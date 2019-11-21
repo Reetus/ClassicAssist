@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ClassicAssist": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\johns\\Documents\\Code\\ClassicUO\\bin\\Debug\\ClassicUO.exe"
+    }
+  }
+}

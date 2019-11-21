@@ -1,0 +1,32 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ca="clr-namespace:ClassicAssist"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="clr-namespace:ClassicAssist.UI.Views;assembly=ClassicAssist"
+        xmlns:r="clr-namespace:ClassicAssist.Resources"
+        xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
+        mc:Ignorable="d" Height="500" Width="493"
+        x:Class="ClassicAssist.UI.Views.MainWindow"
+        Icon="/UI/Assets/avalonia-logo.ico"
+        Title="ClassicAssist" Topmost="True">
+
+    <Design.DataContext>
+        <viewModels:MainWindowViewModel/>
+    </Design.DataContext>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <TabControl Grid.Row="0">
+      <TabItem Header="{x:Static r:Strings.General}">
+          <ui:GeneralTab Margin="5"/>
+      </TabItem>
+      <TabItem Header="{x:Static r:Strings.About}">
+        <ui:AboutTab Margin="5"/>
+      </TabItem>
+    </TabControl>
+  </Grid>
+
+</Window>

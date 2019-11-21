@@ -1,0 +1,6 @@
+.vs/
+**/bin/Debug/**
+**/obj/Debug/**
+*/obj/**
+Output/
+packages/

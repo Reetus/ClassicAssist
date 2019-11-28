@@ -1,0 +1,131 @@
+﻿<UserControl x:Class="ClassicAssist.UI.Views.SkillsTabControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:misc="clr-namespace:ClassicAssist.Misc"
+             xmlns:data="clr-namespace:ClassicAssist.UO.Data"
+             xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
+             xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+             mc:Ignorable="d" 
+             Background="White">
+    <UserControl.DataContext>
+        <viewModels:SkillsTabViewModel/>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <valueConverters:LockStatusValueConverter x:Key="LockStatusValueConverter"/>
+        <valueConverters:SetSkillLockMultiValueConverter x:Key="MenuItemMultiValueConverter"/>
+        <!--ContextMenu in a different visual tree, https://stackoverflow.com/questions/3583507/wpf-binding-a-contextmenu-to-an-mvvm-command-->
+        <misc:BindingProxy x:Key="Proxy" Data="{Binding}" />
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="0,7,0,0"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="90"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <ListView Grid.Column="0" ItemsSource="{Binding Items}" Margin="5" SelectedItem="{Binding SelectedSkillEntry}" GridViewColumnHeader.Click="GridViewHeaderOnClick" x:Name="listView">
+            <ListView.Resources>
+                <misc:BindingProxy x:Key="SelectedItems" Data="{Binding Path=SelectedItems, ElementName=listView}"/>
+                <ContextMenu x:Key="ItemContextMenu">
+                    <MenuItem Header="Set Up" Command="{Binding Source={StaticResource Proxy}, Path=Data.SetSkillLockCommand}">
+                        <MenuItem.CommandParameter>
+                            <MultiBinding Converter="{StaticResource MenuItemMultiValueConverter}">
+                                <Binding Source="{StaticResource SelectedItems}"/>
+                                <Binding Source="{x:Static data:LockStatus.Up}"/>
+                            </MultiBinding>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
+                    <MenuItem Header="Set Down" Command="{Binding Source={StaticResource Proxy}, Path=Data.SetSkillLockCommand}">
+                        <MenuItem.CommandParameter>
+                            <MultiBinding Converter="{StaticResource MenuItemMultiValueConverter}">
+                                <Binding Source="{StaticResource SelectedItems}"/>
+                                <Binding Source="{x:Static data:LockStatus.Down}"/>
+                            </MultiBinding>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
+                    <MenuItem Header="Set Locked" Command="{Binding Source={StaticResource Proxy}, Path=Data.SetSkillLockCommand}">
+                        <MenuItem.CommandParameter>
+                            <MultiBinding Converter="{StaticResource MenuItemMultiValueConverter}">
+                                <Binding Source="{StaticResource SelectedItems}"/>
+                                <Binding Source="{x:Static data:LockStatus.Locked}"/>
+                            </MultiBinding>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
+                </ContextMenu>
+            </ListView.Resources>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}"/>
+                    <!--<Setter Property="Height" Value="14"/>-->
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <misc1:SkillsGridViewColumn Header="Name" DisplayMemberBinding="{Binding Skill}" Width="170" SortField="Name"/>
+                    <misc1:SkillsGridViewColumn Header="Value" Width="50" SortField="Value">
+                        <misc1:SkillsGridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Value}" Width="40" TextAlignment="Center"/>
+                            </DataTemplate>
+                        </misc1:SkillsGridViewColumn.CellTemplate>
+                    </misc1:SkillsGridViewColumn>
+                    <misc1:SkillsGridViewColumn Header="Base" Width="50" SortField="Base">
+                        <misc1:SkillsGridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Base}" Width="40" TextAlignment="Center"/>
+                            </DataTemplate>
+                        </misc1:SkillsGridViewColumn.CellTemplate>
+                    </misc1:SkillsGridViewColumn>
+                    <misc1:SkillsGridViewColumn Header="+/-" Width="30" SortField="Delta">
+                        <misc1:SkillsGridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Delta, StringFormat={}{0:0.#}}" Width="20" TextAlignment="Center"/>
+                            </DataTemplate>
+                        </misc1:SkillsGridViewColumn.CellTemplate>
+                    </misc1:SkillsGridViewColumn>
+                    <misc1:SkillsGridViewColumn Header="Cap" Width="50" SortField="Cap">
+                        <misc1:SkillsGridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Cap}" Width="40" TextAlignment="Center"/>
+                            </DataTemplate>
+                        </misc1:SkillsGridViewColumn.CellTemplate>
+                    </misc1:SkillsGridViewColumn>
+                    <misc1:SkillsGridViewColumn Header="Status" Width="40" SortField="LockStatus">
+                        <misc1:SkillsGridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding LockStatus, Converter={StaticResource LockStatusValueConverter}}" HorizontalAlignment="Center"  Width="40" Stretch="Uniform" Height="10" VerticalAlignment="Center"/>
+                            </DataTemplate>
+                        </misc1:SkillsGridViewColumn.CellTemplate>
+                    </misc1:SkillsGridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <StackPanel Grid.Column="1" Margin="10,0,10,10">
+            <StackPanel.Resources>
+                <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="SkillStatesEnum">
+                    <ObjectDataProvider.MethodParameters>
+                        <x:Type TypeName="data:LockStatus"></x:Type>
+                    </ObjectDataProvider.MethodParameters>
+                </ObjectDataProvider>
+            </StackPanel.Resources>
+            <Button Content="Reset +/-" Command="{Binding ResetDeltasCommand, Mode=OneWay}"/>
+            <Button Content="Copy"/>
+            <Button Content="Copy All"/>
+            <TextBlock Text="All skills:" Margin="0,20,0,0"/>
+            <ComboBox x:Name="comboBox" ItemsSource="{Binding Mode=OneWay, Source={StaticResource SkillStatesEnum}}" Margin="0,5,0,0" SelectedIndex="0">
+            </ComboBox>
+            <Button Content="Set" Command="{Binding SetAllSkillLocksCommand, Mode=OneWay}" CommandParameter="{Binding SelectedIndex, ElementName=comboBox}"/>
+            <TextBlock Text="Total base:" Margin="0,30,0,0"/>
+            <TextBlock Text="{Binding TotalBase}" FontWeight="Bold" Margin="0,3,0,0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

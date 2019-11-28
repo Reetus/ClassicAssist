@@ -1,4 +1,9 @@
-﻿using Assistant;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Assistant;
+using ClassicAssist.Data.Skills;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
 
@@ -6,17 +11,466 @@ namespace ClassicAssist.UO.Network
 {
     public static class IncomingPacketHandlers
     {
+        public delegate void dSkillList( SkillInfo[] skills );
+
+        public delegate void dSkillUpdated( int id, float value, float baseValue, LockStatus lockStatus,
+            float skillCap );
+
         private static PacketHandler[] _handlers;
         private static PacketHandler[] _extendedHandlers;
+        public static event dSkillUpdated SkillUpdatedEvent;
+        public static event dSkillList SkillsListEvent;
+
+        public delegate void dMobileUpdated( Mobile mobile );
+
+        public static event dMobileUpdated MobileUpdatedEvent;
+
 
         public static void Initialize()
         {
             _handlers = new PacketHandler[0x100];
             _extendedHandlers = new PacketHandler[0x100];
 
+            Register( 0x11, 0, OnMobileStatus );
             Register( 0x1B, 37, OnInitializePlayer );
+            Register( 0x1D, 5, OnItemDeleted );
+            Register( 0x20, 19, OnMobileUpdated );
+            Register( 0x25, 21, OnItemAddedToContainer );
+            Register( 0x2E, 15, OnItemEquipped );
+            Register( 0x3A, 0, OnSkillsList );
             Register( 0x3C, 0, OnContainerContents );
+            Register( 0x6C, 19, OnTarget );
+            Register( 0x77, 17, OnMobileMoving );
+            Register( 0x78, 0, OnMobileIncoming );
+            Register( 0x98, 0, OnMobileName );
+            Register( 0xA1, 9, OnMobileHits );
+            Register( 0xA2, 9, OnMobileMana );
+            Register( 0xA3, 9, OnMobileStamina );
+            Register( 0xB9, 5, OnSupportedFeatures );
+            Register( 0xBF, 0, OnExtendedCommand );
+            Register( 0xD6, 0, OnProperties );
+            Register( 0xDD, 0, OnCompressedGump );
             Register( 0xF3, 26, OnSAWorldItem );
+
+            RegisterExtended( 0x08, 0, OnMapChange );
+        }
+
+        private static void OnCompressedGump( PacketReader reader )
+        {
+            int senderSerial = reader.ReadInt32();
+            int gumpId = reader.ReadInt32();
+
+            Engine.GumpList.AddOrUpdate( gumpId, senderSerial, ( k, v ) => senderSerial );
+        }
+
+        private static void OnMobileName( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+            string name = reader.ReadString( 30 );
+
+            Mobile mobile = Engine.GetOrCreateMobile( serial );
+
+            mobile.Name = name;
+        }
+
+        private static void OnMobileMoving( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+            int id = reader.ReadInt16();
+            int x = reader.ReadInt16();
+            int y = reader.ReadInt16();
+            int z = reader.ReadSByte();
+            int direction = reader.ReadByte() & 0x07;
+            int hue = reader.ReadUInt16();
+            int status = reader.ReadByte();
+            int notoriety = reader.ReadByte();
+
+            Mobile mobile = Engine.GetOrCreateMobile( serial );
+            mobile.ID = id;
+            mobile.X = x;
+            mobile.Y = y;
+            mobile.Z = z;
+            mobile.Direction = (Direction) direction;
+            mobile.Hue = hue;
+            mobile.Status = (MobileStatus) status;
+            mobile.Notoriety = (Notoriety) notoriety;
+        }
+
+        private static void OnMobileUpdated( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+            int id = reader.ReadInt16();
+            reader.ReadByte(); // BYTE 0x00;
+            int hue = reader.ReadUInt16();
+            int status = reader.ReadByte();
+            int x = reader.ReadInt16();
+            int y = reader.ReadInt16();
+            reader.ReadInt16(); // WORD 0x00;
+            int direction = reader.ReadByte() & 0x07;
+            int z = reader.ReadSByte();
+
+            Mobile mobile = Engine.GetOrCreateMobile( serial );
+            mobile.ID = id;
+            mobile.Hue = hue;
+            mobile.Status = (MobileStatus) status;
+            mobile.X = x;
+            mobile.Y = y;
+            mobile.Direction = (Direction) direction;
+            mobile.Z = z;
+
+            MobileUpdatedEvent?.Invoke( mobile );
+        }
+
+        private static void OnTarget( PacketReader reader )
+        {
+            byte type = reader.ReadByte();
+            int tid = reader.ReadInt32();
+            int flags = reader.ReadByte();
+
+            Engine.TargetType = (TargetType) type;
+            Engine.TargetSerial = tid;
+        }
+
+        private static void OnMobileStamina( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+            int staminaMax = reader.ReadInt16();
+            int stamina = reader.ReadInt16();
+
+            Mobile mobile = Engine.GetOrCreateMobile( serial );
+            mobile.Stamina = stamina;
+            mobile.StaminaMax = staminaMax;
+        }
+
+        private static void OnMobileMana( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+            int manaMax = reader.ReadInt16();
+            int mana = reader.ReadInt16();
+
+            Mobile mobile = Engine.GetOrCreateMobile( serial );
+            mobile.Mana = mana;
+            mobile.ManaMax = manaMax;
+        }
+
+        private static void OnMobileHits( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+            int hitsMax = reader.ReadInt16();
+            int hits = reader.ReadInt16();
+
+            Mobile mobile = Engine.GetOrCreateMobile( serial );
+            mobile.Hits = hits;
+            mobile.HitsMax = hitsMax;
+        }
+
+        private static void OnSupportedFeatures( PacketReader reader )
+        {
+            Engine.Features = (FeatureFlags) reader.ReadInt32();
+        }
+
+        private static void OnSkillsList( PacketReader reader )
+        {
+            /*byte type = */
+            reader.ReadByte();
+            int id = reader.ReadInt16();
+            int value = reader.ReadInt16();
+            int baseValue = reader.ReadInt16();
+            LockStatus lockStatus = (LockStatus) reader.ReadByte();
+            int skillCap = reader.ReadInt16();
+
+            if ( reader.Size <= 13 )
+            {
+                SkillUpdatedEvent?.Invoke( id, (float) value / 10, (float) baseValue / 10, lockStatus,
+                    (float) skillCap / 10 );
+            }
+            else
+            {
+                SkillInfo si = new SkillInfo
+                {
+                    Value = (float) value / 10,
+                    BaseValue = (float) baseValue / 10,
+                    LockStatus = lockStatus,
+                    SkillCap = (float) skillCap / 10,
+                    ID = id - 1
+                };
+
+                List<SkillInfo> skillInfoList = new List<SkillInfo>( 128 ) { si };
+
+                for ( ;; )
+                {
+                    id = reader.ReadInt16();
+
+                    if ( id == 0 )
+                    {
+                        break;
+                    }
+
+                    value = reader.ReadInt16();
+                    baseValue = reader.ReadInt16();
+                    lockStatus = (LockStatus) reader.ReadByte();
+                    skillCap = reader.ReadInt16();
+
+                    si = new SkillInfo
+                    {
+                        Value = (float) value / 10,
+                        BaseValue = (float) baseValue / 10,
+                        LockStatus = lockStatus,
+                        SkillCap = (float) skillCap / 10,
+                        ID = id - 1
+                    };
+
+                    skillInfoList.Add( si );
+                }
+
+                SkillsListEvent?.Invoke( skillInfoList.ToArray() );
+            }
+        }
+
+        private static void OnExtendedCommand( PacketReader reader )
+        {
+            int command = reader.ReadInt16();
+
+            PacketHandler handler = GetExtendedHandler( command );
+            handler?.OnReceive( reader );
+        }
+
+        private static void OnMapChange( PacketReader reader )
+        {
+            if ( Engine.Player != null )
+            {
+                Engine.Player.Map = (Map) reader.ReadByte();
+            }
+        }
+
+        private static void OnItemAddedToContainer( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+            int id = reader.ReadUInt16();
+            reader.ReadByte(); // offset
+            int count = reader.ReadUInt16();
+            int x = reader.ReadInt16();
+            int y = reader.ReadInt16();
+            int grid = reader.ReadByte();
+            int containerSerial = reader.ReadInt32();
+            int hue = reader.ReadUInt16();
+
+            Item item = Engine.GetOrCreateItem( serial, containerSerial );
+            item.ID = id;
+            item.Count = count;
+            item.X = x;
+            item.Y = y;
+            item.Grid = grid;
+            item.Owner = containerSerial;
+            item.Hue = hue;
+
+            if ( UOMath.IsMobile( containerSerial ) )
+            {
+                item.Owner = containerSerial;
+                Engine.Items.Add( item );
+            }
+            else
+            {
+                Item container = Engine.GetOrCreateItem( containerSerial );
+
+                item.Owner = container.Serial;
+
+                if ( container.Container == null )
+                {
+                    container.Container = new ItemCollection( containerSerial );
+                }
+
+                container.Container.Add( item );
+            }
+        }
+
+        private static void OnItemDeleted( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+
+            Mobile mobile = Engine.Mobiles
+                .FirstOrDefault( m => m.GetEquippedItems().Any( i => i.Serial == serial ) );
+
+            if ( mobile != null )
+            {
+                Item item = Engine.Items.GetItem( serial );
+
+                if ( item != null )
+                {
+                    mobile.SetLayer( item.Layer, 0 );
+                }
+            }
+
+            if ( UOMath.IsMobile( serial ) )
+            {
+                Engine.Mobiles.Remove( serial );
+                Engine.Items.RemoveByOwner( serial );
+            }
+            else
+            {
+                Engine.Items.Remove( serial );
+            }
+        }
+
+        private static void OnItemEquipped( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+            int id = reader.ReadInt16();
+            reader.ReadByte(); // BYTE 0x00
+            int layer = reader.ReadByte();
+            int mobileSerial = reader.ReadInt32();
+            int hue = reader.ReadUInt16();
+
+            Item item = Engine.GetOrCreateItem( serial );
+
+            item.Owner = mobileSerial;
+            item.Layer = (Layer) layer;
+            item.Hue = hue;
+            item.ID = id;
+
+            Mobile mobile = serial == Engine.Player.Serial ? Engine.Player : Engine.GetOrCreateMobile( mobileSerial );
+
+            mobile.SetLayer( item.Layer, item.Serial );
+            mobile.Equipment.Add( item );
+            Engine.Items.Add( item );
+        }
+
+        private static void OnProperties( PacketReader reader )
+        {
+            reader.Seek( 2, SeekOrigin.Current ); // word 1
+
+            int serial = reader.ReadInt32();
+
+            reader.Seek( 2, SeekOrigin.Current ); // word 0
+
+            int hash = reader.ReadInt32();
+
+            List<Property> list = new List<Property>();
+
+            int cliloc;
+            bool first = true;
+            string name = "";
+
+            while ( ( cliloc = reader.ReadInt32() ) != 0 )
+            {
+                Property property = new Property { Cliloc = cliloc };
+
+                int length = reader.ReadInt16();
+
+                property.Arguments = reader.ReadUnicodeString( length )
+                    .Split( new[] { '\t' }, StringSplitOptions.RemoveEmptyEntries );
+
+                property.Text = Cliloc.GetLocalString( cliloc, property.Arguments );
+
+                if ( first )
+                {
+                    name = property.Text;
+                    first = false;
+                }
+
+                list.Add( property );
+            }
+
+            if ( Engine.Player.Serial == serial )
+            {
+                Engine.Player.Name = name;
+                Engine.Player.Properties = list.ToArray();
+            }
+            else if ( UOMath.IsMobile( serial ) )
+            {
+                Mobile mobile = Engine.GetOrCreateMobile( serial );
+
+                mobile.Name = name;
+                mobile.Properties = list.ToArray();
+            }
+            else
+            {
+                Item item = Engine.GetOrCreateItem( serial );
+
+                item.Name = name;
+                item.Properties = list.ToArray();
+            }
+        }
+
+        private static void OnMobileStatus( PacketReader reader )
+        {
+            long length = reader.Size;
+
+            int serial = reader.ReadInt32();
+            string name = reader.ReadString( 30 );
+            int hits = reader.ReadInt16();
+            int hitsMax = reader.ReadInt16();
+            reader.ReadByte(); // Allow Name Change
+            byte features = reader.ReadByte();
+
+            Mobile mobile = serial == Engine.Player.Serial ? Engine.Player : Engine.GetOrCreateMobile( serial );
+            mobile.Name = name;
+            mobile.Hits = hits;
+            mobile.HitsMax = hitsMax;
+        }
+
+        private static void OnMobileIncoming( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+            ItemCollection container = new ItemCollection( serial, 125 );
+
+            Mobile mobile = serial == Engine.Player?.Serial ? Engine.Player : Engine.GetOrCreateMobile( serial );
+
+            mobile.ID = reader.ReadInt16();
+            mobile.X = reader.ReadInt16();
+            mobile.Y = reader.ReadInt16();
+            mobile.Z = reader.ReadSByte();
+            mobile.Direction = (Direction) ( reader.ReadByte() & 0x07 );
+            mobile.Hue = reader.ReadUInt16();
+            mobile.Status = (MobileStatus) reader.ReadByte();
+            mobile.Notoriety = (Notoriety) reader.ReadByte();
+
+            bool useNewIncoming = Engine.ClientVersion >= new Version( 7, 0, 33, 1 );
+
+            for ( ;; )
+            {
+                int itemSerial = reader.ReadInt32();
+
+                if ( itemSerial == 0 )
+                {
+                    break;
+                }
+
+                Item item = Engine.GetOrCreateItem( itemSerial );
+                item.Owner = serial;
+                item.ID = reader.ReadUInt16();
+                item.Layer = (Layer) reader.ReadByte();
+
+                if ( useNewIncoming )
+                {
+                    item.Hue = reader.ReadUInt16();
+                }
+                else
+                {
+                    if ( ( item.ID & 0x8000 ) != 0 )
+                    {
+                        item.ID ^= 0x8000;
+                        item.Hue = reader.ReadUInt16();
+                    }
+                }
+
+                container.Add( item );
+            }
+
+            mobile.Equipment.Clear();
+            mobile.Equipment.Add( container.GetItems() );
+
+            foreach ( Item item in container.GetItems() )
+            {
+                mobile.SetLayer( item.Layer, item.Serial );
+            }
+
+            Engine.Items.Add( container.GetItems() );
+
+            if ( !( mobile is PlayerMobile ) )
+            {
+                Engine.Mobiles.Add( mobile );
+            }
         }
 
         private static void OnContainerContents( PacketReader reader )
@@ -72,6 +526,25 @@ namespace ClassicAssist.UO.Network
 
                 container.Add( item );
             }
+
+            if ( container == null )
+            {
+                return;
+            }
+
+            Item containerItem = Engine.Items.GetItem( container.Serial );
+
+            if ( containerItem.Container == null )
+            {
+                containerItem.Container = container;
+            }
+            else
+            {
+                containerItem.Container.Clear();
+                containerItem.Container.Add( container.GetItems() );
+            }
+
+            Engine.Items.Add( containerItem );
         }
 
         private static void OnSAWorldItem( PacketReader reader )
@@ -100,9 +573,20 @@ namespace ClassicAssist.UO.Network
         private static void OnInitializePlayer( PacketReader reader )
         {
             int serial = reader.ReadInt32();
+
             PlayerMobile mobile = new PlayerMobile( serial );
 
-            int zero = reader.ReadInt32(); // DWORD 0
+            // ClassicUO (or ServUO) seems to send other packets before InitializePlayer that can cause the mobile to already exist before we
+            // know it's the player, if already in collection, copy and delete.
+
+            if ( Engine.Mobiles.GetMobile( serial, out Mobile m ) )
+            {
+                mobile.Equipment = m.Equipment;
+                Engine.Mobiles.Remove( m );
+            }
+
+            reader.ReadInt32(); // DWORD 0
+
             short id = reader.ReadInt16();
             short x = reader.ReadInt16();
             short y = reader.ReadInt16();

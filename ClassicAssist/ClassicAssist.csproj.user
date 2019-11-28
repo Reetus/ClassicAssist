@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ActiveDebugProfile>Outlands</ActiveDebugProfile>
+    <ShowAllFiles>false</ShowAllFiles>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="UI\Controls\EditTextBlock.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Controls\HexDumpControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Controls\TestBoxKey.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Views\AboutControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Views\ActiveObjectsWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Views\AgentsTabControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Views\Agents\OrganizerTabControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Views\EntityCollectionViewer.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Views\GeneralControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Views\HotkeysTabControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Views\MacrosTabControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Views\Macros\MacrosCommandWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Views\MainWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Views\ObjectInpectorWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Views\DebugWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Views\SkillsTabControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Strings.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Resources\ResourceDictionary.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Controls\EditTextBlock.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Controls\HexDumpControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Controls\TestBoxKey.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Views\AboutControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Views\ActiveObjectsWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Views\AgentsTabControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Views\Agents\OrganizerTabControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Views\EntityCollectionViewer.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Views\GeneralControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Views\HotkeysTabControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Views\MacrosTabControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Views\Macros\MacrosCommandWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Views\MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Views\ObjectInpectorWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Views\DebugWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Views\SkillsTabControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

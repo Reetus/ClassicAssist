@@ -77,7 +77,11 @@ namespace ClassicAssist.UO.Data
 
         public string ReadString(int fixedLength)
         {
-            throw new NotImplementedException();
+            byte[] buffer = new byte[fixedLength];
+
+            _stream.Read( buffer, 0, fixedLength );
+
+            return Encoding.ASCII.GetString( buffer );
         }
 
         public string ReadStringSafe()
@@ -107,7 +111,11 @@ namespace ClassicAssist.UO.Data
 
         public string ReadUnicodeString(int fixedLength)
         {
-            throw new NotImplementedException();
+            byte[] buffer = new byte[fixedLength];
+
+            _stream.Read(buffer, 0, fixedLength);
+
+            return Encoding.Unicode.GetString(buffer);
         }
 
         public string ReadUnicodeStringLE()

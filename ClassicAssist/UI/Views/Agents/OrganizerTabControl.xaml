@@ -1,0 +1,97 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ClassicAssist.UI.Views.Agents"
+             xmlns:resources="clr-namespace:ClassicAssist.Resources"
+             xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
+             xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
+             xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+             x:Name="userControl" x:Class="ClassicAssist.UI.Views.Agents.OrganizerTabControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="500">
+    <d:DesignerProperties.DesignStyle>
+        <Style TargetType="UserControl">
+            <Setter Property="Background" Value="White"/>
+        </Style>
+    </d:DesignerProperties.DesignStyle>
+    <UserControl.Resources>
+        <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter"/>
+        <valueConverters:IntToHexStringValueConverter x:Key="IntToHexStringValueConverter"/>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <agents:OrganizerTabViewModel/>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Height" Value="25"/>
+                <Setter Property="Padding" Value="10,0,10,0"/>
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <DockPanel Grid.Row="0">
+                <Button DockPanel.Dock="Left" Content="{Binding PlayStopButtonText}" Command="{Binding OrganizeCommand}" CommandParameter="{Binding SelectedItem}"/>
+                <StackPanel DockPanel.Dock="Right" Margin="5">
+                    <CheckBox Content="{x:Static resources:Strings.Stack}" IsChecked="{Binding SelectedItem.Stack}"/>
+                </StackPanel>
+            </DockPanel>
+            <Grid Grid.Row="1">
+                <ListBox x:Name="listBox" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <controls:EditTextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MinWidth="40" Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+            <DockPanel Grid.Row="2" Margin="0,10,0,0">
+                <Button Content="{x:Static resources:Strings.Remove}" HorizontalAlignment="Left" Margin="0" Command="{Binding RemoveOrganizerAgentEntryCommand}" CommandParameter="{Binding SelectedItem}"/>
+                <Button Content="{x:Static resources:Strings.New}" HorizontalAlignment="Right" Margin="0" Command="{Binding NewOrganizerEntryCommand}"/>
+            </DockPanel>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ListView x:Name="itemsListView" Margin="5" Grid.Row="0" ItemsSource="{Binding SelectedItem.Items}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="{x:Static resources:Strings.Item}" Width="120" DisplayMemberBinding="{Binding Item}"/>
+                            <GridViewColumn Header="{x:Static resources:Strings.Graphic}" Width="120" DisplayMemberBinding="{Binding ID, StringFormat={}0x{0:x}}"/>
+                            <GridViewColumn Header="{x:Static resources:Strings.Amount}" Width="120" x:Name="AmountColumn">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <controls:EditTextBlock Text="{Binding Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MinWidth="50" Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=AmountColumn, Mode=OneWay}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <StackPanel Orientation="Horizontal" Grid.Row="1">
+                    <Button Content="{x:Static resources:Strings.Set_Containers}" Command="{Binding SetContainersCommand}" CommandParameter="{Binding SelectedItem}"/>
+                    <Button Content="{x:Static resources:Strings.Remove}" Command="{Binding RemoveItemCommand}" CommandParameter="{Binding SelectedItem, ElementName=itemsListView}"/>
+                    <Button Content="{x:Static resources:Strings.Insert}" Command="{Binding InsertItemCommand}" CommandParameter="{Binding SelectedItem}"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

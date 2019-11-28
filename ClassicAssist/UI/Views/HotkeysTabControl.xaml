@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="ClassicAssist.UI.Views.HotkeysTabControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
+             xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
+             xmlns:local="clr-namespace:ClassicAssist.Data.Hotkeys"
+             xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+             xmlns:resources="clr-namespace:ClassicAssist.Resources"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="500" Background="White">
+    <UserControl.DataContext>
+        <viewModels:HotkeysTabViewModel/>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <TreeView x:Name="treeView" Grid.Row="0" Margin="10" ItemsSource="{Binding Items}">
+            <i:Interaction.Behaviors>
+                <misc:BindableSelectedItemBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
+            </i:Interaction.Behaviors>
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="TreeViewItem">
+                    <Setter Property="IsExpanded" Value="true"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                    <ContentControl>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding Image}" Stretch="Uniform" Margin="0,0,5,0"/>
+                            <TextBlock Text="{Binding}" />
+                        </StackPanel>
+                    </ContentControl>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+        <GroupBox Grid.Column="1" Header="{x:Static resources:Strings.Hotkeys}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <controls:TextBoxKey Shortcut="{Binding Path=SelectedItem.(local:HotkeySettable.Hotkey)}" Grid.Row="0" Margin="10">
+                    <controls:TextBoxKey.Style>
+                        <Style TargetType="controls:TextBoxKey">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=SelectedItem.(local:HotkeySettable.Hotkey)}" Value="{x:Null}">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </controls:TextBoxKey.Style>
+                </controls:TextBoxKey>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="{x:Static resources:Strings.Clear}" Margin="10,0,10,5" Command="{Binding ClearHotkeyCommand}" CommandParameter="{Binding SelectedItem}" Grid.Column="0" />
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox Content="{x:Static resources:Strings.Pass_to_UO}" Margin="10,0,10,5" IsChecked="{Binding Path=SelectedItem.(local:HotkeySettable.PassToUO), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" />
+                </Grid>
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="{x:Static resources:Strings.Execute}" Margin="10,0,10,5" Command="{Binding ExecuteCommand}" CommandParameter="{Binding SelectedItem}" Grid.Column="0" />
+                </Grid>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

@@ -1,0 +1,30 @@
+﻿<Window x:Class="ClassicAssist.UI.Views.DebugWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClassicAssist.UI.Views"
+        xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
+        xmlns:resources="clr-namespace:ClassicAssist.Resources"
+        xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+        mc:Ignorable="d"
+        Title="Debug Window" Height="450" Width="600" Topmost="{Binding Topmost}">
+    <Window.DataContext>
+        <viewModels:DebugViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ListBox ItemsSource="{Binding Items}" Margin="10" Grid.Row="0" misc:ListBoxBehavior.ScrollOnNewItem="true">
+
+        </ListBox>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10,0,10,10">
+            <CheckBox Content="{x:Static resources:Strings.Capture_Packets}" VerticalAlignment="Center" Margin="0,0,10,0" IsChecked="{Binding Running}"/>
+            <CheckBox Content="{x:Static resources:Strings.Topmost}" VerticalAlignment="Center" Margin="0,0,10,0" IsChecked="{Binding Topmost}"/>
+            <CheckBox Content="{x:Static resources:Strings.Ignore_ping_packets}" VerticalAlignment="Center" Margin="0,0,10,0" IsChecked="{Binding IgnorePingPackets}"/>
+            <Button Content="View Player Equipment" Command="{Binding ViewPlayerEquipmentCommand}" Padding="5"/>
+        </StackPanel>
+    </Grid>
+</Window>

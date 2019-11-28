@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Linq;
+using Assistant;
 
 namespace ClassicAssist.UO.Objects
 {
@@ -8,26 +9,26 @@ namespace ClassicAssist.UO.Objects
     {
         protected ConcurrentDictionary<int, T> EntityList;
 
-        protected EntityCollection() : this( short.MaxValue )
+        protected EntityCollection() : this(short.MaxValue)
         {
         }
 
-        protected EntityCollection( int capacity )
+        protected EntityCollection(int capacity)
         {
-            EntityList = new ConcurrentDictionary<int, T>( 16, capacity );
+            EntityList = new ConcurrentDictionary<int, T>(16, capacity);
         }
 
-        public T this[ int s ]
+        public T this[int s]
         {
-            get => EntityList.ContainsKey( s ) ? EntityList[s] : null;
+            get => EntityList.ContainsKey(s) ? EntityList[s] : null;
             set => EntityList[s] = value;
         }
 
-        public virtual bool Add( T entity )
+        public virtual bool Add(T entity)
         {
-            bool changed = EntityList.AddOrUpdate( entity.Serial, entity, ( k, v ) => entity ) != null;
+            bool changed = EntityList.AddOrUpdate(entity.Serial, entity, (k, v) => entity) != null;
 
-            if ( changed )
+            if (changed)
             {
                 OnCollectionChanged();
             }
@@ -35,13 +36,13 @@ namespace ClassicAssist.UO.Objects
             return changed;
         }
 
-        public virtual bool Add( T[] entities )
+        public virtual bool Add(T[] entities)
         {
             bool changed = false;
 
-            foreach ( T entity in entities )
+            foreach (T entity in entities)
             {
-                if ( EntityList.AddOrUpdate( entity.Serial, entity, ( k, v ) => entity ) == null )
+                if (EntityList.AddOrUpdate(entity.Serial, entity, (k, v) => entity) == null)
                 {
                     continue;
                 }
@@ -49,7 +50,7 @@ namespace ClassicAssist.UO.Objects
                 changed = true;
             }
 
-            if ( changed )
+            if (changed)
             {
                 OnCollectionChanged();
             }
@@ -60,20 +61,20 @@ namespace ClassicAssist.UO.Objects
         protected T[] GetEntities()
         {
             T[] entityArray = new T[EntityList.Values.Count];
-            EntityList.Values.CopyTo( entityArray, 0 );
+            EntityList.Values.CopyTo(entityArray, 0);
             return entityArray;
         }
 
-        public virtual bool Remove( T entity )
+        public virtual bool Remove(T entity)
         {
-            return Remove( entity.Serial );
+            return Remove(entity.Serial);
         }
 
-        public virtual bool Remove( int serial )
+        public virtual bool Remove(int serial)
         {
-            EntityList.TryRemove( serial, out T val );
+            EntityList.TryRemove(serial, out T val);
 
-            if ( val != null )
+            if (val != null)
             {
                 OnCollectionChanged();
             }
@@ -81,13 +82,13 @@ namespace ClassicAssist.UO.Objects
             return val != null;
         }
 
-        public virtual bool Remove( T[] entities )
+        public virtual bool Remove(T[] entities)
         {
             bool changed = false;
 
-            foreach ( T entity in entities )
+            foreach (T entity in entities)
             {
-                if ( Remove( entity.Serial ) )
+                if (Remove(entity.Serial))
                 {
                     changed = true;
                 }
@@ -99,50 +100,58 @@ namespace ClassicAssist.UO.Objects
         internal virtual void Clear()
         {
             EntityList.Clear();
+
+            OnCollectionChanged();
         }
 
-        public virtual void RemoveByDistance( int maxDistance, int x, int y )
-        {
-            T[] items = SelectEntities( i =>
-                i is Item item && item.Owner == 0 && UOMath.Distance( x, y, item.X, item.Y ) > maxDistance );
+        public delegate void dCollectionChanged(int totalCount);
+        public event dCollectionChanged CollectionChanged;
 
-            if ( items == null )
+        public virtual void OnCollectionChanged()
+        {
+            CollectionChanged?.Invoke(EntityList.Count);
+        }
+
+        public virtual void RemoveByDistance(int maxDistance, int x, int y)
+        {
+            T[] items = SelectEntities(i =>
+               i is Item item && item.Owner == 0 && UOMath.Distance(x, y, item.X, item.Y) > maxDistance);
+
+            if (items == null)
             {
                 return;
             }
 
-            bool changed = Remove( items );
+            bool changed = Remove(items);
 
-            if ( changed )
+            if (changed)
             {
                 OnCollectionChanged();
             }
         }
 
-        public virtual T SelectEntity( Func<T, bool> func )
+        public virtual T SelectEntity(Func<T, bool> func)
         {
-            if ( func == null )
+            if (func == null)
             {
                 return null;
             }
 
-            T entity = EntityList.Select( m => m.Value ).FirstOrDefault( func );
+            T entity = EntityList.Select(m => m.Value).FirstOrDefault(func);
 
             return entity;
         }
 
-        public virtual T[] SelectEntities( Func<T, bool> func )
+        public virtual T[] SelectEntities(Func<T, bool> func)
         {
-            return EntityList.Select( m => m.Value ).Where( func ).ToArray();
+            return EntityList.Select(m => m.Value).Where(func).ToArray();
         }
 
-        protected T GetEntity( int key )
+        protected T GetEntity(int key)
         {
-            EntityList.TryGetValue( key, out T val );
+            EntityList.TryGetValue(key, out T val);
 
             return val;
         }
-
-        protected abstract void OnCollectionChanged();
     }
 }

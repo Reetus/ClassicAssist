@@ -1,4 +1,5 @@
 ﻿using System;
+using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.UO
 {

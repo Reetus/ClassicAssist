@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ClassicAssist.Resources">
+    <Style TargetType="Window" x:Key="WindowStyle">
+        <Setter Property="Background" Value="#FFF0F0F0"/>
+    </Style>
+    <Style TargetType="TabControl" x:Key="TabControlStyle">
+        <Setter Property="BorderBrush" Value="#ffd9d9d9"/>
+    </Style>
+</ResourceDictionary>

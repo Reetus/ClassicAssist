@@ -1,4 +1,5 @@
-﻿using ClassicAssist.Misc;
+﻿using Assistant;
+using ClassicAssist.Misc;
 using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.UO.Objects
@@ -33,5 +34,43 @@ namespace ClassicAssist.UO.Objects
 
         [DisplayFormat( typeof( HexFormatProvider ) )]
         public int Owner { get; set; }
+
+        [DisplayFormat( typeof( HexFormatProvider ) )]
+        public int RootOwner
+        {
+            get
+            {
+                int owner = Owner;
+                Item ownerItem;
+
+                while ( ( ownerItem = Engine.Items.GetItem( owner ) )?.Owner != 0 )
+                {
+                    if ( ownerItem == null )
+                    {
+                        break;
+                    }
+
+                    owner = ownerItem.Owner;
+                }
+
+                return owner;
+            }
+        }
+
+        public bool IsDescendantOf( int serial )
+        {
+            int owner = Owner;
+
+            do
+            {
+                if ( owner == serial )
+                    return true;
+
+                owner = Engine.Items.GetItem( owner )?.Owner ?? 0;
+            }
+            while ( owner != 0 );
+
+            return false;
+        }
     }
 }

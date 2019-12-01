@@ -10,7 +10,7 @@
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:resources="clr-namespace:ClassicAssist.Resources"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="500" Background="White">
+             d:DesignHeight="300" d:DesignWidth="500">
     <UserControl.DataContext>
         <viewModels:HotkeysTabViewModel/>
     </UserControl.DataContext>

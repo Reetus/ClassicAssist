@@ -37,7 +37,7 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( Engine.Player != null )
             {
-                Commands.MobileQuery( Engine.Player.Serial, Commands.MobileQueryType.SkillsRequest );
+                Commands.MobileQuery( Engine.Player.Serial, MobileQueryType.SkillsRequest );
             }
 
             _dispatcher = Dispatcher.CurrentDispatcher;
@@ -142,7 +142,7 @@ namespace ClassicAssist.UI.ViewModels
                 Commands.ChangeSkillLock( skillEntry, lockStatus );
             }
 
-            Commands.MobileQuery( Engine.Player.Serial, Commands.MobileQueryType.SkillsRequest );
+            Commands.MobileQuery( Engine.Player.Serial, MobileQueryType.SkillsRequest );
         }
 
         private void UpdateTotalBase()

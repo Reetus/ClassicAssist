@@ -12,7 +12,7 @@
              xmlns:resources="clr-namespace:ClassicAssist.Resources"
              xmlns:valueConverters1="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="500" Background="White" Padding="5">
+             d:DesignHeight="300" d:DesignWidth="500" Padding="5">
     <UserControl.Resources>
         <valueConverters1:CellWidthValueConverter x:Key="CellWidthValueConverter"/>
     </UserControl.Resources>
@@ -53,7 +53,7 @@
                     </Grid.Resources>
                     <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="0" Margin="0,0,2.5,0" Command="{Binding RemoveMacroCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem, ElementName=ListBox}">
                         <Button.Style>
-                            <Style TargetType="Button">
+                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=ListBox}" Value="{x:Null}">
                                         <Setter Property="IsEnabled" Value="False"/>
@@ -115,6 +115,7 @@
                 </avalon:TextEditor.Style>
                 <i:Interaction.Behaviors>
                     <misc:AvalonEditBehaviour TextBinding="{Binding SelectedItem.Macro, ElementName=ListBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <misc:AvalonBindingBehaviour DocumentBinding="{Binding Document}" CaretBinding="{Binding CaretPosition}"/>
                 </i:Interaction.Behaviors>
             </avalon:TextEditor>
             <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">

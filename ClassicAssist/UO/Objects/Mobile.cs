@@ -55,6 +55,8 @@ namespace ClassicAssist.UO.Objects
             }
         }
 
+        public bool IsRenamable { get; set; }
+
         public event dMobileStatusUpdated MobileStatusUpdated;
 
         internal void SetLayer( Layer layer, int serial )

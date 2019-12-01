@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Text;
+using System.Threading;
 using Assistant;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.UO.Data;
@@ -22,7 +23,7 @@ namespace ClassicAssist.Tests.MacroCommands
                     return;
                 }
 
-                int serial = data[1] << 24 | data[2] << 16 | data[3] << 8 | data[4];
+                int serial = ( data[1] << 24 ) | ( data[2] << 16 ) | ( data[3] << 8 ) | data[4];
 
                 Assert.AreEqual( 0x00aabbcc, serial );
 
@@ -43,18 +44,18 @@ namespace ClassicAssist.Tests.MacroCommands
         [TestMethod]
         public void ClearHandsWillSendDragPacket()
         {
-            AutoResetEvent are = new AutoResetEvent(false);
+            AutoResetEvent are = new AutoResetEvent( false );
 
-            void OnInternalPacketSentEvent(byte[] data, int length)
+            void OnInternalPacketSentEvent( byte[] data, int length )
             {
-                if (data[0] != 0x07)
+                if ( data[0] != 0x07 )
                 {
                     return;
                 }
 
-                int serial = data[1] << 24 | data[2] << 16 | data[3] << 8 | data[4];
+                int serial = ( data[1] << 24 ) | ( data[2] << 16 ) | ( data[3] << 8 ) | data[4];
 
-                Assert.AreEqual(0x00aabbcc, serial);
+                Assert.AreEqual( 0x00aabbcc, serial );
 
                 are.Set();
             }
@@ -66,9 +67,9 @@ namespace ClassicAssist.Tests.MacroCommands
 
             ActionCommands.ClearHands( "left" );
 
-            bool result = are.WaitOne(5000);
+            bool result = are.WaitOne( 5000 );
 
-            Assert.IsTrue(result);
+            Assert.IsTrue( result );
 
             Engine.InternalPacketSentEvent -= OnInternalPacketSentEvent;
             Engine.Player = null;
@@ -77,30 +78,30 @@ namespace ClassicAssist.Tests.MacroCommands
         [TestMethod]
         public void ClickObjectWillSendPacket()
         {
-            AutoResetEvent are = new AutoResetEvent(false);
+            AutoResetEvent are = new AutoResetEvent( false );
 
-            void OnInternalPacketSentEvent(byte[] data, int length)
+            void OnInternalPacketSentEvent( byte[] data, int length )
             {
-                if (data[0] != 0x09)
+                if ( data[0] != 0x09 )
                 {
                     return;
                 }
 
-                int serial = data[1] << 24 | data[2] << 16 | data[3] << 8 | data[4];
+                int serial = ( data[1] << 24 ) | ( data[2] << 16 ) | ( data[3] << 8 ) | data[4];
 
-                Assert.AreEqual(0x00aabbcc, serial);
+                Assert.AreEqual( 0x00aabbcc, serial );
 
                 are.Set();
             }
 
             Engine.InternalPacketSentEvent += OnInternalPacketSentEvent;
 
-            AliasCommands.SetAlias( "thing", 0x00aabbcc);
+            AliasCommands.SetAlias( "thing", 0x00aabbcc );
             ActionCommands.ClickObject( "thing" );
 
-            bool result = are.WaitOne(5000);
+            bool result = are.WaitOne( 5000 );
 
-            Assert.IsTrue(result);
+            Assert.IsTrue( result );
 
             Engine.InternalPacketSentEvent -= OnInternalPacketSentEvent;
             Engine.Player = null;
@@ -109,33 +110,190 @@ namespace ClassicAssist.Tests.MacroCommands
         [TestMethod]
         public void MoveItemWillSendDragPacket()
         {
-            AutoResetEvent are = new AutoResetEvent(false);
+            AutoResetEvent are = new AutoResetEvent( false );
 
-            void OnInternalPacketSentEvent(byte[] data, int length)
+            void OnInternalPacketSentEvent( byte[] data, int length )
             {
-                if (data[0] != 0x07)
+                if ( data[0] != 0x07 )
                 {
                     return;
                 }
 
-                int serial = data[1] << 24 | data[2] << 16 | data[3] << 8 | data[4];
+                int serial = ( data[1] << 24 ) | ( data[2] << 16 ) | ( data[3] << 8 ) | data[4];
 
-                Assert.AreEqual(0x00aabbcc, serial);
+                Assert.AreEqual( 0x00aabbcc, serial );
 
                 are.Set();
             }
 
             Engine.InternalPacketSentEvent += OnInternalPacketSentEvent;
 
-            Engine.Items.Add( new Item(0x00aabbcc) { Count = 50} );
+            Engine.Items.Add( new Item( 0x00aabbcc ) { Count = 50 } );
 
             ActionCommands.MoveItem( 0x00aabbcc, 0xaabbdd );
 
-            bool result = are.WaitOne(5000);
+            bool result = are.WaitOne( 5000 );
 
-            Assert.IsTrue(result);
+            Assert.IsTrue( result );
 
             Engine.InternalPacketSentEvent -= OnInternalPacketSentEvent;
+        }
+
+        [TestMethod]
+        public void FeedWillSendDragPacket()
+        {
+            PlayerMobile player = new PlayerMobile( 0x01 );
+            Item backpack = new Item( 0x02 )
+            {
+                Container = new ItemCollection( 0x02 ) { new Item( 0x00aabbcc ) { ID = 0xff, Count = 1 } },
+                Owner = 0x01,
+                Layer = Layer.Backpack
+            };
+
+            player.SetLayer( Layer.Backpack, 0x02 );
+
+            Engine.Player = player;
+            Engine.Items.Add( backpack );
+
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            void OnInternalPacketSentEvent( byte[] data, int length )
+            {
+                if ( data[0] != 0x07 )
+                {
+                    return;
+                }
+
+                int serial = ( data[1] << 24 ) | ( data[2] << 16 ) | ( data[3] << 8 ) | data[4];
+
+                Assert.AreEqual( 0x00aabbcc, serial );
+
+                are.Set();
+            }
+
+            Engine.InternalPacketSentEvent += OnInternalPacketSentEvent;
+
+            ActionCommands.Feed( 0x01, 0xff );
+
+            bool result = are.WaitOne( 5000 );
+
+            Assert.IsTrue( result );
+
+            Engine.InternalPacketSentEvent -= OnInternalPacketSentEvent;
+
+            Engine.Items.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void RenameWillSendRenamePacket()
+        {
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            void OnInternalPacketSentEvent( byte[] data, int length )
+            {
+                int serial = ( data[1] << 24 ) | ( data[2] << 16 ) | ( data[3] << 8 ) | data[4];
+
+                Assert.AreEqual( 0x00aabbcc, serial );
+
+                string name = Encoding.ASCII.GetString( data, 5, 30 ).TrimEnd( '\0' );
+
+                Assert.AreEqual( "Snorlax", name );
+
+                are.Set();
+            }
+
+            Engine.InternalPacketSentEvent += OnInternalPacketSentEvent;
+
+            ActionCommands.Rename( 0x00aabbcc, "Snorlax" );
+
+            bool result = are.WaitOne( 5000 );
+
+            Assert.IsTrue( result );
+
+            Engine.InternalPacketSentEvent -= OnInternalPacketSentEvent;
+        }
+
+        [TestMethod]
+        public void ShowNamesWillSendLookRequest()
+        {
+            PlayerMobile player = new PlayerMobile( 0x01 );
+            Mobile mobile = new Mobile( 0x00aabbcc );
+
+            Engine.Player = player;
+            Engine.Mobiles.Add( mobile );
+
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            void OnInternalPacketSentEvent( byte[] data, int length )
+            {
+                Assert.AreEqual( 0x09, data[0] );
+
+                int serial = ( data[1] << 24 ) | ( data[2] << 16 ) | ( data[3] << 8 ) | data[4];
+
+                Assert.AreEqual( 0x00aabbcc, serial );
+
+                are.Set();
+            }
+
+            Engine.InternalPacketSentEvent += OnInternalPacketSentEvent;
+
+            ActionCommands.ShowNames( "mobiles" );
+
+            bool result = are.WaitOne( 5000 );
+
+            Assert.IsTrue( result );
+
+            Engine.Mobiles.Remove( mobile );
+
+            Engine.Items.Add( new Item( 0x00aabbcc ) { ID = 0x2006 } );
+
+            ActionCommands.ShowNames( "corpses" );
+
+            result = are.WaitOne( 5000 );
+
+            Assert.IsTrue( result );
+
+            Engine.InternalPacketSentEvent -= OnInternalPacketSentEvent;
+            Engine.Player = null;
+            Engine.Mobiles.Clear();
+            Engine.Items.Clear();
+        }
+
+        [TestMethod]
+        public void EquipItemWillSendDragPacket()
+        {
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            void OnInternalPacketSentEvent( byte[] data, int length )
+            {
+                if ( data[0] != 0x07 )
+                {
+                    return;
+                }
+
+                int serial = ( data[1] << 24 ) | ( data[2] << 16 ) | ( data[3] << 8 ) | data[4];
+
+                Assert.AreEqual( 0x00aabbcc, serial );
+
+                are.Set();
+            }
+
+            Engine.InternalPacketSentEvent += OnInternalPacketSentEvent;
+
+            Engine.Items.Add( new Item( 0x00aabbcc ) );
+
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            ActionCommands.EquipItem( 0x00aabbcc, Layer.OneHanded );
+
+            bool result = are.WaitOne( 5000 );
+
+            Assert.IsTrue( result );
+
+            Engine.InternalPacketSentEvent -= OnInternalPacketSentEvent;
+            Engine.Player = null;
+            Engine.Items.Clear();
         }
     }
 }

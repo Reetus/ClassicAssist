@@ -2,21 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assistant;
 
 namespace ClassicAssist.UO.Objects
 {
     public sealed class ItemCollection : EntityCollection<Item>, IEnumerable<Item>
     {
-        public delegate void dContainerContentsChanged(bool added, IEnumerable<Item> items);
+        public delegate void dContainerContentsChanged( bool added, IEnumerable<Item> items );
 
         private const int DefaultCapacity = 125;
         public readonly int Serial;
 
-        internal ItemCollection(int serial) : this(serial, DefaultCapacity)
-        {
-        }
-
-        internal ItemCollection(int serial, int capacity) : base(capacity)
+        internal ItemCollection( int serial ) : base( DefaultCapacity )
         {
             Serial = serial;
         }
@@ -31,11 +28,11 @@ namespace ClassicAssist.UO.Objects
             return GetEnumerator();
         }
 
-        public bool FindItem(int id, out Item item)
+        public bool FindItem( int id, out Item item )
         {
-            item = SelectEntity(i => i.ID == id);
+            item = SelectEntity( i => i.ID == id );
 
-            if (item != null)
+            if ( item != null )
             {
                 return true;
             }
@@ -45,35 +42,35 @@ namespace ClassicAssist.UO.Objects
             return false;
         }
 
-        public override bool Add(Item entity)
+        public override bool Add( Item entity )
         {
-            bool added = base.Add(entity);
+            bool added = base.Add( entity );
 
-            if (added)
+            if ( added )
             {
-                OnCollectionChanged();
+                OnCollectionChanged( true );
             }
 
             return added;
         }
 
-        public override bool Add(Item[] entities)
+        public override bool Add( Item[] entities )
         {
-            bool added = base.Add(entities);
+            bool added = base.Add( entities );
 
-            if (added)
+            if ( added )
             {
-                OnCollectionChanged();
+                OnCollectionChanged( true );
             }
 
             return added;
         }
 
-        public bool FindItems(int id, out Item[] items)
+        public bool FindItems( int id, out Item[] items )
         {
-            items = SelectEntities(i => i.ID == id);
+            items = SelectEntities( i => i.ID == id );
 
-            if (items != null)
+            if ( items != null )
             {
                 return true;
             }
@@ -88,17 +85,17 @@ namespace ClassicAssist.UO.Objects
         /// </summary>
         /// <param name="items">Item array to flatten.</param>
         /// <returns>Array of flattened items.</returns>
-        public static Item[] GetAllItems(Item[] items)
+        public static Item[] GetAllItems( Item[] items )
         {
             List<Item> output = new List<Item>();
 
-            for (int i = 0; i < items.Length; i++)
+            for ( int i = 0; i < items.Length; i++ )
             {
-                output.Add(items[i]);
+                output.Add( items[i] );
 
-                if (items[i].IsContainer)
+                if ( items[i].IsContainer )
                 {
-                    output.AddRange(GetAllItems(items[i].Container.GetItems()));
+                    output.AddRange( GetAllItems( items[i].Container.GetItems() ) );
                 }
             }
 
@@ -111,24 +108,24 @@ namespace ClassicAssist.UO.Objects
         /// <param name="serial">Serial of item to retrieve.</param>
         /// <param name="item">Item (out).</param>
         /// <returns>Null if no match is found.</returns>
-        public bool GetItem(int serial, out Item item)
+        public bool GetItem( int serial, out Item item )
         {
             try
             {
-                Item match = EntityList.Values.FirstOrDefault(i => i.Serial == serial);
+                Item match = EntityList.Values.FirstOrDefault( i => i.Serial == serial );
 
-                if (match != null)
+                if ( match != null )
                 {
                     item = match;
 
                     return true;
                 }
 
-                IEnumerable<Item> containers = EntityList.Values.Where(i => i.IsContainer);
+                IEnumerable<Item> containers = EntityList.Values.Where( i => i.IsContainer );
 
-                foreach (Item container in containers)
+                foreach ( Item container in containers )
                 {
-                    if (!container.Container.GetItem(serial, out Item containerMatch))
+                    if ( !container.Container.GetItem( serial, out Item containerMatch ) )
                     {
                         continue;
                     }
@@ -137,7 +134,7 @@ namespace ClassicAssist.UO.Objects
                     return true;
                 }
             }
-            catch (Exception)
+            catch ( Exception )
             {
                 // ignored
             }
@@ -147,9 +144,9 @@ namespace ClassicAssist.UO.Objects
             return false;
         }
 
-        public Item GetItem(int serial)
+        public Item GetItem( int serial )
         {
-            GetItem(serial, out Item item);
+            GetItem( serial, out Item item );
 
             return item;
         }
@@ -160,7 +157,7 @@ namespace ClassicAssist.UO.Objects
         public Item[] GetItems()
         {
             Item[] itemArray = new Item[EntityList.Values.Count];
-            EntityList.Values.CopyTo(itemArray, 0);
+            EntityList.Values.CopyTo( itemArray, 0 );
 
             return itemArray;
         }
@@ -174,11 +171,11 @@ namespace ClassicAssist.UO.Objects
         {
             int count = 0;
 
-            foreach (Item item in EntityList.Values)
+            foreach ( Item item in EntityList.Values )
             {
                 count++;
 
-                if (item.IsContainer)
+                if ( item.IsContainer )
                 {
                     count += item.Container.GetTotalItemCount();
                 }
@@ -187,56 +184,56 @@ namespace ClassicAssist.UO.Objects
             return count;
         }
 
-        public static implicit operator int(ItemCollection i)
+        public static implicit operator int( ItemCollection i )
         {
             return i.Serial;
         }
 
-        public override bool Remove(Item entity)
+        public override bool Remove( Item entity )
         {
             bool changed;
 
-            if (entity.Container == null)
+            if ( entity.Container == null )
             {
-                changed = base.Remove(entity);
+                changed = base.Remove( entity );
             }
             else
             {
-                Remove(entity.Container.GetItems());
+                Remove( entity.Container.GetItems() );
 
-                changed = base.Remove(entity);
+                changed = base.Remove( entity );
             }
 
-            if (changed)
+            if ( changed )
             {
-                OnCollectionChanged();
+                OnCollectionChanged( true );
             }
 
             return changed;
         }
 
-        public override bool Remove(Item[] entities)
+        public override bool Remove( Item[] entities )
         {
             bool changed = false;
 
-            if (entities == null)
+            if ( entities == null )
             {
                 return false;
             }
 
-            foreach (Item entity in entities)
+            foreach ( Item entity in entities )
             {
-                if (entity == null)
+                if ( entity == null )
                 {
                     continue;
                 }
 
-                if (entity.Container != null)
+                if ( entity.Container != null )
                 {
-                    Remove(entity.Container.GetItems());
+                    Remove( entity.Container.GetItems() );
                 }
 
-                if (base.Remove(entity))
+                if ( base.Remove( entity ) )
                 {
                     changed = true;
                 }
@@ -245,101 +242,123 @@ namespace ClassicAssist.UO.Objects
             return changed;
         }
 
-        public override bool Remove(int serial)
+        public override bool Remove( int serial )
         {
             bool changed = false;
 
-            Item item = GetItem(serial);
+            Item item = GetItem( serial );
 
-            if (EntityList.ContainsKey(serial))
+            if ( EntityList.ContainsKey( serial ) )
             {
-                changed = base.Remove(serial);
+                changed = base.Remove( serial );
             }
             else
             {
-                IEnumerable<Item> containers = EntityList.Values.Where(i => i.IsContainer);
+                IEnumerable<Item> containers = EntityList.Values.Where( i => i.IsContainer );
 
-                foreach (Item container in containers)
+                foreach ( Item container in containers )
                 {
-                    if (container.Container?.GetItem(serial) == null)
+                    if ( container.Container?.GetItem( serial ) == null )
                     {
                         continue;
                     }
 
-                    container.Container.Remove(serial);
+                    container.Container.Remove( serial );
                 }
             }
 
-            if (changed && item != null)
+            if ( changed && item != null )
             {
-                OnCollectionChanged();
+                OnCollectionChanged( true );
             }
 
             return changed;
         }
 
-        internal void RemoveByOwner(int serial)
+        internal void RemoveByOwner( int serial )
         {
-            Item[] items = SelectEntities(i => i.Owner == serial);
+            Item[] items = SelectEntities( i => i.Owner == serial );
 
-            if (items == null)
+            if ( items == null )
             {
                 return;
             }
 
-            Remove(items);
+            Remove( items );
         }
 
-        public override Item[] SelectEntities(Func<Item, bool> func)
+        public override Item[] SelectEntities( Func<Item, bool> func )
         {
             List<Item> itemList = new List<Item>();
-            IEnumerable<Item> ents = EntityList.Select(m => m.Value).Where(m => func(m) || m.IsContainer);
+            IEnumerable<Item> ents = EntityList.Select( m => m.Value ).Where( m => func( m ) || m.IsContainer );
 
-            foreach (Item i in ents)
+            foreach ( Item i in ents )
             {
-                if (func(i) && !itemList.Contains(i))
+                if ( func( i ) && !itemList.Contains( i ) )
                 {
-                    itemList.Add(i);
+                    itemList.Add( i );
                 }
 
-                if (!i.IsContainer)
+                if ( !i.IsContainer )
                 {
                     continue;
                 }
 
-                Item[] result = i.Container.SelectEntities(func);
+                Item[] result = i.Container.SelectEntities( func );
 
-                if (result != null)
+                if ( result != null )
                 {
-                    itemList.AddRange(result);
+                    itemList.AddRange( result );
                 }
             }
 
             return itemList.Count > 0 ? itemList.ToArray() : null;
         }
 
-        public override Item SelectEntity(Func<Item, bool> func)
+        public override Item SelectEntity( Func<Item, bool> func )
         {
-            Item item = base.SelectEntity(func);
+            Item item = base.SelectEntity( func );
 
-            if (item != null)
+            if ( item != null )
             {
                 return item;
             }
 
-            IEnumerable<Item> containers = EntityList.Select(i => i.Value).Where(i => i.Container != null);
+            IEnumerable<Item> containers = EntityList.Select( i => i.Value ).Where( i => i.Container != null );
 
-            foreach (Item container in containers)
+            foreach ( Item container in containers )
             {
-                item = container.Container.SelectEntity(func);
+                item = container.Container.SelectEntity( func );
 
-                if (item != null)
+                if ( item != null )
                 {
                     return item;
                 }
             }
 
             return null;
+        }
+
+        public void OnCollectionChanged( bool rippleDown )
+        {
+            base.OnCollectionChanged();
+
+            // Ripple down
+
+            if ( !rippleDown )
+            {
+                return;
+            }
+
+            if ( Serial == 0 || !Engine.Items.GetItem( Serial, out Item item ) || item.Owner == 0 )
+            {
+                return;
+            }
+
+            if ( Engine.Items.GetItem( item.Owner, out Item parent ) )
+            {
+                parent.Container?.OnCollectionChanged( false );
+            }
         }
 
         public override string ToString()

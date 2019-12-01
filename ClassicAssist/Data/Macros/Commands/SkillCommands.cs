@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using ClassicAssist.Resources;
 using ClassicAssist.UO.Data;
 using UOC = ClassicAssist.UO.Commands;
@@ -8,7 +7,7 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class SkillCommands
     {
-        [CommandsDisplay(Category = "Skills", Description = "Invokes the given skill name.")]
+        [CommandsDisplay( Category = "Skills", Description = "Invokes the given skill name.", InsertText = "UseSkill(\"Hiding\")")]
         public static void UseSkill( string skill )
         {
             try
@@ -35,7 +34,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
                 if ( skill.Equals( normalizedName ) )
                 {
-                    Skill s = (Skill)Enum.Parse( typeof( Skill ), t );
+                    Skill s = (Skill) Enum.Parse( typeof( Skill ), t );
 
                     return s;
                 }

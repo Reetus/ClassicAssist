@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Input;
 using ClassicAssist.Data.Macros;
 
 namespace ClassicAssist.UI.ViewModels.Macros
 {
     public class CommandsData
     {
+        public CommandsDisplayAttribute Attribute { get; set; }
         public string Category { get; set; }
         public bool IsExpanded { get; set; }
         public string Name { get; set; }
@@ -22,7 +24,15 @@ namespace ClassicAssist.UI.ViewModels.Macros
 
     public class MacrosCommandViewModel : BaseViewModel
     {
+        private ICommand _insertCommand;
         private ObservableCollection<CommandsData> _items = new ObservableCollection<CommandsData>();
+        private readonly MacrosTabViewModel _macrosViewModel;
+        private CommandsData _selectedItem;
+
+        public MacrosCommandViewModel( MacrosTabViewModel macros ) : this()
+        {
+            _macrosViewModel = macros;
+        }
 
         public MacrosCommandViewModel()
         {
@@ -37,26 +47,51 @@ namespace ClassicAssist.UI.ViewModels.Macros
                 {
                     CommandsDisplayAttribute attr = memberInfo.GetCustomAttribute<CommandsDisplayAttribute>();
 
-                    if ( attr != null )
+                    if ( attr == null )
                     {
-                        CommandsData entry = new CommandsData
-                        {
-                            Category = attr.Category,
-                            IsExpanded = false,
-                            Name = memberInfo.ToString(),
-                            Tooltip = attr.Description
-                        };
-
-                        Items.Add( entry );
+                        continue;
                     }
+
+                    CommandsData entry = new CommandsData
+                    {
+                        Category = attr.Category,
+                        IsExpanded = false,
+                        Name = memberInfo.ToString(),
+                        Tooltip = attr.Description,
+                        Attribute = attr
+                    };
+
+                    Items.Add( entry );
                 }
             }
         }
+
+        public ICommand InsertCommand =>
+            _insertCommand ?? ( _insertCommand = new RelayCommand( Insert, o => SelectedItem != null ) );
 
         public ObservableCollection<CommandsData> Items
         {
             get => _items;
             set => SetProperty( ref _items, value );
+        }
+
+        public CommandsData SelectedItem
+        {
+            get => _selectedItem;
+            set => SetProperty( ref _selectedItem, value );
+        }
+
+        private void Insert( object obj )
+        {
+            if ( !( obj is CommandsData cd ) )
+            {
+                return;
+            }
+
+            if ( cd.Attribute != null )
+            {
+                _macrosViewModel?.Document.Insert( _macrosViewModel.CaretPosition, cd.Attribute.InsertText );
+            }
         }
     }
 }

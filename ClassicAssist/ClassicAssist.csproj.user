@@ -4,7 +4,7 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
-    <ActiveDebugProfile>Outlands</ActiveDebugProfile>
+    <ActiveDebugProfile>Local</ActiveDebugProfile>
     <ShowAllFiles>false</ShowAllFiles>
   </PropertyGroup>
   <ItemGroup>
@@ -24,6 +24,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="UI\Views\AgentsTabControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Views\Agents\CountersTabControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="UI\Views\Agents\OrganizerTabControl.xaml.cs">
@@ -82,6 +85,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UI\Views\AgentsTabControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Views\Agents\CountersTabControl.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UI\Views\Agents\OrganizerTabControl.xaml">

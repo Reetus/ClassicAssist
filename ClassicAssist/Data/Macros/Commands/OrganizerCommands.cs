@@ -7,22 +7,25 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class OrganizerCommands
     {
-        [CommandsDisplay(Category = "Agents", Description = "Returns true if currently running an organizer agent, or false if not.")]
+        [CommandsDisplay( Category = "Agents",
+            Description = "Returns true if currently running an organizer agent, or false if not.",
+            InsertText = "if Organizing():" )]
         public static bool Organizing()
         {
             OrganizerManager manager = OrganizerManager.GetInstance();
 
-            bool organizing = manager.Items.Any( ( o ) => o.IsRunning() );
+            bool organizing = manager.Items.Any( o => o.IsRunning() );
 
             return organizing;
         }
 
-        [CommandsDisplay(Category = "Agents", Description = "Executes the named Organizer agent.")]
+        [CommandsDisplay( Category = "Agents", Description = "Executes the named Organizer agent.",
+            InsertText = "Organize(\"Organizer-1\")" )]
         public static void Organizer( string name )
         {
             OrganizerManager manager = OrganizerManager.GetInstance();
 
-            OrganizerEntry agent = manager.Items.FirstOrDefault( ( oa ) => oa.Name.ToLower().Equals( name.ToLower() ) );
+            OrganizerEntry agent = manager.Items.FirstOrDefault( oa => oa.Name.ToLower().Equals( name.ToLower() ) );
 
             if ( agent == null )
             {

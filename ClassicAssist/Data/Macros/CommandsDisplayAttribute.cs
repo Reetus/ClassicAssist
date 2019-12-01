@@ -15,6 +15,8 @@ namespace ClassicAssist.Data.Macros
 
         public string Description { get; set; }
 
+        public string InsertText { get; set; }
+
         private void SetCategory( string value )
         {
             string resourceName = Strings.ResourceManager.GetString( value );

@@ -8,6 +8,7 @@ using ClassicAssist.Data.Skills;
 using ClassicAssist.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
+using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using Skill = ClassicAssist.UO.Data.Skill;
 
@@ -15,37 +16,18 @@ namespace ClassicAssist.UO
 {
     public class Commands
     {
-        public enum MobileQueryType : byte
-        {
-            StatsRequest = 4,
-            SkillsRequest = 5
-        }
-
         public static void DragItem( int serial, int amount )
         {
-            PacketWriter pw = new PacketWriter( 7 );
-            pw.Write( (byte) 0x07 );
-            pw.Write( serial );
-            pw.Write( (short) amount );
-
-            Engine.SendPacketToServer( pw );
+            Engine.SendPacketToServer( new DragItem( serial, amount ) );
         }
 
         public static void DropItem( int serial, int containerSerial, int x = -1, int y = -1, int z = 0 )
         {
-            PacketWriter pw = new PacketWriter( 15 );
-            pw.Write( (byte) 0x08 );
-            pw.Write( serial );
-            pw.Write( (short) x );
-            pw.Write( (short) y );
-            pw.Write( (sbyte) z );
-            pw.Write( (byte) 0 );
-            pw.Write( containerSerial );
-
-            Engine.SendPacketToServer( pw );
+            Engine.SendPacketToServer( new DropItem( serial, containerSerial, x, y, z ) );
         }
 
-        public static async Task DragDropAsync( int serial, int amount, int containerSerial, int x = -1, int y = -1, int z = 0 )
+        public static async Task DragDropAsync( int serial, int amount, int containerSerial, int x = -1, int y = -1,
+            int z = 0 )
         {
             await Task.Run( async () =>
             {
@@ -72,20 +54,14 @@ namespace ClassicAssist.UO
                 throw new ArgumentException( "EquipItem: Layer is invalid" );
             }
 
-            PacketWriter pw = new PacketWriter( 10 );
-
-            pw.Write( (byte) 0x13 );
-            pw.Write( item.Serial );
-            pw.Write( (byte) layer );
-            pw.Write( containerSerial );
-
             DragItem( item.Serial, 1 );
 
-            Engine.SendPacketToServer( pw );
+            Engine.SendPacketToServer( new EquipRequest( item.Serial, layer, containerSerial ) );
         }
 
         public static void SystemMessage( string text )
         {
+            //TODO
             byte[] textBytes = Encoding.BigEndianUnicode.GetBytes( text + '\0' );
 
             int length = 48 + textBytes.Length;
@@ -108,12 +84,7 @@ namespace ClassicAssist.UO
         public static void MobileQuery( int serial,
             MobileQueryType queryType = MobileQueryType.StatsRequest )
         {
-            PacketWriter pw = new PacketWriter( 10 );
-            pw.Write( (byte) 0x34 );
-            pw.Write( 0xEDEDEDED );
-            pw.Write( (byte) queryType );
-            pw.Write( serial );
-            Engine.SendPacketToServer( pw );
+            Engine.SendPacketToServer( new MobileQuery( serial, queryType ) );
         }
 
         public static async Task<int> GetTargeSerialAsync( string message = "", int timeout = 5000 )
@@ -131,6 +102,7 @@ namespace ClassicAssist.UO
             {
                 int value = random.Next( 1, int.MaxValue );
 
+                //TODO
                 PacketWriter pw = new PacketWriter( 19 );
                 pw.Write( (byte) 0x6C );
                 pw.Write( (byte) 0 );
@@ -164,14 +136,7 @@ namespace ClassicAssist.UO
                         return serial;
                     }
 
-                    pw = new PacketWriter( 19 );
-                    pw.Write( (byte) 0x6C );
-                    pw.Write( (byte) 0 );
-                    pw.Write( value );
-                    pw.Write( (byte) 3 );
-                    pw.Fill();
-
-                    Engine.SendPacketToClient( pw );
+                    Engine.SendPacketToClient( new CancelTargetCursor( value ) );
 
                     SystemMessage( Strings.Timeout___ );
 
@@ -191,15 +156,7 @@ namespace ClassicAssist.UO
                 return false;
             }
 
-            PacketWriter pw = new PacketWriter( 23 );
-            pw.Write( (byte) 0xB1 );
-            pw.Write( (short) 23 );
-            pw.Write( serial );
-            pw.Write( gumpID );
-            pw.Write( buttonID );
-            pw.Fill();
-
-            Engine.SendPacketToServer( pw );
+            Engine.SendPacketToServer( new GumpButtonClick( gumpID, serial, buttonID ) );
 
             Engine.GumpList.TryRemove( gumpID, out _ );
             CloseClientGump( gumpID );
@@ -209,15 +166,7 @@ namespace ClassicAssist.UO
 
         public static void CloseClientGump( int gumpID )
         {
-            byte[] packet = new byte[13];
-            packet[0] = 0xBF;
-            packet[2] = 0x0D;
-            packet[4] = 0x04;
-            packet[5] = (byte) ( gumpID >> 24 );
-            packet[6] = (byte) ( gumpID >> 16 );
-            packet[7] = (byte) ( gumpID >> 8 );
-            packet[8] = (byte) gumpID;
-            Engine.SendPacketToClient( packet, packet.Length );
+            Engine.SendPacketToClient( new CloseClientGump( gumpID ) );
         }
 
         public static bool WaitForGump( int gumpId, int timeout = 30000 )
@@ -246,11 +195,7 @@ namespace ClassicAssist.UO
 
         public static void ChangeSkillLock( SkillEntry skill, LockStatus lockStatus )
         {
-            byte[] packet = { 0x3A, 0x00, 0x06, 0x00, 0x00, 0x00 };
-            packet[4] = (byte) skill.Skill.ID;
-            packet[5] = (byte) lockStatus;
-
-            Engine.SendPacketToServer( packet, packet.Length );
+            Engine.SendPacketToServer( new ChangeSkillLock( skill, lockStatus ) );
         }
 
         public static void UseSkill( Skill skill )
@@ -472,25 +417,15 @@ namespace ClassicAssist.UO
 
         public static void Resync()
         {
-            byte[] packet = { 0x22, 0x00, 0x00 };
-
-            Engine.SendPacketToServer( packet, packet.Length );
+            Engine.SendPacketToServer( new Resync() );
         }
 
         public static void ToggleGargoyleFlying()
         {
-            PacketWriter pw = new PacketWriter( 11 );
-
-            pw.Write( (byte) 0xBF );
-            pw.Write( (short) 11 );
-            pw.Write( (short) 0x32 );
-            pw.Write( (short) 1 );
-            pw.Write( 0 );
-
-            Engine.SendPacketToServer( pw );
+            Engine.SendPacketToServer( new ToggleGargoyleFlying() );
         }
 
-        public static bool WaitForIncomingPacket( PacketFilterInfo pfi, int timeout, Action beforeWait )
+        public static bool WaitForIncomingPacket( PacketFilterInfo pfi, int timeout, Action beforeWait = null )
         {
             WaitEntry we = Engine.WaitEntries.AddWait( pfi, PacketDirection.Incoming, true );
 
@@ -508,6 +443,21 @@ namespace ClassicAssist.UO
             }
 
             return result;
+        }
+
+        public static void SetWeaponAbility( int abilityIndex )
+        {
+            Engine.SendPacketToServer( new SetWeaponAbility( abilityIndex ) );
+        }
+
+        public static void ClearWeaponAbility()
+        {
+            Engine.SendPacketToServer( new ClearWeaponAbility() );
+        }
+
+        public static void RenameRequest( int serial, string name )
+        {
+            Engine.SendPacketToServer( new RenameRequest( serial, name ) );
         }
     }
 }

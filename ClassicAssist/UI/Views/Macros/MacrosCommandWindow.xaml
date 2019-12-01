@@ -26,7 +26,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <ListView ItemsSource="{Binding Source={StaticResource src}}">
+            <ListView ItemsSource="{Binding Source={StaticResource src}}" SelectedItem="{Binding SelectedItem}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}" ToolTip="{Binding Tooltip}"/>
@@ -73,7 +73,7 @@
                         <misc:CloseOnClickBehaviour/>
                     </i:Interaction.Behaviors>
                 </Button>
-                <Button Content="{x:Static resources:Strings.Insert}" IsEnabled="False"/>
+                <Button Content="{x:Static resources:Strings.Insert}" Command="{Binding InsertCommand}" CommandParameter="{Binding SelectedItem}"/>
             </StackPanel>
         </Grid>
     </Grid>

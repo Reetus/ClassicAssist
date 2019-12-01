@@ -7,13 +7,16 @@
              xmlns:resources="clr-namespace:ClassicAssist.Resources"
              xmlns:agents="clr-namespace:ClassicAssist.UI.Views.Agents"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="White">
+             d:DesignHeight="450" d:DesignWidth="800">
     <TabControl Margin="5">
         <TabItem Header="{x:Static resources:Strings.Organizer}">
             <agents:OrganizerTabControl/>
         </TabItem>
-            <TabItem Header="{x:Static resources:Strings.Dress}">
-            <agents:DressTabControl></agents:DressTabControl>
+        <TabItem Header="{x:Static resources:Strings.Dress}">
+            <agents:DressTabControl/>
+        </TabItem>
+        <TabItem Header="{x:Static resources:Strings.Counters}">
+            <agents:CountersTabControl/>
         </TabItem>
     </TabControl>
 </UserControl>

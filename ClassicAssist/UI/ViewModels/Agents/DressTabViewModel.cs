@@ -41,6 +41,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public DressTabViewModel() : base( Strings.Dress )
         {
+            DressManager manager = DressManager.GetInstance();
+
+            manager.Items = Items;
         }
 
         public ICommand AddDressItemCommand =>
@@ -337,7 +340,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                         Commands.EquipItem( item, dai.Layer );
 
-                        await Task.Delay( 800 );
+                        await Task.Delay( Options.CurrentOptions.ActionDelayMS );
                     }
                 }
                 finally

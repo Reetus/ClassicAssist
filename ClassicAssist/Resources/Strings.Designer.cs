@@ -160,6 +160,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bought.
+        /// </summary>
+        public static string Bought {
+            get {
+                return ResourceManager.GetString("Bought", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Buffs / Penalties.
         /// </summary>
         public static string Buffs___Penalties {
@@ -286,6 +295,33 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Count.
+        /// </summary>
+        public static string Count {
+            get {
+                return ResourceManager.GetString("Count", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Counter &quot;{0}&quot; amount is now {1}....
+        /// </summary>
+        public static string Counter___0___amount_is_now__1____ {
+            get {
+                return ResourceManager.GetString("Counter \"{0}\" amount is now {1}...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Counters.
+        /// </summary>
+        public static string Counters {
+            get {
+                return ResourceManager.GetString("Counters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do not auto interupt.
         /// </summary>
         public static string Do_not_auto_interupt {
@@ -300,6 +336,15 @@ namespace ClassicAssist.Resources {
         public static string Dress {
             get {
                 return ResourceManager.GetString("Dress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        public static string Enabled {
+            get {
+                return ResourceManager.GetString("Enabled", resourceCulture);
             }
         }
         
@@ -439,6 +484,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Include Backpack Amount.
+        /// </summary>
+        public static string Include_Backpack_Amount {
+            get {
+                return ResourceManager.GetString("Include Backpack Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include Purchased Amount.
+        /// </summary>
+        public static string Include_Purchased_Amount {
+            get {
+                return ResourceManager.GetString("Include Purchased Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Insert.
         /// </summary>
         public static string Insert {
@@ -457,11 +520,29 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid counter agent name....
+        /// </summary>
+        public static string Invalid_counter_agent_name___ {
+            get {
+                return ResourceManager.GetString("Invalid counter agent name...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid destination container....
         /// </summary>
         public static string Invalid_destination_container___ {
             get {
                 return ResourceManager.GetString("Invalid destination container...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid layer value....
+        /// </summary>
+        public static string Invalid_layer_value___ {
+            get {
+                return ResourceManager.GetString("Invalid layer value...", resourceCulture);
             }
         }
         
@@ -516,6 +597,15 @@ namespace ClassicAssist.Resources {
         public static string Items_ {
             get {
                 return ResourceManager.GetString("Items:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Journal.
+        /// </summary>
+        public static string Journal {
+            get {
+                return ResourceManager.GetString("Journal", resourceCulture);
             }
         }
         
@@ -624,6 +714,15 @@ namespace ClassicAssist.Resources {
         public static string Map_ {
             get {
                 return ResourceManager.GetString("Map:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Price.
+        /// </summary>
+        public static string Max_Price {
+            get {
+                return ResourceManager.GetString("Max Price", resourceCulture);
             }
         }
         
@@ -858,6 +957,15 @@ namespace ClassicAssist.Resources {
         public static string Ready___ {
             get {
                 return ResourceManager.GetString("Ready...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recount.
+        /// </summary>
+        public static string Recount {
+            get {
+                return ResourceManager.GetString("Recount", resourceCulture);
             }
         }
         
@@ -1159,6 +1267,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unknown dress agent &quot;{0}&quot;..
+        /// </summary>
+        public static string Unknown_dress_agent___0___ {
+            get {
+                return ResourceManager.GetString("Unknown dress agent \"{0}\".", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ENU.
         /// </summary>
         public static string UO_LOCALE {
@@ -1186,11 +1303,29 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vendor Buy.
+        /// </summary>
+        public static string Vendor_Buy {
+            get {
+                return ResourceManager.GetString("Vendor Buy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Version:.
         /// </summary>
         public static string Version_ {
             get {
                 return ResourceManager.GetString("Version:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warn when counter amount below:.
+        /// </summary>
+        public static string Warn_when_counter_amount_below_ {
+            get {
+                return ResourceManager.GetString("Warn when counter amount below:", resourceCulture);
             }
         }
         

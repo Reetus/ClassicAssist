@@ -6,10 +6,14 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Data\Weapons.json" />
     <None Remove="Python.xshd" />
     <None Remove="Resources\bug.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\Weapons.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Python.xshd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -21,6 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AvalonEdit" Version="6.0.0" />
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="3.7.0" />
     <PackageReference Include="IronPython" Version="2.7.10-candidate1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.7.0-preview3.19551.4" />
@@ -33,7 +38,6 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>..\Output\net48\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\bug.png" />

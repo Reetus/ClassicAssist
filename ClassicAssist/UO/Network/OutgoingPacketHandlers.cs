@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Assistant;
 using ClassicAssist.UO.Data;
-using ClassicAssist.UO.Network.PacketFilter;
 
 namespace ClassicAssist.UO.Network
 {
@@ -21,9 +18,18 @@ namespace ClassicAssist.UO.Network
             _handlers = new PacketHandler[0x100];
             _extendedHandlers = new PacketHandler[0x100];
 
-            Register(0x6C, 19, OnTargetSent);
-            Register(0xB1, 0, OnGumpButtonPressed);
+            Register( 0x02, 7, OnMoveRequested );
+            Register( 0x6C, 19, OnTargetSent );
+            Register( 0xB1, 0, OnGumpButtonPressed );
             Register( 0xEF, 31, OnNewClientVersion );
+        }
+
+        private static void OnMoveRequested( PacketReader reader )
+        {
+            Direction direction = (Direction) ( reader.ReadByte() & 0x07 );
+            int sequence = reader.ReadByte();
+
+            Engine.SetSequence( sequence, direction );
         }
 
         private static void OnGumpButtonPressed( PacketReader reader )

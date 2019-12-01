@@ -1,0 +1,772 @@
+[
+  {
+    "Graphic": 3913,
+    "Name": "Axe",
+    "Primary": 4,
+    "Secondary": 6,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 3911,
+    "Name": "Battle Axe",
+    "Primary": 2,
+    "Secondary": 3,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 3915,
+    "Name": "Double Axe",
+    "Primary": 7,
+    "Secondary": 13,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 3909,
+    "Name": "Executioners Axe",
+    "Primary": 2,
+    "Secondary": 9,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 3907,
+    "Name": "Hatchet",
+    "Primary": 1,
+    "Secondary": 5,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 5115,
+    "Name": "Large Battle Axe",
+    "Primary": 13,
+    "Secondary": 2,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 3718,
+    "Name": "Pickaxe",
+    "Primary": 7,
+    "Secondary": 5,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 5187,
+    "Name": "Two Handed Axe",
+    "Primary": 7,
+    "Secondary": 12,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 5040,
+    "Name": "War Axe",
+    "Primary": 1,
+    "Secondary": 2,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 5110,
+    "Name": "Butcher Knife",
+    "Primary": 8,
+    "Secondary": 5,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 3779,
+    "Name": "Cleaver",
+    "Primary": 2,
+    "Secondary": 8,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 3922,
+    "Name": "Dagger",
+    "Primary": 8,
+    "Secondary": 12,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 3780,
+    "Name": "Skinning Knife",
+    "Primary": 12,
+    "Secondary": 5,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 5044,
+    "Name": "Club",
+    "Primary": 12,
+    "Secondary": 6,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 5181,
+    "Name": "Hammer Pick",
+    "Primary": 1,
+    "Secondary": 9,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 3932,
+    "Name": "Mace",
+    "Primary": 3,
+    "Secondary": 5,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 3570,
+    "Name": "Magic Wand",
+    "Primary": 6,
+    "Secondary": 5,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 5179,
+    "Name": "Maul",
+    "Primary": 4,
+    "Secondary": 3,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 9916,
+    "Name": "Scepter",
+    "Primary": 4,
+    "Secondary": 9,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 5177,
+    "Name": "War Hammer",
+    "Primary": 13,
+    "Secondary": 4,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 5127,
+    "Name": "War Mace",
+    "Primary": 4,
+    "Secondary": 2,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 3917,
+    "Name": "Bardiche",
+    "Primary": 11,
+    "Secondary": 6,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 5182,
+    "Name": "Halberd",
+    "Primary": 13,
+    "Secondary": 3,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 9914,
+    "Name": "Scythe",
+    "Primary": 2,
+    "Secondary": 11,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 5042,
+    "Name": "Bow",
+    "Primary": 11,
+    "Secondary": 9,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 5041,
+    "Name": "Bow",
+    "Primary": 11,
+    "Secondary": 9,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 9922,
+    "Name": "Composite Bow",
+    "Primary": 1,
+    "Secondary": 10,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 3920,
+    "Name": "Crossbow",
+    "Primary": 3,
+    "Secondary": 9,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 5117,
+    "Name": "Heavy Crossbow",
+    "Primary": 10,
+    "Secondary": 6,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 9923,
+    "Name": "Repeating Crossbow",
+    "Primary": 7,
+    "Secondary": 10,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 11551,
+    "Name": "Magical Shortbow",
+    "Primary": 26,
+    "Secondary": 27,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 9917,
+    "Name": "Bladed Staff",
+    "Primary": 1,
+    "Secondary": 6,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 9919,
+    "Name": "Double Bladed Staff",
+    "Primary": 7,
+    "Secondary": 8,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 9918,
+    "Name": "Pike",
+    "Primary": 11,
+    "Secondary": 8,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 3719,
+    "Name": "Pitchfork",
+    "Primary": 2,
+    "Secondary": 6,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 5123,
+    "Name": "Short Spear",
+    "Primary": 12,
+    "Secondary": 9,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 3938,
+    "Name": "Spear",
+    "Primary": 1,
+    "Secondary": 11,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 5125,
+    "Name": "War Fork",
+    "Primary": 2,
+    "Secondary": 5,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 3568,
+    "Name": "Black Staff",
+    "Primary": 13,
+    "Secondary": 11,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 5112,
+    "Name": "Gnarled Staff",
+    "Primary": 3,
+    "Secondary": 11,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 3721,
+    "Name": "Quarter Staff",
+    "Primary": 7,
+    "Secondary": 3,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 3713,
+    "Name": "Shepherds Crook",
+    "Primary": 4,
+    "Secondary": 5,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 9915,
+    "Name": "Bone Harvester",
+    "Primary": 11,
+    "Secondary": 9,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 9925,
+    "Name": "Bone Harvester",
+    "Primary": 11,
+    "Secondary": 9,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 3934,
+    "Name": "Broadsword",
+    "Primary": 4,
+    "Secondary": 1,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 9921,
+    "Name": "Crescent Blade",
+    "Primary": 7,
+    "Secondary": 9,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 5185,
+    "Name": "Cutlass",
+    "Primary": 2,
+    "Secondary": 12,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 5119,
+    "Name": "Katana",
+    "Primary": 7,
+    "Secondary": 1,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 5121,
+    "Name": "Kryss",
+    "Primary": 1,
+    "Secondary": 8,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 5120,
+    "Name": "Kryss",
+    "Primary": 1,
+    "Secondary": 8,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 9920,
+    "Name": "Lance",
+    "Primary": 6,
+    "Secondary": 3,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 3937,
+    "Name": "Longsword",
+    "Primary": 1,
+    "Secondary": 3,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 5046,
+    "Name": "Scimitar",
+    "Primary": 7,
+    "Secondary": 11,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 5049,
+    "Name": "Viking Sword",
+    "Primary": 4,
+    "Secondary": 11,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 10152,
+    "Name": "Bokuto",
+    "Primary": 20,
+    "Secondary": 18,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 10153,
+    "Name": "Daisho",
+    "Primary": 20,
+    "Secondary": 7,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 10157,
+    "Name": "Kama",
+    "Primary": 13,
+    "Secondary": 17,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 10151,
+    "Name": "Lajatang",
+    "Primary": 17,
+    "Secondary": 15,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 10146,
+    "Name": "No-Dachi",
+    "Primary": 4,
+    "Secondary": 14,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 10158,
+    "Name": "Nunchaku",
+    "Primary": 16,
+    "Secondary": 20,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 10159,
+    "Name": "Sai",
+    "Primary": 16,
+    "Secondary": 23,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 10155,
+    "Name": "Tekagi",
+    "Primary": 21,
+    "Secondary": 19,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 10147,
+    "Name": "Tessen",
+    "Primary": 20,
+    "Secondary": 21,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 10150,
+    "Name": "Tetsubo",
+    "Primary": 15,
+    "Secondary": 4,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 10148,
+    "Name": "Wakizashi",
+    "Primary": 15,
+    "Secondary": 7,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 10149,
+    "Name": "Yumi",
+    "Primary": 23,
+    "Secondary": 22,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 11553,
+    "Name": "Assassin Spike",
+    "Primary": 8,
+    "Secondary": 12,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 11556,
+    "Name": "Diamond Mace",
+    "Primary": 3,
+    "Secondary": 4,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 11550,
+    "Name": "Elven Composite Longbow",
+    "Primary": 25,
+    "Secondary": 28,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 11573,
+    "Name": "Elven Machete",
+    "Primary": 17,
+    "Secondary": 24,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 11552,
+    "Name": "Elven Spellblade",
+    "Primary": 27,
+    "Secondary": 2,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 11554,
+    "Name": "Leafblade",
+    "Primary": 20,
+    "Secondary": 1,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 11563,
+    "Name": "Magical Shortbow",
+    "Primary": 26,
+    "Secondary": 27,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 11560,
+    "Name": "Ornate Axe",
+    "Primary": 5,
+    "Secondary": 4,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 11571,
+    "Name": "Radiant Scimitar",
+    "Primary": 13,
+    "Secondary": 24,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 11570,
+    "Name": "Rune Blade",
+    "Primary": 5,
+    "Secondary": 24,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 11567,
+    "Name": "War Cleaver",
+    "Primary": 5,
+    "Secondary": 24,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 11557,
+    "Name": "Wild Staff",
+    "Primary": 16,
+    "Secondary": 29,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 16491,
+    "Name": "Soul Glaive",
+    "Primary": 1,
+    "Secondary": 9,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 16492,
+    "Name": "Cyclone",
+    "Primary": 10,
+    "Secondary": 30,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 16487,
+    "Name": "Boomerang",
+    "Primary": 31,
+    "Secondary": 3,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 2302,
+    "Name": "Bloodblade",
+    "Primary": 2,
+    "Secondary": 11,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 2307,
+    "Name": "Disc Mace",
+    "Primary": 1,
+    "Secondary": 5,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 2315,
+    "Name": "Dread Sword",
+    "Primary": 4,
+    "Secondary": 3,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 2308,
+    "Name": "Dual Pointed Spear",
+    "Primary": 7,
+    "Secondary": 5,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 2301,
+    "Name": "Dual Short Axes",
+    "Primary": 7,
+    "Secondary": 8,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 18610,
+    "Name": "Gargish Axe",
+    "Primary": 4,
+    "Secondary": 6,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 18612,
+    "Name": "Gargish Bardiche",
+    "Primary": 11,
+    "Secondary": 6,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 18608,
+    "Name": "Gargish Battle Axe",
+    "Primary": 2,
+    "Secondary": 3,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 18630,
+    "Name": "Gargish Bone Harvester",
+    "Primary": 11,
+    "Secondary": 9,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 18614,
+    "Name": "Gargish Butcher Knife",
+    "Primary": 8,
+    "Secondary": 5,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 18606,
+    "Name": "Gargish Cleaver",
+    "Primary": 2,
+    "Secondary": 8,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 2306,
+    "Name": "Gargish Dagger",
+    "Primary": 8,
+    "Secondary": 12,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 18640,
+    "Name": "Gargish Daisho",
+    "Primary": 20,
+    "Secondary": 7,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 18616,
+    "Name": "Gargish Gnarled Staff",
+    "Primary": 3,
+    "Secondary": 11,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 18618,
+    "Name": "Gargish Katana",
+    "Primary": 7,
+    "Secondary": 1,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 18620,
+    "Name": "Gargish Kryss",
+    "Primary": 1,
+    "Secondary": 8,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 18634,
+    "Name": "Gargish Lance",
+    "Primary": 6,
+    "Secondary": 3,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 18626,
+    "Name": "Gargish Maul",
+    "Primary": 4,
+    "Secondary": 3,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 18632,
+    "Name": "Gargish Pike",
+    "Primary": 11,
+    "Secondary": 8,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 18628,
+    "Name": "Gargish Scythe",
+    "Primary": 2,
+    "Secondary": 11,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 2312,
+    "Name": "Gargish Talwar",
+    "Primary": 13,
+    "Secondary": 6,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 18638,
+    "Name": "Gargish Tekagi",
+    "Primary": 21,
+    "Secondary": 19,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 18636,
+    "Name": "Gargish Tessen",
+    "Primary": 20,
+    "Secondary": 16,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 18624,
+    "Name": "Gargish War Hammer",
+    "Primary": 13,
+    "Secondary": 4,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 2309,
+    "Name": "Glass Staff",
+    "Primary": 7,
+    "Secondary": 9,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 2316,
+    "Name": "Glass Sword",
+    "Primary": 2,
+    "Secondary": 9,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 2310,
+    "Name": "Serpentstone Staff",
+    "Primary": 4,
+    "Secondary": 6,
+    "Twohanded": true
+  },
+  {
+    "Graphic": 2311,
+    "Name": "Shortblade",
+    "Primary": 1,
+    "Secondary": 9,
+    "Twohanded": false
+  },
+  {
+    "Graphic": 2304,
+    "Name": "Stone War Sword",
+    "Primary": 1,
+    "Secondary": 11,
+    "Twohanded": false
+  }
+]

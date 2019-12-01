@@ -8,10 +8,12 @@ using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
+using ClassicAssist.UI.ViewModels.Macros;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UI.Views.Macros;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Objects;
+using ICSharpCode.AvalonEdit.Document;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.UI.ViewModels
@@ -28,6 +30,20 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _showActiveObjectsWindowCommand;
         private ICommand _showCommandsCommand;
         private ICommand _stopCommand;
+        private TextDocument _document;
+        private int _caretPosition;
+
+        public TextDocument Document
+        {
+            get => _document;
+            set => SetProperty(ref _document, value);
+        }
+
+        public int CaretPosition
+        {
+            get => _caretPosition;
+            set => SetProperty(ref _caretPosition, value);
+        }
 
         public MacrosTabViewModel() : base( Strings.Macros )
         {
@@ -205,9 +221,9 @@ namespace ClassicAssist.UI.ViewModels
             _macroInvoker.Execute();
         }
 
-        private static void ShowCommands( object obj )
+        private void ShowCommands( object obj )
         {
-            MacrosCommandWindow window = new MacrosCommandWindow();
+            MacrosCommandWindow window = new MacrosCommandWindow() { DataContext = new MacrosCommandViewModel( this ) };
             window.ShowDialog();
         }
     }

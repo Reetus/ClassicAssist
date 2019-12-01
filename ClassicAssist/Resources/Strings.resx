@@ -150,6 +150,9 @@
   <data name="Bandage Self" xml:space="preserve">
     <value>Bandage Self</value>
   </data>
+  <data name="Bought" xml:space="preserve">
+    <value>Bought</value>
+  </data>
   <data name="Buffs / Penalties" xml:space="preserve">
     <value>Buffs / Penalties</value>
   </data>
@@ -192,11 +195,23 @@
   <data name="Connected:" xml:space="preserve">
     <value>Connected:</value>
   </data>
+  <data name="Count" xml:space="preserve">
+    <value>Count</value>
+  </data>
+  <data name="Counter &quot;{0}&quot; amount is now {1}..." xml:space="preserve">
+    <value>Counter "{0}" amount is now {1}...</value>
+  </data>
+  <data name="Counters" xml:space="preserve">
+    <value>Counters</value>
+  </data>
   <data name="Do not auto interupt" xml:space="preserve">
     <value>Do not auto interupt</value>
   </data>
   <data name="Dress" xml:space="preserve">
     <value>Dress</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Enabled</value>
   </data>
   <data name="Entity" xml:space="preserve">
     <value>Entity</value>
@@ -243,14 +258,26 @@
   <data name="Import" xml:space="preserve">
     <value>Import</value>
   </data>
+  <data name="Include Backpack Amount" xml:space="preserve">
+    <value>Include Backpack Amount</value>
+  </data>
+  <data name="Include Purchased Amount" xml:space="preserve">
+    <value>Include Purchased Amount</value>
+  </data>
   <data name="Insert" xml:space="preserve">
     <value>Insert</value>
   </data>
   <data name="Invalid container..." xml:space="preserve">
     <value>Invalid container...</value>
   </data>
+  <data name="Invalid counter agent name..." xml:space="preserve">
+    <value>Invalid counter agent name...</value>
+  </data>
   <data name="Invalid destination container..." xml:space="preserve">
     <value>Invalid destination container...</value>
+  </data>
+  <data name="Invalid layer value..." xml:space="preserve">
+    <value>Invalid layer value...</value>
   </data>
   <data name="Invalid mount..." xml:space="preserve">
     <value>Invalid mount...</value>
@@ -269,6 +296,9 @@
   </data>
   <data name="Items:" xml:space="preserve">
     <value>Items:</value>
+  </data>
+  <data name="Journal" xml:space="preserve">
+    <value>Journal</value>
   </data>
   <data name="Last Target" xml:space="preserve">
     <value>Last Target</value>
@@ -305,6 +335,9 @@
   </data>
   <data name="Map:" xml:space="preserve">
     <value>Map:</value>
+  </data>
+  <data name="Max Price" xml:space="preserve">
+    <value>Max Price</value>
   </data>
   <data name="Misc" xml:space="preserve">
     <value>Misc</value>
@@ -383,6 +416,9 @@
   </data>
   <data name="Ready..." xml:space="preserve">
     <value>Ready...</value>
+  </data>
+  <data name="Recount" xml:space="preserve">
+    <value>Recount</value>
   </data>
   <data name="Refresh" xml:space="preserve">
     <value>Refresh</value>
@@ -483,6 +519,9 @@
   <data name="Unknown alias &quot;{0}&quot;." xml:space="preserve">
     <value>Unknown alias "{0}".</value>
   </data>
+  <data name="Unknown dress agent &quot;{0}&quot;." xml:space="preserve">
+    <value>Unknown dress agent "{0}".</value>
+  </data>
   <data name="UO_LOCALE" xml:space="preserve">
     <value>ENU</value>
   </data>
@@ -492,8 +531,14 @@
   <data name="Value" xml:space="preserve">
     <value>Value</value>
   </data>
+  <data name="Vendor Buy" xml:space="preserve">
+    <value>Vendor Buy</value>
+  </data>
   <data name="Version:" xml:space="preserve">
     <value>Version:</value>
+  </data>
+  <data name="Warn when counter amount below:" xml:space="preserve">
+    <value>Warn when counter amount below:</value>
   </data>
   <data name="Weather" xml:space="preserve">
     <value>Weather</value>

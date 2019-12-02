@@ -961,6 +961,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Record.
+        /// </summary>
+        public static string Record {
+            get {
+                return ResourceManager.GetString("Record", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recount.
         /// </summary>
         public static string Recount {
@@ -1290,6 +1299,24 @@ namespace ClassicAssist.Resources {
         public static string Use_death_screen_whilst_hidden {
             get {
                 return ResourceManager.GetString("Use death screen whilst hidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UseOnce: Cannot find type....
+        /// </summary>
+        public static string UseOnce__Cannot_find_type___ {
+            get {
+                return ResourceManager.GetString("UseOnce: Cannot find type...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UseOnce cleared....
+        /// </summary>
+        public static string UseOnce_cleared___ {
+            get {
+                return ResourceManager.GetString("UseOnce cleared...", resourceCulture);
             }
         }
         

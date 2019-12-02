@@ -100,7 +100,7 @@ namespace ClassicAssist.UO
 
             return await Task.Run( () =>
             {
-                int value = random.Next( 1, int.MaxValue );
+                uint value = (uint)random.Next( 1, int.MaxValue );
 
                 //TODO
                 PacketWriter pw = new PacketWriter( 19 );
@@ -115,7 +115,7 @@ namespace ClassicAssist.UO
                 int serial = -1;
 
                 PacketFilterInfo pfi = new PacketFilterInfo( 0x6C,
-                    new[] { PacketFilterConditions.IntAtPositionCondition( value, 2 ) },
+                    new[] { PacketFilterConditions.UIntAtPositionCondition( value, 2 ) },
                     ( packet, info ) =>
                     {
                         serial = ( packet[7] << 24 ) | ( packet[8] << 16 ) | ( packet[9] << 8 ) | packet[10];
@@ -149,17 +149,17 @@ namespace ClassicAssist.UO
             } );
         }
 
-        public static bool GumpButtonClick( int gumpID, int buttonID )
+        public static bool GumpButtonClick( uint gumpID, int buttonID )
         {
-            if ( !Engine.GumpList.TryGetValue( gumpID, out int serial ) )
+            if ( !Engine.GumpList.TryGetValue( (int)gumpID, out int serial ) )
             {
                 return false;
             }
 
-            Engine.SendPacketToServer( new GumpButtonClick( gumpID, serial, buttonID ) );
+            Engine.SendPacketToServer( new GumpButtonClick((int)gumpID, serial, buttonID ) );
 
-            Engine.GumpList.TryRemove( gumpID, out _ );
-            CloseClientGump( gumpID );
+            Engine.GumpList.TryRemove((int)gumpID, out _ );
+            CloseClientGump((int)gumpID );
 
             return true;
         }
@@ -169,14 +169,14 @@ namespace ClassicAssist.UO
             Engine.SendPacketToClient( new CloseClientGump( gumpID ) );
         }
 
-        public static bool WaitForGump( int gumpId, int timeout = 30000 )
+        public static bool WaitForGump( uint gumpId, int timeout = 30000 )
         {
             PacketFilterInfo pfi = new PacketFilterInfo( 0xDD );
 
-            if ( gumpId != -1 )
+            if ( gumpId != 0 )
             {
                 pfi = new PacketFilterInfo( 0xDD,
-                    new[] { PacketFilterConditions.IntAtPositionCondition( gumpId, 7 ) } );
+                    new[] { PacketFilterConditions.UIntAtPositionCondition( gumpId, 7 ) } );
             }
 
             WaitEntry waitEntry = Engine.WaitEntries.AddWait( pfi, PacketDirection.Incoming, true );

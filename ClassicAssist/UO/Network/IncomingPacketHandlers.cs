@@ -446,7 +446,7 @@ namespace ClassicAssist.UO.Network
                 list.Add( property );
             }
 
-            if ( Engine.Player.Serial == serial )
+            if ( Engine.Player?.Serial == serial )
             {
                 Engine.Player.Name = name;
                 Engine.Player.Properties = list.ToArray();

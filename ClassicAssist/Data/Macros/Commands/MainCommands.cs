@@ -1,9 +1,12 @@
 ﻿using System.Threading;
 using Assistant;
+using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
+using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 
@@ -11,6 +14,20 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class MainCommands
     {
+        [CommandsDisplay( Category = "Main", Description = "Use a virtue by name.",
+            InsertText = "InvokeVirtue(\"Honor\")" )]
+        public static void InvokeVirtue( string virtue )
+        {
+            Virtues v = Utility.GetEnumValueByName<Virtues>( virtue );
+
+            if ( v == Virtues.None )
+            {
+                return;
+            }
+
+            Engine.SendPacketToServer( new InvokeVirtue( v ) );
+        }
+
         [CommandsDisplay( Category = "Main", Description = "Sends Resync request to server.", InsertText = "Resync()" )]
         public static void Resync()
         {

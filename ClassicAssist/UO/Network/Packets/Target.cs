@@ -1,5 +1,6 @@
 ﻿using Assistant;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UO.Network.Packets
@@ -12,8 +13,13 @@ namespace ClassicAssist.UO.Network.Packets
         Cancel
     }
 
-    public class Target : Packets
+    public class Target : Packets, IMacroCommandParser
     {
+        public Target()
+        {
+            
+        }
+
         public Target(int senderSerial, Entity entity) : this(TargetType.Object, senderSerial, TargetFlags.None, entity.Serial, -1, -1, -1, entity.ID)
         {
         }
@@ -34,6 +40,21 @@ namespace ClassicAssist.UO.Network.Packets
             _writer.Write( (short) y );
             _writer.Write( (short) z );
             _writer.Write( (short) id );
+        }
+
+        public string Parse( byte[] packet, int length, PacketDirection direction )
+        {
+            if ( packet[0] != 0x6C )
+                return null;
+
+            if ( direction == PacketDirection.Incoming )
+            {
+                return "WaitForTarget(5000)\r\n";
+            }
+
+            uint serial = (uint)((packet[7] << 24) | (packet[8] << 16) | (packet[9] << 8) | packet[10]);
+
+            return $"Target(0x{serial:x})\r\n";
         }
     }
 }

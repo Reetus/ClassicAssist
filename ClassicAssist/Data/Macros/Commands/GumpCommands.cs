@@ -8,7 +8,7 @@ namespace ClassicAssist.Data.Macros.Commands
     public static class GumpCommands
     {
         [CommandsDisplay(Category = "Gumps", Description = "Pauses until incoming gump packet is received, optional paramters of gump ID and timeout", InsertText = "WaitForGump(0xff, 5000)")]
-        public static bool WaitForGump( int gumpId = -1, int timeout = 30000 )
+        public static bool WaitForGump( uint gumpId = 0, int timeout = 30000 )
         {
             bool result = UOC.WaitForGump( gumpId, timeout );
 
@@ -21,7 +21,7 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay(Category = "Gumps", Description = "Sends a button reply to server gump, parameters are gumpID and buttonID.", InsertText = "ReplyGump(0xff, 0)")]
-        public static void ReplyGump( int gumpId, int buttonId )
+        public static void ReplyGump( uint gumpId, int buttonId )
         {
             UOC.GumpButtonClick( gumpId, buttonId );
         }

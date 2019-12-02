@@ -2,6 +2,19 @@
 
 namespace ClassicAssist.UO.Data
 {
+    public enum Virtues
+    {
+        None = '0',
+        Honor,
+        Sacrafice,
+        Valor,
+        Compassion,
+        Honesty,
+        Humility,
+        Justice,
+        Spirituality
+    }
+
     public enum MobileRace : byte
     {
         Unknown,

@@ -1,11 +1,11 @@
-﻿using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Annotations;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
+using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.ViewModels.Macros;
@@ -20,42 +20,56 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class MacrosTabViewModel : HotkeySettableViewModel<MacroEntry>, ISettingProvider
     {
+        private int _caretPosition;
+        private TextDocument _document;
         private RelayCommand _executeCommand;
         private ICommand _inspectObjectCommand;
+        private bool _isRecording;
         private bool _isRunning;
         private MacroInvoker _macroInvoker;
         private RelayCommand _newMacroCommand;
+        private ICommand _recordCommand;
         private RelayCommand _removeMacroCommand;
         private MacroEntry _selectedItem;
         private ICommand _showActiveObjectsWindowCommand;
         private ICommand _showCommandsCommand;
         private ICommand _stopCommand;
-        private TextDocument _document;
-        private int _caretPosition;
 
-        public TextDocument Document
+        public MacrosTabViewModel() : base( Strings.Macros )
         {
-            get => _document;
-            set => SetProperty(ref _document, value);
+            Engine.DisconnectedEvent += OnDisconnectedEvent;
+
+            MacroManager manager = MacroManager.GetInstance();
+
+            manager.IsRecording = () => _isRecording;
+            manager.InsertDocument = str => { _dispatcher.Invoke( () => { SelectedItem.Macro += str; } ); };
         }
 
         public int CaretPosition
         {
             get => _caretPosition;
-            set => SetProperty(ref _caretPosition, value);
+            set => SetProperty( ref _caretPosition, value );
         }
 
-        public MacrosTabViewModel() : base( Strings.Macros )
+        public TextDocument Document
         {
-            Engine.DisconnectedEvent += OnDisconnectedEvent;
+            get => _document;
+            set => SetProperty( ref _document, value );
         }
 
         public RelayCommand ExecuteCommand =>
-            _executeCommand ?? ( _executeCommand = new RelayCommand( Execute, o => !IsRunning && SelectedItem != null) );
+            _executeCommand ??
+            ( _executeCommand = new RelayCommand( Execute, o => !IsRunning && SelectedItem != null ) );
 
         public ICommand InspectObjectCommand =>
             _inspectObjectCommand ??
             ( _inspectObjectCommand = new RelayCommandAsync( InspectObject, o => Engine.Connected ) );
+
+        public bool IsRecording
+        {
+            get => _isRecording;
+            set => SetProperty( ref _isRecording, value );
+        }
 
         public bool IsRunning
         {
@@ -65,6 +79,11 @@ namespace ClassicAssist.UI.ViewModels
 
         public RelayCommand NewMacroCommand =>
             _newMacroCommand ?? ( _newMacroCommand = new RelayCommand( NewMacro, o => !IsRunning ) );
+
+        public ICommand RecordCommand =>
+            _recordCommand ?? ( _recordCommand = new RelayCommand( Record, o => SelectedItem != null ) );
+
+        public string RecordLabel => IsRecording ? Strings.Stop : Strings.Record;
 
         public RelayCommand RemoveMacroCommand =>
             _removeMacroCommand ?? ( _removeMacroCommand =
@@ -108,6 +127,15 @@ namespace ClassicAssist.UI.ViewModels
 
             macros.Add( "Macros", macroArray );
 
+            JArray useOnce = new JArray();
+
+            foreach ( int serial in ActionCommands.UseOnceList )
+            {
+                useOnce.Add( serial );
+            }
+
+            macros.Add( "UseOnce", useOnce );
+
             json.Add( "Macros", macros );
         }
 
@@ -116,6 +144,14 @@ namespace ClassicAssist.UI.ViewModels
             if ( json["Macros"]?["Macros"] == null )
             {
                 return;
+            }
+
+            if ( json["UseOnce"] != null )
+            {
+                foreach ( JToken token in json["UseOnce"] )
+                {
+                    ActionCommands.UseOnceList.Add( token.ToObject<int>() );
+                }
             }
 
             foreach ( JToken token in json["Macros"]["Macros"] )
@@ -223,8 +259,21 @@ namespace ClassicAssist.UI.ViewModels
 
         private void ShowCommands( object obj )
         {
-            MacrosCommandWindow window = new MacrosCommandWindow() { DataContext = new MacrosCommandViewModel( this ) };
+            MacrosCommandWindow window = new MacrosCommandWindow { DataContext = new MacrosCommandViewModel( this ) };
             window.ShowDialog();
+        }
+
+        private void Record( object obj )
+        {
+            if ( IsRecording )
+            {
+                IsRecording = false;
+                NotifyPropertyChanged( nameof( RecordLabel ) );
+                return;
+            }
+
+            IsRecording = true;
+            NotifyPropertyChanged( nameof( RecordLabel ) );
         }
     }
 }

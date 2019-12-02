@@ -14,6 +14,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500" Padding="5">
     <UserControl.Resources>
+        <valueConverters1:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
         <valueConverters1:CellWidthValueConverter x:Key="CellWidthValueConverter"/>
     </UserControl.Resources>
     <UserControl.DataContext>
@@ -33,8 +34,9 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <ListBox Grid.Row="0" ItemsSource="{Binding Items}" x:Name="ListBox" SelectedItem="{Binding SelectedItem}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MinHeight="40">
+                <ListBox Grid.Row="0" ItemsSource="{Binding Items}" x:Name="ListBox" SelectedItem="{Binding SelectedItem}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MinHeight="40" IsEnabled="{Binding IsRecording, Converter={StaticResource InverseBooleanConverter}}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <controls:EditTextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MinWidth="40" Width="{Binding ActualWidth, ConverterParameter=20, Converter={StaticResource CellWidthValueConverter}, ElementName=ListBox, Mode=OneWay}"/>
@@ -64,7 +66,10 @@
                     </Button>
                     <Button Content="{x:Static resources:Strings.New}" Grid.Column="1" Margin="2.5,0" Command="{Binding NewMacroCommand, Mode=OneWay}"/>
                 </Grid>
-                <Grid Grid.Row="2" Margin="0,15,0,0">
+                <Grid Grid.Row="2" Margin="2,5,2,5">
+                    <Button Content="{Binding RecordLabel}" Command="{Binding RecordCommand}"/>
+                </Grid>
+                <Grid Grid.Row="3" Margin="0,15,0,0">
                     <Grid.Resources>
                         <valueConverters1:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
                     </Grid.Resources>
@@ -75,7 +80,7 @@
                     <Button Content="{x:Static resources:Strings.Play}" Grid.Column="0" Margin="0,0,2.5,0" Command="{Binding ExecuteCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem, ElementName=ListBox}" IsEnabled="{Binding IsRunning, Converter={StaticResource InverseBooleanConverter}}"/>
                     <Button Content="{x:Static resources:Strings.Stop}" Grid.Column="1" Margin="2.5,0,0,0" IsEnabled="{Binding IsRunning}" Command="{Binding StopCommand, Mode=OneWay}"/>
                 </Grid>
-                <Grid Grid.Row="3">
+                <Grid Grid.Row="4">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -83,7 +88,7 @@
                     <CheckBox Content="{x:Static resources:Strings.Loop}" Grid.Row="0" Margin="0,5,0,0" IsChecked="{Binding SelectedItem.Loop, ElementName=ListBox}"/>
                     <CheckBox Content="{x:Static resources:Strings.Do_not_auto_interupt}" Grid.Row="1" Margin="0,5,0,0" IsEnabled="False"/>
                 </Grid>
-                <GroupBox Header="Hotkey" Grid.Row="4" Padding="5">
+                <GroupBox Header="Hotkey" Grid.Row="5" Padding="5">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
@@ -103,7 +108,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <avalon:TextEditor ShowLineNumbers="True" x:Name="CodeTextEditor" Grid.Row="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <avalon:TextEditor ShowLineNumbers="True" x:Name="CodeTextEditor" Grid.Row="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" IsEnabled="{Binding IsRecording, Converter={StaticResource InverseBooleanConverter}}">
                 <avalon:TextEditor.Style>
                     <Style TargetType="avalon:TextEditor">
                         <Style.Triggers>

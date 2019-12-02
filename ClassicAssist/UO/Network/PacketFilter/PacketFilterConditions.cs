@@ -2,25 +2,32 @@
 {
     public class PacketFilterConditions
     {
-        public static PacketFilterCondition IntAtPositionCondition(int value, int position)
+        public static PacketFilterCondition IntAtPositionCondition( int value, int position )
         {
-            byte[] valueBytes = { (byte)(value >> 24), (byte)(value >> 16), (byte)(value >> 8), (byte)value };
+            byte[] valueBytes = { (byte) ( value >> 24 ), (byte) ( value >> 16 ), (byte) ( value >> 8 ), (byte) value };
 
-            return new PacketFilterCondition(position, valueBytes, 4);
+            return new PacketFilterCondition( position, valueBytes, 4 );
         }
 
-        public static PacketFilterCondition ShortAtPositionCondition(int value, int position)
+        public static PacketFilterCondition UIntAtPositionCondition( uint value, int position )
         {
-            byte[] valueBytes = { (byte)(value >> 8), (byte)value };
+            byte[] valueBytes = { (byte) ( value >> 24 ), (byte) ( value >> 16 ), (byte) ( value >> 8 ), (byte) value };
 
-            return new PacketFilterCondition(position, valueBytes, 2);
+            return new PacketFilterCondition( position, valueBytes, 4 );
         }
 
-        public static PacketFilterCondition ByteAtPositionCondition(int value, int position)
+        public static PacketFilterCondition ShortAtPositionCondition( int value, int position )
         {
-            byte[] valueBytes = { (byte)value };
+            byte[] valueBytes = { (byte) ( value >> 8 ), (byte) value };
 
-            return new PacketFilterCondition(position, valueBytes, 1);
+            return new PacketFilterCondition( position, valueBytes, 2 );
+        }
+
+        public static PacketFilterCondition ByteAtPositionCondition( int value, int position )
+        {
+            byte[] valueBytes = { (byte) value };
+
+            return new PacketFilterCondition( position, valueBytes, 1 );
         }
     }
 }

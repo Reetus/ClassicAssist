@@ -2,7 +2,7 @@
 {
     public static class DummyCommand
     {
-        public static int Dummy(int x, int y)
+        public static int Dummy( int x, int y )
         {
             return x + y;
         }

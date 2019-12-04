@@ -2,7 +2,7 @@
 
 namespace ClassicAssist.UO.Network.Packets
 {
-    public class ContextMenuRequest : Packets
+    public class ContextMenuRequest : BasePacket
     {
         public ContextMenuRequest( int serial )
         {

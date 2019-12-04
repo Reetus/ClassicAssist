@@ -1,8 +1,8 @@
 ﻿<UserControl x:Class="ClassicAssist.UI.Views.MacrosTabControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:avalon="http://icsharpcode.net/sharpdevelop/avalonedit"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
@@ -11,131 +11,154 @@
              xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
              xmlns:resources="clr-namespace:ClassicAssist.Resources"
              xmlns:valueConverters1="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500" Padding="5">
     <UserControl.Resources>
-        <valueConverters1:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
-        <valueConverters1:CellWidthValueConverter x:Key="CellWidthValueConverter"/>
+        <valueConverters1:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <valueConverters1:CellWidthValueConverter x:Key="CellWidthValueConverter" />
     </UserControl.Resources>
     <UserControl.DataContext>
-        <viewModels:MacrosTabViewModel/>
+        <viewModels:MacrosTabViewModel />
     </UserControl.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Margin="0,0,5,0">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ListBox Grid.Row="0" ItemsSource="{Binding Items}" x:Name="ListBox" SelectedItem="{Binding SelectedItem}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MinHeight="40" IsEnabled="{Binding IsRecording, Converter={StaticResource InverseBooleanConverter}}">
+                <ListBox Grid.Row="0" ItemsSource="{Binding Items}" x:Name="ListBox"
+                         SelectedItem="{Binding SelectedItem}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         MinHeight="40"
+                         IsEnabled="{Binding IsRecording, Converter={StaticResource InverseBooleanConverter}}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <controls:EditTextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MinWidth="40" Width="{Binding ActualWidth, ConverterParameter=20, Converter={StaticResource CellWidthValueConverter}, ElementName=ListBox, Mode=OneWay}"/>
+                            <controls:EditTextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                                    MinWidth="40"
+                                                    Width="{Binding ActualWidth, ConverterParameter=20, Converter={StaticResource CellWidthValueConverter}, ElementName=ListBox, Mode=OneWay}" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
                 <Grid Grid.Row="1" Margin="0,5,0,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.Resources>
                         <Style TargetType="Button">
-                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Margin" Value="0" />
                         </Style>
                     </Grid.Resources>
-                    <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="0" Margin="0,0,2.5,0" Command="{Binding RemoveMacroCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem, ElementName=ListBox}">
+                    <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="0" Margin="0,0,2.5,0"
+                            Command="{Binding RemoveMacroCommand, Mode=OneWay}"
+                            CommandParameter="{Binding SelectedItem, ElementName=ListBox}">
                         <Button.Style>
                             <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=ListBox}" Value="{x:Null}">
-                                        <Setter Property="IsEnabled" Value="False"/>
+                                    <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=ListBox}"
+                                                 Value="{x:Null}">
+                                        <Setter Property="IsEnabled" Value="False" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Button Content="{x:Static resources:Strings.New}" Grid.Column="1" Margin="2.5,0" Command="{Binding NewMacroCommand, Mode=OneWay}"/>
+                    <Button Content="{x:Static resources:Strings.New}" Grid.Column="1" Margin="2.5,0"
+                            Command="{Binding NewMacroCommand, Mode=OneWay}" />
                 </Grid>
                 <Grid Grid.Row="2" Margin="2,5,2,5">
-                    <Button Content="{Binding RecordLabel}" Command="{Binding RecordCommand}"/>
+                    <Button Content="{Binding RecordLabel}" Command="{Binding RecordCommand}" />
                 </Grid>
                 <Grid Grid.Row="3" Margin="0,15,0,0">
                     <Grid.Resources>
-                        <valueConverters1:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+                        <valueConverters1:InverseBooleanConverter x:Key="InverseBooleanConverter" />
                     </Grid.Resources>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Button Content="{x:Static resources:Strings.Play}" Grid.Column="0" Margin="0,0,2.5,0" Command="{Binding ExecuteCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem, ElementName=ListBox}" IsEnabled="{Binding IsRunning, Converter={StaticResource InverseBooleanConverter}}"/>
-                    <Button Content="{x:Static resources:Strings.Stop}" Grid.Column="1" Margin="2.5,0,0,0" IsEnabled="{Binding IsRunning}" Command="{Binding StopCommand, Mode=OneWay}"/>
+                    <Button Content="{x:Static resources:Strings.Play}" Grid.Column="0" Margin="0,0,2.5,0"
+                            Command="{Binding ExecuteCommand, Mode=OneWay}"
+                            CommandParameter="{Binding SelectedItem, ElementName=ListBox}"
+                            IsEnabled="{Binding IsRunning, Converter={StaticResource InverseBooleanConverter}}" />
+                    <Button Content="{x:Static resources:Strings.Stop}" Grid.Column="1" Margin="2.5,0,0,0"
+                            IsEnabled="{Binding IsRunning}" Command="{Binding StopCommand, Mode=OneWay}" />
                 </Grid>
                 <Grid Grid.Row="4">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <CheckBox Content="{x:Static resources:Strings.Loop}" Grid.Row="0" Margin="0,5,0,0" IsChecked="{Binding SelectedItem.Loop, ElementName=ListBox}"/>
-                    <CheckBox Content="{x:Static resources:Strings.Do_not_auto_interupt}" Grid.Row="1" Margin="0,5,0,0" IsEnabled="False"/>
+                    <CheckBox Content="{x:Static resources:Strings.Loop}" Grid.Row="0" Margin="0,5,0,0"
+                              IsChecked="{Binding SelectedItem.Loop, ElementName=ListBox}" />
+                    <CheckBox Content="{x:Static resources:Strings.Do_not_auto_interupt}" Grid.Row="1" Margin="0,5,0,0"
+                              IsEnabled="False" />
                 </Grid>
                 <GroupBox Header="Hotkey" Grid.Row="5" Padding="5">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
-                        <controls:TextBoxKey Shortcut="{Binding SelectedItem.Hotkey}" Grid.Row="0"/>
-                        <CheckBox Content="{x:Static resources:Strings.Pass_to_UO}" Grid.Row="1" Padding="4,-1,0,0" Margin="0,5,0,0" IsChecked="{Binding SelectedItem.PassToUO}"/>
-                        <Button Content="{x:Static resources:Strings.Clear}" Grid.Row="2" Padding="1,0,1,1" Margin="0,5,0,0" Command="{Binding ClearHotkeyCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem, ElementName=ListBox}"/>
+                        <controls:TextBoxKey Shortcut="{Binding SelectedItem.Hotkey}" Grid.Row="0" />
+                        <CheckBox Content="{x:Static resources:Strings.Pass_to_UO}" Grid.Row="1" Padding="4,-1,0,0"
+                                  Margin="0,5,0,0" IsChecked="{Binding SelectedItem.PassToUO}" />
+                        <Button Content="{x:Static resources:Strings.Clear}" Grid.Row="2" Padding="1,0,1,1"
+                                Margin="0,5,0,0" Command="{Binding ClearHotkeyCommand, Mode=OneWay}"
+                                CommandParameter="{Binding SelectedItem, ElementName=ListBox}" />
                     </Grid>
                 </GroupBox>
             </Grid>
         </Grid>
-        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
         <Grid Grid.Column="2" Initialized="Grid_Initialized" Margin="5,0,0,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <avalon:TextEditor ShowLineNumbers="True" x:Name="CodeTextEditor" Grid.Row="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" IsEnabled="{Binding IsRecording, Converter={StaticResource InverseBooleanConverter}}">
+            <avalon:TextEditor ShowLineNumbers="True" x:Name="CodeTextEditor" Grid.Row="0"
+                               HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                               IsEnabled="{Binding IsRecording, Converter={StaticResource InverseBooleanConverter}}">
                 <avalon:TextEditor.Style>
                     <Style TargetType="avalon:TextEditor">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding SelectedItem, ElementName=ListBox}" Value="{x:Null}">
-                                <Setter Property="IsEnabled" Value="False"/>
+                                <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </avalon:TextEditor.Style>
                 <i:Interaction.Behaviors>
-                    <misc:AvalonEditBehaviour TextBinding="{Binding SelectedItem.Macro, ElementName=ListBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <misc:AvalonBindingBehaviour DocumentBinding="{Binding Document}" CaretBinding="{Binding CaretPosition}"/>
+                    <misc:AvalonEditBehaviour
+                        TextBinding="{Binding SelectedItem.Macro, ElementName=ListBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <misc:AvalonBindingBehaviour DocumentBinding="{Binding Document}"
+                                                 CaretBinding="{Binding CaretPosition}" />
                 </i:Interaction.Behaviors>
             </avalon:TextEditor>
             <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
                 <StackPanel.Resources>
                     <Style TargetType="Button">
-                        <Setter Property="Margin" Value="10,10,10,0"/>
-                        <Setter Property="Padding" Value="10,0,10,0"/>
-                        <Setter Property="Height" Value="25"/>
+                        <Setter Property="Margin" Value="10,10,10,0" />
+                        <Setter Property="Padding" Value="10,0,10,0" />
+                        <Setter Property="Height" Value="25" />
                     </Style>
                 </StackPanel.Resources>
-                <Button Content="{x:Static resources:Strings.Object_Inspector}" Command="{Binding InspectObjectCommand, Mode=OneWay}"/>
-                <Button Content="{x:Static resources:Strings.Commands}" Command="{Binding ShowCommandsCommand}"/>
-                <Button Content="{x:Static resources:Strings.Active_Objects}" Command="{Binding ShowActiveObjectsWindowCommand}"/>
+                <Button Content="{x:Static resources:Strings.Object_Inspector}"
+                        Command="{Binding InspectObjectCommand, Mode=OneWay}" />
+                <Button Content="{x:Static resources:Strings.Commands}" Command="{Binding ShowCommandsCommand}" />
+                <Button Content="{x:Static resources:Strings.Active_Objects}"
+                        Command="{Binding ShowActiveObjectsWindowCommand}" />
             </StackPanel>
         </Grid>
     </Grid>
 </UserControl>
-

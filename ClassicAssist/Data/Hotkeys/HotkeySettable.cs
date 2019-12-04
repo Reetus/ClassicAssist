@@ -14,8 +14,8 @@ namespace ClassicAssist.Data.Hotkeys
         public delegate void HotkeyChangedEventHandler( object sender, HotkeyChangedEventArgs e );
 
         private ShortcutKeys _hotkey = new ShortcutKeys { Modifier = Key.None, Key = Key.None };
-        private bool _passToUo = true;
         private string _name;
+        private bool _passToUo = true;
 
         public HotkeySettable()
         {
@@ -40,16 +40,16 @@ namespace ClassicAssist.Data.Hotkeys
                 ? Properties.Resources.red_circle.ToImageSource()
                 : Properties.Resources.green_circle.ToImageSource();
 
+        public string Name
+        {
+            get => _name;
+            set => SetProperty( ref _name, value );
+        }
+
         public bool PassToUO
         {
             get => _passToUo;
             set => SetProperty( ref _passToUo, value );
-        }
-
-        public string Name
-        {
-            get => _name;
-            set => SetProperty(ref _name, value);
         }
 
         public event HotkeyChangedEventHandler HotkeyChanged;

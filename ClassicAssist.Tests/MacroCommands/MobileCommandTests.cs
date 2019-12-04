@@ -14,8 +14,25 @@ namespace ClassicAssist.Tests.MacroCommands
         [TestInitialize]
         public void Initialize()
         {
-            _player = new PlayerMobile( 0x01 );
+            _player = new PlayerMobile( 0x01 ) { Name = "Shmoo", Notoriety = Notoriety.Murderer };
             Engine.Player = _player;
+            AliasCommands.SetAlias( "self", 0x01 );
+        }
+
+        [TestMethod]
+        public void WillGetName()
+        {
+            string name = MobileCommands.Name( "self" );
+
+            Assert.AreEqual( "Shmoo", name );
+
+            Assert.AreEqual( string.Empty, MobileCommands.Name( 0x00 ) );
+        }
+
+        [TestMethod]
+        public void WillGetNotoriety()
+        {
+            Assert.IsTrue( NotorietyCommands.Murderer( "self" ) );
         }
 
         [TestMethod]

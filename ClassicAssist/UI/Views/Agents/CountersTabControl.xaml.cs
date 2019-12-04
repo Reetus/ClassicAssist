@@ -3,7 +3,7 @@
 namespace ClassicAssist.UI.Views.Agents
 {
     /// <summary>
-    /// Interaction logic for CountersTabControl.xaml
+    ///     Interaction logic for CountersTabControl.xaml
     /// </summary>
     public partial class CountersTabControl : UserControl
     {

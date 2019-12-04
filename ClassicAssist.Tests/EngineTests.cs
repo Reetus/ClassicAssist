@@ -21,9 +21,9 @@ namespace ClassicAssist.Tests
         private int[] _packetLengths;
         private PluginHeader _pluginHeader;
         private OnPacketSendRecv _receivePacket;
+        private RequestMove _requestMove;
         private OnPacketSendRecv _sendPacket;
         private string _startupPath;
-        private RequestMove _requestMove;
 
         [TestInitialize]
         public void Initialize()
@@ -42,7 +42,7 @@ namespace ClassicAssist.Tests
                 GetUOFilePath = Marshal.GetFunctionPointerForDelegate( _getUOFilePath ),
                 Recv = Marshal.GetFunctionPointerForDelegate( _receivePacket ),
                 Send = Marshal.GetFunctionPointerForDelegate( _sendPacket ),
-                RequestMove =  Marshal.GetFunctionPointerForDelegate( _requestMove )
+                RequestMove = Marshal.GetFunctionPointerForDelegate( _requestMove )
             };
 
             Engine.StartupPath = _startupPath;

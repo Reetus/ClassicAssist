@@ -128,7 +128,7 @@ namespace ClassicAssist.Data.Macros.Commands
             InsertText = "PromptAlias(\"mount\")" )]
         public static void PromptAlias( string aliasName )
         {
-            int serial = UOC.GetTargeSerialAsync( Strings.Target_object___, 30000 ).Result;
+            int serial = UOC.GetTargeSerialAsync( Strings.Target_object___ ).Result;
             SetAlias( aliasName, serial );
         }
 

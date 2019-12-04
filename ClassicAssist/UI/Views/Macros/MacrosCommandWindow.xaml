@@ -11,7 +11,7 @@
         mc:Ignorable="d"
         Title="{x:Static resources:Strings.Commands}" Height="350" Width="400">
     <Window.DataContext>
-        <macros:MacrosCommandViewModel/>
+        <macros:MacrosCommandViewModel />
     </Window.DataContext>
     <Window.Resources>
         <CollectionViewSource x:Key='src' Source="{Binding Items}">
@@ -22,32 +22,33 @@
     </Window.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <ListView ItemsSource="{Binding Source={StaticResource src}}" SelectedItem="{Binding SelectedItem}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}" ToolTip="{Binding Tooltip}"/>
+                        <TextBlock Text="{Binding Name}" ToolTip="{Binding Tooltip}" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.ContainerStyle>
                             <Style TargetType="{x:Type GroupItem}">
-                                <Setter Property="Margin" Value="0,0,0,5"/>
+                                <Setter Property="Margin" Value="0,0,0,5" />
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="{x:Type GroupItem}">
                                             <Expander IsExpanded="{Binding Items/IsExpanded}" BorderThickness="0,0,0,0">
                                                 <Expander.Header>
                                                     <DockPanel>
-                                                        <TextBlock FontSize="12" Text="{Binding Path=Name}" Margin="5,0,0,0" Width="100"/>
+                                                        <TextBlock FontSize="12" Text="{Binding Path=Name}"
+                                                                   Margin="5,0,0,0" Width="100" />
                                                     </DockPanel>
                                                 </Expander.Header>
                                                 <Expander.Content>
-                                                    <ItemsPresenter/>
+                                                    <ItemsPresenter />
                                                 </Expander.Content>
                                             </Expander>
                                         </ControlTemplate>
@@ -63,17 +64,18 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel.Resources>
                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                        <Setter Property="Margin" Value="0,0,10,0"/>
-                        <Setter Property="Height" Value="25"/>
-                        <Setter Property="Padding" Value="10,0,10,0"/>
+                        <Setter Property="Margin" Value="0,0,10,0" />
+                        <Setter Property="Height" Value="25" />
+                        <Setter Property="Padding" Value="10,0,10,0" />
                     </Style>
                 </StackPanel.Resources>
                 <Button Content="{x:Static resources:Strings.Close}">
                     <i:Interaction.Behaviors>
-                        <misc:CloseOnClickBehaviour/>
+                        <misc:CloseOnClickBehaviour />
                     </i:Interaction.Behaviors>
                 </Button>
-                <Button Content="{x:Static resources:Strings.Insert}" Command="{Binding InsertCommand}" CommandParameter="{Binding SelectedItem}"/>
+                <Button Content="{x:Static resources:Strings.Insert}" Command="{Binding InsertCommand}"
+                        CommandParameter="{Binding SelectedItem}" />
             </StackPanel>
         </Grid>
     </Grid>

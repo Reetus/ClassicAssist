@@ -13,7 +13,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            int serial = UO.Commands.GetTargeSerialAsync( Strings.Target_object___, 30000 ).Result;
+            int serial = UO.Commands.GetTargeSerialAsync( Strings.Target_object___ ).Result;
 
             if ( serial <= 0 )
             {

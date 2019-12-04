@@ -64,19 +64,7 @@ namespace ClassicAssist.UI.ViewModels
             }
         }
 
-        protected void SetOptionsNotify<T>( string propertyName, T value, T defaultValue )
-        {
-            PropertyInfo property = Options.CurrentOptions.GetType().GetProperty( propertyName );
-
-            if ( property == null )
-            {
-                return;
-            }
-
-            property.SetValue( Options.CurrentOptions, value == null ? defaultValue : value );
-            NotifyPropertyChanged( propertyName );
-        }
-
+        // ReSharper disable once RedundantAssignment
         public virtual void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
         {
             obj = value;
@@ -127,6 +115,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private event EventHandler CanExecuteChangedInternal;
 
+        // ReSharper disable once UnusedMember.Global
         public void RaiseCanExecuteChanged()
         {
             CanExecuteChangedInternal?.Invoke( this, EventArgs.Empty );

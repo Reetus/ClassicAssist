@@ -1,8 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using ClassicAssist.Annotations;
+using ClassicAssist.Data.Friends;
 using ClassicAssist.Misc;
 using ClassicAssist.UI.ViewModels;
 using Newtonsoft.Json.Linq;
@@ -16,8 +18,13 @@ namespace ClassicAssist.Data
         private bool _actionDelay;
         private int _actionDelayMs;
         private bool _alwaysOnTop;
+        private char _commandPrefix = '+';
+        private ObservableCollection<FriendEntry> _friends = new ObservableCollection<FriendEntry>();
+        private bool _includePartyMembersInFriends;
         private int _lightLevel;
         private string _name;
+        private bool _persistUseOnce;
+        private bool _preventAttackingFriendsInWarMode;
         private bool _useDeathScreenWhilstHidden;
 
         public bool ActionDelay
@@ -38,7 +45,25 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _alwaysOnTop, value );
         }
 
+        public char CommandPrefix
+        {
+            get => _commandPrefix;
+            set => SetProperty( ref _commandPrefix, value );
+        }
+
         public static Options CurrentOptions { get; set; } = new Options();
+
+        public ObservableCollection<FriendEntry> Friends
+        {
+            get => _friends;
+            set => SetProperty( ref _friends, value );
+        }
+
+        public bool IncludePartyMembersInFriends
+        {
+            get => _includePartyMembersInFriends;
+            set => SetProperty( ref _includePartyMembersInFriends, value );
+        }
 
         public int LightLevel
         {
@@ -50,6 +75,18 @@ namespace ClassicAssist.Data
         {
             get => _name;
             set => SetProperty( ref _name, value );
+        }
+
+        public bool PersistUseOnce
+        {
+            get => _persistUseOnce;
+            set => SetProperty( ref _persistUseOnce, value );
+        }
+
+        public bool PreventAttackingFriendsInWarMode
+        {
+            get => _preventAttackingFriendsInWarMode;
+            set => SetProperty( ref _preventAttackingFriendsInWarMode, value );
         }
 
         public bool UseDeathScreenWhilstHidden

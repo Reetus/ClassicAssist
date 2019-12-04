@@ -24,9 +24,9 @@ namespace ClassicAssist.UI.ViewModels.Macros
 
     public class MacrosCommandViewModel : BaseViewModel
     {
+        private readonly MacrosTabViewModel _macrosViewModel;
         private ICommand _insertCommand;
         private ObservableCollection<CommandsData> _items = new ObservableCollection<CommandsData>();
-        private readonly MacrosTabViewModel _macrosViewModel;
         private CommandsData _selectedItem;
 
         public MacrosCommandViewModel( MacrosTabViewModel macros ) : this()

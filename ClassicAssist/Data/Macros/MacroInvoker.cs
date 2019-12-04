@@ -11,16 +11,12 @@ namespace ClassicAssist.Data.Macros
 {
     public class MacroInvoker
     {
-        private readonly MacroEntry _macro;
-        private readonly ScriptEngine _engine;
+        public delegate void dMacroException( Exception e );
 
         public delegate void dMacroStartStop();
 
-        public delegate void dMacroException( Exception e );
-
-        public event dMacroStartStop StartedEvent;
-        public event dMacroStartStop StoppedEvent;
-        public event dMacroException ExceptionEvent;
+        private readonly ScriptEngine _engine;
+        private readonly MacroEntry _macro;
 
         public MacroInvoker( MacroEntry macro )
         {
@@ -28,19 +24,29 @@ namespace ClassicAssist.Data.Macros
             _engine = Python.CreateEngine();
 
             ScriptRuntime runtime = _engine.Runtime;
-            runtime.LoadAssembly(Assembly.GetExecutingAssembly());
+            runtime.LoadAssembly( Assembly.GetExecutingAssembly() );
         }
+
+        public Exception Exception { get; set; }
+        public bool IsFaulted { get; set; }
+
+        public bool IsRunning => Thread.IsAlive;
+
+        public Thread Thread { get; set; }
+
+        public event dMacroStartStop StartedEvent;
+        public event dMacroStartStop StoppedEvent;
+        public event dMacroException ExceptionEvent;
 
         private static string GetScriptingImports()
         {
-            string prepend = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.Namespace != null && t.IsPublic && t.IsClass && t.Namespace.EndsWith("Macros.Commands")).Aggregate(string.Empty, (current, t) => current + $"from {t.FullName} import * \n");
+            string prepend = Assembly.GetExecutingAssembly().GetTypes()
+                .Where( t =>
+                    t.Namespace != null && t.IsPublic && t.IsClass && t.Namespace.EndsWith( "Macros.Commands" ) )
+                .Aggregate( string.Empty, ( current, t ) => current + $"from {t.FullName} import * \n" );
 
             return prepend;
         }
-
-        public bool IsRunning => Thread.IsAlive;
-        public bool IsFaulted { get; set; }
-        public Exception Exception { get; set; }
 
         public void Execute()
         {
@@ -84,7 +90,5 @@ namespace ClassicAssist.Data.Macros
         {
             Thread?.Abort();
         }
-
-        public Thread Thread { get; set; }
     }
 }

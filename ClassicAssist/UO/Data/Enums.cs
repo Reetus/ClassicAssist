@@ -22,7 +22,7 @@ namespace ClassicAssist.UO.Data
         Elf,
         Gargoyle
     }
-    
+
     public enum JournalSpeech : byte
     {
         Say,

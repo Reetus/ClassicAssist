@@ -93,7 +93,7 @@ namespace ClassicAssist.Data.Hotkeys
 
                     filter = !hks.PassToUO;
 
-                    Task.Run( () => 
+                    Task.Run( () =>
                         hks.Action.Invoke( hks ) );
                     _modifiers?.Clear();
                 }

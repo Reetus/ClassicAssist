@@ -2,7 +2,7 @@
 
 namespace ClassicAssist.UO.Network.Packets
 {
-    public class AttackRequest : Packets
+    public class AttackRequest : BasePacket
     {
         public AttackRequest( int serial )
         {

@@ -15,7 +15,7 @@ namespace ClassicAssist.Tests.MacroCommands
         [TestInitialize]
         public void Initialize()
         {
-            _player = new PlayerMobile(0x01);
+            _player = new PlayerMobile( 0x01 );
             Engine.Player = _player;
         }
 
@@ -24,7 +24,7 @@ namespace ClassicAssist.Tests.MacroCommands
         {
             AliasCommands.SetDefaultAliases();
 
-            Assert.AreEqual(_player.Serial, (int)AliasCommands.GetAlias("self"));
+            Assert.AreEqual( _player.Serial, AliasCommands.GetAlias( "self" ) );
 
             AliasCommands.UnsetDefaultAliases();
         }
@@ -36,21 +36,21 @@ namespace ClassicAssist.Tests.MacroCommands
 
             AliasCommands.SetDefaultAliases();
 
-            Assert.AreEqual(0x02, (int)AliasCommands.GetAlias("last"));
+            Assert.AreEqual( 0x02, AliasCommands.GetAlias( "last" ) );
 
             OutgoingPacketHandlers.Initialize();
-            PacketHandler handler = OutgoingPacketHandlers.GetHandler(0x6C);
+            PacketHandler handler = OutgoingPacketHandlers.GetHandler( 0x6C );
 
-            byte[] packet = {
+            byte[] packet =
+            {
                 0x6C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xAA, 0xBB, 0xCC, 0xDD, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
             };
 
-            handler?.OnReceive(new PacketReader(packet, packet.Length, true));
+            handler?.OnReceive( new PacketReader( packet, packet.Length, true ) );
 
-            Assert.AreEqual((uint)0xAABBCCDD, (uint)AliasCommands.GetAlias("last"));
+            Assert.AreEqual( 0xAABBCCDD, (uint) AliasCommands.GetAlias( "last" ) );
 
             AliasCommands.UnsetDefaultAliases();
         }
-
     }
 }

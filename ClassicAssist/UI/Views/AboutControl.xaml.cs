@@ -43,7 +43,7 @@ namespace ClassicAssist.UI.Views
             _timer.Start();
         }
 
-        private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
+        private void TextBlock_MouseLeave( object sender, MouseEventArgs e )
         {
             _timer?.Stop();
         }

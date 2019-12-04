@@ -17,13 +17,13 @@ namespace ClassicAssist.Data.Dress
         public IEnumerable<DressAgentItem> Items
         {
             get => _items;
-            set => SetProperty(ref _items, value);
+            set => SetProperty( ref _items, value );
         }
 
         public int UndressContainer
         {
             get => _undressContainer;
-            set => SetProperty(ref _undressContainer, value);
+            set => SetProperty( ref _undressContainer, value );
         }
 
         public override string ToString()
@@ -31,16 +31,18 @@ namespace ClassicAssist.Data.Dress
             return Name;
         }
 
-        public void AddOrReplaceDressItem(int itemSerial, Layer itemLayer)
+        public void AddOrReplaceDressItem( int itemSerial, Layer itemLayer )
         {
             List<DressAgentItem> list = Items.ToList();
 
-            DressAgentItem existingItem = Items.FirstOrDefault(i => i.Layer == itemLayer);
+            DressAgentItem existingItem = Items.FirstOrDefault( i => i.Layer == itemLayer );
 
-            if (existingItem != null)
-                list.Remove(existingItem);
+            if ( existingItem != null )
+            {
+                list.Remove( existingItem );
+            }
 
-            list.Add(new DressAgentItem() { Serial = itemSerial, Layer = itemLayer });
+            list.Add( new DressAgentItem { Serial = itemSerial, Layer = itemLayer } );
 
             Items = list;
         }
@@ -54,12 +56,13 @@ namespace ClassicAssist.Data.Dress
 
             IEnumerable<int> serials = Items.Select( dai => dai.Serial );
 
-            IEnumerable<Item> itemsToUnequip = Engine.Player.GetEquippedItems().Where( i => serials.Contains( i.Serial ) );
+            IEnumerable<Item> itemsToUnequip =
+                Engine.Player.GetEquippedItems().Where( i => serials.Contains( i.Serial ) );
 
             foreach ( Item item in itemsToUnequip )
             {
                 UOC.DragDropAsync( item.Serial, 1, Engine.Player?.Backpack?.Serial ?? 0 ).Wait();
-                Thread.Sleep(Options.CurrentOptions.ActionDelayMS);
+                Thread.Sleep( Options.CurrentOptions.ActionDelayMS );
             }
         }
     }

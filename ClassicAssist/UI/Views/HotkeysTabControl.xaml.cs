@@ -3,7 +3,7 @@
 namespace ClassicAssist.UI.Views
 {
     /// <summary>
-    /// Interaction logic for HotkeysTab.xaml
+    ///     Interaction logic for HotkeysTab.xaml
     /// </summary>
     public partial class HotkeysTabControl : UserControl
     {

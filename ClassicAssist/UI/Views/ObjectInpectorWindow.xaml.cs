@@ -3,7 +3,7 @@
 namespace ClassicAssist.UI.Views
 {
     /// <summary>
-    /// Interaction logic for ObjectInpectorWindow.xaml
+    ///     Interaction logic for ObjectInpectorWindow.xaml
     /// </summary>
     public partial class ObjectInspectorWindow : Window
     {

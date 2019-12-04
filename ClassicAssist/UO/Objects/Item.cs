@@ -64,7 +64,9 @@ namespace ClassicAssist.UO.Objects
             do
             {
                 if ( owner == serial )
+                {
                     return true;
+                }
 
                 owner = Engine.Items.GetItem( owner )?.Owner ?? 0;
             }

@@ -29,7 +29,7 @@ namespace ClassicAssist.Tests
         [TestMethod]
         public void RemoveCommandWillRemoveItem()
         {
-            _model.NewMacroCommand.Execute(null);
+            _model.NewMacroCommand.Execute( null );
 
             MacroEntry item = _model.Items.FirstOrDefault();
 

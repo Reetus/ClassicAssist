@@ -8,22 +8,23 @@ namespace ClassicAssist.Data.Organizer
     {
         private ObservableCollectionEx<OrganizerItem> _items = new ObservableCollectionEx<OrganizerItem>();
         private bool _stack = true;
-        public int SourceContainer { get; set; }
+
+        public Func<bool> IsRunning;
         public int DestinationContainer { get; set; }
 
         public ObservableCollectionEx<OrganizerItem> Items
         {
             get => _items;
-            set => SetProperty(ref _items, value);
+            set => SetProperty( ref _items, value );
         }
+
+        public int SourceContainer { get; set; }
 
         public bool Stack
         {
             get => _stack;
-            set => SetProperty(ref _stack, value);
+            set => SetProperty( ref _stack, value );
         }
-
-        public Func<bool> IsRunning;
 
         public override string ToString()
         {

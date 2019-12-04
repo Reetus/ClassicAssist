@@ -71,7 +71,8 @@ namespace ClassicAssist.Misc
 
         public static BitmapSource ToBitmapSource( this Bitmap bmp )
         {
-            return Imaging.CreateBitmapSourceFromHBitmap(bmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(bmp.Width, bmp.Height));
+            return Imaging.CreateBitmapSourceFromHBitmap( bmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty,
+                BitmapSizeOptions.FromWidthAndHeight( bmp.Width, bmp.Height ) );
         }
 
         public static void AddSorted<T>( this IList<T> list, T item, IComparer<T> comparer = null )

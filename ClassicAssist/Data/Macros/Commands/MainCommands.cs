@@ -58,7 +58,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( obj == null )
             {
-                serial = UOC.GetTargeSerialAsync( Strings.Target_object___, 30000 ).Result;
+                serial = UOC.GetTargeSerialAsync( Strings.Target_object___ ).Result;
 
                 if ( serial == 0 )
                 {

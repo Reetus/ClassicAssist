@@ -2,7 +2,7 @@
 
 namespace ClassicAssist.UO.Network.Packets
 {
-    public class CancelTargetCursor : Packets
+    public class CancelTargetCursor : BasePacket
     {
         public CancelTargetCursor( uint senderSerial )
         {

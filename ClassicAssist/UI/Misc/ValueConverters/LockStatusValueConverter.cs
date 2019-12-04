@@ -8,14 +8,16 @@ namespace ClassicAssist.UI.Misc.ValueConverters
 {
     public class LockStatusValueConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
         {
-            if (!(value is LockStatus))
+            if ( !( value is LockStatus ) )
+            {
                 return value;
+            }
 
-            LockStatus lockStatus = (LockStatus)value;
+            LockStatus lockStatus = (LockStatus) value;
 
-            switch (lockStatus)
+            switch ( lockStatus )
             {
                 case LockStatus.Up:
 
@@ -32,7 +34,7 @@ namespace ClassicAssist.UI.Misc.ValueConverters
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture )
         {
             throw new NotImplementedException();
         }

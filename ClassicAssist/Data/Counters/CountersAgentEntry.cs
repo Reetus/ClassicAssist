@@ -9,8 +9,8 @@ namespace ClassicAssist.Data.Counters
 {
     public class CountersAgentEntry : INotifyPropertyChanged
     {
-        private int _count;
         private int _color;
+        private int _count;
 
         public int Color
         {

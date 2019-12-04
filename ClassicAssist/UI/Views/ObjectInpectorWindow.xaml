@@ -10,10 +10,10 @@
         mc:Ignorable="d"
         Title="{x:Static r:Strings.Object_Inspector}" Height="396.8" Width="450" Topmost="True">
     <Window.InputBindings>
-        <KeyBinding Modifiers="Ctrl" Key="C" Command="{Binding CopyToClipboardCommand}"/>
+        <KeyBinding Modifiers="Ctrl" Key="C" Command="{Binding CopyToClipboardCommand}" />
     </Window.InputBindings>
     <Window.DataContext>
-        <viewModels:ObjectInspectorViewModel/>
+        <viewModels:ObjectInspectorViewModel />
     </Window.DataContext>
     <Window.Resources>
         <CollectionViewSource x:Key='src' Source="{Binding Items}">
@@ -23,32 +23,36 @@
         </CollectionViewSource>
     </Window.Resources>
     <Grid>
-        <ListView ItemsSource="{Binding Source={StaticResource src}}" SelectedValue="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <ListView ItemsSource="{Binding Source={StaticResource src}}"
+                  SelectedValue="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Behaviors>
-                <misc:ListViewDoubleClickBehaviour/>
+                <misc:ListViewDoubleClickBehaviour />
             </i:Interaction.Behaviors>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="150" Header="{x:Static r:Strings.Property}" DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Width="250" Header="{x:Static r:Strings.Value}" DisplayMemberBinding="{Binding Value}"/>
+                    <GridViewColumn Width="150" Header="{x:Static r:Strings.Property}"
+                                    DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Width="250" Header="{x:Static r:Strings.Value}"
+                                    DisplayMemberBinding="{Binding Value}" />
                 </GridView>
             </ListView.View>
             <ListView.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.ContainerStyle>
                         <Style TargetType="{x:Type GroupItem}">
-                            <Setter Property="Margin" Value="0,0,0,5"/>
+                            <Setter Property="Margin" Value="0,0,0,5" />
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type GroupItem}">
                                         <Expander IsExpanded="{Binding Items/IsExpanded}" BorderThickness="0,0,0,0">
                                             <Expander.Header>
                                                 <DockPanel>
-                                                    <TextBlock FontSize="12" Text="{Binding Path=Name}" Margin="5,0,0,0" Width="100"/>
+                                                    <TextBlock FontSize="12" Text="{Binding Path=Name}"
+                                                               Margin="5,0,0,0" Width="100" />
                                                 </DockPanel>
                                             </Expander.Header>
                                             <Expander.Content>
-                                                <ItemsPresenter/>
+                                                <ItemsPresenter />
                                             </Expander.Content>
                                         </Expander>
                                     </ControlTemplate>

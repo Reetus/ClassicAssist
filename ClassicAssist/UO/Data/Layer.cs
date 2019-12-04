@@ -32,6 +32,6 @@
         ShopResale = 27, // 0x1B
         ShopSell = 28, // 0x1C
         Bank = 29, // 0x1D
-        LastValid = 29, // 0x1D
+        LastValid = 29 // 0x1D
     }
 }

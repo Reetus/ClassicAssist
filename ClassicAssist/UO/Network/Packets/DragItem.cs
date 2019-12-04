@@ -2,7 +2,7 @@
 
 namespace ClassicAssist.UO.Network.Packets
 {
-    public class DragItem : Packets
+    public class DragItem : BasePacket
     {
         public DragItem( int serial, int amount )
         {

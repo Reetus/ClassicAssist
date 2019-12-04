@@ -1,22 +1,25 @@
 ﻿<UserControl x:Class="ClassicAssist.UI.Views.AgentsTabControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ClassicAssist.UI.Views"
              xmlns:resources="clr-namespace:ClassicAssist.Resources"
              xmlns:agents="clr-namespace:ClassicAssist.UI.Views.Agents"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <TabControl Margin="5">
         <TabItem Header="{x:Static resources:Strings.Organizer}">
-            <agents:OrganizerTabControl/>
+            <agents:OrganizerTabControl />
         </TabItem>
         <TabItem Header="{x:Static resources:Strings.Dress}">
-            <agents:DressTabControl/>
+            <agents:DressTabControl />
         </TabItem>
         <TabItem Header="{x:Static resources:Strings.Counters}">
-            <agents:CountersTabControl/>
+            <agents:CountersTabControl />
+        </TabItem>
+        <TabItem Header="{x:Static resources:Strings.Friends}">
+            <agents:FriendsTabControl />
         </TabItem>
     </TabControl>
 </UserControl>

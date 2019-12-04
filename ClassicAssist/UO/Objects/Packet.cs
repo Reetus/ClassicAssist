@@ -4,6 +4,9 @@ namespace ClassicAssist.UO.Objects
 {
     public class Packet
     {
+        private readonly byte[] _data;
+        private readonly int _length;
+
         public Packet( byte[] data, int length )
         {
             _data = new byte[length];
@@ -26,8 +29,5 @@ namespace ClassicAssist.UO.Objects
         {
             return _length;
         }
-
-        private readonly byte[] _data;
-        private readonly int _length;
     }
 }

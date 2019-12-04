@@ -5,7 +5,7 @@
         public int ID { get; set; }
         public string Name { get; set; }
 
-        public override bool Equals(object obj)
+        public override bool Equals( object obj )
         {
             Skill? skill = obj as Skill?;
             return ID == skill?.ID;
@@ -23,14 +23,14 @@
             return Name;
         }
 
-        public static bool operator ==(Skill left, Skill right)
+        public static bool operator ==( Skill left, Skill right )
         {
-            return left.Equals(right);
+            return left.Equals( right );
         }
 
-        public static bool operator !=(Skill left, Skill right)
+        public static bool operator !=( Skill left, Skill right )
         {
-            return !(left == right);
+            return !( left == right );
         }
     }
 }

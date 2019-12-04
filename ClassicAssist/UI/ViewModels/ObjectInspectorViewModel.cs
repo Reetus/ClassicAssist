@@ -405,7 +405,10 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             EntityCollectionViewer window =
-                new EntityCollectionViewer { DataContext = new EntityCollectionViewerViewModel( collection ), Topmost = true};
+                new EntityCollectionViewer
+                {
+                    DataContext = new EntityCollectionViewerViewModel( collection ), Topmost = true
+                };
 
             window.ShowDialog();
         }

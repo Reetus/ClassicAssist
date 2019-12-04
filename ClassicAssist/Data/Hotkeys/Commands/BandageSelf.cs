@@ -43,7 +43,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
 
             Engine.SendPacketToServer( new UseObject( bandage.Serial ) );
 
-            WaitEntry we = Engine.WaitEntries.AddWait(new PacketFilterInfo(0x6C), PacketDirection.Incoming);
+            PacketWaitEntry we = Engine.PacketWaitEntries.Add( new PacketFilterInfo( 0x6C ), PacketDirection.Incoming );
 
             try
             {
@@ -65,7 +65,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
             }
             finally
             {
-                Engine.WaitEntries.RemoveWait( we );
+                Engine.PacketWaitEntries.Remove( we );
             }
         }
     }

@@ -357,6 +357,17 @@ namespace ClassicAssist.UO.Network
 
                 container.Container.Add( item );
             }
+
+            //rehueList
+
+            int backpack = Engine.Player?.Backpack?.Serial ?? 0;
+
+            if ( item.IsDescendantOf( backpack ) )
+            {
+                Engine.RehueList.CheckRehue( item );
+            }
+
+            //rehueList
         }
 
         private static void OnItemDeleted( PacketReader reader )
@@ -695,6 +706,8 @@ namespace ClassicAssist.UO.Network
             Engine.Items.Add( containerItem );
 
             ContainerContentsEvent?.Invoke( container.Serial, container );
+
+            Engine.RehueList.CheckRehue( container );
         }
 
         private static void OnSAWorldItem( PacketReader reader )

@@ -3,7 +3,7 @@ using ClassicAssist.UO.Network.PacketFilter;
 
 namespace ClassicAssist.UO.Network.Packets
 {
-    public class InvokeVirtue : Packets, IMacroCommandParser
+    public class InvokeVirtue : BasePacket, IMacroCommandParser
     {
         public InvokeVirtue()
         {

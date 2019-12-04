@@ -188,7 +188,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            int serial = await Commands.GetTargeSerialAsync( Strings.Target_new_item___, 30000 );
+            int serial = await Commands.GetTargeSerialAsync( Strings.Target_new_item___ );
 
             if ( serial <= 0 )
             {
@@ -246,7 +246,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             if ( Commands.WaitForIncomingPacket( pfi, 1000,
                 () => Engine.SendPacketToServer( new UseObject( sourceContainer.Serial ) ) ) )
             {
-                await Task.Delay(Options.CurrentOptions.ActionDelayMS);
+                await Task.Delay( Options.CurrentOptions.ActionDelayMS );
             }
 
             if ( sourceContainer.Container == null )
@@ -313,7 +313,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            int sourceContainer = await Commands.GetTargeSerialAsync( Strings.Select_source_container___, 30000 );
+            int sourceContainer = await Commands.GetTargeSerialAsync( Strings.Select_source_container___ );
 
             if ( sourceContainer <= 0 )
             {
@@ -322,7 +322,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
 
             int desintationContainer =
-                await Commands.GetTargeSerialAsync( Strings.Select_destination_container___, 30000 );
+                await Commands.GetTargeSerialAsync( Strings.Select_destination_container___ );
 
             if ( desintationContainer <= 0 )
             {

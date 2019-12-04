@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ClassicAssist.Data.Macros.Commands;
@@ -61,13 +60,13 @@ namespace ClassicAssist.UI.ViewModels
 
         private void RemoveList( object obj )
         {
-            if (!(obj is ListEntry entry))
+            if ( !( obj is ListEntry entry ) )
             {
                 return;
             }
 
             ListCommands.RemoveList( entry.Name );
-            Lists.Remove(entry);
+            Lists.Remove( entry );
         }
 
         private void ClearAllLists( object obj )

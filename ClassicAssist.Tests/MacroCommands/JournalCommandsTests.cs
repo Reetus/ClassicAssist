@@ -1,11 +1,7 @@
-﻿using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using Assistant;
+﻿using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.UO.Data;
-using ClassicAssist.UO.Network;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ClassicAssist.Tests.MacroCommands
@@ -96,7 +92,7 @@ namespace ClassicAssist.Tests.MacroCommands
         //    pw.Write((byte)1  ); // system
         //    pw.Seek( 39, SeekOrigin.Current );
         //    pw.Write(textBytes, 0, textBytes.Length  );
-            
+
         //    IncomingPacketHandlers.Initialize();
 
         //    PacketHandler handler = IncomingPacketHandlers.GetHandler( 0xAE );

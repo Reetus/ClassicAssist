@@ -10,50 +10,54 @@
         xmlns:misc="clr-namespace:ClassicAssist.Misc"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Height="500" Width="625" Style="{DynamicResource WindowStyle}" Topmost="{Binding AlwaysOnTop}" Title="{Binding Title}">
+        Height="500" Width="625" Style="{DynamicResource WindowStyle}" Topmost="{Binding AlwaysOnTop}"
+        Title="{Binding Title}">
     <i:Interaction.Behaviors>
-        <misc:LoadOptionsOnWindowLoaded/>
+        <misc:LoadOptionsOnWindowLoaded />
     </i:Interaction.Behaviors>
     <Window.DataContext>
-        <viewModels:MainWindowViewModel/>
+        <viewModels:MainWindowViewModel />
     </Window.DataContext>
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml"/>
+                <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="10">
             <TabControl Style="{StaticResource TabControlStyle}">
                 <TabItem Header="{x:Static r:Strings.General}">
-                    <local:GeneralControl/>
+                    <local:GeneralControl />
+                </TabItem>
+                <TabItem Header="{x:Static r:Strings.Options}">
+                    <local:OptionsTabControl />
                 </TabItem>
                 <TabItem Header="{x:Static r:Strings.Hotkeys}">
-                    <local:HotkeysTabControl/>
+                    <local:HotkeysTabControl />
                 </TabItem>
                 <TabItem Header="{x:Static r:Strings.Macros}">
-                    <local:MacrosTabControl/>
+                    <local:MacrosTabControl />
                 </TabItem>
                 <TabItem Header="{x:Static r:Strings.Skills}">
-                    <local:SkillsTabControl/>
+                    <local:SkillsTabControl />
                 </TabItem>
                 <TabItem Header="{x:Static r:Strings.Agents}">
-                    <local:AgentsTabControl/>
+                    <local:AgentsTabControl />
                 </TabItem>
                 <TabItem Header="{x:Static r:Strings.About}">
-                    <local:AboutControl/>
+                    <local:AboutControl />
                 </TabItem>
             </TabControl>
         </Grid>
         <Grid Grid.Row="1" HorizontalAlignment="Left" Margin="5,0,5,5">
             <Button Command="{Binding DebugCommand}">
-                <Image Source="../../Resources/bug.png" Height="16" Width="16"></Image>
+                <Image Source="../../Resources/bug.png" Height="16" Width="16" />
             </Button>
         </Grid>
     </Grid>

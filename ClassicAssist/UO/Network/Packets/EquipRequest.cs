@@ -2,7 +2,7 @@
 
 namespace ClassicAssist.UO.Network.Packets
 {
-    public class EquipRequest : Packets
+    public class EquipRequest : BasePacket
     {
         public EquipRequest( int serial, Layer layer, int containerSerial )
         {

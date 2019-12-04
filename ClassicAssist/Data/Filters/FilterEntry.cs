@@ -10,32 +10,17 @@ namespace ClassicAssist.Data.Filters
         private bool _enabled;
         private string _name;
 
-        public bool Enabled
-        {
-            get => _enabled;
-            set
-            {
-                SetProperty(ref _enabled, value);
-                Action?.Invoke(value);
-            }
-        }
-
-        public string Name
-        {
-            get => _name;
-            set => SetProperty(ref _name, value);
-        }
-
-        public Action<bool> Action { get; set; }
-
         protected FilterEntry()
         {
             Action = OnChanged;
 
-            FilterOptionsAttribute a = (FilterOptionsAttribute)Attribute.GetCustomAttribute(GetType(), typeof(FilterOptionsAttribute));
+            FilterOptionsAttribute a =
+                (FilterOptionsAttribute) Attribute.GetCustomAttribute( GetType(), typeof( FilterOptionsAttribute ) );
 
-            if (a == null)
+            if ( a == null )
+            {
                 return;
+            }
 
             string resourceName = Strings.ResourceManager.GetString( a.Name );
 
@@ -43,22 +28,40 @@ namespace ClassicAssist.Data.Filters
             Enabled = a.DefaultEnabled;
         }
 
-        protected virtual void OnChanged(bool enabled)
+        public Action<bool> Action { get; set; }
+
+        public bool Enabled
         {
-            throw new NotImplementedException();
+            get => _enabled;
+            set
+            {
+                SetProperty( ref _enabled, value );
+                Action?.Invoke( value );
+            }
+        }
+
+        public string Name
+        {
+            get => _name;
+            set => SetProperty( ref _name, value );
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnChanged( bool enabled )
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            throw new NotImplementedException();
         }
 
-        public void SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
+        {
+            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+        }
+
+        public void SetProperty<T>( ref T field, T value, [CallerMemberName] string propertyName = null )
         {
             field = value;
-            OnPropertyChanged(propertyName);
+            OnPropertyChanged( propertyName );
         }
     }
 }

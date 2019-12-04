@@ -17,9 +17,11 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class ActionCommands
     {
-        public static List<int> UseOnceList { get; set; } = new List<int>();
+        internal static UseOnceList UseOnceList { get; set; } = new UseOnceList();
 
-        [CommandsDisplay(Category = "Actions", Description = "Use a specific item type (graphic) from your backpack, only once", InsertText = "UseOnce(0xff)")]
+        [CommandsDisplay( Category = "Actions",
+            Description = "Use a specific item type (graphic) from your backpack, only once",
+            InsertText = "UseOnce(0xff)" )]
         public static bool UseOnce( int graphic, int hue = -1 )
         {
             //TODO hue?
@@ -39,12 +41,14 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
+            UseOnceList.Add( match );
+
             Engine.SendPacketToServer( new UseObject( match.Serial ) );
-            UseOnceList.Add( match.Serial );
+
             return true;
         }
 
-        [CommandsDisplay(Category = "Actions", Description = "Clear UseOnce list.", InsertText = "ClearUseOnce()")]
+        [CommandsDisplay( Category = "Actions", Description = "Clear UseOnce list.", InsertText = "ClearUseOnce()" )]
         public static void ClearUseOnce()
         {
             UseOnceList?.Clear();
@@ -175,7 +179,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( !AliasCommands.FindAlias( "mount" ) )
             {
-                int serial = UOC.GetTargeSerialAsync( Strings.Target_new_mount___, 10000 ).Result;
+                int serial = UOC.GetTargeSerialAsync( Strings.Target_new_mount___ ).Result;
 
                 if ( serial == -1 )
                 {
@@ -340,11 +344,11 @@ namespace ClassicAssist.Data.Macros.Commands
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            WaitEntry we = Engine.WaitEntries.AddWait(
+            PacketWaitEntry we = Engine.PacketWaitEntries.Add(
                 new PacketFilterInfo( 0x73, new[] { new PacketFilterCondition( 1, new[] { value }, 1 ) } ),
                 PacketDirection.Incoming, true );
 
-            Engine.SendPacketToServer( new PingPacket( value ) );
+            Engine.SendPacketToServer( new Ping( value ) );
 
             bool result = we.Lock.WaitOne( 5000 );
 

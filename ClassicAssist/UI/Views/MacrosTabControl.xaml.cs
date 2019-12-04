@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Windows.Controls;
 using System.Xml;
@@ -8,7 +9,7 @@ using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 namespace ClassicAssist.UI.Views
 {
     /// <summary>
-    /// Interaction logic for MacrosTabControl.xaml
+    ///     Interaction logic for MacrosTabControl.xaml
     /// </summary>
     public partial class MacrosTabControl : UserControl
     {
@@ -17,9 +18,11 @@ namespace ClassicAssist.UI.Views
             InitializeComponent();
         }
 
-        private void Grid_Initialized(object sender, System.EventArgs e)
+        private void Grid_Initialized( object sender, EventArgs e )
         {
-            CodeTextEditor.SyntaxHighlighting = HighlightingLoader.Load(new XmlTextReader(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Python.xshd")), HighlightingManager.Instance);
+            CodeTextEditor.SyntaxHighlighting = HighlightingLoader.Load(
+                new XmlTextReader( Path.Combine( Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location ),
+                    "Python.xshd" ) ), HighlightingManager.Instance );
         }
     }
 }

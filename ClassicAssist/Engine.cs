@@ -6,7 +6,9 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Input;
+using System.Windows.Threading;
 using ClassicAssist.Data;
+using ClassicAssist.Data.Commands;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Misc;
 using ClassicAssist.UI.Views;
@@ -55,21 +57,20 @@ namespace Assistant
 
         private static readonly int[] _sequenceList = new int[256];
 
-        //private static readonly object _actionDelayLock = new object();
         public static string ClientPath { get; set; }
         public static Version ClientVersion { get; set; }
         public static bool Connected { get; set; }
+        public static Dispatcher Dispatcher { get; set; }
         public static FeatureFlags Features { get; set; }
         public static ItemCollection Items { get; set; } = new ItemCollection( 0 );
         public static CircularBuffer<JournalEntry> Journal { get; set; } = new CircularBuffer<JournalEntry>( 1024 );
         public static MobileCollection Mobiles { get; set; } = new MobileCollection( Items );
-
-        //public static DateTime NextActionTime { get; set; }
+        public static PacketWaitEntries PacketWaitEntries { get; set; }
         public static PlayerMobile Player { get; set; }
+        public static RehueList RehueList { get; set; } = new RehueList();
         public static string StartupPath { get; set; }
         public static int TargetSerial { get; set; }
         public static TargetType TargetType { get; set; }
-        public static WaitEntries WaitEntries { get; set; }
         internal static ConcurrentDictionary<int, int> GumpList { get; set; } = new ConcurrentDictionary<int, int>();
 
         internal static event dSendRecvPacket InternalPacketSentEvent;
@@ -187,13 +188,17 @@ namespace Assistant
 
             AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
 
-            WaitEntries = new WaitEntries();
+            PacketWaitEntries = new PacketWaitEntries();
 
             _incomingQueue = new ThreadQueue<Packet>( ProcessIncomingQueue );
             _outgoingQueue = new ThreadQueue<Packet>( ProcessOutgoingQueue );
 
             IncomingPacketHandlers.Initialize();
             OutgoingPacketHandlers.Initialize();
+
+            OutgoingPacketFilters.Initialize();
+
+            CommandsManager.Initialize();
         }
 
         private static void ProcessIncomingQueue( Packet packet )
@@ -260,7 +265,9 @@ namespace Assistant
 
                 if ( newStatus.HasFlag( MobileStatus.Hidden ) )
                 {
-                    SendPacketToClient( new MobileDeadIncoming( mobile ) );
+                    SendPacketToClient( new MobileUpdate( mobile.Serial, mobile.ID == 0x191 ? 0x193 : 0x192, mobile.Hue,
+                        newStatus, mobile.X,
+                        mobile.Y, mobile.Z, mobile.Direction ) );
                 }
             };
         }
@@ -286,9 +293,14 @@ namespace Assistant
             SendPacketToClient( data, data.Length );
         }
 
-        public static void SendPacketToClient( Packets packet )
+        public static void SendPacketToClient( BasePacket basePacket )
         {
-            byte[] data = packet.ToArray();
+            if ( basePacket.Direction != PacketDirection.Any && basePacket.Direction != PacketDirection.Incoming )
+            {
+                throw new InvalidOperationException( "Send packet wrong direction." );
+            }
+
+            byte[] data = basePacket.ToArray();
 
             SendPacketToClient( data, data.Length );
         }
@@ -300,9 +312,14 @@ namespace Assistant
             SendPacketToServer( data, data.Length );
         }
 
-        public static void SendPacketToServer( Packets packet )
+        public static void SendPacketToServer( BasePacket basePacket )
         {
-            byte[] data = packet.ToArray();
+            if ( basePacket.Direction != PacketDirection.Any && basePacket.Direction != PacketDirection.Outgoing )
+            {
+                throw new InvalidOperationException( "Send packet wrong direction." );
+            }
+
+            byte[] data = basePacket.ToArray();
 
             SendPacketToServer( data, data.Length );
         }
@@ -316,6 +333,13 @@ namespace Assistant
 
         private static bool OnPacketSend( ref byte[] data, ref int length )
         {
+            bool filter = false;
+
+            if ( CommandsManager.IsSpeechPacket( data[0] ) )
+            {
+                filter = CommandsManager.CheckCommand( data, length );
+            }
+
             if ( _outgoingPacketFilter.MatchFilterAll( data, out PacketFilterInfo[] pfis ) > 0 )
             {
                 foreach ( PacketFilterInfo pfi in pfis )
@@ -328,11 +352,18 @@ namespace Assistant
                 return false;
             }
 
+            if ( OutgoingPacketFilters.CheckPacket( data, data.Length ) )
+            {
+                SentPacketFilteredEvent?.Invoke( data, data.Length );
+
+                return false;
+            }
+
             _outgoingQueue.Enqueue( new Packet( data, length ) );
 
-            WaitEntries.CheckWait( data, PacketDirection.Outgoing );
+            PacketWaitEntries.CheckWait( data, PacketDirection.Outgoing );
 
-            return true;
+            return !filter;
         }
 
         private static bool OnPacketReceive( ref byte[] data, ref int length )
@@ -351,7 +382,7 @@ namespace Assistant
 
             _incomingQueue.Enqueue( new Packet( data, length ) );
 
-            WaitEntries.CheckWait( data, PacketDirection.Incoming );
+            PacketWaitEntries.CheckWait( data, PacketDirection.Incoming );
 
             return true;
         }

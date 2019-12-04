@@ -83,9 +83,9 @@ namespace ClassicAssist.Tests
         [TestMethod]
         public void WillExecuteRunDummy()
         {
-            MacroEntry me = new MacroEntry() { Macro = "Dummy(5,7)"};
+            MacroEntry me = new MacroEntry { Macro = "Dummy(5,7)" };
 
-            MacroInvoker mi = new MacroInvoker(me);
+            MacroInvoker mi = new MacroInvoker( me );
 
             mi.Execute();
 
@@ -93,7 +93,6 @@ namespace ClassicAssist.Tests
 
             Assert.IsFalse( mi.IsFaulted );
         }
-
 
         [TestMethod]
         public void WillExceptionEvent()

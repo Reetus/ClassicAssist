@@ -1,77 +1,85 @@
 ﻿<Window
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:resources="clr-namespace:ClassicAssist.Resources"
-        xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
-        xmlns:misc1="clr-namespace:ClassicAssist.Misc"
-        xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
-        x:Class="ClassicAssist.UI.Views.ActiveObjectsWindow"
-        mc:Ignorable="d"
-        Title="{x:Static resources:Strings.Active_Objects}" Height="350" Width="400">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:ClassicAssist.Resources"
+    xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+    xmlns:misc1="clr-namespace:ClassicAssist.Misc"
+    xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+    x:Class="ClassicAssist.UI.Views.ActiveObjectsWindow"
+    mc:Ignorable="d"
+    Title="{x:Static resources:Strings.Active_Objects}" Height="350" Width="400">
     <Window.Resources>
-        <valueConverters:IntToHexStringValueConverter x:Key="IntToHexStringValueConverter"/>
-        <misc1:BindingProxy x:Key="Proxy" Data="{Binding}"/>
+        <valueConverters:IntToHexStringValueConverter x:Key="IntToHexStringValueConverter" />
+        <misc1:BindingProxy x:Key="Proxy" Data="{Binding}" />
     </Window.Resources>
     <Window.DataContext>
-        <viewModels:ActiveObjectsViewModel/>
+        <viewModels:ActiveObjectsViewModel />
     </Window.DataContext>
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TabControl>
             <TabItem Header="{x:Static resources:Strings.Aliases}">
                 <Grid Margin="5">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <ListView ItemsSource="{Binding Aliases}" SelectedItem="{Binding SelectedAlias}">
                         <ListView.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="{x:Static resources:Strings.Remove}" Command="{Binding Data.RemoveAliasCommand, Source={StaticResource Proxy}}" CommandParameter="{Binding SelectedAlias}"/>
+                                <MenuItem Header="{x:Static resources:Strings.Remove}"
+                                          Command="{Binding Data.RemoveAliasCommand, Source={StaticResource Proxy}}"
+                                          CommandParameter="{Binding SelectedAlias}" />
                             </ContextMenu>
                         </ListView.ContextMenu>
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="{x:Static resources:Strings.Name}" Width="170" DisplayMemberBinding="{Binding Name}"/>
-                                <GridViewColumn Header="{x:Static resources:Strings.Serial}" Width="170" DisplayMemberBinding="{Binding Serial, Converter={StaticResource IntToHexStringValueConverter}}"/>
+                                <GridViewColumn Header="{x:Static resources:Strings.Name}" Width="170"
+                                                DisplayMemberBinding="{Binding Name}" />
+                                <GridViewColumn Header="{x:Static resources:Strings.Serial}" Width="170"
+                                                DisplayMemberBinding="{Binding Serial, Converter={StaticResource IntToHexStringValueConverter}}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0, 10,0,0">
                         <StackPanel.Resources>
                             <Style TargetType="{x:Type Button}">
-                                <Setter Property="Height" Value="25"/>
-                                <Setter Property="Padding" Value="10,0,10,0"/>
-                                <Setter Property="Margin" Value="0,0,10,0"/>
+                                <Setter Property="Height" Value="25" />
+                                <Setter Property="Padding" Value="10,0,10,0" />
+                                <Setter Property="Margin" Value="0,0,10,0" />
                             </Style>
                         </StackPanel.Resources>
                         <Button Content="{x:Static resources:Strings.Close}">
                             <i:Interaction.Behaviors>
-                                <misc:CloseOnClickBehaviour/>
+                                <misc:CloseOnClickBehaviour />
                             </i:Interaction.Behaviors>
                         </Button>
-                        <Button Content="{x:Static resources:Strings.Refresh}" Command="{Binding RefreshAliasesCommand}"/>
-                        <Button Content="{x:Static resources:Strings.Clear_All_Objects}" Command="{Binding ClearAllAliasesCommand}"/>
+                        <Button Content="{x:Static resources:Strings.Refresh}"
+                                Command="{Binding RefreshAliasesCommand}" />
+                        <Button Content="{x:Static resources:Strings.Clear_All_Objects}"
+                                Command="{Binding ClearAllAliasesCommand}" />
                     </StackPanel>
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static resources:Strings.Lists}">
                 <Grid Margin="5">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <ListView ItemsSource="{Binding Lists}" SelectedItem="{Binding SelectedList}">
                         <ListView.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="{x:Static resources:Strings.Remove}" Command="{Binding Data.RemoveListCommand, Source={StaticResource Proxy}}" CommandParameter="{Binding Data.SelectedList, Source={StaticResource Proxy}}"/>
+                                <MenuItem Header="{x:Static resources:Strings.Remove}"
+                                          Command="{Binding Data.RemoveListCommand, Source={StaticResource Proxy}}"
+                                          CommandParameter="{Binding Data.SelectedList, Source={StaticResource Proxy}}" />
                             </ContextMenu>
                         </ListView.ContextMenu>
                         <ListView.ItemTemplate>
@@ -80,7 +88,7 @@
                                     <ItemsControl ItemsSource="{Binding Serials}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding Mode=OneWay}" Margin="25,0,0,0"/>
+                                                <TextBlock Text="{Binding Mode=OneWay}" Margin="25,0,0,0" />
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
@@ -91,18 +99,19 @@
                     <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0, 10,0,0">
                         <StackPanel.Resources>
                             <Style TargetType="{x:Type Button}">
-                                <Setter Property="Height" Value="25"/>
-                                <Setter Property="Padding" Value="10,0,10,0"/>
-                                <Setter Property="Margin" Value="0,0,10,0"/>
+                                <Setter Property="Height" Value="25" />
+                                <Setter Property="Padding" Value="10,0,10,0" />
+                                <Setter Property="Margin" Value="0,0,10,0" />
                             </Style>
                         </StackPanel.Resources>
                         <Button Content="{x:Static resources:Strings.Close}">
                             <i:Interaction.Behaviors>
-                                <misc:CloseOnClickBehaviour/>
+                                <misc:CloseOnClickBehaviour />
                             </i:Interaction.Behaviors>
                         </Button>
-                        <Button Content="{x:Static resources:Strings.Refresh}" Command="{Binding RefreshListsCommand}"/>
-                        <Button Content="{x:Static resources:Strings.Clear_All_Objects}" Command="{Binding ClearAllListsCommand}"/>
+                        <Button Content="{x:Static resources:Strings.Refresh}" Command="{Binding RefreshListsCommand}" />
+                        <Button Content="{x:Static resources:Strings.Clear_All_Objects}"
+                                Command="{Binding ClearAllListsCommand}" />
                     </StackPanel>
                 </Grid>
             </TabItem>

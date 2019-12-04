@@ -17,12 +17,6 @@ namespace ClassicAssist.UI.ViewModels
         private bool _showProperties;
         private bool _topmost;
 
-        public bool Topmost
-        {
-            get => _topmost;
-            set => SetProperty(ref _topmost, value);
-        }
-
         public EntityCollectionViewerViewModel()
         {
             Entities = new ObservableCollection<EntityCollectionData>
@@ -50,6 +44,12 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _showProperties;
             set => SetProperty( ref _showProperties, value );
+        }
+
+        public bool Topmost
+        {
+            get => _topmost;
+            set => SetProperty( ref _topmost, value );
         }
 
         private void ItemDoubleClick( object obj )

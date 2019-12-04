@@ -9,7 +9,7 @@ namespace ClassicAssist.UO.Data
     {
         Up,
         Down,
-        Locked,
+        Locked
     }
 
     internal class SkillData

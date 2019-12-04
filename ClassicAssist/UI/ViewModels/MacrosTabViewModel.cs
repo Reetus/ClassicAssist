@@ -5,7 +5,6 @@ using ClassicAssist.Annotations;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
-using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.ViewModels.Macros;
@@ -28,6 +27,7 @@ namespace ClassicAssist.UI.ViewModels
         private bool _isRunning;
         private MacroInvoker _macroInvoker;
         private RelayCommand _newMacroCommand;
+        private bool _persistUseOnce;
         private ICommand _recordCommand;
         private RelayCommand _removeMacroCommand;
         private MacroEntry _selectedItem;
@@ -80,6 +80,12 @@ namespace ClassicAssist.UI.ViewModels
         public RelayCommand NewMacroCommand =>
             _newMacroCommand ?? ( _newMacroCommand = new RelayCommand( NewMacro, o => !IsRunning ) );
 
+        public bool PersistUseOnce
+        {
+            get => _persistUseOnce;
+            set => SetProperty( ref _persistUseOnce, value );
+        }
+
         public ICommand RecordCommand =>
             _recordCommand ?? ( _recordCommand = new RelayCommand( Record, o => SelectedItem != null ) );
 
@@ -127,34 +133,14 @@ namespace ClassicAssist.UI.ViewModels
 
             macros.Add( "Macros", macroArray );
 
-            JArray useOnce = new JArray();
-
-            foreach ( int serial in ActionCommands.UseOnceList )
-            {
-                useOnce.Add( serial );
-            }
-
-            macros.Add( "UseOnce", useOnce );
-
             json.Add( "Macros", macros );
         }
 
         public void Deserialize( [NotNull] JObject json, Options options )
         {
-            if ( json["Macros"]?["Macros"] == null )
-            {
-                return;
-            }
+            JToken config = json["Macros"];
 
-            if ( json["UseOnce"] != null )
-            {
-                foreach ( JToken token in json["UseOnce"] )
-                {
-                    ActionCommands.UseOnceList.Add( token.ToObject<int>() );
-                }
-            }
-
-            foreach ( JToken token in json["Macros"]["Macros"] )
+            foreach ( JToken token in config["Macros"] )
             {
                 MacroEntry entry = new MacroEntry
                 {
@@ -186,7 +172,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private static async Task InspectObject( object arg )
         {
-            int serial = await Commands.GetTargeSerialAsync( Strings.Target_object___, 30000 );
+            int serial = await Commands.GetTargeSerialAsync( Strings.Target_object___ );
 
             if ( serial > 0 )
             {

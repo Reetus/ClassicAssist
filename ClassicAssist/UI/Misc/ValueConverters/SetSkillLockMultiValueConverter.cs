@@ -18,17 +18,17 @@ namespace ClassicAssist.UI.Misc.ValueConverters
 
     public class SetSkillLockMultiValueConverter : IMultiValueConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        public object Convert( object[] values, Type targetType, object parameter, CultureInfo culture )
         {
-            IList items = (IList)((BindingProxy)values[0]).Data;
+            IList items = (IList) ( (BindingProxy) values[0] ).Data;
             IEnumerable<SkillEntry> skills = items.Cast<SkillEntry>();
 
-            LockStatus lockStatus = (LockStatus)values[1];
+            LockStatus lockStatus = (LockStatus) values[1];
 
             return new SetSkillLockData { SkillEntries = skills, LockStatus = lockStatus };
         }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        public object[] ConvertBack( object value, Type[] targetTypes, object parameter, CultureInfo culture )
         {
             throw new NotImplementedException();
         }

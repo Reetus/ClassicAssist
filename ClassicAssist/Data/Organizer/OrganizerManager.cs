@@ -17,11 +17,6 @@ namespace ClassicAssist.Data.Organizer
             Items.CollectionChanged += OnCollectionChanged;
         }
 
-        private void OnCollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
-        {
-            OnPropertyChanged( nameof( Items ) );
-        }
-
         public ObservableCollectionEx<OrganizerEntry> Items
         {
             get => _items;
@@ -29,6 +24,11 @@ namespace ClassicAssist.Data.Organizer
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnCollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
+        {
+            OnPropertyChanged( nameof( Items ) );
+        }
 
         public static OrganizerManager GetInstance()
         {

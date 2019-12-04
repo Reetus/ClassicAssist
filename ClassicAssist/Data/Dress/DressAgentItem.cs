@@ -9,25 +9,27 @@ namespace ClassicAssist.Data.Dress
     {
         private Layer _layer;
         private int _serial;
+
         public Layer Layer
         {
             get => _layer;
-            set => SetProperty(ref _layer, value);
+            set => SetProperty( ref _layer, value );
         }
+
         public int Serial
         {
             get => _serial;
-            set => SetProperty(ref _serial, value);
-        }
-
-        // ReSharper disable once RedundantAssignment
-        public void SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
-        {
-            field = value;
-            OnPropertyChanged(propertyName);
+            set => SetProperty( ref _serial, value );
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        // ReSharper disable once RedundantAssignment
+        public void SetProperty<T>( ref T field, T value, [CallerMemberName] string propertyName = null )
+        {
+            field = value;
+            OnPropertyChanged( propertyName );
+        }
 
         public override string ToString()
         {
@@ -35,9 +37,9 @@ namespace ClassicAssist.Data.Dress
         }
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
         }
     }
 }

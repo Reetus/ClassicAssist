@@ -20,8 +20,6 @@ namespace ClassicAssist.UO.Objects
             Equipment = new ItemCollection( serial );
         }
 
-        public bool IsMounted => Mount != null;
-        public Item Mount => Engine.Items.GetItem( GetLayer( Layer.Mount ) );
         public Item Backpack => Engine.Items.GetItem( GetLayer( Layer.Backpack ) );
         public ItemCollection Equipment { get; set; }
 
@@ -38,8 +36,13 @@ namespace ClassicAssist.UO.Objects
             set => _isDead = value;
         }
 
+        public bool IsMounted => Mount != null;
+
+        public bool IsRenamable { get; set; }
+
         public int Mana { get; set; }
         public int ManaMax { get; set; }
+        public Item Mount => Engine.Items.GetItem( GetLayer( Layer.Mount ) );
         public Notoriety Notoriety { get; set; }
         public int Stamina { get; set; }
         public int StaminaMax { get; set; }
@@ -54,8 +57,6 @@ namespace ClassicAssist.UO.Objects
                 _status = value;
             }
         }
-
-        public bool IsRenamable { get; set; }
 
         public event dMobileStatusUpdated MobileStatusUpdated;
 

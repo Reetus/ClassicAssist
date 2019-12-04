@@ -8,26 +8,33 @@ namespace ClassicAssist.Misc
     {
         private readonly Action<T> _onAction;
         private readonly ConcurrentQueue<T> _queue = new ConcurrentQueue<T>();
-        private readonly EventWaitHandle _wh = new AutoResetEvent(false);
+        private readonly EventWaitHandle _wh = new AutoResetEvent( false );
         private readonly Thread _workerThread;
 
-        public ThreadQueue(Action<T> onAction)
+        public ThreadQueue( Action<T> onAction )
         {
             _onAction = onAction;
-            _workerThread = new Thread(ProcessQueue) { IsBackground = true };
+            _workerThread = new Thread( ProcessQueue ) { IsBackground = true };
             _workerThread.Start();
+        }
+
+        public void Dispose()
+        {
+            StopThread();
         }
 
         private void ProcessQueue()
         {
-            while (_workerThread.IsAlive)
+            while ( _workerThread.IsAlive )
             {
-                if (_queue.TryDequeue(out T queueItem))
+                if ( _queue.TryDequeue( out T queueItem ) )
                 {
-                    if (queueItem == null)
+                    if ( queueItem == null )
+                    {
                         return;
+                    }
 
-                    _onAction(queueItem);
+                    _onAction( queueItem );
                 }
                 else
                 {
@@ -36,36 +43,29 @@ namespace ClassicAssist.Misc
             }
         }
 
-        public void Dispose()
+        public void Enqueue( T queueItem )
         {
-            StopThread();
-        }
-
-        public void Enqueue(T queueItem)
-        {
-            _queue.Enqueue(queueItem);
+            _queue.Enqueue( queueItem );
 
             try
             {
                 _wh.Set();
             }
-            catch (ObjectDisposedException)
+            catch ( ObjectDisposedException )
             {
-
             }
         }
 
         private void StopThread()
         {
-            _queue.Enqueue(default);
+            _queue.Enqueue( default );
 
             try
             {
                 _wh.Set();
             }
-            catch (ObjectDisposedException)
+            catch ( ObjectDisposedException )
             {
-
             }
 
             _workerThread.Join();

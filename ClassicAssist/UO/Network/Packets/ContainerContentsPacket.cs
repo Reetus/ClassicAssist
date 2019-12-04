@@ -3,7 +3,7 @@ using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UO.Network.Packets
 {
-    public class ContainerContentsPacket : Packets
+    public class ContainerContentsPacket : BasePacket
     {
         public ContainerContentsPacket( ItemCollection collection )
         {

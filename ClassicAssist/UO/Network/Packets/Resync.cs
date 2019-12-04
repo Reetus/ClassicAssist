@@ -2,7 +2,7 @@
 
 namespace ClassicAssist.UO.Network.Packets
 {
-    public class Resync : Packets
+    public class Resync : BasePacket
     {
         public Resync()
         {

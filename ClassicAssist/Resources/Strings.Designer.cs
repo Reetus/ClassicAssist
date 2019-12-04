@@ -151,6 +151,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Attack request blocked....
+        /// </summary>
+        public static string Attack_request_blocked___ {
+            get {
+                return ResourceManager.GetString("Attack request blocked...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bandage Self.
         /// </summary>
         public static string Bandage_Self {
@@ -277,11 +286,29 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Command Prefix:.
+        /// </summary>
+        public static string Command_Prefix_ {
+            get {
+                return ResourceManager.GetString("Command Prefix:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Commands.
         /// </summary>
         public static string Commands {
             get {
                 return ResourceManager.GetString("Commands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commands:.
+        /// </summary>
+        public static string Commands_ {
+            get {
+                return ResourceManager.GetString("Commands:", resourceCulture);
             }
         }
         
@@ -318,6 +345,15 @@ namespace ClassicAssist.Resources {
         public static string Counters {
             get {
                 return ResourceManager.GetString("Counters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Location:.
+        /// </summary>
+        public static string Current_Location_ {
+            get {
+                return ResourceManager.GetString("Current Location:", resourceCulture);
             }
         }
         
@@ -430,6 +466,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Friends.
+        /// </summary>
+        public static string Friends {
+            get {
+                return ResourceManager.GetString("Friends", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to General.
         /// </summary>
         public static string General {
@@ -489,6 +534,15 @@ namespace ClassicAssist.Resources {
         public static string Include_Backpack_Amount {
             get {
                 return ResourceManager.GetString("Include Backpack Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include party members.
+        /// </summary>
+        public static string Include_party_members {
+            get {
+                return ResourceManager.GetString("Include party members", resourceCulture);
             }
         }
         
@@ -826,6 +880,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        public static string Options {
+            get {
+                return ResourceManager.GetString("Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Organizer.
         /// </summary>
         public static string Organizer {
@@ -880,6 +943,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Persist Use Once.
+        /// </summary>
+        public static string Persist_Use_Once {
+            get {
+                return ResourceManager.GetString("Persist Use Once", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Play.
         /// </summary>
         public static string Play {
@@ -903,6 +975,15 @@ namespace ClassicAssist.Resources {
         public static string Port_ {
             get {
                 return ResourceManager.GetString("Port:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prevent attacking friends in war mode.
+        /// </summary>
+        public static string Prevent_attacking_friends_in_war_mode {
+            get {
+                return ResourceManager.GetString("Prevent attacking friends in war mode", resourceCulture);
             }
         }
         
@@ -1182,6 +1263,24 @@ namespace ClassicAssist.Resources {
         public static string Target_clothing_item___ {
             get {
                 return ResourceManager.GetString("Target clothing item...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target friend to remove....
+        /// </summary>
+        public static string Target_friend_to_remove___ {
+            get {
+                return ResourceManager.GetString("Target friend to remove...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target new friend....
+        /// </summary>
+        public static string Target_new_friend___ {
+            get {
+                return ResourceManager.GetString("Target new friend...", resourceCulture);
             }
         }
         

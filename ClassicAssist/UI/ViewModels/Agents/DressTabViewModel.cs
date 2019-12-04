@@ -242,7 +242,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            int serial = await Commands.GetTargeSerialAsync( Strings.Target_clothing_item___, 30000 );
+            int serial = await Commands.GetTargeSerialAsync( Strings.Target_clothing_item___ );
 
             Item item = Engine.Items.GetItem( serial );
 

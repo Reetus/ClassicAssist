@@ -26,6 +26,13 @@ namespace ClassicAssist.Data.Macros.Commands
             return _lists.ContainsKey( listName );
         }
 
+        [CommandsDisplay( Category = "Lists", Description = "Returns the number of entries in the list.",
+            InsertText = "if List(\"list\") < 5:" )]
+        public static int List( string listName )
+        {
+            return ListExists( listName ) ? _lists[listName].Count : 0;
+        }
+
         [CommandsDisplay( Category = "Lists",
             Description = "Pushes a value to the end of the list, will create list if it doesn't exist.",
             InsertText = "PushList(\"list\", 1)" )]

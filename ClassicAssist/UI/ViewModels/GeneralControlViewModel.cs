@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -14,6 +13,7 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class GeneralControlViewModel : BaseViewModel, ISettingProvider
     {
+        private Options _options;
         private ObservableCollection<string> _profiles = new ObservableCollection<string>();
 
         public GeneralControlViewModel()
@@ -27,37 +27,7 @@ namespace ClassicAssist.UI.ViewModels
             }
         }
 
-        public bool ActionDelay
-        {
-            get => Options.CurrentOptions.ActionDelay;
-            set => Options.CurrentOptions.ActionDelay = value;
-        }
-
-        public int ActionDelayMS
-        {
-            get => Options.CurrentOptions.ActionDelayMS;
-            set => Options.CurrentOptions.ActionDelayMS = value;
-        }
-
-        public bool AlwaysOnTop
-        {
-            get => Options.CurrentOptions.AlwaysOnTop;
-            set => Options.CurrentOptions.AlwaysOnTop = value;
-        }
-
         public ObservableCollectionEx<FilterEntry> Filters { get; set; } = new ObservableCollectionEx<FilterEntry>();
-
-        public ObservableCollection<string> Profiles
-        {
-            get => _profiles;
-            set => SetProperty(ref _profiles, value);
-        }
-
-        public int LightLevel
-        {
-            get => Options.CurrentOptions.LightLevel;
-            set => Options.CurrentOptions.LightLevel = value;
-        }
 
         [OptionsBinding( Property = "LightLevel" )]
         public int LightLevelListen
@@ -78,10 +48,16 @@ namespace ClassicAssist.UI.ViewModels
             }
         }
 
-        public bool UseDeathScreenWhilstHidden
+        public Options Options
         {
-            get => Options.CurrentOptions.UseDeathScreenWhilstHidden;
-            set => Options.CurrentOptions.UseDeathScreenWhilstHidden = value;
+            get => _options;
+            set => SetProperty( ref _options, value );
+        }
+
+        public ObservableCollection<string> Profiles
+        {
+            get => _profiles;
+            set => SetProperty( ref _profiles, value );
         }
 
         public void Serialize( JObject json )
@@ -91,8 +67,7 @@ namespace ClassicAssist.UI.ViewModels
                 ["AlwaysOnTop"] = Options.CurrentOptions.AlwaysOnTop,
                 ["LightLevel"] = Options.CurrentOptions.LightLevel,
                 ["ActionDelay"] = Options.CurrentOptions.ActionDelay,
-                ["ActionDelayMS"] = Options.CurrentOptions.ActionDelayMS,
-                ["UseDeathScreenWhilstHidden"] = Options.CurrentOptions.UseDeathScreenWhilstHidden
+                ["ActionDelayMS"] = Options.CurrentOptions.ActionDelayMS
             };
 
             json.Add( "General", obj );
@@ -100,6 +75,8 @@ namespace ClassicAssist.UI.ViewModels
 
         public void Deserialize( JObject json, Options options )
         {
+            Options = options;
+
             if ( json["General"] == null )
             {
                 return;
@@ -107,22 +84,21 @@ namespace ClassicAssist.UI.ViewModels
 
             JToken general = json["General"];
 
-            SetOptionsNotify( nameof( LightLevel ), general["LightLevel"]?.ToObject<int>(), 100 );
-            SetOptionsNotify( nameof( ActionDelay ), general["ActionDelay"]?.ToObject<bool>(), false );
-            SetOptionsNotify( nameof( ActionDelayMS ), general["ActionDelayMS"]?.ToObject<int>(), 900 );
-            SetOptionsNotify( nameof( UseDeathScreenWhilstHidden ),
-                general["UseDeathScreenWhilstHidden"]?.ToObject<bool>(), false );
-            bool topmost = general["AlwaysOnTop"]?.ToObject<bool>() ?? false;
-            SetOptionsNotify( nameof( AlwaysOnTop ), topmost, false );
+            Options.LightLevel = general["LightLevel"]?.ToObject<int>() ?? 100;
+            Options.ActionDelay = general["ActionDelay"]?.ToObject<bool>() ?? false;
+            Options.ActionDelayMS = general["ActionDelayMS"]?.ToObject<int>() ?? 900;
+            Options.AlwaysOnTop = general["AlwaysOnTop"]?.ToObject<bool>() ?? false;
 
             string[] profiles = Options.GetProfiles();
 
-            if (profiles == null)
-                return;
-
-            foreach (string profile in profiles)
+            if ( profiles == null )
             {
-                Profiles.Add(Path.GetFileName(profile));
+                return;
+            }
+
+            foreach ( string profile in profiles )
+            {
+                Profiles.Add( Path.GetFileName( profile ) );
             }
         }
     }

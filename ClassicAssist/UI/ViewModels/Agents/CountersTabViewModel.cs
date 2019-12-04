@@ -137,7 +137,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private async Task InsertEntry( object arg )
         {
-            int serial = await Commands.GetTargeSerialAsync( Strings.Target_object___, 30000 );
+            int serial = await Commands.GetTargeSerialAsync( Strings.Target_object___ );
 
             if ( serial == 0 )
             {

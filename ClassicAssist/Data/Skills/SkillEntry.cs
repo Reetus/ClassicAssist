@@ -53,6 +53,7 @@ namespace ClassicAssist.Data.Skills
                 OnPropertyChanged();
             }
         }
+
         public Skill Skill
         {
             get => _skill;
@@ -76,9 +77,9 @@ namespace ClassicAssist.Data.Skills
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
         }
     }
 }

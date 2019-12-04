@@ -8,7 +8,7 @@ using ClassicAssist.UI.Misc;
 namespace ClassicAssist.UI.Views
 {
     /// <summary>
-    /// Interaction logic for SkillsTabControl.xaml
+    ///     Interaction logic for SkillsTabControl.xaml
     /// </summary>
     public partial class SkillsTabControl : UserControl
     {
@@ -20,16 +20,20 @@ namespace ClassicAssist.UI.Views
             InitializeComponent();
         }
 
-        private void GridViewHeaderOnClick(object sender, RoutedEventArgs e)
+        private void GridViewHeaderOnClick( object sender, RoutedEventArgs e )
         {
             GridViewColumnHeader headerClicked = e.OriginalSource as GridViewColumnHeader;
             ListSortDirection direction;
 
-            if (headerClicked == null || headerClicked.Role == GridViewColumnHeaderRole.Padding)
+            if ( headerClicked == null || headerClicked.Role == GridViewColumnHeaderRole.Padding )
+            {
                 return;
+            }
 
-            if (!Equals(headerClicked, _lastHeaderClicked))
+            if ( !Equals( headerClicked, _lastHeaderClicked ) )
+            {
                 direction = ListSortDirection.Ascending;
+            }
             else
             {
                 direction = _lastDirection == ListSortDirection.Ascending
@@ -37,21 +41,25 @@ namespace ClassicAssist.UI.Views
                     : ListSortDirection.Ascending;
             }
 
-            if (headerClicked.Column is SkillsGridViewColumn column) Sort((string)headerClicked.Column.Header, direction, column.SortField);
+            if ( headerClicked.Column is SkillsGridViewColumn column )
+            {
+                Sort( (string) headerClicked.Column.Header, direction, column.SortField );
+            }
 
             _lastHeaderClicked = headerClicked;
             _lastDirection = direction;
         }
 
-        private void Sort(string header, ListSortDirection direction, SkillsGridViewColumn.Enums sortField)
+        private void Sort( string header, ListSortDirection direction, SkillsGridViewColumn.Enums sortField )
         {
-            ListCollectionView dataView = (ListCollectionView)CollectionViewSource.GetDefaultView(listView.ItemsSource);
+            ListCollectionView dataView =
+                (ListCollectionView) CollectionViewSource.GetDefaultView( listView.ItemsSource );
 
             dataView.SortDescriptions.Clear();
-            SortDescription sd = new SortDescription(header, direction);
-            dataView.SortDescriptions.Add(sd);
+            SortDescription sd = new SortDescription( header, direction );
+            dataView.SortDescriptions.Add( sd );
 
-            dataView.CustomSort = new SkillComparer(direction, sortField);
+            dataView.CustomSort = new SkillComparer( direction, sortField );
             dataView.Refresh();
         }
     }

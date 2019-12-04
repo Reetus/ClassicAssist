@@ -147,6 +147,9 @@
   <data name="Amount" xml:space="preserve">
     <value>Amount</value>
   </data>
+  <data name="Attack request blocked..." xml:space="preserve">
+    <value>Attack request blocked...</value>
+  </data>
   <data name="Bandage Self" xml:space="preserve">
     <value>Bandage Self</value>
   </data>
@@ -189,8 +192,14 @@
   <data name="Combat" xml:space="preserve">
     <value>Combat</value>
   </data>
+  <data name="Command Prefix:" xml:space="preserve">
+    <value>Command Prefix:</value>
+  </data>
   <data name="Commands" xml:space="preserve">
     <value>Commands</value>
+  </data>
+  <data name="Commands:" xml:space="preserve">
+    <value>Commands:</value>
   </data>
   <data name="Connected:" xml:space="preserve">
     <value>Connected:</value>
@@ -203,6 +212,9 @@
   </data>
   <data name="Counters" xml:space="preserve">
     <value>Counters</value>
+  </data>
+  <data name="Current Location:" xml:space="preserve">
+    <value>Current Location:</value>
   </data>
   <data name="Do not auto interupt" xml:space="preserve">
     <value>Do not auto interupt</value>
@@ -240,6 +252,9 @@
   <data name="Filters" xml:space="preserve">
     <value>Filters</value>
   </data>
+  <data name="Friends" xml:space="preserve">
+    <value>Friends</value>
+  </data>
   <data name="General" xml:space="preserve">
     <value>General</value>
   </data>
@@ -260,6 +275,9 @@
   </data>
   <data name="Include Backpack Amount" xml:space="preserve">
     <value>Include Backpack Amount</value>
+  </data>
+  <data name="Include party members" xml:space="preserve">
+    <value>Include party members</value>
   </data>
   <data name="Include Purchased Amount" xml:space="preserve">
     <value>Include Purchased Amount</value>
@@ -372,6 +390,9 @@
   <data name="Objects" xml:space="preserve">
     <value>Objects</value>
   </data>
+  <data name="Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
   <data name="Organizer" xml:space="preserve">
     <value>Organizer</value>
   </data>
@@ -390,6 +411,9 @@
   <data name="Pass to UO" xml:space="preserve">
     <value>Pass to UO</value>
   </data>
+  <data name="Persist Use Once" xml:space="preserve">
+    <value>Persist Use Once</value>
+  </data>
   <data name="Play" xml:space="preserve">
     <value>Play</value>
   </data>
@@ -398,6 +422,9 @@
   </data>
   <data name="Port:" xml:space="preserve">
     <value>Port:</value>
+  </data>
+  <data name="Prevent attacking friends in war mode" xml:space="preserve">
+    <value>Prevent attacking friends in war mode</value>
   </data>
   <data name="Product:" xml:space="preserve">
     <value>Product:</value>
@@ -491,6 +518,12 @@
   </data>
   <data name="Target clothing item..." xml:space="preserve">
     <value>Target clothing item...</value>
+  </data>
+  <data name="Target friend to remove..." xml:space="preserve">
+    <value>Target friend to remove...</value>
+  </data>
+  <data name="Target new friend..." xml:space="preserve">
+    <value>Target new friend...</value>
   </data>
   <data name="Target new item..." xml:space="preserve">
     <value>Target new item...</value>

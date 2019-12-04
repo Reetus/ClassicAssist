@@ -87,7 +87,7 @@ namespace ClassicAssist.UO
             Engine.SendPacketToServer( new MobileQuery( serial, queryType ) );
         }
 
-        public static async Task<int> GetTargeSerialAsync( string message = "", int timeout = 5000 )
+        public static async Task<int> GetTargeSerialAsync( string message = "", int timeout = 30000 )
         {
             if ( string.IsNullOrEmpty( message ) )
             {
@@ -100,7 +100,7 @@ namespace ClassicAssist.UO
 
             return await Task.Run( () =>
             {
-                uint value = (uint)random.Next( 1, int.MaxValue );
+                uint value = (uint) random.Next( 1, int.MaxValue );
 
                 //TODO
                 PacketWriter pw = new PacketWriter( 19 );
@@ -151,15 +151,15 @@ namespace ClassicAssist.UO
 
         public static bool GumpButtonClick( uint gumpID, int buttonID )
         {
-            if ( !Engine.GumpList.TryGetValue( (int)gumpID, out int serial ) )
+            if ( !Engine.GumpList.TryGetValue( (int) gumpID, out int serial ) )
             {
                 return false;
             }
 
-            Engine.SendPacketToServer( new GumpButtonClick((int)gumpID, serial, buttonID ) );
+            Engine.SendPacketToServer( new GumpButtonClick( (int) gumpID, serial, buttonID ) );
 
-            Engine.GumpList.TryRemove((int)gumpID, out _ );
-            CloseClientGump((int)gumpID );
+            Engine.GumpList.TryRemove( (int) gumpID, out _ );
+            CloseClientGump( (int) gumpID );
 
             return true;
         }
@@ -179,17 +179,17 @@ namespace ClassicAssist.UO
                     new[] { PacketFilterConditions.UIntAtPositionCondition( gumpId, 7 ) } );
             }
 
-            WaitEntry waitEntry = Engine.WaitEntries.AddWait( pfi, PacketDirection.Incoming, true );
+            PacketWaitEntry packetWaitEntry = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );
 
             try
             {
-                bool result = waitEntry.Lock.WaitOne( timeout );
+                bool result = packetWaitEntry.Lock.WaitOne( timeout );
 
                 return result;
             }
             finally
             {
-                Engine.WaitEntries.RemoveWait( waitEntry );
+                Engine.PacketWaitEntries.Remove( packetWaitEntry );
             }
         }
 
@@ -387,7 +387,7 @@ namespace ClassicAssist.UO
         {
             PacketFilterInfo pfi = new PacketFilterInfo( 0x6C );
 
-            WaitEntry we = Engine.WaitEntries.AddWait( pfi, PacketDirection.Incoming );
+            PacketWaitEntry we = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming );
 
             try
             {
@@ -411,7 +411,7 @@ namespace ClassicAssist.UO
             }
             finally
             {
-                Engine.WaitEntries.RemoveWait( we );
+                Engine.PacketWaitEntries.Remove( we );
             }
         }
 
@@ -427,7 +427,7 @@ namespace ClassicAssist.UO
 
         public static bool WaitForIncomingPacket( PacketFilterInfo pfi, int timeout, Action beforeWait = null )
         {
-            WaitEntry we = Engine.WaitEntries.AddWait( pfi, PacketDirection.Incoming, true );
+            PacketWaitEntry we = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );
 
             bool result;
 
@@ -439,7 +439,7 @@ namespace ClassicAssist.UO
             }
             finally
             {
-                Engine.WaitEntries.RemoveWait( we );
+                Engine.PacketWaitEntries.Remove( we );
             }
 
             return result;

@@ -12,23 +12,23 @@ namespace ClassicAssist.Data.Dress
         private static readonly object _instanceLock = new object();
         private ObservableCollectionEx<DressAgentEntry> _items = new ObservableCollectionEx<DressAgentEntry>();
 
+        private DressManager()
+        {
+            Items.CollectionChanged += OnCollectionChanged;
+        }
+
         public ObservableCollectionEx<DressAgentEntry> Items
         {
             get => _items;
             set => SetProperty( ref _items, value );
         }
 
-        private DressManager()
-        {
-            Items.CollectionChanged += OnCollectionChanged;
-        }
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnCollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
         {
-            OnPropertyChanged(nameof(Items));
+            OnPropertyChanged( nameof( Items ) );
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public static DressManager GetInstance()
         {

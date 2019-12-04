@@ -18,8 +18,8 @@ namespace ClassicAssist.Tests
             int int16 = reader.ReadInt16();
             int int8 = reader.ReadByte();
 
-            Assert.AreEqual(unchecked((int)0xAABBCCDD), int32 );
-            Assert.AreEqual( unchecked((short)0xEEFF), int16 );
+            Assert.AreEqual( unchecked( (int) 0xAABBCCDD ), int32 );
+            Assert.AreEqual( unchecked( (short) 0xEEFF ), int16 );
             Assert.AreEqual( 0x0A, int8 );
 
             reader.Seek( 1, SeekOrigin.Begin );
@@ -28,9 +28,9 @@ namespace ClassicAssist.Tests
             uint uint16 = reader.ReadUInt16();
             sbyte uint8 = reader.ReadSByte();
 
-            Assert.AreEqual(unchecked((uint)0xAABBCCDD), uint32);
-            Assert.AreEqual(unchecked((ushort)0xEEFF), uint16);
-            Assert.AreEqual(0x0A, uint8);
+            Assert.AreEqual( 0xAABBCCDD, uint32 );
+            Assert.AreEqual( (ushort) 0xEEFF, uint16 );
+            Assert.AreEqual( 0x0A, uint8 );
         }
     }
 }

@@ -8,7 +8,7 @@ namespace ClassicAssist.UI.Misc.ValueConverters
     {
         public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
         {
-            return !( value is DateTime dt ) ? (object) null : (DateTime.Now - dt).ToString();
+            return !( value is DateTime dt ) ? null : ( DateTime.Now - dt ).ToString();
         }
 
         public object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture )

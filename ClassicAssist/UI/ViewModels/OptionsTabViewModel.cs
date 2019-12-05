@@ -37,14 +37,14 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "UseDeathScreenWhilstHidden", Options.UseDeathScreenWhilstHidden );
             options.Add( "CommandPrefix", Options.CommandPrefix );
 
-            json.Add( "Options", options );
+            json?.Add( "Options", options );
         }
 
         public void Deserialize( JObject json, Options options )
         {
             Options = options;
 
-            JToken config = json["Options"];
+            JToken config = json?["Options"];
 
             if ( config?["UseOnce"] != null )
             {

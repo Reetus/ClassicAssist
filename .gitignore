@@ -5,3 +5,5 @@
 Output/
 packages/
 ClassicAssist/ClassicAssist.csproj.user
+ClassicAssist.sln.DotSettings.user
+ClassicAssist/Properties/launchSettings.json

@@ -107,12 +107,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 organizer.Add( entryObj );
             }
 
-            json.Add( "Organizer", organizer );
+            json?.Add( "Organizer", organizer );
         }
 
         public void Deserialize( JObject json, Options options )
         {
-            if ( json["Organizer"] == null )
+            if ( json?["Organizer"] == null )
             {
                 return;
             }

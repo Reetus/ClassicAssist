@@ -63,7 +63,7 @@ namespace ClassicAssist.UI.ViewModels
 
             hotkeys.Add( "Commands", commandsArray );
 
-            json.Add( "Hotkeys", hotkeys );
+            json?.Add( "Hotkeys", hotkeys );
         }
 
         public void Deserialize( JObject json, Options options )
@@ -86,7 +86,7 @@ namespace ClassicAssist.UI.ViewModels
 
             _hotkeyManager.Items.AddSorted( _commandsCategory );
 
-            JToken hotkeys = json["Hotkeys"];
+            JToken hotkeys = json?["Hotkeys"];
 
             if ( hotkeys?["Commands"] == null )
             {

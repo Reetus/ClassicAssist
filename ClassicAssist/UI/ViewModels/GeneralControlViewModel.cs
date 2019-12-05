@@ -70,14 +70,14 @@ namespace ClassicAssist.UI.ViewModels
                 ["ActionDelayMS"] = Options.CurrentOptions.ActionDelayMS
             };
 
-            json.Add( "General", obj );
+            json?.Add( "General", obj );
         }
 
         public void Deserialize( JObject json, Options options )
         {
             Options = options;
 
-            if ( json["General"] == null )
+            if ( json?["General"] == null )
             {
                 return;
             }

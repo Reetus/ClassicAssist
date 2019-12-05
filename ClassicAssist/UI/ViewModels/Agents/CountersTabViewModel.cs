@@ -82,12 +82,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             options.Add( "Items", items );
 
-            json.Add( "Counters", options );
+            json?.Add( "Counters", options );
         }
 
         public void Deserialize( JObject json, Options options )
         {
-            if ( json["Counters"] == null )
+            if ( json?["Counters"] == null )
             {
                 return;
             }

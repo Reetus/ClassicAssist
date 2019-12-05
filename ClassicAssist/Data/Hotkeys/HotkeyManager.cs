@@ -77,6 +77,11 @@ namespace ClassicAssist.Data.Hotkeys
 
             foreach ( HotkeyEntry hke in Items )
             {
+                if ( hke.Children == null )
+                {
+                    break;
+                }
+
                 foreach ( HotkeySettable hks in hke.Children )
                 {
                     Key modifier = Key.None;

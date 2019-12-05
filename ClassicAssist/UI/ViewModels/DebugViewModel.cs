@@ -53,19 +53,19 @@ namespace ClassicAssist.UI.ViewModels
 
         public void Serialize( JObject json )
         {
-            if ( json["Debug"] != null )
+            if ( json?["Debug"] != null )
             {
                 return;
             }
 
             JObject options = new JObject { { "IgnorePingPackets", IgnorePingPackets } };
 
-            json.Add( "Debug", options );
+            json?.Add( "Debug", options );
         }
 
         public void Deserialize( JObject json, Options options )
         {
-            if ( json["Debug"] == null )
+            if ( json?["Debug"] == null )
             {
                 return;
             }

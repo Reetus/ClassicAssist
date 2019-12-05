@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ClassicAssist.Updater": {
+      "commandName": "Project",
+      "commandLineArgs": "--force"
+    }
+  }
+}

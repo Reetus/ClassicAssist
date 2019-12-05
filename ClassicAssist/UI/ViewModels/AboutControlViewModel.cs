@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Timers;
 using System.Windows.Input;
@@ -17,6 +18,7 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class AboutControlViewModel : BaseViewModel
     {
+        private ICommand _checkForUpdatesCommand;
         private bool _connected;
         private DateTime _connectedTime;
         private int _itemCount;
@@ -48,6 +50,9 @@ namespace ClassicAssist.UI.ViewModels
         }
 
         public string BuildDate { get; set; }
+
+        public ICommand CheckForUpdatesCommand =>
+            _checkForUpdatesCommand ?? ( _checkForUpdatesCommand = new RelayCommand( CheckForUpdates, o => true ) );
 
         public bool Connected
         {
@@ -156,6 +161,33 @@ namespace ClassicAssist.UI.ViewModels
             Connected = false;
 
             _timer.Stop();
+        }
+
+        private static void CheckForUpdates( object obj )
+        {
+            string updaterPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
+                "ClassicAssist.Updater.exe" );
+
+            Version version = null;
+
+            if ( System.Version.TryParse(
+                FileVersionInfo.GetVersionInfo( Assembly.GetExecutingAssembly().Location ).ProductVersion,
+                out Version v ) )
+            {
+                version = v;
+            }
+
+            if ( !File.Exists( updaterPath ) )
+            {
+                return;
+            }
+
+            ProcessStartInfo psi = new ProcessStartInfo( updaterPath,
+                $"--pid {Process.GetCurrentProcess().Id} --path {Engine.StartupPath}" + ( version != null
+                    ? $" --version {version}"
+                    : "" ) ) { UseShellExecute = false };
+
+            Process.Start( psi );
         }
 
         private void OnConnectedEvent()

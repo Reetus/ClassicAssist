@@ -1,5 +1,5 @@
-﻿using CommandLine;
-using System;
+﻿using System;
+using CommandLine;
 
 namespace ClassicAssist.Updater
 {
@@ -11,22 +11,22 @@ namespace ClassicAssist.Updater
 
     public class Options
     {
-        [Option("version", Required = false)]
+        [Option( "version", Required = false )]
         public Version CurrentVersion { get; set; }
 
-        [Option("force", Required = false, Default = false)]
+        [Option( "force", Required = false, Default = false )]
         public bool Force { get; set; }
 
-        [Option("path", Required = false, Default = "")]
+        [Option( "path", Required = false, Default = "" )]
         public string Path { get; set; }
 
-        [Option("pid", Required = false, Default = 0)]
+        [Option( "pid", Required = false, Default = 0 )]
         public int PID { get; set; }
 
-        [Option("stage", Default = UpdaterStage.Initial, Required = false)]
+        [Option( "stage", Default = UpdaterStage.Initial, Required = false )]
         public UpdaterStage Stage { get; set; }
 
-        [Option("updatepath", Required = false, Default = "")]
+        [Option( "updatepath", Required = false, Default = "" )]
         public string UpdatePath { get; set; }
     }
 }

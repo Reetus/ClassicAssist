@@ -1,17 +1,21 @@
 ﻿using System;
 using Assistant;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Objects.Gumps;
 
 namespace ClassicAssist.UO.Network
 {
     public static class OutgoingPacketHandlers
     {
+        public delegate void dGump( int gumpId, int serial, Gump gump );
+
         public delegate void dTargetSentEvent( TargetType targetType, int senderSerial, int flags, int serial, int x,
             int y, int z, int id );
 
         private static PacketHandler[] _handlers;
         private static PacketHandler[] _extendedHandlers;
         public static event dTargetSentEvent TargetSentEvent;
+        public static event dGump GumpEvent;
 
         public static void Initialize()
         {
@@ -36,8 +40,16 @@ namespace ClassicAssist.UO.Network
         {
             int senderSerial = reader.ReadInt32();
             int gumpId = reader.ReadInt32();
+            int buttonId = reader.ReadInt32();
 
             Engine.GumpList.TryRemove( gumpId, out _ );
+
+            if ( Engine.Gumps.GetGump( gumpId, out Gump gump ) )
+            {
+                GumpEvent?.Invoke( gumpId, senderSerial, gump );
+            }
+
+            Engine.Gumps.Remove( gumpId, buttonId );
         }
 
         private static void OnTargetSent( PacketReader reader )

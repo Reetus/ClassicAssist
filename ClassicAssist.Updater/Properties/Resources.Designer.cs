@@ -70,6 +70,15 @@ namespace ClassicAssist.Updater.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot locate update package....
+        /// </summary>
+        public static string Cannot_locate_update_package___ {
+            get {
+                return ResourceManager.GetString("Cannot locate update package...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Checking for latest release....
         /// </summary>
         public static string Checking_for_latest_release___ {

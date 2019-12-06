@@ -61,6 +61,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} items, {1} selected, {2} total amount.
+        /// </summary>
+        public static string _0__items___1__selected___2__total_amount {
+            get {
+                return ResourceManager.GetString("{0} items, {1} selected, {2} total amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Abilities.
         /// </summary>
         public static string Abilities {
@@ -192,6 +201,15 @@ namespace ClassicAssist.Resources {
         public static string Build_Date_ {
             get {
                 return ResourceManager.GetString("Build Date:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel action.
+        /// </summary>
+        public static string Cancel_action {
+            get {
+                return ResourceManager.GetString("Cancel action", resourceCulture);
             }
         }
         
@@ -430,6 +448,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Equip Last Weapon (Quick Weapon Switch).
+        /// </summary>
+        public static string Equip_Last_Weapon__Quick_Weapon_Switch_ {
+            get {
+                return ResourceManager.GetString("Equip Last Weapon (Quick Weapon Switch)", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error: Cannot find player backpack.
         /// </summary>
         public static string Error__Cannot_find_player_backpack {
@@ -498,6 +525,15 @@ namespace ClassicAssist.Resources {
         public static string Graphic {
             get {
                 return ResourceManager.GetString("Graphic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grid Container Viewer.
+        /// </summary>
+        public static string Grid_Container_Viewer {
+            get {
+                return ResourceManager.GetString("Grid Container Viewer", resourceCulture);
             }
         }
         
@@ -597,6 +633,15 @@ namespace ClassicAssist.Resources {
         public static string Invalid_destination_container___ {
             get {
                 return ResourceManager.GetString("Invalid destination container...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid gump....
+        /// </summary>
+        public static string Invalid_gump___ {
+            get {
+                return ResourceManager.GetString("Invalid gump...", resourceCulture);
             }
         }
         
@@ -831,6 +876,24 @@ namespace ClassicAssist.Resources {
         public static string Move_conflicting_items {
             get {
                 return ResourceManager.GetString("Move conflicting items", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to backpack.
+        /// </summary>
+        public static string Move_to_backpack {
+            get {
+                return ResourceManager.GetString("Move to backpack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to container.
+        /// </summary>
+        public static string Move_to_container {
+            get {
+                return ResourceManager.GetString("Move to container", resourceCulture);
             }
         }
         
@@ -1276,6 +1339,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Target container....
+        /// </summary>
+        public static string Target_container___ {
+            get {
+                return ResourceManager.GetString("Target container...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Target friend to remove....
         /// </summary>
         public static string Target_friend_to_remove___ {
@@ -1357,6 +1429,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toggle item properties.
+        /// </summary>
+        public static string Toggle_item_properties {
+            get {
+                return ResourceManager.GetString("Toggle item properties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Topmost.
         /// </summary>
         public static string Topmost {
@@ -1407,6 +1488,15 @@ namespace ClassicAssist.Resources {
         public static string Use_death_screen_whilst_hidden {
             get {
                 return ResourceManager.GetString("Use death screen whilst hidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use item.
+        /// </summary>
+        public static string Use_item {
+            get {
+                return ResourceManager.GetString("Use item", resourceCulture);
             }
         }
         

@@ -56,7 +56,8 @@
                                MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave"
                                TextDecorations="Underline" />
                 </Grid>
-                <Button Content="{x:Static r:Strings.Check_For_Updates}" Width="140" Height="25" Command="{Binding CheckForUpdatesCommand}"/>
+                <Button Content="{x:Static r:Strings.Check_For_Updates}" Width="140" Height="25"
+                        Command="{Binding CheckForUpdatesCommand}" />
             </StackPanel>
         </GroupBox>
         <GroupBox Header="{x:Static r:Strings.World_Status}" Grid.Row="0" Grid.Column="1">

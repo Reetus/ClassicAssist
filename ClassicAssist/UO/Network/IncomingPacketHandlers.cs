@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Skills;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
+using ClassicAssist.UO.Objects.Gumps;
 
 namespace ClassicAssist.UO.Network
 {
     public static class IncomingPacketHandlers
     {
         public delegate void dContainerContents( int serial, ItemCollection container );
+
+        public delegate void dGump( int gumpId, int serial, Gump gump );
 
         public delegate void dJournalEntryAdded( JournalEntry je );
 
@@ -29,14 +33,12 @@ namespace ClassicAssist.UO.Network
         private static PacketHandler[] _extendedHandlers;
 
         public static event dJournalEntryAdded JournalEntryAddedEvent;
-
         public static event dSkillUpdated SkillUpdatedEvent;
         public static event dSkillList SkillsListEvent;
-
         public static event dMobileUpdated MobileUpdatedEvent;
         public static event dMobileIncoming MobileIncomingEvent;
-
         public static event dContainerContents ContainerContentsEvent;
+        public static event dGump GumpEvent;
 
         public static void Initialize()
         {
@@ -68,7 +70,17 @@ namespace ClassicAssist.UO.Network
             Register( 0xDD, 0, OnCompressedGump );
             Register( 0xF3, 26, OnSAWorldItem );
 
+            RegisterExtended( 0x04, 0, OnCloseGump );
             RegisterExtended( 0x08, 0, OnMapChange );
+        }
+
+        private static void OnCloseGump( PacketReader reader )
+        {
+            int gumpID = reader.ReadInt32();
+            int buttonID = reader.ReadInt32();
+
+            Engine.GumpList.TryRemove( gumpID, out int _ );
+            Engine.Gumps.Remove( gumpID, buttonID );
         }
 
         private static void OnASCIIText( PacketReader reader )
@@ -136,6 +148,71 @@ namespace ClassicAssist.UO.Network
             int gumpId = reader.ReadInt32();
 
             Engine.GumpList.AddOrUpdate( gumpId, senderSerial, ( k, v ) => senderSerial );
+
+            int x = reader.ReadInt32();
+            int y = reader.ReadInt32();
+            int compressedLength = reader.ReadInt32();
+            int decompressedLength = reader.ReadInt32() + 1;
+
+            if ( compressedLength <= 4 )
+            {
+                return;
+            }
+
+            compressedLength -= 4;
+
+            byte[] decompressedBuffer = new byte[decompressedLength];
+
+            byte[] compressedBuffer = reader.ReadByteArray( compressedLength );
+
+            bool success = Compression.Uncompress( ref decompressedBuffer, ref decompressedLength, compressedBuffer,
+                compressedLength );
+
+            if ( !success )
+            {
+                return;
+            }
+
+            string layout = Encoding.ASCII.GetString( decompressedBuffer );
+
+            int linesCount = reader.ReadInt32();
+
+            compressedLength = reader.ReadInt32();
+            decompressedLength = reader.ReadInt32() + 1;
+
+            string[] text = new string[linesCount];
+
+            if ( compressedLength > 4 )
+            {
+                compressedLength -= 4;
+
+                decompressedBuffer = new byte[decompressedLength];
+
+                compressedBuffer = reader.ReadByteArray( compressedLength );
+
+                success = Compression.Uncompress( ref decompressedBuffer, ref decompressedLength, compressedBuffer,
+                    compressedLength );
+
+                if ( !success )
+                {
+                    return;
+                }
+
+                int offset = 0;
+
+                for ( int i = 0; i < linesCount; i++ )
+                {
+                    int length = ( ( decompressedBuffer[offset] << 8 ) | decompressedBuffer[offset + 1] ) * 2;
+                    offset += 2;
+                    text[i] = Encoding.BigEndianUnicode.GetString( decompressedBuffer, offset, length );
+                    offset += length;
+                }
+            }
+
+            Gump gump = GumpParser.Parse( senderSerial, gumpId, x, y, layout, text );
+            Engine.Gumps.Add( gump );
+
+            GumpEvent?.Invoke( gumpId, senderSerial, gump );
         }
 
         private static void OnMobileName( PacketReader reader )
@@ -414,7 +491,7 @@ namespace ClassicAssist.UO.Network
             item.Hue = hue;
             item.ID = id;
 
-            Mobile mobile = serial == Engine.Player.Serial ? Engine.Player : Engine.GetOrCreateMobile( mobileSerial );
+            Mobile mobile = Engine.GetOrCreateMobile( mobileSerial );
 
             mobile.SetLayer( item.Layer, item.Serial );
             mobile.Equipment.Add( item );
@@ -772,7 +849,7 @@ namespace ClassicAssist.UO.Network
 
         private static void RegisterExtended( int packetId, int length, OnPacketReceive onReceive )
         {
-            _handlers[packetId] = new PacketHandler( packetId, length, onReceive );
+            _extendedHandlers[packetId] = new PacketHandler( packetId, length, onReceive );
         }
 
         internal static PacketHandler GetHandler( int packetId )
@@ -782,7 +859,7 @@ namespace ClassicAssist.UO.Network
 
         private static PacketHandler GetExtendedHandler( int packetId )
         {
-            return _handlers[packetId];
+            return _extendedHandlers[packetId];
         }
     }
 }

@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:ClassicAssist.UI.Views"
         xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
         xmlns:resources="clr-namespace:ClassicAssist.Resources"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
         mc:Ignorable="d"
         Width="600" Height="400" Title="{x:Static resources:Strings.Entity_Collection_Viewer}"
         Topmost="{Binding Topmost}">
@@ -13,72 +14,46 @@
         <viewModels:EntityCollectionViewerViewModel />
     </Window.DataContext>
     <Window.Resources>
-        <Style x:Key="FileItemStyle" TargetType="{x:Type ListViewItem}">
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListViewItem}">
-                        <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <Border x:Name="border" BorderBrush="{x:Null}" BorderThickness="1"
-                                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="2.5"
-                                    Visibility="Hidden" />
-                            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <ContentPresenter />
-                            </StackPanel>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="EntityCollectionViewerResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ToolBarTray Grid.Row="0">
+            <ToolBar>
+                <Button Height="24" Padding="0" Command="{Binding RefreshCommand}"
+                        ToolTip="{x:Static resources:Strings.Refresh}"
+                        Style="{StaticResource ToolbarButtonStyle}">
+                    <Image Source="{StaticResource RefreshIcon}" />
+                </Button>
+                <ToggleButton Height="24" ToolTip="{x:Static resources:Strings.Toggle_item_properties}"
+                              Command="{Binding TogglePropertiesCommand}"
+                              CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}">
+                    <Image Source="{StaticResource ListIcon}" />
+                </ToggleButton>
+                <Button Height="24" Padding="0" Command="{Binding CancelActionCommand}"
+                        ToolTip="{x:Static resources:Strings.Cancel_action}" IsEnabled="{Binding IsPerformingAction}"
+                        Style="{StaticResource ToolbarButtonStyle}">
+                    <Image Source="{StaticResource CancelIcon}" />
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
         <ListView x:Name="listView" ItemsSource="{Binding Entities}"
                   ItemContainerStyle="{StaticResource FileItemStyle}"
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel />
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <DockPanel x:Name="DockPanel" Background="Transparent">
-                        <DockPanel.InputBindings>
-                            <MouseBinding Gesture="LeftDoubleClick"
-                                          Command="{Binding DataContext.ItemDoubleClickCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                                          CommandParameter="{Binding SelectedItem, ElementName=listView}" />
-                        </DockPanel.InputBindings>
-                        <StackPanel>
-                            <Image Source="{Binding Bitmap}" Height="32" DockPanel.Dock="Top" Stretch="Uniform"
-                                   HorizontalAlignment="Center" />
-                            <TextBlock x:Name="TextBlock" Text="{Binding Name}" TextAlignment="Center"
-                                       DockPanel.Dock="Bottom" Padding="1" TextWrapping="WrapWithOverflow" />
-                        </StackPanel>
-                    </DockPanel>
-                    <DataTemplate.Triggers>
-                        <DataTrigger
-                            Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}"
-                            Value="True">
-                            <Setter TargetName="TextBlock" Property="Background" Value="Navy" />
-                            <Setter TargetName="TextBlock" Property="Foreground" Value="White" />
-                        </DataTrigger>
-                        <DataTrigger
-                            Binding="{Binding DataContext.ShowProperties, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                            Value="False">
-                            <Setter Property="Width" Value="60" />
-                            <Setter TargetName="TextBlock" Property="FontSize" Value="10" />
-                        </DataTrigger>
-                        <DataTrigger
-                            Binding="{Binding DataContext.ShowProperties, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                            Value="True">
-                            <Setter Property="Width" Value="120" />
-                            <Setter TargetName="TextBlock" Property="FontSize" Value="10" />
-                        </DataTrigger>
-                    </DataTemplate.Triggers>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1">
+            <i:Interaction.Behaviors>
+                <misc:MultiSelectionBehaviour SelectedItems="{Binding SelectedItems}" />
+            </i:Interaction.Behaviors>
         </ListView>
+        <StatusBar Grid.Row="2">
+            <TextBlock Text="{Binding StatusLabel}" />
+        </StatusBar>
     </Grid>
 </Window>

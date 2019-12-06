@@ -117,7 +117,7 @@ namespace ClassicAssist.UI.ViewModels
         {
             EntityCollectionViewer window = new EntityCollectionViewer
             {
-                DataContext = new EntityCollectionViewerViewModel( Engine.Player.Equipment ) { Topmost = Topmost }
+                DataContext = new EntityCollectionViewerViewModel( Engine.Player?.Equipment ) { Topmost = Topmost }
             };
 
             window.Show();

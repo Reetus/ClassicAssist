@@ -162,6 +162,9 @@
   <data name="Build Date:" xml:space="preserve">
     <value>Build Date:</value>
   </data>
+  <data name="Cancel action" xml:space="preserve">
+    <value>Cancel action</value>
+  </data>
   <data name="Cannot find container..." xml:space="preserve">
     <value>Cannot find container...</value>
   </data>
@@ -240,6 +243,9 @@
   <data name="Entity Viewer" xml:space="preserve">
     <value>Entity Viewer</value>
   </data>
+  <data name="Equip Last Weapon (Quick Weapon Switch)" xml:space="preserve">
+    <value>Equip Last Weapon (Quick Weapon Switch)</value>
+  </data>
   <data name="Error: Cannot find player backpack" xml:space="preserve">
     <value>Error: Cannot find player backpack</value>
   </data>
@@ -263,6 +269,9 @@
   </data>
   <data name="Graphic" xml:space="preserve">
     <value>Graphic</value>
+  </data>
+  <data name="Grid Container Viewer" xml:space="preserve">
+    <value>Grid Container Viewer</value>
   </data>
   <data name="Gumps" xml:space="preserve">
     <value>Gumps</value>
@@ -296,6 +305,9 @@
   </data>
   <data name="Invalid destination container..." xml:space="preserve">
     <value>Invalid destination container...</value>
+  </data>
+  <data name="Invalid gump..." xml:space="preserve">
+    <value>Invalid gump...</value>
   </data>
   <data name="Invalid layer value..." xml:space="preserve">
     <value>Invalid layer value...</value>
@@ -374,6 +386,12 @@
   </data>
   <data name="Move conflicting items" xml:space="preserve">
     <value>Move conflicting items</value>
+  </data>
+  <data name="Move to backpack" xml:space="preserve">
+    <value>Move to backpack</value>
+  </data>
+  <data name="Move to container" xml:space="preserve">
+    <value>Move to container</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -522,6 +540,9 @@
   <data name="Target clothing item..." xml:space="preserve">
     <value>Target clothing item...</value>
   </data>
+  <data name="Target container..." xml:space="preserve">
+    <value>Target container...</value>
+  </data>
   <data name="Target friend to remove..." xml:space="preserve">
     <value>Target friend to remove...</value>
   </data>
@@ -549,6 +570,9 @@
   <data name="Timers" xml:space="preserve">
     <value>Timers</value>
   </data>
+  <data name="Toggle item properties" xml:space="preserve">
+    <value>Toggle item properties</value>
+  </data>
   <data name="Topmost" xml:space="preserve">
     <value>Topmost</value>
   </data>
@@ -566,6 +590,9 @@
   </data>
   <data name="Use death screen whilst hidden" xml:space="preserve">
     <value>Use death screen whilst hidden (Chuckles Mode)</value>
+  </data>
+  <data name="Use item" xml:space="preserve">
+    <value>Use item</value>
   </data>
   <data name="UseOnce cleared..." xml:space="preserve">
     <value>UseOnce cleared...</value>
@@ -590,5 +617,8 @@
   </data>
   <data name="World_Status" xml:space="preserve">
     <value>World Status</value>
+  </data>
+  <data name="{0} items, {1} selected, {2} total amount" xml:space="preserve">
+    <value>{0} items, {1} selected, {2} total amount</value>
   </data>
 </root>

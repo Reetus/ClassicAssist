@@ -1,7 +1,7 @@
-﻿using CommandLine;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Windows;
+using CommandLine;
 using IOPath = System.IO.Path;
 
 namespace ClassicAssist.Updater
@@ -13,21 +13,21 @@ namespace ClassicAssist.Updater
     {
         public static Options CurrentOptions { get; set; }
 
-        private void Application_Startup(object sender, StartupEventArgs e)
+        private void Application_Startup( object sender, StartupEventArgs e )
         {
-            Parser.Default.ParseArguments<Options>(e.Args).WithParsed(o => CurrentOptions = o);
+            Parser.Default.ParseArguments<Options>( e.Args ).WithParsed( o => CurrentOptions = o );
 
-            if (string.IsNullOrEmpty(CurrentOptions.Path))
+            if ( string.IsNullOrEmpty( CurrentOptions.Path ) )
             {
                 CurrentOptions.Path = Environment.CurrentDirectory;
             }
 
-            if (CurrentOptions.CurrentVersion == null)
+            if ( CurrentOptions.CurrentVersion == null )
             {
-                if (Version.TryParse(
-                    FileVersionInfo.GetVersionInfo(IOPath.Combine(CurrentOptions.Path, "ClassicAssist.dll"))
+                if ( Version.TryParse(
+                    FileVersionInfo.GetVersionInfo( IOPath.Combine( CurrentOptions.Path, "ClassicAssist.dll" ) )
                         .ProductVersion,
-                    out Version version))
+                    out Version version ) )
                 {
                     CurrentOptions.CurrentVersion = version;
                 }

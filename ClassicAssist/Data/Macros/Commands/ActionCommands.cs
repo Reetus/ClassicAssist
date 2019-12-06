@@ -20,6 +20,14 @@ namespace ClassicAssist.Data.Macros.Commands
         internal static UseOnceList UseOnceList { get; set; } = new UseOnceList();
 
         [CommandsDisplay( Category = "Actions",
+            Description = "Send quick switch weapon packet (probably not supported on pre-AoS servers.",
+            InsertText = "EquipLastWeapon()" )]
+        public static void EquipLastWeapon()
+        {
+            Engine.SendPacketToServer( new EquipLastWeapon() );
+        }
+
+        [CommandsDisplay( Category = "Actions",
             Description = "Use a specific item type (graphic) from your backpack, only once",
             InsertText = "UseOnce(0xff)" )]
         public static bool UseOnce( int graphic, int hue = -1 )

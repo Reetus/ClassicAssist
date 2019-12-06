@@ -18,14 +18,14 @@ namespace ClassicAssist.Updater
             AssociatedObject.Click -= OnClick;
         }
 
-        private void OnClick(object sender, RoutedEventArgs e)
+        private void OnClick( object sender, RoutedEventArgs e )
         {
-            if (!(sender is Button button))
+            if ( !( sender is Button button ) )
             {
                 return;
             }
 
-            Window window = Window.GetWindow(button);
+            Window window = Window.GetWindow( button );
 
             window?.Close();
         }

@@ -1,7 +1,4 @@
-﻿using ClassicAssist.Updater.Annotations;
-using ClassicAssist.Updater.Properties;
-using Octokit;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -13,6 +10,9 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using ClassicAssist.Updater.Annotations;
+using ClassicAssist.Updater.Properties;
+using Octokit;
 using Application = System.Windows.Application;
 
 namespace ClassicAssist.Updater
@@ -29,34 +29,34 @@ namespace ClassicAssist.Updater
         {
             _dispatcher = Dispatcher.CurrentDispatcher;
 
-            Task.Run(async () =>
-           {
-               if (App.CurrentOptions.Stage == UpdaterStage.Initial)
-               {
-                   string path = await Task.Run(CheckForUpdate);
+            Task.Run( async () =>
+            {
+                if ( App.CurrentOptions.Stage == UpdaterStage.Initial )
+                {
+                    string path = await Task.Run( CheckForUpdate );
 
-                   if (!string.IsNullOrEmpty(path))
-                   {
-                       App.CurrentOptions.UpdatePath = path;
-                   }
-               }
+                    if ( !string.IsNullOrEmpty( path ) )
+                    {
+                        App.CurrentOptions.UpdatePath = path;
+                    }
+                }
 
-               if (!string.IsNullOrEmpty(App.CurrentOptions.UpdatePath))
-               {
-                   IsUpdating = true;
+                if ( !string.IsNullOrEmpty( App.CurrentOptions.UpdatePath ) )
+                {
+                    IsUpdating = true;
 
-                   AddText(Resources.Updating_files___);
+                    AddText( Resources.Updating_files___ );
 
-                   DirectoryInfo source = new DirectoryInfo(App.CurrentOptions.UpdatePath);
-                   DirectoryInfo destination = new DirectoryInfo(App.CurrentOptions.Path);
+                    DirectoryInfo source = new DirectoryInfo( App.CurrentOptions.UpdatePath );
+                    DirectoryInfo destination = new DirectoryInfo( App.CurrentOptions.Path );
 
-                   CopyAll(source, destination);
+                    CopyAll( source, destination );
 
-                   AddText(Resources.Done_);
+                    AddText( Resources.Done_ );
 
-                   IsUpdating = false;
-               }
-           });
+                    IsUpdating = false;
+                }
+            } );
         }
 
         public long DownloadSize
@@ -64,7 +64,7 @@ namespace ClassicAssist.Updater
             get => _downloadSize;
             set
             {
-                SetProperty(ref _downloadSize, value);
+                SetProperty( ref _downloadSize, value );
                 IsIndeterminate = value == 0;
             }
         }
@@ -72,54 +72,54 @@ namespace ClassicAssist.Updater
         public bool IsIndeterminate
         {
             get => _isIndeterminate;
-            set => SetProperty(ref _isIndeterminate, value);
+            set => SetProperty( ref _isIndeterminate, value );
         }
 
         public bool IsUpdating
         {
             get => _isUpdating;
-            set => SetProperty(ref _isUpdating, value);
+            set => SetProperty( ref _isUpdating, value );
         }
 
         public ObservableCollection<string> Items
         {
             get => _items;
-            set => SetProperty(ref _items, value);
+            set => SetProperty( ref _items, value );
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         //https://stackoverflow.com/questions/627504/what-is-the-best-way-to-recursively-copy-contents-in-c/627518#627518
-        public void CopyAll(DirectoryInfo source, DirectoryInfo target)
+        public void CopyAll( DirectoryInfo source, DirectoryInfo target )
         {
             //check if the target directory exists
-            if (Directory.Exists(target.FullName) == false)
+            if ( Directory.Exists( target.FullName ) == false )
             {
-                Directory.CreateDirectory(target.FullName);
+                Directory.CreateDirectory( target.FullName );
             }
 
             //copy all the files into the new directory
 
-            foreach (FileInfo fi in source.GetFiles())
+            foreach ( FileInfo fi in source.GetFiles() )
             {
                 try
                 {
-                    fi.CopyTo(Path.Combine(target.ToString(), fi.Name), true);
-                    AddText(string.Format(Resources.Copying__0____, fi.Name));
+                    fi.CopyTo( Path.Combine( target.ToString(), fi.Name ), true );
+                    AddText( string.Format( Resources.Copying__0____, fi.Name ) );
                 }
-                catch (IOException ie)
+                catch ( IOException ie )
                 {
                     //handle it here
-                    AddText(ie.Message);
+                    AddText( ie.Message );
                 }
             }
 
             //copy all the sub directories using recursion
 
-            foreach (DirectoryInfo diSourceDir in source.GetDirectories())
+            foreach ( DirectoryInfo diSourceDir in source.GetDirectories() )
             {
-                DirectoryInfo nextTargetDir = target.CreateSubdirectory(diSourceDir.Name);
-                CopyAll(diSourceDir, nextTargetDir);
+                DirectoryInfo nextTargetDir = target.CreateSubdirectory( diSourceDir.Name );
+                CopyAll( diSourceDir, nextTargetDir );
             }
         }
 
@@ -129,49 +129,58 @@ namespace ClassicAssist.Updater
             {
                 IsUpdating = true;
 
-                AddText(Resources.Checking_for_latest_release___);
+                AddText( Resources.Checking_for_latest_release___ );
 
-                GitHubClient client = new GitHubClient(new ProductHeaderValue("ClassicAssist"));
+                GitHubClient client = new GitHubClient( new ProductHeaderValue( "ClassicAssist" ) );
 
                 IReadOnlyList<Release> releases =
-                    await client.Repository.Release.GetAll(Settings.Default.RepositoryOwner,
-                        Settings.Default.RepositoryName);
+                    await client.Repository.Release.GetAll( Settings.Default.RepositoryOwner,
+                        Settings.Default.RepositoryName );
 
                 Release latestRelease = releases?.FirstOrDefault();
 
-                if (latestRelease == null)
+                if ( latestRelease == null )
                 {
-                    throw new InvalidOperationException(Resources.Unable_to_locate_GitHub_release);
+                    throw new InvalidOperationException( Resources.Unable_to_locate_GitHub_release );
                 }
 
-                AddText($"{Resources.Latest_Release_} {latestRelease.TagName}");
+                AddText( $"{Resources.Latest_Release_} {latestRelease.TagName}" );
 
-                Version newVersion = Version.Parse(latestRelease.TagName);
+                Version newVersion = Version.Parse( latestRelease.TagName );
 
-                if (newVersion > App.CurrentOptions.CurrentVersion || App.CurrentOptions.Force)
+                if ( newVersion > App.CurrentOptions.CurrentVersion || App.CurrentOptions.Force )
                 {
-                    if (App.CurrentOptions.PID != 0)
+                    if ( App.CurrentOptions.PID != 0 )
                     {
-                        Process p = Process.GetProcessById(App.CurrentOptions.PID);
+                        Process p = Process.GetProcessById( App.CurrentOptions.PID );
                         p.Kill();
-                        await Task.Delay(2000);
+                        await Task.Delay( 2000 );
                     }
 
-                    if (latestRelease.Assets.Count == 0)
+                    if ( latestRelease.Assets.Count == 0 )
                     {
-                        throw new InvalidOperationException(Resources.No_release_asset___);
+                        throw new InvalidOperationException( Resources.No_release_asset___ );
                     }
 
-                    AddText($"{Resources.Downloading} {latestRelease.Assets[0].Name}...");
+                    ReleaseAsset assest = latestRelease.Assets.FirstOrDefault( a =>
+                        a.Name.EndsWith( ".zip", StringComparison.InvariantCultureIgnoreCase ) );
 
-                    string fileName = await DownloadFile(latestRelease.Assets[0].BrowserDownloadUrl,
-                        latestRelease.Assets[0].Size);
+                    if ( assest == null )
+                    {
+                        AddText( Resources.Cannot_locate_update_package___ );
+                        return null;
+                    }
 
-                    AddText(Resources.Extracting_package___);
+                    AddText( $"{Resources.Downloading} {assest.Name}..." );
 
-                    string updatePath = await ExtractPackage(fileName, newVersion);
+                    string fileName = await DownloadFile( assest.BrowserDownloadUrl,
+                        assest.Size );
 
-                    if (!File.Exists(Path.Combine(updatePath, "ClassicAssist.Updater.exe")))
+                    AddText( Resources.Extracting_package___ );
+
+                    string updatePath = await ExtractPackage( fileName, newVersion );
+
+                    if ( !File.Exists( Path.Combine( updatePath, "ClassicAssist.Updater.exe" ) ) )
                     {
                         return updatePath;
                     }
@@ -179,22 +188,22 @@ namespace ClassicAssist.Updater
                     // if directory contains updater...
 
                     ProcessStartInfo psi = new ProcessStartInfo(
-                        Path.Combine(updatePath, "ClassicAssist.Updater.exe"),
-                        $"--stage Install --updatepath {updatePath} --path {App.CurrentOptions.Path}");
-                    Process.Start(psi);
+                        Path.Combine( updatePath, "ClassicAssist.Updater.exe" ),
+                        $"--stage Install --updatepath {updatePath} --path {App.CurrentOptions.Path}" );
+                    Process.Start( psi );
 
-                    _dispatcher.Invoke(() => Application.Current.Shutdown());
+                    _dispatcher.Invoke( () => Application.Current.Shutdown() );
 
                     return null;
                 }
                 else
                 {
-                    AddText(Resources.No_new_release_available___);
+                    AddText( Resources.No_new_release_available___ );
                 }
             }
-            catch (Exception e)
+            catch ( Exception e )
             {
-                AddText($"{Resources.Error_} {e.Message}");
+                AddText( $"{Resources.Error_} {e.Message}" );
             }
             finally
             {
@@ -204,16 +213,16 @@ namespace ClassicAssist.Updater
             return null;
         }
 
-        private static async Task<string> ExtractPackage(string fileName, Version newVersion)
+        private static async Task<string> ExtractPackage( string fileName, Version newVersion )
         {
-            string path = Path.Combine(Path.GetTempPath(), $"CAUpdate-{newVersion}");
+            string path = Path.Combine( Path.GetTempPath(), $"CAUpdate-{newVersion}" );
 
             try
             {
                 await Task.Run(
-                    () => ZipFile.ExtractToDirectory(fileName, path));
+                    () => ZipFile.ExtractToDirectory( fileName, path ) );
             }
-            catch (Exception)
+            catch ( Exception )
             {
                 // ignored
             }
@@ -221,43 +230,45 @@ namespace ClassicAssist.Updater
             return path;
         }
 
-        private static async Task<string> DownloadFile(string browserDownloadUrl, int size)
+        private static async Task<string> DownloadFile( string browserDownloadUrl, int size )
         {
-            using (HttpClient http = new HttpClient())
+            using ( HttpClient http = new HttpClient() )
             {
-                string fileName = Path.Combine(Environment.CurrentDirectory, "Update.zip");
+                http.Timeout = TimeSpan.FromMinutes( 5 );
 
-                http.DefaultRequestHeaders.Add("User-Agent", "ClassicAssist Updater");
+                string fileName = Path.Combine( Environment.CurrentDirectory, "Update.zip" );
 
-                byte[] response = await http.GetByteArrayAsync(browserDownloadUrl);
+                http.DefaultRequestHeaders.Add( "User-Agent", "ClassicAssist Updater" );
 
-                if (response.Length != size)
+                byte[] response = await http.GetByteArrayAsync( browserDownloadUrl );
+
+                if ( response.Length != size )
                 {
-                    throw new InvalidOperationException(Resources.Downloaded_size_doesn_t_match_expected___);
+                    throw new InvalidOperationException( Resources.Downloaded_size_doesn_t_match_expected___ );
                 }
 
-                File.WriteAllBytes(fileName, response);
+                File.WriteAllBytes( fileName, response );
 
                 return fileName;
             }
         }
 
-        private void AddText(string message)
+        private void AddText( string message )
         {
-            _dispatcher?.Invoke(() => Items.Add(message));
+            _dispatcher?.Invoke( () => Items.Add( message ) );
         }
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
         }
 
         // ReSharper disable once RedundantAssignment
-        private void SetProperty<T>(ref T obj, T value, [CallerMemberName] string propertyName = null)
+        private void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = null )
         {
             obj = value;
-            OnPropertyChanged(propertyName);
+            OnPropertyChanged( propertyName );
         }
     }
 }

@@ -11,7 +11,7 @@
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <local:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+        <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
     </Window.Resources>
     <Window.DataContext>
         <local:MainViewModel />
@@ -25,12 +25,15 @@
         <ProgressBar Height="7"
                      Visibility="{Binding IsUpdating, Converter={StaticResource BooleanToVisibilityConverter}}"
                      IsIndeterminate="{Binding IsIndeterminate}"
-                     Maximum="{Binding DownloadSize}" Grid.Row="0"/>
+                     Maximum="{Binding DownloadSize}" Grid.Row="0" />
         <Grid Grid.Row="1" Margin="10">
-            <ListBox ItemsSource="{Binding Items}" local:ListBoxBehavior.ScrollOnNewItem="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+            <ListBox ItemsSource="{Binding Items}" local:ListBoxBehavior.ScrollOnNewItem="True"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     ScrollViewer.VerticalScrollBarVisibility="Visible" />
         </Grid>
         <StackPanel Grid.Row="2" Margin="10,0,10,10">
-            <Button Content="{x:Static properties:Resources.Close}" Width="100" HorizontalAlignment="Right" IsEnabled="{Binding IsUpdating, Converter={StaticResource InverseBooleanConverter}}">
+            <Button Content="{x:Static properties:Resources.Close}" Width="100" HorizontalAlignment="Right"
+                    IsEnabled="{Binding IsUpdating, Converter={StaticResource InverseBooleanConverter}}">
                 <i:Interaction.Behaviors>
                     <local:CloseBehaviour />
                 </i:Interaction.Behaviors>

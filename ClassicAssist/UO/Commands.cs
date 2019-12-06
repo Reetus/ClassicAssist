@@ -29,6 +29,13 @@ namespace ClassicAssist.UO
         public static async Task DragDropAsync( int serial, int amount, int containerSerial, int x = -1, int y = -1,
             int z = 0 )
         {
+            if ( amount == -1 )
+            {
+                Item i = Engine.Items.GetItem( serial );
+
+                amount = i?.Count ?? 1;
+            }
+
             await Task.Run( async () =>
             {
                 DragItem( serial, amount );
@@ -166,6 +173,7 @@ namespace ClassicAssist.UO
 
         public static void CloseClientGump( int gumpID )
         {
+            Engine.Gumps.Remove( gumpID );
             Engine.SendPacketToClient( new CloseClientGump( gumpID ) );
         }
 
@@ -458,6 +466,25 @@ namespace ClassicAssist.UO
         public static void RenameRequest( int serial, string name )
         {
             Engine.SendPacketToServer( new RenameRequest( serial, name ) );
+        }
+
+        public static bool WaitForContainerContents( int serial, int timeout )
+        {
+            PacketFilterInfo pfi = new PacketFilterInfo( 0x3C,
+                new[] { PacketFilterConditions.IntAtPositionCondition( serial, 19 ) } );
+
+            PacketWaitEntry we = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );
+
+            try
+            {
+                bool result = we.Lock.WaitOne( timeout );
+
+                return result;
+            }
+            finally
+            {
+                Engine.PacketWaitEntries.Remove( we );
+            }
         }
     }
 }

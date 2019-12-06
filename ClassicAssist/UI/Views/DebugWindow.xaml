@@ -7,6 +7,7 @@
         xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
         xmlns:resources="clr-namespace:ClassicAssist.Resources"
         xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+        xmlns:debug="clr-namespace:ClassicAssist.UI.Views.Debug"
         mc:Ignorable="d"
         Title="Debug Window" Height="450" Width="600" Topmost="{Binding Topmost}">
     <Window.DataContext>
@@ -19,20 +20,29 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <ListBox ItemsSource="{Binding Items}" Margin="10" Grid.Row="0" misc:ListBoxBehavior.ScrollOnNewItem="true" />
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10,0,10,10">
-            <CheckBox Content="{x:Static resources:Strings.Capture_Packets}" VerticalAlignment="Center"
-                      Margin="0,0,10,0" IsChecked="{Binding Running}" />
-            <CheckBox Content="{x:Static resources:Strings.Topmost}" VerticalAlignment="Center" Margin="0,0,10,0"
-                      IsChecked="{Binding Topmost}" />
-            <CheckBox Content="{x:Static resources:Strings.Ignore_ping_packets}" VerticalAlignment="Center"
-                      Margin="0,0,10,0" IsChecked="{Binding IgnorePingPackets}" />
-            <Button Content="View Player Equipment" Command="{Binding ViewPlayerEquipmentCommand}" Padding="5" />
-        </StackPanel>
-    </Grid>
+    <TabControl Margin="10">
+        <TabItem Header="{x:Static resources:Strings.Main}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ListBox ItemsSource="{Binding Items}" Margin="10" Grid.Row="0"
+                         misc:ListBoxBehavior.ScrollOnNewItem="true" />
+                <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10,0,10,10">
+                    <CheckBox Content="{x:Static resources:Strings.Capture_Packets}" VerticalAlignment="Center"
+                              Margin="0,0,10,0" IsChecked="{Binding Running}" />
+                    <CheckBox Content="{x:Static resources:Strings.Topmost}" VerticalAlignment="Center"
+                              Margin="0,0,10,0"
+                              IsChecked="{Binding Topmost}" />
+                    <CheckBox Content="{x:Static resources:Strings.Ignore_ping_packets}" VerticalAlignment="Center"
+                              Margin="0,0,10,0" IsChecked="{Binding IgnorePingPackets}" />
+                    <Button Content="View Player Equipment" Command="{Binding ViewPlayerEquipmentCommand}" Padding="5" />
+                </StackPanel>
+            </Grid>
+        </TabItem>
+        <TabItem Header="{x:Static resources:Strings.Gumps}">
+            <debug:DebugGumpControl />
+        </TabItem>
+    </TabControl>
 </Window>

@@ -13,7 +13,6 @@ namespace ClassicAssist.UO.Data
         private static string _dataPath;
         private static bool _isUOPFormat;
         private static Lazy<Dictionary<int, Entry3D>> _lazyIndex;
-        private static Dictionary<int, Bitmap> _cache;
 
         public static bool Initialize( string dataPath )
         {
@@ -135,16 +134,6 @@ namespace ClassicAssist.UO.Data
         {
             itemId += 0x4000;
 
-            if ( _cache == null )
-            {
-                _cache = new Dictionary<int, Bitmap>();
-            }
-
-            if ( _cache.ContainsKey( itemId ) )
-            {
-                return _cache[itemId];
-            }
-
             string fileName = Path.Combine( _dataPath, "art.mul" );
 
             if ( _isUOPFormat )
@@ -245,11 +234,6 @@ namespace ClassicAssist.UO.Data
                 }
 
                 bmp.UnlockBits( bd );
-
-                if ( !_cache.ContainsKey( itemId ) )
-                {
-                    _cache.Add( itemId, bmp );
-                }
 
                 return bmp;
             }

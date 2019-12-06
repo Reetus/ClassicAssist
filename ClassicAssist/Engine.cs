@@ -62,6 +62,7 @@ namespace Assistant
         public static bool Connected { get; set; }
         public static Dispatcher Dispatcher { get; set; }
         public static FeatureFlags Features { get; set; }
+        public static GumpCollection Gumps { get; set; } = new GumpCollection();
         public static ItemCollection Items { get; set; } = new ItemCollection( 0 );
         public static CircularBuffer<JournalEntry> Journal { get; set; } = new CircularBuffer<JournalEntry>( 1024 );
         public static MobileCollection Mobiles { get; set; } = new MobileCollection( Items );
@@ -210,6 +211,8 @@ namespace Assistant
             int length = _getPacketLength( packet.GetPacketID() );
 
             handler?.OnReceive?.Invoke( new PacketReader( packet.GetPacket(), packet.GetLength(), length > 0 ) );
+
+            PacketWaitEntries.CheckWait( packet.GetPacket(), PacketDirection.Incoming );
         }
 
         private static void ProcessOutgoingQueue( Packet packet )
@@ -221,6 +224,8 @@ namespace Assistant
             int length = _getPacketLength( packet.GetPacketID() );
 
             handler?.OnReceive?.Invoke( new PacketReader( packet.GetPacket(), packet.GetLength(), length > 0 ) );
+
+            PacketWaitEntries.CheckWait( packet.GetPacket(), PacketDirection.Outgoing );
         }
 
         private static Assembly OnAssemblyResolve( object sender, ResolveEventArgs args )
@@ -361,8 +366,6 @@ namespace Assistant
 
             _outgoingQueue.Enqueue( new Packet( data, length ) );
 
-            PacketWaitEntries.CheckWait( data, PacketDirection.Outgoing );
-
             return !filter;
         }
 
@@ -381,8 +384,6 @@ namespace Assistant
             }
 
             _incomingQueue.Enqueue( new Packet( data, length ) );
-
-            PacketWaitEntries.CheckWait( data, PacketDirection.Incoming );
 
             return true;
         }

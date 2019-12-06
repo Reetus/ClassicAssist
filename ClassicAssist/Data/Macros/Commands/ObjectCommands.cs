@@ -69,9 +69,16 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = "Entity", Description = "Amount comparison of item type inside a container.",
             InsertText = "CountType(0xff, \"backpack\")" )]
-        public static int CountType( int graphic, int hue, int source )
+        public static int CountType( int graphic, object source = null, int hue = -1 )
         {
-            Item countainerItem = Engine.Items.GetItem( source );
+            if ( source == null )
+            {
+                source = "backpack";
+            }
+
+            int sourceSerial = AliasCommands.ResolveSerial( source );
+
+            Item countainerItem = Engine.Items.GetItem( sourceSerial );
 
             if ( countainerItem?.Container == null )
             {

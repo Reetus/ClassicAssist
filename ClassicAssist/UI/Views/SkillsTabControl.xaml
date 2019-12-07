@@ -9,6 +9,8 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+             xmlns:resources="clr-namespace:ClassicAssist.Resources"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d"
              Background="White">
     <UserControl.DataContext>
@@ -28,44 +30,28 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="90" />
         </Grid.ColumnDefinitions>
-        <ListView Grid.Column="0" ItemsSource="{Binding Items}" Margin="5" SelectedItem="{Binding SelectedSkillEntry}"
-                  GridViewColumnHeader.Click="GridViewHeaderOnClick" x:Name="listView">
+        <ListView Grid.Column="0" ItemsSource="{Binding Items}" Margin="5"
+                  GridViewColumnHeader.Click="GridViewHeaderOnClick" x:Name="listView"
+                  SelectedItem="{Binding SelectedItem}">
             <ListView.Resources>
-                <misc:BindingProxy x:Key="SelectedItems" Data="{Binding Path=SelectedItems, ElementName=listView}" />
                 <ContextMenu x:Key="ItemContextMenu">
-                    <MenuItem Header="Set Up"
-                              Command="{Binding Source={StaticResource Proxy}, Path=Data.SetSkillLockCommand}">
-                        <MenuItem.CommandParameter>
-                            <MultiBinding Converter="{StaticResource MenuItemMultiValueConverter}">
-                                <Binding Source="{StaticResource SelectedItems}" />
-                                <Binding Source="{x:Static data:LockStatus.Up}" />
-                            </MultiBinding>
-                        </MenuItem.CommandParameter>
-                    </MenuItem>
-                    <MenuItem Header="Set Down"
-                              Command="{Binding Source={StaticResource Proxy}, Path=Data.SetSkillLockCommand}">
-                        <MenuItem.CommandParameter>
-                            <MultiBinding Converter="{StaticResource MenuItemMultiValueConverter}">
-                                <Binding Source="{StaticResource SelectedItems}" />
-                                <Binding Source="{x:Static data:LockStatus.Down}" />
-                            </MultiBinding>
-                        </MenuItem.CommandParameter>
-                    </MenuItem>
-                    <MenuItem Header="Set Locked"
-                              Command="{Binding Source={StaticResource Proxy}, Path=Data.SetSkillLockCommand}">
-                        <MenuItem.CommandParameter>
-                            <MultiBinding Converter="{StaticResource MenuItemMultiValueConverter}">
-                                <Binding Source="{StaticResource SelectedItems}" />
-                                <Binding Source="{x:Static data:LockStatus.Locked}" />
-                            </MultiBinding>
-                        </MenuItem.CommandParameter>
-                    </MenuItem>
+                    <MenuItem Header="{x:Static resources:Strings.Set_Up}"
+                              Command="{Binding Source={StaticResource Proxy}, Path=Data.SetSkillLocksCommand}"
+                              CommandParameter="{x:Static data:LockStatus.Up}" />
+                    <MenuItem Header="{x:Static resources:Strings.Set_Down}"
+                              Command="{Binding Source={StaticResource Proxy}, Path=Data.SetSkillLocksCommand}"
+                              CommandParameter="{x:Static data:LockStatus.Down}" />
+                    <MenuItem Header="{x:Static resources:Strings.Set_Locked}"
+                              Command="{Binding Source={StaticResource Proxy}, Path=Data.SetSkillLocksCommand}"
+                              CommandParameter="{x:Static data:LockStatus.Locked}" />
+                    <Separator />
+                    <MenuItem Header="{x:Static resources:Strings.Use_skill}"
+                              Command="{Binding Source={StaticResource Proxy}, Path=Data.UseSkillCommand}" />
                 </ContextMenu>
             </ListView.Resources>
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
-                    <!--<Setter Property="Height" Value="14"/>-->
                     <Setter Property="Padding" Value="0" />
                     <Setter Property="Margin" Value="0" />
                     <Setter Property="BorderThickness" Value="0" />
@@ -93,8 +79,7 @@
                     <misc1:SkillsGridViewColumn Header="+/-" Width="30" SortField="Delta">
                         <misc1:SkillsGridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Delta, StringFormat={}{0:0.#}}" Width="20"
-                                           TextAlignment="Center" />
+                                <TextBlock Text="{Binding Delta, StringFormat={}{0:0.#}}" TextAlignment="Center" />
                             </DataTemplate>
                         </misc1:SkillsGridViewColumn.CellTemplate>
                     </misc1:SkillsGridViewColumn>
@@ -126,13 +111,12 @@
                     </ObjectDataProvider.MethodParameters>
                 </ObjectDataProvider>
             </StackPanel.Resources>
-            <Button Content="Reset +/-" Command="{Binding ResetDeltasCommand, Mode=OneWay}" />
-            <Button Content="Copy" />
-            <Button Content="Copy All" />
-            <TextBlock Text="All skills:" Margin="0,20,0,0" />
+            <Button Content="{x:Static resources:Strings.Reset____}"
+                    Command="{Binding ResetDeltasCommand, Mode=OneWay}" />
+            <TextBlock Text="{x:Static resources:Strings.All_skills_}" Margin="0,20,0,0" />
             <ComboBox x:Name="comboBox" ItemsSource="{Binding Mode=OneWay, Source={StaticResource SkillStatesEnum}}"
                       Margin="0,5,0,0" SelectedIndex="0" />
-            <Button Content="Set" Command="{Binding SetAllSkillLocksCommand, Mode=OneWay}"
+            <Button Content="{x:Static resources:Strings.Set}" Command="{Binding SetAllSkillLocksCommand, Mode=OneWay}"
                     CommandParameter="{Binding SelectedIndex, ElementName=comboBox}" />
             <TextBlock Text="Total base:" Margin="0,30,0,0" />
             <TextBlock Text="{Binding TotalBase}" FontWeight="Bold" Margin="0,3,0,0" />

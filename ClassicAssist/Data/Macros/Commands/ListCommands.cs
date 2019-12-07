@@ -61,7 +61,7 @@ namespace ClassicAssist.Data.Macros.Commands
             _lists.Remove( listName );
         }
 
-        public static Dictionary<string, List<int>> GetAllLists()
+        internal static Dictionary<string, List<int>> GetAllLists()
         {
             return _lists;
         }

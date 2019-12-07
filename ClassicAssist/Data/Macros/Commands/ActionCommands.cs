@@ -19,6 +19,21 @@ namespace ClassicAssist.Data.Macros.Commands
     {
         internal static UseOnceList UseOnceList { get; set; } = new UseOnceList();
 
+        [CommandsDisplay( Category = "Actions", Description = "Wait for container contents for given container.",
+            InsertText = "WaitForContents(\"backpack\", 5000)" )]
+        public static bool WaitForContents( object obj, int timeout = 5000 )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return false;
+            }
+
+            return UOC.WaitForContainerContents( serial, timeout );
+        }
+
         [CommandsDisplay( Category = "Actions",
             Description = "Send quick switch weapon packet (probably not supported on pre-AoS servers.",
             InsertText = "EquipLastWeapon()" )]

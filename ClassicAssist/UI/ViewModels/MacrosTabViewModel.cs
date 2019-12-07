@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using Assistant;
-using ClassicAssist.Annotations;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
@@ -27,7 +26,6 @@ namespace ClassicAssist.UI.ViewModels
         private bool _isRunning;
         private MacroInvoker _macroInvoker;
         private RelayCommand _newMacroCommand;
-        private bool _persistUseOnce;
         private ICommand _recordCommand;
         private RelayCommand _removeMacroCommand;
         private MacroEntry _selectedItem;
@@ -43,6 +41,7 @@ namespace ClassicAssist.UI.ViewModels
 
             manager.IsRecording = () => _isRecording;
             manager.InsertDocument = str => { _dispatcher.Invoke( () => { SelectedItem.Macro += str; } ); };
+            manager.Items = Items;
         }
 
         public int CaretPosition
@@ -79,12 +78,6 @@ namespace ClassicAssist.UI.ViewModels
 
         public RelayCommand NewMacroCommand =>
             _newMacroCommand ?? ( _newMacroCommand = new RelayCommand( NewMacro, o => !IsRunning ) );
-
-        public bool PersistUseOnce
-        {
-            get => _persistUseOnce;
-            set => SetProperty( ref _persistUseOnce, value );
-        }
 
         public ICommand RecordCommand =>
             _recordCommand ?? ( _recordCommand = new RelayCommand( Record, o => SelectedItem != null ) );
@@ -159,9 +152,33 @@ namespace ClassicAssist.UI.ViewModels
                 };
 
                 entry.Action = hks => Execute( entry );
+                entry.ActionSync = macroEntry => ExecuteSync( entry );
 
                 Items.Add( entry );
             }
+        }
+
+        private void ExecuteSync( MacroEntry entry )
+        {
+            _dispatcher.Invoke( () => IsRunning = true );
+            _dispatcher.Invoke( () => SelectedItem = entry );
+
+            _macroInvoker = new MacroInvoker( entry );
+            _macroInvoker.StoppedEvent += () =>
+            {
+                if ( entry.Loop && !_macroInvoker.IsFaulted && IsRunning )
+                {
+                    ExecuteSync( entry );
+                    return;
+                }
+
+                _dispatcher.Invoke( () => IsRunning = false );
+            };
+            _macroInvoker.ExceptionEvent += exception =>
+            {
+                Commands.SystemMessage( string.Format( Strings.Macro_error___0_, exception.Message ) );
+            };
+            _macroInvoker.ExecuteSync();
         }
 
         private static void ShowActiveObjectsWindow( object obj )
@@ -201,10 +218,10 @@ namespace ClassicAssist.UI.ViewModels
         {
             int count = Items.Count;
 
-            MacroEntry macro = new MacroEntry
-            {
-                Name = $"Macro-{count + 1}", Macro = string.Empty, Action = hks => Execute( this )
-            };
+            MacroEntry macro = new MacroEntry { Name = $"Macro-{count + 1}", Macro = string.Empty };
+
+            macro.Action = hks => Execute( macro );
+            macro.ActionSync = macroEntry => ExecuteSync( macro );
 
             Items.Add( macro );
 
@@ -222,6 +239,7 @@ namespace ClassicAssist.UI.ViewModels
         private void Stop( object obj )
         {
             IsRunning = false;
+            _macroInvoker.Stop();
         }
 
         private void Execute( object obj )
@@ -232,19 +250,23 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             _dispatcher.Invoke( () => IsRunning = true );
+            _dispatcher.Invoke( () => SelectedItem = entry );
 
             _macroInvoker = new MacroInvoker( entry );
             _macroInvoker.StoppedEvent += () =>
             {
                 if ( entry.Loop && !_macroInvoker.IsFaulted && IsRunning )
                 {
-                    Execute( entry );
+                    ExecuteSync( entry );
                     return;
                 }
 
                 _dispatcher.Invoke( () => IsRunning = false );
             };
-
+            _macroInvoker.ExceptionEvent += exception =>
+            {
+                Commands.SystemMessage( string.Format( Strings.Macro_error___0_, exception.Message ) );
+            };
             _macroInvoker.Execute();
         }
 

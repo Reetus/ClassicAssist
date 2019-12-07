@@ -68,6 +68,7 @@ namespace ClassicAssist.Data.Macros
                 }
                 catch ( ThreadAbortException )
                 {
+                    IsFaulted = true;
                 }
                 catch ( Exception e )
                 {
@@ -89,6 +90,38 @@ namespace ClassicAssist.Data.Macros
         public void Stop()
         {
             Thread?.Abort();
+        }
+
+        public void ExecuteSync()
+        {
+            string code = $"{GetScriptingImports()}\r\n{_macro.Macro}";
+
+            ScriptSource source = _engine.CreateScriptSourceFromString( code, SourceCodeKind.Statements );
+
+            try
+            {
+                StartedEvent?.Invoke();
+
+                AliasCommands.SetDefaultAliases();
+
+                source.Execute();
+            }
+            catch ( ThreadAbortException )
+            {
+                IsFaulted = true;
+            }
+            catch ( Exception e )
+            {
+                IsFaulted = true;
+                Exception = e;
+
+                ExceptionEvent?.Invoke( e );
+            }
+            finally
+            {
+                StoppedEvent?.Invoke();
+                AliasCommands.UnsetDefaultAliases();
+            }
         }
     }
 }

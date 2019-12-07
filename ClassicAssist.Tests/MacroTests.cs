@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
+using Assistant;
 using ClassicAssist.Data.Macros;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -117,6 +121,28 @@ namespace ClassicAssist.Tests
             bool result = are.WaitOne( 5000 );
 
             Assert.IsTrue( result );
+        }
+
+        [TestMethod]
+        public void EnsureAllCommandsHaveAttribute()
+        {
+            IEnumerable<Type> types = Assembly.GetAssembly( typeof( Engine ) ).GetTypes().Where( t =>
+                t.Namespace != null && t.Namespace.EndsWith( "Macros.Commands" ) && t.IsClass && t.IsPublic && !t.Name.Contains( "Dummy" ) );
+
+            foreach ( Type type in types )
+            {
+                MethodInfo[] members = type.GetMethods( BindingFlags.Public | BindingFlags.Static );
+
+                foreach ( MethodInfo member in members )
+                {
+                    CommandsDisplayAttribute attr = member.GetCustomAttribute<CommandsDisplayAttribute>();
+
+                    if ( attr == null )
+                    {
+                        Assert.Fail( $"{type.Name}.{member.Name} has no CommandsDisplayAttribute." );
+                    }
+                }
+            }
         }
     }
 }

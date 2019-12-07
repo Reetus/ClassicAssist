@@ -11,6 +11,33 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class ObjectCommands
     {
+        private static readonly List<int> _ignoreList = new List<int>();
+
+        [CommandsDisplay( Category = "Entity", Description = "Ignores the given object from find commands",
+            InsertText = "IgnoreObject(\"self\")" )]
+        public static void IgnoreObject( object obj )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return;
+            }
+
+            if ( !_ignoreList.Contains( serial ) )
+            {
+                _ignoreList.Add( serial );
+            }
+        }
+
+        [CommandsDisplay( Category = "Entities", Description = "Clears the ignore list.",
+            InsertText = "ClearIgnoreList()" )]
+        public static void ClearIgnoreList()
+        {
+            _ignoreList.Clear();
+        }
+
         [CommandsDisplay( Category = "Actions",
             Description = "Sends use (doubleclick) request for given object (parameter can be serial or alias).",
             InsertText = "UseObject(\"mount\")" )]
@@ -18,7 +45,7 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             int serial = AliasCommands.ResolveSerial( obj );
 
-            if ( serial <= 0 )
+            if ( serial == 0 )
             {
                 UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
                 return;
@@ -95,13 +122,13 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = "Entity",
             Description = "Amount comparison of item or mobile type on the ground.",
             InsertText = "if CountGround(0xff, 0, 10) < 1:" )]
-        public static int CountTypeGround( int graphic, int hue, int range )
+        public static int CountTypeGround( int graphic, int hue = -1, int range = -1 )
         {
             PlayerMobile player = Engine.Player;
 
             IEnumerable<Item> matches = Engine.Items.Where( i =>
                 i.ID == graphic && ( hue == -1 || hue == i.ID ) &&
-                UOMath.Distance( player.X, player.Y, i.X, i.Y ) <= range );
+                ( range == -1 || UOMath.Distance( player.X, player.Y, i.X, i.Y ) <= range ) );
 
             int count = matches.Sum( match => match.Count );
 
@@ -112,11 +139,56 @@ namespace ClassicAssist.Data.Macros.Commands
 
             IEnumerable<Mobile> mobileMatches = Engine.Mobiles.Where( i =>
                 i.ID == graphic && ( hue == -1 || hue == i.ID ) &&
-                UOMath.Distance( player.X, player.Y, i.X, i.Y ) <= range );
+                ( range == -1 || UOMath.Distance( player.X, player.Y, i.X, i.Y ) <= range ) );
 
             count += mobileMatches.Count();
 
             return count;
+        }
+
+        [CommandsDisplay( Category = "Entities",
+            Description =
+                "Searches for entity by graphic ID and sets found alias, defaults to ground if no source given.",
+            InsertText = "FindType(0xff)\r\nUseObject(\"found\")" )]
+        public static bool FindType( int graphic, int range = -1, object findLocation = null, int hue = -1 )
+        {
+            int owner = 0;
+
+            if ( findLocation != null )
+            {
+                owner = AliasCommands.ResolveSerial( findLocation );
+            }
+
+            Entity entity;
+
+            bool Predicate( Entity i )
+            {
+                return i.ID == graphic && ( hue == -1 || i.Hue == hue ) &&
+                       ( range == -1 || UOMath.Distance( i.X, i.Y, Engine.Player.X, Engine.Player.Y ) < range ) &&
+                       !_ignoreList.Contains( i.Serial );
+            }
+
+            if ( owner != 0 )
+            {
+                entity = Engine.Items.SelectEntities( i => Predicate( i ) && i.IsDescendantOf( owner ) )
+                    ?.FirstOrDefault();
+            }
+            else
+            {
+                entity =
+                    (Entity) Engine.Mobiles.SelectEntities( Predicate )?.FirstOrDefault() ??
+                    Engine.Items.SelectEntities( i => Predicate( i ) && i.Owner == 0 )?.FirstOrDefault();
+            }
+
+            if ( entity == null )
+            {
+                return false;
+            }
+
+            AliasCommands.SetAlias( "found", entity.Serial );
+            UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ) );
+
+            return true;
         }
     }
 }

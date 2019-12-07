@@ -141,6 +141,9 @@
   <data name="Aliases" xml:space="preserve">
     <value>Aliases</value>
   </data>
+  <data name="All skills:" xml:space="preserve">
+    <value>All skills:</value>
+  </data>
   <data name="Always On Top" xml:space="preserve">
     <value>Always On Top</value>
   </data>
@@ -209,6 +212,12 @@
   </data>
   <data name="Connected:" xml:space="preserve">
     <value>Connected:</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="Copy All" xml:space="preserve">
+    <value>Copy All</value>
   </data>
   <data name="Count" xml:space="preserve">
     <value>Count</value>
@@ -357,6 +366,9 @@
   <data name="Loop" xml:space="preserve">
     <value>Loop</value>
   </data>
+  <data name="Macro error: {0}" xml:space="preserve">
+    <value>Macro error: {0}</value>
+  </data>
   <data name="Macros" xml:space="preserve">
     <value>Macros</value>
   </data>
@@ -371,6 +383,9 @@
   </data>
   <data name="Max Price" xml:space="preserve">
     <value>Max Price</value>
+  </data>
+  <data name="Messages" xml:space="preserve">
+    <value>Messages</value>
   </data>
   <data name="Misc" xml:space="preserve">
     <value>Misc</value>
@@ -404,6 +419,9 @@
   </data>
   <data name="New Item" xml:space="preserve">
     <value>New Item</value>
+  </data>
+  <data name="Object &quot;{0}&quot; updated..." xml:space="preserve">
+    <value>Object "{0}" updated...</value>
   </data>
   <data name="Object Inspector" xml:space="preserve">
     <value>Object Inspector</value>
@@ -480,6 +498,9 @@
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
   </data>
+  <data name="Reset +/-" xml:space="preserve">
+    <value>Reset +/-</value>
+  </data>
   <data name="Resistances" xml:space="preserve">
     <value>Resistances</value>
   </data>
@@ -510,11 +531,23 @@
   <data name="Server" xml:space="preserve">
     <value>Server</value>
   </data>
+  <data name="Set" xml:space="preserve">
+    <value>Set</value>
+  </data>
   <data name="Set Containers" xml:space="preserve">
     <value>Set Containers</value>
   </data>
+  <data name="Set Down" xml:space="preserve">
+    <value>Set Down</value>
+  </data>
+  <data name="Set Locked" xml:space="preserve">
+    <value>Set Locked</value>
+  </data>
   <data name="Set Undress Container" xml:space="preserve">
     <value>Set Undress Container</value>
+  </data>
+  <data name="Set Up" xml:space="preserve">
+    <value>Set Up</value>
   </data>
   <data name="Show World Items" xml:space="preserve">
     <value>Show World Items</value>
@@ -585,14 +618,20 @@
   <data name="Unknown dress agent &quot;{0}&quot;." xml:space="preserve">
     <value>Unknown dress agent "{0}".</value>
   </data>
+  <data name="Unknown macro..." xml:space="preserve">
+    <value>Unknown macro...</value>
+  </data>
   <data name="UO_LOCALE" xml:space="preserve">
-    <value>ENU</value>
+    <value>ENU\0</value>
   </data>
   <data name="Use death screen whilst hidden" xml:space="preserve">
     <value>Use death screen whilst hidden (Chuckles Mode)</value>
   </data>
   <data name="Use item" xml:space="preserve">
     <value>Use item</value>
+  </data>
+  <data name="Use skill" xml:space="preserve">
+    <value>Use skill</value>
   </data>
   <data name="UseOnce cleared..." xml:space="preserve">
     <value>UseOnce cleared...</value>

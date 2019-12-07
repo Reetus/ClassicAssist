@@ -11,6 +11,22 @@ namespace ClassicAssist.Data.Macros.Commands
     public static class MobileCommands
     {
         [CommandsDisplay( Category = "Entity",
+            Description = "Returns true if supplied mobile exists in the friends list.",
+            InsertText = "if InFriendsList(\"last\"):" )]
+        public static bool InFriendList( object obj )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial != 0 )
+            {
+                return Options.CurrentOptions.Friends.Any( fe => fe.Serial == serial );
+            }
+
+            UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+            return false;
+        }
+
+        [CommandsDisplay( Category = "Entity",
             Description = "Adds a mobile to friends list, will display target cursor if no serial/alias supplied.",
             InsertText = "AddFriend()" )]
         public static void AddFriend( object obj = null )
@@ -67,7 +83,7 @@ namespace ClassicAssist.Data.Macros.Commands
             Engine.Dispatcher?.Invoke( () => Options.CurrentOptions.Friends.Remove( entry ) );
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Return the name of the givern mobile.",
+        [CommandsDisplay( Category = "Entity", Description = "Return the name of the given mobile.",
             InsertText = "if Name(\"self\") == \"Shmoo\":" )]
         public static string Name( object obj = null )
         {

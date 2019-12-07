@@ -1,4 +1,5 @@
-﻿using ClassicAssist.Data.Hotkeys;
+﻿using System;
+using ClassicAssist.Data.Hotkeys;
 
 namespace ClassicAssist.Data.Macros
 {
@@ -7,6 +8,8 @@ namespace ClassicAssist.Data.Macros
         private bool _doNotAutoInterrupt;
         private bool _loop;
         private string _macro;
+
+        public Action<MacroEntry> ActionSync { get; set; }
 
         public bool DoNotAutoInterrupt
         {

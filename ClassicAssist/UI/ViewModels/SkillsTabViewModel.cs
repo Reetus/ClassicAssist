@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
-using System.Windows.Threading;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
@@ -23,10 +22,12 @@ namespace ClassicAssist.UI.ViewModels
     {
         private HotkeyEntry _hotkeyCategory;
         private ObservableCollectionEx<SkillEntry> _items = new ObservableCollectionEx<SkillEntry>();
-        private SkillEntry[] _selectedItems;
-        private SkillEntry _selectedSkillEntry;
+        private ICommand _resetDeltasCommand;
+        private SkillEntry _selectedItem;
         private ICommand _setAllSkillLocksCommand;
+        private ICommand _setSkillLocksCommand;
         private float _totalBase;
+        private ICommand _useSkillCommand;
 
         public SkillsTabViewModel()
         {
@@ -40,7 +41,8 @@ namespace ClassicAssist.UI.ViewModels
                 Commands.MobileQuery( Engine.Player.Serial, MobileQueryType.SkillsRequest );
             }
 
-            _dispatcher = Dispatcher.CurrentDispatcher;
+            SkillManager manager = SkillManager.GetInstance();
+            manager.Items = Items;
         }
 
         public ObservableCollectionEx<SkillEntry> Items
@@ -49,26 +51,31 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _items, value );
         }
 
-        public SkillEntry[] SelectedItems
-        {
-            get => _selectedItems;
-            set => SetProperty( ref _selectedItems, value );
-        }
+        public ICommand ResetDeltasCommand =>
+            _resetDeltasCommand ?? ( _resetDeltasCommand = new RelayCommand( ResetDeltas, o => true ) );
 
-        public SkillEntry SelectedSkillEntry
+        public SkillEntry SelectedItem
         {
-            get => _selectedSkillEntry;
-            set => SetProperty( ref _selectedSkillEntry, value );
+            get => _selectedItem;
+            set => SetProperty( ref _selectedItem, value );
         }
 
         public ICommand SetAllSkillLocksCommand =>
             _setAllSkillLocksCommand ?? ( _setAllSkillLocksCommand = new RelayCommand( SetAllSkillLocks, o => true ) );
+
+        public ICommand SetSkillLocksCommand =>
+            _setSkillLocksCommand ??
+            ( _setSkillLocksCommand = new RelayCommand( SetSkillLocks, o => true ) );
 
         public float TotalBase
         {
             get => _totalBase;
             set => SetProperty( ref _totalBase, value );
         }
+
+        public ICommand UseSkillCommand =>
+            _useSkillCommand ?? ( _useSkillCommand =
+                new RelayCommand( UseSkill, o => SelectedItem?.Skill.Invokable ?? false ) );
 
         public void Serialize( JObject json )
         {
@@ -117,18 +124,40 @@ namespace ClassicAssist.UI.ViewModels
                 {
                     JToken token = json["Skills"].FirstOrDefault( jo => jo["Name"].ToObject<string>() == hke.Name );
 
-                    if ( token != null )
+                    if ( token == null )
                     {
-                        hke.Hotkey = new ShortcutKeys( token["Keys"]["Modifier"].ToObject<Key>(),
-                            token["Keys"]["Keys"].ToObject<Key>() );
-                        hke.PassToUO = token["PassToUO"].ToObject<bool>();
+                        continue;
                     }
+
+                    hke.Hotkey = new ShortcutKeys( token["Keys"]["Modifier"].ToObject<Key>(),
+                        token["Keys"]["Keys"].ToObject<Key>() );
+                    hke.PassToUO = token["PassToUO"].ToObject<bool>();
                 }
             }
 
             _hotkeyCategory = new HotkeyEntry { IsCategory = true, Name = Strings.Skills, Children = hotkeyEntries };
 
             hotkey.Items.AddSorted( _hotkeyCategory );
+        }
+
+        private void ResetDeltas( object obj )
+        {
+            foreach ( SkillEntry skillEntry in Items )
+            {
+                skillEntry.Delta = 0;
+            }
+        }
+
+        private void SetSkillLocks( object obj )
+        {
+            LockStatus lockStatus = (LockStatus) obj;
+
+            if ( SelectedItem == null )
+            {
+                return;
+            }
+
+            Commands.ChangeSkillLock( SelectedItem, lockStatus );
         }
 
         private void SetAllSkillLocks( object obj )
@@ -139,7 +168,7 @@ namespace ClassicAssist.UI.ViewModels
 
             foreach ( SkillEntry skillEntry in skillsToSet )
             {
-                Commands.ChangeSkillLock( skillEntry, lockStatus );
+                Commands.ChangeSkillLock( skillEntry, lockStatus, false );
             }
 
             Commands.MobileQuery( Engine.Player.Serial, MobileQueryType.SkillsRequest );
@@ -156,7 +185,10 @@ namespace ClassicAssist.UI.ViewModels
 
             foreach ( SkillInfo si in skills )
             {
-                Skill skill = new Skill { ID = si.ID, Name = Skills.GetSkillName( si.ID ) };
+                Skill skill = new Skill
+                {
+                    ID = si.ID, Name = Skills.GetSkillName( si.ID ), Invokable = Skills.IsInvokable( si.ID )
+                };
 
                 SkillEntry se = new SkillEntry
                 {
@@ -169,6 +201,16 @@ namespace ClassicAssist.UI.ViewModels
 
                 _dispatcher.Invoke( () => { Items.Add( se ); } );
             }
+        }
+
+        private void UseSkill( object obj )
+        {
+            if ( SelectedItem == null )
+            {
+                return;
+            }
+
+            Commands.UseSkill( (UO.Data.Skill) SelectedItem.Skill.ID );
         }
 
         private void OnSkillUpdatedEvent( int skillID, float value, float baseValue, LockStatus lockStatus,

@@ -79,7 +79,7 @@ namespace ClassicAssist.Data.Hotkeys
             {
                 if ( hke.Children == null )
                 {
-                    break;
+                    continue;
                 }
 
                 foreach ( HotkeySettable hks in hke.Children )

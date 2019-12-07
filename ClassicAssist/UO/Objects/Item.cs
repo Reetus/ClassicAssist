@@ -19,7 +19,7 @@ namespace ClassicAssist.UO.Objects
 
         public int ArtDataID { get; set; }
         public ItemCollection Container { get; set; }
-        public int Count { get; set; }
+        public int Count { get; set; } = 1;
         public int Flags { get; set; }
         public int Grid { get; set; }
         public bool IsContainer => Container != null;

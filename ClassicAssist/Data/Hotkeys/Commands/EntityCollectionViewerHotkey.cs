@@ -2,7 +2,6 @@
 using ClassicAssist.Resources;
 using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UI.Views;
-using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 
@@ -19,8 +18,6 @@ namespace ClassicAssist.Data.Hotkeys.Commands
 
             if ( item.Container == null )
             {
-                Engine.SendPacketToServer( new UseObject( item.Serial ) );
-
                 UOC.WaitForContainerContents( item.Serial, 1000 );
             }
 

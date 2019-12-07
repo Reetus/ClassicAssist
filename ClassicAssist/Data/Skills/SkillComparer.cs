@@ -41,6 +41,12 @@ namespace ClassicAssist.Data.Skills
                     break;
                 case SkillsGridViewColumn.Enums.Delta:
                     result = first.Delta.CompareTo( second.Delta );
+
+                    if ( result == 0 )
+                    {
+                        result = first.Base.CompareTo( second.Base );
+                    }
+
                     break;
                 case SkillsGridViewColumn.Enums.Cap:
                     result = first.Cap.CompareTo( second.Cap );

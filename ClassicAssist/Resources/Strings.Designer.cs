@@ -142,6 +142,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All skills:.
+        /// </summary>
+        public static string All_skills_ {
+            get {
+                return ResourceManager.GetString("All skills:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Always On Top.
         /// </summary>
         public static string Always_On_Top {
@@ -345,6 +354,24 @@ namespace ClassicAssist.Resources {
         public static string Connected_ {
             get {
                 return ResourceManager.GetString("Connected:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        public static string Copy {
+            get {
+                return ResourceManager.GetString("Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy All.
+        /// </summary>
+        public static string Copy_All {
+            get {
+                return ResourceManager.GetString("Copy All", resourceCulture);
             }
         }
         
@@ -790,6 +817,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Macro error: {0}.
+        /// </summary>
+        public static string Macro_error___0_ {
+            get {
+                return ResourceManager.GetString("Macro error: {0}", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Macros.
         /// </summary>
         public static string Macros {
@@ -831,6 +867,15 @@ namespace ClassicAssist.Resources {
         public static string Max_Price {
             get {
                 return ResourceManager.GetString("Max Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Messages.
+        /// </summary>
+        public static string Messages {
+            get {
+                return ResourceManager.GetString("Messages", resourceCulture);
             }
         }
         
@@ -930,6 +975,15 @@ namespace ClassicAssist.Resources {
         public static string New_Item {
             get {
                 return ResourceManager.GetString("New Item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Object &quot;{0}&quot; updated....
+        /// </summary>
+        public static string Object___0___updated___ {
+            get {
+                return ResourceManager.GetString("Object \"{0}\" updated...", resourceCulture);
             }
         }
         
@@ -1159,6 +1213,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset +/-.
+        /// </summary>
+        public static string Reset____ {
+            get {
+                return ResourceManager.GetString("Reset +/-", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resistances.
         /// </summary>
         public static string Resistances {
@@ -1249,6 +1312,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set.
+        /// </summary>
+        public static string Set {
+            get {
+                return ResourceManager.GetString("Set", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set Containers.
         /// </summary>
         public static string Set_Containers {
@@ -1258,11 +1330,38 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set Down.
+        /// </summary>
+        public static string Set_Down {
+            get {
+                return ResourceManager.GetString("Set Down", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Locked.
+        /// </summary>
+        public static string Set_Locked {
+            get {
+                return ResourceManager.GetString("Set Locked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set Undress Container.
         /// </summary>
         public static string Set_Undress_Container {
             get {
                 return ResourceManager.GetString("Set Undress Container", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Up.
+        /// </summary>
+        public static string Set_Up {
+            get {
+                return ResourceManager.GetString("Set Up", resourceCulture);
             }
         }
         
@@ -1474,7 +1573,16 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ENU.
+        ///   Looks up a localized string similar to Unknown macro....
+        /// </summary>
+        public static string Unknown_macro___ {
+            get {
+                return ResourceManager.GetString("Unknown macro...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ENU\0.
         /// </summary>
         public static string UO_LOCALE {
             get {
@@ -1497,6 +1605,15 @@ namespace ClassicAssist.Resources {
         public static string Use_item {
             get {
                 return ResourceManager.GetString("Use item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use skill.
+        /// </summary>
+        public static string Use_skill {
+            get {
+                return ResourceManager.GetString("Use skill", resourceCulture);
             }
         }
         

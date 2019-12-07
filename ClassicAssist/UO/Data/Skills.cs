@@ -39,6 +39,16 @@ namespace ClassicAssist.UO.Data
             return "";
         }
 
+        public static bool IsInvokable( int skillID )
+        {
+            if ( skillID >= 0 && skillID <= _lazySkillData.Value.Length - 1 )
+            {
+                return _lazySkillData.Value[skillID].Invokable;
+            }
+
+            return false;
+        }
+
         /// <summary>
         ///     Get string array of all skill names for UO installation defined in options.
         ///     Array returned will be indexed by skill ID.

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Assistant;
+using ClassicAssist.UI.Misc;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 
@@ -32,6 +33,7 @@ namespace ClassicAssist.Data.Macros
 
         public Action<string> InsertDocument { get; set; }
         public Func<bool> IsRecording { get; set; }
+        public ObservableCollectionEx<MacroEntry> Items { get; set; }
 
         private void PacketSentEvent( byte[] data, int length )
         {

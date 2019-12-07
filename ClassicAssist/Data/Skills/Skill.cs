@@ -4,6 +4,7 @@
     {
         public int ID { get; set; }
         public string Name { get; set; }
+        public bool Invokable { get; set; }
 
         public override bool Equals( object obj )
         {

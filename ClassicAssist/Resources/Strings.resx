@@ -336,6 +336,9 @@
   <data name="Item" xml:space="preserve">
     <value>Item</value>
   </data>
+  <data name="Item properties null or not loaded..." xml:space="preserve">
+    <value>Item properties null or not loaded...</value>
+  </data>
   <data name="Items:" xml:space="preserve">
     <value>Items:</value>
   </data>
@@ -473,6 +476,9 @@
   </data>
   <data name="Profiles" xml:space="preserve">
     <value>Profiles</value>
+  </data>
+  <data name="Properties" xml:space="preserve">
+    <value>Properties</value>
   </data>
   <data name="Property" xml:space="preserve">
     <value>Property</value>

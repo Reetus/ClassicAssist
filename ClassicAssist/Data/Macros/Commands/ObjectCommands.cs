@@ -31,7 +31,7 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = "Entities", Description = "Clears the ignore list.",
+        [CommandsDisplay( Category = "Entity", Description = "Clears the ignore list.",
             InsertText = "ClearIgnoreList()" )]
         public static void ClearIgnoreList()
         {
@@ -146,7 +146,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return count;
         }
 
-        [CommandsDisplay( Category = "Entities",
+        [CommandsDisplay( Category = "Entity",
             Description =
                 "Searches for entity by graphic ID and sets found alias, defaults to ground if no source given.",
             InsertText = "FindType(0xff)\r\nUseObject(\"found\")" )]

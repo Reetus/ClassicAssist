@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading;
 using Assistant;
 using ClassicAssist.Data.Macros;
+using ClassicAssist.Resources;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ClassicAssist.Tests
@@ -140,6 +141,35 @@ namespace ClassicAssist.Tests
                     if ( attr == null )
                     {
                         Assert.Fail( $"{type.Name}.{member.Name} has no CommandsDisplayAttribute." );
+                    }
+                }
+            }
+        }
+
+        [TestMethod]
+        public void EnsureAllCategoriesAreLocalizable()
+        {
+            IEnumerable<Type> types = Assembly.GetAssembly( typeof( Engine ) ).GetTypes().Where( t =>
+                t.Namespace != null && t.Namespace.EndsWith( "Macros.Commands" ) && t.IsClass && t.IsPublic && !t.Name.Contains( "Dummy" ) );
+
+            foreach (Type type in types)
+            {
+                MethodInfo[] members = type.GetMethods( BindingFlags.Public | BindingFlags.Static );
+
+                foreach (MethodInfo member in members)
+                {
+                    CommandsDisplayAttribute attr = member.GetCustomAttribute<CommandsDisplayAttribute>();
+
+                    if (attr == null)
+                    {
+                        Assert.Fail( $"{type.Name}.{member.Name} has no CommandsDisplayAttribute." );
+                    }
+
+                    string resourceName = Strings.ResourceManager.GetString( attr.Category );
+
+                    if ( string.IsNullOrEmpty( resourceName ) )
+                    {
+                        Assert.Fail( $"{type.Name}.{member.Name}: Category \"{attr.Category}\" has no resource entry." );
                     }
                 }
             }

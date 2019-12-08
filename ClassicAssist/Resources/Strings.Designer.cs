@@ -727,6 +727,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item properties null or not loaded....
+        /// </summary>
+        public static string Item_properties_null_or_not_loaded___ {
+            get {
+                return ResourceManager.GetString("Item properties null or not loaded...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Items:.
         /// </summary>
         public static string Items_ {
@@ -1137,6 +1146,15 @@ namespace ClassicAssist.Resources {
         public static string Profiles {
             get {
                 return ResourceManager.GetString("Profiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Properties.
+        /// </summary>
+        public static string Properties {
+            get {
+                return ResourceManager.GetString("Properties", resourceCulture);
             }
         }
         

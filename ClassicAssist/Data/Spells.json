@@ -1,0 +1,1660 @@
+[
+  {
+    "Circle": 1,
+    "Flag": 1,
+    "ID": 1,
+    "Name": "Clumsy",
+    "Reagents": [
+      3963,
+      3976
+    ],
+    "Timeout": 500,
+    "Words": "Uus Jux"
+  },
+  {
+    "Circle": 1,
+    "Flag": 0,
+    "ID": 2,
+    "Name": "Create Food",
+    "Reagents": [
+      3972,
+      3973,
+      3974
+    ],
+    "Timeout": 500,
+    "Words": "In Mani Ylem"
+  },
+  {
+    "Circle": 1,
+    "Flag": 1,
+    "ID": 3,
+    "Name": "Feeblemind",
+    "Reagents": [
+      3973,
+      3976
+    ],
+    "Timeout": 500,
+    "Words": "Rel Wis"
+  },
+  {
+    "Circle": 1,
+    "Flag": 2,
+    "ID": 4,
+    "Name": "Heal",
+    "Reagents": [
+      3972,
+      3973,
+      3981
+    ],
+    "Timeout": 500,
+    "Words": "In Mani"
+  },
+  {
+    "Circle": 1,
+    "Flag": 1,
+    "ID": 5,
+    "Name": "Magic Arrow",
+    "Reagents": [
+      3980
+    ],
+    "Timeout": 500,
+    "Words": "In Por Ylem"
+  },
+  {
+    "Circle": 1,
+    "Flag": 2,
+    "ID": 6,
+    "Name": "Night Sight",
+    "Reagents": [
+      3980,
+      3981
+    ],
+    "Timeout": 500,
+    "Words": "In Lor"
+  },
+  {
+    "Circle": 1,
+    "Flag": 2,
+    "ID": 7,
+    "Name": "Reactive Armor",
+    "Reagents": [
+      3972,
+      3981,
+      3980
+    ],
+    "Timeout": 500,
+    "Words": "Flam Sanct"
+  },
+  {
+    "Circle": 1,
+    "Flag": 1,
+    "ID": 8,
+    "Name": "Weaken",
+    "Reagents": [
+      3972,
+      3976
+    ],
+    "Timeout": 500,
+    "Words": "Des Mani"
+  },
+  {
+    "Circle": 2,
+    "Flag": 2,
+    "ID": 9,
+    "Name": "Agility",
+    "Reagents": [
+      3963,
+      3974
+    ],
+    "Timeout": 750,
+    "Words": "Ex Uus"
+  },
+  {
+    "Circle": 2,
+    "Flag": 2,
+    "ID": 10,
+    "Name": "Cunning",
+    "Reagents": [
+      3974,
+      3976
+    ],
+    "Timeout": 750,
+    "Words": "Uus Wis"
+  },
+  {
+    "Circle": 2,
+    "Flag": 2,
+    "ID": 11,
+    "Name": "Cure",
+    "Reagents": [
+      3972,
+      3973
+    ],
+    "Timeout": 750,
+    "Words": "An Nox"
+  },
+  {
+    "Circle": 2,
+    "Flag": 1,
+    "ID": 12,
+    "Name": "Harm",
+    "Reagents": [
+      3976,
+      3981
+    ],
+    "Timeout": 750,
+    "Words": "An Mani"
+  },
+  {
+    "Circle": 2,
+    "Flag": 0,
+    "ID": 13,
+    "Name": "Magic Trap",
+    "Reagents": [
+      3972,
+      3981,
+      3980
+    ],
+    "Timeout": 750,
+    "Words": "In Jux"
+  },
+  {
+    "Circle": 2,
+    "Flag": 0,
+    "ID": 14,
+    "Name": "Magic Untrap",
+    "Reagents": [
+      3963,
+      3980
+    ],
+    "Timeout": 750,
+    "Words": "An Jux"
+  },
+  {
+    "Circle": 2,
+    "Flag": 2,
+    "ID": 15,
+    "Name": "Protection",
+    "Reagents": [
+      3972,
+      3973,
+      3980
+    ],
+    "Timeout": 750,
+    "Words": "Uus Sanct"
+  },
+  {
+    "Circle": 2,
+    "Flag": 2,
+    "ID": 16,
+    "Name": "Strength",
+    "Reagents": [
+      3974,
+      3976
+    ],
+    "Timeout": 750,
+    "Words": "Uus Mani"
+  },
+  {
+    "Circle": 3,
+    "Flag": 2,
+    "ID": 17,
+    "Name": "Bless",
+    "Reagents": [
+      3972,
+      3974
+    ],
+    "Timeout": 1000,
+    "Words": "Rel Sanct"
+  },
+  {
+    "Circle": 3,
+    "Flag": 1,
+    "ID": 18,
+    "Name": "Fireball",
+    "Reagents": [
+      3962
+    ],
+    "Timeout": 1000,
+    "Words": "Vas Flam"
+  },
+  {
+    "Circle": 3,
+    "Flag": 0,
+    "ID": 19,
+    "Name": "Magic Lock",
+    "Reagents": [
+      3972,
+      3963,
+      3980
+    ],
+    "Timeout": 1000,
+    "Words": "An Por"
+  },
+  {
+    "Circle": 3,
+    "Flag": 1,
+    "ID": 20,
+    "Name": "Poison",
+    "Reagents": [
+      3976
+    ],
+    "Timeout": 1000,
+    "Words": "In Nox"
+  },
+  {
+    "Circle": 3,
+    "Flag": 0,
+    "ID": 21,
+    "Name": "Telekinesis",
+    "Reagents": [
+      3963,
+      3974
+    ],
+    "Timeout": 1000,
+    "Words": "Ort Por Ylem"
+  },
+  {
+    "Circle": 3,
+    "Flag": 0,
+    "ID": 22,
+    "Name": "Teleport",
+    "Reagents": [
+      3963,
+      3974
+    ],
+    "Timeout": 1000,
+    "Words": "Rel Por"
+  },
+  {
+    "Circle": 3,
+    "Flag": 0,
+    "ID": 23,
+    "Name": "Unlock",
+    "Reagents": [
+      3963,
+      3980
+    ],
+    "Timeout": 1000,
+    "Words": "Ex Por"
+  },
+  {
+    "Circle": 3,
+    "Flag": 0,
+    "ID": 24,
+    "Name": "Wall of Stone",
+    "Reagents": [
+      3963,
+      3972
+    ],
+    "Timeout": 1000,
+    "Words": "In Sanct Ylem"
+  },
+  {
+    "Circle": 4,
+    "Flag": 2,
+    "ID": 25,
+    "Name": "Arch Cure",
+    "Reagents": [
+      3972,
+      3973,
+      3974
+    ],
+    "Timeout": 1250,
+    "Words": "Vas An Nox"
+  },
+  {
+    "Circle": 4,
+    "Flag": 2,
+    "ID": 26,
+    "Name": "Arch Protection",
+    "Reagents": [
+      3972,
+      3973,
+      3974,
+      3980
+    ],
+    "Timeout": 1250,
+    "Words": "Vas Uus Sanct"
+  },
+  {
+    "Circle": 4,
+    "Flag": 1,
+    "ID": 27,
+    "Name": "Curse",
+    "Reagents": [
+      3976,
+      3972,
+      3980
+    ],
+    "Timeout": 1250,
+    "Words": "Des Sanct"
+  },
+  {
+    "Circle": 4,
+    "Flag": 0,
+    "ID": 28,
+    "Name": "Fire Field",
+    "Reagents": [
+      3962,
+      3981,
+      3980
+    ],
+    "Timeout": 1250,
+    "Words": "In Flam Grav"
+  },
+  {
+    "Circle": 4,
+    "Flag": 2,
+    "ID": 29,
+    "Name": "Greater Heal",
+    "Reagents": [
+      3972,
+      3973,
+      3974,
+      3981
+    ],
+    "Timeout": 1250,
+    "Words": "In Vas Mani"
+  },
+  {
+    "Circle": 4,
+    "Flag": 1,
+    "ID": 30,
+    "Name": "Lightning",
+    "Reagents": [
+      3974,
+      3980
+    ],
+    "Timeout": 1250,
+    "Words": "Por Ort Grav"
+  },
+  {
+    "Circle": 4,
+    "Flag": 1,
+    "ID": 31,
+    "Name": "Mana Drain",
+    "Reagents": [
+      3962,
+      3974,
+      3981
+    ],
+    "Timeout": 1250,
+    "Words": "Ort Rel"
+  },
+  {
+    "Circle": 4,
+    "Flag": 0,
+    "ID": 32,
+    "Name": "Recall",
+    "Reagents": [
+      3962,
+      3963,
+      3974
+    ],
+    "Timeout": 1250,
+    "Words": "Kal Ort Por"
+  },
+  {
+    "Circle": 5,
+    "Flag": 0,
+    "ID": 33,
+    "Name": "Blade Spirits",
+    "Reagents": [
+      3962,
+      3974,
+      3976
+    ],
+    "Timeout": 1500,
+    "Words": "In Jux Hur Ylem"
+  },
+  {
+    "Circle": 5,
+    "Flag": 0,
+    "ID": 34,
+    "Name": "Dispel Field",
+    "Reagents": [
+      3962,
+      3981,
+      3980,
+      3972
+    ],
+    "Timeout": 1500,
+    "Words": "An Grav"
+  },
+  {
+    "Circle": 5,
+    "Flag": 0,
+    "ID": 35,
+    "Name": "Incognito",
+    "Reagents": [
+      3963,
+      3972,
+      3976
+    ],
+    "Timeout": 1500,
+    "Words": "Kal In Ex"
+  },
+  {
+    "Circle": 5,
+    "Flag": 2,
+    "ID": 36,
+    "Name": "Magic Reflection",
+    "Reagents": [
+      3972,
+      3974,
+      3981
+    ],
+    "Timeout": 1500,
+    "Words": "In Jux Sanct"
+  },
+  {
+    "Circle": 5,
+    "Flag": 1,
+    "ID": 37,
+    "Name": "Mind Blast",
+    "Reagents": [
+      3962,
+      3974,
+      3976,
+      3980
+    ],
+    "Timeout": 1500,
+    "Words": "Por Corp Wis"
+  },
+  {
+    "Circle": 5,
+    "Flag": 1,
+    "ID": 38,
+    "Name": "Paralyze",
+    "Reagents": [
+      3972,
+      3974,
+      3981
+    ],
+    "Timeout": 1500,
+    "Words": "An Ex Por"
+  },
+  {
+    "Circle": 5,
+    "Flag": 0,
+    "ID": 39,
+    "Name": "Poison Field",
+    "Reagents": [
+      3962,
+      3976,
+      3981
+    ],
+    "Timeout": 1500,
+    "Words": "In Nox Grav"
+  },
+  {
+    "Circle": 5,
+    "Flag": 0,
+    "ID": 40,
+    "Name": "Summon Creature",
+    "Reagents": [
+      3963,
+      3974,
+      3981
+    ],
+    "Timeout": 1500,
+    "Words": "Kal Xen"
+  },
+  {
+    "Circle": 6,
+    "Flag": 0,
+    "ID": 41,
+    "Name": "Dispel",
+    "Reagents": [
+      3972,
+      3974,
+      3980
+    ],
+    "Timeout": 1750,
+    "Words": "An Ort"
+  },
+  {
+    "Circle": 6,
+    "Flag": 1,
+    "ID": 42,
+    "Name": "Energy Bolt",
+    "Reagents": [
+      3962,
+      3976
+    ],
+    "Timeout": 1750,
+    "Words": "Corp Por"
+  },
+  {
+    "Circle": 6,
+    "Flag": 1,
+    "ID": 43,
+    "Name": "Explosion",
+    "Reagents": [
+      3963,
+      3974
+    ],
+    "Timeout": 1750,
+    "Words": "Vas Ort Flam"
+  },
+  {
+    "Circle": 6,
+    "Flag": 2,
+    "ID": 44,
+    "Name": "Invisibility",
+    "Reagents": [
+      3963,
+      3976
+    ],
+    "Timeout": 1750,
+    "Words": "An Lor Xen"
+  },
+  {
+    "Circle": 6,
+    "Flag": 0,
+    "ID": 45,
+    "Name": "Mark",
+    "Reagents": [
+      3962,
+      3963,
+      3974
+    ],
+    "Timeout": 1750,
+    "Words": "Kal Por Ylem"
+  },
+  {
+    "Circle": 6,
+    "Flag": 1,
+    "ID": 46,
+    "Name": "Mass Curse",
+    "Reagents": [
+      3972,
+      3976,
+      3974,
+      3980
+    ],
+    "Timeout": 1750,
+    "Words": "Vas Des Sanct"
+  },
+  {
+    "Circle": 6,
+    "Flag": 0,
+    "ID": 47,
+    "Name": "Paralyze Field",
+    "Reagents": [
+      3962,
+      3973,
+      3981
+    ],
+    "Timeout": 1750,
+    "Words": "In Ex Grav"
+  },
+  {
+    "Circle": 6,
+    "Flag": 0,
+    "ID": 48,
+    "Name": "Reveal",
+    "Reagents": [
+      3963,
+      3980
+    ],
+    "Timeout": 1750,
+    "Words": "Wis Quas"
+  },
+  {
+    "Circle": 7,
+    "Flag": 1,
+    "ID": 49,
+    "Name": "Chain Lightning",
+    "Reagents": [
+      3962,
+      3963,
+      3974,
+      3980
+    ],
+    "Timeout": 2000,
+    "Words": "Vas Ort Grav"
+  },
+  {
+    "Circle": 7,
+    "Flag": 0,
+    "ID": 50,
+    "Name": "Energy Field",
+    "Reagents": [
+      3962,
+      3974,
+      3981,
+      3980
+    ],
+    "Timeout": 2000,
+    "Words": "In Sanct Grav"
+  },
+  {
+    "Circle": 7,
+    "Flag": 1,
+    "ID": 51,
+    "Name": "Flame Strike",
+    "Reagents": [
+      3981,
+      3980
+    ],
+    "Timeout": 2000,
+    "Words": "Kal Vas Flam"
+  },
+  {
+    "Circle": 7,
+    "Flag": 0,
+    "ID": 52,
+    "Name": "Gate Travel",
+    "Reagents": [
+      3962,
+      3974,
+      3980
+    ],
+    "Timeout": 2000,
+    "Words": "Vas Rel Por"
+  },
+  {
+    "Circle": 7,
+    "Flag": 1,
+    "ID": 53,
+    "Name": "Mana Vampire",
+    "Reagents": [
+      3962,
+      3963,
+      3974,
+      3981
+    ],
+    "Timeout": 2000,
+    "Words": "Ort Sanct"
+  },
+  {
+    "Circle": 7,
+    "Flag": 0,
+    "ID": 54,
+    "Name": "Mass Dispel",
+    "Reagents": [
+      3972,
+      3974,
+      3962,
+      3980
+    ],
+    "Timeout": 2000,
+    "Words": "Vas An Ort"
+  },
+  {
+    "Circle": 7,
+    "Flag": 1,
+    "ID": 55,
+    "Name": "Meteor Swarm",
+    "Reagents": [
+      3963,
+      3974,
+      3980,
+      3981
+    ],
+    "Timeout": 2000,
+    "Words": "Flam Kal Des Ylem"
+  },
+  {
+    "Circle": 7,
+    "Flag": 0,
+    "ID": 56,
+    "Name": "Polymorph",
+    "Reagents": [
+      3963,
+      3981,
+      3974
+    ],
+    "Timeout": 2000,
+    "Words": "Vas Ylem Rel"
+  },
+  {
+    "Circle": 8,
+    "Flag": 1,
+    "ID": 57,
+    "Name": "Earthquake",
+    "Reagents": [
+      3963,
+      3973,
+      3974,
+      3980
+    ],
+    "Timeout": 2250,
+    "Words": "In Vas Por"
+  },
+  {
+    "Circle": 8,
+    "Flag": 0,
+    "ID": 58,
+    "Name": "Energy Vortex",
+    "Reagents": [
+      3963,
+      3962,
+      3974,
+      3976
+    ],
+    "Timeout": 2250,
+    "Words": "Vas Corp Por"
+  },
+  {
+    "Circle": 8,
+    "Flag": 2,
+    "ID": 59,
+    "Name": "Resurrection",
+    "Reagents": [
+      3963,
+      3972,
+      3973
+    ],
+    "Timeout": 2250,
+    "Words": "An Corp"
+  },
+  {
+    "Circle": 8,
+    "Flag": 0,
+    "ID": 60,
+    "Name": "Summon Air Elemental",
+    "Reagents": [
+      3963,
+      3974,
+      3981
+    ],
+    "Timeout": 2250,
+    "Words": "Kal Vas Xen Hur"
+  },
+  {
+    "Circle": 8,
+    "Flag": 0,
+    "ID": 61,
+    "Name": "Summon Daemon",
+    "Reagents": [
+      3963,
+      3974,
+      3981,
+      3980
+    ],
+    "Timeout": 2250,
+    "Words": "Kal Vas Xen Corp"
+  },
+  {
+    "Circle": 8,
+    "Flag": 0,
+    "ID": 62,
+    "Name": "Summon Earth Elemental",
+    "Reagents": [
+      3963,
+      3974,
+      3981
+    ],
+    "Timeout": 2250,
+    "Words": "Kal Vas Xen Ylem"
+  },
+  {
+    "Circle": 8,
+    "Flag": 0,
+    "ID": 63,
+    "Name": "Summon Fire Elemental",
+    "Reagents": [
+      3963,
+      3974,
+      3981,
+      3980
+    ],
+    "Timeout": 2250,
+    "Words": "Kal Vas Xen Flam"
+  },
+  {
+    "Circle": 8,
+    "Flag": 0,
+    "ID": 64,
+    "Name": "Summon Water Elemental",
+    "Reagents": [
+      3963,
+      3974,
+      3981
+    ],
+    "Timeout": 2250,
+    "Words": "Kal Vas Xen An Flam"
+  },
+  {
+    "Circle": 10,
+    "Flag": 0,
+    "ID": 101,
+    "Name": "Animate Dead",
+    "Reagents": [
+      3983,
+      3965
+    ],
+    "Timeout": 1500,
+    "Words": "Uus Corp"
+  },
+  {
+    "Circle": 10,
+    "Flag": 1,
+    "ID": 102,
+    "Name": "Blood Oath",
+    "Reagents": [
+      3965
+    ],
+    "Timeout": 1500,
+    "Words": "In Jux Mani Xen"
+  },
+  {
+    "Circle": 10,
+    "Flag": 1,
+    "ID": 103,
+    "Name": "Corpse Skin",
+    "Reagents": [
+      3960,
+      3983
+    ],
+    "Timeout": 1500,
+    "Words": "In Agle Corp Ylem"
+  },
+  {
+    "Circle": 10,
+    "Flag": 0,
+    "ID": 104,
+    "Name": "Curse Weapon",
+    "Reagents": [
+      3978
+    ],
+    "Timeout": 750,
+    "Words": "An Sanct Gra Char"
+  },
+  {
+    "Circle": 10,
+    "Flag": 1,
+    "ID": 105,
+    "Name": "Evil Omen",
+    "Reagents": [
+      3960,
+      3982
+    ],
+    "Timeout": 750,
+    "Words": "Pas Tym An Sanct"
+  },
+  {
+    "Circle": 10,
+    "Flag": 0,
+    "ID": 106,
+    "Name": "Horrific Beast",
+    "Reagents": [
+      3960,
+      3965
+    ],
+    "Timeout": 2000,
+    "Words": "Rel Xen Vas Bal"
+  },
+  {
+    "Circle": 10,
+    "Flag": 0,
+    "ID": 107,
+    "Name": "Lich Form",
+    "Reagents": [
+      3983,
+      3965,
+      3982
+    ],
+    "Timeout": 2000,
+    "Words": "Rel Xen Corp Ort"
+  },
+  {
+    "Circle": 10,
+    "Flag": 1,
+    "ID": 108,
+    "Name": "Mind Rot",
+    "Reagents": [
+      3960,
+      3978,
+      3965
+    ],
+    "Timeout": 1500,
+    "Words": "Wis An Ben"
+  },
+  {
+    "Circle": 10,
+    "Flag": 1,
+    "ID": 109,
+    "Name": "Pain Spike",
+    "Reagents": [
+      3983,
+      3978
+    ],
+    "Timeout": 1000,
+    "Words": "In Sar"
+  },
+  {
+    "Circle": 10,
+    "Flag": 1,
+    "ID": 110,
+    "Name": "Poison Strike",
+    "Reagents": [
+      3982
+    ],
+    "Timeout": 1500,
+    "Words": "In Vas Nox"
+  },
+  {
+    "Circle": 10,
+    "Flag": 1,
+    "ID": 111,
+    "Name": "Strangle",
+    "Reagents": [
+      3965,
+      3982
+    ],
+    "Timeout": 2000,
+    "Words": "In Bal Nox"
+  },
+  {
+    "Circle": 10,
+    "Flag": 0,
+    "ID": 112,
+    "Name": "Summon Familiar",
+    "Reagents": [
+      3960,
+      3983,
+      3965
+    ],
+    "Timeout": 2000,
+    "Words": "Kal Xen Bal"
+  },
+  {
+    "Circle": 10,
+    "Flag": 0,
+    "ID": 113,
+    "Name": "Vampiric Embrace",
+    "Reagents": [
+      3960,
+      3982,
+      3978
+    ],
+    "Timeout": 2000,
+    "Words": "Rel Xen An Sanct"
+  },
+  {
+    "Circle": 10,
+    "Flag": 1,
+    "ID": 114,
+    "Name": "Vengeful Spirit",
+    "Reagents": [
+      3960,
+      3983,
+      3978
+    ],
+    "Timeout": 2000,
+    "Words": "Kal Xen Bal Beh"
+  },
+  {
+    "Circle": 10,
+    "Flag": 1,
+    "ID": 115,
+    "Name": "Wither",
+    "Reagents": [
+      3982,
+      3983,
+      3978
+    ],
+    "Timeout": 1500,
+    "Words": "Kal Vas An Flam"
+  },
+  {
+    "Circle": 10,
+    "Flag": 0,
+    "ID": 116,
+    "Name": "Wraith Form",
+    "Reagents": [
+      3982,
+      3978
+    ],
+    "Timeout": 2000,
+    "Words": "Rel Xen Um"
+  },
+  {
+    "Circle": 10,
+    "Flag": 0,
+    "ID": 117,
+    "Name": "Exorcism",
+    "Reagents": [
+      3982,
+      3983
+    ],
+    "Timeout": 2000,
+    "Words": "Ort Corp Grav"
+  },
+  {
+    "Circle": 20,
+    "Flag": 2,
+    "ID": 201,
+    "Name": "Cleanse by Fire",
+    "Reagents": [],
+    "Timeout": 1000,
+    "Words": "Expor Flamus"
+  },
+  {
+    "Circle": 20,
+    "Flag": 2,
+    "ID": 202,
+    "Name": "Close Wounds",
+    "Reagents": [],
+    "Timeout": 1500,
+    "Words": "Obsu Vulni"
+  },
+  {
+    "Circle": 20,
+    "Flag": 0,
+    "ID": 203,
+    "Name": "Consecrate Weapon",
+    "Reagents": [],
+    "Timeout": 500,
+    "Words": "Consecrus Arma"
+  },
+  {
+    "Circle": 20,
+    "Flag": 0,
+    "ID": 204,
+    "Name": "Dispel Evil",
+    "Reagents": [],
+    "Timeout": 250,
+    "Words": "Dispiro Malas"
+  },
+  {
+    "Circle": 20,
+    "Flag": 0,
+    "ID": 205,
+    "Name": "Divine Fury",
+    "Reagents": [],
+    "Timeout": 1000,
+    "Words": "Divinum Furis"
+  },
+  {
+    "Circle": 20,
+    "Flag": 0,
+    "ID": 206,
+    "Name": "Enemy of One",
+    "Reagents": [],
+    "Timeout": 500,
+    "Words": "Forul Solum"
+  },
+  {
+    "Circle": 20,
+    "Flag": 1,
+    "ID": 207,
+    "Name": "Holy Light",
+    "Reagents": [],
+    "Timeout": 1750,
+    "Words": "Augus Luminos"
+  },
+  {
+    "Circle": 20,
+    "Flag": 2,
+    "ID": 208,
+    "Name": "Noble Sacrifice",
+    "Reagents": [],
+    "Timeout": 1500,
+    "Words": "Dium Prostra"
+  },
+  {
+    "Circle": 20,
+    "Flag": 2,
+    "ID": 209,
+    "Name": "Remove Curse",
+    "Reagents": [],
+    "Timeout": 1500,
+    "Words": "Extermo Vomica"
+  },
+  {
+    "Circle": 20,
+    "Flag": 0,
+    "ID": 210,
+    "Name": "Sacred Journey",
+    "Reagents": [],
+    "Timeout": 1500,
+    "Words": "Sanctum Viatas"
+  },
+  {
+    "Circle": 30,
+    "Flag": 1,
+    "ID": 401,
+    "Name": "Honorable Execution",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 30,
+    "Flag": 2,
+    "ID": 402,
+    "Name": "Confidence",
+    "Reagents": [],
+    "Timeout": 250,
+    "Words": ""
+  },
+  {
+    "Circle": 30,
+    "Flag": 2,
+    "ID": 403,
+    "Name": "Evasion",
+    "Reagents": [],
+    "Timeout": 250,
+    "Words": ""
+  },
+  {
+    "Circle": 30,
+    "Flag": 1,
+    "ID": 404,
+    "Name": "Counter Attack",
+    "Reagents": [],
+    "Timeout": 250,
+    "Words": ""
+  },
+  {
+    "Circle": 30,
+    "Flag": 1,
+    "ID": 405,
+    "Name": "Lightning Strike",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 30,
+    "Flag": 1,
+    "ID": 406,
+    "Name": "Momentum Strike",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 40,
+    "Flag": 1,
+    "ID": 501,
+    "Name": "Focus Attack",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 40,
+    "Flag": 1,
+    "ID": 502,
+    "Name": "Death Strike",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 40,
+    "Flag": 2,
+    "ID": 503,
+    "Name": "Animal Form",
+    "Reagents": [],
+    "Timeout": 1000,
+    "Words": ""
+  },
+  {
+    "Circle": 40,
+    "Flag": 1,
+    "ID": 504,
+    "Name": "Ki Attack",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 40,
+    "Flag": 1,
+    "ID": 505,
+    "Name": "Surprise Attack",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 40,
+    "Flag": 1,
+    "ID": 506,
+    "Name": "Backstab",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 40,
+    "Flag": 0,
+    "ID": 507,
+    "Name": "Shadowjump",
+    "Reagents": [],
+    "Timeout": 1000,
+    "Words": ""
+  },
+  {
+    "Circle": 40,
+    "Flag": 0,
+    "ID": 508,
+    "Name": "Mirror Image",
+    "Reagents": [],
+    "Timeout": 1500,
+    "Words": ""
+  },
+  {
+    "Circle": 50,
+    "Flag": 0,
+    "ID": 601,
+    "Name": "Arcane Circle",
+    "Reagents": [],
+    "Timeout": 500,
+    "Words": "Myrshalee"
+  },
+  {
+    "Circle": 50,
+    "Flag": 2,
+    "ID": 602,
+    "Name": "Gift of Renewal",
+    "Reagents": [],
+    "Timeout": 3000,
+    "Words": "Olorisstra"
+  },
+  {
+    "Circle": 50,
+    "Flag": 0,
+    "ID": 603,
+    "Name": "Immolating Weapon",
+    "Reagents": [],
+    "Timeout": 1000,
+    "Words": "Thalshara"
+  },
+  {
+    "Circle": 50,
+    "Flag": 1,
+    "ID": 604,
+    "Name": "Attunement",
+    "Reagents": [],
+    "Timeout": 1000,
+    "Words": "Haeldril"
+  },
+  {
+    "Circle": 50,
+    "Flag": 1,
+    "ID": 605,
+    "Name": "Thunderstorm",
+    "Reagents": [],
+    "Timeout": 1500,
+    "Words": "Erelonia"
+  },
+  {
+    "Circle": 50,
+    "Flag": 0,
+    "ID": 606,
+    "Name": "Nature's Fury",
+    "Reagents": [],
+    "Timeout": 1500,
+    "Words": "Rauvvrae"
+  },
+  {
+    "Circle": 50,
+    "Flag": 0,
+    "ID": 607,
+    "Name": "Summon Fey",
+    "Reagents": [],
+    "Timeout": 1500,
+    "Words": "Alalithra"
+  },
+  {
+    "Circle": 50,
+    "Flag": 0,
+    "ID": 608,
+    "Name": "Summon Fiend",
+    "Reagents": [],
+    "Timeout": 2000,
+    "Words": "Nylisstra"
+  },
+  {
+    "Circle": 50,
+    "Flag": 0,
+    "ID": 609,
+    "Name": "Reaper Form",
+    "Reagents": [],
+    "Timeout": 2500,
+    "Words": "Tarisstree"
+  },
+  {
+    "Circle": 50,
+    "Flag": 1,
+    "ID": 610,
+    "Name": "Wildfire",
+    "Reagents": [],
+    "Timeout": 2500,
+    "Words": "Haelyn"
+  },
+  {
+    "Circle": 50,
+    "Flag": 1,
+    "ID": 611,
+    "Name": "Essence of Wind",
+    "Reagents": [],
+    "Timeout": 3000,
+    "Words": "Anathrae"
+  },
+  {
+    "Circle": 50,
+    "Flag": 0,
+    "ID": 612,
+    "Name": "Dryad Allure",
+    "Reagents": [],
+    "Timeout": 3000,
+    "Words": "Rathril"
+  },
+  {
+    "Circle": 50,
+    "Flag": 0,
+    "ID": 613,
+    "Name": "Ethereal Voyage",
+    "Reagents": [],
+    "Timeout": 3500,
+    "Words": "Orlavdra"
+  },
+  {
+    "Circle": 50,
+    "Flag": 1,
+    "ID": 614,
+    "Name": "Word of Death",
+    "Reagents": [],
+    "Timeout": 3500,
+    "Words": "Nyraxle"
+  },
+  {
+    "Circle": 50,
+    "Flag": 2,
+    "ID": 615,
+    "Name": "Gift of Life",
+    "Reagents": [],
+    "Timeout": 4000,
+    "Words": "Illorae"
+  },
+  {
+    "Circle": 50,
+    "Flag": 2,
+    "ID": 616,
+    "Name": "Arcane Empowerment",
+    "Reagents": [],
+    "Timeout": 3000,
+    "Words": "Aslavdra"
+  },
+  {
+    "Circle": 60,
+    "Flag": 1,
+    "ID": 678,
+    "Name": "Nether Bolt",
+    "Reagents": [
+      3962,
+      3980
+    ],
+    "Timeout": 1000,
+    "Words": "In Corp Ylem"
+  },
+  {
+    "Circle": 60,
+    "Flag": 0,
+    "ID": 679,
+    "Name": "Healing Stone",
+    "Reagents": [
+      3966,
+      3972,
+      3973,
+      3981
+    ],
+    "Timeout": 5500,
+    "Words": "Kal In Mani"
+  },
+  {
+    "Circle": 60,
+    "Flag": 2,
+    "ID": 680,
+    "Name": "Purge Magic",
+    "Reagents": [
+      3972,
+      3974,
+      3980,
+      3969
+    ],
+    "Timeout": 1500,
+    "Words": "An Ort Sanct"
+  },
+  {
+    "Circle": 60,
+    "Flag": 0,
+    "ID": 681,
+    "Name": "Enchant",
+    "Reagents": [
+      3981,
+      3974,
+      3980
+    ],
+    "Timeout": 750,
+    "Words": "In Ort Ylem"
+  },
+  {
+    "Circle": 60,
+    "Flag": 1,
+    "ID": 682,
+    "Name": "Sleep",
+    "Reagents": [
+      3963,
+      3972,
+      3980,
+      16503
+    ],
+    "Timeout": 1750,
+    "Words": "In Zu"
+  },
+  {
+    "Circle": 60,
+    "Flag": 1,
+    "ID": 683,
+    "Name": "Eagle Strike",
+    "Reagents": [
+      3963,
+      3966,
+      3974,
+      3981
+    ],
+    "Timeout": 1750,
+    "Words": "Kal Por Xen"
+  },
+  {
+    "Circle": 60,
+    "Flag": 0,
+    "ID": 684,
+    "Name": "Animated Weapon",
+    "Reagents": [
+      3962,
+      3974,
+      3976,
+      3966
+    ],
+    "Timeout": 2000,
+    "Words": "In Jux Por Ylem"
+  },
+  {
+    "Circle": 60,
+    "Flag": 0,
+    "ID": 685,
+    "Name": "Stone Form",
+    "Reagents": [
+      3963,
+      3969,
+      3972
+    ],
+    "Timeout": 2000,
+    "Words": "In Rel Ylem"
+  },
+  {
+    "Circle": 60,
+    "Flag": 0,
+    "ID": 686,
+    "Name": "Spell Trigger",
+    "Reagents": [
+      3972,
+      3974,
+      3981,
+      16503
+    ],
+    "Timeout": 5500,
+    "Words": "In Vas Ort Ex"
+  },
+  {
+    "Circle": 60,
+    "Flag": 1,
+    "ID": 687,
+    "Name": "Mass Sleep",
+    "Reagents": [
+      3974,
+      3976,
+      3980,
+      3963
+    ],
+    "Timeout": 2000,
+    "Words": "Vas Zu"
+  },
+  {
+    "Circle": 60,
+    "Flag": 2,
+    "ID": 688,
+    "Name": "Cleansing Winds",
+    "Reagents": [
+      3972,
+      3973,
+      3974,
+      16503
+    ],
+    "Timeout": 2000,
+    "Words": "In Vas Mani Hur"
+  },
+  {
+    "Circle": 60,
+    "Flag": 1,
+    "ID": 689,
+    "Name": "Bombard",
+    "Reagents": [
+      3963,
+      3972,
+      3980,
+      16503
+    ],
+    "Timeout": 2750,
+    "Words": "Corp Por Ylem"
+  },
+  {
+    "Circle": 60,
+    "Flag": 1,
+    "ID": 690,
+    "Name": "Spell Plague",
+    "Reagents": [
+      3968,
+      16503,
+      3976,
+      3980
+    ],
+    "Timeout": 2500,
+    "Words": "Vas Rel Jux Ort"
+  },
+  {
+    "Circle": 60,
+    "Flag": 1,
+    "ID": 691,
+    "Name": "Hail Storm",
+    "Reagents": [
+      3962,
+      3963,
+      3974,
+      16503
+    ],
+    "Timeout": 2500,
+    "Words": "Kal Des Ylem"
+  },
+  {
+    "Circle": 60,
+    "Flag": 1,
+    "ID": 692,
+    "Name": "Nether Cyclone",
+    "Reagents": [
+      3962,
+      3980
+    ],
+    "Timeout": 2750,
+    "Words": "Grav Hur"
+  },
+  {
+    "Circle": 60,
+    "Flag": 0,
+    "ID": 693,
+    "Name": "Rising Colossus",
+    "Reagents": [
+      3968,
+      16503,
+      3969,
+      3976
+    ],
+    "Timeout": 2750,
+    "Words": "Kal Vas Xen Corp Ylem"
+  },
+  {
+    "Circle": 70,
+    "Flag": 2,
+    "ID": 701,
+    "Name": "Inspire",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": "Uus Por"
+  },
+  {
+    "Circle": 70,
+    "Flag": 2,
+    "ID": 702,
+    "Name": "Invigorate",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": "An Zu"
+  },
+  {
+    "Circle": 70,
+    "Flag": 2,
+    "ID": 703,
+    "Name": "Resilience",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": "Kal Mani Tym"
+  },
+  {
+    "Circle": 70,
+    "Flag": 2,
+    "ID": 704,
+    "Name": "Perseverance",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": "Uus Jux Sanct"
+  },
+  {
+    "Circle": 70,
+    "Flag": 1,
+    "ID": 705,
+    "Name": "Tribulation",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": "In Jux Hur Rel"
+  },
+  {
+    "Circle": 70,
+    "Flag": 1,
+    "ID": 706,
+    "Name": "Despair",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": "Kal Des Mani Tym"
+  }
+]

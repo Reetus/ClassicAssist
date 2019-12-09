@@ -5,14 +5,6 @@ using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UO.Network.Packets
 {
-    public enum TargetFlags : byte
-    {
-        None,
-        Harmful,
-        Beneficial,
-        Cancel
-    }
-
     public class Target : BasePacket, IMacroCommandParser
     {
         public Target()

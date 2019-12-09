@@ -1411,6 +1411,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Spells.
+        /// </summary>
+        public static string Spells {
+            get {
+                return ResourceManager.GetString("Spells", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stack.
         /// </summary>
         public static string Stack {
@@ -1596,6 +1605,15 @@ namespace ClassicAssist.Resources {
         public static string Unknown_macro___ {
             get {
                 return ResourceManager.GetString("Unknown macro...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown spell....
+        /// </summary>
+        public static string Unknown_spell___ {
+            get {
+                return ResourceManager.GetString("Unknown spell...", resourceCulture);
             }
         }
         

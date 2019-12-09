@@ -564,6 +564,9 @@
   <data name="Software" xml:space="preserve">
     <value>Software</value>
   </data>
+  <data name="Spells" xml:space="preserve">
+    <value>Spells</value>
+  </data>
   <data name="Stack" xml:space="preserve">
     <value>Stack</value>
   </data>
@@ -626,6 +629,9 @@
   </data>
   <data name="Unknown macro..." xml:space="preserve">
     <value>Unknown macro...</value>
+  </data>
+  <data name="Unknown spell..." xml:space="preserve">
+    <value>Unknown spell...</value>
   </data>
   <data name="UO_LOCALE" xml:space="preserve">
     <value>ENU\0</value>

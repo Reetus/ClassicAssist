@@ -2,6 +2,14 @@
 
 namespace ClassicAssist.UO.Data
 {
+    public enum TargetFlags : byte
+    {
+        None,
+        Harmful,
+        Beneficial,
+        Cancel
+    }
+
     public enum Virtues
     {
         None = '0',

@@ -46,6 +46,7 @@ namespace ClassicAssist.UO.Network
             _extendedHandlers = new PacketHandler[0x100];
 
             Register( 0x11, 0, OnMobileStatus );
+            Register( 0x17, 0, OnHealthbarColour );
             Register( 0x1B, 37, OnInitializePlayer );
             Register( 0x1C, 0, OnASCIIText );
             Register( 0x1D, 5, OnItemDeleted );
@@ -71,7 +72,100 @@ namespace ClassicAssist.UO.Network
             Register( 0xF3, 26, OnSAWorldItem );
 
             RegisterExtended( 0x04, 0, OnCloseGump );
+            RegisterExtended( 0x06, 0, OnPartyCommand );
             RegisterExtended( 0x08, 0, OnMapChange );
+        }
+
+        private static void OnPartyCommand( PacketReader reader )
+        {
+            int command = reader.ReadByte();
+
+            switch ( command )
+            {
+                case 1:
+                {
+                    int count = reader.ReadByte();
+
+                    List<int> partyMembers = new List<int>();
+
+                    for ( int i = 0; i < count; i++ )
+                    {
+                        int serial = reader.ReadInt32();
+                        partyMembers.Add( serial );
+                    }
+
+                    if ( Engine.Player == null )
+                    {
+                        return;
+                    }
+
+                    Engine.Player.Party = partyMembers.ToArray();
+
+                    break;
+                }
+                case 2:
+                {
+                    int count = reader.ReadByte();
+
+                    reader.ReadInt32(); // removed member serial
+
+                    List<int> partyMembers = new List<int>();
+
+                    for ( int i = 0; i < count; i++ )
+                    {
+                        int serial = reader.ReadInt32();
+                        partyMembers.Add( serial );
+                    }
+
+                    if ( Engine.Player == null )
+                    {
+                        return;
+                    }
+
+                    Engine.Player.Party = partyMembers.ToArray();
+                    break;
+                }
+            }
+        }
+
+        private static void OnHealthbarColour( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+            reader.ReadInt16(); // 0x01;
+
+            int status = reader.ReadInt16();
+            int flags = reader.ReadByte();
+
+            HealthbarColour healthbar = HealthbarColour.None;
+
+            switch ( status )
+            {
+                case 0x01:
+                    healthbar = HealthbarColour.Green;
+                    break;
+                case 0x02:
+                    healthbar = HealthbarColour.Yellow;
+                    break;
+                case 0x03:
+                    healthbar = HealthbarColour.Red;
+                    break;
+            }
+
+            Mobile mobile = Engine.Mobiles.GetMobile( serial );
+
+            if ( mobile == null )
+            {
+                return;
+            }
+
+            if ( flags >= 1 )
+            {
+                mobile.HealthbarColour |= healthbar;
+            }
+            else
+            {
+                mobile.HealthbarColour &= ~healthbar;
+            }
         }
 
         private static void OnCloseGump( PacketReader reader )

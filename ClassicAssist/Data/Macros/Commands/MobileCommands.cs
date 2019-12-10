@@ -360,5 +360,113 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             return Engine.Player?.TithingPoints ?? 0;
         }
+
+        [CommandsDisplay( Category = "Entity", Description = "Returns true if the specified mobile is poisoned.",
+            InsertText = "if Poisoned(\"self\"):" )]
+        public static bool Poisoned( object obj )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return false;
+            }
+
+            Mobile mobile = Engine.Mobiles.GetMobile( serial );
+
+            if ( mobile != null )
+            {
+                return mobile.IsPoisoned;
+            }
+
+            UOC.SystemMessage( Strings.Mobile_not_found___ );
+            return false;
+        }
+
+        [CommandsDisplay( Category = "Entity", Description = "Returns true if the specified mobile is yellowhits.",
+            InsertText = "if YellowHits(\"self\"):" )]
+        public static bool YellowHits( object obj )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return false;
+            }
+
+            Mobile mobile = Engine.Mobiles.GetMobile( serial );
+
+            if ( mobile != null )
+            {
+                return mobile.IsYellowHits;
+            }
+
+            UOC.SystemMessage( Strings.Mobile_not_found___ );
+            return false;
+        }
+
+        [CommandsDisplay( Category = "Entity", Description = "Returns true if the specified mobile is frozen.",
+            InsertText = "if Paralyzed(\"self\"):" )]
+        public static bool Paralyzed( object obj )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return false;
+            }
+
+            Mobile mobile = Engine.Mobiles.GetMobile( serial );
+
+            if ( mobile != null )
+            {
+                return mobile.IsFrozen;
+            }
+
+            UOC.SystemMessage( Strings.Mobile_not_found___ );
+            return false;
+        }
+
+        [CommandsDisplay( Category = "Entity", Description = "Returns true if the specified mobile is mounted.",
+            InsertText = "if Mounted(\"self\"):" )]
+        public static bool Mounted( object obj )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return false;
+            }
+
+            Mobile mobile = Engine.Mobiles.GetMobile( serial );
+
+            if ( mobile != null )
+            {
+                return mobile.IsMounted;
+            }
+
+            UOC.SystemMessage( Strings.Mobile_not_found___ );
+            return false;
+        }
+
+        [CommandsDisplay( Category = "Entity",
+            Description = "Return the true if the given serial/alias is in party with you.",
+            InsertText = "if InParty(\"friend\"):" )]
+        public static bool InParty( object obj )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial != 0 )
+            {
+                return Engine.Player?.Party != null && Engine.Player.Party.Contains( serial );
+            }
+
+            UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+            return false;
+        }
     }
 }

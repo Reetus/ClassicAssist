@@ -10,9 +10,14 @@ namespace ClassicAssist.Data.Hotkeys.Commands
             HotkeyCommandAttribute a =
                 (HotkeyCommandAttribute) Attribute.GetCustomAttribute( GetType(), typeof( HotkeyCommandAttribute ) );
 
-            string resourceName = Strings.ResourceManager.GetString( a?.Name ?? "" );
+            if ( a != null )
+            {
+                // if the attribute exists, the Name must be localizable.
+                string resourceName = Strings.ResourceManager.GetString(
+                    a.Name ?? throw new ArgumentNullException( $"No localizable string for {a.Name}" ) );
 
-            Name = string.IsNullOrEmpty( resourceName ) ? a?.Name : resourceName;
+                Name = string.IsNullOrEmpty( resourceName ) ? a.Name : resourceName;
+            }
 
             Action = hs => Execute();
         }

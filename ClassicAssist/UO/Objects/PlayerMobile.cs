@@ -35,6 +35,7 @@ namespace ClassicAssist.UO.Objects
         public int Luck { get; set; }
 
         public Map Map { get; set; }
+        public int[] Party { get; set; }
         public int PhysicalResistance { get; set; }
         public int PhysicalResistanceMax { get; set; }
         public int PoisonResistance { get; set; }

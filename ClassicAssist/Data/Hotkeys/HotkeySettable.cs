@@ -23,6 +23,7 @@ namespace ClassicAssist.Data.Hotkeys
         }
 
         public Action<HotkeySettable> Action { get; set; }
+        public virtual bool Disableable { get; set; } = true;
 
         public ShortcutKeys Hotkey
         {

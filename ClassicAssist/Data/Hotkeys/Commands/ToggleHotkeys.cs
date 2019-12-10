@@ -1,4 +1,4 @@
-﻿using ClassicAssist.Resources;
+﻿using ClassicAssist.Data.Macros.Commands;
 using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.Data.Hotkeys.Commands
@@ -13,11 +13,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
 
         public override void Execute()
         {
-            HotkeyManager manager = HotkeyManager.GetInstance();
-
-            manager.Enabled = !manager.Enabled;
-
-            UOC.SystemMessage( manager.Enabled ? Strings.Hotkeys_enabled___ : Strings.Hotkeys_disabled___, 0x3F );
+            MainCommands.Hotkeys();
         }
     }
 }

@@ -73,6 +73,7 @@ namespace ClassicAssist.Data.Macros.Commands
             int offsetX = 0;
             int offsetY = 0;
 
+            // TODO
             Direction direction = (Direction) ( (int) entity.Direction & ~0x80 );
 
             switch ( direction )

@@ -23,6 +23,8 @@ namespace ClassicAssist.UO.Objects
         public Item Backpack => Engine.Items.GetItem( GetLayer( Layer.Backpack ) );
         public ItemCollection Equipment { get; set; }
 
+        public HealthbarColour HealthbarColour { get; set; }
+
         public int Hits { get; set; }
         public int HitsMax { get; set; }
 
@@ -36,9 +38,11 @@ namespace ClassicAssist.UO.Objects
             set => _isDead = value;
         }
 
+        public bool IsFrozen => Status.HasFlag( MobileStatus.Frozen );
         public bool IsMounted => Mount != null;
-
+        public bool IsPoisoned => HealthbarColour.HasFlag( HealthbarColour.Green );
         public bool IsRenamable { get; set; }
+        public bool IsYellowHits => HealthbarColour.HasFlag( HealthbarColour.Yellow );
 
         public int Mana { get; set; }
         public int ManaMax { get; set; }

@@ -53,5 +53,73 @@ namespace ClassicAssist.Tests
             Engine.Items.Clear();
             Engine.Player.SetLayer( Layer.Backpack, 0 );
         }
+
+        [TestMethod]
+        public void WillSetPoisonedOnHealthbarColour()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            byte[] packet = { 0x17, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x01 };
+
+            PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x17 );
+
+            Assert.IsNotNull( handler );
+
+            handler.OnReceive( new PacketReader( packet, packet.Length, false ) );
+
+            Assert.IsTrue( Engine.Player.IsPoisoned );
+
+            packet = new byte[] { 0x17, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00 };
+
+            handler.OnReceive( new PacketReader( packet, packet.Length, false ) );
+
+            Assert.IsFalse( Engine.Player.IsPoisoned );
+
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillSetYellowHitsOnHealthbarColour()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            byte[] packet = { 0x17, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x02, 0x01 };
+
+            PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x17 );
+
+            Assert.IsNotNull( handler );
+
+            handler.OnReceive( new PacketReader( packet, packet.Length, false ) );
+
+            Assert.IsTrue( Engine.Player.IsYellowHits );
+
+            packet = new byte[] { 0x17, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x02, 0x00 };
+
+            handler.OnReceive( new PacketReader( packet, packet.Length, false ) );
+
+            Assert.IsFalse( Engine.Player.IsYellowHits );
+
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillSetFrozenOnMobileStatus()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            Assert.IsFalse( Engine.Player.IsFrozen );
+
+            byte[] packet = { 0x20, 0x00, 0x00, 0x00, 0x01, 0x01, 0x90, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
+            PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x20 );
+
+            Assert.IsNotNull( handler );
+
+            handler.OnReceive( new PacketReader( packet, packet.Length, true ) );
+
+            Assert.IsTrue( Engine.Player.IsFrozen );
+
+            Engine.Player = null;
+        }
     }
 }

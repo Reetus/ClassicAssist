@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ClassicAssist.Annotations;
-using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.UI.Misc;
 
 namespace ClassicAssist.Data.Hotkeys
@@ -104,7 +103,7 @@ namespace ClassicAssist.Data.Hotkeys
                         continue;
                     }
 
-                    if ( hks is HotkeyCommand hkc && hkc.Disableable && !Enabled )
+                    if ( hks.Disableable && !Enabled )
                     {
                         continue;
                     }

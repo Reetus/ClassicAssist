@@ -115,5 +115,25 @@ namespace ClassicAssist.Tests.MacroCommands
 
             Engine.Mobiles.Remove( m );
         }
+
+        [TestMethod]
+        public void WillGetMountedParam()
+        {
+            Item mount = new Item( 2 );
+
+            Engine.Items.Add( mount );
+
+            AliasCommands.SetAlias( "self", 1 );
+            AliasCommands.SetAlias( "mount", 2 );
+
+            Assert.IsFalse( MobileCommands.Mounted( "self" ) );
+
+            _player.SetLayer( Layer.Mount, 2 );
+
+            Assert.IsTrue( MobileCommands.Mounted( "self" ) );
+
+            Engine.Items.Remove( mount );
+            _player.SetLayer( Layer.Mount, 0 );
+        }
     }
 }

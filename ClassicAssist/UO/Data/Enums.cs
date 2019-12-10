@@ -2,6 +2,15 @@
 
 namespace ClassicAssist.UO.Data
 {
+    [Flags]
+    public enum HealthbarColour
+    {
+        None = 0x00,
+        Green = 0x01,
+        Yellow = 0x02,
+        Red = 0x04
+    }
+
     public enum TargetFlags : byte
     {
         None,

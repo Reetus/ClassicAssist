@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using Assistant;
+using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.ViewModels;
@@ -93,6 +94,16 @@ namespace ClassicAssist.Data.Macros.Commands
 
             t.SetApartmentState( ApartmentState.STA );
             t.Start();
+        }
+
+        [CommandsDisplay( Category = "Main", Description = "Enable and disable hotkeys.", InsertText = "Hotkeys()" )]
+        public static void Hotkeys()
+        {
+            HotkeyManager manager = HotkeyManager.GetInstance();
+
+            manager.Enabled = !manager.Enabled;
+
+            UOC.SystemMessage( manager.Enabled ? Strings.Hotkeys_enabled___ : Strings.Hotkeys_disabled___, 0x3F );
         }
     }
 }

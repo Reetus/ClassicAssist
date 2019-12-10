@@ -24,6 +24,12 @@ namespace ClassicAssist.UO.Network.Packets
                 senderSerial = Engine.TargetSerial;
             }
 
+            if ( targetSerial > 0 )
+            {
+                Engine.Player.LastTargetSerial = targetSerial;
+                Engine.Player.LastTargetType = targetType;
+            }
+
             _writer = new PacketWriter( 19 );
             _writer.Write( (byte) 0x6C );
             _writer.Write( (byte) targetType );

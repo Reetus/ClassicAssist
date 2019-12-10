@@ -73,7 +73,9 @@ namespace ClassicAssist.Data.Macros.Commands
             int offsetX = 0;
             int offsetY = 0;
 
-            switch ( entity.Direction )
+            Direction direction = (Direction) ( (int) entity.Direction & ~0x80 );
+
+            switch ( direction )
             {
                 case Direction.North:
                     offsetY = -1;

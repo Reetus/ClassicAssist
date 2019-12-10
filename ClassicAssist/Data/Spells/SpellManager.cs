@@ -35,6 +35,13 @@ namespace ClassicAssist.Data.Spells
                 .ToList();
         }
 
+        public SpellData GetSpellData( int id )
+        {
+            SpellData sd = _spellData.FirstOrDefault( s => s.ID == id );
+
+            return sd;
+        }
+
         public SpellData GetSpellData( string name )
         {
             SpellData sd = _spellData.FirstOrDefault( s => s.Name.ToLower().Equals( name.ToLower() ) );

@@ -288,6 +288,12 @@
   <data name="Hotkeys" xml:space="preserve">
     <value>Hotkeys</value>
   </data>
+  <data name="Hotkeys disabled..." xml:space="preserve">
+    <value>Hotkeys disabled...</value>
+  </data>
+  <data name="Hotkeys enabled..." xml:space="preserve">
+    <value>Hotkeys enabled...</value>
+  </data>
   <data name="Ignore ping packets" xml:space="preserve">
     <value>Ignore ping packets</value>
   </data>
@@ -579,6 +585,9 @@
   <data name="Stop" xml:space="preserve">
     <value>Stop</value>
   </data>
+  <data name="Target" xml:space="preserve">
+    <value>Target</value>
+  </data>
   <data name="Target clothing item..." xml:space="preserve">
     <value>Target clothing item...</value>
   </data>
@@ -611,6 +620,9 @@
   </data>
   <data name="Timers" xml:space="preserve">
     <value>Timers</value>
+  </data>
+  <data name="Toggle hotkeys" xml:space="preserve">
+    <value>Toggle hotkeys</value>
   </data>
   <data name="Toggle item properties" xml:space="preserve">
     <value>Toggle item properties</value>

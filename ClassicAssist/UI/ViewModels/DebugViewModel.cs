@@ -21,6 +21,8 @@ namespace ClassicAssist.UI.ViewModels
         {
             Engine.PacketReceivedEvent += OnPacketReceivedEvent;
             Engine.PacketSentEvent += OnPacketSentEvent;
+            Engine.InternalPacketReceivedEvent += OnInternalPacketReceivedEvent;
+            Engine.InternalPacketSentEvent += OnInternalPacketSentEvent;
         }
 
         public bool IgnorePingPackets
@@ -71,6 +73,46 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             IgnorePingPackets = json["Debug"]["IgnorePingPackets"].ToObject<bool>();
+        }
+
+        private void OnInternalPacketSentEvent( byte[] data, int length )
+        {
+            _dispatcher.Invoke( () =>
+            {
+                if ( IgnorePingPackets && data[0] == 0x73 )
+                {
+                    return;
+                }
+
+                if ( !Running )
+                {
+                    return;
+                }
+
+                HexDumpControl hd = new HexDumpControl( "Internal Outgoing Packet", data );
+
+                Items.Add( hd );
+            } );
+        }
+
+        private void OnInternalPacketReceivedEvent( byte[] data, int length )
+        {
+            _dispatcher.Invoke( () =>
+            {
+                if ( IgnorePingPackets && data[0] == 0x73 )
+                {
+                    return;
+                }
+
+                if ( !Running )
+                {
+                    return;
+                }
+
+                HexDumpControl hd = new HexDumpControl( "Internal Incoming Packet", data );
+
+                Items.Add( hd );
+            } );
         }
 
         private void OnPacketSentEvent( byte[] data, int length )

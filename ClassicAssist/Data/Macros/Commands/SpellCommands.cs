@@ -18,7 +18,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = "Spells",
             Description = "Cast the given named spell and automatically target given object.",
-            InsertText = "Cast(\"Recall\", \"runebook\"" )]
+            InsertText = "Cast(\"Recall\", \"runebook\")" )]
         public static bool Cast( string name, object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );

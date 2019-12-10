@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ClassicAssist.Annotations;
+using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.UI.Misc;
 
 namespace ClassicAssist.Data.Hotkeys
@@ -20,11 +21,18 @@ namespace ClassicAssist.Data.Hotkeys
         };
 
         private readonly List<Key> _modifiers = new List<Key>();
+        private bool _enabled = true;
 
         private ObservableCollectionEx<HotkeyEntry> _items = new ObservableCollectionEx<HotkeyEntry>();
 
         private HotkeyManager()
         {
+        }
+
+        public bool Enabled
+        {
+            get => _enabled;
+            set => SetProperty( ref _enabled, value );
         }
 
         public ObservableCollectionEx<HotkeyEntry> Items
@@ -92,6 +100,11 @@ namespace ClassicAssist.Data.Hotkeys
                     }
 
                     if ( hks.Hotkey.Key != keys || hks.Hotkey.Modifier != modifier )
+                    {
+                        continue;
+                    }
+
+                    if ( hks is HotkeyCommand hkc && hkc.Disableable && !Enabled )
                     {
                         continue;
                     }

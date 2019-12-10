@@ -57,7 +57,8 @@ namespace ClassicAssist.UI.ViewModels
                 JObject entry = new JObject
                 {
                     { "Type", commandsCategoryChild.GetType().FullName },
-                    { "Keys", commandsCategoryChild.Hotkey.ToJObject() }
+                    { "Keys", commandsCategoryChild.Hotkey.ToJObject() },
+                    { "PassToUO", commandsCategoryChild.PassToUO }
                 };
 
                 commandsArray.Add( entry );
@@ -76,7 +77,9 @@ namespace ClassicAssist.UI.ViewModels
 
                 JObject entry = new JObject
                 {
-                    { "Name", spellsCategoryChild.Name }, { "Keys", spellsCategoryChild.Hotkey.ToJObject() }
+                    { "Name", spellsCategoryChild.Name },
+                    { "Keys", spellsCategoryChild.Hotkey.ToJObject() },
+                    { "PassToUO", spellsCategoryChild.PassToUO }
                 };
 
                 spellsArray.Add( entry );
@@ -127,6 +130,7 @@ namespace ClassicAssist.UI.ViewModels
                     JToken keys = token["Keys"];
 
                     entry.Hotkey = new ShortcutKeys( keys["Modifier"].ToObject<Key>(), keys["Keys"].ToObject<Key>() );
+                    entry.PassToUO = token["PassToUO"]?.ToObject<bool>() ?? true;
                 }
             }
 
@@ -174,6 +178,7 @@ namespace ClassicAssist.UI.ViewModels
                     JToken keys = token["Keys"];
 
                     entry.Hotkey = new ShortcutKeys( keys["Modifier"].ToObject<Key>(), keys["Keys"].ToObject<Key>() );
+                    entry.PassToUO = token["PassToUO"]?.ToObject<bool>() ?? true;
                 }
             }
         }

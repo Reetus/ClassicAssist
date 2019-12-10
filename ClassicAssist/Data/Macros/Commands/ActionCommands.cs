@@ -396,8 +396,16 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = "Actions", Description = "Request or wait for a context menu option.",
             InsertText = "WaitForContext(0x00aabbcc, 1, 5000)" )]
-        public static bool WaitForContext( int serial, int entry, int timeout )
+        public static bool WaitForContext( object obj, int entry, int timeout )
         {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return false;
+            }
+
             AutoResetEvent are = new AutoResetEvent( false );
 
             PacketFilterInfo pfi = new PacketFilterInfo( 0xBF,

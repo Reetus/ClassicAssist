@@ -19,6 +19,7 @@ namespace ClassicAssist.UI.ViewModels
     public class MacrosTabViewModel : HotkeySettableViewModel<MacroEntry>, ISettingProvider
     {
         private int _caretPosition;
+        private MacroEntry _currentMacro;
         private TextDocument _document;
         private RelayCommand _executeCommand;
         private ICommand _inspectObjectCommand;
@@ -163,6 +164,8 @@ namespace ClassicAssist.UI.ViewModels
             _dispatcher.Invoke( () => IsRunning = true );
             _dispatcher.Invoke( () => SelectedItem = entry );
 
+            _currentMacro = entry;
+
             _macroInvoker = new MacroInvoker( entry );
             _macroInvoker.StoppedEvent += () =>
             {
@@ -172,12 +175,15 @@ namespace ClassicAssist.UI.ViewModels
                     return;
                 }
 
+                _currentMacro = null;
                 _dispatcher.Invoke( () => IsRunning = false );
             };
+
             _macroInvoker.ExceptionEvent += exception =>
             {
                 Commands.SystemMessage( string.Format( Strings.Macro_error___0_, exception.Message ) );
             };
+
             _macroInvoker.ExecuteSync();
         }
 
@@ -249,8 +255,20 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
+            if ( _currentMacro != null && _currentMacro.DoNotAutoInterrupt )
+            {
+                return;
+            }
+
+            if ( IsRunning )
+            {
+                Stop( _currentMacro );
+            }
+
             _dispatcher.Invoke( () => IsRunning = true );
             _dispatcher.Invoke( () => SelectedItem = entry );
+
+            _currentMacro = entry;
 
             _macroInvoker = new MacroInvoker( entry );
             _macroInvoker.StoppedEvent += () =>
@@ -261,12 +279,15 @@ namespace ClassicAssist.UI.ViewModels
                     return;
                 }
 
+                _currentMacro = null;
                 _dispatcher.Invoke( () => IsRunning = false );
             };
+
             _macroInvoker.ExceptionEvent += exception =>
             {
                 Commands.SystemMessage( string.Format( Strings.Macro_error___0_, exception.Message ) );
             };
+
             _macroInvoker.Execute();
         }
 

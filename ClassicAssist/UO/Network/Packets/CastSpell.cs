@@ -1,9 +1,15 @@
-﻿using ClassicAssist.UO.Data;
+﻿using ClassicAssist.Data.Spells;
+using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network.PacketFilter;
 
 namespace ClassicAssist.UO.Network.Packets
 {
-    public class CastSpell : BasePacket
+    public class CastSpell : BasePacket, IMacroCommandParser
     {
+        public CastSpell()
+        {
+        }
+
         public CastSpell( int id )
         {
             _writer = new PacketWriter( 9 );
@@ -12,6 +18,20 @@ namespace ClassicAssist.UO.Network.Packets
             _writer.Write( (short) 0x1C );
             _writer.Write( (short) 0x02 );
             _writer.Write( (short) id );
+        }
+
+        public string Parse( byte[] packet, int length, PacketDirection direction )
+        {
+            if ( packet[0] != 0xBF || packet[4] != 0x1C || direction != PacketDirection.Outgoing )
+            {
+                return null;
+            }
+
+            int spellId = ( packet[7] << 8 ) | packet[8];
+
+            SpellData sd = SpellManager.GetInstance().GetSpellData( spellId );
+
+            return sd != null ? $"Cast(\"{sd.Name}\")\r\n" : null;
         }
     }
 }

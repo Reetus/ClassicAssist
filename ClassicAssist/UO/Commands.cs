@@ -67,7 +67,7 @@ namespace ClassicAssist.UO
             Engine.SendPacketToServer( new EquipRequest( item.Serial, layer, containerSerial ) );
         }
 
-        public static void SystemMessage( string text )
+        public static void SystemMessage( string text, int hue = 0x03b2 )
         {
             //TODO
             byte[] textBytes = Encoding.BigEndianUnicode.GetBytes( text + '\0' );
@@ -80,7 +80,7 @@ namespace ClassicAssist.UO
             pw.Write( 0xFFFFFFFF );
             pw.Write( (ushort) 0xFFFF );
             pw.Write( (byte) 0 );
-            pw.Write( (short) 0x03b2 );
+            pw.Write( (short) hue );
             pw.Write( (short) 0x03 );
             pw.WriteAsciiFixed( "ENU\0", 4 );
             pw.WriteAsciiFixed( "System\0", 30 );

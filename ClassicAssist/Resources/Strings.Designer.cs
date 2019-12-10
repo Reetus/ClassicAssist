@@ -583,6 +583,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hotkeys disabled....
+        /// </summary>
+        public static string Hotkeys_disabled___ {
+            get {
+                return ResourceManager.GetString("Hotkeys disabled...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hotkeys enabled....
+        /// </summary>
+        public static string Hotkeys_enabled___ {
+            get {
+                return ResourceManager.GetString("Hotkeys enabled...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ignore ping packets.
         /// </summary>
         public static string Ignore_ping_packets {
@@ -1456,6 +1474,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Target.
+        /// </summary>
+        public static string Target {
+            get {
+                return ResourceManager.GetString("Target", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Target clothing item....
         /// </summary>
         public static string Target_clothing_item___ {
@@ -1551,6 +1578,15 @@ namespace ClassicAssist.Resources {
         public static string Timers {
             get {
                 return ResourceManager.GetString("Timers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle hotkeys.
+        /// </summary>
+        public static string Toggle_hotkeys {
+            get {
+                return ResourceManager.GetString("Toggle hotkeys", resourceCulture);
             }
         }
         

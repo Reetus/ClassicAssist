@@ -80,7 +80,6 @@ namespace ClassicAssist.Data.Macros
                 finally
                 {
                     StoppedEvent?.Invoke();
-                    AliasCommands.UnsetDefaultAliases();
                 }
             } ) { IsBackground = true };
 
@@ -120,7 +119,6 @@ namespace ClassicAssist.Data.Macros
             finally
             {
                 StoppedEvent?.Invoke();
-                AliasCommands.UnsetDefaultAliases();
             }
         }
     }

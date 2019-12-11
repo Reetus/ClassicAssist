@@ -35,7 +35,7 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             int serial = AliasCommands.ResolveSerial( obj );
 
-            if ( serial <= 0 )
+            if ( serial == 0 )
             {
                 return;
             }

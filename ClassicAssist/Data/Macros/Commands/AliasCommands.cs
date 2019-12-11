@@ -3,7 +3,6 @@ using Assistant;
 using ClassicAssist.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
-using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 
@@ -15,8 +14,6 @@ namespace ClassicAssist.Data.Macros.Commands
 
         internal static void SetDefaultAliases()
         {
-            OutgoingPacketHandlers.TargetSentEvent += OnTargetSentEvent;
-
             PlayerMobile player = Engine.Player;
 
             if ( player == null )
@@ -26,27 +23,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             SetAlias( "bank", player.GetLayer( Layer.Bank ) );
             SetAlias( "backpack", player.GetLayer( Layer.Backpack ) );
-            SetAlias( "last", player.LastTargetSerial );
             SetAlias( "self", player.Serial );
-        }
-
-        internal static void UnsetDefaultAliases()
-        {
-            OutgoingPacketHandlers.TargetSentEvent -= OnTargetSentEvent;
-
-            UnsetAlias( "bank" );
-            UnsetAlias( "backpack" );
-            UnsetAlias( "last" );
-            UnsetAlias( "self" );
-        }
-
-        private static void OnTargetSentEvent( TargetType targettype, int senderserial, int flags, int serial, int x,
-            int y, int z, int id )
-        {
-            if ( targettype == TargetType.Object )
-            {
-                SetAlias( "last", serial );
-            }
         }
 
         internal static int ResolveSerial( object obj )

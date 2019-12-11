@@ -8,8 +8,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
   <PropertyGroup>
-    <BuildDate>$([System.DateTime]::op_Subtraction($([System.DateTime]::get_Now().get_Date()),$([System.DateTime]::new(2000,1,1))).get_TotalDays())</BuildDate>
-    <Version>0.1.0.$(BuildDate)</Version>
+    <BuildDate>$([System.DateTime]::op_Subtraction($([System.DateTime]::get_Now().get_Date()),$([System.DateTime]::new(2019,11,22))).get_TotalDays())</BuildDate>
+    <Version>0.1.$(BuildDate).0</Version>
     <StartupObject>ClassicAssist.Updater.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>

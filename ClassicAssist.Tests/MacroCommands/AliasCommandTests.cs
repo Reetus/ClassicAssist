@@ -25,8 +25,6 @@ namespace ClassicAssist.Tests.MacroCommands
             AliasCommands.SetDefaultAliases();
 
             Assert.AreEqual( _player.Serial, AliasCommands.GetAlias( "self" ) );
-
-            AliasCommands.UnsetDefaultAliases();
         }
 
         [TestMethod]
@@ -49,8 +47,6 @@ namespace ClassicAssist.Tests.MacroCommands
             handler?.OnReceive( new PacketReader( packet, packet.Length, true ) );
 
             Assert.AreEqual( 0xAABBCCDD, (uint) AliasCommands.GetAlias( "last" ) );
-
-            AliasCommands.UnsetDefaultAliases();
         }
     }
 }

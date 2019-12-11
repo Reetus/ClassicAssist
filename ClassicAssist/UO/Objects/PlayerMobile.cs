@@ -1,9 +1,12 @@
-﻿using ClassicAssist.UO.Data;
+﻿using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.UO.Objects
 {
     public class PlayerMobile : Mobile
     {
+        private int _lastTargetSerial;
+
         public PlayerMobile( int serial ) : base( serial )
         {
         }
@@ -28,7 +31,17 @@ namespace ClassicAssist.UO.Objects
         public int Gold { get; set; }
         public int HitChanceIncrease { get; set; }
         public int Int { get; set; }
-        public int LastTargetSerial { get; set; }
+
+        public int LastTargetSerial
+        {
+            get => _lastTargetSerial;
+            set
+            {
+                _lastTargetSerial = value;
+                AliasCommands.SetAlias( "last", value );
+            }
+        }
+
         public TargetType LastTargetType { get; set; }
         public int LowerManaCost { get; set; }
         public int LowerReagentCost { get; set; }

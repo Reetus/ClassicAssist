@@ -7,8 +7,13 @@ namespace ClassicAssist.UO.Network.PacketFilter
 {
     public class PacketWaitEntries
     {
+        public delegate void dWaitEntryAddedRemoved( PacketWaitEntry entry );
+
         private readonly List<PacketWaitEntry> _waitEntries = new List<PacketWaitEntry>();
         private readonly object _waitEntryLock = new object();
+
+        public event dWaitEntryAddedRemoved WaitEntryAddedEvent;
+        public event dWaitEntryAddedRemoved WaitEntryRemovedEvent;
 
         public PacketWaitEntry Add( PacketFilterInfo pfi, PacketDirection direction, bool autoRemove = false )
         {
@@ -20,6 +25,7 @@ namespace ClassicAssist.UO.Network.PacketFilter
             lock ( _waitEntryLock )
             {
                 _waitEntries.Add( we );
+                WaitEntryAddedEvent?.Invoke( we );
             }
 
             return we;
@@ -132,6 +138,7 @@ namespace ClassicAssist.UO.Network.PacketFilter
             lock ( _waitEntryLock )
             {
                 _waitEntries.Remove( we );
+                WaitEntryRemovedEvent?.Invoke( we );
             }
         }
     }

@@ -22,8 +22,6 @@ namespace ClassicAssist.Data.Hotkeys.Commands
             Action = hs => Execute();
         }
 
-        public virtual bool Disableable { get; set; } = true;
-
         public virtual void Execute()
         {
             throw new NotImplementedException();

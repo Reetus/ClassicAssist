@@ -74,6 +74,7 @@ namespace ClassicAssist.UO.Network
             if ( targetType == TargetType.Object && flags != 0x03 )
             {
                 Engine.Player.LastTargetSerial = serial;
+                Engine.Player.LastTargetType = targetType;
             }
 
             TargetSentEvent?.Invoke( targetType, senderSerial, flags, serial, x, y, z, id );

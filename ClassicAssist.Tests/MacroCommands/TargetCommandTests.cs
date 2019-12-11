@@ -1,7 +1,9 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -102,6 +104,68 @@ namespace ClassicAssist.Tests.MacroCommands
 
             Assert.AreEqual( 0x00aabbcc, Engine.Player.LastTargetSerial );
 
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillKeepLastBetweenCasts()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+            Engine.PacketWaitEntries = new PacketWaitEntries();
+
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            void OnWaitEntryAddedEvent( PacketWaitEntry entry )
+            {
+                PacketWriter target = new PacketWriter( 0x19 );
+                target.Write( (byte) 0x6C );
+                target.Fill();
+
+                Engine.SendPacketToClient( target );
+                Engine.PacketWaitEntries.CheckWait( target.ToArray(), PacketDirection.Incoming );
+            }
+
+            Engine.PacketWaitEntries.WaitEntryAddedEvent += OnWaitEntryAddedEvent;
+
+            void OnInternalPacketSentEvent( byte[] data, int length )
+            {
+                if ( data[0] != 0x6C )
+                {
+                    return;
+                }
+
+                int serial = ( data[7] << 24 ) | ( data[8] << 16 ) | ( data[9] << 8 ) | data[10];
+
+                if ( serial != 0x00aabbcc )
+                {
+                    Assert.Fail();
+                }
+
+                are.Set();
+            }
+
+            Engine.InternalPacketSentEvent += OnInternalPacketSentEvent;
+
+            Task.Run( () => SpellCommands.Cast( "Explosion", 0x00aabbcc ) );
+
+            bool result = are.WaitOne( 60000 );
+
+            Assert.AreEqual( 0x00aabbcc, AliasCommands.GetAlias( "last" ) );
+
+            Assert.IsTrue( result );
+
+            Task.Run( () => SpellCommands.Cast( "Explosion", "last" ) );
+
+            result = are.WaitOne( 60000 );
+
+            Assert.AreEqual( 0x00aabbcc, AliasCommands.GetAlias( "last" ) );
+
+            Assert.IsTrue( result );
+
+            Assert.AreEqual( 0x00aabbcc, Engine.Player.LastTargetSerial );
+
+            Engine.PacketWaitEntries.WaitEntryAddedEvent -= OnWaitEntryAddedEvent;
+            Engine.InternalPacketSentEvent -= OnInternalPacketSentEvent;
             Engine.Player = null;
         }
     }

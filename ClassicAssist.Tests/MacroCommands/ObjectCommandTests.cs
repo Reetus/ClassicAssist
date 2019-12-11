@@ -160,10 +160,12 @@ namespace ClassicAssist.Tests.MacroCommands
 
             void InternalPacketSentEvent( byte[] data, int length )
             {
-                if ( data[0] != 0x06 ) 
+                if ( data[0] != 0x06 )
+                {
                     Assert.Fail();
+                }
 
-                int serial = data[1] << 24 | data[2] << 16 | data[3] << 8 | data[4];
+                int serial = ( data[1] << 24 ) | ( data[2] << 16 ) | ( data[3] << 8 ) | data[4];
 
                 Assert.AreEqual( 0x40000001, serial );
 
@@ -185,6 +187,52 @@ namespace ClassicAssist.Tests.MacroCommands
             Engine.InternalPacketSentEvent -= InternalPacketSentEvent;
             Engine.Items.Clear();
             AliasCommands.UnsetAlias( "item" );
+        }
+
+        [TestMethod]
+        public void WillFindObjectInContainer()
+        {
+            Item container = new Item( 0x55 ) { Container = new ItemCollection( 0x55 ) };
+
+            Engine.Items.Add( container );
+
+            container.Container.Add( new Item( 0x56 ) { Owner = 0x55 } );
+
+            bool result = ObjectCommands.FindObject( 0x56, -1, 0x55 );
+
+            Assert.IsTrue( result );
+
+            Item subContainer = new Item( 0x57 ) { Container = new ItemCollection( 0x57 ), Owner = 0x55 };
+
+            container.Container.Add( subContainer );
+            subContainer.Container.Add( new Item( 0x58 ) { Owner = 0x57 } );
+
+            result = ObjectCommands.FindObject( 0x57, -1, 0x55 );
+
+            Assert.IsTrue( result );
+
+            Engine.Items.Remove( container );
+        }
+
+        [TestMethod]
+        public void WillFindObjectGround()
+        {
+            Engine.Player = new PlayerMobile( 0x01 ) { X = 0, Y = 0 };
+
+            Item item1 = new Item( 0x40000001 );
+            Item item2 = new Item( 0x40000002 ) { X = 100, Y = 100 };
+
+            Engine.Items.Add( item1 );
+            Engine.Items.Add( item2 );
+
+            Assert.IsTrue( ObjectCommands.FindObject( item1.Serial ) );
+            Assert.IsTrue( ObjectCommands.FindObject( item2.Serial ) );
+            Assert.IsFalse( ObjectCommands.FindObject( item2.Serial, 5 ) );
+
+            Engine.Items.Remove( item2 );
+            Engine.Items.Remove( item1 );
+
+            Engine.Player = null;
         }
     }
 }

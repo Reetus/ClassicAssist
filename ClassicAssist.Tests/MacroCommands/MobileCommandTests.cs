@@ -135,5 +135,30 @@ namespace ClassicAssist.Tests.MacroCommands
             Engine.Items.Remove( mount );
             _player.SetLayer( Layer.Mount, 0 );
         }
+
+        [TestMethod]
+        public void WillGetMaxHits()
+        {
+            _player.HitsMax = 100;
+
+            Assert.AreEqual( 100, MobileCommands.MaxHits( _player.Serial ) );
+        }
+
+        [TestMethod]
+        public void WillGetHits()
+        {
+            _player.Hits = 100;
+
+            Assert.AreEqual( 100, MobileCommands.Hits( _player.Serial ) );
+        }
+
+        [TestMethod]
+        public void WillGetDiffHits()
+        {
+            _player.Hits = 90;
+            _player.HitsMax = 100;
+
+            Assert.AreEqual( 10, MobileCommands.DiffHits( _player.Serial ) );
+        }
     }
 }

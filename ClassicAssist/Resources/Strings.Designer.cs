@@ -1681,6 +1681,33 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use Last Object.
+        /// </summary>
+        public static string Use_Last_Object {
+            get {
+                return ResourceManager.GetString("Use Last Object", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Left Hand.
+        /// </summary>
+        public static string Use_Left_Hand {
+            get {
+                return ResourceManager.GetString("Use Left Hand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Right Hand.
+        /// </summary>
+        public static string Use_Right_Hand {
+            get {
+                return ResourceManager.GetString("Use Right Hand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use skill.
         /// </summary>
         public static string Use_skill {

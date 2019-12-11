@@ -54,6 +54,11 @@ namespace ClassicAssist.UI.ViewModels
 
             foreach ( HotkeySettable commandsCategoryChild in _commandsCategory.Children )
             {
+                if ( Equals( commandsCategoryChild.Hotkey, ShortcutKeys.Default ) )
+                {
+                    continue;
+                }
+
                 JObject entry = new JObject
                 {
                     { "Type", commandsCategoryChild.GetType().FullName },

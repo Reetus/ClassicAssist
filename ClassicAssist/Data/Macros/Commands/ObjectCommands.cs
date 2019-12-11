@@ -190,5 +190,57 @@ namespace ClassicAssist.Data.Macros.Commands
 
             return true;
         }
+
+        [CommandsDisplay( Category = "Entity",
+            Description =
+                "Searches for entity by serial and sets found alias, defaults to ground if no source given.",
+            InsertText = "FindObject(\"mount\")\r\nUseObject(\"found\")" )]
+        public static bool FindObject( object obj, int range = -1, object findLocation = null )
+        {
+            int owner = 0;
+
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return false;
+            }
+
+            if ( findLocation != null )
+            {
+                owner = AliasCommands.ResolveSerial( findLocation );
+            }
+
+            Entity entity;
+
+            bool Predicate( Entity i )
+            {
+                return i.Serial == serial &&
+                       ( range == -1 || UOMath.Distance( i.X, i.Y, Engine.Player.X, Engine.Player.Y ) < range );
+            }
+
+            if ( owner != 0 )
+            {
+                entity = Engine.Items.SelectEntities( i => Predicate( i ) && i.IsDescendantOf( owner ) )
+                    ?.FirstOrDefault();
+            }
+            else
+            {
+                entity =
+                    (Entity) Engine.Mobiles.SelectEntities( Predicate )?.FirstOrDefault() ??
+                    Engine.Items.SelectEntities( i => Predicate( i ) && i.Owner == 0 )?.FirstOrDefault();
+            }
+
+            if ( entity == null )
+            {
+                return false;
+            }
+
+            AliasCommands.SetAlias( "found", entity.Serial );
+            UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ) );
+
+            return true;
+        }
     }
 }

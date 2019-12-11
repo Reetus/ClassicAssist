@@ -199,7 +199,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( mobile != null )
             {
-                return mobile.Hits;
+                return mobile.HitsMax;
             }
 
             UOC.SystemMessage( Strings.Mobile_not_found___ );

@@ -654,6 +654,15 @@
   <data name="Use item" xml:space="preserve">
     <value>Use item</value>
   </data>
+  <data name="Use Last Object" xml:space="preserve">
+    <value>Use Last Object</value>
+  </data>
+  <data name="Use Left Hand" xml:space="preserve">
+    <value>Use Left Hand</value>
+  </data>
+  <data name="Use Right Hand" xml:space="preserve">
+    <value>Use Right Hand</value>
+  </data>
   <data name="Use skill" xml:space="preserve">
     <value>Use skill</value>
   </data>

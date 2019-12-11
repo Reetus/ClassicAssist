@@ -1,4 +1,5 @@
 ﻿using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Misc;
 using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.UO.Objects
@@ -32,6 +33,10 @@ namespace ClassicAssist.UO.Objects
         public int HitChanceIncrease { get; set; }
         public int Int { get; set; }
 
+        [DisplayFormat( typeof( HexFormatProvider ) )]
+        public int LastObjectSerial { get; set; }
+
+        [DisplayFormat( typeof( HexFormatProvider ) )]
         public int LastTargetSerial
         {
             get => _lastTargetSerial;
@@ -46,7 +51,6 @@ namespace ClassicAssist.UO.Objects
         public int LowerManaCost { get; set; }
         public int LowerReagentCost { get; set; }
         public int Luck { get; set; }
-
         public Map Map { get; set; }
         public int[] Party { get; set; }
         public int PhysicalResistance { get; set; }

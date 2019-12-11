@@ -1,9 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
+using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.ViewModels.Macros;
@@ -127,6 +129,16 @@ namespace ClassicAssist.UI.ViewModels
 
             macros.Add( "Macros", macroArray );
 
+            JArray aliasArray = new JArray();
+
+            foreach ( JObject entry in AliasCommands.GetAllAliases()
+                .Select( kvp => new JObject { { "Name", kvp.Key }, { "Value", kvp.Value } } ) )
+            {
+                aliasArray.Add( entry );
+            }
+
+            macros.Add( "Alias", aliasArray );
+
             json?.Add( "Macros", macros );
         }
 
@@ -134,28 +146,39 @@ namespace ClassicAssist.UI.ViewModels
         {
             JToken config = json?["Macros"];
 
-            if ( config?["Macros"] == null )
+            if ( config == null )
             {
                 return;
             }
 
-            foreach ( JToken token in config["Macros"] )
+            if ( config?["Macros"] != null )
             {
-                MacroEntry entry = new MacroEntry
+                foreach ( JToken token in config?["Macros"] )
                 {
-                    Name = GetJsonValue( token, "Name", string.Empty ),
-                    Loop = GetJsonValue( token, "Loop", false ),
-                    DoNotAutoInterrupt = GetJsonValue( token, "DoNotAutoInterrupt", false ),
-                    Macro = GetJsonValue( token, "Macro", string.Empty ),
-                    PassToUO = GetJsonValue( token, "PassToUO", true ),
-                    Hotkey = new ShortcutKeys( GetJsonValue( token["Keys"], "Modifier", Key.None ),
-                        GetJsonValue( token["Keys"], "Keys", Key.None ) )
-                };
+                    MacroEntry entry = new MacroEntry
+                    {
+                        Name = GetJsonValue( token, "Name", string.Empty ),
+                        Loop = GetJsonValue( token, "Loop", false ),
+                        DoNotAutoInterrupt = GetJsonValue( token, "DoNotAutoInterrupt", false ),
+                        Macro = GetJsonValue( token, "Macro", string.Empty ),
+                        PassToUO = GetJsonValue( token, "PassToUO", true ),
+                        Hotkey = new ShortcutKeys( GetJsonValue( token["Keys"], "Modifier", Key.None ),
+                            GetJsonValue( token["Keys"], "Keys", Key.None ) )
+                    };
 
-                entry.Action = hks => Execute( entry );
-                entry.ActionSync = macroEntry => ExecuteSync( entry );
+                    entry.Action = hks => Execute( entry );
+                    entry.ActionSync = macroEntry => ExecuteSync( entry );
 
-                Items.Add( entry );
+                    Items.Add( entry );
+                }
+            }
+
+            if ( config?["Alias"] != null )
+            {
+                foreach ( JToken token in config["Alias"] )
+                {
+                    AliasCommands.SetAlias( token["Name"].ToObject<string>(), token["Value"].ToObject<int>() );
+                }
             }
         }
 

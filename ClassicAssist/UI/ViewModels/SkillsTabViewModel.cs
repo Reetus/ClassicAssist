@@ -88,6 +88,11 @@ namespace ClassicAssist.UI.ViewModels
 
             foreach ( HotkeySettable hks in _hotkeyCategory.Children )
             {
+                if ( Equals( hks.Hotkey, ShortcutKeys.Default ) )
+                {
+                    continue;
+                }
+
                 skills.Add( new JObject
                 {
                     { "Name", hks.Name }, { "Keys", hks.Hotkey.ToJObject() }, { "PassToUO", hks.PassToUO }

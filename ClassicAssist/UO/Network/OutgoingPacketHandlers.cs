@@ -23,9 +23,20 @@ namespace ClassicAssist.UO.Network
             _extendedHandlers = new PacketHandler[0x100];
 
             Register( 0x02, 7, OnMoveRequested );
+            Register( 0x06, 5, OnUseRequest );
             Register( 0x6C, 19, OnTargetSent );
             Register( 0xB1, 0, OnGumpButtonPressed );
             Register( 0xEF, 31, OnNewClientVersion );
+        }
+
+        private static void OnUseRequest( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+
+            if ( Engine.Player != null )
+            {
+                Engine.Player.LastObjectSerial = serial;
+            }
         }
 
         private static void OnMoveRequested( PacketReader reader )

@@ -8,7 +8,6 @@ using System.Windows.Threading;
 using Assistant;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.Views;
-using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
@@ -46,7 +45,6 @@ namespace ClassicAssist.UI.ViewModels
             Engine.Mobiles.CollectionChanged += MobilesOnCollectionChanged;
 
             IncomingPacketHandlers.MobileUpdatedEvent += OnMobileUpdatedEvent;
-            OutgoingPacketHandlers.TargetSentEvent += OnTargetSentEvent;
         }
 
         public string BuildDate { get; set; }
@@ -109,18 +107,17 @@ namespace ClassicAssist.UI.ViewModels
 
         public string Version { get; set; }
 
+        private void LastTargetChangedEvent( int serial )
+        {
+            LastTargetSerial = serial;
+        }
+
         private void OnMobileUpdatedEvent( Mobile mobile )
         {
             if ( mobile.Serial == Engine.Player?.Serial )
             {
                 PlayerInitializedEvent( Engine.Player );
             }
-        }
-
-        private void OnTargetSentEvent( TargetType targettype, int senderserial, int flags, int serial, int x, int y,
-            int z, int id )
-        {
-            LastTargetSerial = Engine.Player.LastTargetSerial;
         }
 
         private void MobilesOnCollectionChanged( int totalcount )
@@ -154,6 +151,7 @@ namespace ClassicAssist.UI.ViewModels
         {
             PlayerSerial = player.Serial;
             PlayerName = player.Name;
+            player.LastTargetChangedEvent += LastTargetChangedEvent;
         }
 
         private void OnDisconnectedEvent()

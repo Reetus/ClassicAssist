@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Assistant;
 using ClassicAssist.Annotations;
 using ClassicAssist.UI.Misc;
 
@@ -65,6 +66,7 @@ namespace ClassicAssist.Data.Hotkeys
             PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
         }
 
+        // ReSharper disable once RedundantAssignment
         public void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
         {
             obj = value;
@@ -82,6 +84,22 @@ namespace ClassicAssist.Data.Hotkeys
                 return false;
             }
 
+            Key modifier = Key.None;
+
+            if ( _modifiers.Count > 0 )
+            {
+                modifier = _modifiers[0];
+            }
+
+            bool down = modifier != Key.None
+                ? Engine.Dispatcher.Invoke( () => Keyboard.IsKeyDown( modifier ) )
+                : false;
+
+            if ( !down )
+            {
+                modifier = Key.None;
+            }
+
             foreach ( HotkeyEntry hke in Items )
             {
                 if ( hke.Children == null )
@@ -91,14 +109,12 @@ namespace ClassicAssist.Data.Hotkeys
 
                 foreach ( HotkeySettable hks in hke.Children )
                 {
-                    Key modifier = Key.None;
-
-                    if ( _modifiers.Count > 0 )
+                    if ( hks.Hotkey.Key != keys || hks.Hotkey.Modifier != modifier )
                     {
-                        modifier = _modifiers[0];
+                        continue;
                     }
 
-                    if ( hks.Hotkey.Key != keys || hks.Hotkey.Modifier != modifier )
+                    if ( hks.Disableable && !Enabled )
                     {
                         continue;
                     }
@@ -112,12 +128,10 @@ namespace ClassicAssist.Data.Hotkeys
 
                     Task.Run( () =>
                         hks.Action.Invoke( hks ) );
-                    _modifiers?.Clear();
+
+                    break;
                 }
             }
-
-            // Any key that isn't a modifier with clear the modifiers
-            _modifiers?.Clear();
 
             return filter;
         }

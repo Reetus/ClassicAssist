@@ -278,7 +278,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 case ShowNamesType.Mobiles:
 
                     Mobile[] mobiles = Engine.Mobiles.SelectEntities( m =>
-                        UOMath.Distance( m.X, m.Y, Engine.Player.X, Engine.Player.Y ) < MAX_DISTANCE );
+                        m.Distance < MAX_DISTANCE );
 
                     if ( mobiles == null )
                     {

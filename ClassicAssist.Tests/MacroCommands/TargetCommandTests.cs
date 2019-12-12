@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections;
+using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data.Macros.Commands;
@@ -166,6 +167,44 @@ namespace ClassicAssist.Tests.MacroCommands
 
             Engine.PacketWaitEntries.WaitEntryAddedEvent -= OnWaitEntryAddedEvent;
             Engine.InternalPacketSentEvent -= OnInternalPacketSentEvent;
+            Engine.Player = null;
+        }
+
+        //TODO more robust testing
+        [TestMethod]
+        public void WillGetFriend()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            Mobile[] mobiles =
+            {
+                new Mobile( 0x02 ) { Notoriety = Notoriety.Innocent },
+                new Mobile( 0x03 ) { Notoriety = Notoriety.Ally },
+                new Mobile( 0x04 ) { Notoriety = Notoriety.Murderer },
+                new Mobile( 0x05 ) { Notoriety = Notoriety.Criminal }
+            };
+
+            Engine.Mobiles.Add( mobiles );
+
+            TargetCommands.GetFriend( new[] { "Innocent" } );
+
+            Assert.AreEqual( 0x02, AliasCommands.GetAlias( "friend" ) );
+
+            TargetCommands.GetFriend( new[] { "Friend" } );
+
+            Assert.AreEqual( 0x03, AliasCommands.GetAlias( "friend" ) );
+
+            TargetCommands.GetFriend( new[] { "Murderer" } );
+
+            Assert.AreEqual( 0x04, AliasCommands.GetAlias( "friend" ) );
+
+            TargetCommands.GetFriend( new[] { "Innocent", "Friend", "Murderer" } );
+
+            int friend = AliasCommands.GetAlias( "friend" );
+
+            Assert.IsTrue( ( (IList) new[] { 0x02, 0x03, 0x04 } ).Contains( friend ) );
+
+            Engine.Mobiles.Remove( mobiles );
             Engine.Player = null;
         }
     }

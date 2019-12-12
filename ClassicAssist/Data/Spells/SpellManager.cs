@@ -3,23 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Assistant;
-using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;
 using Newtonsoft.Json;
 
 namespace ClassicAssist.Data.Spells
 {
-    public class SpellData
-    {
-        public int Circle { get; set; }
-        public TargetFlags Flag { get; set; }
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public int[] Reagents { get; set; }
-        public int Timeout { get; set; }
-        public string Words { get; set; }
-    }
-
     public class SpellManager
     {
         private static readonly object _lock = new object();

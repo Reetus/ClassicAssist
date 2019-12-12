@@ -19,7 +19,19 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial != 0 )
             {
-                return Options.CurrentOptions.Friends.Any( fe => fe.Serial == serial );
+                bool result = Options.CurrentOptions.Friends.Any( fe => fe.Serial == serial );
+
+                if ( result )
+                {
+                    return true;
+                }
+
+                if ( Options.CurrentOptions.IncludePartyMembersInFriends )
+                {
+                    result = Engine.Player?.Party?.Contains( serial ) ?? false;
+                }
+
+                return result;
             }
 
             UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );

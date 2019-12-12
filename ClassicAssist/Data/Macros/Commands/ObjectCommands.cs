@@ -2,7 +2,6 @@
 using System.Linq;
 using Assistant;
 using ClassicAssist.Resources;
-using ClassicAssist.UO;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
@@ -128,7 +127,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             IEnumerable<Item> matches = Engine.Items.Where( i =>
                 i.ID == graphic && ( hue == -1 || hue == i.ID ) &&
-                ( range == -1 || UOMath.Distance( player.X, player.Y, i.X, i.Y ) <= range ) );
+                ( range == -1 || i.Distance <= range ) );
 
             int count = matches.Sum( match => match.Count );
 
@@ -139,7 +138,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             IEnumerable<Mobile> mobileMatches = Engine.Mobiles.Where( i =>
                 i.ID == graphic && ( hue == -1 || hue == i.ID ) &&
-                ( range == -1 || UOMath.Distance( player.X, player.Y, i.X, i.Y ) <= range ) );
+                ( range == -1 || i.Distance <= range ) );
 
             count += mobileMatches.Count();
 
@@ -164,7 +163,7 @@ namespace ClassicAssist.Data.Macros.Commands
             bool Predicate( Entity i )
             {
                 return i.ID == graphic && ( hue == -1 || i.Hue == hue ) &&
-                       ( range == -1 || UOMath.Distance( i.X, i.Y, Engine.Player.X, Engine.Player.Y ) < range ) &&
+                       ( range == -1 || i.Distance < range ) &&
                        !_ignoreList.Contains( i.Serial );
             }
 
@@ -217,7 +216,7 @@ namespace ClassicAssist.Data.Macros.Commands
             bool Predicate( Entity i )
             {
                 return i.Serial == serial &&
-                       ( range == -1 || UOMath.Distance( i.X, i.Y, Engine.Player.X, Engine.Player.Y ) < range );
+                       ( range == -1 || i.Distance < range );
             }
 
             if ( owner != 0 )

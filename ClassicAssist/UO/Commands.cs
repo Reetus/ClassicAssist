@@ -605,7 +605,7 @@ namespace ClassicAssist.UO
             pw.Write( (short) hue );
             pw.Write( (short) 0x03 );
             pw.WriteAsciiFixed( Strings.UO_LOCALE, 4 );
-            pw.WriteAsciiFixed( entity.Name, 30 );
+            pw.WriteAsciiFixed( entity.Name ?? "Unknown", 30 );
             pw.Write( textBytes, 0, textBytes.Length );
 
             Engine.SendPacketToClient( pw );

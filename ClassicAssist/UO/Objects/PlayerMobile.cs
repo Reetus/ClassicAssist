@@ -6,6 +6,11 @@ namespace ClassicAssist.UO.Objects
 {
     public class PlayerMobile : Mobile
     {
+        public delegate void dLastTargetChanged( int serial );
+
+        private int _enemyTargetSerial;
+        private int _friendTargetSerial;
+
         private int _lastTargetSerial;
 
         public PlayerMobile( int serial ) : base( serial )
@@ -21,6 +26,18 @@ namespace ClassicAssist.UO.Objects
         public int DefenseChanceIncreaseMax { get; set; }
 
         public int Dex { get; set; }
+
+        [DisplayFormat( typeof( HexFormatProvider ) )]
+        public int EnemyTargetSerial
+        {
+            get => _enemyTargetSerial;
+            set
+            {
+                _enemyTargetSerial = value;
+                AliasCommands.SetAlias( "enemy", value );
+            }
+        }
+
         public int EnergyResistance { get; set; }
         public int EnergyResistanceMax { get; set; }
         public int FasterCasting { get; set; }
@@ -29,6 +46,18 @@ namespace ClassicAssist.UO.Objects
         public int FireResistanceMax { get; set; }
         public int Followers { get; set; }
         public int FollowersMax { get; set; }
+
+        [DisplayFormat( typeof( HexFormatProvider ) )]
+        public int FriendTargetSerial
+        {
+            get => _friendTargetSerial;
+            set
+            {
+                _friendTargetSerial = value;
+                AliasCommands.SetAlias( "friend", value );
+            }
+        }
+
         public int Gold { get; set; }
         public int HitChanceIncrease { get; set; }
         public int Int { get; set; }
@@ -42,8 +71,14 @@ namespace ClassicAssist.UO.Objects
             get => _lastTargetSerial;
             set
             {
+                if ( value == Serial )
+                {
+                    return;
+                }
+
                 _lastTargetSerial = value;
                 AliasCommands.SetAlias( "last", value );
+                LastTargetChangedEvent?.Invoke( value );
             }
         }
 
@@ -65,5 +100,7 @@ namespace ClassicAssist.UO.Objects
         public int TithingPoints { get; set; }
         public int Weight { get; set; }
         public int WeightMax { get; set; }
+
+        public event dLastTargetChanged LastTargetChangedEvent;
     }
 }

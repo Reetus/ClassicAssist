@@ -6,6 +6,7 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Data\Bodies.json" />
     <None Remove="Data\Spells.json" />
     <None Remove="Data\Weapons.json" />
     <None Remove="Python.xshd" />
@@ -14,6 +15,9 @@
     <None Remove="zlib64.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\Bodies.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\Spells.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

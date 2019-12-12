@@ -29,6 +29,8 @@ namespace ClassicAssist.Data.Macros
             set => SetProperty( ref _macro, value );
         }
 
+        public Action Stop { get; set; }
+
         public override string ToString()
         {
             return Name;

@@ -547,6 +547,51 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Get Closest Gray.
+        /// </summary>
+        public static string Get_Closest_Gray {
+            get {
+                return ResourceManager.GetString("Get Closest Gray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Next Gray.
+        /// </summary>
+        public static string Get_Next_Gray {
+            get {
+                return ResourceManager.GetString("Get Next Gray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Next Innocent.
+        /// </summary>
+        public static string Get_Next_Innocent {
+            get {
+                return ResourceManager.GetString("Get Next Innocent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Next Murderer.
+        /// </summary>
+        public static string Get_Next_Murderer {
+            get {
+                return ResourceManager.GetString("Get Next Murderer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Next Unfriendly.
+        /// </summary>
+        public static string Get_Next_Unfriendly {
+            get {
+                return ResourceManager.GetString("Get Next Unfriendly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Graphic.
         /// </summary>
         public static string Graphic {
@@ -1375,6 +1420,33 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set Enemy.
+        /// </summary>
+        public static string Set_Enemy {
+            get {
+                return ResourceManager.GetString("Set Enemy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Friend.
+        /// </summary>
+        public static string Set_Friend {
+            get {
+                return ResourceManager.GetString("Set Friend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Last Target.
+        /// </summary>
+        public static string Set_Last_Target {
+            get {
+                return ResourceManager.GetString("Set Last Target", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set Locked.
         /// </summary>
         public static string Set_Locked {
@@ -1474,6 +1546,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stop Current Macro.
+        /// </summary>
+        public static string Stop_Current_Macro {
+            get {
+                return ResourceManager.GetString("Stop Current Macro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Target.
         /// </summary>
         public static string Target {
@@ -1501,11 +1582,38 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Target Enemy.
+        /// </summary>
+        public static string Target_Enemy {
+            get {
+                return ResourceManager.GetString("Target Enemy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target Friend.
+        /// </summary>
+        public static string Target_Friend {
+            get {
+                return ResourceManager.GetString("Target Friend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Target friend to remove....
         /// </summary>
         public static string Target_friend_to_remove___ {
             get {
                 return ResourceManager.GetString("Target friend to remove...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target Last.
+        /// </summary>
+        public static string Target_Last {
+            get {
+                return ResourceManager.GetString("Target Last", resourceCulture);
             }
         }
         
@@ -1551,6 +1659,15 @@ namespace ClassicAssist.Resources {
         public static string Target_timeout___ {
             get {
                 return ResourceManager.GetString("Target timeout...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Targeting.
+        /// </summary>
+        public static string Targeting {
+            get {
+                return ResourceManager.GetString("Targeting", resourceCulture);
             }
         }
         

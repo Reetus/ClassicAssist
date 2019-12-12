@@ -1,8 +1,10 @@
-﻿using Assistant;
+﻿using System.Linq;
+using Assistant;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xceed.Wpf.Toolkit;
 
 namespace ClassicAssist.Tests.MacroCommands
 {
@@ -42,7 +44,7 @@ namespace ClassicAssist.Tests.MacroCommands
 
             int val = MobileCommands.Hits();
 
-            Assert.AreEqual( 100, _player.Hits );
+            Assert.AreEqual( 100, val );
 
             _player.Hits = 0;
         }

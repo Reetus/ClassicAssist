@@ -17,6 +17,7 @@ namespace ClassicAssist.UI.ViewModels
     public class HotkeysTabViewModel : BaseViewModel, ISettingProvider
     {
         private readonly HotkeyManager _hotkeyManager;
+        private readonly List<HotkeyEntry> _serializeCategories = new List<HotkeyEntry>();
         private ICommand _clearHotkeyCommand;
         private HotkeyEntry _commandsCategory;
         private ICommand _executeCommand;
@@ -52,21 +53,24 @@ namespace ClassicAssist.UI.ViewModels
 
             JArray commandsArray = new JArray();
 
-            foreach ( HotkeySettable commandsCategoryChild in _commandsCategory.Children )
+            foreach ( HotkeyEntry category in _serializeCategories )
             {
-                if ( Equals( commandsCategoryChild.Hotkey, ShortcutKeys.Default ) )
+                foreach ( HotkeySettable categoryChild in category.Children )
                 {
-                    continue;
+                    if ( Equals( categoryChild.Hotkey, ShortcutKeys.Default ) )
+                    {
+                        continue;
+                    }
+
+                    JObject entry = new JObject
+                    {
+                        { "Type", categoryChild.GetType().FullName },
+                        { "Keys", categoryChild.Hotkey.ToJObject() },
+                        { "PassToUO", categoryChild.PassToUO }
+                    };
+
+                    commandsArray.Add( entry );
                 }
-
-                JObject entry = new JObject
-                {
-                    { "Type", commandsCategoryChild.GetType().FullName },
-                    { "Keys", commandsCategoryChild.Hotkey.ToJObject() },
-                    { "PassToUO", commandsCategoryChild.PassToUO }
-                };
-
-                commandsArray.Add( entry );
             }
 
             hotkeys.Add( "Commands", commandsArray );
@@ -108,12 +112,47 @@ namespace ClassicAssist.UI.ViewModels
             {
                 HotkeyCommand hkc = (HotkeyCommand) Activator.CreateInstance( hotkeyCommand );
 
-                children.Add( hkc );
+                HotkeyCommandAttribute attr = hkc.GetType().GetCustomAttribute<HotkeyCommandAttribute>();
+
+                if ( attr == null || string.IsNullOrEmpty( attr.Category ) )
+                {
+                    children.Add( hkc );
+                }
+                else
+                {
+                    string categoryName = Strings.ResourceManager.GetString( attr.Category );
+
+                    HotkeyEntry category = Items.FirstOrDefault( hke => hke.Name == categoryName && hke.IsCategory );
+
+                    if ( category != null )
+                    {
+                        if ( category.Children == null )
+                        {
+                            category.Children = new ObservableCollectionEx<HotkeySettable>();
+                        }
+
+                        category.Children.Add( hkc );
+                    }
+                    else
+                    {
+                        category = new HotkeyEntry
+                        {
+                            Name = categoryName,
+                            IsCategory = true,
+                            Children = new ObservableCollectionEx<HotkeySettable>()
+                        };
+
+                        category.Children.Add( hkc );
+                        Items.AddSorted( category );
+                        _serializeCategories.Add( category );
+                    }
+                }
             }
 
             _commandsCategory.Children = children;
 
             _hotkeyManager.Items.AddSorted( _commandsCategory );
+            _serializeCategories.Add( _commandsCategory );
 
             JToken hotkeys = json?["Hotkeys"];
 
@@ -123,19 +162,23 @@ namespace ClassicAssist.UI.ViewModels
                 {
                     JToken type = token["Type"];
 
-                    HotkeySettable entry =
-                        _commandsCategory.Children.FirstOrDefault(
-                            o => o.GetType().FullName == type.ToObject<string>() );
-
-                    if ( entry == null )
+                    foreach ( HotkeyEntry category in _serializeCategories )
                     {
-                        continue;
+                        HotkeySettable entry =
+                            category.Children.FirstOrDefault(
+                                o => o.GetType().FullName == type.ToObject<string>() );
+
+                        if ( entry == null )
+                        {
+                            continue;
+                        }
+
+                        JToken keys = token["Keys"];
+
+                        entry.Hotkey = new ShortcutKeys( keys["Modifier"].ToObject<Key>(),
+                            keys["Keys"].ToObject<Key>() );
+                        entry.PassToUO = token["PassToUO"]?.ToObject<bool>() ?? true;
                     }
-
-                    JToken keys = token["Keys"];
-
-                    entry.Hotkey = new ShortcutKeys( keys["Modifier"].ToObject<Key>(), keys["Keys"].ToObject<Key>() );
-                    entry.PassToUO = token["PassToUO"]?.ToObject<bool>() ?? true;
                 }
             }
 

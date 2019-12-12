@@ -1,4 +1,6 @@
-﻿using ClassicAssist.Misc;
+﻿using System;
+using Assistant;
+using ClassicAssist.Misc;
 using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.UO.Objects
@@ -13,6 +15,9 @@ namespace ClassicAssist.UO.Objects
         }
 
         public Direction Direction { get; set; }
+
+        public int Distance => Math.Max( Math.Abs( X - Engine.Player?.X ?? X ), Math.Abs( Y - Engine.Player?.Y ?? Y ) );
+
         public int Hue { get; set; }
 
         [DisplayFormat( typeof( HexFormatProvider ) )]

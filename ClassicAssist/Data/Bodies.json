@@ -1,0 +1,97 @@
+[
+  {
+    "BodyType": 1,
+    "Graphic": 400,
+    "Name": "Human Male"
+  },
+  {
+    "BodyType": 1,
+    "Graphic": 401,
+    "Name": "Human Female"
+  },
+  {
+    "BodyType": 1,
+    "Graphic": 605,
+    "Name": "Elf Male"
+  },
+  {
+    "BodyType": 1,
+    "Graphic": 606,
+    "Name": "Elf Female"
+  },
+  {
+    "BodyType": 1,
+    "Graphic": 666,
+    "Name": "Gargoyle Male"
+  },
+  {
+    "BodyType": 1,
+    "Graphic": 667,
+    "Name": "Gargoyle Female"
+  },
+  {
+    "BodyType": 2,
+    "Graphic": 746,
+    "Name": "Horrific Beast"
+  },
+  {
+    "BodyType": 2,
+    "Graphic": 748,
+    "Name": "Wraith Male"
+  },
+  {
+    "BodyType": 2,
+    "Graphic": 747,
+    "Name": "Wraith Female"
+  },
+  {
+    "BodyType": 2,
+    "Graphic": 749,
+    "Name": "Lich"
+  },
+  {
+    "BodyType": 2,
+    "Graphic": 744,
+    "Name": "Vampire Male"
+  },
+  {
+    "BodyType": 2,
+    "Graphic": 745,
+    "Name": "Vampire Female"
+  },
+  {
+    "BodyType": 2,
+    "Graphic": 220,
+    "Name": "Llama"
+  },
+  {
+    "BodyType": 2,
+    "Graphic": 25,
+    "Name": "Wolf"
+  },
+  {
+    "BodyType": 2,
+    "Graphic": 770,
+    "Name": "Ethereal Voyage"
+  },
+  {
+    "BodyType": 2,
+    "Graphic": 285,
+    "Name": "Reaper Form"
+  },
+  {
+    "BodyType": 2,
+    "Graphic": 705,
+    "Name": "Stone Form"
+  },
+  {
+    "BodyType": 2,
+    "Graphic": 183,
+    "Name": "Tribal Male"
+  },
+  {
+    "BodyType": 2,
+    "Graphic": 184,
+    "Name": "Tribal Female"
+  }
+]

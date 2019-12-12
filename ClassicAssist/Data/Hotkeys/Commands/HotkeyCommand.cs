@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ClassicAssist.Resources;
 
 namespace ClassicAssist.Data.Hotkeys.Commands
@@ -19,7 +20,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
                 Name = string.IsNullOrEmpty( resourceName ) ? a.Name : resourceName;
             }
 
-            Action = hs => Execute();
+            Action = hs => Task.Run( Execute );
         }
 
         public virtual void Execute()

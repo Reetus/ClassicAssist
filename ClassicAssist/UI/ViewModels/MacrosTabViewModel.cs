@@ -21,6 +21,7 @@ namespace ClassicAssist.UI.ViewModels
     public class MacrosTabViewModel : HotkeySettableViewModel<MacroEntry>, ISettingProvider
     {
         private int _caretPosition;
+        private ICommand _clearHotkeyCommand;
         private MacroEntry _currentMacro;
         private TextDocument _document;
         private RelayCommand _executeCommand;
@@ -45,6 +46,8 @@ namespace ClassicAssist.UI.ViewModels
             manager.IsRecording = () => _isRecording;
             manager.InsertDocument = str => { _dispatcher.Invoke( () => { SelectedItem.Macro += str; } ); };
             manager.Items = Items;
+            manager.IsPlaying = () => _isRunning;
+            manager.CurrentMacro = () => _currentMacro;
         }
 
         public int CaretPosition
@@ -52,6 +55,9 @@ namespace ClassicAssist.UI.ViewModels
             get => _caretPosition;
             set => SetProperty( ref _caretPosition, value );
         }
+
+        public ICommand ClearHotkeyCommand =>
+            _clearHotkeyCommand ?? ( _clearHotkeyCommand = new RelayCommand( ClearHotkey, o => SelectedItem != null ) );
 
         public TextDocument Document
         {
@@ -151,9 +157,9 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            if ( config?["Macros"] != null )
+            if ( config["Macros"] != null )
             {
-                foreach ( JToken token in config?["Macros"] )
+                foreach ( JToken token in config["Macros"] )
                 {
                     MacroEntry entry = new MacroEntry
                     {
@@ -173,7 +179,7 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            if ( config?["Alias"] != null )
+            if ( config["Alias"] != null )
             {
                 foreach ( JToken token in config["Alias"] )
                 {
@@ -219,6 +225,16 @@ namespace ClassicAssist.UI.ViewModels
         private void OnDisconnectedEvent()
         {
             _macroInvoker?.Stop();
+        }
+
+        private void ClearHotkey( object obj )
+        {
+            if ( !( obj is MacroEntry entry ) )
+            {
+                return;
+            }
+
+            entry.Hotkey = ShortcutKeys.Default;
         }
 
         private static async Task InspectObject( object arg )
@@ -267,8 +283,8 @@ namespace ClassicAssist.UI.ViewModels
 
         private void Stop( object obj )
         {
-            IsRunning = false;
             _macroInvoker.Stop();
+            IsRunning = false;
         }
 
         private void Execute( object obj )
@@ -292,6 +308,7 @@ namespace ClassicAssist.UI.ViewModels
             _dispatcher.Invoke( () => SelectedItem = entry );
 
             _currentMacro = entry;
+            _currentMacro.Stop = () => Stop( _currentMacro );
 
             _macroInvoker = new MacroInvoker( entry );
             _macroInvoker.StoppedEvent += () =>

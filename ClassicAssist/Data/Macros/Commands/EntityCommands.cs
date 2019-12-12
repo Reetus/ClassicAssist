@@ -22,7 +22,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             Entity entity = Engine.Items.GetItem( serial ) ?? (Entity) Engine.Mobiles.GetMobile( serial );
 
-            return UOMath.Distance( entity.X, entity.Y, Engine.Player.X, Engine.Player.Y );
+            return entity.Distance;
         }
 
         [CommandsDisplay( Category = "Entity",

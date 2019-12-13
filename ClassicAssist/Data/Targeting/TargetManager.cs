@@ -73,29 +73,55 @@ namespace ClassicAssist.Data.Targeting
             Engine.SendPacketToClient( new ChangeCombatant( m.Serial ) );
         }
 
-        public Mobile GetClosestMobile( IEnumerable<Notoriety> notoriety, TargetBodyType bodyType = TargetBodyType.Any )
+        public Mobile GetClosestMobile( IEnumerable<Notoriety> notoriety, TargetBodyType bodyType = TargetBodyType.Any,
+            TargetFriendType friendType = TargetFriendType.Include )
         {
-            Mobile mobile = Engine.Mobiles.SelectEntities( m =>
-                    notoriety.Contains( m.Notoriety ) && m.Distance < MAX_DISTANCE &&
-                    ( bodyType == TargetBodyType.Any || _bodyData.Where( bd => bd.BodyType == bodyType )
-                          .Select( bd => bd.Graphic ).Contains( m.ID ) ) && !_ignoreList.Contains( m ) )
-                .OrderBy( m => m.Distance )
-                .FirstOrDefault();
+            Mobile mobile = null;
+
+            if ( friendType == TargetFriendType.Only )
+            {
+                mobile = Engine.Mobiles
+                    .SelectEntities( m => !_ignoreList.Contains( m ) && MobileCommands.InFriendList( m.Serial ) )
+                    .OrderBy( m => m.Distance ).FirstOrDefault();
+            }
+            else
+            {
+                mobile = Engine.Mobiles.SelectEntities( m =>
+                        notoriety.Contains( m.Notoriety ) && m.Distance < MAX_DISTANCE &&
+                        ( bodyType == TargetBodyType.Any || _bodyData.Where( bd => bd.BodyType == bodyType )
+                              .Select( bd => bd.Graphic ).Contains( m.ID ) ) && !_ignoreList.Contains( m ) &&
+                        ( friendType == TargetFriendType.Include || !MobileCommands.InFriendList( m.Serial ) ) )
+                    .OrderBy( m => m.Distance )
+                    .FirstOrDefault();
+            }
 
             return mobile;
         }
 
         public Mobile GetNextMobile( IEnumerable<Notoriety> notoriety, TargetBodyType bodyType = TargetBodyType.Any,
-            int distance = MAX_DISTANCE )
+            int distance = MAX_DISTANCE, TargetFriendType friendType = TargetFriendType.Include )
         {
             bool looped = false;
 
             while ( true )
             {
-                Mobile[] mobiles = Engine.Mobiles.SelectEntities( m =>
-                    notoriety.Contains( m.Notoriety ) && m.Distance < distance &&
-                    ( bodyType == TargetBodyType.Any || _bodyData.Where( bd => bd.BodyType == bodyType )
-                          .Select( bd => bd.Graphic ).Contains( m.ID ) ) && !_ignoreList.Contains( m ) );
+                Mobile[] mobiles;
+
+                if ( friendType == TargetFriendType.Only )
+                {
+                    //Notoriety, bodyType ignored
+                    mobiles = Engine.Mobiles.SelectEntities( m =>
+                        m.Distance < distance && MobileCommands.InFriendList( m.Serial ) &&
+                        !_ignoreList.Contains( m ) );
+                }
+                else
+                {
+                    mobiles = Engine.Mobiles.SelectEntities( m =>
+                        notoriety.Contains( m.Notoriety ) && m.Distance < distance &&
+                        ( bodyType == TargetBodyType.Any || _bodyData.Where( bd => bd.BodyType == bodyType )
+                              .Select( bd => bd.Graphic ).Contains( m.ID ) ) && !_ignoreList.Contains( m ) &&
+                        ( friendType == TargetFriendType.Include || !MobileCommands.InFriendList( m.Serial ) ) );
+                }
 
                 if ( mobiles == null || mobiles.Length == 0 )
                 {
@@ -157,9 +183,10 @@ namespace ClassicAssist.Data.Targeting
             return _instance;
         }
 
-        public bool GetEnemy( TargetNotoriety notoFlags, TargetBodyType bodyType, TargetDistance targetDistance )
+        public bool GetEnemy( TargetNotoriety notoFlags, TargetBodyType bodyType, TargetDistance targetDistance,
+            TargetFriendType friendType = TargetFriendType.None )
         {
-            Mobile m = GetMobile( notoFlags, bodyType, targetDistance );
+            Mobile m = GetMobile( notoFlags, bodyType, targetDistance, friendType );
 
             if ( m == null )
             {
@@ -170,9 +197,10 @@ namespace ClassicAssist.Data.Targeting
             return true;
         }
 
-        public bool GetFriend( TargetNotoriety notoFlags, TargetBodyType bodyType, TargetDistance targetDistance )
+        public bool GetFriend( TargetNotoriety notoFlags, TargetBodyType bodyType, TargetDistance targetDistance,
+            TargetFriendType friendType = TargetFriendType.Include )
         {
-            Mobile m = GetMobile( notoFlags, bodyType, targetDistance );
+            Mobile m = GetMobile( notoFlags, bodyType, targetDistance, friendType );
 
             if ( m == null )
             {
@@ -183,7 +211,8 @@ namespace ClassicAssist.Data.Targeting
             return true;
         }
 
-        public Mobile GetMobile( TargetNotoriety notoFlags, TargetBodyType bodyType, TargetDistance targetDistance )
+        public Mobile GetMobile( TargetNotoriety notoFlags, TargetBodyType bodyType, TargetDistance targetDistance,
+            TargetFriendType friendType )
         {
             Notoriety[] noto = NotoFlagsToArray( notoFlags );
 
@@ -193,17 +222,17 @@ namespace ClassicAssist.Data.Targeting
             {
                 case TargetDistance.Next:
 
-                    m = GetNextMobile( noto, bodyType );
+                    m = GetNextMobile( noto, bodyType, MAX_DISTANCE, friendType );
 
                     break;
                 case TargetDistance.Nearest:
 
-                    m = GetNextMobile( noto, bodyType, 3 );
+                    m = GetNextMobile( noto, bodyType, 3, friendType );
 
                     break;
                 case TargetDistance.Closest:
 
-                    m = GetClosestMobile( noto, bodyType );
+                    m = GetClosestMobile( noto, bodyType, friendType );
 
                     break;
                 default:

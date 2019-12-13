@@ -2,6 +2,20 @@
 
 namespace ClassicAssist.Data.Targeting
 {
+    public enum TargetFriendType
+    {
+        Include,
+        Only,
+        None
+    }
+
+    public enum TargetBodyType
+    {
+        Any,
+        Humanoid,
+        Transformation
+    }
+
     [Flags]
     public enum TargetNotoriety
     {
@@ -13,5 +27,12 @@ namespace ClassicAssist.Data.Targeting
         Friend = 0b10000,
         Gray = 0b100000,
         Any = 0b111111
+    }
+
+    public enum TargetDistance
+    {
+        Next,
+        Nearest,
+        Closest
     }
 }

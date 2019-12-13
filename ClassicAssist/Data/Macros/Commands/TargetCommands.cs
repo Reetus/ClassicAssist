@@ -167,6 +167,21 @@ namespace ClassicAssist.Data.Macros.Commands
             return TargetManager.GetInstance().GetEnemy( notoFlags, bt, td );
         }
 
+        [CommandsDisplay( Category = "Target",
+            Description =
+                "Get friend that only exists in the friends list, parameter distance 'Closest'/'Nearest'/'Next'",
+            InsertText = "GetFriendListOnly([\"Closest\"])" )]
+        public static bool GetFriendListOnly( string distance = "Next" )
+        {
+            if ( !Enum.TryParse( distance, true, out TargetDistance td ) )
+            {
+                td = TargetDistance.Next;
+            }
+
+            return TargetManager.GetInstance()
+                .GetFriend( TargetNotoriety.Any, TargetBodyType.Any, td, TargetFriendType.Only );
+        }
+
         [CommandsDisplay( Category = "Target", Description = "Get mobile and set friend alias.",
             InsertText = "GetFriend([\"Murderer\"])" )]
         public static bool GetFriend( IEnumerable<string> notos, string bodyType = "Any", string distance = "Next" )

@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
+using ClassicAssist.Data;
+using ClassicAssist.Data.Friends;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
@@ -205,6 +207,89 @@ namespace ClassicAssist.Tests.MacroCommands
             Assert.IsTrue( ( (IList) new[] { 0x02, 0x03, 0x04 } ).Contains( friend ) );
 
             Engine.Mobiles.Remove( mobiles );
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillOnlyGetClosestFriend()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            Mobile mate = new Mobile( 0x02 ) { X = 5, Y = 5, Notoriety = Notoriety.Murderer };
+            Mobile random = new Mobile( 0x03 ) { X = 1, Y = 1, Notoriety = Notoriety.Murderer };
+
+            Engine.Mobiles.Add( mate );
+            Engine.Mobiles.Add( random );
+
+            Options.CurrentOptions.Friends.Add( new FriendEntry { Name = "Mate", Serial = mate.Serial } );
+
+            bool result = TargetCommands.GetFriend( new[] { "Murderer" }, "Any", "Closest" );
+
+            Assert.IsTrue( result );
+
+            Assert.AreEqual( random.Serial, AliasCommands.GetAlias( "friend" ) );
+
+            // Will get mate even though he is further away
+            result = TargetCommands.GetFriendListOnly( "Closest" );
+
+            Assert.IsTrue( result );
+
+            Assert.AreEqual( mate.Serial, AliasCommands.GetAlias( "friend" ) );
+
+            Options.CurrentOptions.Friends.Clear();
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WontGetEnemyFriendClosest()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            Mobile mate = new Mobile( 0x02 ) { X = 1, Y = 1, Notoriety = Notoriety.Murderer };
+            Mobile random = new Mobile( 0x03 ) { X = 5, Y = 5, Notoriety = Notoriety.Murderer };
+
+            Engine.Mobiles.Add( mate );
+            Engine.Mobiles.Add( random );
+
+            Options.CurrentOptions.Friends.Add( new FriendEntry { Name = "Mate", Serial = mate.Serial } );
+
+            // Won't get mate even though he is closest
+            bool result = TargetCommands.GetEnemy( new[] { "Murderer" }, "Any", "Closest" );
+
+            Assert.IsTrue( result );
+
+            Assert.AreEqual( random.Serial, AliasCommands.GetAlias( "enemy" ) );
+
+            Options.CurrentOptions.Friends.Clear();
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WontGetEnemyFriendNext()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            Mobile mate = new Mobile( 0x02 ) { X = 1, Y = 1, Notoriety = Notoriety.Murderer };
+
+            Engine.Mobiles.Add( mate );
+
+            // Will get mate because he's not in the friends list yet
+            bool result = TargetCommands.GetEnemy( new[] { "Murderer" } );
+
+            Assert.IsTrue( result );
+            Assert.AreEqual( mate.Serial, AliasCommands.GetAlias( "enemy" ) );
+
+            Options.CurrentOptions.Friends.Add( new FriendEntry { Name = "Mate", Serial = mate.Serial } );
+
+            // Won't get a result because mate is in the friends list
+            result = TargetCommands.GetEnemy( new[] { "Murderer" } );
+
+            Assert.IsFalse( result );
+
+            Options.CurrentOptions.Friends.Clear();
+            Engine.Mobiles.Clear();
             Engine.Player = null;
         }
     }

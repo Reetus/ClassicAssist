@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Reflection;
 using Assistant;
 using ClassicAssist.Data.Friends;
 using ClassicAssist.Resources;
@@ -99,23 +100,7 @@ namespace ClassicAssist.Data.Macros.Commands
             InsertText = "if Name(\"self\") == \"Shmoo\":" )]
         public static string Name( object obj = null )
         {
-            int serial = AliasCommands.ResolveSerial( obj );
-
-            if ( serial <= 0 )
-            {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
-                return string.Empty;
-            }
-
-            Mobile mobile = Engine.Mobiles.GetMobile( serial );
-
-            if ( mobile != null )
-            {
-                return mobile.Name;
-            }
-
-            UOC.SystemMessage( Strings.Mobile_not_found___ );
-            return string.Empty;
+            return GetMobileProperty<string>( obj, nameof( Mobile.Name ) );
         }
 
         [CommandsDisplay( Category = "Entity",
@@ -124,23 +109,7 @@ namespace ClassicAssist.Data.Macros.Commands
             InsertText = "if Dead(\"self\"):" )]
         public static bool Dead( object obj = null )
         {
-            int serial = AliasCommands.ResolveSerial( obj );
-
-            if ( serial <= 0 )
-            {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
-                return false;
-            }
-
-            Mobile mobile = Engine.Mobiles.GetMobile( serial );
-
-            if ( mobile != null )
-            {
-                return mobile.IsDead;
-            }
-
-            UOC.SystemMessage( Strings.Mobile_not_found___ );
-            return false;
+            return GetMobileProperty<bool>( obj, nameof( Mobile.IsDead ) );
         }
 
         [CommandsDisplay( Category = "Entity",
@@ -168,29 +137,61 @@ namespace ClassicAssist.Data.Macros.Commands
             return false;
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description =
-                "Returns the given mobiles hitpoints, if parameter is null, then returns the value from the player (parameter can be serial or alias).",
-            InsertText = "hits = Hits(\"self\")" )]
-        public static int Hits( object obj = null )
+        private static T GetMobileProperty<T>( object obj, string propertyName )
         {
             int serial = AliasCommands.ResolveSerial( obj );
 
             if ( serial <= 0 )
             {
                 UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
-                return 0;
+                return default;
             }
 
             Mobile mobile = Engine.Mobiles.GetMobile( serial );
 
-            if ( mobile != null )
+            if ( mobile == null )
             {
-                return mobile.Hits;
+                UOC.SystemMessage( Strings.Mobile_not_found___ );
+                return default;
             }
 
-            UOC.SystemMessage( Strings.Mobile_not_found___ );
-            return 0;
+            PropertyInfo property = mobile.GetType().GetProperty( propertyName );
+
+            if ( property == null )
+            {
+                return default;
+            }
+
+            T val = (T) property.GetValue( mobile );
+
+            return val;
+        }
+
+        [CommandsDisplay( Category = "Entity",
+            Description =
+                "Returns the given mobiles max mana, if parameter is null, then returns the value from the player (parameter can be serial or alias).",
+            InsertText = "mana = MaxMana(\"self\")" )]
+        public static int MaxMana( object obj )
+        {
+            return GetMobileProperty<int>( obj, nameof( Mobile.ManaMax ) );
+        }
+
+        [CommandsDisplay( Category = "Entity",
+            Description =
+                "Returns the given mobiles max stamina, if parameter is null, then returns the value from the player (parameter can be serial or alias).",
+            InsertText = "stam = MaxStam(\"self\")" )]
+        public static int MaxStam( object obj )
+        {
+            return GetMobileProperty<int>( obj, nameof( Mobile.StaminaMax ) );
+        }
+
+        [CommandsDisplay( Category = "Entity",
+            Description =
+                "Returns the given mobiles hitpoints, if parameter is null, then returns the value from the player (parameter can be serial or alias).",
+            InsertText = "hits = Hits(\"self\")" )]
+        public static int Hits( object obj = null )
+        {
+            return GetMobileProperty<int>( obj, nameof( Mobile.Hits ) );
         }
 
         [CommandsDisplay( Category = "Entity",
@@ -199,23 +200,7 @@ namespace ClassicAssist.Data.Macros.Commands
             InsertText = "hits = MaxHits(\"self\")" )]
         public static int MaxHits( object obj = null )
         {
-            int serial = AliasCommands.ResolveSerial( obj );
-
-            if ( serial <= 0 )
-            {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
-                return 0;
-            }
-
-            Mobile mobile = Engine.Mobiles.GetMobile( serial );
-
-            if ( mobile != null )
-            {
-                return mobile.HitsMax;
-            }
-
-            UOC.SystemMessage( Strings.Mobile_not_found___ );
-            return 0;
+            return GetMobileProperty<int>( obj, nameof( Mobile.HitsMax ) );
         }
 
         [CommandsDisplay( Category = "Entity",
@@ -249,23 +234,7 @@ namespace ClassicAssist.Data.Macros.Commands
             InsertText = "if Stam(\"self\") < 25:" )]
         public static int Stam( object obj = null )
         {
-            int serial = AliasCommands.ResolveSerial( obj );
-
-            if ( serial <= 0 )
-            {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
-                return 0;
-            }
-
-            Mobile mobile = Engine.Mobiles.GetMobile( serial );
-
-            if ( mobile != null )
-            {
-                return mobile.Stamina;
-            }
-
-            UOC.SystemMessage( Strings.Mobile_not_found___ );
-            return 0;
+            return GetMobileProperty<int>( obj, nameof( Mobile.Stamina ) );
         }
 
         [CommandsDisplay( Category = "Entity",
@@ -274,23 +243,7 @@ namespace ClassicAssist.Data.Macros.Commands
             InsertText = "if Mana(\"self\") < 25:" )]
         public static int Mana( object obj = null )
         {
-            int serial = AliasCommands.ResolveSerial( obj );
-
-            if ( serial <= 0 )
-            {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
-                return 0;
-            }
-
-            Mobile mobile = Engine.Mobiles.GetMobile( serial );
-
-            if ( mobile != null )
-            {
-                return mobile.Mana;
-            }
-
-            UOC.SystemMessage( Strings.Mobile_not_found___ );
-            return 0;
+            return GetMobileProperty<int>( obj, nameof( Mobile.Mana ) );
         }
 
         [CommandsDisplay( Category = "Entity", Description = "Checks whether a mobile is in war mode.",
@@ -299,13 +252,13 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             int serial = AliasCommands.ResolveSerial( obj );
 
-            if ( serial == 0 )
+            if ( serial != 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
-                return false;
+                return Engine.Mobiles.GetMobile( serial )?.Status.HasFlag( MobileStatus.WarMode ) ?? false;
             }
 
-            return Engine.Mobiles.GetMobile( serial )?.Status.HasFlag( MobileStatus.WarMode ) ?? false;
+            UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+            return false;
         }
 
         [CommandsDisplay( Category = "Entity",
@@ -377,69 +330,21 @@ namespace ClassicAssist.Data.Macros.Commands
             InsertText = "if Poisoned(\"self\"):" )]
         public static bool Poisoned( object obj )
         {
-            int serial = AliasCommands.ResolveSerial( obj );
-
-            if ( serial == 0 )
-            {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
-                return false;
-            }
-
-            Mobile mobile = Engine.Mobiles.GetMobile( serial );
-
-            if ( mobile != null )
-            {
-                return mobile.IsPoisoned;
-            }
-
-            UOC.SystemMessage( Strings.Mobile_not_found___ );
-            return false;
+            return GetMobileProperty<bool>( obj, nameof( Mobile.IsPoisoned ) );
         }
 
         [CommandsDisplay( Category = "Entity", Description = "Returns true if the specified mobile is yellowhits.",
             InsertText = "if YellowHits(\"self\"):" )]
         public static bool YellowHits( object obj )
         {
-            int serial = AliasCommands.ResolveSerial( obj );
-
-            if ( serial == 0 )
-            {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
-                return false;
-            }
-
-            Mobile mobile = Engine.Mobiles.GetMobile( serial );
-
-            if ( mobile != null )
-            {
-                return mobile.IsYellowHits;
-            }
-
-            UOC.SystemMessage( Strings.Mobile_not_found___ );
-            return false;
+            return GetMobileProperty<bool>( obj, nameof( Mobile.IsYellowHits ) );
         }
 
         [CommandsDisplay( Category = "Entity", Description = "Returns true if the specified mobile is frozen.",
             InsertText = "if Paralyzed(\"self\"):" )]
         public static bool Paralyzed( object obj )
         {
-            int serial = AliasCommands.ResolveSerial( obj );
-
-            if ( serial == 0 )
-            {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
-                return false;
-            }
-
-            Mobile mobile = Engine.Mobiles.GetMobile( serial );
-
-            if ( mobile != null )
-            {
-                return mobile.IsFrozen;
-            }
-
-            UOC.SystemMessage( Strings.Mobile_not_found___ );
-            return false;
+            return GetMobileProperty<bool>( obj, nameof( Mobile.IsFrozen ) );
         }
 
         [CommandsDisplay( Category = "Entity", Description = "Returns true if the specified mobile is mounted.",

@@ -119,11 +119,6 @@ namespace ClassicAssist.Data.Hotkeys
                         continue;
                     }
 
-                    if ( hks.Disableable && !Enabled )
-                    {
-                        continue;
-                    }
-
                     filter = !hks.PassToUO;
 
                     Task.Run( () =>

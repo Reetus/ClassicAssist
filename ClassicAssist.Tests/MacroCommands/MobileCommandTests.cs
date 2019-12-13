@@ -27,8 +27,6 @@ namespace ClassicAssist.Tests.MacroCommands
             string name = MobileCommands.Name( "self" );
 
             Assert.AreEqual( "Shmoo", name );
-
-            Assert.AreEqual( string.Empty, MobileCommands.Name( 0x00 ) );
         }
 
         [TestMethod]

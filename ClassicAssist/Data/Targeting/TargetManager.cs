@@ -157,24 +157,30 @@ namespace ClassicAssist.Data.Targeting
             return _instance;
         }
 
-        public void GetEnemy( TargetNotoriety notoFlags, TargetBodyType bodyType, TargetDistance targetDistance )
+        public bool GetEnemy( TargetNotoriety notoFlags, TargetBodyType bodyType, TargetDistance targetDistance )
         {
             Mobile m = GetMobile( notoFlags, bodyType, targetDistance );
 
-            if ( m != null )
+            if ( m == null )
             {
-                SetEnemy( m );
+                return false;
             }
+
+            SetEnemy( m );
+            return true;
         }
 
-        public void GetFriend( TargetNotoriety notoFlags, TargetBodyType bodyType, TargetDistance targetDistance )
+        public bool GetFriend( TargetNotoriety notoFlags, TargetBodyType bodyType, TargetDistance targetDistance )
         {
             Mobile m = GetMobile( notoFlags, bodyType, targetDistance );
 
-            if ( m != null )
+            if ( m == null )
             {
-                SetFriend( m );
+                return false;
             }
+
+            SetFriend( m );
+            return true;
         }
 
         public Mobile GetMobile( TargetNotoriety notoFlags, TargetBodyType bodyType, TargetDistance targetDistance )

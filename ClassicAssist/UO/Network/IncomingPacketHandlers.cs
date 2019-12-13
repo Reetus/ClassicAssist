@@ -411,10 +411,12 @@ namespace ClassicAssist.UO.Network
         {
             byte type = reader.ReadByte();
             int tid = reader.ReadInt32();
-            int flags = reader.ReadByte();
+            TargetFlags flags = (TargetFlags) reader.ReadByte();
 
             Engine.TargetType = (TargetType) type;
             Engine.TargetSerial = tid;
+            Engine.TargetFlags = flags;
+            Engine.TargetExists = flags != TargetFlags.Cancel;
         }
 
         private static void OnMobileStamina( PacketReader reader )

@@ -88,6 +88,8 @@ namespace ClassicAssist.UO.Network
                 Engine.Player.LastTargetType = targetType;
             }
 
+            Engine.TargetExists = false;
+
             TargetSentEvent?.Invoke( targetType, senderSerial, flags, serial, x, y, z, id );
         }
 

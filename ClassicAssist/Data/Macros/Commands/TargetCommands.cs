@@ -12,6 +12,14 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class TargetCommands
     {
+        public enum TargetExistsType
+        {
+            Any,
+            Beneficial,
+            Harmful,
+            Neutral
+        }
+
         [CommandsDisplay( Category = "Target", Description = "Cancel an existing cursor/target.",
             InsertText = "CancelTarget()" )]
         public static void CancelTarget()
@@ -134,7 +142,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = "Target", Description = "Get mobile and set enemy alias.",
             InsertText = "GetEnemy([\"Murderer\"])" )]
-        public static void GetEnemy( IEnumerable<string> notos, string bodyType = "Any", string distance = "Next" )
+        public static bool GetEnemy( IEnumerable<string> notos, string bodyType = "Any", string distance = "Next" )
         {
             TargetNotoriety notoFlags = TargetNotoriety.None;
 
@@ -156,12 +164,12 @@ namespace ClassicAssist.Data.Macros.Commands
                 td = TargetDistance.Next;
             }
 
-            TargetManager.GetInstance().GetEnemy( notoFlags, bt, td );
+            return TargetManager.GetInstance().GetEnemy( notoFlags, bt, td );
         }
 
         [CommandsDisplay( Category = "Target", Description = "Get mobile and set friend alias.",
             InsertText = "GetFriend([\"Murderer\"])" )]
-        public static void GetFriend( IEnumerable<string> notos, string bodyType = "Any", string distance = "Next" )
+        public static bool GetFriend( IEnumerable<string> notos, string bodyType = "Any", string distance = "Next" )
         {
             TargetNotoriety notoFlags = TargetNotoriety.None;
 
@@ -183,7 +191,41 @@ namespace ClassicAssist.Data.Macros.Commands
                 td = TargetDistance.Next;
             }
 
-            TargetManager.GetInstance().GetFriend( notoFlags, bt, td );
+            return TargetManager.GetInstance().GetFriend( notoFlags, bt, td );
+        }
+
+        [CommandsDisplay( Category = "Target",
+            Description =
+                "Returns true if a target cursor is displayed and the notoriety matches the supplied value, defaults to 'Any', options are 'Any', 'Beneficial', 'Harmful' or 'Neutral'",
+            InsertText = "if TargetExists(\"Harmful\"):" )]
+        public static bool TargetExists( string targetExistsType = "Any" )
+        {
+            if ( !Enum.TryParse( targetExistsType, out TargetExistsType enumValue ) )
+            {
+                enumValue = TargetExistsType.Any;
+            }
+
+            switch ( enumValue )
+            {
+                case TargetExistsType.Any:
+
+                    return Engine.TargetExists;
+
+                case TargetExistsType.Beneficial:
+
+                    return Engine.TargetExists && Engine.TargetFlags == TargetFlags.Beneficial;
+
+                case TargetExistsType.Harmful:
+
+                    return Engine.TargetExists && Engine.TargetFlags == TargetFlags.Harmful;
+
+                case TargetExistsType.Neutral:
+
+                    return Engine.TargetExists && Engine.TargetFlags == TargetFlags.None;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

@@ -40,6 +40,8 @@ namespace ClassicAssist.UO.Network.Packets
             _writer.Write( (short) y );
             _writer.Write( (short) z );
             _writer.Write( (short) id );
+
+            Engine.TargetExists = false;
         }
 
         public string Parse( byte[] packet, int length, PacketDirection direction )

@@ -70,6 +70,8 @@ namespace Assistant
         public static PlayerMobile Player { get; set; }
         public static RehueList RehueList { get; set; } = new RehueList();
         public static string StartupPath { get; set; }
+        public static bool TargetExists { get; set; }
+        public static TargetFlags TargetFlags { get; set; }
         public static int TargetSerial { get; set; }
         public static TargetType TargetType { get; set; }
         internal static ConcurrentDictionary<int, int> GumpList { get; set; } = new ConcurrentDictionary<int, int>();

@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Assistant;
 using ClassicAssist.Resources;
-using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
@@ -58,9 +57,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             int senderSerial = ( packet[2] << 24 ) | ( packet[3] << 16 ) | ( packet[4] << 8 ) | packet[5];
 
-            Engine.SendPacketToServer( new Target( senderSerial, player ) );
-            Engine.SendPacketToClient( new Target( TargetType.Object, senderSerial, TargetFlags.Cancel, -1, -1, -1, 0,
-                0 ) );
+            Engine.SendPacketToServer( new Target( senderSerial, player, true ) );
 
             return true;
         }

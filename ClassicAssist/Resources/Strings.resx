@@ -132,6 +132,9 @@
   <data name="Active Objects" xml:space="preserve">
     <value>Active Objects</value>
   </data>
+  <data name="Add Friend" xml:space="preserve">
+    <value>Add Friend</value>
+  </data>
   <data name="Address:" xml:space="preserve">
     <value>Address:</value>
   </data>
@@ -158,6 +161,9 @@
   </data>
   <data name="Bought" xml:space="preserve">
     <value>Bought</value>
+  </data>
+  <data name="BuffIcon" xml:space="preserve">
+    <value>BuffIcon</value>
   </data>
   <data name="Buffs / Penalties" xml:space="preserve">
     <value>Buffs / Penalties</value>
@@ -489,6 +495,9 @@
   <data name="Prevent attacking friends in war mode" xml:space="preserve">
     <value>Prevent attacking friends in war mode</value>
   </data>
+  <data name="Prevent targeting friends with Harmful spells" xml:space="preserve">
+    <value>Prevent targeting friends with Harmful spells</value>
+  </data>
   <data name="Product:" xml:space="preserve">
     <value>Product:</value>
   </data>
@@ -524,6 +533,9 @@
   </data>
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
+  </data>
+  <data name="Remove Friend" xml:space="preserve">
+    <value>Remove Friend</value>
   </data>
   <data name="Reset +/-" xml:space="preserve">
     <value>Reset +/-</value>
@@ -615,6 +627,9 @@
   <data name="Target" xml:space="preserve">
     <value>Target</value>
   </data>
+  <data name="Target blocked... try again..." xml:space="preserve">
+    <value>Target blocked... try again...</value>
+  </data>
   <data name="Target clothing item..." xml:space="preserve">
     <value>Target clothing item...</value>
   </data>
@@ -672,8 +687,14 @@
   <data name="Undress" xml:space="preserve">
     <value>Undress</value>
   </data>
+  <data name="Undress All" xml:space="preserve">
+    <value>Undress All</value>
+  </data>
   <data name="Unknown alias &quot;{0}&quot;." xml:space="preserve">
     <value>Unknown alias "{0}".</value>
+  </data>
+  <data name="Unknown buff name..." xml:space="preserve">
+    <value>Unknown buff name...</value>
   </data>
   <data name="Unknown dress agent &quot;{0}&quot;." xml:space="preserve">
     <value>Unknown dress agent "{0}".</value>

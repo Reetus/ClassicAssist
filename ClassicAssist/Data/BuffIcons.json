@@ -1,0 +1,686 @@
+[
+  {
+    "ID": 1001,
+    "Name": "Dismount Prevention"
+  },
+  {
+    "ID": 1002,
+    "Name": "No Rearm"
+  },
+  {
+    "ID": 1005,
+    "Name": "Night Sight"
+  },
+  {
+    "ID": 1006,
+    "Name": "Death Strike"
+  },
+  {
+    "ID": 1007,
+    "Name": "Evil Omen"
+  },
+  {
+    "ID": 1008,
+    "Name": "Honored Debuff"
+  },
+  {
+    "ID": 1009,
+    "Name": "Achieve Perfection"
+  },
+  {
+    "ID": 1010,
+    "Name": "Divine Fury"
+  },
+  {
+    "ID": 1011,
+    "Name": "Enemy Of One"
+  },
+  {
+    "ID": 1012,
+    "Name": "Hiding"
+  },
+  {
+    "ID": 1013,
+    "Name": "Active Meditation"
+  },
+  {
+    "ID": 1014,
+    "Name": "BloodOathCaster"
+  },
+  {
+    "ID": 1015,
+    "Name": "Blood Oath"
+  },
+  {
+    "ID": 1016,
+    "Name": "Corpse Skin"
+  },
+  {
+    "ID": 1017,
+    "Name": "Mindrot"
+  },
+  {
+    "ID": 1018,
+    "Name": "Pain Spike"
+  },
+  {
+    "ID": 1019,
+    "Name": "Strangle"
+  },
+  {
+    "ID": 1020,
+    "Name": "Gift Of Renewal"
+  },
+  {
+    "ID": 1021,
+    "Name": "Attune Weapon"
+  },
+  {
+    "ID": 1022,
+    "Name": "Thunderstorm"
+  },
+  {
+    "ID": 1023,
+    "Name": "Essence Of Wind"
+  },
+  {
+    "ID": 1024,
+    "Name": "Ethereal Voyage"
+  },
+  {
+    "ID": 1025,
+    "Name": "Gift Of Life"
+  },
+  {
+    "ID": 1026,
+    "Name": "Arcane Empowerment"
+  },
+  {
+    "ID": 1027,
+    "Name": "Mortal Strike"
+  },
+  {
+    "ID": 1028,
+    "Name": "Reactive Armor"
+  },
+  {
+    "ID": 1029,
+    "Name": "Protection"
+  },
+  {
+    "ID": 1030,
+    "Name": "Arch Protection"
+  },
+  {
+    "ID": 1031,
+    "Name": "Magic Reflection"
+  },
+  {
+    "ID": 1032,
+    "Name": "Incognito"
+  },
+  {
+    "ID": 1033,
+    "Name": "Disguised"
+  },
+  {
+    "ID": 1034,
+    "Name": "Animal Form"
+  },
+  {
+    "ID": 1035,
+    "Name": "Polymorph"
+  },
+  {
+    "ID": 1036,
+    "Name": "Invisibility"
+  },
+  {
+    "ID": 1037,
+    "Name": "Paralyze"
+  },
+  {
+    "ID": 1038,
+    "Name": "Poison"
+  },
+  {
+    "ID": 1039,
+    "Name": "Bleed"
+  },
+  {
+    "ID": 1040,
+    "Name": "Clumsy"
+  },
+  {
+    "ID": 1041,
+    "Name": "FeebleMind"
+  },
+  {
+    "ID": 1042,
+    "Name": "Weaken"
+  },
+  {
+    "ID": 1043,
+    "Name": "Curse"
+  },
+  {
+    "ID": 1044,
+    "Name": "Mass Curse"
+  },
+  {
+    "ID": 1045,
+    "Name": "Agility"
+  },
+  {
+    "ID": 1046,
+    "Name": "Cunning"
+  },
+  {
+    "ID": 1047,
+    "Name": "Strength"
+  },
+  {
+    "ID": 1048,
+    "Name": "Bless"
+  },
+  {
+    "ID": 1049,
+    "Name": "Sleep"
+  },
+  {
+    "ID": 1050,
+    "Name": "Stone Form"
+  },
+  {
+    "ID": 1051,
+    "Name": "Spell Plague"
+  },
+  {
+    "ID": 1052,
+    "Name": "Berserk"
+  },
+  {
+    "ID": 1053,
+    "Name": "Mass Sleep"
+  },
+  {
+    "ID": 1054,
+    "Name": "Fly"
+  },
+  {
+    "ID": 1055,
+    "Name": "Inspire"
+  },
+  {
+    "ID": 1056,
+    "Name": "Invigorate"
+  },
+  {
+    "ID": 1057,
+    "Name": "Resilience"
+  },
+  {
+    "ID": 1058,
+    "Name": "Perseverance"
+  },
+  {
+    "ID": 1059,
+    "Name": "Tribulation Target"
+  },
+  {
+    "ID": 1060,
+    "Name": "Despair Target"
+  },
+  {
+    "ID": 1062,
+    "Name": "Fish Pie"
+  },
+  {
+    "ID": 1063,
+    "Name": "Hit Lower Attack"
+  },
+  {
+    "ID": 1064,
+    "Name": "Hit Lower Defense"
+  },
+  {
+    "ID": 1065,
+    "Name": "Dual Wield"
+  },
+  {
+    "ID": 1066,
+    "Name": "Block"
+  },
+  {
+    "ID": 1067,
+    "Name": "Defense Mastery"
+  },
+  {
+    "ID": 1068,
+    "Name": "Despair Caster"
+  },
+  {
+    "ID": 1069,
+    "Name": "Healing"
+  },
+  {
+    "ID": 1070,
+    "Name": "Spell Focusing Buff"
+  },
+  {
+    "ID": 1071,
+    "Name": "Spell Focusing Debuff"
+  },
+  {
+    "ID": 1072,
+    "Name": "Rage Focusing Debuff"
+  },
+  {
+    "ID": 1073,
+    "Name": "Rage Focusing Buff"
+  },
+  {
+    "ID": 1074,
+    "Name": "Warding"
+  },
+  {
+    "ID": 1075,
+    "Name": "Tribulation Caster"
+  },
+  {
+    "ID": 1076,
+    "Name": "Force Arrow"
+  },
+  {
+    "ID": 1077,
+    "Name": "Disarm"
+  },
+  {
+    "ID": 1078,
+    "Name": "Surge"
+  },
+  {
+    "ID": 1079,
+    "Name": "Feint"
+  },
+  {
+    "ID": 1080,
+    "Name": "Talon Strike"
+  },
+  {
+    "ID": 1081,
+    "Name": "Psychic Attack"
+  },
+  {
+    "ID": 1082,
+    "Name": "Consecrate Weapon"
+  },
+  {
+    "ID": 1083,
+    "Name": "Grapes Of Wrath"
+  },
+  {
+    "ID": 1084,
+    "Name": "Enemy Of One Debuff"
+  },
+  {
+    "ID": 1085,
+    "Name": "Horrific Beast"
+  },
+  {
+    "ID": 1086,
+    "Name": "Lich Form"
+  },
+  {
+    "ID": 1087,
+    "Name": "Vampiric Embrace"
+  },
+  {
+    "ID": 1088,
+    "Name": "Curse Weapon"
+  },
+  {
+    "ID": 1089,
+    "Name": "Reaper Form"
+  },
+  {
+    "ID": 1090,
+    "Name": "Immolating Weapon"
+  },
+  {
+    "ID": 1091,
+    "Name": "Enchant"
+  },
+  {
+    "ID": 1092,
+    "Name": "Honorable Execution"
+  },
+  {
+    "ID": 1093,
+    "Name": "Confidence"
+  },
+  {
+    "ID": 1094,
+    "Name": "Evasion"
+  },
+  {
+    "ID": 1095,
+    "Name": "Counter Attack"
+  },
+  {
+    "ID": 1096,
+    "Name": "Lightning Strike"
+  },
+  {
+    "ID": 1097,
+    "Name": "Momentum Strike"
+  },
+  {
+    "ID": 1098,
+    "Name": "Orange Petals"
+  },
+  {
+    "ID": 1099,
+    "Name": "Rose Of Trinsic"
+  },
+  {
+    "ID": 1100,
+    "Name": "Poison Immunity"
+  },
+  {
+    "ID": 1101,
+    "Name": "Veterinary"
+  },
+  {
+    "ID": 1102,
+    "Name": "Perfection"
+  },
+  {
+    "ID": 1103,
+    "Name": "Honored"
+  },
+  {
+    "ID": 1104,
+    "Name": "Mana Phase"
+  },
+  {
+    "ID": 1105,
+    "Name": "Fan Dancer Fan Fire"
+  },
+  {
+    "ID": 1106,
+    "Name": "Rage"
+  },
+  {
+    "ID": 1107,
+    "Name": "Webbing"
+  },
+  {
+    "ID": 1108,
+    "Name": "Medusa Stone"
+  },
+  {
+    "ID": 1109,
+    "Name": "True Fear"
+  },
+  {
+    "ID": 1110,
+    "Name": "Aura Of Nausea"
+  },
+  {
+    "ID": 1111,
+    "Name": "Howl Of Cacophony"
+  },
+  {
+    "ID": 1112,
+    "Name": "Gaze Despair"
+  },
+  {
+    "ID": 1113,
+    "Name": "Hiryu Physical Resistance"
+  },
+  {
+    "ID": 1114,
+    "Name": "Rune Beetle Corruption"
+  },
+  {
+    "ID": 1115,
+    "Name": "Bloodworm Anemia"
+  },
+  {
+    "ID": 1116,
+    "Name": "Rotworm Blood Disease"
+  },
+  {
+    "ID": 1117,
+    "Name": "Skill Use Delay"
+  },
+  {
+    "ID": 1118,
+    "Name": "Faction Stat Loss"
+  },
+  {
+    "ID": 1119,
+    "Name": "Heat Of Battle Status"
+  },
+  {
+    "ID": 1120,
+    "Name": "Criminal Status"
+  },
+  {
+    "ID": 1121,
+    "Name": "Armor Pierce"
+  },
+  {
+    "ID": 1122,
+    "Name": "Splintering Effect"
+  },
+  {
+    "ID": 1123,
+    "Name": "Swing Speed Debuff"
+  },
+  {
+    "ID": 1124,
+    "Name": "Wraith Form"
+  },
+  {
+    "ID": 1126,
+    "Name": "City Trade Deal"
+  },
+  {
+    "ID": 1127,
+    "Name": "Humility Debuff"
+  },
+  {
+    "ID": 1128,
+    "Name": "Spirituality"
+  },
+  {
+    "ID": 1129,
+    "Name": "Humility"
+  },
+  {
+    "ID": 1130,
+    "Name": "Rampage"
+  },
+  {
+    "ID": 1131,
+    "Name": "Stagger"
+  },
+  {
+    "ID": 1132,
+    "Name": "Toughness"
+  },
+  {
+    "ID": 1133,
+    "Name": "Thrust"
+  },
+  {
+    "ID": 1134,
+    "Name": "Pierce"
+  },
+  {
+    "ID": 1135,
+    "Name": "Playing The Odds"
+  },
+  {
+    "ID": 1136,
+    "Name": "Focused Eye"
+  },
+  {
+    "ID": 1137,
+    "Name": "Onslaught"
+  },
+  {
+    "ID": 1138,
+    "Name": "Elemental Fury"
+  },
+  {
+    "ID": 1139,
+    "Name": "Elemental Fury Debuff"
+  },
+  {
+    "ID": 1140,
+    "Name": "Called Shot"
+  },
+  {
+    "ID": 1141,
+    "Name": "Knockout"
+  },
+  {
+    "ID": 1142,
+    "Name": "Saving Throw"
+  },
+  {
+    "ID": 1143,
+    "Name": "Conduit"
+  },
+  {
+    "ID": 1144,
+    "Name": "Ethereal Burst"
+  },
+  {
+    "ID": 1145,
+    "Name": "Mystic Weapon"
+  },
+  {
+    "ID": 1146,
+    "Name": "Mana Shield"
+  },
+  {
+    "ID": 1147,
+    "Name": "Anticipate Hit"
+  },
+  {
+    "ID": 1148,
+    "Name": "Warcry"
+  },
+  {
+    "ID": 1149,
+    "Name": "Shadow"
+  },
+  {
+    "ID": 1150,
+    "Name": "White Tiger Form"
+  },
+  {
+    "ID": 1151,
+    "Name": "Bodyguard"
+  },
+  {
+    "ID": 1152,
+    "Name": "Heightened Senses"
+  },
+  {
+    "ID": 1153,
+    "Name": "Tolerance"
+  },
+  {
+    "ID": 1154,
+    "Name": "Death Ray"
+  },
+  {
+    "ID": 1155,
+    "Name": "Death Ray Debuff"
+  },
+  {
+    "ID": 1156,
+    "Name": "Intuition"
+  },
+  {
+    "ID": 1157,
+    "Name": "Enchanted Summoning"
+  },
+  {
+    "ID": 1158,
+    "Name": "Shield Bash"
+  },
+  {
+    "ID": 1159,
+    "Name": "Whispering"
+  },
+  {
+    "ID": 1160,
+    "Name": "Combat Training"
+  },
+  {
+    "ID": 1161,
+    "Name": "Injected Strike Debuff"
+  },
+  {
+    "ID": 1162,
+    "Name": "Injected Strike"
+  },
+  {
+    "ID": 1163,
+    "Name": "Unknown Tomato"
+  },
+  {
+    "ID": 1164,
+    "Name": "Playing The Odds Debuff"
+  },
+  {
+    "ID": 1165,
+    "Name": "Dragon Turtle Debuff"
+  },
+  {
+    "ID": 1166,
+    "Name": "Boarding"
+  },
+  {
+    "ID": 1167,
+    "Name": "Potency"
+  },
+  {
+    "ID": 1168,
+    "Name": "Thrust Debuff"
+  },
+  {
+    "ID": 1169,
+    "Name": "Fists Of Fury"
+  },
+  {
+    "ID": 1170,
+    "Name": "Barrab Hemolymph Concentrate"
+  },
+  {
+    "ID": 1171,
+    "Name": "Jukari Burn Poiltice"
+  },
+  {
+    "ID": 1172,
+    "Name": "Kurak Ambushers Essence"
+  },
+  {
+    "ID": 1173,
+    "Name": "Barako Draft Of Might"
+  },
+  {
+    "ID": 1174,
+    "Name": "Urali Trance Tonic"
+  },
+  {
+    "ID": 1175,
+    "Name": "Sakkhra Prophylaxis"
+  }
+]

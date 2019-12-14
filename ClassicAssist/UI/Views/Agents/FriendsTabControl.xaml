@@ -40,9 +40,11 @@
             </Grid>
             <StackPanel Grid.Row="2">
                 <CheckBox Content="{x:Static resources:Strings.Include_party_members}"
-                          IsChecked="{Binding Options.IncludePartyMembersInFriends}" IsEnabled="False" />
+                          IsChecked="{Binding Options.IncludePartyMembersInFriends}" />
                 <CheckBox Content="{x:Static resources:Strings.Prevent_attacking_friends_in_war_mode}"
                           IsChecked="{Binding Options.PreventAttackingFriendsInWarMode}" />
+                <CheckBox Content="{x:Static resources:Strings.Prevent_targeting_friends_with_Harmful_spells}"
+                          IsChecked="{Binding Options.PreventTargetingFriendsWithHarmful}" />
             </StackPanel>
         </Grid>
     </Grid>

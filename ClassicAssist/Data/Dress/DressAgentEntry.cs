@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.UO.Data;
@@ -47,12 +48,63 @@ namespace ClassicAssist.Data.Dress
             Items = list;
         }
 
+        public async Task Dress( bool moveConflicting = true )
+        {
+            PlayerMobile player = Engine.Player;
+
+            if ( player == null )
+            {
+                return;
+            }
+
+            int container = DressManager.GetInstance().GetUndressContainer( UndressContainer );
+
+            await Task.Run( async () =>
+            {
+                foreach ( DressAgentItem dai in Items )
+                {
+                    Item item = Engine.Items.GetItem( dai.Serial );
+
+                    if ( item == null )
+                    {
+                        continue;
+                    }
+
+                    int currentInLayer = Engine.Player?.GetLayer( dai.Layer ) ?? 0;
+
+                    if ( currentInLayer == item.Serial )
+                    {
+                        continue;
+                    }
+
+                    if ( currentInLayer != 0 && moveConflicting )
+                    {
+                        Engine.Player?.SetLayer( dai.Layer, 0 );
+                        await UOC.DragDropAsync( currentInLayer, 1, container );
+                        await Task.Delay( Options.CurrentOptions.ActionDelayMS );
+                        currentInLayer = 0;
+                    }
+
+                    if ( currentInLayer != 0 )
+                    {
+                        continue;
+                    }
+
+                    UOC.EquipItem( item, dai.Layer );
+
+                    await Task.Delay( Options.CurrentOptions.ActionDelayMS );
+                }
+            } );
+        }
+
         public void Undress()
         {
             if ( Engine.Player == null )
             {
                 return;
             }
+
+            int container = DressManager.GetInstance().GetUndressContainer( UndressContainer );
 
             IEnumerable<int> serials = Items.Select( dai => dai.Serial );
 
@@ -61,7 +113,8 @@ namespace ClassicAssist.Data.Dress
 
             foreach ( Item item in itemsToUnequip )
             {
-                UOC.DragDropAsync( item.Serial, 1, Engine.Player?.Backpack?.Serial ?? 0 ).Wait();
+                UOC.DragDropAsync( item.Serial, 1, container ).Wait();
+                Engine.Player.SetLayer( item.Layer, 0 );
                 Thread.Sleep( Options.CurrentOptions.ActionDelayMS );
             }
         }

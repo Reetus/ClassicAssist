@@ -158,9 +158,12 @@ namespace Assistant
 
         private static void OnPlayerPositionChanged( int x, int y, int z )
         {
-            Player.X = x;
-            Player.Y = y;
-            Player.Z = z;
+            if ( Player != null )
+            {
+                Player.X = x;
+                Player.Y = y;
+                Player.Z = z;
+            }
 
             Items.RemoveByDistance( MAX_DISTANCE, x, y );
             Mobiles.RemoveByDistance( MAX_DISTANCE, x, y );
@@ -328,6 +331,11 @@ namespace Assistant
             }
 
             byte[] data = basePacket.ToArray();
+
+            if ( data == null )
+            {
+                return;
+            }
 
             SendPacketToServer( data, data.Length );
         }

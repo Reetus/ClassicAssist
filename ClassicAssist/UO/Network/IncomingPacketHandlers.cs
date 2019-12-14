@@ -15,6 +15,8 @@ namespace ClassicAssist.UO.Network
 {
     public static class IncomingPacketHandlers
     {
+        public delegate void dBufficonEnabledDisabled( int type, bool enabled );
+
         public delegate void dContainerContents( int serial, ItemCollection container );
 
         public delegate void dGump( int gumpId, int serial, Gump gump );
@@ -40,6 +42,7 @@ namespace ClassicAssist.UO.Network
         public static event dMobileIncoming MobileIncomingEvent;
         public static event dContainerContents ContainerContentsEvent;
         public static event dGump GumpEvent;
+        public static event dBufficonEnabledDisabled BufficonEnabledDisabledEvent;
 
         public static void Initialize()
         {
@@ -71,11 +74,28 @@ namespace ClassicAssist.UO.Network
             Register( 0xC1, 0, OnLocalizedText );
             Register( 0xD6, 0, OnProperties );
             Register( 0xDD, 0, OnCompressedGump );
+            Register( 0xDF, 0, OnBuffAndAttributes );
             Register( 0xF3, 26, OnSAWorldItem );
 
             RegisterExtended( 0x04, 0, OnCloseGump );
             RegisterExtended( 0x06, 0, OnPartyCommand );
             RegisterExtended( 0x08, 0, OnMapChange );
+        }
+
+        private static void OnBuffAndAttributes( PacketReader reader )
+        {
+            reader.ReadInt32(); // serial
+            int type = reader.ReadUInt16();
+            int count = reader.ReadInt16();
+
+            if ( type < 0x3ea )
+            {
+                return;
+            }
+
+            bool enabled = count > 0;
+
+            BufficonEnabledDisabledEvent?.Invoke( type, enabled );
         }
 
         private static void OnLocalizedText( PacketReader reader )

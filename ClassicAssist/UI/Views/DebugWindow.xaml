@@ -44,5 +44,8 @@
         <TabItem Header="{x:Static resources:Strings.Gumps}">
             <debug:DebugGumpControl />
         </TabItem>
+        <TabItem Header="{x:Static resources:Strings.BuffIcon}">
+            <debug:DebugBuffIconsControl />
+        </TabItem>
     </TabControl>
 </Window>

@@ -95,7 +95,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = "Actions", Description = "Clear hands, \"left\", \"right\", or \"both\"",
             InsertText = "ClearHands(\"both\")" )]
-        public static void ClearHands( string hand )
+        public static void ClearHands( string hand = "both" )
         {
             hand = hand.ToLower();
             List<Layer> unequipLayers = new List<Layer>();

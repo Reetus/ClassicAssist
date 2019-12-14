@@ -25,6 +25,7 @@ namespace ClassicAssist.Data
         private string _name;
         private bool _persistUseOnce;
         private bool _preventAttackingFriendsInWarMode;
+        private bool _preventTargetingFriendsWithHarmful;
         private bool _useDeathScreenWhilstHidden;
 
         public bool ActionDelay
@@ -87,6 +88,12 @@ namespace ClassicAssist.Data
         {
             get => _preventAttackingFriendsInWarMode;
             set => SetProperty( ref _preventAttackingFriendsInWarMode, value );
+        }
+
+        public bool PreventTargetingFriendsWithHarmful
+        {
+            get => _preventTargetingFriendsWithHarmful;
+            set => SetProperty( ref _preventTargetingFriendsWithHarmful, value );
         }
 
         public bool UseDeathScreenWhilstHidden

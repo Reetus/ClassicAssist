@@ -610,5 +610,21 @@ namespace ClassicAssist.UO
 
             Engine.SendPacketToClient( pw );
         }
+
+        public static void ResendTargetToClient()
+        {
+            PacketWriter pw = new PacketWriter( 19 );
+            pw.Write( (byte) 0x6C );
+            pw.Write( (byte) TargetType.Object );
+            pw.Write( Engine.TargetSerial );
+            pw.Write( (byte) Engine.TargetFlags );
+            pw.Write( 0 );
+            pw.Write( (short) 0 );
+            pw.Write( (short) 0 );
+            pw.Write( (short) 0 );
+            pw.Write( (short) 0 );
+
+            Engine.SendPacketToClient( pw );
+        }
     }
 }

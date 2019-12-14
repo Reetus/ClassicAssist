@@ -40,7 +40,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
             JObject config = new JObject
             {
                 ["IncludePartyMembersInFriends"] = Options.IncludePartyMembersInFriends,
-                ["PreventAttackingFriendsInWarMode"] = Options.PreventAttackingFriendsInWarMode
+                ["PreventAttackingFriendsInWarMode"] = Options.PreventAttackingFriendsInWarMode,
+                ["PreventTargetingFriendsWithHarmful"] = Options.PreventTargetingFriendsWithHarmful
             };
 
             JArray friends = new JArray();
@@ -69,6 +70,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
             Options.IncludePartyMembersInFriends = config["IncludePartyMembersInFriends"]?.ToObject<bool>() ?? true;
             Options.PreventAttackingFriendsInWarMode =
                 config["PreventAttackingFriendsInWarMode"]?.ToObject<bool>() ?? true;
+            Options.PreventTargetingFriendsWithHarmful =
+                config["PreventTargetingFriendsWithHarmful"]?.ToObject<bool>() ?? false;
 
             if ( config["Items"] == null )
             {

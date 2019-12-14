@@ -92,18 +92,18 @@
             <Button Content="{x:Static resources:Strings.Dress}" Grid.Row="0"
                     Command="{Binding DressAllItemsCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
             <Button Content="{x:Static resources:Strings.Undress}" Grid.Row="1"
-                    Command="{Binding UndressAllItemsCommand, Mode=OneWay}" />
-            <Button Content="{x:Static resources:Strings.Import}" Grid.Row="2"
+                    Command="{Binding UndressItemsCommand}" CommandParameter="{Binding SelectedItem}" />
+            <Button Content="{x:Static resources:Strings.Undress_All}" Grid.Row="2"
+                    Command="{Binding UndressAllItemsCommand}" />
+            <Button Content="{x:Static resources:Strings.Import}" Grid.Row="3"
                     Command="{Binding ImportItemsCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
-            <Button Content="{x:Static resources:Strings.New_Item}" Grid.Row="3"
+            <Button Content="{x:Static resources:Strings.New_Item}" Grid.Row="4"
                     Command="{Binding AddDressItemCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
-            <Button Content="{x:Static resources:Strings.Remove}" Grid.Row="4"
+            <Button Content="{x:Static resources:Strings.Remove}" Grid.Row="5"
                     Command="{Binding RemoveDressItemCommand, Mode=OneWay}"
                     CommandParameter="{Binding SelectedItem, ElementName=listBox}" />
-            <Button Content="{x:Static resources:Strings.Clear_All}" Grid.Row="5" Margin="0,10,5,0" Height="25"
+            <Button Content="{x:Static resources:Strings.Clear_All}" Grid.Row="6" Margin="0,10,5,0" Height="25"
                     Command="{Binding ClearDressItemsCommand}" CommandParameter="{Binding SelectedItem}" />
-            <CheckBox Grid.Row="6" Margin="0,10,0,0" Content="UO3D Packets" FontSize="9"
-                      IsChecked="{Binding UseUO3DPackets}" IsEnabled="False" />
             <Grid Grid.Row="7" Margin="0,40,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />

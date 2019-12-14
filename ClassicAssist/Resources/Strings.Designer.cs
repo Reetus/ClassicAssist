@@ -115,6 +115,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Friend.
+        /// </summary>
+        public static string Add_Friend {
+            get {
+                return ResourceManager.GetString("Add Friend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Address:.
         /// </summary>
         public static string Address_ {
@@ -192,6 +201,15 @@ namespace ClassicAssist.Resources {
         public static string Bought {
             get {
                 return ResourceManager.GetString("Bought", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BuffIcon.
+        /// </summary>
+        public static string BuffIcon {
+            get {
+                return ResourceManager.GetString("BuffIcon", resourceCulture);
             }
         }
         
@@ -1186,6 +1204,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Prevent targeting friends with Harmful spells.
+        /// </summary>
+        public static string Prevent_targeting_friends_with_Harmful_spells {
+            get {
+                return ResourceManager.GetString("Prevent targeting friends with Harmful spells", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product:.
         /// </summary>
         public static string Product_ {
@@ -1290,6 +1317,15 @@ namespace ClassicAssist.Resources {
         public static string Remove {
             get {
                 return ResourceManager.GetString("Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Friend.
+        /// </summary>
+        public static string Remove_Friend {
+            get {
+                return ResourceManager.GetString("Remove Friend", resourceCulture);
             }
         }
         
@@ -1564,6 +1600,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Target blocked... try again....
+        /// </summary>
+        public static string Target_blocked____try_again___ {
+            get {
+                return ResourceManager.GetString("Target blocked... try again...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Target clothing item....
         /// </summary>
         public static string Target_clothing_item___ {
@@ -1735,11 +1780,29 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Undress All.
+        /// </summary>
+        public static string Undress_All {
+            get {
+                return ResourceManager.GetString("Undress All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unknown alias &quot;{0}&quot;..
         /// </summary>
         public static string Unknown_alias___0___ {
             get {
                 return ResourceManager.GetString("Unknown alias \"{0}\".", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown buff name....
+        /// </summary>
+        public static string Unknown_buff_name___ {
+            get {
+                return ResourceManager.GetString("Unknown buff name...", resourceCulture);
             }
         }
         

@@ -25,7 +25,7 @@ namespace ClassicAssist.UO.Network.Packets
 
         public virtual byte[] ToArray()
         {
-            return _writer.ToArray();
+            return _writer?.ToArray();
         }
     }
 }

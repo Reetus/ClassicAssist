@@ -17,6 +17,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
 {
     public class DressTabViewModel : HotkeySettableViewModel<DressAgentEntry>, ISettingProvider
     {
+        private readonly DressManager _manager;
+
         private readonly Layer[] _validLayers =
         {
             Layer.Arms, Layer.Bracelet, Layer.Cloak, Layer.Earrings, Layer.Gloves, Layer.Helm, Layer.InnerLegs,
@@ -37,13 +39,14 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private DressAgentEntry _selectedItem;
         private ICommand _setUndressContainerCommand;
         private ICommand _undressAllItemsCommand;
+        private ICommand _undressItemsCommand;
         private bool _useUo3DPackets;
 
         public DressTabViewModel() : base( Strings.Dress )
         {
-            DressManager manager = DressManager.GetInstance();
+            _manager = DressManager.GetInstance();
 
-            manager.Items = Items;
+            _manager.Items = Items;
         }
 
         public ICommand AddDressItemCommand =>
@@ -56,10 +59,17 @@ namespace ClassicAssist.UI.ViewModels.Agents
         public ICommand DressAllItemsCommand =>
             _dressAllItemsCommand ??
             ( _dressAllItemsCommand =
-                new RelayCommandAsync( DressAllItems, o => Engine.Connected && !_isDressingOrUndressing ) );
+                new RelayCommandAsync( DressAllItems,
+                    o => SelectedItem != null && Engine.Connected && !IsDressingOrUndressing ) );
 
         public ICommand ImportItemsCommand =>
             _importItemsCommand ?? ( _importItemsCommand = new RelayCommand( ImportItems, o => SelectedItem != null ) );
+
+        public bool IsDressingOrUndressing
+        {
+            get => _isDressingOrUndressing;
+            set => SetProperty( ref _isDressingOrUndressing, value );
+        }
 
         public bool MoveConflictingItems
         {
@@ -96,7 +106,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public ICommand UndressAllItemsCommand =>
             _undressAllItemsCommand ??
-            ( _undressAllItemsCommand = new RelayCommandAsync( UndressAllItems, o => Engine.Connected ) );
+            ( _undressAllItemsCommand =
+                new RelayCommandAsync( UndressAllItems, o => Engine.Connected && !IsDressingOrUndressing ) );
+
+        public ICommand UndressItemsCommand =>
+            _undressItemsCommand ??
+            ( _undressItemsCommand = new RelayCommandAsync( UndressItems,
+                o => SelectedItem != null && Engine.Connected && !IsDressingOrUndressing ) );
 
         public bool UseUO3DPackets
         {
@@ -190,6 +206,25 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
         }
 
+        private async Task UndressItems( object arg )
+        {
+            if ( !( arg is DressAgentEntry dae ) )
+            {
+                return;
+            }
+
+            try
+            {
+                IsDressingOrUndressing = true;
+
+                await Task.Run( () => dae.Undress() );
+            }
+            finally
+            {
+                IsDressingOrUndressing = false;
+            }
+        }
+
         private static async Task SetUndressContainer( object obj )
         {
             if ( !( obj is DressAgentEntry entry ) )
@@ -263,27 +298,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private async Task UndressAllItems( object obj )
         {
-            PlayerMobile player = Engine.Player;
-
-            if ( player == null )
-            {
-                return;
-            }
-
-            int backpack = player.Backpack.Serial;
-
-            if ( backpack <= 0 )
-            {
-                return;
-            }
-
-            int[] items = player.GetEquippedItems().Where( i => IsValidLayer( i.Layer ) ).Select( i => i.Serial )
-                .ToArray();
-
-            foreach ( int item in items )
-            {
-                await Commands.DragDropAsync( item, 1, backpack );
-            }
+            await _manager.UndressAll();
         }
 
         private void NewDressEntry( object obj )
@@ -316,38 +331,16 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            PlayerMobile player = Engine.Player;
-
-            if ( player == null )
+            try
             {
-                return;
+                IsDressingOrUndressing = true;
+
+                await dae.Dress( MoveConflictingItems );
             }
-
-            await Task.Run( async () =>
+            finally
             {
-                try
-                {
-                    _isDressingOrUndressing = true;
-
-                    foreach ( DressAgentItem dai in dae.Items )
-                    {
-                        Item item = Engine.Items.GetItem( dai.Serial );
-
-                        if ( item == null )
-                        {
-                            continue;
-                        }
-
-                        Commands.EquipItem( item, dai.Layer );
-
-                        await Task.Delay( Options.CurrentOptions.ActionDelayMS );
-                    }
-                }
-                finally
-                {
-                    _isDressingOrUndressing = false;
-                }
-            } );
+                IsDressingOrUndressing = false;
+            }
         }
 
         private void ImportItems( object obj )

@@ -1,4 +1,5 @@
 ﻿using Assistant;
+using ClassicAssist.Data.BuffIcons;
 using ClassicAssist.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Objects;
@@ -153,6 +154,13 @@ namespace ClassicAssist.Data.Macros.Commands
 
             UOC.SystemMessage( Strings.Entity_not_found___ );
             return 0;
+        }
+
+        [CommandsDisplay( Category = "Entity", Description = "Check for a specific buff",
+            InsertText = "if BuffExists(\"Blood Oath\"):" )]
+        public static bool BuffExists( string name )
+        {
+            return BuffIconManager.GetInstance().BuffExists( name );
         }
     }
 }

@@ -115,6 +115,40 @@
                     </StackPanel>
                 </Grid>
             </TabItem>
+            <TabItem Header="{x:Static resources:Strings.Timers}">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ListView ItemsSource="{Binding Timers}" SelectedItem="{Binding SelectedTimer}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="{x:Static resources:Strings.Name}" Width="170"
+                                                DisplayMemberBinding="{Binding Name}" />
+                                <GridViewColumn Header="{x:Static resources:Strings.Value}" Width="170"
+                                                DisplayMemberBinding="{Binding Value, Converter={StaticResource IntToHexStringValueConverter}}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0, 10,0,0">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Height" Value="25" />
+                                <Setter Property="Padding" Value="10,0,10,0" />
+                                <Setter Property="Margin" Value="0,0,10,0" />
+                            </Style>
+                        </StackPanel.Resources>
+                        <Button Content="{x:Static resources:Strings.Close}">
+                            <i:Interaction.Behaviors>
+                                <misc:CloseOnClickBehaviour />
+                            </i:Interaction.Behaviors>
+                        </Button>
+                        <Button Content="{x:Static resources:Strings.Refresh}"
+                                Command="{Binding RefreshTimersCommand}" />
+                    </StackPanel>
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

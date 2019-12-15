@@ -705,6 +705,9 @@
   <data name="Unknown spell..." xml:space="preserve">
     <value>Unknown spell...</value>
   </data>
+  <data name="Unknown timer..." xml:space="preserve">
+    <value>Unknown timer...</value>
+  </data>
   <data name="UO_LOCALE" xml:space="preserve">
     <value>ENU\0</value>
   </data>

@@ -2,24 +2,35 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Misc;
 
 namespace ClassicAssist.UI.ViewModels
 {
+    public class TimerData
+    {
+        public string Name { get; set; }
+        public OffsetStopwatch Value { get; set; }
+    }
+
     public class ActiveObjectsViewModel : BaseViewModel
     {
         private ICommand _clearAllAliasesCommand;
         private ICommand _clearAllListsCommand;
         private ICommand _refreshAliasesCommand;
         private ICommand _refreshListsCommand;
+        private ICommand _refreshTimersCommand;
         private ICommand _removeAliasCommand;
         private ICommand _removeListCommand;
         private AliasEntry _selectedAlias;
         private ListEntry _selectedList;
+        private TimerData _selectedTimer;
+        private ObservableCollection<TimerData> _timers = new ObservableCollection<TimerData>();
 
         public ActiveObjectsViewModel()
         {
             RefreshAliases();
             RefreshLists();
+            RefreshTimers();
         }
 
         public ObservableCollection<AliasEntry> Aliases { get; set; } = new ObservableCollection<AliasEntry>();
@@ -37,6 +48,9 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand RefreshListsCommand =>
             _refreshListsCommand ?? ( _refreshListsCommand = new RelayCommand( o => RefreshLists(), o => true ) );
+
+        public ICommand RefreshTimersCommand =>
+            _refreshTimersCommand ?? ( _refreshTimersCommand = new RelayCommand( o => RefreshTimers(), o => true ) );
 
         public ICommand RemoveAliasCommand =>
             _removeAliasCommand ??
@@ -56,6 +70,35 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _selectedList;
             set => SetProperty( ref _selectedList, value );
+        }
+
+        public TimerData SelectedTimer
+        {
+            get => _selectedTimer;
+            set => SetProperty( ref _selectedTimer, value );
+        }
+
+        public ObservableCollection<TimerData> Timers
+        {
+            get => _timers;
+            set => SetProperty( ref _timers, value );
+        }
+
+        private void RefreshTimers()
+        {
+            Dictionary<string, OffsetStopwatch> timers = TimerCommands.GetAllTimers();
+
+            if ( timers == null )
+            {
+                return;
+            }
+
+            Timers.Clear();
+
+            foreach ( KeyValuePair<string, OffsetStopwatch> timer in timers )
+            {
+                Timers.Add( new TimerData { Name = timer.Key, Value = timer.Value } );
+            }
         }
 
         private void RemoveList( object obj )

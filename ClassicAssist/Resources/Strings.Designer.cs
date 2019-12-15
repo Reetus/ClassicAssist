@@ -1834,6 +1834,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unknown timer....
+        /// </summary>
+        public static string Unknown_timer___ {
+            get {
+                return ResourceManager.GetString("Unknown timer...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ENU\0.
         /// </summary>
         public static string UO_LOCALE {

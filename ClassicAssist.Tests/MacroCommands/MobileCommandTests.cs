@@ -171,7 +171,7 @@ namespace ClassicAssist.Tests.MacroCommands
 
             IncomingPacketHandlers.Initialize();
 
-            PacketHandler handler = IncomingPacketHandlers.GetExtendedHandler( 0x25 );
+            PacketHandler handler = IncomingPacketHandlers.GetHandler( 0xBF );
 
             handler?.OnReceive( new PacketReader( enablePacket, enablePacket.Length, false ) );
 

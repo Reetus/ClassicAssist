@@ -91,7 +91,6 @@ namespace ClassicAssist.UO.Network
 
         private static void OnToggleSpecialMoves( PacketReader reader )
         {
-            reader.ReadInt16(); // command
             int spellID = reader.ReadInt16();
             bool enabled = reader.ReadByte() == 1;
 
@@ -1042,7 +1041,7 @@ namespace ClassicAssist.UO.Network
             return _handlers[packetId];
         }
 
-        internal static PacketHandler GetExtendedHandler( int packetId )
+        private static PacketHandler GetExtendedHandler( int packetId )
         {
             return _extendedHandlers[packetId];
         }

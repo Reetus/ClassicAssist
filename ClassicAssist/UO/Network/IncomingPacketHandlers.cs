@@ -23,6 +23,8 @@ namespace ClassicAssist.UO.Network
 
         public delegate void dJournalEntryAdded( JournalEntry je );
 
+        public delegate void dMapChanged( Map newMap );
+
         public delegate void dMobileIncoming( Mobile mobile, ItemCollection equipment );
 
         public delegate void dMobileUpdated( Mobile mobile );
@@ -31,6 +33,8 @@ namespace ClassicAssist.UO.Network
 
         public delegate void dSkillUpdated( int id, float value, float baseValue, LockStatus lockStatus,
             float skillCap );
+
+        public delegate void dToggleSpecialMove( int spellID, bool enabled );
 
         private static PacketHandler[] _handlers;
         private static PacketHandler[] _extendedHandlers;
@@ -80,6 +84,18 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x04, 0, OnCloseGump );
             RegisterExtended( 0x06, 0, OnPartyCommand );
             RegisterExtended( 0x08, 0, OnMapChange );
+            RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
+        }
+
+        public static event dToggleSpecialMove ToggleSpecialMoveEvent;
+
+        private static void OnToggleSpecialMoves( PacketReader reader )
+        {
+            reader.ReadInt16(); // command
+            int spellID = reader.ReadInt16();
+            bool enabled = reader.ReadByte() == 1;
+
+            ToggleSpecialMoveEvent?.Invoke( spellID, enabled );
         }
 
         private static void OnBuffAndAttributes( PacketReader reader )
@@ -163,6 +179,7 @@ namespace ClassicAssist.UO.Network
 
                     break;
                 }
+
                 case 2:
                 {
                     int count = reader.ReadByte();
@@ -183,6 +200,7 @@ namespace ClassicAssist.UO.Network
                     }
 
                     Engine.Player.Party = partyMembers.ToArray();
+
                     break;
                 }
             }
@@ -202,12 +220,17 @@ namespace ClassicAssist.UO.Network
             {
                 case 0x01:
                     healthbar = HealthbarColour.Green;
+
                     break;
+
                 case 0x02:
                     healthbar = HealthbarColour.Yellow;
+
                     break;
+
                 case 0x03:
                     healthbar = HealthbarColour.Red;
+
                     break;
             }
 
@@ -545,11 +568,17 @@ namespace ClassicAssist.UO.Network
 
         private static void OnMapChange( PacketReader reader )
         {
+            Map map = (Map) reader.ReadByte();
+
             if ( Engine.Player != null )
             {
-                Engine.Player.Map = (Map) reader.ReadByte();
+                Engine.Player.Map = map;
             }
+
+            MapChangedEvent?.Invoke( map );
         }
+
+        public static event dMapChanged MapChangedEvent;
 
         private static void OnItemAddedToContainer( PacketReader reader )
         {
@@ -1013,7 +1042,7 @@ namespace ClassicAssist.UO.Network
             return _handlers[packetId];
         }
 
-        private static PacketHandler GetExtendedHandler( int packetId )
+        internal static PacketHandler GetExtendedHandler( int packetId )
         {
             return _extendedHandlers[packetId];
         }

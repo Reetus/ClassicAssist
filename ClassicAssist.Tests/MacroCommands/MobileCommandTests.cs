@@ -1,10 +1,10 @@
-﻿using System.Linq;
-using Assistant;
+﻿using Assistant;
 using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Data.SpecialMoves;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Xceed.Wpf.Toolkit;
 
 namespace ClassicAssist.Tests.MacroCommands
 {
@@ -159,6 +159,31 @@ namespace ClassicAssist.Tests.MacroCommands
             _player.HitsMax = 100;
 
             Assert.AreEqual( 10, MobileCommands.DiffHits( _player.Serial ) );
+        }
+
+        [TestMethod]
+        public void WillEnableDisableSpecialMove()
+        {
+            SpecialMovesManager manager = SpecialMovesManager.GetInstance();
+
+            byte[] enablePacket = { 0xBF, 0x00, 0x08, 0x00, 0x25, 0x01, 0xF6, 0x01 };
+            byte[] disablePacket = { 0xBF, 0x00, 0x08, 0x00, 0x25, 0x01, 0xF6, 0x00 };
+
+            IncomingPacketHandlers.Initialize();
+
+            PacketHandler handler = IncomingPacketHandlers.GetExtendedHandler( 0x25 );
+
+            handler?.OnReceive( new PacketReader( enablePacket, enablePacket.Length, false ) );
+
+            bool result = EntityCommands.SpecialMoveExists( "Death Strike" );
+
+            Assert.IsTrue( result );
+
+            handler?.OnReceive( new PacketReader( disablePacket, disablePacket.Length, false ) );
+
+            result = EntityCommands.SpecialMoveExists( "Death Strike" );
+
+            Assert.IsFalse( result );
         }
     }
 }

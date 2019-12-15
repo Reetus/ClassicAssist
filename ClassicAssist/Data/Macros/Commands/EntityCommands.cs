@@ -1,5 +1,6 @@
 ﻿using Assistant;
 using ClassicAssist.Data.BuffIcons;
+using ClassicAssist.Data.SpecialMoves;
 using ClassicAssist.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Objects;
@@ -161,6 +162,13 @@ namespace ClassicAssist.Data.Macros.Commands
         public static bool BuffExists( string name )
         {
             return BuffIconManager.GetInstance().BuffExists( name );
+        }
+
+        [CommandsDisplay( Category = "Entity", Description = "Check for a specific special move",
+            InsertText = "if SpecialMoveExists(\"Death Strike\"):" )]
+        public static bool SpecialMoveExists( string name )
+        {
+            return SpecialMovesManager.GetInstance().SpecialMoveExists( name );
         }
     }
 }

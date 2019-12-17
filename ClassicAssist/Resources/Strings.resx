@@ -450,6 +450,9 @@
   <data name="New Item" xml:space="preserve">
     <value>New Item</value>
   </data>
+  <data name="New version available:" xml:space="preserve">
+    <value>New version available:</value>
+  </data>
   <data name="Object &quot;{0}&quot; updated..." xml:space="preserve">
     <value>Object "{0}" updated...</value>
   </data>

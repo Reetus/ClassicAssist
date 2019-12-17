@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Assistant;
@@ -212,7 +211,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             entry.Items.Add( organizerItem );
         }
 
-        private async Task Organize( object obj )
+        internal async Task Organize( object obj )
         {
             if ( !( obj is OrganizerEntry entry ) )
             {
@@ -272,30 +271,52 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                 Commands.SystemMessage( string.Format( Strings.Organizer__0__running___, entry.Name ) );
 
-                int[] matchItems = entry.Items.Select( mi => mi.ID ).ToArray();
-
-                Item[] moveItems = sourceContainer.Container.SelectEntities( i => matchItems.Contains( i.ID ) );
-
-                if ( moveItems == null )
+                foreach ( OrganizerItem entryItem in entry.Items )
                 {
-                    return;
-                }
+                    Item[] moveItems = sourceContainer.Container.SelectEntities( i => entryItem.ID == i.ID );
 
-                foreach ( Item moveItem in moveItems )
-                {
-                    if ( entry.Stack )
+                    if ( moveItems == null )
                     {
-                        await Commands.DragDropAsync( moveItem.Serial, moveItem.Count, desinationContainer.Serial );
-                    }
-                    else
-                    {
-                        await Commands.DragDropAsync( moveItem.Serial, moveItem.Count, desinationContainer.Serial, 0,
-                            0 );
+                        continue;
                     }
 
-                    if ( _cancellationTokenSource.IsCancellationRequested )
+                    bool limitAmount = entryItem.Amount != -1;
+                    int moveAmount = entryItem.Amount;
+                    int moved = 0;
+
+                    foreach ( Item moveItem in moveItems )
                     {
-                        break;
+                        if ( limitAmount && moved >= moveAmount )
+                        {
+                            break;
+                        }
+
+                        int amount = moveItem.Count;
+
+                        if ( limitAmount )
+                        {
+                            if ( moveItem.Count > moveAmount )
+                            {
+                                amount = moveAmount - moved;
+                            }
+
+                            moved += amount;
+                        }
+
+                        if ( entry.Stack )
+                        {
+                            await Commands.DragDropAsync( moveItem.Serial, amount, desinationContainer.Serial );
+                        }
+                        else
+                        {
+                            await Commands.DragDropAsync( moveItem.Serial, amount, desinationContainer.Serial,
+                                0, 0 );
+                        }
+
+                        if ( _cancellationTokenSource.IsCancellationRequested )
+                        {
+                            break;
+                        }
                     }
                 }
             }

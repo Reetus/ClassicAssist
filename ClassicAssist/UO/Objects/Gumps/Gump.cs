@@ -99,8 +99,7 @@ namespace ClassicAssist.UO.Objects.Gumps
             _elements = new List<GumpElement>();
             _strings = new List<string>();
 
-            //TODO
-            //OutgoingPackets.GumpButtonPressedEvent += OutgoingPackets_GumpButtonPressedEvent;
+            Engine.Gumps.Add( this );
         }
 
         public bool Closable { get; set; }

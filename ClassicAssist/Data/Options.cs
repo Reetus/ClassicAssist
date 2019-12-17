@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -95,6 +96,8 @@ namespace ClassicAssist.Data
             get => _preventTargetingFriendsWithHarmful;
             set => SetProperty( ref _preventTargetingFriendsWithHarmful, value );
         }
+
+        public Version UpdateGumpVersion { get; set; }
 
         public bool UseDeathScreenWhilstHidden
         {

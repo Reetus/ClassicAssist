@@ -1069,6 +1069,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New version available:.
+        /// </summary>
+        public static string New_version_available_ {
+            get {
+                return ResourceManager.GetString("New version available:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Object &quot;{0}&quot; updated....
         /// </summary>
         public static string Object___0___updated___ {

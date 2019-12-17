@@ -1,23 +1,31 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Commands;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Misc;
+using ClassicAssist.Resources;
 using ClassicAssist.UI.Views;
+using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using CUO_API;
+using Octokit;
 
 [assembly: InternalsVisibleTo( "ClassicAssist.Tests" )]
 
@@ -281,6 +289,52 @@ namespace Assistant
                         mobile.Y, mobile.Z, mobile.Direction ) );
                 }
             };
+
+            Task.Run( async () =>
+            {
+                try
+                {
+                    GitHubClient client = new GitHubClient( new ProductHeaderValue( "ClassicAssist" ) );
+
+                    IReadOnlyList<Release> releases =
+                        await client.Repository.Release.GetAll( "Reetus",
+                            "ClassicAssist" );
+
+                    Release latestRelease = releases.FirstOrDefault();
+
+                    if ( latestRelease == null )
+                    {
+                        return;
+                    }
+
+                    Version latestVersion = Version.Parse( latestRelease.TagName );
+
+                    if ( !Version.TryParse(
+                        FileVersionInfo.GetVersionInfo( Path.Combine( StartupPath, "ClassicAssist.dll" ) )
+                            .ProductVersion,
+                        out Version localVersion ) )
+                    {
+                        return;
+                    }
+
+                    if ( latestVersion > localVersion && Options.CurrentOptions.UpdateGumpVersion < latestVersion )
+                    {
+                        StringBuilder message = new StringBuilder();
+                        message.AppendLine( Strings.ProductName );
+                        message.AppendLine( $"{Strings.New_version_available_} {latestVersion}" );
+                        message.AppendLine();
+
+                        UpdateMessageGump gump = new UpdateMessageGump( message.ToString(), latestVersion );
+                        byte[] packet = gump.Compile();
+
+                        SendPacketToClient( packet, packet.Length );
+                    }
+                }
+                catch ( Exception e )
+                {
+                    // Squash all
+                }
+            } );
         }
 
         public static void SendPacketToServer( byte[] packet, int length )

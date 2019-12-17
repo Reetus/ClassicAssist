@@ -162,6 +162,18 @@ namespace ClassicAssist.Tests.MacroCommands
         }
 
         [TestMethod]
+        public void WillGetStats()
+        {
+            _player.Strength = 100;
+            _player.Int = 90;
+            _player.Dex = 25;
+
+            Assert.AreEqual( 100, MobileCommands.Str() );
+            Assert.AreEqual( 90, MobileCommands.Int() );
+            Assert.AreEqual( 25, MobileCommands.Dex() );
+        }
+
+        [TestMethod]
         public void WillEnableDisableSpecialMove()
         {
             SpecialMovesManager manager = SpecialMovesManager.GetInstance();

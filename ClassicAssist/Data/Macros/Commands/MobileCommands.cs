@@ -194,6 +194,27 @@ namespace ClassicAssist.Data.Macros.Commands
             return GetMobileProperty<int>( obj, nameof( Mobile.Hits ) );
         }
 
+        [CommandsDisplay( Category = "Entity", Description = "Returns the strength of the player",
+            InsertText = "if Str() < 100:" )]
+        public static int Str()
+        {
+            return GetMobileProperty<int>( "self", nameof( PlayerMobile.Strength ) );
+        }
+
+        [CommandsDisplay( Category = "Entity", Description = "Returns the dexterity of the player",
+            InsertText = "if Str() < 100:" )]
+        public static int Dex()
+        {
+            return GetMobileProperty<int>( "self", nameof( PlayerMobile.Dex ) );
+        }
+
+        [CommandsDisplay( Category = "Entity", Description = "Returns the intelligence of the player",
+            InsertText = "if Str() < 100:" )]
+        public static int Int()
+        {
+            return GetMobileProperty<int>( "self", nameof( PlayerMobile.Int ) );
+        }
+
         [CommandsDisplay( Category = "Entity",
             Description =
                 "Returns the given mobiles max hitpoints, if parameter is null, then returns the value from the player (parameter can be serial or alias).",

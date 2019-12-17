@@ -67,7 +67,8 @@ namespace ClassicAssist.UI.ViewModels
                 ["AlwaysOnTop"] = Options.CurrentOptions.AlwaysOnTop,
                 ["LightLevel"] = Options.CurrentOptions.LightLevel,
                 ["ActionDelay"] = Options.CurrentOptions.ActionDelay,
-                ["ActionDelayMS"] = Options.CurrentOptions.ActionDelayMS
+                ["ActionDelayMS"] = Options.CurrentOptions.ActionDelayMS,
+                ["UpdateGumpVersion"] = Options.CurrentOptions.UpdateGumpVersion?.ToString() ?? "0.0.0.0"
             };
 
             json?.Add( "General", obj );
@@ -88,6 +89,7 @@ namespace ClassicAssist.UI.ViewModels
             Options.ActionDelay = general["ActionDelay"]?.ToObject<bool>() ?? false;
             Options.ActionDelayMS = general["ActionDelayMS"]?.ToObject<int>() ?? 900;
             Options.AlwaysOnTop = general["AlwaysOnTop"]?.ToObject<bool>() ?? false;
+            Options.UpdateGumpVersion = general["UpdateGumpVersion"]?.ToObject<Version>() ?? new Version();
 
             string[] profiles = Options.GetProfiles();
 

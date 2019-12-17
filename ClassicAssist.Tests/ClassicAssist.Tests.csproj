@@ -27,5 +27,6 @@
     <Reference Include="cuoapi">
       <HintPath>..\ClassicAssist\cuoapi.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
 </Project>

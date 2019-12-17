@@ -134,8 +134,7 @@ namespace ClassicAssist.UI.ViewModels
                         continue;
                     }
 
-                    hke.Hotkey = new ShortcutKeys( token["Keys"]["Modifier"].ToObject<Key>(),
-                        token["Keys"]["Keys"].ToObject<Key>() );
+                    hke.Hotkey = new ShortcutKeys( token["Keys"] );
                     hke.PassToUO = token["PassToUO"].ToObject<bool>();
                 }
             }

@@ -61,8 +61,10 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = "Aliases", Description = "Sets the value of the given alias name.",
             InsertText = "SetAlias(\"mount\", 0x40000001\")" )]
-        public static void SetAlias( string aliasName, int value )
+        public static void SetAlias( string aliasName, object obj )
         {
+            int value = ResolveSerial( obj );
+
             if ( _aliases.ContainsKey( aliasName ) )
             {
                 _aliases[aliasName] = value;

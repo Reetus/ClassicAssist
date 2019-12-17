@@ -130,5 +130,42 @@ namespace ClassicAssist.Data.Hotkeys
 
             return filter;
         }
+
+        public void OnMouseAction( MouseOptions mouse )
+        {
+            foreach ( HotkeyEntry hke in Items )
+            {
+                if ( hke.Children == null )
+                {
+                    continue;
+                }
+
+                foreach ( HotkeySettable hks in hke.Children )
+                {
+                    if ( hks.Hotkey.Mouse != mouse )
+                    {
+                        continue;
+                    }
+
+                    if ( hks.Disableable && !Enabled )
+                    {
+                        continue;
+                    }
+
+                    Key modifier = _modifierKeys.FirstOrDefault( key =>
+                        Engine.Dispatcher.Invoke( () => Keyboard.IsKeyDown( key ) ) );
+
+                    if ( hks.Hotkey.Modifier != modifier )
+                    {
+                        continue;
+                    }
+
+                    Task.Run( () =>
+                        hks.Action.Invoke( hks ) );
+
+                    break;
+                }
+            }
+        }
     }
 }

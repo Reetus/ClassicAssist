@@ -4,6 +4,18 @@ using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.Data.Hotkeys
 {
+    public enum MouseOptions
+    {
+        LeftButton,
+        MiddleButton,
+        RightButton,
+        XButton1,
+        XButton2,
+        MouseWheelUp,
+        MouseWheelDown,
+        None
+    }
+
     public class ShortcutKeys
     {
         public ShortcutKeys()
@@ -16,9 +28,17 @@ namespace ClassicAssist.Data.Hotkeys
             Key = key;
         }
 
-        public static ShortcutKeys Default => new ShortcutKeys( Key.None, Key.None );
+        public ShortcutKeys( JToken token )
+        {
+            Key = token["Keys"]?.ToObject<Key>() ?? Key.None;
+            Modifier = token["Modifier"]?.ToObject<Key>() ?? Key.None;
+            Mouse = token["Mouse"]?.ToObject<MouseOptions>() ?? MouseOptions.None;
+        }
+
+        public static ShortcutKeys Default => new ShortcutKeys( Key.None, Key.None ) { Mouse = MouseOptions.None };
         public Key Key { get; set; } = Key.None;
         public Key Modifier { get; set; } = Key.None;
+        public MouseOptions Mouse { get; set; } = MouseOptions.None;
 
         public Keys[] ToArray()
         {
@@ -35,6 +55,11 @@ namespace ClassicAssist.Data.Hotkeys
 
         public override string ToString()
         {
+            if ( Mouse != MouseOptions.None )
+            {
+                return Modifier != Key.None ? $"{Modifier} + {Mouse}" : Mouse.ToString();
+            }
+
             return Modifier != Key.None ? $"{Modifier} + {Key}" : Key.ToString();
         }
 
@@ -42,7 +67,7 @@ namespace ClassicAssist.Data.Hotkeys
         {
             return obj is ShortcutKeys keys &&
                    Key == keys.Key &&
-                   Modifier == keys.Modifier;
+                   Modifier == keys.Modifier && Mouse == keys.Mouse;
         }
 
         public override int GetHashCode()
@@ -50,12 +75,16 @@ namespace ClassicAssist.Data.Hotkeys
             int hashCode = 572187996;
             hashCode = hashCode * -1521134295 + Key.GetHashCode();
             hashCode = hashCode * -1521134295 + Modifier.GetHashCode();
+            hashCode = hashCode * -1521134295 + Mouse.GetHashCode();
             return hashCode;
         }
 
         public JObject ToJObject()
         {
-            JObject keys = new JObject { { "Keys", (int) Key }, { "Modifier", (int) Modifier } };
+            JObject keys = new JObject
+            {
+                { "Keys", (int) Key }, { "Modifier", (int) Modifier }, { "Mouse", (int) Mouse }
+            };
 
             return keys;
         }

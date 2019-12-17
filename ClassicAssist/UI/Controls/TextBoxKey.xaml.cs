@@ -70,5 +70,30 @@ namespace ClassicAssist.UI.Controls
 
             //ShortcutChanged?.Execute( new ShortcutKeys { Modifier = Modifier, Key = Key } );
         }
+
+        private void UIElement_OnPreviewMouseDown( object sender, MouseButtonEventArgs e )
+        {
+            e.Handled = true;
+
+            if ( ( e.ChangedButton == MouseButton.Left ) | ( e.ChangedButton == MouseButton.Right ) )
+            {
+                return;
+            }
+
+            Modifier = CheckModifiers();
+
+            Shortcut = new ShortcutKeys { Mouse = (MouseOptions) e.ChangedButton };
+        }
+
+        private void UIElement_OnMouseWheel( object sender, MouseWheelEventArgs e )
+        {
+            e.Handled = true;
+
+            Modifier = CheckModifiers();
+
+            Shortcut = e.Delta < 0
+                ? new ShortcutKeys { Mouse = MouseOptions.MouseWheelUp, Modifier = Modifier }
+                : new ShortcutKeys { Mouse = MouseOptions.MouseWheelDown, Modifier = Modifier };
+        }
     }
 }

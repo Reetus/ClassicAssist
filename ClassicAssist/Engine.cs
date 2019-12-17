@@ -64,6 +64,7 @@ namespace Assistant
         private static RequestMove _requestMove;
 
         private static readonly int[] _sequenceList = new int[256];
+        private static OnMouse _onMouse;
 
         public static string ClientPath { get; set; }
         public static Version ClientVersion { get; set; }
@@ -120,6 +121,7 @@ namespace Assistant
             _onPlayerPositionChanged = OnPlayerPositionChanged;
             _onClientClosing = OnClientClosing;
             _onHotkeyPressed = OnHotkeyPressed;
+            _onMouse = OnMouse;
 
             plugin->OnConnected = Marshal.GetFunctionPointerForDelegate( _onConnected );
             plugin->OnDisconnected = Marshal.GetFunctionPointerForDelegate( _onDisconnected );
@@ -128,6 +130,7 @@ namespace Assistant
             plugin->OnPlayerPositionChanged = Marshal.GetFunctionPointerForDelegate( _onPlayerPositionChanged );
             plugin->OnClientClosing = Marshal.GetFunctionPointerForDelegate( _onClientClosing );
             plugin->OnHotkeyPressed = Marshal.GetFunctionPointerForDelegate( _onHotkeyPressed );
+            plugin->OnMouse = Marshal.GetFunctionPointerForDelegate( _onMouse );
 
             _getPacketLength = Marshal.GetDelegateForFunctionPointer<OnGetPacketLength>( plugin->GetPacketLength );
             _getUOFilePath = Marshal.GetDelegateForFunctionPointer<OnGetUOFilePath>( plugin->GetUOFilePath );
@@ -148,6 +151,23 @@ namespace Assistant
             Skills.Initialize( ClientPath );
             Speech.Initialize( ClientPath );
             TileData.Initialize( ClientPath );
+        }
+
+        private static void OnMouse( int button, int wheel )
+        {
+            MouseOptions mouse = MouseOptions.None;
+
+            if ( button > 0 )
+            {
+                mouse = (MouseOptions) ( button + 1 );
+            }
+
+            if ( wheel != 0 )
+            {
+                mouse = wheel < 0 ? MouseOptions.MouseWheelUp : MouseOptions.MouseWheelDown;
+            }
+
+            HotkeyManager.GetInstance().OnMouseAction( mouse );
         }
 
         private static bool OnHotkeyPressed( int key, int mod, bool pressed )

@@ -183,8 +183,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     Name = GetJsonValue( entry, "Name", string.Empty ),
                     UndressContainer = GetJsonValue( entry, "UndressContainer", 0 ),
                     PassToUO = GetJsonValue( entry, "PassToUO", true ),
-                    Hotkey = new ShortcutKeys( GetJsonValue( entry["Keys"], "Modifier", Key.None ),
-                        GetJsonValue( entry["Keys"], "Keys", Key.None ) )
+                    Hotkey = new ShortcutKeys( entry["Keys"] )
                 };
 
                 dae.Action = async hks => await DressAllItems( dae );

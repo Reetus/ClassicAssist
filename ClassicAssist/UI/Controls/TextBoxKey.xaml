@@ -8,6 +8,7 @@
     <Grid>
         <TextBox Text="{Binding Shortcut, ElementName=UserControl, Mode=OneWay}"
                  PreviewKeyDown="TextBox_PreviewKeyDown" IsReadOnly="True" IsReadOnlyCaretVisible="False"
-                 IsUndoEnabled="False" />
+                 IsUndoEnabled="False" PreviewMouseDown="UIElement_OnPreviewMouseDown"
+                 MouseWheel="UIElement_OnMouseWheel" />
     </Grid>
 </UserControl>

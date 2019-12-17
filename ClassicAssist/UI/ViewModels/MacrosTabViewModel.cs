@@ -168,8 +168,7 @@ namespace ClassicAssist.UI.ViewModels
                         DoNotAutoInterrupt = GetJsonValue( token, "DoNotAutoInterrupt", false ),
                         Macro = GetJsonValue( token, "Macro", string.Empty ),
                         PassToUO = GetJsonValue( token, "PassToUO", true ),
-                        Hotkey = new ShortcutKeys( GetJsonValue( token["Keys"], "Modifier", Key.None ),
-                            GetJsonValue( token["Keys"], "Keys", Key.None ) )
+                        Hotkey = new ShortcutKeys( token["Keys"] )
                     };
 
                     entry.Action = hks => Execute( entry );

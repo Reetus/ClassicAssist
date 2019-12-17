@@ -175,8 +175,7 @@ namespace ClassicAssist.UI.ViewModels
 
                         JToken keys = token["Keys"];
 
-                        entry.Hotkey = new ShortcutKeys( keys["Modifier"].ToObject<Key>(),
-                            keys["Keys"].ToObject<Key>() );
+                        entry.Hotkey = new ShortcutKeys( keys );
                         entry.PassToUO = token["PassToUO"]?.ToObject<bool>() ?? true;
                     }
                 }
@@ -223,9 +222,7 @@ namespace ClassicAssist.UI.ViewModels
                         continue;
                     }
 
-                    JToken keys = token["Keys"];
-
-                    entry.Hotkey = new ShortcutKeys( keys["Modifier"].ToObject<Key>(), keys["Keys"].ToObject<Key>() );
+                    entry.Hotkey = new ShortcutKeys( token["Keys"] );
                     entry.PassToUO = token["PassToUO"]?.ToObject<bool>() ?? true;
                 }
             }

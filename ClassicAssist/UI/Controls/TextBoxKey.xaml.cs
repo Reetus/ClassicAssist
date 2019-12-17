@@ -73,12 +73,12 @@ namespace ClassicAssist.UI.Controls
 
         private void UIElement_OnPreviewMouseDown( object sender, MouseButtonEventArgs e )
         {
-            e.Handled = true;
-
             if ( ( e.ChangedButton == MouseButton.Left ) | ( e.ChangedButton == MouseButton.Right ) )
             {
                 return;
             }
+
+            e.Handled = true;
 
             Modifier = CheckModifiers();
 

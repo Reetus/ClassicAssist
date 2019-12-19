@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Assistant;
 using ClassicAssist.Resources;
-using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
@@ -41,28 +40,11 @@ namespace ClassicAssist.Data.Hotkeys.Commands
             }
 
             Engine.SendPacketToServer( new UseObject( bandage.Serial ) );
+            bool result = UOC.WaitForTarget( TIMEOUT );
 
-            PacketWaitEntry we = Engine.PacketWaitEntries.Add( new PacketFilterInfo( 0x6C ), PacketDirection.Incoming );
-
-            try
+            if ( result )
             {
-                bool result = we.Lock.WaitOne( TIMEOUT );
-
-                if ( !result )
-                {
-                    UOC.SystemMessage( Strings.Target_timeout___ );
-                    return;
-                }
-
-                byte[] packet = we.Packet;
-
-                int senderSerial = ( packet[2] << 24 ) | ( packet[3] << 16 ) | ( packet[4] << 8 ) | packet[5];
-
-                Engine.SendPacketToServer( new Target( senderSerial, player, true ) );
-            }
-            finally
-            {
-                Engine.PacketWaitEntries.Remove( we );
+                Engine.SendPacketToServer( new Target( -1, player, true ) );
             }
         }
     }

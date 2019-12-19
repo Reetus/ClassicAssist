@@ -83,6 +83,7 @@ namespace Assistant
         public static TargetFlags TargetFlags { get; set; }
         public static int TargetSerial { get; set; }
         public static TargetType TargetType { get; set; }
+        public static bool WaitingForTarget { get; set; }
         internal static ConcurrentDictionary<int, int> GumpList { get; set; } = new ConcurrentDictionary<int, int>();
 
         internal static event dSendRecvPacket InternalPacketSentEvent;

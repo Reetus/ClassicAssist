@@ -237,5 +237,13 @@ namespace ClassicAssist.Data.Macros.Commands
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+        [CommandsDisplay( Category = "Target",
+            Description = "Returns true whenever the core is internally waiting for a server target",
+            InsertText = "if WaitingForTarget():" )]
+        public static bool WaitingForTarget()
+        {
+            return Engine.WaitingForTarget;
+        }
     }
 }

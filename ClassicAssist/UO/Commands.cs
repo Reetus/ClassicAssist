@@ -108,6 +108,8 @@ namespace ClassicAssist.UO
 
             return await Task.Run( () =>
             {
+                bool wasTargetting = Engine.TargetExists;
+
                 uint value = (uint) random.Next( 1, int.MaxValue );
 
                 //TODO
@@ -153,6 +155,11 @@ namespace ClassicAssist.UO
                 finally
                 {
                     Engine.RemoveSendFilter( pfi );
+
+                    if ( wasTargetting )
+                    {
+                        ResendTargetToClient();
+                    }
                 }
             } );
         }
@@ -402,6 +409,8 @@ namespace ClassicAssist.UO
         {
             PacketFilterInfo pfi = new PacketFilterInfo( 0x6C );
 
+            Engine.WaitingForTarget = true;
+
             PacketWaitEntry we = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming );
 
             try
@@ -427,6 +436,8 @@ namespace ClassicAssist.UO
             finally
             {
                 Engine.PacketWaitEntries.Remove( we );
+
+                Engine.WaitingForTarget = false;
             }
         }
 

@@ -10,7 +10,7 @@ namespace ClassicAssist.Data.Macros.Commands
     public static class JournalCommands
     {
         [CommandsDisplay( Category = "Journal", Description = "Check for a text in journal, optional source name.",
-            InsertText = "if InJounal(\"town guards\", \"system\"):" )]
+            InsertText = "if InJournal(\"town guards\", \"system\"):" )]
         public static bool InJournal( string text, string author = "" )
         {
             bool match;

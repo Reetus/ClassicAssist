@@ -13,7 +13,8 @@ namespace ClassicAssist.Data.Targeting
     {
         Any,
         Humanoid,
-        Transformation
+        Transformation,
+        Both
     }
 
     [Flags]

@@ -292,5 +292,31 @@ namespace ClassicAssist.Tests.MacroCommands
             Engine.Mobiles.Clear();
             Engine.Player = null;
         }
+
+        [TestMethod]
+        public void WillGetEnemyClosestBodyType()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            Mobile any = new Mobile(0x02  ) { ID = 1, X = 1, Y = 1, Notoriety = Notoriety.Murderer};
+            Mobile humanoid = new Mobile(0x03  ) { ID = 400, X = 2, Y = 2, Notoriety = Notoriety.Murderer };
+            Mobile transformation = new Mobile( 0x04 ) { ID = 748, X = 3, Y = 3, Notoriety = Notoriety.Murderer };
+
+            Engine.Mobiles.Add( new[] { any, humanoid, transformation } );
+
+            TargetCommands.GetEnemy( new[] { "Murderer" }, "Any", "Closest" );
+            Assert.AreEqual( any.Serial, AliasCommands.GetAlias( "enemy" ) );
+
+            TargetCommands.GetEnemy( new[] { "Murderer" }, "Humanoid", "Closest" );
+            Assert.AreEqual( humanoid.Serial, AliasCommands.GetAlias( "enemy" ) );
+
+            TargetCommands.GetEnemy( new[] { "Murderer" }, "Transformation", "Closest" );
+            Assert.AreEqual( transformation.Serial, AliasCommands.GetAlias( "enemy" ) );
+
+            TargetCommands.GetEnemy( new[] { "Murderer" }, "Both", "Closest" );
+            Assert.AreEqual( humanoid.Serial, AliasCommands.GetAlias( "enemy" ) );
+
+            Engine.Player = null;
+        }
     }
 }

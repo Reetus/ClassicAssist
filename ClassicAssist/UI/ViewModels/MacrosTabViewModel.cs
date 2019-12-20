@@ -293,7 +293,7 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            if ( _currentMacro != null && _currentMacro.DoNotAutoInterrupt )
+            if ( _currentMacro != null && _currentMacro.DoNotAutoInterrupt && _currentMacro == entry )
             {
                 return;
             }

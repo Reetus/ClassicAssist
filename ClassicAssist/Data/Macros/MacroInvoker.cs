@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -15,13 +17,13 @@ namespace ClassicAssist.Data.Macros
 
         public delegate void dMacroStartStop();
 
-        private readonly ScriptEngine _engine;
+        private static readonly ScriptEngine _engine = Python.CreateEngine();
+        private static Dictionary<string, object> _importCache;
         private readonly MacroEntry _macro;
 
         public MacroInvoker( MacroEntry macro )
         {
             _macro = macro;
-            _engine = Python.CreateEngine();
 
             ScriptRuntime runtime = _engine.Runtime;
             runtime.LoadAssembly( Assembly.GetExecutingAssembly() );
@@ -48,11 +50,30 @@ namespace ClassicAssist.Data.Macros
             return prepend;
         }
 
+        public static Dictionary<string, object> InitializeImports( ScriptEngine engine )
+        {
+            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+
+            ScriptSource importSource =
+                engine.CreateScriptSourceFromString( GetScriptingImports(), SourceCodeKind.Statements );
+
+            CompiledCode importCompiled = importSource.Compile();
+            ScriptScope importScope = engine.CreateScope( dictionary );
+            importCompiled.Execute( importScope );
+
+            return dictionary;
+        }
+
         public void Execute()
         {
-            string code = $"{GetScriptingImports()}\r\n{_macro.Macro}";
+            if ( _importCache == null )
+            {
+                _importCache = InitializeImports( _engine );
+            }
 
-            ScriptSource source = _engine.CreateScriptSourceFromString( code, SourceCodeKind.Statements );
+            ScriptSource source = _engine.CreateScriptSourceFromString( _macro.Macro, SourceCodeKind.Statements );
+
+            Dictionary<string, object> importCache = new Dictionary<string, object>( _importCache );
 
             Thread = new Thread( () =>
             {
@@ -64,7 +85,9 @@ namespace ClassicAssist.Data.Macros
 
                     AliasCommands.SetDefaultAliases();
 
-                    source.Execute();
+                    ScriptScope macroScope = _engine.CreateScope( importCache );
+
+                    source.Execute( macroScope );
                 }
                 catch ( ThreadAbortException )
                 {
@@ -91,11 +114,16 @@ namespace ClassicAssist.Data.Macros
             Thread?.Abort();
         }
 
-        public void ExecuteSync()
+        public void ExecuteSync( bool loop, CancellationToken token )
         {
-            string code = $"{GetScriptingImports()}\r\n{_macro.Macro}";
+            if ( _importCache == null )
+            {
+                _importCache = InitializeImports( _engine );
+            }
 
-            ScriptSource source = _engine.CreateScriptSourceFromString( code, SourceCodeKind.Statements );
+            ScriptSource source = _engine.CreateScriptSourceFromString( _macro.Macro, SourceCodeKind.Statements );
+
+            Dictionary<string, object> importCache = new Dictionary<string, object>( _importCache );
 
             try
             {
@@ -103,7 +131,34 @@ namespace ClassicAssist.Data.Macros
 
                 AliasCommands.SetDefaultAliases();
 
-                source.Execute();
+                ScriptScope macroScope = _engine.CreateScope( importCache );
+
+                Stopwatch sw = new Stopwatch();
+
+                do
+                {
+                    sw.Start();
+
+                    source.Execute( macroScope );
+
+                    if ( token.IsCancellationRequested )
+                    {
+                        break;
+                    }
+
+                    if ( sw.ElapsedMilliseconds < 50 )
+                    {
+                        Thread.Sleep( 50 - (int) sw.ElapsedMilliseconds );
+                    }
+
+                    if ( Options.CurrentOptions.Debug )
+                    {
+                        UO.Commands.SystemMessage( sw.ElapsedMilliseconds.ToString() );
+                    }
+
+                    sw.Reset();
+                }
+                while ( loop && !IsFaulted );
             }
             catch ( ThreadAbortException )
             {

@@ -33,7 +33,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
-            Item bandage = backpack.Container.SelectEntity( i => _bandageTypes.Contains( i.ID ) );
+            Item bandage = backpack.Container?.SelectEntity( i => _bandageTypes.Contains( i.ID ) );
 
             if ( bandage == null )
             {

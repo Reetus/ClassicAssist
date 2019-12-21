@@ -7,7 +7,7 @@ namespace ClassicAssist.Data.Macros
     {
         private bool _doNotAutoInterrupt;
         private bool _loop;
-        private string _macro;
+        private string _macro = string.Empty;
 
         public Action<MacroEntry> ActionSync { get; set; }
 

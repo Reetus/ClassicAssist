@@ -31,7 +31,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
                 return;
             }
 
-            Item bandage = backpack.Container.SelectEntity( i => _bandageTypes.Contains( i.ID ) );
+            Item bandage = backpack.Container?.SelectEntity( i => _bandageTypes.Contains( i.ID ) );
 
             if ( bandage == null )
             {

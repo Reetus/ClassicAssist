@@ -20,6 +20,7 @@ namespace ClassicAssist.Data
         private int _actionDelayMs;
         private bool _alwaysOnTop;
         private char _commandPrefix = '+';
+        private bool _debug;
         private ObservableCollection<FriendEntry> _friends = new ObservableCollection<FriendEntry>();
         private bool _includePartyMembersInFriends;
         private int _lightLevel;
@@ -54,6 +55,12 @@ namespace ClassicAssist.Data
         }
 
         public static Options CurrentOptions { get; set; } = new Options();
+
+        public bool Debug
+        {
+            get => _debug;
+            set => SetProperty( ref _debug, value );
+        }
 
         public ObservableCollection<FriendEntry> Friends
         {

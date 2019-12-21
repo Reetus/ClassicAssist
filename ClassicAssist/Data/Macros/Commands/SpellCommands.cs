@@ -54,7 +54,12 @@ namespace ClassicAssist.Data.Macros.Commands
 
             // Debugging only
             sw.Stop();
-            UOC.SystemMessage( $"Target received in {sw.ElapsedMilliseconds}ms, Spell data timeout: {sd.Timeout}ms" );
+
+            if ( Options.CurrentOptions.Debug )
+            {
+                UOC.SystemMessage(
+                    $"Target received in {sw.ElapsedMilliseconds}ms, Spell data timeout: {sd.Timeout}ms" );
+            }
             //
 
             TargetCommands.Target( serial );

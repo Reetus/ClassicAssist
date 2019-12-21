@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Assistant;
@@ -20,6 +21,7 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class MacrosTabViewModel : HotkeySettableViewModel<MacroEntry>, ISettingProvider
     {
+        private CancellationTokenSource _cancellationToken;
         private int _caretPosition;
         private ICommand _clearHotkeyCommand;
         private MacroEntry _currentMacro;
@@ -197,12 +199,6 @@ namespace ClassicAssist.UI.ViewModels
             _macroInvoker = new MacroInvoker( entry );
             _macroInvoker.StoppedEvent += () =>
             {
-                if ( entry.Loop && !_macroInvoker.IsFaulted && IsRunning )
-                {
-                    ExecuteSync( entry );
-                    return;
-                }
-
                 _currentMacro = null;
                 _dispatcher.Invoke( () => IsRunning = false );
             };
@@ -212,7 +208,9 @@ namespace ClassicAssist.UI.ViewModels
                 Commands.SystemMessage( string.Format( Strings.Macro_error___0_, exception.Message ) );
             };
 
-            _macroInvoker.ExecuteSync();
+            _cancellationToken = new CancellationTokenSource();
+
+            _macroInvoker.ExecuteSync( entry.Loop, _cancellationToken.Token );
         }
 
         private static void ShowActiveObjectsWindow( object obj )
@@ -282,6 +280,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private void Stop( object obj )
         {
+            _cancellationToken?.Cancel();
             _macroInvoker.Stop();
             IsRunning = false;
         }

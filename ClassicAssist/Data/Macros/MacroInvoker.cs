@@ -141,6 +141,8 @@ namespace ClassicAssist.Data.Macros
 
                     source.Execute( macroScope );
 
+                    sw.Stop();
+
                     if ( token.IsCancellationRequested )
                     {
                         break;
@@ -148,7 +150,8 @@ namespace ClassicAssist.Data.Macros
 
                     if ( sw.ElapsedMilliseconds < 50 )
                     {
-                        Thread.Sleep( 50 - (int) sw.ElapsedMilliseconds );
+                        int diff = 50 - (int) sw.ElapsedMilliseconds;
+                        Thread.Sleep( diff > 0 ? diff : 1 );
                     }
 
                     if ( Options.CurrentOptions.Debug )

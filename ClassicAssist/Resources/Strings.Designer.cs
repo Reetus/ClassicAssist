@@ -79,6 +79,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ability already set....
+        /// </summary>
+        public static string Ability_already_set___ {
+            get {
+                return ResourceManager.GetString("Ability already set...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ability not set....
+        /// </summary>
+        public static string Ability_not_set___ {
+            get {
+                return ResourceManager.GetString("Ability not set...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About.
         /// </summary>
         public static string About {
@@ -417,6 +435,15 @@ namespace ClassicAssist.Resources {
         public static string Counters {
             get {
                 return ResourceManager.GetString("Counters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Ability Cleared.
+        /// </summary>
+        public static string Current_Ability_Cleared {
+            get {
+                return ResourceManager.GetString("Current Ability Cleared", resourceCulture);
             }
         }
         
@@ -1501,6 +1528,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set Primary Ability.
+        /// </summary>
+        public static string Set_Primary_Ability {
+            get {
+                return ResourceManager.GetString("Set Primary Ability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Secondary Ability.
+        /// </summary>
+        public static string Set_Secondary_Ability {
+            get {
+                return ResourceManager.GetString("Set Secondary Ability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set Undress Container.
         /// </summary>
         public static string Set_Undress_Container {
@@ -1515,6 +1560,15 @@ namespace ClassicAssist.Resources {
         public static string Set_Up {
             get {
                 return ResourceManager.GetString("Set Up", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setting ability &quot;{0}&quot;....
+        /// </summary>
+        public static string Setting_ability___0_____ {
+            get {
+                return ResourceManager.GetString("Setting ability \"{0}\"...", resourceCulture);
             }
         }
         
@@ -1771,6 +1825,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toggle Primary Ability.
+        /// </summary>
+        public static string Toggle_Primary_Ability {
+            get {
+                return ResourceManager.GetString("Toggle Primary Ability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle Secondary Ability.
+        /// </summary>
+        public static string Toggle_Secondary_Ability {
+            get {
+                return ResourceManager.GetString("Toggle Secondary Ability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Topmost.
         /// </summary>
         public static string Topmost {
@@ -1848,6 +1920,24 @@ namespace ClassicAssist.Resources {
         public static string Unknown_timer___ {
             get {
                 return ResourceManager.GetString("Unknown timer...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unset Primary Ability.
+        /// </summary>
+        public static string Unset_Primary_Ability {
+            get {
+                return ResourceManager.GetString("Unset Primary Ability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unset Secondary Ability.
+        /// </summary>
+        public static string Unset_Secondary_Ability {
+            get {
+                return ResourceManager.GetString("Unset Secondary Ability", resourceCulture);
             }
         }
         

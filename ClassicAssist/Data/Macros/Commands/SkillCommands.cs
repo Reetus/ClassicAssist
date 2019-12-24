@@ -58,7 +58,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             SkillEntry s = manager.Items.FirstOrDefault( se => se.Skill.Name.ToLower().Contains( name.ToLower() ) );
 
-            return s?.Base ?? 0;
+            return s?.Value ?? 0;
         }
 
         [CommandsDisplay( Category = "Skills",

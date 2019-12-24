@@ -120,6 +120,12 @@
   <data name="Abilities" xml:space="preserve">
     <value>Abilities</value>
   </data>
+  <data name="Ability already set..." xml:space="preserve">
+    <value>Ability already set...</value>
+  </data>
+  <data name="Ability not set..." xml:space="preserve">
+    <value>Ability not set...</value>
+  </data>
   <data name="About" xml:space="preserve">
     <value>About</value>
   </data>
@@ -233,6 +239,9 @@
   </data>
   <data name="Counters" xml:space="preserve">
     <value>Counters</value>
+  </data>
+  <data name="Current Ability Cleared" xml:space="preserve">
+    <value>Current Ability Cleared</value>
   </data>
   <data name="Current Location:" xml:space="preserve">
     <value>Current Location:</value>
@@ -594,11 +603,20 @@
   <data name="Set Locked" xml:space="preserve">
     <value>Set Locked</value>
   </data>
+  <data name="Set Primary Ability" xml:space="preserve">
+    <value>Set Primary Ability</value>
+  </data>
+  <data name="Set Secondary Ability" xml:space="preserve">
+    <value>Set Secondary Ability</value>
+  </data>
   <data name="Set Undress Container" xml:space="preserve">
     <value>Set Undress Container</value>
   </data>
   <data name="Set Up" xml:space="preserve">
     <value>Set Up</value>
+  </data>
+  <data name="Setting ability &quot;{0}&quot;..." xml:space="preserve">
+    <value>Setting ability "{0}"...</value>
   </data>
   <data name="Show World Items" xml:space="preserve">
     <value>Show World Items</value>
@@ -684,6 +702,12 @@
   <data name="Toggle item properties" xml:space="preserve">
     <value>Toggle item properties</value>
   </data>
+  <data name="Toggle Primary Ability" xml:space="preserve">
+    <value>Toggle Primary Ability</value>
+  </data>
+  <data name="Toggle Secondary Ability" xml:space="preserve">
+    <value>Toggle Secondary Ability</value>
+  </data>
   <data name="Topmost" xml:space="preserve">
     <value>Topmost</value>
   </data>
@@ -710,6 +734,12 @@
   </data>
   <data name="Unknown timer..." xml:space="preserve">
     <value>Unknown timer...</value>
+  </data>
+  <data name="Unset Primary Ability" xml:space="preserve">
+    <value>Unset Primary Ability</value>
+  </data>
+  <data name="Unset Secondary Ability" xml:space="preserve">
+    <value>Unset Secondary Ability</value>
   </data>
   <data name="UO_LOCALE" xml:space="preserve">
     <value>ENU\0</value>

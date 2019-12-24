@@ -1,32 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Assistant;
+﻿using Assistant;
+using ClassicAssist.Data.Abilities;
 using ClassicAssist.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
-using Newtonsoft.Json;
 using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.Data.Macros.Commands
 {
     public static class AbilitiesCommands
     {
-        private static List<WeaponData> _weaponData;
-
         [CommandsDisplay( Category = "Abilities", Description = "Clear weapon ability.",
             InsertText = "ClearAbility()" )]
         public static void ClearAbility()
         {
-            UOC.ClearWeaponAbility();
+            AbilitiesManager manager = AbilitiesManager.GetInstance();
+
+            if ( manager.IsPrimaryEnabled )
+            {
+                manager.SetAbility( AbilityType.Primary );
+            }
+            else if ( manager.IsSecondaryEnabled )
+            {
+                manager.SetAbility( AbilityType.Secondary );
+            }
         }
 
         [CommandsDisplay( Category = "Abilities",
             Description = "Set weapon ability, parameter \"primary\" / \"secondary\".",
             InsertText = "SetAbility(\"primary\")" )]
-        public static void SetAbility( string ability )
+        public static void SetAbility( string ability, string onOff = "toggle" )
         {
+            AbilitiesManager manager = AbilitiesManager.GetInstance();
+
             // TODO stun/disarm old
             bool primary;
 
@@ -40,52 +45,37 @@ namespace ClassicAssist.Data.Macros.Commands
                     break;
             }
 
-            if ( _weaponData == null )
+            string onOffNormalized = onOff.Trim().ToLower();
+
+            if ( onOffNormalized != "toggle" )
             {
-                LoadWeaponData( Engine.StartupPath );
-            }
-
-            if ( Engine.Player == null )
-            {
-                return;
-            }
-
-            int twoHandSerial = Engine.Player.GetLayer( Layer.TwoHanded );
-
-            Item twoHandItem = Engine.Items.GetItem( twoHandSerial );
-
-            if ( twoHandItem != null )
-            {
-                WeaponData wd =
-                    ( _weaponData ?? throw new InvalidOperationException() ).FirstOrDefault( d =>
-                        d.Graphic == twoHandItem.ID && d.Twohanded );
-
-                if ( wd != null )
+                switch ( onOffNormalized )
                 {
-                    UOC.SetWeaponAbility( primary ? wd.Primary : wd.Secondary );
-                    return;
+                    case "on":
+                    {
+                        if ( primary && manager.IsPrimaryEnabled || !primary && manager.IsSecondaryEnabled )
+                        {
+                            UOC.SystemMessage( Strings.Ability_already_set___ );
+                            return;
+                        }
+
+                        break;
+                    }
+                    case "off":
+                    {
+                        if ( primary && !manager.IsPrimaryEnabled || !primary && !manager.IsSecondaryEnabled )
+                        {
+                            UOC.SystemMessage( Strings.Ability_not_set___ );
+                            return;
+                        }
+
+                        break;
+                    }
                 }
             }
 
-            int oneHandSerial = Engine.Player.GetLayer( Layer.OneHanded );
-
-            Item oneHandItem = Engine.Items.GetItem( oneHandSerial );
-
-            if ( oneHandItem != null )
-            {
-                WeaponData wd =
-                    ( _weaponData ?? throw new InvalidOperationException() ).FirstOrDefault( d =>
-                        d.Graphic == oneHandItem.ID && !d.Twohanded );
-
-                if ( wd != null )
-                {
-                    UOC.SetWeaponAbility( primary ? wd.Primary : wd.Secondary );
-                    return;
-                }
-            }
-
-            // Fists etc
-            UOC.SetWeaponAbility( primary ? 11 : 5 );
+            UOC.SystemMessage( string.Format( Strings.Setting_ability___0_____, ability ) );
+            manager.SetAbility( primary ? AbilityType.Primary : AbilityType.Secondary );
         }
 
         [CommandsDisplay( Category = "Abilities", Description = "(Garoyle) Start flying if not already flying.",
@@ -144,24 +134,6 @@ namespace ClassicAssist.Data.Macros.Commands
             {
                 UOC.ToggleGargoyleFlying();
             }
-        }
-
-        private static void LoadWeaponData( string basePath )
-        {
-            string dataPath = Path.Combine( basePath, "Data" );
-
-            _weaponData = JsonConvert
-                .DeserializeObject<WeaponData[]>( File.ReadAllText( Path.Combine( dataPath, "Weapons.json" ) ) )
-                .ToList();
-        }
-
-        internal class WeaponData
-        {
-            public int Graphic { get; set; }
-            public string Name { get; set; }
-            public int Primary { get; set; }
-            public int Secondary { get; set; }
-            public bool Twohanded { get; set; }
         }
     }
 }

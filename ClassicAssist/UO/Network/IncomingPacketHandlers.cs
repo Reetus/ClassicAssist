@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using Assistant;
 using ClassicAssist.Data;
+using ClassicAssist.Data.Abilities;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Skills;
+using ClassicAssist.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
 using ClassicAssist.UO.Objects.Gumps;
@@ -84,7 +86,14 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x04, 0, OnCloseGump );
             RegisterExtended( 0x06, 0, OnPartyCommand );
             RegisterExtended( 0x08, 0, OnMapChange );
+            RegisterExtended( 0x21, 0, OnClearWeaponAbility );
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
+        }
+
+        private static void OnClearWeaponAbility( PacketReader reader )
+        {
+            AbilitiesManager.GetInstance().Enabled = AbilityType.None;
+            Commands.SystemMessage( Strings.Current_Ability_Cleared );
         }
 
         public static event dToggleSpecialMove ToggleSpecialMoveEvent;

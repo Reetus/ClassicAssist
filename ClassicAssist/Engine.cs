@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
 using ClassicAssist.Data;
+using ClassicAssist.Data.Abilities;
 using ClassicAssist.Data.Commands;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Misc;
@@ -356,6 +357,8 @@ namespace Assistant
                     // Squash all
                 }
             } );
+
+            AbilitiesManager.GetInstance().Enabled = AbilityType.None;
         }
 
         public static void SendPacketToServer( byte[] packet, int length )

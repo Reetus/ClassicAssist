@@ -92,8 +92,14 @@ namespace ClassicAssist.UO.Network
 
         private static void OnClearWeaponAbility( PacketReader reader )
         {
-            AbilitiesManager.GetInstance().Enabled = AbilityType.None;
-            Commands.SystemMessage( Strings.Current_Ability_Cleared );
+            AbilitiesManager manager = AbilitiesManager.GetInstance();
+
+            if ( manager.Enabled != AbilityType.None )
+            {
+                Commands.SystemMessage( Strings.Current_Ability_Cleared );
+            }
+
+            manager.Enabled = AbilityType.None;
         }
 
         public static event dToggleSpecialMove ToggleSpecialMoveEvent;

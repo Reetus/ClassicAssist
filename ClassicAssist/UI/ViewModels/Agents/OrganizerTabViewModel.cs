@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data;
+using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Organizer;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
@@ -87,6 +88,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 SetJsonValue( entryObj, "Stack", organizerEntry.Stack );
                 SetJsonValue( entryObj, "SourceContainer", organizerEntry.SourceContainer );
                 SetJsonValue( entryObj, "DestinationContainer", organizerEntry.DestinationContainer );
+                SetJsonValue( entryObj, "Keys", organizerEntry.Hotkey.ToJObject() );
 
                 JArray itemsArray = new JArray();
 
@@ -123,7 +125,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     Name = GetJsonValue( token, "Name", "Organizer" ),
                     Stack = GetJsonValue( token, "Stack", true ),
                     SourceContainer = GetJsonValue( token, "SourceContainer", 0 ),
-                    DestinationContainer = GetJsonValue( token, "DestinationContainer", 0 )
+                    DestinationContainer = GetJsonValue( token, "DestinationContainer", 0 ),
+                    Hotkey = new ShortcutKeys( token["Keys"] )
                 };
 
                 entry.Action = hks => Task.Run( async () => await Organize( entry ) );

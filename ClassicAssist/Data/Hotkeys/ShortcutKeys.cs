@@ -30,6 +30,11 @@ namespace ClassicAssist.Data.Hotkeys
 
         public ShortcutKeys( JToken token )
         {
+            if ( token == null )
+            {
+                return;
+            }
+
             Key = token["Keys"]?.ToObject<Key>() ?? Key.None;
             Modifier = token["Modifier"]?.ToObject<Key>() ?? Key.None;
             Mouse = token["Mouse"]?.ToObject<MouseOptions>() ?? MouseOptions.None;

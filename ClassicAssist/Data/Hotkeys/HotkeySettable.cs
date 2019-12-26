@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Xml.Serialization;
 using ClassicAssist.Annotations;
@@ -13,14 +12,10 @@ namespace ClassicAssist.Data.Hotkeys
     {
         public delegate void HotkeyChangedEventHandler( object sender, HotkeyChangedEventArgs e );
 
-        private ShortcutKeys _hotkey = new ShortcutKeys { Modifier = Key.None, Key = Key.None };
+        private ShortcutKeys _hotkey = new ShortcutKeys();
+
         private string _name;
         private bool _passToUo = true;
-
-        public HotkeySettable()
-        {
-            HotkeyChanged += OnHotkeyChanged;
-        }
 
         public Action<HotkeySettable> Action { get; set; }
         public virtual bool Disableable { get; set; } = true;
@@ -30,6 +25,12 @@ namespace ClassicAssist.Data.Hotkeys
             get => _hotkey;
             set
             {
+                if ( !Equals( value, ShortcutKeys.Default ) )
+                {
+                    HotkeyManager manager = HotkeyManager.GetInstance();
+                    manager.ClearPreviousHotkey( value );
+                }
+
                 SetProperty( ref _hotkey, value );
                 HotkeyChanged?.Invoke( this, new HotkeyChangedEventArgs( _hotkey, value ) );
             }
@@ -54,10 +55,6 @@ namespace ClassicAssist.Data.Hotkeys
         }
 
         public event HotkeyChangedEventHandler HotkeyChanged;
-
-        protected virtual void OnHotkeyChanged( object sender, HotkeyChangedEventArgs e )
-        {
-        }
 
         #region INotifyPropertyChanged
 

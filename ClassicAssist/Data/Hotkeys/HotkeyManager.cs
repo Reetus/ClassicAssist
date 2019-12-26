@@ -43,6 +43,25 @@ namespace ClassicAssist.Data.Hotkeys
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public void ClearPreviousHotkey( ShortcutKeys keys )
+        {
+            foreach ( HotkeyEntry hotkeyEntry in Items )
+            {
+                if ( hotkeyEntry.Children == null )
+                {
+                    continue;
+                }
+
+                foreach ( HotkeySettable hotkeyEntryChild in hotkeyEntry.Children )
+                {
+                    if ( Equals( hotkeyEntryChild.Hotkey, keys ) )
+                    {
+                        hotkeyEntryChild.Hotkey = ShortcutKeys.Default;
+                    }
+                }
+            }
+        }
+
         public static HotkeyManager GetInstance()
         {
             // ReSharper disable once InvertIf

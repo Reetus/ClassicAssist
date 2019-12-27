@@ -528,6 +528,9 @@
   <data name="Public Properties" xml:space="preserve">
     <value>Public Properties</value>
   </data>
+  <data name="Range check last target" xml:space="preserve">
+    <value>Range check last target</value>
+  </data>
   <data name="Ready..." xml:space="preserve">
     <value>Ready...</value>
   </data>
@@ -681,6 +684,9 @@
   <data name="Target object..." xml:space="preserve">
     <value>Target object...</value>
   </data>
+  <data name="Target out of range, try again..." xml:space="preserve">
+    <value>Target out of range, try again...</value>
+  </data>
   <data name="Target timeout..." xml:space="preserve">
     <value>Target timeout...</value>
   </data>
@@ -746,6 +752,9 @@
   </data>
   <data name="Use death screen whilst hidden" xml:space="preserve">
     <value>Use death screen whilst hidden (Chuckles Mode)</value>
+  </data>
+  <data name="Use experimental fizzle detection" xml:space="preserve">
+    <value>Use experimental fizzle detection</value>
   </data>
   <data name="Use item" xml:space="preserve">
     <value>Use item</value>

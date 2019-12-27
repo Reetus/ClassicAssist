@@ -1303,6 +1303,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Range check last target.
+        /// </summary>
+        public static string Range_check_last_target {
+            get {
+                return ResourceManager.GetString("Range check last target", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ready....
         /// </summary>
         public static string Ready___ {
@@ -1762,6 +1771,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Target out of range, try again....
+        /// </summary>
+        public static string Target_out_of_range__try_again___ {
+            get {
+                return ResourceManager.GetString("Target out of range, try again...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Target timeout....
         /// </summary>
         public static string Target_timeout___ {
@@ -1956,6 +1974,15 @@ namespace ClassicAssist.Resources {
         public static string Use_death_screen_whilst_hidden {
             get {
                 return ResourceManager.GetString("Use death screen whilst hidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use experimental fizzle detection.
+        /// </summary>
+        public static string Use_experimental_fizzle_detection {
+            get {
+                return ResourceManager.GetString("Use experimental fizzle detection", resourceCulture);
             }
         }
         

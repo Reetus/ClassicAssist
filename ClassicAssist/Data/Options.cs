@@ -28,7 +28,10 @@ namespace ClassicAssist.Data
         private bool _persistUseOnce;
         private bool _preventAttackingFriendsInWarMode;
         private bool _preventTargetingFriendsWithHarmful;
+        private bool _rangeCheckLastTarget;
+        private int _rangeCheckLastTargetAmount = 11;
         private bool _useDeathScreenWhilstHidden;
+        private bool _useExperimentalFizzleDetection;
 
         public bool ActionDelay
         {
@@ -104,12 +107,30 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _preventTargetingFriendsWithHarmful, value );
         }
 
+        public bool RangeCheckLastTarget
+        {
+            get => _rangeCheckLastTarget;
+            set => SetProperty( ref _rangeCheckLastTarget, value );
+        }
+
+        public int RangeCheckLastTargetAmount
+        {
+            get => _rangeCheckLastTargetAmount;
+            set => SetProperty( ref _rangeCheckLastTargetAmount, value );
+        }
+
         public Version UpdateGumpVersion { get; set; }
 
         public bool UseDeathScreenWhilstHidden
         {
             get => _useDeathScreenWhilstHidden;
             set => SetProperty( ref _useDeathScreenWhilstHidden, value );
+        }
+
+        public bool UseExperimentalFizzleDetection
+        {
+            get => _useExperimentalFizzleDetection;
+            set => SetProperty(ref _useExperimentalFizzleDetection, value);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

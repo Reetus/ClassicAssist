@@ -7,6 +7,7 @@
     xmlns:resources="clr-namespace:ClassicAssist.Resources"
     xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
     xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+    xmlns:misc="clr-namespace:ClassicAssist.Misc"
     x:Class="ClassicAssist.UI.Views.OptionsTabControl"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="500">
@@ -24,6 +25,9 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
+            <StackPanel.Resources>
+                <misc:BindingProxy x:Key="proxy" Data="{Binding}" />
+            </StackPanel.Resources>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <TextBlock Text="{x:Static resources:Strings.Command_Prefix_}" />
                 <ComboBox Text="{Binding Options.CommandPrefix}" Margin="10,0,0,0" Padding="10,2,10,2">
@@ -35,6 +39,20 @@
                       IsChecked="{Binding Options.PersistUseOnce, Mode=TwoWay}" />
             <CheckBox Content="{x:Static resources:Strings.Use_death_screen_whilst_hidden}"
                       IsChecked="{Binding Options.UseDeathScreenWhilstHidden}" />
+            <CheckBox IsChecked="{Binding Options.RangeCheckLastTarget}" DataContext="{Binding}">
+                <CheckBox.ContentTemplate>
+                    <ItemContainerTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{x:Static resources:Strings.Range_check_last_target}" Margin="0"
+                                   Padding="5,0,0,0" />
+                            <TextBox Width="40" Margin="10,0,10,0"
+                                     Text="{Binding Path=Data.Options.RangeCheckLastTargetAmount, Source={StaticResource proxy}}" />
+                        </StackPanel>
+                    </ItemContainerTemplate>
+                </CheckBox.ContentTemplate>
+            </CheckBox>
+            <CheckBox Content="{x:Static resources:Strings.Use_experimental_fizzle_detection}"
+                      IsChecked="{Binding Options.UseExperimentalFizzleDetection}" />
         </StackPanel>
     </Grid>
 </UserControl>

@@ -405,6 +405,59 @@ namespace ClassicAssist.UO
             }
         }
 
+        public static bool WaitForTargetOrFizzle( int timeout )
+        {
+            PacketFilterInfo targetPfi = new PacketFilterInfo( 0x6C );
+            PacketFilterInfo fizzPfi = new PacketFilterInfo( 0xC0,
+                new[]
+                {
+                    PacketFilterConditions.IntAtPositionCondition( Engine.Player.Serial, 2 ),
+                    PacketFilterConditions.ShortAtPositionCondition( 0x3735, 10 )
+                } );
+
+            Engine.WaitingForTarget = true;
+
+            PacketWaitEntry targetWe = Engine.PacketWaitEntries.Add( targetPfi, PacketDirection.Incoming );
+            PacketWaitEntry fizzWe = Engine.PacketWaitEntries.Add( fizzPfi, PacketDirection.Incoming );
+
+            try
+            {
+                Task<bool> targetTask = Task.Run( () =>
+                {
+                    do
+                    {
+                        bool result = targetWe.Lock.WaitOne( timeout );
+
+                        if ( !result )
+                        {
+                            return false;
+                        }
+
+                        if ( targetWe.Packet[6] == 0x03 )
+                        {
+                            continue;
+                        }
+
+                        return true;
+                    }
+                    while ( true );
+                } );
+
+                Task fizzTask = Task.Run( () => fizzWe.Lock.WaitOne( timeout ) );
+
+                int index = Task.WaitAny( targetTask, fizzTask );
+
+                return index == 0 && targetTask.Result;
+            }
+            finally
+            {
+                Engine.PacketWaitEntries.Remove( targetWe );
+                Engine.PacketWaitEntries.Remove( fizzWe );
+
+                Engine.WaitingForTarget = false;
+            }
+        }
+
         public static bool WaitForTarget( int timeout )
         {
             PacketFilterInfo pfi = new PacketFilterInfo( 0x6C );

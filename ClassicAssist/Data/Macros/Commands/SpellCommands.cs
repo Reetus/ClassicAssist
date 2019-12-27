@@ -44,7 +44,11 @@ namespace ClassicAssist.Data.Macros.Commands
 
             _manager.CastSpell( sd.ID );
 
-            bool result = TargetCommands.WaitForTarget( sd.Timeout + 500 );
+            bool result = false;
+
+            result = Options.CurrentOptions.UseExperimentalFizzleDetection
+                ? UOC.WaitForTargetOrFizzle( sd.Timeout + 1000 )
+                : TargetCommands.WaitForTarget( sd.Timeout + 500 );
 
             if ( !result )
             {

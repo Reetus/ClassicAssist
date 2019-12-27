@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assistant;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Resources;
+using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
@@ -39,13 +40,28 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = "Target",
             Description = "Targets the given object (parameter can be serial or alias).",
             InsertText = "Target(\"self\")" )]
-        public static void Target( object obj )
+        public static void Target( object obj, bool checkRange = false )
         {
             int serial = AliasCommands.ResolveSerial( obj );
 
             if ( serial == 0 )
             {
                 return;
+            }
+
+            if ( checkRange && UOMath.IsMobile( serial ) )
+            {
+                Mobile mobile = Engine.Mobiles.GetMobile( serial );
+
+                if ( mobile != null )
+                {
+                    if ( mobile.Distance > Options.CurrentOptions.RangeCheckLastTargetAmount )
+                    {
+                        UOC.SystemMessage( Strings.Target_out_of_range__try_again___ );
+                        UOC.ResendTargetToClient();
+                        return;
+                    }
+                }
             }
 
             Engine.SendPacketToServer( new Target( TargetType.Object, -1, TargetFlags.None, serial, -1, -1, -1, 0,

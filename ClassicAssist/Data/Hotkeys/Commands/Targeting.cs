@@ -76,7 +76,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
         {
             public override void Execute()
             {
-                TargetCommands.Target( "enemy" );
+                TargetCommands.Target( "enemy", Options.CurrentOptions.RangeCheckLastTarget );
             }
         }
 
@@ -85,7 +85,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
         {
             public override void Execute()
             {
-                TargetCommands.Target( "last" );
+                TargetCommands.Target( "last", Options.CurrentOptions.RangeCheckLastTarget );
             }
         }
 
@@ -94,7 +94,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
         {
             public override void Execute()
             {
-                TargetCommands.Target( "friend" );
+                TargetCommands.Target( "friend", Options.CurrentOptions.RangeCheckLastTarget );
             }
         }
     }

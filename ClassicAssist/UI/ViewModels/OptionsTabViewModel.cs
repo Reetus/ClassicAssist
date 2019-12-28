@@ -39,6 +39,8 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "RangeCheckLastTarget", Options.RangeCheckLastTarget );
             options.Add( "RangeCheckLastTargetAmount", Options.RangeCheckLastTargetAmount );
             options.Add( "UseExperimentalFizzleDetection", Options.UseExperimentalFizzleDetection );
+            options.Add( "UseObjectQueue", Options.UseObjectQueue );
+            options.Add( "UseObjectQueueAmount", Options.UseObjectQueueAmount );
 
             json?.Add( "Options", options );
         }
@@ -66,8 +68,12 @@ namespace ClassicAssist.UI.ViewModels
             Options.CommandPrefix = config?["CommandPrefix"]?.ToObject<char>() ?? '=';
             Options.RangeCheckLastTarget = config?["RangeCheckLastTarget"]?.ToObject<bool>() ?? false;
             Options.RangeCheckLastTargetAmount = config?["RangeCheckLastTargetAmount"]?.ToObject<int>() ?? 11;
+
             Options.UseExperimentalFizzleDetection =
                 config?["UseExperimentalFizzleDetection"]?.ToObject<bool>() ?? false;
+
+            Options.UseObjectQueue = config?["UseObjectQueue"]?.ToObject<bool>() ?? false;
+            Options.UseObjectQueueAmount = config?["UseObjectQueueAmount"]?.ToObject<int>() ?? 5;
         }
     }
 }

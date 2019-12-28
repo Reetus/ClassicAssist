@@ -204,6 +204,9 @@
   <data name="Clear All Objects" xml:space="preserve">
     <value>Clear All Objects</value>
   </data>
+  <data name="Clear Object Queue" xml:space="preserve">
+    <value>Clear Object Queue</value>
+  </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -374,6 +377,9 @@
   </data>
   <data name="Item properties null or not loaded..." xml:space="preserve">
     <value>Item properties null or not loaded...</value>
+  </data>
+  <data name="items" xml:space="preserve">
+    <value>items</value>
   </data>
   <data name="Items:" xml:space="preserve">
     <value>Items:</value>
@@ -764,6 +770,9 @@
   </data>
   <data name="Use Left Hand" xml:space="preserve">
     <value>Use Left Hand</value>
+  </data>
+  <data name="Use object queue" xml:space="preserve">
+    <value>Use object queue</value>
   </data>
   <data name="Use Right Hand" xml:space="preserve">
     <value>Use Right Hand</value>

@@ -21,6 +21,7 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( serial == 0 )
             {
                 UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+
                 return;
             }
 
@@ -40,17 +41,25 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = "Actions",
             Description = "Sends use (doubleclick) request for given object (parameter can be serial or alias).",
             InsertText = "UseObject(\"mount\")" )]
-        public static void UseObject( object obj )
+        public static void UseObject( object obj, bool skipQueue = false )
         {
             int serial = AliasCommands.ResolveSerial( obj );
 
             if ( serial == 0 )
             {
                 UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+
                 return;
             }
 
-            Engine.SendPacketToServer( new UseObject( serial ) );
+            if ( !Options.CurrentOptions.UseObjectQueue || skipQueue )
+            {
+                Engine.SendPacketToServer( new UseObject( serial ) );
+            }
+            else if ( Engine.UseObjectQueue.Count < Options.CurrentOptions.UseObjectQueueAmount )
+            {
+                Engine.UseObjectQueue.Enqueue( serial );
+            }
         }
 
         [CommandsDisplay( Category = "Actions",
@@ -64,6 +73,7 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( serial <= 0 )
             {
                 UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+
                 return;
             }
 
@@ -77,6 +87,7 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( !Engine.Items.GetItem( containerSerial, out Item containerItem ) )
             {
                 UOC.SystemMessage( Strings.Cannot_find_container___ );
+
                 return;
             }
 
@@ -87,6 +98,7 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( useItem == null )
             {
                 UOC.SystemMessage( Strings.Cannot_find_item___ );
+
                 return;
             }
 
@@ -109,6 +121,7 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( countainerItem?.Container == null )
             {
                 UOC.SystemMessage( Strings.Invalid_container___ );
+
                 return 0;
             }
 
@@ -203,6 +216,7 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( serial == 0 )
             {
                 UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+
                 return false;
             }
 

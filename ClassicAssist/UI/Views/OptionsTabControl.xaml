@@ -53,6 +53,20 @@
             </CheckBox>
             <CheckBox Content="{x:Static resources:Strings.Use_experimental_fizzle_detection}"
                       IsChecked="{Binding Options.UseExperimentalFizzleDetection}" />
+            <CheckBox IsChecked="{Binding Options.UseObjectQueue}" DataContext="{Binding}">
+                <CheckBox.ContentTemplate>
+                    <ItemContainerTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{x:Static resources:Strings.Use_object_queue}" Margin="0"
+                                   Padding="5,0,0,0" />
+                            <TextBox Width="40" Margin="10,0,10,0"
+                                     Text="{Binding Path=Data.Options.UseObjectQueueAmount, Source={StaticResource proxy}}" />
+                            <Label Content="{x:Static resources:Strings.items}" Margin="0"
+                                   Padding="0,0,0,0" />
+                        </StackPanel>
+                    </ItemContainerTemplate>
+                </CheckBox.ContentTemplate>
+            </CheckBox>
         </StackPanel>
     </Grid>
 </UserControl>

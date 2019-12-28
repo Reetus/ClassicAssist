@@ -18,9 +18,18 @@ namespace ClassicAssist.Misc
             _workerThread.Start();
         }
 
+        public int Count => _queue.Count;
+
         public void Dispose()
         {
             StopThread();
+        }
+
+        public void Clear()
+        {
+            while ( _queue.TryDequeue( out T item ) )
+            {
+            }
         }
 
         private void ProcessQueue()

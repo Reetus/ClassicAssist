@@ -331,6 +331,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear Object Queue.
+        /// </summary>
+        public static string Clear_Object_Queue {
+            get {
+                return ResourceManager.GetString("Clear Object Queue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         public static string Close {
@@ -840,6 +849,15 @@ namespace ClassicAssist.Resources {
         public static string Item_properties_null_or_not_loaded___ {
             get {
                 return ResourceManager.GetString("Item properties null or not loaded...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to items.
+        /// </summary>
+        public static string items {
+            get {
+                return ResourceManager.GetString("items", resourceCulture);
             }
         }
         
@@ -2010,6 +2028,15 @@ namespace ClassicAssist.Resources {
         public static string Use_Left_Hand {
             get {
                 return ResourceManager.GetString("Use Left Hand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use object queue.
+        /// </summary>
+        public static string Use_object_queue {
+            get {
+                return ResourceManager.GetString("Use object queue", resourceCulture);
             }
         }
         

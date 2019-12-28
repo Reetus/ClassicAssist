@@ -32,6 +32,8 @@ namespace ClassicAssist.Data
         private int _rangeCheckLastTargetAmount = 11;
         private bool _useDeathScreenWhilstHidden;
         private bool _useExperimentalFizzleDetection;
+        private bool _useObjectQueue;
+        private int _useObjectQueueAmount = 5;
 
         public bool ActionDelay
         {
@@ -130,7 +132,19 @@ namespace ClassicAssist.Data
         public bool UseExperimentalFizzleDetection
         {
             get => _useExperimentalFizzleDetection;
-            set => SetProperty(ref _useExperimentalFizzleDetection, value);
+            set => SetProperty( ref _useExperimentalFizzleDetection, value );
+        }
+
+        public bool UseObjectQueue
+        {
+            get => _useObjectQueue;
+            set => SetProperty( ref _useObjectQueue, value );
+        }
+
+        public int UseObjectQueueAmount
+        {
+            get => _useObjectQueueAmount;
+            set => SetProperty( ref _useObjectQueueAmount, value );
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

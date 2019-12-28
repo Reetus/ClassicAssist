@@ -67,6 +67,8 @@
                     </ItemContainerTemplate>
                 </CheckBox.ContentTemplate>
             </CheckBox>
+            <CheckBox Content="{x:Static resources:Strings.Queue_Last_Target___Target_Self}"
+                      IsChecked="{Binding Options.QueueLastTarget}" />
         </StackPanel>
     </Grid>
 </UserControl>

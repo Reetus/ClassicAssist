@@ -207,6 +207,9 @@
   <data name="Clear Object Queue" xml:space="preserve">
     <value>Clear Object Queue</value>
   </data>
+  <data name="Clear Target Queue" xml:space="preserve">
+    <value>Clear Target Queue</value>
+  </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -390,6 +393,9 @@
   <data name="Last Target" xml:space="preserve">
     <value>Last Target</value>
   </data>
+  <data name="Last Target Queued" xml:space="preserve">
+    <value>Last Target Queued</value>
+  </data>
   <data name="Last Target:" xml:space="preserve">
     <value>Last Target:</value>
   </data>
@@ -533,6 +539,9 @@
   </data>
   <data name="Public Properties" xml:space="preserve">
     <value>Public Properties</value>
+  </data>
+  <data name="Queue Last Target / Target Self" xml:space="preserve">
+    <value>Queue Last Target / Target Self</value>
   </data>
   <data name="Range check last target" xml:space="preserve">
     <value>Range check last target</value>
@@ -692,6 +701,12 @@
   </data>
   <data name="Target out of range, try again..." xml:space="preserve">
     <value>Target out of range, try again...</value>
+  </data>
+  <data name="Target queue cleared..." xml:space="preserve">
+    <value>Target queue cleared...</value>
+  </data>
+  <data name="Target Self" xml:space="preserve">
+    <value>Target Self</value>
   </data>
   <data name="Target timeout..." xml:space="preserve">
     <value>Target timeout...</value>

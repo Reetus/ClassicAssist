@@ -340,6 +340,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear Target Queue.
+        /// </summary>
+        public static string Clear_Target_Queue {
+            get {
+                return ResourceManager.GetString("Clear Target Queue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         public static string Close {
@@ -898,6 +907,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last Target Queued.
+        /// </summary>
+        public static string Last_Target_Queued {
+            get {
+                return ResourceManager.GetString("Last Target Queued", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Latency:.
         /// </summary>
         public static string Latency_ {
@@ -1317,6 +1335,15 @@ namespace ClassicAssist.Resources {
         public static string Public_Properties {
             get {
                 return ResourceManager.GetString("Public Properties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Queue Last Target / Target Self.
+        /// </summary>
+        public static string Queue_Last_Target___Target_Self {
+            get {
+                return ResourceManager.GetString("Queue Last Target / Target Self", resourceCulture);
             }
         }
         
@@ -1794,6 +1821,24 @@ namespace ClassicAssist.Resources {
         public static string Target_out_of_range__try_again___ {
             get {
                 return ResourceManager.GetString("Target out of range, try again...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target queue cleared....
+        /// </summary>
+        public static string Target_queue_cleared___ {
+            get {
+                return ResourceManager.GetString("Target queue cleared...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target Self.
+        /// </summary>
+        public static string Target_Self {
+            get {
+                return ResourceManager.GetString("Target Self", resourceCulture);
             }
         }
         

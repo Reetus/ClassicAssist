@@ -40,7 +40,7 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = "Target",
             Description = "Targets the given object (parameter can be serial or alias).",
             InsertText = "Target(\"self\")" )]
-        public static void Target( object obj, bool checkRange = false )
+        public static void Target( object obj, bool checkRange = false, bool useQueue = false )
         {
             int serial = AliasCommands.ResolveSerial( obj );
 
@@ -64,8 +64,16 @@ namespace ClassicAssist.Data.Macros.Commands
                 }
             }
 
-            Engine.SendPacketToServer( new Target( TargetType.Object, -1, TargetFlags.None, serial, -1, -1, -1, 0,
-                true ) );
+            if ( useQueue && !Engine.TargetExists )
+            {
+                MsgCommands.HeadMsg( Strings.Last_Target_Queued, Engine.Player?.Serial );
+                Engine.LastTargetQueue.Enqueue( serial );
+            }
+            else
+            {
+                Engine.SendPacketToServer( new Target( TargetType.Object, -1, TargetFlags.None, serial, -1, -1, -1, 0,
+                    true ) );
+            }
         }
 
         [CommandsDisplay( Category = "Target",
@@ -260,6 +268,15 @@ namespace ClassicAssist.Data.Macros.Commands
         public static bool WaitingForTarget()
         {
             return Engine.WaitingForTarget;
+        }
+
+        [CommandsDisplay( Category = "Target",
+            Description = "Clears the target queue when queue last target/target self is enabled.",
+            InsertText = "ClearTargetQueue()" )]
+        public static void ClearTargetQueue()
+        {
+            Engine.LastTargetQueue?.Clear();
+            UOC.SystemMessage( Strings.Target_queue_cleared___ );
         }
     }
 }

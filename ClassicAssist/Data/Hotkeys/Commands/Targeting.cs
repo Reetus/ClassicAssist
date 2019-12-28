@@ -76,7 +76,8 @@ namespace ClassicAssist.Data.Hotkeys.Commands
         {
             public override void Execute()
             {
-                TargetCommands.Target( "enemy", Options.CurrentOptions.RangeCheckLastTarget );
+                TargetCommands.Target( "enemy", Options.CurrentOptions.RangeCheckLastTarget,
+                    Options.CurrentOptions.QueueLastTarget );
             }
         }
 
@@ -85,7 +86,8 @@ namespace ClassicAssist.Data.Hotkeys.Commands
         {
             public override void Execute()
             {
-                TargetCommands.Target( "last", Options.CurrentOptions.RangeCheckLastTarget );
+                TargetCommands.Target( "last", Options.CurrentOptions.RangeCheckLastTarget,
+                    Options.CurrentOptions.QueueLastTarget );
             }
         }
 
@@ -94,7 +96,27 @@ namespace ClassicAssist.Data.Hotkeys.Commands
         {
             public override void Execute()
             {
-                TargetCommands.Target( "friend", Options.CurrentOptions.RangeCheckLastTarget );
+                TargetCommands.Target( "friend", Options.CurrentOptions.RangeCheckLastTarget,
+                    Options.CurrentOptions.QueueLastTarget );
+            }
+        }
+
+        [HotkeyCommand( Name = "Target Self", Category = "Targeting" )]
+        public class TargetSelfCommand : HotkeyCommand
+        {
+            public override void Execute()
+            {
+                TargetCommands.Target( "self", Options.CurrentOptions.RangeCheckLastTarget,
+                    Options.CurrentOptions.QueueLastTarget );
+            }
+        }
+
+        [HotkeyCommand( Name = "Clear Target Queue", Category = "Targeting" )]
+        public class ClearTargetQueueCommand : HotkeyCommand
+        {
+            public override void Execute()
+            {
+                TargetCommands.ClearTargetQueue();
             }
         }
     }

@@ -474,6 +474,23 @@ namespace ClassicAssist.UO.Network
             Engine.TargetSerial = tid;
             Engine.TargetFlags = flags;
             Engine.TargetExists = flags != TargetFlags.Cancel;
+
+            if ( !Options.CurrentOptions.QueueLastTarget || (TargetType) type != TargetType.Object ||
+                 Engine.LastTargetQueue.Count == 0 )
+            {
+                return;
+            }
+
+            int serial = Engine.LastTargetQueue.Dequeue();
+
+            if ( serial == 0 )
+            {
+                return;
+            }
+
+            TargetCommands.Target( serial, Options.CurrentOptions.RangeCheckLastTarget );
+
+            Engine.TargetExists = false;
         }
 
         private static void OnMobileStamina( PacketReader reader )

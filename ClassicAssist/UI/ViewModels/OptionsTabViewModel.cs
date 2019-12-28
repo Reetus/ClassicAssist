@@ -41,6 +41,7 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "UseExperimentalFizzleDetection", Options.UseExperimentalFizzleDetection );
             options.Add( "UseObjectQueue", Options.UseObjectQueue );
             options.Add( "UseObjectQueueAmount", Options.UseObjectQueueAmount );
+            options.Add( "QueueLastTarget", Options.QueueLastTarget );
 
             json?.Add( "Options", options );
         }
@@ -74,6 +75,7 @@ namespace ClassicAssist.UI.ViewModels
 
             Options.UseObjectQueue = config?["UseObjectQueue"]?.ToObject<bool>() ?? false;
             Options.UseObjectQueueAmount = config?["UseObjectQueueAmount"]?.ToObject<int>() ?? 5;
+            Options.QueueLastTarget = config?["QueueLastTarget"]?.ToObject<bool>() ?? false;
         }
     }
 }

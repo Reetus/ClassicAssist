@@ -177,6 +177,9 @@
   <data name="Build Date:" xml:space="preserve">
     <value>Build Date:</value>
   </data>
+  <data name="Buy Agent: No matches found." xml:space="preserve">
+    <value>Buy Agent: No matches found.</value>
+  </data>
   <data name="Cancel action" xml:space="preserve">
     <value>Cancel action</value>
   </data>

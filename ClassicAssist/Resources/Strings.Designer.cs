@@ -250,6 +250,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Buy Agent: No matches found..
+        /// </summary>
+        public static string Buy_Agent__No_matches_found_ {
+            get {
+                return ResourceManager.GetString("Buy Agent: No matches found.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel action.
         /// </summary>
         public static string Cancel_action {

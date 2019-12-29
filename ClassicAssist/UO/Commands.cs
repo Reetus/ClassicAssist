@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Skills;
+using ClassicAssist.Data.Vendors;
 using ClassicAssist.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
@@ -689,6 +690,30 @@ namespace ClassicAssist.UO
             pw.Write( (short) 0 );
 
             Engine.SendPacketToClient( pw );
+        }
+
+        public static void VendorBuy( int serial, ShopListEntry[] shopListEntries )
+        {
+            int len = 8 + shopListEntries.Length * 7;
+            PacketWriter pw = new PacketWriter( len );
+            pw.Write( (byte) 0x3B );
+            pw.Write( (short) len ); // length
+            pw.Write( serial );
+            pw.Write( (byte) 2 ); //item list
+
+            foreach ( ShopListEntry entry in shopListEntries )
+            {
+                if ( entry == null )
+                {
+                    continue;
+                }
+
+                pw.Write( (byte) Layer.ShopBuy );
+                pw.Write( entry.Item.Serial );
+                pw.Write( (short) entry.Amount );
+            }
+
+            Engine.SendPacketToServer( pw );
         }
     }
 }

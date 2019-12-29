@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using Assistant;
+using ClassicAssist.Data.Vendors;
 using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.UO.Objects
@@ -48,6 +49,7 @@ namespace ClassicAssist.UO.Objects
         public int ManaMax { get; set; }
         public Item Mount => Engine.Items.GetItem( GetLayer( Layer.Mount ) );
         public Notoriety Notoriety { get; set; }
+        public ShopListEntry[] ShopBuy { get; set; }
         public int Stamina { get; set; }
         public int StaminaMax { get; set; }
 

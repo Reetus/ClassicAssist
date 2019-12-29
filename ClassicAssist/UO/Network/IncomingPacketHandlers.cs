@@ -8,6 +8,7 @@ using ClassicAssist.Data;
 using ClassicAssist.Data.Abilities;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Skills;
+using ClassicAssist.Data.Vendors;
 using ClassicAssist.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
@@ -38,6 +39,8 @@ namespace ClassicAssist.UO.Network
 
         public delegate void dToggleSpecialMove( int spellID, bool enabled );
 
+        public delegate void dVendorDisplay( int serial, ShopListEntry[] entries );
+
         private static PacketHandler[] _handlers;
         private static PacketHandler[] _extendedHandlers;
 
@@ -63,11 +66,13 @@ namespace ClassicAssist.UO.Network
             Register( 0x20, 19, OnMobileUpdated );
             Register( 0x21, 8, OnMoveRejected );
             Register( 0x22, 3, OnMoveAccepted );
+            Register( 0x24, 9, OnContainerDisplay );
             Register( 0x25, 21, OnItemAddedToContainer );
             Register( 0x2E, 15, OnItemEquipped );
             Register( 0x3A, 0, OnSkillsList );
             Register( 0x3C, 0, OnContainerContents );
             Register( 0x6C, 19, OnTarget );
+            Register( 0x74, 0, OnShopList );
             Register( 0x77, 17, OnMobileMoving );
             Register( 0x78, 0, OnMobileIncoming );
             Register( 0x98, 0, OnMobileName );
@@ -90,6 +95,27 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
         }
 
+        public static event dVendorDisplay VendorDisplayEvent;
+
+        private static void OnContainerDisplay( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+            int gumpId = reader.ReadUInt16();
+            int ctype = reader.ReadUInt16();
+
+            if ( ctype != 0 )
+            {
+                return;
+            }
+
+            Mobile entity = Engine.Mobiles.GetMobile( serial );
+
+            if ( entity?.ShopBuy != null )
+            {
+                VendorDisplayEvent?.Invoke( serial, entity.ShopBuy );
+            }
+        }
+
         private static void OnClearWeaponAbility( PacketReader reader )
         {
             AbilitiesManager manager = AbilitiesManager.GetInstance();
@@ -100,6 +126,52 @@ namespace ClassicAssist.UO.Network
             }
 
             manager.Enabled = AbilityType.None;
+        }
+
+        private static void OnShopList( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+            int count = reader.ReadByte();
+
+            List<ShopListEntry> shopList = new List<ShopListEntry>();
+
+            for ( int i = 0; i < count; i++ )
+            {
+                int price = reader.ReadInt32();
+                string name = reader.ReadString( reader.ReadByte() );
+
+                shopList.Add( new ShopListEntry { Name = name, Price = price, VendorSerial = serial } );
+            }
+
+            Mobile mobile = Engine.Mobiles.SelectEntity( m => m.Equipment.GetItems().Any( i => i.Serial == serial ) );
+
+            if ( mobile == null )
+            {
+                return;
+            }
+
+            Item containerItem = Engine.Items.GetItem( serial );
+
+            if ( containerItem?.Container == null )
+            {
+                return;
+            }
+
+            List<Item> containerItems = new List<Item>( containerItem.Container.GetItems() );
+            containerItems.Sort( new XYComparer() );
+
+            for ( int i = 0; i < shopList.Count; i++ )
+            {
+                shopList[i].VendorSerial = mobile.Serial;
+
+                if ( shopList[i] != null )
+                {
+                    shopList[i].Item = containerItems[i];
+                    shopList[i].Amount = containerItems[i].Count;
+                }
+            }
+
+            mobile.ShopBuy = shopList.ToArray();
         }
 
         public static event dToggleSpecialMove ToggleSpecialMoveEvent;

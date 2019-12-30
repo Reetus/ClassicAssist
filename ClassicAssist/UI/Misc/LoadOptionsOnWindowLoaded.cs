@@ -1,11 +1,9 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Interactivity;
-using Assistant;
 using ClassicAssist.Data;
 
-namespace ClassicAssist.Misc
+namespace ClassicAssist.UI.Misc
 {
     public class LoadOptionsOnWindowLoaded : Behavior<Window>
     {
@@ -18,12 +16,12 @@ namespace ClassicAssist.Misc
 
         private static void OnClosing( object sender, CancelEventArgs e )
         {
-            Options.Save( Engine.StartupPath ?? Environment.CurrentDirectory );
+            Options.Save( Options.CurrentOptions );
         }
 
         private static void OnLoaded( object sender, RoutedEventArgs e )
         {
-            Options.Load( Engine.StartupPath ?? Environment.CurrentDirectory, Options.CurrentOptions );
+            Options.Load( Options.DEFAULT_SETTINGS_FILENAME, Options.CurrentOptions );
         }
 
         protected override void OnDetaching()

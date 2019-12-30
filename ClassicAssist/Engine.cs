@@ -191,7 +191,7 @@ namespace Assistant
 
         private static void OnClientClosing()
         {
-            Options.Save( StartupPath );
+            Options.Save( Options.CurrentOptions );
         }
 
         private static void OnPlayerPositionChanged( int x, int y, int z )

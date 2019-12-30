@@ -113,6 +113,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public void Deserialize( JObject json, Options options )
         {
+            Items.Clear();
+
             if ( json?["Organizer"] == null )
             {
                 return;

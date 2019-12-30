@@ -1,0 +1,57 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:ClassicAssist.UI.Views"
+    xmlns:resources="clr-namespace:ClassicAssist.Resources"
+    xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
+    xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+    x:Class="ClassicAssist.UI.Views.NewProfileWindow"
+    mc:Ignorable="d"
+    Title="{x:Static resources:Strings.New_Profile}" Height="130" Width="290" WindowStyle="ToolWindow">
+    <Window.Resources>
+        <ValueConverters:EnumMatchToBooleanConverter x:Key="EnumMatchToBooleanConverter" />
+    </Window.Resources>
+    <Window.DataContext>
+        <viewModels:NewProfileViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10,10,10,5">
+            <TextBlock Text="{x:Static resources:Strings.Name_}" Margin="0,0,20,0" />
+            <TextBox Width="200" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10,5,10,10">
+            <RadioButton Content="{x:Static resources:Strings.Blank}" Margin="0,0,30,0"
+                         IsChecked="{Binding Option, ConverterParameter=Blank, Converter={StaticResource EnumMatchToBooleanConverter}}" />
+            <RadioButton Content="{x:Static resources:Strings.Duplicate}"
+                         IsChecked="{Binding Option, ConverterParameter=Duplicate, Converter={StaticResource EnumMatchToBooleanConverter}}" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="MinWidth" Value="80" />
+                    <Setter Property="Margin" Value="10,0,0,0" />
+                    <Setter Property="Padding" Value="20,2,20,2" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="{x:Static resources:Strings.OK}" Command="{Binding OkCommand}">
+                <i:Interaction.Behaviors>
+                    <misc:CloseOnClickBehaviour />
+                </i:Interaction.Behaviors>
+            </Button>
+            <Button Content="{x:Static resources:Strings.Cancel}">
+                <i:Interaction.Behaviors>
+                    <misc:CloseOnClickBehaviour />
+                </i:Interaction.Behaviors>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

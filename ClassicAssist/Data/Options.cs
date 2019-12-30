@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Assistant;
 using ClassicAssist.Annotations;
 using ClassicAssist.Data.Friends;
 using ClassicAssist.Misc;
@@ -14,7 +15,7 @@ namespace ClassicAssist.Data
 {
     public class Options : INotifyPropertyChanged
     {
-        private const string DEFAULT_SETTINGS_FILENAME = "settings.json";
+        public const string DEFAULT_SETTINGS_FILENAME = "settings.json";
         private static string _profilePath;
         private bool _actionDelay;
         private int _actionDelayMs;
@@ -156,13 +157,11 @@ namespace ClassicAssist.Data
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public static void Save( string startupPath )
+        public static void Save( Options options )
         {
             BaseViewModel[] instances = BaseViewModel.Instances;
 
-            JObject obj = new JObject { { "Name", DEFAULT_SETTINGS_FILENAME } };
-
-            EnsureProfilePath( startupPath );
+            JObject obj = new JObject { { "Name", options.Name } };
 
             foreach ( BaseViewModel instance in instances )
             {
@@ -172,7 +171,10 @@ namespace ClassicAssist.Data
                 }
             }
 
-            File.WriteAllText( Path.Combine( _profilePath, DEFAULT_SETTINGS_FILENAME ), obj.ToString() );
+            EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
+
+            File.WriteAllText( Path.Combine( _profilePath, options.Name ?? DEFAULT_SETTINGS_FILENAME ),
+                obj.ToString() );
         }
 
         private static void EnsureProfilePath( string startupPath )
@@ -185,20 +187,22 @@ namespace ClassicAssist.Data
             }
         }
 
-        public static void Load( string startupPath, Options options )
+        public static void Load( string optionsFile, Options options )
         {
             BaseViewModel[] instances = BaseViewModel.Instances;
 
-            EnsureProfilePath( startupPath );
+            EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
 
             JObject json = new JObject();
 
-            if ( File.Exists( Path.Combine( _profilePath, DEFAULT_SETTINGS_FILENAME ) ) )
+            string fullPath = Path.Combine( _profilePath, optionsFile );
+
+            if ( File.Exists( fullPath ) )
             {
-                json = JObject.Parse( File.ReadAllText( Path.Combine( _profilePath, DEFAULT_SETTINGS_FILENAME ) ) );
+                json = JObject.Parse( File.ReadAllText( fullPath ) );
             }
 
-            CurrentOptions.Name = json["Name"]?.ToObject<string>() ?? DEFAULT_SETTINGS_FILENAME;
+            options.Name = options.Name ?? json["Name"]?.ToObject<string>() ?? DEFAULT_SETTINGS_FILENAME;
 
             foreach ( BaseViewModel instance in instances )
             {
@@ -215,6 +219,7 @@ namespace ClassicAssist.Data
             PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
         }
 
+        // ReSharper disable once RedundantAssignment
         public void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
         {
             obj = value;
@@ -223,6 +228,7 @@ namespace ClassicAssist.Data
 
         public static string[] GetProfiles()
         {
+            EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
             return Directory.EnumerateFiles( _profilePath, "*.json" ).ToArray();
         }
     }

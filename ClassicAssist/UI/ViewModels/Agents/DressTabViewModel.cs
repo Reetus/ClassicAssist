@@ -164,6 +164,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public void Deserialize( JObject json, Options options )
         {
+            Items.Clear();
+
             if ( json?["Dress"] == null )
             {
                 return;
@@ -173,8 +175,6 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             MoveConflictingItems = GetJsonValue( dress["Options"], "MoveConflictingItems", false );
             UseUO3DPackets = GetJsonValue( dress["Options"], "UseUO3DPackets", false );
-
-            Items.Clear();
 
             foreach ( JToken entry in dress["Entries"] )
             {

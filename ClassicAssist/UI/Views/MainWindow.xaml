@@ -7,7 +7,7 @@
         xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
         xmlns:r="clr-namespace:ClassicAssist.Resources"
         xmlns:data="clr-namespace:ClassicAssist.Data"
-        xmlns:misc="clr-namespace:ClassicAssist.Misc"
+        xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Height="500" Width="625" Style="{DynamicResource WindowStyle}" Topmost="{Binding AlwaysOnTop}"

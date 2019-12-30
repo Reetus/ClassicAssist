@@ -59,6 +59,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         public void Deserialize( JObject json, Options options )
         {
             Options = options;
+            Options.Friends.Clear();
 
             if ( json?["Friends"] == null )
             {

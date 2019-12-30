@@ -214,6 +214,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Blank.
+        /// </summary>
+        public static string Blank {
+            get {
+                return ResourceManager.GetString("Blank", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bought.
         /// </summary>
         public static string Bought {
@@ -255,6 +264,15 @@ namespace ClassicAssist.Resources {
         public static string Buy_Agent__No_matches_found_ {
             get {
                 return ResourceManager.GetString("Buy Agent: No matches found.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
         
@@ -502,6 +520,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duplicate.
+        /// </summary>
+        public static string Duplicate {
+            get {
+                return ResourceManager.GetString("Duplicate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enabled.
         /// </summary>
         public static string Enabled {
@@ -552,6 +579,15 @@ namespace ClassicAssist.Resources {
         public static string Equip_Last_Weapon__Quick_Weapon_Switch_ {
             get {
                 return ResourceManager.GetString("Equip Last Weapon (Quick Weapon Switch)", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
             }
         }
         
@@ -1141,6 +1177,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Profile.
+        /// </summary>
+        public static string New_Profile {
+            get {
+                return ResourceManager.GetString("New Profile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New version available:.
         /// </summary>
         public static string New_version_available_ {
@@ -1173,6 +1218,15 @@ namespace ClassicAssist.Resources {
         public static string Objects {
             get {
                 return ResourceManager.GetString("Objects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string OK {
+            get {
+                return ResourceManager.GetString("OK", resourceCulture);
             }
         }
         
@@ -1308,6 +1362,15 @@ namespace ClassicAssist.Resources {
         public static string ProductName {
             get {
                 return ResourceManager.GetString("ProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile name contains illegal characters..
+        /// </summary>
+        public static string Profile_name_contains_illegal_characters_ {
+            get {
+                return ResourceManager.GetString("Profile name contains illegal characters.", resourceCulture);
             }
         }
         

@@ -49,6 +49,7 @@ namespace ClassicAssist.UI.ViewModels
         public void Deserialize( JObject json, Options options )
         {
             Options = options;
+            ActionCommands.UseOnceList.Clear();
 
             JToken config = json?["Options"];
 

@@ -67,6 +67,8 @@ namespace ClassicAssist.UI.ViewModels
 
         public void Deserialize( JObject json, Options options )
         {
+            Items.Clear();
+
             if ( json?["Debug"] == null )
             {
                 return;

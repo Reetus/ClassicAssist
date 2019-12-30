@@ -152,6 +152,8 @@ namespace ClassicAssist.UI.ViewModels
 
         public void Deserialize( JObject json, Options options )
         {
+            Items.Clear();
+
             JToken config = json?["Macros"];
 
             if ( config == null )

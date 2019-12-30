@@ -7,8 +7,15 @@
              xmlns:r="clr-namespace:ClassicAssist.Resources"
              xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
              xmlns:misc="clr-namespace:ClassicAssist.Misc"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500">
+    <d:DesignerProperties.DesignStyle>
+        <Style TargetType="UserControl">
+            <Setter Property="Background" Value="White" />
+        </Style>
+    </d:DesignerProperties.DesignStyle>
     <UserControl.DataContext>
         <viewModels:GeneralControlViewModel />
     </UserControl.DataContext>
@@ -90,13 +97,18 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0" Margin="5">
-                            <ComboBox ItemsSource="{Binding Profiles}" SelectedIndex="0" />
+                            <ComboBox ItemsSource="{Binding Profiles}" SelectedIndex="0"
+                                      SelectedItem="{Binding SelectedProfile}">
+                                <i:Interaction.Behaviors>
+                                    <misc1:ComboBoxBehavior CommandBinding="{Binding ChangeProfileCommand}" />
+                                </i:Interaction.Behaviors>
+                            </ComboBox>
                         </Grid>
                         <DockPanel Grid.Column="1" Margin="5">
                             <Button Content="{x:Static r:Strings.New}" Margin="0,0,10,0" Padding="10,0,10,0"
-                                    IsEnabled="False" />
+                                    Command="{Binding NewProfileCommand}" />
                             <Button Content="{x:Static r:Strings.Save}" Margin="0,0,10,0" Padding="10,0,10,0"
-                                    IsEnabled="False" />
+                                    Command="{Binding SaveProfileCommand}" />
                         </DockPanel>
                     </Grid>
                 </GroupBox>

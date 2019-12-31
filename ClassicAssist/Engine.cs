@@ -361,7 +361,7 @@ namespace Assistant
                         SendPacketToClient( packet, packet.Length );
                     }
                 }
-                catch ( Exception e )
+                catch ( Exception )
                 {
                     // Squash all
                 }

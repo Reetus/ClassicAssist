@@ -715,5 +715,17 @@ namespace ClassicAssist.UO
 
             Engine.SendPacketToServer( pw );
         }
+
+        public static void SetForceWalk( bool force )
+        {
+            PacketWriter pw = new PacketWriter( 6 );
+
+            pw.Write( (byte) 0xBF );
+            pw.Write( (short) 0x06 );
+            pw.Write( (short) 0x26 );
+            pw.Write( (byte) ( force ? 2 : 0 ) );
+
+            Engine.SendPacketToClient( pw );
+        }
     }
 }

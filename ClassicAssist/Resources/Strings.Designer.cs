@@ -637,6 +637,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Force Walk Off.
+        /// </summary>
+        public static string Force_Walk_Off {
+            get {
+                return ResourceManager.GetString("Force Walk Off", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Force Walk On.
+        /// </summary>
+        public static string Force_Walk_On {
+            get {
+                return ResourceManager.GetString("Force Walk On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Friends.
         /// </summary>
         public static string Friends {
@@ -1137,6 +1155,15 @@ namespace ClassicAssist.Resources {
         public static string Move_to_container {
             get {
                 return ResourceManager.GetString("Move to container", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Movement.
+        /// </summary>
+        public static string Movement {
+            get {
+                return ResourceManager.GetString("Movement", resourceCulture);
             }
         }
         
@@ -1956,6 +1983,15 @@ namespace ClassicAssist.Resources {
         public static string Timers {
             get {
                 return ResourceManager.GetString("Timers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle Force Walk.
+        /// </summary>
+        public static string Toggle_Force_Walk {
+            get {
+                return ResourceManager.GetString("Toggle Force Walk", resourceCulture);
             }
         }
         

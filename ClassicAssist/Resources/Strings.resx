@@ -306,6 +306,12 @@
   <data name="Filters" xml:space="preserve">
     <value>Filters</value>
   </data>
+  <data name="Force Walk Off" xml:space="preserve">
+    <value>Force Walk Off</value>
+  </data>
+  <data name="Force Walk On" xml:space="preserve">
+    <value>Force Walk On</value>
+  </data>
   <data name="Friends" xml:space="preserve">
     <value>Friends</value>
   </data>
@@ -473,6 +479,9 @@
   </data>
   <data name="Move to container" xml:space="preserve">
     <value>Move to container</value>
+  </data>
+  <data name="Movement" xml:space="preserve">
+    <value>Movement</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -746,6 +755,9 @@
   </data>
   <data name="Timers" xml:space="preserve">
     <value>Timers</value>
+  </data>
+  <data name="Toggle Force Walk" xml:space="preserve">
+    <value>Toggle Force Walk</value>
   </data>
   <data name="Toggle hotkeys" xml:space="preserve">
     <value>Toggle hotkeys</value>

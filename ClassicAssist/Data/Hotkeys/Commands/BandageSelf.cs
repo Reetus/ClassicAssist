@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Assistant;
+using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Resources;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
@@ -39,7 +40,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
                 return;
             }
 
-            Engine.SendPacketToServer( new UseObject( bandage.Serial ) );
+            ObjectCommands.UseObject( bandage.Serial );
             bool result = UOC.WaitForTarget( TIMEOUT );
 
             if ( result )

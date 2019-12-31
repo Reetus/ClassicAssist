@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using ClassicAssist.Data.Macros.Commands;
 using IronPython.Hosting;
 using Microsoft.Scripting;
@@ -89,6 +90,14 @@ namespace ClassicAssist.Data.Macros
 
                     source.Execute( macroScope );
                 }
+                catch ( TaskCanceledException )
+                {
+                    IsFaulted = true;
+                }
+                catch ( ThreadInterruptedException )
+                {
+                    IsFaulted = true;
+                }
                 catch ( ThreadAbortException )
                 {
                     IsFaulted = true;
@@ -111,6 +120,12 @@ namespace ClassicAssist.Data.Macros
 
         public void Stop()
         {
+            if ( Thread == null || !Thread.IsAlive )
+            {
+                return;
+            }
+
+            Thread?.Interrupt();
             Thread?.Abort();
         }
 
@@ -143,10 +158,7 @@ namespace ClassicAssist.Data.Macros
 
                     sw.Stop();
 
-                    if ( token.IsCancellationRequested )
-                    {
-                        break;
-                    }
+                    token.ThrowIfCancellationRequested();
 
                     if ( sw.ElapsedMilliseconds < 50 )
                     {
@@ -162,6 +174,14 @@ namespace ClassicAssist.Data.Macros
                     sw.Reset();
                 }
                 while ( loop && !IsFaulted );
+            }
+            catch ( TaskCanceledException )
+            {
+                IsFaulted = true;
+            }
+            catch ( ThreadInterruptedException )
+            {
+                IsFaulted = true;
             }
             catch ( ThreadAbortException )
             {

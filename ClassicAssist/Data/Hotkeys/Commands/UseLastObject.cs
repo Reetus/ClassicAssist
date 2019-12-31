@@ -1,5 +1,5 @@
 ﻿using Assistant;
-using ClassicAssist.UO.Network.Packets;
+using ClassicAssist.Data.Macros.Commands;
 
 namespace ClassicAssist.Data.Hotkeys.Commands
 {
@@ -12,7 +12,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
 
             if ( serial != 0 )
             {
-                Engine.SendPacketToServer( new UseObject( serial ) );
+                ObjectCommands.UseObject( serial );
             }
         }
     }

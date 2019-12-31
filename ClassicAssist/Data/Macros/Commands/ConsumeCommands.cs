@@ -41,7 +41,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
-            Engine.SendPacketToServer( new UseObject( bandage.Serial ) );
+            ObjectCommands.UseObject( bandage.Serial );
 
             PacketWaitEntry we = Engine.PacketWaitEntries.Add( new PacketFilterInfo( 0x6C ), PacketDirection.Incoming );
 

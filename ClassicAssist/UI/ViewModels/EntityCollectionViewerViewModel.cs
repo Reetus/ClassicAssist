@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Assistant;
+using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
-using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UI.ViewModels
@@ -154,7 +154,7 @@ namespace ClassicAssist.UI.ViewModels
 
                     foreach ( int item in items )
                     {
-                        Engine.SendPacketToServer( new UseObject( item ) );
+                        ObjectCommands.UseObject( item );
 
                         if ( _cancellationToken.Token.IsCancellationRequested )
                         {

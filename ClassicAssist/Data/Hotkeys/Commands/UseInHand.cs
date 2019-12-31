@@ -1,7 +1,7 @@
 ﻿using Assistant;
+using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Resources;
 using ClassicAssist.UO.Data;
-using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 
@@ -26,7 +26,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
                 return;
             }
 
-            Engine.SendPacketToServer( new UseObject( serial ) );
+            ObjectCommands.UseObject( serial );
         }
 
         [HotkeyCommand( Name = "Use Left Hand" )]

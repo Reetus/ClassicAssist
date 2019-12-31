@@ -66,7 +66,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             UseOnceList.Add( match );
 
-            Engine.SendPacketToServer( new UseObject( match.Serial ) );
+            ObjectCommands.UseObject( match.Serial );
 
             return true;
         }
@@ -196,7 +196,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( player.IsMounted )
             {
-                Engine.SendPacketToServer( new UseObject( player.Serial ) );
+                ObjectCommands.UseObject( player.Serial );
                 return;
             }
 
@@ -215,7 +215,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             int mountSerial = AliasCommands.GetAlias( "mount" );
 
-            Engine.SendPacketToServer( new UseObject( mountSerial ) );
+            ObjectCommands.UseObject( mountSerial );
         }
 
         [CommandsDisplay( Category = "Actions", Description = "Feed a given alias or serial with graphic.",

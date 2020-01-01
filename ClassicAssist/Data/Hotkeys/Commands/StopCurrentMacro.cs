@@ -8,7 +8,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
         public override void Execute()
         {
             MacroManager manager = MacroManager.GetInstance();
-            manager.CurrentMacro()?.Stop();
+            manager.Stop();
         }
     }
 }

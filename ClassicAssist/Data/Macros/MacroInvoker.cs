@@ -19,12 +19,13 @@ namespace ClassicAssist.Data.Macros
 
         private static readonly ScriptEngine _engine = Python.CreateEngine();
         private static Dictionary<string, object> _importCache;
-        private readonly MacroEntry _macro;
+        private static MacroInvoker _instance;
+        private static readonly object _lock = new object();
+        private CancellationTokenSource _cancellationToken;
+        private MacroEntry _macro;
 
-        public MacroInvoker( MacroEntry macro )
+        private MacroInvoker()
         {
-            _macro = macro;
-
             ScriptRuntime runtime = _engine.Runtime;
             runtime.LoadAssembly( Assembly.GetExecutingAssembly() );
         }
@@ -35,6 +36,26 @@ namespace ClassicAssist.Data.Macros
         public bool IsRunning => Thread.IsAlive;
 
         public Thread Thread { get; set; }
+
+        public static MacroInvoker GetInstance()
+        {
+            // ReSharper disable once InvertIf
+            if ( _instance == null )
+            {
+                lock ( _lock )
+                {
+                    if ( _instance != null )
+                    {
+                        return _instance;
+                    }
+
+                    _instance = new MacroInvoker();
+                    return _instance;
+                }
+            }
+
+            return _instance;
+        }
 
         public event dMacroStartStop StartedEvent;
         public event dMacroStartStop StoppedEvent;
@@ -64,8 +85,17 @@ namespace ClassicAssist.Data.Macros
             return dictionary;
         }
 
-        public void Execute()
+        public void Execute( MacroEntry macro )
         {
+            _macro = macro;
+
+            if ( Thread != null && Thread.IsAlive )
+            {
+                Stop();
+            }
+
+            _cancellationToken = new CancellationTokenSource();
+
             if ( _importCache == null )
             {
                 _importCache = InitializeImports( _engine );
@@ -74,6 +104,8 @@ namespace ClassicAssist.Data.Macros
             ScriptSource source = _engine.CreateScriptSourceFromString( _macro.Macro, SourceCodeKind.Statements );
 
             Dictionary<string, object> importCache = new Dictionary<string, object>( _importCache );
+
+            IsFaulted = false;
 
             Thread = new Thread( () =>
             {
@@ -89,6 +121,8 @@ namespace ClassicAssist.Data.Macros
 
                     do
                     {
+                        _cancellationToken.Token.ThrowIfCancellationRequested();
+
                         source.Execute( macroScope );
                     }
                     while ( _macro.Loop && !IsFaulted );
@@ -124,6 +158,8 @@ namespace ClassicAssist.Data.Macros
 
         public void Stop()
         {
+            _cancellationToken?.Cancel();
+
             if ( Thread == null || !Thread.IsAlive )
             {
                 return;
@@ -131,6 +167,7 @@ namespace ClassicAssist.Data.Macros
 
             Thread?.Interrupt();
             Thread?.Abort();
+            Thread?.Join();
         }
     }
 }

@@ -18,9 +18,9 @@ namespace ClassicAssist.Tests
         {
             MacroEntry me = new MacroEntry();
 
-            MacroInvoker mi = new MacroInvoker( me );
+            MacroInvoker mi = MacroInvoker.GetInstance();
 
-            mi.Execute();
+            mi.Execute( me );
         }
 
         [TestMethod]
@@ -28,9 +28,9 @@ namespace ClassicAssist.Tests
         {
             MacroEntry me = new MacroEntry { Macro = "while true:\r\n\t" };
 
-            MacroInvoker mi = new MacroInvoker( me );
+            MacroInvoker mi = MacroInvoker.GetInstance();
 
-            mi.Execute();
+            mi.Execute(me);
 
             mi.Stop();
 
@@ -44,7 +44,7 @@ namespace ClassicAssist.Tests
         {
             MacroEntry me = new MacroEntry();
 
-            MacroInvoker mi = new MacroInvoker( me );
+            MacroInvoker mi = MacroInvoker.GetInstance();
 
             AutoResetEvent are = new AutoResetEvent( false );
 
@@ -55,7 +55,7 @@ namespace ClassicAssist.Tests
 
             mi.StartedEvent += OnStartedEvent;
 
-            mi.Execute();
+            mi.Execute(me);
 
             bool result = are.WaitOne( 5000 );
 
@@ -67,7 +67,7 @@ namespace ClassicAssist.Tests
         {
             MacroEntry me = new MacroEntry();
 
-            MacroInvoker mi = new MacroInvoker( me );
+            MacroInvoker mi = MacroInvoker.GetInstance();
 
             AutoResetEvent are = new AutoResetEvent( false );
 
@@ -78,7 +78,7 @@ namespace ClassicAssist.Tests
 
             mi.StoppedEvent += OnStoppedEvent;
 
-            mi.Execute();
+            mi.Execute(me);
 
             bool result = are.WaitOne( 5000 );
 
@@ -90,9 +90,9 @@ namespace ClassicAssist.Tests
         {
             MacroEntry me = new MacroEntry { Macro = "Dummy(5,7)" };
 
-            MacroInvoker mi = new MacroInvoker( me );
+            MacroInvoker mi = MacroInvoker.GetInstance();
 
-            mi.Execute();
+            mi.Execute(me);
 
             mi.Thread.Join();
 
@@ -104,7 +104,7 @@ namespace ClassicAssist.Tests
         {
             MacroEntry me = new MacroEntry { Macro = "kjdkdsdksdfsdk" };
 
-            MacroInvoker mi = new MacroInvoker( me );
+            MacroInvoker mi = MacroInvoker.GetInstance();
 
             AutoResetEvent are = new AutoResetEvent( false );
 
@@ -117,7 +117,7 @@ namespace ClassicAssist.Tests
 
             mi.ExceptionEvent += OnExceptionEvent;
 
-            mi.Execute();
+            mi.Execute(me);
 
             bool result = are.WaitOne( 5000 );
 

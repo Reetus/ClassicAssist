@@ -92,12 +92,12 @@ namespace ClassicAssist.Data.Macros
 
         public void Execute( MacroEntry macro )
         {
-            _invoker = new MacroInvoker( macro );
+            _invoker = MacroInvoker.GetInstance();
             _invoker.ExceptionEvent += exception =>
             {
                 UO.Commands.SystemMessage( string.Format( Strings.Macro_error___0_, exception.Message ) );
             };
-            _invoker.Execute();
+            _invoker.Execute( macro );
         }
 
         public void Stop()

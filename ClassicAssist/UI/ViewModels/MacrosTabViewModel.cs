@@ -209,7 +209,7 @@ namespace ClassicAssist.UI.ViewModels
             _dispatcher.Invoke( () => SelectedItem = entry );
 
             _currentMacro = entry;
-            _currentMacro.Stop = () => Stop( _currentMacro ).Wait();
+            _currentMacro.Stop = () => Stop( entry ).Wait();
 
             await Task.Run( () => { _manager.Execute( entry ); } );
 

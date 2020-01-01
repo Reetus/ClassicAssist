@@ -223,6 +223,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Both.
+        /// </summary>
+        public static string Both {
+            get {
+                return ResourceManager.GetString("Both", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bought.
         /// </summary>
         public static string Bought {
@@ -538,6 +547,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enemy.
+        /// </summary>
+        public static string Enemy {
+            get {
+                return ResourceManager.GetString("Enemy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Entity.
         /// </summary>
         public static string Entity {
@@ -651,6 +669,15 @@ namespace ClassicAssist.Resources {
         public static string Force_Walk_On {
             get {
                 return ResourceManager.GetString("Force Walk On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friend.
+        /// </summary>
+        public static string Friend {
+            get {
+                return ResourceManager.GetString("Friend", resourceCulture);
             }
         }
         
@@ -1222,6 +1249,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        public static string None {
+            get {
+                return ResourceManager.GetString("None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Object &quot;{0}&quot; updated....
         /// </summary>
         public static string Object___0___updated___ {
@@ -1740,6 +1776,15 @@ namespace ClassicAssist.Resources {
         public static string Skills {
             get {
                 return ResourceManager.GetString("Skills", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Smart last target:.
+        /// </summary>
+        public static string Smart_last_target_ {
+            get {
+                return ResourceManager.GetString("Smart last target:", resourceCulture);
             }
         }
         

@@ -101,13 +101,10 @@ namespace ClassicAssist.UI.ViewModels
 
         public void Deserialize( JObject json, Options options )
         {
-            _hotkeyManager.Items.Clear();
-
             IEnumerable<Type> hotkeyCommands = Assembly.GetExecutingAssembly().GetTypes()
                 .Where( i => i.IsSubclassOf( typeof( HotkeyCommand ) ) );
 
-            _commandsCategory = new HotkeyEntry { IsCategory = true, Name = Strings.Commands };
-
+            _commandsCategory = new HotkeyEntry( Strings.Commands, true );
             ObservableCollectionEx<HotkeySettable> children = new ObservableCollectionEx<HotkeySettable>();
 
             foreach ( Type hotkeyCommand in hotkeyCommands )
@@ -133,19 +130,22 @@ namespace ClassicAssist.UI.ViewModels
                             category.Children = new ObservableCollectionEx<HotkeySettable>();
                         }
 
+                        if ( category.Children.Contains( hkc ) )
+                        {
+                            category.Children.Remove( hkc );
+                        }
+
                         category.Children.Add( hkc );
                     }
                     else
                     {
-                        category = new HotkeyEntry
+                        category = new HotkeyEntry( categoryName, true )
                         {
-                            Name = categoryName,
-                            IsCategory = true,
                             Children = new ObservableCollectionEx<HotkeySettable>()
                         };
 
                         category.Children.Add( hkc );
-                        Items.AddSorted( category );
+                        _hotkeyManager.AddCategory( category );
                         _serializeCategories.Add( category );
                     }
                 }
@@ -153,7 +153,7 @@ namespace ClassicAssist.UI.ViewModels
 
             _commandsCategory.Children = children;
 
-            _hotkeyManager.Items.AddSorted( _commandsCategory );
+            _hotkeyManager.AddCategory( _commandsCategory );
             _serializeCategories.Add( _commandsCategory );
 
             JToken hotkeys = json?["Hotkeys"];
@@ -183,7 +183,7 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            _spellsCategory = new HotkeyEntry { IsCategory = true, Name = Strings.Spells };
+            _spellsCategory = new HotkeyEntry( Strings.Spells, true );
 
             SpellManager spellManager = SpellManager.GetInstance();
 
@@ -206,7 +206,7 @@ namespace ClassicAssist.UI.ViewModels
 
             _spellsCategory.Children = children;
 
-            _hotkeyManager.Items.AddSorted( _spellsCategory );
+            _hotkeyManager.AddCategory( _spellsCategory );
 
             JToken spellsObj = hotkeys?["Spells"];
 

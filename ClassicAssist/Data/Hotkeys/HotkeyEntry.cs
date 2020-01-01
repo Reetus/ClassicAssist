@@ -9,9 +9,13 @@ namespace ClassicAssist.Data.Hotkeys
     public class HotkeyEntry : INotifyPropertyChanged, IComparable<HotkeyEntry>
     {
         private ObservableCollectionEx<HotkeySettable> _children;
-        private bool _isCategory;
-        private string _name;
         private object _o;
+
+        public HotkeyEntry( string name, bool isCategory )
+        {
+            Name = name;
+            IsCategory = isCategory;
+        }
 
         public ObservableCollectionEx<HotkeySettable> Children
         {
@@ -19,17 +23,9 @@ namespace ClassicAssist.Data.Hotkeys
             set => SetProperty( ref _children, value );
         }
 
-        public bool IsCategory
-        {
-            get => _isCategory;
-            set => SetProperty( ref _isCategory, value );
-        }
+        public bool IsCategory { get; }
 
-        public string Name
-        {
-            get => _name;
-            set => SetProperty( ref _name, value );
-        }
+        public string Name { get; }
 
         public object Object
         {
@@ -44,10 +40,33 @@ namespace ClassicAssist.Data.Hotkeys
                 return 0;
             }
 
-            return other is null ? 1 : string.Compare( _name, other._name, StringComparison.Ordinal );
+            return other is null ? 1 : string.Compare( Name, other.Name, StringComparison.Ordinal );
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public override bool Equals( object obj )
+        {
+            if ( !( obj is HotkeyEntry hke ) )
+            {
+                return false;
+            }
+
+            return Name == hke.Name && IsCategory == hke.IsCategory;
+        }
+
+        protected bool Equals( HotkeyEntry other )
+        {
+            return IsCategory == other.IsCategory && Name == other.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ( IsCategory.GetHashCode() * 397 ) ^ ( Name != null ? Name.GetHashCode() : 0 );
+            }
+        }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
@@ -64,7 +83,7 @@ namespace ClassicAssist.Data.Hotkeys
 
         public override string ToString()
         {
-            return _name;
+            return Name;
         }
     }
 }

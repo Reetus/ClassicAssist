@@ -32,6 +32,7 @@ namespace ClassicAssist.Data
         private bool _queueLastTarget;
         private bool _rangeCheckLastTarget;
         private int _rangeCheckLastTargetAmount = 11;
+        private SmartTargetOption _smartTargetOption;
         private bool _useDeathScreenWhilstHidden;
         private bool _useExperimentalFizzleDetection;
         private bool _useObjectQueue;
@@ -127,6 +128,12 @@ namespace ClassicAssist.Data
         {
             get => _rangeCheckLastTargetAmount;
             set => SetProperty( ref _rangeCheckLastTargetAmount, value );
+        }
+
+        public SmartTargetOption SmartTargetOption
+        {
+            get => _smartTargetOption;
+            set => SetProperty( ref _smartTargetOption, value );
         }
 
         public Version UpdateGumpVersion { get; set; }
@@ -231,5 +238,14 @@ namespace ClassicAssist.Data
             EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
             return Directory.EnumerateFiles( _profilePath, "*.json" ).ToArray();
         }
+    }
+
+    [Flags]
+    public enum SmartTargetOption
+    {
+        None = 0b00,
+        Friend = 0b01,
+        Enemy = 0b10,
+        Both = 0b11
     }
 }

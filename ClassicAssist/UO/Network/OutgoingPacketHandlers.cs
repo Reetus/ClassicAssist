@@ -1,6 +1,9 @@
 ﻿using System;
 using Assistant;
+using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Data.Targeting;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Objects;
 using ClassicAssist.UO.Objects.Gumps;
 
 namespace ClassicAssist.UO.Network
@@ -86,6 +89,19 @@ namespace ClassicAssist.UO.Network
             {
                 Engine.Player.LastTargetSerial = serial;
                 Engine.Player.LastTargetType = targetType;
+
+                switch ( (TargetFlags) flags )
+                {
+                    case TargetFlags.Harmful when Engine.Mobiles.GetMobile( serial, out Mobile enemyMobile ) &&
+                                                  AliasCommands.GetAlias( "enemy" ) != serial:
+                        TargetManager.GetInstance().SetEnemy( enemyMobile );
+                        break;
+                    case TargetFlags.Beneficial when Engine.Mobiles.GetMobile( serial, out Mobile friendMobile ) &&
+                                                     MobileCommands.InFriendList( serial ) &&
+                                                     AliasCommands.GetAlias( "friend" ) != serial:
+                        TargetManager.GetInstance().SetFriend( friendMobile );
+                        break;
+                }
             }
 
             Engine.TargetExists = false;

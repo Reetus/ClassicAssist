@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Assistant;
@@ -21,16 +20,15 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class MacrosTabViewModel : HotkeySettableViewModel<MacroEntry>, ISettingProvider
     {
-        private CancellationTokenSource _cancellationToken;
+        private readonly MacroManager _manager;
         private int _caretPosition;
         private ICommand _clearHotkeyCommand;
         private MacroEntry _currentMacro;
         private TextDocument _document;
-        private RelayCommand _executeCommand;
+        private ICommand _executeCommand;
         private ICommand _inspectObjectCommand;
         private bool _isRecording;
         private bool _isRunning;
-        private MacroInvoker _macroInvoker;
         private RelayCommand _newMacroCommand;
         private ICommand _recordCommand;
         private RelayCommand _removeMacroCommand;
@@ -43,13 +41,13 @@ namespace ClassicAssist.UI.ViewModels
         {
             Engine.DisconnectedEvent += OnDisconnectedEvent;
 
-            MacroManager manager = MacroManager.GetInstance();
+            _manager = MacroManager.GetInstance();
 
-            manager.IsRecording = () => _isRecording;
-            manager.InsertDocument = str => { _dispatcher.Invoke( () => { SelectedItem.Macro += str; } ); };
-            manager.Items = Items;
-            manager.IsPlaying = () => _isRunning;
-            manager.CurrentMacro = () => _currentMacro;
+            _manager.IsRecording = () => _isRecording;
+            _manager.InsertDocument = str => { _dispatcher.Invoke( () => { SelectedItem.Macro += str; } ); };
+            _manager.Items = Items;
+            _manager.IsPlaying = () => _isRunning;
+            _manager.CurrentMacro = () => _currentMacro;
         }
 
         public int CaretPosition
@@ -67,9 +65,9 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _document, value );
         }
 
-        public RelayCommand ExecuteCommand =>
+        public ICommand ExecuteCommand =>
             _executeCommand ??
-            ( _executeCommand = new RelayCommand( Execute, o => !IsRunning && SelectedItem != null ) );
+            ( _executeCommand = new RelayCommandAsync( Execute, o => !IsRunning && SelectedItem != null ) );
 
         public ICommand InspectObjectCommand =>
             _inspectObjectCommand ??
@@ -175,8 +173,7 @@ namespace ClassicAssist.UI.ViewModels
                         Hotkey = new ShortcutKeys( token["Keys"] )
                     };
 
-                    entry.Action = hks => Execute( entry );
-                    entry.ActionSync = macroEntry => ExecuteSync( entry );
+                    entry.Action = async hks => await Execute( entry );
 
                     Items.Add( entry );
                 }
@@ -191,21 +188,33 @@ namespace ClassicAssist.UI.ViewModels
             }
         }
 
-        private void ExecuteSync( MacroEntry entry )
+        private async Task Execute( object obj )
         {
+            if ( !( obj is MacroEntry entry ) )
+            {
+                return;
+            }
+
+            if ( _currentMacro != null && _currentMacro.DoNotAutoInterrupt && _currentMacro == entry )
+            {
+                return;
+            }
+
+            if ( IsRunning )
+            {
+                Stop( _currentMacro ).Wait();
+            }
+
             _dispatcher.Invoke( () => IsRunning = true );
             _dispatcher.Invoke( () => SelectedItem = entry );
 
             _currentMacro = entry;
+            _currentMacro.Stop = () => Stop( _currentMacro ).Wait();
 
-            _macroInvoker.ExceptionEvent += exception =>
-            {
-                Commands.SystemMessage( string.Format( Strings.Macro_error___0_, exception.Message ) );
-            };
+            await Task.Run( () => { _manager.Execute( entry ); } );
 
-            _cancellationToken = new CancellationTokenSource();
-
-            _macroInvoker.ExecuteSync( entry.Loop, _cancellationToken.Token );
+            _dispatcher.Invoke( () => IsRunning = false );
+            _currentMacro = null;
         }
 
         private static void ShowActiveObjectsWindow( object obj )
@@ -216,10 +225,10 @@ namespace ClassicAssist.UI.ViewModels
 
         private void OnDisconnectedEvent()
         {
-            _macroInvoker?.Stop();
+            _manager.Stop();
         }
 
-        private void ClearHotkey( object obj )
+        private static void ClearHotkey( object obj )
         {
             if ( !( obj is MacroEntry entry ) )
             {
@@ -257,8 +266,7 @@ namespace ClassicAssist.UI.ViewModels
 
             MacroEntry macro = new MacroEntry { Name = $"Macro-{count + 1}", Macro = string.Empty };
 
-            macro.Action = hks => Execute( macro );
-            macro.ActionSync = macroEntry => ExecuteSync( macro );
+            macro.Action = async hks => await Execute( macro );
 
             Items.Add( macro );
 
@@ -275,57 +283,9 @@ namespace ClassicAssist.UI.ViewModels
 
         private async Task Stop( object obj )
         {
-            await Task.Run( () =>
-            {
-                _cancellationToken?.Cancel();
-                _macroInvoker.Stop();
-            } );
+            _manager.Stop();
 
-            IsRunning = false;
-        }
-
-        private void Execute( object obj )
-        {
-            if ( !( obj is MacroEntry entry ) )
-            {
-                return;
-            }
-
-            if ( _currentMacro != null && _currentMacro.DoNotAutoInterrupt && _currentMacro == entry )
-            {
-                return;
-            }
-
-            if ( IsRunning )
-            {
-                Stop( _currentMacro ).Wait();
-            }
-
-            _dispatcher.Invoke( () => IsRunning = true );
-            _dispatcher.Invoke( () => SelectedItem = entry );
-
-            _currentMacro = entry;
-            _currentMacro.Stop = () => Stop( _currentMacro ).Wait();
-
-            _macroInvoker = new MacroInvoker( entry );
-            _macroInvoker.StoppedEvent += () =>
-            {
-                if ( entry.Loop && !_macroInvoker.IsFaulted && IsRunning )
-                {
-                    ExecuteSync( entry );
-                    return;
-                }
-
-                _currentMacro = null;
-                _dispatcher.Invoke( () => IsRunning = false );
-            };
-
-            _macroInvoker.ExceptionEvent += exception =>
-            {
-                Commands.SystemMessage( string.Format( Strings.Macro_error___0_, exception.Message ) );
-            };
-
-            _macroInvoker.Execute();
+            await Task.CompletedTask;
         }
 
         private void ShowCommands( object obj )

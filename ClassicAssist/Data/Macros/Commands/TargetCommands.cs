@@ -62,6 +62,12 @@ namespace ClassicAssist.Data.Macros.Commands
                         return;
                     }
                 }
+                else
+                {
+                    UOC.SystemMessage( Strings.Target_out_of_range__try_again___ );
+                    UOC.ResendTargetToClient();
+                    return;
+                }
             }
 
             if ( useQueue && !Engine.TargetExists )

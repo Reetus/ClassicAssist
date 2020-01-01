@@ -21,7 +21,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _newProfileCommand;
         private Options _options;
         private ObservableCollection<string> _profiles = new ObservableCollection<string>();
-        private string _selectedProfile;
+        private string _selectedProfile = Options.CurrentOptions.Name;
 
         public ICommand SaveProfileCommand =
             _saveProfileCommand ?? ( _saveProfileCommand = new RelayCommand( SaveProfile, o => true ) );

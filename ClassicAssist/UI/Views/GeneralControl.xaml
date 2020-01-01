@@ -97,8 +97,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0" Margin="5">
-                            <ComboBox ItemsSource="{Binding Profiles}" SelectedIndex="0"
-                                      SelectedItem="{Binding SelectedProfile}">
+                            <ComboBox ItemsSource="{Binding Profiles}" SelectedItem="{Binding Options.Name}">
                                 <i:Interaction.Behaviors>
                                     <misc1:ComboBoxBehavior CommandBinding="{Binding ChangeProfileCommand}" />
                                 </i:Interaction.Behaviors>

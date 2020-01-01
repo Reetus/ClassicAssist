@@ -168,6 +168,9 @@
   <data name="Blank" xml:space="preserve">
     <value>Blank</value>
   </data>
+  <data name="Both" xml:space="preserve">
+    <value>Both</value>
+  </data>
   <data name="Bought" xml:space="preserve">
     <value>Bought</value>
   </data>
@@ -273,6 +276,9 @@
   <data name="Enabled" xml:space="preserve">
     <value>Enabled</value>
   </data>
+  <data name="Enemy" xml:space="preserve">
+    <value>Enemy</value>
+  </data>
   <data name="Entity" xml:space="preserve">
     <value>Entity</value>
   </data>
@@ -311,6 +317,9 @@
   </data>
   <data name="Force Walk On" xml:space="preserve">
     <value>Force Walk On</value>
+  </data>
+  <data name="Friend" xml:space="preserve">
+    <value>Friend</value>
   </data>
   <data name="Friends" xml:space="preserve">
     <value>Friends</value>
@@ -501,6 +510,9 @@
   <data name="New version available:" xml:space="preserve">
     <value>New version available:</value>
   </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
+  </data>
   <data name="Object &quot;{0}&quot; updated..." xml:space="preserve">
     <value>Object "{0}" updated...</value>
   </data>
@@ -674,6 +686,9 @@
   </data>
   <data name="Skills" xml:space="preserve">
     <value>Skills</value>
+  </data>
+  <data name="Smart last target:" xml:space="preserve">
+    <value>Smart last target:</value>
   </data>
   <data name="Software" xml:space="preserve">
     <value>Software</value>

@@ -12,10 +12,21 @@ namespace ClassicAssist.UI.Misc
                 new FrameworkPropertyMetadata( default( ICommand ),
                     FrameworkPropertyMetadataOptions.None, PropertyChangedCallback ) );
 
+        public static readonly DependencyProperty CommandParameterProperty =
+            DependencyProperty.Register( "CommandParameter", typeof( object ), typeof( ComboBoxBehavior ),
+                new FrameworkPropertyMetadata( default,
+                    FrameworkPropertyMetadataOptions.None, PropertyChangedCallback ) );
+
         public ICommand CommandBinding
         {
             get => (ICommand) GetValue( CommandBindingProperty );
             set => SetValue( CommandBindingProperty, value );
+        }
+
+        public object CommandParameter
+        {
+            get => GetValue( CommandParameterProperty );
+            set => SetValue( CommandParameterProperty, value );
         }
 
         private static void PropertyChangedCallback( DependencyObject d, DependencyPropertyChangedEventArgs e )

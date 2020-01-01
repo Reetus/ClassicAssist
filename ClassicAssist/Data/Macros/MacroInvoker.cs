@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -88,7 +87,11 @@ namespace ClassicAssist.Data.Macros
 
                     ScriptScope macroScope = _engine.CreateScope( importCache );
 
-                    source.Execute( macroScope );
+                    do
+                    {
+                        source.Execute( macroScope );
+                    }
+                    while ( _macro.Loop && !IsFaulted );
                 }
                 catch ( TaskCanceledException )
                 {
@@ -116,6 +119,7 @@ namespace ClassicAssist.Data.Macros
             } ) { IsBackground = true };
 
             Thread.Start();
+            Thread.Join();
         }
 
         public void Stop()
@@ -127,77 +131,6 @@ namespace ClassicAssist.Data.Macros
 
             Thread?.Interrupt();
             Thread?.Abort();
-        }
-
-        public void ExecuteSync( bool loop, CancellationToken token )
-        {
-            if ( _importCache == null )
-            {
-                _importCache = InitializeImports( _engine );
-            }
-
-            ScriptSource source = _engine.CreateScriptSourceFromString( _macro.Macro, SourceCodeKind.Statements );
-
-            Dictionary<string, object> importCache = new Dictionary<string, object>( _importCache );
-
-            try
-            {
-                StartedEvent?.Invoke();
-
-                AliasCommands.SetDefaultAliases();
-
-                ScriptScope macroScope = _engine.CreateScope( importCache );
-
-                Stopwatch sw = new Stopwatch();
-
-                do
-                {
-                    sw.Start();
-
-                    source.Execute( macroScope );
-
-                    sw.Stop();
-
-                    token.ThrowIfCancellationRequested();
-
-                    if ( sw.ElapsedMilliseconds < 50 )
-                    {
-                        int diff = 50 - (int) sw.ElapsedMilliseconds;
-                        Thread.Sleep( diff > 0 ? diff : 1 );
-                    }
-
-                    if ( Options.CurrentOptions.Debug )
-                    {
-                        UO.Commands.SystemMessage( sw.ElapsedMilliseconds.ToString() );
-                    }
-
-                    sw.Reset();
-                }
-                while ( loop && !IsFaulted );
-            }
-            catch ( TaskCanceledException )
-            {
-                IsFaulted = true;
-            }
-            catch ( ThreadInterruptedException )
-            {
-                IsFaulted = true;
-            }
-            catch ( ThreadAbortException )
-            {
-                IsFaulted = true;
-            }
-            catch ( Exception e )
-            {
-                IsFaulted = true;
-                Exception = e;
-
-                ExceptionEvent?.Invoke( e );
-            }
-            finally
-            {
-                StoppedEvent?.Invoke();
-            }
         }
     }
 }

@@ -43,6 +43,28 @@ namespace ClassicAssist.Data.Hotkeys
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public void AddCategory( HotkeyEntry item, IComparer<HotkeyEntry> comparer = null )
+        {
+            if ( Items.Contains( item ) )
+            {
+                Items.Remove( item );
+            }
+
+            if ( comparer == null )
+            {
+                comparer = Comparer<HotkeyEntry>.Default;
+            }
+
+            int i = 0;
+
+            while ( i < Items.Count && comparer.Compare( Items[i], item ) < 0 )
+            {
+                i++;
+            }
+
+            Items.Insert( i, item );
+        }
+
         public void ClearPreviousHotkey( ShortcutKeys keys )
         {
             foreach ( HotkeyEntry hotkeyEntry in Items )

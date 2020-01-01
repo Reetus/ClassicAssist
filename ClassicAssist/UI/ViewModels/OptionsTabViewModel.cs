@@ -1,4 +1,5 @@
-﻿using ClassicAssist.Data;
+﻿using System.Windows.Input;
+using ClassicAssist.Data;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using Newtonsoft.Json.Linq;
@@ -8,12 +9,16 @@ namespace ClassicAssist.UI.ViewModels
     public class OptionsTabViewModel : BaseViewModel, ISettingProvider
     {
         private Options _options;
+        private ICommand _setSmartTargetCommand;
 
         public Options Options
         {
             get => _options;
             set => SetProperty( ref _options, value );
         }
+
+        public ICommand SetSmartTargetCommand =>
+            _setSmartTargetCommand ?? ( _setSmartTargetCommand = new RelayCommand( SetSmartTarget, o => true ) );
 
         public void Serialize( JObject json )
         {
@@ -42,6 +47,7 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "UseObjectQueue", Options.UseObjectQueue );
             options.Add( "UseObjectQueueAmount", Options.UseObjectQueueAmount );
             options.Add( "QueueLastTarget", Options.QueueLastTarget );
+            options.Add( "SmartTargetOption", Options.SmartTargetOption.ToString() );
 
             json?.Add( "Options", options );
         }
@@ -77,6 +83,13 @@ namespace ClassicAssist.UI.ViewModels
             Options.UseObjectQueue = config?["UseObjectQueue"]?.ToObject<bool>() ?? false;
             Options.UseObjectQueueAmount = config?["UseObjectQueueAmount"]?.ToObject<int>() ?? 5;
             Options.QueueLastTarget = config?["QueueLastTarget"]?.ToObject<bool>() ?? false;
+            Options.SmartTargetOption =
+                config?["SmartTargetOption"]?.ToObject<SmartTargetOption>() ?? SmartTargetOption.None;
+        }
+
+        private void SetSmartTarget( object obj )
+        {
+            Options.CurrentOptions.SmartTargetOption = (SmartTargetOption) obj;
         }
     }
 }

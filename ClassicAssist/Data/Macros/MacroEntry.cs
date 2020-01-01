@@ -9,8 +9,6 @@ namespace ClassicAssist.Data.Macros
         private bool _loop;
         private string _macro = string.Empty;
 
-        public Action<MacroEntry> ActionSync { get; set; }
-
         public bool DoNotAutoInterrupt
         {
             get => _doNotAutoInterrupt;

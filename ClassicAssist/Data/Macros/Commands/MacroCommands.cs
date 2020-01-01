@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using System.Threading;
+using System.Threading.Tasks;
 using ClassicAssist.Resources;
 using UOC = ClassicAssist.UO.Commands;
 
@@ -21,15 +21,13 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            macro.ActionSync( macro );
-
-            Stop();
+            Task.Run( () => { macro.Action( macro ); } );
         }
 
         [CommandsDisplay( Category = "Macros", Description = "Stops the current macro.", InsertText = "Stop()" )]
         public static void Stop()
         {
-            Thread.CurrentThread.Abort();
+            MacroManager.GetInstance().Stop();
         }
     }
 }

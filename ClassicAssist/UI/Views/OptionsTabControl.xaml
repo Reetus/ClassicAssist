@@ -8,6 +8,9 @@
     xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
     xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:misc="clr-namespace:ClassicAssist.Misc"
+    xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
+    xmlns:data="clr-namespace:ClassicAssist.Data"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     x:Class="ClassicAssist.UI.Views.OptionsTabControl"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="500">
@@ -33,6 +36,17 @@
                 <ComboBox Text="{Binding Options.CommandPrefix}" Margin="10,0,0,0" Padding="10,2,10,2">
                     <ComboBoxItem Content="+" />
                     <ComboBoxItem Content="=" />
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="{x:Static resources:Strings.Smart_last_target_}" />
+                <ComboBox Text="{Binding Options.SmartTargetOption, Mode=TwoWay}" Margin="10,0,0,0"
+                          ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type data:SmartTargetOption}}}"
+                          MinWidth="100">
+                    <i:Interaction.Behaviors>
+                        <misc1:ComboBoxBehavior CommandBinding="{Binding SetSmartTargetCommand}"
+                                                CommandParameter="{Binding Options.SmartTargetOption}" />
+                    </i:Interaction.Behaviors>
                 </ComboBox>
             </StackPanel>
             <CheckBox Content="{x:Static resources:Strings.Persist_Use_Once}"

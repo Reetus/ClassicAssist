@@ -2,6 +2,7 @@
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.UO;
+using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
@@ -86,8 +87,35 @@ namespace ClassicAssist.Data.Hotkeys.Commands
         {
             public override void Execute()
             {
-                TargetCommands.Target( "last", Options.CurrentOptions.RangeCheckLastTarget,
-                    Options.CurrentOptions.QueueLastTarget );
+                if ( Options.CurrentOptions.SmartTargetOption == SmartTargetOption.None )
+                {
+                    TargetCommands.Target( "last", Options.CurrentOptions.RangeCheckLastTarget,
+                        Options.CurrentOptions.QueueLastTarget );
+                }
+                else
+                {
+                    if ( Engine.TargetExists )
+                    {
+                        if ( Options.CurrentOptions.SmartTargetOption.HasFlag( SmartTargetOption.Friend ) &&
+                             Engine.TargetFlags == TargetFlags.Beneficial && AliasCommands.FindAlias( "friend" ) )
+                        {
+                            TargetCommands.Target( "friend", Options.CurrentOptions.RangeCheckLastTarget,
+                                Options.CurrentOptions.QueueLastTarget );
+                            return;
+                        }
+
+                        if ( Options.CurrentOptions.SmartTargetOption.HasFlag( SmartTargetOption.Enemy ) &&
+                             Engine.TargetFlags == TargetFlags.Harmful && AliasCommands.FindAlias( "enemy" ) )
+                        {
+                            TargetCommands.Target( "enemy", Options.CurrentOptions.RangeCheckLastTarget,
+                                Options.CurrentOptions.QueueLastTarget );
+                            return;
+                        }
+                    }
+
+                    TargetCommands.Target( "last", Options.CurrentOptions.RangeCheckLastTarget,
+                        Options.CurrentOptions.QueueLastTarget );
+                }
             }
         }
 

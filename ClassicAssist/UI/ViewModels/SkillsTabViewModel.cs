@@ -139,9 +139,9 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            _hotkeyCategory = new HotkeyEntry { IsCategory = true, Name = Strings.Skills, Children = hotkeyEntries };
+            _hotkeyCategory = new HotkeyEntry( Strings.Skills, true ) { Children = hotkeyEntries };
 
-            hotkey.Items.AddSorted( _hotkeyCategory );
+            hotkey.AddCategory( _hotkeyCategory );
         }
 
         private void ResetDeltas( object obj )

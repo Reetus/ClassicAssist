@@ -196,6 +196,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Attack Enemy.
+        /// </summary>
+        public static string Attack_Enemy {
+            get {
+                return ResourceManager.GetString("Attack Enemy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attack Last.
+        /// </summary>
+        public static string Attack_Last {
+            get {
+                return ResourceManager.GetString("Attack Last", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Attack request blocked....
         /// </summary>
         public static string Attack_request_blocked___ {
@@ -1056,6 +1074,15 @@ namespace ClassicAssist.Resources {
         public static string Loop {
             get {
                 return ResourceManager.GetString("Loop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loop time: {0}.
+        /// </summary>
+        public static string Loop_time___0_ {
+            get {
+                return ResourceManager.GetString("Loop time: {0}", resourceCulture);
             }
         }
         

@@ -147,5 +147,23 @@ namespace ClassicAssist.Data.Hotkeys.Commands
                 TargetCommands.ClearTargetQueue();
             }
         }
+
+        [HotkeyCommand( Name = "Attack Last", Category = "Targeting" )]
+        public class AttackLastCommand : HotkeyCommand
+        {
+            public override void Execute()
+            {
+                ActionCommands.Attack( "last" );
+            }
+        }
+
+        [HotkeyCommand( Name = "Attack Enemy", Category = "Targeting" )]
+        public class AttackEnemyCommand : HotkeyCommand
+        {
+            public override void Execute()
+            {
+                ActionCommands.Attack( "enemy" );
+            }
+        }
     }
 }

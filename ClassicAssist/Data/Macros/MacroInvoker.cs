@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Resources;
 using IronPython.Hosting;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
@@ -21,6 +23,7 @@ namespace ClassicAssist.Data.Macros
         private static Dictionary<string, object> _importCache;
         private static MacroInvoker _instance;
         private static readonly object _lock = new object();
+        private readonly Stopwatch _stopWatch = new Stopwatch();
         private CancellationTokenSource _cancellationToken;
         private MacroEntry _macro;
 
@@ -119,11 +122,35 @@ namespace ClassicAssist.Data.Macros
 
                     ScriptScope macroScope = _engine.CreateScope( importCache );
 
+                    _stopWatch.Reset();
+                    _stopWatch.Start();
+
                     do
                     {
                         _cancellationToken.Token.ThrowIfCancellationRequested();
 
                         source.Execute( macroScope );
+
+                        _stopWatch.Stop();
+
+                        bool willLoop = _macro.Loop && !IsFaulted && !_cancellationToken.IsCancellationRequested;
+
+                        if ( !willLoop )
+                        {
+                            break;
+                        }
+
+                        if ( Options.CurrentOptions.Debug )
+                        {
+                            UO.Commands.SystemMessage( string.Format( Strings.Loop_time___0_, _stopWatch.Elapsed ) );
+                        }
+
+                        int diff = 50 - (int) _stopWatch.ElapsedMilliseconds;
+
+                        if ( diff > 0 )
+                        {
+                            Thread.Sleep( diff );
+                        }
                     }
                     while ( _macro.Loop && !IsFaulted );
                 }

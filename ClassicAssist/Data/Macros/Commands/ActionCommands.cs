@@ -90,6 +90,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
+            Engine.SendPacketToClient( new ChangeCombatant( serial ) );
             Engine.SendPacketToServer( new AttackRequest( serial ) );
         }
 

@@ -159,6 +159,12 @@
   <data name="Amount" xml:space="preserve">
     <value>Amount</value>
   </data>
+  <data name="Attack Enemy" xml:space="preserve">
+    <value>Attack Enemy</value>
+  </data>
+  <data name="Attack Last" xml:space="preserve">
+    <value>Attack Last</value>
+  </data>
   <data name="Attack request blocked..." xml:space="preserve">
     <value>Attack request blocked...</value>
   </data>
@@ -446,6 +452,9 @@
   </data>
   <data name="Loop" xml:space="preserve">
     <value>Loop</value>
+  </data>
+  <data name="Loop time: {0}" xml:space="preserve">
+    <value>Loop time: {0}</value>
   </data>
   <data name="Macro error: {0}" xml:space="preserve">
     <value>Macro error: {0}</value>

@@ -1150,6 +1150,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Min Price.
+        /// </summary>
+        public static string Min_Price {
+            get {
+                return ResourceManager.GetString("Min Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Misc.
         /// </summary>
         public static string Misc {
@@ -2316,6 +2325,15 @@ namespace ClassicAssist.Resources {
         public static string Vendor_Buy {
             get {
                 return ResourceManager.GetString("Vendor Buy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vendor Sell.
+        /// </summary>
+        public static string Vendor_Sell {
+            get {
+                return ResourceManager.GetString("Vendor Sell", resourceCulture);
             }
         }
         

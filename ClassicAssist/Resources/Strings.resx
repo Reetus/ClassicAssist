@@ -477,6 +477,9 @@
   <data name="Messages" xml:space="preserve">
     <value>Messages</value>
   </data>
+  <data name="Min Price" xml:space="preserve">
+    <value>Min Price</value>
+  </data>
   <data name="Misc" xml:space="preserve">
     <value>Misc</value>
   </data>
@@ -866,6 +869,9 @@
   </data>
   <data name="Vendor Buy" xml:space="preserve">
     <value>Vendor Buy</value>
+  </data>
+  <data name="Vendor Sell" xml:space="preserve">
+    <value>Vendor Sell</value>
   </data>
   <data name="Version:" xml:space="preserve">
     <value>Version:</value>

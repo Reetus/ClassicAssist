@@ -1,7 +1,10 @@
-﻿using Assistant;
+﻿using System.Diagnostics;
+using System.IO;
+using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ClassicAssist.Tests.MacroCommands
@@ -20,6 +23,38 @@ namespace ClassicAssist.Tests.MacroCommands
             Assert.IsTrue( JournalCommands.InJournal( "town guards", "system" ) );
 
             Engine.Journal.Clear();
+        }
+
+        [TestMethod]
+        public void WillMatchSystemRegular()
+        {
+            const string localPath = @"C:\Users\johns\Desktop\KvG Client 2.0";
+
+            if ( !Directory.Exists( localPath ) )
+            {
+                Debug.WriteLine( "Not running test, requires Cliloc.enu" );
+                return;
+            }
+
+            Cliloc.Initialize( localPath );
+
+            byte[] packet =
+            {
+                0xC1, 0x00, 0x32, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x03, 0xB2, 0x00, 0x03, 0x00, 0x07,
+                0xA4, 0xE1, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x00, 0x00
+            };
+
+            IncomingPacketHandlers.Initialize();
+
+            PacketHandler handler = IncomingPacketHandlers.GetHandler( 0xc1 );
+
+            Assert.IsNotNull( handler );
+
+            handler.OnReceive( new PacketReader( packet, packet.Length, false ) );
+
+            Assert.IsTrue( JournalCommands.InJournal( "fingers slip!", "system" ) );
         }
 
         [TestMethod]

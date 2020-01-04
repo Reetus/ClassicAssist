@@ -25,7 +25,7 @@
             </i:Interaction.Behaviors>
             <TreeView.ItemContainerStyle>
                 <Style TargetType="TreeViewItem">
-                    <Setter Property="IsExpanded" Value="true" />
+                    <Setter Property="IsExpanded" Value="false" />
                 </Style>
             </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>

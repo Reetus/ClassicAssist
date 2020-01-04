@@ -175,7 +175,7 @@ namespace ClassicAssist.UI.ViewModels
 
                     entry.Action = async hks => await Execute( entry );
 
-                    Items.Add( entry );
+                    Items.AddSorted( entry );
                 }
             }
 

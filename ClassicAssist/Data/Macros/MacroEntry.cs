@@ -3,7 +3,7 @@ using ClassicAssist.Data.Hotkeys;
 
 namespace ClassicAssist.Data.Macros
 {
-    public class MacroEntry : HotkeySettable
+    public class MacroEntry : HotkeySettable, IComparable<MacroEntry>
     {
         private bool _doNotAutoInterrupt;
         private bool _loop;
@@ -28,6 +28,11 @@ namespace ClassicAssist.Data.Macros
         }
 
         public Action Stop { get; set; }
+
+        public int CompareTo( MacroEntry other )
+        {
+            return string.Compare( Name, other.Name, StringComparison.OrdinalIgnoreCase );
+        }
 
         public override string ToString()
         {

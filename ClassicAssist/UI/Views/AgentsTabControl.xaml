@@ -24,5 +24,8 @@
         <TabItem Header="{x:Static resources:Strings.Vendor_Buy}">
             <agents:VendorBuyTabControl />
         </TabItem>
+        <TabItem Header="{x:Static resources:Strings.Vendor_Sell}">
+            <agents:VendorSellTabControl />
+        </TabItem>
     </TabControl>
 </UserControl>

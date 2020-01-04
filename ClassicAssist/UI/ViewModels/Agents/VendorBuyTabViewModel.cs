@@ -29,7 +29,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public VendorBuyTabViewModel()
         {
-            IncomingPacketHandlers.VendorDisplayEvent += OnVendorDisplayEvent;
+            IncomingPacketHandlers.VendorBuyDisplayEvent += OnVendorBuyDisplayEvent;
         }
 
         public bool Enabled
@@ -135,7 +135,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
         }
 
-        private void OnVendorDisplayEvent( int serial, ShopListEntry[] entries )
+        private void OnVendorBuyDisplayEvent( int serial, ShopListEntry[] entries )
         {
             if ( !Enabled )
             {

@@ -39,11 +39,14 @@ namespace ClassicAssist.UO.Network
 
         public delegate void dToggleSpecialMove( int spellID, bool enabled );
 
-        public delegate void dVendorDisplay( int serial, ShopListEntry[] entries );
+        public delegate void dVendorBuyDisplay( int serial, ShopListEntry[] entries );
+
+        public delegate void dVendorSellDisplay( int serial, SellListEntry[] entries );
 
         private static PacketHandler[] _handlers;
         private static PacketHandler[] _extendedHandlers;
 
+        public static event dVendorSellDisplay VendorSellDisplayEvent;
         public static event dJournalEntryAdded JournalEntryAddedEvent;
         public static event dSkillUpdated SkillUpdatedEvent;
         public static event dSkillList SkillsListEvent;
@@ -76,6 +79,7 @@ namespace ClassicAssist.UO.Network
             Register( 0x77, 17, OnMobileMoving );
             Register( 0x78, 0, OnMobileIncoming );
             Register( 0x98, 0, OnMobileName );
+            Register( 0x9E, 0, OnShopSell );
             Register( 0xA1, 9, OnMobileHits );
             Register( 0xA2, 9, OnMobileMana );
             Register( 0xA3, 9, OnMobileStamina );
@@ -95,7 +99,40 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
         }
 
-        public static event dVendorDisplay VendorDisplayEvent;
+        private static void OnShopSell( PacketReader reader )
+        {
+            int vendorSerial = reader.ReadInt32();
+            int itemCount = reader.ReadInt16();
+
+            List<SellListEntry> shopList = new List<SellListEntry>();
+
+            for ( int i = 0; i < itemCount; i++ )
+            {
+                int serial = reader.ReadInt32();
+                int id = reader.ReadInt16();
+                int hue = reader.ReadInt16();
+                int amount = reader.ReadInt16();
+                int price = reader.ReadInt16();
+                string name = reader.ReadString( reader.ReadInt16() );
+
+                shopList.Add( new SellListEntry
+                {
+                    Serial = serial,
+                    ID = id,
+                    Hue = hue,
+                    Amount = amount,
+                    Price = price,
+                    Name = name
+                } );
+            }
+
+            if ( shopList.Count > 0 )
+            {
+                VendorSellDisplayEvent?.Invoke( vendorSerial, shopList.ToArray() );
+            }
+        }
+
+        public static event dVendorBuyDisplay VendorBuyDisplayEvent;
 
         private static void OnContainerDisplay( PacketReader reader )
         {
@@ -112,7 +149,7 @@ namespace ClassicAssist.UO.Network
 
             if ( entity?.ShopBuy != null )
             {
-                VendorDisplayEvent?.Invoke( serial, entity.ShopBuy );
+                VendorBuyDisplayEvent?.Invoke( serial, entity.ShopBuy );
             }
         }
 

@@ -31,6 +31,11 @@ namespace ClassicAssist.Data.Macros
         {
             ScriptRuntime runtime = _engine.Runtime;
             runtime.LoadAssembly( Assembly.GetExecutingAssembly() );
+
+            if ( _importCache == null )
+            {
+                _importCache = InitializeImports( _engine );
+            }
         }
 
         public Exception Exception { get; set; }

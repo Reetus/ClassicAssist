@@ -18,7 +18,8 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( author.ToLower().Equals( "system" ) )
             {
                 match = Engine.Journal.GetBuffer().Any( je =>
-                    je.Text.ToLower().Contains( text.ToLower() ) && je.SpeechType == JournalSpeech.System );
+                    je.Text.ToLower().Contains( text.ToLower() ) &&
+                    ( je.SpeechType == JournalSpeech.System || je.Name == "System" ) );
             }
             else
             {

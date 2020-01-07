@@ -62,7 +62,7 @@ namespace ClassicAssist.UO.Objects.Gumps
             return false;
         }
 
-        public static Gump Parse( int serial, int ID, int x, int y, string layout, string[] text )
+        public static Gump Parse( int serial, uint ID, int x, int y, string layout, string[] text )
         {
             bool closable = true, movable = true, disposable = true, resizable = true;
 

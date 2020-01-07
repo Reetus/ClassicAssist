@@ -167,20 +167,20 @@ namespace ClassicAssist.UO
 
         public static bool GumpButtonClick( uint gumpID, int buttonID )
         {
-            if ( !Engine.GumpList.TryGetValue( (int) gumpID, out int serial ) )
+            if ( !Engine.GumpList.TryGetValue( gumpID, out int serial ) )
             {
                 return false;
             }
 
             Engine.SendPacketToServer( new GumpButtonClick( (int) gumpID, serial, buttonID ) );
 
-            Engine.GumpList.TryRemove( (int) gumpID, out _ );
-            CloseClientGump( (int) gumpID );
+            Engine.GumpList.TryRemove( gumpID, out _ );
+            CloseClientGump( gumpID );
 
             return true;
         }
 
-        public static void CloseClientGump( int gumpID )
+        public static void CloseClientGump( uint gumpID )
         {
             Engine.Gumps.Remove( gumpID );
             Engine.SendPacketToClient( new CloseClientGump( gumpID ) );

@@ -24,7 +24,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             Entity entity = Engine.Items.GetItem( serial ) ?? (Entity) Engine.Mobiles.GetMobile( serial );
 
-            return entity.Distance;
+            return entity?.Distance ?? 0;
         }
 
         [CommandsDisplay( Category = "Entity",

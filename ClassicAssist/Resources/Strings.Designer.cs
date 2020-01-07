@@ -1051,6 +1051,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Line Number.
+        /// </summary>
+        public static string Line_Number {
+            get {
+                return ResourceManager.GetString("Line Number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lists.
         /// </summary>
         public static string Lists {

@@ -36,7 +36,7 @@ namespace ClassicAssist.Tests
             // Clilocs removed to prevent dependancy on Cliloc.enu
             const string layout = "{ page 0 }{ resizepic 10 10 2600 500 135 }{ xmfhtmlgump 52 35 420 55 0 1 1 }{ button 60 95 4005 4007 1 0 1 }{ xmfhtmlgump 95 96 150 35 0 0 0 }{ button 285 95 4017 4019 1 0 0 }{ xmfhtmlgump 320 96 150 35 0 0 0 }";
 
-            Gump gump = GumpParser.Parse( 0x01, unchecked((int)0x93a564c3), 10, 10, layout, new string[0] );
+            Gump gump = GumpParser.Parse( 0x01, 0x93a564c3, 10, 10, layout, new string[0] );
 
             Assert.IsNotNull( gump );
 

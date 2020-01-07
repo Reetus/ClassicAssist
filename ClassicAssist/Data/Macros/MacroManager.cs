@@ -93,11 +93,20 @@ namespace ClassicAssist.Data.Macros
         public void Execute( MacroEntry macro )
         {
             _invoker = MacroInvoker.GetInstance();
-            _invoker.ExceptionEvent += exception =>
+
+            void OnException( Exception exception )
             {
                 UO.Commands.SystemMessage( string.Format( Strings.Macro_error___0_, exception.Message ) );
-            };
+
+                if ( exception is Microsoft.Scripting.SyntaxErrorException syntaxError )
+                {
+                    UO.Commands.SystemMessage( $"{Strings.Line_Number}: {syntaxError.RawSpan.Start.Line}" );
+                }
+            }
+
+            _invoker.ExceptionEvent += OnException;
             _invoker.Execute( macro );
+            _invoker.ExceptionEvent -= OnException;
         }
 
         public void Stop()

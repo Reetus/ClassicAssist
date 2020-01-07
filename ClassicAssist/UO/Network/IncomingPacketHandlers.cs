@@ -22,7 +22,7 @@ namespace ClassicAssist.UO.Network
 
         public delegate void dContainerContents( int serial, ItemCollection container );
 
-        public delegate void dGump( int gumpId, int serial, Gump gump );
+        public delegate void dGump( uint gumpId, int serial, Gump gump );
 
         public delegate void dJournalEntryAdded( JournalEntry je );
 
@@ -376,7 +376,7 @@ namespace ClassicAssist.UO.Network
 
         private static void OnCloseGump( PacketReader reader )
         {
-            int gumpID = reader.ReadInt32();
+            uint gumpID = reader.ReadUInt32();
             int buttonID = reader.ReadInt32();
 
             Engine.GumpList.TryRemove( gumpID, out int _ );
@@ -445,7 +445,7 @@ namespace ClassicAssist.UO.Network
         private static void OnCompressedGump( PacketReader reader )
         {
             int senderSerial = reader.ReadInt32();
-            int gumpId = reader.ReadInt32();
+            uint gumpId = reader.ReadUInt32();
 
             Engine.GumpList.AddOrUpdate( gumpId, senderSerial, ( k, v ) => senderSerial );
 
@@ -740,6 +740,19 @@ namespace ClassicAssist.UO.Network
             item.Grid = grid;
             item.Owner = containerSerial;
             item.Hue = hue;
+
+            // Check mobile layer items if container is not a mobile
+            if ( !UOMath.IsMobile( containerSerial ) )
+            {
+                Mobile mobile = Engine.Mobiles.SelectEntity( m => m.GetAllLayers().Contains( serial ) );
+
+                Item layerItem = mobile?.GetEquippedItems().FirstOrDefault( i => i.Serial == serial );
+
+                if ( layerItem != null )
+                {
+                    mobile.SetLayer( layerItem.Layer, 0 );
+                }
+            }
 
             if ( UOMath.IsMobile( containerSerial ) )
             {

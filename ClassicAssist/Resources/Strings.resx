@@ -444,6 +444,9 @@
   <data name="Light Level" xml:space="preserve">
     <value>Light Level</value>
   </data>
+  <data name="Line Number" xml:space="preserve">
+    <value>Line Number</value>
+  </data>
   <data name="Lists" xml:space="preserve">
     <value>Lists</value>
   </data>

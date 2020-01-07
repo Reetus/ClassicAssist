@@ -77,9 +77,10 @@ namespace ClassicAssist.Data.Dress
                         continue;
                     }
 
-                    if ( currentInLayer != 0 && moveConflicting )
+                    if ( currentInLayer != 0 && moveConflicting && container != -1 )
                     {
                         Engine.Player?.SetLayer( dai.Layer, 0 );
+
                         await UOC.DragDropAsync( currentInLayer, 1, container );
                         await Task.Delay( Options.CurrentOptions.ActionDelayMS );
                         currentInLayer = 0;
@@ -110,6 +111,11 @@ namespace ClassicAssist.Data.Dress
 
             IEnumerable<Item> itemsToUnequip =
                 Engine.Player.GetEquippedItems().Where( i => serials.Contains( i.Serial ) );
+
+            if ( container == -1 )
+            {
+                return;
+            }
 
             foreach ( Item item in itemsToUnequip )
             {

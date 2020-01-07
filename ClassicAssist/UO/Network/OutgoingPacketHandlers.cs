@@ -10,7 +10,7 @@ namespace ClassicAssist.UO.Network
 {
     public static class OutgoingPacketHandlers
     {
-        public delegate void dGump( int gumpId, int serial, Gump gump );
+        public delegate void dGump( uint gumpId, int serial, Gump gump );
 
         public delegate void dTargetSentEvent( TargetType targetType, int senderSerial, int flags, int serial, int x,
             int y, int z, int id );
@@ -53,7 +53,7 @@ namespace ClassicAssist.UO.Network
         private static void OnGumpButtonPressed( PacketReader reader )
         {
             int senderSerial = reader.ReadInt32();
-            int gumpId = reader.ReadInt32();
+            uint gumpId = reader.ReadUInt32();
             int buttonId = reader.ReadInt32();
 
             Engine.GumpList.TryRemove( gumpId, out _ );

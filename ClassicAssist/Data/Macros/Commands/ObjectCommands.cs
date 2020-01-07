@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Assistant;
 using ClassicAssist.Resources;
@@ -252,6 +253,81 @@ namespace ClassicAssist.Data.Macros.Commands
 
             AliasCommands.SetAlias( "found", entity.Serial );
             UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ) );
+
+            return true;
+        }
+
+        [CommandsDisplay( Category = "Entity",
+            Description =
+                "Move the given serial/alias to the specified x,y,z offset of the player, no amount specified or -1 will move the full stack.",
+            InsertText = "MoveItemOffset(\"trashitem\", 0, 1, 0, -1\")" )]
+        public static void MoveItemOffset( object obj, int xOffset, int yOffset, int zOffset, int amount = -1 )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+
+                return;
+            }
+
+            PlayerMobile player = Engine.Player;
+
+            if ( player == null )
+            {
+                return;
+            }
+
+            int x = player.X + xOffset;
+            int y = player.Y + yOffset;
+            int z = player.Z + zOffset;
+
+            UOC.DragDropAsync( serial, amount, -1, x, y, z ).Wait();
+        }
+
+        [CommandsDisplay( Category = "Entity",
+            Description =
+                "Move the given type from the specified source container to the specified x,y,z offset of the player, no amount specified or -1 will move the full stack.",
+            InsertText = "MoveTypeOffset(0xf0e, \"backpack\", 0, 1, 0, -1\")" )]
+        public static bool MoveTypeOffset( int id, object findLocation, int xOffset, int yOffset, int zOffset,
+            int amount = -1 )
+        {
+            int owner = 0;
+
+            if ( findLocation == null ||
+                 ( (string) findLocation ).Equals( "ground", StringComparison.InvariantCultureIgnoreCase ) )
+            {
+                UOC.SystemMessage( Strings.Invalid_container___ );
+                return false;
+            }
+
+            owner = AliasCommands.ResolveSerial( findLocation );
+
+            bool Predicate( Item i )
+            {
+                return i.ID == id && i.IsDescendantOf( owner );
+            }
+
+            Item entity = Engine.Items.SelectEntities( Predicate ).FirstOrDefault();
+
+            if ( entity == null )
+            {
+                return false;
+            }
+
+            PlayerMobile player = Engine.Player;
+
+            if ( player == null )
+            {
+                return false;
+            }
+
+            int x = player.X + xOffset;
+            int y = player.Y + yOffset;
+            int z = player.Z + zOffset;
+
+            UOC.DragDropAsync( entity.Serial, amount, -1, x, y, z ).Wait();
 
             return true;
         }

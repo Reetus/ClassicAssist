@@ -87,7 +87,7 @@ namespace Assistant
         public static TargetType TargetType { get; set; }
         public static ThreadQueue<int> UseObjectQueue { get; set; } = new ThreadQueue<int>( ProcessUseObjectQueue );
         public static bool WaitingForTarget { get; set; }
-        internal static ConcurrentDictionary<int, int> GumpList { get; set; } = new ConcurrentDictionary<int, int>();
+        internal static ConcurrentDictionary<uint, int> GumpList { get; set; } = new ConcurrentDictionary<uint, int>();
 
         internal static event dSendRecvPacket InternalPacketSentEvent;
         internal static event dSendRecvPacket InternalPacketReceivedEvent;

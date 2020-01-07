@@ -55,7 +55,7 @@ namespace ClassicAssist.Data.Macros.Commands
                     {
                         if ( primary && manager.IsPrimaryEnabled || !primary && manager.IsSecondaryEnabled )
                         {
-                            UOC.SystemMessage( Strings.Ability_already_set___ );
+                            UOC.SystemMessage( Strings.Ability_already_set___, 0x3F );
                             return;
                         }
 
@@ -65,7 +65,7 @@ namespace ClassicAssist.Data.Macros.Commands
                     {
                         if ( primary && !manager.IsPrimaryEnabled || !primary && !manager.IsSecondaryEnabled )
                         {
-                            UOC.SystemMessage( Strings.Ability_not_set___ );
+                            UOC.SystemMessage( Strings.Ability_not_set___, 0x3F );
                             return;
                         }
 
@@ -74,7 +74,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 }
             }
 
-            UOC.SystemMessage( string.Format( Strings.Setting_ability___0_____, ability ) );
+            UOC.SystemMessage( string.Format( Strings.Setting_ability___0_____, ability ), 0x3F );
             manager.SetAbility( primary ? AbilityType.Primary : AbilityType.Secondary );
         }
 

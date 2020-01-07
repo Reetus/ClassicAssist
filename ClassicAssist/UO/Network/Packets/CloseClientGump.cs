@@ -4,7 +4,7 @@ namespace ClassicAssist.UO.Network.Packets
 {
     public class CloseClientGump : BasePacket
     {
-        public CloseClientGump( int gumpID )
+        public CloseClientGump( uint gumpID )
         {
             _writer = new PacketWriter( 13 );
             _writer.Write( (byte) 0xBF );

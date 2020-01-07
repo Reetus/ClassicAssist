@@ -23,11 +23,11 @@ namespace ClassicAssist.UO.Objects
 {
     public sealed class GumpCollection
     {
-        private readonly ConcurrentDictionary<int, Gump> _dictionary;
+        private readonly ConcurrentDictionary<uint, Gump> _dictionary;
 
         public GumpCollection()
         {
-            _dictionary = new ConcurrentDictionary<int, Gump>();
+            _dictionary = new ConcurrentDictionary<uint, Gump>();
         }
 
         public void Add( Gump gump )
@@ -40,7 +40,7 @@ namespace ClassicAssist.UO.Objects
             }
         }
 
-        public bool Remove( int id, int buttonId = 0 )
+        public bool Remove( uint id, int buttonId = 0 )
         {
             bool result = _dictionary.TryRemove( id, out Gump g );
 
@@ -54,7 +54,7 @@ namespace ClassicAssist.UO.Objects
             return result;
         }
 
-        public bool GetGump( int id, out Gump gump )
+        public bool GetGump( uint id, out Gump gump )
         {
             return _dictionary.TryGetValue( id, out gump );
         }

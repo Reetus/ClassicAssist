@@ -33,14 +33,14 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = "Gumps", Description = "Checks if a gump id exists or not.",
             InsertText = "if GumpExists(0xff):" )]
-        public static bool GumpExists( int gumpId )
+        public static bool GumpExists( uint gumpId )
         {
             return Engine.GumpList.ContainsKey( gumpId );
         }
 
         [CommandsDisplay( Category = "Gumps", Description = "Check for a text in gump.",
             InsertText = "if InGump(0xf00f, \"lethal darts\"):" )]
-        public static bool InGump( int gumpId, string text )
+        public static bool InGump( uint gumpId, string text )
         {
             if ( Engine.Gumps.GetGump( gumpId, out Gump gump ) )
             {

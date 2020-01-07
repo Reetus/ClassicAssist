@@ -52,7 +52,7 @@ namespace ClassicAssist.UO.Objects.Gumps
         public int X;
         public int Y;
 
-        public Gump( int x, int y, int id, int serial, string layout, string[] strings,
+        public Gump( int x, int y, uint id, int serial, string layout, string[] strings,
             GumpElement[] elements, GumpPage[] pages )
         {
             X = x;
@@ -70,7 +70,7 @@ namespace ClassicAssist.UO.Objects.Gumps
             }
         }
 
-        public Gump( int x, int y, int serial = 0, int id = 0 )
+        public Gump( int x, int y, int serial = 0, uint id = 0 )
         {
             X = x;
             Y = y;
@@ -82,7 +82,7 @@ namespace ClassicAssist.UO.Objects.Gumps
 
             if ( ID == 0 && fullName != null )
             {
-                ID = fullName.GetHashCode();
+                ID = (uint)fullName.GetHashCode();
             }
 
             if ( Serial == 0 && fullName != null )
@@ -120,7 +120,7 @@ namespace ClassicAssist.UO.Objects.Gumps
             }
         }
 
-        public int ID { get; }
+        public uint ID { get; }
 
         public bool Movable { get; set; }
 

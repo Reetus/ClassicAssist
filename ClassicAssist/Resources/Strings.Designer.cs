@@ -871,6 +871,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Interrupt Spell.
+        /// </summary>
+        public static string Interrupt_Spell {
+            get {
+                return ResourceManager.GetString("Interrupt Spell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid container....
         /// </summary>
         public static string Invalid_container___ {

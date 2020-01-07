@@ -384,6 +384,9 @@
   <data name="Insert" xml:space="preserve">
     <value>Insert</value>
   </data>
+  <data name="Interrupt Spell" xml:space="preserve">
+    <value>Interrupt Spell</value>
+  </data>
   <data name="Invalid container..." xml:space="preserve">
     <value>Invalid container...</value>
   </data>

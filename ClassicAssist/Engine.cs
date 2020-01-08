@@ -67,6 +67,8 @@ namespace Assistant
         private static readonly int[] _sequenceList = new int[256];
         private static OnMouse _onMouse;
 
+        private static readonly DateTime[] _lastMouseAction = new DateTime[(int) MouseOptions.None];
+
         public static string ClientPath { get; set; }
         public static Version ClientVersion { get; set; }
         public static bool Connected { get; set; }
@@ -174,7 +176,20 @@ namespace Assistant
 
             if ( wheel != 0 )
             {
-                mouse = wheel < 0 ? MouseOptions.MouseWheelUp : MouseOptions.MouseWheelDown;
+                mouse = wheel < 0 ? MouseOptions.MouseWheelDown : MouseOptions.MouseWheelUp;
+
+                if ( Options.CurrentOptions.LimitMouseWheelTrigger )
+                {
+                    TimeSpan diff = DateTime.Now - _lastMouseAction[(int) mouse];
+
+                    if ( diff <
+                         TimeSpan.FromMilliseconds( Options.CurrentOptions.LimitMouseWheelTriggerMS ) )
+                    {
+                        return;
+                    }
+                }
+
+                _lastMouseAction[(int) mouse] = DateTime.Now;
             }
 
             HotkeyManager.GetInstance().OnMouseAction( mouse );

@@ -1024,15 +1024,6 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last Target Queued.
-        /// </summary>
-        public static string Last_Target_Queued {
-            get {
-                return ResourceManager.GetString("Last Target Queued", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Latency:.
         /// </summary>
         public static string Latency_ {
@@ -1056,6 +1047,15 @@ namespace ClassicAssist.Resources {
         public static string Light_Level {
             get {
                 return ResourceManager.GetString("Light Level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Limit Mouse Wheel Retrigger.
+        /// </summary>
+        public static string Limit_Mouse_Wheel_Retrigger {
+            get {
+                return ResourceManager.GetString("Limit Mouse Wheel Retrigger", resourceCulture);
             }
         }
         
@@ -1119,6 +1119,15 @@ namespace ClassicAssist.Resources {
         public static string Macros {
             get {
                 return ResourceManager.GetString("Macros", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;Made For Malo&quot;.
+        /// </summary>
+        public static string Made_For_Malo {
+            get {
+                return ResourceManager.GetString("Made_For_Malo", resourceCulture);
             }
         }
         
@@ -2028,6 +2037,15 @@ namespace ClassicAssist.Resources {
         public static string Target_queue_cleared___ {
             get {
                 return ResourceManager.GetString("Target queue cleared...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target Queued.
+        /// </summary>
+        public static string Target_Queued {
+            get {
+                return ResourceManager.GetString("Target Queued", resourceCulture);
             }
         }
         

@@ -11,8 +11,8 @@ namespace ClassicAssist.Data.Hotkeys
         RightButton,
         XButton1,
         XButton2,
-        MouseWheelUp,
         MouseWheelDown,
+        MouseWheelUp,
         None
     }
 

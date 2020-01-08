@@ -33,48 +33,43 @@
             </StackPanel.Resources>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <TextBlock Text="{x:Static resources:Strings.Command_Prefix_}" />
-                <ComboBox Text="{Binding Options.CommandPrefix}" Margin="10,0,0,0" Padding="10,2,10,2">
+                <ComboBox Text="{Binding CurrentOptions.CommandPrefix}" Margin="10,0,0,0" Padding="10,2,10,2">
                     <ComboBoxItem Content="+" />
                     <ComboBoxItem Content="=" />
                 </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <TextBlock Text="{x:Static resources:Strings.Smart_last_target_}" />
-                <ComboBox Text="{Binding Options.SmartTargetOption, Mode=TwoWay}" Margin="10,0,0,0"
+                <ComboBox Text="{Binding CurrentOptions.SmartTargetOption, Mode=TwoWay}" Margin="10,0,0,0"
                           ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type data:SmartTargetOption}}}"
-                          MinWidth="100">
-                    <i:Interaction.Behaviors>
-                        <misc1:ComboBoxBehavior CommandBinding="{Binding SetSmartTargetCommand}"
-                                                CommandParameter="{Binding Options.SmartTargetOption}" />
-                    </i:Interaction.Behaviors>
-                </ComboBox>
+                          MinWidth="100" />
             </StackPanel>
             <CheckBox Content="{x:Static resources:Strings.Persist_Use_Once}"
-                      IsChecked="{Binding Options.PersistUseOnce, Mode=TwoWay}" />
+                      IsChecked="{Binding CurrentOptions.PersistUseOnce, Mode=TwoWay}" />
             <CheckBox Content="{x:Static resources:Strings.Use_death_screen_whilst_hidden}"
-                      IsChecked="{Binding Options.UseDeathScreenWhilstHidden}" />
-            <CheckBox IsChecked="{Binding Options.RangeCheckLastTarget}" DataContext="{Binding}">
+                      IsChecked="{Binding CurrentOptions.UseDeathScreenWhilstHidden}" />
+            <CheckBox IsChecked="{Binding CurrentOptions.RangeCheckLastTarget}" DataContext="{Binding}">
                 <CheckBox.ContentTemplate>
                     <ItemContainerTemplate>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="{x:Static resources:Strings.Range_check_last_target}" Margin="0"
                                    Padding="5,0,0,0" />
                             <TextBox Width="40" Margin="10,0,10,0"
-                                     Text="{Binding Path=Data.Options.RangeCheckLastTargetAmount, Source={StaticResource proxy}}" />
+                                     Text="{Binding Path=Data.CurrentOptions.RangeCheckLastTargetAmount, Source={StaticResource proxy}}" />
                         </StackPanel>
                     </ItemContainerTemplate>
                 </CheckBox.ContentTemplate>
             </CheckBox>
             <CheckBox Content="{x:Static resources:Strings.Use_experimental_fizzle_detection}"
-                      IsChecked="{Binding Options.UseExperimentalFizzleDetection}" />
-            <CheckBox IsChecked="{Binding Options.UseObjectQueue}" DataContext="{Binding}">
+                      IsChecked="{Binding CurrentOptions.UseExperimentalFizzleDetection}" />
+            <CheckBox IsChecked="{Binding CurrentOptions.UseObjectQueue}" DataContext="{Binding}">
                 <CheckBox.ContentTemplate>
                     <ItemContainerTemplate>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="{x:Static resources:Strings.Use_object_queue}" Margin="0"
                                    Padding="5,0,0,0" />
                             <TextBox Width="40" Margin="10,0,10,0"
-                                     Text="{Binding Path=Data.Options.UseObjectQueueAmount, Source={StaticResource proxy}}" />
+                                     Text="{Binding Path=Data.CurrentOptions.UseObjectQueueAmount, Source={StaticResource proxy}}" />
                             <Label Content="{x:Static resources:Strings.items}" Margin="0"
                                    Padding="0,0,0,0" />
                         </StackPanel>
@@ -82,7 +77,21 @@
                 </CheckBox.ContentTemplate>
             </CheckBox>
             <CheckBox Content="{x:Static resources:Strings.Queue_Last_Target___Target_Self}"
-                      IsChecked="{Binding Options.QueueLastTarget}" />
+                      IsChecked="{Binding CurrentOptions.QueueLastTarget}" />
+            <CheckBox IsChecked="{Binding CurrentOptions.LimitMouseWheelTrigger}" DataContext="{Binding}">
+                <CheckBox.ContentTemplate>
+                    <ItemContainerTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{x:Static resources:Strings.Limit_Mouse_Wheel_Retrigger}" Margin="0"
+                                   Padding="5,0,0,0" />
+                            <TextBox Width="40" Margin="10,0,10,0"
+                                     Text="{Binding Path=Data.CurrentOptions.LimitMouseWheelTriggerMS, Source={StaticResource proxy}}" />
+                            <Label Content="ms" Margin="0"
+                                   Padding="0,0,0,0" />
+                        </StackPanel>
+                    </ItemContainerTemplate>
+                </CheckBox.ContentTemplate>
+            </CheckBox>
         </StackPanel>
     </Grid>
 </UserControl>

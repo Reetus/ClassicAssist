@@ -18,6 +18,12 @@ namespace ClassicAssist.Data.Filters
             {
                 Engine.AddReceiveFilter( pfi );
 
+                if ( Engine.Player != null && Engine.Player.Map == Map.Felucca )
+                {
+                    Engine.SendPacketToClient( _desolationSeason, _desolationSeason.Length );
+                    return;
+                }
+
                 Engine.SendPacketToClient( _standardSeason, _standardSeason.Length );
             }
             else

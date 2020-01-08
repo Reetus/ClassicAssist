@@ -52,7 +52,7 @@
                     </StackPanel>
                 </DockPanel>
                 <Grid Margin="5">
-                    <TextBlock Text="&quot;Made for Malo&quot;" HorizontalAlignment="Center" FontWeight="Bold"
+                    <TextBlock Text="{x:Static r:Strings.Made_For_Malo}" HorizontalAlignment="Center" FontWeight="Bold"
                                MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave"
                                TextDecorations="Underline" />
                 </Grid>

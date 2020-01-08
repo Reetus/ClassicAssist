@@ -25,6 +25,8 @@ namespace ClassicAssist.Data
         private ObservableCollection<FriendEntry> _friends = new ObservableCollection<FriendEntry>();
         private bool _includePartyMembersInFriends;
         private int _lightLevel;
+        private bool _limitMouseWheelTrigger;
+        private int _limitMouseWheelTriggerMS;
         private string _name;
         private bool _persistUseOnce;
         private bool _preventAttackingFriendsInWarMode;
@@ -86,6 +88,18 @@ namespace ClassicAssist.Data
         {
             get => _lightLevel;
             set => SetProperty( ref _lightLevel, value );
+        }
+
+        public bool LimitMouseWheelTrigger
+        {
+            get => _limitMouseWheelTrigger;
+            set => SetProperty( ref _limitMouseWheelTrigger, value );
+        }
+
+        public int LimitMouseWheelTriggerMS
+        {
+            get => _limitMouseWheelTriggerMS;
+            set => SetProperty( ref _limitMouseWheelTriggerMS, value );
         }
 
         public string Name

@@ -96,6 +96,18 @@ namespace ClassicAssist.UI.ViewModels
                 ["Debug"] = Options.CurrentOptions.Debug
             };
 
+            JArray filtersArray = new JArray();
+
+            foreach ( FilterEntry filterEntry in Filters )
+            {
+                filtersArray.Add( new JObject
+                {
+                    { "Name", filterEntry.GetType().ToString() }, { "Enabled", filterEntry.Enabled }
+                } );
+            }
+
+            obj.Add( "Filters", filtersArray );
+
             json?.Add( "General", obj );
         }
 
@@ -116,6 +128,24 @@ namespace ClassicAssist.UI.ViewModels
             Options.AlwaysOnTop = general["AlwaysOnTop"]?.ToObject<bool>() ?? false;
             Options.UpdateGumpVersion = general["UpdateGumpVersion"]?.ToObject<Version>() ?? new Version();
             Options.Debug = general["Debug"]?.ToObject<bool>() ?? false;
+
+            if ( general["Filters"] == null )
+            {
+                return;
+            }
+
+            foreach ( JToken token in general["Filters"] )
+            {
+                string filterName = token["Name"]?.ToObject<string>() ?? string.Empty;
+                bool enabled = token["Enabled"]?.ToObject<bool>() ?? false;
+
+                FilterEntry filter = Filters.FirstOrDefault( f => f.GetType().ToString().Equals( filterName ) );
+
+                if ( filter != null )
+                {
+                    filter.Enabled = enabled;
+                }
+            }
         }
 
         private static void SaveProfile( object obj )

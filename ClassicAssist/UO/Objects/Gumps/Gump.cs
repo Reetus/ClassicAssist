@@ -82,7 +82,7 @@ namespace ClassicAssist.UO.Objects.Gumps
 
             if ( ID == 0 && fullName != null )
             {
-                ID = (uint)fullName.GetHashCode();
+                ID = (uint) fullName.GetHashCode();
             }
 
             if ( Serial == 0 && fullName != null )

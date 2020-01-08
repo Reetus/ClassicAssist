@@ -7,6 +7,7 @@ using ClassicAssist.Resources;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
+using Microsoft.Scripting;
 
 namespace ClassicAssist.Data.Macros
 {
@@ -98,7 +99,7 @@ namespace ClassicAssist.Data.Macros
             {
                 UO.Commands.SystemMessage( string.Format( Strings.Macro_error___0_, exception.Message ) );
 
-                if ( exception is Microsoft.Scripting.SyntaxErrorException syntaxError )
+                if ( exception is SyntaxErrorException syntaxError )
                 {
                     UO.Commands.SystemMessage( $"{Strings.Line_Number}: {syntaxError.RawSpan.Start.Line}" );
                 }

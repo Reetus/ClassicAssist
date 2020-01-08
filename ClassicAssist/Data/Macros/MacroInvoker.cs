@@ -184,8 +184,15 @@ namespace ClassicAssist.Data.Macros
                 }
             } ) { IsBackground = true };
 
-            Thread.Start();
-            Thread.Join();
+            try
+            {
+                Thread.Start();
+                Thread.Join();
+            }
+            catch ( ThreadStartException )
+            {
+                // TODO 
+            }
         }
 
         public void Stop()

@@ -92,8 +92,8 @@ namespace ClassicAssist.UI.Controls
             Modifier = CheckModifiers();
 
             Shortcut = e.Delta < 0
-                ? new ShortcutKeys { Mouse = MouseOptions.MouseWheelUp, Modifier = Modifier }
-                : new ShortcutKeys { Mouse = MouseOptions.MouseWheelDown, Modifier = Modifier };
+                ? new ShortcutKeys { Mouse = MouseOptions.MouseWheelDown, Modifier = Modifier }
+                : new ShortcutKeys { Mouse = MouseOptions.MouseWheelUp, Modifier = Modifier };
         }
     }
 }

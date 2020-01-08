@@ -137,8 +137,6 @@ namespace ClassicAssist.Data.Macros.Commands
             InsertText = "if CountGround(0xff, 0, 10) < 1:" )]
         public static int CountTypeGround( int graphic, int hue = -1, int range = -1 )
         {
-            PlayerMobile player = Engine.Player;
-
             IEnumerable<Item> matches = Engine.Items.Where( i =>
                 i.ID == graphic && ( hue == -1 || hue == i.ID ) &&
                 ( range == -1 || i.Distance <= range ) );
@@ -289,12 +287,10 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = "Entity",
             Description =
                 "Move the given type from the specified source container to the specified x,y,z offset of the player, no amount specified or -1 will move the full stack.",
-            InsertText = "MoveTypeOffset(0xf0e, \"backpack\", 0, 1, 0, -1\")" )]
+            InsertText = "MoveTypeOffset(0xf0e, \"backpack\", 0, 1, 0, -1)" )]
         public static bool MoveTypeOffset( int id, object findLocation, int xOffset, int yOffset, int zOffset,
             int amount = -1 )
         {
-            int owner = 0;
-
             if ( findLocation == null ||
                  ( (string) findLocation ).Equals( "ground", StringComparison.InvariantCultureIgnoreCase ) )
             {
@@ -302,14 +298,14 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
-            owner = AliasCommands.ResolveSerial( findLocation );
+            int owner = AliasCommands.ResolveSerial( findLocation );
 
             bool Predicate( Item i )
             {
                 return i.ID == id && i.IsDescendantOf( owner );
             }
 
-            Item entity = Engine.Items.SelectEntities( Predicate ).FirstOrDefault();
+            Item entity = Engine.Items.SelectEntities( Predicate )?.FirstOrDefault();
 
             if ( entity == null )
             {

@@ -40,6 +40,11 @@ namespace ClassicAssist.Data.Hotkeys.Commands
                 break;
             }
 
+            if ( selectedLayer == Layer.Invalid )
+            {
+                return;
+            }
+
             Engine.SendPacketToServer( new DragItem( serial, 1 ) );
             Engine.SendPacketToServer( new EquipRequest( serial, selectedLayer, player.Serial ) );
         }

@@ -1,4 +1,4 @@
-﻿using System.Windows.Input;
+﻿using System.ComponentModel;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
@@ -8,25 +8,21 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class OptionsTabViewModel : BaseViewModel, ISettingProvider
     {
-        private Options _options;
-        private ICommand _setSmartTargetCommand;
+        private Options _currentOptions;
 
-        public Options Options
+        public Options CurrentOptions
         {
-            get => _options;
-            set => SetProperty( ref _options, value );
+            get => _currentOptions;
+            set => SetProperty( ref _currentOptions, value );
         }
-
-        public ICommand SetSmartTargetCommand =>
-            _setSmartTargetCommand ?? ( _setSmartTargetCommand = new RelayCommand( SetSmartTarget, o => true ) );
 
         public void Serialize( JObject json )
         {
             JObject options = new JObject();
 
-            JObject useOnce = new JObject { ["Persist"] = Options.PersistUseOnce };
+            JObject useOnce = new JObject { ["Persist"] = CurrentOptions.PersistUseOnce };
 
-            if ( Options.PersistUseOnce )
+            if ( CurrentOptions.PersistUseOnce )
             {
                 JArray useOnceItems = new JArray();
 
@@ -39,31 +35,36 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             options.Add( "UseOnce", useOnce );
-            options.Add( "UseDeathScreenWhilstHidden", Options.UseDeathScreenWhilstHidden );
-            options.Add( "CommandPrefix", Options.CommandPrefix );
-            options.Add( "RangeCheckLastTarget", Options.RangeCheckLastTarget );
-            options.Add( "RangeCheckLastTargetAmount", Options.RangeCheckLastTargetAmount );
-            options.Add( "UseExperimentalFizzleDetection", Options.UseExperimentalFizzleDetection );
-            options.Add( "UseObjectQueue", Options.UseObjectQueue );
-            options.Add( "UseObjectQueueAmount", Options.UseObjectQueueAmount );
-            options.Add( "QueueLastTarget", Options.QueueLastTarget );
-            options.Add( "SmartTargetOption", Options.SmartTargetOption.ToString() );
+            options.Add( "UseDeathScreenWhilstHidden", CurrentOptions.UseDeathScreenWhilstHidden );
+            options.Add( "CommandPrefix", CurrentOptions.CommandPrefix );
+            options.Add( "RangeCheckLastTarget", CurrentOptions.RangeCheckLastTarget );
+            options.Add( "RangeCheckLastTargetAmount", CurrentOptions.RangeCheckLastTargetAmount );
+            options.Add( "UseExperimentalFizzleDetection", CurrentOptions.UseExperimentalFizzleDetection );
+            options.Add( "UseObjectQueue", CurrentOptions.UseObjectQueue );
+            options.Add( "UseObjectQueueAmount", CurrentOptions.UseObjectQueueAmount );
+            options.Add( "QueueLastTarget", CurrentOptions.QueueLastTarget );
+            options.Add( "SmartTargetOption", CurrentOptions.SmartTargetOption.ToString() );
+            options.Add( "LimitMouseWheelTrigger", CurrentOptions.LimitMouseWheelTrigger );
+            options.Add( "LimitMouseWheelTriggerMS", CurrentOptions.LimitMouseWheelTriggerMS );
 
             json?.Add( "Options", options );
         }
 
         public void Deserialize( JObject json, Options options )
         {
-            Options = options;
+            CurrentOptions = options;
+
+            CurrentOptions.PropertyChanged += OnOptionsChanged;
+
             ActionCommands.UseOnceList.Clear();
 
             JToken config = json?["Options"];
 
             if ( config?["UseOnce"] != null )
             {
-                Options.PersistUseOnce = config["UseOnce"]["Persist"]?.ToObject<bool>() ?? false;
+                CurrentOptions.PersistUseOnce = config["UseOnce"]["Persist"]?.ToObject<bool>() ?? false;
 
-                if ( Options.PersistUseOnce )
+                if ( CurrentOptions.PersistUseOnce )
                 {
                     foreach ( JToken token in config["UseOnce"]["Items"] )
                     {
@@ -72,24 +73,43 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            Options.UseDeathScreenWhilstHidden = config?["UseDeathScreenWhilstHidden"]?.ToObject<bool>() ?? false;
-            Options.CommandPrefix = config?["CommandPrefix"]?.ToObject<char>() ?? '=';
-            Options.RangeCheckLastTarget = config?["RangeCheckLastTarget"]?.ToObject<bool>() ?? false;
-            Options.RangeCheckLastTargetAmount = config?["RangeCheckLastTargetAmount"]?.ToObject<int>() ?? 11;
+            CurrentOptions.UseDeathScreenWhilstHidden =
+                config?["UseDeathScreenWhilstHidden"]?.ToObject<bool>() ?? false;
+            CurrentOptions.CommandPrefix = config?["CommandPrefix"]?.ToObject<char>() ?? '=';
+            CurrentOptions.RangeCheckLastTarget = config?["RangeCheckLastTarget"]?.ToObject<bool>() ?? false;
+            CurrentOptions.RangeCheckLastTargetAmount = config?["RangeCheckLastTargetAmount"]?.ToObject<int>() ?? 11;
 
-            Options.UseExperimentalFizzleDetection =
+            CurrentOptions.UseExperimentalFizzleDetection =
                 config?["UseExperimentalFizzleDetection"]?.ToObject<bool>() ?? false;
 
-            Options.UseObjectQueue = config?["UseObjectQueue"]?.ToObject<bool>() ?? false;
-            Options.UseObjectQueueAmount = config?["UseObjectQueueAmount"]?.ToObject<int>() ?? 5;
-            Options.QueueLastTarget = config?["QueueLastTarget"]?.ToObject<bool>() ?? false;
-            Options.SmartTargetOption =
+            CurrentOptions.UseObjectQueue = config?["UseObjectQueue"]?.ToObject<bool>() ?? false;
+            CurrentOptions.UseObjectQueueAmount = config?["UseObjectQueueAmount"]?.ToObject<int>() ?? 5;
+            CurrentOptions.QueueLastTarget = config?["QueueLastTarget"]?.ToObject<bool>() ?? false;
+            CurrentOptions.SmartTargetOption =
                 config?["SmartTargetOption"]?.ToObject<SmartTargetOption>() ?? SmartTargetOption.None;
+            CurrentOptions.LimitMouseWheelTrigger = config?["LimitMouseWheelTrigger"]?.ToObject<bool>() ?? false;
+            CurrentOptions.LimitMouseWheelTriggerMS = config?["LimitMouseWheelTriggerMS"]?.ToObject<int>() ?? 25;
         }
 
-        private void SetSmartTarget( object obj )
+        // Replay CurrentOptions changes onto Options.CurrentOptions
+        // TODO: Fix Options
+        private void OnOptionsChanged( object sender, PropertyChangedEventArgs args )
         {
-            Options.CurrentOptions.SmartTargetOption = (SmartTargetOption) obj;
+            object val = CurrentOptions.GetType().GetProperty( args.PropertyName )?.GetValue( CurrentOptions );
+
+            if ( val == null )
+            {
+                return;
+            }
+
+            object oldVal = Options.CurrentOptions.GetType().GetProperty( args.PropertyName )
+                ?.GetValue( Options.CurrentOptions );
+
+            if ( !val.Equals( oldVal ) )
+            {
+                Options.CurrentOptions.GetType().GetProperty( args.PropertyName )
+                    ?.SetValue( Options.CurrentOptions, val );
+            }
         }
     }
 }

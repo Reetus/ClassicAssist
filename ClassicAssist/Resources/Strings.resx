@@ -432,9 +432,6 @@
   <data name="Last Target" xml:space="preserve">
     <value>Last Target</value>
   </data>
-  <data name="Last Target Queued" xml:space="preserve">
-    <value>Last Target Queued</value>
-  </data>
   <data name="Last Target:" xml:space="preserve">
     <value>Last Target:</value>
   </data>
@@ -446,6 +443,9 @@
   </data>
   <data name="Light Level" xml:space="preserve">
     <value>Light Level</value>
+  </data>
+  <data name="Limit Mouse Wheel Retrigger" xml:space="preserve">
+    <value>Limit Mouse Wheel Retrigger</value>
   </data>
   <data name="Line Number" xml:space="preserve">
     <value>Line Number</value>
@@ -467,6 +467,9 @@
   </data>
   <data name="Macros" xml:space="preserve">
     <value>Macros</value>
+  </data>
+  <data name="Made_For_Malo" xml:space="preserve">
+    <value>"Made For Malo"</value>
   </data>
   <data name="Magical" xml:space="preserve">
     <value>Magical</value>
@@ -770,6 +773,9 @@
   </data>
   <data name="Target queue cleared..." xml:space="preserve">
     <value>Target queue cleared...</value>
+  </data>
+  <data name="Target Queued" xml:space="preserve">
+    <value>Target Queued</value>
   </data>
   <data name="Target Self" xml:space="preserve">
     <value>Target Self</value>

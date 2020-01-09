@@ -95,6 +95,11 @@ namespace ClassicAssist.UI.ViewModels
         // TODO: Fix Options
         private void OnOptionsChanged( object sender, PropertyChangedEventArgs args )
         {
+            if ( args.PropertyName == "Name" )
+            {
+                return;
+            }
+
             object val = CurrentOptions.GetType().GetProperty( args.PropertyName )?.GetValue( CurrentOptions );
 
             if ( val == null )

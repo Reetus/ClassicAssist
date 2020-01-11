@@ -302,9 +302,20 @@ namespace Assistant
             {
                 string fullPath = Path.Combine( searchPath, assemblyname + ".dll" );
 
+                string culture = new AssemblyName( args.Name ).CultureName;
+
                 if ( !File.Exists( fullPath ) )
                 {
-                    continue;
+                    string culturePath = Path.Combine( searchPath, culture, assemblyname + ".dll" );
+
+                    if ( File.Exists( culturePath ) )
+                    {
+                        fullPath = culturePath;
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
 
                 Assembly assembly = Assembly.LoadFrom( fullPath );

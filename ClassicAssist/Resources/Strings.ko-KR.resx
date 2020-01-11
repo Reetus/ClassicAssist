@@ -117,13 +117,133 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Color" xml:space="preserve">
-    <value>Colour</value>
-  </data>
-  <data name="Organizer" xml:space="preserve">
-    <value>Organiser</value>
+  <data name="Made_For_Malo" xml:space="preserve">
+    <value>"한국을 위해 만든"</value>
   </data>
   <data name="UO_LOCALE" xml:space="preserve">
-    <value>ENG\0</value>
+    <value>KOR\0</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>일반</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>선택권</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>약</value>
+  </data>
+  <data name="Agents" xml:space="preserve">
+    <value>자치령 대표</value>
+  </data>
+  <data name="Counters" xml:space="preserve">
+    <value>카운터</value>
+  </data>
+  <data name="Dress" xml:space="preserve">
+    <value>드레스</value>
+  </data>
+  <data name="Friends" xml:space="preserve">
+    <value>친구</value>
+  </data>
+  <data name="Hotkeys" xml:space="preserve">
+    <value>단축키</value>
+  </data>
+  <data name="Macros" xml:space="preserve">
+    <value>매크로</value>
+  </data>
+  <data name="Organizer" xml:space="preserve">
+    <value>조직자</value>
+  </data>
+  <data name="Skills" xml:space="preserve">
+    <value>기술</value>
+  </data>
+  <data name="Vendor Buy" xml:space="preserve">
+    <value>공급 업체 구매</value>
+  </data>
+  <data name="Vendor Sell" xml:space="preserve">
+    <value>공급 업체 구매</value>
+  </data>
+  <data name="Weather" xml:space="preserve">
+    <value>组织者</value>
+  </data>
+  <data name="Seasons" xml:space="preserve">
+    <value>계절</value>
+  </data>
+  <data name="Light Level" xml:space="preserve">
+    <value>라이트 레벨</value>
+  </data>
+  <data name="Filters" xml:space="preserve">
+    <value>필터</value>
+  </data>
+  <data name="Light" xml:space="preserve">
+    <value>빛</value>
+  </data>
+  <data name="Profiles" xml:space="preserve">
+    <value>프로필</value>
+  </data>
+  <data name="Abilities" xml:space="preserve">
+    <value>능력</value>
+  </data>
+  <data name="Commands" xml:space="preserve">
+    <value>명령</value>
+  </data>
+  <data name="Commands:" xml:space="preserve">
+    <value>명령:</value>
+  </data>
+  <data name="Consume" xml:space="preserve">
+    <value>바싹 여위다</value>
+  </data>
+  <data name="Movement" xml:space="preserve">
+    <value>운동</value>
+  </data>
+  <data name="Spells" xml:space="preserve">
+    <value>주문</value>
+  </data>
+  <data name="Targeting" xml:space="preserve">
+    <value>타겟팅</value>
+  </data>
+  <data name="Software" xml:space="preserve">
+    <value>소프트웨어</value>
+  </data>
+  <data name="Product:" xml:space="preserve">
+    <value>생성물:</value>
+  </data>
+  <data name="Version:" xml:space="preserve">
+    <value>버전:</value>
+  </data>
+  <data name="Build Date:" xml:space="preserve">
+    <value>빌드 날짜 :</value>
+  </data>
+  <data name="World_Status" xml:space="preserve">
+    <value>세계 상태</value>
+  </data>
+  <data name="Connected:" xml:space="preserve">
+    <value>연결됨 :</value>
+  </data>
+  <data name="Items:" xml:space="preserve">
+    <value>아이템:</value>
+  </data>
+  <data name="items" xml:space="preserve">
+    <value>아이템</value>
+  </data>
+  <data name="Mobiles:" xml:space="preserve">
+    <value>핸드폰 :</value>
+  </data>
+  <data name="Latency:" xml:space="preserve">
+    <value>지연 시간:</value>
+  </data>
+  <data name="Player" xml:space="preserve">
+    <value>플레이어</value>
+  </data>
+  <data name="Name:" xml:space="preserve">
+    <value>이름:</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>이름</value>
+  </data>
+  <data name="Serial:" xml:space="preserve">
+    <value>연속물:</value>
+  </data>
+  <data name="Last Target:" xml:space="preserve">
+    <value>마지막 목표 :</value>
   </data>
 </root>

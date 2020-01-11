@@ -147,6 +147,9 @@
   <data name="Agents" xml:space="preserve">
     <value>Agents</value>
   </data>
+  <data name="Agility Potion" xml:space="preserve">
+    <value>Agility Potion</value>
+  </data>
   <data name="Aliases" xml:space="preserve">
     <value>Aliases</value>
   </data>
@@ -173,6 +176,9 @@
   </data>
   <data name="Blank" xml:space="preserve">
     <value>Blank</value>
+  </data>
+  <data name="Bola" xml:space="preserve">
+    <value>Bola</value>
   </data>
   <data name="Both" xml:space="preserve">
     <value>Both</value>
@@ -246,8 +252,17 @@
   <data name="Commands:" xml:space="preserve">
     <value>Commands:</value>
   </data>
+  <data name="Conflagration Potion" xml:space="preserve">
+    <value>Conflagration Potion</value>
+  </data>
+  <data name="Confusion Blast Potion" xml:space="preserve">
+    <value>Confusion Blast Potion</value>
+  </data>
   <data name="Connected:" xml:space="preserve">
     <value>Connected:</value>
+  </data>
+  <data name="Consume" xml:space="preserve">
+    <value>Consume</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
@@ -263,6 +278,9 @@
   </data>
   <data name="Counters" xml:space="preserve">
     <value>Counters</value>
+  </data>
+  <data name="Cure Potion" xml:space="preserve">
+    <value>Cure Potion</value>
   </data>
   <data name="Current Ability Cleared" xml:space="preserve">
     <value>Current Ability Cleared</value>
@@ -281,6 +299,9 @@
   </data>
   <data name="Enabled" xml:space="preserve">
     <value>Enabled</value>
+  </data>
+  <data name="Enchanted Apple" xml:space="preserve">
+    <value>Enchanted Apple</value>
   </data>
   <data name="Enemy" xml:space="preserve">
     <value>Enemy</value>
@@ -315,6 +336,9 @@
   <data name="Execute" xml:space="preserve">
     <value>Execute</value>
   </data>
+  <data name="Explosion Potion" xml:space="preserve">
+    <value>Explosion Potion</value>
+  </data>
   <data name="Filters" xml:space="preserve">
     <value>Filters</value>
   </data>
@@ -329,6 +353,9 @@
   </data>
   <data name="Friends" xml:space="preserve">
     <value>Friends</value>
+  </data>
+  <data name="Fruit Bowl" xml:space="preserve">
+    <value>Fruit Bowl</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>General</value>
@@ -348,6 +375,9 @@
   <data name="Get Next Unfriendly" xml:space="preserve">
     <value>Get Next Unfriendly</value>
   </data>
+  <data name="Grapes of Wrath" xml:space="preserve">
+    <value>Grapes of Wrath</value>
+  </data>
   <data name="Graphic" xml:space="preserve">
     <value>Graphic</value>
   </data>
@@ -356,6 +386,9 @@
   </data>
   <data name="Gumps" xml:space="preserve">
     <value>Gumps</value>
+  </data>
+  <data name="Heal Poition" xml:space="preserve">
+    <value>Heal Poition</value>
   </data>
   <data name="Hotkeys" xml:space="preserve">
     <value>Hotkeys</value>
@@ -413,6 +446,9 @@
   </data>
   <data name="Invalid source container..." xml:space="preserve">
     <value>Invalid source container...</value>
+  </data>
+  <data name="Invisibility Potion" xml:space="preserve">
+    <value>Invisibility Potion</value>
   </data>
   <data name="Item" xml:space="preserve">
     <value>Item</value>
@@ -549,6 +585,9 @@
   <data name="Options" xml:space="preserve">
     <value>Options</value>
   </data>
+  <data name="Orange Petal" xml:space="preserve">
+    <value>Orange Petal</value>
+  </data>
   <data name="Organizer" xml:space="preserve">
     <value>Organizer</value>
   </data>
@@ -623,6 +662,9 @@
   </data>
   <data name="Refresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="Refresh Potion" xml:space="preserve">
+    <value>Refresh Potion</value>
   </data>
   <data name="Regeneration" xml:space="preserve">
     <value>Regeneration</value>
@@ -711,6 +753,9 @@
   <data name="Smart last target:" xml:space="preserve">
     <value>Smart last target:</value>
   </data>
+  <data name="Smoke Bomb" xml:space="preserve">
+    <value>Smoke Bomb</value>
+  </data>
   <data name="Software" xml:space="preserve">
     <value>Software</value>
   </data>
@@ -731,6 +776,9 @@
   </data>
   <data name="Stop Current Macro" xml:space="preserve">
     <value>Stop Current Macro</value>
+  </data>
+  <data name="Strength Potion" xml:space="preserve">
+    <value>Strength Potion</value>
   </data>
   <data name="Target" xml:space="preserve">
     <value>Target</value>
@@ -812,6 +860,9 @@
   </data>
   <data name="Topmost" xml:space="preserve">
     <value>Topmost</value>
+  </data>
+  <data name="Trinsic Rose Petal" xml:space="preserve">
+    <value>Trinsic Rose Petal</value>
   </data>
   <data name="Undress" xml:space="preserve">
     <value>Undress</value>

@@ -160,6 +160,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agility Potion.
+        /// </summary>
+        public static string Agility_Potion {
+            get {
+                return ResourceManager.GetString("Agility Potion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aliases.
         /// </summary>
         public static string Aliases {
@@ -237,6 +246,15 @@ namespace ClassicAssist.Resources {
         public static string Blank {
             get {
                 return ResourceManager.GetString("Blank", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bola.
+        /// </summary>
+        public static string Bola {
+            get {
+                return ResourceManager.GetString("Bola", resourceCulture);
             }
         }
         
@@ -457,11 +475,38 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Conflagration Potion.
+        /// </summary>
+        public static string Conflagration_Potion {
+            get {
+                return ResourceManager.GetString("Conflagration Potion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confusion Blast Potion.
+        /// </summary>
+        public static string Confusion_Blast_Potion {
+            get {
+                return ResourceManager.GetString("Confusion Blast Potion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connected:.
         /// </summary>
         public static string Connected_ {
             get {
                 return ResourceManager.GetString("Connected:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Consume.
+        /// </summary>
+        public static string Consume {
+            get {
+                return ResourceManager.GetString("Consume", resourceCulture);
             }
         }
         
@@ -507,6 +552,15 @@ namespace ClassicAssist.Resources {
         public static string Counters {
             get {
                 return ResourceManager.GetString("Counters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cure Potion.
+        /// </summary>
+        public static string Cure_Potion {
+            get {
+                return ResourceManager.GetString("Cure Potion", resourceCulture);
             }
         }
         
@@ -561,6 +615,15 @@ namespace ClassicAssist.Resources {
         public static string Enabled {
             get {
                 return ResourceManager.GetString("Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enchanted Apple.
+        /// </summary>
+        public static string Enchanted_Apple {
+            get {
+                return ResourceManager.GetString("Enchanted Apple", resourceCulture);
             }
         }
         
@@ -664,6 +727,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Explosion Potion.
+        /// </summary>
+        public static string Explosion_Potion {
+            get {
+                return ResourceManager.GetString("Explosion Potion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filters.
         /// </summary>
         public static string Filters {
@@ -705,6 +777,15 @@ namespace ClassicAssist.Resources {
         public static string Friends {
             get {
                 return ResourceManager.GetString("Friends", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fruit Bowl.
+        /// </summary>
+        public static string Fruit_Bowl {
+            get {
+                return ResourceManager.GetString("Fruit Bowl", resourceCulture);
             }
         }
         
@@ -763,6 +844,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Grapes of Wrath.
+        /// </summary>
+        public static string Grapes_of_Wrath {
+            get {
+                return ResourceManager.GetString("Grapes of Wrath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Graphic.
         /// </summary>
         public static string Graphic {
@@ -786,6 +876,15 @@ namespace ClassicAssist.Resources {
         public static string Gumps {
             get {
                 return ResourceManager.GetString("Gumps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heal Poition.
+        /// </summary>
+        public static string Heal_Poition {
+            get {
+                return ResourceManager.GetString("Heal Poition", resourceCulture);
             }
         }
         
@@ -957,6 +1056,15 @@ namespace ClassicAssist.Resources {
         public static string Invalid_source_container___ {
             get {
                 return ResourceManager.GetString("Invalid source container...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invisibility Potion.
+        /// </summary>
+        public static string Invisibility_Potion {
+            get {
+                return ResourceManager.GetString("Invisibility Potion", resourceCulture);
             }
         }
         
@@ -1366,6 +1474,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Orange Petal.
+        /// </summary>
+        public static string Orange_Petal {
+            get {
+                return ResourceManager.GetString("Orange Petal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Organizer.
         /// </summary>
         public static string Organizer {
@@ -1587,6 +1704,15 @@ namespace ClassicAssist.Resources {
         public static string Refresh {
             get {
                 return ResourceManager.GetString("Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh Potion.
+        /// </summary>
+        public static string Refresh_Potion {
+            get {
+                return ResourceManager.GetString("Refresh Potion", resourceCulture);
             }
         }
         
@@ -1852,6 +1978,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Smoke Bomb.
+        /// </summary>
+        public static string Smoke_Bomb {
+            get {
+                return ResourceManager.GetString("Smoke Bomb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Software.
         /// </summary>
         public static string Software {
@@ -1911,6 +2046,15 @@ namespace ClassicAssist.Resources {
         public static string Stop_Current_Macro {
             get {
                 return ResourceManager.GetString("Stop Current Macro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Strength Potion.
+        /// </summary>
+        public static string Strength_Potion {
+            get {
+                return ResourceManager.GetString("Strength Potion", resourceCulture);
             }
         }
         
@@ -2154,6 +2298,15 @@ namespace ClassicAssist.Resources {
         public static string Topmost {
             get {
                 return ResourceManager.GetString("Topmost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trinsic Rose Petal.
+        /// </summary>
+        public static string Trinsic_Rose_Petal {
+            get {
+                return ResourceManager.GetString("Trinsic Rose Petal", resourceCulture);
             }
         }
         

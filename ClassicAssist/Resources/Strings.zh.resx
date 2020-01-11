@@ -117,13 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Color" xml:space="preserve">
-    <value>Colour</value>
+  <data name="UO_LOCALE" xml:space="preserve">
+    <value>CHT\0</value>
+  </data>
+  <data name="Vendor Buy" xml:space="preserve">
+    <value>供应商购买</value>
+  </data>
+  <data name="Vendor Sell" xml:space="preserve">
+    <value>供应商销售</value>
+  </data>
+  <data name="Skills" xml:space="preserve">
+    <value>技能专长</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="Agents" xml:space="preserve">
+    <value>代理商</value>
+  </data>
+  <data name="Counters" xml:space="preserve">
+    <value>专柜</value>
+  </data>
+  <data name="Dress" xml:space="preserve">
+    <value>连衣裙</value>
+  </data>
+  <data name="Friends" xml:space="preserve">
+    <value>朋友们</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>一般</value>
+  </data>
+  <data name="Hotkeys" xml:space="preserve">
+    <value>热键</value>
+  </data>
+  <data name="Macros" xml:space="preserve">
+    <value>巨集</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>选件</value>
   </data>
   <data name="Organizer" xml:space="preserve">
-    <value>Organiser</value>
-  </data>
-  <data name="UO_LOCALE" xml:space="preserve">
-    <value>ENG\0</value>
+    <value>组织者</value>
   </data>
 </root>

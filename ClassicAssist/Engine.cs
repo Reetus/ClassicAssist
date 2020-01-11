@@ -26,7 +26,9 @@ using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using CUO_API;
+using Newtonsoft.Json.Linq;
 using Octokit;
+using Language = ClassicAssist.UI.Misc.Language;
 
 [assembly: InternalsVisibleTo( "ClassicAssist.Tests" )]
 
@@ -259,6 +261,31 @@ namespace Assistant
             OutgoingPacketFilters.Initialize();
 
             CommandsManager.Initialize();
+
+            string langOverridePath = Path.Combine( StartupPath, "Data", "languageOverride.json" );
+
+            if ( !File.Exists( langOverridePath ) )
+            {
+                return;
+            }
+
+            string fileText = File.ReadAllText( langOverridePath );
+
+            JObject jsonObject = JObject.Parse( fileText );
+
+            if ( jsonObject?["Language"] == null )
+            {
+                return;
+            }
+
+            Language lang = (Language) jsonObject["Language"]?.ToObject<Language>();
+
+            if ( lang != Language.Default )
+            {
+                Options.SetLanguage( lang );
+            }
+
+            Options.LanguageOverride = lang;
         }
 
         private static void ProcessIncomingQueue( Packet packet )

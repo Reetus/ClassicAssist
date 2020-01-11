@@ -1,7 +1,14 @@
 ﻿using System.ComponentModel;
+using System.IO;
+using System.Windows;
+using System.Windows.Input;
+using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
+using ClassicAssist.Resources;
+using ClassicAssist.UI.Misc;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.UI.ViewModels
@@ -9,12 +16,16 @@ namespace ClassicAssist.UI.ViewModels
     public class OptionsTabViewModel : BaseViewModel, ISettingProvider
     {
         private Options _currentOptions;
+        private ICommand _setLanguageOverrideCommand;
 
         public Options CurrentOptions
         {
             get => _currentOptions;
             set => SetProperty( ref _currentOptions, value );
         }
+
+        public ICommand SetLanguageOverrideCommand =>
+            _setLanguageOverrideCommand ?? ( _setLanguageOverrideCommand = new RelayCommand( SetLanguageOverride ) );
 
         public void Serialize( JObject json )
         {
@@ -115,6 +126,23 @@ namespace ClassicAssist.UI.ViewModels
                 Options.CurrentOptions.GetType().GetProperty( args.PropertyName )
                     ?.SetValue( Options.CurrentOptions, val );
             }
+        }
+
+        private static void SetLanguageOverride( object obj )
+        {
+            if ( !( obj is Language language ) )
+            {
+                return;
+            }
+
+            string fullPath = Path.Combine( Engine.StartupPath, "Data", "languageOverride.json" );
+
+            JObject langObj = new JObject { { "Language", language.ToString() } };
+
+            File.WriteAllText( fullPath, langObj.ToString( Formatting.Indented ) );
+
+            MessageBox.Show( Strings.Restart_game_for_changes_to_take_effect___,
+                Strings.Restart_game_for_changes_to_take_effect___ );
         }
     }
 }

@@ -17,6 +17,13 @@ namespace ClassicAssist.UI.Misc
                 new FrameworkPropertyMetadata( default,
                     FrameworkPropertyMetadataOptions.None, PropertyChangedCallback ) );
 
+        public static readonly DependencyProperty OnlyUserTriggeredProperty =
+            DependencyProperty.Register( "OnlyUserTriggered", typeof( bool ), typeof( ComboBoxBehavior ),
+                new FrameworkPropertyMetadata( false,
+                    FrameworkPropertyMetadataOptions.None, PropertyChangedCallback ) );
+
+        private bool _userTriggered;
+
         public ICommand CommandBinding
         {
             get => (ICommand) GetValue( CommandBindingProperty );
@@ -29,6 +36,12 @@ namespace ClassicAssist.UI.Misc
             set => SetValue( CommandParameterProperty, value );
         }
 
+        public bool OnlyUserTriggered
+        {
+            get => (bool) GetValue( OnlyUserTriggeredProperty );
+            set => SetValue( OnlyUserTriggeredProperty, value );
+        }
+
         private static void PropertyChangedCallback( DependencyObject d, DependencyPropertyChangedEventArgs e )
         {
         }
@@ -38,16 +51,29 @@ namespace ClassicAssist.UI.Misc
             base.OnAttached();
 
             AssociatedObject.SelectionChanged += OnSelectionChanged;
+            AssociatedObject.PreviewMouseDown += OnPreviewMouseDown;
+        }
+
+        private void OnPreviewMouseDown( object sender, MouseButtonEventArgs e )
+        {
+            _userTriggered = true;
         }
 
         private void OnSelectionChanged( object sender, SelectionChangedEventArgs e )
         {
+            if ( OnlyUserTriggered && !_userTriggered )
+            {
+                return;
+            }
+
             CommandBinding?.Execute( AssociatedObject.SelectedItem );
+            _userTriggered = false;
         }
 
         protected override void OnDetaching()
         {
             AssociatedObject.SelectionChanged -= OnSelectionChanged;
+            AssociatedObject.PreviewMouseDown -= OnPreviewMouseDown;
         }
     }
 }

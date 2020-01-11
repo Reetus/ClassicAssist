@@ -99,7 +99,8 @@
                         <Grid Grid.Column="0" Margin="5">
                             <ComboBox ItemsSource="{Binding Profiles}" SelectedItem="{Binding Options.Name}">
                                 <i:Interaction.Behaviors>
-                                    <misc1:ComboBoxBehavior CommandBinding="{Binding ChangeProfileCommand}" />
+                                    <misc1:ComboBoxBehavior CommandBinding="{Binding ChangeProfileCommand}"
+                                                            OnlyUserTriggered="True" />
                                 </i:Interaction.Behaviors>
                             </ComboBox>
                         </Grid>

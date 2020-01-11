@@ -1114,6 +1114,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string Language {
+            get {
+                return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last Target.
         /// </summary>
         public static string Last_Target {
@@ -1758,6 +1767,15 @@ namespace ClassicAssist.Resources {
         public static string Resistances {
             get {
                 return ResourceManager.GetString("Resistances", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restart game for changes to take effect....
+        /// </summary>
+        public static string Restart_game_for_changes_to_take_effect___ {
+            get {
+                return ResourceManager.GetString("Restart game for changes to take effect...", resourceCulture);
             }
         }
         

@@ -32,6 +32,18 @@
                 <misc:BindingProxy x:Key="proxy" Data="{Binding}" />
             </StackPanel.Resources>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="{x:Static resources:Strings.Language}" />
+                <ComboBox Margin="10,0,0,0" Padding="10,2,10,2"
+                          ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type misc1:Language}}}"
+                          x:Name="langCombo" SelectedItem="{Binding CurrentOptions.LanguageOverride}">
+                    <i:Interaction.Behaviors>
+                        <misc1:ComboBoxBehavior CommandBinding="{Binding SetLanguageOverrideCommand}"
+                                                CommandParameter="{Binding SelectedItem, ElementName=langCombo}"
+                                                OnlyUserTriggered="True" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <TextBlock Text="{x:Static resources:Strings.Command_Prefix_}" />
                 <ComboBox Text="{Binding CurrentOptions.CommandPrefix}" Margin="10,0,0,0" Padding="10,2,10,2">
                     <ComboBoxItem Content="+" />

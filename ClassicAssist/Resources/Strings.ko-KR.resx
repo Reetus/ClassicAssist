@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Made_For_Malo" xml:space="preserve">
-    <value>"한국을 위해 만든"</value>
+    <value>"Reetus가 한국을 위해 만든"</value>
   </data>
   <data name="UO_LOCALE" xml:space="preserve">
     <value>KOR\0</value>
@@ -127,19 +127,19 @@
     <value>일반</value>
   </data>
   <data name="Options" xml:space="preserve">
-    <value>선택권</value>
+    <value>옵션</value>
   </data>
   <data name="About" xml:space="preserve">
-    <value>약</value>
+    <value>상태</value>
   </data>
   <data name="Agents" xml:space="preserve">
-    <value>자치령 대표</value>
+    <value>에이전트</value>
   </data>
   <data name="Counters" xml:space="preserve">
     <value>카운터</value>
   </data>
   <data name="Dress" xml:space="preserve">
-    <value>드레스</value>
+    <value>장비착용</value>
   </data>
   <data name="Friends" xml:space="preserve">
     <value>친구</value>
@@ -151,25 +151,25 @@
     <value>매크로</value>
   </data>
   <data name="Organizer" xml:space="preserve">
-    <value>조직자</value>
+    <value>정리</value>
   </data>
   <data name="Skills" xml:space="preserve">
-    <value>기술</value>
+    <value>스킬</value>
   </data>
   <data name="Vendor Buy" xml:space="preserve">
     <value>공급 업체 구매</value>
   </data>
   <data name="Vendor Sell" xml:space="preserve">
-    <value>공급 업체 구매</value>
+    <value>공급 업체 판매</value>
   </data>
   <data name="Weather" xml:space="preserve">
-    <value>组织者</value>
+    <value>날씨</value>
   </data>
   <data name="Seasons" xml:space="preserve">
     <value>계절</value>
   </data>
   <data name="Light Level" xml:space="preserve">
-    <value>라이트 레벨</value>
+    <value>조명 레벨</value>
   </data>
   <data name="Filters" xml:space="preserve">
     <value>필터</value>
@@ -181,7 +181,7 @@
     <value>프로필</value>
   </data>
   <data name="Abilities" xml:space="preserve">
-    <value>능력</value>
+    <value>특수기</value>
   </data>
   <data name="Commands" xml:space="preserve">
     <value>명령</value>
@@ -190,7 +190,7 @@
     <value>명령:</value>
   </data>
   <data name="Consume" xml:space="preserve">
-    <value>바싹 여위다</value>
+    <value>물약 버프</value>
   </data>
   <data name="Movement" xml:space="preserve">
     <value>운동</value>
@@ -205,13 +205,13 @@
     <value>소프트웨어</value>
   </data>
   <data name="Product:" xml:space="preserve">
-    <value>생성물:</value>
+    <value>제품:</value>
   </data>
   <data name="Version:" xml:space="preserve">
     <value>버전:</value>
   </data>
   <data name="Build Date:" xml:space="preserve">
-    <value>빌드 날짜 :</value>
+    <value>빌드:</value>
   </data>
   <data name="World_Status" xml:space="preserve">
     <value>세계 상태</value>
@@ -226,7 +226,7 @@
     <value>아이템</value>
   </data>
   <data name="Mobiles:" xml:space="preserve">
-    <value>핸드폰 :</value>
+    <value>개체:</value>
   </data>
   <data name="Latency:" xml:space="preserve">
     <value>지연 시간:</value>
@@ -245,5 +245,104 @@
   </data>
   <data name="Last Target:" xml:space="preserve">
     <value>마지막 목표 :</value>
+  </data>
+  <data name="Active Objects" xml:space="preserve">
+    <value>활성 객체</value>
+  </data>
+  <data name="Add Friend" xml:space="preserve">
+    <value>친구 추가</value>
+  </data>
+  <data name="Always On Top" xml:space="preserve">
+    <value>언제나 맨 위에</value>
+  </data>
+  <data name="Both" xml:space="preserve">
+    <value>둘돠</value>
+  </data>
+  <data name="Bought" xml:space="preserve">
+    <value>샀다</value>
+  </data>
+  <data name="BuffIcon" xml:space="preserve">
+    <value>버프아이콘</value>
+  </data>
+  <data name="Check For Updates" xml:space="preserve">
+    <value>동안미남님 업데이트를 확인해유</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>삭제</value>
+  </data>
+  <data name="Execute" xml:space="preserve">
+    <value>적용</value>
+  </data>
+  <data name="Insert" xml:space="preserve">
+    <value>삽입</value>
+  </data>
+  <data name="Location:" xml:space="preserve">
+    <value>장소:</value>
+  </data>
+  <data name="Loop" xml:space="preserve">
+    <value>반복</value>
+  </data>
+  <data name="Map:" xml:space="preserve">
+    <value>지도:</value>
+  </data>
+  <data name="Messages" xml:space="preserve">
+    <value>메시지</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>추가</value>
+  </data>
+  <data name="New Item" xml:space="preserve">
+    <value>새 아이템</value>
+  </data>
+  <data name="New version available:" xml:space="preserve">
+    <value>사용가능한 새 버전:</value>
+  </data>
+  <data name="Object Inspector" xml:space="preserve">
+    <value>객체 검사기</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>오케이</value>
+  </data>
+  <data name="Pass to UO" xml:space="preserve">
+    <value>키보드 기능 동시 사용</value>
+  </data>
+  <data name="Play" xml:space="preserve">
+    <value>재생</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>클래식어시스트</value>
+  </data>
+  <data name="Record" xml:space="preserve">
+    <value>녹화</value>
+  </data>
+  <data name="Refresh Potion" xml:space="preserve">
+    <value>스탬포션</value>
+  </data>
+  <data name="Regeneration" xml:space="preserve">
+    <value>재생</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>삭제</value>
+  </data>
+  <data name="Remove Friend" xml:space="preserve">
+    <value>친구 삭제</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>저장</value>
+  </data>
+  <data name="Set" xml:space="preserve">
+    <value>결정</value>
+  </data>
+  <data name="Set Containers" xml:space="preserve">
+    <value>상자 선택</value>
+  </data>
+  <data name="Stack" xml:space="preserve">
+    <value>쌓다</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>정지</value>
+  </data>
+  <data name="Warn when counter amount below:" xml:space="preserve">
+    <value>카운터의 수량이 설정값보다 아래일때 경고:</value>
   </data>
 </root>

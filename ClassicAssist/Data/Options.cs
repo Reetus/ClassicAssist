@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -8,6 +9,7 @@ using Assistant;
 using ClassicAssist.Annotations;
 using ClassicAssist.Data.Friends;
 using ClassicAssist.Misc;
+using ClassicAssist.UI.Misc;
 using ClassicAssist.UI.ViewModels;
 using Newtonsoft.Json.Linq;
 
@@ -83,6 +85,8 @@ namespace ClassicAssist.Data
             get => _includePartyMembersInFriends;
             set => SetProperty( ref _includePartyMembersInFriends, value );
         }
+
+        public static Language LanguageOverride { get; set; } = Language.Default;
 
         public int LightLevel
         {
@@ -251,6 +255,33 @@ namespace ClassicAssist.Data
         {
             EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
             return Directory.EnumerateFiles( _profilePath, "*.json" ).ToArray();
+        }
+
+        public static void SetLanguage( Language language )
+        {
+            CultureInfo locale = CultureInfo.CurrentCulture;
+
+            switch ( language )
+            {
+                case Language.English:
+                    locale = new CultureInfo( "en-US" );
+                    break;
+                case Language.Korean:
+                    locale = new CultureInfo( "ko-KR" );
+                    break;
+                case Language.Chinese:
+                    locale = new CultureInfo( "zh" );
+                    break;
+                case Language.Default:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            CultureInfo.DefaultThreadCurrentUICulture = locale;
+            CultureInfo.DefaultThreadCurrentUICulture = locale;
+            CultureInfo.CurrentCulture = locale;
+            CultureInfo.CurrentUICulture = locale;
         }
     }
 

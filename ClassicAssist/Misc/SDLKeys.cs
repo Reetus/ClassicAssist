@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
+using ClassicAssist.Data.Hotkeys;
 
 namespace ClassicAssist.Misc
 {
@@ -586,6 +587,12 @@ namespace ClassicAssist.Misc
 
         public const int SDLK_SCANCODE_MASK = 1 << 30;
 
+        public const int SDL_BUTTON_LEFT = 1;
+        public const int SDL_BUTTON_MIDDLE = 2;
+        public const int SDL_BUTTON_RIGHT = 3;
+        public const int SDL_BUTTON_X1 = 4;
+        public const int SDL_BUTTON_X2 = 5;
+
         private static readonly Dictionary<int, Key> INTERNAL_keyMap = new Dictionary<int, Key>
         {
             { (int) SDL_Keycode.SDLK_a, Key.A },
@@ -731,6 +738,25 @@ namespace ClassicAssist.Misc
         public static SDL_Keycode SDL_SCANCODE_TO_KEYCODE( SDL_Scancode X )
         {
             return (SDL_Keycode) ( (int) X | SDLK_SCANCODE_MASK );
+        }
+
+        public static MouseOptions MouseButtonToMouseOptions( int button )
+        {
+            switch ( button )
+            {
+                case SDL_BUTTON_LEFT:
+                    return MouseOptions.LeftButton;
+                case SDL_BUTTON_MIDDLE:
+                    return MouseOptions.MiddleButton;
+                case SDL_BUTTON_RIGHT:
+                    return MouseOptions.RightButton;
+                case SDL_BUTTON_X1:
+                    return MouseOptions.XButton1;
+                case SDL_BUTTON_X2:
+                    return MouseOptions.XButton2;
+                default:
+                    return MouseOptions.None;
+            }
         }
     }
 }

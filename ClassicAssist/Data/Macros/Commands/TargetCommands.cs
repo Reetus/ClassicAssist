@@ -73,7 +73,7 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( useQueue && !Engine.TargetExists )
             {
                 MsgCommands.HeadMsg( Strings.Target_Queued, Engine.Player?.Serial );
-                Engine.LastTargetQueue.Enqueue( serial );
+                Engine.LastTargetQueue.Enqueue( obj );
             }
             else
             {

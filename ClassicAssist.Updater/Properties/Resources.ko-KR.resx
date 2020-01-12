@@ -121,7 +121,7 @@
     <value>오류가 발생했습니다…</value>
   </data>
   <data name="Cannot locate update package..." xml:space="preserve">
-    <value>업데이트 패키지를 찾을 수 없습니다.</value>
+    <value>업데이트 패키지를 찾을 수 없습니다…</value>
   </data>
   <data name="ClassicAssist Updater" xml:space="preserve">
     <value>클래식어시스트 업데이터</value>
@@ -139,21 +139,36 @@
     <value>패키지 추출 중…</value>
   </data>
   <data name="Latest Release:" xml:space="preserve">
-    <value>최신 자료:</value>
+    <value>최신 배포판:</value>
   </data>
   <data name="No new release available..." xml:space="preserve">
-    <value>동안미남님 사용할 수 있는 새로운 버전이 없습니다...</value>
+    <value>동안미남님 사용할 수 있는 새로운 배포판이 없습니다...</value>
   </data>
   <data name="No release asset..." xml:space="preserve">
-    <value>출시된 자료가 없습니다…</value>
+    <value>출시된 배포판이 없습니다…</value>
   </data>
   <data name="Relaunching updater..." xml:space="preserve">
     <value>업데이트 다시 시작중…</value>
   </data>
   <data name="Unable to locate GitHub release" xml:space="preserve">
-    <value>깃허브에서 찾을 수 없습니다</value>
+    <value>GitHub에서 찾을 수 없습니다</value>
   </data>
   <data name="Updating files..." xml:space="preserve">
-    <value>업데이트 파일…</value>
+    <value>파일 업데이트 중…</value>
+  </data>
+  <data name="Checking for latest release..." xml:space="preserve">
+    <value>마지막 배포판 확인중…</value>
+  </data>
+  <data name="Copying {0}..." xml:space="preserve">
+    <value>복사중 {0}…</value>
+  </data>
+  <data name="Done." xml:space="preserve">
+    <value>고생했다 다되었구나.</value>
+  </data>
+  <data name="Downloaded" xml:space="preserve">
+    <value>다운로드 완료</value>
+  </data>
+  <data name="Downloaded size doesn't match expected..." xml:space="preserve">
+    <value>다운로드 크기가 올바르지 않습니다…</value>
   </data>
 </root>

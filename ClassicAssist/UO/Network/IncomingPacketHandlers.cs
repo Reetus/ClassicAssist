@@ -590,14 +590,14 @@ namespace ClassicAssist.UO.Network
                 return;
             }
 
-            int serial = Engine.LastTargetQueue.Dequeue();
+            object obj = Engine.LastTargetQueue.Dequeue();
 
-            if ( serial == 0 )
+            if ( obj == null )
             {
                 return;
             }
 
-            TargetCommands.Target( serial, Options.CurrentOptions.RangeCheckLastTarget );
+            TargetCommands.Target( obj, Options.CurrentOptions.RangeCheckLastTarget );
 
             Engine.TargetExists = false;
         }

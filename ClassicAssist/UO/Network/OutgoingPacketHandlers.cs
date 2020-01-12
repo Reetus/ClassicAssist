@@ -85,7 +85,7 @@ namespace ClassicAssist.UO.Network
             int z = reader.ReadInt16();
             int id = reader.ReadInt16();
 
-            if ( targetType == TargetType.Object && flags != 0x03 )
+            if ( targetType == TargetType.Object && flags != 0x03 && serial != 0 )
             {
                 Engine.Player.LastTargetSerial = serial;
                 Engine.Player.LastTargetType = targetType;

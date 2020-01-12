@@ -508,7 +508,7 @@
     "Name": "Magical Shortbow",
     "Primary": 26,
     "Secondary": 27,
-    "Twohanded": false
+    "Twohanded": true
   },
   {
     "Graphic": 11560,

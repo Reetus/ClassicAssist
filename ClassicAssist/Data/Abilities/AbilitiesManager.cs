@@ -63,7 +63,7 @@ namespace ClassicAssist.Data.Abilities
             {
                 WeaponData wd =
                     ( _weaponData ?? throw new InvalidOperationException() ).FirstOrDefault( d =>
-                        d.Graphic == twoHandItem.ID && d.Twohanded );
+                        d.Graphic == twoHandItem.ID );
 
                 if ( wd != null )
                 {
@@ -80,7 +80,7 @@ namespace ClassicAssist.Data.Abilities
             {
                 WeaponData wd =
                     ( _weaponData ?? throw new InvalidOperationException() ).FirstOrDefault( d =>
-                        d.Graphic == oneHandItem.ID && !d.Twohanded );
+                        d.Graphic == oneHandItem.ID );
 
                 if ( wd != null )
                 {

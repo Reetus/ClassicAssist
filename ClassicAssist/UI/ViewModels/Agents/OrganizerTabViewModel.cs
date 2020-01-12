@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Assistant;
@@ -89,6 +90,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 SetJsonValue( entryObj, "SourceContainer", organizerEntry.SourceContainer );
                 SetJsonValue( entryObj, "DestinationContainer", organizerEntry.DestinationContainer );
                 SetJsonValue( entryObj, "Keys", organizerEntry.Hotkey.ToJObject() );
+                SetJsonValue( entryObj, "Complete", organizerEntry.Complete );
 
                 JArray itemsArray = new JArray();
 
@@ -128,7 +130,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     Stack = GetJsonValue( token, "Stack", true ),
                     SourceContainer = GetJsonValue( token, "SourceContainer", 0 ),
                     DestinationContainer = GetJsonValue( token, "DestinationContainer", 0 ),
-                    Hotkey = new ShortcutKeys( token["Keys"] )
+                    Hotkey = new ShortcutKeys( token["Keys"] ),
+                    Complete = GetJsonValue( token, "Complete", false )
                 };
 
                 entry.Action = hks => Task.Run( async () => await Organize( entry ) );
@@ -260,9 +263,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            Item desinationContainer = Engine.Items.GetItem( entry.DestinationContainer );
+            Item destinationContainer = Engine.Items.GetItem( entry.DestinationContainer );
 
-            if ( desinationContainer == null )
+            if ( destinationContainer == null )
             {
                 //TODO
                 Commands.SystemMessage( Strings.Cannot_find_container___ );
@@ -289,6 +292,15 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     int moveAmount = entryItem.Amount;
                     int moved = 0;
 
+                    if ( entry.Complete )
+                    {
+                        int existingCount = destinationContainer.Container?
+                                                .SelectEntities( i => entryItem.ID == i.ID )?.Select( i => i.Count )
+                                                .Sum() ?? 0;
+
+                        moved += existingCount;
+                    }
+
                     foreach ( Item moveItem in moveItems )
                     {
                         if ( limitAmount && moved >= moveAmount )
@@ -310,11 +322,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                         if ( entry.Stack )
                         {
-                            await Commands.DragDropAsync( moveItem.Serial, amount, desinationContainer.Serial );
+                            await Commands.DragDropAsync( moveItem.Serial, amount, destinationContainer.Serial );
                         }
                         else
                         {
-                            await Commands.DragDropAsync( moveItem.Serial, amount, desinationContainer.Serial,
+                            await Commands.DragDropAsync( moveItem.Serial, amount, destinationContainer.Serial,
                                 0, 0 );
                         }
 

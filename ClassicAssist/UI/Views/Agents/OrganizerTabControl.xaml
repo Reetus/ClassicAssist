@@ -40,6 +40,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <DockPanel Grid.Row="0">
                 <Button DockPanel.Dock="Left" Content="{Binding PlayStopButtonText}"
@@ -61,7 +62,10 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </Grid>
-            <DockPanel Grid.Row="2" Margin="0,10,0,0">
+            <StackPanel Grid.Row="2" Margin="0,10,0,0">
+                <CheckBox Content="{x:Static resources:Strings.Complete}" IsChecked="{Binding SelectedItem.Complete}" />
+            </StackPanel>
+            <DockPanel Grid.Row="3" Margin="0,10,0,0">
                 <Button Content="{x:Static resources:Strings.Remove}" HorizontalAlignment="Left" Margin="0"
                         Command="{Binding RemoveOrganizerAgentEntryCommand}" CommandParameter="{Binding SelectedItem}" />
                 <Button Content="{x:Static resources:Strings.New}" HorizontalAlignment="Right" Margin="0"

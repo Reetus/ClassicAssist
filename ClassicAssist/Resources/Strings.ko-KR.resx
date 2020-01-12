@@ -549,7 +549,7 @@
   <data name="Gumps" xml:space="preserve">
     <value>검프</value>
   </data>
-  <data name="Heal Poition" xml:space="preserve">
+  <data name="Heal Potion" xml:space="preserve">
     <value>치료 포션</value>
   </data>
   <data name="Hotkeys disabled..." xml:space="preserve">
@@ -956,5 +956,8 @@
   </data>
   <data name="Restart game for changes to take effect..." xml:space="preserve">
     <value>변경 사항을 적용하려면 게임을 다시 시작하세요...</value>
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value>완료</value>
   </data>
 </root>

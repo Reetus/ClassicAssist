@@ -387,8 +387,8 @@
   <data name="Gumps" xml:space="preserve">
     <value>Gumps</value>
   </data>
-  <data name="Heal Poition" xml:space="preserve">
-    <value>Heal Poition</value>
+  <data name="Heal Potion" xml:space="preserve">
+    <value>Heal Potion</value>
   </data>
   <data name="Hotkeys" xml:space="preserve">
     <value>Hotkeys</value>
@@ -956,5 +956,8 @@
   </data>
   <data name="Restart game for changes to take effect..." xml:space="preserve">
     <value>Restart game for changes to take effect...</value>
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value>Complete</value>
   </data>
 </root>

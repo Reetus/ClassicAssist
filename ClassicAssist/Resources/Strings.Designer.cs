@@ -475,6 +475,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Complete.
+        /// </summary>
+        public static string Complete {
+            get {
+                return ResourceManager.GetString("Complete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Conflagration Potion.
         /// </summary>
         public static string Conflagration_Potion {
@@ -880,11 +889,11 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Heal Poition.
+        ///   Looks up a localized string similar to Heal Potion.
         /// </summary>
-        public static string Heal_Poition {
+        public static string Heal_Potion {
             get {
-                return ResourceManager.GetString("Heal Poition", resourceCulture);
+                return ResourceManager.GetString("Heal Potion", resourceCulture);
             }
         }
         

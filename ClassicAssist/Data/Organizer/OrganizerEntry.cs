@@ -6,10 +6,18 @@ namespace ClassicAssist.Data.Organizer
 {
     public class OrganizerEntry : HotkeySettable
     {
+        private bool _complete;
         private ObservableCollectionEx<OrganizerItem> _items = new ObservableCollectionEx<OrganizerItem>();
         private bool _stack = true;
 
         public Func<bool> IsRunning;
+
+        public bool Complete
+        {
+            get => _complete;
+            set => SetProperty( ref _complete, value );
+        }
+
         public int DestinationContainer { get; set; }
 
         public ObservableCollectionEx<OrganizerItem> Items

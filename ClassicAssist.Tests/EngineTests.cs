@@ -4,6 +4,10 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Assistant;
+using ClassicAssist.Data;
+using ClassicAssist.Data.Friends;
+using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
 using CUO_API;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -344,6 +348,104 @@ namespace ClassicAssist.Tests
 
                 are.Dispose();
             }
+        }
+
+        [TestMethod]
+        public void WillAutoAcceptPartyInvite()
+        {
+            Options.CurrentOptions.AutoAcceptPartyInvite = true;
+            Options.CurrentOptions.AutoAcceptPartyOnlyFromFriends = false;
+
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            void OnPacketSentEvent( byte[] data, int length )
+            {
+                if ( data[0] == 0xBF && data[5] == 0x08 )
+                {
+                    are.Set();
+                }
+            }
+
+            Engine.InternalPacketSentEvent += OnPacketSentEvent;
+
+            IncomingPacketHandlers.Initialize();
+
+            PacketHandler handler = IncomingPacketHandlers.GetHandler( 0xBF );
+
+            byte[] packet = { 0xBF, 0x00, 0x0A, 0x00, 0x06, 0x07, 0x00, 0xaa, 0xbb, 0xcc };
+
+            handler.OnReceive( new PacketReader( packet, packet.Length, false ) );
+
+            bool result = are.WaitOne( 5000 );
+
+            Assert.IsTrue( result );
+
+            Engine.InternalPacketSentEvent -= OnPacketSentEvent;
+        }
+
+        [TestMethod]
+        public void WontAutoAcceptPartyInviteNonFriend()
+        {
+            Options.CurrentOptions.AutoAcceptPartyInvite = true;
+            Options.CurrentOptions.AutoAcceptPartyOnlyFromFriends = true;
+
+            void OnPacketSentEvent( byte[] data, int length )
+            {
+                if ( data[0] == 0xBF && data[5] == 0x08 )
+                {
+                    Assert.Fail();
+                }
+            }
+
+            Engine.InternalPacketSentEvent += OnPacketSentEvent;
+
+            IncomingPacketHandlers.Initialize();
+
+            PacketHandler handler = IncomingPacketHandlers.GetHandler( 0xBF );
+
+            byte[] packet = { 0xBF, 0x00, 0x0A, 0x00, 0x06, 0x07, 0x00, 0xaa, 0xbb, 0xcc };
+
+            handler.OnReceive( new PacketReader( packet, packet.Length, false ) );
+
+            Engine.InternalPacketSentEvent -= OnPacketSentEvent;
+        }
+
+        [TestMethod]
+        public void WillAutoAcceptPartyInviteIfFriend()
+        {
+            Options.CurrentOptions.AutoAcceptPartyInvite = true;
+            Options.CurrentOptions.AutoAcceptPartyOnlyFromFriends = true;
+
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            FriendEntry fe = new FriendEntry { Name = "Test", Serial = 0xaabbcc };
+
+            Options.CurrentOptions.Friends.Add( fe );
+
+            void OnPacketSentEvent( byte[] data, int length )
+            {
+                if ( data[0] == 0xBF && data[5] == 0x08 )
+                {
+                    are.Set();
+                }
+            }
+
+            Engine.InternalPacketSentEvent += OnPacketSentEvent;
+
+            IncomingPacketHandlers.Initialize();
+
+            PacketHandler handler = IncomingPacketHandlers.GetHandler( 0xBF );
+
+            byte[] packet = { 0xBF, 0x00, 0x0A, 0x00, 0x06, 0x07, 0x00, 0xaa, 0xbb, 0xcc };
+
+            handler.OnReceive( new PacketReader( packet, packet.Length, false ) );
+
+            bool result = are.WaitOne( 5000 );
+
+            Assert.IsTrue( result );
+
+            Options.CurrentOptions.Friends.Remove( fe );
+            Engine.InternalPacketSentEvent -= OnPacketSentEvent;
         }
 
         [TestCleanup]

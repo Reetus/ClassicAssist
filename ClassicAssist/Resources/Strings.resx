@@ -960,4 +960,10 @@
   <data name="Complete" xml:space="preserve">
     <value>Complete</value>
   </data>
+  <data name="Auto accept party invites" xml:space="preserve">
+    <value>Auto accept party invites</value>
+  </data>
+  <data name="Auto accept only from friends" xml:space="preserve">
+    <value>Auto accept only from friends</value>
+  </data>
 </root>

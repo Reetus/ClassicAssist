@@ -57,6 +57,8 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "SmartTargetOption", CurrentOptions.SmartTargetOption.ToString() );
             options.Add( "LimitMouseWheelTrigger", CurrentOptions.LimitMouseWheelTrigger );
             options.Add( "LimitMouseWheelTriggerMS", CurrentOptions.LimitMouseWheelTriggerMS );
+            options.Add( "AutoAcceptPartyInvite", CurrentOptions.AutoAcceptPartyInvite );
+            options.Add( "AutoAcceptPartyOnlyFromFriends", CurrentOptions.AutoAcceptPartyOnlyFromFriends );
 
             json?.Add( "Options", options );
         }
@@ -100,6 +102,9 @@ namespace ClassicAssist.UI.ViewModels
                 config?["SmartTargetOption"]?.ToObject<SmartTargetOption>() ?? SmartTargetOption.None;
             CurrentOptions.LimitMouseWheelTrigger = config?["LimitMouseWheelTrigger"]?.ToObject<bool>() ?? false;
             CurrentOptions.LimitMouseWheelTriggerMS = config?["LimitMouseWheelTriggerMS"]?.ToObject<int>() ?? 25;
+            CurrentOptions.AutoAcceptPartyInvite = config?["AutoAcceptPartyInvite"]?.ToObject<bool>() ?? false;
+            CurrentOptions.AutoAcceptPartyOnlyFromFriends =
+                config?["AutoAcceptPartyOnlyFromFriends"]?.ToObject<bool>() ?? false;
         }
 
         // Replay CurrentOptions changes onto Options.CurrentOptions

@@ -104,6 +104,10 @@
                     </ItemContainerTemplate>
                 </CheckBox.ContentTemplate>
             </CheckBox>
+            <CheckBox Content="{x:Static resources:Strings.Auto_accept_party_invites}"
+                      IsChecked="{Binding CurrentOptions.AutoAcceptPartyInvite}" />
+            <CheckBox Content="{x:Static resources:Strings.Auto_accept_only_from_friends}"
+                      IsChecked="{Binding CurrentOptions.AutoAcceptPartyOnlyFromFriends}" />
         </StackPanel>
     </Grid>
 </UserControl>

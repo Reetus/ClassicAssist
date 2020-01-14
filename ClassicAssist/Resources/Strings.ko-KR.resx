@@ -960,4 +960,10 @@
   <data name="Complete" xml:space="preserve">
     <value>완료</value>
   </data>
+  <data name="Auto accept party invites" xml:space="preserve">
+    <value>파티 초대 자동 수락</value>
+  </data>
+  <data name="Auto accept only from friends" xml:space="preserve">
+    <value>친구 만 자동 수락합니다</value>
+  </data>
 </root>

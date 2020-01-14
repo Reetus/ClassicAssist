@@ -22,6 +22,8 @@ namespace ClassicAssist.Data
         private bool _actionDelay;
         private int _actionDelayMs;
         private bool _alwaysOnTop;
+        private bool _autoAcceptPartyInvite;
+        private bool _autoAcceptPartyOnlyFromFriends;
         private char _commandPrefix = '+';
         private bool _debug;
         private ObservableCollection<FriendEntry> _friends = new ObservableCollection<FriendEntry>();
@@ -58,6 +60,18 @@ namespace ClassicAssist.Data
         {
             get => _alwaysOnTop;
             set => SetProperty( ref _alwaysOnTop, value );
+        }
+
+        public bool AutoAcceptPartyInvite
+        {
+            get => _autoAcceptPartyInvite;
+            set => SetProperty( ref _autoAcceptPartyInvite, value );
+        }
+
+        public bool AutoAcceptPartyOnlyFromFriends
+        {
+            get => _autoAcceptPartyOnlyFromFriends;
+            set => SetProperty( ref _autoAcceptPartyOnlyFromFriends, value );
         }
 
         public char CommandPrefix

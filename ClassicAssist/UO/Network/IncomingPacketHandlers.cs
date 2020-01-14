@@ -11,6 +11,7 @@ using ClassicAssist.Data.Skills;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Resources;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using ClassicAssist.UO.Objects.Gumps;
 
@@ -323,6 +324,23 @@ namespace ClassicAssist.UO.Network
                     }
 
                     Engine.Player.Party = partyMembers.ToArray();
+
+                    break;
+                }
+
+                case 7:
+                {
+                    int leaderSerial = reader.ReadInt32();
+
+                    if ( Options.CurrentOptions.AutoAcceptPartyInvite )
+                    {
+                        if ( !Options.CurrentOptions.AutoAcceptPartyOnlyFromFriends ||
+                             Options.CurrentOptions.AutoAcceptPartyOnlyFromFriends &&
+                             MobileCommands.InFriendList( leaderSerial ) )
+                        {
+                            Engine.SendPacketToServer( new AcceptPartyInvitation( leaderSerial ) );
+                        }
+                    }
 
                     break;
                 }

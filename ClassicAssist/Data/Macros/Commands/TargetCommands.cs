@@ -49,7 +49,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            if ( checkRange && UOMath.IsMobile( serial ) )
+            if ( checkRange && UOMath.IsMobile( serial ) && Engine.TargetExists )
             {
                 Mobile mobile = Engine.Mobiles.GetMobile( serial );
 

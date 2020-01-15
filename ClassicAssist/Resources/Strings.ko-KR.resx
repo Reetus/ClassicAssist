@@ -966,4 +966,13 @@
   <data name="Auto accept only from friends" xml:space="preserve">
     <value>친구 만 자동 수락합니다</value>
   </data>
+  <data name="WarMode On" xml:space="preserve">
+    <value>전쟁 모드 설정</value>
+  </data>
+  <data name="WarMode Off" xml:space="preserve">
+    <value>전쟁 모드 해제</value>
+  </data>
+  <data name="WarMode Toggle" xml:space="preserve">
+    <value>전쟁 모드 토글</value>
+  </data>
 </root>

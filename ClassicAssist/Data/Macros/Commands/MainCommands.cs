@@ -105,5 +105,33 @@ namespace ClassicAssist.Data.Macros.Commands
 
             UOC.SystemMessage( manager.Enabled ? Strings.Hotkeys_enabled___ : Strings.Hotkeys_disabled___, 0x3F );
         }
+
+        [CommandsDisplay( Category = "Main",
+            Description =
+                "Sets war mode status, parameter on, off, or toggle, defaults to toggle if no parameter given.",
+            InsertText = "WarMode(\"on\")" )]
+        public static void WarMode( string onOff = "toggle" )
+        {
+            if ( Engine.Player == null )
+            {
+                return;
+            }
+
+            string onOffNormalized = onOff.Trim().ToLower();
+
+            if ( onOffNormalized != "toggle" )
+            {
+                switch ( onOffNormalized )
+                {
+                    case "on" when Engine.Player.Status.HasFlag( MobileStatus.WarMode ):
+                    case "off" when !Engine.Player.Status.HasFlag( MobileStatus.WarMode ):
+                        return;
+                }
+            }
+
+            Engine.SendPacketToServer( Engine.Player.Status.HasFlag( MobileStatus.WarMode )
+                ? new WarMode( false )
+                : new WarMode( true ) );
+        }
     }
 }

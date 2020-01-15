@@ -762,13 +762,26 @@ namespace ClassicAssist.UO.Network
             // Check mobile layer items if container is not a mobile
             if ( !UOMath.IsMobile( containerSerial ) )
             {
-                Mobile mobile = Engine.Mobiles.SelectEntity( m => m.GetAllLayers().Contains( serial ) );
+                Layer layer = Engine.Player?.GetAllLayers().Select( ( s, i ) => new { i, s } )
+                                  .Where( t => t.s == serial )
+                                  .Select( t => (Layer) t.i ).FirstOrDefault() ?? Layer.Invalid;
 
-                Item layerItem = mobile?.GetEquippedItems().FirstOrDefault( i => i.Serial == serial );
-
-                if ( layerItem != null )
+                if ( layer != Layer.Invalid )
                 {
-                    mobile.SetLayer( layerItem.Layer, 0 );
+                    Engine.Player?.SetLayer( layer, 0 );
+                }
+                else
+                {
+                    Mobile mobile = Engine.Mobiles.SelectEntity( m => m.GetAllLayers().Contains( serial ) );
+
+                    layer = mobile?.GetAllLayers().Select( ( s, i ) => new { i, s } )
+                                .Where( t => t.s == serial )
+                                .Select( t => (Layer) t.i ).FirstOrDefault() ?? Layer.Invalid;
+
+                    if ( layer != Layer.Invalid )
+                    {
+                        mobile?.SetLayer( layer, 0 );
+                    }
                 }
             }
 

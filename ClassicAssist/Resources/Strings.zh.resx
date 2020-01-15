@@ -159,4 +159,820 @@
   <data name="Organizer" xml:space="preserve">
     <value>组织者</value>
   </data>
+  <data name="Abilities" xml:space="preserve">
+    <value>能力</value>
+  </data>
+  <data name="Ability already set..." xml:space="preserve">
+    <value>能力已设置...</value>
+  </data>
+  <data name="Ability not set..." xml:space="preserve">
+    <value>能力未设置...</value>
+  </data>
+  <data name="Action Delay:" xml:space="preserve">
+    <value>操作延迟：</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>行动</value>
+  </data>
+  <data name="Active Objects" xml:space="preserve">
+    <value>活动对象</value>
+  </data>
+  <data name="Add Friend" xml:space="preserve">
+    <value>添加好友</value>
+  </data>
+  <data name="Address:" xml:space="preserve">
+    <value>地址：</value>
+  </data>
+  <data name="Agility Potion" xml:space="preserve">
+    <value>敏捷药水</value>
+  </data>
+  <data name="Aliases" xml:space="preserve">
+    <value>别名</value>
+  </data>
+  <data name="All skills:" xml:space="preserve">
+    <value>所有技能：</value>
+  </data>
+  <data name="Always On Top" xml:space="preserve">
+    <value>始终位于顶部</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>量</value>
+  </data>
+  <data name="Attack Enemy" xml:space="preserve">
+    <value>攻击敌人</value>
+  </data>
+  <data name="Attack Last" xml:space="preserve">
+    <value>上次攻击</value>
+  </data>
+  <data name="Attack request blocked..." xml:space="preserve">
+    <value>攻击请求已阻止...</value>
+  </data>
+  <data name="Bandage Self" xml:space="preserve">
+    <value>绷带自</value>
+  </data>
+  <data name="Blank" xml:space="preserve">
+    <value>空白</value>
+  </data>
+  <data name="Bola" xml:space="preserve">
+    <value>博拉</value>
+  </data>
+  <data name="Both" xml:space="preserve">
+    <value>两者</value>
+  </data>
+  <data name="Bought" xml:space="preserve">
+    <value>买</value>
+  </data>
+  <data name="BuffIcon" xml:space="preserve">
+    <value>布菲孔</value>
+  </data>
+  <data name="Buffs / Penalties" xml:space="preserve">
+    <value>布夫斯 / 处罚</value>
+  </data>
+  <data name="Build Date:" xml:space="preserve">
+    <value>生成日期：</value>
+  </data>
+  <data name="Buy Agent: No matches found." xml:space="preserve">
+    <value>购买代理：未找到匹配项。</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Cancel action" xml:space="preserve">
+    <value>取消操作</value>
+  </data>
+  <data name="Cannot find container..." xml:space="preserve">
+    <value>找不到容器...</value>
+  </data>
+  <data name="Cannot find item..." xml:space="preserve">
+    <value>找不到项目...</value>
+  </data>
+  <data name="Capture Packets" xml:space="preserve">
+    <value>捕获数据包</value>
+  </data>
+  <data name="Character" xml:space="preserve">
+    <value>字符</value>
+  </data>
+  <data name="Check For Updates" xml:space="preserve">
+    <value>检查更新</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>清楚</value>
+  </data>
+  <data name="Clear All" xml:space="preserve">
+    <value>全部清除</value>
+  </data>
+  <data name="Clear All Objects" xml:space="preserve">
+    <value>清除所有对象</value>
+  </data>
+  <data name="Clear Object Queue" xml:space="preserve">
+    <value>清除对象队列</value>
+  </data>
+  <data name="Clear Target Queue" xml:space="preserve">
+    <value>清除目标队列</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="Color" xml:space="preserve">
+    <value>颜色</value>
+  </data>
+  <data name="Combat" xml:space="preserve">
+    <value>战斗</value>
+  </data>
+  <data name="Command Prefix:" xml:space="preserve">
+    <value>命令前缀：</value>
+  </data>
+  <data name="Commands" xml:space="preserve">
+    <value>命令</value>
+  </data>
+  <data name="Commands:" xml:space="preserve">
+    <value>命令：</value>
+  </data>
+  <data name="Conflagration Potion" xml:space="preserve">
+    <value>战火药水</value>
+  </data>
+  <data name="Confusion Blast Potion" xml:space="preserve">
+    <value>混乱爆炸药水</value>
+  </data>
+  <data name="Connected:" xml:space="preserve">
+    <value>连接：</value>
+  </data>
+  <data name="Consume" xml:space="preserve">
+    <value>消费</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="Copy All" xml:space="preserve">
+    <value>全部复制</value>
+  </data>
+  <data name="Count" xml:space="preserve">
+    <value>计数</value>
+  </data>
+  <data name="Counter &quot;{0}&quot; amount is now {1}..." xml:space="preserve">
+    <value>计数器"{0}"金额现在{1}...</value>
+  </data>
+  <data name="Cure Potion" xml:space="preserve">
+    <value>治疗药水</value>
+  </data>
+  <data name="Current Ability Cleared" xml:space="preserve">
+    <value>已清除当前能力</value>
+  </data>
+  <data name="Current Location:" xml:space="preserve">
+    <value>当前位置：</value>
+  </data>
+  <data name="Do not auto interupt" xml:space="preserve">
+    <value>不自动插接</value>
+  </data>
+  <data name="Duplicate" xml:space="preserve">
+    <value>重复</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>启用</value>
+  </data>
+  <data name="Enchanted Apple" xml:space="preserve">
+    <value>魔幻苹果</value>
+  </data>
+  <data name="Enemy" xml:space="preserve">
+    <value>敌人</value>
+  </data>
+  <data name="Entity" xml:space="preserve">
+    <value>实体</value>
+  </data>
+  <data name="Entity Collection Viewer" xml:space="preserve">
+    <value>实体集合查看器</value>
+  </data>
+  <data name="Entity not found..." xml:space="preserve">
+    <value>未找到实体...</value>
+  </data>
+  <data name="Entity Viewer" xml:space="preserve">
+    <value>实体查看器</value>
+  </data>
+  <data name="Equip Last Weapon (Quick Weapon Switch)" xml:space="preserve">
+    <value>装备最后武器（快速武器开关）</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="Error: Cannot find player backpack" xml:space="preserve">
+    <value>错误： 找不到玩家背包</value>
+  </data>
+  <data name="Error: Cannot find type" xml:space="preserve">
+    <value>错误： 找不到类型</value>
+  </data>
+  <data name="Error: No Player" xml:space="preserve">
+    <value>错误： 没有播放器</value>
+  </data>
+  <data name="Execute" xml:space="preserve">
+    <value>执行</value>
+  </data>
+  <data name="Explosion Potion" xml:space="preserve">
+    <value>爆炸药水</value>
+  </data>
+  <data name="Filters" xml:space="preserve">
+    <value>过滤 器</value>
+  </data>
+  <data name="Force Walk Off" xml:space="preserve">
+    <value>强制步行关闭</value>
+  </data>
+  <data name="Force Walk On" xml:space="preserve">
+    <value>强制行走打开</value>
+  </data>
+  <data name="Friend" xml:space="preserve">
+    <value>朋友</value>
+  </data>
+  <data name="Fruit Bowl" xml:space="preserve">
+    <value>水果碗</value>
+  </data>
+  <data name="Get Closest Gray" xml:space="preserve">
+    <value>获取最接近的灰色</value>
+  </data>
+  <data name="Get Next Gray" xml:space="preserve">
+    <value>获取下一个灰色</value>
+  </data>
+  <data name="Get Next Innocent" xml:space="preserve">
+    <value>获取下一个无辜</value>
+  </data>
+  <data name="Get Next Murderer" xml:space="preserve">
+    <value>获取下一个谋杀者</value>
+  </data>
+  <data name="Get Next Unfriendly" xml:space="preserve">
+    <value>获取下一个不友好</value>
+  </data>
+  <data name="Grapes of Wrath" xml:space="preserve">
+    <value>愤怒的葡萄</value>
+  </data>
+  <data name="Graphic" xml:space="preserve">
+    <value>图形</value>
+  </data>
+  <data name="Grid Container Viewer" xml:space="preserve">
+    <value>网格容器查看器</value>
+  </data>
+  <data name="Gumps" xml:space="preserve">
+    <value>甘普斯</value>
+  </data>
+  <data name="Heal Potion" xml:space="preserve">
+    <value>治疗药水</value>
+  </data>
+  <data name="Hotkeys disabled..." xml:space="preserve">
+    <value>热键已禁用...</value>
+  </data>
+  <data name="Hotkeys enabled..." xml:space="preserve">
+    <value>热键已启用...</value>
+  </data>
+  <data name="Ignore ping packets" xml:space="preserve">
+    <value>忽略 ping 数据包</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>进口</value>
+  </data>
+  <data name="Include Backpack Amount" xml:space="preserve">
+    <value>包括背包金额</value>
+  </data>
+  <data name="Include party members" xml:space="preserve">
+    <value>包括党员</value>
+  </data>
+  <data name="Include Purchased Amount" xml:space="preserve">
+    <value>包括购买金额</value>
+  </data>
+  <data name="Insert" xml:space="preserve">
+    <value>插入</value>
+  </data>
+  <data name="Interrupt Spell" xml:space="preserve">
+    <value>中断拼写</value>
+  </data>
+  <data name="Invalid container..." xml:space="preserve">
+    <value>容器无效...</value>
+  </data>
+  <data name="Invalid counter agent name..." xml:space="preserve">
+    <value>计数器代理名称无效...</value>
+  </data>
+  <data name="Invalid destination container..." xml:space="preserve">
+    <value>目标容器无效...</value>
+  </data>
+  <data name="Invalid gump..." xml:space="preserve">
+    <value>无效的口瓜...</value>
+  </data>
+  <data name="Invalid layer value..." xml:space="preserve">
+    <value>无效的图层值...</value>
+  </data>
+  <data name="Invalid mount..." xml:space="preserve">
+    <value>安装无效...</value>
+  </data>
+  <data name="Invalid or unknown object id" xml:space="preserve">
+    <value>无效或未知对象 ID</value>
+  </data>
+  <data name="Invalid skill name &quot;{0}&quot;" xml:space="preserve">
+    <value>无效技能名称"{0}"</value>
+  </data>
+  <data name="Invalid source container..." xml:space="preserve">
+    <value>无效的源容器...</value>
+  </data>
+  <data name="Invisibility Potion" xml:space="preserve">
+    <value>隐形药水</value>
+  </data>
+  <data name="Item" xml:space="preserve">
+    <value>项目</value>
+  </data>
+  <data name="Item properties null or not loaded..." xml:space="preserve">
+    <value>项目属性为空或未加载...</value>
+  </data>
+  <data name="items" xml:space="preserve">
+    <value>项目</value>
+  </data>
+  <data name="Items:" xml:space="preserve">
+    <value>项目：</value>
+  </data>
+  <data name="Journal" xml:space="preserve">
+    <value>杂志</value>
+  </data>
+  <data name="Last Target" xml:space="preserve">
+    <value>最后一个目标</value>
+  </data>
+  <data name="Last Target:" xml:space="preserve">
+    <value>最后一个目标：</value>
+  </data>
+  <data name="Latency:" xml:space="preserve">
+    <value>延迟：</value>
+  </data>
+  <data name="Light" xml:space="preserve">
+    <value>光</value>
+  </data>
+  <data name="Light Level" xml:space="preserve">
+    <value>光级</value>
+  </data>
+  <data name="Limit Mouse Wheel Retrigger" xml:space="preserve">
+    <value>限制鼠标滚轮重新触发</value>
+  </data>
+  <data name="Line Number" xml:space="preserve">
+    <value>行号</value>
+  </data>
+  <data name="Lists" xml:space="preserve">
+    <value>列表</value>
+  </data>
+  <data name="Location:" xml:space="preserve">
+    <value>位置：</value>
+  </data>
+  <data name="Loop" xml:space="preserve">
+    <value>环</value>
+  </data>
+  <data name="Loop time: {0}" xml:space="preserve">
+    <value>循环时间：{0}</value>
+  </data>
+  <data name="Macro error: {0}" xml:space="preserve">
+    <value>宏错误：{0}</value>
+  </data>
+  <data name="Made_For_Malo" xml:space="preserve">
+    <value>"为马洛制作"</value>
+  </data>
+  <data name="Magical" xml:space="preserve">
+    <value>神奇</value>
+  </data>
+  <data name="Main" xml:space="preserve">
+    <value>主要</value>
+  </data>
+  <data name="Map:" xml:space="preserve">
+    <value>地图：</value>
+  </data>
+  <data name="Max Price" xml:space="preserve">
+    <value>最高价</value>
+  </data>
+  <data name="Messages" xml:space="preserve">
+    <value>消息</value>
+  </data>
+  <data name="Min Price" xml:space="preserve">
+    <value>最低价格</value>
+  </data>
+  <data name="Misc" xml:space="preserve">
+    <value>杂项</value>
+  </data>
+  <data name="Mobile" xml:space="preserve">
+    <value>移动</value>
+  </data>
+  <data name="Mobile not found..." xml:space="preserve">
+    <value>未找到手机...</value>
+  </data>
+  <data name="Mobiles:" xml:space="preserve">
+    <value>手机：</value>
+  </data>
+  <data name="Move conflicting items" xml:space="preserve">
+    <value>移动冲突项目</value>
+  </data>
+  <data name="Move to backpack" xml:space="preserve">
+    <value>移动到背包</value>
+  </data>
+  <data name="Move to container" xml:space="preserve">
+    <value>移动到容器</value>
+  </data>
+  <data name="Movement" xml:space="preserve">
+    <value>运动</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>名字</value>
+  </data>
+  <data name="Name:" xml:space="preserve">
+    <value>名字：</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>新增功能</value>
+  </data>
+  <data name="New Item" xml:space="preserve">
+    <value>新项目</value>
+  </data>
+  <data name="New Profile" xml:space="preserve">
+    <value>新配置文件</value>
+  </data>
+  <data name="New version available:" xml:space="preserve">
+    <value>新版本可用：</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>没有</value>
+  </data>
+  <data name="Object &quot;{0}&quot; updated..." xml:space="preserve">
+    <value>对象"{0}"已更新...</value>
+  </data>
+  <data name="Object Inspector" xml:space="preserve">
+    <value>对象检查器</value>
+  </data>
+  <data name="Objects" xml:space="preserve">
+    <value>对象</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>还行</value>
+  </data>
+  <data name="Orange Petal" xml:space="preserve">
+    <value>橙色花瓣</value>
+  </data>
+  <data name="Organizer &quot;{0}&quot; not found..." xml:space="preserve">
+    <value>未找到组织者"{0}"...</value>
+  </data>
+  <data name="Organizer containers set..." xml:space="preserve">
+    <value>组织者容器集...</value>
+  </data>
+  <data name="Organizer {0} finished..." xml:space="preserve">
+    <value>组织者"{0}"完成...</value>
+  </data>
+  <data name="Organizer {0} running..." xml:space="preserve">
+    <value>组织者"{0}"正在运行...</value>
+  </data>
+  <data name="Pass to UO" xml:space="preserve">
+    <value>通行证到UO</value>
+  </data>
+  <data name="Persist Use Once" xml:space="preserve">
+    <value>保留使用一次</value>
+  </data>
+  <data name="Play" xml:space="preserve">
+    <value>玩</value>
+  </data>
+  <data name="Player" xml:space="preserve">
+    <value>球员</value>
+  </data>
+  <data name="Port:" xml:space="preserve">
+    <value>港口：</value>
+  </data>
+  <data name="Prevent attacking friends in war mode" xml:space="preserve">
+    <value>防止在战争模式下攻击朋友</value>
+  </data>
+  <data name="Prevent targeting friends with Harmful spells" xml:space="preserve">
+    <value>防止以有害法术定位朋友</value>
+  </data>
+  <data name="Product:" xml:space="preserve">
+    <value>产品：</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>经典辅助</value>
+  </data>
+  <data name="Profile name contains illegal characters." xml:space="preserve">
+    <value>配置文件名称包含非法字符。</value>
+  </data>
+  <data name="Profiles" xml:space="preserve">
+    <value>配置 文件</value>
+  </data>
+  <data name="Properties" xml:space="preserve">
+    <value>性能</value>
+  </data>
+  <data name="Property" xml:space="preserve">
+    <value>财产</value>
+  </data>
+  <data name="Public Properties" xml:space="preserve">
+    <value>公共属性</value>
+  </data>
+  <data name="Queue Last Target / Target Self" xml:space="preserve">
+    <value>队列最后一个目标 /目标自我</value>
+  </data>
+  <data name="Range check last target" xml:space="preserve">
+    <value>范围检查最后一个目标</value>
+  </data>
+  <data name="Ready..." xml:space="preserve">
+    <value>准备。。。</value>
+  </data>
+  <data name="Record" xml:space="preserve">
+    <value>记录</value>
+  </data>
+  <data name="Recount" xml:space="preserve">
+    <value>叙述</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="Refresh Potion" xml:space="preserve">
+    <value>刷新药水</value>
+  </data>
+  <data name="Regeneration" xml:space="preserve">
+    <value>再生</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="Remove Friend" xml:space="preserve">
+    <value>删除好友</value>
+  </data>
+  <data name="Reset +/-" xml:space="preserve">
+    <value>重置 +/-</value>
+  </data>
+  <data name="Resistances" xml:space="preserve">
+    <value>电阻</value>
+  </data>
+  <data name="Resync" xml:space="preserve">
+    <value>重新同步</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>救</value>
+  </data>
+  <data name="Seasons" xml:space="preserve">
+    <value>季节</value>
+  </data>
+  <data name="Select destination container..." xml:space="preserve">
+    <value>选择目标容器...</value>
+  </data>
+  <data name="Select source container..." xml:space="preserve">
+    <value>选择源容器...</value>
+  </data>
+  <data name="Select undress container..." xml:space="preserve">
+    <value>选择脱衣服容器...</value>
+  </data>
+  <data name="Serial" xml:space="preserve">
+    <value>串行</value>
+  </data>
+  <data name="Serial:" xml:space="preserve">
+    <value>串行：</value>
+  </data>
+  <data name="Server" xml:space="preserve">
+    <value>服务器</value>
+  </data>
+  <data name="Set" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="Set Containers" xml:space="preserve">
+    <value>设置容器</value>
+  </data>
+  <data name="Set Down" xml:space="preserve">
+    <value>设置下来</value>
+  </data>
+  <data name="Set Enemy" xml:space="preserve">
+    <value>设置敌人</value>
+  </data>
+  <data name="Set Friend" xml:space="preserve">
+    <value>设置好友</value>
+  </data>
+  <data name="Set Last Target" xml:space="preserve">
+    <value>设置最后一个目标</value>
+  </data>
+  <data name="Set Locked" xml:space="preserve">
+    <value>设置已锁定</value>
+  </data>
+  <data name="Set Primary Ability" xml:space="preserve">
+    <value>设置主要能力</value>
+  </data>
+  <data name="Set Secondary Ability" xml:space="preserve">
+    <value>设置辅助能力</value>
+  </data>
+  <data name="Set Undress Container" xml:space="preserve">
+    <value>设置脱衣容器</value>
+  </data>
+  <data name="Set Up" xml:space="preserve">
+    <value>建立</value>
+  </data>
+  <data name="Setting ability &quot;{0}&quot;..." xml:space="preserve">
+    <value>设置能力"{0}"...</value>
+  </data>
+  <data name="Show World Items" xml:space="preserve">
+    <value>显示世界物品</value>
+  </data>
+  <data name="Smart last target:" xml:space="preserve">
+    <value>智能最后一个目标：</value>
+  </data>
+  <data name="Smoke Bomb" xml:space="preserve">
+    <value>烟雾弹</value>
+  </data>
+  <data name="Software" xml:space="preserve">
+    <value>软件</value>
+  </data>
+  <data name="Spells" xml:space="preserve">
+    <value>法术</value>
+  </data>
+  <data name="Stack" xml:space="preserve">
+    <value>堆栈</value>
+  </data>
+  <data name="Stats" xml:space="preserve">
+    <value>统计</value>
+  </data>
+  <data name="Status:" xml:space="preserve">
+    <value>地位：</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="Stop Current Macro" xml:space="preserve">
+    <value>停止当前宏</value>
+  </data>
+  <data name="Strength Potion" xml:space="preserve">
+    <value>力量药水</value>
+  </data>
+  <data name="Target" xml:space="preserve">
+    <value>目标</value>
+  </data>
+  <data name="Target blocked... try again..." xml:space="preserve">
+    <value>目标被阻止...再试一次。。。</value>
+  </data>
+  <data name="Target clothing item..." xml:space="preserve">
+    <value>目标服装项目...</value>
+  </data>
+  <data name="Target container..." xml:space="preserve">
+    <value>目标容器...</value>
+  </data>
+  <data name="Target Enemy" xml:space="preserve">
+    <value>目标敌人</value>
+  </data>
+  <data name="Target Friend" xml:space="preserve">
+    <value>目标好友</value>
+  </data>
+  <data name="Target friend to remove..." xml:space="preserve">
+    <value>目标好友要删除...</value>
+  </data>
+  <data name="Target Last" xml:space="preserve">
+    <value>目标最后</value>
+  </data>
+  <data name="Target new friend..." xml:space="preserve">
+    <value>瞄准新朋友...</value>
+  </data>
+  <data name="Target new item..." xml:space="preserve">
+    <value>目标新项目...</value>
+  </data>
+  <data name="Target new mount..." xml:space="preserve">
+    <value>目标新安装...</value>
+  </data>
+  <data name="Target object..." xml:space="preserve">
+    <value>目标对象...</value>
+  </data>
+  <data name="Target out of range, try again..." xml:space="preserve">
+    <value>目标范围外，重试...</value>
+  </data>
+  <data name="Target queue cleared..." xml:space="preserve">
+    <value>目标队列已清除...</value>
+  </data>
+  <data name="Target Queued" xml:space="preserve">
+    <value>目标排队</value>
+  </data>
+  <data name="Target Self" xml:space="preserve">
+    <value>目标自我</value>
+  </data>
+  <data name="Target timeout..." xml:space="preserve">
+    <value>目标超时...</value>
+  </data>
+  <data name="Targeting" xml:space="preserve">
+    <value>针对</value>
+  </data>
+  <data name="The item needs to be equipped..." xml:space="preserve">
+    <value>物品需要配备...</value>
+  </data>
+  <data name="Timeout..." xml:space="preserve">
+    <value>超时。。。</value>
+  </data>
+  <data name="Timers" xml:space="preserve">
+    <value>定时器</value>
+  </data>
+  <data name="Toggle Force Walk" xml:space="preserve">
+    <value>切换力行走</value>
+  </data>
+  <data name="Toggle hotkeys" xml:space="preserve">
+    <value>切换热键</value>
+  </data>
+  <data name="Toggle item properties" xml:space="preserve">
+    <value>切换项属性</value>
+  </data>
+  <data name="Toggle Primary Ability" xml:space="preserve">
+    <value>切换主要能力</value>
+  </data>
+  <data name="Toggle Secondary Ability" xml:space="preserve">
+    <value>切换辅助能力</value>
+  </data>
+  <data name="Topmost" xml:space="preserve">
+    <value>上面</value>
+  </data>
+  <data name="Trinsic Rose Petal" xml:space="preserve">
+    <value>特里西奇玫瑰花瓣</value>
+  </data>
+  <data name="Undress" xml:space="preserve">
+    <value>脱 衣服</value>
+  </data>
+  <data name="Undress All" xml:space="preserve">
+    <value>全部脱衣服</value>
+  </data>
+  <data name="Unknown alias &quot;{0}&quot;." xml:space="preserve">
+    <value>未知别名"{0}"。</value>
+  </data>
+  <data name="Unknown buff name..." xml:space="preserve">
+    <value>未知爱好者名称...</value>
+  </data>
+  <data name="Unknown dress agent &quot;{0}&quot;." xml:space="preserve">
+    <value>不明服装代理"{0}"。</value>
+  </data>
+  <data name="Unknown macro..." xml:space="preserve">
+    <value>未知宏...</value>
+  </data>
+  <data name="Unknown spell..." xml:space="preserve">
+    <value>未知拼写...</value>
+  </data>
+  <data name="Unknown timer..." xml:space="preserve">
+    <value>未知计时器...</value>
+  </data>
+  <data name="Unset Primary Ability" xml:space="preserve">
+    <value>未设置主要能力</value>
+  </data>
+  <data name="Unset Secondary Ability" xml:space="preserve">
+    <value>未设置辅助能力</value>
+  </data>
+  <data name="Use death screen whilst hidden" xml:space="preserve">
+    <value>使用死屏，而隐藏（查克模式）</value>
+  </data>
+  <data name="Use experimental fizzle detection" xml:space="preserve">
+    <value>使用实验性泡沫检测</value>
+  </data>
+  <data name="Use item" xml:space="preserve">
+    <value>使用项目</value>
+  </data>
+  <data name="Use Last Object" xml:space="preserve">
+    <value>使用最后一个对象</value>
+  </data>
+  <data name="Use Left Hand" xml:space="preserve">
+    <value>使用左手</value>
+  </data>
+  <data name="Use object queue" xml:space="preserve">
+    <value>使用对象队列</value>
+  </data>
+  <data name="Use Right Hand" xml:space="preserve">
+    <value>使用右手</value>
+  </data>
+  <data name="Use skill" xml:space="preserve">
+    <value>使用技能</value>
+  </data>
+  <data name="UseOnce cleared..." xml:space="preserve">
+    <value>使用一旦清除...</value>
+  </data>
+  <data name="UseOnce: Cannot find type..." xml:space="preserve">
+    <value>使用一次：找不到类型...</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>价值</value>
+  </data>
+  <data name="Version:" xml:space="preserve">
+    <value>版本：</value>
+  </data>
+  <data name="Warn when counter amount below:" xml:space="preserve">
+    <value>当计数器金额低于以下时发出警告：</value>
+  </data>
+  <data name="Weather" xml:space="preserve">
+    <value>天气</value>
+  </data>
+  <data name="World_Status" xml:space="preserve">
+    <value>世界地位</value>
+  </data>
+  <data name="{0} items, {1} selected, {2} total amount" xml:space="preserve">
+    <value>{0}项，{1}选中，{2}总金额</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="Restart game for changes to take effect..." xml:space="preserve">
+    <value>重新启动游戏以进行更改...</value>
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="Auto accept party invites" xml:space="preserve">
+    <value>自动接受方邀请</value>
+  </data>
+  <data name="Auto accept only from friends" xml:space="preserve">
+    <value>仅自动接受朋友</value>
+  </data>
+  <data name="WarMode On" xml:space="preserve">
+    <value>战争模式打开</value>
+  </data>
+  <data name="WarMode Off" xml:space="preserve">
+    <value>战争模式关闭</value>
+  </data>
+  <data name="WarMode Toggle" xml:space="preserve">
+    <value>战争模式切换</value>
+  </data>
 </root>

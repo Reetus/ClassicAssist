@@ -966,4 +966,13 @@
   <data name="Auto accept only from friends" xml:space="preserve">
     <value>Auto accept only from friends</value>
   </data>
+  <data name="WarMode On" xml:space="preserve">
+    <value>WarMode On</value>
+  </data>
+  <data name="WarMode Off" xml:space="preserve">
+    <value>WarMode Off</value>
+  </data>
+  <data name="WarMode Toggle" xml:space="preserve">
+    <value>WarMode Toggle</value>
+  </data>
 </root>

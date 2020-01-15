@@ -2581,6 +2581,33 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to WarMode Off.
+        /// </summary>
+        public static string WarMode_Off {
+            get {
+                return ResourceManager.GetString("WarMode Off", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WarMode On.
+        /// </summary>
+        public static string WarMode_On {
+            get {
+                return ResourceManager.GetString("WarMode On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WarMode Toggle.
+        /// </summary>
+        public static string WarMode_Toggle {
+            get {
+                return ResourceManager.GetString("WarMode Toggle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Warn when counter amount below:.
         /// </summary>
         public static string Warn_when_counter_amount_below_ {

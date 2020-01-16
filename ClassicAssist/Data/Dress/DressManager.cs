@@ -85,7 +85,7 @@ namespace ClassicAssist.Data.Dress
 
             int backpack = player.Backpack.Serial;
 
-            if ( backpack <= 0 )
+            if ( backpack == 0 || backpack == -1 )
             {
                 return;
             }

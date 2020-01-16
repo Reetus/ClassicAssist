@@ -59,6 +59,11 @@ namespace ClassicAssist.Data.Dress
 
             int container = DressManager.GetInstance().GetUndressContainer( UndressContainer );
 
+            if ( container == 0 || container == -1 )
+            {
+                return;
+            }
+
             await Task.Run( async () =>
             {
                 foreach ( DressAgentItem dai in Items )
@@ -107,15 +112,15 @@ namespace ClassicAssist.Data.Dress
 
             int container = DressManager.GetInstance().GetUndressContainer( UndressContainer );
 
+            if ( container == 0 || container == -1 )
+            {
+                return;
+            }
+
             IEnumerable<int> serials = Items.Select( dai => dai.Serial );
 
             IEnumerable<Item> itemsToUnequip =
                 Engine.Player.GetEquippedItems().Where( i => serials.Contains( i.Serial ) );
-
-            if ( container == -1 )
-            {
-                return;
-            }
 
             foreach ( Item item in itemsToUnequip )
             {

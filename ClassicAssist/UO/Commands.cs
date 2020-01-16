@@ -18,6 +18,8 @@ namespace ClassicAssist.UO
 {
     public class Commands
     {
+        private static readonly object _dragDropLock = new object();
+
         public static void DragItem( int serial, int amount )
         {
             Engine.SendPacketToServer( new DragItem( serial, amount ) );
@@ -38,19 +40,26 @@ namespace ClassicAssist.UO
                 amount = i?.Count ?? 1;
             }
 
-            await Task.Run( async () =>
+            lock ( _dragDropLock )
             {
                 DragItem( serial, amount );
 
-                await Task.Delay( Options.CurrentOptions.ActionDelayMS );
+                Thread.Sleep( Options.CurrentOptions.ActionDelayMS );
 
                 DropItem( serial, containerSerial, x, y, z );
-            } );
+            }
+
+            await Task.CompletedTask;
         }
 
         public static void EquipItem( Item item, Layer layer )
         {
             int containerSerial = Engine.Player?.Serial ?? 0;
+
+            if ( containerSerial == 0 || containerSerial == -1 )
+            {
+                return;
+            }
 
             if ( layer == Layer.Invalid )
             {

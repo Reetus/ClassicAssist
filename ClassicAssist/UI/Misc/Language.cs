@@ -5,6 +5,7 @@
         Default,
         English,
         Korean,
-        Chinese
+        Chinese,
+        Italian
     }
 }

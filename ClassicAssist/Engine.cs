@@ -16,6 +16,7 @@ using ClassicAssist.Data;
 using ClassicAssist.Data.Abilities;
 using ClassicAssist.Data.Commands;
 using ClassicAssist.Data.Hotkeys;
+using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.Views;
@@ -222,6 +223,7 @@ namespace Assistant
 
             Items.RemoveByDistance( MAX_DISTANCE, x, y );
             Mobiles.RemoveByDistance( MAX_DISTANCE, x, y );
+            ScavengerManager.GetInstance().CheckArea?.Invoke();
         }
 
         public static Item GetOrCreateItem( int serial, int containerSerial = -1 )

@@ -975,4 +975,10 @@
   <data name="WarMode Toggle" xml:space="preserve">
     <value>WarMode Toggle</value>
   </data>
+  <data name="Set Container" xml:space="preserve">
+    <value>Set Container</value>
+  </data>
+  <data name="Scavenger" xml:space="preserve">
+    <value>Scavenger</value>
+  </data>
 </root>

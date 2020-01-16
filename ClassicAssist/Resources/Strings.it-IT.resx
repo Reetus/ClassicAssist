@@ -117,868 +117,868 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Made_For_Malo" xml:space="preserve">
-    <value>"호주 친구 Reetus가 한국을 위해 만들었습니다"</value>
-  </data>
   <data name="UO_LOCALE" xml:space="preserve">
-    <value>KOR\0</value>
-  </data>
-  <data name="General" xml:space="preserve">
-    <value>일반</value>
-  </data>
-  <data name="Options" xml:space="preserve">
-    <value>옵션</value>
-  </data>
-  <data name="About" xml:space="preserve">
-    <value>상태</value>
-  </data>
-  <data name="Agents" xml:space="preserve">
-    <value>에이전트</value>
-  </data>
-  <data name="Counters" xml:space="preserve">
-    <value>카운터</value>
-  </data>
-  <data name="Dress" xml:space="preserve">
-    <value>장비착용</value>
-  </data>
-  <data name="Friends" xml:space="preserve">
-    <value>친구</value>
-  </data>
-  <data name="Hotkeys" xml:space="preserve">
-    <value>단축키</value>
-  </data>
-  <data name="Macros" xml:space="preserve">
-    <value>매크로</value>
-  </data>
-  <data name="Organizer" xml:space="preserve">
-    <value>정리</value>
-  </data>
-  <data name="Skills" xml:space="preserve">
-    <value>스킬</value>
-  </data>
-  <data name="Vendor Buy" xml:space="preserve">
-    <value>벤더에서 구매</value>
-  </data>
-  <data name="Vendor Sell" xml:space="preserve">
-    <value>벤더에게 판매</value>
-  </data>
-  <data name="Weather" xml:space="preserve">
-    <value>날씨</value>
-  </data>
-  <data name="Seasons" xml:space="preserve">
-    <value>계절</value>
-  </data>
-  <data name="Light Level" xml:space="preserve">
-    <value>조명 레벨</value>
-  </data>
-  <data name="Filters" xml:space="preserve">
-    <value>필터</value>
-  </data>
-  <data name="Light" xml:space="preserve">
-    <value>빛</value>
-  </data>
-  <data name="Profiles" xml:space="preserve">
-    <value>프로필</value>
+    <value>ITA\0</value>
   </data>
   <data name="Abilities" xml:space="preserve">
-    <value>특수기</value>
-  </data>
-  <data name="Commands" xml:space="preserve">
-    <value>명령</value>
-  </data>
-  <data name="Commands:" xml:space="preserve">
-    <value>명령:</value>
-  </data>
-  <data name="Consume" xml:space="preserve">
-    <value>물약과 버프</value>
-  </data>
-  <data name="Movement" xml:space="preserve">
-    <value>이동</value>
-  </data>
-  <data name="Spells" xml:space="preserve">
-    <value>주문</value>
-  </data>
-  <data name="Targeting" xml:space="preserve">
-    <value>타겟팅</value>
-  </data>
-  <data name="Software" xml:space="preserve">
-    <value>소프트웨어</value>
-  </data>
-  <data name="Product:" xml:space="preserve">
-    <value>제품:</value>
-  </data>
-  <data name="Version:" xml:space="preserve">
-    <value>버전:</value>
-  </data>
-  <data name="Build Date:" xml:space="preserve">
-    <value>빌드:</value>
-  </data>
-  <data name="World_Status" xml:space="preserve">
-    <value>세계 상태</value>
-  </data>
-  <data name="Connected:" xml:space="preserve">
-    <value>연결됨 :</value>
-  </data>
-  <data name="Items:" xml:space="preserve">
-    <value>아이템:</value>
-  </data>
-  <data name="items" xml:space="preserve">
-    <value>아이템</value>
-  </data>
-  <data name="Mobiles:" xml:space="preserve">
-    <value>모빌들:</value>
-  </data>
-  <data name="Latency:" xml:space="preserve">
-    <value>지연 시간:</value>
-  </data>
-  <data name="Player" xml:space="preserve">
-    <value>플레이어</value>
-  </data>
-  <data name="Name:" xml:space="preserve">
-    <value>이름:</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>이름</value>
-  </data>
-  <data name="Serial:" xml:space="preserve">
-    <value>시리얼:</value>
-  </data>
-  <data name="Last Target:" xml:space="preserve">
-    <value>라스트 타겟:</value>
-  </data>
-  <data name="Active Objects" xml:space="preserve">
-    <value>활성 객체</value>
-  </data>
-  <data name="Add Friend" xml:space="preserve">
-    <value>친구 추가</value>
-  </data>
-  <data name="Always On Top" xml:space="preserve">
-    <value>항상 위로 보이기</value>
-  </data>
-  <data name="Both" xml:space="preserve">
-    <value>둘다</value>
-  </data>
-  <data name="Bought" xml:space="preserve">
-    <value>샀다</value>
-  </data>
-  <data name="BuffIcon" xml:space="preserve">
-    <value>버프아이콘</value>
-  </data>
-  <data name="Check For Updates" xml:space="preserve">
-    <value>업데이트를 확인</value>
-  </data>
-  <data name="Clear" xml:space="preserve">
-    <value>삭제</value>
-  </data>
-  <data name="Execute" xml:space="preserve">
-    <value>적용</value>
-  </data>
-  <data name="Insert" xml:space="preserve">
-    <value>삽입</value>
-  </data>
-  <data name="Location:" xml:space="preserve">
-    <value>장소:</value>
-  </data>
-  <data name="Loop" xml:space="preserve">
-    <value>반복</value>
-  </data>
-  <data name="Map:" xml:space="preserve">
-    <value>지도:</value>
-  </data>
-  <data name="Messages" xml:space="preserve">
-    <value>메시지</value>
-  </data>
-  <data name="New" xml:space="preserve">
-    <value>추가</value>
-  </data>
-  <data name="New Item" xml:space="preserve">
-    <value>새 아이템</value>
-  </data>
-  <data name="New version available:" xml:space="preserve">
-    <value>사용가능한 새 버전:</value>
-  </data>
-  <data name="Object Inspector" xml:space="preserve">
-    <value>오프젝트 검사기</value>
-  </data>
-  <data name="OK" xml:space="preserve">
-    <value>오케이</value>
-  </data>
-  <data name="Pass to UO" xml:space="preserve">
-    <value>키보드 키 동시 사용</value>
-  </data>
-  <data name="Play" xml:space="preserve">
-    <value>재생</value>
-  </data>
-  <data name="ProductName" xml:space="preserve">
-    <value>클래식어시스트</value>
-  </data>
-  <data name="Record" xml:space="preserve">
-    <value>녹화</value>
-  </data>
-  <data name="Refresh Potion" xml:space="preserve">
-    <value>스탬 포션</value>
-  </data>
-  <data name="Regeneration" xml:space="preserve">
-    <value>재생</value>
-  </data>
-  <data name="Remove" xml:space="preserve">
-    <value>삭제</value>
-  </data>
-  <data name="Remove Friend" xml:space="preserve">
-    <value>친구 삭제</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>저장</value>
-  </data>
-  <data name="Set" xml:space="preserve">
-    <value>설정</value>
-  </data>
-  <data name="Set Containers" xml:space="preserve">
-    <value>상자 선택</value>
-  </data>
-  <data name="Stack" xml:space="preserve">
-    <value>쌓다</value>
-  </data>
-  <data name="Stop" xml:space="preserve">
-    <value>정지</value>
-  </data>
-  <data name="Warn when counter amount below:" xml:space="preserve">
-    <value>카운터의 수량이 설정값보다 아래일 때 경고:</value>
+    <value>Abilità</value>
   </data>
   <data name="Ability already set..." xml:space="preserve">
-    <value>특수기가 이미 설정됐습니다…</value>
+    <value>Abilità già impostata...</value>
   </data>
   <data name="Ability not set..." xml:space="preserve">
-    <value>특수기가 설정 설정되지 않았습니다…</value>
+    <value>Capacità non impostata...</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>Circa</value>
   </data>
   <data name="Action Delay:" xml:space="preserve">
-    <value>행동 딜레이:</value>
+    <value>Ritardo azione:</value>
   </data>
   <data name="Actions" xml:space="preserve">
-    <value>행동</value>
+    <value>Azioni</value>
+  </data>
+  <data name="Active Objects" xml:space="preserve">
+    <value>Oggetti attivi</value>
+  </data>
+  <data name="Add Friend" xml:space="preserve">
+    <value>Aggiungi amico</value>
   </data>
   <data name="Address:" xml:space="preserve">
-    <value>주소:</value>
+    <value>Indirizzo:</value>
+  </data>
+  <data name="Agents" xml:space="preserve">
+    <value>Agenti</value>
   </data>
   <data name="Agility Potion" xml:space="preserve">
-    <value>덱스 포션</value>
+    <value>Pozione Agilità</value>
   </data>
   <data name="Aliases" xml:space="preserve">
-    <value>별명</value>
+    <value>Alias</value>
   </data>
   <data name="All skills:" xml:space="preserve">
-    <value>모든 스킬:</value>
+    <value>Tutte le Skills:</value>
+  </data>
+  <data name="Always On Top" xml:space="preserve">
+    <value>In primo piano</value>
   </data>
   <data name="Amount" xml:space="preserve">
-    <value>수량</value>
+    <value>Quantità</value>
   </data>
   <data name="Attack Enemy" xml:space="preserve">
-    <value>적 공격</value>
+    <value>Attacca Nemico</value>
   </data>
   <data name="Attack Last" xml:space="preserve">
-    <value>라스트타겟 물리공격</value>
+    <value>Attacca Ultimo</value>
   </data>
   <data name="Attack request blocked..." xml:space="preserve">
-    <value>공격 요청이 차단됐습니다…</value>
+    <value>Richiesta di attacco bloccata...</value>
   </data>
   <data name="Bandage Self" xml:space="preserve">
-    <value>셀프 붕대질</value>
+    <value>Auto Benda</value>
   </data>
   <data name="Blank" xml:space="preserve">
-    <value>공백</value>
+    <value>Vuoto</value>
   </data>
   <data name="Bola" xml:space="preserve">
-    <value>볼라</value>
+    <value>Bola</value>
+  </data>
+  <data name="Both" xml:space="preserve">
+    <value>Entrambi</value>
+  </data>
+  <data name="Bought" xml:space="preserve">
+    <value>Comprato</value>
+  </data>
+  <data name="BuffIcon" xml:space="preserve">
+    <value>BuffIcon</value>
   </data>
   <data name="Buffs / Penalties" xml:space="preserve">
-    <value>버프 / 페널티</value>
+    <value>Buffs / Penalità</value>
+  </data>
+  <data name="Build Date:" xml:space="preserve">
+    <value>Data Build:</value>
   </data>
   <data name="Buy Agent: No matches found." xml:space="preserve">
-    <value>구매 에이전트: 일치하는 항목이 없습니다</value>
+    <value>Agente Buy: nessuna corrispondenza trovata.</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>취소</value>
+    <value>Annulla</value>
   </data>
   <data name="Cancel action" xml:space="preserve">
-    <value>행동 취소</value>
+    <value>Annulla azione</value>
   </data>
   <data name="Cannot find container..." xml:space="preserve">
-    <value>상자를 찾을 수 없습니다</value>
+    <value>Impossibile trovare il contenitore...</value>
   </data>
   <data name="Cannot find item..." xml:space="preserve">
-    <value>아이템을 찾을 수 없습니다</value>
+    <value>Impossibile trovare l'oggetto...</value>
   </data>
   <data name="Capture Packets" xml:space="preserve">
-    <value>패킷 캡쳐</value>
+    <value>Cattura pacchetti</value>
   </data>
   <data name="Character" xml:space="preserve">
-    <value>캐릭터</value>
+    <value>Personaggio</value>
+  </data>
+  <data name="Check For Updates" xml:space="preserve">
+    <value>Verifica la disponibilità di aggiornamenti</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Pulisci</value>
   </data>
   <data name="Clear All" xml:space="preserve">
-    <value>모두 삭제</value>
+    <value>Pulisci tutto</value>
   </data>
   <data name="Clear All Objects" xml:space="preserve">
-    <value>모든 오브젝트 삭제</value>
+    <value>Pulisci tutti gli oggetti</value>
   </data>
   <data name="Clear Object Queue" xml:space="preserve">
-    <value>오브젝트 큐 삭제</value>
+    <value>Pulisci la coda oggetti</value>
   </data>
   <data name="Clear Target Queue" xml:space="preserve">
-    <value>타겟 큐 삭제</value>
+    <value>Pulisci la coda dei Targets</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>닫기</value>
+    <value>Vicino</value>
   </data>
   <data name="Color" xml:space="preserve">
-    <value>색상</value>
+    <value>Colore</value>
   </data>
   <data name="Combat" xml:space="preserve">
-    <value>전투</value>
+    <value>Combattimento</value>
   </data>
   <data name="Command Prefix:" xml:space="preserve">
-    <value>명령 접두사:</value>
+    <value>Prefisso comando:</value>
+  </data>
+  <data name="Commands" xml:space="preserve">
+    <value>Comandi</value>
+  </data>
+  <data name="Commands:" xml:space="preserve">
+    <value>Comandi:</value>
   </data>
   <data name="Conflagration Potion" xml:space="preserve">
-    <value>불장판 포션</value>
+    <value>Pozione Conflagration</value>
   </data>
   <data name="Confusion Blast Potion" xml:space="preserve">
-    <value>거대한 혼란 포션</value>
+    <value>Pozione Confusion Blast</value>
+  </data>
+  <data name="Connected:" xml:space="preserve">
+    <value>Connesso:</value>
+  </data>
+  <data name="Consume" xml:space="preserve">
+    <value>Consumare</value>
   </data>
   <data name="Copy" xml:space="preserve">
-    <value>복사</value>
+    <value>Copia</value>
   </data>
   <data name="Copy All" xml:space="preserve">
-    <value>모두 복사</value>
+    <value>Copia tutto</value>
   </data>
   <data name="Count" xml:space="preserve">
-    <value>카운트</value>
+    <value>Conta</value>
   </data>
   <data name="Counter &quot;{0}&quot; amount is now {1}..." xml:space="preserve">
-    <value>카운터 이름 "{0}" 현재 갯수 {1}…</value>
+    <value>La quantità di "{0}" è ora {1}...</value>
+  </data>
+  <data name="Counters" xml:space="preserve">
+    <value>Contatori</value>
   </data>
   <data name="Cure Potion" xml:space="preserve">
-    <value>해독 포션</value>
+    <value>Pozione Cure</value>
   </data>
   <data name="Current Ability Cleared" xml:space="preserve">
-    <value>현재 능력 삭제</value>
+    <value>Abilità corrente deselezionata</value>
   </data>
   <data name="Current Location:" xml:space="preserve">
-    <value>현재 장소:</value>
+    <value>Posizione corrente:</value>
   </data>
   <data name="Do not auto interupt" xml:space="preserve">
-    <value>자동으로 중단하지 않습니다</value>
+    <value>Non auto interrompere</value>
+  </data>
+  <data name="Dress" xml:space="preserve">
+    <value>Equipaggiamento</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
-    <value>복제</value>
+    <value>Duplicato</value>
   </data>
   <data name="Enabled" xml:space="preserve">
-    <value>활성화</value>
+    <value>Abilitato</value>
   </data>
   <data name="Enchanted Apple" xml:space="preserve">
-    <value>인챈티드 애플</value>
+    <value>Mela Incantata</value>
   </data>
   <data name="Enemy" xml:space="preserve">
-    <value>적</value>
+    <value>Nemico</value>
   </data>
   <data name="Entity" xml:space="preserve">
-    <value>게임오브젝트</value>
+    <value>Entità</value>
   </data>
   <data name="Entity Collection Viewer" xml:space="preserve">
-    <value>게임오브젝트 콜렉션 뷰어</value>
+    <value>Visualizzatore raccolta entità</value>
   </data>
   <data name="Entity not found..." xml:space="preserve">
-    <value>게임오브젝트를 찾을 수 없습니다…</value>
+    <value>Entità non trovata...</value>
   </data>
   <data name="Entity Viewer" xml:space="preserve">
-    <value>게임오브젝트 뷰어</value>
+    <value>Visualizzatore entità</value>
   </data>
   <data name="Equip Last Weapon (Quick Weapon Switch)" xml:space="preserve">
-    <value>마지막 무기로 빠르게 전환</value>
+    <value>Equipaggia l'ultima arma (Cambio Rapido Armi)</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>오류가 발생했습니다…</value>
+    <value>Errore</value>
   </data>
   <data name="Error: Cannot find player backpack" xml:space="preserve">
-    <value>오류 : 너의 배낭을 못찾겠다</value>
+    <value>Errore: Impossibile trovare lo zaino</value>
   </data>
   <data name="Error: Cannot find type" xml:space="preserve">
-    <value>오류 : 해당 유형을 찾을 수 없다</value>
+    <value>Errore: impossibile trovare il tipo di oggetto</value>
   </data>
   <data name="Error: No Player" xml:space="preserve">
-    <value>오류 : 플레이어가 없다</value>
+    <value>Errore: nessun personaggio</value>
+  </data>
+  <data name="Execute" xml:space="preserve">
+    <value>Eseguire</value>
   </data>
   <data name="Explosion Potion" xml:space="preserve">
-    <value>폭탄 포션</value>
+    <value>Pozione Explosion</value>
+  </data>
+  <data name="Filters" xml:space="preserve">
+    <value>Filtri</value>
   </data>
   <data name="Force Walk Off" xml:space="preserve">
-    <value>강제로 걷기 비활성</value>
+    <value>Forza camminare Off</value>
   </data>
   <data name="Force Walk On" xml:space="preserve">
-    <value>강제로 걷기 활성</value>
+    <value>Forza camminare On</value>
   </data>
   <data name="Friend" xml:space="preserve">
-    <value>친구</value>
+    <value>Amico</value>
+  </data>
+  <data name="Friends" xml:space="preserve">
+    <value>Amici</value>
   </data>
   <data name="Fruit Bowl" xml:space="preserve">
-    <value>과일 그릇</value>
+    <value>Vassoio di frutta</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Generale</value>
   </data>
   <data name="Get Closest Gray" xml:space="preserve">
-    <value>가까운 그레이 선택</value>
+    <value>Aggancia il Criminale più vicino</value>
   </data>
   <data name="Get Next Gray" xml:space="preserve">
-    <value>다음 그레이 선택</value>
+    <value>Aggancia il prossimo Criminale</value>
   </data>
   <data name="Get Next Innocent" xml:space="preserve">
-    <value>다음 블루 선택</value>
+    <value>Aggancia il prossimo Innocente</value>
   </data>
   <data name="Get Next Murderer" xml:space="preserve">
-    <value>다음 머더러 선택</value>
+    <value>Aggancia il prossimo Assassino</value>
   </data>
   <data name="Get Next Unfriendly" xml:space="preserve">
-    <value>다음 친구아닌사람 선택</value>
+    <value>Aggancia il prossimo Nemico</value>
   </data>
   <data name="Grapes of Wrath" xml:space="preserve">
-    <value>분노의 포도</value>
+    <value>Uva dell'Ira</value>
   </data>
   <data name="Graphic" xml:space="preserve">
-    <value>그래픽</value>
+    <value>Grafica</value>
   </data>
   <data name="Grid Container Viewer" xml:space="preserve">
-    <value>그리도 컨테이너 뷰어</value>
+    <value>Visualizzatore contenitore a griglia</value>
   </data>
   <data name="Gumps" xml:space="preserve">
-    <value>검프</value>
+    <value>Gumps</value>
   </data>
   <data name="Heal Potion" xml:space="preserve">
-    <value>치료 포션</value>
+    <value>Pozione Heal</value>
+  </data>
+  <data name="Hotkeys" xml:space="preserve">
+    <value>Tasti Rapidi</value>
   </data>
   <data name="Hotkeys disabled..." xml:space="preserve">
-    <value>단축키 비활성화</value>
+    <value>Tasti di scelta rapida disabilitati...</value>
   </data>
   <data name="Hotkeys enabled..." xml:space="preserve">
-    <value>단축키 활성화</value>
+    <value>Tasti di scelta rapida abilitati...</value>
   </data>
   <data name="Ignore ping packets" xml:space="preserve">
-    <value>핑 패킷 무시</value>
+    <value>Ignora pacchetti ping</value>
   </data>
   <data name="Import" xml:space="preserve">
-    <value>반입</value>
+    <value>Importazione</value>
   </data>
   <data name="Include Backpack Amount" xml:space="preserve">
-    <value>백팩의 양 포함</value>
+    <value>Includi quantità nello zaino</value>
   </data>
   <data name="Include party members" xml:space="preserve">
-    <value>파티 멤버 포함</value>
+    <value>Includi membri del gruppo</value>
   </data>
   <data name="Include Purchased Amount" xml:space="preserve">
-    <value>구매 금액 포함</value>
+    <value>Includi importo acquistato</value>
+  </data>
+  <data name="Insert" xml:space="preserve">
+    <value>Inserire</value>
   </data>
   <data name="Interrupt Spell" xml:space="preserve">
-    <value>스펠끊기/디스텁</value>
+    <value>Interrompi Spell</value>
   </data>
   <data name="Invalid container..." xml:space="preserve">
-    <value>올바르지않은 상자…</value>
+    <value>Contenitore non valido...</value>
   </data>
   <data name="Invalid counter agent name..." xml:space="preserve">
-    <value>카운터 에이전트 이름이 잘못되었습니다…</value>
+    <value>Nome Agente contatore non valido...</value>
   </data>
   <data name="Invalid destination container..." xml:space="preserve">
-    <value>올바르지 않은 대상 상자…</value>
+    <value>Contenitore di destinazione non valido...</value>
   </data>
   <data name="Invalid gump..." xml:space="preserve">
-    <value>잘못된 검프…</value>
+    <value>Gump non valido...</value>
   </data>
   <data name="Invalid layer value..." xml:space="preserve">
-    <value>잘못된 레이어 값…</value>
+    <value>Valore layer non valido...</value>
   </data>
   <data name="Invalid mount..." xml:space="preserve">
-    <value>탈것이 잘못되었습니다…</value>
+    <value>Mount non valida...</value>
   </data>
   <data name="Invalid or unknown object id" xml:space="preserve">
-    <value>잘못되었거나 알 수 없는 오브젝트 ID</value>
+    <value>ID oggetto non valido o sconosciuto</value>
   </data>
   <data name="Invalid skill name &quot;{0}&quot;" xml:space="preserve">
-    <value>유요하지않은 기술 이름 "{0}"</value>
+    <value>Nome Skill non valida "{0}"</value>
   </data>
   <data name="Invalid source container..." xml:space="preserve">
-    <value>잘못된 공급 상자…</value>
+    <value>Contenitore di origine non valido...</value>
   </data>
   <data name="Invisibility Potion" xml:space="preserve">
-    <value>인비 포션</value>
+    <value>Pozione Invisibility</value>
   </data>
   <data name="Item" xml:space="preserve">
-    <value>아이템</value>
+    <value>Oggetto</value>
   </data>
   <data name="Item properties null or not loaded..." xml:space="preserve">
-    <value>아이템 속성이 존재하지 않거나 불러오지 못했습니다…</value>
+    <value>Proprietà dell'oggetto nulle o non caricate...</value>
+  </data>
+  <data name="items" xml:space="preserve">
+    <value>Oggetti</value>
+  </data>
+  <data name="Items:" xml:space="preserve">
+    <value>Oggetti:</value>
   </data>
   <data name="Journal" xml:space="preserve">
-    <value>저널</value>
+    <value>Journal</value>
   </data>
   <data name="Last Target" xml:space="preserve">
-    <value>라스트 타겟</value>
+    <value>Last Target</value>
+  </data>
+  <data name="Last Target:" xml:space="preserve">
+    <value>Last Target:</value>
+  </data>
+  <data name="Latency:" xml:space="preserve">
+    <value>Latenza:</value>
+  </data>
+  <data name="Light" xml:space="preserve">
+    <value>Luce</value>
+  </data>
+  <data name="Light Level" xml:space="preserve">
+    <value>Livello luce</value>
   </data>
   <data name="Limit Mouse Wheel Retrigger" xml:space="preserve">
-    <value>마우스 휠 리트리거 제한</value>
+    <value>Limita spam della rotellina del mouse</value>
   </data>
   <data name="Line Number" xml:space="preserve">
-    <value>줄 번호</value>
+    <value>Numero riga</value>
   </data>
   <data name="Lists" xml:space="preserve">
-    <value>목록</value>
+    <value>Liste</value>
+  </data>
+  <data name="Location:" xml:space="preserve">
+    <value>Posizione:</value>
+  </data>
+  <data name="Loop" xml:space="preserve">
+    <value>Loop</value>
   </data>
   <data name="Loop time: {0}" xml:space="preserve">
-    <value>반복 시간: {0}</value>
+    <value>Tempo di loop: {0}</value>
   </data>
   <data name="Macro error: {0}" xml:space="preserve">
-    <value>매크로 오류: {0}</value>
+    <value>Errore script: {0}</value>
+  </data>
+  <data name="Macros" xml:space="preserve">
+    <value>Scripts</value>
+  </data>
+  <data name="Made_For_Malo" xml:space="preserve">
+    <value>Tradotto_da_riin4</value>
   </data>
   <data name="Magical" xml:space="preserve">
-    <value>마법</value>
+    <value>Magico</value>
   </data>
   <data name="Main" xml:space="preserve">
-    <value>메인</value>
+    <value>Principale</value>
+  </data>
+  <data name="Map:" xml:space="preserve">
+    <value>Mappa:</value>
   </data>
   <data name="Max Price" xml:space="preserve">
-    <value>최대 가격</value>
+    <value>Prezzo massimo</value>
+  </data>
+  <data name="Messages" xml:space="preserve">
+    <value>Messaggi</value>
   </data>
   <data name="Min Price" xml:space="preserve">
-    <value>최소 가격</value>
+    <value>Prezzo minimo</value>
   </data>
   <data name="Misc" xml:space="preserve">
-    <value>기타</value>
+    <value>Varie</value>
   </data>
   <data name="Mobile" xml:space="preserve">
-    <value>모빌</value>
+    <value>Mobile</value>
   </data>
   <data name="Mobile not found..." xml:space="preserve">
-    <value>모빌을 찾지 못했습니다…</value>
+    <value>Mobile non trovato...</value>
+  </data>
+  <data name="Mobiles:" xml:space="preserve">
+    <value>Cellulari:</value>
   </data>
   <data name="Move conflicting items" xml:space="preserve">
-    <value>충돌하는 아이템 이동</value>
+    <value>Spostare elementi in conflitto</value>
   </data>
   <data name="Move to backpack" xml:space="preserve">
-    <value>백팩으로 이동</value>
+    <value>Sposta nello zaino</value>
   </data>
   <data name="Move to container" xml:space="preserve">
-    <value>상자로 이동</value>
+    <value>Sposta nel contenitore</value>
+  </data>
+  <data name="Movement" xml:space="preserve">
+    <value>Movimento</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Name:" xml:space="preserve">
+    <value>Nome:</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>Nuovo</value>
+  </data>
+  <data name="New Item" xml:space="preserve">
+    <value>Nuovo Oggetto</value>
   </data>
   <data name="New Profile" xml:space="preserve">
-    <value>새 프로필</value>
+    <value>Nuovo Profilo</value>
+  </data>
+  <data name="New version available:" xml:space="preserve">
+    <value>Nuova versione disponibile:</value>
   </data>
   <data name="None" xml:space="preserve">
-    <value>없음</value>
+    <value>Nessuno</value>
   </data>
   <data name="Object &quot;{0}&quot; updated..." xml:space="preserve">
-    <value>오프젝트 "{0}" 업데이트완료…</value>
+    <value>Oggetto "{0}" aggiornato...</value>
+  </data>
+  <data name="Object Inspector" xml:space="preserve">
+    <value>Ispeziona Oggetto</value>
   </data>
   <data name="Objects" xml:space="preserve">
-    <value>오브젝트</value>
+    <value>Oggetti</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Opzioni</value>
   </data>
   <data name="Orange Petal" xml:space="preserve">
-    <value>오렌지 꽃잎</value>
+    <value>Orange Petal</value>
+  </data>
+  <data name="Organizer" xml:space="preserve">
+    <value>Organizzatore</value>
   </data>
   <data name="Organizer &quot;{0}&quot; not found..." xml:space="preserve">
-    <value>정리 "{0}" 을 못찾았다…</value>
+    <value>Organizzatore "{0}" non trovato...</value>
   </data>
   <data name="Organizer containers set..." xml:space="preserve">
-    <value>정리 상자 설정…</value>
+    <value>Configura i contenitori dell'organizzatore...</value>
   </data>
   <data name="Organizer {0} finished..." xml:space="preserve">
-    <value>정리 "{0}" 을 마무리했다…</value>
+    <value>Organizzatore "{0}" finito...</value>
   </data>
   <data name="Organizer {0} running..." xml:space="preserve">
-    <value>정리 "{0}" 실행중…</value>
+    <value>Organizzatore "{0}" in esecuzione...</value>
+  </data>
+  <data name="Pass to UO" xml:space="preserve">
+    <value>Passa a UO</value>
   </data>
   <data name="Persist Use Once" xml:space="preserve">
-    <value>한 번만 사용</value>
+    <value>Salva oggetti della lista UsaUnavolta</value>
+  </data>
+  <data name="Play" xml:space="preserve">
+    <value>Avvia</value>
+  </data>
+  <data name="Player" xml:space="preserve">
+    <value>Giocatore</value>
   </data>
   <data name="Port:" xml:space="preserve">
-    <value>포트:</value>
+    <value>Porta:</value>
   </data>
   <data name="Prevent attacking friends in war mode" xml:space="preserve">
-    <value>워모드에서 친구공격 금지</value>
+    <value>Impedisci di attaccare gli amici in modalità war</value>
   </data>
   <data name="Prevent targeting friends with Harmful spells" xml:space="preserve">
-    <value>공격스펠을 친구에게 타게팅 금지 </value>
+    <value>Impedisci di attaccare gli amici con incantesimi dannosi</value>
+  </data>
+  <data name="Product:" xml:space="preserve">
+    <value>Prodotto:</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>ClassicAssist</value>
   </data>
   <data name="Profile name contains illegal characters." xml:space="preserve">
-    <value>프로필 이름을 제대로 적어라!</value>
+    <value>Il nome del profilo contiene caratteri non validi.</value>
+  </data>
+  <data name="Profiles" xml:space="preserve">
+    <value>Profili</value>
   </data>
   <data name="Properties" xml:space="preserve">
-    <value>속성</value>
+    <value>Proprietà</value>
   </data>
   <data name="Property" xml:space="preserve">
-    <value>특성</value>
+    <value>Proprietà</value>
   </data>
   <data name="Public Properties" xml:space="preserve">
-    <value>공공 재산</value>
+    <value>Proprietà pubbliche</value>
   </data>
   <data name="Queue Last Target / Target Self" xml:space="preserve">
-    <value>큐 라스트 타겟 / 타겟 셀프</value>
+    <value>Accoda Target (Self e Last)</value>
   </data>
   <data name="Range check last target" xml:space="preserve">
-    <value>라스트타겟 체크 거리 </value>
+    <value>Controllo raggio del Target</value>
   </data>
   <data name="Ready..." xml:space="preserve">
-    <value>준비…</value>
+    <value>Pronto...</value>
+  </data>
+  <data name="Record" xml:space="preserve">
+    <value>Registra</value>
   </data>
   <data name="Recount" xml:space="preserve">
-    <value>다시세기</value>
+    <value>Ricontare</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>리프레쉬</value>
+    <value>Aggiornarmento</value>
+  </data>
+  <data name="Refresh Potion" xml:space="preserve">
+    <value>Pozione Refresh</value>
+  </data>
+  <data name="Regeneration" xml:space="preserve">
+    <value>Rigenerazione</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Rimuovere</value>
+  </data>
+  <data name="Remove Friend" xml:space="preserve">
+    <value>Rimuovi Amico</value>
   </data>
   <data name="Reset +/-" xml:space="preserve">
-    <value>리셋 +/-</value>
+    <value>Reimposta +/-</value>
   </data>
   <data name="Resistances" xml:space="preserve">
-    <value>저항</value>
+    <value>Resistenze</value>
   </data>
   <data name="Resync" xml:space="preserve">
-    <value>다시 동기화</value>
+    <value>Resync</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="Seasons" xml:space="preserve">
+    <value>Stagioni</value>
   </data>
   <data name="Select destination container..." xml:space="preserve">
-    <value>대상 상자 선택…</value>
+    <value>Seleziona contenitore di destinazione...</value>
   </data>
   <data name="Select source container..." xml:space="preserve">
-    <value>공급 상자 선택…</value>
+    <value>Seleziona contenitore di origine...</value>
   </data>
   <data name="Select undress container..." xml:space="preserve">
-    <value>옷을 벗어놓을 상자 선택…</value>
+    <value>Seleziona il contenitore per l'equipaggiamento rimosso...</value>
   </data>
   <data name="Serial" xml:space="preserve">
-    <value>시리얼</value>
+    <value>Seriale</value>
+  </data>
+  <data name="Serial:" xml:space="preserve">
+    <value>Seriale:</value>
   </data>
   <data name="Server" xml:space="preserve">
-    <value>서버</value>
+    <value>Server</value>
+  </data>
+  <data name="Set" xml:space="preserve">
+    <value>Imposta</value>
+  </data>
+  <data name="Set Containers" xml:space="preserve">
+    <value>Imposta contenitori</value>
   </data>
   <data name="Set Down" xml:space="preserve">
-    <value>내리기</value>
+    <value>Imposta giù</value>
   </data>
   <data name="Set Enemy" xml:space="preserve">
-    <value>적 선택</value>
+    <value>Imposta Nemico</value>
   </data>
   <data name="Set Friend" xml:space="preserve">
-    <value>친구 선택</value>
+    <value>Imposta Amico</value>
   </data>
   <data name="Set Last Target" xml:space="preserve">
-    <value>라스트타겟 선택</value>
+    <value>Imposta Last Target</value>
   </data>
   <data name="Set Locked" xml:space="preserve">
-    <value>잠금</value>
+    <value>Imposta bloccata</value>
   </data>
   <data name="Set Primary Ability" xml:space="preserve">
-    <value>첫번째 특수기 선택</value>
+    <value>Imposta abilità primaria</value>
   </data>
   <data name="Set Secondary Ability" xml:space="preserve">
-    <value>두번째 특수기 선택</value>
+    <value>Imposta abilità secondaria</value>
   </data>
   <data name="Set Undress Container" xml:space="preserve">
-    <value>옷을 벗어놓을 상자 선택</value>
+    <value>Imposta il contenitore per l'equipaggiamento rimosso</value>
   </data>
   <data name="Set Up" xml:space="preserve">
-    <value>올리기</value>
+    <value>Imposta su</value>
   </data>
   <data name="Setting ability &quot;{0}&quot;..." xml:space="preserve">
-    <value>특수기 "{0}" 준비중…</value>
+    <value>Imposta Skill "{0}"...</value>
   </data>
   <data name="Show World Items" xml:space="preserve">
-    <value>현재화면 아이템 확인</value>
+    <value>Mostra elementi del mondo</value>
+  </data>
+  <data name="Skills" xml:space="preserve">
+    <value>Skills</value>
   </data>
   <data name="Smart last target:" xml:space="preserve">
-    <value>스마트 라스트 타겟:</value>
+    <value>Smart Last Target:</value>
   </data>
   <data name="Smoke Bomb" xml:space="preserve">
-    <value>스모크밤</value>
+    <value>Smoke Bomb</value>
+  </data>
+  <data name="Software" xml:space="preserve">
+    <value>Software</value>
+  </data>
+  <data name="Spells" xml:space="preserve">
+    <value>Spells</value>
+  </data>
+  <data name="Stack" xml:space="preserve">
+    <value>Pila</value>
   </data>
   <data name="Stats" xml:space="preserve">
-    <value>스탯</value>
+    <value>Statistiche</value>
   </data>
   <data name="Status:" xml:space="preserve">
-    <value>스탯:</value>
+    <value>Stato:</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stop</value>
   </data>
   <data name="Stop Current Macro" xml:space="preserve">
-    <value>현재 매크로 정지</value>
+    <value>Interrompi Script Corrente</value>
   </data>
   <data name="Strength Potion" xml:space="preserve">
-    <value>힘 포션</value>
+    <value>Pozione Strength</value>
   </data>
   <data name="Target" xml:space="preserve">
-    <value>타겟</value>
+    <value>Target</value>
   </data>
   <data name="Target blocked... try again..." xml:space="preserve">
-    <value>타겟이 막혀있습니다… 다시 선택하세요…</value>
+    <value>Target bloccato... Riprova...</value>
   </data>
   <data name="Target clothing item..." xml:space="preserve">
-    <value>타겟 의류 아이템…</value>
+    <value>Target vestiario...</value>
   </data>
   <data name="Target container..." xml:space="preserve">
-    <value>타겟 상자…</value>
+    <value>Target contenitore...</value>
   </data>
   <data name="Target Enemy" xml:space="preserve">
-    <value>적 타겟</value>
+    <value>Target Nemico </value>
   </data>
   <data name="Target Friend" xml:space="preserve">
-    <value>친구 타겟</value>
+    <value>Target Amico</value>
   </data>
   <data name="Target friend to remove..." xml:space="preserve">
-    <value>친구목록에서 제거…</value>
+    <value>Target Amico da rimuovere...</value>
   </data>
   <data name="Target Last" xml:space="preserve">
-    <value>라스트타겟</value>
+    <value>Target Last</value>
   </data>
   <data name="Target new friend..." xml:space="preserve">
-    <value>새로운 친구 선택…</value>
+    <value>Target nuovo Amico...</value>
   </data>
   <data name="Target new item..." xml:space="preserve">
-    <value>새로운 아이템 타겟…</value>
+    <value>Target nuovo Oggetto...</value>
   </data>
   <data name="Target new mount..." xml:space="preserve">
-    <value>새로운 탈 것 선택…</value>
+    <value>Target nuova Mount...</value>
   </data>
   <data name="Target object..." xml:space="preserve">
-    <value>타겟 오브젝트…</value>
+    <value>Target Oggetto...</value>
   </data>
   <data name="Target out of range, try again..." xml:space="preserve">
-    <value>범위를 벗어난 타겟, 다시 시도하세요…</value>
+    <value>Target fuori portata, riprova...</value>
   </data>
   <data name="Target queue cleared..." xml:space="preserve">
-    <value>타겟 큐 삭제됩니다…</value>
+    <value>Coda Target pulita...</value>
   </data>
   <data name="Target Queued" xml:space="preserve">
-    <value>타겟 예약(Target Queued)</value>
+    <value>Target Accodato</value>
   </data>
   <data name="Target Self" xml:space="preserve">
-    <value>타겟 셀프</value>
+    <value>Target Self</value>
   </data>
   <data name="Target timeout..." xml:space="preserve">
-    <value>타겟팅 시간초과…</value>
+    <value>Target Timeout...</value>
+  </data>
+  <data name="Targeting" xml:space="preserve">
+    <value>Targeting</value>
   </data>
   <data name="The item needs to be equipped..." xml:space="preserve">
-    <value>아이템을 장착해야합니다…</value>
+    <value>L'oggetto deve essere equipaggiato...</value>
   </data>
   <data name="Timeout..." xml:space="preserve">
-    <value>시간초과…</value>
+    <value>Timeout...</value>
   </data>
   <data name="Timers" xml:space="preserve">
-    <value>타이머</value>
+    <value>Timers</value>
   </data>
   <data name="Toggle Force Walk" xml:space="preserve">
-    <value>강제로 걷기 전환</value>
+    <value>Attiva/disattiva Forza camminare</value>
   </data>
   <data name="Toggle hotkeys" xml:space="preserve">
-    <value>단축키 전환</value>
+    <value>Attivare/disattivare Tasti Rapidi</value>
   </data>
   <data name="Toggle item properties" xml:space="preserve">
-    <value>아이템 속성 전환</value>
+    <value>Attivare/disattivare proprietà degli oggetti</value>
   </data>
   <data name="Toggle Primary Ability" xml:space="preserve">
-    <value>첫번째 특수기 전환</value>
+    <value>Attiva/disattiva Primary Ability</value>
   </data>
   <data name="Toggle Secondary Ability" xml:space="preserve">
-    <value>두번째 특수기 전환</value>
+    <value>Attiva/disattiva Secondary Ability</value>
   </data>
   <data name="Topmost" xml:space="preserve">
-    <value>Topmost</value>
+    <value>In primo piano</value>
   </data>
   <data name="Trinsic Rose Petal" xml:space="preserve">
-    <value>트린식 장미 꽃잎</value>
+    <value>Trinsic Rose Petal</value>
   </data>
   <data name="Undress" xml:space="preserve">
-    <value>탈의</value>
+    <value>Spoglia</value>
   </data>
   <data name="Undress All" xml:space="preserve">
-    <value>모두 탈의</value>
+    <value>Spoglia tutto</value>
   </data>
   <data name="Unknown alias &quot;{0}&quot;." xml:space="preserve">
-    <value>알 수 없는 별칭 "{0}".</value>
+    <value>Alias sconosciuto "{0}".</value>
   </data>
   <data name="Unknown buff name..." xml:space="preserve">
-    <value>알 수 없는 버프 이름…</value>
+    <value>Nome buff sconosciuto...</value>
   </data>
   <data name="Unknown dress agent &quot;{0}&quot;." xml:space="preserve">
-    <value>알 수 없는 드레스 에이전트 "{0}".</value>
+    <value>Agente Equipaggiamento sconosciuto "{0}".</value>
   </data>
   <data name="Unknown macro..." xml:space="preserve">
-    <value>알 수 없는 매크로…</value>
+    <value>Script sconosciuto...</value>
   </data>
   <data name="Unknown spell..." xml:space="preserve">
-    <value>알 수 없는 주문…</value>
+    <value>Spell sconosciuto...</value>
   </data>
   <data name="Unknown timer..." xml:space="preserve">
-    <value>알 수 없는 타이머…</value>
+    <value>Timer sconosciuto...</value>
   </data>
   <data name="Unset Primary Ability" xml:space="preserve">
-    <value>첫번째 특수기 해제</value>
+    <value>Deseleziona Primary Ability</value>
   </data>
   <data name="Unset Secondary Ability" xml:space="preserve">
-    <value>두번째 특수기 해제</value>
+    <value>Deseleziona Secondary Ability</value>
   </data>
   <data name="Use death screen whilst hidden" xml:space="preserve">
-    <value>하이딩상태에서 죽었을때 화면 사용</value>
+    <value>Schermo grigio da Hiddati</value>
   </data>
   <data name="Use experimental fizzle detection" xml:space="preserve">
-    <value>실험적인 피즐 감지 사용</value>
+    <value>Rilevamento sperimentale di fizzle</value>
   </data>
   <data name="Use item" xml:space="preserve">
-    <value>아이템 사용</value>
+    <value>Usa oggetto</value>
   </data>
   <data name="Use Last Object" xml:space="preserve">
-    <value>라스트 오브젝트 사용</value>
+    <value>Usa ultimo oggetto</value>
   </data>
   <data name="Use Left Hand" xml:space="preserve">
-    <value>왼손 사용</value>
+    <value>Usa oggetto nella mano sinistra</value>
   </data>
   <data name="Use object queue" xml:space="preserve">
-    <value>오브젝트 큐 사용</value>
+    <value>Usa coda oggetti</value>
   </data>
   <data name="Use Right Hand" xml:space="preserve">
-    <value>오른손 사용</value>
+    <value>Usa oggetto nella mano destra</value>
   </data>
   <data name="Use skill" xml:space="preserve">
-    <value>기술 사용</value>
+    <value>Usa skill</value>
   </data>
   <data name="UseOnce cleared..." xml:space="preserve">
-    <value>UseOnce 클리어…</value>
+    <value>UsaUnaVolta pulita..</value>
   </data>
   <data name="UseOnce: Cannot find type..." xml:space="preserve">
-    <value>UseOnce : 유형을 찾을 수 없습니다…</value>
+    <value>UsaUnaVolta: Impossibile trovare il Type...</value>
   </data>
   <data name="Value" xml:space="preserve">
-    <value>밸류</value>
+    <value>Valore</value>
+  </data>
+  <data name="Vendor Buy" xml:space="preserve">
+    <value>Mercante Compra</value>
+  </data>
+  <data name="Vendor Sell" xml:space="preserve">
+    <value>Mercante Vendi</value>
+  </data>
+  <data name="Version:" xml:space="preserve">
+    <value>Versione:</value>
+  </data>
+  <data name="Warn when counter amount below:" xml:space="preserve">
+    <value>Avvisa quando la quantità scende sotto:</value>
+  </data>
+  <data name="Weather" xml:space="preserve">
+    <value>Meteo</value>
+  </data>
+  <data name="World_Status" xml:space="preserve">
+    <value>Stato del mondo</value>
   </data>
   <data name="{0} items, {1} selected, {2} total amount" xml:space="preserve">
-    <value>{0} items, {1} selected, {2} total amount</value>
+    <value>{0} oggetti, {1} selezionati, {2} totale</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>언어</value>
+    <value>Lingua</value>
   </data>
   <data name="Restart game for changes to take effect..." xml:space="preserve">
-    <value>변경 사항을 적용하려면 게임을 다시 시작하세요...</value>
+    <value>Riavvia il gioco per rendere effettive le modifiche...</value>
   </data>
   <data name="Complete" xml:space="preserve">
-    <value>완료</value>
+    <value>Completo</value>
   </data>
   <data name="Auto accept party invites" xml:space="preserve">
-    <value>파티 초대 자동 수락</value>
+    <value>Accetta automaticamente inviti Party</value>
   </data>
   <data name="Auto accept only from friends" xml:space="preserve">
-    <value>친구 만 자동 수락합니다</value>
+    <value>Accetta automaticamente inviti Party solo dagli Amici</value>
   </data>
   <data name="WarMode On" xml:space="preserve">
-    <value>전쟁 모드 설정</value>
+    <value>WarMode On</value>
   </data>
   <data name="WarMode Off" xml:space="preserve">
-    <value>전쟁 모드 해제</value>
+    <value>WarMode Off</value>
   </data>
   <data name="WarMode Toggle" xml:space="preserve">
-    <value>전쟁 모드 토글</value>
+    <value>Attiva/disattiva WarMode</value>
   </data>
   <data name="Set Container" xml:space="preserve">
-    <value>상자 선택</value>
+    <value>Imposta contenitore</value>
   </data>
   <data name="Scavenger" xml:space="preserve">
-    <value>스캐빈저</value>
+    <value>Scavenger</value>
   </data>
 </root>

@@ -286,6 +286,9 @@ namespace ClassicAssist.Data
                 case Language.Chinese:
                     locale = new CultureInfo( "zh" );
                     break;
+                case Language.Italian:
+                    locale = new CultureInfo( "it-IT" );
+                    break;
                 case Language.Default:
                     break;
                 default:

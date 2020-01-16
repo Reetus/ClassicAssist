@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
@@ -114,9 +115,11 @@ namespace ClassicAssist.UI.ViewModels
 
         private void ClearAllLists( object obj )
         {
-            foreach ( KeyValuePair<string, List<int>> list in ListCommands.GetAllLists() )
+            string[] lists = ListCommands.GetAllLists().Select( l => l.Key ).ToArray();
+
+            for ( int i = 0; i < lists.Count(); i++ )
             {
-                ListCommands.RemoveList( list.Key );
+                ListCommands.RemoveList( lists[i] );
             }
 
             RefreshLists();
@@ -155,9 +158,12 @@ namespace ClassicAssist.UI.ViewModels
 
         private void ClearAllAliases( object obj )
         {
-            foreach ( KeyValuePair<string, int> alias in AliasCommands.GetAllAliases() )
+            string[] aliases = AliasCommands.GetAllAliases().Select( a => a.Key ).ToArray();
+
+            // ReSharper disable once ForCanBeConvertedToForeach
+            for ( int i = 0; i < aliases.Length; i++ )
             {
-                AliasCommands.UnsetAlias( alias.Key );
+                AliasCommands.UnsetAlias( aliases[i] );
             }
 
             RefreshAliases();

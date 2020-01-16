@@ -1825,6 +1825,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scavenger.
+        /// </summary>
+        public static string Scavenger {
+            get {
+                return ResourceManager.GetString("Scavenger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seasons.
         /// </summary>
         public static string Seasons {
@@ -1893,6 +1902,15 @@ namespace ClassicAssist.Resources {
         public static string Set {
             get {
                 return ResourceManager.GetString("Set", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Container.
+        /// </summary>
+        public static string Set_Container {
+            get {
+                return ResourceManager.GetString("Set Container", resourceCulture);
             }
         }
         

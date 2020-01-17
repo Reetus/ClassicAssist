@@ -92,7 +92,7 @@ namespace ClassicAssist.UO
             pw.Write( (byte) 0 );
             pw.Write( (short) hue );
             pw.Write( (short) 0x03 );
-            pw.WriteAsciiFixed( "ENU\0", 4 );
+            pw.WriteAsciiFixed( Strings.UO_LOCALE, 4 );
             pw.WriteAsciiFixed( "System\0", 30 );
             pw.Write( textBytes, 0, textBytes.Length );
 

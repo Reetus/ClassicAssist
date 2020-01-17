@@ -46,10 +46,17 @@ namespace ClassicAssist.Data.Spells
         {
             SpellData sd = GetSpellData( name );
 
-            if ( sd != null )
+            if ( sd == null )
             {
-                CastSpell( sd.ID );
+                return;
             }
+
+            if ( sd.Target )
+            {
+                Engine.WaitingForTarget = true;
+            }
+
+            CastSpell( sd.ID );
         }
 
         public void CastSpell( int id )

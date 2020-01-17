@@ -9,6 +9,7 @@ namespace ClassicAssist.Data.Spells
         public int ID { get; set; }
         public string Name { get; set; }
         public int[] Reagents { get; set; }
+        public bool Target { get; set; }
         public int Timeout { get; set; }
         public string Words { get; set; }
     }

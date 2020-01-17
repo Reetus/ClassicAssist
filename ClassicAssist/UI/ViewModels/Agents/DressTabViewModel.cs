@@ -333,12 +333,14 @@ namespace ClassicAssist.UI.ViewModels.Agents
             try
             {
                 IsDressingOrUndressing = true;
+                _manager.IsDressing = true;
 
                 await dae.Dress( MoveConflictingItems );
             }
             finally
             {
                 IsDressingOrUndressing = false;
+                _manager.IsDressing = false;
             }
         }
 

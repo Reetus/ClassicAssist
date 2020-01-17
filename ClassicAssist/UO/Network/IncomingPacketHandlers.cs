@@ -602,6 +602,11 @@ namespace ClassicAssist.UO.Network
             Engine.TargetFlags = flags;
             Engine.TargetExists = flags != TargetFlags.Cancel;
 
+            if ( Engine.TargetExists )
+            {
+                Engine.WaitingForTarget = false;
+            }
+
             if ( !Options.CurrentOptions.QueueLastTarget || (TargetType) type != TargetType.Object ||
                  Engine.LastTargetQueue.Count == 0 )
             {

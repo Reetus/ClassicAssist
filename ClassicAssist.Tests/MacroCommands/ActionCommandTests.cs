@@ -295,5 +295,19 @@ namespace ClassicAssist.Tests.MacroCommands
             Engine.Player = null;
             Engine.Items.Clear();
         }
+
+        [TestMethod]
+        public void WillFindLayer()
+        {
+            Engine.Player = new PlayerMobile( 1 );
+            Engine.Player.SetLayer( Layer.OneHanded, 0x40000001 );
+            AliasCommands.SetAlias( "self", Engine.Player.Serial );
+
+            Assert.IsTrue( ActionCommands.FindLayer( "OneHanded" ) );
+            Assert.IsFalse( ActionCommands.FindLayer( "TwoHanded" ) );
+
+            AliasCommands.UnsetAlias( "self" );
+            Engine.Player = null;
+        }
     }
 }

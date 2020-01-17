@@ -358,6 +358,67 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = "Actions",
+            Description =
+                "Returns true and updates found alias if an item exists in the specified layer, option serial/alias for mobile to check.",
+            InsertText = "if FindLayer(\"OneHanded\"):" )]
+        public static bool FindLayer( object layer, object obj = null )
+        {
+            if ( obj == null )
+            {
+                obj = "self";
+            }
+
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return false;
+            }
+
+            Layer layerValue = Layer.Invalid;
+
+            switch ( layer )
+            {
+                case string s:
+                    layerValue = Utility.GetEnumValueByName<Layer>( s );
+                    break;
+                case int i:
+                    layerValue = (Layer) i;
+                    break;
+                case Layer l:
+                    layerValue = l;
+                    break;
+            }
+
+            if ( layerValue == Layer.Invalid )
+            {
+                UOC.SystemMessage( Strings.Invalid_layer_value___ );
+                return false;
+            }
+
+            if ( !UOMath.IsMobile( serial ) )
+            {
+                UOC.SystemMessage( Strings.Cannot_find_item___ );
+                return false;
+            }
+
+            Mobile mobile = Engine.Mobiles.GetMobile( serial );
+
+            int layerSerial = mobile?.GetLayer( layerValue ) ?? 0;
+
+            if ( layerSerial == 0 )
+            {
+                return false;
+            }
+
+            AliasCommands.SetAlias( "found", layerSerial );
+            UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ) );
+
+            return true;
+        }
+
+        [CommandsDisplay( Category = "Actions",
             Description = "Retrieve an approximated ping with server. -1 on failure.", InsertText = "Ping()" )]
         public static long Ping()
         {

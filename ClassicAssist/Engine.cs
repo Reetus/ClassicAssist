@@ -71,6 +71,14 @@ namespace Assistant
         private static OnMouse _onMouse;
 
         private static readonly DateTime[] _lastMouseAction = new DateTime[(int) MouseOptions.None];
+        private static readonly object _clientSendLock = new object();
+        private static DateTime _nextPacketRecvTime;
+
+        private static readonly TimeSpan PACKET_RECV_DELAY = TimeSpan.FromMilliseconds( 5 );
+        private static readonly object _serverSendLock = new object();
+
+        private static readonly TimeSpan PACKET_SEND_DELAY = TimeSpan.FromMilliseconds( 5 );
+        private static DateTime _nextPacketSendTime;
 
         public static string ClientPath { get; set; }
         public static Version ClientVersion { get; set; }
@@ -427,16 +435,36 @@ namespace Assistant
 
         public static void SendPacketToServer( byte[] packet, int length )
         {
-            InternalPacketSentEvent?.Invoke( packet, length );
+            lock ( _serverSendLock )
+            {
+                while ( DateTime.Now < _nextPacketSendTime )
+                {
+                    Thread.Sleep( 1 );
+                }
 
-            _sendToServer?.Invoke( ref packet, ref length );
+                InternalPacketSentEvent?.Invoke( packet, length );
+
+                _sendToServer?.Invoke( ref packet, ref length );
+
+                _nextPacketSendTime = DateTime.Now + PACKET_SEND_DELAY;
+            }
         }
 
         public static void SendPacketToClient( byte[] packet, int length )
         {
-            InternalPacketReceivedEvent?.Invoke( packet, length );
+            lock ( _clientSendLock )
+            {
+                while ( DateTime.Now < _nextPacketRecvTime )
+                {
+                    Thread.Sleep( 1 );
+                }
 
-            _sendToClient?.Invoke( ref packet, ref length );
+                InternalPacketReceivedEvent?.Invoke( packet, length );
+
+                _sendToClient?.Invoke( ref packet, ref length );
+
+                _nextPacketRecvTime = DateTime.Now + PACKET_RECV_DELAY;
+            }
         }
 
         public static void SendPacketToClient( PacketWriter packet )

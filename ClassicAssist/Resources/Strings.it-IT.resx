@@ -130,7 +130,7 @@
     <value>Capacità non impostata...</value>
   </data>
   <data name="About" xml:space="preserve">
-    <value>Circa</value>
+    <value>Info</value>
   </data>
   <data name="Action Delay:" xml:space="preserve">
     <value>Ritardo azione:</value>
@@ -151,7 +151,7 @@
     <value>Agenti</value>
   </data>
   <data name="Agility Potion" xml:space="preserve">
-    <value>Pozione Agilità</value>
+    <value>Pozione Agility</value>
   </data>
   <data name="Aliases" xml:space="preserve">
     <value>Alias</value>
@@ -166,10 +166,10 @@
     <value>Quantità</value>
   </data>
   <data name="Attack Enemy" xml:space="preserve">
-    <value>Attacca Nemico</value>
+    <value>Attack Enemy</value>
   </data>
   <data name="Attack Last" xml:space="preserve">
-    <value>Attacca Ultimo</value>
+    <value>Attack Last</value>
   </data>
   <data name="Attack request blocked..." xml:space="preserve">
     <value>Richiesta di attacco bloccata...</value>
@@ -223,13 +223,13 @@
     <value>Verifica la disponibilità di aggiornamenti</value>
   </data>
   <data name="Clear" xml:space="preserve">
-    <value>Pulisci</value>
+    <value>Svuota</value>
   </data>
   <data name="Clear All" xml:space="preserve">
-    <value>Pulisci tutto</value>
+    <value>Svuota tutto</value>
   </data>
   <data name="Clear All Objects" xml:space="preserve">
-    <value>Pulisci tutti gli oggetti</value>
+    <value>Svuota tutto</value>
   </data>
   <data name="Clear Object Queue" xml:space="preserve">
     <value>Pulisci la coda oggetti</value>
@@ -238,7 +238,7 @@
     <value>Pulisci la coda dei Targets</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>Vicino</value>
+    <value>Chiudi</value>
   </data>
   <data name="Color" xml:space="preserve">
     <value>Colore</value>
@@ -265,7 +265,7 @@
     <value>Connesso:</value>
   </data>
   <data name="Consume" xml:space="preserve">
-    <value>Consumare</value>
+    <value>Oggetti</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>Copia</value>
@@ -295,7 +295,7 @@
     <value>Non auto interrompere</value>
   </data>
   <data name="Dress" xml:space="preserve">
-    <value>Equipaggiamento</value>
+    <value>Equip</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
     <value>Duplicato</value>
@@ -304,13 +304,13 @@
     <value>Abilitato</value>
   </data>
   <data name="Enchanted Apple" xml:space="preserve">
-    <value>Mela Incantata</value>
+    <value>Enchanted Apple</value>
   </data>
   <data name="Enemy" xml:space="preserve">
     <value>Nemico</value>
   </data>
   <data name="Entity" xml:space="preserve">
-    <value>Entità</value>
+    <value>Variabili</value>
   </data>
   <data name="Entity Collection Viewer" xml:space="preserve">
     <value>Visualizzatore raccolta entità</value>
@@ -346,10 +346,10 @@
     <value>Filtri</value>
   </data>
   <data name="Force Walk Off" xml:space="preserve">
-    <value>Forza camminare Off</value>
+    <value>Camminare Off</value>
   </data>
   <data name="Force Walk On" xml:space="preserve">
-    <value>Forza camminare On</value>
+    <value>Camminare On</value>
   </data>
   <data name="Friend" xml:space="preserve">
     <value>Amico</value>
@@ -358,7 +358,7 @@
     <value>Amici</value>
   </data>
   <data name="Fruit Bowl" xml:space="preserve">
-    <value>Vassoio di frutta</value>
+    <value>Fruit Bowl</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>Generale</value>
@@ -379,7 +379,7 @@
     <value>Aggancia il prossimo Nemico</value>
   </data>
   <data name="Grapes of Wrath" xml:space="preserve">
-    <value>Uva dell'Ira</value>
+    <value>Grapes of Wrath</value>
   </data>
   <data name="Graphic" xml:space="preserve">
     <value>Grafica</value>
@@ -406,13 +406,13 @@
     <value>Ignora pacchetti ping</value>
   </data>
   <data name="Import" xml:space="preserve">
-    <value>Importazione</value>
+    <value>Importa</value>
   </data>
   <data name="Include Backpack Amount" xml:space="preserve">
     <value>Includi quantità nello zaino</value>
   </data>
   <data name="Include party members" xml:space="preserve">
-    <value>Includi membri del gruppo</value>
+    <value>Includi membri del party</value>
   </data>
   <data name="Include Purchased Amount" xml:space="preserve">
     <value>Includi importo acquistato</value>
@@ -475,7 +475,7 @@
     <value>Last Target:</value>
   </data>
   <data name="Latency:" xml:space="preserve">
-    <value>Latenza:</value>
+    <value>Latenza/Ping:</value>
   </data>
   <data name="Light" xml:space="preserve">
     <value>Luce</value>
@@ -508,7 +508,7 @@
     <value>Scripts</value>
   </data>
   <data name="Made_For_Malo" xml:space="preserve">
-    <value>Tradotto_da_riin4</value>
+    <value>Tradotto da riin4</value>
   </data>
   <data name="Magical" xml:space="preserve">
     <value>Magico</value>
@@ -520,13 +520,13 @@
     <value>Mappa:</value>
   </data>
   <data name="Max Price" xml:space="preserve">
-    <value>Prezzo massimo</value>
+    <value>Prezzo Max</value>
   </data>
   <data name="Messages" xml:space="preserve">
     <value>Messaggi</value>
   </data>
   <data name="Min Price" xml:space="preserve">
-    <value>Prezzo minimo</value>
+    <value>Prezzo Min</value>
   </data>
   <data name="Misc" xml:space="preserve">
     <value>Varie</value>
@@ -538,10 +538,10 @@
     <value>Mobile non trovato...</value>
   </data>
   <data name="Mobiles:" xml:space="preserve">
-    <value>Cellulari:</value>
+    <value>Cerca Aggiornamenti</value>
   </data>
   <data name="Move conflicting items" xml:space="preserve">
-    <value>Spostare elementi in conflitto</value>
+    <value>Sostituisci Equip</value>
   </data>
   <data name="Move to backpack" xml:space="preserve">
     <value>Sposta nello zaino</value>
@@ -562,10 +562,10 @@
     <value>Nuovo</value>
   </data>
   <data name="New Item" xml:space="preserve">
-    <value>Nuovo Oggetto</value>
+    <value>Nuovo</value>
   </data>
   <data name="New Profile" xml:space="preserve">
-    <value>Nuovo Profilo</value>
+    <value>Aggiungi</value>
   </data>
   <data name="New version available:" xml:space="preserve">
     <value>Nuova versione disponibile:</value>
@@ -610,7 +610,7 @@
     <value>Passa a UO</value>
   </data>
   <data name="Persist Use Once" xml:space="preserve">
-    <value>Salva oggetti della lista UsaUnavolta</value>
+    <value>Salva oggetti della lista UsaUnaVolta</value>
   </data>
   <data name="Play" xml:space="preserve">
     <value>Avvia</value>
@@ -622,10 +622,10 @@
     <value>Porta:</value>
   </data>
   <data name="Prevent attacking friends in war mode" xml:space="preserve">
-    <value>Impedisci di attaccare gli amici in modalità war</value>
+    <value>Impedisci attacco amici in war</value>
   </data>
   <data name="Prevent targeting friends with Harmful spells" xml:space="preserve">
-    <value>Impedisci di attaccare gli amici con incantesimi dannosi</value>
+    <value>Impedisci attacco amici con spells</value>
   </data>
   <data name="Product:" xml:space="preserve">
     <value>Prodotto:</value>
@@ -640,7 +640,7 @@
     <value>Profili</value>
   </data>
   <data name="Properties" xml:space="preserve">
-    <value>Proprietà</value>
+    <value>Proprietà Oggetti</value>
   </data>
   <data name="Property" xml:space="preserve">
     <value>Proprietà</value>
@@ -664,7 +664,7 @@
     <value>Ricontare</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>Aggiornarmento</value>
+    <value>Aggiorna</value>
   </data>
   <data name="Refresh Potion" xml:space="preserve">
     <value>Pozione Refresh</value>
@@ -673,13 +673,13 @@
     <value>Rigenerazione</value>
   </data>
   <data name="Remove" xml:space="preserve">
-    <value>Rimuovere</value>
+    <value>Cancella</value>
   </data>
   <data name="Remove Friend" xml:space="preserve">
-    <value>Rimuovi Amico</value>
+    <value>Rimuovi amico</value>
   </data>
   <data name="Reset +/-" xml:space="preserve">
-    <value>Reimposta +/-</value>
+    <value>Reset +/-</value>
   </data>
   <data name="Resistances" xml:space="preserve">
     <value>Resistenze</value>
@@ -721,22 +721,22 @@
     <value>Imposta giù</value>
   </data>
   <data name="Set Enemy" xml:space="preserve">
-    <value>Imposta Nemico</value>
+    <value>Set Enemy</value>
   </data>
   <data name="Set Friend" xml:space="preserve">
-    <value>Imposta Amico</value>
+    <value>Set Friend</value>
   </data>
   <data name="Set Last Target" xml:space="preserve">
-    <value>Imposta Last Target</value>
+    <value>Set Last Target</value>
   </data>
   <data name="Set Locked" xml:space="preserve">
-    <value>Imposta bloccata</value>
+    <value>Set Locked</value>
   </data>
   <data name="Set Primary Ability" xml:space="preserve">
-    <value>Imposta abilità primaria</value>
+    <value>Seleziona Primary Ability</value>
   </data>
   <data name="Set Secondary Ability" xml:space="preserve">
-    <value>Imposta abilità secondaria</value>
+    <value>Seleziona Secondary Ability</value>
   </data>
   <data name="Set Undress Container" xml:space="preserve">
     <value>Imposta il contenitore per l'equipaggiamento rimosso</value>
@@ -748,7 +748,7 @@
     <value>Imposta Skill "{0}"...</value>
   </data>
   <data name="Show World Items" xml:space="preserve">
-    <value>Mostra elementi del mondo</value>
+    <value>Mostra elementi vicini</value>
   </data>
   <data name="Skills" xml:space="preserve">
     <value>Skills</value>
@@ -766,7 +766,7 @@
     <value>Spells</value>
   </data>
   <data name="Stack" xml:space="preserve">
-    <value>Pila</value>
+    <value>Inpila</value>
   </data>
   <data name="Stats" xml:space="preserve">
     <value>Statistiche</value>
@@ -796,10 +796,10 @@
     <value>Target contenitore...</value>
   </data>
   <data name="Target Enemy" xml:space="preserve">
-    <value>Target Nemico </value>
+    <value>Target Enemy</value>
   </data>
   <data name="Target Friend" xml:space="preserve">
-    <value>Target Amico</value>
+    <value>Target Friend</value>
   </data>
   <data name="Target friend to remove..." xml:space="preserve">
     <value>Target Amico da rimuovere...</value>
@@ -847,7 +847,7 @@
     <value>Timers</value>
   </data>
   <data name="Toggle Force Walk" xml:space="preserve">
-    <value>Attiva/disattiva Forza camminare</value>
+    <value>Attiva/disattiva Camminare</value>
   </data>
   <data name="Toggle hotkeys" xml:space="preserve">
     <value>Attivare/disattivare Tasti Rapidi</value>
@@ -913,7 +913,7 @@
     <value>Usa oggetto nella mano sinistra</value>
   </data>
   <data name="Use object queue" xml:space="preserve">
-    <value>Usa coda oggetti</value>
+    <value>Usa coda oggetti per</value>
   </data>
   <data name="Use Right Hand" xml:space="preserve">
     <value>Usa oggetto nella mano destra</value>
@@ -931,10 +931,10 @@
     <value>Valore</value>
   </data>
   <data name="Vendor Buy" xml:space="preserve">
-    <value>Mercante Compra</value>
+    <value>Compra</value>
   </data>
   <data name="Vendor Sell" xml:space="preserve">
-    <value>Mercante Vendi</value>
+    <value>Vendi</value>
   </data>
   <data name="Version:" xml:space="preserve">
     <value>Versione:</value>
@@ -946,7 +946,7 @@
     <value>Meteo</value>
   </data>
   <data name="World_Status" xml:space="preserve">
-    <value>Stato del mondo</value>
+    <value>Stato</value>
   </data>
   <data name="{0} items, {1} selected, {2} total amount" xml:space="preserve">
     <value>{0} oggetti, {1} selezionati, {2} totale</value>
@@ -961,10 +961,10 @@
     <value>Completo</value>
   </data>
   <data name="Auto accept party invites" xml:space="preserve">
-    <value>Accetta automaticamente inviti Party</value>
+    <value>Auto accetta inviti Party</value>
   </data>
   <data name="Auto accept only from friends" xml:space="preserve">
-    <value>Accetta automaticamente inviti Party solo dagli Amici</value>
+    <value>Auto accetta inviti Party solo dagli Amici</value>
   </data>
   <data name="WarMode On" xml:space="preserve">
     <value>WarMode On</value>

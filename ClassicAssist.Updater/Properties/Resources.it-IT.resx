@@ -130,7 +130,7 @@
     <value>ClassicAssist Updater</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>Vicino</value>
+    <value>Chiudi</value>
   </data>
   <data name="Copying {0}..." xml:space="preserve">
     <value>Copia di {0} in corso...</value>

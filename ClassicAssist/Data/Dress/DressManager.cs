@@ -31,6 +31,8 @@ namespace ClassicAssist.Data.Dress
             Items.CollectionChanged += OnCollectionChanged;
         }
 
+        public bool IsDressing { get; set; }
+
         public ObservableCollectionEx<DressAgentEntry> Items
         {
             get => _items;
@@ -76,29 +78,38 @@ namespace ClassicAssist.Data.Dress
 
         public async Task UndressAll()
         {
-            PlayerMobile player = Engine.Player;
-
-            if ( player == null )
+            try
             {
-                return;
+                IsDressing = true;
+
+                PlayerMobile player = Engine.Player;
+
+                if ( player == null )
+                {
+                    return;
+                }
+
+                int backpack = player.Backpack.Serial;
+
+                if ( backpack == 0 || backpack == -1 )
+                {
+                    return;
+                }
+
+                int[] items = player.GetEquippedItems().Where( i => IsValidLayer( i.Layer ) ).Select( i => i.Serial )
+                    .ToArray();
+
+                foreach ( int item in items )
+                {
+                    Item itemObj = Engine.Items.GetItem( item );
+
+                    await UOC.DragDropAsync( item, 1, backpack );
+                    Engine.Player.SetLayer( itemObj?.Layer ?? Layer.Invalid, 0 );
+                }
             }
-
-            int backpack = player.Backpack.Serial;
-
-            if ( backpack == 0 || backpack == -1 )
+            finally
             {
-                return;
-            }
-
-            int[] items = player.GetEquippedItems().Where( i => IsValidLayer( i.Layer ) ).Select( i => i.Serial )
-                .ToArray();
-
-            foreach ( int item in items )
-            {
-                Item itemObj = Engine.Items.GetItem( item );
-
-                await UOC.DragDropAsync( item, 1, backpack );
-                Engine.Player.SetLayer( itemObj?.Layer ?? Layer.Invalid, 0 );
+                IsDressing = false;
             }
         }
 

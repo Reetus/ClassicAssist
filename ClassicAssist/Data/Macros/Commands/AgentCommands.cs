@@ -42,6 +42,16 @@ namespace ClassicAssist.Data.Macros.Commands
             dressAgentEntry.Undress();
         }
 
+        [CommandsDisplay( Category = "Agents",
+            Description = "Returns true if the Dress agent is currently dressing or undressing.",
+            InsertText = "if Dressing():" )]
+        public static bool Dressing()
+        {
+            DressManager manager = DressManager.GetInstance();
+
+            return manager.IsDressing;
+        }
+
         [CommandsDisplay( Category = "Agents", Description = "Returns the count of the given counter agent.",
             InsertText = "Counter(\"bm\")" )]
         public static int Counter( string name )

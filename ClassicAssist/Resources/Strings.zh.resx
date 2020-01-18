@@ -981,4 +981,13 @@
   <data name="Scavenger" xml:space="preserve">
     <value>拾荒者</value>
   </data>
+  <data name="Prevent targeting innocents in guardzone" xml:space="preserve">
+    <value>防止在警戒区以无辜者为目标</value>
+  </data>
+  <data name="Prevent attacking innocents in guardzone" xml:space="preserve">
+    <value>防止攻击守卫区的无辜者</value>
+  </data>
+  <data name="Applies to hotkeys / macros only." xml:space="preserve">
+    <value>仅适用于热键/宏。</value>
+  </data>
 </root>

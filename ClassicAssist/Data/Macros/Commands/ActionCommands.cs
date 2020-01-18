@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using Assistant;
+using ClassicAssist.Data.Regions;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UO;
@@ -88,6 +89,19 @@ namespace ClassicAssist.Data.Macros.Commands
             {
                 UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
                 return;
+            }
+
+            if ( Options.CurrentOptions.PreventAttackingInnocentsInGuardzone )
+            {
+                Mobile mobile = Engine.Mobiles.GetMobile( serial );
+
+                if ( mobile != null && mobile.Notoriety == Notoriety.Innocent &&
+                     mobile.GetRegion().Attributes.HasFlag( RegionAttributes.Guarded ) )
+                {
+                    UOC.SystemMessage( Strings.Attack_request_blocked___ );
+
+                    return;
+                }
             }
 
             Engine.SendPacketToClient( new ChangeCombatant( serial ) );

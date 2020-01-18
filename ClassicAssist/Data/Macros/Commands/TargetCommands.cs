@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assistant;
+using ClassicAssist.Data.Regions;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Resources;
 using ClassicAssist.UO;
@@ -70,16 +71,29 @@ namespace ClassicAssist.Data.Macros.Commands
                 }
             }
 
+            if ( Options.CurrentOptions.PreventTargetingInnocentsInGuardzone && Engine.TargetExists )
+            {
+                Mobile mobile = Engine.Mobiles.GetMobile( serial );
+
+                if ( mobile != null && mobile.Notoriety == Notoriety.Innocent &&
+                     mobile.GetRegion().Attributes.HasFlag( RegionAttributes.Guarded ) )
+                {
+                    UOC.SystemMessage( Strings.Target_blocked____try_again___ );
+                    UOC.ResendTargetToClient();
+
+                    return;
+                }
+            }
+
             if ( useQueue && !Engine.TargetExists )
             {
                 MsgCommands.HeadMsg( Strings.Target_Queued, Engine.Player?.Serial );
                 Engine.LastTargetQueue.Enqueue( obj );
+                return;
             }
-            else
-            {
-                Engine.SendPacketToServer( new Target( TargetType.Object, -1, TargetFlags.None, serial, -1, -1, -1, 0,
-                    true ) );
-            }
+
+            Engine.SendPacketToServer( new Target( TargetType.Object, -1, TargetFlags.None, serial, -1, -1, -1, 0,
+                true ) );
         }
 
         [CommandsDisplay( Category = "Target",

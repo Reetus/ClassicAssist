@@ -109,5 +109,13 @@
             <CheckBox Content="{x:Static resources:Strings.Auto_accept_only_from_friends}"
                       IsChecked="{Binding CurrentOptions.AutoAcceptPartyOnlyFromFriends}" />
         </StackPanel>
+        <StackPanel Grid.Column="1">
+            <CheckBox Content="{x:Static resources:Strings.Prevent_targeting_innocents_in_guardzone}"
+                      IsChecked="{Binding CurrentOptions.PreventTargetingInnocentsInGuardzone}"
+                      ToolTip="{x:Static resources:Strings.Applies_to_hotkeys___macros_only_}" />
+            <CheckBox Content="{x:Static resources:Strings.Prevent_attacking_innocents_in_guardzone}"
+                      IsChecked="{Binding CurrentOptions.PreventAttackingInnocentsInGuardzone}"
+                      ToolTip="{x:Static resources:Strings.Applies_to_hotkeys___macros_only_}" />
+        </StackPanel>
     </Grid>
 </UserControl>

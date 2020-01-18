@@ -220,7 +220,7 @@
     <value>Personaggio</value>
   </data>
   <data name="Check For Updates" xml:space="preserve">
-    <value>Verifica la disponibilità di aggiornamenti</value>
+    <value>Verifica aggiornamenti</value>
   </data>
   <data name="Clear" xml:space="preserve">
     <value>Svuota</value>
@@ -980,5 +980,14 @@
   </data>
   <data name="Scavenger" xml:space="preserve">
     <value>Scavenger</value>
+  </data>
+  <data name="Prevent targeting innocents in guardzone" xml:space="preserve">
+    <value>Previeni target innocenti in zona guardie</value>
+  </data>
+  <data name="Prevent attacking innocents in guardzone" xml:space="preserve">
+    <value>Previeni attacco innocenti in zona guardie</value>
+  </data>
+  <data name="Applies to hotkeys / macros only." xml:space="preserve">
+    <value>Si applica solo ai tasti di scelta rapida/macro.</value>
   </data>
 </root>

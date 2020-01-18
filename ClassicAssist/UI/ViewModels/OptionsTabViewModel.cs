@@ -59,6 +59,7 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "LimitMouseWheelTriggerMS", CurrentOptions.LimitMouseWheelTriggerMS );
             options.Add( "AutoAcceptPartyInvite", CurrentOptions.AutoAcceptPartyInvite );
             options.Add( "AutoAcceptPartyOnlyFromFriends", CurrentOptions.AutoAcceptPartyOnlyFromFriends );
+            options.Add( "PreventTargetingInnocentsInGuardzone", CurrentOptions.PreventTargetingInnocentsInGuardzone );
 
             json?.Add( "Options", options );
         }
@@ -105,6 +106,8 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.AutoAcceptPartyInvite = config?["AutoAcceptPartyInvite"]?.ToObject<bool>() ?? false;
             CurrentOptions.AutoAcceptPartyOnlyFromFriends =
                 config?["AutoAcceptPartyOnlyFromFriends"]?.ToObject<bool>() ?? false;
+            CurrentOptions.PreventTargetingInnocentsInGuardzone =
+                config?["PreventTargetingInnocentsInGuardzone"]?.ToObject<bool>() ?? false;
         }
 
         // Replay CurrentOptions changes onto Options.CurrentOptions

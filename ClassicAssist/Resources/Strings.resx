@@ -981,4 +981,13 @@
   <data name="Scavenger" xml:space="preserve">
     <value>Scavenger</value>
   </data>
+  <data name="Prevent targeting innocents in guardzone" xml:space="preserve">
+    <value>Prevent targeting innocents in guardzone</value>
+  </data>
+  <data name="Prevent attacking innocents in guardzone" xml:space="preserve">
+    <value>Prevent attacking innocents in guardzone</value>
+  </data>
+  <data name="Applies to hotkeys / macros only." xml:space="preserve">
+    <value>Applies to hotkeys / macros only.</value>
+  </data>
 </root>

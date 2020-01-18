@@ -982,7 +982,7 @@
     <value>스캐빈저</value>
   </data>
   <data name="Prevent attacking innocents in guardzone" xml:space="preserve">
-    <value>가드존에서 블루공격 막기</value>
+    <value>가드존에서 블루공격 방지</value>
   </data>
   <data name="Prevent targeting innocents in guardzone" xml:space="preserve">
     <value>가드 존에서 무고한 대상을 방지</value>

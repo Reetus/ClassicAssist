@@ -60,6 +60,7 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "AutoAcceptPartyInvite", CurrentOptions.AutoAcceptPartyInvite );
             options.Add( "AutoAcceptPartyOnlyFromFriends", CurrentOptions.AutoAcceptPartyOnlyFromFriends );
             options.Add( "PreventTargetingInnocentsInGuardzone", CurrentOptions.PreventTargetingInnocentsInGuardzone );
+            options.Add( "PreventAttackingInnocentsInGuardzone", CurrentOptions.PreventAttackingInnocentsInGuardzone );
 
             json?.Add( "Options", options );
         }
@@ -108,6 +109,8 @@ namespace ClassicAssist.UI.ViewModels
                 config?["AutoAcceptPartyOnlyFromFriends"]?.ToObject<bool>() ?? false;
             CurrentOptions.PreventTargetingInnocentsInGuardzone =
                 config?["PreventTargetingInnocentsInGuardzone"]?.ToObject<bool>() ?? false;
+            CurrentOptions.PreventAttackingInnocentsInGuardzone =
+                config?["PreventAttackingInnocentsInGuardzone"]?.ToObject<bool>() ?? false;
         }
 
         // Replay CurrentOptions changes onto Options.CurrentOptions

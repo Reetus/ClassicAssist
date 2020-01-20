@@ -57,15 +57,23 @@ namespace ClassicAssist.UO.Objects
             }
         }
 
-        public bool IsDescendantOf( int serial )
+        public bool IsDescendantOf( int serial, int searchLevel = -1 )
         {
             int owner = Owner;
+            int level = 0;
 
             do
             {
                 if ( owner == serial )
                 {
                     return true;
+                }
+
+                level++;
+
+                if ( searchLevel != -1 && level > searchLevel )
+                {
+                    break;
                 }
 
                 owner = Engine.Items.GetItem( owner )?.Owner ?? 0;

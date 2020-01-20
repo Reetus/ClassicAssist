@@ -298,8 +298,8 @@ namespace ClassicAssist.Tests.MacroCommands
         {
             Engine.Player = new PlayerMobile( 0x01 );
 
-            Mobile any = new Mobile(0x02  ) { ID = 1, X = 1, Y = 1, Notoriety = Notoriety.Murderer};
-            Mobile humanoid = new Mobile(0x03  ) { ID = 400, X = 2, Y = 2, Notoriety = Notoriety.Murderer };
+            Mobile any = new Mobile( 0x02 ) { ID = 1, X = 1, Y = 1, Notoriety = Notoriety.Murderer };
+            Mobile humanoid = new Mobile( 0x03 ) { ID = 400, X = 2, Y = 2, Notoriety = Notoriety.Murderer };
             Mobile transformation = new Mobile( 0x04 ) { ID = 748, X = 3, Y = 3, Notoriety = Notoriety.Murderer };
 
             Engine.Mobiles.Add( new[] { any, humanoid, transformation } );
@@ -316,6 +316,168 @@ namespace ClassicAssist.Tests.MacroCommands
             TargetCommands.GetEnemy( new[] { "Murderer" }, "Both", "Closest" );
             Assert.AreEqual( humanoid.Serial, AliasCommands.GetAlias( "enemy" ) );
 
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillTargetType()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+            Item backpack =
+                new Item( 0x40000000, Engine.Player.Serial ) { Container = new ItemCollection( 0x40000000 ) };
+            Engine.Items.Add( backpack );
+            Engine.Player.SetLayer( Layer.Backpack, backpack.Serial );
+
+            Item item = new Item( 0x40000001, backpack.Serial ) { ID = 0xfeef };
+            backpack.Container.Add( item );
+
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            void PassOnTargetSent( byte[] data, int length )
+            {
+                if ( data[0] == 0x6C )
+                {
+                    are.Set();
+                }
+            }
+
+            Engine.InternalPacketSentEvent += PassOnTargetSent;
+
+            TargetCommands.TargetType( item.ID );
+
+            bool result = are.WaitOne( 5000 );
+
+            Assert.IsTrue( result );
+
+            Engine.InternalPacketSentEvent -= PassOnTargetSent;
+            Engine.Items.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillTargetTypeLessThanSearchLevel()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+            Item backpack =
+                new Item( 0x40000000, Engine.Player.Serial ) { Container = new ItemCollection( 0x40000000 ) };
+            Engine.Items.Add( backpack );
+            Engine.Player.SetLayer( Layer.Backpack, backpack.Serial );
+
+            ItemCollection container = backpack.Container;
+
+            for (int i = 0; i < 5; i++)
+            {
+                Item subitem =
+                    new Item( container.Serial + 1, container.Serial )
+                    {
+                        Container = new ItemCollection( container.Serial + 1 ),
+                        Owner = container.Serial
+                    };
+
+                container.Add( subitem );
+
+                container = subitem.Container;
+            }
+
+            Item item = new Item( container.Serial+1, container.Serial ) { ID = 0xfeef };
+            container.Add( item );
+
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            void PassOnTargetSent( byte[] data, int length )
+            {
+                if (data[ 0 ] == 0x6C)
+                {
+                    are.Set();
+                }
+            }
+
+            Engine.InternalPacketSentEvent += PassOnTargetSent;
+
+            TargetCommands.TargetType( item.ID, -1, 5 );
+
+            bool result = are.WaitOne( 5000 );
+
+            Assert.IsTrue( result );
+
+            Engine.InternalPacketSentEvent -= PassOnTargetSent;
+            Engine.Items.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WontTargetTypeGreaterThanSearchLevel()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+            Item backpack =
+                new Item( 0x40000000, Engine.Player.Serial ) { Container = new ItemCollection( 0x40000000 ) };
+            Engine.Items.Add( backpack );
+            Engine.Player.SetLayer( Layer.Backpack, backpack.Serial );
+
+            ItemCollection container = backpack.Container;
+
+            for ( int i = 0; i < 5; i++ )
+            {
+                Item subitem =
+                    new Item( container.Serial + 1, container.Serial )
+                    {
+                        Container = new ItemCollection( container.Serial + 1 ),
+                        Owner = container.Serial
+                    };
+
+                container.Add( subitem );
+
+                container = subitem.Container;
+            }
+
+            Item item = new Item( container.Serial+1, container.Serial ) { ID = 0xfeef };
+            container.Add( item );
+
+            void FailOnTargetSent( byte[] data, int length )
+            {
+                if (data[ 0 ] == 0x6C)
+                {
+                    Assert.Fail();
+                }
+            }
+
+            Engine.InternalPacketSentEvent += FailOnTargetSent;
+
+            TargetCommands.TargetType( item.ID, -1, 4 );
+
+            Engine.InternalPacketSentEvent -= FailOnTargetSent;
+            Engine.Items.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillTargetGround()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            Mobile mobile = new Mobile( 0x02 ) { ID = 0x191 };
+            Engine.Mobiles.Add( mobile );
+
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            void PassOnTargetSent( byte[] data, int length )
+            {
+                if (data[ 0 ] == 0x6C)
+                {
+                    are.Set();
+                }
+            }
+
+            Engine.InternalPacketSentEvent += PassOnTargetSent;
+
+            TargetCommands.TargetGround( mobile.ID );
+
+            bool result = are.WaitOne( 5000 );
+
+            Assert.IsTrue( result );
+
+            Engine.InternalPacketSentEvent -= PassOnTargetSent;
+            Engine.Mobiles.Clear();
             Engine.Player = null;
         }
     }

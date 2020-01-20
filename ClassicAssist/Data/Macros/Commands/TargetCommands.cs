@@ -8,6 +8,7 @@ using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
+using TargetTypeEnum = ClassicAssist.UO.Data.TargetType;
 using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.Data.Macros.Commands
@@ -26,7 +27,7 @@ namespace ClassicAssist.Data.Macros.Commands
             InsertText = "CancelTarget()" )]
         public static void CancelTarget()
         {
-            Engine.SendPacketToServer( new Target( TargetType.Object, -1, TargetFlags.Cancel, -1, -1, -1,
+            Engine.SendPacketToServer( new Target( TargetTypeEnum.Object, -1, TargetFlags.Cancel, -1, -1, -1,
                 0, 0, true ) );
         }
 
@@ -92,7 +93,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            Engine.SendPacketToServer( new Target( TargetType.Object, -1, TargetFlags.None, serial, -1, -1, -1, 0,
+            Engine.SendPacketToServer( new Target( TargetTypeEnum.Object, -1, TargetFlags.None, serial, -1, -1, -1, 0,
                 true ) );
         }
 
@@ -175,7 +176,7 @@ namespace ClassicAssist.Data.Macros.Commands
             int destinationX = x + totalOffsetX;
             int destinationY = y + totalOffsetY;
 
-            Engine.SendPacketToServer( new Target( TargetType.Tile, -1, TargetFlags.None, 0, destinationX,
+            Engine.SendPacketToServer( new Target( TargetTypeEnum.Tile, -1, TargetFlags.None, 0, destinationX,
                 destinationY, entity.Z, 0, true ) );
         }
 
@@ -297,6 +298,65 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             Engine.LastTargetQueue?.Clear();
             UOC.SystemMessage( Strings.Target_queue_cleared___ );
+        }
+
+        [CommandsDisplay( Category = "Target",
+            Description = "Target specified type in player backpack, optional parameters for hue and search level.",
+            InsertText = "UseType(0xff, 0, 3)" )]
+        public static void TargetType( object obj, int hue = -1, int range = -1 )
+        {
+            int id = AliasCommands.ResolveSerial( obj );
+
+            if ( id == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return;
+            }
+
+            if ( Engine.Player?.Backpack == null )
+            {
+                UOC.SystemMessage( Strings.Error__Cannot_find_player_backpack );
+                return;
+            }
+
+            Item item = Engine.Items.SelectEntity( i =>
+                i.ID == id && ( hue == -1 || i.Hue == hue ) &&
+                i.IsDescendantOf( Engine.Player.Backpack.Serial, range ) );
+
+            if ( item == null )
+            {
+                UOC.SystemMessage( Strings.Cannot_find_item___ );
+                return;
+            }
+
+            Target( item.Serial, false, Options.CurrentOptions.QueueLastTarget );
+        }
+
+        [CommandsDisplay( Category = "Target",
+            Description = "Target the specified type on the ground, optional parameters for hue and distance.",
+            InsertText = "TargetGround(0x190, -1, 10)" )]
+        public static void TargetGround( object obj, int hue = -1, int range = -1 )
+        {
+            int id = AliasCommands.ResolveSerial( obj );
+
+            if ( id == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return;
+            }
+
+            Entity entity = (Entity) Engine.Items.SelectEntity( i =>
+                                i.ID == id && ( hue == -1 || i.Hue == hue ) &&
+                                ( range == -1 || i.Distance < range ) ) ?? Engine.Mobiles.SelectEntity( m =>
+                                m.ID == id && ( hue == -1 || m.Hue == hue ) && ( range == -1 || m.Distance < range ) );
+
+            if ( entity == null )
+            {
+                UOC.SystemMessage( Strings.Cannot_find_item___ );
+                return;
+            }
+
+            Target( entity.Serial, false, Options.CurrentOptions.QueueLastTarget );
         }
     }
 }

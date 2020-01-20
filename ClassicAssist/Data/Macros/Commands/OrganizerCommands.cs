@@ -21,19 +21,29 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = "Agents", Description = "Executes the named Organizer agent.",
             InsertText = "Organize(\"Organizer-1\")" )]
-        public static void Organizer( string name )
+        public static void Organizer( string name, object sourceContainer = null, object destinationContainer = null )
         {
             OrganizerManager manager = OrganizerManager.GetInstance();
 
-            OrganizerEntry agent = manager.Items.FirstOrDefault( oa => oa.Name.ToLower().Equals( name.ToLower() ) );
+            OrganizerEntry entry = manager.Items.FirstOrDefault( oa => oa.Name.ToLower().Equals( name.ToLower() ) );
 
-            if ( agent == null )
+            if ( entry == null )
             {
                 UOC.SystemMessage( string.Format( Strings.Organizer___0___not_found___, name ) );
                 return;
             }
 
-            agent.Action.Invoke( agent );
+            if ( sourceContainer != null && destinationContainer != null )
+            {
+                int sourceContainerSerial = AliasCommands.ResolveSerial( sourceContainer );
+                int destinatinContainerSerial = AliasCommands.ResolveSerial( destinationContainer );
+
+                manager.Organize( entry, sourceContainerSerial, destinatinContainerSerial ).Wait();
+            }
+            else
+            {
+                manager.Organize( entry ).Wait();
+            }
         }
     }
 }

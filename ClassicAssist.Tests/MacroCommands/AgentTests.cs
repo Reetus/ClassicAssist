@@ -5,7 +5,6 @@ using Assistant;
 using ClassicAssist.Data.Counters;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Organizer;
-using ClassicAssist.UI.ViewModels.Agents;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Objects;
@@ -110,9 +109,8 @@ namespace ClassicAssist.Tests.MacroCommands
                 entry.DestinationContainer = destinationContainer.Serial;
 
                 Engine.PacketWaitEntries = new PacketWaitEntries();
-                OrganizerTabViewModel vm = new OrganizerTabViewModel();
 
-                vm.Organize( entry ).Wait();
+                OrganizerManager.GetInstance().Organize( entry ).Wait();
 
                 Item[] destinationItems = destinationContainer.Container.GetItems();
 
@@ -189,10 +187,9 @@ namespace ClassicAssist.Tests.MacroCommands
                 entry.SourceContainer = sourceContainer.Serial;
                 entry.DestinationContainer = destinationContainer.Serial;
 
-                OrganizerTabViewModel vm = new OrganizerTabViewModel();
                 Engine.PacketWaitEntries = new PacketWaitEntries();
 
-                vm.Organize( entry ).Wait();
+                OrganizerManager.GetInstance().Organize( entry ).Wait();
 
                 Item[] destinationItems = destinationContainer.Container.GetItems();
 
@@ -271,10 +268,9 @@ namespace ClassicAssist.Tests.MacroCommands
                 entry.SourceContainer = sourceContainer.Serial;
                 entry.DestinationContainer = destinationContainer.Serial;
 
-                OrganizerTabViewModel vm = new OrganizerTabViewModel();
                 Engine.PacketWaitEntries = new PacketWaitEntries();
 
-                vm.Organize( entry ).Wait();
+                OrganizerManager.GetInstance().Organize( entry ).Wait();
 
                 Item[] destinationItems = destinationContainer.Container.GetItems();
 

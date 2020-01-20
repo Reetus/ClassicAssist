@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data;
@@ -10,8 +8,6 @@ using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
-using ClassicAssist.UO.Network.PacketFilter;
-using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using Newtonsoft.Json.Linq;
 
@@ -19,6 +15,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 {
     public class OrganizerTabViewModel : HotkeySettableViewModel<OrganizerEntry>, ISettingProvider
     {
+        private readonly OrganizerManager _manager;
         private ICommand _insertItemCommand;
         private bool _isOrganizing;
         private ICommand _newOrganizerEntryCommand;
@@ -30,9 +27,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public OrganizerTabViewModel() : base( Strings.Organizer )
         {
-            OrganizerManager manager = OrganizerManager.GetInstance();
+            _manager = OrganizerManager.GetInstance();
 
-            manager.Items = Items;
+            _manager.Items = Items;
         }
 
         public ICommand InsertItemCommand =>
@@ -54,7 +51,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
             ( _newOrganizerEntryCommand = new RelayCommand( NewOrganizerEntry, o => !IsOrganizing ) );
 
         public ICommand OrganizeCommand =>
-            _organizeCommand ?? ( _organizeCommand = new RelayCommandAsync( Organize, o => SelectedItem != null ) );
+            _organizeCommand ??
+            ( _organizeCommand = new RelayCommandAsync( Organize, o => SelectedItem != null ) );
 
         public string PlayStopButtonText => IsOrganizing ? Strings.Stop : Strings.Play;
 
@@ -73,9 +71,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public ICommand SetContainersCommand =>
             _setContainersCommand ?? ( _setContainersCommand =
-                new RelayCommandAsync( SetContainers, o => SelectedItem != null && !IsOrganizing ) );
-
-        private CancellationTokenSource _cancellationTokenSource { get; set; } = new CancellationTokenSource();
+                new RelayCommandAsync( _manager.SetContainers, o => SelectedItem != null && !IsOrganizing ) );
 
         public void Serialize( JObject json )
         {
@@ -134,7 +130,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     Complete = GetJsonValue( token, "Complete", false )
                 };
 
-                entry.Action = hks => Task.Run( async () => await Organize( entry ) );
+                entry.Action = hks => Task.Run( async () => await _manager.Organize( entry ) );
                 entry.IsRunning = () => IsOrganizing;
 
                 foreach ( JToken itemToken in token["Items"] )
@@ -153,6 +149,20 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
         }
 
+        private async Task Organize( object arg )
+        {
+            if ( !( arg is OrganizerEntry entry ) )
+            {
+                return;
+            }
+
+            IsOrganizing = true;
+
+            await _manager.Organize( entry );
+
+            IsOrganizing = false;
+        }
+
         private void NewOrganizerEntry( object obj )
         {
             int count = Items.Count + 1;
@@ -160,7 +170,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             OrganizerEntry entry = new OrganizerEntry
             {
                 Name = $"Organizer-{count}",
-                Action = hks => Task.Run( async () => await Organize( SelectedItem ) ),
+                Action = hks => Task.Run( async () => await _manager.Organize( SelectedItem ) ),
                 IsRunning = () => IsOrganizing
             };
 
@@ -217,161 +227,6 @@ namespace ClassicAssist.UI.ViewModels.Agents
             };
 
             entry.Items.Add( organizerItem );
-        }
-
-        internal async Task Organize( object obj )
-        {
-            if ( !( obj is OrganizerEntry entry ) )
-            {
-                return;
-            }
-
-            if ( IsOrganizing )
-            {
-                _cancellationTokenSource.Cancel();
-                return;
-            }
-
-            if ( entry.SourceContainer == 0 || entry.DestinationContainer == 0 )
-            {
-                await SetContainers( entry );
-                return;
-            }
-
-            Item sourceContainer = Engine.Items.GetItem( entry.SourceContainer );
-
-            if ( sourceContainer == null )
-            {
-                //TODO
-                Commands.SystemMessage( Strings.Cannot_find_container___ );
-                return;
-            }
-
-            PacketFilterInfo pfi = new PacketFilterInfo( 0x3C,
-                new[] { PacketFilterConditions.IntAtPositionCondition( sourceContainer.Serial, 19 ) } );
-
-            if ( Commands.WaitForIncomingPacket( pfi, 1000,
-                () => Engine.SendPacketToServer( new UseObject( sourceContainer.Serial ) ) ) )
-            {
-                await Task.Delay( Options.CurrentOptions.ActionDelayMS );
-            }
-
-            if ( sourceContainer.Container == null )
-            {
-                //TODO
-                Commands.SystemMessage( Strings.Cannot_find_container___ );
-                return;
-            }
-
-            Item destinationContainer = Engine.Items.GetItem( entry.DestinationContainer );
-
-            if ( destinationContainer == null )
-            {
-                //TODO
-                Commands.SystemMessage( Strings.Cannot_find_container___ );
-                return;
-            }
-
-            try
-            {
-                _cancellationTokenSource = new CancellationTokenSource();
-                IsOrganizing = true;
-
-                Commands.SystemMessage( string.Format( Strings.Organizer__0__running___, entry.Name ) );
-
-                foreach ( OrganizerItem entryItem in entry.Items )
-                {
-                    Item[] moveItems = sourceContainer.Container.SelectEntities( i => entryItem.ID == i.ID );
-
-                    if ( moveItems == null )
-                    {
-                        continue;
-                    }
-
-                    bool limitAmount = entryItem.Amount != -1;
-                    int moveAmount = entryItem.Amount;
-                    int moved = 0;
-
-                    if ( entry.Complete )
-                    {
-                        int existingCount = destinationContainer.Container?
-                                                .SelectEntities( i => entryItem.ID == i.ID )?.Select( i => i.Count )
-                                                .Sum() ?? 0;
-
-                        moved += existingCount;
-                    }
-
-                    foreach ( Item moveItem in moveItems )
-                    {
-                        if ( limitAmount && moved >= moveAmount )
-                        {
-                            break;
-                        }
-
-                        int amount = moveItem.Count;
-
-                        if ( limitAmount )
-                        {
-                            if ( moveItem.Count > moveAmount )
-                            {
-                                amount = moveAmount - moved;
-                            }
-
-                            moved += amount;
-                        }
-
-                        if ( entry.Stack )
-                        {
-                            await Commands.DragDropAsync( moveItem.Serial, amount, destinationContainer.Serial );
-                        }
-                        else
-                        {
-                            await Commands.DragDropAsync( moveItem.Serial, amount, destinationContainer.Serial,
-                                0, 0 );
-                        }
-
-                        if ( _cancellationTokenSource.IsCancellationRequested )
-                        {
-                            break;
-                        }
-                    }
-                }
-            }
-            finally
-            {
-                Commands.SystemMessage( string.Format( Strings.Organizer__0__finished___, entry.Name ) );
-                IsOrganizing = false;
-            }
-        }
-
-        private static async Task SetContainers( object obj )
-        {
-            if ( !( obj is OrganizerEntry entry ) )
-            {
-                return;
-            }
-
-            int sourceContainer = await Commands.GetTargeSerialAsync( Strings.Select_source_container___ );
-
-            if ( sourceContainer <= 0 )
-            {
-                Commands.SystemMessage( Strings.Invalid_source_container___ );
-                return;
-            }
-
-            int desintationContainer =
-                await Commands.GetTargeSerialAsync( Strings.Select_destination_container___ );
-
-            if ( desintationContainer <= 0 )
-            {
-                Commands.SystemMessage( Strings.Invalid_destination_container___ );
-                return;
-            }
-
-            entry.SourceContainer = sourceContainer;
-            entry.DestinationContainer = desintationContainer;
-
-            Commands.SystemMessage( Strings.Organizer_containers_set___ );
         }
     }
 }

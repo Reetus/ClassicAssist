@@ -990,4 +990,7 @@
   <data name="Applies to hotkeys / macros only." xml:space="preserve">
     <value>Applies to hotkeys / macros only.</value>
   </data>
+  <data name="Cannot find sound file..." xml:space="preserve">
+    <value>Cannot find sound file...</value>
+  </data>
 </root>

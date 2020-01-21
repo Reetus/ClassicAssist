@@ -1,4 +1,7 @@
-﻿using System.Threading;
+﻿using System.IO;
+using System.Media;
+using System.Threading;
+using System.Windows;
 using Assistant;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Misc;
@@ -132,6 +135,39 @@ namespace ClassicAssist.Data.Macros.Commands
             Engine.SendPacketToServer( Engine.Player.Status.HasFlag( MobileStatus.WarMode )
                 ? new WarMode( false )
                 : new WarMode( true ) );
+        }
+
+        [CommandsDisplay( Category = "Main", Description = "Show a simple message box with a custom title and body.",
+            InsertText = "MessageBox(\"title\", \"message\")" )]
+        public static void MessageBox( string title, string body )
+        {
+            System.Windows.MessageBox.Show( body, title, MessageBoxButton.OK, MessageBoxImage.Information );
+        }
+
+        [CommandsDisplay( Category = "Main", Description = "Play sound by id or system .wav file.",
+            InsertText = "PlaySound(\"Bike Horn.wav\")" )]
+        public static void PlaySound( object param )
+        {
+            switch ( param )
+            {
+                case int id:
+                    Engine.SendPacketToClient( new PlaySound( id ) );
+                    break;
+                case string soundFile:
+                {
+                    string fullPath = Path.Combine( Engine.StartupPath, "Sounds", soundFile );
+
+                    if ( !File.Exists( fullPath ) )
+                    {
+                        UOC.SystemMessage( Strings.Cannot_find_sound_file___ );
+                        return;
+                    }
+
+                    SoundPlayer soundPlayer = new SoundPlayer( fullPath );
+                    soundPlayer.PlaySync();
+                    break;
+                }
+            }
         }
     }
 }

@@ -376,6 +376,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot find sound file....
+        /// </summary>
+        public static string Cannot_find_sound_file___ {
+            get {
+                return ResourceManager.GetString("Cannot find sound file...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Capture Packets.
         /// </summary>
         public static string Capture_Packets {

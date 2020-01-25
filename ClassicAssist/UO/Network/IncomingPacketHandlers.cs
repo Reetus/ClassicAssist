@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Abilities;
@@ -22,6 +23,8 @@ namespace ClassicAssist.UO.Network
         public delegate void dBufficonEnabledDisabled( int type, bool enabled );
 
         public delegate void dContainerContents( int serial, ItemCollection container );
+
+        public delegate void dCorpseContainerDisplay( int serial );
 
         public delegate void dGump( uint gumpId, int serial, Gump gump );
 
@@ -56,6 +59,7 @@ namespace ClassicAssist.UO.Network
         public static event dContainerContents ContainerContentsEvent;
         public static event dGump GumpEvent;
         public static event dBufficonEnabledDisabled BufficonEnabledDisabledEvent;
+        public static event dCorpseContainerDisplay CorpseContainerDisplayEvent;
 
         public static void Initialize()
         {
@@ -140,6 +144,11 @@ namespace ClassicAssist.UO.Network
             int serial = reader.ReadInt32();
             int gumpId = reader.ReadUInt16();
             int ctype = reader.ReadUInt16();
+
+            if ( ctype != 0 && gumpId == 0x09 )
+            {
+                Task.Run( () => CorpseContainerDisplayEvent?.Invoke( serial ) );
+            }
 
             if ( ctype != 0 )
             {
@@ -228,7 +237,7 @@ namespace ClassicAssist.UO.Network
             int type = reader.ReadUInt16();
             int count = reader.ReadInt16();
 
-            if ( type < 0x3ea )
+            if ( type < 0x3e9 )
             {
                 return;
             }

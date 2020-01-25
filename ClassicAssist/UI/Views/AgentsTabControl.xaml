@@ -30,5 +30,8 @@
         <TabItem Header="{x:Static resources:Strings.Scavenger}">
             <agents:ScavengerTabControl />
         </TabItem>
+        <TabItem Header="{x:Static resources:Strings.Autoloot}">
+            <agents:AutolootTabControl />
+        </TabItem>
     </TabControl>
 </UserControl>

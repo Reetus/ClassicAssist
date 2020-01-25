@@ -18,6 +18,14 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class MainCommands
     {
+        [CommandsDisplay( Category = "Main",
+            Description = "Set quiet mode True/False, True reduces the number of messages macro commands emit.",
+            InsertText = "SetQuietMode(True)" )]
+        public static void SetQuietMode( bool onOff )
+        {
+            MacroManager.QuietMode = onOff;
+        }
+
         [CommandsDisplay( Category = "Main", Description = "Use a virtue by name.",
             InsertText = "InvokeVirtue(\"Honor\")" )]
         public static void InvokeVirtue( string virtue )

@@ -1,0 +1,96 @@
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Input;
+using ClassicAssist.Annotations;
+using ClassicAssist.UI.ViewModels;
+using ClassicAssist.UO.Data;
+
+namespace ClassicAssist.UI.Views
+{
+    /// <summary>
+    ///     Interaction logic for HuePickerWindow.xaml
+    /// </summary>
+    public partial class HuePickerWindow : Window, INotifyPropertyChanged
+    {
+        private ObservableCollection<HuePickerEntry> _items = new ObservableCollection<HuePickerEntry>();
+        private ICommand _okCommand;
+        private int _selectedHue = -1;
+        private HuePickerEntry _selectedItem;
+
+        public HuePickerWindow()
+        {
+            InitializeComponent();
+
+            for ( int i = 0; i < 3000; i++ )
+            {
+                Items.Add( new HuePickerEntry { Index = i + 1, Entry = Hues._lazyHueEntries.Value[i] } );
+            }
+        }
+
+        public ObservableCollection<HuePickerEntry> Items
+        {
+            get => _items;
+            set => SetProperty( ref _items, value );
+        }
+
+        public ICommand OKCommand => _okCommand ?? ( _okCommand = new RelayCommand( OK, o => SelectedItem != null ) );
+
+        public int SelectedHue
+        {
+            get => _selectedHue;
+            set => SetProperty( ref _selectedHue, value );
+        }
+
+        public HuePickerEntry SelectedItem
+        {
+            get => _selectedItem;
+            set => SetProperty( ref _selectedItem, value );
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public static bool GetHue( out int hue )
+        {
+            HuePickerWindow window = new HuePickerWindow();
+
+            window.ShowDialog();
+
+            hue = window.SelectedHue;
+
+            return hue != -1;
+        }
+
+        private void OK( object obj )
+        {
+            if ( !( obj is HuePickerEntry entry ) )
+            {
+                return;
+            }
+
+            SelectedHue = entry.Index;
+        }
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
+        {
+            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+        }
+
+        // ReSharper disable once RedundantAssignment
+        public virtual void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
+        {
+            obj = value;
+            OnPropertyChanged( propertyName );
+            CommandManager.InvalidateRequerySuggested();
+        }
+
+        public class HuePickerEntry
+        {
+            public HueEntry Entry { get; set; }
+            public string EntryName => Entry.Name ?? "Unknown";
+            public int Index { get; set; }
+        }
+    }
+}

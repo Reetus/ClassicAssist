@@ -35,7 +35,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 case string str:
                     serial = GetAlias( str );
 
-                    if ( serial == -1 )
+                    if ( serial == -1 && !MacroManager.QuietMode )
                     {
                         UOC.SystemMessage( string.Format( Strings.Unknown_alias___0___, str ) );
                     }

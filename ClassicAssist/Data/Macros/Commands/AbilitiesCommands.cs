@@ -55,7 +55,11 @@ namespace ClassicAssist.Data.Macros.Commands
                     {
                         if ( primary && manager.IsPrimaryEnabled || !primary && manager.IsSecondaryEnabled )
                         {
-                            UOC.SystemMessage( Strings.Ability_already_set___, 0x3F );
+                            if ( !MacroManager.QuietMode )
+                            {
+                                UOC.SystemMessage( Strings.Ability_already_set___, 0x3F );
+                            }
+
                             return;
                         }
 
@@ -65,7 +69,11 @@ namespace ClassicAssist.Data.Macros.Commands
                     {
                         if ( primary && !manager.IsPrimaryEnabled || !primary && !manager.IsSecondaryEnabled )
                         {
-                            UOC.SystemMessage( Strings.Ability_not_set___, 0x3F );
+                            if ( !MacroManager.QuietMode )
+                            {
+                                UOC.SystemMessage( Strings.Ability_not_set___, 0x3F );
+                            }
+
                             return;
                         }
 

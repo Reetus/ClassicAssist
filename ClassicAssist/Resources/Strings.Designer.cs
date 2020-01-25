@@ -259,6 +259,33 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Autoloot.
+        /// </summary>
+        public static string Autoloot {
+            get {
+                return ResourceManager.GetString("Autoloot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Autoloot matching items.
+        /// </summary>
+        public static string Autoloot_matching_items {
+            get {
+                return ResourceManager.GetString("Autoloot matching items", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Autolooting &apos;{0}&apos;.
+        /// </summary>
+        public static string Autolooting___0__ {
+            get {
+                return ResourceManager.GetString("Autolooting \'{0}\'", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bandage Self.
         /// </summary>
         public static string Bandage_Self {
@@ -628,6 +655,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disable inside guardzone.
+        /// </summary>
+        public static string Disable_inside_guardzone {
+            get {
+                return ResourceManager.GetString("Disable inside guardzone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do not auto interupt.
         /// </summary>
         public static string Do_not_auto_interupt {
@@ -957,6 +993,15 @@ namespace ClassicAssist.Resources {
         public static string Hotkeys_enabled___ {
             get {
                 return ResourceManager.GetString("Hotkeys enabled...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hue Picker.
+        /// </summary>
+        public static string Hue_Picker {
+            get {
+                return ResourceManager.GetString("Hue Picker", resourceCulture);
             }
         }
         
@@ -1519,6 +1564,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operator.
+        /// </summary>
+        public static string Operator {
+            get {
+                return ResourceManager.GetString("Operator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Options.
         /// </summary>
         public static string Options {
@@ -1794,6 +1848,15 @@ namespace ClassicAssist.Resources {
         public static string Regeneration {
             get {
                 return ResourceManager.GetString("Regeneration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rehue matching items.
+        /// </summary>
+        public static string Rehue_matching_items {
+            get {
+                return ResourceManager.GetString("Rehue matching items", resourceCulture);
             }
         }
         

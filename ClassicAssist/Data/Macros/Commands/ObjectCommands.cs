@@ -196,6 +196,11 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
+            if ( MacroManager.QuietMode )
+            {
+                return true;
+            }
+
             AliasCommands.SetAlias( "found", entity.Serial );
             UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ) );
 
@@ -247,6 +252,11 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( entity == null )
             {
                 return false;
+            }
+
+            if ( MacroManager.QuietMode )
+            {
+                return true;
             }
 
             AliasCommands.SetAlias( "found", entity.Serial );

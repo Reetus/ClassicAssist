@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.Misc
 {
@@ -90,6 +91,23 @@ namespace ClassicAssist.Misc
             }
 
             list.Insert( i, item );
+        }
+
+        public static JArray ToJArray( this int[] arr )
+        {
+            JArray jArray = new JArray();
+
+            foreach ( int i in arr )
+            {
+                jArray.Add( i );
+            }
+
+            return jArray;
+        }
+
+        public static int[] ToIntArray( this JToken jToken )
+        {
+            return jToken.Select( token => token.ToObject<int>() ).ToArray();
         }
     }
 }

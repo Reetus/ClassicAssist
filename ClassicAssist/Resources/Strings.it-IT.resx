@@ -922,7 +922,7 @@
     <value>Usa skill</value>
   </data>
   <data name="UseOnce cleared..." xml:space="preserve">
-    <value>UsaUnaVolta pulita..</value>
+    <value>UsaUnaVolta pulita...</value>
   </data>
   <data name="UseOnce: Cannot find type..." xml:space="preserve">
     <value>UsaUnaVolta: Impossibile trovare il Type...</value>
@@ -988,6 +988,30 @@
     <value>Previeni attacco innocenti in zona guardie</value>
   </data>
   <data name="Applies to hotkeys / macros only." xml:space="preserve">
-    <value>Si applica solo ai tasti di scelta rapida/macro.</value>
+    <value>Applica solo alle Hotkeys / Scripts</value>
+  </data>
+  <data name="Hue Picker" xml:space="preserve">
+    <value>Prendi colore</value>
+  </data>
+  <data name="Cannot find sound file..." xml:space="preserve">
+    <value>Impossibile trovare il file audio...</value>
+  </data>
+  <data name="Disable inside guardzone" xml:space="preserve">
+    <value>Disattiva in zona guardie</value>
+  </data>
+  <data name="Autoloot" xml:space="preserve">
+    <value>Autoloot</value>
+  </data>
+  <data name="Autoloot matching items" xml:space="preserve">
+    <value>Autoloot oggetti trovati</value>
+  </data>
+  <data name="Rehue matching items" xml:space="preserve">
+    <value>Ricolora oggetti trovati</value>
+  </data>
+  <data name="Operator" xml:space="preserve">
+    <value>Operatore</value>
+  </data>
+  <data name="Autolooting '{0}'" xml:space="preserve">
+    <value>Autolooting '{0}'</value>
   </data>
 </root>

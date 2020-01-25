@@ -990,4 +990,28 @@
   <data name="Applies to hotkeys / macros only." xml:space="preserve">
     <value>仅适用于热键/宏。</value>
   </data>
+  <data name="Hue Picker" xml:space="preserve">
+    <value>色调选取器</value>
+  </data>
+  <data name="Cannot find sound file..." xml:space="preserve">
+    <value>找不到声音文件...</value>
+  </data>
+  <data name="Disable inside guardzone" xml:space="preserve">
+    <value>禁用内部防护区</value>
+  </data>
+  <data name="Autoloot" xml:space="preserve">
+    <value>自动</value>
+  </data>
+  <data name="Autoloot matching items" xml:space="preserve">
+    <value>自动匹配项</value>
+  </data>
+  <data name="Rehue matching items" xml:space="preserve">
+    <value>重新匹配项目</value>
+  </data>
+  <data name="Operator" xml:space="preserve">
+    <value>算子</value>
+  </data>
+  <data name="Autolooting '{0}'" xml:space="preserve">
+    <value>自动抢劫"{0}"</value>
+  </data>
 </root>

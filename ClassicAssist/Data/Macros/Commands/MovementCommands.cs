@@ -64,7 +64,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             bool result = Engine.Move( directionEnum, run );
 
-            UOC.WaitForIncomingPacket( new PacketFilterInfo( 22 ), MOVEMENT_TIMEOUT );
+            //UOC.WaitForIncomingPacket( new PacketFilterInfo( 22 ), MOVEMENT_TIMEOUT );
 
             return result;
         }

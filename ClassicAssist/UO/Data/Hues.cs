@@ -12,13 +12,11 @@ namespace ClassicAssist.UO.Data
         private const int BlockCount = 375;
         private static string _dataPath;
 
-        public static Lazy<HueEntry[]> _lazyHueEntries;
+        public static Lazy<HueEntry[]> _lazyHueEntries = new Lazy<HueEntry[]>( LoadHueIndex );
 
         public static bool Initialize( string dataPath )
         {
             _dataPath = dataPath;
-
-            _lazyHueEntries = new Lazy<HueEntry[]>( LoadHueIndex );
 
             return true;
         }

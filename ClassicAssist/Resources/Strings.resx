@@ -990,7 +990,28 @@
   <data name="Applies to hotkeys / macros only." xml:space="preserve">
     <value>Applies to hotkeys / macros only.</value>
   </data>
+  <data name="Hue Picker" xml:space="preserve">
+    <value>Hue Picker</value>
+  </data>
+  <data name="Disable inside guardzone" xml:space="preserve">
+    <value>Disable inside guardzone</value>
+  </data>
+  <data name="Autoloot" xml:space="preserve">
+    <value>Autoloot</value>
+  </data>
+  <data name="Autoloot matching items" xml:space="preserve">
+    <value>Autoloot matching items</value>
+  </data>
+  <data name="Rehue matching items" xml:space="preserve">
+    <value>Rehue matching items</value>
+  </data>
+  <data name="Operator" xml:space="preserve">
+    <value>Operator</value>
+  </data>
   <data name="Cannot find sound file..." xml:space="preserve">
     <value>Cannot find sound file...</value>
+  </data>
+  <data name="Autolooting '{0}'" xml:space="preserve">
+    <value>Autolooting '{0}'</value>
   </data>
 </root>

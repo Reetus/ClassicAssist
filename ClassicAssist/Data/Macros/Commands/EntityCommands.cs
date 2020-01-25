@@ -3,6 +3,7 @@ using ClassicAssist.Data.BuffIcons;
 using ClassicAssist.Data.SpecialMoves;
 using ClassicAssist.Resources;
 using ClassicAssist.UO;
+using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 
@@ -73,7 +74,11 @@ namespace ClassicAssist.Data.Macros.Commands
                 return entity.Hue;
             }
 
-            UOC.SystemMessage( Strings.Entity_not_found___ );
+            if ( !MacroManager.QuietMode )
+            {
+                UOC.SystemMessage( Strings.Entity_not_found___ );
+            }
+
             return 0;
         }
 
@@ -99,7 +104,11 @@ namespace ClassicAssist.Data.Macros.Commands
                 return entity.ID;
             }
 
-            UOC.SystemMessage( Strings.Entity_not_found___ );
+            if ( !MacroManager.QuietMode )
+            {
+                UOC.SystemMessage( Strings.Entity_not_found___ );
+            }
+
             return 0;
         }
 
@@ -125,7 +134,11 @@ namespace ClassicAssist.Data.Macros.Commands
                 return entity.X;
             }
 
-            UOC.SystemMessage( Strings.Entity_not_found___ );
+            if ( !MacroManager.QuietMode )
+            {
+                UOC.SystemMessage( Strings.Entity_not_found___ );
+            }
+
             return 0;
         }
 
@@ -151,7 +164,11 @@ namespace ClassicAssist.Data.Macros.Commands
                 return entity.Y;
             }
 
-            UOC.SystemMessage( Strings.Entity_not_found___ );
+            if ( !MacroManager.QuietMode )
+            {
+                UOC.SystemMessage( Strings.Entity_not_found___ );
+            }
+
             return 0;
         }
 
@@ -177,7 +194,11 @@ namespace ClassicAssist.Data.Macros.Commands
                 return entity.Z;
             }
 
-            UOC.SystemMessage( Strings.Entity_not_found___ );
+            if ( !MacroManager.QuietMode )
+            {
+                UOC.SystemMessage( Strings.Entity_not_found___ );
+            }
+
             return 0;
         }
 
@@ -193,6 +214,30 @@ namespace ClassicAssist.Data.Macros.Commands
         public static bool SpecialMoveExists( string name )
         {
             return SpecialMovesManager.GetInstance().SpecialMoveExists( name );
+        }
+
+        [CommandsDisplay( Category = "Entity",
+            Description = "Returns the Direction the entity is in relative to the player.",
+            InsertText = "Run(DirectionTo(\"enemy\"))" )]
+        public static string DirectionTo( object obj )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 )
+            {
+                return Direction.Invalid.ToString();
+            }
+
+            Entity entity = UOMath.IsMobile( serial )
+                ? Engine.Mobiles.GetMobile( serial )
+                : Engine.Items.GetItem( serial ) as Entity;
+
+            if ( entity == null )
+            {
+                return Direction.Invalid.ToString();
+            }
+
+            return UOMath.MapDirection( Engine.Player.X, Engine.Player.Y, entity.X, entity.Y ).ToString();
         }
     }
 }

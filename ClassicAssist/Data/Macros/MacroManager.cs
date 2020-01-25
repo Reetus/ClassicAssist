@@ -39,6 +39,7 @@ namespace ClassicAssist.Data.Macros
         public Func<bool> IsPlaying { get; set; }
         public Func<bool> IsRecording { get; set; }
         public ObservableCollectionEx<MacroEntry> Items { get; set; }
+        public static bool QuietMode { get; set; }
 
         private void PacketSentEvent( byte[] data, int length )
         {

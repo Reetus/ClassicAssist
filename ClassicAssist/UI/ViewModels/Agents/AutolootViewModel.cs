@@ -29,6 +29,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
 {
     public class AutolootViewModel : BaseViewModel, ISettingProvider
     {
+        private readonly object _autolootLock = new object();
+
         private ObservableCollection<AutolootConstraints>
             _constraints = new ObservableCollection<AutolootConstraints>();
 
@@ -254,60 +256,63 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            Item item = Engine.Items.GetItem( serial );
-
-            if ( item == null || item.ID != 0x2006 )
+            lock ( _autolootLock )
             {
-                return;
-            }
+                Item item = Engine.Items.GetItem( serial );
 
-            PacketWaitEntry we = Engine.PacketWaitEntries.Add( new PacketFilterInfo( 0x3C,
-                    new[] { PacketFilterConditions.IntAtPositionCondition( serial, 19 ) } ),
-                PacketDirection.Incoming );
-
-            bool result = we.Lock.WaitOne( 5000 );
-
-            if ( !result )
-            {
-                return;
-            }
-
-            IEnumerable<Item> items = Engine.Items.GetItem( serial )?.Container.GetItems();
-
-            if ( items == null )
-            {
-                return;
-            }
-
-            foreach ( AutolootEntry entry in Items )
-            {
-                IEnumerable<Item> matchItems = AutolootFilter( items, entry );
-
-                if ( matchItems == null )
+                if ( item == null || item.ID != 0x2006 )
                 {
-                    continue;
+                    return;
+                }
+
+                PacketWaitEntry we = Engine.PacketWaitEntries.Add( new PacketFilterInfo( 0x3C,
+                        new[] { PacketFilterConditions.IntAtPositionCondition( serial, 19 ) } ),
+                    PacketDirection.Incoming );
+
+                bool result = we.Lock.WaitOne( 5000 );
+
+                if ( !result )
+                {
+                    return;
+                }
+
+                IEnumerable<Item> items = Engine.Items.GetItem( serial )?.Container.GetItems();
+
+                if ( items == null )
+                {
+                    return;
                 }
 
                 List<Item> lootItems = new List<Item>();
 
-                foreach ( Item matchItem in matchItems )
+                foreach ( AutolootEntry entry in Items )
                 {
-                    if ( entry.Rehue )
-                    {
-                        Engine.SendPacketToClient( new ContainerContentUpdate( matchItem.Serial, matchItem.ID,
-                            matchItem.Direction, matchItem.Count,
-                            matchItem.X, matchItem.Y, matchItem.Grid, matchItem.Owner, entry.RehueHue ) );
-                    }
+                    IEnumerable<Item> matchItems = AutolootFilter( items, entry );
 
-                    if ( DisableInGuardzone &&
-                         Engine.Player.GetRegion().Attributes.HasFlag( RegionAttributes.Guarded ) )
+                    if ( matchItems == null )
                     {
                         continue;
                     }
 
-                    if ( entry.Autoloot )
+                    foreach ( Item matchItem in matchItems )
                     {
-                        lootItems.Add( matchItem );
+                        if ( entry.Rehue )
+                        {
+                            Engine.SendPacketToClient( new ContainerContentUpdate( matchItem.Serial, matchItem.ID,
+                                matchItem.Direction, matchItem.Count,
+                                matchItem.X, matchItem.Y, matchItem.Grid, matchItem.Owner, entry.RehueHue ) );
+                        }
+
+                        if ( DisableInGuardzone &&
+                             Engine.Player.GetRegion().Attributes.HasFlag( RegionAttributes.Guarded ) )
+                        {
+                            continue;
+                        }
+
+                        if ( entry.Autoloot )
+                        {
+                            lootItems.Add( matchItem );
+                        }
                     }
                 }
 

@@ -425,10 +425,20 @@ namespace ClassicAssist.UO
                     PacketFilterConditions.ShortAtPositionCondition( 0x3735, 10 )
                 } );
 
+            PacketFilterInfo fizzChivPFI = new PacketFilterInfo( 0x54,
+                new[]
+                {
+                    PacketFilterConditions.ShortAtPositionCondition( 0x1D6, 2 ),
+                    PacketFilterConditions.ShortAtPositionCondition( Engine.Player.X, 6 ),
+                    PacketFilterConditions.ShortAtPositionCondition( Engine.Player.Y, 8 ),
+                    PacketFilterConditions.ShortAtPositionCondition( Engine.Player.Z, 10 )
+                } );
+
             Engine.WaitingForTarget = true;
 
             PacketWaitEntry targetWe = Engine.PacketWaitEntries.Add( targetPfi, PacketDirection.Incoming );
             PacketWaitEntry fizzWe = Engine.PacketWaitEntries.Add( fizzPfi, PacketDirection.Incoming );
+            PacketWaitEntry fizzChivWe = Engine.PacketWaitEntries.Add( fizzChivPFI, PacketDirection.Incoming );
 
             try
             {
@@ -455,7 +465,9 @@ namespace ClassicAssist.UO
 
                 Task fizzTask = Task.Run( () => fizzWe.Lock.WaitOne( timeout ) );
 
-                int index = Task.WaitAny( targetTask, fizzTask );
+                Task fizzChivTask = Task.Run( () => fizzChivWe.Lock.WaitOne( timeout ) );
+
+                int index = Task.WaitAny( targetTask, fizzTask, fizzChivTask );
 
                 return index == 0 && targetTask.Result;
             }
@@ -463,6 +475,7 @@ namespace ClassicAssist.UO
             {
                 Engine.PacketWaitEntries.Remove( targetWe );
                 Engine.PacketWaitEntries.Remove( fizzWe );
+                Engine.PacketWaitEntries.Remove( fizzChivWe );
 
                 Engine.WaitingForTarget = false;
             }

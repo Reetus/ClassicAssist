@@ -11,7 +11,7 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class ObjectCommands
     {
-        private static readonly List<int> _ignoreList = new List<int>();
+        internal static List<int> IgnoreList { get; set; } = new List<int>();
 
         [CommandsDisplay( Category = "Entity", Description = "Ignores the given object from find commands",
             InsertText = "IgnoreObject(\"self\")" )]
@@ -26,9 +26,9 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            if ( !_ignoreList.Contains( serial ) )
+            if ( !IgnoreList.Contains( serial ) )
             {
-                _ignoreList.Add( serial );
+                IgnoreList.Add( serial );
             }
         }
 
@@ -36,7 +36,7 @@ namespace ClassicAssist.Data.Macros.Commands
             InsertText = "ClearIgnoreList()" )]
         public static void ClearIgnoreList()
         {
-            _ignoreList.Clear();
+            IgnoreList.Clear();
         }
 
         [CommandsDisplay( Category = "Actions",
@@ -176,7 +176,7 @@ namespace ClassicAssist.Data.Macros.Commands
             {
                 return i.ID == graphic && ( hue == -1 || i.Hue == hue ) &&
                        ( range == -1 || i.Distance < range ) &&
-                       !_ignoreList.Contains( i.Serial );
+                       !IgnoreList.Contains( i.Serial );
             }
 
             if ( owner != 0 )

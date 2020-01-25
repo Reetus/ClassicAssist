@@ -117,6 +117,7 @@ namespace ClassicAssist.Data.Targeting
                 mobile = Engine.Mobiles.SelectEntities( m =>
                         notoriety.Contains( m.Notoriety ) && m.Distance < MAX_DISTANCE &&
                         bodyTypePredicate( m.ID ) && !_ignoreList.Contains( m ) &&
+                        !ObjectCommands.IgnoreList.Contains( m.Serial ) &&
                         ( friendType == TargetFriendType.Include || !MobileCommands.InFriendList( m.Serial ) ) )
                     .OrderBy( m => m.Distance )
                     .FirstOrDefault();
@@ -139,7 +140,7 @@ namespace ClassicAssist.Data.Targeting
                     //Notoriety, bodyType ignored
                     mobiles = Engine.Mobiles.SelectEntities( m =>
                         m.Distance < distance && MobileCommands.InFriendList( m.Serial ) &&
-                        !_ignoreList.Contains( m ) );
+                        !_ignoreList.Contains( m ) && !ObjectCommands.IgnoreList.Contains( m.Serial ) );
                 }
                 else
                 {
@@ -174,6 +175,7 @@ namespace ClassicAssist.Data.Targeting
                     mobiles = Engine.Mobiles.SelectEntities( m =>
                         notoriety.Contains( m.Notoriety ) && m.Distance < distance &&
                         bodyTypePredicate( m.ID ) && !_ignoreList.Contains( m ) &&
+                        !ObjectCommands.IgnoreList.Contains( m.Serial ) &&
                         ( friendType == TargetFriendType.Include || !MobileCommands.InFriendList( m.Serial ) ) );
                 }
 

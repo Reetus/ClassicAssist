@@ -2,7 +2,7 @@
 
 # ClassicAssist
 
-Assistant for ClassicUO with UOSteam-like interface and macro syntax.
+Assistant for [ClassicUO](https://github.com/andreakarasho/ClassicUO) with UOSteam-like interface and macro syntax.
 
 ![image](https://user-images.githubusercontent.com/6239195/71762715-94710c00-2f05-11ea-8b86-d55e64ef9276.png)
 

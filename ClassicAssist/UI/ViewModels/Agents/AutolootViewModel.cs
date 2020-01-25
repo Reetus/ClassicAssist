@@ -254,6 +254,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
+            Item item = Engine.Items.GetItem( serial );
+
+            if ( item == null || item.ID != 0x2006 )
+            {
+                return;
+            }
+
             PacketWaitEntry we = Engine.PacketWaitEntries.Add( new PacketFilterInfo( 0x3C,
                     new[] { PacketFilterConditions.IntAtPositionCondition( serial, 19 ) } ),
                 PacketDirection.Incoming );

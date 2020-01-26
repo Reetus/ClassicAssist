@@ -1,0 +1,138 @@
+﻿<UserControl x:Name="userControl" x:Class="ClassicAssist.UI.Views.EntityCollectionFilterControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:resources="clr-namespace:ClassicAssist.Resources"
+             xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
+             xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+             xmlns:autoloot="clr-namespace:ClassicAssist.Data.Autoloot"
+             mc:Ignorable="d"
+             d:DesignHeight="200" d:DesignWidth="400"
+             DataContext="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}" Background="White">
+    <UserControl.Resources>
+        <DrawingImage x:Key="PlusIcon">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                    <DrawingGroup Opacity="1">
+                        <DrawingGroup Opacity="1">
+                            <GeometryDrawing Brush="#FF000000"
+                                             Geometry="F1 M512,512z M0,0z M492,236L276,236 276,20C276,8.954 267.046,0 256,0 244.954,0 236,8.954 236,20L236,236 20,236C8.954,236 0,244.954 0,256 0,267.046 8.954,276 20,276L236,276 236,492C236,503.046 244.954,512 256,512 267.046,512 276,503.046 276,492L276,276 492,276C503.046,276 512,267.046 512,256 512,244.954 503.046,236 492,236z" />
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <DrawingImage x:Key="MinusIcon">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                    <DrawingGroup Opacity="1">
+                        <DrawingGroup Opacity="1">
+                            <GeometryDrawing Brush="#FF000000"
+                                             Geometry="F1 M512,512z M0,0z M492,236L20,236C8.954,236 0,244.954 0,256 0,267.046 8.954,276 20,276L492,276C503.046,276 512,267.046 512,256 512,244.954 503.046,236 492,236z" />
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <DrawingImage x:Key="OpenIcon">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,-24 V391 H415.32856 V0 H-24 Z">
+                    <DrawingGroup.Transform>
+                        <TranslateTransform X="0" Y="24" />
+                    </DrawingGroup.Transform>
+                    <GeometryDrawing Brush="#FF000000"
+                                     Geometry="F1 M415.32856,415z M0,0z M368.328125,130.164062L341.9375,130.164062 341.9375,88.519531C341.902344,61.21875,319.78125,39.09375,292.476562,39.0625L223.089844,39.0625C215.125,39.066406,207.429688,36.183594,201.425781,30.957031L179.316406,11.710938C170.757812,4.265625,159.800781,0.164062000000003,148.457031,0.164062000000003L49.457031,0.164062000000003C22.15625,0.195312000000003,0.03125,22.320312,0,49.621094L0,310.375C0.0351562,340.632812,23.714844,365.589844,53.929688,367.214844L53.929688,367.292969 334.132812,367.292969C356.507812,367.25,375.769531,351.472656,380.210938,329.539062L414.378906,186.539062 414.4375,186.269531C417.164062,172.476562 413.566406,158.1875 404.640625,147.324219 395.710938,136.460938 382.390625,130.164062 368.328125,130.164062z M14.003906,310.375L14.003906,49.621094C14.027344,30.046875,29.886719,14.1875,49.460938,14.164062L148.460938,14.164062C156.425781,14.164062,164.121094,17.042969,170.128906,22.273438L192.238281,41.515625C200.792969,48.960938,211.75,53.0625,223.089844,53.0625L292.476562,53.0625C312.050781,53.085938,327.914062,68.949219,327.9375,88.523438L327.9375,130.164062 321.285156,130.164062C317.890625,112.023438,302.066406,98.863281,283.609375,98.835938L281.296875,98.835938C277.894531,80.320312,261.765625,66.863281,242.9375,66.835938L81.9374999999999,66.835938C55.9921879999999,66.867188,34.9648439999999,87.890625,34.9374999999999,113.835938L34.9374999999999,347.214844C21.9609379999999,339.472656,14.0117189999999,325.480469,14.0039059999999,310.375z M283.609375,112.835938C294.34375,112.847656,303.808594,119.882812,306.910156,130.164062L188.015625,130.164062C166.269531,130.097656,147.34375,145.011719,142.316406,166.167969L98.757812,319.980469 98.679688,320.273438C97.042969,327.230469,93.695312,333.667969,88.9375,339L88.9375,145.835938C88.957031,127.617188,103.722656,112.855469,121.9375,112.835938z M48.9375,352.535156L48.9375,113.835938C48.957031,95.617188,63.722656,80.855469,81.9375,80.835938L242.9375,80.835938C254.042969,80.847656,263.816406,88.175781,266.9375,98.835938L121.9375,98.835938C95.992188,98.863281,74.96875,119.890625,74.9375,145.835938L74.9375,349.355469C66.8125,353.09375,57.722656,354.203125,48.9375,352.535156z M400.730469,183.425781L366.566406,326.414062 366.507812,326.6875C363.425781,342.132812,349.878906,353.261719,334.132812,353.292969L94.390625,353.292969C103.289062,345.511719,109.539062,335.152344,112.269531,323.652344L155.828125,169.84375 155.90625,169.550781C159.394531,154.648438,172.707031,144.121094,188.015625,144.164062L368.328125,144.164062C378.179688,144.164062 387.511719,148.5625 393.78125,156.160156 400.050781,163.757812 402.597656,173.757812 400.730469,183.429688z M400.730469,183.425781" />
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <DrawingImage x:Key="SaveIcon">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V64 H64 V0 H0 Z">
+                    <DrawingGroup Opacity="1">
+                        <GeometryDrawing Brush="#FF000000"
+                                         Geometry="F1 M64,64z M0,0z M61.707,10.293L53.707,2.293A1,1,0,0,0,53,2L7,2A5.006,5.006,0,0,0,2,7L2,57A5.006,5.006,0,0,0,7,62L57,62A5.006,5.006,0,0,0,62,57L62,11A1,1,0,0,0,61.707,10.293z M48,4L48,20A1,1,0,0,1,47,21L17,21A1,1,0,0,1,16,20L16,4z M10,60L10,35A3,3,0,0,1,13,32L51,32A3,3,0,0,1,54,35L54,60z M60,57A3,3,0,0,1,57,60L56,60 56,35A5.006,5.006,0,0,0,51,30L13,30A5.006,5.006,0,0,0,8,35L8,60 7,60A3,3,0,0,1,4,57L4,7A3,3,0,0,1,7,4L14,4 14,20A3,3,0,0,0,17,23L47,23A3,3,0,0,0,50,20L50,4 52.586,4 60,11.414z" />
+                        <GeometryDrawing Brush="#FF000000"
+                                         Geometry="F1 M64,64z M0,0z M39,19L45,19A1,1,0,0,0,46,18L46,7A1,1,0,0,0,45,6L39,6A1,1,0,0,0,38,7L38,18A1,1,0,0,0,39,19z M40,8L44,8 44,17 40,17z" />
+                        <GeometryDrawing Brush="#FF000000"
+                                         Geometry="F1 M64,64z M0,0z M47,45L17,45A1,1,0,0,0,17,47L47,47A1,1,0,0,0,47,45z" />
+                        <GeometryDrawing Brush="#FF000000"
+                                         Geometry="F1 M64,64z M0,0z M47,39L17,39A1,1,0,0,0,17,41L47,41A1,1,0,0,0,47,39z" />
+                        <GeometryDrawing Brush="#FF000000"
+                                         Geometry="F1 M64,64z M0,0z M47,51L17,51A1,1,0,0,0,17,53L47,53A1,1,0,0,0,47,51z" />
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+    </UserControl.Resources>
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="{x:Static resources:Strings.Save}" Command="{Binding SaveFilterCommand}" />
+            <MenuItem Header="{x:Static resources:Strings.LoadFilter}" Command="{Binding LoadFilterCommand}" />
+        </ContextMenu>
+    </UserControl.ContextMenu>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ListView x:Name="listView" Margin="10" Grid.Row="0" ItemsSource="{Binding Items}"
+                  SelectedItem="{Binding SelectedItem}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="{x:Static resources:Strings.Property}" Width="220" x:Name="NameColumn">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedItem="{Binding Constraint}"
+                                          ItemsSource="{Binding Constraints, ElementName=userControl}" Width="200" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="{x:Static resources:Strings.Operator}" Width="75">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox Width="50" SelectedItem="{Binding Operator}"
+                                          ItemsSource="{Binding Source={misc:EnumBindingSource {x:Type autoloot:AutolootOperator}}}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="{x:Static resources:Strings.Value}" Width="75" x:Name="GridViewColumn">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox
+                                    Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    MinWidth="40" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="+/-">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Command="{Binding AddCommand, ElementName=userControl}">
+                                        <Image Source="{StaticResource PlusIcon}" Height="8" />
+                                    </Button>
+                                    <Button Command="{Binding RemoveCommand, ElementName=userControl}"
+                                            CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}"
+                                            Margin="5,0,0,0">
+                                        <Image Source="{StaticResource MinusIcon}" Height="8" />
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1" Margin="10,0,10,10">
+            <StackPanel.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Padding" Value="20,0,20,0" />
+                    <Setter Property="Margin" Value="10,0,0,0" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="{x:Static resources:Strings.Apply}" Command="{Binding ApplyCommand}" />
+            <Button Content="{x:Static resources:Strings.Reset}" Command="{Binding ResetCommand}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

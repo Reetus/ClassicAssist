@@ -62,9 +62,12 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             Direction directionEnum = Utility.GetEnumValueByName<Direction>( direction );
 
-            bool result = Engine.Move( directionEnum, run );
+            if ( directionEnum == Direction.Invalid )
+            {
+                return false;
+            }
 
-            //UOC.WaitForIncomingPacket( new PacketFilterInfo( 22 ), MOVEMENT_TIMEOUT );
+            bool result = Engine.Move( directionEnum, run );
 
             return result;
         }

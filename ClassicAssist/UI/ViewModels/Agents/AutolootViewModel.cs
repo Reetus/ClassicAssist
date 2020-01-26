@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -193,6 +192,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public void Deserialize( JObject json, Options options )
         {
+            Items.Clear();
+
             if ( json?["Autoloot"] == null )
             {
                 return;
@@ -451,18 +452,16 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 {
                     case AutolootConstraintType.Properties:
                         predicates.Add( i => i.Properties != null && constraint.Clilocs.Any( cliloc =>
-                                                 i.Properties.Any( p =>
-                                                     p.Cliloc == cliloc && ( constraint.ClilocIndex == -1 || Operation(
-                                                                                 constraint.Operator,
-                                                                                 int.Parse( p.Arguments[
-                                                                                     constraint.ClilocIndex] ),
-                                                                                 constraint.Value ) ) ) ) );
+                                                 i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc,
+                                                     constraint, constraint.Operator, constraint.Value ) ) ) );
                         break;
                     case AutolootConstraintType.Object:
 
                         predicates.Add( i =>
-                            ItemHasObjectProperty( i, constraint.Name ) && Operation( constraint.Operator,
-                                GetItemObjectPropertyValue<int>( i, constraint.Name ), constraint.Value ) );
+                            AutolootHelpers.ItemHasObjectProperty( i, constraint.Name ) && AutolootHelpers.Operation(
+                                constraint.Operator,
+                                AutolootHelpers.GetItemObjectPropertyValue<int>( i, constraint.Name ),
+                                constraint.Value ) );
 
                         break;
                     default:
@@ -471,49 +470,6 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
 
             return predicates;
-        }
-
-        public static bool ItemHasObjectProperty( Item item, string propertyName )
-        {
-            PropertyInfo propertyInfo = item.GetType().GetProperty( propertyName );
-
-            if ( propertyInfo == null )
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private static T GetItemObjectPropertyValue<T>( Item item, string propertyName )
-        {
-            PropertyInfo propertyInfo = item.GetType().GetProperty( propertyName );
-
-            if ( propertyInfo == null )
-            {
-                return default;
-            }
-
-            T val = (T) propertyInfo.GetValue( item );
-
-            return val;
-        }
-
-        public static bool Operation( AutolootOperator @operator, int x, int y )
-        {
-            switch ( @operator )
-            {
-                case AutolootOperator.GreaterThan:
-                    return x >= y;
-                case AutolootOperator.LessThan:
-                    return x <= y;
-                case AutolootOperator.Equal:
-                    return x == y;
-                case AutolootOperator.NotEqual:
-                    return x != y;
-                default:
-                    throw new ArgumentOutOfRangeException( nameof( @operator ), @operator, null );
-            }
         }
     }
 }

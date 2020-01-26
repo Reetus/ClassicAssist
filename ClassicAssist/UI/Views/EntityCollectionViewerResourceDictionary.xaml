@@ -51,6 +51,17 @@
             </DrawingGroup>
         </DrawingImage.Drawing>
     </DrawingImage>
+    <DrawingImage x:Key="FilterIcon">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M-5,0 V394.00003 H389 V-5 H0 Z">
+                <DrawingGroup.Transform>
+                    <TranslateTransform X="5" Y="2.9666463888133876E-05" />
+                </DrawingGroup.Transform>
+                <GeometryDrawing Brush="#FF000000"
+                                 Geometry="F1 M394,394.00003z M0,0z M367.820312,0L16.558594,0C10.359375,-0.0117188 4.67968800000003,3.449219 1.84765600000003,8.960938 -1.02343799999997,14.546875 -0.519530999999973,21.273438 3.14843800000003,26.375L131.835938,207.660156C131.878906,207.722656 131.925781,207.78125 131.96875,207.84375 136.644531,214.15625 139.175781,221.804688 139.1875,229.660156L139.1875,377.460938C139.160156,381.835938 140.878906,386.042969 143.960938,389.148438 147.046875,392.25 151.242188,394 155.617188,394 157.839844,393.996094 160.042969,393.554688 162.097656,392.699219L234.410156,365.128906C240.886719,363.148438,245.1875,357.035156,245.1875,349.675781L245.1875,229.660156C245.199219,221.804688 247.730469,214.15625 252.402344,207.84375 252.445312,207.78125 252.492188,207.722656 252.535156,207.660156L381.226562,26.371094C384.894531,21.273438 385.398438,14.550781 382.527344,8.96484400000003 379.699219,3.44921900000003 374.015625,-0.0117187999999722 367.820312,2.8421709430404E-14z M367.820312,0" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
     <ItemsPanelTemplate x:Key="ItemsPanelTemplate">
         <WrapPanel />
     </ItemsPanelTemplate>
@@ -108,7 +119,7 @@
             </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
-    <Style TargetType="ListView">
+    <Style TargetType="ListView" x:Key="EntityListViewStyle">
         <Setter Property="ItemsPanel" Value="{StaticResource ItemsPanelTemplate}" />
         <Setter Property="ItemTemplate" Value="{StaticResource DataTemplate}" />
     </Style>

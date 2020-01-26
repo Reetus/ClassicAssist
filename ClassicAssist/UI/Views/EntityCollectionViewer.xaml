@@ -1,4 +1,4 @@
-﻿<Window x:Class="ClassicAssist.UI.Views.EntityCollectionViewer"
+﻿<Window x:Name="window" x:Class="ClassicAssist.UI.Views.EntityCollectionViewer"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -7,6 +7,7 @@
         xmlns:resources="clr-namespace:ClassicAssist.Resources"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+        xmlns:views="clr-namespace:ClassicAssist.UI.Views"
         mc:Ignorable="d"
         Width="600" Height="400" Title="{x:Static resources:Strings.Entity_Collection_Viewer}"
         Topmost="{Binding Topmost}">
@@ -18,10 +19,12 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="EntityCollectionViewerResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
@@ -38,6 +41,9 @@
                               CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}">
                     <Image Source="{StaticResource ListIcon}" />
                 </ToggleButton>
+                <ToggleButton x:Name="toggleButton" Height="24">
+                    <Image Source="{StaticResource FilterIcon}" />
+                </ToggleButton>
                 <Button Height="24" Padding="0" Command="{Binding CancelActionCommand}"
                         ToolTip="{x:Static resources:Strings.Cancel_action}" IsEnabled="{Binding IsPerformingAction}"
                         Style="{StaticResource ToolbarButtonStyle}">
@@ -45,14 +51,22 @@
                 </Button>
             </ToolBar>
         </ToolBarTray>
+        <ScrollViewer Grid.Row="1" MaxHeight="200"
+                      Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=toggleButton}"
+                      VerticalScrollBarVisibility="Auto">
+            <views:EntityCollectionFilterControl
+                Command="{Binding DataContext.ApplyFiltersCommand, ElementName=window}"
+                PresentationTraceSources.TraceLevel="High" />
+        </ScrollViewer>
         <ListView x:Name="listView" ItemsSource="{Binding Entities}"
                   ItemContainerStyle="{StaticResource FileItemStyle}"
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1">
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="2"
+                  Style="{StaticResource EntityListViewStyle}">
             <i:Interaction.Behaviors>
                 <misc:MultiSelectionBehaviour SelectedItems="{Binding SelectedItems}" />
             </i:Interaction.Behaviors>
         </ListView>
-        <StatusBar Grid.Row="2">
+        <StatusBar Grid.Row="3">
             <TextBlock Text="{Binding StatusLabel}" />
         </StatusBar>
     </Grid>

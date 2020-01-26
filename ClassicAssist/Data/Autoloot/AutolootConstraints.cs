@@ -70,6 +70,11 @@ namespace ClassicAssist.Data.Autoloot
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public override string ToString()
+        {
+            return Name;
+        }
+
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
         {

@@ -1014,4 +1014,13 @@
   <data name="Autolooting '{0}'" xml:space="preserve">
     <value>自动抢劫"{0}"</value>
   </data>
+  <data name="Apply" xml:space="preserve">
+    <value>应用</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>重置</value>
+  </data>
+  <data name="LoadFilter" xml:space="preserve">
+    <value>负荷</value>
+  </data>
 </root>

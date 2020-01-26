@@ -102,6 +102,8 @@ namespace ClassicAssist.Data.Macros
                 Stop();
             }
 
+            MainCommands.SetQuietMode( false );
+
             _cancellationToken = new CancellationTokenSource();
 
             if ( _importCache == null )

@@ -14,7 +14,6 @@
     <None Remove="Data\Weapons.json" />
     <None Remove="Python.xshd" />
     <None Remove="Resources\bug.png" />
-    <None Remove="Resources\paint.png" />
     <None Remove="zlib32.dll" />
     <None Remove="zlib64.dll" />
   </ItemGroup>
@@ -71,7 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\bug.png" />
-    <Resource Include="Resources\paint.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">

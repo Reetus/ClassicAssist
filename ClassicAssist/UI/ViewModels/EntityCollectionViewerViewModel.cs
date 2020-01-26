@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
@@ -6,9 +7,11 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Assistant;
+using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
+using ClassicAssist.UI.Models;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
@@ -18,6 +21,7 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class EntityCollectionViewerViewModel : BaseViewModel
     {
+        private ICommand _applyFiltersCommand;
         private ICommand _cancelActionCommand;
         private CancellationTokenSource _cancellationToken;
         private ItemCollection _collection;
@@ -25,6 +29,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _contextMoveToContainerCommand;
         private ICommand _contextUseItemCommand;
         private ObservableCollection<EntityCollectionData> _entities;
+        private IEnumerable<EntityCollectionFilter> _filters;
         private bool _isPerformingAction;
         private ICommand _itemDoubleClickCommand;
         private ICommand _refreshCommand;
@@ -39,11 +44,16 @@ namespace ClassicAssist.UI.ViewModels
 
         public EntityCollectionViewerViewModel()
         {
-            Entities = new ObservableCollection<EntityCollectionData>
+            _collection = new ItemCollection( 0 );
+
+            for ( int i = 0; i < 5; i++ )
             {
-                new EntityCollectionData { Entity = new Item( 1 ) },
-                new EntityCollectionData { Entity = new Item( 2 ) }
-            };
+                _collection.Add( new Item( i + 1 ) { ID = 100 + i } );
+            }
+
+            _collection.Add( new Item( 6 ) { ID = 106, Hue = 2413 } );
+
+            Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData() );
         }
 
         public EntityCollectionViewerViewModel( ItemCollection collection )
@@ -63,6 +73,9 @@ namespace ClassicAssist.UI.ViewModels
                     si.Count, si.Select( i => i.Entity ).Where( i => i is Item ).Cast<Item>().Sum( i => i.Count ) );
             };
         }
+
+        public ICommand ApplyFiltersCommand =>
+            _applyFiltersCommand ?? ( _applyFiltersCommand = new RelayCommand( ApplyFilters, o => true ) );
 
         public ICommand CancelActionCommand =>
             _cancelActionCommand ?? ( _cancelActionCommand = new RelayCommandAsync( CancelAction,
@@ -125,6 +138,21 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _topmost;
             set => SetProperty( ref _topmost, value );
+        }
+
+        private void ApplyFilters( object obj )
+        {
+            if ( !( obj is IEnumerable<EntityCollectionFilter> list ) )
+            {
+                return;
+            }
+
+            _filters = list;
+
+            Entities.Clear();
+
+            Entities = new ObservableCollection<EntityCollectionData>( _collection.Filter( _filters )
+                .ToEntityCollectionData() );
         }
 
         private void Refresh( object obj )
@@ -267,6 +295,66 @@ namespace ClassicAssist.UI.ViewModels
 
     public static class ExtensionMethods
     {
+        public static ItemCollection Filter( this ItemCollection collection,
+            IEnumerable<EntityCollectionFilter> filterList )
+        {
+            ItemCollection newCollection = new ItemCollection( collection.Serial );
+
+            IEnumerable<Predicate<Item>> predicates = FiltersToPredicates( filterList ).ToList();
+
+            if ( !predicates.Any() )
+            {
+                return collection;
+            }
+
+            foreach ( Item item in collection.GetItems() )
+            {
+                if ( predicates.All( p => p( item ) ) )
+                {
+                    newCollection.Add( item );
+                }
+            }
+
+            return newCollection;
+        }
+
+        private static IEnumerable<Predicate<Item>> FiltersToPredicates(
+            IEnumerable<EntityCollectionFilter> filterList )
+        {
+            List<Predicate<Item>> predicates = new List<Predicate<Item>>();
+
+            foreach ( EntityCollectionFilter filter in filterList )
+            {
+                AutolootConstraints constraint = filter.Constraint;
+
+                switch ( constraint.ConstraintType )
+                {
+                    case AutolootConstraintType.Properties:
+                    {
+                        predicates.Add( i => i.Properties != null && constraint.Clilocs.Any( cliloc =>
+                                                 i.Properties.Any( p =>
+                                                     AutolootHelpers.MatchProperty( p, cliloc, constraint,
+                                                         filter.Operator,
+                                                         filter.Value ) ) ) );
+
+                        break;
+                    }
+                    case AutolootConstraintType.Object:
+                    {
+                        predicates.Add( i =>
+                            AutolootHelpers.ItemHasObjectProperty( i, constraint.Name ) && AutolootHelpers.Operation(
+                                filter.Operator,
+                                AutolootHelpers.GetItemObjectPropertyValue<int>( i, constraint.Name ), filter.Value ) );
+                        break;
+                    }
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            return predicates;
+        }
+
         public static string TrimTrailingNewLine( this string s )
         {
             return s.TrimEnd( '\r', '\n' );

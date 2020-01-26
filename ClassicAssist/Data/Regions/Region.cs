@@ -188,7 +188,9 @@ namespace ClassicAssist.Data.Regions
         {
             JsonSerializer serializer = new JsonSerializer();
 
-            using ( StreamReader sr = new StreamReader( Path.Combine( Engine.StartupPath, "Data", "Regions.json" ) ) )
+            using ( StreamReader sr =
+                new StreamReader( Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data",
+                    "Regions.json" ) ) )
             {
                 using ( JsonTextReader reader = new JsonTextReader( sr ) )
                 {

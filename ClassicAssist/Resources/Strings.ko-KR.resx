@@ -991,36 +991,36 @@
     <value>단축키/매크로에만 적용됩니다.</value>
   </data>
   <data name="Hue Picker" xml:space="preserve">
-    <value>색조 피커</value>
+    <value>색상 채집</value>
   </data>
   <data name="Cannot find sound file..." xml:space="preserve">
     <value>사운드 파일을 찾을 수 없습니다...</value>
   </data>
   <data name="Disable inside guardzone" xml:space="preserve">
-    <value>내부 가드존 사용 안 함</value>
+    <value>가드존내 자동룻 비활성화</value>
   </data>
   <data name="Autoloot" xml:space="preserve">
-    <value>오토루트</value>
+    <value>자동룻</value>
   </data>
   <data name="Autoloot matching items" xml:space="preserve">
-    <value>오토루트 매칭 아이템</value>
+    <value>일치하는 아이템 자동룻</value>
   </data>
   <data name="Rehue matching items" xml:space="preserve">
-    <value>리후에 매칭 아이템</value>
+    <value>일치하는 아이템 색상변경</value>
   </data>
   <data name="Operator" xml:space="preserve">
     <value>연산자</value>
   </data>
   <data name="Autolooting '{0}'" xml:space="preserve">
-    <value>자동 약탈 '{0}'</value>
+    <value>자동룻팅 '{0}'</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>적용</value>
   </data>
   <data name="Reset" xml:space="preserve">
-    <value>리셋</value>
+    <value>재설정</value>
   </data>
-  <data name="LoadFilter" xml:space="preserve">
-    <value>로드</value>
+  <data name="Load" xml:space="preserve">
+    <value>불러오기</value>
   </data>
 </root>

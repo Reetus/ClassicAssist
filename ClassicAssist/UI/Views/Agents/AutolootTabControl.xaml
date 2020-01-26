@@ -107,11 +107,11 @@
             <ComboBox x:Name="comboBox" Grid.Row="0" ItemsSource="{Binding Constraints}" DisplayMemberPath="Name"
                       SelectedIndex="0" />
             <ListView x:Name="listView1" Grid.Row="1" Margin="0,10,0,10"
-                      ItemsSource="{Binding SelectedItem.Constraints}" SelectedItem="{Binding SelectedConstraint}">
+                      ItemsSource="{Binding SelectedItem.Constraints}" SelectedItem="{Binding SelectedProperty}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="{x:Static resources:Strings.Property}" Width="150"
-                                        DisplayMemberBinding="{Binding Name}" />
+                                        DisplayMemberBinding="{Binding Property.Name}" />
                         <GridViewColumn Header="{x:Static resources:Strings.Operator}" Width="75">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>

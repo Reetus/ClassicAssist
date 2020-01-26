@@ -2,26 +2,25 @@
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using ClassicAssist.Annotations;
-using ClassicAssist.Data.Autoloot;
 
-namespace ClassicAssist.UI.Models
+namespace ClassicAssist.Data.Autoloot
 {
-    public class EntityCollectionFilter : INotifyPropertyChanged
+    public class AutolootConstraintEntry : INotifyPropertyChanged
     {
-        private PropertyEntry _constraint;
         private AutolootOperator _operator = AutolootOperator.Equal;
+        private PropertyEntry _property;
         private int _value;
-
-        public PropertyEntry Constraint
-        {
-            get => _constraint;
-            set => SetProperty( ref _constraint, value );
-        }
 
         public AutolootOperator Operator
         {
             get => _operator;
             set => SetProperty( ref _operator, value );
+        }
+
+        public PropertyEntry Property
+        {
+            get => _property;
+            set => SetProperty( ref _property, value );
         }
 
         public int Value

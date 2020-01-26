@@ -33,8 +33,8 @@ namespace ClassicAssist.UI.Views
 
         private ICommand _applyCommand;
 
-        private ObservableCollection<AutolootConstraints>
-            _constraints = new ObservableCollection<AutolootConstraints>();
+        private ObservableCollection<PropertyEntry>
+            _constraints = new ObservableCollection<PropertyEntry>();
 
         private ObservableCollection<EntityCollectionFilter>
             _items = new ObservableCollection<EntityCollectionFilter>();
@@ -63,9 +63,9 @@ namespace ClassicAssist.UI.Views
             {
                 using ( JsonTextReader reader = new JsonTextReader( sr ) )
                 {
-                    AutolootConstraints[] constraints = serializer.Deserialize<AutolootConstraints[]>( reader );
+                    PropertyEntry[] constraints = serializer.Deserialize<PropertyEntry[]>( reader );
 
-                    foreach ( AutolootConstraints constraint in constraints )
+                    foreach ( PropertyEntry constraint in constraints )
                     {
                         Constraints.AddSorted( constraint );
                     }
@@ -84,7 +84,7 @@ namespace ClassicAssist.UI.Views
             set => SetValue( CommandProperty, value );
         }
 
-        public ObservableCollection<AutolootConstraints> Constraints
+        public ObservableCollection<PropertyEntry> Constraints
         {
             get => _constraints;
             set => SetProperty( ref _constraints, value );
@@ -144,7 +144,7 @@ namespace ClassicAssist.UI.Views
 
                         foreach ( EntityCollectionFilter entry in entries )
                         {
-                            AutolootConstraints constraint =
+                            PropertyEntry constraint =
                                 Constraints.FirstOrDefault( c => c.Name == entry.Constraint.Name );
 
                             if ( constraint != null )

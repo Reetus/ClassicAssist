@@ -6,9 +6,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Data\Autoloot.json" />
     <None Remove="Data\Bodies.json" />
     <None Remove="Data\BuffIcons.json" />
+    <None Remove="Data\Properties.json" />
     <None Remove="Data\Regions.json" />
     <None Remove="Data\Spells.json" />
     <None Remove="Data\Weapons.json" />
@@ -18,7 +18,7 @@
     <None Remove="zlib64.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\Autoloot.json">
+    <Content Include="Data\Properties.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Bodies.json">

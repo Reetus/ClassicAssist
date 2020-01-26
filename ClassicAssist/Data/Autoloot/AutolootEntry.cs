@@ -10,8 +10,8 @@ namespace ClassicAssist.Data.Autoloot
     {
         private bool _autoloot;
 
-        private ObservableCollection<AutolootConstraints>
-            _constraints = new ObservableCollection<AutolootConstraints>();
+        private ObservableCollection<AutolootConstraintEntry>
+            _constraints = new ObservableCollection<AutolootConstraintEntry>();
 
         private int _id;
         private string _name;
@@ -24,7 +24,7 @@ namespace ClassicAssist.Data.Autoloot
             set => SetProperty( ref _autoloot, value );
         }
 
-        public ObservableCollection<AutolootConstraints> Constraints
+        public ObservableCollection<AutolootConstraintEntry> Constraints
         {
             get => _constraints;
             set => SetProperty( ref _constraints, value );

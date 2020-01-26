@@ -1,6 +1,6 @@
 ﻿namespace ClassicAssist.Data.Autoloot
 {
-    public enum AutolootConstraintType
+    public enum PropertyType
     {
         Properties,
         Object

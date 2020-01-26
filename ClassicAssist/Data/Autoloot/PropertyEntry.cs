@@ -6,14 +6,12 @@ using ClassicAssist.Annotations;
 
 namespace ClassicAssist.Data.Autoloot
 {
-    public class AutolootConstraints : INotifyPropertyChanged, IComparable<AutolootConstraints>
+    public class PropertyEntry : INotifyPropertyChanged, IComparable<PropertyEntry>
     {
         private int _clilocIndex;
         private int[] _clilocs;
-        private AutolootConstraintType _constraintType;
+        private PropertyType _constraintType;
         private string _name;
-        private AutolootOperator _operator = AutolootOperator.Equal;
-        private int _value;
 
         public int ClilocIndex
         {
@@ -27,7 +25,7 @@ namespace ClassicAssist.Data.Autoloot
             set => SetProperty( ref _clilocs, value );
         }
 
-        public AutolootConstraintType ConstraintType
+        public PropertyType ConstraintType
         {
             get => _constraintType;
             set => SetProperty( ref _constraintType, value );
@@ -39,19 +37,7 @@ namespace ClassicAssist.Data.Autoloot
             set => SetProperty( ref _name, value );
         }
 
-        public AutolootOperator Operator
-        {
-            get => _operator;
-            set => SetProperty( ref _operator, value );
-        }
-
-        public int Value
-        {
-            get => _value;
-            set => SetProperty( ref _value, value );
-        }
-
-        public int CompareTo( AutolootConstraints other )
+        public int CompareTo( PropertyEntry other )
         {
             if ( ReferenceEquals( this, other ) )
             {

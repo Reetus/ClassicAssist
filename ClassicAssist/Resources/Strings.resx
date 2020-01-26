@@ -1020,7 +1020,7 @@
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
   </data>
-  <data name="LoadFilter" xml:space="preserve">
+  <data name="Load" xml:space="preserve">
     <value>Load</value>
   </data>
 </root>

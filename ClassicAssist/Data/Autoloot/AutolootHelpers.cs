@@ -49,7 +49,7 @@ namespace ClassicAssist.Data.Autoloot
             }
         }
 
-        public static bool MatchProperty( Property property, int cliloc, AutolootConstraints constraint,
+        public static bool MatchProperty( Property property, int cliloc, PropertyEntry constraint,
             AutolootOperator @operator, int value )
         {
             return property.Cliloc == cliloc && ( constraint.ClilocIndex == -1 || Operation( @operator,

@@ -68,7 +68,7 @@
     <UserControl.ContextMenu>
         <ContextMenu>
             <MenuItem Header="{x:Static resources:Strings.Save}" Command="{Binding SaveFilterCommand}" />
-            <MenuItem Header="{x:Static resources:Strings.LoadFilter}" Command="{Binding LoadFilterCommand}" />
+            <MenuItem Header="{x:Static resources:Strings.Load}" Command="{Binding LoadFilterCommand}" />
         </ContextMenu>
     </UserControl.ContextMenu>
     <Grid>

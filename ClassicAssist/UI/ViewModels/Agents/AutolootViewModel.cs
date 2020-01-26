@@ -30,8 +30,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
     {
         private readonly object _autolootLock = new object();
 
-        private ObservableCollection<AutolootConstraints>
-            _constraints = new ObservableCollection<AutolootConstraints>();
+        private ObservableCollection<PropertyEntry>
+            _constraints = new ObservableCollection<PropertyEntry>();
 
         private int _containerSerial;
 
@@ -51,7 +51,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         public AutolootViewModel()
         {
             string constraintsFile = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data",
-                "Autoloot.json" );
+                "Properties.json" );
 
             if ( !File.Exists( constraintsFile ) )
             {
@@ -64,9 +64,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
             {
                 using ( JsonTextReader reader = new JsonTextReader( sr ) )
                 {
-                    AutolootConstraints[] constraints = serializer.Deserialize<AutolootConstraints[]>( reader );
+                    PropertyEntry[] constraints = serializer.Deserialize<PropertyEntry[]>( reader );
 
-                    foreach ( AutolootConstraints constraint in constraints )
+                    foreach ( PropertyEntry constraint in constraints )
                     {
                         Constraints.AddSorted( constraint );
                     }
@@ -76,7 +76,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             IncomingPacketHandlers.CorpseContainerDisplayEvent += OnCorpseContainerDisplayEvent;
         }
 
-        public ObservableCollection<AutolootConstraints> Constraints
+        public ObservableCollection<PropertyEntry> Constraints
         {
             get => _constraints;
             set => SetProperty( ref _constraints, value );
@@ -118,15 +118,15 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public ICommand RemoveConstraintCommand =>
             _removeConstraintCommand ?? ( _removeConstraintCommand =
-                new RelayCommand( RemoveConstraint, o => SelectedConstraint != null ) );
-
-        public AutolootConstraints SelectedConstraint { get; set; }
+                new RelayCommand( RemoveConstraint, o => SelectedProperty != null ) );
 
         public AutolootEntry SelectedItem
         {
             get => _selectedItem;
             set => SetProperty( ref _selectedItem, value );
         }
+
+        public PropertyEntry SelectedProperty { get; set; }
 
         public ICommand SelectHueCommand =>
             _selectHueCommand ?? ( _selectHueCommand = new RelayCommand( SelectHue, o => SelectedItem != null ) );
@@ -165,13 +165,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 {
                     JArray constraintsArray = new JArray();
 
-                    foreach ( AutolootConstraints constraint in entry.Constraints )
+                    foreach ( AutolootConstraintEntry constraint in entry.Constraints )
                     {
                         JObject constraintObj = new JObject
                         {
-                            { "Name", constraint.Name },
-                            { "Clilocs", constraint.Clilocs.ToJArray() },
-                            { "ConstraintType", constraint.ConstraintType.ToString() },
+                            { "Name", constraint.Property.Name },
                             { "Operator", constraint.Operator.ToString() },
                             { "Value", constraint.Value }
                         };
@@ -179,7 +177,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         constraintsArray.Add( constraintObj );
                     }
 
-                    entryObj.Add( "Constraints", constraintsArray );
+                    entryObj.Add( "Properties", constraintsArray );
                 }
 
                 itemsArray.Add( entryObj );
@@ -220,20 +218,25 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         RehueHue = token["RehueHue"]?.ToObject<int>() ?? 0
                     };
 
-                    if ( token["Constraints"] != null )
+                    if ( token["Properties"] != null )
                     {
-                        List<AutolootConstraints> constraintsList = new List<AutolootConstraints>();
+                        List<AutolootConstraintEntry> constraintsList = new List<AutolootConstraintEntry>();
 
                         // ReSharper disable once LoopCanBeConvertedToQuery
-                        foreach ( JToken constraintToken in token["Constraints"] )
+                        foreach ( JToken constraintToken in token["Properties"] )
                         {
-                            AutolootConstraints constraintObj = new AutolootConstraints
+                            string constraintName = constraintToken["Name"]?.ToObject<string>() ?? "Unknown";
+
+                            PropertyEntry propertyEntry = Constraints.FirstOrDefault( c => c.Name == constraintName );
+
+                            if ( propertyEntry == null )
                             {
-                                Name = constraintToken["Name"]?.ToObject<string>() ?? "Unknown",
-                                Clilocs = constraintToken["Clilocs"]?.ToIntArray() ?? new[] { 0 },
-                                ConstraintType =
-                                    constraintToken["ConstraintType"]?.ToObject<AutolootConstraintType>() ??
-                                    AutolootConstraintType.Object,
+                                continue;
+                            }
+
+                            AutolootConstraintEntry constraintObj = new AutolootConstraintEntry
+                            {
+                                Property = propertyEntry,
                                 Operator = constraintToken["Operator"]?.ToObject<AutolootOperator>() ??
                                            AutolootOperator.Equal,
                                 Value = constraintToken["Value"]?.ToObject<int>() ?? 0
@@ -250,7 +253,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
         }
 
-        private void OnCorpseContainerDisplayEvent( int serial )
+        internal void OnCorpseContainerDisplayEvent( int serial )
         {
             if ( !Enabled )
             {
@@ -340,7 +343,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private void RemoveConstraint( object obj )
         {
-            if ( !( obj is AutolootConstraints constraint ) )
+            if ( !( obj is AutolootConstraintEntry constraint ) )
             {
                 return;
             }
@@ -350,15 +353,18 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private void InsertConstraint( object obj )
         {
-            if ( !( obj is AutolootConstraints constraint ) )
+            if ( !( obj is PropertyEntry propertyEntry ) )
             {
                 return;
             }
 
-            List<AutolootConstraints> constraints =
-                new List<AutolootConstraints>( SelectedItem.Constraints ) { constraint };
+            List<AutolootConstraintEntry> constraints =
+                new List<AutolootConstraintEntry>( SelectedItem.Constraints )
+                {
+                    new AutolootConstraintEntry { Property = propertyEntry }
+                };
 
-            SelectedItem.Constraints = new ObservableCollection<AutolootConstraints>( constraints );
+            SelectedItem.Constraints = new ObservableCollection<AutolootConstraintEntry>( constraints );
         }
 
         private async Task SetContainer( object arg )
@@ -396,7 +402,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             {
                 Name = TileData.GetStaticTile( item.ID ).Name,
                 ID = item.ID,
-                Constraints = new ObservableCollection<AutolootConstraints>()
+                Constraints = new ObservableCollection<AutolootConstraintEntry>()
             } );
         }
 
@@ -442,25 +448,27 @@ namespace ClassicAssist.UI.ViewModels.Agents
         }
 
         public static IEnumerable<Predicate<Item>> ConstraintsToPredicates(
-            IEnumerable<AutolootConstraints> constraints )
+            IEnumerable<AutolootConstraintEntry> constraints )
         {
             List<Predicate<Item>> predicates = new List<Predicate<Item>>();
 
-            foreach ( AutolootConstraints constraint in constraints )
+            foreach ( AutolootConstraintEntry constraint in constraints )
             {
-                switch ( constraint.ConstraintType )
+                switch ( constraint.Property.ConstraintType )
                 {
-                    case AutolootConstraintType.Properties:
-                        predicates.Add( i => i.Properties != null && constraint.Clilocs.Any( cliloc =>
+                    case PropertyType.Properties:
+                        predicates.Add( i => i.Properties != null && constraint.Property.Clilocs.Any( cliloc =>
                                                  i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc,
-                                                     constraint, constraint.Operator, constraint.Value ) ) ) );
+                                                     constraint.Property, constraint.Operator,
+                                                     constraint.Value ) ) ) );
                         break;
-                    case AutolootConstraintType.Object:
+                    case PropertyType.Object:
 
                         predicates.Add( i =>
-                            AutolootHelpers.ItemHasObjectProperty( i, constraint.Name ) && AutolootHelpers.Operation(
+                            AutolootHelpers.ItemHasObjectProperty( i, constraint.Property.Name ) &&
+                            AutolootHelpers.Operation(
                                 constraint.Operator,
-                                AutolootHelpers.GetItemObjectPropertyValue<int>( i, constraint.Name ),
+                                AutolootHelpers.GetItemObjectPropertyValue<int>( i, constraint.Property.Name ),
                                 constraint.Value ) );
 
                         break;

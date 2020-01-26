@@ -1296,9 +1296,9 @@ namespace ClassicAssist.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Load.
         /// </summary>
-        public static string LoadFilter {
+        public static string Load {
             get {
-                return ResourceManager.GetString("LoadFilter", resourceCulture);
+                return ResourceManager.GetString("Load", resourceCulture);
             }
         }
         

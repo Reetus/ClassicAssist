@@ -325,11 +325,11 @@ namespace ClassicAssist.UI.ViewModels
 
             foreach ( EntityCollectionFilter filter in filterList )
             {
-                AutolootConstraints constraint = filter.Constraint;
+                PropertyEntry constraint = filter.Constraint;
 
                 switch ( constraint.ConstraintType )
                 {
-                    case AutolootConstraintType.Properties:
+                    case PropertyType.Properties:
                     {
                         predicates.Add( i => i.Properties != null && constraint.Clilocs.Any( cliloc =>
                                                  i.Properties.Any( p =>
@@ -339,7 +339,7 @@ namespace ClassicAssist.UI.ViewModels
 
                         break;
                     }
-                    case AutolootConstraintType.Object:
+                    case PropertyType.Object:
                     {
                         predicates.Add( i =>
                             AutolootHelpers.ItemHasObjectProperty( i, constraint.Name ) && AutolootHelpers.Operation(

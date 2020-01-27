@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.UO.Objects.Gumps
@@ -842,15 +843,31 @@ namespace ClassicAssist.UO.Objects.Gumps
                                     Type = ElementType.xmfhtmltok, ParentPage = currentPage
                                 };
 
-                                string[] args = GetTokens( formatted[9] );
+                                //string[] args = GetTokens( formatted[9] );
 
-                                if ( formatted.Length > 10 && formatted[10] != null )
+                                //if ( formatted.Length > 10 && formatted[10] != null )
+                                //{
+                                //    string[] args2 = GetTokens( formatted[10] );
+                                //    string[] tmp = args;
+                                //    args = new string[args.Length + args2.Length];
+                                //    Array.Copy( tmp, args, tmp.Length );
+                                //    Array.Copy( args2, 0, args, tmp.Length, args2.Length );
+                                //}
+
+                                string[] args = null;
+                                StringBuilder sb = new StringBuilder();
+
+                                if ( formatted.Length > 9 )
                                 {
-                                    string[] args2 = GetTokens( formatted[10] );
-                                    string[] tmp = args;
-                                    args = new string[args.Length + args2.Length];
-                                    Array.Copy( tmp, args, tmp.Length );
-                                    Array.Copy( args2, 0, args, tmp.Length, args2.Length );
+                                    sb.Append( formatted[9] );
+
+                                    for ( int a = 10; a < formatted.Length; a++ )
+                                    {
+                                        sb.Append( ' ' );
+                                        sb.Append( formatted[a] );
+                                    }
+
+                                    args = GetTokens( sb.ToString() );
                                 }
 
                                 ge.Text = Cliloc.GetLocalString( xtCliloc, args );

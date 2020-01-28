@@ -74,7 +74,8 @@ namespace ClassicAssist.Data.Targeting
         }
 
         public Mobile GetClosestMobile( IEnumerable<Notoriety> notoriety, TargetBodyType bodyType = TargetBodyType.Any,
-            TargetFriendType friendType = TargetFriendType.Include )
+            TargetFriendType friendType = TargetFriendType.Include,
+            TargetInfliction inflictionType = TargetInfliction.Any )
         {
             Mobile mobile = null;
 
@@ -82,7 +83,7 @@ namespace ClassicAssist.Data.Targeting
             {
                 mobile = Engine.Mobiles
                     .SelectEntities( m => !_ignoreList.Contains( m ) && MobileCommands.InFriendList( m.Serial ) )
-                    .OrderBy( m => m.Distance ).FirstOrDefault();
+                    .OrderBy( m => m.Distance ).ByInflication( inflictionType ).FirstOrDefault();
             }
             else
             {
@@ -119,7 +120,7 @@ namespace ClassicAssist.Data.Targeting
                         bodyTypePredicate( m.ID ) && !_ignoreList.Contains( m ) &&
                         !ObjectCommands.IgnoreList.Contains( m.Serial ) &&
                         ( friendType == TargetFriendType.Include || !MobileCommands.InFriendList( m.Serial ) ) )
-                    .OrderBy( m => m.Distance )
+                    .OrderBy( m => m.Distance ).ByInflication( inflictionType )?
                     .FirstOrDefault();
             }
 
@@ -127,7 +128,8 @@ namespace ClassicAssist.Data.Targeting
         }
 
         public Mobile GetNextMobile( IEnumerable<Notoriety> notoriety, TargetBodyType bodyType = TargetBodyType.Any,
-            int distance = MAX_DISTANCE, TargetFriendType friendType = TargetFriendType.Include )
+            int distance = MAX_DISTANCE, TargetFriendType friendType = TargetFriendType.Include,
+            TargetInfliction inflictionType = TargetInfliction.Any )
         {
             bool looped = false;
 
@@ -178,6 +180,8 @@ namespace ClassicAssist.Data.Targeting
                         !ObjectCommands.IgnoreList.Contains( m.Serial ) &&
                         ( friendType == TargetFriendType.Include || !MobileCommands.InFriendList( m.Serial ) ) );
                 }
+
+                mobiles = mobiles.ByInflication( inflictionType );
 
                 if ( mobiles == null || mobiles.Length == 0 )
                 {
@@ -240,9 +244,10 @@ namespace ClassicAssist.Data.Targeting
         }
 
         public bool GetEnemy( TargetNotoriety notoFlags, TargetBodyType bodyType, TargetDistance targetDistance,
-            TargetFriendType friendType = TargetFriendType.None )
+            TargetFriendType friendType = TargetFriendType.None,
+            TargetInfliction inflictionType = TargetInfliction.Any )
         {
-            Mobile m = GetMobile( notoFlags, bodyType, targetDistance, friendType );
+            Mobile m = GetMobile( notoFlags, bodyType, targetDistance, friendType, inflictionType );
 
             if ( m == null )
             {
@@ -254,9 +259,10 @@ namespace ClassicAssist.Data.Targeting
         }
 
         public bool GetFriend( TargetNotoriety notoFlags, TargetBodyType bodyType, TargetDistance targetDistance,
-            TargetFriendType friendType = TargetFriendType.Include )
+            TargetFriendType friendType = TargetFriendType.Include,
+            TargetInfliction inflictionType = TargetInfliction.Any )
         {
-            Mobile m = GetMobile( notoFlags, bodyType, targetDistance, friendType );
+            Mobile m = GetMobile( notoFlags, bodyType, targetDistance, friendType, inflictionType );
 
             if ( m == null )
             {
@@ -268,7 +274,7 @@ namespace ClassicAssist.Data.Targeting
         }
 
         public Mobile GetMobile( TargetNotoriety notoFlags, TargetBodyType bodyType, TargetDistance targetDistance,
-            TargetFriendType friendType )
+            TargetFriendType friendType, TargetInfliction inflictionType )
         {
             Notoriety[] noto = NotoFlagsToArray( notoFlags );
 
@@ -278,17 +284,17 @@ namespace ClassicAssist.Data.Targeting
             {
                 case TargetDistance.Next:
 
-                    m = GetNextMobile( noto, bodyType, MAX_DISTANCE, friendType );
+                    m = GetNextMobile( noto, bodyType, MAX_DISTANCE, friendType, inflictionType );
 
                     break;
                 case TargetDistance.Nearest:
 
-                    m = GetNextMobile( noto, bodyType, 3, friendType );
+                    m = GetNextMobile( noto, bodyType, 3, friendType, inflictionType );
 
                     break;
                 case TargetDistance.Closest:
 
-                    m = GetClosestMobile( noto, bodyType, friendType );
+                    m = GetClosestMobile( noto, bodyType, friendType, inflictionType );
 
                     break;
                 default:
@@ -333,6 +339,27 @@ namespace ClassicAssist.Data.Targeting
             }
 
             return notos.ToArray();
+        }
+    }
+
+    public static class MobileEnumerableExtensionMethods
+    {
+        public static Mobile[] ByInflication( this IEnumerable<Mobile> mobiles,
+            TargetInfliction inflictionType )
+        {
+            switch ( inflictionType )
+            {
+                case TargetInfliction.Any:
+                    return mobiles.ToArray();
+                case TargetInfliction.Lowest:
+                    return mobiles.Where( m => m.Hits < m.HitsMax ).OrderBy( m => m.Hits ).ToArray();
+                case TargetInfliction.Poisoned:
+                    return mobiles.Where( m => m.IsPoisoned ).ToArray();
+                case TargetInfliction.Mortaled:
+                    return mobiles.Where( m => m.IsYellowHits ).ToArray();
+                default:
+                    throw new ArgumentOutOfRangeException( nameof( inflictionType ), inflictionType, null );
+            }
         }
     }
 }

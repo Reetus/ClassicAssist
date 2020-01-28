@@ -182,7 +182,8 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = "Target", Description = "Get mobile and set enemy alias.",
             InsertText = "GetEnemy([\"Murderer\"])" )]
-        public static bool GetEnemy( IEnumerable<string> notos, string bodyType = "Any", string distance = "Next" )
+        public static bool GetEnemy( IEnumerable<string> notos, string bodyType = "Any", string distance = "Next",
+            string infliction = "Any" )
         {
             TargetNotoriety notoFlags = TargetNotoriety.None;
 
@@ -204,27 +205,38 @@ namespace ClassicAssist.Data.Macros.Commands
                 td = TargetDistance.Next;
             }
 
-            return TargetManager.GetInstance().GetEnemy( notoFlags, bt, td );
+            if ( !Enum.TryParse( infliction, true, out TargetInfliction ti ) )
+            {
+                ti = TargetInfliction.Any;
+            }
+
+            return TargetManager.GetInstance().GetEnemy( notoFlags, bt, td, TargetFriendType.None, ti );
         }
 
         [CommandsDisplay( Category = "Target",
             Description =
                 "Get friend that only exists in the friends list, parameter distance 'Closest'/'Nearest'/'Next'",
             InsertText = "GetFriendListOnly([\"Closest\"])" )]
-        public static bool GetFriendListOnly( string distance = "Next" )
+        public static bool GetFriendListOnly( string distance = "Next", string targetInfliction = "Any" )
         {
             if ( !Enum.TryParse( distance, true, out TargetDistance td ) )
             {
                 td = TargetDistance.Next;
             }
 
+            if ( !Enum.TryParse( targetInfliction, true, out TargetInfliction ti ) )
+            {
+                ti = TargetInfliction.Any;
+            }
+
             return TargetManager.GetInstance()
-                .GetFriend( TargetNotoriety.Any, TargetBodyType.Any, td, TargetFriendType.Only );
+                .GetFriend( TargetNotoriety.Any, TargetBodyType.Any, td, TargetFriendType.Only, ti );
         }
 
         [CommandsDisplay( Category = "Target", Description = "Get mobile and set friend alias.",
             InsertText = "GetFriend([\"Murderer\"])" )]
-        public static bool GetFriend( IEnumerable<string> notos, string bodyType = "Any", string distance = "Next" )
+        public static bool GetFriend( IEnumerable<string> notos, string bodyType = "Any", string distance = "Next",
+            string infliction = "Any" )
         {
             TargetNotoriety notoFlags = TargetNotoriety.None;
 
@@ -246,7 +258,12 @@ namespace ClassicAssist.Data.Macros.Commands
                 td = TargetDistance.Next;
             }
 
-            return TargetManager.GetInstance().GetFriend( notoFlags, bt, td );
+            if ( !Enum.TryParse( infliction, true, out TargetInfliction ti ) )
+            {
+                ti = TargetInfliction.Any;
+            }
+
+            return TargetManager.GetInstance().GetFriend( notoFlags, bt, td, TargetFriendType.Include, ti );
         }
 
         [CommandsDisplay( Category = "Target",

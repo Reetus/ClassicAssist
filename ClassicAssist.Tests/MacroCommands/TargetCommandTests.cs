@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
@@ -365,13 +366,12 @@ namespace ClassicAssist.Tests.MacroCommands
 
             ItemCollection container = backpack.Container;
 
-            for (int i = 0; i < 5; i++)
+            for ( int i = 0; i < 5; i++ )
             {
                 Item subitem =
                     new Item( container.Serial + 1, container.Serial )
                     {
-                        Container = new ItemCollection( container.Serial + 1 ),
-                        Owner = container.Serial
+                        Container = new ItemCollection( container.Serial + 1 ), Owner = container.Serial
                     };
 
                 container.Add( subitem );
@@ -379,14 +379,14 @@ namespace ClassicAssist.Tests.MacroCommands
                 container = subitem.Container;
             }
 
-            Item item = new Item( container.Serial+1, container.Serial ) { ID = 0xfeef };
+            Item item = new Item( container.Serial + 1, container.Serial ) { ID = 0xfeef };
             container.Add( item );
 
             AutoResetEvent are = new AutoResetEvent( false );
 
             void PassOnTargetSent( byte[] data, int length )
             {
-                if (data[ 0 ] == 0x6C)
+                if ( data[0] == 0x6C )
                 {
                     are.Set();
                 }
@@ -421,8 +421,7 @@ namespace ClassicAssist.Tests.MacroCommands
                 Item subitem =
                     new Item( container.Serial + 1, container.Serial )
                     {
-                        Container = new ItemCollection( container.Serial + 1 ),
-                        Owner = container.Serial
+                        Container = new ItemCollection( container.Serial + 1 ), Owner = container.Serial
                     };
 
                 container.Add( subitem );
@@ -430,12 +429,12 @@ namespace ClassicAssist.Tests.MacroCommands
                 container = subitem.Container;
             }
 
-            Item item = new Item( container.Serial+1, container.Serial ) { ID = 0xfeef };
+            Item item = new Item( container.Serial + 1, container.Serial ) { ID = 0xfeef };
             container.Add( item );
 
             void FailOnTargetSent( byte[] data, int length )
             {
-                if (data[ 0 ] == 0x6C)
+                if ( data[0] == 0x6C )
                 {
                     Assert.Fail();
                 }
@@ -462,7 +461,7 @@ namespace ClassicAssist.Tests.MacroCommands
 
             void PassOnTargetSent( byte[] data, int length )
             {
-                if (data[ 0 ] == 0x6C)
+                if ( data[0] == 0x6C )
                 {
                     are.Set();
                 }
@@ -477,6 +476,290 @@ namespace ClassicAssist.Tests.MacroCommands
             Assert.IsTrue( result );
 
             Engine.InternalPacketSentEvent -= PassOnTargetSent;
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillGetLowestEnemy()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            for ( int i = 2; i < 10; i++ )
+            {
+                Engine.Mobiles.Add( new Mobile( i )
+                {
+                    Notoriety = Notoriety.Criminal,
+                    Hits = 25,
+                    HitsMax = 25,
+                    X = i,
+                    Y = i
+                } );
+            }
+
+            Engine.Mobiles.GetMobile( 7 ).Hits = 10;
+
+            TargetCommands.GetEnemy( new[] { "Criminal" }, "Any", "Closest", "Lowest" );
+
+            Assert.AreEqual( 7, AliasCommands.GetAlias( "enemy" ) );
+
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillGetPoisonedEnemy()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            for ( int i = 2; i < 10; i++ )
+            {
+                Engine.Mobiles.Add( new Mobile( i )
+                {
+                    Notoriety = Notoriety.Criminal,
+                    Hits = 25,
+                    HitsMax = 25,
+                    X = i,
+                    Y = i
+                } );
+            }
+
+            Engine.Mobiles.GetMobile( 7 ).HealthbarColour |= HealthbarColour.Green;
+
+            TargetCommands.GetEnemy( new[] { "Criminal" }, "Any", "Closest", "Poisoned" );
+
+            Assert.AreEqual( 7, AliasCommands.GetAlias( "enemy" ) );
+
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillGetMortaledEnemy()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            for ( int i = 2; i < 10; i++ )
+            {
+                Engine.Mobiles.Add( new Mobile( i )
+                {
+                    Notoriety = Notoriety.Criminal,
+                    Hits = 25,
+                    HitsMax = 25,
+                    X = i,
+                    Y = i
+                } );
+            }
+
+            Engine.Mobiles.GetMobile( 7 ).HealthbarColour |= HealthbarColour.Yellow;
+
+            TargetCommands.GetEnemy( new[] { "Criminal" }, "Any", "Closest", "Mortaled" );
+
+            Assert.AreEqual( 7, AliasCommands.GetAlias( "enemy" ) );
+
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillGetLowestFriendOnly()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+            Options.CurrentOptions.Friends = new ObservableCollection<FriendEntry>();
+
+            for ( int i = 2; i < 10; i++ )
+            {
+                Engine.Mobiles.Add( new Mobile( i )
+                {
+                    Notoriety = Notoriety.Criminal,
+                    Hits = 25,
+                    HitsMax = 25,
+                    X = i,
+                    Y = i
+                } );
+                Options.CurrentOptions.Friends.Add( new FriendEntry { Name = "Friend", Serial = i } );
+            }
+
+            Engine.Mobiles.GetMobile( 7 ).Hits = 10;
+
+            TargetCommands.GetFriendListOnly( "Closest", "Lowest" );
+
+            Assert.AreEqual( 7, AliasCommands.GetAlias( "friend" ) );
+
+            Options.CurrentOptions.Friends.Clear();
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillGetPoisonedFriendOnly()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+            Options.CurrentOptions.Friends = new ObservableCollection<FriendEntry>();
+
+            for (int i = 2; i < 10; i++)
+            {
+                Engine.Mobiles.Add( new Mobile( i )
+                {
+                    Notoriety = Notoriety.Criminal,
+                    Hits = 25,
+                    HitsMax = 25,
+                    X = i,
+                    Y = i
+                } );
+                Options.CurrentOptions.Friends.Add( new FriendEntry { Name = "Friend", Serial = i } );
+            }
+
+            Engine.Mobiles.GetMobile( 7 ).HealthbarColour |= HealthbarColour.Green;
+
+            TargetCommands.GetFriendListOnly( "Closest", "Poisoned" );
+
+            Assert.AreEqual( 7, AliasCommands.GetAlias( "friend" ) );
+
+            Options.CurrentOptions.Friends.Clear();
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillGetMortaledFriendOnly()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+            Options.CurrentOptions.Friends = new ObservableCollection<FriendEntry>();
+
+            for (int i = 2; i < 10; i++)
+            {
+                Engine.Mobiles.Add( new Mobile( i )
+                {
+                    Notoriety = Notoriety.Criminal,
+                    Hits = 25,
+                    HitsMax = 25,
+                    X = i,
+                    Y = i
+                } );
+                Options.CurrentOptions.Friends.Add( new FriendEntry { Name = "Friend", Serial = i } );
+            }
+
+            Engine.Mobiles.GetMobile( 7 ).HealthbarColour |= HealthbarColour.Yellow;
+
+            TargetCommands.GetFriendListOnly( "Closest", "Mortaled" );
+
+            Assert.AreEqual( 7, AliasCommands.GetAlias( "friend" ) );
+
+            Options.CurrentOptions.Friends.Clear();
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillGetLowestFriend()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            for (int i = 2; i < 10; i++)
+            {
+                Engine.Mobiles.Add( new Mobile( i )
+                {
+                    Notoriety = Notoriety.Ally,
+                    Hits = 25,
+                    HitsMax = 25,
+                    X = i,
+                    Y = i
+                } );
+            }
+
+            Engine.Mobiles.GetMobile( 7 ).Hits = 10;
+
+            TargetCommands.GetFriend(new []{"Friend"}, "Any", "Closest", "Lowest" );
+
+            Assert.AreEqual( 7, AliasCommands.GetAlias( "friend" ) );
+
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillGetPoisonedFriend()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            for (int i = 2; i < 10; i++)
+            {
+                Engine.Mobiles.Add( new Mobile( i )
+                {
+                    Notoriety = Notoriety.Ally,
+                    Hits = 25,
+                    HitsMax = 25,
+                    X = i,
+                    Y = i
+                } );
+            }
+
+            Engine.Mobiles.GetMobile( 7 ).HealthbarColour |= HealthbarColour.Green;
+
+            TargetCommands.GetFriend( new[] { "Friend" }, "Any", "Closest", "Poisoned" );
+
+            Assert.AreEqual( 7, AliasCommands.GetAlias( "friend" ) );
+
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillGetMortaledFriend()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            for (int i = 2; i < 10; i++)
+            {
+                Engine.Mobiles.Add( new Mobile( i )
+                {
+                    Notoriety = Notoriety.Ally,
+                    Hits = 25,
+                    HitsMax = 25,
+                    X = i,
+                    Y = i
+                } );
+            }
+
+            Engine.Mobiles.GetMobile( 7 ).HealthbarColour |= HealthbarColour.Yellow;
+
+            TargetCommands.GetFriend( new[] { "Friend" }, "Any", "Closest", "Mortaled" );
+
+            Assert.AreEqual( 7, AliasCommands.GetAlias( "friend" ) );
+
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillGetNextLowestEnemy()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            for (int i = 2; i < 10; i++)
+            {
+                Engine.Mobiles.Add( new Mobile( i )
+                {
+                    Notoriety = Notoriety.Criminal,
+                    Hits = 25,
+                    HitsMax = 25,
+                    X = i,
+                    Y = i
+                } );
+            }
+
+            Engine.Mobiles.GetMobile( 7 ).Hits = 10;
+            Engine.Mobiles.GetMobile( 8 ).Hits = 11;
+
+            TargetCommands.GetEnemy( new[] { "Criminal" }, "Any", "Next", "Lowest" );
+
+            Assert.AreEqual( 7, AliasCommands.GetAlias( "enemy" ) );
+
+            TargetCommands.GetEnemy( new[] { "Criminal" }, "Any", "Next", "Lowest" );
+
+            Assert.AreEqual( 8, AliasCommands.GetAlias( "enemy" ) );
+
             Engine.Mobiles.Clear();
             Engine.Player = null;
         }

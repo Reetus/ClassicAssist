@@ -1023,4 +1023,7 @@
   <data name="Load" xml:space="preserve">
     <value>Carico</value>
   </data>
+  <data name="Project Homepage" xml:space="preserve">
+    <value>Home page del progetto</value>
+  </data>
 </root>

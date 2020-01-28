@@ -1771,6 +1771,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Project Homepage.
+        /// </summary>
+        public static string Project_Homepage {
+            get {
+                return ResourceManager.GetString("Project Homepage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Properties.
         /// </summary>
         public static string Properties {

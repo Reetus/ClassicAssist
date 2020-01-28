@@ -1023,4 +1023,7 @@
   <data name="Load" xml:space="preserve">
     <value>불러오기</value>
   </data>
+  <data name="Project Homepage" xml:space="preserve">
+    <value>프로젝트 홈페이지</value>
+  </data>
 </root>

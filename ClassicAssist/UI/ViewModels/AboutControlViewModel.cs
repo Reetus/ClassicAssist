@@ -23,6 +23,7 @@ namespace ClassicAssist.UI.ViewModels
         private int _itemCount;
         private int _lastTargetSerial;
         private double _latency;
+        private ICommand _launchHomepageCommand;
         private int _mobileCount;
         private Timer _pingTimer;
         private string _playerName;
@@ -82,6 +83,9 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _latency, value );
         }
 
+        public ICommand LaunchHomepageCommand =>
+            _launchHomepageCommand ?? ( _launchHomepageCommand = new RelayCommand( LaunchHomepage, o => true ) );
+
         public int MobileCount
         {
             get => _mobileCount;
@@ -118,6 +122,11 @@ namespace ClassicAssist.UI.ViewModels
             {
                 PlayerInitializedEvent( Engine.Player );
             }
+        }
+
+        private static void LaunchHomepage( object obj )
+        {
+            Process.Start( "https://github.com/Reetus/ClassicAssist" );
         }
 
         private void MobilesOnCollectionChanged( int totalcount )

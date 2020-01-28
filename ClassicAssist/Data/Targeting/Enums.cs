@@ -36,4 +36,12 @@ namespace ClassicAssist.Data.Targeting
         Nearest,
         Closest
     }
+
+    public enum TargetInfliction
+    {
+        Any,
+        Lowest,
+        Poisoned,
+        Mortaled
+    }
 }

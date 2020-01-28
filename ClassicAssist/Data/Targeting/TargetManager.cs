@@ -357,6 +357,8 @@ namespace ClassicAssist.Data.Targeting
                     return mobiles.Where( m => m.IsPoisoned ).ToArray();
                 case TargetInfliction.Mortaled:
                     return mobiles.Where( m => m.IsYellowHits ).ToArray();
+                case TargetInfliction.Paralyzed:
+                    return mobiles.Where( m => m.IsFrozen ).ToArray();
                 default:
                     throw new ArgumentOutOfRangeException( nameof( inflictionType ), inflictionType, null );
             }

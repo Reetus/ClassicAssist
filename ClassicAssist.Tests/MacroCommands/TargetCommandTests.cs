@@ -508,6 +508,33 @@ namespace ClassicAssist.Tests.MacroCommands
         }
 
         [TestMethod]
+        public void WillGetParalyzedEnemy()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            for ( int i = 2; i < 10; i++ )
+            {
+                Engine.Mobiles.Add( new Mobile( i )
+                {
+                    Notoriety = Notoriety.Criminal,
+                    Hits = 25,
+                    HitsMax = 25,
+                    X = i,
+                    Y = i
+                } );
+            }
+
+            Engine.Mobiles.GetMobile( 7 ).Status |= MobileStatus.Frozen;
+
+            TargetCommands.GetEnemy( new[] { "Criminal" }, "Any", "Closest", "Paralyzed" );
+
+            Assert.AreEqual( 7, AliasCommands.GetAlias( "enemy" ) );
+
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
         public void WillGetPoisonedEnemy()
         {
             Engine.Player = new PlayerMobile( 0x01 );
@@ -597,7 +624,7 @@ namespace ClassicAssist.Tests.MacroCommands
             Engine.Player = new PlayerMobile( 0x01 );
             Options.CurrentOptions.Friends = new ObservableCollection<FriendEntry>();
 
-            for (int i = 2; i < 10; i++)
+            for ( int i = 2; i < 10; i++ )
             {
                 Engine.Mobiles.Add( new Mobile( i )
                 {
@@ -627,7 +654,7 @@ namespace ClassicAssist.Tests.MacroCommands
             Engine.Player = new PlayerMobile( 0x01 );
             Options.CurrentOptions.Friends = new ObservableCollection<FriendEntry>();
 
-            for (int i = 2; i < 10; i++)
+            for ( int i = 2; i < 10; i++ )
             {
                 Engine.Mobiles.Add( new Mobile( i )
                 {
@@ -656,7 +683,7 @@ namespace ClassicAssist.Tests.MacroCommands
         {
             Engine.Player = new PlayerMobile( 0x01 );
 
-            for (int i = 2; i < 10; i++)
+            for ( int i = 2; i < 10; i++ )
             {
                 Engine.Mobiles.Add( new Mobile( i )
                 {
@@ -670,7 +697,7 @@ namespace ClassicAssist.Tests.MacroCommands
 
             Engine.Mobiles.GetMobile( 7 ).Hits = 10;
 
-            TargetCommands.GetFriend(new []{"Friend"}, "Any", "Closest", "Lowest" );
+            TargetCommands.GetFriend( new[] { "Friend" }, "Any", "Closest", "Lowest" );
 
             Assert.AreEqual( 7, AliasCommands.GetAlias( "friend" ) );
 
@@ -683,7 +710,7 @@ namespace ClassicAssist.Tests.MacroCommands
         {
             Engine.Player = new PlayerMobile( 0x01 );
 
-            for (int i = 2; i < 10; i++)
+            for ( int i = 2; i < 10; i++ )
             {
                 Engine.Mobiles.Add( new Mobile( i )
                 {
@@ -710,7 +737,7 @@ namespace ClassicAssist.Tests.MacroCommands
         {
             Engine.Player = new PlayerMobile( 0x01 );
 
-            for (int i = 2; i < 10; i++)
+            for ( int i = 2; i < 10; i++ )
             {
                 Engine.Mobiles.Add( new Mobile( i )
                 {
@@ -737,7 +764,7 @@ namespace ClassicAssist.Tests.MacroCommands
         {
             Engine.Player = new PlayerMobile( 0x01 );
 
-            for (int i = 2; i < 10; i++)
+            for ( int i = 2; i < 10; i++ )
             {
                 Engine.Mobiles.Add( new Mobile( i )
                 {

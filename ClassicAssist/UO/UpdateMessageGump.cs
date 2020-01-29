@@ -15,9 +15,9 @@ namespace ClassicAssist.UO
             Disposable = false;
 
             AddPage( 0 );
-            AddBackground( 0, 0, 250, 200, 9270 );
-            AddHtml( 20, 20, 210, 130, message, true, true );
-            AddButton( 170, 160, 247, 248, 0, GumpButtonType.Reply, 0 );
+            AddBackground( 0, 0, 500, 200, 9270 );
+            AddHtml( 20, 20, 460, 130, message, true, true );
+            AddButton( 420, 160, 247, 248, 0, GumpButtonType.Reply, 0 );
         }
 
         public override void OnResponse( int buttonID, int[] switches )

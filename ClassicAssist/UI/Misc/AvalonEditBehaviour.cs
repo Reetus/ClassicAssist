@@ -88,9 +88,8 @@ namespace ClassicAssist.UI.Misc
                 return;
             }
 
-            int caretOffset = editor.CaretOffset;
             editor.Document.Text = dependencyPropertyChangedEventArgs.NewValue.ToString();
-            editor.CaretOffset = caretOffset;
+            editor.CaretOffset = 0;
         }
     }
 }

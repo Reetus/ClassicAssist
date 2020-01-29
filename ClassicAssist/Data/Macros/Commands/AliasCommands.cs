@@ -33,7 +33,7 @@ namespace ClassicAssist.Data.Macros.Commands
             switch ( obj )
             {
                 case string str:
-                    serial = GetAlias( str );
+                    serial = GetAlias( str.ToLower() );
 
                     if ( serial == -1 && !MacroManager.QuietMode )
                     {
@@ -65,13 +65,13 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             int value = ResolveSerial( obj );
 
-            if ( _aliases.ContainsKey( aliasName ) )
+            if ( _aliases.ContainsKey( aliasName.ToLower() ) )
             {
-                _aliases[aliasName] = value;
+                _aliases[aliasName.ToLower()] = value;
             }
             else
             {
-                _aliases.Add( aliasName, value );
+                _aliases.Add( aliasName.ToLower(), value );
             }
         }
 
@@ -89,9 +89,9 @@ namespace ClassicAssist.Data.Macros.Commands
             InsertText = "GetAlias(\"mount\")" )]
         public static int GetAlias( string aliasName )
         {
-            if ( _aliases.ContainsKey( aliasName ) )
+            if ( _aliases.ContainsKey( aliasName.ToLower() ) )
             {
-                return _aliases[aliasName];
+                return _aliases[aliasName.ToLower()];
             }
 
             return -1;
@@ -108,7 +108,7 @@ namespace ClassicAssist.Data.Macros.Commands
         public static void PromptAlias( string aliasName )
         {
             int serial = UOC.GetTargeSerialAsync( Strings.Target_object___ ).Result;
-            SetAlias( aliasName, serial );
+            SetAlias( aliasName.ToLower(), serial );
         }
 
         [CommandsDisplay( Category = "Aliases",
@@ -118,7 +118,7 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             int serial;
 
-            if ( ( serial = GetAlias( aliasName ) ) == -1 )
+            if ( ( serial = GetAlias( aliasName.ToLower() ) ) == -1 )
             {
                 return false;
             }

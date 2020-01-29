@@ -413,10 +413,27 @@ namespace Assistant
 
                     if ( latestVersion > localVersion && Options.CurrentOptions.UpdateGumpVersion < latestVersion )
                     {
+                        IReadOnlyList<GitHubCommit> commits =
+                            await client.Repository.Commit.GetAll( "Reetus", "ClassicAssist" );
+
+                        IEnumerable<GitHubCommit> latestCommits =
+                            commits.OrderByDescending( c => c.Commit.Author.Date ).Take( 7 );
+
+                        StringBuilder commitMessage = new StringBuilder();
+
+                        foreach ( GitHubCommit gitHubCommit in latestCommits )
+                        {
+                            commitMessage.AppendLine( $"{gitHubCommit.Commit.Author.Date.Date.ToShortDateString()}:" );
+                            commitMessage.AppendLine();
+                            commitMessage.AppendLine( gitHubCommit.Commit.Message );
+                            commitMessage.AppendLine();
+                        }
+
                         StringBuilder message = new StringBuilder();
                         message.AppendLine( Strings.ProductName );
                         message.AppendLine( $"{Strings.New_version_available_} {latestVersion}" );
                         message.AppendLine();
+                        message.AppendLine( commitMessage.ToString() );
 
                         UpdateMessageGump gump = new UpdateMessageGump( message.ToString(), latestVersion );
                         byte[] packet = gump.Compile();

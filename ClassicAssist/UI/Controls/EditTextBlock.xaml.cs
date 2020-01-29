@@ -9,7 +9,7 @@ namespace ClassicAssist.UI.Controls
     /// <summary>
     ///     Interaction logic for EditTextBlock.xaml
     /// </summary>
-    public partial class EditTextBlock : UserControl
+    public partial class EditTextBlock
     {
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register( "Text", typeof( string ),
             typeof( EditTextBlock ), new UIPropertyMetadata() );
@@ -34,8 +34,10 @@ namespace ClassicAssist.UI.Controls
 
             ( (TextBlock) sender ).Visibility = Visibility.Collapsed;
             textBox.Visibility = Visibility.Visible;
+            textBox.CaretIndex = textBox.Text.Length;
+            textBox.SelectAll();
 
-            Dispatcher.BeginInvoke( (Action) ( () => Keyboard.Focus( textBox ) ), DispatcherPriority.Render );
+            Dispatcher?.BeginInvoke( (Action) ( () => Keyboard.Focus( textBox ) ), DispatcherPriority.Render );
         }
 
         private void TextBox_OnKeyDown( object sender, KeyEventArgs e )

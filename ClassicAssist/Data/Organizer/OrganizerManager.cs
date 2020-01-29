@@ -152,11 +152,13 @@ namespace ClassicAssist.Data.Organizer
                         if ( entry.Stack )
                         {
                             await UOC.DragDropAsync( moveItem.Serial, amount, destinationContainerItem.Serial );
+                            await Task.Delay( Options.CurrentOptions.ActionDelayMS );
                         }
                         else
                         {
                             await UOC.DragDropAsync( moveItem.Serial, amount, destinationContainerItem.Serial,
                                 0, 0 );
+                            await Task.Delay( Options.CurrentOptions.ActionDelayMS );
                         }
 
                         if ( _cancellationTokenSource.IsCancellationRequested )

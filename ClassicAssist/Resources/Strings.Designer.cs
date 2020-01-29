@@ -727,6 +727,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enemy target message:.
+        /// </summary>
+        public static string Enemy_target_message_ {
+            get {
+                return ResourceManager.GetString("Enemy target message:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Entity.
         /// </summary>
         public static string Entity {
@@ -858,6 +867,15 @@ namespace ClassicAssist.Resources {
         public static string Friend {
             get {
                 return ResourceManager.GetString("Friend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friend target message:.
+        /// </summary>
+        public static string Friend_target_message_ {
+            get {
+                return ResourceManager.GetString("Friend target message:", resourceCulture);
             }
         }
         
@@ -1236,6 +1254,15 @@ namespace ClassicAssist.Resources {
         public static string Last_Target_ {
             get {
                 return ResourceManager.GetString("Last Target:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last target message:.
+        /// </summary>
+        public static string Last_target_message_ {
+            get {
+                return ResourceManager.GetString("Last target message:", resourceCulture);
             }
         }
         

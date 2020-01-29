@@ -26,8 +26,11 @@ namespace ClassicAssist.Data
         private bool _autoAcceptPartyOnlyFromFriends;
         private char _commandPrefix = '+';
         private bool _debug;
+        private string _enemyTargetMessage;
         private ObservableCollection<FriendEntry> _friends = new ObservableCollection<FriendEntry>();
+        private string _friendTargetMessage;
         private bool _includePartyMembersInFriends;
+        private string _lastTargetMessage;
         private int _lightLevel;
         private bool _limitMouseWheelTrigger;
         private int _limitMouseWheelTriggerMS;
@@ -90,10 +93,22 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _debug, value );
         }
 
+        public string EnemyTargetMessage
+        {
+            get => _enemyTargetMessage;
+            set => SetProperty( ref _enemyTargetMessage, value );
+        }
+
         public ObservableCollection<FriendEntry> Friends
         {
             get => _friends;
             set => SetProperty( ref _friends, value );
+        }
+
+        public string FriendTargetMessage
+        {
+            get => _friendTargetMessage;
+            set => SetProperty( ref _friendTargetMessage, value );
         }
 
         public bool IncludePartyMembersInFriends
@@ -103,6 +118,12 @@ namespace ClassicAssist.Data
         }
 
         public static Language LanguageOverride { get; set; } = Language.Default;
+
+        public string LastTargetMessage
+        {
+            get => _lastTargetMessage;
+            set => SetProperty( ref _lastTargetMessage, value );
+        }
 
         public int LightLevel
         {

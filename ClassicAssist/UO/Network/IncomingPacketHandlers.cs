@@ -267,17 +267,17 @@ namespace ClassicAssist.UO.Network
             {
                 if ( Engine.Player?.LastTargetSerial == journalEntry.Serial )
                 {
-                    MsgCommands.HeadMsg( "[Last Target]", journalEntry.Serial );
+                    MsgCommands.HeadMsg( Options.CurrentOptions.LastTargetMessage, journalEntry.Serial );
                 }
 
                 if ( Engine.Player?.EnemyTargetSerial == journalEntry.Serial )
                 {
-                    MsgCommands.HeadMsg( "[Enemy]", journalEntry.Serial );
+                    MsgCommands.HeadMsg( Options.CurrentOptions.EnemyTargetMessage, journalEntry.Serial );
                 }
 
                 if ( Engine.Player?.FriendTargetSerial == journalEntry.Serial )
                 {
-                    MsgCommands.HeadMsg( "[Friend]", journalEntry.Serial );
+                    MsgCommands.HeadMsg( Options.CurrentOptions.FriendTargetMessage, journalEntry.Serial );
                 }
             }
 

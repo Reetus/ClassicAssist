@@ -61,6 +61,9 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "AutoAcceptPartyOnlyFromFriends", CurrentOptions.AutoAcceptPartyOnlyFromFriends );
             options.Add( "PreventTargetingInnocentsInGuardzone", CurrentOptions.PreventTargetingInnocentsInGuardzone );
             options.Add( "PreventAttackingInnocentsInGuardzone", CurrentOptions.PreventAttackingInnocentsInGuardzone );
+            options.Add( "LastTargetMessage", CurrentOptions.LastTargetMessage );
+            options.Add( "FriendTargetMessage", CurrentOptions.FriendTargetMessage );
+            options.Add( "EnemyTargetMessage", CurrentOptions.EnemyTargetMessage );
 
             json?.Add( "Options", options );
         }
@@ -111,6 +114,9 @@ namespace ClassicAssist.UI.ViewModels
                 config?["PreventTargetingInnocentsInGuardzone"]?.ToObject<bool>() ?? false;
             CurrentOptions.PreventAttackingInnocentsInGuardzone =
                 config?["PreventAttackingInnocentsInGuardzone"]?.ToObject<bool>() ?? false;
+            CurrentOptions.LastTargetMessage = config?["LastTargetMessage"]?.ToObject<string>() ?? "[Last Target]";
+            CurrentOptions.FriendTargetMessage = config?["FriendTargetMessage"]?.ToObject<string>() ?? "[Friend]";
+            CurrentOptions.EnemyTargetMessage = config?["EnemyTargetMessage"]?.ToObject<string>() ?? "[Enemy]";
         }
 
         // Replay CurrentOptions changes onto Options.CurrentOptions

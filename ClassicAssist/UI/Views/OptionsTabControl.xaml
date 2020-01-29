@@ -109,13 +109,30 @@
             <CheckBox Content="{x:Static resources:Strings.Auto_accept_only_from_friends}"
                       IsChecked="{Binding CurrentOptions.AutoAcceptPartyOnlyFromFriends}" />
         </StackPanel>
-        <StackPanel Grid.Column="1">
+        <StackPanel x:Name="stackPanel" Grid.Column="1">
             <CheckBox Content="{x:Static resources:Strings.Prevent_targeting_innocents_in_guardzone}"
                       IsChecked="{Binding CurrentOptions.PreventTargetingInnocentsInGuardzone}"
                       ToolTip="{x:Static resources:Strings.Applies_to_hotkeys___macros_only_}" />
             <CheckBox Content="{x:Static resources:Strings.Prevent_attacking_innocents_in_guardzone}"
                       IsChecked="{Binding CurrentOptions.PreventAttackingInnocentsInGuardzone}"
                       ToolTip="{x:Static resources:Strings.Applies_to_hotkeys___macros_only_}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Content="{x:Static resources:Strings.Last_target_message_}" Grid.Row="0" Grid.Column="0" />
+                <TextBox Text="{Binding CurrentOptions.LastTargetMessage}" Grid.Row="0" Grid.Column="1" />
+                <Label Content="{x:Static resources:Strings.Friend_target_message_}" Grid.Row="1" Grid.Column="0" />
+                <TextBox Text="{Binding CurrentOptions.FriendTargetMessage}" Grid.Row="1" Grid.Column="1" />
+                <Label Content="{x:Static resources:Strings.Enemy_target_message_}" Grid.Row="2" Grid.Column="0" />
+                <TextBox Text="{Binding CurrentOptions.EnemyTargetMessage}" Grid.Row="2" Grid.Column="1" />
+            </Grid>
         </StackPanel>
     </Grid>
 </UserControl>

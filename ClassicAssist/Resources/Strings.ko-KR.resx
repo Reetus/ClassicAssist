@@ -1026,4 +1026,13 @@
   <data name="Project Homepage" xml:space="preserve">
     <value>프로젝트 홈페이지</value>
   </data>
+  <data name="Last target message:" xml:space="preserve">
+    <value>라스트타겟 표시:</value>
+  </data>
+  <data name="Friend target message:" xml:space="preserve">
+    <value>친구타겟 표시:</value>
+  </data>
+  <data name="Enemy target message:" xml:space="preserve">
+    <value>적타겟 표시:</value>
+  </data>
 </root>

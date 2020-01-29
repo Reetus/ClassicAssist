@@ -6,8 +6,10 @@
         xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
         xmlns:resources="clr-namespace:ClassicAssist.Resources"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+        xmlns:uimisc="clr-namespace:ClassicAssist.UI.Misc"
         xmlns:views="clr-namespace:ClassicAssist.UI.Views"
+        xmlns:local="clr-namespace:ClassicAssist"
+        xmlns:models="clr-namespace:ClassicAssist.UI.Models"
         mc:Ignorable="d"
         Width="600" Height="400" Title="{x:Static resources:Strings.Entity_Collection_Viewer}"
         Topmost="{Binding Topmost}">
@@ -44,6 +46,27 @@
                 <ToggleButton x:Name="toggleButton" Height="24">
                     <Image Source="{StaticResource FilterIcon}" />
                 </ToggleButton>
+                <Menu Background="Transparent" Height="24">
+                    <MenuItem Height="24">
+                        <MenuItem.Header>
+                            <Image Source="{StaticResource SortIcon}" />
+                        </MenuItem.Header>
+                        <MenuItem Header="{x:Static resources:Strings.Name}" Command="{Binding ChangeSortStyleCommand}"
+                                  CommandParameter="{x:Static models:EntityCollectionSortStyle.Name}" />
+                        <MenuItem Header="{x:Static resources:Strings.Serial}"
+                                  Command="{Binding ChangeSortStyleCommand}"
+                                  CommandParameter="{x:Static models:EntityCollectionSortStyle.Serial}" />
+                        <MenuItem Header="{x:Static resources:Strings.Color}"
+                                  Command="{Binding ChangeSortStyleCommand}"
+                                  CommandParameter="{x:Static models:EntityCollectionSortStyle.Hue}" />
+                        <MenuItem Header="{x:Static resources:Strings.Graphic}"
+                                  Command="{Binding ChangeSortStyleCommand}"
+                                  CommandParameter="{x:Static models:EntityCollectionSortStyle.ID}" />
+                        <MenuItem Header="{x:Static resources:Strings.Amount}"
+                                  Command="{Binding ChangeSortStyleCommand}"
+                                  CommandParameter="{x:Static models:EntityCollectionSortStyle.Quantity}" />
+                    </MenuItem>
+                </Menu>
                 <Button Height="24" Padding="0" Command="{Binding CancelActionCommand}"
                         ToolTip="{x:Static resources:Strings.Cancel_action}" IsEnabled="{Binding IsPerformingAction}"
                         Style="{StaticResource ToolbarButtonStyle}">
@@ -63,7 +86,7 @@
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="2"
                   Style="{StaticResource EntityListViewStyle}">
             <i:Interaction.Behaviors>
-                <misc:MultiSelectionBehaviour SelectedItems="{Binding SelectedItems}" />
+                <uimisc:MultiSelectionBehaviour SelectedItems="{Binding SelectedItems}" />
             </i:Interaction.Behaviors>
         </ListView>
         <StatusBar Grid.Row="3">

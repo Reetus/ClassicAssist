@@ -24,6 +24,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _applyFiltersCommand;
         private ICommand _cancelActionCommand;
         private CancellationTokenSource _cancellationToken;
+        private ICommand _changeSortStyleCommand;
         private ItemCollection _collection;
         private ICommand _contextMoveToBackpackCommand;
         private ICommand _contextMoveToContainerCommand;
@@ -38,6 +39,8 @@ namespace ClassicAssist.UI.ViewModels
             new ObservableCollection<EntityCollectionData>();
 
         private bool _showProperties;
+
+        private IComparer<Entity> _sorter = new IDThenSerialComparer();
         private string _statusLabel;
         private ICommand _togglePropertiesCommand;
         private bool _topmost;
@@ -53,14 +56,14 @@ namespace ClassicAssist.UI.ViewModels
 
             _collection.Add( new Item( 6 ) { ID = 106, Hue = 2413 } );
 
-            Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData() );
+            Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter ) );
         }
 
         public EntityCollectionViewerViewModel( ItemCollection collection )
         {
             _collection = collection;
 
-            Entities = new ObservableCollection<EntityCollectionData>( collection.ToEntityCollectionData() );
+            Entities = new ObservableCollection<EntityCollectionData>( collection.ToEntityCollectionData( _sorter ) );
 
             SelectedItems.CollectionChanged += ( sender, args ) =>
             {
@@ -69,9 +72,10 @@ namespace ClassicAssist.UI.ViewModels
                     return;
                 }
 
-                StatusLabel = string.Format( Strings._0__items___1__selected___2__total_amount, Entities.Count,
-                    si.Count, si.Select( i => i.Entity ).Where( i => i is Item ).Cast<Item>().Sum( i => i.Count ) );
+                UpdateStatusLabel();
             };
+
+            UpdateStatusLabel();
         }
 
         public ICommand ApplyFiltersCommand =>
@@ -80,6 +84,9 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand CancelActionCommand =>
             _cancelActionCommand ?? ( _cancelActionCommand = new RelayCommandAsync( CancelAction,
                 o => _cancellationToken != null ) );
+
+        public ICommand ChangeSortStyleCommand =>
+            _changeSortStyleCommand ?? ( _changeSortStyleCommand = new RelayCommand( ChangeSortStyle, o => true ) );
 
         public ICommand ContextMoveToBackpackCommand =>
             _contextMoveToBackpackCommand ?? ( _contextMoveToBackpackCommand =
@@ -152,7 +159,57 @@ namespace ClassicAssist.UI.ViewModels
             Entities.Clear();
 
             Entities = new ObservableCollection<EntityCollectionData>( _collection.Filter( _filters )
-                .ToEntityCollectionData() );
+                .ToEntityCollectionData( _sorter ) );
+
+            UpdateStatusLabel();
+        }
+
+        private void ChangeSortStyle( object obj )
+        {
+            if ( !( obj is EntityCollectionSortStyle val ) )
+            {
+                return;
+            }
+
+            switch ( val )
+            {
+                case EntityCollectionSortStyle.Name:
+                    _sorter = new NameThenSerialComparer();
+
+                    break;
+
+                case EntityCollectionSortStyle.Serial:
+                    _sorter = new SerialComparer();
+
+                    break;
+
+                case EntityCollectionSortStyle.Hue:
+                    _sorter = new HueThenAmountComparer();
+
+                    break;
+
+                case EntityCollectionSortStyle.ID:
+                    _sorter = new IDThenSerialComparer();
+
+                    break;
+
+                case EntityCollectionSortStyle.Quantity:
+                    _sorter = new QuantityThenSerialComparer();
+
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter ) );
+        }
+
+        private void UpdateStatusLabel()
+        {
+            StatusLabel = string.Format( Strings._0__items___1__selected___2__total_amount, Entities.Count,
+                SelectedItems?.Count ?? 0,
+                SelectedItems?.Select( i => i.Entity ).Where( i => i is Item ).Cast<Item>().Sum( i => i.Count ) );
         }
 
         private void Refresh( object obj )
@@ -165,7 +222,7 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData() );
+            Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter ) );
         }
 
         private async Task ContextUseItem( object arg )
@@ -360,7 +417,8 @@ namespace ClassicAssist.UI.ViewModels
             return s.TrimEnd( '\r', '\n' );
         }
 
-        public static List<EntityCollectionData> ToEntityCollectionData( this ItemCollection itemCollection )
+        public static List<EntityCollectionData> ToEntityCollectionData( this ItemCollection itemCollection,
+            IComparer<Entity> comparer )
         {
             if ( itemCollection == null )
             {
@@ -376,7 +434,8 @@ namespace ClassicAssist.UI.ViewModels
                 item.Name = $"0x{item.Serial:x8}";
             }
 
-            return items.Select( item => new EntityCollectionData { Entity = item } ).ToList();
+            return items.OrderBy( i => i, comparer ).Select( item => new EntityCollectionData { Entity = item } )
+                .ToList();
         }
     }
 }

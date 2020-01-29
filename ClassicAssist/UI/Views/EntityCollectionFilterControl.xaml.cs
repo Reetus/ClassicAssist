@@ -50,7 +50,7 @@ namespace ClassicAssist.UI.Views
             InitializeComponent();
 
             string constraintsFile = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data",
-                "Autoloot.json" );
+                "Properties.json" );
 
             if ( !File.Exists( constraintsFile ) )
             {

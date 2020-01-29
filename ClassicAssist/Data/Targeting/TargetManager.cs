@@ -77,13 +77,13 @@ namespace ClassicAssist.Data.Targeting
             TargetFriendType friendType = TargetFriendType.Include,
             TargetInfliction inflictionType = TargetInfliction.Any )
         {
-            Mobile mobile = null;
+            Mobile mobile;
 
             if ( friendType == TargetFriendType.Only )
             {
                 mobile = Engine.Mobiles
-                    .SelectEntities( m => !_ignoreList.Contains( m ) && MobileCommands.InFriendList( m.Serial ) )
-                    .OrderBy( m => m.Distance ).ByInflication( inflictionType ).FirstOrDefault();
+                    .SelectEntities( m => MobileCommands.InFriendList( m.Serial ) ).OrderBy( m => m.Distance )
+                    .ByInflication( inflictionType ).FirstOrDefault();
             }
             else
             {
@@ -117,8 +117,7 @@ namespace ClassicAssist.Data.Targeting
 
                 mobile = Engine.Mobiles.SelectEntities( m =>
                         notoriety.Contains( m.Notoriety ) && m.Distance < MAX_DISTANCE &&
-                        bodyTypePredicate( m.ID ) && !_ignoreList.Contains( m ) &&
-                        !ObjectCommands.IgnoreList.Contains( m.Serial ) &&
+                        bodyTypePredicate( m.ID ) && !ObjectCommands.IgnoreList.Contains( m.Serial ) &&
                         ( friendType == TargetFriendType.Include || !MobileCommands.InFriendList( m.Serial ) ) )
                     .OrderBy( m => m.Distance ).ByInflication( inflictionType )?
                     .FirstOrDefault();

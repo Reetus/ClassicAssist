@@ -206,9 +206,16 @@ namespace ClassicAssist.Data.Macros
                 return;
             }
 
-            Thread?.Interrupt();
-            Thread?.Abort();
-            Thread?.Join();
+            try
+            {
+                Thread?.Interrupt();
+                Thread?.Abort();
+                Thread?.Join();
+            }
+            catch ( ThreadStateException e )
+            {
+                UO.Commands.SystemMessage( string.Format( Strings.Macro_error___0_, e.Message ) );
+            }
         }
     }
 }

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Linq;
+using System.Windows;
 using ClassicAssist.Data.Hotkeys;
+using ClassicAssist.Resources;
 
 namespace ClassicAssist.Data.Macros
 {
@@ -8,6 +11,7 @@ namespace ClassicAssist.Data.Macros
         private bool _doNotAutoInterrupt;
         private bool _loop;
         private string _macro = string.Empty;
+        private string _name;
 
         public bool DoNotAutoInterrupt
         {
@@ -27,6 +31,12 @@ namespace ClassicAssist.Data.Macros
             set => SetProperty( ref _macro, value );
         }
 
+        public override string Name
+        {
+            get => _name;
+            set => SetName( _name, value );
+        }
+
         public Action Stop { get; set; }
 
         public int CompareTo( MacroEntry other )
@@ -37,6 +47,27 @@ namespace ClassicAssist.Data.Macros
         public override string ToString()
         {
             return Name;
+        }
+
+        private void SetName( string name, string value )
+        {
+            MacroManager manager = MacroManager.GetInstance();
+
+            bool exists = manager.Items.Any( m => m.Name == value && !ReferenceEquals( m, this ) );
+
+            if ( exists && name == null )
+            {
+                SetName( null, $"{value}-" );
+                return;
+            }
+
+            if ( exists )
+            {
+                MessageBox.Show( Strings.Macro_name_must_be_unique_, Strings.Error );
+                return;
+            }
+
+            SetProperty( ref _name, value );
         }
     }
 }

@@ -32,6 +32,7 @@ namespace ClassicAssist.UI.ViewModels
         private RelayCommand _newMacroCommand;
         private ICommand _recordCommand;
         private RelayCommand _removeMacroCommand;
+        private ICommand _saveMacroCommand;
         private MacroEntry _selectedItem;
         private ICommand _showActiveObjectsWindowCommand;
         private ICommand _showCommandsCommand;
@@ -96,6 +97,9 @@ namespace ClassicAssist.UI.ViewModels
         public RelayCommand RemoveMacroCommand =>
             _removeMacroCommand ?? ( _removeMacroCommand =
                 new RelayCommand( RemoveMacro, o => !IsRunning && SelectedItem != null ) );
+
+        public ICommand SaveMacroCommand =>
+            _saveMacroCommand ?? ( _saveMacroCommand = new RelayCommand( SaveMacro, o => true ) );
 
         public MacroEntry SelectedItem
         {
@@ -186,6 +190,12 @@ namespace ClassicAssist.UI.ViewModels
                     AliasCommands.SetAlias( token["Name"].ToObject<string>(), token["Value"].ToObject<int>() );
                 }
             }
+        }
+
+        private static void SaveMacro( object obj )
+        {
+            //Saves whole profile, think of better way
+            Options.Save( Options.CurrentOptions );
         }
 
         private async Task Execute( object obj )

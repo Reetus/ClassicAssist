@@ -44,7 +44,8 @@
                 <ListBox Grid.Row="0" ItemsSource="{Binding Items}" x:Name="ListBox"
                          SelectedItem="{Binding SelectedItem}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                          MinHeight="40"
-                         IsEnabled="{Binding IsRecording, Converter={StaticResource InverseBooleanConverter}}">
+                         IsEnabled="{Binding IsRecording, Converter={StaticResource InverseBooleanConverter}}"
+                         misc:ListBoxBehavior.ScrollOnNewItem="True">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <controls:EditTextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
@@ -57,10 +58,12 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.Resources>
                         <Style TargetType="Button">
                             <Setter Property="Margin" Value="0" />
+                            <Setter Property="FontSize" Value="10" />
                         </Style>
                     </Grid.Resources>
                     <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="0" Margin="0,0,2.5,0"
@@ -79,6 +82,8 @@
                     </Button>
                     <Button Content="{x:Static resources:Strings.New}" Grid.Column="1" Margin="2.5,0"
                             Command="{Binding NewMacroCommand, Mode=OneWay}" />
+                    <Button Content="{x:Static resources:Strings.Save}" Grid.Column="2" Margin="2.5,0"
+                            Command="{Binding SaveMacroCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
                 </Grid>
                 <Grid Grid.Row="2" Margin="2,5,2,5">
                     <Button Content="{Binding RecordLabel}" Command="{Binding RecordCommand}" />

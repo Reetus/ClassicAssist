@@ -1366,6 +1366,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Macro name must be unique..
+        /// </summary>
+        public static string Macro_name_must_be_unique_ {
+            get {
+                return ResourceManager.GetString("Macro name must be unique.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Macros.
         /// </summary>
         public static string Macros {

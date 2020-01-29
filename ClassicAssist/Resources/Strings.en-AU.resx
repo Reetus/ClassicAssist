@@ -1035,4 +1035,7 @@
   <data name="Enemy target message:" xml:space="preserve">
     <value>Enemy target message:</value>
   </data>
+  <data name="Macro name must be unique." xml:space="preserve">
+    <value>Macro name must be unique.</value>
+  </data>
 </root>

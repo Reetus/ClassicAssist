@@ -538,7 +538,7 @@
     <value>Mobile non trovato...</value>
   </data>
   <data name="Mobiles:" xml:space="preserve">
-    <value>Cerca Aggiornamenti</value>
+    <value>Cerca Aggiornamenti:</value>
   </data>
   <data name="Move conflicting items" xml:space="preserve">
     <value>Sostituisci Equip</value>
@@ -988,7 +988,7 @@
     <value>Previeni attacco innocenti in zona guardie</value>
   </data>
   <data name="Applies to hotkeys / macros only." xml:space="preserve">
-    <value>Applica solo alle Hotkeys / Scripts</value>
+    <value>Applica solo alle Hotkeys / Scripts.</value>
   </data>
   <data name="Hue Picker" xml:space="preserve">
     <value>Prendi colore</value>
@@ -1034,5 +1034,8 @@
   </data>
   <data name="Enemy target message:" xml:space="preserve">
     <value>Notifica sul Enemy Target:</value>
+  </data>
+  <data name="Macro name must be unique." xml:space="preserve">
+    <value>I nomi degli Script devono essere unici.</value>
   </data>
 </root>

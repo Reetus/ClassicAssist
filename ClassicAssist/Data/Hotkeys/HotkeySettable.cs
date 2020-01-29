@@ -42,7 +42,7 @@ namespace ClassicAssist.Data.Hotkeys
                 ? Properties.Resources.red_circle.ToImageSource()
                 : Properties.Resources.green_circle.ToImageSource();
 
-        public string Name
+        public virtual string Name
         {
             get => _name;
             set => SetProperty( ref _name, value );

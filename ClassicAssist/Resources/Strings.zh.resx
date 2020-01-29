@@ -1035,4 +1035,7 @@
   <data name="Enemy target message:" xml:space="preserve">
     <value>敌人目标消息：</value>
   </data>
+  <data name="Macro name must be unique." xml:space="preserve">
+    <value>宏名称必须是唯一的。</value>
+  </data>
 </root>

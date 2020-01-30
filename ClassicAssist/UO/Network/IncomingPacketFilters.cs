@@ -40,7 +40,9 @@ namespace ClassicAssist.UO.Network
 
             journalEntry.Text = Cliloc.GetLocalString( journalEntry.Cliloc, journalEntry.Arguments );
 
-            return RepeatedMessagesFilter.CheckMessage( journalEntry );
+            bool block = RepeatedMessagesFilter.CheckMessage( journalEntry );
+
+            return block || ClilocFilter.CheckMessage( journalEntry );
         }
 
         private static void Register( byte packetId, Func<byte[], int, bool> action )

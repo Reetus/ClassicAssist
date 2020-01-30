@@ -1044,4 +1044,22 @@
   <data name="Repeated Messages" xml:space="preserve">
     <value>Repeated Messages</value>
   </data>
+  <data name="Cliloc Filter" xml:space="preserve">
+    <value>Cliloc Filter</value>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Filter:" xml:space="preserve">
+    <value>Filter:</value>
+  </data>
+  <data name="Original" xml:space="preserve">
+    <value>Original</value>
+  </data>
+  <data name="Replacement" xml:space="preserve">
+    <value>Replacement</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
 </root>

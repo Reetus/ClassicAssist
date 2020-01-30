@@ -1044,4 +1044,22 @@
   <data name="Repeated Messages" xml:space="preserve">
     <value>반복된 메시지</value>
   </data>
+  <data name="Cliloc Filter" xml:space="preserve">
+    <value>클리록 필터</value>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>자료</value>
+  </data>
+  <data name="Filter:" xml:space="preserve">
+    <value>필터:</value>
+  </data>
+  <data name="Original" xml:space="preserve">
+    <value>원문 언어</value>
+  </data>
+  <data name="Replacement" xml:space="preserve">
+    <value>교체</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>추가</value>
+  </data>
 </root>

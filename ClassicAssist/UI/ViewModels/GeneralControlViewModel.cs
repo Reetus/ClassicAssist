@@ -20,6 +20,7 @@ namespace ClassicAssist.UI.ViewModels
     {
         private static ICommand _saveProfileCommand;
         private ICommand _changeProfileCommand;
+        private ICommand _configureFilterCommand;
 
         private bool _isLinkedProfile;
         private ICommand _linkUnlinkProfileCommand;
@@ -33,7 +34,7 @@ namespace ClassicAssist.UI.ViewModels
             Type[] filterTypes =
             {
                 typeof( WeatherFilter ), typeof( SeasonFilter ), typeof( LightLevelFilter ),
-                typeof( RepeatedMessagesFilter )
+                typeof( RepeatedMessagesFilter ), typeof( ClilocFilter )
             };
 
             foreach ( Type type in filterTypes )
@@ -49,6 +50,9 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand ChangeProfileCommand =>
             _changeProfileCommand ?? ( _changeProfileCommand = new RelayCommand( ChangeProfile, o => true ) );
+
+        public ICommand ConfigureFilterCommand =>
+            _configureFilterCommand ?? ( _configureFilterCommand = new RelayCommand( ConfigureFilter ) );
 
         public ObservableCollectionEx<FilterEntry> Filters { get; set; } = new ObservableCollectionEx<FilterEntry>();
 
@@ -119,10 +123,18 @@ namespace ClassicAssist.UI.ViewModels
 
             foreach ( FilterEntry filterEntry in Filters )
             {
-                filtersArray.Add( new JObject
+                JObject filterObj = new JObject
                 {
                     { "Name", filterEntry.GetType().ToString() }, { "Enabled", filterEntry.Enabled }
-                } );
+                };
+
+                if ( filterEntry is IConfigurableFilter configurableFilter )
+                {
+                    JObject options = configurableFilter.Serialize();
+                    filterObj.Add( "Options", options );
+                }
+
+                filtersArray.Add( filterObj );
             }
 
             obj.Add( "Filters", filtersArray );
@@ -163,7 +175,22 @@ namespace ClassicAssist.UI.ViewModels
                 {
                     filter.Enabled = enabled;
                 }
+
+                if ( filter is IConfigurableFilter configurableFilter && token["Options"] != null )
+                {
+                    configurableFilter.Deserialize( token["Options"] );
+                }
             }
+        }
+
+        private static void ConfigureFilter( object obj )
+        {
+            if ( !( obj is IConfigurableFilter configurableFilter ) )
+            {
+                return;
+            }
+
+            configurableFilter.Configure();
         }
 
         private void OnProfileChangedEvent( string profile )

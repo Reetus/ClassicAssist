@@ -1,4 +1,4 @@
-﻿﻿[![Build status](https://ci.appveyor.com/api/projects/status/8ky24q5mvc1h0xll/branch/master?svg=true)](https://ci.appveyor.com/project/Reetus/classicassist/branch/master)
+﻿﻿﻿﻿﻿﻿[![Build status](https://ci.appveyor.com/api/projects/status/8ky24q5mvc1h0xll/branch/master?svg=true)](https://ci.appveyor.com/project/Reetus/classicassist/branch/master)
 
 # ClassicAssist
 
@@ -26,3 +26,11 @@ If you encounter any issues or require a feature not currently added, please rai
 ## Translation
 
 If your native language isn't English and you'd like to contribute a translation into your language, send a pull request or open an issue.
+
+## Credits
+
+Icons made by [FreePik](https://www.flaticon.com/authors/freepik") from [FlatIcon](https://www.flaticon.com/)
+
+Icons made by [SmashIcons](https://www.flaticon.com/authors/smashicons") from [FlatIcon](https://www.flaticon.com/)
+
+

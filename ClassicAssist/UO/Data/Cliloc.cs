@@ -151,5 +151,10 @@ namespace ClassicAssist.UO.Data
                 ? propertyString
                 : $"Localized string {property} not found!";
         }
+
+        public static Dictionary<int, string> GetItems()
+        {
+            return new Dictionary<int, string>( _lazyClilocList.Value );
+        }
     }
 }

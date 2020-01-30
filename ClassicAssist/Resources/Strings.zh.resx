@@ -1044,4 +1044,22 @@
   <data name="Repeated Messages" xml:space="preserve">
     <value>重复的消息</value>
   </data>
+  <data name="Cliloc Filter" xml:space="preserve">
+    <value>克利洛克过滤器</value>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Filter:" xml:space="preserve">
+    <value>滤波器：</value>
+  </data>
+  <data name="Original" xml:space="preserve">
+    <value>源语言</value>
+  </data>
+  <data name="Replacement" xml:space="preserve">
+    <value>更换</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>添加</value>
+  </data>
 </root>

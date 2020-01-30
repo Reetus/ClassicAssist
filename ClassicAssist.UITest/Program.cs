@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Globalization;
 using System.Threading;
+using ClassicAssist.Data;
+using ClassicAssist.Data.Filters;
 using ClassicAssist.UI.Views;
+using ClassicAssist.UI.Views.Filters;
+using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.UITest
 {
@@ -14,6 +18,7 @@ namespace ClassicAssist.UITest
         {
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo( "en-GB" );
             //new MacrosCommandWindow().ShowDialog();
+            AssistantOptions.Load();
             _window = new MainWindow();
             _window.ShowDialog();
         }

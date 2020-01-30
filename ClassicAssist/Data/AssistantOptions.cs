@@ -147,6 +147,11 @@ namespace ClassicAssist.Data
 
         public static void OnWindowLoaded()
         {
+            if ( LastProfile == null )
+            {
+                LastProfile = Options.DEFAULT_SETTINGS_FILENAME;
+            }
+
             Options.Load( LastProfile, Options.CurrentOptions );
             ProfileChangedEvent?.Invoke( LastProfile );
         }

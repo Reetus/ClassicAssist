@@ -133,6 +133,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Friend.
         /// </summary>
         public static string Add_Friend {
@@ -493,6 +502,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cliloc Filter.
+        /// </summary>
+        public static string Cliloc_Filter {
+            get {
+                return ResourceManager.GetString("Cliloc Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         public static string Close {
@@ -835,6 +853,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter:.
+        /// </summary>
+        public static string Filter_ {
+            get {
+                return ResourceManager.GetString("Filter:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filters.
         /// </summary>
         public static string Filters {
@@ -1029,6 +1056,15 @@ namespace ClassicAssist.Resources {
         public static string Hue_Picker {
             get {
                 return ResourceManager.GetString("Hue Picker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID.
+        /// </summary>
+        public static string ID {
+            get {
+                return ResourceManager.GetString("ID", resourceCulture);
             }
         }
         
@@ -1690,6 +1726,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Original.
+        /// </summary>
+        public static string Original {
+            get {
+                return ResourceManager.GetString("Original", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pass to UO.
         /// </summary>
         public static string Pass_to_UO {
@@ -1956,6 +2001,15 @@ namespace ClassicAssist.Resources {
         public static string Repeated_Messages {
             get {
                 return ResourceManager.GetString("Repeated Messages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replacement.
+        /// </summary>
+        public static string Replacement {
+            get {
+                return ResourceManager.GetString("Replacement", resourceCulture);
             }
         }
         

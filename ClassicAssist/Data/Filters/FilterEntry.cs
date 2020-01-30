@@ -8,6 +8,7 @@ namespace ClassicAssist.Data.Filters
     public abstract class FilterEntry : INotifyPropertyChanged
     {
         private bool _enabled;
+        private bool _isConfigurable;
         private string _name;
 
         protected FilterEntry()
@@ -31,6 +32,7 @@ namespace ClassicAssist.Data.Filters
 
             Name = string.IsNullOrEmpty( resourceName ) ? a.Name : resourceName;
             Enabled = a.DefaultEnabled;
+            IsConfigurable = typeof( IConfigurableFilter ).IsAssignableFrom( GetType() );
         }
 
         public Action<bool> Action { get; set; }
@@ -43,6 +45,12 @@ namespace ClassicAssist.Data.Filters
                 SetProperty( ref _enabled, value );
                 Action?.Invoke( value );
             }
+        }
+
+        public bool IsConfigurable
+        {
+            get => _isConfigurable;
+            set => SetProperty( ref _isConfigurable, value );
         }
 
         public string Name
@@ -63,6 +71,7 @@ namespace ClassicAssist.Data.Filters
             PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
         }
 
+        // ReSharper disable once RedundantAssignment
         public void SetProperty<T>( ref T field, T value, [CallerMemberName] string propertyName = null )
         {
             field = value;

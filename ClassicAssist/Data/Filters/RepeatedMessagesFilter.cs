@@ -22,6 +22,11 @@ namespace ClassicAssist.Data.Filters
 
         public static bool CheckMessage( JournalEntry journalEntry )
         {
+            if ( !IsEnabled )
+            {
+                return false;
+            }
+
             if ( journalEntry.SpeechType != JournalSpeech.System &&
                  ( journalEntry.Name != "System" || journalEntry.Serial != -1 ) )
             {

@@ -1,14 +1,11 @@
 ﻿using System.ComponentModel;
-using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.Misc;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.UI.ViewModels
@@ -152,11 +149,7 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            string fullPath = Path.Combine( Engine.StartupPath, "Data", "languageOverride.json" );
-
-            JObject langObj = new JObject { { "Language", language.ToString() } };
-
-            File.WriteAllText( fullPath, langObj.ToString( Formatting.Indented ) );
+            AssistantOptions.LanguageOverride = language;
 
             MessageBox.Show( Strings.Restart_game_for_changes_to_take_effect___,
                 Strings.Restart_game_for_changes_to_take_effect___ );

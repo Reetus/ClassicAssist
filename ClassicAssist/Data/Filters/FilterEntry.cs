@@ -24,6 +24,11 @@ namespace ClassicAssist.Data.Filters
 
             string resourceName = Strings.ResourceManager.GetString( a.Name );
 
+            if ( string.IsNullOrEmpty( resourceName ) )
+            {
+                throw new InvalidOperationException( $"No localized text for filter: {a.Name}" );
+            }
+
             Name = string.IsNullOrEmpty( resourceName ) ? a.Name : resourceName;
             Enabled = a.DefaultEnabled;
         }

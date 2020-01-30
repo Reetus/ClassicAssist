@@ -10,7 +10,7 @@
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
              xmlns:resources="clr-namespace:ClassicAssist.Resources"
-             xmlns:valueConverters1="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+             xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500" Padding="5">
     <d:DesignerProperties.DesignStyle>
@@ -19,8 +19,8 @@
         </Style>
     </d:DesignerProperties.DesignStyle>
     <UserControl.Resources>
-        <valueConverters1:InverseBooleanConverter x:Key="InverseBooleanConverter" />
-        <valueConverters1:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+        <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
     </UserControl.Resources>
     <UserControl.DataContext>
         <viewModels:MacrosTabViewModel />
@@ -90,7 +90,7 @@
                 </Grid>
                 <Grid Grid.Row="3" Margin="0,15,0,0">
                     <Grid.Resources>
-                        <valueConverters1:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+                        <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
                     </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -108,6 +108,16 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=ListBox}"
+                                             Value="{x:Null}">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Resources>
                     <CheckBox Content="{x:Static resources:Strings.Loop}" Grid.Row="0" Margin="0,5,0,0"
                               IsChecked="{Binding SelectedItem.Loop, ElementName=ListBox}" />
                     <CheckBox Content="{x:Static resources:Strings.Do_not_auto_interupt}" Grid.Row="1" Margin="0,5,0,0"
@@ -120,9 +130,21 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <controls:TextBoxKey Shortcut="{Binding SelectedItem.Hotkey}" Grid.Row="0" />
+                        <Grid.Resources>
+                            <Style x:Key="DisableNoSelection" TargetType="FrameworkElement">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=ListBox}"
+                                                 Value="{x:Null}">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Resources>
+                        <controls:TextBoxKey Shortcut="{Binding SelectedItem.Hotkey}" Grid.Row="0"
+                                             Style="{StaticResource DisableNoSelection}" />
                         <CheckBox Content="{x:Static resources:Strings.Pass_to_UO}" Grid.Row="1" Padding="4,-1,0,0"
-                                  Margin="0,5,0,0" IsChecked="{Binding SelectedItem.PassToUO}" />
+                                  Margin="0,5,0,0" IsChecked="{Binding SelectedItem.PassToUO}"
+                                  Style="{StaticResource DisableNoSelection}" />
                         <Button Content="{x:Static resources:Strings.Clear}" Grid.Row="2" Padding="1,0,1,1"
                                 Margin="0,5,0,0" Command="{Binding ClearHotkeyCommand, Mode=OneWay}"
                                 CommandParameter="{Binding SelectedItem, ElementName=ListBox}" />
@@ -137,12 +159,14 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <avalon:TextEditor ShowLineNumbers="True" x:Name="CodeTextEditor" Grid.Row="0"
-                               HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
-                               IsEnabled="{Binding IsRecording, Converter={StaticResource InverseBooleanConverter}}">
+                               HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                 <avalon:TextEditor.Style>
                     <Style TargetType="avalon:TextEditor">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding SelectedItem, ElementName=ListBox}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsRecording}" Value="True">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
                         </Style.Triggers>

@@ -22,7 +22,7 @@ namespace ClassicAssist.UO
 
         public override void OnResponse( int buttonID, int[] switches )
         {
-            Options.CurrentOptions.UpdateGumpVersion = _version;
+            AssistantOptions.UpdateGumpVersion = _version;
             base.OnResponse( buttonID, switches );
         }
     }

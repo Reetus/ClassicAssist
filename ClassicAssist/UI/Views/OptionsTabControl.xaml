@@ -35,7 +35,7 @@
                 <TextBlock Text="{x:Static resources:Strings.Language}" />
                 <ComboBox Margin="10,0,0,0" Padding="10,2,10,2"
                           ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type misc1:Language}}}"
-                          x:Name="langCombo" SelectedItem="{Binding CurrentOptions.LanguageOverride}">
+                          x:Name="langCombo" SelectedItem="{x:Static data:AssistantOptions.LanguageOverride}">
                     <i:Interaction.Behaviors>
                         <misc1:ComboBoxBehavior CommandBinding="{Binding SetLanguageOverrideCommand}"
                                                 CommandParameter="{Binding SelectedItem, ElementName=langCombo}"

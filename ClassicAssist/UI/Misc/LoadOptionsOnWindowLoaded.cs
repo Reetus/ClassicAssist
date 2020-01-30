@@ -17,11 +17,12 @@ namespace ClassicAssist.UI.Misc
         private static void OnClosing( object sender, CancelEventArgs e )
         {
             Options.Save( Options.CurrentOptions );
+            AssistantOptions.Save();
         }
 
         private static void OnLoaded( object sender, RoutedEventArgs e )
         {
-            Options.Load( Options.DEFAULT_SETTINGS_FILENAME, Options.CurrentOptions );
+            AssistantOptions.OnWindowLoaded();
         }
 
         protected override void OnDetaching()

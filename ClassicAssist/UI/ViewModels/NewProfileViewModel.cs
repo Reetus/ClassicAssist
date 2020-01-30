@@ -43,22 +43,20 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( valid )
             {
-                Options options = new Options();
-
                 if ( Option == NewProfileOption.Duplicate )
                 {
-                    options = Options.CurrentOptions;
+                    Options options = Options.CurrentOptions;
                     options.Name = $"{profileName}.json";
                     Options.Save( options );
                 }
-
-                options.Name = $"{profileName}.json";
-                Options.CurrentOptions = options;
-
-                Options.Load( options.Name, options );
-                Options.Save( options );
-
-                FileName = options.Name;
+                else
+                {
+                    Options.ClearOptions();
+                    Options options = new Options { Name = $"{profileName}.json" };
+                    Options.CurrentOptions = options;
+                    Options.Load( options.Name, options );
+                    Options.Save( options );
+                }
             }
             else
             {

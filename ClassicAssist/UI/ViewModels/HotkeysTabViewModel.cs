@@ -27,6 +27,7 @@ namespace ClassicAssist.UI.ViewModels
         public HotkeysTabViewModel()
         {
             _hotkeyManager = HotkeyManager.GetInstance();
+            _hotkeyManager.ClearAllHotkeys = ClearAllHotkeys;
         }
 
         public ICommand ClearHotkeyCommand =>
@@ -227,6 +228,20 @@ namespace ClassicAssist.UI.ViewModels
                     entry.Hotkey = new ShortcutKeys( token["Keys"] );
                     entry.PassToUO = token["PassToUO"]?.ToObject<bool>() ?? true;
                 }
+            }
+        }
+
+        private void ClearAllHotkeys()
+        {
+            foreach ( HotkeySettable entryChild in _serializeCategories.SelectMany(
+                hotkeyEntry => hotkeyEntry.Children ) )
+            {
+                entryChild.Hotkey = ShortcutKeys.Default;
+            }
+
+            foreach ( HotkeySettable spellEntry in _spellsCategory.Children )
+            {
+                spellEntry.Hotkey = ShortcutKeys.Default;
             }
         }
 

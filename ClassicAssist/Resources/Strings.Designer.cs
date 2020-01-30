@@ -1798,6 +1798,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Profile saved....
+        /// </summary>
+        public static string Profile_saved___ {
+            get {
+                return ResourceManager.GetString("Profile saved...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profiles.
         /// </summary>
         public static string Profiles {
@@ -1938,6 +1947,15 @@ namespace ClassicAssist.Resources {
         public static string Remove_Friend {
             get {
                 return ResourceManager.GetString("Remove Friend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repeated Messages.
+        /// </summary>
+        public static string Repeated_Messages {
+            get {
+                return ResourceManager.GetString("Repeated Messages", resourceCulture);
             }
         }
         

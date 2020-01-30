@@ -1038,4 +1038,10 @@
   <data name="Macro name must be unique." xml:space="preserve">
     <value>I nomi degli Script devono essere unici.</value>
   </data>
+  <data name="Profile saved..." xml:space="preserve">
+    <value>Profilo salvato...</value>
+  </data>
+  <data name="Repeated Messages" xml:space="preserve">
+    <value>Messaggi ripetuti</value>
+  </data>
 </root>

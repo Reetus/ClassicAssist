@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -28,6 +29,8 @@ namespace ClassicAssist.Data.Hotkeys
         private HotkeyManager()
         {
         }
+
+        public Action ClearAllHotkeys { get; set; }
 
         public bool Enabled
         {

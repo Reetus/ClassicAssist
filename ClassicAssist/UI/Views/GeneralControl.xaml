@@ -97,7 +97,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0" Margin="5">
-                            <ComboBox ItemsSource="{Binding Profiles}" SelectedItem="{Binding Options.Name}">
+                            <ComboBox ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}">
                                 <i:Interaction.Behaviors>
                                     <misc1:ComboBoxBehavior CommandBinding="{Binding ChangeProfileCommand}"
                                                             OnlyUserTriggered="True" />
@@ -109,6 +109,24 @@
                                     Command="{Binding NewProfileCommand}" />
                             <Button Content="{x:Static r:Strings.Save}" Margin="0,0,10,0" Padding="10,0,10,0"
                                     Command="{Binding SaveProfileCommand}" />
+                            <Button Command="{Binding LinkUnlinkProfileCommand}">
+                                <Button.Content>
+                                    <Image Width="16" Margin="3,0,3,0">
+                                        <Image.Style>
+                                            <Style TargetType="{x:Type Image}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsLinkedProfile}" Value="False">
+                                                        <Setter Property="Source" Value="{StaticResource unlinkedIcon}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding IsLinkedProfile}" Value="True">
+                                                        <Setter Property="Source" Value="{StaticResource linkedIcon}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                </Button.Content>
+                            </Button>
                         </DockPanel>
                     </Grid>
                 </GroupBox>

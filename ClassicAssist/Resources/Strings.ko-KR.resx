@@ -1065,4 +1065,7 @@
   <data name="Macros default to quiet mode" xml:space="preserve">
     <value>매크로 기본값에서 조용한 모드로 설정</value>
   </data>
+  <data name="GetFriend/GetEnemy uses ignore list" xml:space="preserve">
+    <value>GetFriend/GetEnemy는 무시 목록을 사용합니다</value>
+  </data>
 </root>

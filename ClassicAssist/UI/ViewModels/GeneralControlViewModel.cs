@@ -21,7 +21,6 @@ namespace ClassicAssist.UI.ViewModels
         private static ICommand _saveProfileCommand;
         private ICommand _changeProfileCommand;
         private ICommand _configureFilterCommand;
-
         private bool _isLinkedProfile;
         private ICommand _linkUnlinkProfileCommand;
         private ICommand _newProfileCommand;
@@ -145,6 +144,26 @@ namespace ClassicAssist.UI.ViewModels
         public void Deserialize( JObject json, Options options )
         {
             Options = options;
+
+            // Reset current filters to default value
+            foreach ( FilterEntry filterEntry in Filters )
+            {
+                FilterOptionsAttribute a =
+                    (FilterOptionsAttribute) Attribute.GetCustomAttribute( filterEntry.GetType(),
+                        typeof( FilterOptionsAttribute ) );
+
+                if ( a == null )
+                {
+                    continue;
+                }
+
+                filterEntry.Enabled = a.DefaultEnabled;
+
+                if ( filterEntry is IConfigurableFilter configurableFilter )
+                {
+                    configurableFilter.ResetOptions();
+                }
+            }
 
             if ( json?["General"] == null )
             {

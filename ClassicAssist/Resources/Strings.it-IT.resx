@@ -1065,4 +1065,7 @@
   <data name="Macros default to quiet mode" xml:space="preserve">
     <value>Silenzia gli Scripts</value>
   </data>
+  <data name="GetFriend/GetEnemy uses ignore list" xml:space="preserve">
+    <value>Applica IgnoreList a GetEnemy/GetFriend</value>
+  </data>
 </root>

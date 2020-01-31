@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Assistant;
@@ -127,7 +128,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     Enabled = token["Enabled"]?.ToObject<bool>() ?? true
                 };
 
-                Items.Add( entry );
+                bool alreadyExists = Items.Any( s => s.Graphic == entry.Graphic && s.Hue == entry.Hue );
+
+                if ( !alreadyExists )
+                {
+                    Items.Add( entry );
+                }
             }
         }
 

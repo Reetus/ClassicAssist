@@ -32,6 +32,7 @@ namespace ClassicAssist.Data
         private string _enemyTargetMessage;
         private ObservableCollection<FriendEntry> _friends = new ObservableCollection<FriendEntry>();
         private string _friendTargetMessage;
+        private bool _getFriendEnemyUsesIgnoreList;
         private bool _includePartyMembersInFriends;
         private string _lastTargetMessage;
         private int _lightLevel;
@@ -118,6 +119,12 @@ namespace ClassicAssist.Data
         {
             get => _friendTargetMessage;
             set => SetProperty( ref _friendTargetMessage, value );
+        }
+
+        public bool GetFriendEnemyUsesIgnoreList
+        {
+            get => _getFriendEnemyUsesIgnoreList;
+            set => SetProperty( ref _getFriendEnemyUsesIgnoreList, value );
         }
 
         public bool IncludePartyMembersInFriends

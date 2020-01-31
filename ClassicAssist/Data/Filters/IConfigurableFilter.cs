@@ -7,5 +7,6 @@ namespace ClassicAssist.Data.Filters
         void Configure();
         void Deserialize( JToken token );
         JObject Serialize();
+        void ResetOptions();
     }
 }

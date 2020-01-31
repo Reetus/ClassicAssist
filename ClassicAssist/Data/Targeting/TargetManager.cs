@@ -95,7 +95,10 @@ namespace ClassicAssist.Data.Targeting
             if ( friendType == TargetFriendType.Only )
             {
                 mobile = Engine.Mobiles
-                    .SelectEntities( m => MobileCommands.InFriendList( m.Serial ) ).OrderBy( m => m.Distance )
+                    .SelectEntities( m => MobileCommands.InFriendList( m.Serial ) &&
+                                          ( !Options.CurrentOptions.GetFriendEnemyUsesIgnoreList ||
+                                            !ObjectCommands.IgnoreList.Contains( m.Serial ) ) )
+                    .OrderBy( m => m.Distance )
                     .ByInflication( inflictionType ).FirstOrDefault();
             }
             else
@@ -131,7 +134,9 @@ namespace ClassicAssist.Data.Targeting
                 mobile = Engine.Mobiles.SelectEntities( m =>
                         notoriety.Contains( m.Notoriety ) && m.Distance < MAX_DISTANCE &&
                         bodyTypePredicate( m.ID ) &&
-                        ( friendType == TargetFriendType.Include || !MobileCommands.InFriendList( m.Serial ) ) )
+                        ( friendType == TargetFriendType.Include || !MobileCommands.InFriendList( m.Serial ) ) &&
+                        ( !Options.CurrentOptions.GetFriendEnemyUsesIgnoreList ||
+                          !ObjectCommands.IgnoreList.Contains( m.Serial ) ) )
                     .OrderBy( m => m.Distance ).ByInflication( inflictionType )?
                     .FirstOrDefault();
             }
@@ -154,7 +159,8 @@ namespace ClassicAssist.Data.Targeting
                     //Notoriety, bodyType ignored
                     mobiles = Engine.Mobiles.SelectEntities( m =>
                         m.Distance < distance && MobileCommands.InFriendList( m.Serial ) &&
-                        !_ignoreList.Contains( m ) );
+                        !_ignoreList.Contains( m ) && ( !Options.CurrentOptions.GetFriendEnemyUsesIgnoreList ||
+                                                        !ObjectCommands.IgnoreList.Contains( m.Serial ) ) );
                 }
                 else
                 {
@@ -189,7 +195,9 @@ namespace ClassicAssist.Data.Targeting
                     mobiles = Engine.Mobiles.SelectEntities( m =>
                         notoriety.Contains( m.Notoriety ) && m.Distance < distance &&
                         bodyTypePredicate( m.ID ) && !_ignoreList.Contains( m ) &&
-                        ( friendType == TargetFriendType.Include || !MobileCommands.InFriendList( m.Serial ) ) );
+                        ( friendType == TargetFriendType.Include || !MobileCommands.InFriendList( m.Serial ) ) &&
+                        ( !Options.CurrentOptions.GetFriendEnemyUsesIgnoreList ||
+                          !ObjectCommands.IgnoreList.Contains( m.Serial ) ) );
                 }
 
                 mobiles = mobiles.ByInflication( inflictionType );

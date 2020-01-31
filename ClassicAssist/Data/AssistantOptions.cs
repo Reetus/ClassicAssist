@@ -15,7 +15,13 @@ namespace ClassicAssist.Data
     {
         public delegate void dProfileChanged( string profile );
 
+        private const string DEFAULT_BACKUP_PATH = "Backup";
+
         private static readonly Dictionary<int, string> _linkedProfiles = new Dictionary<int, string>();
+        public static bool AutoBackupProfiles { get; set; }
+        public static int AutoBackupProfilesDays { get; set; }
+        public static string AutoBackupProfilesDirectory { get; set; }
+        public static DateTime AutoBackupProfilesLast { get; set; }
         public static Language LanguageOverride { get; set; }
         public static string LastProfile { get; set; }
         public static Version UpdateGumpVersion { get; set; }
@@ -26,7 +32,11 @@ namespace ClassicAssist.Data
             {
                 { "LanguageOverride", LanguageOverride.ToString() },
                 { "LastProfile", LastProfile },
-                { "UpdateGumpVersion", UpdateGumpVersion?.ToString() ?? "0.0.0.0" }
+                { "UpdateGumpVersion", UpdateGumpVersion?.ToString() ?? "0.0.0.0" },
+                { "AutoBackupProfiles", AutoBackupProfiles },
+                { "AutoBackupProfilesDays", AutoBackupProfilesDays },
+                { "AutoBackupProfilesDirectory", AutoBackupProfilesDirectory },
+                { "AutoBackupProfilesLast", AutoBackupProfilesLast }
             };
 
             JArray linkedProfilesArray = new JArray();
@@ -60,6 +70,11 @@ namespace ClassicAssist.Data
             LanguageOverride = json?["LanguageOverride"]?.ToObject<Language>() ?? Language.Default;
             LastProfile = json?["LastProfile"]?.ToObject<string>() ?? Options.DEFAULT_SETTINGS_FILENAME;
             UpdateGumpVersion = json?["UpdateGumpVersion"]?.ToObject<Version>() ?? new Version();
+            AutoBackupProfiles = json?["AutoBackupProfiles"]?.ToObject<bool>() ?? true;
+            AutoBackupProfilesDays = json?["AutoBackupProfilesDays"]?.ToObject<int>() ?? 7;
+            AutoBackupProfilesDirectory =
+                json?["AutoBackupProfilesDirectory"]?.ToObject<string>() ?? DEFAULT_BACKUP_PATH;
+            AutoBackupProfilesLast = json?["AutoBackupProfilesLast"]?.ToObject<DateTime>() ?? default;
 
             if ( json?["Profiles"] != null )
             {
@@ -70,6 +85,64 @@ namespace ClassicAssist.Data
             }
 
             SetLanguage( LanguageOverride );
+
+            if ( DateTime.Now - AutoBackupProfilesLast >= TimeSpan.FromDays( AutoBackupProfilesDays ) )
+            {
+                BackupProfiles();
+            }
+        }
+
+        private static void BackupProfiles()
+        {
+            string profileDirectory = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Profiles" );
+
+            if ( !Directory.Exists( profileDirectory ) )
+            {
+                return;
+            }
+
+            IEnumerable<string> files = Directory.EnumerateFiles( profileDirectory ).ToList();
+
+            if ( !files.Any() )
+            {
+                return;
+            }
+
+            string outputPath = AutoBackupProfilesDirectory;
+
+            if ( string.IsNullOrEmpty( outputPath ) )
+            {
+                outputPath = DEFAULT_BACKUP_PATH;
+            }
+
+            bool rooted = Path.IsPathRooted( AutoBackupProfilesDirectory );
+
+            if ( !rooted )
+            {
+                outputPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
+                    AutoBackupProfilesDirectory );
+            }
+
+            if ( !Directory.Exists( outputPath ) )
+            {
+                Directory.CreateDirectory( outputPath );
+            }
+
+            try
+            {
+                foreach ( string file in files )
+                {
+                    string outputFile = Path.Combine( outputPath,
+                        Path.GetFileName( file ) ?? throw new InvalidOperationException() );
+                    File.Copy( file, outputFile, true );
+                }
+            }
+            catch ( Exception )
+            {
+                // We tried
+            }
+
+            AutoBackupProfilesLast = DateTime.Now;
         }
 
         public static event dProfileChanged ProfileChangedEvent;

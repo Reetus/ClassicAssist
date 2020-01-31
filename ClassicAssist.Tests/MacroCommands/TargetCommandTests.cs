@@ -790,5 +790,165 @@ namespace ClassicAssist.Tests.MacroCommands
             Engine.Mobiles.Clear();
             Engine.Player = null;
         }
+
+        [TestMethod]
+        public void WillUseIgnoreListIfEnabledGetClosestEnemy()
+        {
+            Options.CurrentOptions.GetFriendEnemyUsesIgnoreList = true;
+
+            Engine.Player = new PlayerMobile( 0x01 );
+            Mobile mobile = new Mobile( 0x02 ) { Notoriety = Notoriety.Murderer };
+            Engine.Mobiles.Add( mobile );
+
+            bool result = TargetCommands.GetEnemy( new[] { Notoriety.Murderer.ToString() }, "Any", "Closest" );
+
+            Assert.IsTrue( result );
+            Assert.AreEqual( mobile.Serial, AliasCommands.GetAlias( "enemy" ) );
+
+            AliasCommands.UnsetAlias( "enemy" );
+            ObjectCommands.IgnoreObject( mobile.Serial );
+
+            result = TargetCommands.GetEnemy( new[] { Notoriety.Murderer.ToString() }, "Any", "Closest" );
+
+            Assert.IsFalse( result );
+
+            ObjectCommands.ClearIgnoreList();
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillUseIgnoreListIfEnabledGetNextEnemy()
+        {
+            Options.CurrentOptions.GetFriendEnemyUsesIgnoreList = true;
+
+            Engine.Player = new PlayerMobile( 0x01 );
+            Mobile mobile = new Mobile( 0x02 ) { Notoriety = Notoriety.Murderer };
+            Engine.Mobiles.Add( mobile );
+
+            bool result = TargetCommands.GetEnemy( new[] { Notoriety.Murderer.ToString() } );
+
+            Assert.IsTrue( result );
+            Assert.AreEqual( mobile.Serial, AliasCommands.GetAlias( "enemy" ) );
+
+            AliasCommands.UnsetAlias( "enemy" );
+            ObjectCommands.IgnoreObject( mobile.Serial );
+
+            result = TargetCommands.GetEnemy( new[] { Notoriety.Murderer.ToString() } );
+
+            Assert.IsFalse( result );
+
+            ObjectCommands.ClearIgnoreList();
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillUseIgnoreListIfEnabledGetClosestFriend()
+        {
+            Options.CurrentOptions.GetFriendEnemyUsesIgnoreList = true;
+
+            Engine.Player = new PlayerMobile( 0x01 );
+            Mobile mobile = new Mobile( 0x02 ) { Notoriety = Notoriety.Murderer };
+            Engine.Mobiles.Add( mobile );
+
+            bool result = TargetCommands.GetFriend( new[] { Notoriety.Murderer.ToString() }, "Any", "Closest" );
+
+            Assert.IsTrue( result );
+            Assert.AreEqual( mobile.Serial, AliasCommands.GetAlias( "friend" ) );
+
+            AliasCommands.UnsetAlias( "enemy" );
+            ObjectCommands.IgnoreObject( mobile.Serial );
+
+            result = TargetCommands.GetFriend( new[] { Notoriety.Murderer.ToString() }, "Any", "Closest" );
+
+            Assert.IsFalse( result );
+
+            ObjectCommands.ClearIgnoreList();
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillUseIgnoreListIfEnabledGetNextFriend()
+        {
+            Options.CurrentOptions.GetFriendEnemyUsesIgnoreList = true;
+
+            Engine.Player = new PlayerMobile( 0x01 );
+            Mobile mobile = new Mobile( 0x02 ) { Notoriety = Notoriety.Murderer };
+            Engine.Mobiles.Add( mobile );
+
+            bool result = TargetCommands.GetFriend( new[] { Notoriety.Murderer.ToString() } );
+
+            Assert.IsTrue( result );
+            Assert.AreEqual( mobile.Serial, AliasCommands.GetAlias( "friend" ) );
+
+            AliasCommands.UnsetAlias( "enemy" );
+            ObjectCommands.IgnoreObject( mobile.Serial );
+
+            result = TargetCommands.GetFriend( new[] { Notoriety.Murderer.ToString() } );
+
+            Assert.IsFalse( result );
+
+            ObjectCommands.ClearIgnoreList();
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillUseIgnoreListIfEnabledGetClosestFriendOnly()
+        {
+            Options.CurrentOptions.GetFriendEnemyUsesIgnoreList = true;
+
+            Engine.Player = new PlayerMobile( 0x01 );
+            Mobile mobile = new Mobile( 0x02 ) { Notoriety = Notoriety.Murderer };
+            Engine.Mobiles.Add( mobile );
+            Options.CurrentOptions.Friends.Add( new FriendEntry { Name = "Friend", Serial = mobile.Serial } );
+
+            bool result = TargetCommands.GetFriendListOnly( "Closest" );
+
+            Assert.IsTrue( result );
+            Assert.AreEqual( mobile.Serial, AliasCommands.GetAlias( "friend" ) );
+
+            AliasCommands.UnsetAlias( "enemy" );
+            ObjectCommands.IgnoreObject( mobile.Serial );
+
+            result = TargetCommands.GetFriendListOnly( "Closest" );
+
+            Assert.IsFalse( result );
+
+            Options.CurrentOptions.Friends.Clear();
+            ObjectCommands.ClearIgnoreList();
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillUseIgnoreListIfEnabledGetNextFriendOnly()
+        {
+            Options.CurrentOptions.GetFriendEnemyUsesIgnoreList = true;
+
+            Engine.Player = new PlayerMobile( 0x01 );
+            Mobile mobile = new Mobile( 0x02 ) { Notoriety = Notoriety.Murderer };
+            Engine.Mobiles.Add( mobile );
+            Options.CurrentOptions.Friends.Add( new FriendEntry { Name = "Friend", Serial = mobile.Serial } );
+
+            bool result = TargetCommands.GetFriendListOnly();
+
+            Assert.IsTrue( result );
+            Assert.AreEqual( mobile.Serial, AliasCommands.GetAlias( "friend" ) );
+
+            AliasCommands.UnsetAlias( "enemy" );
+            ObjectCommands.IgnoreObject( mobile.Serial );
+
+            result = TargetCommands.GetFriendListOnly();
+
+            Assert.IsFalse( result );
+
+            Options.CurrentOptions.Friends.Clear();
+            ObjectCommands.ClearIgnoreList();
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
     }
 }

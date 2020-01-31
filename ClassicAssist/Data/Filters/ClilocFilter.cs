@@ -55,6 +55,11 @@ namespace ClassicAssist.Data.Filters
             return new JObject { { "Filters", itemsArray } };
         }
 
+        public void ResetOptions()
+        {
+            Filters.Clear();
+        }
+
         protected override void OnChanged( bool enabled )
         {
             IsEnabled = enabled;

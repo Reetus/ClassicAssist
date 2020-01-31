@@ -135,6 +135,8 @@
                 <Label Content="{x:Static resources:Strings.Enemy_target_message_}" Grid.Row="2" Grid.Column="0" />
                 <TextBox Text="{Binding CurrentOptions.EnemyTargetMessage}" Grid.Row="2" Grid.Column="1" />
             </Grid>
+            <CheckBox Content="{x:Static resources:Strings.GetFriend_GetEnemy_uses_ignore_list}"
+                      IsChecked="{Binding CurrentOptions.GetFriendEnemyUsesIgnoreList}" />
         </StackPanel>
     </Grid>
 </UserControl>

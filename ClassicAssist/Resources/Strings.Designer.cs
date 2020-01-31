@@ -979,6 +979,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GetFriend/GetEnemy uses ignore list.
+        /// </summary>
+        public static string GetFriend_GetEnemy_uses_ignore_list {
+            get {
+                return ResourceManager.GetString("GetFriend/GetEnemy uses ignore list", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Grapes of Wrath.
         /// </summary>
         public static string Grapes_of_Wrath {

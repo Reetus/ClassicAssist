@@ -14,21 +14,28 @@
     d:DesignHeight="250" d:DesignWidth="500">
     <d:DesignerProperties.DesignStyle>
         <Style TargetType="UserControl">
-            <Setter Property="Background" Value="White" />
+            <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
         </Style>
     </d:DesignerProperties.DesignStyle>
-    <UserControl.Resources>
-        <ValueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
-    </UserControl.Resources>
     <UserControl.DataContext>
         <agents:CountersTabViewModel />
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/ResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <Grid.Resources>
+            <ValueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+        </Grid.Resources>
         <ListView Grid.Row="0" Margin="10" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
             <ListView.View>
                 <GridView>

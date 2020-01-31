@@ -22,7 +22,7 @@ namespace ClassicAssist.UI.Views
         {
             CodeTextEditor.SyntaxHighlighting = HighlightingLoader.Load(
                 new XmlTextReader( Path.Combine( Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location ),
-                    "Python.xshd" ) ), HighlightingManager.Instance );
+                    "Python.Dark.xshd" ) ), HighlightingManager.Instance );
         }
     }
 }

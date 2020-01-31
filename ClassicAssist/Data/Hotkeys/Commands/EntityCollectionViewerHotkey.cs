@@ -16,6 +16,11 @@ namespace ClassicAssist.Data.Hotkeys.Commands
 
             Item item = Engine.Items.GetItem( serial );
 
+            if ( item == null )
+            {
+                return;
+            }
+
             if ( item.Container == null )
             {
                 UOC.WaitForContainerContents( item.Serial, 1000 );

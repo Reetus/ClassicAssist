@@ -45,6 +45,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private ICommand _removeCommand;
         private ICommand _removeConstraintCommand;
         private AutolootEntry _selectedItem;
+        private AutolootConstraintEntry _selectedProperty;
         private ICommand _selectHueCommand;
         private ICommand _setContainerCommand;
 
@@ -126,7 +127,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set => SetProperty( ref _selectedItem, value );
         }
 
-        public PropertyEntry SelectedProperty { get; set; }
+        public AutolootConstraintEntry SelectedProperty
+        {
+            get => _selectedProperty;
+            set => SetProperty( ref _selectedProperty, value );
+        }
 
         public ICommand SelectHueCommand =>
             _selectHueCommand ?? ( _selectHueCommand = new RelayCommand( SelectHue, o => SelectedItem != null ) );

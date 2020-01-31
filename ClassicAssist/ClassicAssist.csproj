@@ -12,8 +12,8 @@
     <None Remove="Data\Regions.json" />
     <None Remove="Data\Spells.json" />
     <None Remove="Data\Weapons.json" />
+    <None Remove="Python.Dark.xshd" />
     <None Remove="Python.xshd" />
-    <None Remove="Resources\bug.png" />
     <None Remove="zlib32.dll" />
     <None Remove="zlib64.dll" />
   </ItemGroup>
@@ -34,6 +34,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Weapons.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Python.Dark.xshd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Python.xshd">
@@ -59,6 +62,7 @@
     <PackageReference Include="Octokit" Version="0.36.0" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.7.0-preview3.19551.4" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
+    <PackageReference Include="WpfPlus.Plus" Version="1.2.8" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="cuoapi">
@@ -67,9 +71,6 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>..\Output\net48\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\bug.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">

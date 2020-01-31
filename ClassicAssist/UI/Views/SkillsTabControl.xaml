@@ -10,26 +10,36 @@
              xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              xmlns:resources="clr-namespace:ClassicAssist.Resources"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             mc:Ignorable="d"
-             Background="White">
+             mc:Ignorable="d">
+    <d:DesignerProperties.DesignStyle>
+        <Style TargetType="UserControl">
+            <Setter Property="Background" Value="White" />
+        </Style>
+    </d:DesignerProperties.DesignStyle>
     <UserControl.DataContext>
         <viewModels:SkillsTabViewModel />
     </UserControl.DataContext>
     <UserControl.Resources>
-        <valueConverters:LockStatusValueConverter x:Key="LockStatusValueConverter" />
-        <valueConverters:SetSkillLockMultiValueConverter x:Key="MenuItemMultiValueConverter" />
-        <!--ContextMenu in a different visual tree, https://stackoverflow.com/questions/3583507/wpf-binding-a-contextmenu-to-an-mvvm-command-->
-        <misc:BindingProxy x:Key="Proxy" Data="{Binding}" />
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Margin" Value="0,7,0,0" />
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="90" />
         </Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <valueConverters:LockStatusValueConverter x:Key="LockStatusValueConverter" />
+            <valueConverters:SetSkillLockMultiValueConverter x:Key="MenuItemMultiValueConverter" />
+            <!--ContextMenu in a different visual tree, https://stackoverflow.com/questions/3583507/wpf-binding-a-contextmenu-to-an-mvvm-command-->
+            <misc:BindingProxy x:Key="Proxy" Data="{Binding}" />
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Margin" Value="0,7,0,0" />
+            </Style>
+        </Grid.Resources>
         <ListView Grid.Column="0" ItemsSource="{Binding Items}" Margin="5"
                   GridViewColumnHeader.Click="GridViewHeaderOnClick" x:Name="listView"
                   SelectedItem="{Binding SelectedItem}">

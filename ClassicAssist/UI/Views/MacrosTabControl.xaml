@@ -19,8 +19,11 @@
         </Style>
     </d:DesignerProperties.DesignStyle>
     <UserControl.Resources>
-        <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
-        <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
         <viewModels:MacrosTabViewModel />
@@ -33,6 +36,10 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Margin="0,0,5,0">
             <Grid>
+                <Grid.Resources>
+                    <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+                    <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+                </Grid.Resources>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
@@ -61,7 +68,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.Resources>
-                        <Style TargetType="Button">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                             <Setter Property="Margin" Value="0" />
                             <Setter Property="FontSize" Value="10" />
                         </Style>
@@ -70,7 +77,7 @@
                             Command="{Binding RemoveMacroCommand, Mode=OneWay}"
                             CommandParameter="{Binding SelectedItem, ElementName=ListBox}">
                         <Button.Style>
-                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=ListBox}"
                                                  Value="{x:Null}">
@@ -130,21 +137,9 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <Grid.Resources>
-                            <Style x:Key="DisableNoSelection" TargetType="FrameworkElement">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=ListBox}"
-                                                 Value="{x:Null}">
-                                        <Setter Property="IsEnabled" Value="False" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Grid.Resources>
-                        <controls:TextBoxKey Shortcut="{Binding SelectedItem.Hotkey}" Grid.Row="0"
-                                             Style="{StaticResource DisableNoSelection}" />
+                        <controls:TextBoxKey Shortcut="{Binding SelectedItem.Hotkey}" Grid.Row="0" />
                         <CheckBox Content="{x:Static resources:Strings.Pass_to_UO}" Grid.Row="1" Padding="4,-1,0,0"
-                                  Margin="0,5,0,0" IsChecked="{Binding SelectedItem.PassToUO}"
-                                  Style="{StaticResource DisableNoSelection}" />
+                                  Margin="0,5,0,0" IsChecked="{Binding SelectedItem.PassToUO}" />
                         <Button Content="{x:Static resources:Strings.Clear}" Grid.Row="2" Padding="1,0,1,1"
                                 Margin="0,5,0,0" Command="{Binding ClearHotkeyCommand, Mode=OneWay}"
                                 CommandParameter="{Binding SelectedItem, ElementName=ListBox}" />
@@ -159,9 +154,11 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <avalon:TextEditor ShowLineNumbers="True" x:Name="CodeTextEditor" Grid.Row="0"
-                               HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                               HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                               FontFamily="Consolas">
                 <avalon:TextEditor.Style>
-                    <Style TargetType="avalon:TextEditor">
+                    <Style TargetType="{x:Type avalon:TextEditor}"
+                           BasedOn="{StaticResource {x:Type avalon:TextEditor}}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding SelectedItem, ElementName=ListBox}" Value="{x:Null}">
                                 <Setter Property="IsEnabled" Value="False" />
@@ -181,7 +178,7 @@
             </avalon:TextEditor>
             <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
                 <StackPanel.Resources>
-                    <Style TargetType="Button">
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                         <Setter Property="Margin" Value="10,10,10,0" />
                         <Setter Property="Padding" Value="10,0,10,0" />
                         <Setter Property="Height" Value="25" />

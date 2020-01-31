@@ -3,10 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:ClassicAssist.UI.Views"
     xmlns:resources="clr-namespace:ClassicAssist.Resources"
     xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
-    xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:misc="clr-namespace:ClassicAssist.Misc"
     xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
     xmlns:data="clr-namespace:ClassicAssist.Data"
@@ -16,9 +14,16 @@
     d:DesignHeight="300" d:DesignWidth="500">
     <d:DesignerProperties.DesignStyle>
         <Style TargetType="UserControl">
-            <Setter Property="Background" Value="White" />
+            <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
         </Style>
     </d:DesignerProperties.DesignStyle>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <UserControl.DataContext>
         <viewModels:OptionsTabViewModel />
     </UserControl.DataContext>
@@ -32,10 +37,11 @@
                 <misc:BindingProxy x:Key="proxy" Data="{Binding}" />
             </StackPanel.Resources>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <TextBlock Text="{x:Static resources:Strings.Language}" />
-                <ComboBox Margin="10,0,0,0" Padding="10,2,10,2"
+                <Label Content="{x:Static resources:Strings.Language}" />
+                <ComboBox Margin="10,0,10,0"
                           ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type misc1:Language}}}"
-                          x:Name="langCombo" SelectedItem="{x:Static data:AssistantOptions.LanguageOverride}">
+                          x:Name="langCombo" SelectedItem="{x:Static data:AssistantOptions.LanguageOverride}"
+                          MinWidth="100">
                     <i:Interaction.Behaviors>
                         <misc1:ComboBoxBehavior CommandBinding="{Binding SetLanguageOverrideCommand}"
                                                 CommandParameter="{Binding SelectedItem, ElementName=langCombo}"
@@ -44,15 +50,16 @@
                 </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <TextBlock Text="{x:Static resources:Strings.Command_Prefix_}" />
-                <ComboBox Text="{Binding CurrentOptions.CommandPrefix}" Margin="10,0,0,0" Padding="10,2,10,2">
+                <Label Content="{x:Static resources:Strings.Command_Prefix_}" />
+                <ComboBox Text="{Binding CurrentOptions.CommandPrefix}" Margin="10,0,10,0" Padding="10,2,10,2"
+                          MinWidth="50">
                     <ComboBoxItem Content="+" />
                     <ComboBoxItem Content="=" />
                 </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <TextBlock Text="{x:Static resources:Strings.Smart_last_target_}" />
-                <ComboBox Text="{Binding CurrentOptions.SmartTargetOption, Mode=TwoWay}" Margin="10,0,0,0"
+                <Label Content="{x:Static resources:Strings.Smart_last_target_}" />
+                <ComboBox Text="{Binding CurrentOptions.SmartTargetOption, Mode=TwoWay}" Margin="10,0,10,0"
                           ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type data:SmartTargetOption}}}"
                           MinWidth="100" />
             </StackPanel>
@@ -64,9 +71,8 @@
                 <CheckBox.ContentTemplate>
                     <ItemContainerTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="{x:Static resources:Strings.Range_check_last_target}" Margin="0"
-                                   Padding="5,0,0,0" />
-                            <TextBox Width="40" Margin="10,0,10,0"
+                            <Label Content="{x:Static resources:Strings.Range_check_last_target}" />
+                            <TextBox Width="40"
                                      Text="{Binding Path=Data.CurrentOptions.RangeCheckLastTargetAmount, Source={StaticResource proxy}}" />
                         </StackPanel>
                     </ItemContainerTemplate>
@@ -78,8 +84,7 @@
                 <CheckBox.ContentTemplate>
                     <ItemContainerTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="{x:Static resources:Strings.Use_object_queue}" Margin="0"
-                                   Padding="5,0,0,0" />
+                            <Label Content="{x:Static resources:Strings.Use_object_queue}" Margin="0" />
                             <TextBox Width="40" Margin="10,0,10,0"
                                      Text="{Binding Path=Data.CurrentOptions.UseObjectQueueAmount, Source={StaticResource proxy}}" />
                             <Label Content="{x:Static resources:Strings.items}" Margin="0"
@@ -94,8 +99,7 @@
                 <CheckBox.ContentTemplate>
                     <ItemContainerTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="{x:Static resources:Strings.Limit_Mouse_Wheel_Retrigger}" Margin="0"
-                                   Padding="5,0,0,0" />
+                            <Label Content="{x:Static resources:Strings.Limit_Mouse_Wheel_Retrigger}" Margin="0" />
                             <TextBox Width="40" Margin="10,0,10,0"
                                      Text="{Binding Path=Data.CurrentOptions.LimitMouseWheelTriggerMS, Source={StaticResource proxy}}" />
                             <Label Content="ms" Margin="0"

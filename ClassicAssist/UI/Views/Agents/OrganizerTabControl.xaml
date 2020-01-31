@@ -13,19 +13,23 @@
     d:DesignHeight="250" d:DesignWidth="500">
     <d:DesignerProperties.DesignStyle>
         <Style TargetType="UserControl">
-            <Setter Property="Background" Value="White" />
+            <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
         </Style>
     </d:DesignerProperties.DesignStyle>
     <UserControl.Resources>
-        <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
-        <valueConverters:IntToHexStringValueConverter x:Key="IntToHexStringValueConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/ResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
         <agents:OrganizerTabViewModel />
     </UserControl.DataContext>
     <Grid>
         <Grid.Resources>
-            <Style TargetType="{x:Type Button}">
+            <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                 <Setter Property="Margin" Value="5" />
                 <Setter Property="Height" Value="25" />
                 <Setter Property="Padding" Value="10,0,10,0" />
@@ -42,6 +46,9 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
+            <Grid.Resources>
+                <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+            </Grid.Resources>
             <DockPanel Grid.Row="0">
                 <Button DockPanel.Dock="Left" Content="{Binding PlayStopButtonText}"
                         Command="{Binding OrganizeCommand}" CommandParameter="{Binding SelectedItem}" />

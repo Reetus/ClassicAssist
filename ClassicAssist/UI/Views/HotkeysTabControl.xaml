@@ -14,6 +14,14 @@
     <UserControl.DataContext>
         <viewModels:HotkeysTabViewModel />
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/Icons.xaml" />
+                <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -33,7 +41,7 @@
                     <ContentControl>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="{Binding Image}" Stretch="Uniform" Margin="0,0,5,0" />
-                            <TextBlock Text="{Binding}" />
+                            <TextBlock Text="{Binding}" Foreground="{DynamicResource ThemeForegroundBrush}" />
                         </StackPanel>
                     </ContentControl>
                 </HierarchicalDataTemplate>

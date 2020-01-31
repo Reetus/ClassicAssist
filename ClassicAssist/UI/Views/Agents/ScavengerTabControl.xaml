@@ -11,20 +11,27 @@
              d:DesignWidth="493" d:DesignHeight="400">
     <d:DesignerProperties.DesignStyle>
         <Style TargetType="UserControl">
-            <Setter Property="Background" Value="White" />
+            <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
         </Style>
     </d:DesignerProperties.DesignStyle>
     <UserControl.DataContext>
         <agents:ScavengerTabViewModel />
     </UserControl.DataContext>
     <UserControl.Resources>
-        <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/ResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+        </Grid.Resources>
         <StackPanel Grid.Column="0" Margin="10,10,0,10">
             <StackPanel.Resources>
                 <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">

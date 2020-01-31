@@ -83,16 +83,6 @@ namespace ClassicAssist.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap bug {
-            get {
-                object obj = ResourceManager.GetObject("bug", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         public static System.Drawing.Bitmap green_circle {
             get {
                 object obj = ResourceManager.GetObject("green_circle", resourceCulture);

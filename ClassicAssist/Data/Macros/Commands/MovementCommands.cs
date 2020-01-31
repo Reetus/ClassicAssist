@@ -1,4 +1,5 @@
-﻿using Assistant;
+﻿using System;
+using Assistant;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UO.Data;
@@ -67,9 +68,17 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
-            bool result = Engine.Move( directionEnum, run );
+            try
+            {
+                bool result = Engine.Move( directionEnum, run );
 
-            return result;
+                return result;
+            }
+            catch ( IndexOutOfRangeException )
+            {
+            }
+
+            return false;
         }
     }
 }

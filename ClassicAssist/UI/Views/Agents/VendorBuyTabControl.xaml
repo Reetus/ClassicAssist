@@ -11,11 +11,15 @@
     d:DesignWidth="493" d:DesignHeight="400">
     <d:DesignerProperties.DesignStyle>
         <Style TargetType="UserControl">
-            <Setter Property="Background" Value="White" />
+            <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
         </Style>
     </d:DesignerProperties.DesignStyle>
     <UserControl.Resources>
-        <ValueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/ResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
         <agents:VendorBuyTabViewModel />

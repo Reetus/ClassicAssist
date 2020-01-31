@@ -12,23 +12,30 @@
              d:DesignHeight="350" d:DesignWidth="600"
              d:DataContext="{d:DesignInstance {x:Type viewModels:AboutControlViewModel}, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
-        <valueConverters1:IntToHexStringValueConverter x:Key="IntToHexStringValueConverter" />
-        <valueConverters1:DateTimeToTimeSpanValueConverter x:Key="DateTimeToTimeSpanValueConverter" />
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <Style TargetType="GroupBox">
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="Padding" Value="5" />
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
         <viewModels:AboutControlViewModel />
     </UserControl.DataContext>
     <d:DesignerProperties.DesignStyle>
         <Style TargetType="UserControl">
-            <Setter Property="Background" Value="White" />
+            <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
         </Style>
     </d:DesignerProperties.DesignStyle>
     <Grid>
+        <Grid.Resources>
+            <valueConverters1:IntToHexStringValueConverter x:Key="IntToHexStringValueConverter" />
+            <valueConverters1:DateTimeToTimeSpanValueConverter x:Key="DateTimeToTimeSpanValueConverter" />
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource {x:Type GroupBox}}">
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="Padding" Value="5" />
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -71,7 +78,7 @@
         <GroupBox Header="{x:Static r:Strings.World_Status}" Grid.Row="0" Grid.Column="1">
             <StackPanel>
                 <StackPanel.Resources>
-                    <Style TargetType="Button">
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                         <Setter Property="Margin" Value="5" />
                         <Setter Property="Width" Value="150" />
                     </Style>

@@ -13,13 +13,6 @@
     <Window.DataContext>
         <viewModels:DebugViewModel />
     </Window.DataContext>
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
     <TabControl Margin="10">
         <TabItem Header="{x:Static resources:Strings.Main}">
             <Grid>

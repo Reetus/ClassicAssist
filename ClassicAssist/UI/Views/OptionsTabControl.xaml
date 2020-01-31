@@ -108,6 +108,8 @@
                       IsChecked="{Binding CurrentOptions.AutoAcceptPartyInvite}" />
             <CheckBox Content="{x:Static resources:Strings.Auto_accept_only_from_friends}"
                       IsChecked="{Binding CurrentOptions.AutoAcceptPartyOnlyFromFriends}" />
+            <CheckBox Content="{x:Static resources:Strings.Macros_default_to_quiet_mode}"
+                      IsChecked="{Binding CurrentOptions.DefaultMacroQuietMode}" />
         </StackPanel>
         <StackPanel x:Name="stackPanel" Grid.Column="1">
             <CheckBox Content="{x:Static resources:Strings.Prevent_targeting_innocents_in_guardzone}"

@@ -1420,6 +1420,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Macros default to quiet mode.
+        /// </summary>
+        public static string Macros_default_to_quiet_mode {
+            get {
+                return ResourceManager.GetString("Macros default to quiet mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Made For Malo&quot;.
         /// </summary>
         public static string Made_For_Malo {

@@ -1062,4 +1062,7 @@
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="Macros default to quiet mode" xml:space="preserve">
+    <value>Macros default to quiet mode</value>
+  </data>
 </root>

@@ -284,6 +284,8 @@ namespace ClassicAssist.UI.ViewModels
                 RefreshProfiles();
 
                 SelectedProfile = vm.FileName;
+
+                ChangeProfile( vm.FileName );
             }
 
             await Task.CompletedTask;

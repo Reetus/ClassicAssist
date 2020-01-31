@@ -28,6 +28,7 @@ namespace ClassicAssist.Data
         private bool _autoAcceptPartyOnlyFromFriends;
         private char _commandPrefix = '+';
         private bool _debug;
+        private bool _defaultMacroQuietMode;
         private string _enemyTargetMessage;
         private ObservableCollection<FriendEntry> _friends = new ObservableCollection<FriendEntry>();
         private string _friendTargetMessage;
@@ -93,6 +94,12 @@ namespace ClassicAssist.Data
         {
             get => _debug;
             set => SetProperty( ref _debug, value );
+        }
+
+        public bool DefaultMacroQuietMode
+        {
+            get => _defaultMacroQuietMode;
+            set => SetProperty( ref _defaultMacroQuietMode, value );
         }
 
         public string EnemyTargetMessage

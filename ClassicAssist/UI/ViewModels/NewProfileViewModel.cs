@@ -43,6 +43,8 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( valid )
             {
+                FileName = $"{profileName}.json";
+
                 if ( Option == NewProfileOption.Duplicate )
                 {
                     Options options = Options.CurrentOptions;

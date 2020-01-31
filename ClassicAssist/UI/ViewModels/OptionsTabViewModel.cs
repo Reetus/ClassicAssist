@@ -61,6 +61,7 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "LastTargetMessage", CurrentOptions.LastTargetMessage );
             options.Add( "FriendTargetMessage", CurrentOptions.FriendTargetMessage );
             options.Add( "EnemyTargetMessage", CurrentOptions.EnemyTargetMessage );
+            options.Add( "DefaultMacroQuietMode", CurrentOptions.DefaultMacroQuietMode );
 
             json?.Add( "Options", options );
         }
@@ -114,6 +115,7 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.LastTargetMessage = config?["LastTargetMessage"]?.ToObject<string>() ?? "[Last Target]";
             CurrentOptions.FriendTargetMessage = config?["FriendTargetMessage"]?.ToObject<string>() ?? "[Friend]";
             CurrentOptions.EnemyTargetMessage = config?["EnemyTargetMessage"]?.ToObject<string>() ?? "[Enemy]";
+            CurrentOptions.DefaultMacroQuietMode = config?["DefaultMacroQuietMode"]?.ToObject<bool>() ?? false;
         }
 
         // Replay CurrentOptions changes onto Options.CurrentOptions

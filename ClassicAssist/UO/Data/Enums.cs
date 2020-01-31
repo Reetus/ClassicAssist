@@ -3,6 +3,14 @@
 namespace ClassicAssist.UO.Data
 {
     [Flags]
+    public enum MessageAffixType
+    {
+        Append,
+        Prepend,
+        System
+    }
+
+    [Flags]
     public enum HealthbarColour
     {
         None = 0x00,

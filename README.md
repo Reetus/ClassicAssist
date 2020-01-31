@@ -29,8 +29,8 @@ If your native language isn't English and you'd like to contribute a translation
 
 ## Credits
 
-Icons made by [FreePik](https://www.flaticon.com/authors/freepik") from [FlatIcon](https://www.flaticon.com/)
+Icons made by [FreePik](https://www.flaticon.com/authors/freepik) from [FlatIcon](https://www.flaticon.com/)
 
-Icons made by [SmashIcons](https://www.flaticon.com/authors/smashicons") from [FlatIcon](https://www.flaticon.com/)
+Icons made by [SmashIcons](https://www.flaticon.com/authors/smashicons) from [FlatIcon](https://www.flaticon.com/)
 
 

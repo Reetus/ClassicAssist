@@ -92,6 +92,7 @@ namespace ClassicAssist.UO.Network
             Register( 0xB9, 5, OnSupportedFeatures );
             Register( 0xBF, 0, OnExtendedCommand );
             Register( 0xC1, 0, OnLocalizedText );
+            Register( 0xCC, 0, OnLocalizedTextAffix );
             Register( 0xD6, 0, OnProperties );
             Register( 0xDD, 0, OnCompressedGump );
             Register( 0xDF, 0, OnBuffAndAttributes );
@@ -258,7 +259,8 @@ namespace ClassicAssist.UO.Network
                 SpeechFont = reader.ReadInt16(),
                 Cliloc = reader.ReadInt32(),
                 Name = reader.ReadString( 30 ),
-                Arguments = reader.ReadUnicodeString( (int) reader.Size - 50 ).Split( '\t' )
+                Arguments = reader.ReadUnicodeString( (int) reader.Size - 50 )
+                    .Split( new[] { '\t' }, StringSplitOptions.RemoveEmptyEntries )
             };
 
             journalEntry.Text = Cliloc.GetLocalString( journalEntry.Cliloc, journalEntry.Arguments );
@@ -279,6 +281,47 @@ namespace ClassicAssist.UO.Network
                 {
                     MsgCommands.HeadMsg( Options.CurrentOptions.FriendTargetMessage, journalEntry.Serial );
                 }
+            }
+
+            Engine.Journal.Write( journalEntry );
+            JournalEntryAddedEvent?.Invoke( journalEntry );
+        }
+
+        private static void OnLocalizedTextAffix( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+            int graphic = reader.ReadInt16();
+            JournalSpeech messageType = (JournalSpeech) reader.ReadByte();
+            int hue = reader.ReadInt16();
+            int font = reader.ReadInt16();
+            int cliloc = reader.ReadInt32();
+            MessageAffixType affixType = (MessageAffixType) reader.ReadByte();
+            string name = reader.ReadString( 30 );
+            string affix = reader.ReadString();
+            string[] arguments = reader.ReadUnicodeString()
+                .Split( new[] { '\t' }, StringSplitOptions.RemoveEmptyEntries );
+
+            JournalEntry journalEntry = new JournalEntry
+            {
+                Serial = serial,
+                ID = graphic,
+                SpeechType = messageType,
+                SpeechHue = hue,
+                SpeechFont = font,
+                Cliloc = cliloc,
+                Name = name,
+                Arguments = arguments
+            };
+
+            string text = Cliloc.GetLocalString( journalEntry.Cliloc, journalEntry.Arguments );
+
+            if ( affixType.HasFlag( MessageAffixType.Prepend ) )
+            {
+                journalEntry.Text = $"{affix}{text}";
+            }
+            else if ( affixType.HasFlag( MessageAffixType.Append ) )
+            {
+                journalEntry.Text = $"{text}{affix}";
             }
 
             Engine.Journal.Write( journalEntry );

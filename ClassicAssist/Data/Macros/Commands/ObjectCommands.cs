@@ -196,12 +196,13 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
+            AliasCommands.SetAlias( "found", entity.Serial );
+
             if ( MacroManager.QuietMode )
             {
                 return true;
             }
 
-            AliasCommands.SetAlias( "found", entity.Serial );
             UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ) );
 
             return true;
@@ -254,12 +255,13 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
+            AliasCommands.SetAlias( "found", entity.Serial );
+
             if ( MacroManager.QuietMode )
             {
                 return true;
             }
 
-            AliasCommands.SetAlias( "found", entity.Serial );
             UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ) );
 
             return true;

@@ -102,7 +102,7 @@ namespace ClassicAssist.Data.Macros
                 Stop();
             }
 
-            MainCommands.SetQuietMode( false );
+            MainCommands.SetQuietMode( Options.CurrentOptions.DefaultMacroQuietMode );
 
             _cancellationToken = new CancellationTokenSource();
 

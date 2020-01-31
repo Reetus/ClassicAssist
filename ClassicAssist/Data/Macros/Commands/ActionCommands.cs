@@ -426,12 +426,13 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
+            AliasCommands.SetAlias( "found", layerSerial );
+
             if ( MacroManager.QuietMode )
             {
                 return true;
             }
 
-            AliasCommands.SetAlias( "found", layerSerial );
             UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ) );
 
             return true;

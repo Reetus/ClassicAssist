@@ -1062,4 +1062,7 @@
   <data name="Add" xml:space="preserve">
     <value>添加</value>
   </data>
+  <data name="Macros default to quiet mode" xml:space="preserve">
+    <value>宏默认为静音模式</value>
+  </data>
 </root>

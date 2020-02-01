@@ -1,36 +1,74 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Media;
+using System.Xml.Serialization;
 using ClassicAssist.Annotations;
+using ClassicAssist.Misc;
 using ClassicAssist.UI.Misc;
 
 namespace ClassicAssist.Data.Hotkeys
 {
     public class HotkeyEntry : INotifyPropertyChanged, IComparable<HotkeyEntry>
     {
-        private ObservableCollectionEx<HotkeySettable> _children;
-        private object _o;
+        public delegate void HotkeyChangedEventHandler( object sender, HotkeyChangedEventArgs e );
 
-        public HotkeyEntry( string name, bool isCategory )
-        {
-            Name = name;
-            IsCategory = isCategory;
-        }
+        private ObservableCollectionEx<HotkeyEntry> _children = new ObservableCollectionEx<HotkeyEntry>();
 
-        public ObservableCollectionEx<HotkeySettable> Children
+        private ShortcutKeys _hotkey = new ShortcutKeys();
+        private bool _isCategory;
+
+        private string _name;
+        private bool _passToUo = true;
+
+        public Action<HotkeyEntry> Action { get; set; }
+
+        public ObservableCollectionEx<HotkeyEntry> Children
         {
             get => _children;
             set => SetProperty( ref _children, value );
         }
 
-        public bool IsCategory { get; }
+        public virtual bool Disableable { get; set; } = true;
 
-        public string Name { get; }
-
-        public object Object
+        public ShortcutKeys Hotkey
         {
-            get => _o;
-            set => SetProperty( ref _o, value );
+            get => _hotkey;
+            set
+            {
+                if ( !Equals( value, ShortcutKeys.Default ) )
+                {
+                    HotkeyManager manager = HotkeyManager.GetInstance();
+                    manager.ClearPreviousHotkey( value );
+                }
+
+                SetProperty( ref _hotkey, value );
+                HotkeyChanged?.Invoke( this, new HotkeyChangedEventArgs( _hotkey, value ) );
+            }
+        }
+
+        [XmlIgnore]
+        public ImageSource Image =>
+            Equals( Hotkey, ShortcutKeys.Default )
+                ? Properties.Resources.red_circle.ToImageSource()
+                : Properties.Resources.green_circle.ToImageSource();
+
+        public bool IsCategory
+        {
+            get => _isCategory;
+            set => SetProperty( ref _isCategory, value );
+        }
+
+        public virtual string Name
+        {
+            get => _name;
+            set => SetProperty( ref _name, value );
+        }
+
+        public bool PassToUO
+        {
+            get => _passToUo;
+            set => SetProperty( ref _passToUo, value );
         }
 
         public int CompareTo( HotkeyEntry other )
@@ -40,33 +78,31 @@ namespace ClassicAssist.Data.Hotkeys
                 return 0;
             }
 
-            return other is null ? 1 : string.Compare( Name, other.Name, StringComparison.Ordinal );
+            if ( ReferenceEquals( null, other ) )
+            {
+                return 1;
+            }
+
+            int isCategoryComparison = _isCategory.CompareTo( other._isCategory );
+
+            if ( isCategoryComparison != 0 )
+            {
+                return isCategoryComparison;
+            }
+
+            return string.Compare( _name, other._name, StringComparison.Ordinal );
         }
+
+        public event HotkeyChangedEventHandler HotkeyChanged;
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        #region INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public override bool Equals( object obj )
-        {
-            if ( !( obj is HotkeyEntry hke ) )
-            {
-                return false;
-            }
-
-            return Name == hke.Name && IsCategory == hke.IsCategory;
-        }
-
-        protected bool Equals( HotkeyEntry other )
-        {
-            return IsCategory == other.IsCategory && Name == other.Name;
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return ( IsCategory.GetHashCode() * 397 ) ^ ( Name != null ? Name.GetHashCode() : 0 );
-            }
-        }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
@@ -75,15 +111,12 @@ namespace ClassicAssist.Data.Hotkeys
         }
 
         // ReSharper disable once RedundantAssignment
-        private void SetProperty<T>( ref T name, T value, [CallerMemberName] string propertyName = "" )
+        public void SetProperty<T>( ref T field, T value, [CallerMemberName] string propertyName = null )
         {
-            name = value;
+            field = value;
             OnPropertyChanged( propertyName );
         }
 
-        public override string ToString()
-        {
-            return Name;
-        }
+        #endregion
     }
 }

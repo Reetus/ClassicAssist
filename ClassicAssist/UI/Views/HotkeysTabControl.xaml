@@ -17,6 +17,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary Source="../../Resources/Icons.xaml" />
                 <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -31,11 +32,6 @@
             <i:Interaction.Behaviors>
                 <misc:BindableSelectedItemBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
             </i:Interaction.Behaviors>
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="TreeViewItem">
-                    <Setter Property="IsExpanded" Value="false" />
-                </Style>
-            </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                     <ContentControl>
@@ -55,12 +51,16 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <controls:TextBoxKey Shortcut="{Binding Path=SelectedItem.(local:HotkeySettable.Hotkey)}" Grid.Row="0"
+                <controls:TextBoxKey x:Name="textBoxKey"
+                                     Shortcut="{Binding Path=SelectedItem.(local:HotkeyEntry.Hotkey)}" Grid.Row="0"
                                      Margin="10">
                     <controls:TextBoxKey.Style>
                         <Style TargetType="controls:TextBoxKey">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=SelectedItem.(local:HotkeySettable.Hotkey)}"
+                                <DataTrigger Binding="{Binding Path=SelectedItem.IsCategory}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=SelectedItem.(local:HotkeyEntry.Hotkey)}"
                                              Value="{x:Null}">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
@@ -74,15 +74,15 @@
                     </Grid.ColumnDefinitions>
                     <Button Content="{x:Static resources:Strings.Clear}" Margin="10,0,10,5"
                             Command="{Binding ClearHotkeyCommand}" CommandParameter="{Binding SelectedItem}"
-                            Grid.Column="0" />
+                            Grid.Column="0" IsEnabled="{Binding IsEnabled, ElementName=textBoxKey}" />
                 </Grid>
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <CheckBox Content="{x:Static resources:Strings.Pass_to_UO}" Margin="10,0,10,5"
-                              IsChecked="{Binding Path=SelectedItem.(local:HotkeySettable.PassToUO), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              Grid.Column="0" />
+                              IsChecked="{Binding Path=SelectedItem.(local:HotkeyEntry.PassToUO), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              Grid.Column="0" IsEnabled="{Binding IsEnabled, ElementName=textBoxKey}" />
                 </Grid>
                 <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
@@ -90,7 +90,7 @@
                     </Grid.ColumnDefinitions>
                     <Button Content="{x:Static resources:Strings.Execute}" Margin="10,0,10,5"
                             Command="{Binding ExecuteCommand}" CommandParameter="{Binding SelectedItem}"
-                            Grid.Column="0" />
+                            Grid.Column="0" IsEnabled="{Binding IsEnabled, ElementName=textBoxKey}" />
                 </Grid>
             </Grid>
         </GroupBox>

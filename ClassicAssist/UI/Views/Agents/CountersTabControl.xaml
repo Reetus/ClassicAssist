@@ -42,8 +42,7 @@
                     <GridViewColumn Header="{x:Static resources:Strings.Name}" Width="150" x:Name="NameColumn">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <controls:EditTextBlock MinWidth="50"
-                                                        Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=NameColumn, Mode=OneWay}"
+                                <controls:EditTextBlock Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=NameColumn, Mode=OneWay}"
                                                         Text="{Binding Name}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -53,8 +52,7 @@
                     <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="75" x:Name="ColorColumn">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <controls:EditTextBlock MinWidth="50"
-                                                        Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=ColorColumn, Mode=OneWay}"
+                                <controls:EditTextBlock Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=ColorColumn, Mode=OneWay}"
                                                         Text="{Binding Color, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

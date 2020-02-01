@@ -6,7 +6,7 @@ using ClassicAssist.Resources;
 
 namespace ClassicAssist.Data.Macros
 {
-    public class MacroEntry : HotkeySettable, IComparable<MacroEntry>
+    public class MacroEntry : HotkeyEntry, IComparable<MacroEntry>
     {
         private bool _doNotAutoInterrupt;
         private bool _loop;

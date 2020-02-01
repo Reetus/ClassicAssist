@@ -50,9 +50,9 @@
                                         ToolTip="{x:Static r:Strings.Options}"
                                         Visibility="{Binding IsConfigurable, Converter={StaticResource BooleanToVisibilityConverter}}"
                                         Command="{Binding DataContext.ConfigureFilterCommand, ElementName=userControl}"
-                                        CommandParameter="{Binding Mode=OneWay}">
+                                        CommandParameter="{Binding Mode=OneWay}" Margin="0" Padding="0">
                                     <Button.Content>
-                                        <Image Source="{StaticResource configureIcon}" Height="16" />
+                                        <Image Source="{StaticResource configureIcon}" Height="16" Margin="0" />
                                     </Button.Content>
                                 </Button>
                             </StackPanel>

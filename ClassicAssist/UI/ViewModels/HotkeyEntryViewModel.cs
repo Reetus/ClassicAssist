@@ -5,16 +5,16 @@ using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.UI.ViewModels
 {
-    public abstract class HotkeySettableViewModel<T> : BaseViewModel where T : HotkeySettable
+    public abstract class HotkeyEntryViewModel<T> : BaseViewModel where T : HotkeyEntry
     {
         private readonly HotkeyEntry _category;
         private readonly string _name;
         private ObservableCollectionEx<T> _items = new ObservableCollectionEx<T>();
 
-        protected HotkeySettableViewModel( string name )
+        protected HotkeyEntryViewModel( string name )
         {
             _name = name;
-            _category = new HotkeyEntry( _name, true );
+            _category = new HotkeyEntry { Name = _name, IsCategory = true };
 
             HotkeyManager hotkey = HotkeyManager.GetInstance();
 
@@ -22,7 +22,7 @@ namespace ClassicAssist.UI.ViewModels
 
             Items.CollectionChanged += OnCollectionChanged;
 
-            _category.Children = new ObservableCollectionEx<HotkeySettable>();
+            _category.Children = new ObservableCollectionEx<HotkeyEntry>();
         }
 
         public ObservableCollectionEx<T> Items
@@ -31,14 +31,14 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _items, value );
         }
 
-        ~HotkeySettableViewModel()
+        ~HotkeyEntryViewModel()
         {
             Items.CollectionChanged -= OnCollectionChanged;
         }
 
         protected virtual void OnCollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
         {
-            _category.Children = new ObservableCollectionEx<HotkeySettable>();
+            _category.Children = new ObservableCollectionEx<HotkeyEntry>();
 
             foreach ( T item in Items )
             {

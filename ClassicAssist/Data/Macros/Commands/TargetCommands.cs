@@ -217,7 +217,8 @@ namespace ClassicAssist.Data.Macros.Commands
             Description =
                 "Get friend that only exists in the friends list, parameter distance 'Closest'/'Nearest'/'Next'",
             InsertText = "GetFriendListOnly([\"Closest\"])" )]
-        public static bool GetFriendListOnly( string distance = "Next", string targetInfliction = "Any" )
+        public static bool GetFriendListOnly( string distance = "Next", string targetInfliction = "Any",
+            string bodyType = "Any" )
         {
             if ( !Enum.TryParse( distance, true, out TargetDistance td ) )
             {
@@ -229,8 +230,13 @@ namespace ClassicAssist.Data.Macros.Commands
                 ti = TargetInfliction.Any;
             }
 
+            if ( !Enum.TryParse( bodyType, true, out TargetBodyType bt ) )
+            {
+                bt = TargetBodyType.Any;
+            }
+
             return TargetManager.GetInstance()
-                .GetFriend( TargetNotoriety.Any, TargetBodyType.Any, td, TargetFriendType.Only, ti );
+                .GetFriend( TargetNotoriety.Any, bt, td, TargetFriendType.Only, ti );
         }
 
         [CommandsDisplay( Category = "Target", Description = "Get mobile and set friend alias.",

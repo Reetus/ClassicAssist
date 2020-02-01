@@ -4,7 +4,7 @@ using ClassicAssist.UI.Misc;
 
 namespace ClassicAssist.Data.Organizer
 {
-    public class OrganizerEntry : HotkeySettable
+    public class OrganizerEntry : HotkeyEntry
     {
         private bool _complete;
         private ObservableCollectionEx<OrganizerItem> _items = new ObservableCollectionEx<OrganizerItem>();

@@ -86,7 +86,7 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            foreach ( HotkeySettable hks in _hotkeyCategory.Children )
+            foreach ( HotkeyEntry hks in _hotkeyCategory.Children )
             {
                 if ( Equals( hks.Hotkey, ShortcutKeys.Default ) )
                 {
@@ -113,7 +113,7 @@ namespace ClassicAssist.UI.ViewModels
 
             IOrderedEnumerable<SkillData> skills = Skills.GetSkills().Where( s => s.Invokable ).OrderBy( s => s.Name );
 
-            ObservableCollectionEx<HotkeySettable> hotkeyEntries = new ObservableCollectionEx<HotkeySettable>();
+            ObservableCollectionEx<HotkeyEntry> hotkeyEntries = new ObservableCollectionEx<HotkeyEntry>();
 
             foreach ( SkillData skill in skills )
             {
@@ -125,7 +125,7 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( json["Skills"] != null )
             {
-                foreach ( HotkeySettable hke in hotkeyEntries )
+                foreach ( HotkeyEntry hke in hotkeyEntries )
                 {
                     JToken token = json["Skills"].FirstOrDefault( jo => jo["Name"].ToObject<string>() == hke.Name );
 
@@ -139,7 +139,7 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            _hotkeyCategory = new HotkeyEntry( Strings.Skills, true ) { Children = hotkeyEntries };
+            _hotkeyCategory = new HotkeyEntry { Name = Strings.Skills, IsCategory = true, Children = hotkeyEntries };
 
             hotkey.AddCategory( _hotkeyCategory );
         }

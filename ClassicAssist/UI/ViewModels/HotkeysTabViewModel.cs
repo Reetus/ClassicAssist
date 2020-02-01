@@ -21,7 +21,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _clearHotkeyCommand;
         private HotkeyEntry _commandsCategory;
         private ICommand _executeCommand;
-        private HotkeySettable _selectedItem;
+        private HotkeyEntry _selectedItem;
         private HotkeyEntry _spellsCategory;
 
         public HotkeysTabViewModel()
@@ -42,7 +42,7 @@ namespace ClassicAssist.UI.ViewModels
             set => _hotkeyManager.Items = value;
         }
 
-        public HotkeySettable SelectedItem
+        public HotkeyEntry SelectedItem
         {
             get => _selectedItem;
             set => SetProperty( ref _selectedItem, value );
@@ -56,7 +56,7 @@ namespace ClassicAssist.UI.ViewModels
 
             foreach ( HotkeyEntry category in _serializeCategories )
             {
-                foreach ( HotkeySettable categoryChild in category.Children )
+                foreach ( HotkeyEntry categoryChild in category.Children )
                 {
                     if ( Equals( categoryChild.Hotkey, ShortcutKeys.Default ) )
                     {
@@ -78,7 +78,7 @@ namespace ClassicAssist.UI.ViewModels
 
             JArray spellsArray = new JArray();
 
-            foreach ( HotkeySettable spellsCategoryChild in _spellsCategory.Children )
+            foreach ( HotkeyEntry spellsCategoryChild in _spellsCategory.Children )
             {
                 if ( Equals( spellsCategoryChild.Hotkey, ShortcutKeys.Default ) )
                 {
@@ -105,8 +105,8 @@ namespace ClassicAssist.UI.ViewModels
             IEnumerable<Type> hotkeyCommands = Assembly.GetExecutingAssembly().GetTypes()
                 .Where( i => i.IsSubclassOf( typeof( HotkeyCommand ) ) );
 
-            _commandsCategory = new HotkeyEntry( Strings.Commands, true );
-            ObservableCollectionEx<HotkeySettable> children = new ObservableCollectionEx<HotkeySettable>();
+            _commandsCategory = new HotkeyEntry { Name = Strings.Commands, IsCategory = true };
+            ObservableCollectionEx<HotkeyEntry> children = new ObservableCollectionEx<HotkeyEntry>();
 
             foreach ( Type hotkeyCommand in hotkeyCommands )
             {
@@ -128,7 +128,7 @@ namespace ClassicAssist.UI.ViewModels
                     {
                         if ( category.Children == null )
                         {
-                            category.Children = new ObservableCollectionEx<HotkeySettable>();
+                            category.Children = new ObservableCollectionEx<HotkeyEntry>();
                         }
 
                         if ( category.Children.Contains( hkc ) )
@@ -140,9 +140,11 @@ namespace ClassicAssist.UI.ViewModels
                     }
                     else
                     {
-                        category = new HotkeyEntry( categoryName, true )
+                        category = new HotkeyEntry
                         {
-                            Children = new ObservableCollectionEx<HotkeySettable>()
+                            Name = categoryName,
+                            IsCategory = true,
+                            Children = new ObservableCollectionEx<HotkeyEntry>()
                         };
 
                         category.Children.Add( hkc );
@@ -167,7 +169,7 @@ namespace ClassicAssist.UI.ViewModels
 
                     foreach ( HotkeyEntry category in _serializeCategories )
                     {
-                        HotkeySettable entry =
+                        HotkeyEntry entry =
                             category.Children.FirstOrDefault(
                                 o => o.GetType().FullName == type.ToObject<string>() );
 
@@ -184,13 +186,13 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            _spellsCategory = new HotkeyEntry( Strings.Spells, true );
+            _spellsCategory = new HotkeyEntry { Name = Strings.Spells, IsCategory = true };
 
             SpellManager spellManager = SpellManager.GetInstance();
 
             SpellData[] spells = spellManager.GetSpellData();
 
-            children = new ObservableCollectionEx<HotkeySettable>();
+            children = new ObservableCollectionEx<HotkeyEntry>();
 
             foreach ( SpellData spell in spells )
             {
@@ -217,7 +219,7 @@ namespace ClassicAssist.UI.ViewModels
                 {
                     JToken name = token["Name"];
 
-                    HotkeySettable entry =
+                    HotkeyEntry entry =
                         _spellsCategory.Children.FirstOrDefault( s => s.Name == name.ToObject<string>() );
 
                     if ( entry == null )
@@ -233,13 +235,13 @@ namespace ClassicAssist.UI.ViewModels
 
         private void ClearAllHotkeys()
         {
-            foreach ( HotkeySettable entryChild in _serializeCategories.SelectMany(
+            foreach ( HotkeyEntry entryChild in _serializeCategories.SelectMany(
                 hotkeyEntry => hotkeyEntry.Children ) )
             {
                 entryChild.Hotkey = ShortcutKeys.Default;
             }
 
-            foreach ( HotkeySettable spellEntry in _spellsCategory.Children )
+            foreach ( HotkeyEntry spellEntry in _spellsCategory.Children )
             {
                 spellEntry.Hotkey = ShortcutKeys.Default;
             }
@@ -247,7 +249,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private static void ClearHotkey( object obj )
         {
-            if ( obj is HotkeySettable cmd )
+            if ( obj is HotkeyEntry cmd )
             {
                 cmd.Hotkey = ShortcutKeys.Default;
             }
@@ -255,7 +257,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private static void ExecuteHotkey( object obj )
         {
-            if ( obj is HotkeySettable cmd )
+            if ( obj is HotkeyEntry cmd )
             {
                 cmd.Action( cmd );
             }

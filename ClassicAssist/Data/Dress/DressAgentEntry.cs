@@ -10,7 +10,7 @@ using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.Data.Dress
 {
-    public class DressAgentEntry : HotkeySettable
+    public class DressAgentEntry : HotkeyEntry
     {
         private IEnumerable<DressAgentItem> _items;
         private int _undressContainer;

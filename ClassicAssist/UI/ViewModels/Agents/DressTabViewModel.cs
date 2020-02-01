@@ -15,7 +15,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.UI.ViewModels.Agents
 {
-    public class DressTabViewModel : HotkeySettableViewModel<DressAgentEntry>, ISettingProvider
+    public class DressTabViewModel : HotkeyEntryViewModel<DressAgentEntry>, ISettingProvider
     {
         private readonly DressManager _manager;
 

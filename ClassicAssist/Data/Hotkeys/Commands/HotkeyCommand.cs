@@ -4,7 +4,7 @@ using ClassicAssist.Resources;
 
 namespace ClassicAssist.Data.Hotkeys.Commands
 {
-    public class HotkeyCommand : HotkeySettable, IComparable<HotkeyCommand>
+    public class HotkeyCommand : HotkeyEntry, IComparable<HotkeyCommand>
     {
         public HotkeyCommand()
         {

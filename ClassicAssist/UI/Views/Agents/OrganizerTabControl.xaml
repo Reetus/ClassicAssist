@@ -62,7 +62,7 @@
                         <DataTemplate>
                             <Grid>
                                 <controls:EditTextBlock
-                                    Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" MinWidth="40"
+                                    Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                     Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}" />
                             </Grid>
                         </DataTemplate>
@@ -99,7 +99,6 @@
                                         <Grid>
                                             <controls:EditTextBlock
                                                 Text="{Binding Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                                MinWidth="50"
                                                 Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=AmountColumn, Mode=OneWay}" />
                                         </Grid>
                                     </DataTemplate>

@@ -950,5 +950,33 @@ namespace ClassicAssist.Tests.MacroCommands
             Engine.Mobiles.Clear();
             Engine.Player = null;
         }
+
+        [TestMethod]
+        public void WontGetInvalidBodyGetFriendListOnlyTransformation()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+            Mobile mobile = new Mobile( 0x02 ) { Notoriety = Notoriety.Murderer, ID = 0x190 };
+            Engine.Mobiles.Add( mobile );
+            Options.CurrentOptions.Friends.Add( new FriendEntry { Name = "Friend", Serial = mobile.Serial } );
+
+            bool result = TargetCommands.GetFriendListOnly( "Closest", "Any", "Humanoid" );
+
+            Assert.IsTrue( result );
+            Assert.AreEqual( mobile.Serial, AliasCommands.GetAlias( "friend" ) );
+
+            result = TargetCommands.GetFriendListOnly( "Closest", "Any", "Transformation" );
+
+            Assert.IsFalse( result );
+
+            result = TargetCommands.GetFriendListOnly( "Next" );
+
+            Assert.IsTrue( result );
+            Assert.AreEqual( mobile.Serial, AliasCommands.GetAlias( "friend" ) );
+
+            Options.CurrentOptions.Friends.Clear();
+            ObjectCommands.ClearIgnoreList();
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
     }
 }

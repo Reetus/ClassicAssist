@@ -77,7 +77,7 @@ namespace ClassicAssist.Data.Hotkeys
                     continue;
                 }
 
-                foreach ( HotkeySettable hotkeyEntryChild in hotkeyEntry.Children )
+                foreach ( HotkeyEntry hotkeyEntryChild in hotkeyEntry.Children )
                 {
                     if ( Equals( hotkeyEntryChild.Hotkey, keys ) )
                     {
@@ -151,7 +151,7 @@ namespace ClassicAssist.Data.Hotkeys
                     continue;
                 }
 
-                foreach ( HotkeySettable hks in hke.Children )
+                foreach ( HotkeyEntry hks in hke.Children )
                 {
                     if ( hks.Hotkey.Key != keys || hks.Hotkey.Modifier != modifier )
                     {
@@ -184,7 +184,7 @@ namespace ClassicAssist.Data.Hotkeys
                     continue;
                 }
 
-                foreach ( HotkeySettable hks in hke.Children )
+                foreach ( HotkeyEntry hks in hke.Children )
                 {
                     if ( hks.Hotkey.Mouse != mouse )
                     {

@@ -18,7 +18,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.UI.ViewModels
 {
-    public class MacrosTabViewModel : HotkeySettableViewModel<MacroEntry>, ISettingProvider
+    public class MacrosTabViewModel : HotkeyEntryViewModel<MacroEntry>, ISettingProvider
     {
         private readonly MacroManager _manager;
         private int _caretPosition;

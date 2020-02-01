@@ -13,7 +13,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.UI.ViewModels.Agents
 {
-    public class OrganizerTabViewModel : HotkeySettableViewModel<OrganizerEntry>, ISettingProvider
+    public class OrganizerTabViewModel : HotkeyEntryViewModel<OrganizerEntry>, ISettingProvider
     {
         private readonly OrganizerManager _manager;
         private ICommand _insertItemCommand;

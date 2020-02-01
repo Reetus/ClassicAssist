@@ -13,7 +13,7 @@
              mc:Ignorable="d">
     <d:DesignerProperties.DesignStyle>
         <Style TargetType="UserControl">
-            <Setter Property="Background" Value="White" />
+            <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
         </Style>
     </d:DesignerProperties.DesignStyle>
     <UserControl.DataContext>
@@ -22,6 +22,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -39,67 +40,32 @@
             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                 <Setter Property="Margin" Value="0,7,0,0" />
             </Style>
+            <ContextMenu x:Key="ItemContextMenu">
+                <MenuItem Header="{x:Static resources:Strings.Set_Up}"
+                          Command="{Binding Source={StaticResource Proxy}, Path=Data.SetSkillLocksCommand}"
+                          CommandParameter="{x:Static data:LockStatus.Up}" />
+                <MenuItem Header="{x:Static resources:Strings.Set_Down}"
+                          Command="{Binding Source={StaticResource Proxy}, Path=Data.SetSkillLocksCommand}"
+                          CommandParameter="{x:Static data:LockStatus.Down}" />
+                <MenuItem Header="{x:Static resources:Strings.Set_Locked}"
+                          Command="{Binding Source={StaticResource Proxy}, Path=Data.SetSkillLocksCommand}"
+                          CommandParameter="{x:Static data:LockStatus.Locked}" />
+                <Separator />
+                <MenuItem Header="{x:Static resources:Strings.Use_skill}"
+                          Command="{Binding Source={StaticResource Proxy}, Path=Data.UseSkillCommand}" />
+            </ContextMenu>
         </Grid.Resources>
         <ListView Grid.Column="0" ItemsSource="{Binding Items}" Margin="5"
                   GridViewColumnHeader.Click="GridViewHeaderOnClick" x:Name="listView"
-                  SelectedItem="{Binding SelectedItem}">
-            <ListView.Resources>
-                <ContextMenu x:Key="ItemContextMenu">
-                    <MenuItem Header="{x:Static resources:Strings.Set_Up}"
-                              Command="{Binding Source={StaticResource Proxy}, Path=Data.SetSkillLocksCommand}"
-                              CommandParameter="{x:Static data:LockStatus.Up}" />
-                    <MenuItem Header="{x:Static resources:Strings.Set_Down}"
-                              Command="{Binding Source={StaticResource Proxy}, Path=Data.SetSkillLocksCommand}"
-                              CommandParameter="{x:Static data:LockStatus.Down}" />
-                    <MenuItem Header="{x:Static resources:Strings.Set_Locked}"
-                              Command="{Binding Source={StaticResource Proxy}, Path=Data.SetSkillLocksCommand}"
-                              CommandParameter="{x:Static data:LockStatus.Locked}" />
-                    <Separator />
-                    <MenuItem Header="{x:Static resources:Strings.Use_skill}"
-                              Command="{Binding Source={StaticResource Proxy}, Path=Data.UseSkillCommand}" />
-                </ContextMenu>
-            </ListView.Resources>
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
-                    <Setter Property="Padding" Value="0" />
-                    <Setter Property="Margin" Value="0" />
-                    <Setter Property="BorderThickness" Value="0" />
-                    <Setter Property="Foreground" Value="Black" />
-                </Style>
-            </ListView.ItemContainerStyle>
+                  SelectedItem="{Binding SelectedItem}" ContextMenu="{StaticResource ItemContextMenu}">
             <ListView.View>
                 <GridView>
                     <misc1:SkillsGridViewColumn Header="Name" DisplayMemberBinding="{Binding Skill}" Width="170"
                                                 SortField="Name" />
-                    <misc1:SkillsGridViewColumn Header="Value" Width="50" SortField="Value">
-                        <misc1:SkillsGridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Value}" Width="40" TextAlignment="Center" />
-                            </DataTemplate>
-                        </misc1:SkillsGridViewColumn.CellTemplate>
-                    </misc1:SkillsGridViewColumn>
-                    <misc1:SkillsGridViewColumn Header="Base" Width="50" SortField="Base">
-                        <misc1:SkillsGridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Base}" Width="40" TextAlignment="Center" />
-                            </DataTemplate>
-                        </misc1:SkillsGridViewColumn.CellTemplate>
-                    </misc1:SkillsGridViewColumn>
-                    <misc1:SkillsGridViewColumn Header="+/-" Width="30" SortField="Delta">
-                        <misc1:SkillsGridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Delta, StringFormat={}{0:0.#}}" TextAlignment="Center" />
-                            </DataTemplate>
-                        </misc1:SkillsGridViewColumn.CellTemplate>
-                    </misc1:SkillsGridViewColumn>
-                    <misc1:SkillsGridViewColumn Header="Cap" Width="50" SortField="Cap">
-                        <misc1:SkillsGridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Cap}" Width="40" TextAlignment="Center" />
-                            </DataTemplate>
-                        </misc1:SkillsGridViewColumn.CellTemplate>
-                    </misc1:SkillsGridViewColumn>
+                    <misc1:SkillsGridViewColumn Header="Value" Width="50" SortField="Value" DisplayMemberBinding="{Binding Value}"/>
+                    <misc1:SkillsGridViewColumn Header="Base" Width="50" SortField="Base" DisplayMemberBinding="{Binding Base}"/>
+                    <misc1:SkillsGridViewColumn Header="+/-" Width="30" SortField="Delta" DisplayMemberBinding="{Binding Delta, StringFormat={}{0:0.#}}"/>
+                    <misc1:SkillsGridViewColumn Header="Cap" Width="50" SortField="Cap" DisplayMemberBinding="{Binding Cap}"/>
                     <misc1:SkillsGridViewColumn Header="Status" Width="40" SortField="LockStatus">
                         <misc1:SkillsGridViewColumn.CellTemplate>
                             <DataTemplate>

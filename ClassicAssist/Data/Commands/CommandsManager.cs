@@ -106,7 +106,7 @@ namespace ClassicAssist.Data.Commands
                 text = ParseAsciiSpeech( data, data.Length );
             }
 
-            if ( text == null || text[0] != Options.CurrentOptions.CommandPrefix )
+            if ( string.IsNullOrEmpty(text) || text[0] != Options.CurrentOptions.CommandPrefix )
             {
                 return false;
             }

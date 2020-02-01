@@ -36,7 +36,7 @@ namespace ClassicAssist.UI.ViewModels
             IncomingPacketHandlers.SkillUpdatedEvent += OnSkillUpdatedEvent;
             IncomingPacketHandlers.SkillsListEvent += OnSkillsListEvent;
 
-            if ( Engine.Player != null )
+            if ( Engine.Player != null && Engine.Connected )
             {
                 Commands.MobileQuery( Engine.Player.Serial, MobileQueryType.SkillsRequest );
             }

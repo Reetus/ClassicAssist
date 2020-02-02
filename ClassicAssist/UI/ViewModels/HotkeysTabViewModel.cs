@@ -102,6 +102,8 @@ namespace ClassicAssist.UI.ViewModels
 
         public void Deserialize( JObject json, Options options )
         {
+            _hotkeyManager.ClearItems();
+
             IEnumerable<Type> hotkeyCommands = Assembly.GetExecutingAssembly().GetTypes()
                 .Where( i => i.IsSubclassOf( typeof( HotkeyCommand ) ) );
 

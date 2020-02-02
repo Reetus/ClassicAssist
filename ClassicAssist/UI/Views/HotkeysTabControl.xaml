@@ -9,6 +9,7 @@
              xmlns:local="clr-namespace:ClassicAssist.Data.Hotkeys"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:resources="clr-namespace:ClassicAssist.Resources"
+             xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500">
     <UserControl.DataContext>
@@ -21,6 +22,10 @@
                 <ResourceDictionary Source="../../Resources/Icons.xaml" />
                 <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <valueConverters:ValueConverterGroup x:Key="InvertAndVisibilitate">
+                <valueConverters:InverseBooleanConverter />
+                <BooleanToVisibilityConverter />
+            </valueConverters:ValueConverterGroup>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -36,7 +41,8 @@
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                     <ContentControl>
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding Image}" Stretch="Uniform" Margin="0,0,5,0" />
+                            <Image Source="{Binding Image}" Stretch="Uniform" Margin="0,0,5,0"
+                                   Visibility="{Binding IsCategory, Converter={StaticResource InvertAndVisibilitate}}" />
                             <TextBlock Text="{Binding}" Foreground="{DynamicResource ThemeForegroundBrush}" />
                         </StackPanel>
                     </ContentControl>

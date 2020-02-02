@@ -211,30 +211,5 @@ namespace ClassicAssist.Data.Hotkeys
                 }
             }
         }
-
-        public void ClearItems()
-        {
-            foreach ( HotkeyEntry entry in Items )
-            {
-                ClearHotkeys( entry );
-            }
-
-            Items.Clear();
-        }
-
-        private void ClearHotkeys( HotkeyEntry entry )
-        {
-            entry.Hotkey = ShortcutKeys.Default;
-
-            if ( !entry.IsCategory )
-            {
-                return;
-            }
-
-            foreach ( HotkeyEntry hotkeyEntry in entry.Children )
-            {
-                ClearHotkeys( hotkeyEntry );
-            }
-        }
     }
 }

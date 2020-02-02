@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data;
@@ -29,6 +30,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
     public class AutolootViewModel : BaseViewModel, ISettingProvider
     {
         private readonly object _autolootLock = new object();
+        private ICommand _clipboardCopyCommand;
+        private ICommand _clipboardPasteCommand;
 
         private ObservableCollection<PropertyEntry>
             _constraints = new ObservableCollection<PropertyEntry>();
@@ -76,6 +79,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             IncomingPacketHandlers.CorpseContainerDisplayEvent += OnCorpseContainerDisplayEvent;
         }
+
+        public ICommand ClipboardCopyCommand =>
+            _clipboardCopyCommand ?? ( _clipboardCopyCommand = new RelayCommand( ClipboardCopy, o => true ) );
+
+        public ICommand ClipboardPasteCommand =>
+            _clipboardPasteCommand ?? ( _clipboardPasteCommand = new RelayCommand( ClipboardPaste, o => true ) );
 
         public ObservableCollection<PropertyEntry> Constraints
         {
@@ -256,6 +265,37 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     Items.Add( entry );
                 }
             }
+        }
+
+        private void ClipboardPaste( object obj )
+        {
+            string text = Clipboard.GetText();
+
+            try
+            {
+                AutolootConstraintEntry entry = JsonConvert.DeserializeObject<AutolootConstraintEntry>( text );
+
+                if ( entry != null )
+                {
+                    SelectedItem?.Constraints.Add( entry );
+                }
+            }
+            catch ( Exception )
+            {
+                // ignored
+            }
+        }
+
+        private static void ClipboardCopy( object obj )
+        {
+            if ( !( obj is AutolootConstraintEntry entry ) )
+            {
+                return;
+            }
+
+            string text = JsonConvert.SerializeObject( entry );
+
+            Clipboard.SetText( text );
         }
 
         internal void OnCorpseContainerDisplayEvent( int serial )

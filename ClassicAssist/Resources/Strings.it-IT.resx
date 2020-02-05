@@ -1068,4 +1068,7 @@
   <data name="GetFriend/GetEnemy uses ignore list" xml:space="preserve">
     <value>Applica IgnoreList a GetEnemy/GetFriend</value>
   </data>
+  <data name="Ignore List" xml:space="preserve">
+    <value>Ignora elenco</value>
+  </data>
 </root>

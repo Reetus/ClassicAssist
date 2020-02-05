@@ -17,12 +17,17 @@ namespace ClassicAssist.UI.ViewModels
     {
         private ICommand _clearAllAliasesCommand;
         private ICommand _clearAllListsCommand;
+        private ICommand _clearIgnoreListCommand;
+        private ObservableCollection<int> _ignoreEntries = new ObservableCollection<int>();
         private ICommand _refreshAliasesCommand;
+        private ICommand _refreshIgnoreListCommand;
         private ICommand _refreshListsCommand;
         private ICommand _refreshTimersCommand;
         private ICommand _removeAliasCommand;
+        private ICommand _removeIgnoreEntryCommand;
         private ICommand _removeListCommand;
         private AliasEntry _selectedAlias;
+        private int _selectedIgnoreEntry;
         private ListEntry _selectedList;
         private TimerData _selectedTimer;
         private ObservableCollection<TimerData> _timers = new ObservableCollection<TimerData>();
@@ -32,6 +37,7 @@ namespace ClassicAssist.UI.ViewModels
             RefreshAliases();
             RefreshLists();
             RefreshTimers();
+            RefreshIgnoreList();
         }
 
         public ObservableCollection<AliasEntry> Aliases { get; set; } = new ObservableCollection<AliasEntry>();
@@ -42,10 +48,23 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ClearAllListsCommand =>
             _clearAllListsCommand ?? ( _clearAllListsCommand = new RelayCommand( ClearAllLists, o => true ) );
 
+        public ICommand ClearIgnoreListCommand =>
+            _clearIgnoreListCommand ?? ( _clearIgnoreListCommand = new RelayCommand( ClearIgnoreList, o => true ) );
+
+        public ObservableCollection<int> IgnoreEntries
+        {
+            get => _ignoreEntries;
+            set => SetProperty( ref _ignoreEntries, value );
+        }
+
         public ObservableCollection<ListEntry> Lists { get; set; } = new ObservableCollection<ListEntry>();
 
         public ICommand RefreshAliasesCommand =>
             _refreshAliasesCommand ?? ( _refreshAliasesCommand = new RelayCommand( o => RefreshAliases(), o => true ) );
+
+        public ICommand RefreshIgnoreListCommand =>
+            _refreshIgnoreListCommand ??
+            ( _refreshIgnoreListCommand = new RelayCommand( o => RefreshIgnoreList(), o => true ) );
 
         public ICommand RefreshListsCommand =>
             _refreshListsCommand ?? ( _refreshListsCommand = new RelayCommand( o => RefreshLists(), o => true ) );
@@ -57,6 +76,10 @@ namespace ClassicAssist.UI.ViewModels
             _removeAliasCommand ??
             ( _removeAliasCommand = new RelayCommand( RemoveAlias, o => SelectedAlias != null ) );
 
+        public ICommand RemoveIgnoreEntryCommand =>
+            _removeIgnoreEntryCommand ??
+            ( _removeIgnoreEntryCommand = new RelayCommand( RemoveIgnoreEntry, o => true ) );
+
         public ICommand RemoveListCommand =>
             _removeListCommand ??
             ( _removeListCommand = new RelayCommand( RemoveList, o => SelectedList != null ) );
@@ -65,6 +88,12 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _selectedAlias;
             set => SetProperty( ref _selectedAlias, value );
+        }
+
+        public int SelectedIgnoreEntry
+        {
+            get => _selectedIgnoreEntry;
+            set => SetProperty( ref _selectedIgnoreEntry, value );
         }
 
         public ListEntry SelectedList
@@ -83,6 +112,35 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _timers;
             set => SetProperty( ref _timers, value );
+        }
+
+        private void ClearIgnoreList( object obj )
+        {
+            ObjectCommands.ClearIgnoreList();
+
+            RefreshIgnoreList();
+        }
+
+        private void RemoveIgnoreEntry( object obj )
+        {
+            if ( !( obj is int serial ) )
+            {
+                return;
+            }
+
+            ObjectCommands.IgnoreList.Remove( serial );
+
+            RefreshIgnoreList();
+        }
+
+        private void RefreshIgnoreList()
+        {
+            IgnoreEntries.Clear();
+
+            foreach ( int serial in ObjectCommands.IgnoreList )
+            {
+                IgnoreEntries.Add( serial );
+            }
         }
 
         private void RefreshTimers()

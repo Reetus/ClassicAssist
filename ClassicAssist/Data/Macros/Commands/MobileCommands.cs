@@ -96,13 +96,6 @@ namespace ClassicAssist.Data.Macros.Commands
             Engine.Dispatcher?.Invoke( () => Options.CurrentOptions.Friends.Remove( entry ) );
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Return the name of the given mobile.",
-            InsertText = "if Name(\"self\") == \"Shmoo\":" )]
-        public static string Name( object obj = null )
-        {
-            return GetMobileProperty<string>( obj, nameof( Mobile.Name ) );
-        }
-
         [CommandsDisplay( Category = "Entity",
             Description =
                 "Returns true if given mobile is dead, false if not, if parameter is null, then returns the value from the player (parameter can be serial or alias).",

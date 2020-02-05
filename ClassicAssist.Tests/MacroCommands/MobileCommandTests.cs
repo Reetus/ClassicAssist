@@ -24,9 +24,21 @@ namespace ClassicAssist.Tests.MacroCommands
         [TestMethod]
         public void WillGetName()
         {
-            string name = MobileCommands.Name( "self" );
+            string name = EntityCommands.Name( "self" );
 
             Assert.AreEqual( "Shmoo", name );
+        }
+
+        [TestMethod]
+        public void WillTrimNameItem()
+        {
+            Engine.Items.Add( new Item( 0x40000000 ) { Name = " need trim " } );
+
+            Assert.AreEqual( "need trim", EntityCommands.Name(0x40000000  ) );
+
+            Assert.AreEqual( string.Empty, EntityCommands.Name( 0x40000001 ) );
+
+            Engine.Items.Remove( 0x40000000 );
         }
 
         [TestMethod]

@@ -1,4 +1,5 @@
-﻿using Assistant;
+﻿using System.Reflection;
+using Assistant;
 using ClassicAssist.Data.BuffIcons;
 using ClassicAssist.Data.SpecialMoves;
 using ClassicAssist.Resources;
@@ -238,6 +239,45 @@ namespace ClassicAssist.Data.Macros.Commands
             }
 
             return UOMath.MapDirection( Engine.Player.X, Engine.Player.Y, entity.X, entity.Y ).ToString();
+        }
+
+        [CommandsDisplay( Category = "Entity", Description = "Return the name of the given mobile.",
+            InsertText = "if Name(\"self\") == \"Shmoo\":" )]
+        public static string Name( object obj = null )
+        {
+            return GetEntityProperty<string>( obj, nameof( Entity.Name ) )?.Trim() ?? string.Empty;
+        }
+
+        private static T GetEntityProperty<T>( object obj, string propertyName )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial <= 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return default;
+            }
+
+            Entity entity = UOMath.IsMobile( serial )
+                ? Engine.Mobiles.GetMobile( serial )
+                : (Entity) Engine.Items.GetItem( serial );
+
+            if ( entity == null )
+            {
+                UOC.SystemMessage( Strings.Entity_not_found___ );
+                return default;
+            }
+
+            PropertyInfo property = entity.GetType().GetProperty( propertyName );
+
+            if ( property == null )
+            {
+                return default;
+            }
+
+            T val = (T) property.GetValue( entity );
+
+            return val;
         }
     }
 }

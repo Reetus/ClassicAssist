@@ -27,7 +27,7 @@
         <StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Background="{DynamicResource ThemeWindowBackgroundBrush}" BorderBrush="Transparent" Height="24"
                     Width="24" DockPanel.Dock="Right"
-                    Visibility="{Binding CanMinimize, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    IsEnabled="{Binding CanMinimize}">
                 <i:Interaction.Behaviors>
                     <misc:WindowCommandBehaviour Command="Minimize" />
                 </i:Interaction.Behaviors>
@@ -35,7 +35,7 @@
             </Button>
             <Button Background="{DynamicResource ThemeWindowBackgroundBrush}" BorderBrush="Transparent" Height="24"
                     Width="24" DockPanel.Dock="Right"
-                    Visibility="{Binding CanMaximize, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    IsEnabled="{Binding CanMaximize}">
                 <i:Interaction.Behaviors>
                     <misc:WindowCommandBehaviour Command="Maximize" />
                 </i:Interaction.Behaviors>
@@ -43,7 +43,7 @@
             </Button>
             <Button Background="{DynamicResource ThemeWindowBackgroundBrush}" BorderBrush="Transparent" Height="24"
                     Width="24" DockPanel.Dock="Right"
-                    Visibility="{Binding CanClose, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    IsEnabled="{Binding CanClose}">
                 <i:Interaction.Behaviors>
                     <misc:WindowCommandBehaviour Command="Close" />
                 </i:Interaction.Behaviors>

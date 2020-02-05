@@ -1078,6 +1078,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ignore List.
+        /// </summary>
+        public static string Ignore_List {
+            get {
+                return ResourceManager.GetString("Ignore List", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ignore ping packets.
         /// </summary>
         public static string Ignore_ping_packets {

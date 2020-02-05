@@ -30,7 +30,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel>
-        <controls:CustomWindowTitleControl DockPanel.Dock="Top" CustomTitle="{Binding Path=Title, ElementName=window}" />
+        <controls:CustomWindowTitleControl DockPanel.Dock="Top" CustomTitle="{Binding Path=Title, ElementName=window}" CanClose="False" />
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />

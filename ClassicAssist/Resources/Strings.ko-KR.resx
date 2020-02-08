@@ -1071,4 +1071,10 @@
   <data name="Ignore List" xml:space="preserve">
     <value>목록 무시</value>
   </data>
+  <data name="Warning" xml:space="preserve">
+    <value>경고</value>
+  </data>
+  <data name="Overwrite existing hotkey '{0}' ?" xml:space="preserve">
+    <value>기존 단축키 '{0}'을 덮어쓰기?</value>
+  </data>
 </root>

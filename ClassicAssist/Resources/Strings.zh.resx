@@ -1071,4 +1071,10 @@
   <data name="Ignore List" xml:space="preserve">
     <value>忽略列表</value>
   </data>
+  <data name="Warning" xml:space="preserve">
+    <value>警告</value>
+  </data>
+  <data name="Overwrite existing hotkey '{0}' ?" xml:space="preserve">
+    <value>覆盖现有的热键"{0}"？</value>
+  </data>
 </root>

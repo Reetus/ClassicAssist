@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data;
@@ -70,6 +71,12 @@ namespace ClassicAssist.UI.ViewModels
             _executeCommand ??
             ( _executeCommand = new RelayCommandAsync( Execute, o => !IsRunning && SelectedItem != null ) );
 
+        public ShortcutKeys Hotkey
+        {
+            get => SelectedItem?.Hotkey;
+            set => CheckOverwriteHotkey( SelectedItem, value );
+        }
+
         public ICommand InspectObjectCommand =>
             _inspectObjectCommand ??
             ( _inspectObjectCommand = new RelayCommandAsync( InspectObject, o => Engine.Connected ) );
@@ -104,7 +111,11 @@ namespace ClassicAssist.UI.ViewModels
         public MacroEntry SelectedItem
         {
             get => _selectedItem;
-            set => SetProperty( ref _selectedItem, value );
+            set
+            {
+                SetProperty( ref _selectedItem, value );
+                NotifyPropertyChanged( nameof( Hotkey ) );
+            }
         }
 
         public ICommand ShowActiveObjectsWindowCommand =>
@@ -190,6 +201,38 @@ namespace ClassicAssist.UI.ViewModels
                     AliasCommands.SetAlias( token["Name"].ToObject<string>(), token["Value"].ToObject<int>() );
                 }
             }
+        }
+
+        private void CheckOverwriteHotkey( HotkeyEntry selectedItem, ShortcutKeys hotkey )
+        {
+            HotkeyEntry conflict = null;
+
+            foreach ( HotkeyEntry hotkeyEntry in HotkeyManager.GetInstance().Items )
+            {
+                foreach ( HotkeyEntry entry in hotkeyEntry.Children )
+                {
+                    if ( entry.Hotkey.Equals( hotkey ) )
+                    {
+                        conflict = entry;
+                    }
+                }
+            }
+
+            if ( conflict != null && !ReferenceEquals( selectedItem, conflict ) )
+            {
+                MessageBoxResult result =
+                    MessageBox.Show( string.Format( Strings.Overwrite_existing_hotkey___0____, conflict ),
+                        Strings.Warning, MessageBoxButton.YesNo );
+
+                if ( result == MessageBoxResult.No )
+                {
+                    NotifyPropertyChanged( nameof( Hotkey ) );
+                    return;
+                }
+            }
+
+            SelectedItem.Hotkey = hotkey;
+            NotifyPropertyChanged( nameof( Hotkey ) );
         }
 
         private static void SaveMacro( object obj )

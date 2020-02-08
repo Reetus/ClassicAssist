@@ -172,7 +172,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     { "ID", entry.ID },
                     { "Autoloot", entry.Autoloot },
                     { "Rehue", entry.Rehue },
-                    { "RehueHue", entry.RehueHue }
+                    { "RehueHue", entry.RehueHue },
+                    { "Enabled", entry.Enabled }
                 };
 
                 if ( entry.Constraints != null )
@@ -229,7 +230,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         ID = token["ID"]?.ToObject<int>() ?? 0,
                         Autoloot = token["Autoloot"]?.ToObject<bool>() ?? false,
                         Rehue = token["Rehue"]?.ToObject<bool>() ?? false,
-                        RehueHue = token["RehueHue"]?.ToObject<int>() ?? 0
+                        RehueHue = token["RehueHue"]?.ToObject<int>() ?? 0,
+                        Enabled = token["Enabled"]?.ToObject<bool>() ?? true
                     };
 
                     if ( token["Properties"] != null )
@@ -336,6 +338,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                 foreach ( AutolootEntry entry in Items )
                 {
+                    if ( !entry.Enabled )
+                    {
+                        continue;
+                    }
+
                     IEnumerable<Item> matchItems = AutolootFilter( items, entry );
 
                     if ( matchItems == null )

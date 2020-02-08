@@ -1071,4 +1071,10 @@
   <data name="Ignore List" xml:space="preserve">
     <value>Ignore List</value>
   </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Overwrite existing hotkey '{0}' ?" xml:space="preserve">
+    <value>Overwrite existing hotkey '{0}' ?</value>
+  </data>
 </root>

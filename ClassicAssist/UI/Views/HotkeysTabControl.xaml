@@ -58,7 +58,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <controls:TextBoxKey x:Name="textBoxKey"
-                                     Shortcut="{Binding Path=SelectedItem.(local:HotkeyEntry.Hotkey)}" Grid.Row="0"
+                                     Shortcut="{Binding Hotkey}" Grid.Row="0"
                                      Margin="10">
                     <controls:TextBoxKey.Style>
                         <Style TargetType="controls:TextBoxKey">

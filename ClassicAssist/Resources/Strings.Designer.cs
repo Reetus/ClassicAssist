@@ -1762,6 +1762,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Overwrite existing hotkey &apos;{0}&apos; ?.
+        /// </summary>
+        public static string Overwrite_existing_hotkey___0____ {
+            get {
+                return ResourceManager.GetString("Overwrite existing hotkey \'{0}\' ?", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pass to UO.
         /// </summary>
         public static string Pass_to_UO {
@@ -2901,6 +2910,15 @@ namespace ClassicAssist.Resources {
         public static string Warn_when_counter_amount_below_ {
             get {
                 return ResourceManager.GetString("Warn when counter amount below:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
             }
         }
         

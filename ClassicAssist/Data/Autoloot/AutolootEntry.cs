@@ -13,6 +13,7 @@ namespace ClassicAssist.Data.Autoloot
         private ObservableCollection<AutolootConstraintEntry>
             _constraints = new ObservableCollection<AutolootConstraintEntry>();
 
+        private bool _enabled = true;
         private int _id;
         private string _name;
         private bool _rehue;
@@ -28,6 +29,12 @@ namespace ClassicAssist.Data.Autoloot
         {
             get => _constraints;
             set => SetProperty( ref _constraints, value );
+        }
+
+        public bool Enabled
+        {
+            get => _enabled;
+            set => SetProperty( ref _enabled, value );
         }
 
         public int ID

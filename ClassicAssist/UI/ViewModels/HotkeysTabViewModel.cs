@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Input;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
@@ -35,6 +36,12 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ExecuteCommand =>
             _executeCommand ?? ( _executeCommand = new RelayCommand( ExecuteHotkey, o => SelectedItem != null ) );
 
+        public ShortcutKeys Hotkey
+        {
+            get => SelectedItem?.Hotkey;
+            set => CheckOverwriteHotkey( SelectedItem, value );
+        }
+
         public ObservableCollectionEx<HotkeyEntry> Items
         {
             get => _hotkeyManager.Items;
@@ -44,7 +51,11 @@ namespace ClassicAssist.UI.ViewModels
         public HotkeyEntry SelectedItem
         {
             get => _selectedItem;
-            set => SetProperty( ref _selectedItem, value );
+            set
+            {
+                SetProperty( ref _selectedItem, value );
+                NotifyPropertyChanged( nameof( Hotkey ) );
+            }
         }
 
         public void Serialize( JObject json )
@@ -223,6 +234,38 @@ namespace ClassicAssist.UI.ViewModels
                     entry.PassToUO = token["PassToUO"]?.ToObject<bool>() ?? true;
                 }
             }
+        }
+
+        private void CheckOverwriteHotkey( HotkeyEntry selectedItem, ShortcutKeys hotkey )
+        {
+            HotkeyEntry conflict = null;
+
+            foreach ( HotkeyEntry hotkeyEntry in Items )
+            {
+                foreach ( HotkeyEntry entry in hotkeyEntry.Children )
+                {
+                    if ( entry.Hotkey.Equals( hotkey ) )
+                    {
+                        conflict = entry;
+                    }
+                }
+            }
+
+            if ( conflict != null && !ReferenceEquals( selectedItem, conflict ) )
+            {
+                MessageBoxResult result =
+                    MessageBox.Show( string.Format( Strings.Overwrite_existing_hotkey___0____, conflict ),
+                        Strings.Warning, MessageBoxButton.YesNo );
+
+                if ( result == MessageBoxResult.No )
+                {
+                    NotifyPropertyChanged( nameof( Hotkey ) );
+                    return;
+                }
+            }
+
+            SelectedItem.Hotkey = hotkey;
+            NotifyPropertyChanged( nameof( Hotkey ) );
         }
 
         private void ClearAllHotkeys()

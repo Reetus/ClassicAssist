@@ -992,7 +992,7 @@ namespace ClassicAssist.UO.Network
             bool allowNameChange = reader.ReadBoolean(); // Allow Name Change
             byte features = reader.ReadByte();
 
-            Mobile mobile = serial == Engine.Player.Serial ? Engine.Player : Engine.GetOrCreateMobile( serial );
+            Mobile mobile = serial == Engine.Player?.Serial ? Engine.Player : Engine.GetOrCreateMobile( serial );
             mobile.Name = name;
             mobile.Hits = hits;
             mobile.HitsMax = hitsMax;

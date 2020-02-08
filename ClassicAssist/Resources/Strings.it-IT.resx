@@ -1071,4 +1071,10 @@
   <data name="Ignore List" xml:space="preserve">
     <value>Ignora elenco</value>
   </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Avviso</value>
+  </data>
+  <data name="Overwrite existing hotkey '{0}' ?" xml:space="preserve">
+    <value>Sovrascrivere il tasto di scelta rapida '{0}' esistente?</value>
+  </data>
 </root>

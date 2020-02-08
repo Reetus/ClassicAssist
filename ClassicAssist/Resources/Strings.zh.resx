@@ -1077,4 +1077,13 @@
   <data name="Overwrite existing hotkey '{0}' ?" xml:space="preserve">
     <value>覆盖现有的热键"{0}"？</value>
   </data>
+  <data name="Abilities Gump" xml:space="preserve">
+    <value>能力甘</value>
+  </data>
+  <data name="X:" xml:space="preserve">
+    <value>Ⅹ：</value>
+  </data>
+  <data name="Y:" xml:space="preserve">
+    <value>Y：</value>
+  </data>
 </root>

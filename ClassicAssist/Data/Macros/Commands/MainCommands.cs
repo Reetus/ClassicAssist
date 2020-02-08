@@ -114,7 +114,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             manager.Enabled = !manager.Enabled;
 
-            UOC.SystemMessage( manager.Enabled ? Strings.Hotkeys_enabled___ : Strings.Hotkeys_disabled___, 0x3F );
+            UOC.SystemMessage( manager.Enabled ? Strings.Hotkeys_enabled___ : Strings.Hotkeys_disabled___, manager.Enabled ? 0x3F : 36 );
         }
 
         [CommandsDisplay( Category = "Main",

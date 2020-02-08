@@ -21,6 +21,9 @@ namespace ClassicAssist.Data
     {
         public const string DEFAULT_SETTINGS_FILENAME = "settings.json";
         private static string _profilePath;
+        private bool _abilitiesGump = true;
+        private int _abilitiesGumpX = 100;
+        private int _abilitiesGumpY = 100;
         private bool _actionDelay;
         private int _actionDelayMs;
         private bool _alwaysOnTop;
@@ -52,6 +55,24 @@ namespace ClassicAssist.Data
         private bool _useExperimentalFizzleDetection;
         private bool _useObjectQueue;
         private int _useObjectQueueAmount = 5;
+
+        public bool AbilitiesGump
+        {
+            get => _abilitiesGump;
+            set => SetProperty( ref _abilitiesGump, value );
+        }
+
+        public int AbilitiesGumpX
+        {
+            get => _abilitiesGumpX;
+            set => SetProperty( ref _abilitiesGumpX, value );
+        }
+
+        public int AbilitiesGumpY
+        {
+            get => _abilitiesGumpY;
+            set => SetProperty( ref _abilitiesGumpY, value );
+        }
 
         public bool ActionDelay
         {

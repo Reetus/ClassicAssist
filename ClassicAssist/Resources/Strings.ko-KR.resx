@@ -1075,6 +1075,15 @@
     <value>경고</value>
   </data>
   <data name="Overwrite existing hotkey '{0}' ?" xml:space="preserve">
-    <value>기존 단축키 '{0}'을 덮어쓰기?</value>
+    <value>기존 단축키 {0} 해제됩니다</value>
+  </data>
+  <data name="Abilities Gump" xml:space="preserve">
+    <value>능력 검프</value>
+  </data>
+  <data name="X:" xml:space="preserve">
+    <value>Ⅹ:</value>
+  </data>
+  <data name="Y:" xml:space="preserve">
+    <value>Y:</value>
   </data>
 </root>

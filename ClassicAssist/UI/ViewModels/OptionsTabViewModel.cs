@@ -63,6 +63,9 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "EnemyTargetMessage", CurrentOptions.EnemyTargetMessage );
             options.Add( "DefaultMacroQuietMode", CurrentOptions.DefaultMacroQuietMode );
             options.Add( "GetFriendEnemyUsesIgnoreList", CurrentOptions.GetFriendEnemyUsesIgnoreList );
+            options.Add( "AbilitiesGump", CurrentOptions.AbilitiesGump );
+            options.Add( "AbilitiesGumpX", CurrentOptions.AbilitiesGumpX );
+            options.Add( "AbilitiesGumpY", CurrentOptions.AbilitiesGumpY );
 
             json?.Add( "Options", options );
         }
@@ -119,6 +122,19 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.DefaultMacroQuietMode = config?["DefaultMacroQuietMode"]?.ToObject<bool>() ?? false;
             CurrentOptions.GetFriendEnemyUsesIgnoreList =
                 config?["GetFriendEnemyUsesIgnoreList"]?.ToObject<bool>() ?? false;
+            CurrentOptions.AbilitiesGump = config?["AbilitiesGump"]?.ToObject<bool>() ?? true;
+            CurrentOptions.AbilitiesGumpX = config?["AbilitiesGumpX"]?.ToObject<int>() ?? 100;
+            CurrentOptions.AbilitiesGumpY = config?["AbilitiesGumpY"]?.ToObject<int>() ?? 100;
+
+            if ( CurrentOptions.AbilitiesGumpX <= 1 )
+            {
+                CurrentOptions.AbilitiesGumpX = 100;
+            }
+
+            if ( CurrentOptions.AbilitiesGumpY <= 1 )
+            {
+                CurrentOptions.AbilitiesGumpY = 100;
+            }
         }
 
         // Replay CurrentOptions changes onto Options.CurrentOptions

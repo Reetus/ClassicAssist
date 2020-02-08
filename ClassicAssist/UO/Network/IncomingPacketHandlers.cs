@@ -47,6 +47,8 @@ namespace ClassicAssist.UO.Network
 
         public delegate void dVendorSellDisplay( int serial, SellListEntry[] entries );
 
+        private const int HUE_RED = 36;
+
         private static PacketHandler[] _handlers;
         private static PacketHandler[] _extendedHandlers;
 
@@ -170,10 +172,11 @@ namespace ClassicAssist.UO.Network
 
             if ( manager.Enabled != AbilityType.None )
             {
-                Commands.SystemMessage( Strings.Current_Ability_Cleared );
+                Commands.SystemMessage( Strings.Current_Ability_Cleared, HUE_RED );
             }
 
             manager.Enabled = AbilityType.None;
+            manager.ResendGump( AbilityType.None );
         }
 
         private static void OnShopList( PacketReader reader )
@@ -1130,6 +1133,11 @@ namespace ClassicAssist.UO.Network
             if ( !( mobile is PlayerMobile ) )
             {
                 Engine.Mobiles.Add( mobile );
+            }
+            else
+            {
+                AbilitiesManager manager = AbilitiesManager.GetInstance();
+                manager.ResendGump( manager.Enabled );
             }
 
             MobileIncomingEvent?.Invoke( mobile, container );

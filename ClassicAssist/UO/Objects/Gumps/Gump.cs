@@ -98,8 +98,6 @@ namespace ClassicAssist.UO.Objects.Gumps
 
             _elements = new List<GumpElement>();
             _strings = new List<string>();
-
-            Engine.Gumps.Add( this );
         }
 
         public bool Closable { get; set; }
@@ -352,6 +350,7 @@ namespace ClassicAssist.UO.Objects.Gumps
         {
             byte[] bytes = Compile();
 
+            Engine.Gumps.Add( this );
             Engine.SendPacketToClient( bytes, bytes.Length );
         }
 

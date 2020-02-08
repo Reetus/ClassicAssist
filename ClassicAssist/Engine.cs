@@ -425,6 +425,7 @@ namespace Assistant
             } );
 
             AbilitiesManager.GetInstance().Enabled = AbilityType.None;
+            AbilitiesManager.GetInstance().ResendGump( AbilityType.None );
         }
 
         public static void SendPacketToServer( byte[] packet, int length )

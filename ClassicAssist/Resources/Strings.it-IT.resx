@@ -397,10 +397,10 @@
     <value>Tasti Rapidi</value>
   </data>
   <data name="Hotkeys disabled..." xml:space="preserve">
-    <value>Tasti di scelta rapida disabilitati...</value>
+    <value>Tasti Rapidi disabilitati...</value>
   </data>
   <data name="Hotkeys enabled..." xml:space="preserve">
-    <value>Tasti di scelta rapida abilitati...</value>
+    <value>Tasti Rapidi abilitati...</value>
   </data>
   <data name="Ignore ping packets" xml:space="preserve">
     <value>Ignora pacchetti ping</value>
@@ -988,7 +988,7 @@
     <value>Previeni attacco innocenti in zona guardie</value>
   </data>
   <data name="Applies to hotkeys / macros only." xml:space="preserve">
-    <value>Applica solo alle Hotkeys / Scripts.</value>
+    <value>Applica solo ai Tasti Rapidi / Scripts.</value>
   </data>
   <data name="Hue Picker" xml:space="preserve">
     <value>Prendi colore</value>
@@ -1072,9 +1072,18 @@
     <value>Ignora elenco</value>
   </data>
   <data name="Warning" xml:space="preserve">
-    <value>Avviso</value>
+    <value>Attenzione</value>
   </data>
   <data name="Overwrite existing hotkey '{0}' ?" xml:space="preserve">
-    <value>Sovrascrivere il tasto di scelta rapida '{0}' esistente?</value>
+    <value>Il Tasto Rapido '{0}' è gia assegnato. Vuoi cambiarlo?</value>
+  </data>
+  <data name="Abilities Gump" xml:space="preserve">
+    <value>Abilità Gump</value>
+  </data>
+  <data name="X:" xml:space="preserve">
+    <value>X:</value>
+  </data>
+  <data name="Y:" xml:space="preserve">
+    <value>Y:</value>
   </data>
 </root>

@@ -141,6 +141,8 @@
             </Grid>
             <CheckBox Content="{x:Static resources:Strings.GetFriend_GetEnemy_uses_ignore_list}"
                       IsChecked="{Binding CurrentOptions.GetFriendEnemyUsesIgnoreList}" />
+            <CheckBox Content="{x:Static resources:Strings.Abilities_Gump}"
+                      IsChecked="{Binding CurrentOptions.AbilitiesGump}" />
         </StackPanel>
     </Grid>
 </UserControl>

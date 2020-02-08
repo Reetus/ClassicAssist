@@ -1077,4 +1077,13 @@
   <data name="Overwrite existing hotkey '{0}' ?" xml:space="preserve">
     <value>Overwrite existing hotkey '{0}' ?</value>
   </data>
+  <data name="Abilities Gump" xml:space="preserve">
+    <value>Abilities Gump</value>
+  </data>
+  <data name="X:" xml:space="preserve">
+    <value>X:</value>
+  </data>
+  <data name="Y:" xml:space="preserve">
+    <value>Y:</value>
+  </data>
 </root>

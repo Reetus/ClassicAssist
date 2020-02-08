@@ -79,6 +79,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Abilities Gump.
+        /// </summary>
+        public static string Abilities_Gump {
+            get {
+                return ResourceManager.GetString("Abilities Gump", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ability already set....
         /// </summary>
         public static string Ability_already_set___ {
@@ -2937,6 +2946,24 @@ namespace ClassicAssist.Resources {
         public static string World_Status {
             get {
                 return ResourceManager.GetString("World_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X:.
+        /// </summary>
+        public static string X_ {
+            get {
+                return ResourceManager.GetString("X:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Y:.
+        /// </summary>
+        public static string Y_ {
+            get {
+                return ResourceManager.GetString("Y:", resourceCulture);
             }
         }
     }

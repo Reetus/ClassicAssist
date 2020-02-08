@@ -1,4 +1,7 @@
-﻿using ClassicAssist.UO.Data;
+﻿using Assistant;
+using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network.PacketFilter;
+using ClassicAssist.UO.Network.Packets;
 using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.Data.Macros.Commands
@@ -63,6 +66,35 @@ namespace ClassicAssist.Data.Macros.Commands
             int serial = AliasCommands.ResolveSerial( obj );
 
             UOC.OverheadMessage( message, hue, serial );
+        }
+
+        [CommandsDisplay( Category = "Messages", Description = "Sends the specified message as a prompt response",
+            InsertText = "PromptMsg(\"hello\")" )]
+        public static void PromptMsg( string message )
+        {
+            Engine.SendPacketToServer( new UnicodePromptResponse( Engine.LastPromptSerial, Engine.LastPromptID,
+                message ) );
+        }
+
+        [CommandsDisplay( Category = "Messages",
+            Description = "Wait the specified timeout for a prompt packet to be received",
+            InsertText = "WaitForPrompt(5000)" )]
+        public static bool WaitForPrompt( int timeout )
+        {
+            PacketFilterInfo pfi = new PacketFilterInfo( 0xC2 );
+
+            PacketWaitEntry packetWaitEntry = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );
+
+            try
+            {
+                bool result = packetWaitEntry.Lock.WaitOne( timeout );
+
+                return result;
+            }
+            finally
+            {
+                Engine.PacketWaitEntries.Remove( packetWaitEntry );
+            }
         }
     }
 }

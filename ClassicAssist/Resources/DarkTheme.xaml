@@ -10,7 +10,7 @@
     <SolidColorBrush x:Key="ThemeForegroundBrush" Color="#CCCCCC" />
     <SolidColorBrush x:Key="ThemeWindowBackgroundBrush" Color="Black" />
     <SolidColorBrush x:Key="ThemeBorderBrush" Color="#474747" />
-    <SolidColorBrush x:Key="ThemeInnerControlBackgroundBrush" Color="#151515"/>
+    <SolidColorBrush x:Key="ThemeInnerControlBackgroundBrush" Color="#151515" />
     <SolidColorBrush x:Key="ThemeTabBackgroundBrush" Color="#121212" />
     <SolidColorBrush x:Key="IconForegroundBrush" Color="#CCCCCC" />
 
@@ -54,7 +54,7 @@
                         <ContentPresenter Margin="4,0,0,0"
                                           VerticalAlignment="Center"
                                           HorizontalAlignment="Left"
-                                          RecognizesAccessKey="True"/>
+                                          RecognizesAccessKey="True" />
                     </BulletDecorator>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="false">
@@ -146,12 +146,12 @@
     </Style>
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle}" />
     <Style TargetType="{x:Type TreeView}" BasedOn="{StaticResource TreeViewStyle}">
-        <Setter Property="Background" Value="{DynamicResource ThemeInnerControlBackgroundBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource ThemeInnerControlBackgroundBrush}" />
     </Style>
     <Style TargetType="{x:Type GridSplitter}" BasedOn="{StaticResource GridSplitterStyle}" />
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxStyle}">
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
     <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource ScrollViewerStyle}" />
     <Style x:Key="{x:Type avalonedit:TextEditor}" TargetType="{x:Type avalonedit:TextEditor}"
@@ -526,8 +526,9 @@
         </Setter>
     </Style>
 
-    <Style x:Key="{x:Type controls:EditTextBlock}" TargetType="{x:Type controls:EditTextBlock}" BasedOn="{StaticResource {x:Type controls:EditTextBlock}}">
-        <Setter Property="MinWidth" Value="50"/>
+    <Style x:Key="{x:Type controls:EditTextBlock}" TargetType="{x:Type controls:EditTextBlock}"
+           BasedOn="{StaticResource {x:Type controls:EditTextBlock}}">
+        <Setter Property="MinWidth" Value="50" />
     </Style>
 
     <Style x:Key="{x:Type TextBlock}" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">

@@ -47,7 +47,8 @@
                      SelectedItem="{Binding SelectedItem}" SelectedIndex="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <controls1:EditTextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=listBox1, Mode=OneWay}" />
+                        <controls1:EditTextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                                 Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=listBox1, Mode=OneWay}" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

@@ -86,6 +86,8 @@ namespace Assistant
         public static GumpCollection Gumps { get; set; } = new GumpCollection();
         public static ItemCollection Items { get; set; } = new ItemCollection( 0 );
         public static CircularBuffer<JournalEntry> Journal { get; set; } = new CircularBuffer<JournalEntry>( 1024 );
+        public static int LastPromptID { get; set; }
+        public static int LastPromptSerial { get; set; }
         public static Queue<object> LastTargetQueue { get; set; } = new Queue<object>();
         public static MobileCollection Mobiles { get; set; } = new MobileCollection( Items );
         public static PacketWaitEntries PacketWaitEntries { get; set; }

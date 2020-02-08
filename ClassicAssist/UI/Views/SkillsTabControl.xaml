@@ -62,10 +62,14 @@
                 <GridView>
                     <misc1:SkillsGridViewColumn Header="Name" DisplayMemberBinding="{Binding Skill}" Width="170"
                                                 SortField="Name" />
-                    <misc1:SkillsGridViewColumn Header="Value" Width="50" SortField="Value" DisplayMemberBinding="{Binding Value}"/>
-                    <misc1:SkillsGridViewColumn Header="Base" Width="50" SortField="Base" DisplayMemberBinding="{Binding Base}"/>
-                    <misc1:SkillsGridViewColumn Header="+/-" Width="30" SortField="Delta" DisplayMemberBinding="{Binding Delta, StringFormat={}{0:0.#}}"/>
-                    <misc1:SkillsGridViewColumn Header="Cap" Width="50" SortField="Cap" DisplayMemberBinding="{Binding Cap}"/>
+                    <misc1:SkillsGridViewColumn Header="Value" Width="50" SortField="Value"
+                                                DisplayMemberBinding="{Binding Value}" />
+                    <misc1:SkillsGridViewColumn Header="Base" Width="50" SortField="Base"
+                                                DisplayMemberBinding="{Binding Base}" />
+                    <misc1:SkillsGridViewColumn Header="+/-" Width="30" SortField="Delta"
+                                                DisplayMemberBinding="{Binding Delta, StringFormat={}{0:0.#}}" />
+                    <misc1:SkillsGridViewColumn Header="Cap" Width="50" SortField="Cap"
+                                                DisplayMemberBinding="{Binding Cap}" />
                     <misc1:SkillsGridViewColumn Header="Status" Width="40" SortField="LockStatus">
                         <misc1:SkillsGridViewColumn.CellTemplate>
                             <DataTemplate>

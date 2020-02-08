@@ -94,6 +94,7 @@ namespace ClassicAssist.UO.Network
             Register( 0xB9, 5, OnSupportedFeatures );
             Register( 0xBF, 0, OnExtendedCommand );
             Register( 0xC1, 0, OnLocalizedText );
+            Register( 0xC2, 0, OnUnicodePrompt );
             Register( 0xCC, 0, OnLocalizedTextAffix );
             Register( 0xD6, 0, OnProperties );
             Register( 0xDD, 0, OnCompressedGump );
@@ -105,6 +106,15 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x08, 0, OnMapChange );
             RegisterExtended( 0x21, 0, OnClearWeaponAbility );
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
+        }
+
+        private static void OnUnicodePrompt( PacketReader reader )
+        {
+            int senderSerial = reader.ReadInt32();
+            int promptId = reader.ReadInt32();
+
+            Engine.LastPromptSerial = senderSerial;
+            Engine.LastPromptID = promptId;
         }
 
         private static void OnShopSell( PacketReader reader )

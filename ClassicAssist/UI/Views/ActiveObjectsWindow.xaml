@@ -155,7 +155,8 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <ListBox x:Name="listBox" ItemsSource="{Binding IgnoreEntries}" SelectedItem="{Binding SelectedIgnoreEntry}">
+                    <ListBox x:Name="listBox" ItemsSource="{Binding IgnoreEntries}"
+                             SelectedItem="{Binding SelectedIgnoreEntry}">
                         <ListBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="{x:Static resources:Strings.Remove}"
@@ -165,7 +166,7 @@
                         </ListBox.ContextMenu>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding StringFormat={}0x{0:x}}"/>
+                                <TextBlock Text="{Binding StringFormat={}0x{0:x}}" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

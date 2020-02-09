@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -26,6 +27,8 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _newProfileCommand;
         private Options _options;
         private ObservableCollection<string> _profiles = new ObservableCollection<string>();
+        private ICommand _removeSavedPasswordCommand;
+        private Dictionary<string, string> _savedPasswords = new Dictionary<string, string>();
         private string _selectedProfile = Options.CurrentOptions.Name;
 
         public GeneralControlViewModel()
@@ -45,6 +48,9 @@ namespace ClassicAssist.UI.ViewModels
             RefreshProfiles();
 
             AssistantOptions.ProfileChangedEvent += OnProfileChangedEvent;
+            AssistantOptions.SavedPasswordsChanged += OnSavedPasswordsChangedEvent;
+
+            OnSavedPasswordsChangedEvent( this, EventArgs.Empty );
         }
 
         public ICommand ChangeProfileCommand =>
@@ -96,6 +102,28 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _profiles;
             set => SetProperty( ref _profiles, value );
+        }
+
+        public ICommand RemoveSavedPasswordCommand =>
+            _removeSavedPasswordCommand ?? ( _removeSavedPasswordCommand =
+                new RelayCommand( RemoveSavedPassword, o => AssistantOptions.SavePasswords ) );
+
+        public Dictionary<string, string> SavedPasswords
+        {
+            get => _savedPasswords;
+            set => SetProperty( ref _savedPasswords, value );
+        }
+
+        public bool SavePasswords
+        {
+            get => AssistantOptions.SavePasswords;
+            set => AssistantOptions.SavePasswords = value;
+        }
+
+        public bool SavePasswordsOnlyBlank
+        {
+            get => AssistantOptions.SavePasswordsOnlyBlank;
+            set => AssistantOptions.SavePasswordsOnlyBlank = value;
         }
 
         public ICommand SaveProfileCommand =>
@@ -200,6 +228,26 @@ namespace ClassicAssist.UI.ViewModels
                     configurableFilter.Deserialize( token["Options"] );
                 }
             }
+        }
+
+        private void OnSavedPasswordsChangedEvent( object sender, EventArgs e )
+        {
+            Dictionary<string, string> newList =
+                AssistantOptions.SavedPasswords.ToDictionary( kvp => kvp.Key, kvp => kvp.Value );
+
+            SavedPasswords = newList;
+        }
+
+        private void RemoveSavedPassword( object obj )
+        {
+            if ( !( obj is KeyValuePair<string, string> kvp ) )
+            {
+                return;
+            }
+
+            SavedPasswords.Remove( kvp.Key );
+            AssistantOptions.SavedPasswords.Remove( kvp.Key );
+            AssistantOptions.OnPasswordsChanged();
         }
 
         private static void ConfigureFilter( object obj )

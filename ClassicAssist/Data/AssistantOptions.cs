@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -24,7 +25,12 @@ namespace ClassicAssist.Data
         public static DateTime AutoBackupProfilesLast { get; set; }
         public static Language LanguageOverride { get; set; }
         public static string LastProfile { get; set; }
+        public static Dictionary<string, string> SavedPasswords { get; set; } = new Dictionary<string, string>();
+        public static bool SavePasswords { get; set; }
+        public static bool SavePasswordsOnlyBlank { get; set; }
         public static Version UpdateGumpVersion { get; set; }
+
+        public static event EventHandler SavedPasswordsChanged;
 
         public static void Save()
         {
@@ -36,7 +42,9 @@ namespace ClassicAssist.Data
                 { "AutoBackupProfiles", AutoBackupProfiles },
                 { "AutoBackupProfilesDays", AutoBackupProfilesDays },
                 { "AutoBackupProfilesDirectory", AutoBackupProfilesDirectory },
-                { "AutoBackupProfilesLast", AutoBackupProfilesLast }
+                { "AutoBackupProfilesLast", AutoBackupProfilesLast },
+                { "SavePasswords", SavePasswords },
+                { "SavePasswordsOnlyBlank", SavePasswordsOnlyBlank }
             };
 
             JArray linkedProfilesArray = new JArray();
@@ -48,6 +56,18 @@ namespace ClassicAssist.Data
             }
 
             json.Add( "Profiles", linkedProfilesArray );
+
+            JArray savedPasswordsArray = new JArray();
+
+            foreach ( KeyValuePair<string, string> kvp in SavedPasswords )
+            {
+                savedPasswordsArray.Add( new JObject
+                {
+                    { "Username", kvp.Key }, { "Password", Crypter.Encrypt( kvp.Value ) }
+                } );
+            }
+
+            json.Add( "SavedPasswords", savedPasswordsArray );
 
             File.WriteAllText( Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Assistant.json" ),
                 json.ToString( Formatting.Indented ) );
@@ -75,6 +95,8 @@ namespace ClassicAssist.Data
             AutoBackupProfilesDirectory =
                 json?["AutoBackupProfilesDirectory"]?.ToObject<string>() ?? DEFAULT_BACKUP_PATH;
             AutoBackupProfilesLast = json?["AutoBackupProfilesLast"]?.ToObject<DateTime>() ?? default;
+            SavePasswords = json?["SavePasswords"]?.ToObject<bool>() ?? false;
+            SavePasswordsOnlyBlank = json?["SavePasswordsOnlyBlank"]?.ToObject<bool>() ?? false;
 
             if ( json?["Profiles"] != null )
             {
@@ -84,12 +106,28 @@ namespace ClassicAssist.Data
                 }
             }
 
+            if ( json?["SavedPasswords"] != null )
+            {
+                foreach ( JToken token in json["SavedPasswords"] )
+                {
+                    SavedPasswords.Add( token["Username"].ToObject<string>(),
+                        Crypter.Decrypt( token["Password"].ToObject<string>() ) );
+                }
+
+                OnPasswordsChanged();
+            }
+
             SetLanguage( LanguageOverride );
 
             if ( DateTime.Now - AutoBackupProfilesLast >= TimeSpan.FromDays( AutoBackupProfilesDays ) )
             {
                 BackupProfiles();
             }
+        }
+
+        public static void OnPasswordsChanged()
+        {
+            SavedPasswordsChanged?.Invoke( null, new PropertyChangedEventArgs( nameof( SavedPasswords ) ) );
         }
 
         private static void BackupProfiles()

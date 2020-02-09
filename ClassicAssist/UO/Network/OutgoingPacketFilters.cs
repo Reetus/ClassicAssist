@@ -1,23 +1,100 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using ClassicAssist.Data;
 using ClassicAssist.Resources;
+using ClassicAssist.UO.Data;
 using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.UO.Network
 {
     public static class OutgoingPacketFilters
     {
-        private static readonly Dictionary<byte, Func<byte[], int, bool>> _filters =
-            new Dictionary<byte, Func<byte[], int, bool>>();
+        public delegate bool OnReceive( ref byte[] packet, ref int length );
+
+        private static readonly Dictionary<byte, OnReceive> _filters =
+            new Dictionary<byte, OnReceive>();
 
         public static void Initialize()
         {
             Register( 0x05, OnAttackRequested );
+            Register( 0x80, OnAccountLoginRequest );
+            Register( 0x91, OnGameServerLogin );
         }
 
-        private static bool OnAttackRequested( byte[] packet, int length )
+        private static bool OnGameServerLogin( ref byte[] packet, ref int length )
+        {
+            PacketReader reader = new PacketReader( packet, length, true );
+
+            int authid = reader.ReadInt32();
+
+            string username = reader.ReadString( 30 );
+            string password = reader.ReadString( 30 );
+
+            if ( !AssistantOptions.SavePasswords )
+            {
+                return false;
+            }
+
+            if ( !AssistantOptions.SavedPasswords.ContainsKey( username ) ||
+                 AssistantOptions.SavePasswordsOnlyBlank && !string.IsNullOrEmpty( password ) )
+            {
+                return false;
+            }
+
+            string storedPassword = AssistantOptions.SavedPasswords[username];
+            byte[] passwordBytes = Encoding.ASCII.GetBytes( storedPassword );
+            byte[] buffer = new byte[30];
+
+            Buffer.BlockCopy( passwordBytes, 0, buffer, 0, passwordBytes.Length );
+            Buffer.BlockCopy( buffer, 0, packet, 35, buffer.Length );
+
+            return false;
+        }
+
+        private static bool OnAccountLoginRequest( ref byte[] packet, ref int packetLength )
+        {
+            PacketReader reader = new PacketReader( packet, packetLength, true );
+
+            string username = reader.ReadString( 30 );
+            string password = reader.ReadString( 30 );
+
+            if ( !AssistantOptions.SavePasswords )
+            {
+                return false;
+            }
+
+            if ( AssistantOptions.SavedPasswords.ContainsKey( username ) &&
+                 ( !AssistantOptions.SavePasswordsOnlyBlank || string.IsNullOrEmpty( password ) ) )
+            {
+                string storedPassword = AssistantOptions.SavedPasswords[username];
+                byte[] passwordBytes = Encoding.ASCII.GetBytes( storedPassword );
+                byte[] buffer = new byte[30];
+
+                Buffer.BlockCopy( passwordBytes, 0, buffer, 0, passwordBytes.Length );
+                Buffer.BlockCopy( buffer, 0, packet, 31, buffer.Length );
+
+                return false;
+            }
+
+            if ( string.IsNullOrEmpty( password ) )
+            {
+                return false;
+            }
+
+            if ( AssistantOptions.SavedPasswords.ContainsKey( username ) )
+            {
+                AssistantOptions.SavedPasswords.Remove( username );
+            }
+
+            AssistantOptions.SavedPasswords.Add( username, password );
+            AssistantOptions.OnPasswordsChanged();
+
+            return false;
+        }
+
+        private static bool OnAttackRequested( ref byte[] packet, ref int length )
         {
             int serial = ( packet[1] << 24 ) | ( packet[2] << 16 ) | ( packet[3] << 8 ) | packet[4];
 
@@ -32,7 +109,7 @@ namespace ClassicAssist.UO.Network
             return block;
         }
 
-        private static void Register( byte packetId, Func<byte[], int, bool> action )
+        private static void Register( byte packetId, OnReceive action )
         {
             if ( !_filters.ContainsKey( packetId ) )
             {
@@ -40,12 +117,12 @@ namespace ClassicAssist.UO.Network
             }
         }
 
-        public static bool CheckPacket( byte[] data, int length )
+        public static bool CheckPacket( ref byte[] data, ref int length )
         {
             if ( _filters.ContainsKey( data[0] ) &&
-                 _filters.TryGetValue( data[0], out Func<byte[], int, bool> action ) )
+                 _filters.TryGetValue( data[0], out OnReceive onReceive ) )
             {
-                return action.Invoke( data, length );
+                return onReceive.Invoke( ref data, ref length );
             }
 
             return false;

@@ -535,7 +535,7 @@ namespace Assistant
                 return false;
             }
 
-            if ( OutgoingPacketFilters.CheckPacket( data, data.Length ) )
+            if ( OutgoingPacketFilters.CheckPacket( ref data, ref length ) )
             {
                 SentPacketFilteredEvent?.Invoke( data, data.Length );
 

@@ -8,6 +8,7 @@
     xmlns:misc="clr-namespace:ClassicAssist.Misc"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
+    xmlns:data="clr-namespace:ClassicAssist.Data"
     x:Name="userControl"
     x:Class="ClassicAssist.UI.Views.GeneralControl"
     mc:Ignorable="d"
@@ -75,6 +76,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
                 <CheckBox Content="{x:Static r:Strings.Always_On_Top}" IsChecked="{Binding Options.AlwaysOnTop}" />
@@ -97,6 +99,28 @@
                 </StackPanel>
             </StackPanel>
             <Grid Grid.Row="1">
+                <GroupBox Header="{x:Static r:Strings.Saved_Passwords_}" Margin="5" Padding="5">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Content="{x:Static r:Strings.Enabled}" Grid.Column="0"
+                                      IsChecked="{Binding SavePasswords}" />
+                            <ComboBox x:Name="comboBox" Grid.Column="1" Margin="10,0,10,0" SelectedIndex="0"
+                                      ItemsSource="{Binding SavedPasswords}" DisplayMemberPath="Key" />
+                            <Button Content="{x:Static r:Strings.Remove}" Grid.Column="2"
+                                    Command="{Binding RemoveSavedPasswordCommand}"
+                                    CommandParameter="{Binding SelectedItem, ElementName=comboBox}" />
+                        </Grid>
+                        <CheckBox Content="{x:Static r:Strings.Only_overwrite_blank_password}"
+                                  IsChecked="{Binding SavePasswordsOnlyBlank}" />
+                    </StackPanel>
+                </GroupBox>
+            </Grid>
+            <Grid Grid.Row="2">
                 <GroupBox Header="{x:Static r:Strings.Profiles}" Margin="5">
                     <Grid>
                         <Grid.ColumnDefinitions>

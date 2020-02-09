@@ -1690,6 +1690,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only overwrite blank password.
+        /// </summary>
+        public static string Only_overwrite_blank_password {
+            get {
+                return ResourceManager.GetString("Only overwrite blank password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operator.
         /// </summary>
         public static string Operator {
@@ -2109,6 +2118,15 @@ namespace ClassicAssist.Resources {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saved Passwords:.
+        /// </summary>
+        public static string Saved_Passwords_ {
+            get {
+                return ResourceManager.GetString("Saved Passwords:", resourceCulture);
             }
         }
         

@@ -1086,4 +1086,10 @@
   <data name="Y:" xml:space="preserve">
     <value>Y:</value>
   </data>
+  <data name="Saved Passwords:" xml:space="preserve">
+    <value>Saved Passwords:</value>
+  </data>
+  <data name="Only overwrite blank password" xml:space="preserve">
+    <value>Only overwrite blank password</value>
+  </data>
 </root>

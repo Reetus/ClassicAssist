@@ -66,7 +66,7 @@ namespace ClassicAssist.UO.Objects
 
         public event dMobileStatusUpdated MobileStatusUpdated;
 
-        internal void SetLayer( Layer layer, int serial )
+        internal virtual void SetLayer( Layer layer, int serial )
         {
             if ( (int) layer >= _layerArray.Length )
             {

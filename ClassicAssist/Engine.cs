@@ -415,9 +415,7 @@ namespace Assistant
                         message.AppendLine( commitMessage.ToString() );
 
                         UpdateMessageGump gump = new UpdateMessageGump( message.ToString(), latestVersion );
-                        byte[] packet = gump.Compile();
-
-                        SendPacketToClient( packet, packet.Length );
+                        gump.SendGump();
                     }
                 }
                 catch ( Exception )

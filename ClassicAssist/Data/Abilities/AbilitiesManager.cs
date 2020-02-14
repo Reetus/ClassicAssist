@@ -93,7 +93,8 @@ namespace ClassicAssist.Data.Abilities
             }
 
             // Fists etc
-            UOC.SetWeaponAbility( abilityType == AbilityType.Primary ? 11 : 5 );
+            ResendGump( 5, 11, abilityType );
+            UOC.SetWeaponAbility( abilityType == AbilityType.Primary ? 5 : 11 );
         }
 
         public void ResendGump( AbilityType abilityType )

@@ -371,7 +371,7 @@ namespace ClassicAssist.Data.Targeting
                 case TargetInfliction.Any:
                     return mobiles.ToArray();
                 case TargetInfliction.Lowest:
-                    return mobiles.Where( m => m.Hits < m.HitsMax && !m.IsDead).OrderBy( m => m.Hits ).ToArray();
+                    return mobiles.Where( m => m.Hits < m.HitsMax && !m.IsDead ).OrderBy( m => m.Hits ).ToArray();
                 case TargetInfliction.Poisoned:
                     return mobiles.Where( m => m.IsPoisoned ).ToArray();
                 case TargetInfliction.Mortaled:

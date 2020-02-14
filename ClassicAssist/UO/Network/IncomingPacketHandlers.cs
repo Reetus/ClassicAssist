@@ -931,10 +931,10 @@ namespace ClassicAssist.UO.Network
             item.ID = id;
 
             Mobile mobile = Engine.GetOrCreateMobile( mobileSerial );
-
-            mobile.SetLayer( item.Layer, item.Serial );
             mobile.Equipment.Add( item );
             Engine.Items.Add( item );
+
+            mobile.SetLayer( item.Layer, item.Serial );
         }
 
         private static void OnProperties( PacketReader reader )

@@ -690,7 +690,7 @@ namespace ClassicAssist.UO.Objects.Gumps
             return Encoding.ASCII.GetBytes( str );
         }
 
-        public byte[] Compile()
+        private byte[] Compile()
         {
             IGumpWriter disp = new GumpWriter( this );
 

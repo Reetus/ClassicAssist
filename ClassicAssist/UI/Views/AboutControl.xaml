@@ -53,6 +53,11 @@
                         <Label Content="{x:Static r:Strings.Build_Date_}" />
                     </StackPanel>
                     <StackPanel DockPanel.Dock="Right">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                                <Setter Property="Margin" Value="10,0,0,0"/>
+                            </Style>
+                        </StackPanel.Resources>
                         <Label Content="{Binding Product}" />
                         <Label Content="{Binding Version}" />
                         <Label Content="{Binding BuildDate}" />
@@ -91,6 +96,11 @@
                         <Label Content="{x:Static r:Strings.Latency_}" />
                     </StackPanel>
                     <StackPanel DockPanel.Dock="Right">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                                <Setter Property="Margin" Value="10,0,0,0"/>
+                            </Style>
+                        </StackPanel.Resources>
                         <Label
                             Content="{Binding ConnectedTime, Converter={StaticResource DateTimeToTimeSpanValueConverter}}"
                             Visibility="{Binding Connected, Converter={StaticResource BooleanToVisibilityConverter}}" />
@@ -111,6 +121,11 @@
                     <Label Content="{x:Static r:Strings.Last_Target_}" />
                 </StackPanel>
                 <StackPanel DockPanel.Dock="Right">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                            <Setter Property="Margin" Value="10,0,0,0"/>
+                        </Style>
+                    </StackPanel.Resources>
                     <Label Content="{Binding PlayerName}" />
                     <Label Content="{Binding PlayerSerial, Converter={StaticResource IntToHexStringValueConverter}}" />
                     <Label

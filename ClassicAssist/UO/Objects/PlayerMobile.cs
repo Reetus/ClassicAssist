@@ -1,4 +1,5 @@
-﻿using ClassicAssist.Data.Macros.Commands;
+﻿using ClassicAssist.Data.Abilities;
+using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.UO.Data;
 
@@ -10,7 +11,6 @@ namespace ClassicAssist.UO.Objects
 
         private int _enemyTargetSerial;
         private int _friendTargetSerial;
-
         private int _lastTargetSerial;
 
         public PlayerMobile( int serial ) : base( serial )
@@ -102,5 +102,13 @@ namespace ClassicAssist.UO.Objects
         public int WeightMax { get; set; }
 
         public event dLastTargetChanged LastTargetChangedEvent;
+
+        internal override void SetLayer( Layer layer, int serial )
+        {
+            base.SetLayer( layer, serial );
+
+            AbilitiesManager manager = AbilitiesManager.GetInstance();
+            manager.ResendGump( manager.Enabled );
+        }
     }
 }

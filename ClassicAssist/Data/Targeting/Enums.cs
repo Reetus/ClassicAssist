@@ -43,6 +43,7 @@ namespace ClassicAssist.Data.Targeting
         Lowest,
         Poisoned,
         Mortaled,
-        Paralyzed
+        Paralyzed,
+        Dead
     }
 }

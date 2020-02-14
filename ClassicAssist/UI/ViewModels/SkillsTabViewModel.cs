@@ -139,7 +139,10 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            _hotkeyCategory = new HotkeyEntry { Name = Strings.Skills, IsCategory = true, Children = hotkeyEntries };
+            _hotkeyCategory = hotkey.Items.FirstOrDefault( hk => hk.IsCategory && hk.Name == Strings.Skills ) ??
+                              new HotkeyEntry { Name = Strings.Skills, IsCategory = true };
+
+            _hotkeyCategory.Children = hotkeyEntries;
 
             hotkey.AddCategory( _hotkeyCategory );
         }

@@ -371,13 +371,15 @@ namespace ClassicAssist.Data.Targeting
                 case TargetInfliction.Any:
                     return mobiles.ToArray();
                 case TargetInfliction.Lowest:
-                    return mobiles.Where( m => m.Hits < m.HitsMax ).OrderBy( m => m.Hits ).ToArray();
+                    return mobiles.Where( m => m.Hits < m.HitsMax && !m.IsDead).OrderBy( m => m.Hits ).ToArray();
                 case TargetInfliction.Poisoned:
                     return mobiles.Where( m => m.IsPoisoned ).ToArray();
                 case TargetInfliction.Mortaled:
                     return mobiles.Where( m => m.IsYellowHits ).ToArray();
                 case TargetInfliction.Paralyzed:
                     return mobiles.Where( m => m.IsFrozen ).ToArray();
+                case TargetInfliction.Dead:
+                    return mobiles.Where( m => m.IsDead ).ToArray();
                 default:
                     throw new ArgumentOutOfRangeException( nameof( inflictionType ), inflictionType, null );
             }

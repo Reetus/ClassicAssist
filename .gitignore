@@ -7,3 +7,4 @@ packages/
 ClassicAssist/ClassicAssist.csproj.user
 ClassicAssist.sln.DotSettings.user
 ClassicAssist/Properties/launchSettings.json
+ClassicAssist.Launcher/ClassicAssist.Launcher.csproj.user

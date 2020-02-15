@@ -34,7 +34,8 @@ namespace ClassicAssist.Data.Targeting
     {
         Next,
         Nearest,
-        Closest
+        Closest,
+        Previous
     }
 
     public enum TargetInfliction

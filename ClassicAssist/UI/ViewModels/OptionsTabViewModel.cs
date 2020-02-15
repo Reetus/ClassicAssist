@@ -126,12 +126,12 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.AbilitiesGumpX = config?["AbilitiesGumpX"]?.ToObject<int>() ?? 100;
             CurrentOptions.AbilitiesGumpY = config?["AbilitiesGumpY"]?.ToObject<int>() ?? 100;
 
-            if ( CurrentOptions.AbilitiesGumpX <= 1 )
+            if ( CurrentOptions.AbilitiesGumpX < 0 )
             {
                 CurrentOptions.AbilitiesGumpX = 100;
             }
 
-            if ( CurrentOptions.AbilitiesGumpY <= 1 )
+            if ( CurrentOptions.AbilitiesGumpY < 0 )
             {
                 CurrentOptions.AbilitiesGumpY = 100;
             }

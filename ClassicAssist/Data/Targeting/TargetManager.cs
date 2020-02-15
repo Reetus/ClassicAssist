@@ -146,7 +146,7 @@ namespace ClassicAssist.Data.Targeting
 
         public Mobile GetNextMobile( IEnumerable<Notoriety> notoriety, TargetBodyType bodyType = TargetBodyType.Any,
             int distance = MAX_DISTANCE, TargetFriendType friendType = TargetFriendType.Include,
-            TargetInfliction inflictionType = TargetInfliction.Any )
+            TargetInfliction inflictionType = TargetInfliction.Any, bool reverse = false )
         {
             bool looped = false;
 
@@ -198,6 +198,11 @@ namespace ClassicAssist.Data.Targeting
                         ( friendType == TargetFriendType.Include || !MobileCommands.InFriendList( m.Serial ) ) &&
                         ( !Options.CurrentOptions.GetFriendEnemyUsesIgnoreList ||
                           !ObjectCommands.IgnoreList.Contains( m.Serial ) ) );
+                }
+
+                if ( reverse )
+                {
+                    mobiles = mobiles.Reverse().ToArray();
                 }
 
                 mobiles = mobiles.ByInflication( inflictionType );
@@ -314,6 +319,11 @@ namespace ClassicAssist.Data.Targeting
                 case TargetDistance.Closest:
 
                     m = GetClosestMobile( noto, bodyType, friendType, inflictionType );
+
+                    break;
+                case TargetDistance.Previous:
+
+                    m = GetNextMobile( noto, bodyType, MAX_DISTANCE, friendType, inflictionType, true );
 
                     break;
                 default:

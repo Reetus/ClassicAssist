@@ -1092,4 +1092,7 @@
   <data name="Only overwrite blank password" xml:space="preserve">
     <value>仅覆盖空白密码</value>
   </data>
+  <data name="Show GIF Capture" xml:space="preserve">
+    <value>显示 GIF 捕获</value>
+  </data>
 </root>

@@ -2320,6 +2320,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show GIF Capture.
+        /// </summary>
+        public static string Show_GIF_Capture {
+            get {
+                return ResourceManager.GetString("Show GIF Capture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show World Items.
         /// </summary>
         public static string Show_World_Items {

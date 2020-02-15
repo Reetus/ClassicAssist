@@ -19,6 +19,10 @@ Macros have similar function names as UOSteam but uses Python as the language, t
 
 ![assist2](https://user-images.githubusercontent.com/6239195/73602829-d8166e80-45b4-11ea-8132-61c29fce3862.png)
 
+## Compatibility
+
+ClassicAssist uses [WPF](https://en.wikipedia.org/wiki/Windows_Presentation_Foundation) as the UI framework which is only compatible with Windows.
+
 ## Issues / Feature Requests
 
 If you encounter any issues or require a feature not currently added, please raise an issue on GitHub with as much information as possible.
@@ -28,6 +32,21 @@ If you encounter any issues or require a feature not currently added, please rai
 If your native language isn't English and you'd like to contribute a translation into your language, send a pull request or open an issue.
 
 ![assist3](https://user-images.githubusercontent.com/6239195/73602831-da78c880-45b4-11ea-82e4-fe71c3ca41c8.png)
+
+## License
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ## Credits
 

@@ -1092,4 +1092,7 @@
   <data name="Only overwrite blank password" xml:space="preserve">
     <value>Only overwrite blank password</value>
   </data>
+  <data name="Show GIF Capture" xml:space="preserve">
+    <value>Show GIF Capture</value>
+  </data>
 </root>

@@ -7,6 +7,10 @@ namespace ClassicAssist.UI.Controls
     /// </summary>
     public partial class CustomWindowTitleControl
     {
+        public static readonly DependencyProperty AdditionalContentProperty =
+            DependencyProperty.Register( "AdditionalContent", typeof( object ), typeof( CustomWindowTitleControl ),
+                new PropertyMetadata( null ) );
+
         public static readonly DependencyProperty CustomTitleProperty = DependencyProperty.Register( "CustomTitle",
             typeof( string ),
             typeof( CustomWindowTitleControl ),
@@ -27,6 +31,12 @@ namespace ClassicAssist.UI.Controls
         public CustomWindowTitleControl()
         {
             InitializeComponent();
+        }
+
+        public object AdditionalContent
+        {
+            get => GetValue( AdditionalContentProperty );
+            set => SetValue( AdditionalContentProperty, value );
         }
 
         public bool CanClose

@@ -220,6 +220,21 @@
 	<s:String x:Key="/Default/CodeStyle/CSharpVarKeywordUsage/ForSimpleTypes/@EntryValue">UseExplicitType</s:String>
 	<s:Boolean x:Key="/Default/CodeStyle/EncapsulateField/UpdateExternalUsagesOnly/@EntryValue">False</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeStyle/EncapsulateField/UseAutoProperty/@EntryValue">False</s:Boolean>
+	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">Copyright (C) $CURRENT_YEAR$ Reetus&#xD;
+ &#xD;
+This program is free software: you can redistribute it and/or modify&#xD;
+it under the terms of the GNU General Public License as published by&#xD;
+the Free Software Foundation, either version 3 of the License, or&#xD;
+(at your option) any later version.&#xD;
+ &#xD;
+This program is distributed in the hope that it will be useful,&#xD;
+but WITHOUT ANY WARRANTY; without even the implied warranty of&#xD;
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the&#xD;
+GNU General Public License for more details.&#xD;
+ &#xD;
+You should have received a copy of the GNU General Public License&#xD;
+along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.&#xD;
+</s:String>
 	<s:Boolean x:Key="/Default/CodeStyle/Naming/CSharpAutoNaming/IsNotificationDisabled/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/CodeStyle/Naming/JavaScriptNaming/UserRules/=JS_005FBLOCK_005FSCOPE_005FCONSTANT/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="aaBb" /&gt;</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/JavaScriptNaming/UserRules/=JS_005FBLOCK_005FSCOPE_005FFUNCTION/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="aaBb" /&gt;</s:String>

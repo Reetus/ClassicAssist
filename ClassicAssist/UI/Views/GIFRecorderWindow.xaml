@@ -1,0 +1,128 @@
+﻿<Window x:Name="window" x:Class="ClassicAssist.UI.Views.GIFRecorderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClassicAssist.UI.Views"
+        xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
+        xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
+        xmlns:resources="clr-namespace:ClassicAssist.Resources"
+        xmlns:misc="clr-namespace:ClassicAssist.Misc"
+        mc:Ignorable="d" AllowsTransparency="True" WindowStyle="None"
+        Title="GIFRecorderWindow" Height="300" Width="300" Background="Transparent" ResizeMode="CanResizeWithGrip"
+        Topmost="True">
+    <Window.DataContext>
+        <viewModels:GIFRecorderViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <DrawingImage x:Key="PlayIcon">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                    <GeometryDrawing Brush="#FFDEECF1"
+                                     Geometry="F1 M512,512z M0,0z M256,512C115.390625,512 0,396.609375 0,256 0,115.390625 115.390625,0 256,0 396.609375,0 512,115.390625 512,256 512,396.609375 396.609375,512 256,512z M256,512" />
+                    <GeometryDrawing Brush="#FFC6E2E7"
+                                     Geometry="F1 M512,512z M0,0z M512,256C512,115.390625,396.609375,0,256,0L256,512C396.609375,512,512,396.609375,512,256z M512,256" />
+                    <GeometryDrawing Brush="#FF384949"
+                                     Geometry="F1 M512,512z M0,0z M181,107.976562L181,404.023438 403.039062,256z M181,107.976562" />
+                    <GeometryDrawing Brush="#FF293939"
+                                     Geometry="F1 M512,512z M0,0z M256,354.023438L403.039062,256 256,157.976562z M256,354.023438" />
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <DrawingImage x:Key="StopIcon">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                    <GeometryDrawing Brush="#FFDEECF1"
+                                     Geometry="F1 M512,512z M0,0z M256,512C115.390625,512 0,396.609375 0,256 0,115.390625 115.390625,0 256,0 396.609375,0 512,115.390625 512,256 512,396.609375 396.609375,512 256,512z M256,512" />
+                    <GeometryDrawing Brush="#FFC6E2E7"
+                                     Geometry="F1 M512,512z M0,0z M512,256C512,115.390625,396.609375,0,256,0L256,512C396.609375,512,512,396.609375,512,256z M512,256" />
+                    <GeometryDrawing Brush="#FF384949"
+                                     Geometry="F1 M512,512z M0,0z M151,361L361,361 361,151 151,151z M151,361" />
+                    <GeometryDrawing Brush="#FF293939"
+                                     Geometry="F1 M512,512z M0,0z M256,151L361,151 361,361 256,361z M256,151" />
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <DrawingImage x:Key="SaveIcon">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V47 H47 V0 H0 Z">
+                    <GeometryDrawing Brush="#FF424A60"
+                                     Geometry="F1 M47,47z M0,0z M46.5,8L46.5,8 46.5,47 0.5,47 0.5,0 38.5,0z" />
+                    <GeometryDrawing Brush="#FFE7ECED">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="7.5,26,31,21" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFEBBA16">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="7.5,26,31,12.037" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFC7CAC7">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9.5,0,26,16" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <DrawingGroup Opacity="1">
+                        <GeometryDrawing Brush="#FFFFFFFF"
+                                         Geometry="F1 M47,47z M0,0z M12.5,31L19.5,31C20.053,31 20.5,30.553 20.5,30 20.5,29.447 20.053,29 19.5,29L12.5,29C11.947,29 11.5,29.447 11.5,30 11.5,30.553 11.947,31 12.5,31z" />
+                        <GeometryDrawing Brush="#FFFFFFFF"
+                                         Geometry="F1 M47,47z M0,0z M22.5,33L12.5,33C11.947,33 11.5,33.447 11.5,34 11.5,34.553 11.947,35 12.5,35L22.5,35C23.053,35 23.5,34.553 23.5,34 23.5,33.447 23.053,33 22.5,33z" />
+                        <GeometryDrawing Brush="#FFFFFFFF"
+                                         Geometry="F1 M47,47z M0,0z M26.21,33.29C25.84,32.92 25.17,32.92 24.8,33.29 24.61,33.479 24.5,33.729 24.5,34 24.5,34.27 24.609,34.52 24.79,34.71 24.979,34.89 25.229,35 25.5,35 25.77,35 26.02,34.89 26.21,34.71 26.39,34.52 26.5,34.26 26.5,34 26.5,33.74 26.39,33.479 26.21,33.29z" />
+                    </DrawingGroup>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF424A60" Thickness="2" StartLineCap="Round" EndLineCap="Round"
+                                 LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="27.5,4,4,8" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFE7ECED"
+                                     Geometry="F1 M47,47z M0,0z M24.5,16L24.5,16 9.5,16 9.5,0 16.5,0z" />
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <misc:BindingProxy x:Key="Proxy" Data="{Binding}" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <controls:CustomWindowTitleControl DockPanel.Dock="Top">
+            <controls:CustomWindowTitleControl.AdditionalContent>
+                <StackPanel Orientation="Horizontal">
+                    <Button Width="16" Background="Transparent" BorderThickness="0" Padding="0"
+                            Command="{Binding Data.RecordCommand, Source={StaticResource Proxy}}">
+                        <Image>
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Style.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding Data.IsRecording, Source={StaticResource Proxy}}"
+                                            Value="false">
+                                            <Setter Property="Source" Value="{StaticResource PlayIcon}" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                                            Binding="{Binding Data.IsRecording, Source={StaticResource Proxy}}"
+                                            Value="true">
+                                            <Setter Property="Source" Value="{StaticResource StopIcon}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </Button>
+                    <Button Width="16" Background="Transparent" BorderThickness="0" Padding="0" Margin="10,0,0,0"
+                            Command="{Binding Data.SaveCommand, Source={StaticResource Proxy}}">
+                        <Image Source="{StaticResource SaveIcon}" />
+                    </Button>
+                </StackPanel>
+            </controls:CustomWindowTitleControl.AdditionalContent>
+        </controls:CustomWindowTitleControl>
+        <Border Grid.Row="1" BorderThickness="4" BorderBrush="Black" />
+    </Grid>
+</Window>

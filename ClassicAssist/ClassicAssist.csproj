@@ -55,6 +55,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AnimatedGif" Version="1.0.5" />
     <PackageReference Include="AvalonEdit" Version="6.0.0" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="3.7.0" />
     <PackageReference Include="IronPython" Version="2.7.10-candidate1" />

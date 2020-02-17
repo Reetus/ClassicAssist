@@ -75,7 +75,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
             sb.AppendLine( $"Pages: {value.Pages?.Length}" );
             sb.AppendLine();
             sb.AppendLine(
-                $"Layout: ({value.Layout.Length})\r\n\r\n{string.Join( "}\r\n", value.Layout.Split( '}' ) )}" );
+                $"Layout: ({value.Layout?.Length})\r\n\r\n{string.Join( "}\r\n", value.Layout?.Split( '}' ) ?? new string[0] )}" );
             sb.AppendLine();
             sb.AppendLine( $"Text: ({value.Strings.Length})\r\n\r\n{string.Join( "\r\n", value.Strings )}" );
             sb.AppendLine();

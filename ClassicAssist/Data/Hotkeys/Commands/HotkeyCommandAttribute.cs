@@ -6,5 +6,6 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public string Category { get; set; } = "";
         public string Name { get; set; }
+        public string Tooltip { get; set; } = "";
     }
 }

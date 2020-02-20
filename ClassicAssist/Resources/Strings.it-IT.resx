@@ -322,7 +322,7 @@
     <value>Visualizzatore entità</value>
   </data>
   <data name="Equip Last Weapon (Quick Weapon Switch)" xml:space="preserve">
-    <value>Equipaggia l'ultima arma (Cambio Rapido Armi)</value>
+    <value>Equipaggia l'ultima arma (Cambio Rapido Armi) *</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Errore</value>
@@ -1094,5 +1094,8 @@
   </data>
   <data name="Show GIF Capture" xml:space="preserve">
     <value>Mostra acquisizione GIF</value>
+  </data>
+  <data name="Requires Server Support" xml:space="preserve">
+    <value>Richiede il supporto del server</value>
   </data>
 </root>

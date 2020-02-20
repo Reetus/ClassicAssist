@@ -349,7 +349,7 @@
     <value>实体查看器</value>
   </data>
   <data name="Equip Last Weapon (Quick Weapon Switch)" xml:space="preserve">
-    <value>装备最后武器（快速武器开关）</value>
+    <value>装备最后武器（快速武器开关）*</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>错误</value>
@@ -1094,5 +1094,8 @@
   </data>
   <data name="Show GIF Capture" xml:space="preserve">
     <value>显示 GIF 捕获</value>
+  </data>
+  <data name="Requires Server Support" xml:space="preserve">
+    <value>需要服务器支持</value>
   </data>
 </root>

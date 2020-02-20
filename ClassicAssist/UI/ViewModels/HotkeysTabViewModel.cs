@@ -18,11 +18,11 @@ namespace ClassicAssist.UI.ViewModels
     public class HotkeysTabViewModel : BaseViewModel, ISettingProvider
     {
         private readonly HotkeyManager _hotkeyManager;
-        private readonly List<HotkeyEntry> _serializeCategories = new List<HotkeyEntry>();
+        private readonly List<HotkeyCommand> _serializeCategories = new List<HotkeyCommand>();
         private ICommand _clearHotkeyCommand;
         private ICommand _executeCommand;
-        private HotkeyEntry _selectedItem;
-        private HotkeyEntry _spellsCategory;
+        private HotkeyCommand _selectedItem;
+        private HotkeyCommand _spellsCategory;
 
         public HotkeysTabViewModel()
         {
@@ -42,13 +42,13 @@ namespace ClassicAssist.UI.ViewModels
             set => CheckOverwriteHotkey( SelectedItem, value );
         }
 
-        public ObservableCollectionEx<HotkeyEntry> Items
+        public ObservableCollectionEx<HotkeyCommand> Items
         {
             get => _hotkeyManager.Items;
             set => _hotkeyManager.Items = value;
         }
 
-        public HotkeyEntry SelectedItem
+        public HotkeyCommand SelectedItem
         {
             get => _selectedItem;
             set
@@ -128,7 +128,7 @@ namespace ClassicAssist.UI.ViewModels
                     categoryName = Strings.ResourceManager.GetString( attr.Category );
                 }
 
-                HotkeyEntry category = Items.FirstOrDefault( hke => hke.Name == categoryName && hke.IsCategory );
+                HotkeyCommand category = Items.FirstOrDefault( hke => hke.Name == categoryName && hke.IsCategory );
 
                 if ( category != null )
                 {
@@ -146,7 +146,7 @@ namespace ClassicAssist.UI.ViewModels
                 }
                 else
                 {
-                    category = new HotkeyEntry
+                    category = new HotkeyCommand
                     {
                         Name = categoryName, IsCategory = true, Children = new ObservableCollectionEx<HotkeyEntry>()
                     };
@@ -189,7 +189,7 @@ namespace ClassicAssist.UI.ViewModels
                 _hotkeyManager.Items.Remove( _spellsCategory );
             }
 
-            _spellsCategory = new HotkeyEntry { Name = Strings.Spells, IsCategory = true };
+            _spellsCategory = new HotkeyCommand { Name = Strings.Spells, IsCategory = true };
 
             SpellManager spellManager = SpellManager.GetInstance();
 

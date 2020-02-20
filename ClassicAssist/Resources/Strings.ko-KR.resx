@@ -493,7 +493,7 @@
     <value>게임오브젝트 뷰어</value>
   </data>
   <data name="Equip Last Weapon (Quick Weapon Switch)" xml:space="preserve">
-    <value>마지막 무기로 빠르게 전환</value>
+    <value>마지막 무기로 빠르게 전환 *</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>오류가 발생했습니다</value>
@@ -1094,5 +1094,8 @@
   </data>
   <data name="Show GIF Capture" xml:space="preserve">
     <value>GIF 캡처 표시</value>
+  </data>
+  <data name="Requires Server Support" xml:space="preserve">
+    <value>서버 지원 필요</value>
   </data>
 </root>

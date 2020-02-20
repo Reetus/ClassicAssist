@@ -20,7 +20,7 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class SkillsTabViewModel : BaseViewModel, ISettingProvider
     {
-        private HotkeyEntry _hotkeyCategory;
+        private HotkeyCommand _hotkeyCategory;
         private ObservableCollectionEx<SkillEntry> _items = new ObservableCollectionEx<SkillEntry>();
         private ICommand _resetDeltasCommand;
         private SkillEntry _selectedItem;
@@ -140,7 +140,7 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             _hotkeyCategory = hotkey.Items.FirstOrDefault( hk => hk.IsCategory && hk.Name == Strings.Skills ) ??
-                              new HotkeyEntry { Name = Strings.Skills, IsCategory = true };
+                              new HotkeyCommand { Name = Strings.Skills, IsCategory = true };
 
             _hotkeyCategory.Children = hotkeyEntries;
 

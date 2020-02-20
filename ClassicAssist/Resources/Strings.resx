@@ -319,7 +319,7 @@
     <value>Entity Viewer</value>
   </data>
   <data name="Equip Last Weapon (Quick Weapon Switch)" xml:space="preserve">
-    <value>Equip Last Weapon (Quick Weapon Switch)</value>
+    <value>Equip Last Weapon (Quick Weapon Switch) *</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
@@ -1094,5 +1094,8 @@
   </data>
   <data name="Show GIF Capture" xml:space="preserve">
     <value>Show GIF Capture</value>
+  </data>
+  <data name="Requires Server Support" xml:space="preserve">
+    <value>Requires Server Support</value>
   </data>
 </root>

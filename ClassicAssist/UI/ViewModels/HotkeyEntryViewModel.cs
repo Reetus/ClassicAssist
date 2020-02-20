@@ -1,5 +1,6 @@
 ﻿using System.Collections.Specialized;
 using ClassicAssist.Data.Hotkeys;
+using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.UI.Misc;
 using Newtonsoft.Json.Linq;
 
@@ -7,14 +8,12 @@ namespace ClassicAssist.UI.ViewModels
 {
     public abstract class HotkeyEntryViewModel<T> : BaseViewModel where T : HotkeyEntry
     {
-        private readonly HotkeyEntry _category;
-        private readonly string _name;
+        private readonly HotkeyCommand _category;
         private ObservableCollectionEx<T> _items = new ObservableCollectionEx<T>();
 
         protected HotkeyEntryViewModel( string name )
         {
-            _name = name;
-            _category = new HotkeyEntry { Name = _name, IsCategory = true };
+            _category = new HotkeyCommand { Name = name, IsCategory = true };
 
             HotkeyManager hotkey = HotkeyManager.GetInstance();
 

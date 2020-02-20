@@ -799,7 +799,7 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Equip Last Weapon (Quick Weapon Switch).
+        ///   Looks up a localized string similar to Equip Last Weapon (Quick Weapon Switch) *.
         /// </summary>
         public static string Equip_Last_Weapon__Quick_Weapon_Switch_ {
             get {
@@ -2064,6 +2064,15 @@ namespace ClassicAssist.Resources {
         public static string Replacement {
             get {
                 return ResourceManager.GetString("Replacement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requires Server Support.
+        /// </summary>
+        public static string Requires_Server_Support {
+            get {
+                return ResourceManager.GetString("Requires Server Support", resourceCulture);
             }
         }
         

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Annotations;
+using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.UI.Misc;
 
 namespace ClassicAssist.Data.Hotkeys
@@ -24,7 +25,7 @@ namespace ClassicAssist.Data.Hotkeys
         private readonly List<Key> _modifiers = new List<Key>();
         private bool _enabled = true;
 
-        private ObservableCollectionEx<HotkeyEntry> _items = new ObservableCollectionEx<HotkeyEntry>();
+        private ObservableCollectionEx<HotkeyCommand> _items = new ObservableCollectionEx<HotkeyCommand>();
 
         private HotkeyManager()
         {
@@ -38,7 +39,7 @@ namespace ClassicAssist.Data.Hotkeys
             set => SetProperty( ref _enabled, value );
         }
 
-        public ObservableCollectionEx<HotkeyEntry> Items
+        public ObservableCollectionEx<HotkeyCommand> Items
         {
             get => _items;
             set => SetProperty( ref _items, value );
@@ -46,7 +47,7 @@ namespace ClassicAssist.Data.Hotkeys
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void AddCategory( HotkeyEntry item, IComparer<HotkeyEntry> comparer = null )
+        public void AddCategory( HotkeyCommand item, IComparer<HotkeyEntry> comparer = null )
         {
             if ( Items.Contains( item ) )
             {

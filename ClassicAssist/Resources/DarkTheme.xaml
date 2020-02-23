@@ -1,8 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:wpfPlus="clr-namespace:WpfPlus;assembly=WpfPlus"
-                    xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
-                    xmlns:controls="clr-namespace:ClassicAssist.UI.Controls">
+                    xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit">
     <ResourceDictionary.MergedDictionaries>
         <wpfPlus:DarkTheme />
     </ResourceDictionary.MergedDictionaries>
@@ -524,11 +523,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
-    <Style x:Key="{x:Type controls:EditTextBlock}" TargetType="{x:Type controls:EditTextBlock}"
-           BasedOn="{StaticResource {x:Type controls:EditTextBlock}}">
-        <Setter Property="MinWidth" Value="50" />
     </Style>
 
     <Style x:Key="{x:Type TextBlock}" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">

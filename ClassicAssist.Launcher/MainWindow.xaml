@@ -1,0 +1,88 @@
+﻿<Window x:Class="ClassicAssist.Launcher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClassicAssist.Launcher"
+        xmlns:properties="clr-namespace:ClassicAssist.Launcher.Properties"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:behaviours="clr-namespace:ClassicAssist.Launcher.Behaviours"
+        xmlns:valueConverters="clr-namespace:ClassicAssist.Launcher.ValueConverters"
+        mc:Ignorable="d"
+        Title="{x:Static properties:Resources.ClassicAssist_Launcher}" Height="280" Width="350"
+        ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <b:Interaction.Behaviors>
+        <behaviours:WindowClosingBehaviour Command="{Binding ClosingCommand}" />
+    </b:Interaction.Behaviors>
+    <Window.Resources>
+        <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    </Window.Resources>
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
+    <Grid Margin="5">
+        <Grid.Resources>
+            <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource {x:Type GroupBox}}">
+                <Setter Property="Padding" Value="10" />
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <GroupBox Header="{x:Static properties:Resources.Client_Options}" Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ComboBox Grid.Column="0" Margin="0,0,10,0" ItemsSource="{Binding ClientPaths}"
+                          Text="{Binding SelectedClientPath}" />
+                <Button Content="..." Grid.Column="1" Padding="10,0,10,0"
+                        Command="{Binding SelectClientPathCommand, Mode=OneWay}" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="{x:Static properties:Resources.Ultima_Online}" Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ComboBox Grid.Column="0" Margin="0,0,10,0" ItemsSource="{Binding DataPaths}"
+                          Text="{Binding SelectedDataPath}" />
+                <Button Content="..." Grid.Column="1" Padding="10,0,10,0"
+                        Command="{Binding SelectDataPathCommand, Mode=OneWay}" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="{x:Static properties:Resources.Shard}" Grid.Row="2">
+            <DockPanel>
+                <ComboBox DockPanel.Dock="Left" Width="225" Margin="0,0,10,0" ItemsSource="{Binding ShardEntries}"
+                          SelectedIndex="0" SelectedItem="{Binding SelectedShard}" DisplayMemberPath="Name" />
+                <Button Content="{x:Static properties:Resources.Shards}"
+                        Command="{Binding ShowShardsWindowCommand, Mode=OneWay}" />
+            </DockPanel>
+        </GroupBox>
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="0,10,0,10">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Margin" Value="0,0,5,0" />
+                    <Setter Property="Padding" Value="10,0,10,0" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Command="{Binding StartCommand, Mode=OneWay}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{StaticResource PlayIcon}" Height="16" Margin="0,3,10,3" />
+                    <TextBlock Text="{x:Static properties:Resources.Start}" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding CheckForUpdateCommand, Mode=OneWay}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{StaticResource RefreshButton}" Height="16" Margin="0,3,10,3" />
+                    <TextBlock Text="{x:Static properties:Resources.Check_for_update}" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

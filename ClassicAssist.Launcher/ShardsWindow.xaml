@@ -1,0 +1,101 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:properties="clr-namespace:ClassicAssist.Launcher.Properties"
+    xmlns:launcher="clr-namespace:ClassicAssist.Launcher"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:behaviours="clr-namespace:ClassicAssist.Launcher.Behaviours"
+    xmlns:ValueConverters="clr-namespace:ClassicAssist.Launcher.ValueConverters"
+    xmlns:controls="clr-namespace:ClassicAssist.Launcher.Controls"
+    x:Class="ClassicAssist.Launcher.ShardsWindow"
+    mc:Ignorable="d"
+    Title="{x:Static properties:Resources.Shards}" Height="350" Width="600" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ValueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <ValueConverters:BooleanToOpacityValueConverter x:Key="BooleanToOpacityValueConverter" />
+        <ValueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+    </Window.Resources>
+    <Window.DataContext>
+        <launcher:ShardsViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ToolBar Grid.Row="0">
+            <Button Height="24" Margin="0,0,5,0" Command="{Binding AddCommand, Mode=OneWay}">
+                <Image Source="{StaticResource AddIcon}" ToolTip="{x:Static properties:Resources.Add}"
+                       Opacity="{Binding IsEnabled, Converter={StaticResource BooleanToOpacityValueConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" />
+            </Button>
+            <Button Height="24" Margin="0,0,5,0" Command="{Binding RemoveCommand, Mode=OneWay}"
+                    CommandParameter="{Binding SelectedShard}">
+                <Image Source="{StaticResource RemoveIcon}" ToolTip="{x:Static properties:Resources.Remove}"
+                       Opacity="{Binding IsEnabled, Converter={StaticResource BooleanToOpacityValueConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" />
+            </Button>
+            <Button Height="24" Command="{Binding RefreshCommand}" CommandParameter="{Binding SelectedShard}">
+                <Image Source="{StaticResource RefreshIcon}" ToolTip="{x:Static properties:Resources.Refresh}"
+                       Opacity="{Binding IsEnabled, Converter={StaticResource BooleanToOpacityValueConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" />
+            </Button>
+        </ToolBar>
+        <ListView ItemsSource="{Binding Shards}" Grid.Row="1" SelectedItem="{Binding SelectedShard}" Margin="10">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="{x:Static properties:Resources.Shard}" Width="150" x:Name="NameColumn">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <controls:EditTextBlock
+                                    Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                    CanEdit="{Binding IsPreset, Converter={StaticResource InverseBooleanConverter}}"
+                                    Width="{Binding ActualWidth, ElementName=NameColumn, Converter={StaticResource CellWidthValueConverter}}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="{x:Static properties:Resources.Address}" Width="150" x:Name="AddressColumn">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <controls:EditTextBlock
+                                    Text="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                    CanEdit="{Binding IsPreset, Converter={StaticResource InverseBooleanConverter}}"
+                                    Width="{Binding ActualWidth, ElementName=AddressColumn, Converter={StaticResource CellWidthValueConverter}}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="{x:Static properties:Resources.Port}" Width="50" x:Name="PortColumn">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <controls:EditTextBlock
+                                    Text="{Binding Port, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                    CanEdit="{Binding IsPreset, Converter={StaticResource InverseBooleanConverter}}"
+                                    Width="{Binding ActualWidth, ElementName=PortColumn, Converter={StaticResource CellWidthValueConverter}}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="{x:Static properties:Resources.Players}" Width="150"
+                                    DisplayMemberBinding="{Binding Status}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,10,10">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Padding" Value="15,0,15,0" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="{x:Static properties:Resources.OK}" Margin="0,0,10,0"
+                    Command="{Binding OKCommand, Mode=OneWay}">
+                <b:Interaction.Behaviors>
+                    <behaviours:CloseOnClickBehaviour />
+                </b:Interaction.Behaviors>
+            </Button>
+            <Button Content="{x:Static properties:Resources.Cancel}" Command="{Binding CancelCommand, Mode=OneWay}">
+                <b:Interaction.Behaviors>
+                    <behaviours:CloseOnClickBehaviour />
+                </b:Interaction.Behaviors>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

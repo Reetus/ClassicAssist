@@ -188,7 +188,7 @@ namespace ClassicAssist.Launcher
 
             if ( File.Exists( updaterPath ) )
             {
-                Process.Start( updaterPath );
+                Process.Start( updaterPath, $"--pid {Process.GetCurrentProcess().Id}" );
             }
         }
 

@@ -21,13 +21,11 @@ namespace ClassicAssist.Data.Macros
 
         private static readonly ScriptEngine _engine = Python.CreateEngine();
         private static Dictionary<string, object> _importCache;
-        private static MacroInvoker _instance;
-        private static readonly object _lock = new object();
         private readonly Stopwatch _stopWatch = new Stopwatch();
         private CancellationTokenSource _cancellationToken;
         private MacroEntry _macro;
 
-        private MacroInvoker()
+        public MacroInvoker()
         {
             ScriptRuntime runtime = _engine.Runtime;
             runtime.LoadAssembly( Assembly.GetExecutingAssembly() );
@@ -41,29 +39,9 @@ namespace ClassicAssist.Data.Macros
         public Exception Exception { get; set; }
         public bool IsFaulted { get; set; }
 
-        public bool IsRunning => Thread.IsAlive;
+        public bool IsRunning => Thread?.IsAlive ?? false;
 
         public Thread Thread { get; set; }
-
-        public static MacroInvoker GetInstance()
-        {
-            // ReSharper disable once InvertIf
-            if ( _instance == null )
-            {
-                lock ( _lock )
-                {
-                    if ( _instance != null )
-                    {
-                        return _instance;
-                    }
-
-                    _instance = new MacroInvoker();
-                    return _instance;
-                }
-            }
-
-            return _instance;
-        }
 
         public event dMacroStartStop StartedEvent;
         public event dMacroStartStop StoppedEvent;
@@ -189,7 +167,6 @@ namespace ClassicAssist.Data.Macros
             try
             {
                 Thread.Start();
-                Thread.Join();
             }
             catch ( ThreadStartException )
             {
@@ -210,7 +187,7 @@ namespace ClassicAssist.Data.Macros
             {
                 Thread?.Interrupt();
                 Thread?.Abort();
-                Thread?.Join();
+                Thread?.Join( 100 );
             }
             catch ( ThreadStateException e )
             {

@@ -1098,4 +1098,28 @@
   <data name="Requires Server Support" xml:space="preserve">
     <value>需要服务器支持</value>
   </data>
+  <data name="Run in background" xml:space="preserve">
+    <value>在后台运行</value>
+  </data>
+  <data name="Background macro '{0}' started..." xml:space="preserve">
+    <value>后台宏"{0}"已启动...</value>
+  </data>
+  <data name="Background macro '{0}' stopped..." xml:space="preserve">
+    <value>后台宏"{0}"已停止...</value>
+  </data>
+  <data name="Cannot PlayMacro from background macro..." xml:space="preserve">
+    <value>无法从背景宏播放宏...</value>
+  </data>
+  <data name="Autostart" xml:space="preserve">
+    <value>自动启动</value>
+  </data>
+  <data name="When checked macro will execute automatically after login." xml:space="preserve">
+    <value>选中宏后，宏将在登录后自动执行。</value>
+  </data>
+  <data name="Stop All Macros" xml:space="preserve">
+    <value>停止所有宏</value>
+  </data>
+  <data name="Stops all running macros including background and autostart macros." xml:space="preserve">
+    <value>停止所有正在运行的宏，包括背景和自动启动宏。</value>
+  </data>
 </root>

@@ -1098,4 +1098,28 @@
   <data name="Requires Server Support" xml:space="preserve">
     <value>Richiede il supporto del server</value>
   </data>
+  <data name="Run in background" xml:space="preserve">
+    <value>Esegui in background</value>
+  </data>
+  <data name="Background macro '{0}' started..." xml:space="preserve">
+    <value>Avviata la macro di sfondo '{0}'...</value>
+  </data>
+  <data name="Background macro '{0}' stopped..." xml:space="preserve">
+    <value>La macro di sfondo '{0}' interrotta...</value>
+  </data>
+  <data name="Cannot PlayMacro from background macro..." xml:space="preserve">
+    <value>Impossibile riprodurreMacro dalla macro in background...</value>
+  </data>
+  <data name="Autostart" xml:space="preserve">
+    <value>Autostart</value>
+  </data>
+  <data name="When checked macro will execute automatically after login." xml:space="preserve">
+    <value>Quando selezionata macro verrà eseguito automaticamente dopo l'accesso.</value>
+  </data>
+  <data name="Stop All Macros" xml:space="preserve">
+    <value>Interrompi tutte le macro</value>
+  </data>
+  <data name="Stops all running macros including background and autostart macros." xml:space="preserve">
+    <value>Interrompe tutte le macro in esecuzione, incluse le macro in background e di avvio automatico.</value>
+  </data>
 </root>

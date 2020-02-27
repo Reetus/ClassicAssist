@@ -24,12 +24,10 @@ namespace ClassicAssist.UI.ViewModels
         private readonly MacroManager _manager;
         private int _caretPosition;
         private ICommand _clearHotkeyCommand;
-        private MacroEntry _currentMacro;
         private TextDocument _document;
         private ICommand _executeCommand;
         private ICommand _inspectObjectCommand;
         private bool _isRecording;
-        private bool _isRunning;
         private RelayCommand _newMacroCommand;
         private ICommand _recordCommand;
         private RelayCommand _removeMacroCommand;
@@ -48,8 +46,6 @@ namespace ClassicAssist.UI.ViewModels
             _manager.IsRecording = () => _isRecording;
             _manager.InsertDocument = str => { _dispatcher.Invoke( () => { SelectedItem.Macro += str; } ); };
             _manager.Items = Items;
-            _manager.IsPlaying = () => _isRunning;
-            _manager.CurrentMacro = () => _currentMacro;
         }
 
         public int CaretPosition
@@ -69,7 +65,7 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand ExecuteCommand =>
             _executeCommand ??
-            ( _executeCommand = new RelayCommandAsync( Execute, o => !IsRunning && SelectedItem != null ) );
+            ( _executeCommand = new RelayCommandAsync( Execute, CanExecute ) );
 
         public ShortcutKeys Hotkey
         {
@@ -87,14 +83,9 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _isRecording, value );
         }
 
-        public bool IsRunning
-        {
-            get => _isRunning;
-            set => SetProperty( ref _isRunning, value );
-        }
-
         public RelayCommand NewMacroCommand =>
-            _newMacroCommand ?? ( _newMacroCommand = new RelayCommand( NewMacro, o => !IsRunning ) );
+            _newMacroCommand ??
+            ( _newMacroCommand = new RelayCommand( NewMacro, o => !SelectedItem?.IsRunning ?? true ) );
 
         public ICommand RecordCommand =>
             _recordCommand ?? ( _recordCommand = new RelayCommand( Record, o => SelectedItem != null ) );
@@ -103,7 +94,7 @@ namespace ClassicAssist.UI.ViewModels
 
         public RelayCommand RemoveMacroCommand =>
             _removeMacroCommand ?? ( _removeMacroCommand =
-                new RelayCommand( RemoveMacro, o => !IsRunning && SelectedItem != null ) );
+                new RelayCommand( RemoveMacro, o => !SelectedItem?.IsRunning ?? SelectedItem != null ) );
 
         public ICommand SaveMacroCommand =>
             _saveMacroCommand ?? ( _saveMacroCommand = new RelayCommand( SaveMacro, o => true ) );
@@ -125,7 +116,8 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ShowCommandsCommand =>
             _showCommandsCommand ?? ( _showCommandsCommand = new RelayCommand( ShowCommands, o => true ) );
 
-        public ICommand StopCommand => _stopCommand ?? ( _stopCommand = new RelayCommandAsync( Stop, o => IsRunning ) );
+        public ICommand StopCommand =>
+            _stopCommand ?? ( _stopCommand = new RelayCommandAsync( Stop, o => SelectedItem?.IsRunning ?? false ) );
 
         public void Serialize( JObject json )
         {
@@ -142,7 +134,9 @@ namespace ClassicAssist.UI.ViewModels
                     { "DoNotAutoInterrupt", macroEntry.DoNotAutoInterrupt },
                     { "Macro", macroEntry.Macro },
                     { "PassToUO", macroEntry.PassToUO },
-                    { "Keys", macroEntry.Hotkey.ToJObject() }
+                    { "Keys", macroEntry.Hotkey.ToJObject() },
+                    { "IsBackground", macroEntry.IsBackground },
+                    { "IsAutostart", macroEntry.IsAutostart }
                 };
 
                 macroArray.Add( entry );
@@ -185,7 +179,9 @@ namespace ClassicAssist.UI.ViewModels
                         DoNotAutoInterrupt = GetJsonValue( token, "DoNotAutoInterrupt", false ),
                         Macro = GetJsonValue( token, "Macro", string.Empty ),
                         PassToUO = GetJsonValue( token, "PassToUO", true ),
-                        Hotkey = new ShortcutKeys( token["Keys"] )
+                        Hotkey = new ShortcutKeys( token["Keys"] ),
+                        IsBackground = GetJsonValue( token, "IsBackground", false ),
+                        IsAutostart = GetJsonValue( token, "IsAutostart", false )
                     };
 
                     entry.Action = async hks => await Execute( entry );
@@ -201,6 +197,21 @@ namespace ClassicAssist.UI.ViewModels
                     AliasCommands.SetAlias( token["Name"].ToObject<string>(), token["Value"].ToObject<int>() );
                 }
             }
+        }
+
+        private bool CanExecute( object arg )
+        {
+            if ( !( arg is MacroEntry entry ) )
+            {
+                return false;
+            }
+
+            if ( entry.IsRunning )
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private void CheckOverwriteHotkey( HotkeyEntry selectedItem, ShortcutKeys hotkey )
@@ -248,26 +259,9 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            if ( _currentMacro != null && _currentMacro.DoNotAutoInterrupt && _currentMacro == entry )
-            {
-                return;
-            }
+            _manager.Execute( entry );
 
-            if ( IsRunning )
-            {
-                Stop( _currentMacro ).Wait();
-            }
-
-            _dispatcher.Invoke( () => IsRunning = true );
-            _dispatcher.Invoke( () => SelectedItem = entry );
-
-            _currentMacro = entry;
-            _currentMacro.Stop = () => Stop( entry ).Wait();
-
-            await Task.Run( () => { _manager.Execute( entry ); } );
-
-            _dispatcher.Invoke( () => IsRunning = false );
-            _currentMacro = null;
+            await Task.CompletedTask;
         }
 
         private static void ShowActiveObjectsWindow( object obj )
@@ -278,7 +272,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private void OnDisconnectedEvent()
         {
-            _manager.Stop();
+            _manager.StopAll();
         }
 
         private static void ClearHotkey( object obj )
@@ -336,7 +330,12 @@ namespace ClassicAssist.UI.ViewModels
 
         private async Task Stop( object obj )
         {
-            _manager.Stop();
+            if ( !( obj is MacroEntry entry ) )
+            {
+                return;
+            }
+
+            entry.Stop();
 
             await Task.CompletedTask;
         }

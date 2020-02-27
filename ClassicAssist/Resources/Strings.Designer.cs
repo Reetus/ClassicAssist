@@ -313,6 +313,33 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Autostart.
+        /// </summary>
+        public static string Autostart {
+            get {
+                return ResourceManager.GetString("Autostart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Background macro &apos;{0}&apos; started....
+        /// </summary>
+        public static string Background_macro___0___started___ {
+            get {
+                return ResourceManager.GetString("Background macro \'{0}\' started...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Background macro &apos;{0}&apos; stopped....
+        /// </summary>
+        public static string Background_macro___0___stopped___ {
+            get {
+                return ResourceManager.GetString("Background macro \'{0}\' stopped...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bandage Self.
         /// </summary>
         public static string Bandage_Self {
@@ -435,6 +462,15 @@ namespace ClassicAssist.Resources {
         public static string Cannot_find_sound_file___ {
             get {
                 return ResourceManager.GetString("Cannot find sound file...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot PlayMacro from background macro....
+        /// </summary>
+        public static string Cannot_PlayMacro_from_background_macro___ {
+            get {
+                return ResourceManager.GetString("Cannot PlayMacro from background macro...", resourceCulture);
             }
         }
         
@@ -2122,6 +2158,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Run in background.
+        /// </summary>
+        public static string Run_in_background {
+            get {
+                return ResourceManager.GetString("Run in background", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Save {
@@ -2428,11 +2473,29 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stop All Macros.
+        /// </summary>
+        public static string Stop_All_Macros {
+            get {
+                return ResourceManager.GetString("Stop All Macros", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stop Current Macro.
         /// </summary>
         public static string Stop_Current_Macro {
             get {
                 return ResourceManager.GetString("Stop Current Macro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stops all running macros including background and autostart macros..
+        /// </summary>
+        public static string Stops_all_running_macros_including_background_and_autostart_macros_ {
+            get {
+                return ResourceManager.GetString("Stops all running macros including background and autostart macros.", resourceCulture);
             }
         }
         
@@ -2973,6 +3036,15 @@ namespace ClassicAssist.Resources {
         public static string Weather {
             get {
                 return ResourceManager.GetString("Weather", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When checked macro will execute automatically after login..
+        /// </summary>
+        public static string When_checked_macro_will_execute_automatically_after_login_ {
+            get {
+                return ResourceManager.GetString("When checked macro will execute automatically after login.", resourceCulture);
             }
         }
         

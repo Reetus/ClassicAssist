@@ -244,7 +244,7 @@ namespace ClassicAssist.UI.ViewModels
                 out Version version );
 
             DateTime buildDateTime =
-                new DateTime( 2019, 11, 22 ).Add( new TimeSpan( TimeSpan.TicksPerDay * version.Build ) );
+                new DateTime( 2020, 2, 27 ).Add( new TimeSpan( TimeSpan.TicksPerDay * version.Build ) );
 
             return buildDateTime;
         }

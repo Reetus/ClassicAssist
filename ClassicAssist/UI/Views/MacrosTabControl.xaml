@@ -90,10 +90,10 @@
                     <Button Content="{x:Static resources:Strings.Save}" Grid.Column="2" Margin="2.5,0"
                             Command="{Binding SaveMacroCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
                 </Grid>
-                <Grid Grid.Row="2" Margin="2,5,2,5">
+                <Grid Grid.Row="2" Margin="0,5,0,5">
                     <Button Content="{Binding RecordLabel}" Command="{Binding RecordCommand}" />
                 </Grid>
-                <Grid Grid.Row="3" Margin="0,15,0,0">
+                <Grid Grid.Row="3" Margin="0,0,0,0">
                     <Grid.Resources>
                         <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
                     </Grid.Resources>
@@ -104,31 +104,12 @@
                     <Button Content="{x:Static resources:Strings.Play}" Grid.Column="0" Margin="0,0,2.5,0"
                             Command="{Binding ExecuteCommand, Mode=OneWay}"
                             CommandParameter="{Binding SelectedItem, ElementName=ListBox}"
-                            IsEnabled="{Binding IsRunning, Converter={StaticResource InverseBooleanConverter}}" />
+                            IsEnabled="{Binding SelectedItem.IsRunning, Converter={StaticResource InverseBooleanConverter}, ElementName=ListBox}" />
                     <Button Content="{x:Static resources:Strings.Stop}" Grid.Column="1" Margin="2.5,0,0,0"
-                            IsEnabled="{Binding IsRunning}" Command="{Binding StopCommand, Mode=OneWay}" />
+                            IsEnabled="{Binding SelectedItem.IsRunning, ElementName=ListBox}"
+                            Command="{Binding StopCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
                 </Grid>
-                <Grid Grid.Row="4">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.Resources>
-                        <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=ListBox}"
-                                             Value="{x:Null}">
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Grid.Resources>
-                    <CheckBox Content="{x:Static resources:Strings.Loop}" Grid.Row="0" Margin="0,5,0,0"
-                              IsChecked="{Binding SelectedItem.Loop, ElementName=ListBox}" />
-                    <CheckBox Content="{x:Static resources:Strings.Do_not_auto_interupt}" Grid.Row="1" Margin="0,5,0,0"
-                              IsChecked="{Binding SelectedItem.DoNotAutoInterrupt, ElementName=ListBox}" />
-                </Grid>
-                <GroupBox Header="Hotkey" Grid.Row="5" Padding="5">
+                <GroupBox Header="Hotkey" Grid.Row="5" Padding="5" Margin="0,5,0,0">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -149,6 +130,7 @@
         <Grid Grid.Column="2" Initialized="Grid_Initialized" Margin="5,0,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <avalon:TextEditor ShowLineNumbers="True" x:Name="CodeTextEditor" Grid.Row="0"
@@ -174,7 +156,28 @@
                                                  CaretBinding="{Binding CaretPosition}" />
                 </i:Interaction.Behaviors>
             </avalon:TextEditor>
-            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="5">
+                <StackPanel.Resources>
+                    <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=ListBox}"
+                                         Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Resources>
+                <CheckBox Content="{x:Static resources:Strings.Loop}" Margin="0,0,5,0"
+                          IsChecked="{Binding SelectedItem.Loop, ElementName=ListBox}" />
+                <CheckBox Content="{x:Static resources:Strings.Do_not_auto_interupt}" Margin="0,0,5,0"
+                          IsChecked="{Binding SelectedItem.DoNotAutoInterrupt, ElementName=ListBox}" />
+                <CheckBox Content="{x:Static resources:Strings.Run_in_background}" Margin="0,0,5,0"
+                          IsChecked="{Binding SelectedItem.IsBackground, ElementName=ListBox}" />
+                <CheckBox Content="{x:Static resources:Strings.Autostart}" Margin="0,0,5,0"
+                          IsChecked="{Binding SelectedItem.IsAutostart, ElementName=ListBox}"
+                          ToolTip="{x:Static resources:Strings.When_checked_macro_will_execute_automatically_after_login_}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
                 <StackPanel.Resources>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                         <Setter Property="Margin" Value="10,10,10,0" />

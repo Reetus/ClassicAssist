@@ -16,6 +16,7 @@ using ClassicAssist.Data;
 using ClassicAssist.Data.Abilities;
 using ClassicAssist.Data.Commands;
 using ClassicAssist.Data.Hotkeys;
+using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
@@ -426,6 +427,12 @@ namespace Assistant
 
             AbilitiesManager.GetInstance().Enabled = AbilityType.None;
             AbilitiesManager.GetInstance().ResendGump( AbilityType.None );
+
+            Task.Run( async () =>
+            {
+                await Task.Delay( 3000 );
+                MacroManager.GetInstance().Autostart();
+            } );
         }
 
         public static void SendPacketToServer( byte[] packet, int length )

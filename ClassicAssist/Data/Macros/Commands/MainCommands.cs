@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Media;
 using System.Threading;
 using System.Windows;
@@ -177,6 +178,26 @@ namespace ClassicAssist.Data.Macros.Commands
                     break;
                 }
             }
+        }
+
+        [CommandsDisplay( Category = "Main",
+            Description = "Returns true if there is a macro, use in background macros.", InsertText = "if Playing():" )]
+        public static bool Playing()
+        {
+            MacroManager manager = MacroManager.GetInstance();
+
+            return manager.CurrentMacro != null && manager.CurrentMacro.IsRunning;
+        }
+
+        [CommandsDisplay( Category = "Main",
+            Description = "Returns true if the named macro is playing.", InsertText = "if Playing(\"dressstuff\"):" )]
+        public static bool Playing( string macroName )
+        {
+            MacroManager manager = MacroManager.GetInstance();
+
+            MacroEntry macro = manager.Items.FirstOrDefault( m => m.Name.Equals( macroName ) );
+
+            return macro != null && macro.IsRunning;
         }
     }
 }

@@ -1098,4 +1098,28 @@
   <data name="Requires Server Support" xml:space="preserve">
     <value>Requires Server Support</value>
   </data>
+  <data name="Run in background" xml:space="preserve">
+    <value>Run in background</value>
+  </data>
+  <data name="Background macro '{0}' started..." xml:space="preserve">
+    <value>Background macro '{0}' started...</value>
+  </data>
+  <data name="Background macro '{0}' stopped..." xml:space="preserve">
+    <value>Background macro '{0}' stopped...</value>
+  </data>
+  <data name="Cannot PlayMacro from background macro..." xml:space="preserve">
+    <value>Cannot PlayMacro from background macro...</value>
+  </data>
+  <data name="Autostart" xml:space="preserve">
+    <value>Autostart</value>
+  </data>
+  <data name="When checked macro will execute automatically after login." xml:space="preserve">
+    <value>When checked macro will execute automatically after login.</value>
+  </data>
+  <data name="Stop All Macros" xml:space="preserve">
+    <value>Stop All Macros</value>
+  </data>
+  <data name="Stops all running macros including background and autostart macros." xml:space="preserve">
+    <value>Stops all running macros including background and autostart macros.</value>
+  </data>
 </root>

@@ -145,7 +145,7 @@ namespace ClassicAssist.Data.Hotkeys
                 modifier = Key.None;
             }
 
-            foreach ( HotkeyEntry hke in Items )
+            foreach ( HotkeyCommand hke in Items )
             {
                 if ( hke.Children == null )
                 {

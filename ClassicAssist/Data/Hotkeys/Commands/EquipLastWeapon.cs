@@ -2,7 +2,7 @@
 
 namespace ClassicAssist.Data.Hotkeys.Commands
 {
-    [HotkeyCommand( Name = "Equip Last Weapon (Quick Weapon Switch)", Tooltip = "Requires Server Support")]
+    [HotkeyCommand( Name = "Equip Last Weapon (Quick Weapon Switch)", Tooltip = "Requires Server Support" )]
     public class EquipLastWeapon : HotkeyCommand
     {
         public override void Execute()

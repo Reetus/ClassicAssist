@@ -13,6 +13,14 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             MacroManager manager = MacroManager.GetInstance();
 
+            MacroEntry current = manager.GetCurrentMacro();
+
+            if ( current != null && current.IsBackground )
+            {
+                UOC.SystemMessage( Strings.Cannot_PlayMacro_from_background_macro___ );
+                return;
+            }
+
             MacroEntry macro = manager.Items.FirstOrDefault( m => m.Name == name );
 
             if ( macro == null )
@@ -21,7 +29,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            Task.Run( () => { macro.Action( macro ); } );
+            Task.Run( () => macro.Action( macro ) );
         }
 
         [CommandsDisplay( Category = "Macros", Description = "Stops the current macro.", InsertText = "Stop()" )]

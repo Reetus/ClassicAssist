@@ -1098,4 +1098,28 @@
   <data name="Requires Server Support" xml:space="preserve">
     <value>서버 지원 필요</value>
   </data>
+  <data name="Run in background" xml:space="preserve">
+    <value>백그라운드에서 실행</value>
+  </data>
+  <data name="Background macro '{0}' started..." xml:space="preserve">
+    <value>배경 매크로 '{0}'가 시작되었습니다...</value>
+  </data>
+  <data name="Background macro '{0}' stopped..." xml:space="preserve">
+    <value>배경 매크로 '{0}'가 중지되었습니다...</value>
+  </data>
+  <data name="Cannot PlayMacro from background macro..." xml:space="preserve">
+    <value>배경 매크로에서 매크로를 재생할 수 없습니다...</value>
+  </data>
+  <data name="Autostart" xml:space="preserve">
+    <value>Autostart</value>
+  </data>
+  <data name="When checked macro will execute automatically after login." xml:space="preserve">
+    <value>확인되면 매크로는 로그인 후 자동으로 실행됩니다.</value>
+  </data>
+  <data name="Stop All Macros" xml:space="preserve">
+    <value>모든 매크로 중지</value>
+  </data>
+  <data name="Stops all running macros including background and autostart macros." xml:space="preserve">
+    <value>백그라운드 및 자동 시작 매크로를 포함하여 실행 중인 모든 매크로를 중지합니다.</value>
+  </data>
 </root>

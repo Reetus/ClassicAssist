@@ -10,6 +10,7 @@ namespace ClassicAssist.Launcher
         private const string RUNUO_REGEX = @".*Clients=(\d+),.*";
         private string _address;
         private string _name;
+        private string _ping;
         private int _port;
 
         private string _status;
@@ -27,6 +28,12 @@ namespace ClassicAssist.Launcher
         {
             get => _name;
             set => SetProperty( ref _name, value );
+        }
+
+        public string Ping
+        {
+            get => _ping;
+            set => SetProperty( ref _ping, value );
         }
 
         public int Port

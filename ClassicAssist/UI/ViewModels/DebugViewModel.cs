@@ -11,19 +11,23 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class DebugViewModel : BaseViewModel, ISettingProvider
     {
+        private ICommand _clearCommand;
         private bool _ignorePingPackets = true;
-        private ObservableCollection<HexDumpControl> _items = new ObservableCollection<HexDumpControl>();
+        private ObservableCollection<PacketEntry> _items = new ObservableCollection<PacketEntry>();
         private bool _running = true;
         private bool _topmost = true;
         private ICommand _viewPlayerEquipmentCommand;
 
         public DebugViewModel()
         {
+            Queue = new ThreadQueue<PacketEntry>( ProcessQueue );
             Engine.PacketReceivedEvent += OnPacketReceivedEvent;
             Engine.PacketSentEvent += OnPacketSentEvent;
             Engine.InternalPacketReceivedEvent += OnInternalPacketReceivedEvent;
             Engine.InternalPacketSentEvent += OnInternalPacketSentEvent;
         }
+
+        public ICommand ClearCommand => _clearCommand ?? ( _clearCommand = new RelayCommand( Clear, o => true ) );
 
         public bool IgnorePingPackets
         {
@@ -31,11 +35,13 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _ignorePingPackets, value );
         }
 
-        public ObservableCollection<HexDumpControl> Items
+        public ObservableCollection<PacketEntry> Items
         {
             get => _items;
             set => SetProperty( ref _items, value );
         }
+
+        public ThreadQueue<PacketEntry> Queue { get; set; }
 
         public bool Running
         {
@@ -77,84 +83,77 @@ namespace ClassicAssist.UI.ViewModels
             IgnorePingPackets = json["Debug"]["IgnorePingPackets"].ToObject<bool>();
         }
 
+        private void ProcessQueue( PacketEntry entry )
+        {
+            _dispatcher.Invoke( () => { Items.Add( entry ); } );
+        }
+
         private void OnInternalPacketSentEvent( byte[] data, int length )
         {
-            _dispatcher.Invoke( () =>
+            if ( IgnorePingPackets && data[0] == 0x73 )
             {
-                if ( IgnorePingPackets && data[0] == 0x73 )
-                {
-                    return;
-                }
+                return;
+            }
 
-                if ( !Running )
-                {
-                    return;
-                }
+            if ( !Running )
+            {
+                return;
+            }
 
-                HexDumpControl hd = new HexDumpControl( "Internal Outgoing Packet", data );
+            PacketEntry entry = new PacketEntry { Title = "Internal Outgoing Packet", Data = data };
 
-                Items.Add( hd );
-            } );
+            Queue.Enqueue( entry );
         }
 
         private void OnInternalPacketReceivedEvent( byte[] data, int length )
         {
-            _dispatcher.Invoke( () =>
+            if ( IgnorePingPackets && data[0] == 0x73 )
             {
-                if ( IgnorePingPackets && data[0] == 0x73 )
-                {
-                    return;
-                }
+                return;
+            }
 
-                if ( !Running )
-                {
-                    return;
-                }
+            if ( !Running )
+            {
+                return;
+            }
 
-                HexDumpControl hd = new HexDumpControl( "Internal Incoming Packet", data );
+            PacketEntry entry = new PacketEntry { Title = "Internal Incoming Packet", Data = data };
 
-                Items.Add( hd );
-            } );
+            Queue.Enqueue( entry );
         }
 
         private void OnPacketSentEvent( byte[] data, int length )
         {
-            _dispatcher.Invoke( () =>
+            if ( IgnorePingPackets && data[0] == 0x73 )
             {
-                if ( IgnorePingPackets && data[0] == 0x73 )
-                {
-                    return;
-                }
+                return;
+            }
 
-                if ( !Running )
-                {
-                    return;
-                }
+            if ( !Running )
+            {
+                return;
+            }
 
-                HexDumpControl hd = new HexDumpControl( "Outgoing Packet", data );
+            PacketEntry entry = new PacketEntry { Title = "Outgoing Packet", Data = data };
 
-                Items.Add( hd );
-            } );
+            Queue.Enqueue( entry );
         }
 
         private void OnPacketReceivedEvent( byte[] data, int length )
         {
-            _dispatcher.Invoke( () =>
+            if ( IgnorePingPackets && data[0] == 0x73 )
             {
-                if ( IgnorePingPackets && data[0] == 0x73 )
-                {
-                    return;
-                }
+                return;
+            }
 
-                if ( !Running )
-                {
-                    return;
-                }
+            if ( !Running )
+            {
+                return;
+            }
 
-                HexDumpControl hd = new HexDumpControl( "Incoming Packet", data );
+            PacketEntry entry = new PacketEntry { Title = "Incoming Packet", Data = data };
 
-                Items.Add( hd );
-            } );
+            Queue.Enqueue( entry );
         }
 
         private void ViewPlayerEquipment( object obj )
@@ -165,6 +164,11 @@ namespace ClassicAssist.UI.ViewModels
             };
 
             window.Show();
+        }
+
+        private void Clear( object obj )
+        {
+            Items.Clear();
         }
     }
 }

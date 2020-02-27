@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -119,6 +121,13 @@ namespace ClassicAssist.Launcher
 
                         NotifyPropertyChanged( nameof( Shards ) );
                     } );
+
+                    Task.Run( async () => await GetPing( shard ) )
+                        .ContinueWith( result =>
+                        {
+                            shard.Ping = result.Result;
+                            NotifyPropertyChanged( nameof( Shards ) );
+                        } );
                 }
             }
             finally
@@ -164,6 +173,22 @@ namespace ClassicAssist.Launcher
             string status = Encoding.ASCII.GetString( buffer ).TrimEnd( '\0' );
 
             return status;
+        }
+
+        public async Task<string> GetPing( ShardEntry entry )
+        {
+            IPAddress ip = await Utility.ResolveAddress( entry.Address );
+
+            if ( ip == null )
+            {
+                return "-";
+            }
+
+            Ping ping = new Ping();
+
+            PingReply result = ping.Send( ip.ToString() );
+
+            return result?.Status == IPStatus.Success ? result.RoundtripTime.ToString() : "-";
         }
 
         private void Cancel( object obj )

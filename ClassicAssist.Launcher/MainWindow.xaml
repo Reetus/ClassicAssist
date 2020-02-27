@@ -8,12 +8,13 @@
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:behaviours="clr-namespace:ClassicAssist.Launcher.Behaviours"
         xmlns:valueConverters="clr-namespace:ClassicAssist.Launcher.ValueConverters"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="{x:Static properties:Resources.ClassicAssist_Launcher}" Height="280" Width="350"
         ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
-    <b:Interaction.Behaviors>
+    <i:Interaction.Behaviors>
         <behaviours:WindowClosingBehaviour Command="{Binding ClosingCommand}" />
-    </b:Interaction.Behaviors>
+    </i:Interaction.Behaviors>
     <Window.Resources>
         <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
     </Window.Resources>

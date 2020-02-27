@@ -142,6 +142,15 @@ namespace ClassicAssist.Launcher.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ping.
+        /// </summary>
+        public static string Ping {
+            get {
+                return ResourceManager.GetString("Ping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Players.
         /// </summary>
         public static string Players {

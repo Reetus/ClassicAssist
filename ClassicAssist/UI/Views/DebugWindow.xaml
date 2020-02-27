@@ -1,15 +1,52 @@
-﻿<Window x:Class="ClassicAssist.UI.Views.DebugWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ClassicAssist.UI.Views"
-        xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
-        xmlns:resources="clr-namespace:ClassicAssist.Resources"
-        xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
-        xmlns:debug="clr-namespace:ClassicAssist.UI.Views.Debug"
-        mc:Ignorable="d"
-        Title="Debug Window" Height="450" Width="600" Topmost="{Binding Topmost}">
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:ClassicAssist.UI.Views"
+    xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
+    xmlns:resources="clr-namespace:ClassicAssist.Resources"
+    xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+    xmlns:debug="clr-namespace:ClassicAssist.UI.Views.Debug"
+    xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
+    xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
+    x:Class="ClassicAssist.UI.Views.DebugWindow"
+    mc:Ignorable="d"
+    Title="Debug Window" Height="450" Width="600" Topmost="{Binding Topmost}">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Debug/DebugToolBarStyle.xaml" />
+                <ResourceDictionary>
+                    <DrawingImage x:Key="RemoveIcon">
+                        <DrawingImage.Drawing>
+                            <DrawingGroup ClipGeometry="M0,0 V512.001 H512.001 V0 H0 Z">
+                                <DrawingGroup Opacity="1">
+                                    <DrawingGroup Opacity="1">
+                                        <GeometryDrawing Brush="#FF000000"
+                                                         Geometry="F1 M512.001,512.001z M0,0z M294.111,256.001L504.109,46.003C514.632,35.479 514.632,18.417 504.109,7.894 493.585,-2.63 476.522,-2.63 465.999,7.894L256,217.892 46.002,7.894C35.478,-2.63 18.416,-2.63 7.893,7.894 -2.63,18.418 -2.631,35.48 7.893,46.003L217.891,256.001 7.893,465.999C-2.631,476.523 -2.631,493.585 7.893,504.108 18.417,514.632 35.479,514.631 46.002,504.108L256,294.11 465.997,504.108C476.521,514.632 493.584,514.631 504.107,504.108 514.63,493.584 514.63,476.522 504.107,465.999L294.111,256.001z" />
+                                    </DrawingGroup>
+                                </DrawingGroup>
+                            </DrawingGroup>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+                    <DrawingImage x:Key="PersonIcon">
+                        <DrawingImage.Drawing>
+                            <DrawingGroup ClipGeometry="M-42,0 V512.001 H470 V-42 H0 Z">
+                                <DrawingGroup.Transform>
+                                    <TranslateTransform X="42" Y="0" />
+                                </DrawingGroup.Transform>
+                                <GeometryDrawing Brush="#FF000000"
+                                                 Geometry="F1 M512,512.001z M0,0z M210.351562,246.632812C244.234375,246.632812 273.570312,234.480469 297.546875,210.503906 321.515625,186.53125 333.671875,157.199219 333.671875,123.3125 333.671875,89.4375 321.519531,60.101562 297.542969,36.121094 273.566406,12.152344 244.230469,0 210.351562,0 176.464844,0 147.132812,12.152344 123.160156,36.125 99.1875,60.097656 87.03125,89.433594 87.03125,123.3125 87.03125,157.199219 99.1875,186.535156 123.160156,210.507812 147.140625,234.476562 176.476562,246.632812 210.351562,246.632812z M144.378906,57.339844C162.773438,38.945312 184.351562,30.003906 210.351562,30.003906 236.347656,30.003906 257.929688,38.945312 276.328125,57.339844 294.722656,75.738281 303.667969,97.320312 303.667969,123.3125 303.667969,149.3125 294.722656,170.890625 276.328125,189.289062 257.929688,207.6875 236.347656,216.628906 210.351562,216.628906 184.359375,216.628906 162.78125,207.683594 144.378906,189.289062 125.980469,170.894531 117.035156,149.3125 117.035156,123.3125 117.035156,97.320312 125.980469,75.738281 144.378906,57.339844z M144.378906,57.339844" />
+                                <GeometryDrawing Brush="#FF000000"
+                                                 Geometry="F1 M512,512.001z M0,0z M426.128906,393.703125C425.4375,383.726562 424.039062,372.84375 421.980469,361.351562 419.902344,349.773438 417.226562,338.828125 414.023438,328.824219 410.710938,318.484375 406.214844,308.273438 400.648438,298.488281 394.878906,288.332031 388.097656,279.488281 380.488281,272.210938 372.53125,264.597656 362.789062,258.476562 351.523438,254.011719 340.296875,249.570312 327.855469,247.320312 314.546875,247.320312 309.320312,247.320312 304.265625,249.464844 294.503906,255.820312 288.496094,259.738281 281.46875,264.269531 273.625,269.28125 266.917969,273.554688 257.832031,277.558594 246.609375,281.183594 235.660156,284.726562 224.542969,286.523438 213.566406,286.523438 202.597656,286.523438 191.480469,284.726562 180.523438,281.183594 169.3125,277.5625 160.222656,273.558594 153.527344,269.285156 145.757812,264.320312 138.726562,259.789062 132.628906,255.816406 122.875,249.460938 117.820312,247.316406 112.59375,247.316406 99.28125,247.316406 86.84375,249.570312 75.621094,254.015625 64.363281,258.472656 54.617188,264.59375 46.652344,272.214844 39.042969,279.496094 32.261719,288.335938 26.496094,298.488281 20.9375,308.273438 16.4375,318.480469 13.125,328.828125 9.925781,338.832031 7.25,349.773438 5.171875,361.351562 3.109375,372.828125 1.714844,383.714844 1.023438,393.714844 0.34375,403.492188 -4.44089209850063E-16,413.667969 -4.44089209850063E-16,423.949219 -4.44089209850063E-16,450.675781 8.496094,472.3125 25.25,488.269531 41.796875,504.015625 63.6875,512 90.316406,512L336.847656,512C363.46875,512 385.359375,504.015625 401.910156,488.269531 418.667969,472.324219 427.164062,450.679688 427.164062,423.945312 427.160156,413.628906 426.8125,403.453125 426.128906,393.703125z M381.222656,466.53125C370.289062,476.9375,355.773438,481.996094,336.84375,481.996094L90.316406,481.996094C71.382812,481.996094 56.867188,476.9375 45.9375,466.535156 35.214844,456.328125 30.003906,442.394531 30.003906,423.949219 30.003906,414.355469 30.320312,404.882812 30.953125,395.789062 31.570312,386.867188 32.832031,377.066406 34.703125,366.652344 36.550781,356.367188 38.902344,346.714844 41.699219,337.976562 44.382812,329.597656 48.042969,321.300781 52.582031,313.308594 56.914062,305.691406 61.898438,299.15625 67.398438,293.890625 72.542969,288.964844 79.027344,284.933594 86.667969,281.910156 93.734375,279.113281 101.675781,277.582031 110.296875,277.351562 111.347656,277.910156 113.21875,278.976562 116.25,280.953125 122.417969,284.972656 129.527344,289.558594 137.386719,294.578125 146.246094,300.226562 157.660156,305.328125 171.296875,309.730469 185.238281,314.238281 199.457031,316.527344 213.570312,316.527344 227.683594,316.527344 241.90625,314.238281 255.839844,309.734375 269.488281,305.324219 280.898438,300.226562 289.769531,294.570312 297.8125,289.429688 304.722656,284.976562 310.890625,280.953125 313.921875,278.980469 315.792969,277.910156 316.84375,277.351562 325.46875,277.582031 333.410156,279.113281 340.480469,281.910156 348.117188,284.933594 354.601562,288.96875 359.746094,293.890625 365.246094,299.152344 370.230469,305.6875 374.5625,313.3125 379.105469,321.300781 382.769531,329.601562 385.449219,337.972656 388.25,346.722656 390.605469,356.371094 392.449219,366.648438 394.316406,377.082031 395.582031,386.886719 396.199219,395.792969L396.199219,395.800781C396.835938,404.859375 397.15625,414.328125 397.160156,423.949219 397.15625,442.398438 391.945312,456.328125 381.222656,466.53125z M381.222656,466.53125" />
+                            </DrawingGroup>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Window.DataContext>
         <viewModels:DebugViewModel />
     </Window.DataContext>
@@ -17,12 +54,28 @@
         <TabItem Header="{x:Static resources:Strings.Main}">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ListBox ItemsSource="{Binding Items}" Margin="10" Grid.Row="0"
-                         misc:ListBoxBehavior.ScrollOnNewItem="true" />
-                <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10,0,10,10">
+                <ToolBar Grid.Row="0" Margin="10,0,10,0" Style="{DynamicResource ToolBarStyle1}">
+                    <Button Command="{Binding ClearCommand}" Margin="0,0,5,0">
+                        <Image Source="{StaticResource RemoveIcon}" Height="16"
+                               ToolTip="{x:Static resources:Strings.Clear_All}" />
+                    </Button>
+                    <Button Command="{Binding ViewPlayerEquipmentCommand}">
+                        <Image Source="{StaticResource PersonIcon}" Height="16" ToolTip="View Player Equipment" />
+                    </Button>
+                </ToolBar>
+                <ListBox ItemsSource="{Binding Items}" Margin="10" Grid.Row="1"
+                         misc:ListBoxBehavior.ScrollOnNewItem="true">
+                    <ListBox.ItemTemplate>
+                        <ItemContainerTemplate>
+                            <controls:HexDumpControl Packet="{Binding}" />
+                        </ItemContainerTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="10,0,10,10">
                     <CheckBox Content="{x:Static resources:Strings.Capture_Packets}" VerticalAlignment="Center"
                               Margin="0,0,10,0" IsChecked="{Binding Running}" />
                     <CheckBox Content="{x:Static resources:Strings.Topmost}" VerticalAlignment="Center"
@@ -30,7 +83,6 @@
                               IsChecked="{Binding Topmost}" />
                     <CheckBox Content="{x:Static resources:Strings.Ignore_ping_packets}" VerticalAlignment="Center"
                               Margin="0,0,10,0" IsChecked="{Binding IgnorePingPackets}" />
-                    <Button Content="View Player Equipment" Command="{Binding ViewPlayerEquipmentCommand}" Padding="5" />
                 </StackPanel>
             </Grid>
         </TabItem>

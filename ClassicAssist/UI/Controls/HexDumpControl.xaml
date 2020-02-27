@@ -13,7 +13,7 @@
     </UserControl.Resources>
     <StackPanel
         DataContext="{Binding Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HexDumpControl}}}">
-        <Label Content="{Binding WindowTitle}" />
+        <Label Content="{Binding Packet.Title}" />
         <Grid>
             <Grid.ContextMenu>
                 <ContextMenu>

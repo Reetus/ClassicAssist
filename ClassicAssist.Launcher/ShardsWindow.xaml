@@ -9,6 +9,7 @@
     xmlns:behaviours="clr-namespace:ClassicAssist.Launcher.Behaviours"
     xmlns:ValueConverters="clr-namespace:ClassicAssist.Launcher.ValueConverters"
     xmlns:controls="clr-namespace:ClassicAssist.Launcher.Controls"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     x:Class="ClassicAssist.Launcher.ShardsWindow"
     mc:Ignorable="d"
     Title="{x:Static properties:Resources.Shards}" Height="350" Width="600" WindowStartupLocation="CenterScreen">
@@ -74,8 +75,10 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{x:Static properties:Resources.Players}" Width="150"
+                    <GridViewColumn Header="{x:Static properties:Resources.Players}" Width="100"
                                     DisplayMemberBinding="{Binding Status}" />
+                    <GridViewColumn Header="{x:Static properties:Resources.Ping}" Width="100"
+                                    DisplayMemberBinding="{Binding Ping}" />
                 </GridView>
             </ListView.View>
         </ListView>
@@ -87,14 +90,14 @@
             </StackPanel.Resources>
             <Button Content="{x:Static properties:Resources.OK}" Margin="0,0,10,0"
                     Command="{Binding OKCommand, Mode=OneWay}">
-                <b:Interaction.Behaviors>
+                <i:Interaction.Behaviors>
                     <behaviours:CloseOnClickBehaviour />
-                </b:Interaction.Behaviors>
+                </i:Interaction.Behaviors>
             </Button>
             <Button Content="{x:Static properties:Resources.Cancel}" Command="{Binding CancelCommand, Mode=OneWay}">
-                <b:Interaction.Behaviors>
+                <i:Interaction.Behaviors>
                     <behaviours:CloseOnClickBehaviour />
-                </b:Interaction.Behaviors>
+                </i:Interaction.Behaviors>
             </Button>
         </StackPanel>
     </Grid>

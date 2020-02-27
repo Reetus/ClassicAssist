@@ -118,66 +118,66 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ClassicAssist Launcher" xml:space="preserve">
-    <value>经典辅助启动器</value>
+    <value>클래식어시스트 런처</value>
   </data>
   <data name="Client Options" xml:space="preserve">
-    <value>客户端选项</value>
+    <value>클라이언트 옵션</value>
   </data>
   <data name="Ultima Online" xml:space="preserve">
     <value>Ultima Online</value>
   </data>
   <data name="Check for update" xml:space="preserve">
-    <value>检查更新</value>
+    <value>업데이트 확인</value>
   </data>
   <data name="Shard" xml:space="preserve">
-    <value>碎片</value>
+    <value>파편</value>
   </data>
   <data name="Port" xml:space="preserve">
-    <value>港口</value>
+    <value>포트</value>
   </data>
   <data name="Start" xml:space="preserve">
-    <value>开始</value>
+    <value>시작</value>
   </data>
   <data name="Select a client" xml:space="preserve">
-    <value>选择客户端</value>
+    <value>클라이언트 선택</value>
   </data>
   <data name="Select your Ultima Online directory" xml:space="preserve">
-    <value>选择您的 Ultima 在线目录</value>
+    <value>울티마 온라인 디렉토리 선택</value>
   </data>
   <data name="Unable to resolve shard hostname." xml:space="preserve">
-    <value>无法解析分片主机名。</value>
+    <value>샤드 호스트 이름을 확인할 수 없습니다.</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>错误</value>
+    <value>오류</value>
   </data>
   <data name="Shards" xml:space="preserve">
-    <value>碎片</value>
+    <value>파편</value>
   </data>
   <data name="Address" xml:space="preserve">
-    <value>地址</value>
+    <value>주소</value>
   </data>
   <data name="Players" xml:space="preserve">
-    <value>球员</value>
+    <value>플레이어</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>取消</value>
+    <value>취소</value>
   </data>
   <data name="OK" xml:space="preserve">
-    <value>还行</value>
+    <value>그래</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>添加</value>
+    <value>추가</value>
   </data>
   <data name="Cannot remove preset shard" xml:space="preserve">
-    <value>无法删除预设分片</value>
+    <value>사전 설정 샤드를 제거할 수 없음</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>刷新</value>
+    <value>새로 고침</value>
   </data>
   <data name="Remove" xml:space="preserve">
-    <value>删除</value>
+    <value>제거</value>
   </data>
   <data name="Ping" xml:space="preserve">
-    <value>坪</value>
+    <value>Ping</value>
   </data>
 </root>

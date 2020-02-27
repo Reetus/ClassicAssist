@@ -118,66 +118,66 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ClassicAssist Launcher" xml:space="preserve">
-    <value>经典辅助启动器</value>
+    <value>ClassicAssist Launcher</value>
   </data>
   <data name="Client Options" xml:space="preserve">
-    <value>客户端选项</value>
+    <value>Seleziona Client</value>
   </data>
   <data name="Ultima Online" xml:space="preserve">
-    <value>Ultima Online</value>
+    <value>Cartella di Ultima Online</value>
   </data>
   <data name="Check for update" xml:space="preserve">
-    <value>检查更新</value>
+    <value>Verifica Aggiornamenti</value>
   </data>
   <data name="Shard" xml:space="preserve">
-    <value>碎片</value>
+    <value>Seleziona Shard</value>
   </data>
   <data name="Port" xml:space="preserve">
-    <value>港口</value>
+    <value>Porta</value>
   </data>
   <data name="Start" xml:space="preserve">
-    <value>开始</value>
+    <value>Avvia</value>
   </data>
   <data name="Select a client" xml:space="preserve">
-    <value>选择客户端</value>
+    <value>Seleziona il client</value>
   </data>
   <data name="Select your Ultima Online directory" xml:space="preserve">
-    <value>选择您的 Ultima 在线目录</value>
+    <value>Seleziona la cartella di Ultima Online</value>
   </data>
   <data name="Unable to resolve shard hostname." xml:space="preserve">
-    <value>无法解析分片主机名。</value>
+    <value>Hostname/IP dello Shard non raggiunto.</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>错误</value>
+    <value>Errore</value>
   </data>
   <data name="Shards" xml:space="preserve">
-    <value>碎片</value>
+    <value>Shards</value>
   </data>
   <data name="Address" xml:space="preserve">
-    <value>地址</value>
+    <value>Indirizzo</value>
   </data>
   <data name="Players" xml:space="preserve">
-    <value>球员</value>
+    <value>Giocatori</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>取消</value>
+    <value>Annulla</value>
   </data>
   <data name="OK" xml:space="preserve">
-    <value>还行</value>
+    <value>Ok</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>添加</value>
+    <value>Aggiungi</value>
   </data>
   <data name="Cannot remove preset shard" xml:space="preserve">
-    <value>无法删除预设分片</value>
+    <value>Impossibile rimuovere lo Shard predefinito</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>刷新</value>
+    <value>Aggiorna</value>
   </data>
   <data name="Remove" xml:space="preserve">
-    <value>删除</value>
+    <value>Rimuovi</value>
   </data>
   <data name="Ping" xml:space="preserve">
-    <value>坪</value>
+    <value>Ping</value>
   </data>
 </root>

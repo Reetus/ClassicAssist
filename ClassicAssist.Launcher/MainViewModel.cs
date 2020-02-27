@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -248,7 +247,7 @@ namespace ClassicAssist.Launcher
          */
         private async Task Start( object obj )
         {
-            IPAddress ip = await ResolveAddress( SelectedShard.Address );
+            IPAddress ip = await Utility.ResolveAddress( SelectedShard.Address );
 
             if ( ip == null )
             {
@@ -279,22 +278,18 @@ namespace ClassicAssist.Launcher
             }
         }
 
-        private static async Task<IPAddress> ResolveAddress( string hostname )
-        {
-            IPHostEntry hostentry = await Dns.GetHostEntryAsync( hostname );
-
-            return hostentry?.AddressList.FirstOrDefault( i => i.AddressFamily == AddressFamily.InterNetwork );
-        }
-
         private void ShowShardsWindow( object obj )
         {
             ShardsWindow window = new ShardsWindow();
             window.ShowDialog();
 
-            if ( window.DataContext is ShardsViewModel vm && vm.DialogResult == DialogResult.OK )
+            if ( !( window.DataContext is ShardsViewModel vm ) || vm.DialogResult != DialogResult.OK ||
+                 vm.SelectedShard == null )
             {
-                SelectedShard = vm.SelectedShard;
+                return;
             }
+
+            SelectedShard = vm.SelectedShard;
         }
 
         private void Closing( object obj )

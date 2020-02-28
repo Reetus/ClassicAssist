@@ -423,6 +423,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( layerSerial == 0 )
             {
+                AliasCommands.UnsetAlias( "found" );
                 return false;
             }
 

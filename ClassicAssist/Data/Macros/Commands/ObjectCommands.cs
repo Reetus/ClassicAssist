@@ -193,6 +193,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( entity == null )
             {
+                AliasCommands.UnsetAlias( "found" );
                 return false;
             }
 
@@ -252,6 +253,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( entity == null )
             {
+                AliasCommands.UnsetAlias( "found" );
                 return false;
             }
 

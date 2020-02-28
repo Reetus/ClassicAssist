@@ -1,0 +1,69 @@
+version: '{build}'
+skip_tags: true
+image: Visual Studio 2019
+clone_folder: c:\Projects\ClassicAssist\
+init:
+- ps: ''
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: $(full_version)
+  file_version: $(full_version)
+before_build:
+- ps: >-
+    $d = [datetime]"2/27/2020 00:00"
+
+    $sd = Get-Date
+
+    $env:version = [math]::floor((New-TimeSpan -Start $d -End $sd).TotalDays)
+
+    $env:full_version = "0.2.$env:version.$env:APPVEYOR_BUILD_NUMBER"
+
+    Update-AppveyorBuild -Version "$env:full_version"
+
+    nuget restore
+build:
+  verbosity: minimal
+after_build:
+- ps: >-
+    cd Output\net48
+
+    $files = (Get-ChildItem . -Recurse  | Resolve-Path -Relative)
+
+
+    $filespsobject = @()
+
+
+    foreach ( $file in $files )
+
+    {
+        $f = Get-ItemProperty $file
+
+        if (!($f -is [System.IO.DirectoryInfo]))
+        {
+            $item = "" | select Name, Size, ModifiedDate, SHA1
+            $item.Name = ($file) -replace "\.\\",""
+            $item.Size = $f.Length
+            $item.SHA1 =  (get-filehash -path $f.FullName -Algorithm sha1).Hash
+            $item.ModifiedDate = $f.LastWriteTime.ToString("o")
+            $filespsobject += $item
+        }
+
+        $json = $filespsobject | convertto-json
+    }
+
+
+    $json | Out-File MANIFEST.json
+artifacts:
+- path: Output\net48
+  name: ClassicAssist
+deploy:
+- provider: GitHub
+  tag: $(full_version)
+  auth_token:
+    secure: mJWk62zhXmBw0jG3EpII0T9CIaS1qwLQGcvc6QJjagGLN+cokd1xOAHIszD1jnc9
+  prerelease: true
+  on:
+    branch: master
+on_success:
+- cmd: dir c:\Projects\ClassicAssist\Output\net48\

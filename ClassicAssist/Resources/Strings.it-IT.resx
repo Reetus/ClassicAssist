@@ -1122,4 +1122,10 @@
   <data name="Stops all running macros including background and autostart macros." xml:space="preserve">
     <value>Interrompe tutte le macro in esecuzione, incluse le macro in background e di avvio automatico.</value>
   </data>
+  <data name="Instance" xml:space="preserve">
+    <value>Isolato</value>
+  </data>
+  <data name="Global" xml:space="preserve">
+    <value>Globale</value>
+  </data>
 </root>

@@ -427,7 +427,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
-            AliasCommands.SetAlias( "found", layerSerial );
+            AliasCommands.SetMacroAlias( "found", layerSerial );
 
             if ( MacroManager.QuietMode )
             {

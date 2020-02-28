@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 
@@ -25,9 +26,11 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _refreshTimersCommand;
         private ICommand _removeAliasCommand;
         private ICommand _removeIgnoreEntryCommand;
+        private ICommand _removeInstanceAliasCommand;
         private ICommand _removeListCommand;
         private AliasEntry _selectedAlias;
         private int _selectedIgnoreEntry;
+        private InstanceAliasEntry _selectedInstanceAlias;
         private ListEntry _selectedList;
         private TimerData _selectedTimer;
         private ObservableCollection<TimerData> _timers = new ObservableCollection<TimerData>();
@@ -35,6 +38,7 @@ namespace ClassicAssist.UI.ViewModels
         public ActiveObjectsViewModel()
         {
             RefreshAliases();
+            RefreshInstanceAliases();
             RefreshLists();
             RefreshTimers();
             RefreshIgnoreList();
@@ -56,6 +60,9 @@ namespace ClassicAssist.UI.ViewModels
             get => _ignoreEntries;
             set => SetProperty( ref _ignoreEntries, value );
         }
+
+        public ObservableCollection<InstanceAliasEntry> InstanceAliases { get; set; } =
+            new ObservableCollection<InstanceAliasEntry>();
 
         public ObservableCollection<ListEntry> Lists { get; set; } = new ObservableCollection<ListEntry>();
 
@@ -80,6 +87,11 @@ namespace ClassicAssist.UI.ViewModels
             _removeIgnoreEntryCommand ??
             ( _removeIgnoreEntryCommand = new RelayCommand( RemoveIgnoreEntry, o => true ) );
 
+        public ICommand RemoveInstanceAliasCommand =>
+            _removeInstanceAliasCommand ??
+            ( _removeInstanceAliasCommand =
+                new RelayCommand( RemoveInstanceAlias, o => SelectedInstanceAlias != null ) );
+
         public ICommand RemoveListCommand =>
             _removeListCommand ??
             ( _removeListCommand = new RelayCommand( RemoveList, o => SelectedList != null ) );
@@ -94,6 +106,12 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _selectedIgnoreEntry;
             set => SetProperty( ref _selectedIgnoreEntry, value );
+        }
+
+        public InstanceAliasEntry SelectedInstanceAlias
+        {
+            get => _selectedInstanceAlias;
+            set => SetProperty( ref _selectedInstanceAlias, value );
         }
 
         public ListEntry SelectedList
@@ -112,6 +130,36 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _timers;
             set => SetProperty( ref _timers, value );
+        }
+
+        private void RefreshInstanceAliases()
+        {
+            InstanceAliases.Clear();
+
+            MacroManager manager = MacroManager.GetInstance();
+
+            foreach ( MacroEntry entry in manager.Items )
+            {
+                foreach ( KeyValuePair<string, int> alias in entry.Aliases )
+                {
+                    InstanceAliases.Add( new InstanceAliasEntry
+                    {
+                        Macro = entry, Name = alias.Key, Serial = alias.Value
+                    } );
+                }
+            }
+        }
+
+        private void RemoveInstanceAlias( object obj )
+        {
+            if ( !( obj is InstanceAliasEntry entry ) )
+            {
+                return;
+            }
+
+            entry.Macro.Aliases.Remove( entry.Name );
+
+            RefreshInstanceAliases();
         }
 
         private void ClearIgnoreList( object obj )
@@ -225,6 +273,13 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             RefreshAliases();
+        }
+
+        public class InstanceAliasEntry
+        {
+            public MacroEntry Macro { get; set; }
+            public string Name { get; set; }
+            public int Serial { get; set; }
         }
 
         public class AliasEntry

@@ -1122,4 +1122,10 @@
   <data name="Stops all running macros including background and autostart macros." xml:space="preserve">
     <value>백그라운드 및 자동 시작 매크로를 포함하여 실행 중인 모든 매크로를 중지합니다.</value>
   </data>
+  <data name="Global" xml:space="preserve">
+    <value>글로벌</value>
+  </data>
+  <data name="Instance" xml:space="preserve">
+    <value>글로벌</value>
+  </data>
 </root>

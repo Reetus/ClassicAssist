@@ -35,7 +35,7 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = "Macros", Description = "Stops the current macro.", InsertText = "Stop()" )]
         public static void Stop()
         {
-            MacroManager.GetInstance().Stop();
+            MacroManager.GetInstance().StopAll();
         }
     }
 }

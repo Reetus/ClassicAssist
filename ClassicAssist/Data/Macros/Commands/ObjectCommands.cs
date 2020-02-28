@@ -197,7 +197,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
-            AliasCommands.SetAlias( "found", entity.Serial );
+            AliasCommands.SetMacroAlias( "found", entity.Serial );
 
             if ( MacroManager.QuietMode )
             {
@@ -257,7 +257,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
-            AliasCommands.SetAlias( "found", entity.Serial );
+            AliasCommands.SetMacroAlias( "found", entity.Serial );
 
             if ( MacroManager.QuietMode )
             {

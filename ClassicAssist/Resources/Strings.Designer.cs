@@ -1033,6 +1033,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Global.
+        /// </summary>
+        public static string Global {
+            get {
+                return ResourceManager.GetString("Global", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Grapes of Wrath.
         /// </summary>
         public static string Grapes_of_Wrath {
@@ -1182,6 +1191,15 @@ namespace ClassicAssist.Resources {
         public static string Insert {
             get {
                 return ResourceManager.GetString("Insert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instance.
+        /// </summary>
+        public static string Instance {
+            get {
+                return ResourceManager.GetString("Instance", resourceCulture);
             }
         }
         

@@ -139,6 +139,16 @@ namespace ClassicAssist.UI.ViewModels
                     { "IsAutostart", macroEntry.IsAutostart }
                 };
 
+                JArray aliasesArray = new JArray();
+
+                foreach ( JObject aliasObj in macroEntry.Aliases.Select( kvp =>
+                    new JObject { { "Key", kvp.Key }, { "Value", kvp.Value } } ) )
+                {
+                    aliasesArray.Add( aliasObj );
+                }
+
+                entry.Add( "Aliases", aliasesArray );
+
                 macroArray.Add( entry );
             }
 
@@ -183,6 +193,15 @@ namespace ClassicAssist.UI.ViewModels
                         IsBackground = GetJsonValue( token, "IsBackground", false ),
                         IsAutostart = GetJsonValue( token, "IsAutostart", false )
                     };
+
+                    if ( token["Aliases"] != null )
+                    {
+                        foreach ( JToken aliasToken in token["Aliases"] )
+                        {
+                            entry.Aliases.Add( aliasToken["Key"].ToObject<string>(),
+                                aliasToken["Value"].ToObject<int>() );
+                        }
+                    }
 
                     entry.Action = async hks => await Execute( entry );
 

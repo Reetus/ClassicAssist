@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
@@ -11,6 +12,7 @@ namespace ClassicAssist.Data.Macros
     public class MacroEntry : HotkeyEntry, IComparable<MacroEntry>
     {
         private readonly Dispatcher _dispatcher;
+        private Dictionary<string, int> _aliases = new Dictionary<string, int>();
         private bool _doNotAutoInterrupt;
         private bool _isAutostart;
         private bool _isBackground;
@@ -25,6 +27,12 @@ namespace ClassicAssist.Data.Macros
             _dispatcher = Dispatcher.CurrentDispatcher;
             _macroInvoker.ExceptionEvent += OnExceptionEvent;
             _macroInvoker.StoppedEvent += OnStoppedEvent;
+        }
+
+        public Dictionary<string, int> Aliases
+        {
+            get => _aliases;
+            set => SetProperty( ref _aliases, value );
         }
 
         public bool DoNotAutoInterrupt

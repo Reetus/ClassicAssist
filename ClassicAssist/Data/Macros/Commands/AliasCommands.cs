@@ -75,10 +75,45 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
+        [CommandsDisplay( Category = "Aliases",
+            Description = "Sets the value of the given alias name, alias is valid only in the current macro.",
+            InsertText = "SetMacroAlias(\"mount\", 0x40000001\")" )]
+        public static void SetMacroAlias( string aliasName, object obj )
+        {
+            int value = ResolveSerial( obj );
+
+            MacroEntry macro = MacroManager.GetInstance().GetCurrentMacro();
+
+            if ( macro == null )
+            {
+                SetAlias( aliasName, obj );
+                return;
+            }
+
+            if ( macro.Aliases.ContainsKey( aliasName.ToLower() ) )
+            {
+                macro.Aliases[aliasName.ToLower()] = value;
+            }
+            else
+            {
+                macro.Aliases.Add( aliasName.ToLower(), value );
+            }
+        }
+
         [CommandsDisplay( Category = "Aliases", Description = "Removes the alias name given.",
             InsertText = "UnsetAlias(\"mount\")" )]
         public static void UnsetAlias( string aliasName )
         {
+            MacroEntry macro = MacroManager.GetInstance().GetCurrentMacro();
+
+            if ( macro != null )
+            {
+                if ( macro.Aliases.ContainsKey( aliasName ) )
+                {
+                    macro.Aliases.Remove( aliasName );
+                }
+            }
+
             if ( _aliases.ContainsKey( aliasName ) )
             {
                 _aliases.Remove( aliasName );
@@ -89,6 +124,16 @@ namespace ClassicAssist.Data.Macros.Commands
             InsertText = "GetAlias(\"mount\")" )]
         public static int GetAlias( string aliasName )
         {
+            MacroEntry macro = MacroManager.GetInstance().GetCurrentMacro();
+
+            if ( macro != null )
+            {
+                if ( macro.Aliases.ContainsKey( aliasName.ToLower() ) )
+                {
+                    return macro.Aliases[aliasName.ToLower()];
+                }
+            }
+
             if ( _aliases.ContainsKey( aliasName.ToLower() ) )
             {
                 return _aliases[aliasName.ToLower()];

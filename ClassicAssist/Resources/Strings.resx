@@ -895,7 +895,7 @@
     <value>Unset Secondary Ability</value>
   </data>
   <data name="UO_LOCALE" xml:space="preserve">
-    <value>ENU\0</value>
+    <value>ENU</value>
   </data>
   <data name="Use death screen whilst hidden" xml:space="preserve">
     <value>Use death screen whilst hidden (Chuckles Mode)</value>

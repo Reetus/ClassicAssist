@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ClassicAssist.Data.Macros.Commands
 {
@@ -64,6 +65,27 @@ namespace ClassicAssist.Data.Macros.Commands
         internal static Dictionary<string, List<int>> GetAllLists()
         {
             return _lists;
+        }
+
+        [CommandsDisplay( Category = "Lists", Description = "Clear a list by name.",
+            InsertText = "ClearList(\"list\")" )]
+        public static void ClearList( string listName )
+        {
+            if ( !_lists.ContainsKey( listName ) )
+            {
+                return;
+            }
+
+            _lists[listName].Clear();
+        }
+
+        [CommandsDisplay( Category = "Lists", Description = "Checks whether a list contains a given element.",
+            InsertText = "if InList(\"shmoo\", 1):" )]
+        public static bool InList( string listName, int value )
+        {
+            int[] list;
+
+            return ( list = GetList( listName ) ) != null && list.Contains( value );
         }
     }
 }

@@ -2869,7 +2869,7 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ENU\0.
+        ///   Looks up a localized string similar to ENU.
         /// </summary>
         public static string UO_LOCALE {
             get {

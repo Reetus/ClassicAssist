@@ -41,7 +41,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = "Journal", Description = "Wait the given timeout for the journal text to appear.",
             InsertText = "if WaitForJournal(\"town guards\", 5000, \"system\"):" )]
-        public static bool WaitForJournal( string text, int timeout, string author )
+        public static bool WaitForJournal( string text, int timeout, string author = "" )
         {
             AutoResetEvent are = new AutoResetEvent( false );
 

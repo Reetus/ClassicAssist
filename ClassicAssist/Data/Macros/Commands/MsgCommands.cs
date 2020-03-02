@@ -96,5 +96,12 @@ namespace ClassicAssist.Data.Macros.Commands
                 Engine.PacketWaitEntries.Remove( packetWaitEntry );
             }
         }
+
+        [CommandsDisplay( Category = "Messages", Description = "Cancels the current prompt.",
+            InsertText = "CancelPrompt()" )]
+        public static void CancelPrompt()
+        {
+            Engine.SendPacketToServer( new UnicodePromptCancel( Engine.LastPromptSerial, Engine.LastPromptID ) );
+        }
     }
 }

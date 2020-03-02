@@ -86,7 +86,17 @@ namespace ClassicAssist.Data.Macros.Commands
             {
                 Property p = entity.Properties.FirstOrDefault( pe => pe.Text.ToLower().Contains( property.ToLower() ) );
 
-                return (T) Convert.ChangeType( p?.Arguments[argument], typeof( T ) );
+                if ( p == null )
+                {
+                    return default;
+                }
+
+                if ( p.Arguments[0].Trim().Equals( string.Empty ) )
+                {
+                    return default;
+                }
+
+                return (T) Convert.ChangeType( p?.Arguments?[argument], typeof( T ) );
             }
 
             UOC.SystemMessage( Strings.Item_properties_null_or_not_loaded___ );

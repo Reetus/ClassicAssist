@@ -35,6 +35,29 @@ namespace ClassicAssist.Data.Macros.Commands
             return UOC.WaitForContainerContents( serial, timeout );
         }
 
+        [CommandsDisplay( Category = "Actions", Description = "Returns the item count for given container.",
+            InsertText = "if Contents(\"backpack\") > 120:" )]
+        public static int Contents( object obj )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return 0;
+            }
+
+            Item container = Engine.Items.GetItem( serial );
+
+            if ( container?.Container != null )
+            {
+                return container.Container.GetTotalItemCount();
+            }
+
+            UOC.SystemMessage( Strings.Invalid_container___ );
+            return 0;
+        }
+
         [CommandsDisplay( Category = "Actions",
             Description = "Send quick switch weapon packet (probably not supported on pre-AoS servers.",
             InsertText = "EquipLastWeapon()" )]

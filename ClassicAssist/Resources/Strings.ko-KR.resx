@@ -121,7 +121,7 @@
     <value>"호주 친구 Reetus가 한국을 위해 만들었습니다"</value>
   </data>
   <data name="UO_LOCALE" xml:space="preserve">
-    <value>KOR\0</value>
+    <value>KOR</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>일반</value>

@@ -34,6 +34,11 @@ namespace ClassicAssist.UO.Network.Packets
                 return null;
             }
 
+            if ( packet[14] == 0x00 )
+            {
+                return null;
+            }
+
             string text = Encoding.Unicode.GetString( packet, 19, packet.Length - 20 ).Trim( '\0' );
 
             return $"PromptMsg(\"{text}\")\r\n";

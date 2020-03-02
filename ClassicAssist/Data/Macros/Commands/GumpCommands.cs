@@ -50,5 +50,15 @@ namespace ClassicAssist.Data.Macros.Commands
             UOC.SystemMessage( Strings.Invalid_gump___ );
             return false;
         }
+
+        [CommandsDisplay( Category = "Gumps", Description = "Close a specified gump serial",
+            InsertText = "CloseGump(0x454ddef)" )]
+        public static void CloseGump( int serial )
+        {
+            if ( Engine.Gumps.FindGump( serial, out Gump gump ) )
+            {
+                gump.CloseGump();
+            }
+        }
     }
 }

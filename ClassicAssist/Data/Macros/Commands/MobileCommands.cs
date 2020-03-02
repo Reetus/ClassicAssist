@@ -164,7 +164,7 @@ namespace ClassicAssist.Data.Macros.Commands
             Description =
                 "Returns the given mobiles max mana, if parameter is null, then returns the value from the player (parameter can be serial or alias).",
             InsertText = "mana = MaxMana(\"self\")" )]
-        public static int MaxMana( object obj )
+        public static int MaxMana( object obj = null )
         {
             return GetMobileProperty<int>( obj, nameof( Mobile.ManaMax ) );
         }
@@ -173,7 +173,7 @@ namespace ClassicAssist.Data.Macros.Commands
             Description =
                 "Returns the given mobiles max stamina, if parameter is null, then returns the value from the player (parameter can be serial or alias).",
             InsertText = "stam = MaxStam(\"self\")" )]
-        public static int MaxStam( object obj )
+        public static int MaxStam( object obj = null )
         {
             return GetMobileProperty<int>( obj, nameof( Mobile.StaminaMax ) );
         }

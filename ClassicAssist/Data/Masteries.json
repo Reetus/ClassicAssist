@@ -1,0 +1,364 @@
+[
+  {
+    "Circle": 70,
+    "Flag": 2,
+    "ID": 701,
+    "Name": "Inspire",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": "Uus Por",
+    "Target": false
+  },
+  {
+    "Circle": 70,
+    "Flag": 2,
+    "ID": 702,
+    "Name": "Invigorate",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": "An Zu",
+    "Target": false
+  },
+  {
+    "Circle": 70,
+    "Flag": 2,
+    "ID": 703,
+    "Name": "Resilience",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": "Kal Mani Tym",
+    "Target": false
+  },
+  {
+    "Circle": 70,
+    "Flag": 2,
+    "ID": 704,
+    "Name": "Perseverance",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": "Uus Jux Sanct",
+    "Target": false
+  },
+  {
+    "Circle": 70,
+    "Flag": 1,
+    "ID": 705,
+    "Name": "Tribulation",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": "In Jux Hur Rel",
+    "Target": true
+  },
+  {
+    "Circle": 70,
+    "Flag": 1,
+    "ID": 706,
+    "Name": "Despair",
+    "Reagents": [],
+    "Timeout": -1,
+    "Words": "Kal Des Mani Tym",
+    "Target": true
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 707,
+    "Name": "Death Ray",
+    "Reagents": [
+      3962,
+      3963,
+      3981
+    ],
+    "Target": true,
+    "Timeout": -1,
+    "Words": "In Grav Corp"
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 708,
+    "Name": "Ethereal Blast",
+    "Reagents": [
+      3963,
+      3973,
+      3974
+    ],
+    "Target": false,
+    "Timeout": -1,
+    "Words": "Uus Ort Grav"
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 709,
+    "Name": "Nether Blast",
+    "Reagents": [
+      16503,
+      3968
+    ],
+    "Target": true,
+    "Timeout": -1,
+    "Words": "In Vas Por Grav"
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 710,
+    "Name": "Mystic Weapon",
+    "Reagents": [
+      3969,
+      3966
+    ],
+    "Target": false,
+    "Timeout": -1,
+    "Words": "Vas Ylem Wis"
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 711,
+    "Name": "Command Undead",
+    "Reagents": [
+      3965,
+      3978,
+      3960
+    ],
+    "Target": true,
+    "Timeout": -1,
+    "Words": "In Corp Xen Por"
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 712,
+    "Name": "Conduit",
+    "Reagents": [
+      3982,
+      3960,
+      3983
+    ],
+    "Target": true,
+    "Timeout": -1,
+    "Words": "Uus Corp Grav"
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 713,
+    "Name": "Mana Shield",
+    "Reagents": [],
+    "Target": false,
+    "Timeout": -1,
+    "Words": "Faerkulggen"
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 714,
+    "Name": "Summon Reaper",
+    "Reagents": [],
+    "Target": true,
+    "Timeout": -1,
+    "Words": "Lartarisstree"
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 717,
+    "Name": "Warcry",
+    "Reagents": [],
+    "Target": false,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 719,
+    "Name": "Rejuvinate",
+    "Reagents": [],
+    "Target": true,
+    "Timeout": -1,
+    "Words": "In Vas Ort Grav Mani"
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 720,
+    "Name": "Holy Fist",
+    "Reagents": [],
+    "Target": true,
+    "Timeout": -1,
+    "Words": "Kal Vas Grav"
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 721,
+    "Name": "Shadow",
+    "Reagents": [],
+    "Target": false,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 722,
+    "Name": "White Tiger Form",
+    "Reagents": [],
+    "Target": false,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 723,
+    "Name": "Flameing Shot",
+    "Reagents": [],
+    "Target": true,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 724,
+    "Name": "Playing the Odds",
+    "Reagents": [],
+    "Target": false,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 725,
+    "Name": "Thrust",
+    "Reagents": [],
+    "Target": false,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 728,
+    "Name": "Toughness",
+    "Reagents": [],
+    "Target": false,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 730,
+    "Name": "Focused Eye",
+    "Reagents": [],
+    "Target": false,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 731,
+    "Name": "Anticipate Hit",
+    "Reagents": [],
+    "Target": false,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 732,
+    "Name": "Called Shot",
+    "Reagents": [],
+    "Target": false,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 734,
+    "Name": "Shield Bash",
+    "Reagents": [],
+    "Target": false,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 735,
+    "Name": "Body Guard",
+    "Reagents": [],
+    "Target": true,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 736,
+    "Name": "Heightened Senses",
+    "Reagents": [],
+    "Target": false,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 737,
+    "Name": "Tolerence",
+    "Reagents": [],
+    "Target": false,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 738,
+    "Name": "Injected Strike",
+    "Reagents": [],
+    "Target": true,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 740,
+    "Name": "Rampage",
+    "Reagents": [],
+    "Target": false,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 743,
+    "Name": "Whispering",
+    "Reagents": [],
+    "Target": false,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 744,
+    "Name": "Combat Training",
+    "Reagents": [],
+    "Target": true,
+    "Timeout": -1,
+    "Words": ""
+  }
+]

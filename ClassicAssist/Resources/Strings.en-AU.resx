@@ -1131,4 +1131,7 @@
   <data name="Waiting for ClassicAssist to initialize..." xml:space="preserve">
     <value>Waiting for ClassicAssist to initialize...</value>
   </data>
+  <data name="Masteries" xml:space="preserve">
+    <value>Masteries</value>
+  </data>
 </root>

@@ -23,6 +23,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _executeCommand;
         private HotkeyCommand _selectedItem;
         private HotkeyCommand _spellsCategory;
+        private HotkeyCommand _masteriesCategory;
 
         public HotkeysTabViewModel()
         {
@@ -64,7 +65,7 @@ namespace ClassicAssist.UI.ViewModels
 
             JArray commandsArray = new JArray();
 
-            foreach ( HotkeyEntry category in _serializeCategories )
+            foreach ( HotkeyCommand category in _serializeCategories )
             {
                 foreach ( HotkeyEntry categoryChild in category.Children )
                 {
@@ -106,6 +107,27 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             hotkeys.Add( "Spells", spellsArray );
+
+            JArray masteryArray = new JArray();
+
+            foreach ( HotkeyEntry masteriesCategoryChild in _masteriesCategory.Children )
+            {
+                if (Equals( masteriesCategoryChild.Hotkey, ShortcutKeys.Default ))
+                {
+                    continue;
+                }
+
+                JObject entry = new JObject
+                {
+                    { "Name", masteriesCategoryChild.Name },
+                    { "Keys", masteriesCategoryChild.Hotkey.ToJObject() },
+                    { "PassToUO", masteriesCategoryChild.PassToUO }
+                };
+
+                masteryArray.Add( entry );
+            }
+
+            hotkeys.Add( "Masteries", masteryArray );
 
             json?.Add( "Hotkeys", hotkeys );
         }
@@ -165,7 +187,7 @@ namespace ClassicAssist.UI.ViewModels
                 {
                     JToken type = token["Type"];
 
-                    foreach ( HotkeyEntry category in _serializeCategories )
+                    foreach ( HotkeyCommand category in _serializeCategories )
                     {
                         HotkeyEntry entry =
                             category.Children.FirstOrDefault(
@@ -234,13 +256,62 @@ namespace ClassicAssist.UI.ViewModels
                     entry.PassToUO = token["PassToUO"]?.ToObject<bool>() ?? true;
                 }
             }
+
+            if (_masteriesCategory != null)
+            {
+                _hotkeyManager.Items.Remove( _masteriesCategory );
+            }
+
+            _masteriesCategory = new HotkeyCommand { Name = Strings.Masteries, IsCategory = true };
+
+            SpellData[] masteries = spellManager.GetMasteryData();
+
+            ObservableCollectionEx<HotkeyEntry> masteryChildren = new ObservableCollectionEx<HotkeyEntry>();
+
+            foreach (SpellData mastery in masteries)
+            {
+                HotkeyCommand hkc = new HotkeyCommand
+                {
+                    Name = mastery.Name,
+                    Action = hks => spellManager.CastSpell( mastery.ID ),
+                    Hotkey = ShortcutKeys.Default,
+                    PassToUO = true
+                };
+
+                masteryChildren.Add( hkc );
+            }
+
+            _masteriesCategory.Children = masteryChildren;
+
+            _hotkeyManager.AddCategory( _masteriesCategory );
+
+            JToken masteryObj = hotkeys?["Masteries"];
+
+            if (masteryObj != null)
+            {
+                foreach (JToken token in masteryObj)
+                {
+                    JToken name = token["Name"];
+
+                    HotkeyEntry entry =
+                        _masteriesCategory.Children.FirstOrDefault( s => s.Name == name.ToObject<string>() );
+
+                    if (entry == null)
+                    {
+                        continue;
+                    }
+
+                    entry.Hotkey = new ShortcutKeys( token["Keys"] );
+                    entry.PassToUO = token["PassToUO"]?.ToObject<bool>() ?? true;
+                }
+            }
         }
 
         private void CheckOverwriteHotkey( HotkeyEntry selectedItem, ShortcutKeys hotkey )
         {
             HotkeyEntry conflict = null;
 
-            foreach ( HotkeyEntry hotkeyEntry in Items )
+            foreach ( HotkeyCommand hotkeyEntry in Items )
             {
                 foreach ( HotkeyEntry entry in hotkeyEntry.Children )
                 {

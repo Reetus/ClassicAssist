@@ -682,5 +682,17 @@
   {
     "ID": 1175,
     "Name": "Sakkhra Prophylaxis"
+  },
+  {
+    "ID": 1186,
+    "Name": "Caddellite Infused"
+  },
+  {
+    "ID": 1187,
+    "Name": "Potion Glorious Fortune"
+  },
+  {
+    "ID": 1188,
+    "Name": "Mystical Polymorph Totem"
   }
 ]

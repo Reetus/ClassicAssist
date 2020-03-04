@@ -13,6 +13,7 @@ namespace ClassicAssist.Data.Spells
         private static readonly object _lock = new object();
         private static SpellManager _instance;
         private readonly List<SpellData> _spellData;
+        private readonly List<SpellData> _masteryData;
 
         private SpellManager()
         {
@@ -20,6 +21,10 @@ namespace ClassicAssist.Data.Spells
 
             _spellData = JsonConvert
                 .DeserializeObject<SpellData[]>( File.ReadAllText( Path.Combine( dataPath, "Spells.json" ) ) )
+                .ToList();
+
+            _masteryData = JsonConvert
+                .DeserializeObject<SpellData[]>( File.ReadAllText( Path.Combine( dataPath, "Masteries.json" ) ) )
                 .ToList();
         }
 
@@ -37,26 +42,58 @@ namespace ClassicAssist.Data.Spells
             return sd;
         }
 
+        public SpellData GetMasteryData( int id )
+        {
+            SpellData sd = _masteryData.FirstOrDefault( s => s.ID == id );
+
+            return sd;
+        }
+
+        public SpellData GetMasteryData( string name )
+        {
+            SpellData sd = _masteryData.FirstOrDefault( s => s.Name.ToLower().Equals( name.ToLower() ) );
+
+            return sd;
+        }
+
         public SpellData[] GetSpellData()
         {
             return _spellData.ToArray();
+        }
+
+        public SpellData[] GetMasteryData()
+        {
+            return _masteryData.ToArray();
         }
 
         public void CastSpell( string name )
         {
             SpellData sd = GetSpellData( name );
 
-            if ( sd == null )
+            if ( sd != null )
+            {
+                if (sd.Target)
+                {
+                    Engine.WaitingForTarget = true;
+                }
+
+                CastSpell( sd.ID );
+                return;
+            }
+
+            SpellData md = GetMasteryData( name );
+
+            if ( md == null )
             {
                 return;
             }
 
-            if ( sd.Target )
+            if (md.Target)
             {
                 Engine.WaitingForTarget = true;
             }
 
-            CastSpell( sd.ID );
+            CastSpell( md.ID );
         }
 
         public void CastSpell( int id )

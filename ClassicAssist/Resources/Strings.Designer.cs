@@ -1546,6 +1546,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Masteries.
+        /// </summary>
+        public static string Masteries {
+            get {
+                return ResourceManager.GetString("Masteries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max Price.
         /// </summary>
         public static string Max_Price {

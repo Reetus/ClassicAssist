@@ -110,6 +110,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Update="Data\Masteries.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Sounds\Bike Horn.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

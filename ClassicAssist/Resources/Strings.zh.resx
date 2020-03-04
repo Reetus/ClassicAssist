@@ -1131,4 +1131,7 @@
   <data name="Waiting for ClassicAssist to initialize..." xml:space="preserve">
     <value>正在等待经典辅助系统初始化...</value>
   </data>
+  <data name="Masteries" xml:space="preserve">
+    <value>大师</value>
+  </data>
 </root>

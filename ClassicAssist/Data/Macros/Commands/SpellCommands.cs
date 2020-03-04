@@ -29,7 +29,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
-            SpellData sd = _manager.GetSpellData( name );
+            SpellData sd = _manager.GetSpellData( name ) ?? _manager.GetMasteryData(name);
 
             if ( sd == null )
             {

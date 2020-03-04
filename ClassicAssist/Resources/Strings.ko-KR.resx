@@ -1128,4 +1128,7 @@
   <data name="Instance" xml:space="preserve">
     <value>글로벌</value>
   </data>
+  <data name="Waiting for ClassicAssist to initialize..." xml:space="preserve">
+    <value>클래식 어시스트가 초기화되기를 기다리는 중...</value>
+  </data>
 </root>

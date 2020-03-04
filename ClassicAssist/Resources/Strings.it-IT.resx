@@ -1128,4 +1128,7 @@
   <data name="Global" xml:space="preserve">
     <value>Globale</value>
   </data>
+  <data name="Waiting for ClassicAssist to initialize..." xml:space="preserve">
+    <value>In attesa dell'inizializzazione di ClassicAssist...</value>
+  </data>
 </root>

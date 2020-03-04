@@ -1128,4 +1128,7 @@
   <data name="Instance" xml:space="preserve">
     <value>全球</value>
   </data>
+  <data name="Waiting for ClassicAssist to initialize..." xml:space="preserve">
+    <value>正在等待经典辅助系统初始化...</value>
+  </data>
 </root>

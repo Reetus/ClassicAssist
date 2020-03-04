@@ -12,6 +12,14 @@ ClassicAssist is under development but is in a useable state, features are being
 
 Add the full path to ClassicAssist.dll to the plugin section of the ClassicUO settings.json config file.
 
+Alternatively, use ClassicAssist.Launcher.exe and it will launch ClassicUO with the required path to the plugin.
+
+## Zone.Identifier
+
+If ClassicAssist fails to run or you receive an error message about loading from the network, follow the instructions here to unblock the files:
+
+[https://winaero.com/blog/how-to-unblock-files-downloaded-from-internet-in-windows-10/](https://winaero.com/blog/how-to-unblock-files-downloaded-from-internet-in-windows-10/)
+
 ## Macros
 
 Macros have similar function names as UOSteam but uses Python as the language, to learn the language syntax, refer to Python beginner guides on the internet such as [https://stackabuse.com/python-tutorial-for-absolute-beginners/](https://stackabuse.com/python-tutorial-for-absolute-beginners/)

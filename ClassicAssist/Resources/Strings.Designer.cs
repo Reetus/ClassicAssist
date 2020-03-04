@@ -3004,6 +3004,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Waiting for ClassicAssist to initialize....
+        /// </summary>
+        public static string Waiting_for_ClassicAssist_to_initialize___ {
+            get {
+                return ResourceManager.GetString("Waiting for ClassicAssist to initialize...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to WarMode Off.
         /// </summary>
         public static string WarMode_Off {

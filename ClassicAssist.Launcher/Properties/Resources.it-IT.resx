@@ -180,4 +180,34 @@
   <data name="Ping" xml:space="preserve">
     <value>Ping</value>
   </data>
+  <data name="Options" xml:space="preserve">
+    <value>Opzioni</value>
+  </data>
+  <data name="Additional Plugins:" xml:space="preserve">
+    <value>Plug-in aggiuntivi</value>
+  </data>
+  <data name="Debug" xml:space="preserve">
+    <value>Eseguire il debug</value>
+  </data>
+  <data name="Autologin" xml:space="preserve">
+    <value>Autologin</value>
+  </data>
+  <data name="Auto Reconnect" xml:space="preserve">
+    <value>Riconnessione automatica</value>
+  </data>
+  <data name="Reconnect Time (milliseconds)" xml:space="preserve">
+    <value>Tempo di riconnessione (millisecondi)</value>
+  </data>
+  <data name="Skip Login Screen" xml:space="preserve">
+    <value>Salta la schermata di accesso</value>
+  </data>
+  <data name="Reconnect Time" xml:space="preserve">
+    <value>Tempo di riconnessione:</value>
+  </data>
+  <data name="Override Client Version" xml:space="preserve">
+    <value>Ignora versione client</value>
+  </data>
+  <data name="Client Version" xml:space="preserve">
+    <value>Versione client</value>
+  </data>
 </root>

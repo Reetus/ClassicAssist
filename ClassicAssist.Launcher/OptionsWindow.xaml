@@ -1,0 +1,80 @@
+﻿<Window x:Class="ClassicAssist.Launcher.OptionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClassicAssist.Launcher"
+        xmlns:properties="clr-namespace:ClassicAssist.Launcher.Properties"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:behaviours="clr-namespace:ClassicAssist.Launcher.Behaviours"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Title="{x:Static properties:Resources.Options}" Height="400" Width="400">
+    <Window.DataContext>
+        <local:OptionsViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <GroupBox Margin="10" Grid.Row="0" Header="{x:Static properties:Resources.Additional_Plugins_}">
+            <Grid Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ListBox x:Name="listBox" Grid.Row="1" SelectedItem="{Binding SelectedPlugin}"
+                         ItemsSource="{Binding Plugins}" DisplayMemberPath="Name"
+                         ToolTip="{Binding SelectedItem.FullPath, ElementName=listBox}" />
+                <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="0,10,0,0">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Padding" Value="10,0,10,0" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button Content="{x:Static properties:Resources.Add}" Command="{Binding AddPluginCommand}"
+                            Margin="0,0,10,0" />
+                    <Button Content="{x:Static properties:Resources.Remove}" Command="{Binding RemovePluginCommand}"
+                            CommandParameter="{Binding SelectedItem, ElementName=listBox}" />
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="{x:Static properties:Resources.Options}" Grid.Row="1" Margin="10,0,10,10">
+            <StackPanel Margin="10">
+                <CheckBox Content="{x:Static properties:Resources.Debug}" IsChecked="{Binding ClassicOptions.Debug}"/>
+                <CheckBox Content="{x:Static properties:Resources.Autologin}" IsChecked="{Binding ClassicOptions.Autologin}"/>
+                <CheckBox Content="{x:Static properties:Resources.Skip_Login_Screen}" IsChecked="{Binding ClassicOptions.SkipLoginScreen}"/>
+                <CheckBox Content="{x:Static properties:Resources.Auto_Reconnect}" IsChecked="{Binding ClassicOptions.AutoReconnect}"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{x:Static properties:Resources.Reconnect_Time}" Margin="0,0,10,0" Padding="0"/>
+                    <TextBox MinWidth="80" Text="{Binding ClassicOptions.ReconnectTime, Mode=TwoWay}"/>
+                </StackPanel>
+                <CheckBox Content="{x:Static properties:Resources.Override_Client_Version}" IsChecked="{Binding ClassicOptions.OverrideClientVersion}"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{x:Static properties:Resources.Client_Version}" Margin="0,0,10,0" Padding="0"/>
+                    <TextBox MinWidth="80" Text="{Binding ClassicOptions.ClientVersion, Mode=TwoWay}"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="10,0,10,10">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Padding" Value="10,0,10,0" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="{x:Static properties:Resources.OK}" Margin="0,0,10,0"
+                    Command="{Binding OKCommand, Mode=OneWay}">
+                <i:Interaction.Behaviors>
+                    <behaviours:CloseOnClickBehaviour />
+                </i:Interaction.Behaviors>
+            </Button>
+            <Button Content="{x:Static properties:Resources.Cancel}">
+                <i:Interaction.Behaviors>
+                    <behaviours:CloseOnClickBehaviour />
+                </i:Interaction.Behaviors>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

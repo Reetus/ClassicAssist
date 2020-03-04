@@ -1128,4 +1128,7 @@
   <data name="Instance" xml:space="preserve">
     <value>Instance</value>
   </data>
+  <data name="Waiting for ClassicAssist to initialize..." xml:space="preserve">
+    <value>Waiting for ClassicAssist to initialize...</value>
+  </data>
 </root>

@@ -70,11 +70,38 @@ namespace ClassicAssist.Launcher.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Additional Plugins.
+        /// </summary>
+        public static string Additional_Plugins_ {
+            get {
+                return ResourceManager.GetString("Additional Plugins:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Address.
         /// </summary>
         public static string Address {
             get {
                 return ResourceManager.GetString("Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Reconnect.
+        /// </summary>
+        public static string Auto_Reconnect {
+            get {
+                return ResourceManager.GetString("Auto Reconnect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Autologin.
+        /// </summary>
+        public static string Autologin {
+            get {
+                return ResourceManager.GetString("Autologin", resourceCulture);
             }
         }
         
@@ -124,6 +151,24 @@ namespace ClassicAssist.Launcher.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Client Version.
+        /// </summary>
+        public static string Client_Version {
+            get {
+                return ResourceManager.GetString("Client Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Debug.
+        /// </summary>
+        public static string Debug {
+            get {
+                return ResourceManager.GetString("Debug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {
@@ -138,6 +183,24 @@ namespace ClassicAssist.Launcher.Properties {
         public static string OK {
             get {
                 return ResourceManager.GetString("OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        public static string Options {
+            get {
+                return ResourceManager.GetString("Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Override Client Version.
+        /// </summary>
+        public static string Override_Client_Version {
+            get {
+                return ResourceManager.GetString("Override Client Version", resourceCulture);
             }
         }
         
@@ -165,6 +228,24 @@ namespace ClassicAssist.Launcher.Properties {
         public static string Port {
             get {
                 return ResourceManager.GetString("Port", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reconnect Time:.
+        /// </summary>
+        public static string Reconnect_Time {
+            get {
+                return ResourceManager.GetString("Reconnect Time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reconnect Time (milliseconds).
+        /// </summary>
+        public static string Reconnect_Time__milliseconds_ {
+            get {
+                return ResourceManager.GetString("Reconnect Time (milliseconds)", resourceCulture);
             }
         }
         
@@ -219,6 +300,15 @@ namespace ClassicAssist.Launcher.Properties {
         public static string Shards {
             get {
                 return ResourceManager.GetString("Shards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip Login Screen.
+        /// </summary>
+        public static string Skip_Login_Screen {
+            get {
+                return ResourceManager.GetString("Skip Login Screen", resourceCulture);
             }
         }
         

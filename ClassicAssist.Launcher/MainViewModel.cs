@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -25,6 +26,7 @@ namespace ClassicAssist.Launcher
         private ObservableCollection<string> _clientPaths = new ObservableCollection<string>();
         private ICommand _closingCommand;
         private ObservableCollection<string> _dataPaths = new ObservableCollection<string>();
+        private ICommand _optionsCommand;
         private ICommand _selectClientPathCommand;
         private ICommand _selectDataPathCommand;
         private string _selectedClientPath;
@@ -119,11 +121,24 @@ namespace ClassicAssist.Launcher
                         SelectedShard = match;
                     }
                 }
+
+                if ( config["Plugins"] != null )
+                {
+                    foreach ( JToken token in config["Plugins"] )
+                    {
+                        string pluginPath = token.ToObject<string>();
+                        Plugins.Add( new PluginEntry { Name = Path.GetFileName( pluginPath ), FullPath = pluginPath } );
+                    }
+                }
+
+                ReadClassicOptions( config );
             }
         }
 
         public ICommand CheckForUpdateCommand =>
             _checkforUpdateCommand ?? ( _checkforUpdateCommand = new RelayCommand( CheckForUpdate, UpdaterExists ) );
+
+        public ClassicOptions ClassicOptions { get; set; } = new ClassicOptions();
 
         public ObservableCollection<string> ClientPaths
         {
@@ -139,6 +154,11 @@ namespace ClassicAssist.Launcher
             get => _dataPaths;
             set => SetProperty( ref _dataPaths, value );
         }
+
+        public ICommand OptionsCommand =>
+            _optionsCommand ?? ( _optionsCommand = new RelayCommand( ShowOptionsWindow, o => true ) );
+
+        public List<PluginEntry> Plugins { get; set; } = new List<PluginEntry>();
 
         public ICommand SelectClientPathCommand =>
             _selectClientPathCommand ?? ( _selectClientPathCommand = new RelayCommand( SelectClientPath ) );
@@ -176,6 +196,53 @@ namespace ClassicAssist.Launcher
         public ICommand StartCommand =>
             _startCommand ?? ( _startCommand = new RelayCommandAsync( Start,
                 o => !string.IsNullOrEmpty( SelectedClientPath ) && !string.IsNullOrEmpty( SelectedDataPath ) ) );
+
+        private void ReadClassicOptions( JObject config )
+        {
+            PropertyInfo[] properties =
+                typeof( ClassicOptions ).GetProperties( BindingFlags.Public | BindingFlags.Instance );
+
+            foreach ( PropertyInfo property in properties )
+            {
+                string propName = property.Name;
+                Type propType = property.PropertyType;
+
+                object defaultValue = null;
+
+                ClassicOptionAttribute attr = property.GetCustomAttribute<ClassicOptionAttribute>();
+
+                if ( attr?.DefaultValue != null)
+                {
+                    defaultValue = attr.DefaultValue;
+                }
+
+                if ( defaultValue == null )
+                {
+                    defaultValue = Activator.CreateInstance( propType );
+                }
+
+                object val = config[propName]?.ToObject( propType ) ?? defaultValue;
+
+                property.SetValue( ClassicOptions, val );
+            }
+        }
+
+        private void ShowOptionsWindow( object arg )
+        {
+            OptionsViewModel vm = new OptionsViewModel( Plugins, ClassicOptions );
+
+            OptionsWindow window = new OptionsWindow { DataContext = vm };
+            window.ShowDialog();
+
+            if ( vm.DialogResult != DialogResult.OK )
+            {
+                return;
+            }
+
+            Plugins.Clear();
+            Plugins.AddRange( vm.Plugins );
+            ClassicOptions = vm.ClassicOptions;
+        }
 
         private static bool UpdaterExists( object arg )
         {
@@ -257,9 +324,21 @@ namespace ClassicAssist.Launcher
 
             StringBuilder args = new StringBuilder();
 
-            args.Append( $"-plugins \"{Path.Combine( Environment.CurrentDirectory, "ClassicAssist.dll" )}\" " );
+            List<string> pluginList =
+                new List<string> { Path.Combine( Environment.CurrentDirectory, "ClassicAssist.dll" ) };
+
+            foreach ( PluginEntry plugin in Plugins )
+            {
+                pluginList.Add( plugin.FullPath );
+            }
+
+            string plugins = string.Join( ",", pluginList.ToArray() );
+
+            args.Append( $"-plugins \"{plugins}\" " );
             args.Append( $"-ip \"{ip}\" -port \"{SelectedShard.Port}\" " );
             args.Append( $"-uopath \"{SelectedDataPath}\" " );
+
+            BuildClassicOptions( args );
 
             ProcessStartInfo psi = new ProcessStartInfo
             {
@@ -275,6 +354,41 @@ namespace ClassicAssist.Launcher
             if ( p != null && !p.HasExited )
             {
                 Application.Current.Shutdown( 0 );
+            }
+        }
+
+        private void BuildClassicOptions( StringBuilder args )
+        {
+            PropertyInfo[] properties =
+                typeof( ClassicOptions ).GetProperties( BindingFlags.Public | BindingFlags.Instance );
+
+            foreach ( PropertyInfo property in properties )
+            {
+                ClassicOptionAttribute attr = property.GetCustomAttribute<ClassicOptionAttribute>();
+                object val = property.GetValue( ClassicOptions );
+
+                if ( attr == null )
+                {
+                    continue;
+                }
+
+                bool skip = val is bool b && b == false && !attr.IncludeIfFalse;
+                bool canInclude = true;
+
+                if ( !string.IsNullOrEmpty( attr.CanIncludeProperty ) )
+                {
+                    PropertyInfo canIncludeProperty = typeof( ClassicOptions ).GetProperty( attr.CanIncludeProperty );
+
+                    if ( canIncludeProperty != null )
+                    {
+                        canInclude = (bool) canIncludeProperty.GetValue( ClassicOptions );
+                    }
+                }
+
+                if ( !skip && canInclude )
+                {
+                    args.Append( $"{attr.Argument} {val} " );
+                }
             }
         }
 
@@ -315,7 +429,6 @@ namespace ClassicAssist.Launcher
 
             config.Add( "DataPaths", dataPathArray );
             config.Add( "SelectedDataPath", SelectedDataPath ?? string.Empty );
-
             config.Add( "SelectedShard", SelectedShard.Name );
 
             IEnumerable<ShardEntry> shards = _manager.Shards.Where( s => !s.IsPreset );
@@ -337,12 +450,37 @@ namespace ClassicAssist.Launcher
 
             config.Add( "Shards", shardArray );
 
+            JArray pluginsArray = new JArray();
+
+            foreach ( PluginEntry plugin in Plugins )
+            {
+                pluginsArray.Add( plugin.FullPath );
+            }
+
+            config.Add( "Plugins", pluginsArray );
+
+            WriteClassicOptions( config );
+
             using ( JsonTextWriter jtw =
                 new JsonTextWriter( new StreamWriter( Path.Combine( Environment.CurrentDirectory, CONFIG_FILENAME ) ) )
             )
             {
                 jtw.Formatting = Formatting.Indented;
                 config.WriteTo( jtw );
+            }
+        }
+
+        private void WriteClassicOptions( JObject config )
+        {
+            PropertyInfo[] properties =
+                typeof( ClassicOptions ).GetProperties( BindingFlags.Public | BindingFlags.Instance );
+
+            foreach ( PropertyInfo property in properties )
+            {
+                string propName = property.Name;
+                object val = property.GetValue( ClassicOptions );
+
+                config.Add( propName, val.ToString() );
             }
         }
     }

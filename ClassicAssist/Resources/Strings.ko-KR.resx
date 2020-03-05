@@ -1134,4 +1134,13 @@
   <data name="Masteries" xml:space="preserve">
     <value>마스터 (마스터)는</value>
   </data>
+  <data name="Stun" xml:space="preserve">
+    <value>기절</value>
+  </data>
+  <data name="Disarm" xml:space="preserve">
+    <value>무기해제</value>
+  </data>
+  <data name="Clear Weapon Ability" xml:space="preserve">
+    <value>무기 클리어</value>
+  </data>
 </root>

@@ -1134,4 +1134,13 @@
   <data name="Masteries" xml:space="preserve">
     <value>Masteries</value>
   </data>
+  <data name="Stun" xml:space="preserve">
+    <value>Stun</value>
+  </data>
+  <data name="Disarm" xml:space="preserve">
+    <value>Disarm</value>
+  </data>
+  <data name="Clear Weapon Ability" xml:space="preserve">
+    <value>Clear Weapon Ability</value>
+  </data>
 </root>

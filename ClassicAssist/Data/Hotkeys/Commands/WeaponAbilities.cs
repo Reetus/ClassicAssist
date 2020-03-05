@@ -1,4 +1,6 @@
-﻿using ClassicAssist.Data.Macros.Commands;
+﻿using Assistant;
+using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.UO.Network.Packets;
 
 namespace ClassicAssist.Data.Hotkeys.Commands
 {
@@ -62,6 +64,24 @@ namespace ClassicAssist.Data.Hotkeys.Commands
         public override void Execute()
         {
             AbilitiesCommands.ClearAbility();
+        }
+    }
+
+    [HotkeyCommand( Category = "Abilities", Name = "Stun" )]
+    public class StunAbility : HotkeyCommand
+    {
+        public override void Execute()
+        {
+            Engine.SendPacketToServer( new StunRequest() );
+        }
+    }
+
+    [HotkeyCommand( Category = "Abilities", Name = "Disarm" )]
+    public class DisarmAbility : HotkeyCommand
+    {
+        public override void Execute()
+        {
+            Engine.SendPacketToServer( new DisarmRequest() );
         }
     }
 }

@@ -547,6 +547,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear Weapon Ability.
+        /// </summary>
+        public static string Clear_Weapon_Ability {
+            get {
+                return ResourceManager.GetString("Clear Weapon Ability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cliloc Filter.
         /// </summary>
         public static string Cliloc_Filter {
@@ -732,6 +741,15 @@ namespace ClassicAssist.Resources {
         public static string Disable_inside_guardzone {
             get {
                 return ResourceManager.GetString("Disable inside guardzone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disarm.
+        /// </summary>
+        public static string Disarm {
+            get {
+                return ResourceManager.GetString("Disarm", resourceCulture);
             }
         }
         
@@ -2532,6 +2550,15 @@ namespace ClassicAssist.Resources {
         public static string Strength_Potion {
             get {
                 return ResourceManager.GetString("Strength Potion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stun.
+        /// </summary>
+        public static string Stun {
+            get {
+                return ResourceManager.GetString("Stun", resourceCulture);
             }
         }
         

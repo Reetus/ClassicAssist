@@ -1134,4 +1134,13 @@
   <data name="Masteries" xml:space="preserve">
     <value>大师</value>
   </data>
+  <data name="Stun" xml:space="preserve">
+    <value>打 晕</value>
+  </data>
+  <data name="Disarm" xml:space="preserve">
+    <value>解除</value>
+  </data>
+  <data name="Clear Weapon Ability" xml:space="preserve">
+    <value>清除武器能力</value>
+  </data>
 </root>

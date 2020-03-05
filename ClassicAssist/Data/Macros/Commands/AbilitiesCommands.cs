@@ -2,6 +2,7 @@
 using ClassicAssist.Data.Abilities;
 using ClassicAssist.Resources;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 
@@ -32,7 +33,18 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             AbilitiesManager manager = AbilitiesManager.GetInstance();
 
-            // TODO stun/disarm old
+            if ( ability.ToLower().Equals( "stun" ) )
+            {
+                Engine.SendPacketToServer( new StunRequest() );
+                return;
+            }
+
+            if ( ability.ToLower().Equals( "disarm" ) )
+            {
+                Engine.SendPacketToServer( new DisarmRequest() );
+                return;
+            }
+
             bool primary;
 
             switch ( ability.ToLower() )

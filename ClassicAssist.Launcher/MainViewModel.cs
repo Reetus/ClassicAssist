@@ -211,7 +211,7 @@ namespace ClassicAssist.Launcher
 
                 ClassicOptionAttribute attr = property.GetCustomAttribute<ClassicOptionAttribute>();
 
-                if ( attr?.DefaultValue != null)
+                if ( attr?.DefaultValue != null )
                 {
                     defaultValue = attr.DefaultValue;
                 }

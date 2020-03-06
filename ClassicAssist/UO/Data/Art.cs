@@ -325,9 +325,14 @@ namespace ClassicAssist.UO.Data
         [StructLayout( LayoutKind.Explicit )]
         private struct Entry3D
         {
-            [FieldOffset( 0 )] public readonly int Lookup;
-            [FieldOffset( 4 )] public readonly int Length;
-            [FieldOffset( 8 )] public readonly int Extra;
+            [FieldOffset( 0 )]
+            public readonly int Lookup;
+
+            [FieldOffset( 4 )]
+            public readonly int Length;
+
+            [FieldOffset( 8 )]
+            public readonly int Extra;
 
             public Entry3D( int lookup, int length, int extra )
             {
@@ -340,20 +345,36 @@ namespace ClassicAssist.UO.Data
         [StructLayout( LayoutKind.Explicit, Size = 12 )]
         private struct UOPBlockHeader
         {
-            [FieldOffset( 0 )] public readonly int NumberOfFiles;
-            [FieldOffset( 4 )] public readonly long NextAddress;
+            [FieldOffset( 0 )]
+            public readonly int NumberOfFiles;
+
+            [FieldOffset( 4 )]
+            public readonly long NextAddress;
         }
 
         [StructLayout( LayoutKind.Explicit, Pack = 0, Size = 34 )]
         private struct UOPFileHeader
         {
-            [FieldOffset( 0 )] public readonly long DataHeaderAddress;
-            [FieldOffset( 8 )] public readonly int Length;
-            [FieldOffset( 12 )] public readonly int CompressedSize;
-            [FieldOffset( 16 )] public readonly int DecompressedSize;
-            [FieldOffset( 20 )] public readonly ulong Hash;
-            [FieldOffset( 28 )] public readonly int Unknown;
-            [FieldOffset( 32 )] public readonly short IsCompressed;
+            [FieldOffset( 0 )]
+            public readonly long DataHeaderAddress;
+
+            [FieldOffset( 8 )]
+            public readonly int Length;
+
+            [FieldOffset( 12 )]
+            public readonly int CompressedSize;
+
+            [FieldOffset( 16 )]
+            public readonly int DecompressedSize;
+
+            [FieldOffset( 20 )]
+            public readonly ulong Hash;
+
+            [FieldOffset( 28 )]
+            public readonly int Unknown;
+
+            [FieldOffset( 32 )]
+            public readonly short IsCompressed;
         }
 
         #endregion

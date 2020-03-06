@@ -13,6 +13,8 @@ namespace ClassicAssist.Data.Hotkeys
     {
         public delegate void HotkeyChangedEventHandler( object sender, HotkeyChangedEventArgs e );
 
+        private readonly object _childrenLock = new object();
+
         private ObservableCollectionEx<HotkeyEntry> _children = new ObservableCollectionEx<HotkeyEntry>();
 
         private ShortcutKeys _hotkey = new ShortcutKeys();
@@ -25,8 +27,20 @@ namespace ClassicAssist.Data.Hotkeys
 
         public ObservableCollectionEx<HotkeyEntry> Children
         {
-            get => _children;
-            set => SetProperty( ref _children, value );
+            get
+            {
+                lock ( _childrenLock )
+                {
+                    return _children;
+                }
+            }
+            set
+            {
+                lock ( _childrenLock )
+                {
+                    SetProperty( ref _children, value );
+                }
+            }
         }
 
         public virtual bool Disableable { get; set; } = true;

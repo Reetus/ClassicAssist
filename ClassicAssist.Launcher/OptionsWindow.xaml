@@ -43,18 +43,22 @@
         </GroupBox>
         <GroupBox Header="{x:Static properties:Resources.Options}" Grid.Row="1" Margin="10,0,10,10">
             <StackPanel Margin="10">
-                <CheckBox Content="{x:Static properties:Resources.Debug}" IsChecked="{Binding ClassicOptions.Debug}"/>
-                <CheckBox Content="{x:Static properties:Resources.Autologin}" IsChecked="{Binding ClassicOptions.Autologin}"/>
-                <CheckBox Content="{x:Static properties:Resources.Skip_Login_Screen}" IsChecked="{Binding ClassicOptions.SkipLoginScreen}"/>
-                <CheckBox Content="{x:Static properties:Resources.Auto_Reconnect}" IsChecked="{Binding ClassicOptions.AutoReconnect}"/>
+                <CheckBox Content="{x:Static properties:Resources.Debug}" IsChecked="{Binding ClassicOptions.Debug}" />
+                <CheckBox Content="{x:Static properties:Resources.Autologin}"
+                          IsChecked="{Binding ClassicOptions.Autologin}" />
+                <CheckBox Content="{x:Static properties:Resources.Skip_Login_Screen}"
+                          IsChecked="{Binding ClassicOptions.SkipLoginScreen}" />
+                <CheckBox Content="{x:Static properties:Resources.Auto_Reconnect}"
+                          IsChecked="{Binding ClassicOptions.AutoReconnect}" />
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="{x:Static properties:Resources.Reconnect_Time}" Margin="0,0,10,0" Padding="0"/>
-                    <TextBox MinWidth="80" Text="{Binding ClassicOptions.ReconnectTime, Mode=TwoWay}"/>
+                    <Label Content="{x:Static properties:Resources.Reconnect_Time}" Margin="0,0,10,0" Padding="0" />
+                    <TextBox MinWidth="80" Text="{Binding ClassicOptions.ReconnectTime, Mode=TwoWay}" />
                 </StackPanel>
-                <CheckBox Content="{x:Static properties:Resources.Override_Client_Version}" IsChecked="{Binding ClassicOptions.OverrideClientVersion}"/>
+                <CheckBox Content="{x:Static properties:Resources.Override_Client_Version}"
+                          IsChecked="{Binding ClassicOptions.OverrideClientVersion}" />
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="{x:Static properties:Resources.Client_Version}" Margin="0,0,10,0" Padding="0"/>
-                    <TextBox MinWidth="80" Text="{Binding ClassicOptions.ClientVersion, Mode=TwoWay}"/>
+                    <Label Content="{x:Static properties:Resources.Client_Version}" Margin="0,0,10,0" Padding="0" />
+                    <TextBox MinWidth="80" Text="{Binding ClassicOptions.ClientVersion, Mode=TwoWay}" />
                 </StackPanel>
             </StackPanel>
         </GroupBox>

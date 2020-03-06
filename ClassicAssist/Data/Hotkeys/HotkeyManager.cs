@@ -16,6 +16,7 @@ namespace ClassicAssist.Data.Hotkeys
     {
         private static HotkeyManager _instance;
         private static readonly object _instanceLock = new object();
+        private readonly object _lock = new object();
 
         private readonly Key[] _modifierKeys =
         {
@@ -71,7 +72,7 @@ namespace ClassicAssist.Data.Hotkeys
 
         public void ClearPreviousHotkey( ShortcutKeys keys )
         {
-            foreach ( HotkeyEntry hotkeyEntry in Items )
+            foreach ( HotkeyCommand hotkeyEntry in Items )
             {
                 if ( hotkeyEntry.Children == null )
                 {
@@ -120,65 +121,83 @@ namespace ClassicAssist.Data.Hotkeys
 
         public bool OnHotkeyPressed( Key keys )
         {
-            bool filter = false;
-
-            if ( _modifierKeys.Contains( keys ) )
+            lock ( _lock )
             {
-                _modifiers.Clear();
-                _modifiers.Add( keys );
-                return false;
-            }
+                bool filter = false;
 
-            Key modifier = Key.None;
-
-            if ( _modifiers.Count > 0 )
-            {
-                modifier = _modifiers[0];
-            }
-
-            bool down = modifier != Key.None
-                ? Engine.Dispatcher.Invoke( () => Keyboard.IsKeyDown( modifier ) )
-                : false;
-
-            if ( !down )
-            {
-                modifier = Key.None;
-            }
-
-            foreach ( HotkeyCommand hke in Items )
-            {
-                if ( hke.Children == null )
+                if ( _modifierKeys.Contains( keys ) )
                 {
-                    continue;
+                    _modifiers.Clear();
+                    _modifiers.Add( keys );
+                    return false;
                 }
 
-                foreach ( HotkeyEntry hks in hke.Children )
+                Key modifier = Key.None;
+
+                if ( _modifiers.Count > 0 )
                 {
-                    if ( hks.Hotkey.Key != keys || hks.Hotkey.Modifier != modifier )
+                    modifier = _modifiers[0];
+                }
+
+                bool down = modifier != Key.None
+                    ? Engine.Dispatcher.Invoke( () => Keyboard.IsKeyDown( modifier ) )
+                    : false;
+
+                if ( !down )
+                {
+                    modifier = Key.None;
+                }
+
+                // Sanity check
+                if ( keys == Key.None && modifier == Key.None )
+                {
+                    return false;
+                }
+
+                foreach ( HotkeyCommand hke in Items )
+                {
+                    if ( hke.Children == null )
                     {
                         continue;
                     }
 
-                    if ( hks.Disableable && !Enabled )
+                    try
                     {
-                        continue;
+                        foreach ( HotkeyEntry t in hke.Children )
+                        {
+                            HotkeyEntry hks = t;
+
+                            if ( hks.Hotkey.Key != keys || hks.Hotkey.Modifier != modifier )
+                            {
+                                continue;
+                            }
+
+                            if ( hks.Disableable && !Enabled )
+                            {
+                                continue;
+                            }
+
+                            filter = !hks.PassToUO;
+
+                            Task.Run( () =>
+                                hks.Action.Invoke( hks ) );
+
+                            break;
+                        }
                     }
-
-                    filter = !hks.PassToUO;
-
-                    Task.Run( () =>
-                        hks.Action.Invoke( hks ) );
-
-                    break;
+                    catch ( InvalidOperationException )
+                    {
+                        // When spamming keys
+                    }
                 }
-            }
 
-            return filter;
+                return filter;
+            }
         }
 
         public void OnMouseAction( MouseOptions mouse )
         {
-            foreach ( HotkeyEntry hke in Items )
+            foreach ( HotkeyCommand hke in Items )
             {
                 if ( hke.Children == null )
                 {

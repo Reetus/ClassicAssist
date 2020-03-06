@@ -342,7 +342,6 @@ namespace ClassicAssist.Data.Macros.Commands
             return true;
         }
 
-
         [CommandsDisplay( Category = "Entity", Description = "Move a type from source to destintion.",
             InsertText = "MoveType(0xff, \"backpack\", \"bank\")" )]
         public static void MoveType( int id, int sourceSerial, int destinationSerial, int x = -1, int y = -1, int z = 0,

@@ -6,9 +6,16 @@ namespace ClassicAssist.Data.Autoloot
     [TypeConverter( typeof( EnumDescriptionTypeConverter ) )]
     public enum AutolootOperator
     {
-        [Description( "==" )] Equal,
-        [Description( "!=" )] NotEqual,
-        [Description( ">=" )] GreaterThan,
-        [Description( "<=" )] LessThan
+        [Description( "==" )]
+        Equal,
+
+        [Description( "!=" )]
+        NotEqual,
+
+        [Description( ">=" )]
+        GreaterThan,
+
+        [Description( "<=" )]
+        LessThan
     }
 }

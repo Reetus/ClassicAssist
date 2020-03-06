@@ -12,8 +12,8 @@ namespace ClassicAssist.Data.Spells
     {
         private static readonly object _lock = new object();
         private static SpellManager _instance;
-        private readonly List<SpellData> _spellData;
         private readonly List<SpellData> _masteryData;
+        private readonly List<SpellData> _spellData;
 
         private SpellManager()
         {
@@ -72,7 +72,7 @@ namespace ClassicAssist.Data.Spells
 
             if ( sd != null )
             {
-                if (sd.Target)
+                if ( sd.Target )
                 {
                     Engine.WaitingForTarget = true;
                 }
@@ -88,7 +88,7 @@ namespace ClassicAssist.Data.Spells
                 return;
             }
 
-            if (md.Target)
+            if ( md.Target )
             {
                 Engine.WaitingForTarget = true;
             }

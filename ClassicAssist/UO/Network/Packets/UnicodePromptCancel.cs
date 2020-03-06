@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (C) 2020 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -13,9 +14,9 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 #endregion
 
-using System.Text;
 using ClassicAssist.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
@@ -31,8 +32,8 @@ namespace ClassicAssist.UO.Network.Packets
         public UnicodePromptCancel( int senderSerial, int promptId )
         {
             _writer = new PacketWriter( 20 );
-            _writer.Write( (byte)0xC2 );
-            _writer.Write( (short)20 );
+            _writer.Write( (byte) 0xC2 );
+            _writer.Write( (short) 20 );
             _writer.Write( senderSerial );
             _writer.Write( promptId );
             _writer.Write( 0 );
@@ -42,7 +43,7 @@ namespace ClassicAssist.UO.Network.Packets
 
         public string Parse( byte[] packet, int length, PacketDirection direction )
         {
-            if (packet[0] != 0xC2 || direction != PacketDirection.Outgoing)
+            if ( packet[0] != 0xC2 || direction != PacketDirection.Outgoing )
             {
                 return null;
             }

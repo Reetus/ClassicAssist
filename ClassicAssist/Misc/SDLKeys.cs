@@ -582,7 +582,7 @@ namespace ClassicAssist.Misc
 
             /* This is not a key, simply marks the number of scancodes
 			 * so that you know how big to make your arrays. */
-            SDL_NUM_SCANCODES = 512
+            SDL_NUM_SCANCODES = 512,
         }
 
         public const int SDLK_SCANCODE_MASK = 1 << 30;
@@ -716,6 +716,12 @@ namespace ClassicAssist.Misc
             { (int) SDL_Keycode.SDLK_BACKQUOTE, Key.OemTilde },
             { (int) SDL_Keycode.SDLK_VOLUMEUP, Key.VolumeUp },
             { (int) SDL_Keycode.SDLK_VOLUMEDOWN, Key.VolumeDown },
+            { (int) SDL_Keycode.SDLK_AUDIONEXT, Key.MediaNextTrack },
+            { (int) SDL_Keycode.SDLK_AUDIOPREV, Key.MediaPreviousTrack },
+            { (int) SDL_Keycode.SDLK_AUDIOSTOP, Key.MediaStop },
+            { (int) SDL_Keycode.SDLK_AUDIOPLAY, Key.MediaPlayPause },
+            { (int) SDL_Keycode.SDLK_AUDIOMUTE, Key.VolumeMute },
+            { (int) SDL_Keycode.SDLK_MEDIASELECT, Key.SelectMedia },
             { '²' /* FIXME: AZERTY SDL2? -flibit */, Key.OemTilde },
             { 'é' /* FIXME: BEPO SDL2? -flibit */, Key.None },
             { '|' /* FIXME: Norwegian SDL2? -flibit */, Key.OemPipe },

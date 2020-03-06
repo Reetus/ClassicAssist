@@ -21,9 +21,9 @@ namespace ClassicAssist.UI.ViewModels
         private readonly List<HotkeyCommand> _serializeCategories = new List<HotkeyCommand>();
         private ICommand _clearHotkeyCommand;
         private ICommand _executeCommand;
+        private HotkeyCommand _masteriesCategory;
         private HotkeyCommand _selectedItem;
         private HotkeyCommand _spellsCategory;
-        private HotkeyCommand _masteriesCategory;
 
         public HotkeysTabViewModel()
         {
@@ -112,7 +112,7 @@ namespace ClassicAssist.UI.ViewModels
 
             foreach ( HotkeyEntry masteriesCategoryChild in _masteriesCategory.Children )
             {
-                if (Equals( masteriesCategoryChild.Hotkey, ShortcutKeys.Default ))
+                if ( Equals( masteriesCategoryChild.Hotkey, ShortcutKeys.Default ) )
                 {
                     continue;
                 }
@@ -257,7 +257,7 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            if (_masteriesCategory != null)
+            if ( _masteriesCategory != null )
             {
                 _hotkeyManager.Items.Remove( _masteriesCategory );
             }
@@ -268,7 +268,7 @@ namespace ClassicAssist.UI.ViewModels
 
             ObservableCollectionEx<HotkeyEntry> masteryChildren = new ObservableCollectionEx<HotkeyEntry>();
 
-            foreach (SpellData mastery in masteries)
+            foreach ( SpellData mastery in masteries )
             {
                 HotkeyCommand hkc = new HotkeyCommand
                 {
@@ -287,16 +287,16 @@ namespace ClassicAssist.UI.ViewModels
 
             JToken masteryObj = hotkeys?["Masteries"];
 
-            if (masteryObj != null)
+            if ( masteryObj != null )
             {
-                foreach (JToken token in masteryObj)
+                foreach ( JToken token in masteryObj )
                 {
                     JToken name = token["Name"];
 
                     HotkeyEntry entry =
                         _masteriesCategory.Children.FirstOrDefault( s => s.Name == name.ToObject<string>() );
 
-                    if (entry == null)
+                    if ( entry == null )
                     {
                         continue;
                     }

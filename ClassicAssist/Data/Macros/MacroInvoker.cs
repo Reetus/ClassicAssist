@@ -168,6 +168,10 @@ namespace ClassicAssist.Data.Macros
             {
                 Thread.Start();
             }
+            catch ( ThreadStateException )
+            {
+                // TODO 
+            }
             catch ( ThreadStartException )
             {
                 // TODO 

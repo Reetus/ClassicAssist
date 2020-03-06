@@ -454,18 +454,25 @@ namespace Assistant
 
         public static void SendPacketToClient( byte[] packet, int length )
         {
-            lock ( _clientSendLock )
+            try
             {
-                while ( DateTime.Now < _nextPacketRecvTime )
+                lock ( _clientSendLock )
                 {
-                    Thread.Sleep( 1 );
+                    while ( DateTime.Now < _nextPacketRecvTime )
+                    {
+                        Thread.Sleep( 1 );
+                    }
+
+                    InternalPacketReceivedEvent?.Invoke( packet, length );
+
+                    _sendToClient?.Invoke( ref packet, ref length );
+
+                    _nextPacketRecvTime = DateTime.Now + PACKET_RECV_DELAY;
                 }
-
-                InternalPacketReceivedEvent?.Invoke( packet, length );
-
-                _sendToClient?.Invoke( ref packet, ref length );
-
-                _nextPacketRecvTime = DateTime.Now + PACKET_RECV_DELAY;
+            }
+            catch ( ThreadInterruptedException )
+            {
+                // Macro was interupted whilst we were waiting...
             }
         }
 

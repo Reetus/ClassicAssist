@@ -29,8 +29,8 @@ namespace ClassicAssist.Launcher
         }
 
         public string Argument { get; set; }
-        public bool IncludeIfFalse { get; set; } = true;
         public string CanIncludeProperty { get; set; }
         public object DefaultValue { get; set; }
+        public bool IncludeIfFalse { get; set; } = true;
     }
 }

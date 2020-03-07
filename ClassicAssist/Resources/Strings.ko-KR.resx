@@ -1143,4 +1143,13 @@
   <data name="Clear Weapon Ability" xml:space="preserve">
     <value>무기 클리어</value>
   </data>
+  <data name="Type" xml:space="preserve">
+    <value>형식</value>
+  </data>
+  <data name="Dress Type" xml:space="preserve">
+    <value>드레스 타입</value>
+  </data>
+  <data name="Invalid type..." xml:space="preserve">
+    <value>유효하지 않은 형식...</value>
+  </data>
 </root>

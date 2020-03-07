@@ -104,7 +104,7 @@ namespace ClassicAssist.Data.Dress
                     Item itemObj = Engine.Items.GetItem( item );
 
                     await UOC.DragDropAsync( item, 1, backpack );
-                    Engine.Player.SetLayer( itemObj?.Layer ?? Layer.Invalid, 0 );
+                    //Engine.Player.SetLayer( itemObj?.Layer ?? Layer.Invalid, 0 );
                 }
             }
             finally

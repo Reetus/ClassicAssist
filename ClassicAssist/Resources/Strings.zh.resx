@@ -1143,4 +1143,13 @@
   <data name="Clear Weapon Ability" xml:space="preserve">
     <value>清除武器能力</value>
   </data>
+  <data name="Type" xml:space="preserve">
+    <value>类型</value>
+  </data>
+  <data name="Dress Type" xml:space="preserve">
+    <value>着装类型</value>
+  </data>
+  <data name="Invalid type..." xml:space="preserve">
+    <value>无效类型...</value>
+  </data>
 </root>

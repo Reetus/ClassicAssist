@@ -772,6 +772,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dress Type.
+        /// </summary>
+        public static string Dress_Type {
+            get {
+                return ResourceManager.GetString("Dress Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duplicate.
         /// </summary>
         public static string Duplicate {
@@ -1308,6 +1317,15 @@ namespace ClassicAssist.Resources {
         public static string Invalid_source_container___ {
             get {
                 return ResourceManager.GetString("Invalid source container...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid type....
+        /// </summary>
+        public static string Invalid_type___ {
+            get {
+                return ResourceManager.GetString("Invalid type...", resourceCulture);
             }
         }
         
@@ -2811,6 +2829,15 @@ namespace ClassicAssist.Resources {
         public static string Trinsic_Rose_Petal {
             get {
                 return ResourceManager.GetString("Trinsic Rose Petal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
             }
         }
         

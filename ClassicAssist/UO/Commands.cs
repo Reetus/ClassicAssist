@@ -52,6 +52,46 @@ namespace ClassicAssist.UO
             await Task.CompletedTask;
         }
 
+        public static void EquipType( int id, Layer layer )
+        {
+            if ( id <= -1 )
+            {
+                SystemMessage( Strings.Invalid_type___ );
+                return;
+            }
+
+            int containerSerial = Engine.Player?.Serial ?? 0;
+
+            if ( containerSerial == 0 || containerSerial == -1 )
+            {
+                return;
+            }
+
+            Item backpack = Engine.Player?.Backpack;
+
+            Item item = backpack?.Container?.SelectEntity( i => i.ID == id );
+
+            if ( item == null )
+            {
+                return;
+            }
+
+            if ( layer == Layer.Invalid )
+            {
+                StaticTile tileData = TileData.GetStaticTile( item.ID );
+                layer = (Layer) tileData.Quality;
+            }
+
+            if ( layer == Layer.Invalid )
+            {
+                throw new ArgumentException( "EquipItem: Layer is invalid" );
+            }
+
+            DragItem( item.Serial, 1 );
+
+            Engine.SendPacketToServer( new EquipRequest( item.Serial, layer, containerSerial ) );
+        }
+
         public static void EquipItem( Item item, Layer layer )
         {
             int containerSerial = Engine.Player?.Serial ?? 0;

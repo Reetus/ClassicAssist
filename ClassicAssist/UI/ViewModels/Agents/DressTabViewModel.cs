@@ -27,6 +27,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         };
 
         private ICommand _addDressItemCommand;
+        private ICommand _changeDressType;
         private ICommand _clearDressItemsCommand;
         private ICommand _dressAllItemsCommand;
         private ICommand _importItemsCommand;
@@ -51,6 +52,10 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public ICommand AddDressItemCommand =>
             _addDressItemCommand ?? ( _addDressItemCommand = new RelayCommandAsync( AddDressItem, o => true ) );
+
+        public ICommand ChangeDressTypeCommand =>
+            _changeDressType ??
+            ( _changeDressType = new RelayCommand( ChangeDressType, o => SelectedDressItem != null ) );
 
         public ICommand ClearDressItemsCommand =>
             _clearDressItemsCommand ?? ( _clearDressItemsCommand = new RelayCommand( ClearDressItems,
@@ -147,10 +152,15 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 {
                     foreach ( DressAgentItem dressAgentItem in dae.Items )
                     {
-                        items.Add( new JObject
+                        JObject item = new JObject
                         {
-                            ["Layer"] = (int) dressAgentItem.Layer, ["Serial"] = dressAgentItem.Serial
-                        } );
+                            { "Layer", (int) dressAgentItem.Layer },
+                            { "Serial", dressAgentItem.Serial },
+                            { "ID", dressAgentItem.ID },
+                            { "Type", (int) dressAgentItem.Type }
+                        };
+
+                        items.Add( item );
                     }
                 }
 
@@ -195,11 +205,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     items.AddRange( entry["Items"].Select( itemEntry => new DressAgentItem
                     {
                         Layer = GetJsonValue( itemEntry, "Layer", Layer.Invalid ),
-                        Serial = GetJsonValue( itemEntry, "Serial", 0 )
+                        Serial = GetJsonValue( itemEntry, "Serial", 0 ),
+                        ID = GetJsonValue( itemEntry, "ID", -1 ),
+                        Type = GetJsonValue( itemEntry, "Type", DressAgentItemType.Serial )
                     } ) );
                 }
 
-                dae.Items = items.ToArray();
+                dae.Items = new List<DressAgentItem>( items );
 
                 Items.Add( dae );
             }
@@ -292,7 +304,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            dae.AddOrReplaceDressItem( serial, item.Layer );
+            dae.AddOrReplaceDressItem( serial, item.Layer, item.ID );
         }
 
         private async Task UndressAllItems( object obj )
@@ -354,7 +366,10 @@ namespace ClassicAssist.UI.ViewModels.Agents
             PlayerMobile player = Engine.Player;
 
             List<DressAgentItem> items = player.GetEquippedItems().Where( i => IsValidLayer( i.Layer ) )
-                .Select( i => new DressAgentItem { Serial = i.Serial, Layer = i.Layer } ).ToList();
+                .Select( i => new DressAgentItem
+                {
+                    Serial = i.Serial, Layer = i.Layer, ID = i.ID, Type = DressAgentItemType.Serial
+                } ).ToList();
 
             dae.Items = items;
         }
@@ -362,6 +377,16 @@ namespace ClassicAssist.UI.ViewModels.Agents
         public bool IsValidLayer( Layer layer )
         {
             return _validLayers.Any( l => l == layer );
+        }
+
+        private void ChangeDressType( object obj )
+        {
+            if ( !( obj is DressAgentItem dai ) )
+            {
+                return;
+            }
+
+            dai.Type = dai.Type == DressAgentItemType.Serial ? DressAgentItemType.ID : DressAgentItemType.Serial;
         }
     }
 }

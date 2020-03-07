@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,10 +13,10 @@ namespace ClassicAssist.Data.Dress
 {
     public class DressAgentEntry : HotkeyEntry
     {
-        private IEnumerable<DressAgentItem> _items;
+        private List<DressAgentItem> _items;
         private int _undressContainer;
 
-        public IEnumerable<DressAgentItem> Items
+        public List<DressAgentItem> Items
         {
             get => _items;
             set => SetProperty( ref _items, value );
@@ -32,7 +33,7 @@ namespace ClassicAssist.Data.Dress
             return Name;
         }
 
-        public void AddOrReplaceDressItem( int itemSerial, Layer itemLayer )
+        public void AddOrReplaceDressItem( int itemSerial, Layer itemLayer, int id )
         {
             List<DressAgentItem> list = Items.ToList();
 
@@ -70,14 +71,14 @@ namespace ClassicAssist.Data.Dress
                 {
                     Item item = Engine.Items.GetItem( dai.Serial );
 
-                    if ( item == null )
+                    if ( item == null && dai.Type == DressAgentItemType.Serial )
                     {
                         continue;
                     }
 
                     int currentInLayer = Engine.Player?.GetLayer( dai.Layer ) ?? 0;
 
-                    if ( currentInLayer == item.Serial )
+                    if ( currentInLayer == item?.Serial )
                     {
                         continue;
                     }
@@ -109,7 +110,17 @@ namespace ClassicAssist.Data.Dress
 
                     do
                     {
-                        UOC.EquipItem( item, dai.Layer );
+                        switch ( dai.Type )
+                        {
+                            case DressAgentItemType.Serial:
+                                UOC.EquipItem( item, dai.Layer );
+                                break;
+                            case DressAgentItemType.ID:
+                                UOC.EquipType( dai.ID, dai.Layer );
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
 
                         await Task.Delay( Options.CurrentOptions.ActionDelayMS );
                     }

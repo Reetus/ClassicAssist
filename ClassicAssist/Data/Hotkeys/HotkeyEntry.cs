@@ -9,7 +9,7 @@ using ClassicAssist.UI.Misc;
 
 namespace ClassicAssist.Data.Hotkeys
 {
-    public class HotkeyEntry : INotifyPropertyChanged, IComparable<HotkeyEntry>
+    public abstract class HotkeyEntry : INotifyPropertyChanged, IComparable<HotkeyEntry>
     {
         public delegate void HotkeyChangedEventHandler( object sender, HotkeyChangedEventArgs e );
 

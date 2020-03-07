@@ -350,6 +350,35 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = "Actions",
+            Description = "Equip a specific type into a given layer. Use object inspector to determine layer value.",
+            InsertText = "EquipType(0xff, \"TwoHanded\")" )]
+        public static void EquipType( int id, object layer )
+        {
+            Layer layerValue = Layer.Invalid;
+
+            switch (layer)
+            {
+                case string s:
+                    layerValue = Utility.GetEnumValueByName<Layer>( s );
+                    break;
+                case int i:
+                    layerValue = (Layer)i;
+                    break;
+                case Layer l:
+                    layerValue = l;
+                    break;
+            }
+
+            if (layerValue == Layer.Invalid)
+            {
+                UOC.SystemMessage( Strings.Invalid_layer_value___ );
+                return;
+            }
+
+            UOC.EquipType( id, layerValue );
+        }
+
+        [CommandsDisplay( Category = "Actions",
             Description = "Equip a specific item into a given layer. Use object inspector to determine layer value.",
             InsertText = "EquipItem(\"axe\", \"TwoHanded\")" )]
         public static void EquipItem( object obj, object layer )

@@ -4,14 +4,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
-using ClassicAssist.Data.Hotkeys;
+using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.Data.Dress
 {
-    public class DressAgentEntry : HotkeyEntry
+    public class DressAgentEntry : HotkeyCommand
     {
         private List<DressAgentItem> _items;
         private int _undressContainer;

@@ -22,7 +22,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _clearHotkeyCommand;
         private ICommand _executeCommand;
         private HotkeyCommand _masteriesCategory;
-        private HotkeyCommand _selectedItem;
+        private HotkeyEntry _selectedItem;
         private HotkeyCommand _spellsCategory;
 
         public HotkeysTabViewModel()
@@ -49,7 +49,7 @@ namespace ClassicAssist.UI.ViewModels
             set => _hotkeyManager.Items = value;
         }
 
-        public HotkeyCommand SelectedItem
+        public HotkeyEntry SelectedItem
         {
             get => _selectedItem;
             set

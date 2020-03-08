@@ -29,7 +29,9 @@ namespace ClassicAssist.UO.Network.Packets
 
             int spellId = ( packet[7] << 8 ) | packet[8];
 
-            SpellData sd = SpellManager.GetInstance().GetSpellData( spellId );
+            SpellManager manager = SpellManager.GetInstance();
+
+            SpellData sd = manager.GetSpellData( spellId ) ?? manager.GetMasteryData( spellId );
 
             return sd != null ? $"Cast(\"{sd.Name}\")\r\n" : null;
         }

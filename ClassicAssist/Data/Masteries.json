@@ -45,7 +45,7 @@
     "ID": 705,
     "Name": "Tribulation",
     "Reagents": [],
-    "Timeout": 5000,
+    "Timeout": 2500,
     "Words": "In Jux Hur Rel",
     "Target": true
   },
@@ -55,7 +55,7 @@
     "ID": 706,
     "Name": "Despair",
     "Reagents": [],
-    "Timeout": 5000,
+    "Timeout": 2500,
     "Words": "Kal Des Mani Tym",
     "Target": true
   },
@@ -70,7 +70,7 @@
       3981
     ],
     "Target": true,
-    "Timeout": 5000,
+    "Timeout": 2500,
     "Words": "In Grav Corp"
   },
   {
@@ -97,7 +97,7 @@
       3968
     ],
     "Target": true,
-    "Timeout": 5000,
+    "Timeout": 2500,
     "Words": "In Vas Por Grav"
   },
   {
@@ -124,7 +124,7 @@
       3960
     ],
     "Target": true,
-    "Timeout": 5000,
+    "Timeout": 3500,
     "Words": "In Corp Xen Por"
   },
   {
@@ -138,7 +138,7 @@
       3983
     ],
     "Target": true,
-    "Timeout": 5000,
+    "Timeout": 2500,
     "Words": "Uus Corp Grav"
   },
   {
@@ -158,7 +158,7 @@
     "Name": "Summon Reaper",
     "Reagents": [],
     "Target": true,
-    "Timeout": 5000,
+    "Timeout": 2500,
     "Words": "Lartarisstree"
   },
   {
@@ -178,7 +178,7 @@
     "Name": "Rejuvinate",
     "Reagents": [],
     "Target": true,
-    "Timeout": 5000,
+    "Timeout": 2500,
     "Words": "In Vas Ort Grav Mani"
   },
   {
@@ -188,7 +188,7 @@
     "Name": "Holy Fist",
     "Reagents": [],
     "Target": true,
-    "Timeout": 5000,
+    "Timeout": 3000,
     "Words": "Kal Vas Grav"
   },
   {
@@ -215,10 +215,10 @@
     "Circle": 70,
     "Flag": 0,
     "ID": 723,
-    "Name": "Flameing Shot",
+    "Name": "Flaming Shot",
     "Reagents": [],
     "Target": true,
-    "Timeout": 5000,
+    "Timeout": 2500,
     "Words": ""
   },
   {
@@ -298,7 +298,7 @@
     "Name": "Body Guard",
     "Reagents": [],
     "Target": true,
-    "Timeout": 5000,
+    "Timeout": 2500,
     "Words": ""
   },
   {
@@ -328,7 +328,7 @@
     "Name": "Injected Strike",
     "Reagents": [],
     "Target": true,
-    "Timeout": 5000,
+    "Timeout": 2500,
     "Words": ""
   },
   {
@@ -358,7 +358,7 @@
     "Name": "Combat Training",
     "Reagents": [],
     "Target": true,
-    "Timeout": 5000,
+    "Timeout": 2500,
     "Words": ""
   }
 ]

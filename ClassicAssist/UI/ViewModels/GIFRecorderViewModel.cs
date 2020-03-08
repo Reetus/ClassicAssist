@@ -21,6 +21,7 @@ namespace ClassicAssist.UI.ViewModels
     {
         private readonly GIFRecorderWindow _window;
         private bool _isRecording;
+        private bool _isWritingStream;
         private MemoryStream _lastStream;
         private ICommand _recordCommand;
         private ICommand _saveCommand;
@@ -50,11 +51,15 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand RecordCommand => _recordCommand ?? ( _recordCommand = new RelayCommand( Record, o => true ) );
 
-        public ICommand SaveCommand =>
-            _saveCommand ?? ( _saveCommand = new RelayCommand( Save, o => LastStream != null ) );
+        public ICommand SaveCommand => _saveCommand ?? ( _saveCommand = new RelayCommand( Save, o => !IsRecording ) );
 
         private void Save( object obj )
         {
+            if ( LastStream == null )
+            {
+                return;
+            }
+
             string directory = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Screenshots" );
 
             if ( !Directory.Exists( directory ) )
@@ -73,9 +78,6 @@ namespace ClassicAssist.UI.ViewModels
             {
                 LastStream.WriteTo( fs );
             }
-
-            LastStream.Dispose();
-            LastStream = null;
 
             string args = $"/e, /select, \"{fullPath}\"";
 
@@ -146,7 +148,7 @@ namespace ClassicAssist.UI.ViewModels
                     }
                     finally
                     {
-                        IsRecording = false;
+                        _dispatcher.Invoke( () => IsRecording = false );
                     }
                 } ).ContinueWith( t =>
                 {
@@ -162,6 +164,7 @@ namespace ClassicAssist.UI.ViewModels
                     }
 
                     LastStream = ms;
+                    CommandManager.InvalidateRequerySuggested();
                 } );
             }
         }

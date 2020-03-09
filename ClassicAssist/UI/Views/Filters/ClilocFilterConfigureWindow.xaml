@@ -120,7 +120,7 @@
                                     <DataTemplate>
                                         <controls:EditTextBlock
                                             Text="{Binding Replacement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                            MinWidth="100" />
+                                            MinWidth="100" ShowIcon="True" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>

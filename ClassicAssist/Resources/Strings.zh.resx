@@ -1152,4 +1152,7 @@
   <data name="Invalid type..." xml:space="preserve">
     <value>无效类型...</value>
   </data>
+  <data name="No temporary dress layout configured..." xml:space="preserve">
+    <value>未配置临时着装布局...</value>
+  </data>
 </root>

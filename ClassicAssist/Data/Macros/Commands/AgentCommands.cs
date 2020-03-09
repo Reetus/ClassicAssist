@@ -10,11 +10,26 @@ namespace ClassicAssist.Data.Macros.Commands
     {
         [CommandsDisplay( Category = "Agents", Description = "Dress all items in the specified dress agent.",
             InsertText = "Dress(\"Dress-1\")" )]
-        public static void Dress( string name )
+        public static void Dress( string name = null )
         {
             DressManager manager = DressManager.GetInstance();
 
-            DressAgentEntry dressAgentEntry = manager.Items.FirstOrDefault( dae => dae.Name == name );
+            DressAgentEntry dressAgentEntry;
+
+            if ( string.IsNullOrEmpty( name ) )
+            {
+                if ( manager.TemporaryDress == null )
+                {
+                    UOC.SystemMessage( Strings.No_temporary_dress_layout_configured___ );
+                    return;
+                }
+
+                dressAgentEntry = manager.TemporaryDress;
+            }
+            else
+            {
+                dressAgentEntry = manager.Items.FirstOrDefault( dae => dae.Name == name );
+            }
 
             if ( dressAgentEntry == null )
             {
@@ -50,6 +65,17 @@ namespace ClassicAssist.Data.Macros.Commands
             DressManager manager = DressManager.GetInstance();
 
             return manager.IsDressing;
+        }
+
+        [CommandsDisplay( Category = "Agents",
+            Description = "Adds all equipped items to a temporary list that isn't persisted on client close.",
+            InsertText = "DressConfig()" )]
+        public static void DressConfig()
+        {
+            DressManager manager = DressManager.GetInstance();
+            manager.TemporaryDress = new DressAgentEntry();
+            manager.TemporaryDress.Action = async hks => await manager.DressAllItems( manager.TemporaryDress, false );
+            manager.ImportItems( manager.TemporaryDress );
         }
 
         [CommandsDisplay( Category = "Agents", Description = "Returns the count of the given counter agent.",

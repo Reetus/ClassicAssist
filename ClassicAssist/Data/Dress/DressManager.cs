@@ -1,4 +1,5 @@
-﻿using System.Collections.Specialized;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -25,6 +26,7 @@ namespace ClassicAssist.Data.Dress
         };
 
         private ObservableCollectionEx<DressAgentEntry> _items = new ObservableCollectionEx<DressAgentEntry>();
+        private DressAgentEntry _temporaryDress;
 
         private DressManager()
         {
@@ -37,6 +39,12 @@ namespace ClassicAssist.Data.Dress
         {
             get => _items;
             set => SetProperty( ref _items, value );
+        }
+
+        public DressAgentEntry TemporaryDress
+        {
+            get => _temporaryDress;
+            set => SetProperty( ref _temporaryDress, value );
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -129,6 +137,33 @@ namespace ClassicAssist.Data.Dress
             }
 
             return container;
+        }
+
+        public void ImportItems( DressAgentEntry dae )
+        {
+            PlayerMobile player = Engine.Player;
+
+            List<DressAgentItem> items = player.GetEquippedItems().Where( i => IsValidLayer( i.Layer ) )
+                .Select( i => new DressAgentItem
+                {
+                    Serial = i.Serial, Layer = i.Layer, ID = i.ID, Type = DressAgentItemType.Serial
+                } ).ToList();
+
+            dae.Items = items;
+        }
+
+        public async Task DressAllItems( DressAgentEntry dae, bool moveConflictingItems )
+        {
+            try
+            {
+                IsDressing = true;
+
+                await dae.Dress( moveConflictingItems );
+            }
+            finally
+            {
+                IsDressing = false;
+            }
         }
     }
 }

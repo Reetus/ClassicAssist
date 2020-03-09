@@ -12,11 +12,22 @@ namespace ClassicAssist.UI.Controls
     public partial class EditTextBlock
     {
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register( "Text", typeof( string ),
+            typeof( EditTextBlock ),
+            new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
+
+        public static readonly DependencyProperty ShowIconProperty = DependencyProperty.Register( "ShowIcon",
+            typeof( bool ),
             typeof( EditTextBlock ), new UIPropertyMetadata() );
 
         public EditTextBlock()
         {
             InitializeComponent();
+        }
+
+        public bool ShowIcon
+        {
+            get => (bool) GetValue( ShowIconProperty );
+            set => SetValue( ShowIconProperty, value );
         }
 
         public string Text
@@ -32,7 +43,13 @@ namespace ClassicAssist.UI.Controls
                 return;
             }
 
-            ( (TextBlock) sender ).Visibility = Visibility.Collapsed;
+            ShowTextBox();
+        }
+
+        private void ShowTextBox()
+        {
+            textBlock.Visibility = Visibility.Collapsed;
+            pencilButton.Visibility = Visibility.Collapsed;
             textBox.Visibility = Visibility.Visible;
             textBox.CaretIndex = textBox.Text.Length;
             textBox.SelectAll();
@@ -51,7 +68,13 @@ namespace ClassicAssist.UI.Controls
         private void TextBox_LostFocus( object sender, RoutedEventArgs e )
         {
             textBlock.Visibility = Visibility.Visible;
+            pencilButton.Visibility = ShowIcon ? Visibility.Visible : Visibility.Hidden;
             ( (TextBox) sender ).Visibility = Visibility.Collapsed;
+        }
+
+        private void Button_OnClick( object sender, RoutedEventArgs e )
+        {
+            ShowTextBox();
         }
     }
 }

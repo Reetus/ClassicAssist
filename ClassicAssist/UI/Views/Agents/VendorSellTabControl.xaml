@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:ClassicAssist.UI.Views.Agents"
              xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
              xmlns:resources="clr-namespace:ClassicAssist.Resources"
+             xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
+             xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              mc:Ignorable="d"
              d:DesignWidth="493" d:DesignHeight="400">
     <d:DesignerProperties.DesignStyle>
@@ -21,6 +23,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../../Resources/ResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -32,15 +35,6 @@
                   ItemsSource="{Binding Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Foreground="Black" Grid.IsSharedSizeScope="True">
-            <ListView.Resources>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="FontSize" Value="10" />
-                    <Setter Property="Padding" Value="0" />
-                    <Setter Property="Margin" Value="0" />
-                    <Setter Property="BorderThickness" Value="0" />
-                </Style>
-            </ListView.Resources>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="✓">
@@ -53,20 +47,22 @@
                     <GridViewColumn Header="{x:Static resources:Strings.Graphic}"
                                     DisplayMemberBinding="{Binding Graphic, StringFormat={}0x{0:x}}" Width="50" />
                     <GridViewColumn Header="{x:Static resources:Strings.Name}" DisplayMemberBinding="{Binding Name}"
-                                    Width="100" />
-                    <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="50">
+                                    Width="150" />
+                    <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="70" x:Name="HueColumn">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Hue}" TabIndex="0"
-                                         Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=GridViewColumn, AncestorLevel=1},Path=ActualWidth}" />
+                                <controls:EditTextBlock Text="{Binding Hue}" TabIndex="0"
+                                                        Width="{Binding Path=Width, ElementName=HueColumn, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15}"
+                                                        ShowIcon="True" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{x:Static resources:Strings.Min_Price}" Width="70">
+                    <GridViewColumn Header="{x:Static resources:Strings.Min_Price}" Width="100" x:Name="MinPriceColumn">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding MinPrice}" TabIndex="2"
-                                         Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=GridViewColumn, AncestorLevel=1},Path=ActualWidth}" />
+                                <controls:EditTextBlock Text="{Binding MinPrice}" TabIndex="2"
+                                                        Width="{Binding Path=Width, ElementName=MinPriceColumn, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15}"
+                                                        ShowIcon="True" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

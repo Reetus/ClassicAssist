@@ -43,8 +43,8 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <controls:EditTextBlock
-                                    Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=NameColumn, Mode=OneWay}"
-                                    Text="{Binding Name}" />
+                                    Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=NameColumn, Mode=OneWay}"
+                                    Text="{Binding Name}" ShowIcon="True" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -54,8 +54,8 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <controls:EditTextBlock
-                                    Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=ColorColumn, Mode=OneWay}"
-                                    Text="{Binding Color, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                                    Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=ColorColumn, Mode=OneWay}"
+                                    Text="{Binding Color, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" ShowIcon="True" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

@@ -5,12 +5,39 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/Icons.xaml" />
+                <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <DrawingImage x:Key="PencilIcon">
+                <DrawingImage.Drawing>
+                    <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                        <DrawingGroup Opacity="1">
+                            <DrawingGroup Opacity="1">
+                                <GeometryDrawing Brush="{DynamicResource ThemeForegroundBrush}"
+                                                 Geometry="F1 M512,512z M0,0z M434.214,0L0,434.213 0,512 77.787,512 512,77.786 434.214,0z M65.359,481.998L30.002,481.998 30.002,446.641 50.125,426.518 85.482,461.875 65.359,481.998z M399.206,77.437L434.214,42.429 469.571,77.786 434.563,112.794 399.206,77.437z" />
+                            </DrawingGroup>
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <TextBlock x:Name="textBlock" Text="{Binding ElementName=root, Path=Text}" VerticalAlignment="Center"
                    MouseDown="TextBlock_OnMouseDown" Background="Transparent" />
         <TextBox x:Name="textBox"
-                 Text="{Binding ElementName=root, Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding ElementName=root, Path=Text, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                  VerticalAlignment="Center" Visibility="Collapsed" KeyDown="TextBox_OnKeyDown"
                  LostFocus="TextBox_LostFocus" />
+        <Button Width="12" Height="12" BorderThickness="0" Background="Transparent" Margin="0" Padding="0"
+                HorizontalAlignment="Right"
+                Visibility="{Binding ShowIcon, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=root}"
+                Click="Button_OnClick" x:Name="pencilButton">
+            <Image Source="{StaticResource PencilIcon}" Width="16" HorizontalAlignment="Center" />
+        </Button>
     </Grid>
 </UserControl>

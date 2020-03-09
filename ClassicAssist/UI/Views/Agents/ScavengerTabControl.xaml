@@ -7,6 +7,7 @@
              xmlns:resources="clr-namespace:ClassicAssist.Resources"
              xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+             xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
              mc:Ignorable="d"
              d:DesignWidth="493" d:DesignHeight="400">
     <d:DesignerProperties.DesignStyle>
@@ -66,8 +67,9 @@
                     <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="75" x:Name="HueColumn">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Hue}" TabIndex="0"
-                                         Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=HueColumn}" />
+                                <controls:EditTextBlock Text="{Binding Hue}" TabIndex="0"
+                                                        Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=HueColumn}"
+                                                        ShowIcon="True" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

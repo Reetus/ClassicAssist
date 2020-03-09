@@ -1744,6 +1744,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No temporary dress layout configured....
+        /// </summary>
+        public static string No_temporary_dress_layout_configured___ {
+            get {
+                return ResourceManager.GetString("No temporary dress layout configured...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
         public static string None {

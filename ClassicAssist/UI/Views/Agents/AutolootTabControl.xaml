@@ -10,14 +10,16 @@
     xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
     xmlns:autoloot="clr-namespace:ClassicAssist.Data.Autoloot"
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     x:Class="ClassicAssist.UI.Views.Agents.AutolootTabControl"
     mc:Ignorable="d"
-    d:DesignHeight="250" d:DesignWidth="500" x:Name="userControl">
+    d:DesignHeight="250" d:DesignWidth="600" x:Name="userControl">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../../Resources/ResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <ValueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
             <DrawingImage x:Key="ColorWheelIcon">
                 <DrawingImage.Drawing>
                     <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
@@ -130,12 +132,13 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="{x:Static resources:Strings.Value}" Width="75" x:Name="GridViewColumn">
+                        <GridViewColumn Header="{x:Static resources:Strings.Value}" Width="75" x:Name="ValueColumn">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <controls:EditTextBlock
                                         Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                        MinWidth="40" />
+                                        MinWidth="40" ShowIcon="True"
+                                        Width="{Binding Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, Path=Width, ElementName=ValueColumn, Mode=OneWay}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

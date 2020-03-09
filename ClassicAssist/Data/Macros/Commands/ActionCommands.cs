@@ -356,20 +356,20 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             Layer layerValue = Layer.Invalid;
 
-            switch (layer)
+            switch ( layer )
             {
                 case string s:
                     layerValue = Utility.GetEnumValueByName<Layer>( s );
                     break;
                 case int i:
-                    layerValue = (Layer)i;
+                    layerValue = (Layer) i;
                     break;
                 case Layer l:
                     layerValue = l;
                     break;
             }
 
-            if (layerValue == Layer.Invalid)
+            if ( layerValue == Layer.Invalid )
             {
                 UOC.SystemMessage( Strings.Invalid_layer_value___ );
                 return;

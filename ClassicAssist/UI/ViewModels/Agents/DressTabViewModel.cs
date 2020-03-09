@@ -342,18 +342,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            try
-            {
-                IsDressingOrUndressing = true;
-                _manager.IsDressing = true;
-
-                await dae.Dress( MoveConflictingItems );
-            }
-            finally
-            {
-                IsDressingOrUndressing = false;
-                _manager.IsDressing = false;
-            }
+            IsDressingOrUndressing = true;
+            await _manager.DressAllItems( dae, MoveConflictingItems );
+            IsDressingOrUndressing = false;
         }
 
         private void ImportItems( object obj )
@@ -363,15 +354,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            PlayerMobile player = Engine.Player;
-
-            List<DressAgentItem> items = player.GetEquippedItems().Where( i => IsValidLayer( i.Layer ) )
-                .Select( i => new DressAgentItem
-                {
-                    Serial = i.Serial, Layer = i.Layer, ID = i.ID, Type = DressAgentItemType.Serial
-                } ).ToList();
-
-            dae.Items = items;
+            _manager.ImportItems( dae );
         }
 
         public bool IsValidLayer( Layer layer )

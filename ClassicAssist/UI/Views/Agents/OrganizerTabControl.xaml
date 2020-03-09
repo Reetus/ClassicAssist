@@ -99,7 +99,8 @@
                                         <Grid>
                                             <controls:EditTextBlock
                                                 Text="{Binding Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                                Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=AmountColumn, Mode=OneWay}" />
+                                                Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=AmountColumn, Mode=OneWay}"
+                                                ShowIcon="True" />
                                         </Grid>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>

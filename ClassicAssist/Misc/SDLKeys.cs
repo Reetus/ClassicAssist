@@ -582,7 +582,7 @@ namespace ClassicAssist.Misc
 
             /* This is not a key, simply marks the number of scancodes
 			 * so that you know how big to make your arrays. */
-            SDL_NUM_SCANCODES = 512,
+            SDL_NUM_SCANCODES = 512
         }
 
         public const int SDLK_SCANCODE_MASK = 1 << 30;

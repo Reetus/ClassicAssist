@@ -12,7 +12,7 @@ namespace ClassicAssist.Data.Macros.Commands
     {
         private const int MOVEMENT_TIMEOUT = 500;
         private static bool _forceWalk;
-
+        
         [CommandsDisplay( Category = "Movement", Description = "Walk in the given direction.",
             InsertText = "Walk(\"east\")" )]
         public static bool Walk( string direction )
@@ -70,8 +70,9 @@ namespace ClassicAssist.Data.Macros.Commands
 
             try
             {
+               
                 bool result = Engine.Move( directionEnum, run );
-
+                UOC.WaitForIncomingPacket( new PacketFilterInfo( 22 ), MOVEMENT_TIMEOUT );
                 return result;
             }
             catch ( IndexOutOfRangeException )

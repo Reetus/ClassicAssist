@@ -78,6 +78,7 @@ namespace Assistant
 
         private static readonly TimeSpan PACKET_SEND_DELAY = TimeSpan.FromMilliseconds( 5 );
         private static DateTime _nextPacketSendTime;
+        private static IntPtr _hWnd;
 
         public static string ClientPath { get; set; }
         public static Version ClientVersion { get; set; }
@@ -146,6 +147,7 @@ namespace Assistant
             _onClientClosing = OnClientClosing;
             _onHotkeyPressed = OnHotkeyPressed;
             _onMouse = OnMouse;
+            _hWnd = plugin->HWND;
 
             plugin->OnConnected = Marshal.GetFunctionPointerForDelegate( _onConnected );
             plugin->OnDisconnected = Marshal.GetFunctionPointerForDelegate( _onDisconnected );
@@ -397,7 +399,7 @@ namespace Assistant
                             await client.Repository.Commit.GetAll( "Reetus", "ClassicAssist" );
 
                         IEnumerable<GitHubCommit> latestCommits =
-                            commits.OrderByDescending( c => c.Commit.Author.Date ).Take( 7 );
+                            commits.OrderByDescending( c => c.Commit.Author.Date ).Take( 15 );
 
                         StringBuilder commitMessage = new StringBuilder();
 
@@ -411,11 +413,14 @@ namespace Assistant
 
                         StringBuilder message = new StringBuilder();
                         message.AppendLine( Strings.ProductName );
-                        message.AppendLine( $"{Strings.New_version_available_} {latestVersion}" );
+                        message.AppendLine(
+                            $"{Strings.New_version_available_} <A HREF=\"https://github.com/Reetus/ClassicAssist/releases/tag/{latestVersion}\">{latestVersion}</A>" );
                         message.AppendLine();
                         message.AppendLine( commitMessage.ToString() );
+                        message.AppendLine(
+                            $"<A HREF=\"https://github.com/Reetus/ClassicAssist/commits/master\">{Strings.See_More}</A>" );
 
-                        UpdateMessageGump gump = new UpdateMessageGump( message.ToString(), latestVersion );
+                        UpdateMessageGump gump = new UpdateMessageGump( _hWnd, message.ToString(), latestVersion );
                         gump.SendGump();
                     }
                 }

@@ -2275,6 +2275,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to See More.
+        /// </summary>
+        public static string See_More {
+            get {
+                return ResourceManager.GetString("See More", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select destination container....
         /// </summary>
         public static string Select_destination_container___ {

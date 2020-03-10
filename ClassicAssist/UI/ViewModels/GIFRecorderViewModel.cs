@@ -21,7 +21,6 @@ namespace ClassicAssist.UI.ViewModels
     {
         private readonly GIFRecorderWindow _window;
         private bool _isRecording;
-        private bool _isWritingStream;
         private MemoryStream _lastStream;
         private ICommand _recordCommand;
         private ICommand _saveCommand;

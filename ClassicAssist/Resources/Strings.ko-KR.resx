@@ -1155,4 +1155,7 @@
   <data name="No temporary dress layout configured..." xml:space="preserve">
     <value>임시 드레스 레이아웃이 구성되지 않았습니다...</value>
   </data>
+  <data name="See More" xml:space="preserve">
+    <value>더 보기</value>
+  </data>
 </root>

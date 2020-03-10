@@ -1155,4 +1155,7 @@
   <data name="No temporary dress layout configured..." xml:space="preserve">
     <value>Nessun Dress temporaneo configurato...</value>
   </data>
+  <data name="See More" xml:space="preserve">
+    <value>Vedi di più</value>
+  </data>
 </root>

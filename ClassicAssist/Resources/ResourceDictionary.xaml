@@ -4,10 +4,6 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="DarkTheme.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    <Style x:Key="{x:Type controls:EditTextBlock}" TargetType="{x:Type controls:EditTextBlock}"
-           BasedOn="{StaticResource {x:Type controls:EditTextBlock}}">
-        <Setter Property="MinWidth" Value="50" />
-    </Style>
     <DrawingImage x:Key="unlinkedIcon">
         <DrawingImage.Drawing>
             <DrawingGroup ClipGeometry="M0,0 V511.9995 H511.9995 V0 H0 Z">

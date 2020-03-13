@@ -27,7 +27,7 @@ namespace ClassicAssist.UO.Network
         {
             PacketReader reader = new PacketReader( packet, length, true );
 
-            int authid = reader.ReadInt32();
+            _ = reader.ReadInt32();
 
             string username = reader.ReadString( 30 );
             string password = reader.ReadString( 30 );

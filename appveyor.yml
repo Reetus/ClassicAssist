@@ -1,14 +1,27 @@
 version: '{build}'
+branches:
+  only:
+  - master
 skip_tags: true
 image: Visual Studio 2019
 clone_folder: c:\Projects\ClassicAssist\
 init:
-- ps: ''
+- ps: >-
+    git config --global credential.helper store
+
+    Add-Content "$HOME\.git-credentials" "https://$($env:githubtoken):x-oauth-basic@github.com`n"
+
+    git config --global user.email "reeeetus@gmail.com"
+
+    git config --global user.name "Reetus"
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
   version: $(full_version)
   file_version: $(full_version)
+environment:
+  githubtoken:
+    secure: xIXqJg4atQ4QWCrvSU0ar/eFXWujui0MG8+gijwdx8+IF+5Lg/QkftiLawcT5pzg
 before_build:
 - ps: >-
     $d = [datetime]"2/27/2020 00:00"
@@ -23,10 +36,16 @@ before_build:
 
     nuget restore
 build:
+  project: ClassicAssist.sln
   verbosity: minimal
 after_build:
 - ps: >-
     cd Output\net48
+
+    .\ExportCommands.exe c:\Projects\ClassicAssist\Output\net48\ClassicAssist.dll
+
+    del ExportCommands.*
+
 
     $files = (Get-ChildItem . -Recurse  | Resolve-Path -Relative)
 
@@ -54,6 +73,19 @@ after_build:
 
 
     $json | Out-File MANIFEST.json
+
+
+    cd ..\..\..
+
+    & cmd /c 'git clone https://github.com/Reetus/ClassicAssist.wiki.git 2>&1'
+
+    cd ClassicAssist.wiki
+
+    copy ..\ClassicAssist\Output\net48\*.md .
+
+    & cmd /c 'git commit -a -m "Update Wiki" 2>&1'
+
+    & cmd /c 'git push 2>&1'
 artifacts:
 - path: Output\net48
   name: ClassicAssist
@@ -62,7 +94,7 @@ deploy:
   tag: $(full_version)
   auth_token:
     secure: mJWk62zhXmBw0jG3EpII0T9CIaS1qwLQGcvc6QJjagGLN+cokd1xOAHIszD1jnc9
-  prerelease: true
+  prerelease: false
   on:
     branch: master
 on_success:

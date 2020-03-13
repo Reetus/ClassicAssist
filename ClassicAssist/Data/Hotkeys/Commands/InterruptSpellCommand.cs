@@ -1,5 +1,7 @@
 ﻿using Assistant;
+using ClassicAssist.Misc;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 
@@ -45,8 +47,11 @@ namespace ClassicAssist.Data.Hotkeys.Commands
                 return;
             }
 
-            Engine.SendPacketToServer( new DragItem( serial, 1 ) );
-            Engine.SendPacketToServer( new EquipRequest( serial, selectedLayer, player.Serial ) );
+            ActionPacketQueue.EnqueueActionPackets(
+                new BasePacket[]
+                {
+                    new DragItem( serial, 1 ), new EquipRequest( serial, selectedLayer, player.Serial )
+                }, QueuePriority.High );
         }
     }
 }

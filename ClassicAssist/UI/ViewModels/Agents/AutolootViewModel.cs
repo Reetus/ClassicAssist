@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -29,6 +28,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 {
     public class AutolootViewModel : BaseViewModel, ISettingProvider
     {
+        private const int LOOT_TIMEOUT = 5000;
         private readonly object _autolootLock = new object();
         private ICommand _clipboardCopyCommand;
         private ICommand _clipboardPasteCommand;
@@ -386,9 +386,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         containerSerial = Engine.Player.Backpack.Serial;
                     }
 
-                    Thread.Sleep( Options.CurrentOptions.ActionDelayMS );
                     UOC.SystemMessage( string.Format( Strings.Autolooting___0__, lootItem.Name ) );
-                    UOC.DragDropAsync( lootItem.Serial, lootItem.Count, containerSerial ).Wait();
+                    Task t = ActionPacketQueue.EnqueueDragDrop( lootItem.Serial, lootItem.Count, containerSerial,
+                        QueuePriority.Medium );
+
+                    t.Wait( LOOT_TIMEOUT );
                 }
             }
         }

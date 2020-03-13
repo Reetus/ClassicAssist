@@ -6,8 +6,9 @@
         xmlns:resources="clr-namespace:ClassicAssist.Resources"
         xmlns:filters="clr-namespace:ClassicAssist.UI.ViewModels.Filters"
         xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
-        mc:Ignorable="d"
-        Title="{x:Static resources:Strings.Cliloc_Filter}" Height="450" Width="500">
+        xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Title="{x:Static resources:Strings.Cliloc_Filter}" Height="650" Width="750">
     <Window.DataContext>
         <filters:ClilocFilterConfigureViewModel />
     </Window.DataContext>
@@ -83,9 +84,11 @@
                 </DrawingGroup>
             </DrawingImage.Drawing>
         </DrawingImage>
+        <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -106,21 +109,30 @@
             </ToolBar>
         </ToolBarTray>
         <Grid Margin="10" Grid.Row="1">
-            <ScrollViewer MaxHeight="200" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer MaxHeight="400" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
                 <ListView x:Name="listView" ItemsSource="{Binding Items}" Foreground="Black"
                           SelectedItem="{Binding SelectedItem}">
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="{x:Static resources:Strings.Remove}"
+                                      Command="{Binding RemoveItemCommand}"
+                                      CommandParameter="{Binding SelectedItem}" />
+                        </ContextMenu>
+                    </ListView.ContextMenu>
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="{x:Static resources:Strings.ID}" Width="100"
                                             DisplayMemberBinding="{Binding Cliloc}" />
-                            <GridViewColumn Header="{x:Static resources:Strings.Original}" Width="175"
+                            <GridViewColumn Header="{x:Static resources:Strings.Original}" Width="300"
                                             DisplayMemberBinding="{Binding Original}" />
-                            <GridViewColumn Header="{x:Static resources:Strings.Replacement}" Width="175">
+                            <GridViewColumn Header="{x:Static resources:Strings.Replacement}" Width="300"
+                                            x:Name="ReplacementColumnHeader">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <controls:EditTextBlock
                                             Text="{Binding Replacement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                            MinWidth="100" ShowIcon="True" />
+                                            MinWidth="100" ShowIcon="True"
+                                            Width="{Binding Path=Width, ElementName=ReplacementColumnHeader, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -129,7 +141,8 @@
                 </ListView>
             </ScrollViewer>
         </Grid>
-        <Grid Margin="10,0,10,10" Grid.Row="2">
+        <GridSplitter Height="10" Grid.Row="2" />
+        <Grid Margin="10,0,10,10" Grid.Row="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -150,7 +163,7 @@
                     <GridView>
                         <GridViewColumn Header="{x:Static resources:Strings.ID}" Width="100"
                                         DisplayMemberBinding="{Binding Key}" />
-                        <GridViewColumn Header="{x:Static resources:Strings.Value}" Width="300">
+                        <GridViewColumn Header="{x:Static resources:Strings.Value}" Width="550">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Value}" ToolTip="{Binding Value}" />

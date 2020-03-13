@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:wpfPlus="clr-namespace:WpfPlus;assembly=WpfPlus"
-                    xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit">
+                    xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+                    xmlns:controls="clr-namespace:ClassicAssist.UI.Controls">
     <ResourceDictionary.MergedDictionaries>
         <wpfPlus:DarkTheme />
     </ResourceDictionary.MergedDictionaries>
@@ -529,4 +530,8 @@
         <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
     </Style>
     <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollBarStyle}" />
+    <Style x:Key="{x:Type controls:EditTextBlock}" TargetType="{x:Type controls:EditTextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
+        <Setter Property="MinWidth" Value="50" />
+    </Style>
 </ResourceDictionary>

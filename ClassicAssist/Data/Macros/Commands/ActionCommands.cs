@@ -9,6 +9,7 @@ using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
@@ -161,8 +162,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             foreach ( int serial in serials )
             {
-                UOC.DragDropAsync( serial, 1, player.Backpack?.Serial ?? 0 ).Wait();
-                Thread.Sleep( Options.CurrentOptions.ActionDelayMS );
+                ActionPacketQueue.EnqueueDragDrop( serial, 1, player.Backpack?.Serial ?? 0 );
             }
         }
 
@@ -217,7 +217,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            UOC.DragDropAsync( itemSerial, amount, containerSerial, x, y ).Wait();
+            ActionPacketQueue.EnqueueDragDrop( itemSerial, amount, containerSerial, QueuePriority.Low, true, x, y );
         }
 
         [CommandsDisplay( Category = "Actions",
@@ -283,7 +283,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            UOC.DragDropAsync( foodItem.Serial, amount, serial ).Wait();
+            ActionPacketQueue.EnqueueDragDrop( foodItem.Serial, amount, serial );
         }
 
         [CommandsDisplay( Category = "Actions", Description = "Sends rename request.",

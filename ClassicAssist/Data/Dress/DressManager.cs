@@ -6,10 +6,11 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Annotations;
+using ClassicAssist.Misc;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
-using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.Data.Dress
 {
@@ -111,8 +112,7 @@ namespace ClassicAssist.Data.Dress
                 {
                     Item itemObj = Engine.Items.GetItem( item );
 
-                    await UOC.DragDropAsync( item, 1, backpack );
-                    //Engine.Player.SetLayer( itemObj?.Layer ?? Layer.Invalid, 0 );
+                    await ActionPacketQueue.EnqueueDragDrop( item, 1, backpack, QueuePriority.Medium );
                 }
             }
             finally

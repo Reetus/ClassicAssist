@@ -2,6 +2,7 @@
 using Assistant;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -233,6 +234,12 @@ namespace ClassicAssist.Tests.MacroCommands
             Engine.Items.Remove( item1 );
 
             Engine.Player = null;
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            ActionPacketQueue.Clear();
         }
     }
 }

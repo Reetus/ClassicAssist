@@ -8,6 +8,7 @@ using Assistant;
 using ClassicAssist.Annotations;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.Misc;
+using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
@@ -151,14 +152,14 @@ namespace ClassicAssist.Data.Organizer
 
                         if ( entry.Stack )
                         {
-                            await UOC.DragDropAsync( moveItem.Serial, amount, destinationContainerItem.Serial );
-                            await Task.Delay( Options.CurrentOptions.ActionDelayMS );
+                            await ActionPacketQueue.EnqueueDragDrop( moveItem.Serial, amount,
+                                destinationContainerItem.Serial );
                         }
                         else
                         {
-                            await UOC.DragDropAsync( moveItem.Serial, amount, destinationContainerItem.Serial,
-                                0, 0 );
-                            await Task.Delay( Options.CurrentOptions.ActionDelayMS );
+                            await ActionPacketQueue.EnqueueDragDrop( moveItem.Serial, amount,
+                                destinationContainerItem.Serial,
+                                x: 0, y: 0 );
                         }
 
                         if ( _cancellationTokenSource.IsCancellationRequested )

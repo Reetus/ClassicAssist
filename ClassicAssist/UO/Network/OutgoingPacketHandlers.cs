@@ -28,6 +28,8 @@ namespace ClassicAssist.UO.Network
 
             Register( 0x02, 7, OnMoveRequested );
             Register( 0x06, 5, OnUseRequest );
+            Register( 0x07, 7, OnLiftRequest );
+            Register( 0x08, 15, OnDropRequest );
             Register( 0x13, 10, OnEquipRequest );
             Register( 0x6C, 19, OnTargetSent );
             Register( 0xB1, 0, OnGumpButtonPressed );
@@ -39,6 +41,16 @@ namespace ClassicAssist.UO.Network
         {
             AbilitiesManager manager = AbilitiesManager.GetInstance();
             manager.ResendGump( manager.Enabled );
+        }
+
+        private static void OnLiftRequest( PacketReader reader )
+        {
+            Engine.LastActionPacket = DateTime.Now;
+        }
+
+        private static void OnDropRequest( PacketReader reader )
+        {
+            Engine.LastActionPacket = DateTime.Now;
         }
 
         private static void OnEncodedCommand( PacketReader reader )
@@ -64,6 +76,8 @@ namespace ClassicAssist.UO.Network
 
         private static void OnUseRequest( PacketReader reader )
         {
+            Engine.LastActionPacket = DateTime.Now;
+
             int serial = reader.ReadInt32();
 
             if ( Engine.Player != null )

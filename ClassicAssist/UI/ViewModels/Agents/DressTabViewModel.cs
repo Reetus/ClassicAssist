@@ -228,7 +228,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             {
                 IsDressingOrUndressing = true;
 
-                await Task.Run( () => dae.Undress() );
+                await dae.Undress();
             }
             finally
             {

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assistant;
+using ClassicAssist.Misc;
 using ClassicAssist.Resources;
+using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
@@ -53,14 +55,8 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            if ( !Options.CurrentOptions.UseObjectQueue || skipQueue )
-            {
-                Engine.SendPacketToServer( new UseObject( serial ) );
-            }
-            else if ( Engine.UseObjectQueue.Count < Options.CurrentOptions.UseObjectQueueAmount )
-            {
-                Engine.UseObjectQueue.Enqueue( serial );
-            }
+            ActionPacketQueue.EnqueueActionPacket( new UseObject( serial ),
+                skipQueue ? QueuePriority.Immediate : QueuePriority.Low );
         }
 
         [CommandsDisplay( Category = "Actions",
@@ -295,7 +291,7 @@ namespace ClassicAssist.Data.Macros.Commands
             int y = player.Y + yOffset;
             int z = player.Z + zOffset;
 
-            UOC.DragDropAsync( serial, amount, -1, x, y, z ).Wait();
+            ActionPacketQueue.EnqueueDragDropGround( serial, amount, x, y, z );
         }
 
         [CommandsDisplay( Category = "Entity",
@@ -337,7 +333,7 @@ namespace ClassicAssist.Data.Macros.Commands
             int y = player.Y + yOffset;
             int z = player.Z + zOffset;
 
-            UOC.DragDropAsync( entity.Serial, amount, -1, x, y, z ).Wait();
+            ActionPacketQueue.EnqueueDragDropGround( entity.Serial, amount, x, y, z );
 
             return true;
         }
@@ -379,7 +375,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 amount = entity.Count;
             }
 
-            UOC.DragDropAsync( entity.Serial, amount, destinationSerial, x, y, z ).Wait();
+            ActionPacketQueue.EnqueueDragDropGround( entity.Serial, amount, x, y, z );
         }
     }
 }

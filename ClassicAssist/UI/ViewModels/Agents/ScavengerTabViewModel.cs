@@ -9,6 +9,7 @@ using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 using Newtonsoft.Json.Linq;
 using UOC = ClassicAssist.UO.Commands;
@@ -182,7 +183,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 foreach ( Item scavengerItem in scavengerItems )
                 {
                     _ignoreList.Add( scavengerItem.Serial );
-                    UOC.DragDropAsync( scavengerItem.Serial, scavengerItem.Count, container.Serial ).Wait();
+                    ActionPacketQueue.EnqueueDragDrop( scavengerItem.Serial, scavengerItem.Count, container.Serial )
+                        .Wait();
                 }
             }
         }

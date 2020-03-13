@@ -3,6 +3,7 @@ using System.Threading;
 using Assistant;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -349,6 +350,12 @@ namespace ClassicAssist.Tests.MacroCommands
 
             AliasCommands.UnsetAlias( "self" );
             Engine.Player = null;
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            ActionPacketQueue.Clear();
         }
     }
 }

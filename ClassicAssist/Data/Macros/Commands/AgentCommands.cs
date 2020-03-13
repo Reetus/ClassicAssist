@@ -54,7 +54,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            dressAgentEntry.Undress();
+            dressAgentEntry.Undress().Wait();
         }
 
         [CommandsDisplay( Category = "Agents",

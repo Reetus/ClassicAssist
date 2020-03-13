@@ -1,4 +1,4 @@
-﻿using Assistant;
+﻿using ClassicAssist.UO.Network;
 
 namespace ClassicAssist.Data.Hotkeys.Commands
 {
@@ -7,7 +7,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            Engine.UseObjectQueue?.Clear();
+            ActionPacketQueue.Clear();
         }
     }
 }

@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -108,6 +110,33 @@ namespace ClassicAssist.Misc
         public static int[] ToIntArray( this JToken jToken )
         {
             return jToken.Select( token => token.ToObject<int>() ).ToArray();
+        }
+
+        // https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/interop-with-other-asynchronous-patterns-and-types?redirectedfrom=MSDN#WHToTap
+        public static Task ToTask( this EventWaitHandle waitHandle )
+        {
+            if ( waitHandle == null )
+            {
+                throw new ArgumentNullException( nameof( waitHandle ) );
+            }
+
+            TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+
+            RegisteredWaitHandle rwh = ThreadPool.RegisterWaitForSingleObject( waitHandle,
+                delegate { tcs.TrySetResult( true ); }, null, -1, true );
+
+            Task<bool> t = tcs.Task;
+
+            t.ContinueWith( antecedent => rwh.Unregister( null ) );
+
+            return t;
+        }
+
+        public static Task ToTask( this IEnumerable<EventWaitHandle> waitHandles )
+        {
+            List<Task> tasks = waitHandles.Select( waitHandle => waitHandle.ToTask() ).ToList();
+
+            return Task.WhenAll( tasks );
         }
     }
 }

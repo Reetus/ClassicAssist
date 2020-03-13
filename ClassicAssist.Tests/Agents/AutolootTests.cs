@@ -460,5 +460,11 @@ namespace ClassicAssist.Tests.Agents
 
             Engine.InternalPacketReceivedEvent -= OnPacketReceivedEvent;
         }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            ActionPacketQueue.Clear();
+        }
     }
 }

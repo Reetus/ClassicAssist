@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data.Hotkeys;
+using ClassicAssist.Misc;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 
@@ -86,20 +87,9 @@ namespace ClassicAssist.Data.Dress
                         continue;
                     }
 
-                    int attempts;
-
                     if ( currentInLayer != 0 && moveConflicting && container != -1 )
                     {
-                        attempts = 0;
-
-                        do
-                        {
-                            await UOC.DragDropAsync( currentInLayer, 1, container );
-                            await Task.Delay( Options.CurrentOptions.ActionDelayMS );
-                        }
-                        while ( Engine.Player?.GetLayer( dai.Layer ) != 0 && attempts++ < 10 );
-
-                        Engine.Player?.SetLayer( dai.Layer, 0 );
+                        await ActionPacketQueue.EnqueueDragDrop( currentInLayer, 1, container, QueuePriority.Medium );
 
                         currentInLayer = 0;
                     }
@@ -109,30 +99,22 @@ namespace ClassicAssist.Data.Dress
                         continue;
                     }
 
-                    attempts = 0;
-
-                    do
+                    switch ( dai.Type )
                     {
-                        switch ( dai.Type )
-                        {
-                            case DressAgentItemType.Serial:
-                                UOC.EquipItem( item, dai.Layer );
-                                break;
-                            case DressAgentItemType.ID:
-                                UOC.EquipType( dai.ID, dai.Layer );
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-
-                        await Task.Delay( Options.CurrentOptions.ActionDelayMS );
+                        case DressAgentItemType.Serial:
+                            await UOC.EquipItem( item, dai.Layer );
+                            break;
+                        case DressAgentItemType.ID:
+                            await UOC.EquipType( dai.ID, dai.Layer );
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
                     }
-                    while ( Engine.Player?.GetLayer( dai.Layer ) == 0 && attempts++ < 10 );
                 }
             } );
         }
 
-        public void Undress()
+        public async Task Undress()
         {
             if ( Engine.Player == null )
             {
@@ -153,9 +135,7 @@ namespace ClassicAssist.Data.Dress
 
             foreach ( Item item in itemsToUnequip )
             {
-                UOC.DragDropAsync( item.Serial, 1, container ).Wait();
-                Engine.Player.SetLayer( item.Layer, 0 );
-                Thread.Sleep( Options.CurrentOptions.ActionDelayMS );
+                await ActionPacketQueue.EnqueueDragDrop( item.Serial, 1, container, QueuePriority.Medium );
             }
         }
     }

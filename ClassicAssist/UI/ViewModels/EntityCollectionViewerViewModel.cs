@@ -15,6 +15,7 @@ using ClassicAssist.UI.Models;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UI.ViewModels
@@ -284,7 +285,7 @@ namespace ClassicAssist.UI.ViewModels
 
                 foreach ( int item in items )
                 {
-                    await Commands.DragDropAsync( item, -1, serial );
+                    await ActionPacketQueue.EnqueueDragDrop( item, -1, serial );
 
                     if ( _cancellationToken.Token.IsCancellationRequested )
                     {

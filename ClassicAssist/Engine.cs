@@ -88,6 +88,8 @@ namespace Assistant
         public static GumpCollection Gumps { get; set; } = new GumpCollection();
         public static ItemCollection Items { get; set; } = new ItemCollection( 0 );
         public static CircularBuffer<JournalEntry> Journal { get; set; } = new CircularBuffer<JournalEntry>( 1024 );
+
+        public static DateTime LastActionPacket { get; set; }
         public static int LastPromptID { get; set; }
         public static int LastPromptSerial { get; set; }
         public static Queue<object> LastTargetQueue { get; set; } = new Queue<object>();
@@ -100,7 +102,6 @@ namespace Assistant
         public static TargetFlags TargetFlags { get; set; }
         public static int TargetSerial { get; set; }
         public static TargetType TargetType { get; set; }
-        public static ThreadQueue<int> UseObjectQueue { get; set; } = new ThreadQueue<int>( ProcessUseObjectQueue );
         public static bool WaitingForTarget { get; set; }
         internal static ConcurrentDictionary<uint, int> GumpList { get; set; } = new ConcurrentDictionary<uint, int>();
 
@@ -129,12 +130,6 @@ namespace Assistant
 
             _mainThread.SetApartmentState( ApartmentState.STA );
             _mainThread.Start();
-        }
-
-        private static void ProcessUseObjectQueue( int serial )
-        {
-            SendPacketToServer( new UseObject( serial ) );
-            Thread.Sleep( Options.CurrentOptions.ActionDelayMS );
         }
 
         internal static unsafe void InitializePlugin( PluginHeader* plugin )

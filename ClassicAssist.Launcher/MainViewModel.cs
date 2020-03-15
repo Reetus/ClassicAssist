@@ -13,6 +13,7 @@ using System.Windows.Input;
 using ClassicAssist.Launcher.Properties;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Trinet.Core.IO.Ntfs;
 using Application = System.Windows.Application;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
@@ -38,6 +39,8 @@ namespace ClassicAssist.Launcher
 
         public MainViewModel()
         {
+            RemoveAlternateDataStreams( Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location ) );
+
             _manager = ShardManager.GetInstance();
 
             _manager.Shards.CollectionChanged += ( sender, args ) => { ShardEntries = _manager.Shards; };
@@ -196,6 +199,38 @@ namespace ClassicAssist.Launcher
         public ICommand StartCommand =>
             _startCommand ?? ( _startCommand = new RelayCommandAsync( Start,
                 o => !string.IsNullOrEmpty( SelectedClientPath ) && !string.IsNullOrEmpty( SelectedDataPath ) ) );
+
+        private static void RemoveAlternateDataStreams( string path )
+        {
+            string manifestFile = Path.Combine( path, "MANIFEST.json" );
+
+            if ( !File.Exists( manifestFile ) )
+            {
+                return;
+            }
+
+            string json = File.ReadAllText( manifestFile );
+
+            IEnumerable<ManifestEntry> manifestEntries =
+                JsonConvert.DeserializeObject<IEnumerable<ManifestEntry>>( json );
+
+            foreach ( ManifestEntry manifestEntry in manifestEntries )
+            {
+                string filePath = Path.Combine( path, manifestEntry.Name );
+
+                if ( !File.Exists( filePath ) )
+                {
+                    continue;
+                }
+
+                FileInfo file = new FileInfo( filePath );
+
+                if ( file.AlternateDataStreamExists( "Zone.Identifier" ) )
+                {
+                    file.DeleteAlternateDataStream( "Zone.Identifier" );
+                }
+            }
+        }
 
         private void ReadClassicOptions( JObject config )
         {

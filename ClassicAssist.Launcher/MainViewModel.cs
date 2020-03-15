@@ -480,7 +480,10 @@ namespace ClassicAssist.Launcher
                 string propName = property.Name;
                 object val = property.GetValue( ClassicOptions );
 
-                config.Add( propName, val.ToString() );
+                if ( val != null )
+                {
+                    config.Add( propName, val.ToString() );
+                }
             }
         }
     }

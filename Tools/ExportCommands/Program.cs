@@ -68,6 +68,7 @@ namespace ExportCommands
                         {
                             Category = attr.Category,
                             Description = attr.Description,
+                            Example = attr.Example,
                             InsertText = attr.InsertText,
                             Name = memberInfo.ToString()
                         };
@@ -94,9 +95,16 @@ namespace ExportCommands
 
                 foreach ( Commands command in categoryCommands )
                 {
+                    var example = command.InsertText;
+
+                    if ( !string.IsNullOrEmpty( command.Example ) )
+                    {
+                        example = command.Example;
+                    }
+
                     markDown += $"Method Signature:  \n  \n**{command.Name}**  \n  \n";
                     markDown += $"Description:  \n  \n**{command.Description}**  \n  \n";
-                    markDown += $"Example:  \n  \n```python  \n{command.InsertText}  \n```  \n  \n";
+                    markDown += $"Example:  \n  \n```python  \n{example}  \n```  \n  \n";
                 }
 
                 markDown += "\n\n\n";
@@ -166,6 +174,7 @@ namespace ExportCommands
     {
         public string Category { get; set; }
         public string Description { get; set; }
+        public string Example { get; set; }
         public string InsertText { get; set; }
         public string Name { get; set; }
     }

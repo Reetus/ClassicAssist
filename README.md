@@ -35,6 +35,10 @@ ClassicAssist uses [WPF](https://en.wikipedia.org/wiki/Windows_Presentation_Foun
 
 If you encounter any issues or require a feature not currently added, please raise an issue on GitHub with as much information as possible.
 
+## Documentation
+
+Full documentation is still a work-in-progress but documentation on Macro Commands can be found here... [Macro Commands](https://github.com/Reetus/ClassicAssist/wiki/Macro-Commands)
+
 ## Translation
 
 If your native language isn't English and you'd like to contribute a translation into your language, send a pull request or open an issue.

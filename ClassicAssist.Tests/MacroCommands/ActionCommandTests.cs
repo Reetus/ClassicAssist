@@ -131,7 +131,7 @@ namespace ClassicAssist.Tests.MacroCommands
 
             Engine.Items.Add( new Item( 0x00aabbcc ) { Count = 50 } );
 
-            ActionCommands.MoveItem( 0x00aabbcc, 0xaabbdd );
+            ObjectCommands.MoveItem( 0x00aabbcc, 0xaabbdd );
 
             bool result = are.WaitOne( 5000 );
 

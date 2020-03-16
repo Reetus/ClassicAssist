@@ -266,6 +266,44 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = "Entity",
+            Description = "Move item to container (parameters can be serials or aliases).",
+            InsertText = "MoveItem(\"source\", \"destination\")" )]
+        public static void MoveItem( object item, object destination, int amount = -1, int x = -1, int y = -1 )
+        {
+            int itemSerial = AliasCommands.ResolveSerial( item );
+
+            if ( itemSerial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return;
+            }
+
+            Item itemObj = Engine.Items.GetItem( itemSerial );
+
+            if ( itemObj == null )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return;
+            }
+
+            if ( amount == -1 )
+            {
+                amount = itemObj.Count;
+            }
+
+            int containerSerial = AliasCommands.ResolveSerial( destination );
+
+            if ( containerSerial == 0 )
+            {
+                //TODO
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return;
+            }
+
+            ActionPacketQueue.EnqueueDragDrop( itemSerial, amount, containerSerial, QueuePriority.Low, true, x, y );
+        }
+
+        [CommandsDisplay( Category = "Entity",
             Description =
                 "Move the given serial/alias to the specified x,y,z offset of the player, no amount specified or -1 will move the full stack.",
             InsertText = "MoveItemOffset(\"trashitem\", 0, 1, 0, -1\")" )]
@@ -339,10 +377,31 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = "Entity", Description = "Move a type from source to destintion.",
+            Example = nameof( MacroCommandHelp.MOVETYPE_COMMAND_EXAMPLE ),
             InsertText = "MoveType(0xff, \"backpack\", \"bank\")" )]
-        public static void MoveType( int id, int sourceSerial, int destinationSerial, int x = -1, int y = -1, int z = 0,
+        public static void MoveType( int id, object sourceContainer, object destinationContainer, int x = -1,
+            int y = -1, int z = 0,
             int hue = -1, int amount = -1 )
         {
+            int sourceSerial = AliasCommands.ResolveSerial( sourceContainer );
+
+            if ( sourceSerial == -1 )
+            {
+                UOC.SystemMessage( Strings.Invalid_source_container___ );
+                return;
+            }
+
+            int destinationSerial;
+
+            if ( destinationContainer is int destSerial )
+            {
+                destinationSerial = destSerial;
+            }
+            else
+            {
+                destinationSerial = AliasCommands.ResolveSerial( destinationContainer );
+            }
+
             Item sourceItem = Engine.Items.GetItem( sourceSerial );
 
             if ( sourceItem == null )
@@ -375,7 +434,14 @@ namespace ClassicAssist.Data.Macros.Commands
                 amount = entity.Count;
             }
 
-            ActionPacketQueue.EnqueueDragDropGround( entity.Serial, amount, x, y, z );
+            if ( destinationSerial == -1 )
+            {
+                ActionPacketQueue.EnqueueDragDropGround( entity.Serial, amount, x, y, z );
+            }
+            else
+            {
+                ActionPacketQueue.EnqueueDragDrop( entity.Serial, amount, destinationSerial );
+            }
         }
     }
 }

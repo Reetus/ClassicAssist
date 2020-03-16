@@ -183,44 +183,6 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = "Actions",
-            Description = "Move item to container (parameters can be serials or aliases).",
-            InsertText = "MoveItem(\"source\", \"destination\")" )]
-        public static void MoveItem( object item, object destination, int amount = -1, int x = -1, int y = -1 )
-        {
-            int itemSerial = AliasCommands.ResolveSerial( item );
-
-            if ( itemSerial == 0 )
-            {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
-                return;
-            }
-
-            Item itemObj = Engine.Items.GetItem( itemSerial );
-
-            if ( itemObj == null )
-            {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
-                return;
-            }
-
-            if ( amount == -1 )
-            {
-                amount = itemObj.Count;
-            }
-
-            int containerSerial = AliasCommands.ResolveSerial( destination );
-
-            if ( containerSerial == 0 )
-            {
-                //TODO
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
-                return;
-            }
-
-            ActionPacketQueue.EnqueueDragDrop( itemSerial, amount, containerSerial, QueuePriority.Low, true, x, y );
-        }
-
-        [CommandsDisplay( Category = "Actions",
             Description = "Unmounts if mounted, or mounts if unmounted, will prompt for mount if no \"mount\" alias.",
             InsertText = "ToggleMounted()" )]
         public static void ToggleMounted()

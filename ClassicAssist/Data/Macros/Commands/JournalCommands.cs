@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using Assistant;
+using ClassicAssist.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 
@@ -9,8 +10,7 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class JournalCommands
     {
-        [CommandsDisplay( Category = "Journal", Description = "Check for a text in journal, optional source name.",
-            InsertText = "if InJournal(\"town guards\", \"system\"):" )]
+        [CommandsDisplay( Category = nameof( Strings.Journal ) )]
         public static bool InJournal( string text, string author = "" )
         {
             bool match;
@@ -32,15 +32,13 @@ namespace ClassicAssist.Data.Macros.Commands
             return match;
         }
 
-        [CommandsDisplay( Category = "Journal", Description = "Clear all journal texts.",
-            InsertText = "ClearJournal()" )]
+        [CommandsDisplay( Category = nameof( Strings.Journal ) )]
         public static void ClearJournal()
         {
             Engine.Journal.Clear();
         }
 
-        [CommandsDisplay( Category = "Journal", Description = "Wait the given timeout for the journal text to appear.",
-            InsertText = "if WaitForJournal(\"town guards\", 5000, \"system\"):" )]
+        [CommandsDisplay( Category = nameof( Strings.Journal ) )]
         public static bool WaitForJournal( string text, int timeout, string author = "" )
         {
             AutoResetEvent are = new AutoResetEvent( false );

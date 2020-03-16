@@ -11,9 +11,7 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class PropertiesCommands
     {
-        [CommandsDisplay( Category = "Properties",
-            Description = "Wait for item properties to be received for specified item.",
-            InsertText = "WaitForProperties(\"backpack\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Properties ) )]
         public static bool WaitForProperties( object obj, int timeout )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -43,9 +41,7 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = "Properties",
-            Description = "Returns true if the given text appears in the items item properties.",
-            InsertText = "if Property(\"item\", \"Defense Chance Increase\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Properties ) )]
         public static bool Property( object obj, string value )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -67,9 +63,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return false;
         }
 
-        [CommandsDisplay( Category = "Properties",
-            Description = "Returns the argument value of the given property name. Optional argument index.",
-            InsertText = "val = PropertyValue[int](\"backpack\", \"Contents\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Properties ) )]
         public static T PropertyValue<T>( object obj, string property, int argument = 0 )
         {
             int serial = AliasCommands.ResolveSerial( obj );

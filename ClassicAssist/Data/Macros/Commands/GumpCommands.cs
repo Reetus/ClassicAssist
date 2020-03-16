@@ -8,9 +8,7 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class GumpCommands
     {
-        [CommandsDisplay( Category = "Gumps",
-            Description = "Pauses until incoming gump packet is received, optional paramters of gump ID and timeout",
-            InsertText = "WaitForGump(0xff, 5000)" )]
+        [CommandsDisplay( Category = nameof( Strings.Gumps ) )]
         public static bool WaitForGump( uint gumpId = 0, int timeout = 30000 )
         {
             bool result = UOC.WaitForGump( gumpId, timeout );
@@ -23,23 +21,19 @@ namespace ClassicAssist.Data.Macros.Commands
             return result;
         }
 
-        [CommandsDisplay( Category = "Gumps",
-            Description = "Sends a button reply to server gump, parameters are gumpID and buttonID.",
-            InsertText = "ReplyGump(0xff, 0)" )]
+        [CommandsDisplay( Category = nameof( Strings.Gumps ) )]
         public static void ReplyGump( uint gumpId, int buttonId )
         {
             UOC.GumpButtonClick( gumpId, buttonId );
         }
 
-        [CommandsDisplay( Category = "Gumps", Description = "Checks if a gump id exists or not.",
-            InsertText = "if GumpExists(0xff):" )]
+        [CommandsDisplay( Category = nameof( Strings.Gumps ) )]
         public static bool GumpExists( uint gumpId )
         {
             return Engine.GumpList.ContainsKey( gumpId );
         }
 
-        [CommandsDisplay( Category = "Gumps", Description = "Check for a text in gump.",
-            InsertText = "if InGump(0xf00f, \"lethal darts\"):" )]
+        [CommandsDisplay( Category = nameof( Strings.Gumps ) )]
         public static bool InGump( uint gumpId, string text )
         {
             if ( Engine.Gumps.GetGump( gumpId, out Gump gump ) )
@@ -51,8 +45,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return false;
         }
 
-        [CommandsDisplay( Category = "Gumps", Description = "Close a specified gump serial",
-            InsertText = "CloseGump(0x454ddef)" )]
+        [CommandsDisplay( Category = nameof( Strings.Gumps ) )]
         public static void CloseGump( int serial )
         {
             if ( Engine.Gumps.FindGump( serial, out Gump gump ) )

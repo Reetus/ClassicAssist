@@ -12,23 +12,21 @@ namespace ClassicAssist.Data.Macros.Commands
     {
         private const int MOVEMENT_TIMEOUT = 500;
         private static bool _forceWalk;
-        
-        [CommandsDisplay( Category = "Movement", Description = "Walk in the given direction.",
-            InsertText = "Walk(\"east\")" )]
+
+        [CommandsDisplay( Category = nameof( Strings.Movement ) )]
         public static bool Walk( string direction )
         {
             return Move( direction, false );
         }
 
-        [CommandsDisplay( Category = "Movement", Description = "Set force walk, True or False",
-            InsertText = "SetForceWalk(True)" )]
+        [CommandsDisplay( Category = nameof( Strings.Movement ) )]
         public static void SetForceWalk( bool force )
         {
             UOC.SetForceWalk( force );
             UOC.SystemMessage( force ? Strings.Force_Walk_On : Strings.Force_Walk_Off );
         }
 
-        [CommandsDisplay( Category = "Movement", Description = "Toggle Force Walk", InsertText = "ToggleForceWalk()" )]
+        [CommandsDisplay( Category = nameof( Strings.Movement ) )]
         public static void ToggleForceWalk()
         {
             _forceWalk = !_forceWalk;
@@ -37,8 +35,7 @@ namespace ClassicAssist.Data.Macros.Commands
             UOC.SystemMessage( _forceWalk ? Strings.Force_Walk_On : Strings.Force_Walk_Off );
         }
 
-        [CommandsDisplay( Category = "Movement", Description = "Turn in the given direction.",
-            InsertText = "Turn(\"east\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Movement ) )]
         public static void Turn( string direction )
         {
             Direction directionEnum = Utility.GetEnumValueByName<Direction>( direction );
@@ -52,8 +49,7 @@ namespace ClassicAssist.Data.Macros.Commands
             UOC.WaitForIncomingPacket( new PacketFilterInfo( 22 ), MOVEMENT_TIMEOUT );
         }
 
-        [CommandsDisplay( Category = "Movement", Description = "Run in the given direction.",
-            InsertText = "Run(\"east\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Movement ) )]
         public static bool Run( string direction )
         {
             return Move( direction, true );
@@ -70,7 +66,6 @@ namespace ClassicAssist.Data.Macros.Commands
 
             try
             {
-               
                 bool result = Engine.Move( directionEnum, run );
                 UOC.WaitForIncomingPacket( new PacketFilterInfo( 22 ), MOVEMENT_TIMEOUT );
                 return result;

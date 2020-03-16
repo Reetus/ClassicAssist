@@ -124,7 +124,7 @@
     <value>Seleziona Client</value>
   </data>
   <data name="Ultima Online" xml:space="preserve">
-    <value>Cartella di Ultima Online</value>
+    <value>Seleziona cartella di Ultima Online</value>
   </data>
   <data name="Check for update" xml:space="preserve">
     <value>Verifica Aggiornamenti</value>
@@ -139,7 +139,7 @@
     <value>Avvia</value>
   </data>
   <data name="Select a client" xml:space="preserve">
-    <value>Seleziona il client</value>
+    <value>Seleziona il Client</value>
   </data>
   <data name="Select your Ultima Online directory" xml:space="preserve">
     <value>Seleziona la cartella di Ultima Online</value>
@@ -187,27 +187,27 @@
     <value>Plug-in aggiuntivi</value>
   </data>
   <data name="Debug" xml:space="preserve">
-    <value>Eseguire il debug</value>
+    <value>Debug</value>
   </data>
   <data name="Autologin" xml:space="preserve">
     <value>Autologin</value>
   </data>
   <data name="Auto Reconnect" xml:space="preserve">
-    <value>Riconnessione automatica</value>
+    <value>Autoriconnetti</value>
   </data>
   <data name="Reconnect Time (milliseconds)" xml:space="preserve">
-    <value>Tempo di riconnessione (millisecondi)</value>
+    <value>Autoriconnetti dopo (millisecondi)</value>
   </data>
   <data name="Skip Login Screen" xml:space="preserve">
     <value>Salta la schermata di accesso</value>
   </data>
   <data name="Reconnect Time" xml:space="preserve">
-    <value>Tempo di riconnessione:</value>
+    <value>Autoriconnetti dopo:</value>
   </data>
   <data name="Override Client Version" xml:space="preserve">
-    <value>Ignora versione client</value>
+    <value>Sovrascrivi versione Client</value>
   </data>
   <data name="Client Version" xml:space="preserve">
-    <value>Versione client</value>
+    <value>Versione Client</value>
   </data>
 </root>

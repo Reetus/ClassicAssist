@@ -142,7 +142,7 @@
     <value>Scaricato</value>
   </data>
   <data name="Downloaded size doesn't match expected..." xml:space="preserve">
-    <value>Le dimensioni del Download non corrispondono alle attese...</value>
+    <value>Le dimensioni del Download non corrispondono...</value>
   </data>
   <data name="Downloading" xml:space="preserve">
     <value>Sto Scaricando</value>
@@ -160,7 +160,7 @@
     <value>Nessuna nuova versione disponibile...</value>
   </data>
   <data name="No release asset..." xml:space="preserve">
-    <value>Nessuna risorsa di rilascio...</value>
+    <value>Errore formato update...</value>
   </data>
   <data name="Relaunching updater..." xml:space="preserve">
     <value>Riavvio Updater...</value>

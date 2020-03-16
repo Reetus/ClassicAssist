@@ -11,9 +11,7 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class MobileCommands
     {
-        [CommandsDisplay( Category = "Entity",
-            Description = "Returns true if supplied mobile exists in the friends list.",
-            InsertText = "if InFriendsList(\"last\"):" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static bool InFriendList( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -39,9 +37,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return false;
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description = "Adds a mobile to friends list, will display target cursor if no serial/alias supplied.",
-            InsertText = "AddFriend()" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static void AddFriend( object obj = null )
         {
             int serial = obj != null
@@ -70,10 +66,7 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description =
-                "Removes a mobile from the friends list, will display target cursor if no serial/alias supplied.",
-            InsertText = "RemoveFriend()" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static void RemoveFriend( object obj = null )
         {
             int serial = obj != null
@@ -96,19 +89,13 @@ namespace ClassicAssist.Data.Macros.Commands
             Engine.Dispatcher?.Invoke( () => Options.CurrentOptions.Friends.Remove( entry ) );
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description =
-                "Returns true if given mobile is dead, false if not, if parameter is null, then returns the value from the player (parameter can be serial or alias).",
-            InsertText = "if Dead(\"self\"):" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static bool Dead( object obj = null )
         {
             return GetMobileProperty<bool>( obj, nameof( Mobile.IsDead ) );
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description =
-                "Returns true if given mobile is hidden, false if not, if parameter is null, then returns the value from the player (parameter can be serial or alias).",
-            InsertText = "if Hidden(\"self\"):" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static bool Hidden( object obj = null )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -160,67 +147,49 @@ namespace ClassicAssist.Data.Macros.Commands
             return val;
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description =
-                "Returns the given mobiles max mana, if parameter is null, then returns the value from the player (parameter can be serial or alias).",
-            InsertText = "mana = MaxMana(\"self\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int MaxMana( object obj = null )
         {
             return GetMobileProperty<int>( obj, nameof( Mobile.ManaMax ) );
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description =
-                "Returns the given mobiles max stamina, if parameter is null, then returns the value from the player (parameter can be serial or alias).",
-            InsertText = "stam = MaxStam(\"self\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int MaxStam( object obj = null )
         {
             return GetMobileProperty<int>( obj, nameof( Mobile.StaminaMax ) );
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description =
-                "Returns the given mobiles hitpoints, if parameter is null, then returns the value from the player (parameter can be serial or alias).",
-            InsertText = "hits = Hits(\"self\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int Hits( object obj = null )
         {
             return GetMobileProperty<int>( obj, nameof( Mobile.Hits ) );
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Returns the strength of the player",
-            InsertText = "if Str() < 100:" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int Str()
         {
             return GetMobileProperty<int>( "self", nameof( PlayerMobile.Strength ) );
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Returns the dexterity of the player",
-            InsertText = "if Str() < 100:" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int Dex()
         {
             return GetMobileProperty<int>( "self", nameof( PlayerMobile.Dex ) );
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Returns the intelligence of the player",
-            InsertText = "if Str() < 100:" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int Int()
         {
             return GetMobileProperty<int>( "self", nameof( PlayerMobile.Int ) );
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description =
-                "Returns the given mobiles max hitpoints, if parameter is null, then returns the value from the player (parameter can be serial or alias).",
-            InsertText = "hits = MaxHits(\"self\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int MaxHits( object obj = null )
         {
             return GetMobileProperty<int>( obj, nameof( Mobile.HitsMax ) );
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description =
-                "Returns the given mobiles difference between max and current hits, if parameter is null, then returns the value from the player (parameter can be serial or alias).",
-            InsertText = "if DiffHits(\"self\") > 50:" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int DiffHits( object obj = null )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -242,26 +211,19 @@ namespace ClassicAssist.Data.Macros.Commands
             return 0;
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description =
-                "Returns the given mobiles stamina, if parameter is null, then returns the value from the player (parameter can be serial or alias).",
-            InsertText = "if Stam(\"self\") < 25:" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int Stam( object obj = null )
         {
             return GetMobileProperty<int>( obj, nameof( Mobile.Stamina ) );
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description =
-                "Returns the given mobiles mana, if parameter is null, then returns the value from the player (parameter can be serial or alias).",
-            InsertText = "if Mana(\"self\") < 25:" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int Mana( object obj = null )
         {
             return GetMobileProperty<int>( obj, nameof( Mobile.Mana ) );
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Checks whether a mobile is in war mode.",
-            InsertText = "if War(\"self\"):" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static bool War( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -275,38 +237,31 @@ namespace ClassicAssist.Data.Macros.Commands
             return false;
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description = "Returns the number of current followers as per status bar data.",
-            InsertText = "if Followers() < 1:" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int Followers()
         {
             return Engine.Player?.Followers ?? 0;
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description = "Returns the number of max followers as per status bar data.",
-            InsertText = "if Followers() == MaxFollowers():" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int MaxFollowers()
         {
             return Engine.Player?.FollowersMax ?? 0;
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Returns the current weight as as per status bar data.",
-            InsertText = "if Weight() > 300:" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int Weight()
         {
             return Engine.Player?.Weight ?? 0;
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Returns the max weight as per status bar data.",
-            InsertText = "if MaxWeight() < 300:" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int MaxWeight()
         {
             return Engine.Player?.WeightMax ?? 0;
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Returns the difference between max weight and weight.",
-            InsertText = "if DiffWeight() > 50:" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int DiffWeight()
         {
             PlayerMobile player = Engine.Player;
@@ -319,50 +274,43 @@ namespace ClassicAssist.Data.Macros.Commands
             return player.WeightMax - player.Weight;
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Returns the gold value as per status bar data.",
-            InsertText = "if Gold() < 2000:" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int Gold()
         {
             return Engine.Player?.Gold ?? 0;
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Returns the luck value as per status bar data.",
-            InsertText = "if Luck() < 800:" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int Luck()
         {
             return Engine.Player?.Luck ?? 0;
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Returns the current players' tithing points.",
-            InsertText = "if TithingPoints() < 1000:" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int TithingPoints()
         {
             return Engine.Player?.TithingPoints ?? 0;
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Returns true if the specified mobile is poisoned.",
-            InsertText = "if Poisoned(\"self\"):" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static bool Poisoned( object obj )
         {
             return GetMobileProperty<bool>( obj, nameof( Mobile.IsPoisoned ) );
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Returns true if the specified mobile is yellowhits.",
-            InsertText = "if YellowHits(\"self\"):" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static bool YellowHits( object obj )
         {
             return GetMobileProperty<bool>( obj, nameof( Mobile.IsYellowHits ) );
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Returns true if the specified mobile is frozen.",
-            InsertText = "if Paralyzed(\"self\"):" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static bool Paralyzed( object obj )
         {
             return GetMobileProperty<bool>( obj, nameof( Mobile.IsFrozen ) );
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Returns true if the specified mobile is mounted.",
-            InsertText = "if Mounted(\"self\"):" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static bool Mounted( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -384,9 +332,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return false;
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description = "Return the true if the given serial/alias is in party with you.",
-            InsertText = "if InParty(\"friend\"):" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static bool InParty( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );

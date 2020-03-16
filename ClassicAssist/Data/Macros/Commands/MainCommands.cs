@@ -19,16 +19,13 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class MainCommands
     {
-        [CommandsDisplay( Category = "Main",
-            Description = "Set quiet mode True/False, True reduces the number of messages macro commands emit.",
-            InsertText = "SetQuietMode(True)" )]
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
         public static void SetQuietMode( bool onOff )
         {
             MacroManager.QuietMode = onOff;
         }
 
-        [CommandsDisplay( Category = "Main", Description = "Use a virtue by name.",
-            InsertText = "InvokeVirtue(\"Honor\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
         public static void InvokeVirtue( string virtue )
         {
             Virtues v = Utility.GetEnumValueByName<Virtues>( virtue );
@@ -41,30 +38,25 @@ namespace ClassicAssist.Data.Macros.Commands
             Engine.SendPacketToServer( new InvokeVirtue( v ) );
         }
 
-        [CommandsDisplay( Category = "Main", Description = "Sends Resync request to server.", InsertText = "Resync()" )]
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
         public static void Resync()
         {
             UOC.Resync();
         }
 
-        [CommandsDisplay( Category = "Main", Description = "Pauses execution for the given amount in milliseconds.",
-            InsertText = "Pause(1000)" )]
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
         public static void Pause( int milliseconds )
         {
             Thread.Sleep( milliseconds );
         }
 
-        [CommandsDisplay( Category = "Main", Description = "Send a text message.",
-            InsertText = "SysMessage(\"hello\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
         public static void SysMessage( string text )
         {
             UOC.SystemMessage( text );
         }
 
-        [CommandsDisplay( Category = "Main",
-            Description =
-                "Show object inspector for supplied serial / alias, will prompt for target if no parameter given.",
-            InsertText = "Info(\"self\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
         public static void Info( object obj = null )
         {
             int serial = 0;
@@ -108,7 +100,7 @@ namespace ClassicAssist.Data.Macros.Commands
             t.Start();
         }
 
-        [CommandsDisplay( Category = "Main", Description = "Enable and disable hotkeys.", InsertText = "Hotkeys()" )]
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
         public static void Hotkeys()
         {
             HotkeyManager manager = HotkeyManager.GetInstance();
@@ -119,10 +111,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 manager.Enabled ? 0x3F : 36 );
         }
 
-        [CommandsDisplay( Category = "Main",
-            Description =
-                "Sets war mode status, parameter on, off, or toggle, defaults to toggle if no parameter given.",
-            InsertText = "WarMode(\"on\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
         public static void WarMode( string onOff = "toggle" )
         {
             if ( Engine.Player == null )
@@ -147,15 +136,13 @@ namespace ClassicAssist.Data.Macros.Commands
                 : new WarMode( true ) );
         }
 
-        [CommandsDisplay( Category = "Main", Description = "Show a simple message box with a custom title and body.",
-            InsertText = "MessageBox(\"title\", \"message\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
         public static void MessageBox( string title, string body )
         {
             System.Windows.MessageBox.Show( body, title, MessageBoxButton.OK, MessageBoxImage.Information );
         }
 
-        [CommandsDisplay( Category = "Main", Description = "Play sound by id or system .wav file.",
-            InsertText = "PlaySound(\"Bike Horn.wav\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
         public static void PlaySound( object param )
         {
             switch ( param )
@@ -180,8 +167,7 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = "Main",
-            Description = "Returns true if there is a macro, use in background macros.", InsertText = "if Playing():" )]
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
         public static bool Playing()
         {
             MacroManager manager = MacroManager.GetInstance();
@@ -189,8 +175,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return manager.CurrentMacro != null && manager.CurrentMacro.IsRunning;
         }
 
-        [CommandsDisplay( Category = "Main",
-            Description = "Returns true if the named macro is playing.", InsertText = "if Playing(\"dressstuff\"):" )]
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
         public static bool Playing( string macroName )
         {
             MacroManager manager = MacroManager.GetInstance();

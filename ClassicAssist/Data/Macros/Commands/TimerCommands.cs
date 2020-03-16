@@ -10,8 +10,7 @@ namespace ClassicAssist.Data.Macros.Commands
     {
         private static readonly Dictionary<string, OffsetStopwatch> _timers = new Dictionary<string, OffsetStopwatch>();
 
-        [CommandsDisplay( Category = "Timers", Description = "Create a new named timer.",
-            InsertText = "CreateTimer(\"shmoo\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Timers ) )]
         public static void CreateTimer( string name )
         {
             if ( _timers.ContainsKey( name ) )
@@ -25,15 +24,13 @@ namespace ClassicAssist.Data.Macros.Commands
             _timers.Add( name, timer );
         }
 
-        [CommandsDisplay( Category = "Timers", Description = "Returns true if the timer exists.",
-            InsertText = "if TimerExists(\"shmoo\"):" )]
+        [CommandsDisplay( Category = nameof( Strings.Timers ) )]
         public static bool TimerExists( string name )
         {
             return _timers.ContainsKey( name );
         }
 
-        [CommandsDisplay( Category = "Timers", Description = "Removes the named timer.",
-            InsertText = "RemoveTimer(\"shmoo\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Timers ) )]
         public static void RemoveTimer( string name )
         {
             if ( _timers.TryGetValue( name, out OffsetStopwatch sw ) )
@@ -44,8 +41,7 @@ namespace ClassicAssist.Data.Macros.Commands
             _timers.Remove( name );
         }
 
-        [CommandsDisplay( Category = "Timers", Description = "Set a timer value and create in case it does not exist.",
-            InsertText = "SetTimer(\"shmoo\", 0)" )]
+        [CommandsDisplay( Category = nameof( Strings.Timers ) )]
         public static void SetTimer( string name, int milliseconds = 0 )
         {
             if ( !TimerExists( name ) )
@@ -59,15 +55,13 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = "Timers", Description = "Check for a named timer value.",
-            InsertText = "if Timer(\"shmoo\") > 10000:" )]
+        [CommandsDisplay( Category = nameof( Strings.Timers ) )]
         public static long Timer( string name )
         {
             return !_timers.ContainsKey( name ) ? 0 : _timers[name].ElapsedMilliseconds;
         }
 
-        [CommandsDisplay( Category = "Timers", Description = "Outputs the elapsed timer value as a SystemMessage",
-            InsertText = "TimerMsg(\"shmoo\"" )]
+        [CommandsDisplay( Category = nameof( Strings.Timers ) )]
         public static void TimerMsg( string name )
         {
             if ( !_timers.ContainsKey( name ) )

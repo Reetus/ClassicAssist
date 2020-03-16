@@ -70,7 +70,8 @@ namespace ExportCommands
                             Description = attr.Description,
                             Example = attr.Example,
                             InsertText = attr.InsertText,
-                            Name = memberInfo.ToString()
+                            Signature = memberInfo.ToString(),
+                            Name = memberInfo.Name
                         };
 
                         commands.Add( cmd );
@@ -89,20 +90,21 @@ namespace ExportCommands
 
             foreach ( string category in categories )
             {
-                IEnumerable<Commands> categoryCommands = commands.Where( c => c.Category == category );
+                IEnumerable<Commands> categoryCommands = commands.Where( c => c.Category == category ).OrderBy( c => c.Name );
 
                 markDown += $"## {category}  \n";
 
                 foreach ( Commands command in categoryCommands )
                 {
-                    var example = command.InsertText;
+                    string example = command.InsertText;
 
                     if ( !string.IsNullOrEmpty( command.Example ) )
                     {
                         example = command.Example;
                     }
 
-                    markDown += $"Method Signature:  \n  \n**{command.Name}**  \n  \n";
+                    markDown += $"### {command.Name}  \n  \n";
+                    markDown += $"Method Signature:  \n  \n**{command.Signature}**  \n  \n";
                     markDown += $"Description:  \n  \n**{command.Description}**  \n  \n";
                     markDown += $"Example:  \n  \n```python  \n{example}  \n```  \n  \n";
                 }
@@ -176,6 +178,7 @@ namespace ExportCommands
         public string Description { get; set; }
         public string Example { get; set; }
         public string InsertText { get; set; }
+        public string Signature { get; set; }
         public string Name { get; set; }
     }
 }

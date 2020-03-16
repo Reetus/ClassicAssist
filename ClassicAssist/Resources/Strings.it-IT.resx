@@ -1024,7 +1024,7 @@
     <value>Carico</value>
   </data>
   <data name="Project Homepage" xml:space="preserve">
-    <value>Home page del progetto</value>
+    <value>Homepage</value>
   </data>
   <data name="Last target message:" xml:space="preserve">
     <value>Notifica sul Last Target:</value>
@@ -1093,64 +1093,64 @@
     <value>Sovrascrivi solo password vuota</value>
   </data>
   <data name="Show GIF Capture" xml:space="preserve">
-    <value>Mostra acquisizione GIF</value>
+    <value>Mostra GIF Capture</value>
   </data>
   <data name="Requires Server Support" xml:space="preserve">
-    <value>Richiede il supporto del server</value>
+    <value>Richiede supporto dal Server</value>
   </data>
   <data name="Run in background" xml:space="preserve">
     <value>Esegui in background</value>
   </data>
   <data name="Background macro '{0}' started..." xml:space="preserve">
-    <value>Avviata la macro di sfondo '{0}'...</value>
+    <value>Script in background '{0}' Avviato...</value>
   </data>
   <data name="Background macro '{0}' stopped..." xml:space="preserve">
-    <value>La macro di sfondo '{0}' interrotta...</value>
+    <value>Script in background '{0}' Terminato...</value>
   </data>
   <data name="Cannot PlayMacro from background macro..." xml:space="preserve">
-    <value>Impossibile riprodurreMacro dalla macro in background...</value>
+    <value>Impossibile avviare PlayMacro() dallo Script in background...</value>
   </data>
   <data name="Autostart" xml:space="preserve">
     <value>Autostart</value>
   </data>
   <data name="When checked macro will execute automatically after login." xml:space="preserve">
-    <value>Quando selezionata macro verrà eseguito automaticamente dopo l'accesso.</value>
+    <value>Se spuntata, lo Script verrà eseguito appena entrati in game.</value>
   </data>
   <data name="Stop All Macros" xml:space="preserve">
-    <value>Interrompi tutte le macro</value>
+    <value>Interrompi tutti gli Script</value>
   </data>
   <data name="Stops all running macros including background and autostart macros." xml:space="preserve">
-    <value>Interrompe tutte le macro in esecuzione, incluse le macro in background e di avvio automatico.</value>
+    <value>Interrompe tutti gli Script in esecuzione, inclusi quelli in Background e Autostart.</value>
   </data>
   <data name="Instance" xml:space="preserve">
-    <value>Isolato</value>
+    <value>Istanziato</value>
   </data>
   <data name="Global" xml:space="preserve">
     <value>Globale</value>
   </data>
   <data name="Waiting for ClassicAssist to initialize..." xml:space="preserve">
-    <value>In attesa dell'inizializzazione di ClassicAssist...</value>
+    <value>Avvio di ClassicAssist in corso...</value>
   </data>
   <data name="Masteries" xml:space="preserve">
     <value>Maestrie</value>
   </data>
   <data name="Stun" xml:space="preserve">
-    <value>Stordimento</value>
+    <value>Stordisci</value>
   </data>
   <data name="Disarm" xml:space="preserve">
-    <value>Disarmare</value>
+    <value>Disarma</value>
   </data>
   <data name="Clear Weapon Ability" xml:space="preserve">
-    <value>Cancella capacità arma</value>
+    <value>Disabilita Weapon Ability</value>
   </data>
   <data name="Type" xml:space="preserve">
-    <value>Digitare</value>
+    <value>Type</value>
   </data>
   <data name="Dress Type" xml:space="preserve">
-    <value>Tipo di abito</value>
+    <value>Dress Type</value>
   </data>
   <data name="Invalid type..." xml:space="preserve">
-    <value>Tipo non valido...</value>
+    <value>Type non valido...</value>
   </data>
   <data name="No temporary dress layout configured..." xml:space="preserve">
     <value>Nessun Dress temporaneo configurato...</value>

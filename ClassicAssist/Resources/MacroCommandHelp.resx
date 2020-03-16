@@ -129,4 +129,1012 @@ MoveType(0x170f, "backpack", -1, 1928, 2526, 0)
 #Optional parameters exist for Hue and Amount, to move 10 maximum with the a Hue of 50...
 MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
   </data>
+  <data name="CLEARABILITY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Clear weapon ability.</value>
+  </data>
+  <data name="CLEARABILITY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ClearAbility()</value>
+  </data>
+  <data name="FLY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>(Garoyle) Start flying if not already flying.</value>
+  </data>
+  <data name="FLY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Fly()</value>
+  </data>
+  <data name="FLYING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if mobile is currently flying.</value>
+  </data>
+  <data name="FLYING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Flying("self"):</value>
+  </data>
+  <data name="LAND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>(Garoyle) Stop flying if currently flying.</value>
+  </data>
+  <data name="LAND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Land()</value>
+  </data>
+  <data name="SETABILITY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Set weapon ability, parameter "primary" / "secondary".</value>
+  </data>
+  <data name="SETABILITY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetAbility("primary")</value>
+  </data>
+  <data name="ATTACK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Attack mobile (parameter can be serial or alias).</value>
+  </data>
+  <data name="ATTACK_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Attack("last")</value>
+  </data>
+  <data name="BANDAGESELF_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Applies a bandage to the player.</value>
+  </data>
+  <data name="BANDAGESELF_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>BandageSelf()</value>
+  </data>
+  <data name="CLEARHANDS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Clear hands, "left", "right", or "both"</value>
+  </data>
+  <data name="CLEARHANDS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ClearHands("both")</value>
+  </data>
+  <data name="CLEARUSEONCE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Clear UseOnce list.</value>
+  </data>
+  <data name="CLEARUSEONCE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ClearUseOnce()</value>
+  </data>
+  <data name="CLICKOBJECT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Single click object (parameter can be serial or alias).</value>
+  </data>
+  <data name="CLICKOBJECT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ClickObject("last")</value>
+  </data>
+  <data name="CONTENTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the item count for given container.</value>
+  </data>
+  <data name="CONTENTS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Contents("backpack") &gt; 120:</value>
+  </data>
+  <data name="CONTEXTMENU_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Request a context menu option.</value>
+  </data>
+  <data name="CONTEXTMENU_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ContextMenu(0x00aabbcc, 1)</value>
+  </data>
+  <data name="EQUIPITEM_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Equip a specific item into a given layer. Use object inspector to determine layer value.</value>
+  </data>
+  <data name="EQUIPITEM_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>EquipItem("axe", "TwoHanded")</value>
+  </data>
+  <data name="EQUIPLASTWEAPON_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Send quick switch weapon packet (probably not supported on pre-AoS servers.</value>
+  </data>
+  <data name="EQUIPLASTWEAPON_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>EquipLastWeapon()</value>
+  </data>
+  <data name="EQUIPTYPE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Equip a specific type into a given layer. Use object inspector to determine layer value.</value>
+  </data>
+  <data name="EQUIPTYPE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>EquipType(0xff, "TwoHanded")</value>
+  </data>
+  <data name="FEED_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Feed a given alias or serial with graphic.</value>
+  </data>
+  <data name="FEED_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Feed("mount", 0xff)</value>
+  </data>
+  <data name="FINDLAYER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true and updates found alias if an item exists in the specified layer, option serial/alias for mobile to check.</value>
+  </data>
+  <data name="FINDLAYER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if FindLayer("OneHanded"):</value>
+  </data>
+  <data name="INREGION_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if the region of the target has the specified attribute.</value>
+  </data>
+  <data name="INREGION_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if InRegion("Guarded", "self")</value>
+  </data>
+  <data name="PING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Retrieve an approximated ping with server. -1 on failure.</value>
+  </data>
+  <data name="PING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Ping()</value>
+  </data>
+  <data name="RENAME_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sends rename request.</value>
+  </data>
+  <data name="RENAME_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Rename("mount", "Snoopy"</value>
+  </data>
+  <data name="SHOWNAMES_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Display corpses and/or mobiles names (parameter "mobiles" or "corpses".</value>
+  </data>
+  <data name="SHOWNAMES_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ShowNames("corpses")</value>
+  </data>
+  <data name="TOGGLEMOUNTED_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Unmounts if mounted, or mounts if unmounted, will prompt for mount if no "mount" alias.</value>
+  </data>
+  <data name="TOGGLEMOUNTED_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ToggleMounted()</value>
+  </data>
+  <data name="USEOBJECT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sends use (doubleclick) request for given object (parameter can be serial or alias).</value>
+  </data>
+  <data name="USEOBJECT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>UseObject("mount")</value>
+  </data>
+  <data name="USEONCE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Use a specific item type (graphic) from your backpack, only once</value>
+  </data>
+  <data name="USEONCE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>UseOnce(0xff)</value>
+  </data>
+  <data name="USETYPE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sends use (doubleclick) request for given type, optional parameters of hue and container object (defaults to player backpack) (parameters can be serial or alias).</value>
+  </data>
+  <data name="USETYPE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>UseType(0xff)</value>
+  </data>
+  <data name="WAITFORCONTENTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wait for container contents for given container.</value>
+  </data>
+  <data name="WAITFORCONTENTS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForContents("backpack", 5000)</value>
+  </data>
+  <data name="WAITFORCONTEXT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Request or wait for a context menu option.</value>
+  </data>
+  <data name="WAITFORCONTEXT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForContext(0x00aabbcc, 1, 5000)</value>
+  </data>
+  <data name="COUNTER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the count of the given counter agent.</value>
+  </data>
+  <data name="COUNTER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Counter("bm")</value>
+  </data>
+  <data name="DRESS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Dress all items in the specified dress agent.</value>
+  </data>
+  <data name="DRESS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Dress("Dress-1")</value>
+  </data>
+  <data name="DRESSCONFIG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Adds all equipped items to a temporary list that isn't persisted on client close.</value>
+  </data>
+  <data name="DRESSCONFIG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>DressConfig()</value>
+  </data>
+  <data name="DRESSING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if the Dress agent is currently dressing or undressing.</value>
+  </data>
+  <data name="DRESSING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Dressing():</value>
+  </data>
+  <data name="ORGANIZER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Executes the named Organizer agent.</value>
+  </data>
+  <data name="ORGANIZER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Organize("Organizer-1")</value>
+  </data>
+  <data name="ORGANIZING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if currently running an organizer agent, or false if not.</value>
+  </data>
+  <data name="ORGANIZING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Organizing():</value>
+  </data>
+  <data name="UNDRESS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Undress all items in the specified dress agent.</value>
+  </data>
+  <data name="UNDRESS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Undress("Dress-1")</value>
+  </data>
+  <data name="FINDALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if alias serial can be found on screen, false if not.</value>
+  </data>
+  <data name="FINDALIAS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if FindAlias("mount"):</value>
+  </data>
+  <data name="GETALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Gets the value of the given alias name.</value>
+  </data>
+  <data name="GETALIAS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>GetAlias("mount")</value>
+  </data>
+  <data name="PROMPTALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Prompt with an in-game target cursor to supply value for given alias name.</value>
+  </data>
+  <data name="PROMPTALIAS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>PromptAlias("mount")</value>
+  </data>
+  <data name="SETALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sets the value of the given alias name.</value>
+  </data>
+  <data name="SETALIAS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetAlias("mount", 0x40000001")</value>
+  </data>
+  <data name="SETMACROALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sets the value of the given alias name, alias is valid only in the current macro.</value>
+  </data>
+  <data name="SETMACROALIAS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetMacroAlias("mount", 0x40000001")</value>
+  </data>
+  <data name="UNSETALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Removes the alias name given.</value>
+  </data>
+  <data name="UNSETALIAS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>UnsetAlias("mount")</value>
+  </data>
+  <data name="ADDFRIEND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Adds a mobile to friends list, will display target cursor if no serial/alias supplied.</value>
+  </data>
+  <data name="ADDFRIEND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>AddFriend()</value>
+  </data>
+  <data name="ALLY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if the mobile's notoriety is Ally</value>
+  </data>
+  <data name="ALLY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Criminal("mount"):</value>
+  </data>
+  <data name="BUFFEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Check for a specific buff</value>
+  </data>
+  <data name="BUFFEXISTS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if BuffExists("Blood Oath"):</value>
+  </data>
+  <data name="CLEARIGNORELIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Clears the ignore list.</value>
+  </data>
+  <data name="CLEARIGNORELIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ClearIgnoreList()</value>
+  </data>
+  <data name="COUNTTYPE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Amount comparison of item type inside a container.</value>
+  </data>
+  <data name="COUNTTYPE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>CountType(0xff, "backpack")</value>
+  </data>
+  <data name="COUNTTYPEGROUND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Amount comparison of item or mobile type on the ground.</value>
+  </data>
+  <data name="COUNTTYPEGROUND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if CountGround(0xff, 0, 10) &lt; 1:</value>
+  </data>
+  <data name="CRIMINAL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if the mobile's notoriety is Criminal</value>
+  </data>
+  <data name="CRIMINAL_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Criminal("mount"):</value>
+  </data>
+  <data name="DEAD_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if given mobile is dead, false if not, if parameter is null, then returns the value from the player (parameter can be serial or alias).</value>
+  </data>
+  <data name="DEAD_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Dead("self"):</value>
+  </data>
+  <data name="DEX_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the dexterity of the player</value>
+  </data>
+  <data name="DEX_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Str() &lt; 100:</value>
+  </data>
+  <data name="DIFFHITS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the given mobiles difference between max and current hits, if parameter is null, then returns the value from the player (parameter can be serial or alias).</value>
+  </data>
+  <data name="DIFFHITS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if DiffHits("self") &gt; 50:</value>
+  </data>
+  <data name="DIFFWEIGHT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the difference between max weight and weight.</value>
+  </data>
+  <data name="DIFFWEIGHT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if DiffWeight() &gt; 50:</value>
+  </data>
+  <data name="DIRECTIONTO_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the Direction the entity is in relative to the player.</value>
+  </data>
+  <data name="DIRECTIONTO_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Run(DirectionTo("enemy"))</value>
+  </data>
+  <data name="DISTANCE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the distance to the given entity.</value>
+  </data>
+  <data name="DISTANCE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Distance("mount") &lt; 4:</value>
+  </data>
+  <data name="ENEMY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if the mobile's notoriety is Enemy</value>
+  </data>
+  <data name="ENEMY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Criminal("mount"):</value>
+  </data>
+  <data name="FINDOBJECT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Searches for entity by serial and sets found alias, defaults to ground if no source given.</value>
+  </data>
+  <data name="FINDOBJECT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>FindObject("mount")</value>
+  </data>
+  <data name="FINDTYPE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Searches for entity by graphic ID and sets found alias, defaults to ground if no source given.</value>
+  </data>
+  <data name="FINDTYPE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>FindType(0xff)</value>
+  </data>
+  <data name="FOLLOWERS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the number of current followers as per status bar data.</value>
+  </data>
+  <data name="FOLLOWERS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Followers() &lt; 1:</value>
+  </data>
+  <data name="GOLD_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the gold value as per status bar data.</value>
+  </data>
+  <data name="GOLD_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Gold() &lt; 2000:</value>
+  </data>
+  <data name="GRAPHIC_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns Item ID of given object (parameter can be serial or alias).</value>
+  </data>
+  <data name="GRAPHIC_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Graphic("mount")</value>
+  </data>
+  <data name="GRAY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if the mobile's notoriety is Attackable</value>
+  </data>
+  <data name="GRAY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Criminal("mount"):</value>
+  </data>
+  <data name="HIDDEN_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if given mobile is hidden, false if not, if parameter is null, then returns the value from the player (parameter can be serial or alias).</value>
+  </data>
+  <data name="HIDDEN_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Hidden("self"):</value>
+  </data>
+  <data name="HITS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the given mobiles hitpoints, if parameter is null, then returns the value from the player (parameter can be serial or alias).</value>
+  </data>
+  <data name="HITS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>hits = Hits("self")</value>
+  </data>
+  <data name="HUE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns Hue of given object (parameter can be serial or alias).</value>
+  </data>
+  <data name="HUE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Hue("mount") == 0:</value>
+  </data>
+  <data name="IGNOREOBJECT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ignores the given object from find commands</value>
+  </data>
+  <data name="IGNOREOBJECT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>IgnoreObject("self")</value>
+  </data>
+  <data name="INFRIENDLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if supplied mobile exists in the friends list.</value>
+  </data>
+  <data name="INFRIENDLIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if InFriendsList("last"):</value>
+  </data>
+  <data name="INNOCENT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if the mobile's notoriety is Innocent</value>
+  </data>
+  <data name="INNOCENT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Criminal("mount"):</value>
+  </data>
+  <data name="INPARTY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Return the true if the given serial/alias is in party with you.</value>
+  </data>
+  <data name="INPARTY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if InParty("friend"):</value>
+  </data>
+  <data name="INRANGE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Check for range between your character and another mobile or an item</value>
+  </data>
+  <data name="INRANGE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if InRange("enemy", 10):</value>
+  </data>
+  <data name="INT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the intelligence of the player</value>
+  </data>
+  <data name="INT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Str() &lt; 100:</value>
+  </data>
+  <data name="INVULNERABLE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if the mobile's notoriety is Invulnerable</value>
+  </data>
+  <data name="INVULNERABLE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Criminal("mount"):</value>
+  </data>
+  <data name="LUCK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the luck value as per status bar data.</value>
+  </data>
+  <data name="LUCK_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Luck() &lt; 800:</value>
+  </data>
+  <data name="MANA_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the given mobiles mana, if parameter is null, then returns the value from the player (parameter can be serial or alias).</value>
+  </data>
+  <data name="MANA_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Mana("self") &lt; 25:</value>
+  </data>
+  <data name="MAXFOLLOWERS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the number of max followers as per status bar data.</value>
+  </data>
+  <data name="MAXFOLLOWERS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Followers() == MaxFollowers():</value>
+  </data>
+  <data name="MAXHITS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the given mobiles max hitpoints, if parameter is null, then returns the value from the player (parameter can be serial or alias).</value>
+  </data>
+  <data name="MAXHITS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>hits = MaxHits("self")</value>
+  </data>
+  <data name="MAXMANA_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the given mobiles max mana, if parameter is null, then returns the value from the player (parameter can be serial or alias).</value>
+  </data>
+  <data name="MAXMANA_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>mana = MaxMana("self")</value>
+  </data>
+  <data name="MAXSTAM_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the given mobiles max stamina, if parameter is null, then returns the value from the player (parameter can be serial or alias).</value>
+  </data>
+  <data name="MAXSTAM_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>stam = MaxStam("self")</value>
+  </data>
+  <data name="MAXWEIGHT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the max weight as per status bar data.</value>
+  </data>
+  <data name="MAXWEIGHT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if MaxWeight() &lt; 300:</value>
+  </data>
+  <data name="MOUNTED_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if the specified mobile is mounted.</value>
+  </data>
+  <data name="MOUNTED_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Mounted("self"):</value>
+  </data>
+  <data name="MOVEITEM_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Move item to container (parameters can be serials or aliases).</value>
+  </data>
+  <data name="MOVEITEM_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>MoveItem("source", "destination")</value>
+  </data>
+  <data name="MOVEITEMOFFSET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Move the given serial/alias to the specified x,y,z offset of the player, no amount specified or -1 will move the full stack.</value>
+  </data>
+  <data name="MOVEITEMOFFSET_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>MoveItemOffset("trashitem", 0, 1, 0, -1")</value>
+  </data>
+  <data name="MOVETYPE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Move a type from source to destintion.</value>
+  </data>
+  <data name="MOVETYPE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>MoveType(0xff, "backpack", "bank")</value>
+  </data>
+  <data name="MOVETYPEOFFSET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Move the given type from the specified source container to the specified x,y,z offset of the player, no amount specified or -1 will move the full stack.</value>
+  </data>
+  <data name="MOVETYPEOFFSET_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>MoveTypeOffset(0xf0e, "backpack", 0, 1, 0, -1)</value>
+  </data>
+  <data name="MURDERER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if the mobile's notoriety is Murderer</value>
+  </data>
+  <data name="MURDERER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Criminal("mount"):</value>
+  </data>
+  <data name="NAME_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Return the name of the given mobile.</value>
+  </data>
+  <data name="NAME_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Name("self") == "Shmoo":</value>
+  </data>
+  <data name="PARALYZED_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if the specified mobile is frozen.</value>
+  </data>
+  <data name="PARALYZED_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Paralyzed("self"):</value>
+  </data>
+  <data name="POISONED_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if the specified mobile is poisoned.</value>
+  </data>
+  <data name="POISONED_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Poisoned("self"):</value>
+  </data>
+  <data name="REMOVEFRIEND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Removes a mobile from the friends list, will display target cursor if no serial/alias supplied.</value>
+  </data>
+  <data name="REMOVEFRIEND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>RemoveFriend()</value>
+  </data>
+  <data name="SPECIALMOVEEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Check for a specific special move</value>
+  </data>
+  <data name="SPECIALMOVEEXISTS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if SpecialMoveExists("Death Strike"):</value>
+  </data>
+  <data name="STAM_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the given mobiles stamina, if parameter is null, then returns the value from the player (parameter can be serial or alias).</value>
+  </data>
+  <data name="STAM_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Stam("self") &lt; 25:</value>
+  </data>
+  <data name="STR_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the strength of the player</value>
+  </data>
+  <data name="STR_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Str() &lt; 100:</value>
+  </data>
+  <data name="TITHINGPOINTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the current players' tithing points.</value>
+  </data>
+  <data name="TITHINGPOINTS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if TithingPoints() &lt; 1000:</value>
+  </data>
+  <data name="WAR_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Checks whether a mobile is in war mode.</value>
+  </data>
+  <data name="WAR_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if War("self"):</value>
+  </data>
+  <data name="WEIGHT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the current weight as as per status bar data.</value>
+  </data>
+  <data name="WEIGHT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Weight() &gt; 300:</value>
+  </data>
+  <data name="X_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns X coordinate of given object (parameter can be serial or alias).</value>
+  </data>
+  <data name="X_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>x = X("self")</value>
+  </data>
+  <data name="Y_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns Y coordinate of given object (parameter can be serial or alias).</value>
+  </data>
+  <data name="Y_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>y = Y("self")</value>
+  </data>
+  <data name="YELLOWHITS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if the specified mobile is yellowhits.</value>
+  </data>
+  <data name="YELLOWHITS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if YellowHits("self"):</value>
+  </data>
+  <data name="Z_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns Z coordinate of given object (parameter can be serial or alias).</value>
+  </data>
+  <data name="Z_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>y = Y("self")</value>
+  </data>
+  <data name="CLOSEGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Close a specified gump serial</value>
+  </data>
+  <data name="CLOSEGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>CloseGump(0x454ddef)</value>
+  </data>
+  <data name="GUMPEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Checks if a gump id exists or not.</value>
+  </data>
+  <data name="GUMPEXISTS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if GumpExists(0xff):</value>
+  </data>
+  <data name="INGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Check for a text in gump.</value>
+  </data>
+  <data name="INGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if InGump(0xf00f, "lethal darts"):</value>
+  </data>
+  <data name="REPLYGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sends a button reply to server gump, parameters are gumpID and buttonID.</value>
+  </data>
+  <data name="REPLYGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ReplyGump(0xff, 0)</value>
+  </data>
+  <data name="WAITFORGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pauses until incoming gump packet is received, optional paramters of gump ID and timeout</value>
+  </data>
+  <data name="WAITFORGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForGump(0xff, 5000)</value>
+  </data>
+  <data name="CLEARJOURNAL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Clear all journal texts.</value>
+  </data>
+  <data name="CLEARJOURNAL_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ClearJournal()</value>
+  </data>
+  <data name="INJOURNAL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Check for a text in journal, optional source name.</value>
+  </data>
+  <data name="INJOURNAL_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if InJournal("town guards", "system"):</value>
+  </data>
+  <data name="WAITFORJOURNAL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wait the given timeout for the journal text to appear.</value>
+  </data>
+  <data name="WAITFORJOURNAL_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if WaitForJournal("town guards", 5000, "system"):</value>
+  </data>
+  <data name="CLEARLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Clear a list by name.</value>
+  </data>
+  <data name="CLEARLIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ClearList("list")</value>
+  </data>
+  <data name="CREATELIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Create list with given name, if list already exists, it is overwritten.</value>
+  </data>
+  <data name="CREATELIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>CreateList("list")</value>
+  </data>
+  <data name="GETLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns array of all entries in the list, for use with for loop etc.</value>
+  </data>
+  <data name="GETLIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>GetList("list")</value>
+  </data>
+  <data name="INLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Checks whether a list contains a given element.</value>
+  </data>
+  <data name="INLIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if InList("shmoo", 1):</value>
+  </data>
+  <data name="LIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the number of entries in the list.</value>
+  </data>
+  <data name="LIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if List("list") &lt; 5:</value>
+  </data>
+  <data name="LISTEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if list exist, or false if not.</value>
+  </data>
+  <data name="LISTEXISTS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if ListExists("list"):</value>
+  </data>
+  <data name="PUSHLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pushes a value to the end of the list, will create list if it doesn't exist.</value>
+  </data>
+  <data name="PUSHLIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>PushList("list", 1)</value>
+  </data>
+  <data name="REMOVELIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Removes the list with the given name.</value>
+  </data>
+  <data name="REMOVELIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>RemoveList("list")</value>
+  </data>
+  <data name="PLAYMACRO_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Plays the given macro name.</value>
+  </data>
+  <data name="PLAYMACRO_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>PlayMacro("beep")</value>
+  </data>
+  <data name="STOP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Stops the current macro.</value>
+  </data>
+  <data name="STOP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Stop()</value>
+  </data>
+  <data name="HOTKEYS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Enable and disable hotkeys.</value>
+  </data>
+  <data name="HOTKEYS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Hotkeys()</value>
+  </data>
+  <data name="INFO_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Show object inspector for supplied serial / alias, will prompt for target if no parameter given.</value>
+  </data>
+  <data name="INFO_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Info("self")</value>
+  </data>
+  <data name="INVOKEVIRTUE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Use a virtue by name.</value>
+  </data>
+  <data name="INVOKEVIRTUE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>InvokeVirtue("Honor")</value>
+  </data>
+  <data name="MESSAGEBOX_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Show a simple message box with a custom title and body.</value>
+  </data>
+  <data name="MESSAGEBOX_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>MessageBox("title", "message")</value>
+  </data>
+  <data name="PAUSE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pauses execution for the given amount in milliseconds.</value>
+  </data>
+  <data name="PAUSE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Pause(1000)</value>
+  </data>
+  <data name="PLAYING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if there is a macro, use in background macros.</value>
+  </data>
+  <data name="PLAYING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Playing():</value>
+  </data>
+  <data name="PLAYSOUND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Play sound by id or system .wav file.</value>
+  </data>
+  <data name="PLAYSOUND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>PlaySound("Bike Horn.wav")</value>
+  </data>
+  <data name="RESYNC_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sends Resync request to server.</value>
+  </data>
+  <data name="RESYNC_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Resync()</value>
+  </data>
+  <data name="SETQUIETMODE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Set quiet mode True/False, True reduces the number of messages macro commands emit.</value>
+  </data>
+  <data name="SETQUIETMODE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetQuietMode(True)</value>
+  </data>
+  <data name="SYSMESSAGE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Send a text message.</value>
+  </data>
+  <data name="SYSMESSAGE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SysMessage("hello")</value>
+  </data>
+  <data name="WARMODE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sets war mode status, parameter on, off, or toggle, defaults to toggle if no parameter given.</value>
+  </data>
+  <data name="WARMODE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WarMode("on")</value>
+  </data>
+  <data name="ALLYMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sends given message to alliance chat.</value>
+  </data>
+  <data name="ALLYMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>AllyMsg("alert")</value>
+  </data>
+  <data name="CANCELPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Cancels the current prompt.</value>
+  </data>
+  <data name="CANCELPROMPT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>CancelPrompt()</value>
+  </data>
+  <data name="EMOTEMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Emotes the given message</value>
+  </data>
+  <data name="EMOTEMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>EmoteMsg("hi")</value>
+  </data>
+  <data name="GUILDMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sends given message to guild chat.</value>
+  </data>
+  <data name="GUILDMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>GuildMsg("alert")</value>
+  </data>
+  <data name="HEADMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Displays overhead message above given mobile / item.</value>
+  </data>
+  <data name="HEADMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>HeadMsg("hi", "backpack")</value>
+  </data>
+  <data name="MSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Speaks the given message, Optional hue</value>
+  </data>
+  <data name="MSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Msg("hi")</value>
+  </data>
+  <data name="PARTYMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sends given message to party chat.</value>
+  </data>
+  <data name="PARTYMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>PartyMsg("alert")</value>
+  </data>
+  <data name="PROMPTMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sends the specified message as a prompt response</value>
+  </data>
+  <data name="PROMPTMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>PromptMsg("hello")</value>
+  </data>
+  <data name="WAITFORPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wait the specified timeout for a prompt packet to be received</value>
+  </data>
+  <data name="WAITFORPROMPT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForPrompt(5000)</value>
+  </data>
+  <data name="WHISPERMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Whispers the given message</value>
+  </data>
+  <data name="WHISPERMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WhisperMsg("hi")</value>
+  </data>
+  <data name="YELLMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Yells the given message</value>
+  </data>
+  <data name="YELLMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>YellMsg("hi")</value>
+  </data>
+  <data name="RUN_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Run in the given direction.</value>
+  </data>
+  <data name="RUN_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Run("east")</value>
+  </data>
+  <data name="SETFORCEWALK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Set force walk, True or False</value>
+  </data>
+  <data name="SETFORCEWALK_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetForceWalk(True)</value>
+  </data>
+  <data name="TOGGLEFORCEWALK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Toggle Force Walk</value>
+  </data>
+  <data name="TOGGLEFORCEWALK_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ToggleForceWalk()</value>
+  </data>
+  <data name="TURN_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Turn in the given direction.</value>
+  </data>
+  <data name="TURN_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Turn("east")</value>
+  </data>
+  <data name="WALK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Walk in the given direction.</value>
+  </data>
+  <data name="WALK_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Walk("east")</value>
+  </data>
+  <data name="PROPERTY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if the given text appears in the items item properties.</value>
+  </data>
+  <data name="PROPERTY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Property("item", "Defense Chance Increase")</value>
+  </data>
+  <data name="PROPERTYVALUE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the argument value of the given property name. Optional argument index.</value>
+  </data>
+  <data name="PROPERTYVALUE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>val = PropertyValue[int]("backpack", "Contents")</value>
+  </data>
+  <data name="WAITFORPROPERTIES_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wait for item properties to be received for specified item.</value>
+  </data>
+  <data name="WAITFORPROPERTIES_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForProperties("backpack")</value>
+  </data>
+  <data name="SETSKILL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sets the lock state of the given skill, up, down or locked.</value>
+  </data>
+  <data name="SETSKILL_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetSkill("hiding", "locked")</value>
+  </data>
+  <data name="SKILL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the base value of the given skill name.</value>
+  </data>
+  <data name="SKILL_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Skill("hiding") &lt; 100:</value>
+  </data>
+  <data name="SKILLSTATE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the lock status of the given skill, up, down, or locked.</value>
+  </data>
+  <data name="SKILLSTATE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if SkillState("hiding') == "locked":</value>
+  </data>
+  <data name="USESKILL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Invokes the given skill name.</value>
+  </data>
+  <data name="USESKILL_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>UseSkill("Hiding")</value>
+  </data>
+  <data name="CAST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Cast the given named spell and automatically target given object.</value>
+  </data>
+  <data name="CAST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Cast("Recall", "runebook")</value>
+  </data>
+  <data name="CANCELTARGET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Cancel an existing cursor/target.</value>
+  </data>
+  <data name="CANCELTARGET_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>CancelTarget()</value>
+  </data>
+  <data name="CLEARTARGETQUEUE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Clears the target queue when queue last target/target self is enabled.</value>
+  </data>
+  <data name="CLEARTARGETQUEUE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ClearTargetQueue()</value>
+  </data>
+  <data name="GETENEMY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Get mobile and set enemy alias.</value>
+  </data>
+  <data name="GETENEMY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>GetEnemy(["Murderer"])</value>
+  </data>
+  <data name="GETFRIEND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Get mobile and set friend alias.</value>
+  </data>
+  <data name="GETFRIEND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>GetFriend(["Murderer"])</value>
+  </data>
+  <data name="GETFRIENDLISTONLY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Get friend that only exists in the friends list, parameter distance 'Closest'/'Nearest'/'Next'</value>
+  </data>
+  <data name="GETFRIENDLISTONLY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>GetFriendListOnly(["Closest"])</value>
+  </data>
+  <data name="TARGET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Targets the given object (parameter can be serial or alias).</value>
+  </data>
+  <data name="TARGET_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Target("self")</value>
+  </data>
+  <data name="TARGETEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if a target cursor is displayed and the notoriety matches the supplied value, defaults to 'Any', options are 'Any', 'Beneficial', 'Harmful' or 'Neutral'</value>
+  </data>
+  <data name="TARGETEXISTS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if TargetExists("Harmful"):</value>
+  </data>
+  <data name="TARGETGROUND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Target the specified type on the ground, optional parameters for hue and distance.</value>
+  </data>
+  <data name="TARGETGROUND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TargetGround(0x190, -1, 10)</value>
+  </data>
+  <data name="TARGETTILERELATIVE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Target tile the given distance relative to the specified alias/serial, optional boolean for reverse mode.</value>
+  </data>
+  <data name="TARGETTILERELATIVE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TargetTileRelative("self", 1, False)</value>
+  </data>
+  <data name="TARGETTYPE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Target specified type in player backpack, optional parameters for hue and search level.</value>
+  </data>
+  <data name="TARGETTYPE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>UseType(0xff, 0, 3)</value>
+  </data>
+  <data name="WAITFORTARGET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wait for target packet from server, optional timeout parameter (default 5000 milliseconds).</value>
+  </data>
+  <data name="WAITFORTARGET_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForTarget(5000)</value>
+  </data>
+  <data name="WAITINGFORTARGET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true whenever the core is internally waiting for a server target</value>
+  </data>
+  <data name="WAITINGFORTARGET_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if WaitingForTarget():</value>
+  </data>
+  <data name="CREATETIMER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Create a new named timer.</value>
+  </data>
+  <data name="CREATETIMER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>CreateTimer("shmoo")</value>
+  </data>
+  <data name="REMOVETIMER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Removes the named timer.</value>
+  </data>
+  <data name="REMOVETIMER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>RemoveTimer("shmoo")</value>
+  </data>
+  <data name="SETTIMER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Set a timer value and create in case it does not exist.</value>
+  </data>
+  <data name="SETTIMER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetTimer("shmoo", 0)</value>
+  </data>
+  <data name="TIMER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Check for a named timer value.</value>
+  </data>
+  <data name="TIMER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Timer("shmoo") &gt; 10000:</value>
+  </data>
+  <data name="TIMEREXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if the timer exists.</value>
+  </data>
+  <data name="TIMEREXISTS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if TimerExists("shmoo"):</value>
+  </data>
+  <data name="TIMERMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Outputs the elapsed timer value as a SystemMessage</value>
+  </data>
+  <data name="TIMERMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TimerMsg("shmoo"</value>
+  </data>
 </root>

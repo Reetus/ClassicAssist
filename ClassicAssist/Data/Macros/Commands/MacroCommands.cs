@@ -7,8 +7,7 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class MacroCommands
     {
-        [CommandsDisplay( Category = "Macros", Description = "Plays the given macro name.",
-            InsertText = "PlayMacro(\"beep\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Macros ) )]
         public static void PlayMacro( string name )
         {
             MacroManager manager = MacroManager.GetInstance();
@@ -32,7 +31,7 @@ namespace ClassicAssist.Data.Macros.Commands
             Task.Run( () => macro.Action( macro ) );
         }
 
-        [CommandsDisplay( Category = "Macros", Description = "Stops the current macro.", InsertText = "Stop()" )]
+        [CommandsDisplay( Category = nameof( Strings.Macros ) )]
         public static void Stop()
         {
             MacroManager.GetInstance().StopAll();

@@ -9,9 +9,7 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class RegionCommands
     {
-        [CommandsDisplay( Category = "Actions",
-            Description = "Returns true if the region of the target has the specified attribute.",
-            InsertText = "if InRegion(\"Guarded\", \"self\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Actions ) )]
         public static bool InRegion( string attribute, object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );

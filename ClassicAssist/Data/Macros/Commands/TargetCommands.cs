@@ -23,25 +23,20 @@ namespace ClassicAssist.Data.Macros.Commands
             Neutral
         }
 
-        [CommandsDisplay( Category = "Target", Description = "Cancel an existing cursor/target.",
-            InsertText = "CancelTarget()" )]
+        [CommandsDisplay( Category = nameof( Strings.Target ) )]
         public static void CancelTarget()
         {
             Engine.SendPacketToServer( new Target( TargetTypeEnum.Object, -1, TargetFlags.Cancel, -1, -1, -1,
                 0, 0, true ) );
         }
 
-        [CommandsDisplay( Category = "Target",
-            Description = "Wait for target packet from server, optional timeout parameter (default 5000 milliseconds).",
-            InsertText = "WaitForTarget(5000)" )]
+        [CommandsDisplay( Category = nameof( Strings.Target ) )]
         public static bool WaitForTarget( int timeout = 5000 )
         {
             return UOC.WaitForTarget( timeout );
         }
 
-        [CommandsDisplay( Category = "Target",
-            Description = "Targets the given object (parameter can be serial or alias).",
-            InsertText = "Target(\"self\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Target ) )]
         public static void Target( object obj, bool checkRange = false, bool useQueue = false )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -97,10 +92,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 true ) );
         }
 
-        [CommandsDisplay( Category = "Target",
-            Description =
-                "Target tile the given distance relative to the specified alias/serial, optional boolean for reverse mode.",
-            InsertText = "TargetTileRelative(\"self\", 1, False)" )]
+        [CommandsDisplay( Category = nameof( Strings.Target ) )]
         public static void TargetTileRelative( object obj, int distance, bool reverse = false )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -180,8 +172,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 destinationY, entity.Z, 0, true ) );
         }
 
-        [CommandsDisplay( Category = "Target", Description = "Get mobile and set enemy alias.",
-            InsertText = "GetEnemy([\"Murderer\"])" )]
+        [CommandsDisplay( Category = nameof( Strings.Target ) )]
         public static bool GetEnemy( IEnumerable<string> notos, string bodyType = "Any", string distance = "Next",
             string infliction = "Any" )
         {
@@ -213,10 +204,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return TargetManager.GetInstance().GetEnemy( notoFlags, bt, td, TargetFriendType.None, ti );
         }
 
-        [CommandsDisplay( Category = "Target",
-            Description =
-                "Get friend that only exists in the friends list, parameter distance 'Closest'/'Nearest'/'Next'",
-            InsertText = "GetFriendListOnly([\"Closest\"])" )]
+        [CommandsDisplay( Category = nameof( Strings.Target ) )]
         public static bool GetFriendListOnly( string distance = "Next", string targetInfliction = "Any",
             string bodyType = "Any" )
         {
@@ -239,8 +227,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 .GetFriend( TargetNotoriety.Any, bt, td, TargetFriendType.Only, ti );
         }
 
-        [CommandsDisplay( Category = "Target", Description = "Get mobile and set friend alias.",
-            InsertText = "GetFriend([\"Murderer\"])" )]
+        [CommandsDisplay( Category = nameof( Strings.Target ) )]
         public static bool GetFriend( IEnumerable<string> notos, string bodyType = "Any", string distance = "Next",
             string infliction = "Any" )
         {
@@ -272,10 +259,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return TargetManager.GetInstance().GetFriend( notoFlags, bt, td, TargetFriendType.Include, ti );
         }
 
-        [CommandsDisplay( Category = "Target",
-            Description =
-                "Returns true if a target cursor is displayed and the notoriety matches the supplied value, defaults to 'Any', options are 'Any', 'Beneficial', 'Harmful' or 'Neutral'",
-            InsertText = "if TargetExists(\"Harmful\"):" )]
+        [CommandsDisplay( Category = nameof( Strings.Target ) )]
         public static bool TargetExists( string targetExistsType = "Any" )
         {
             if ( !Enum.TryParse( targetExistsType, out TargetExistsType enumValue ) )
@@ -306,26 +290,20 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = "Target",
-            Description = "Returns true whenever the core is internally waiting for a server target",
-            InsertText = "if WaitingForTarget():" )]
+        [CommandsDisplay( Category = nameof( Strings.Target ) )]
         public static bool WaitingForTarget()
         {
             return Engine.WaitingForTarget;
         }
 
-        [CommandsDisplay( Category = "Target",
-            Description = "Clears the target queue when queue last target/target self is enabled.",
-            InsertText = "ClearTargetQueue()" )]
+        [CommandsDisplay( Category = nameof( Strings.Target ) )]
         public static void ClearTargetQueue()
         {
             Engine.LastTargetQueue?.Clear();
             UOC.SystemMessage( Strings.Target_queue_cleared___ );
         }
 
-        [CommandsDisplay( Category = "Target",
-            Description = "Target specified type in player backpack, optional parameters for hue and search level.",
-            InsertText = "UseType(0xff, 0, 3)" )]
+        [CommandsDisplay( Category = nameof( Strings.Target ) )]
         public static void TargetType( object obj, int hue = -1, int range = -1 )
         {
             int id = AliasCommands.ResolveSerial( obj );
@@ -355,9 +333,7 @@ namespace ClassicAssist.Data.Macros.Commands
             Target( item.Serial, false, Options.CurrentOptions.QueueLastTarget );
         }
 
-        [CommandsDisplay( Category = "Target",
-            Description = "Target the specified type on the ground, optional parameters for hue and distance.",
-            InsertText = "TargetGround(0x190, -1, 10)" )]
+        [CommandsDisplay( Category = nameof( Strings.Target ) )]
         public static void TargetGround( object obj, int hue = -1, int range = -1 )
         {
             int id = AliasCommands.ResolveSerial( obj );

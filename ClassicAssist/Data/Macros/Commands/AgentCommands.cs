@@ -8,8 +8,7 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class AgentCommands
     {
-        [CommandsDisplay( Category = "Agents", Description = "Dress all items in the specified dress agent.",
-            InsertText = "Dress(\"Dress-1\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Agents ) )]
         public static void Dress( string name = null )
         {
             DressManager manager = DressManager.GetInstance();
@@ -40,8 +39,7 @@ namespace ClassicAssist.Data.Macros.Commands
             dressAgentEntry.Action( dressAgentEntry );
         }
 
-        [CommandsDisplay( Category = "Agents", Description = "Undress all items in the specified dress agent.",
-            InsertText = "Undress(\"Dress-1\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Agents ) )]
         public static void Undress( string name )
         {
             DressManager manager = DressManager.GetInstance();
@@ -57,9 +55,7 @@ namespace ClassicAssist.Data.Macros.Commands
             dressAgentEntry.Undress().Wait();
         }
 
-        [CommandsDisplay( Category = "Agents",
-            Description = "Returns true if the Dress agent is currently dressing or undressing.",
-            InsertText = "if Dressing():" )]
+        [CommandsDisplay( Category = nameof( Strings.Agents ) )]
         public static bool Dressing()
         {
             DressManager manager = DressManager.GetInstance();
@@ -67,9 +63,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return manager.IsDressing;
         }
 
-        [CommandsDisplay( Category = "Agents",
-            Description = "Adds all equipped items to a temporary list that isn't persisted on client close.",
-            InsertText = "DressConfig()" )]
+        [CommandsDisplay( Category = nameof( Strings.Agents ) )]
         public static void DressConfig()
         {
             DressManager manager = DressManager.GetInstance();
@@ -78,8 +72,7 @@ namespace ClassicAssist.Data.Macros.Commands
             manager.ImportItems( manager.TemporaryDress );
         }
 
-        [CommandsDisplay( Category = "Agents", Description = "Returns the count of the given counter agent.",
-            InsertText = "Counter(\"bm\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Agents ) )]
         public static int Counter( string name )
         {
             CountersManager manager = CountersManager.GetInstance();

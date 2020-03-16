@@ -59,8 +59,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return serial;
         }
 
-        [CommandsDisplay( Category = "Aliases", Description = "Sets the value of the given alias name.",
-            InsertText = "SetAlias(\"mount\", 0x40000001\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Aliases ) )]
         public static void SetAlias( string aliasName, object obj )
         {
             int value = ResolveSerial( obj );
@@ -75,9 +74,7 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = "Aliases",
-            Description = "Sets the value of the given alias name, alias is valid only in the current macro.",
-            InsertText = "SetMacroAlias(\"mount\", 0x40000001\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Aliases ) )]
         public static void SetMacroAlias( string aliasName, object obj )
         {
             int value = ResolveSerial( obj );
@@ -100,8 +97,7 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = "Aliases", Description = "Removes the alias name given.",
-            InsertText = "UnsetAlias(\"mount\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Aliases ) )]
         public static void UnsetAlias( string aliasName )
         {
             MacroEntry macro = MacroManager.GetInstance().GetCurrentMacro();
@@ -120,8 +116,7 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = "Aliases", Description = "Gets the value of the given alias name.",
-            InsertText = "GetAlias(\"mount\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Aliases ) )]
         public static int GetAlias( string aliasName )
         {
             MacroEntry macro = MacroManager.GetInstance().GetCurrentMacro();
@@ -147,18 +142,14 @@ namespace ClassicAssist.Data.Macros.Commands
             return _aliases;
         }
 
-        [CommandsDisplay( Category = "Aliases",
-            Description = "Prompt with an in-game target cursor to supply value for given alias name.",
-            InsertText = "PromptAlias(\"mount\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Aliases ) )]
         public static void PromptAlias( string aliasName )
         {
             int serial = UOC.GetTargeSerialAsync( Strings.Target_object___ ).Result;
             SetAlias( aliasName.ToLower(), serial );
         }
 
-        [CommandsDisplay( Category = "Aliases",
-            Description = "Returns true if alias serial can be found on screen, false if not.",
-            InsertText = "if FindAlias(\"mount\"):" )]
+        [CommandsDisplay( Category = nameof( Strings.Aliases ) )]
         public static bool FindAlias( string aliasName )
         {
             int serial;

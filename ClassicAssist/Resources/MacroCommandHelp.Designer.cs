@@ -61,6 +61,1635 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adds a mobile to friends list, will display target cursor if no serial/alias supplied..
+        /// </summary>
+        public static string ADDFRIEND_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("ADDFRIEND_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AddFriend().
+        /// </summary>
+        public static string ADDFRIEND_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("ADDFRIEND_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if the mobile&apos;s notoriety is Ally.
+        /// </summary>
+        public static string ALLY_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("ALLY_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Criminal(&quot;mount&quot;):.
+        /// </summary>
+        public static string ALLY_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("ALLY_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sends given message to alliance chat..
+        /// </summary>
+        public static string ALLYMSG_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("ALLYMSG_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AllyMsg(&quot;alert&quot;).
+        /// </summary>
+        public static string ALLYMSG_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("ALLYMSG_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attack mobile (parameter can be serial or alias)..
+        /// </summary>
+        public static string ATTACK_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("ATTACK_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attack(&quot;last&quot;).
+        /// </summary>
+        public static string ATTACK_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("ATTACK_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Applies a bandage to the player..
+        /// </summary>
+        public static string BANDAGESELF_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("BANDAGESELF_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BandageSelf().
+        /// </summary>
+        public static string BANDAGESELF_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("BANDAGESELF_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for a specific buff.
+        /// </summary>
+        public static string BUFFEXISTS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("BUFFEXISTS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if BuffExists(&quot;Blood Oath&quot;):.
+        /// </summary>
+        public static string BUFFEXISTS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("BUFFEXISTS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancels the current prompt..
+        /// </summary>
+        public static string CANCELPROMPT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CANCELPROMPT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CancelPrompt().
+        /// </summary>
+        public static string CANCELPROMPT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CANCELPROMPT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel an existing cursor/target..
+        /// </summary>
+        public static string CANCELTARGET_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CANCELTARGET_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CancelTarget().
+        /// </summary>
+        public static string CANCELTARGET_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CANCELTARGET_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cast the given named spell and automatically target given object..
+        /// </summary>
+        public static string CAST_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CAST_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cast(&quot;Recall&quot;, &quot;runebook&quot;).
+        /// </summary>
+        public static string CAST_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CAST_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear weapon ability..
+        /// </summary>
+        public static string CLEARABILITY_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CLEARABILITY_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ClearAbility().
+        /// </summary>
+        public static string CLEARABILITY_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CLEARABILITY_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear hands, &quot;left&quot;, &quot;right&quot;, or &quot;both&quot;.
+        /// </summary>
+        public static string CLEARHANDS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CLEARHANDS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ClearHands(&quot;both&quot;).
+        /// </summary>
+        public static string CLEARHANDS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CLEARHANDS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clears the ignore list..
+        /// </summary>
+        public static string CLEARIGNORELIST_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CLEARIGNORELIST_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ClearIgnoreList().
+        /// </summary>
+        public static string CLEARIGNORELIST_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CLEARIGNORELIST_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear all journal texts..
+        /// </summary>
+        public static string CLEARJOURNAL_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CLEARJOURNAL_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ClearJournal().
+        /// </summary>
+        public static string CLEARJOURNAL_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CLEARJOURNAL_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear a list by name..
+        /// </summary>
+        public static string CLEARLIST_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CLEARLIST_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ClearList(&quot;list&quot;).
+        /// </summary>
+        public static string CLEARLIST_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CLEARLIST_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clears the target queue when queue last target/target self is enabled..
+        /// </summary>
+        public static string CLEARTARGETQUEUE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CLEARTARGETQUEUE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ClearTargetQueue().
+        /// </summary>
+        public static string CLEARTARGETQUEUE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CLEARTARGETQUEUE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear UseOnce list..
+        /// </summary>
+        public static string CLEARUSEONCE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CLEARUSEONCE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ClearUseOnce().
+        /// </summary>
+        public static string CLEARUSEONCE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CLEARUSEONCE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Single click object (parameter can be serial or alias)..
+        /// </summary>
+        public static string CLICKOBJECT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CLICKOBJECT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ClickObject(&quot;last&quot;).
+        /// </summary>
+        public static string CLICKOBJECT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CLICKOBJECT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close a specified gump serial.
+        /// </summary>
+        public static string CLOSEGUMP_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CLOSEGUMP_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CloseGump(0x454ddef).
+        /// </summary>
+        public static string CLOSEGUMP_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CLOSEGUMP_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the item count for given container..
+        /// </summary>
+        public static string CONTENTS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CONTENTS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Contents(&quot;backpack&quot;) &gt; 120:.
+        /// </summary>
+        public static string CONTENTS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CONTENTS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request a context menu option..
+        /// </summary>
+        public static string CONTEXTMENU_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CONTEXTMENU_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ContextMenu(0x00aabbcc, 1).
+        /// </summary>
+        public static string CONTEXTMENU_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CONTEXTMENU_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the count of the given counter agent..
+        /// </summary>
+        public static string COUNTER_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("COUNTER_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Counter(&quot;bm&quot;).
+        /// </summary>
+        public static string COUNTER_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("COUNTER_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amount comparison of item type inside a container..
+        /// </summary>
+        public static string COUNTTYPE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("COUNTTYPE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CountType(0xff, &quot;backpack&quot;).
+        /// </summary>
+        public static string COUNTTYPE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("COUNTTYPE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amount comparison of item or mobile type on the ground..
+        /// </summary>
+        public static string COUNTTYPEGROUND_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("COUNTTYPEGROUND_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if CountGround(0xff, 0, 10) &lt; 1:.
+        /// </summary>
+        public static string COUNTTYPEGROUND_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("COUNTTYPEGROUND_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create list with given name, if list already exists, it is overwritten..
+        /// </summary>
+        public static string CREATELIST_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CREATELIST_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CreateList(&quot;list&quot;).
+        /// </summary>
+        public static string CREATELIST_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CREATELIST_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a new named timer..
+        /// </summary>
+        public static string CREATETIMER_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CREATETIMER_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CreateTimer(&quot;shmoo&quot;).
+        /// </summary>
+        public static string CREATETIMER_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CREATETIMER_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if the mobile&apos;s notoriety is Criminal.
+        /// </summary>
+        public static string CRIMINAL_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CRIMINAL_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Criminal(&quot;mount&quot;):.
+        /// </summary>
+        public static string CRIMINAL_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CRIMINAL_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if given mobile is dead, false if not, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
+        /// </summary>
+        public static string DEAD_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("DEAD_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Dead(&quot;self&quot;):.
+        /// </summary>
+        public static string DEAD_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("DEAD_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the dexterity of the player.
+        /// </summary>
+        public static string DEX_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("DEX_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Str() &lt; 100:.
+        /// </summary>
+        public static string DEX_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("DEX_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the given mobiles difference between max and current hits, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
+        /// </summary>
+        public static string DIFFHITS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("DIFFHITS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if DiffHits(&quot;self&quot;) &gt; 50:.
+        /// </summary>
+        public static string DIFFHITS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("DIFFHITS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the difference between max weight and weight..
+        /// </summary>
+        public static string DIFFWEIGHT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("DIFFWEIGHT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if DiffWeight() &gt; 50:.
+        /// </summary>
+        public static string DIFFWEIGHT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("DIFFWEIGHT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the Direction the entity is in relative to the player..
+        /// </summary>
+        public static string DIRECTIONTO_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("DIRECTIONTO_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run(DirectionTo(&quot;enemy&quot;)).
+        /// </summary>
+        public static string DIRECTIONTO_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("DIRECTIONTO_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the distance to the given entity..
+        /// </summary>
+        public static string DISTANCE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("DISTANCE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Distance(&quot;mount&quot;) &lt; 4:.
+        /// </summary>
+        public static string DISTANCE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("DISTANCE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dress all items in the specified dress agent..
+        /// </summary>
+        public static string DRESS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("DRESS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dress(&quot;Dress-1&quot;).
+        /// </summary>
+        public static string DRESS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("DRESS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adds all equipped items to a temporary list that isn&apos;t persisted on client close..
+        /// </summary>
+        public static string DRESSCONFIG_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("DRESSCONFIG_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DressConfig().
+        /// </summary>
+        public static string DRESSCONFIG_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("DRESSCONFIG_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if the Dress agent is currently dressing or undressing..
+        /// </summary>
+        public static string DRESSING_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("DRESSING_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Dressing():.
+        /// </summary>
+        public static string DRESSING_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("DRESSING_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Emotes the given message.
+        /// </summary>
+        public static string EMOTEMSG_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("EMOTEMSG_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EmoteMsg(&quot;hi&quot;).
+        /// </summary>
+        public static string EMOTEMSG_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("EMOTEMSG_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if the mobile&apos;s notoriety is Enemy.
+        /// </summary>
+        public static string ENEMY_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("ENEMY_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Criminal(&quot;mount&quot;):.
+        /// </summary>
+        public static string ENEMY_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("ENEMY_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Equip a specific item into a given layer. Use object inspector to determine layer value..
+        /// </summary>
+        public static string EQUIPITEM_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("EQUIPITEM_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EquipItem(&quot;axe&quot;, &quot;TwoHanded&quot;).
+        /// </summary>
+        public static string EQUIPITEM_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("EQUIPITEM_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send quick switch weapon packet (probably not supported on pre-AoS servers..
+        /// </summary>
+        public static string EQUIPLASTWEAPON_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("EQUIPLASTWEAPON_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EquipLastWeapon().
+        /// </summary>
+        public static string EQUIPLASTWEAPON_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("EQUIPLASTWEAPON_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Equip a specific type into a given layer. Use object inspector to determine layer value..
+        /// </summary>
+        public static string EQUIPTYPE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("EQUIPTYPE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EquipType(0xff, &quot;TwoHanded&quot;).
+        /// </summary>
+        public static string EQUIPTYPE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("EQUIPTYPE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feed a given alias or serial with graphic..
+        /// </summary>
+        public static string FEED_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("FEED_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feed(&quot;mount&quot;, 0xff).
+        /// </summary>
+        public static string FEED_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("FEED_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if alias serial can be found on screen, false if not..
+        /// </summary>
+        public static string FINDALIAS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("FINDALIAS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if FindAlias(&quot;mount&quot;):.
+        /// </summary>
+        public static string FINDALIAS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("FINDALIAS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true and updates found alias if an item exists in the specified layer, option serial/alias for mobile to check..
+        /// </summary>
+        public static string FINDLAYER_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("FINDLAYER_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if FindLayer(&quot;OneHanded&quot;):.
+        /// </summary>
+        public static string FINDLAYER_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("FINDLAYER_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Searches for entity by serial and sets found alias, defaults to ground if no source given..
+        /// </summary>
+        public static string FINDOBJECT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("FINDOBJECT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FindObject(&quot;mount&quot;).
+        /// </summary>
+        public static string FINDOBJECT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("FINDOBJECT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Searches for entity by graphic ID and sets found alias, defaults to ground if no source given..
+        /// </summary>
+        public static string FINDTYPE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("FINDTYPE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FindType(0xff).
+        /// </summary>
+        public static string FINDTYPE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("FINDTYPE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (Garoyle) Start flying if not already flying..
+        /// </summary>
+        public static string FLY_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("FLY_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fly().
+        /// </summary>
+        public static string FLY_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("FLY_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if mobile is currently flying..
+        /// </summary>
+        public static string FLYING_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("FLYING_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Flying(&quot;self&quot;):.
+        /// </summary>
+        public static string FLYING_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("FLYING_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the number of current followers as per status bar data..
+        /// </summary>
+        public static string FOLLOWERS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("FOLLOWERS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Followers() &lt; 1:.
+        /// </summary>
+        public static string FOLLOWERS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("FOLLOWERS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gets the value of the given alias name..
+        /// </summary>
+        public static string GETALIAS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("GETALIAS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GetAlias(&quot;mount&quot;).
+        /// </summary>
+        public static string GETALIAS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("GETALIAS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get mobile and set enemy alias..
+        /// </summary>
+        public static string GETENEMY_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("GETENEMY_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GetEnemy([&quot;Murderer&quot;]).
+        /// </summary>
+        public static string GETENEMY_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("GETENEMY_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get mobile and set friend alias..
+        /// </summary>
+        public static string GETFRIEND_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("GETFRIEND_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GetFriend([&quot;Murderer&quot;]).
+        /// </summary>
+        public static string GETFRIEND_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("GETFRIEND_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get friend that only exists in the friends list, parameter distance &apos;Closest&apos;/&apos;Nearest&apos;/&apos;Next&apos;.
+        /// </summary>
+        public static string GETFRIENDLISTONLY_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("GETFRIENDLISTONLY_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GetFriendListOnly([&quot;Closest&quot;]).
+        /// </summary>
+        public static string GETFRIENDLISTONLY_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("GETFRIENDLISTONLY_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns array of all entries in the list, for use with for loop etc..
+        /// </summary>
+        public static string GETLIST_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("GETLIST_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GetList(&quot;list&quot;).
+        /// </summary>
+        public static string GETLIST_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("GETLIST_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the gold value as per status bar data..
+        /// </summary>
+        public static string GOLD_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("GOLD_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Gold() &lt; 2000:.
+        /// </summary>
+        public static string GOLD_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("GOLD_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns Item ID of given object (parameter can be serial or alias)..
+        /// </summary>
+        public static string GRAPHIC_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("GRAPHIC_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Graphic(&quot;mount&quot;).
+        /// </summary>
+        public static string GRAPHIC_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("GRAPHIC_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if the mobile&apos;s notoriety is Attackable.
+        /// </summary>
+        public static string GRAY_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("GRAY_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Criminal(&quot;mount&quot;):.
+        /// </summary>
+        public static string GRAY_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("GRAY_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sends given message to guild chat..
+        /// </summary>
+        public static string GUILDMSG_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("GUILDMSG_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GuildMsg(&quot;alert&quot;).
+        /// </summary>
+        public static string GUILDMSG_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("GUILDMSG_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checks if a gump id exists or not..
+        /// </summary>
+        public static string GUMPEXISTS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("GUMPEXISTS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if GumpExists(0xff):.
+        /// </summary>
+        public static string GUMPEXISTS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("GUMPEXISTS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Displays overhead message above given mobile / item..
+        /// </summary>
+        public static string HEADMSG_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("HEADMSG_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HeadMsg(&quot;hi&quot;, &quot;backpack&quot;).
+        /// </summary>
+        public static string HEADMSG_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("HEADMSG_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if given mobile is hidden, false if not, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
+        /// </summary>
+        public static string HIDDEN_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("HIDDEN_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Hidden(&quot;self&quot;):.
+        /// </summary>
+        public static string HIDDEN_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("HIDDEN_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the given mobiles hitpoints, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
+        /// </summary>
+        public static string HITS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("HITS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to hits = Hits(&quot;self&quot;).
+        /// </summary>
+        public static string HITS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("HITS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable and disable hotkeys..
+        /// </summary>
+        public static string HOTKEYS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("HOTKEYS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hotkeys().
+        /// </summary>
+        public static string HOTKEYS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("HOTKEYS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns Hue of given object (parameter can be serial or alias)..
+        /// </summary>
+        public static string HUE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("HUE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Hue(&quot;mount&quot;) == 0:.
+        /// </summary>
+        public static string HUE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("HUE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignores the given object from find commands.
+        /// </summary>
+        public static string IGNOREOBJECT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("IGNOREOBJECT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IgnoreObject(&quot;self&quot;).
+        /// </summary>
+        public static string IGNOREOBJECT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("IGNOREOBJECT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show object inspector for supplied serial / alias, will prompt for target if no parameter given..
+        /// </summary>
+        public static string INFO_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("INFO_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info(&quot;self&quot;).
+        /// </summary>
+        public static string INFO_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("INFO_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if supplied mobile exists in the friends list..
+        /// </summary>
+        public static string INFRIENDLIST_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("INFRIENDLIST_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if InFriendsList(&quot;last&quot;):.
+        /// </summary>
+        public static string INFRIENDLIST_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("INFRIENDLIST_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for a text in gump..
+        /// </summary>
+        public static string INGUMP_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("INGUMP_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if InGump(0xf00f, &quot;lethal darts&quot;):.
+        /// </summary>
+        public static string INGUMP_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("INGUMP_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for a text in journal, optional source name..
+        /// </summary>
+        public static string INJOURNAL_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("INJOURNAL_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if InJournal(&quot;town guards&quot;, &quot;system&quot;):.
+        /// </summary>
+        public static string INJOURNAL_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("INJOURNAL_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checks whether a list contains a given element..
+        /// </summary>
+        public static string INLIST_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("INLIST_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if InList(&quot;shmoo&quot;, 1):.
+        /// </summary>
+        public static string INLIST_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("INLIST_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if the mobile&apos;s notoriety is Innocent.
+        /// </summary>
+        public static string INNOCENT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("INNOCENT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Criminal(&quot;mount&quot;):.
+        /// </summary>
+        public static string INNOCENT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("INNOCENT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return the true if the given serial/alias is in party with you..
+        /// </summary>
+        public static string INPARTY_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("INPARTY_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if InParty(&quot;friend&quot;):.
+        /// </summary>
+        public static string INPARTY_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("INPARTY_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for range between your character and another mobile or an item.
+        /// </summary>
+        public static string INRANGE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("INRANGE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if InRange(&quot;enemy&quot;, 10):.
+        /// </summary>
+        public static string INRANGE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("INRANGE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if the region of the target has the specified attribute..
+        /// </summary>
+        public static string INREGION_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("INREGION_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if InRegion(&quot;Guarded&quot;, &quot;self&quot;).
+        /// </summary>
+        public static string INREGION_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("INREGION_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the intelligence of the player.
+        /// </summary>
+        public static string INT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("INT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Str() &lt; 100:.
+        /// </summary>
+        public static string INT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("INT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use a virtue by name..
+        /// </summary>
+        public static string INVOKEVIRTUE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("INVOKEVIRTUE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to InvokeVirtue(&quot;Honor&quot;).
+        /// </summary>
+        public static string INVOKEVIRTUE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("INVOKEVIRTUE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if the mobile&apos;s notoriety is Invulnerable.
+        /// </summary>
+        public static string INVULNERABLE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("INVULNERABLE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Criminal(&quot;mount&quot;):.
+        /// </summary>
+        public static string INVULNERABLE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("INVULNERABLE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (Garoyle) Stop flying if currently flying..
+        /// </summary>
+        public static string LAND_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("LAND_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Land().
+        /// </summary>
+        public static string LAND_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("LAND_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the number of entries in the list..
+        /// </summary>
+        public static string LIST_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("LIST_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if List(&quot;list&quot;) &lt; 5:.
+        /// </summary>
+        public static string LIST_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("LIST_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if list exist, or false if not..
+        /// </summary>
+        public static string LISTEXISTS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("LISTEXISTS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if ListExists(&quot;list&quot;):.
+        /// </summary>
+        public static string LISTEXISTS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("LISTEXISTS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the luck value as per status bar data..
+        /// </summary>
+        public static string LUCK_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("LUCK_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Luck() &lt; 800:.
+        /// </summary>
+        public static string LUCK_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("LUCK_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the given mobiles mana, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
+        /// </summary>
+        public static string MANA_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MANA_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Mana(&quot;self&quot;) &lt; 25:.
+        /// </summary>
+        public static string MANA_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MANA_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the number of max followers as per status bar data..
+        /// </summary>
+        public static string MAXFOLLOWERS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MAXFOLLOWERS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Followers() == MaxFollowers():.
+        /// </summary>
+        public static string MAXFOLLOWERS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MAXFOLLOWERS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the given mobiles max hitpoints, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
+        /// </summary>
+        public static string MAXHITS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MAXHITS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to hits = MaxHits(&quot;self&quot;).
+        /// </summary>
+        public static string MAXHITS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MAXHITS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the given mobiles max mana, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
+        /// </summary>
+        public static string MAXMANA_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MAXMANA_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mana = MaxMana(&quot;self&quot;).
+        /// </summary>
+        public static string MAXMANA_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MAXMANA_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the given mobiles max stamina, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
+        /// </summary>
+        public static string MAXSTAM_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MAXSTAM_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stam = MaxStam(&quot;self&quot;).
+        /// </summary>
+        public static string MAXSTAM_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MAXSTAM_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the max weight as per status bar data..
+        /// </summary>
+        public static string MAXWEIGHT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MAXWEIGHT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if MaxWeight() &lt; 300:.
+        /// </summary>
+        public static string MAXWEIGHT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MAXWEIGHT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show a simple message box with a custom title and body..
+        /// </summary>
+        public static string MESSAGEBOX_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MESSAGEBOX_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MessageBox(&quot;title&quot;, &quot;message&quot;).
+        /// </summary>
+        public static string MESSAGEBOX_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MESSAGEBOX_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if the specified mobile is mounted..
+        /// </summary>
+        public static string MOUNTED_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MOUNTED_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Mounted(&quot;self&quot;):.
+        /// </summary>
+        public static string MOUNTED_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MOUNTED_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move item to container (parameters can be serials or aliases)..
+        /// </summary>
+        public static string MOVEITEM_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MOVEITEM_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MoveItem(&quot;source&quot;, &quot;destination&quot;).
+        /// </summary>
+        public static string MOVEITEM_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MOVEITEM_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move the given serial/alias to the specified x,y,z offset of the player, no amount specified or -1 will move the full stack..
+        /// </summary>
+        public static string MOVEITEMOFFSET_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MOVEITEMOFFSET_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MoveItemOffset(&quot;trashitem&quot;, 0, 1, 0, -1&quot;).
+        /// </summary>
+        public static string MOVEITEMOFFSET_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MOVEITEMOFFSET_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move a type from source to destintion..
+        /// </summary>
+        public static string MOVETYPE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MOVETYPE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to #To move a type to another container...
         ///
         ///MoveType(0x170f, &quot;backpack&quot;, &quot;bank&quot;)
@@ -75,6 +1704,1401 @@ namespace ClassicAssist.Resources {
         public static string MOVETYPE_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("MOVETYPE_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MoveType(0xff, &quot;backpack&quot;, &quot;bank&quot;).
+        /// </summary>
+        public static string MOVETYPE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MOVETYPE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move the given type from the specified source container to the specified x,y,z offset of the player, no amount specified or -1 will move the full stack..
+        /// </summary>
+        public static string MOVETYPEOFFSET_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MOVETYPEOFFSET_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MoveTypeOffset(0xf0e, &quot;backpack&quot;, 0, 1, 0, -1).
+        /// </summary>
+        public static string MOVETYPEOFFSET_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MOVETYPEOFFSET_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speaks the given message, Optional hue.
+        /// </summary>
+        public static string MSG_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MSG_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Msg(&quot;hi&quot;).
+        /// </summary>
+        public static string MSG_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MSG_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if the mobile&apos;s notoriety is Murderer.
+        /// </summary>
+        public static string MURDERER_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MURDERER_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Criminal(&quot;mount&quot;):.
+        /// </summary>
+        public static string MURDERER_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MURDERER_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return the name of the given mobile..
+        /// </summary>
+        public static string NAME_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("NAME_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Name(&quot;self&quot;) == &quot;Shmoo&quot;:.
+        /// </summary>
+        public static string NAME_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("NAME_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Executes the named Organizer agent..
+        /// </summary>
+        public static string ORGANIZER_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("ORGANIZER_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Organize(&quot;Organizer-1&quot;).
+        /// </summary>
+        public static string ORGANIZER_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("ORGANIZER_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if currently running an organizer agent, or false if not..
+        /// </summary>
+        public static string ORGANIZING_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("ORGANIZING_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Organizing():.
+        /// </summary>
+        public static string ORGANIZING_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("ORGANIZING_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if the specified mobile is frozen..
+        /// </summary>
+        public static string PARALYZED_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("PARALYZED_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Paralyzed(&quot;self&quot;):.
+        /// </summary>
+        public static string PARALYZED_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("PARALYZED_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sends given message to party chat..
+        /// </summary>
+        public static string PARTYMSG_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("PARTYMSG_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PartyMsg(&quot;alert&quot;).
+        /// </summary>
+        public static string PARTYMSG_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("PARTYMSG_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pauses execution for the given amount in milliseconds..
+        /// </summary>
+        public static string PAUSE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("PAUSE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pause(1000).
+        /// </summary>
+        public static string PAUSE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("PAUSE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retrieve an approximated ping with server. -1 on failure..
+        /// </summary>
+        public static string PING_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("PING_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ping().
+        /// </summary>
+        public static string PING_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("PING_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if there is a macro, use in background macros..
+        /// </summary>
+        public static string PLAYING_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("PLAYING_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Playing():.
+        /// </summary>
+        public static string PLAYING_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("PLAYING_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plays the given macro name..
+        /// </summary>
+        public static string PLAYMACRO_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("PLAYMACRO_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PlayMacro(&quot;beep&quot;).
+        /// </summary>
+        public static string PLAYMACRO_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("PLAYMACRO_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play sound by id or system .wav file..
+        /// </summary>
+        public static string PLAYSOUND_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("PLAYSOUND_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PlaySound(&quot;Bike Horn.wav&quot;).
+        /// </summary>
+        public static string PLAYSOUND_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("PLAYSOUND_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if the specified mobile is poisoned..
+        /// </summary>
+        public static string POISONED_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("POISONED_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Poisoned(&quot;self&quot;):.
+        /// </summary>
+        public static string POISONED_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("POISONED_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prompt with an in-game target cursor to supply value for given alias name..
+        /// </summary>
+        public static string PROMPTALIAS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("PROMPTALIAS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PromptAlias(&quot;mount&quot;).
+        /// </summary>
+        public static string PROMPTALIAS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("PROMPTALIAS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sends the specified message as a prompt response.
+        /// </summary>
+        public static string PROMPTMSG_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("PROMPTMSG_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PromptMsg(&quot;hello&quot;).
+        /// </summary>
+        public static string PROMPTMSG_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("PROMPTMSG_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if the given text appears in the items item properties..
+        /// </summary>
+        public static string PROPERTY_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("PROPERTY_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Property(&quot;item&quot;, &quot;Defense Chance Increase&quot;).
+        /// </summary>
+        public static string PROPERTY_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("PROPERTY_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the argument value of the given property name. Optional argument index..
+        /// </summary>
+        public static string PROPERTYVALUE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("PROPERTYVALUE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to val = PropertyValue[int](&quot;backpack&quot;, &quot;Contents&quot;).
+        /// </summary>
+        public static string PROPERTYVALUE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("PROPERTYVALUE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pushes a value to the end of the list, will create list if it doesn&apos;t exist..
+        /// </summary>
+        public static string PUSHLIST_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("PUSHLIST_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PushList(&quot;list&quot;, 1).
+        /// </summary>
+        public static string PUSHLIST_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("PUSHLIST_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removes a mobile from the friends list, will display target cursor if no serial/alias supplied..
+        /// </summary>
+        public static string REMOVEFRIEND_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("REMOVEFRIEND_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RemoveFriend().
+        /// </summary>
+        public static string REMOVEFRIEND_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("REMOVEFRIEND_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removes the list with the given name..
+        /// </summary>
+        public static string REMOVELIST_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("REMOVELIST_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RemoveList(&quot;list&quot;).
+        /// </summary>
+        public static string REMOVELIST_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("REMOVELIST_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removes the named timer..
+        /// </summary>
+        public static string REMOVETIMER_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("REMOVETIMER_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RemoveTimer(&quot;shmoo&quot;).
+        /// </summary>
+        public static string REMOVETIMER_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("REMOVETIMER_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sends rename request..
+        /// </summary>
+        public static string RENAME_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("RENAME_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename(&quot;mount&quot;, &quot;Snoopy&quot;.
+        /// </summary>
+        public static string RENAME_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("RENAME_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sends a button reply to server gump, parameters are gumpID and buttonID..
+        /// </summary>
+        public static string REPLYGUMP_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("REPLYGUMP_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ReplyGump(0xff, 0).
+        /// </summary>
+        public static string REPLYGUMP_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("REPLYGUMP_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sends Resync request to server..
+        /// </summary>
+        public static string RESYNC_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("RESYNC_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resync().
+        /// </summary>
+        public static string RESYNC_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("RESYNC_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run in the given direction..
+        /// </summary>
+        public static string RUN_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("RUN_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run(&quot;east&quot;).
+        /// </summary>
+        public static string RUN_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("RUN_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set weapon ability, parameter &quot;primary&quot; / &quot;secondary&quot;..
+        /// </summary>
+        public static string SETABILITY_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETABILITY_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetAbility(&quot;primary&quot;).
+        /// </summary>
+        public static string SETABILITY_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETABILITY_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets the value of the given alias name..
+        /// </summary>
+        public static string SETALIAS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETALIAS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetAlias(&quot;mount&quot;, 0x40000001&quot;).
+        /// </summary>
+        public static string SETALIAS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETALIAS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set force walk, True or False.
+        /// </summary>
+        public static string SETFORCEWALK_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETFORCEWALK_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetForceWalk(True).
+        /// </summary>
+        public static string SETFORCEWALK_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETFORCEWALK_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets the value of the given alias name, alias is valid only in the current macro..
+        /// </summary>
+        public static string SETMACROALIAS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETMACROALIAS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetMacroAlias(&quot;mount&quot;, 0x40000001&quot;).
+        /// </summary>
+        public static string SETMACROALIAS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETMACROALIAS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set quiet mode True/False, True reduces the number of messages macro commands emit..
+        /// </summary>
+        public static string SETQUIETMODE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETQUIETMODE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetQuietMode(True).
+        /// </summary>
+        public static string SETQUIETMODE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETQUIETMODE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets the lock state of the given skill, up, down or locked..
+        /// </summary>
+        public static string SETSKILL_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETSKILL_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetSkill(&quot;hiding&quot;, &quot;locked&quot;).
+        /// </summary>
+        public static string SETSKILL_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETSKILL_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set a timer value and create in case it does not exist..
+        /// </summary>
+        public static string SETTIMER_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETTIMER_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetTimer(&quot;shmoo&quot;, 0).
+        /// </summary>
+        public static string SETTIMER_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETTIMER_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display corpses and/or mobiles names (parameter &quot;mobiles&quot; or &quot;corpses&quot;..
+        /// </summary>
+        public static string SHOWNAMES_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SHOWNAMES_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ShowNames(&quot;corpses&quot;).
+        /// </summary>
+        public static string SHOWNAMES_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SHOWNAMES_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the base value of the given skill name..
+        /// </summary>
+        public static string SKILL_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SKILL_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Skill(&quot;hiding&quot;) &lt; 100:.
+        /// </summary>
+        public static string SKILL_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SKILL_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the lock status of the given skill, up, down, or locked..
+        /// </summary>
+        public static string SKILLSTATE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SKILLSTATE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if SkillState(&quot;hiding&apos;) == &quot;locked&quot;:.
+        /// </summary>
+        public static string SKILLSTATE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SKILLSTATE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for a specific special move.
+        /// </summary>
+        public static string SPECIALMOVEEXISTS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SPECIALMOVEEXISTS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if SpecialMoveExists(&quot;Death Strike&quot;):.
+        /// </summary>
+        public static string SPECIALMOVEEXISTS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SPECIALMOVEEXISTS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the given mobiles stamina, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
+        /// </summary>
+        public static string STAM_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("STAM_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Stam(&quot;self&quot;) &lt; 25:.
+        /// </summary>
+        public static string STAM_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("STAM_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stops the current macro..
+        /// </summary>
+        public static string STOP_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("STOP_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop().
+        /// </summary>
+        public static string STOP_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("STOP_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the strength of the player.
+        /// </summary>
+        public static string STR_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("STR_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Str() &lt; 100:.
+        /// </summary>
+        public static string STR_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("STR_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send a text message..
+        /// </summary>
+        public static string SYSMESSAGE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SYSMESSAGE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SysMessage(&quot;hello&quot;).
+        /// </summary>
+        public static string SYSMESSAGE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SYSMESSAGE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Targets the given object (parameter can be serial or alias)..
+        /// </summary>
+        public static string TARGET_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TARGET_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target(&quot;self&quot;).
+        /// </summary>
+        public static string TARGET_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TARGET_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if a target cursor is displayed and the notoriety matches the supplied value, defaults to &apos;Any&apos;, options are &apos;Any&apos;, &apos;Beneficial&apos;, &apos;Harmful&apos; or &apos;Neutral&apos;.
+        /// </summary>
+        public static string TARGETEXISTS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TARGETEXISTS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if TargetExists(&quot;Harmful&quot;):.
+        /// </summary>
+        public static string TARGETEXISTS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TARGETEXISTS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target the specified type on the ground, optional parameters for hue and distance..
+        /// </summary>
+        public static string TARGETGROUND_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TARGETGROUND_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TargetGround(0x190, -1, 10).
+        /// </summary>
+        public static string TARGETGROUND_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TARGETGROUND_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target tile the given distance relative to the specified alias/serial, optional boolean for reverse mode..
+        /// </summary>
+        public static string TARGETTILERELATIVE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TARGETTILERELATIVE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TargetTileRelative(&quot;self&quot;, 1, False).
+        /// </summary>
+        public static string TARGETTILERELATIVE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TARGETTILERELATIVE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target specified type in player backpack, optional parameters for hue and search level..
+        /// </summary>
+        public static string TARGETTYPE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TARGETTYPE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UseType(0xff, 0, 3).
+        /// </summary>
+        public static string TARGETTYPE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TARGETTYPE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for a named timer value..
+        /// </summary>
+        public static string TIMER_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TIMER_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Timer(&quot;shmoo&quot;) &gt; 10000:.
+        /// </summary>
+        public static string TIMER_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TIMER_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if the timer exists..
+        /// </summary>
+        public static string TIMEREXISTS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TIMEREXISTS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if TimerExists(&quot;shmoo&quot;):.
+        /// </summary>
+        public static string TIMEREXISTS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TIMEREXISTS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outputs the elapsed timer value as a SystemMessage.
+        /// </summary>
+        public static string TIMERMSG_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TIMERMSG_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TimerMsg(&quot;shmoo&quot;.
+        /// </summary>
+        public static string TIMERMSG_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TIMERMSG_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the current players&apos; tithing points..
+        /// </summary>
+        public static string TITHINGPOINTS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TITHINGPOINTS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if TithingPoints() &lt; 1000:.
+        /// </summary>
+        public static string TITHINGPOINTS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TITHINGPOINTS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle Force Walk.
+        /// </summary>
+        public static string TOGGLEFORCEWALK_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TOGGLEFORCEWALK_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ToggleForceWalk().
+        /// </summary>
+        public static string TOGGLEFORCEWALK_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TOGGLEFORCEWALK_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unmounts if mounted, or mounts if unmounted, will prompt for mount if no &quot;mount&quot; alias..
+        /// </summary>
+        public static string TOGGLEMOUNTED_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TOGGLEMOUNTED_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ToggleMounted().
+        /// </summary>
+        public static string TOGGLEMOUNTED_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TOGGLEMOUNTED_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn in the given direction..
+        /// </summary>
+        public static string TURN_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TURN_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn(&quot;east&quot;).
+        /// </summary>
+        public static string TURN_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TURN_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Undress all items in the specified dress agent..
+        /// </summary>
+        public static string UNDRESS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("UNDRESS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Undress(&quot;Dress-1&quot;).
+        /// </summary>
+        public static string UNDRESS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("UNDRESS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removes the alias name given..
+        /// </summary>
+        public static string UNSETALIAS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("UNSETALIAS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UnsetAlias(&quot;mount&quot;).
+        /// </summary>
+        public static string UNSETALIAS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("UNSETALIAS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sends use (doubleclick) request for given object (parameter can be serial or alias)..
+        /// </summary>
+        public static string USEOBJECT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("USEOBJECT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UseObject(&quot;mount&quot;).
+        /// </summary>
+        public static string USEOBJECT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("USEOBJECT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use a specific item type (graphic) from your backpack, only once.
+        /// </summary>
+        public static string USEONCE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("USEONCE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UseOnce(0xff).
+        /// </summary>
+        public static string USEONCE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("USEONCE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invokes the given skill name..
+        /// </summary>
+        public static string USESKILL_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("USESKILL_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UseSkill(&quot;Hiding&quot;).
+        /// </summary>
+        public static string USESKILL_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("USESKILL_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sends use (doubleclick) request for given type, optional parameters of hue and container object (defaults to player backpack) (parameters can be serial or alias)..
+        /// </summary>
+        public static string USETYPE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("USETYPE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UseType(0xff).
+        /// </summary>
+        public static string USETYPE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("USETYPE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait for container contents for given container..
+        /// </summary>
+        public static string WAITFORCONTENTS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WAITFORCONTENTS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WaitForContents(&quot;backpack&quot;, 5000).
+        /// </summary>
+        public static string WAITFORCONTENTS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WAITFORCONTENTS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request or wait for a context menu option..
+        /// </summary>
+        public static string WAITFORCONTEXT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WAITFORCONTEXT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WaitForContext(0x00aabbcc, 1, 5000).
+        /// </summary>
+        public static string WAITFORCONTEXT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WAITFORCONTEXT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pauses until incoming gump packet is received, optional paramters of gump ID and timeout.
+        /// </summary>
+        public static string WAITFORGUMP_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WAITFORGUMP_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WaitForGump(0xff, 5000).
+        /// </summary>
+        public static string WAITFORGUMP_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WAITFORGUMP_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait the given timeout for the journal text to appear..
+        /// </summary>
+        public static string WAITFORJOURNAL_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WAITFORJOURNAL_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if WaitForJournal(&quot;town guards&quot;, 5000, &quot;system&quot;):.
+        /// </summary>
+        public static string WAITFORJOURNAL_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WAITFORJOURNAL_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait the specified timeout for a prompt packet to be received.
+        /// </summary>
+        public static string WAITFORPROMPT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WAITFORPROMPT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WaitForPrompt(5000).
+        /// </summary>
+        public static string WAITFORPROMPT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WAITFORPROMPT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait for item properties to be received for specified item..
+        /// </summary>
+        public static string WAITFORPROPERTIES_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WAITFORPROPERTIES_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WaitForProperties(&quot;backpack&quot;).
+        /// </summary>
+        public static string WAITFORPROPERTIES_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WAITFORPROPERTIES_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait for target packet from server, optional timeout parameter (default 5000 milliseconds)..
+        /// </summary>
+        public static string WAITFORTARGET_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WAITFORTARGET_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WaitForTarget(5000).
+        /// </summary>
+        public static string WAITFORTARGET_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WAITFORTARGET_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true whenever the core is internally waiting for a server target.
+        /// </summary>
+        public static string WAITINGFORTARGET_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WAITINGFORTARGET_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if WaitingForTarget():.
+        /// </summary>
+        public static string WAITINGFORTARGET_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WAITINGFORTARGET_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Walk in the given direction..
+        /// </summary>
+        public static string WALK_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WALK_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Walk(&quot;east&quot;).
+        /// </summary>
+        public static string WALK_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WALK_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checks whether a mobile is in war mode..
+        /// </summary>
+        public static string WAR_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WAR_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if War(&quot;self&quot;):.
+        /// </summary>
+        public static string WAR_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WAR_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets war mode status, parameter on, off, or toggle, defaults to toggle if no parameter given..
+        /// </summary>
+        public static string WARMODE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WARMODE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WarMode(&quot;on&quot;).
+        /// </summary>
+        public static string WARMODE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WARMODE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the current weight as as per status bar data..
+        /// </summary>
+        public static string WEIGHT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WEIGHT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Weight() &gt; 300:.
+        /// </summary>
+        public static string WEIGHT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WEIGHT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whispers the given message.
+        /// </summary>
+        public static string WHISPERMSG_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WHISPERMSG_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WhisperMsg(&quot;hi&quot;).
+        /// </summary>
+        public static string WHISPERMSG_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WHISPERMSG_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns X coordinate of given object (parameter can be serial or alias)..
+        /// </summary>
+        public static string X_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("X_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to x = X(&quot;self&quot;).
+        /// </summary>
+        public static string X_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("X_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns Y coordinate of given object (parameter can be serial or alias)..
+        /// </summary>
+        public static string Y_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("Y_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to y = Y(&quot;self&quot;).
+        /// </summary>
+        public static string Y_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("Y_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yells the given message.
+        /// </summary>
+        public static string YELLMSG_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("YELLMSG_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to YellMsg(&quot;hi&quot;).
+        /// </summary>
+        public static string YELLMSG_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("YELLMSG_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns true if the specified mobile is yellowhits..
+        /// </summary>
+        public static string YELLOWHITS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("YELLOWHITS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if YellowHits(&quot;self&quot;):.
+        /// </summary>
+        public static string YELLOWHITS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("YELLOWHITS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns Z coordinate of given object (parameter can be serial or alias)..
+        /// </summary>
+        public static string Z_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("Z_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to y = Y(&quot;self&quot;).
+        /// </summary>
+        public static string Z_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("Z_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
     }

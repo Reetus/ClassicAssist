@@ -15,8 +15,7 @@ namespace ClassicAssist.Data.Macros.Commands
     {
         internal static List<int> IgnoreList { get; set; } = new List<int>();
 
-        [CommandsDisplay( Category = "Entity", Description = "Ignores the given object from find commands",
-            InsertText = "IgnoreObject(\"self\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static void IgnoreObject( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -34,16 +33,13 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Clears the ignore list.",
-            InsertText = "ClearIgnoreList()" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static void ClearIgnoreList()
         {
             IgnoreList.Clear();
         }
 
-        [CommandsDisplay( Category = "Actions",
-            Description = "Sends use (doubleclick) request for given object (parameter can be serial or alias).",
-            InsertText = "UseObject(\"mount\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Actions ) )]
         public static void UseObject( object obj, bool skipQueue = false )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -59,10 +55,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 skipQueue ? QueuePriority.Immediate : QueuePriority.Low );
         }
 
-        [CommandsDisplay( Category = "Actions",
-            Description =
-                "Sends use (doubleclick) request for given type, optional parameters of hue and container object (defaults to player backpack) (parameters can be serial or alias).",
-            InsertText = "UseType(0xff)" )]
+        [CommandsDisplay( Category = nameof( Strings.Actions ) )]
         public static void UseType( object type, int hue = -1, object container = null )
         {
             int serial = AliasCommands.ResolveSerial( type );
@@ -102,8 +95,7 @@ namespace ClassicAssist.Data.Macros.Commands
             Engine.SendPacketToServer( new UseObject( useItem.Serial ) );
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Amount comparison of item type inside a container.",
-            InsertText = "CountType(0xff, \"backpack\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int CountType( int graphic, object source = null, int hue = -1 )
         {
             if ( source == null )
@@ -128,9 +120,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return matches?.Sum( i => i.Count ) ?? 0;
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description = "Amount comparison of item or mobile type on the ground.",
-            InsertText = "if CountGround(0xff, 0, 10) < 1:" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int CountTypeGround( int graphic, int hue = -1, int range = -1 )
         {
             IEnumerable<Item> matches = Engine.Items.Where( i =>
@@ -153,10 +143,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return count;
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description =
-                "Searches for entity by graphic ID and sets found alias, defaults to ground if no source given.",
-            InsertText = "FindType(0xff)\r\nUseObject(\"found\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static bool FindType( int graphic, int range = -1, object findLocation = null, int hue = -1 )
         {
             int owner = 0;
@@ -205,10 +192,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return true;
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description =
-                "Searches for entity by serial and sets found alias, defaults to ground if no source given.",
-            InsertText = "FindObject(\"mount\")\r\nUseObject(\"found\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static bool FindObject( object obj, int range = -1, object findLocation = null )
         {
             int owner = 0;
@@ -265,9 +249,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return true;
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description = "Move item to container (parameters can be serials or aliases).",
-            InsertText = "MoveItem(\"source\", \"destination\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static void MoveItem( object item, object destination, int amount = -1, int x = -1, int y = -1 )
         {
             int itemSerial = AliasCommands.ResolveSerial( item );
@@ -303,10 +285,7 @@ namespace ClassicAssist.Data.Macros.Commands
             ActionPacketQueue.EnqueueDragDrop( itemSerial, amount, containerSerial, QueuePriority.Low, true, x, y );
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description =
-                "Move the given serial/alias to the specified x,y,z offset of the player, no amount specified or -1 will move the full stack.",
-            InsertText = "MoveItemOffset(\"trashitem\", 0, 1, 0, -1\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static void MoveItemOffset( object obj, int xOffset, int yOffset, int zOffset, int amount = -1 )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -332,10 +311,7 @@ namespace ClassicAssist.Data.Macros.Commands
             ActionPacketQueue.EnqueueDragDropGround( serial, amount, x, y, z );
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description =
-                "Move the given type from the specified source container to the specified x,y,z offset of the player, no amount specified or -1 will move the full stack.",
-            InsertText = "MoveTypeOffset(0xf0e, \"backpack\", 0, 1, 0, -1)" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static bool MoveTypeOffset( int id, object findLocation, int xOffset, int yOffset, int zOffset,
             int amount = -1 )
         {
@@ -376,9 +352,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return true;
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Move a type from source to destintion.",
-            Example = nameof( MacroCommandHelp.MOVETYPE_COMMAND_EXAMPLE ),
-            InsertText = "MoveType(0xff, \"backpack\", \"bank\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static void MoveType( int id, object sourceContainer, object destinationContainer, int x = -1,
             int y = -1, int z = 0,
             int hue = -1, int amount = -1 )

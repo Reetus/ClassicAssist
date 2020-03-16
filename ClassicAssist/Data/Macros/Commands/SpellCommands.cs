@@ -9,16 +9,13 @@ namespace ClassicAssist.Data.Macros.Commands
     {
         private static readonly SpellManager _manager = SpellManager.GetInstance();
 
-        [CommandsDisplay( Category = "Spells", Description = "Cast the given named spell.",
-            InsertText = "Cast(\"Recall\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Spells ) )]
         public static void Cast( string name )
         {
             _manager?.CastSpell( name );
         }
 
-        [CommandsDisplay( Category = "Spells",
-            Description = "Cast the given named spell and automatically target given object.",
-            InsertText = "Cast(\"Recall\", \"runebook\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Spells ) )]
         public static bool Cast( string name, object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );

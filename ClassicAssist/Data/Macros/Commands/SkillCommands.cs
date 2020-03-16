@@ -11,8 +11,7 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class SkillCommands
     {
-        [CommandsDisplay( Category = "Skills", Description = "Invokes the given skill name.",
-            InsertText = "UseSkill(\"Hiding\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Skills ) )]
         public static void UseSkill( string skill )
         {
             try
@@ -50,8 +49,7 @@ namespace ClassicAssist.Data.Macros.Commands
             throw new ArgumentOutOfRangeException();
         }
 
-        [CommandsDisplay( Category = "Skills", Description = "Returns the base value of the given skill name.",
-            InsertText = "if Skill(\"hiding\") < 100:" )]
+        [CommandsDisplay( Category = nameof( Strings.Skills ) )]
         public static double Skill( string name )
         {
             SkillManager manager = SkillManager.GetInstance();
@@ -61,9 +59,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return s?.Value ?? 0;
         }
 
-        [CommandsDisplay( Category = "Skills",
-            Description = "Returns the lock status of the given skill, up, down, or locked.",
-            InsertText = "if SkillState(\"hiding\') == \"locked\":" )]
+        [CommandsDisplay( Category = nameof( Strings.Skills ) )]
         public static string SkillState( string name )
         {
             SkillManager manager = SkillManager.GetInstance();
@@ -73,9 +69,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return s?.LockStatus.ToString().ToLower() ?? "up";
         }
 
-        [CommandsDisplay( Category = "Skills",
-            Description = "Sets the lock state of the given skill, up, down or locked.",
-            InsertText = "SetSkill(\"hiding\", \"locked\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Skills ) )]
         public static void SetSkill( string skill, string status )
         {
             SkillManager manager = SkillManager.GetInstance();

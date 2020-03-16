@@ -12,8 +12,7 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class EntityCommands
     {
-        [CommandsDisplay( Category = "Entity", Description = "Returns the distance to the given entity.",
-            InsertText = "if Distance(\"mount\") < 4:" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int Distance( object obj = null )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -29,9 +28,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return entity?.Distance ?? int.MaxValue;
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description = "Check for range between your character and another mobile or an item",
-            InsertText = "if InRange(\"enemy\", 10):" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static bool InRange( object obj, int distance )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -53,9 +50,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return false;
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description = "Returns Hue of given object (parameter can be serial or alias).",
-            InsertText = "if Hue(\"mount\") == 0:" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int Hue( object obj = null )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -83,9 +78,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return 0;
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description = "Returns Item ID of given object (parameter can be serial or alias).",
-            InsertText = "Graphic(\"mount\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int Graphic( object obj = null )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -113,9 +106,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return 0;
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description = "Returns X coordinate of given object (parameter can be serial or alias).",
-            InsertText = "x = X(\"self\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int X( object obj = null )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -143,9 +134,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return 0;
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description = "Returns Y coordinate of given object (parameter can be serial or alias).",
-            InsertText = "y = Y(\"self\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int Y( object obj = null )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -173,9 +162,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return 0;
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description = "Returns Z coordinate of given object (parameter can be serial or alias).",
-            InsertText = "y = Y(\"self\")" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int Z( object obj = null )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -203,23 +190,19 @@ namespace ClassicAssist.Data.Macros.Commands
             return 0;
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Check for a specific buff",
-            InsertText = "if BuffExists(\"Blood Oath\"):" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static bool BuffExists( string name )
         {
             return BuffIconManager.GetInstance().BuffExists( name );
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Check for a specific special move",
-            InsertText = "if SpecialMoveExists(\"Death Strike\"):" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static bool SpecialMoveExists( string name )
         {
             return SpecialMovesManager.GetInstance().SpecialMoveExists( name );
         }
 
-        [CommandsDisplay( Category = "Entity",
-            Description = "Returns the Direction the entity is in relative to the player.",
-            InsertText = "Run(DirectionTo(\"enemy\"))" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static string DirectionTo( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -241,8 +224,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return UOMath.MapDirection( Engine.Player.X, Engine.Player.Y, entity.X, entity.Y ).ToString();
         }
 
-        [CommandsDisplay( Category = "Entity", Description = "Return the name of the given mobile.",
-            InsertText = "if Name(\"self\") == \"Shmoo\":" )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static string Name( object obj = null )
         {
             return GetEntityProperty<string>( obj, nameof( Entity.Name ) )?.Trim() ?? string.Empty;

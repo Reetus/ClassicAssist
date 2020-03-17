@@ -29,6 +29,7 @@ namespace ClassicAssist.Data
         public static bool SavePasswords { get; set; }
         public static bool SavePasswordsOnlyBlank { get; set; }
         public static Version UpdateGumpVersion { get; set; }
+        public static string UserId { get; set; }
 
         public static event EventHandler SavedPasswordsChanged;
 
@@ -44,7 +45,8 @@ namespace ClassicAssist.Data
                 { "AutoBackupProfilesDirectory", AutoBackupProfilesDirectory },
                 { "AutoBackupProfilesLast", AutoBackupProfilesLast },
                 { "SavePasswords", SavePasswords },
-                { "SavePasswordsOnlyBlank", SavePasswordsOnlyBlank }
+                { "SavePasswordsOnlyBlank", SavePasswordsOnlyBlank },
+                { "UserId", UserId }
             };
 
             JArray linkedProfilesArray = new JArray();
@@ -97,6 +99,7 @@ namespace ClassicAssist.Data
             AutoBackupProfilesLast = json?["AutoBackupProfilesLast"]?.ToObject<DateTime>() ?? default;
             SavePasswords = json?["SavePasswords"]?.ToObject<bool>() ?? false;
             SavePasswordsOnlyBlank = json?["SavePasswordsOnlyBlank"]?.ToObject<bool>() ?? false;
+            UserId = json?["UserId"]?.ToObject<string>() ?? Guid.NewGuid().ToString();
 
             if ( json?["Profiles"] != null )
             {

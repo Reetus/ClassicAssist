@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using Exceptionless;
 
 namespace ClassicAssist.Launcher
 {
@@ -7,5 +9,10 @@ namespace ClassicAssist.Launcher
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup( StartupEventArgs e )
+        {
+            ExceptionlessClient.Default.Startup( "T8v0i7nL90cVRc4sr2pgo5hviThMPRF3OtQ0bK60" );
+            base.OnStartup( e );
+        }
     }
 }

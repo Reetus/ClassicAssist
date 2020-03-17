@@ -58,6 +58,7 @@
   <ItemGroup>
     <PackageReference Include="AnimatedGif" Version="1.0.5" />
     <PackageReference Include="AvalonEdit" Version="6.0.1" />
+    <PackageReference Include="Exceptionless" Version="4.3.2027" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="3.8.1" />
     <PackageReference Include="IronPython" Version="2.7.10-candidate1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />

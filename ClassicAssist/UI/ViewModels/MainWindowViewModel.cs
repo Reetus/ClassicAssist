@@ -5,6 +5,8 @@ using Assistant;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO.Objects;
+using Exceptionless;
+using Exceptionless.Extensions;
 
 namespace ClassicAssist.UI.ViewModels
 {

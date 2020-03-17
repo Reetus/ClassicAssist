@@ -28,6 +28,7 @@ using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using CUO_API;
+using Exceptionless;
 using Octokit;
 
 [assembly: InternalsVisibleTo( "ClassicAssist.Tests" )]
@@ -124,6 +125,10 @@ namespace Assistant
 
             _mainThread = new Thread( () =>
             {
+                ExceptionlessClient.Default.Configuration.SetUserIdentity( AssistantOptions.UserId, AssistantOptions.UserId );
+                ExceptionlessClient.Default.Configuration.UseSessions( true );
+                ExceptionlessClient.Default.Startup( "T8v0i7nL90cVRc4sr2pgo5hviThMPRF3OtQ0bK60" );
+
                 _window = new MainWindow();
                 _window.ShowDialog();
             } ) { IsBackground = true };

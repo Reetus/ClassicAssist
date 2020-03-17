@@ -2122,7 +2122,7 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rename(&quot;mount&quot;, &quot;Snoopy&quot;.
+        ///   Looks up a localized string similar to Rename(&quot;mount&quot;, &quot;Snoopy&quot;).
         /// </summary>
         public static string RENAME_COMMAND_INSERTTEXT {
             get {
@@ -2527,7 +2527,7 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Target specified type in player backpack, optional parameters for hue and search level..
+        ///   Looks up a localized string similar to Use specified type in player backpack, optional parameters for hue and search level..
         /// </summary>
         public static string TARGETTYPE_COMMAND_DESCRIPTION {
             get {
@@ -2590,7 +2590,7 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TimerMsg(&quot;shmoo&quot;.
+        ///   Looks up a localized string similar to TimerMsg(&quot;shmoo&quot;).
         /// </summary>
         public static string TIMERMSG_COMMAND_INSERTTEXT {
             get {

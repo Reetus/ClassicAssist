@@ -10,3 +10,5 @@ ClassicAssist/Properties/launchSettings.json
 ClassicAssist.Launcher/ClassicAssist.Launcher.csproj.user
 CleanupModified.ps1
 Tools/ExportCommands/obj/
+ClassicAssist.Tests/bin/
+ClassicAssist.UITest/bin/

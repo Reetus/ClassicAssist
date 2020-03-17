@@ -1,15 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading;
+using ExportCommands.Properties;
+
+// ReSharper disable LocalizableElement
 
 namespace ExportCommands
 {
     internal class Program
     {
+        private static readonly string[] _locales = { "en-US", "it-IT" };
+
         private static void Main( string[] args )
         {
             if ( args.Length == 0 )
@@ -29,90 +36,97 @@ namespace ExportCommands
 
             Environment.CurrentDirectory = Path.GetDirectoryName( args[0] ) ?? throw new InvalidOperationException();
 
-            Assembly assembly;
-
-            try
-            {
-                assembly = Assembly.LoadFile( args[0] );
-            }
-            catch ( Exception e )
-            {
-                Console.WriteLine($"Failed to load assembly: {e}");
-                return;
-            }
-
-            Console.WriteLine( "Generating Macro documentation..." );
-            Console.WriteLine( $"Loading {args[0]}" );
-
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            IEnumerable<Type> types = assembly.GetTypes().Where( t =>
-                t.Namespace != null && t.Namespace.StartsWith( "ClassicAssist.Data.Macros.Commands" ) );
-
-            List<Commands> commands = new List<Commands>();
-
-            Type cda = assembly.GetType( "ClassicAssist.Data.Macros.CommandsDisplayAttribute" );
-
-            foreach ( Type type in types )
+            foreach ( string locale in _locales )
             {
-                MemberInfo[] members = type.GetMembers( BindingFlags.Public | BindingFlags.Static );
+                Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo( locale );
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo( locale );
 
-                foreach ( MemberInfo memberInfo in members )
+                Assembly assembly;
+
+                try
                 {
-                    dynamic attr = memberInfo.GetCustomAttribute( cda );
+                    assembly = Assembly.LoadFile( args[0] );
+                }
+                catch ( Exception e )
+                {
+                    Console.WriteLine( $"Failed to load assembly: {e}" );
+                    return;
+                }
 
-                    if ( attr != null )
+                Console.WriteLine( "Generating Macro documentation..." );
+                Console.WriteLine( $"Loading {args[0]}" );
+
+                IEnumerable<Type> types = assembly.GetTypes().Where( t =>
+                    t.Namespace != null && t.Namespace.StartsWith( "ClassicAssist.Data.Macros.Commands" ) );
+
+                Type cda = assembly.GetType( "ClassicAssist.Data.Macros.CommandsDisplayAttribute" );
+
+                List<Commands> commands = ( from type in types
+                    from memberInfo in type.GetMembers( BindingFlags.Public | BindingFlags.Static )
+                    let attr = memberInfo.GetCustomAttribute( cda )
+                    where (dynamic) attr != null
+                    select new Commands
                     {
-                        Commands cmd = new Commands
+                        Category = ( (dynamic) attr ).Category,
+                        Description = ( (dynamic) attr ).Description,
+                        Example = ( (dynamic) attr ).Example,
+                        InsertText = ( (dynamic) attr ).InsertText,
+                        Signature = memberInfo.ToString(),
+                        Name = memberInfo.Name
+                    } ).ToList();
+
+                commands.Sort( new CommandComparer() );
+
+                IEnumerable<string> categories = commands.Select( c => c.Category ).Distinct();
+
+                FileVersionInfo fvi = FileVersionInfo.GetVersionInfo( assembly.Location );
+
+                string markDown =
+                    $"# {Resources.ClassicAssist_Macro_Commands}  \n{Resources.Generated_on} {DateTime.UtcNow}  \n{Resources.Version}: {fvi.ProductVersion}  \n  \n";
+
+                if ( !string.IsNullOrEmpty( Resources.TRANSLATE_CREDIT ) )
+                {
+                    markDown =
+                        $"# {Resources.ClassicAssist_Macro_Commands}  \n{Resources.Generated_on} {DateTime.UtcNow}  \n{Resources.Version}: {fvi.ProductVersion}  \n{Resources.TRANSLATE_CREDIT}  \n  \n";
+                }
+
+                foreach ( string category in categories )
+                {
+                    IEnumerable<Commands> categoryCommands =
+                        commands.Where( c => c.Category == category ).OrderBy( c => c.Name );
+
+                    markDown += $"## {category}  \n";
+
+                    foreach ( Commands command in categoryCommands )
+                    {
+                        string example = command.InsertText;
+
+                        if ( !string.IsNullOrEmpty( command.Example ) )
                         {
-                            Category = attr.Category,
-                            Description = attr.Description,
-                            Example = attr.Example,
-                            InsertText = attr.InsertText,
-                            Signature = memberInfo.ToString(),
-                            Name = memberInfo.Name
-                        };
+                            example = command.Example;
+                        }
 
-                        commands.Add( cmd );
+                        markDown += $"### {command.Name}  \n  \n";
+                        markDown += $"{Resources.Method_Signature}:  \n  \n**{command.Signature}**  \n  \n";
+                        markDown += $"{Resources.Description}:  \n  \n**{command.Description}**  \n  \n";
+                        markDown += $"{Resources.Example}:  \n  \n```python  \n{example}  \n```  \n  \n";
                     }
+
+                    markDown += "\n\n\n";
                 }
-            }
 
-            commands.Sort( new CommandComparer() );
+                string fileName = $"Macro-Commands ({locale}).md";
 
-            IEnumerable<string> categories = commands.Select( c => c.Category ).Distinct();
-
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo( assembly.Location );
-
-            string markDown =
-                $"# ClassicAssist Macro Commands  \nGenerated on {DateTime.UtcNow}  \nVersion: {fvi.ProductVersion}  \n  \n";
-
-            foreach ( string category in categories )
-            {
-                IEnumerable<Commands> categoryCommands = commands.Where( c => c.Category == category ).OrderBy( c => c.Name );
-
-                markDown += $"## {category}  \n";
-
-                foreach ( Commands command in categoryCommands )
+                if ( locale.Equals( "en-US" ) )
                 {
-                    string example = command.InsertText;
-
-                    if ( !string.IsNullOrEmpty( command.Example ) )
-                    {
-                        example = command.Example;
-                    }
-
-                    markDown += $"### {command.Name}  \n  \n";
-                    markDown += $"Method Signature:  \n  \n**{command.Signature}**  \n  \n";
-                    markDown += $"Description:  \n  \n**{command.Description}**  \n  \n";
-                    markDown += $"Example:  \n  \n```python  \n{example}  \n```  \n  \n";
+                    fileName = "Macro-Commands.md";
                 }
 
-                markDown += "\n\n\n";
+                File.WriteAllText( Path.Combine( originalDirectory, fileName ), markDown );
             }
-
-            File.WriteAllText( Path.Combine( originalDirectory, "Macro-Commands.md" ), markDown );
 
             sw.Stop();
 
@@ -178,7 +192,7 @@ namespace ExportCommands
         public string Description { get; set; }
         public string Example { get; set; }
         public string InsertText { get; set; }
-        public string Signature { get; set; }
         public string Name { get; set; }
+        public string Signature { get; set; }
     }
 }

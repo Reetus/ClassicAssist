@@ -108,6 +108,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\MacroCommandHelp.it-IT.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\MacroCommandHelp.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MacroCommandHelp.Designer.cs</LastGenOutput>

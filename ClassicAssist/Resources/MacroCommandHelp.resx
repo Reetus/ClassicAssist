@@ -247,7 +247,7 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
     <value>Sends rename request.</value>
   </data>
   <data name="RENAME_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>Rename("mount", "Snoopy"</value>
+    <value>Rename("mount", "Snoopy")</value>
   </data>
   <data name="SHOWNAMES_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Display corpses and/or mobiles names (parameter "mobiles" or "corpses".</value>
@@ -1084,7 +1084,7 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
     <value>TargetTileRelative("self", 1, False)</value>
   </data>
   <data name="TARGETTYPE_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Target specified type in player backpack, optional parameters for hue and search level.</value>
+    <value>Use specified type in player backpack, optional parameters for hue and search level.</value>
   </data>
   <data name="TARGETTYPE_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>UseType(0xff, 0, 3)</value>
@@ -1135,6 +1135,6 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
     <value>Outputs the elapsed timer value as a SystemMessage</value>
   </data>
   <data name="TIMERMSG_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>TimerMsg("shmoo"</value>
+    <value>TimerMsg("shmoo")</value>
   </data>
 </root>

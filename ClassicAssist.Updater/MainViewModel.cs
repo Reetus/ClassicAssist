@@ -8,10 +8,13 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using ClassicAssist.Updater.Annotations;
 using ClassicAssist.Updater.Properties;
+using Exceptionless;
+using Exceptionless.Models;
 using Octokit;
 using Application = System.Windows.Application;
 
@@ -150,6 +153,12 @@ namespace ClassicAssist.Updater
 
                 if ( newVersion > App.CurrentOptions.CurrentVersion || App.CurrentOptions.Force )
                 {
+                    ExceptionlessClient.Default.SubmitEvent( new Event
+                    {
+                        Message =
+                            $"Update: Previous version: {App.CurrentOptions.CurrentVersion}, New version: {newVersion}"
+                    } );
+
                     if ( App.CurrentOptions.PID != 0 )
                     {
                         Process p = Process.GetProcessById( App.CurrentOptions.PID );

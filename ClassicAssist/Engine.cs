@@ -125,10 +125,6 @@ namespace Assistant
 
             _mainThread = new Thread( () =>
             {
-                ExceptionlessClient.Default.Configuration.SetUserIdentity( AssistantOptions.UserId, AssistantOptions.UserId );
-                ExceptionlessClient.Default.Configuration.UseSessions( true );
-                ExceptionlessClient.Default.Startup( "T8v0i7nL90cVRc4sr2pgo5hviThMPRF3OtQ0bK60" );
-
                 _window = new MainWindow();
                 _window.ShowDialog();
             } ) { IsBackground = true };
@@ -222,6 +218,9 @@ namespace Assistant
         {
             Options.Save( Options.CurrentOptions );
             AssistantOptions.Save();
+#if !DEBUG
+            ExceptionlessClient.Default.SubmitSessionEnd( AssistantOptions.UserId );
+#endif
         }
 
         private static void OnPlayerPositionChanged( int x, int y, int z )

@@ -1,0 +1,27 @@
+name: Build and test
+
+on:
+  push:
+    branches: [ staging ]
+  pull_request:
+    branches: [ staging ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+    - name: Setup Nuget.exe
+      uses: warrenbuckley/Setup-Nuget@v1
+    - name: Nuget Restore
+      run: nuget restore        
+    - name: Build with msbuild
+      run: msbuild ClassicAssist.sln /p:Configuration=Release
+    - name: Setup VSTest.console.exe
+      uses: darenm/Setup-VSTest@v1      
+    - name: vstest
+      run: vstest.console ClassicAssist.Tests\bin\Release\net48\ClassicAssist.Tests.dll
+    

@@ -563,6 +563,34 @@ namespace ClassicAssist.UO
             }
         }
 
+        public static async Task<bool> WaitForIncomingPacketFilterAsync( PacketFilterInfo pfi, int timeout, bool invokeHandler = true, bool fixedSize = false )
+        {
+            AutoResetEvent are = new AutoResetEvent( false );
+            byte[] packet = null;
+
+            Engine.AddReceiveFilter( new PacketFilterInfo( pfi.PacketID, pfi.GetConditions(), ( data, info ) =>
+            {
+                packet = data;
+                are.Set();
+            } ) );
+
+            Task filterTask = are.ToTask();
+
+            if ( await Task.WhenAny( filterTask, Task.Delay( timeout ) ) == filterTask )
+            {
+                if ( invokeHandler )
+                {
+                    PacketHandler handler = IncomingPacketHandlers.GetHandler( packet[0] );
+
+                    handler?.OnReceive( new PacketReader( packet, packet.Length, fixedSize ) );
+                }
+            }
+
+            Engine.RemoveReceiveFilter( pfi );
+
+            return packet != null;
+        }
+
         public static void Resync()
         {
             Engine.SendPacketToServer( new Resync() );

@@ -1137,4 +1137,25 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
   <data name="TIMERMSG_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>TimerMsg("shmoo")</value>
   </data>
+  <data name="FINDWAND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Search for a wand and set alias "found".</value>
+  </data>
+  <data name="FINDWAND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>FindWand("fireball", "backpack", 10)</value>
+  </data>
+  <data name="EQUIPWAND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Search for a wand inside your backpack and equip it</value>
+  </data>
+  <data name="EQUIPWAND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>EquipWand("fireball", 10)</value>
+  </data>
+  <data name="EQUIPWAND_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>#Equip a fireball wand if one can be found in our backpack..
+if FindWand("fireball", "backpack", 5):
+ #Remove current item in hand
+ if FindLayer("OneHanded"):
+  ClearHands("left")
+ #Equip the wand
+ EquipWand("fireball")</value>
+  </data>
 </root>

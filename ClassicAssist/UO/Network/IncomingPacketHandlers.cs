@@ -104,8 +104,86 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x04, 0, OnCloseGump );
             RegisterExtended( 0x06, 0, OnPartyCommand );
             RegisterExtended( 0x08, 0, OnMapChange );
+            RegisterExtended( 0x10, 0, OnDisplayEquipmentInfo );
             RegisterExtended( 0x21, 0, OnClearWeaponAbility );
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
+        }
+
+        private static void OnDisplayEquipmentInfo( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+            int cliloc = reader.ReadInt32();
+
+            uint next = reader.ReadUInt32();
+
+            List<Property> properties =
+                new List<Property> { new Property { Cliloc = cliloc, Text = Cliloc.GetProperty( cliloc ) } };
+
+            do
+            {
+                string attrName;
+
+                int charges;
+                uint number;
+
+                switch ( next )
+                {
+                    case 0xFFFFFFFF:
+                        break;
+                    case 0xFFFFFFFD:
+                    {
+                        int nameLen = reader.ReadUInt16();
+                        string craftedBy = reader.ReadString( nameLen );
+
+                        properties.Add( new Property { Cliloc = -3, Text = craftedBy } );
+
+                        break;
+                    }
+                    case 0xFFFFFFFC:
+                    {
+                        number = reader.ReadUInt32();
+                        charges = reader.ReadUInt16();
+
+                        attrName = Cliloc.GetProperty( (int) number );
+
+                        properties.Add( new Property
+                        {
+                            Cliloc = (int) number, Text = attrName, Arguments = new[] { charges.ToString() }
+                        } );
+
+                        break;
+                    }
+                    default:
+                    {
+                        number = next;
+                        charges = reader.ReadUInt16();
+
+                        attrName = Cliloc.GetProperty( (int) number );
+
+                        properties.Add( new Property
+                        {
+                            Cliloc = (int) number, Text = attrName, Arguments = new[] { charges.ToString() }
+                        } );
+
+                        break;
+                    }
+                }
+
+                if ( next == 0xFFFFFFFF )
+                {
+                    break;
+                }
+
+                next = reader.ReadUInt32();
+            }
+            while ( next != 0xFFFFFFFF );
+
+            Item item = Engine.Items.GetItem( serial );
+
+            if ( item != null )
+            {
+                item.Properties = properties.ToArray();
+            }
         }
 
         private static void OnUnicodePrompt( PacketReader reader )

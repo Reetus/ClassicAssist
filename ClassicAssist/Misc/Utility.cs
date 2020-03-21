@@ -9,7 +9,7 @@ namespace ClassicAssist.Misc
         {
             //TODO robust enough?
 
-            value = value.ToLower();
+            value = value.ToLower().Replace( ' ', '_' );
 
             string[] enumValues = Enum.GetNames( typeof( T ) );
 

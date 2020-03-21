@@ -781,6 +781,39 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search for a wand inside your backpack and equip it.
+        /// </summary>
+        public static string EQUIPWAND_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("EQUIPWAND_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #Equip a fireball wand if one can be found in our backpack..
+        ///if FindWand(&quot;fireball&quot;, &quot;backpack&quot;, 5):
+        /// #Remove current item in hand
+        /// if FindLayer(&quot;OneHanded&quot;):
+        ///  ClearHands(&quot;left&quot;)
+        /// #Equip the wand
+        /// EquipWand(&quot;fireball&quot;).
+        /// </summary>
+        public static string EQUIPWAND_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("EQUIPWAND_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EquipWand(&quot;fireball&quot;, 10).
+        /// </summary>
+        public static string EQUIPWAND_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("EQUIPWAND_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Feed a given alias or serial with graphic..
         /// </summary>
         public static string FEED_COMMAND_DESCRIPTION {
@@ -867,6 +900,24 @@ namespace ClassicAssist.Resources {
         public static string FINDTYPE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("FINDTYPE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for a wand and set alias &quot;found&quot;..
+        /// </summary>
+        public static string FINDWAND_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("FINDWAND_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FindWand(&quot;fireball&quot;, &quot;backpack&quot;, 10).
+        /// </summary>
+        public static string FINDWAND_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("FINDWAND_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

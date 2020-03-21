@@ -28,6 +28,7 @@ using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using CUO_API;
+// ReSharper disable once RedundantUsingDirective
 using Exceptionless;
 using Octokit;
 

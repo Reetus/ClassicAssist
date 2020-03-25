@@ -1158,4 +1158,7 @@
   <data name="See More" xml:space="preserve">
     <value>더 보기</value>
   </data>
+  <data name="Reset Container" xml:space="preserve">
+    <value>컨테이너 재설정</value>
+  </data>
 </root>

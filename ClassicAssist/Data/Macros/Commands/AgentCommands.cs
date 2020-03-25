@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Data.Counters;
 using ClassicAssist.Data.Dress;
 using ClassicAssist.Resources;
@@ -86,6 +87,14 @@ namespace ClassicAssist.Data.Macros.Commands
 
             UOC.SystemMessage( Strings.Invalid_counter_agent_name___ );
             return 0;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Agents ) )]
+        public static void SetAutolootContainer( object obj )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            AutolootHelpers.SetAutolootContainer?.Invoke( serial );
         }
     }
 }

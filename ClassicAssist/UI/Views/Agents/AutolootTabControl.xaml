@@ -11,6 +11,7 @@
     xmlns:autoloot="clr-namespace:ClassicAssist.Data.Autoloot"
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+    xmlns:misc1="clr-namespace:ClassicAssist.Misc"
     x:Class="ClassicAssist.UI.Views.Agents.AutolootTabControl"
     mc:Ignorable="d"
     d:DesignHeight="250" d:DesignWidth="600" x:Name="userControl">
@@ -18,8 +19,10 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../../Resources/ResourceDictionary.xaml" />
+                <ResourceDictionary Source="../../../Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <ValueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+            <misc1:BindingProxy x:Key="Proxy" Data="{Binding}" />
             <DrawingImage x:Key="ColorWheelIcon">
                 <DrawingImage.Drawing>
                     <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
@@ -103,8 +106,22 @@
                     <Button Content="{x:Static resources:Strings.Insert}" Grid.Column="1" Margin="5,0,0,0"
                             Command="{Binding InsertCommand}" />
                 </Grid>
-                <Button Content="{x:Static resources:Strings.Set_Container}" Margin="0,10,0,0"
-                        Command="{Binding SetContainerCommand}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button Content="{x:Static resources:Strings.Set_Container}" Margin="0,10,5,0"
+                            Command="{Binding SetContainerCommand}" Grid.Column="0" />
+                    <Image Source="{StaticResource configureIcon}" Height="16" Margin="5,10,0,0" Grid.Column="1"
+                           misc:ClickOpensContextMenuBehaviour.Enabled="True">
+                        <Image.ContextMenu>
+                            <ContextMenu IsOpen="False">
+                                <MenuItem Header="{x:Static resources:Strings.Reset_Container}" Command="{Binding Source={StaticResource Proxy}, Path=Data.ResetContainerCommand}" />
+                            </ContextMenu>
+                        </Image.ContextMenu>
+                    </Image>
+                </Grid>
             </StackPanel>
         </Grid>
         <Grid Grid.Column="1" Margin="10">

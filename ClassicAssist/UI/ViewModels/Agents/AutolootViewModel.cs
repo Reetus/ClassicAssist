@@ -33,8 +33,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private ICommand _clipboardCopyCommand;
         private ICommand _clipboardPasteCommand;
 
-        private ObservableCollection<PropertyEntry>
-            _constraints = new ObservableCollection<PropertyEntry>();
+        private ObservableCollection<PropertyEntry> _constraints = new ObservableCollection<PropertyEntry>();
 
         private int _containerSerial;
 
@@ -47,6 +46,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private ObservableCollectionEx<AutolootEntry> _items = new ObservableCollectionEx<AutolootEntry>();
         private ICommand _removeCommand;
         private ICommand _removeConstraintCommand;
+        private RelayCommand _resetContainerCommand;
         private AutolootEntry _selectedItem;
         private AutolootConstraintEntry _selectedProperty;
         private ICommand _selectHueCommand;
@@ -77,6 +77,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 }
             }
 
+            AutolootHelpers.SetAutolootContainer = serial => ContainerSerial = serial;
             IncomingPacketHandlers.CorpseContainerDisplayEvent += OnCorpseContainerDisplayEvent;
         }
 
@@ -129,6 +130,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
         public ICommand RemoveConstraintCommand =>
             _removeConstraintCommand ?? ( _removeConstraintCommand =
                 new RelayCommand( RemoveConstraint, o => SelectedProperty != null ) );
+
+        public ICommand ResetContainerCommand => _resetContainerCommand = new RelayCommand( ResetContainer, o => true );
 
         public AutolootEntry SelectedItem
         {
@@ -316,8 +319,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     return;
                 }
 
-                PacketWaitEntry we = Engine.PacketWaitEntries.Add( new PacketFilterInfo( 0x3C,
-                        new[] { PacketFilterConditions.IntAtPositionCondition( serial, 19 ) } ),
+                PacketWaitEntry we = Engine.PacketWaitEntries.Add(
+                    new PacketFilterInfo( 0x3C, new[] { PacketFilterConditions.IntAtPositionCondition( serial, 19 ) } ),
                     PacketDirection.Incoming );
 
                 bool result = we.Lock.WaitOne( 5000 );
@@ -355,8 +358,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         if ( entry.Rehue )
                         {
                             Engine.SendPacketToClient( new ContainerContentUpdate( matchItem.Serial, matchItem.ID,
-                                matchItem.Direction, matchItem.Count,
-                                matchItem.X, matchItem.Y, matchItem.Grid, matchItem.Owner, entry.RehueHue ) );
+                                matchItem.Direction, matchItem.Count, matchItem.X, matchItem.Y, matchItem.Grid,
+                                matchItem.Owner, entry.RehueHue ) );
                         }
 
                         if ( DisableInGuardzone &&
@@ -419,6 +422,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 };
 
             SelectedItem.Constraints = new ObservableCollection<AutolootConstraintEntry>( constraints );
+        }
+
+        private void ResetContainer( object obj )
+        {
+            ContainerSerial = 0;
         }
 
         private async Task SetContainer( object arg )
@@ -513,15 +521,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     case PropertyType.Properties:
                         predicates.Add( i => i.Properties != null && constraint.Property.Clilocs.Any( cliloc =>
                                                  i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc,
-                                                     constraint.Property, constraint.Operator,
-                                                     constraint.Value ) ) ) );
+                                                     constraint.Property, constraint.Operator, constraint.Value ) ) ) );
                         break;
                     case PropertyType.Object:
 
                         predicates.Add( i =>
                             AutolootHelpers.ItemHasObjectProperty( i, constraint.Property.Name ) &&
-                            AutolootHelpers.Operation(
-                                constraint.Operator,
+                            AutolootHelpers.Operation( constraint.Operator,
                                 AutolootHelpers.GetItemObjectPropertyValue<int>( i, constraint.Property.Name ),
                                 constraint.Value ) );
 

@@ -6,6 +6,8 @@ namespace ClassicAssist.Data.Autoloot
 {
     public static class AutolootHelpers
     {
+        public static Action<int> SetAutolootContainer { get; set; }
+
         public static bool ItemHasObjectProperty( Item item, string propertyName )
         {
             PropertyInfo propertyInfo = item.GetType().GetProperty( propertyName );

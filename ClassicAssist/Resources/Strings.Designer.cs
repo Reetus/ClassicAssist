@@ -2203,6 +2203,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset Container.
+        /// </summary>
+        public static string Reset_Container {
+            get {
+                return ResourceManager.GetString("Reset Container", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resistances.
         /// </summary>
         public static string Resistances {

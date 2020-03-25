@@ -1158,4 +1158,10 @@ if FindWand("fireball", "backpack", 5):
  #Equip the wand
  EquipWand("fireball")</value>
   </data>
+  <data name="SETAUTOLOOTCONTAINER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sets the container for the Autoloot agent to put items into...</value>
+  </data>
+  <data name="SETAUTOLOOTCONTAINER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetAutolootContainer("backpack")</value>
+  </data>
 </root>

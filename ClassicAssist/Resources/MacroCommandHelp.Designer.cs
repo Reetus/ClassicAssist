@@ -2272,6 +2272,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sets the container for the Autoloot agent to put items into....
+        /// </summary>
+        public static string SETAUTOLOOTCONTAINER_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETAUTOLOOTCONTAINER_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetAutolootContainer(&quot;backpack&quot;).
+        /// </summary>
+        public static string SETAUTOLOOTCONTAINER_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETAUTOLOOTCONTAINER_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set force walk, True or False.
         /// </summary>
         public static string SETFORCEWALK_COMMAND_DESCRIPTION {

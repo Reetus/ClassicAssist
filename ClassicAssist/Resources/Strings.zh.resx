@@ -1158,4 +1158,7 @@
   <data name="See More" xml:space="preserve">
     <value>See More</value>
   </data>
+  <data name="Reset Container" xml:space="preserve">
+    <value>重置容器</value>
+  </data>
 </root>

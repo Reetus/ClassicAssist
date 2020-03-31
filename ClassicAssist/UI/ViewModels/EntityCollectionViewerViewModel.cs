@@ -16,6 +16,7 @@ using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
+using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UI.ViewModels
@@ -27,6 +28,7 @@ namespace ClassicAssist.UI.ViewModels
         private CancellationTokenSource _cancellationToken;
         private ICommand _changeSortStyleCommand;
         private ItemCollection _collection;
+        private ICommand _contextContextMenuRequestCommand;
         private ICommand _contextMoveToBackpackCommand;
         private ICommand _contextMoveToContainerCommand;
         private ICommand _contextUseItemCommand;
@@ -68,7 +70,7 @@ namespace ClassicAssist.UI.ViewModels
 
             SelectedItems.CollectionChanged += ( sender, args ) =>
             {
-                if ( !( sender is ObservableCollection<EntityCollectionData> si ) )
+                if ( !( sender is ObservableCollection<EntityCollectionData> ) )
                 {
                     return;
                 }
@@ -89,15 +91,17 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ChangeSortStyleCommand =>
             _changeSortStyleCommand ?? ( _changeSortStyleCommand = new RelayCommand( ChangeSortStyle, o => true ) );
 
+        public ICommand ContextContextMenuRequestCommand =>
+            _contextContextMenuRequestCommand ?? ( _contextContextMenuRequestCommand =
+                new RelayCommand( ContextMenuRequest, o => SelectedItems.Count > 0 ) );
+
         public ICommand ContextMoveToBackpackCommand =>
             _contextMoveToBackpackCommand ?? ( _contextMoveToBackpackCommand =
-                new RelayCommandAsync( ContextMoveToBackpack,
-                    o => SelectedItems != null && !IsPerformingAction ) );
+                new RelayCommandAsync( ContextMoveToBackpack, o => SelectedItems != null && !IsPerformingAction ) );
 
         public ICommand ContextMoveToContainerCommand =>
             _contextMoveToContainerCommand ?? ( _contextMoveToContainerCommand =
-                new RelayCommandAsync( ContextMoveToContainer,
-                    o => SelectedItems != null && !IsPerformingAction ) );
+                new RelayCommandAsync( ContextMoveToContainer, o => SelectedItems != null && !IsPerformingAction ) );
 
         public ICommand ContextUseItemCommand =>
             _contextUseItemCommand ?? ( _contextUseItemCommand =
@@ -333,6 +337,16 @@ namespace ClassicAssist.UI.ViewModels
 
             window.ShowDialog();
         }
+
+        private void ContextMenuRequest( object obj )
+        {
+            int[] items = SelectedItems.Select( i => i.Entity.Serial ).ToArray();
+
+            foreach ( int serial in items )
+            {
+                Engine.SendPacketToServer( new ContextMenuRequest( serial ) );
+            }
+        }
     }
 
     public class EntityCollectionData
@@ -390,10 +404,8 @@ namespace ClassicAssist.UI.ViewModels
                     case PropertyType.Properties:
                     {
                         predicates.Add( i => i.Properties != null && constraint.Clilocs.Any( cliloc =>
-                                                 i.Properties.Any( p =>
-                                                     AutolootHelpers.MatchProperty( p, cliloc, constraint,
-                                                         filter.Operator,
-                                                         filter.Value ) ) ) );
+                                                 i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc,
+                                                     constraint, filter.Operator, filter.Value ) ) ) );
 
                         break;
                     }
@@ -401,8 +413,8 @@ namespace ClassicAssist.UI.ViewModels
                     {
                         predicates.Add( i =>
                             AutolootHelpers.ItemHasObjectProperty( i, constraint.Name ) && AutolootHelpers.Operation(
-                                filter.Operator,
-                                AutolootHelpers.GetItemObjectPropertyValue<int>( i, constraint.Name ), filter.Value ) );
+                                filter.Operator, AutolootHelpers.GetItemObjectPropertyValue<int>( i, constraint.Name ),
+                                filter.Value ) );
                         break;
                     }
                     default:

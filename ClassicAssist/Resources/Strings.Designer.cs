@@ -664,6 +664,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Context menu request.
+        /// </summary>
+        public static string Context_menu_request {
+            get {
+                return ResourceManager.GetString("Context menu request", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy.
         /// </summary>
         public static string Copy {

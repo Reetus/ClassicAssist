@@ -670,7 +670,7 @@
     <value>WaitForTarget(5000)</value>
   </data>
   <data name="WAITFORPROPERTIES_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>WaitForProperties("backpack")</value>
+    <value>WaitForProperties("backpack", 5000)</value>
   </data>
   <data name="WAITFORPROMPT_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>WaitForPrompt(5000)</value>

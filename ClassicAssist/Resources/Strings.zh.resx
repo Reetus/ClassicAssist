@@ -1161,4 +1161,7 @@
   <data name="Reset Container" xml:space="preserve">
     <value>重置容器</value>
   </data>
+  <data name="Context menu request" xml:space="preserve">
+    <value>上下文菜单请求</value>
+  </data>
 </root>

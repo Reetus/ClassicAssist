@@ -37,18 +37,21 @@ namespace ClassicAssist.Data.Dress
             return Name;
         }
 
-        public void AddOrReplaceDressItem( int itemSerial, Layer itemLayer, int id )
+        public void AddOrReplaceDressItem( Item item )
         {
             List<DressAgentItem> list = Items.ToList();
 
-            DressAgentItem existingItem = Items.FirstOrDefault( i => i.Layer == itemLayer );
+            DressAgentItem existingItem = Items.FirstOrDefault( i => i.Layer == item.Layer );
 
             if ( existingItem != null )
             {
                 list.Remove( existingItem );
             }
 
-            list.Add( new DressAgentItem { Serial = itemSerial, Layer = itemLayer } );
+            list.Add( new DressAgentItem
+            {
+                Serial = item.Serial, Layer = item.Layer, Type = DressAgentItemType.Serial, ID = item.ID
+            } );
 
             Items = list;
         }

@@ -304,7 +304,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            dae.AddOrReplaceDressItem( serial, item.Layer, item.ID );
+            dae.AddOrReplaceDressItem( item );
         }
 
         private async Task UndressAllItems( object obj )
@@ -362,7 +362,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             return _validLayers.Any( l => l == layer );
         }
 
-        private void ChangeDressType( object obj )
+        private static void ChangeDressType( object obj )
         {
             if ( !( obj is DressAgentItem dai ) )
             {

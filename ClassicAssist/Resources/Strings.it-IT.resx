@@ -1161,4 +1161,7 @@
   <data name="Reset Container" xml:space="preserve">
     <value>Reimposta contenitore</value>
   </data>
+  <data name="Context menu request" xml:space="preserve">
+    <value>Richiesta del menu di scelta rapida</value>
+  </data>
 </root>

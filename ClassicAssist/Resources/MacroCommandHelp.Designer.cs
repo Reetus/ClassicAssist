@@ -2947,7 +2947,7 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to WaitForProperties(&quot;backpack&quot;).
+        ///   Looks up a localized string similar to WaitForProperties(&quot;backpack&quot;, 5000).
         /// </summary>
         public static string WAITFORPROPERTIES_COMMAND_INSERTTEXT {
             get {

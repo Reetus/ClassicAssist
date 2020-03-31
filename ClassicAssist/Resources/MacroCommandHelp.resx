@@ -997,7 +997,7 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
     <value>Wait for item properties to be received for specified item.</value>
   </data>
   <data name="WAITFORPROPERTIES_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>WaitForProperties("backpack")</value>
+    <value>WaitForProperties("backpack", 5000)</value>
   </data>
   <data name="SETSKILL_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Sets the lock state of the given skill, up, down or locked.</value>

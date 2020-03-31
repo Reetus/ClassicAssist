@@ -895,6 +895,30 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to # Look for a food item from a list and eat 1 if found.
+        ///if not ListExists(&quot;food&quot;): 
+        /// CreateList(&quot;food&quot;) 
+        /// PushList(&quot;food&quot;, 0x9b7) #bird 
+        /// PushList(&quot;food&quot;, 0x9d3) #ham 
+        /// PushList(&quot;food&quot;, 0x97d) #cheese 
+        /// PushList(&quot;food&quot;, 0x9d0) #apple 
+        /// PushList(&quot;food&quot;, 0x9eb) #muffin 
+        /// PushList(&quot;food&quot;, 0x97b) #fishsteak 
+        /// PushList(&quot;food&quot;, 0x9c0) #sausage 
+        /// PushList(&quot;food&quot;, 0x9f2) #ribs 
+        /// PushList(&quot;food&quot;, 0x9d1) #grapes 
+        /// PushList(&quot;food&quot;, 0x9d2) #peach 
+        ///
+        ///for i in GetList(&quot;food&quot;): 
+        /// if FindType(i, -1, &quot;backpack&quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string FINDTYPE_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("FINDTYPE_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to FindType(0xff).
         /// </summary>
         public static string FINDTYPE_COMMAND_INSERTTEXT {

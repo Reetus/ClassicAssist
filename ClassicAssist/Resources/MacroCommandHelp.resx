@@ -1164,4 +1164,24 @@ if FindWand("fireball", "backpack", 5):
   <data name="SETAUTOLOOTCONTAINER_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>SetAutolootContainer("backpack")</value>
   </data>
+  <data name="FINDTYPE_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># Look for a food item from a list and eat 1 if found.
+if not ListExists("food"): 
+ CreateList("food") 
+ PushList("food", 0x9b7) #bird 
+ PushList("food", 0x9d3) #ham 
+ PushList("food", 0x97d) #cheese 
+ PushList("food", 0x9d0) #apple 
+ PushList("food", 0x9eb) #muffin 
+ PushList("food", 0x97b) #fishsteak 
+ PushList("food", 0x9c0) #sausage 
+ PushList("food", 0x9f2) #ribs 
+ PushList("food", 0x9d1) #grapes 
+ PushList("food", 0x9d2) #peach 
+
+for i in GetList("food"): 
+ if FindType(i, -1, "backpack"): 
+  UseObject("found") 
+  break</value>
+  </data>
 </root>

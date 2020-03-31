@@ -216,7 +216,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 Graphic = item.ID,
                 Amount = -1,
                 Hue = item.Hue,
-                MaxPrice = 0
+                MaxPrice = -1
             } );
         }
 

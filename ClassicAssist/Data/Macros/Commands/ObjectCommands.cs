@@ -124,8 +124,7 @@ namespace ClassicAssist.Data.Macros.Commands
         public static int CountTypeGround( int graphic, int hue = -1, int range = -1 )
         {
             IEnumerable<Item> matches = Engine.Items.Where( i =>
-                i.ID == graphic && ( hue == -1 || hue == i.ID ) &&
-                ( range == -1 || i.Distance <= range ) );
+                i.ID == graphic && ( hue == -1 || hue == i.ID ) && ( range == -1 || i.Distance <= range ) );
 
             int count = matches.Sum( match => match.Count );
 
@@ -135,8 +134,7 @@ namespace ClassicAssist.Data.Macros.Commands
             }
 
             IEnumerable<Mobile> mobileMatches = Engine.Mobiles.Where( i =>
-                i.ID == graphic && ( hue == -1 || hue == i.ID ) &&
-                ( range == -1 || i.Distance <= range ) );
+                i.ID == graphic && ( hue == -1 || hue == i.ID ) && ( range == -1 || i.Distance <= range ) );
 
             count += mobileMatches.Count();
 
@@ -157,21 +155,21 @@ namespace ClassicAssist.Data.Macros.Commands
 
             bool Predicate( Entity i )
             {
-                return i.ID == graphic && ( hue == -1 || i.Hue == hue ) &&
-                       ( range == -1 || i.Distance < range ) &&
-                       !IgnoreList.Contains( i.Serial );
+                return i.ID == graphic && ( hue == -1 || i.Hue == hue ) && !IgnoreList.Contains( i.Serial );
             }
 
             if ( owner != 0 )
             {
-                entity = Engine.Items.SelectEntities( i => Predicate( i ) && i.IsDescendantOf( owner ) )
+                entity = Engine.Items.SelectEntities( i => Predicate( i ) && i.IsDescendantOf( owner, range ) )
                     ?.FirstOrDefault();
             }
             else
             {
                 entity =
-                    (Entity) Engine.Mobiles.SelectEntities( Predicate )?.FirstOrDefault() ??
-                    Engine.Items.SelectEntities( i => Predicate( i ) && i.Owner == 0 )?.FirstOrDefault();
+                    (Entity) Engine.Mobiles
+                        .SelectEntities( i => Predicate( i ) && ( range == -1 || i.Distance < range ) )
+                        ?.FirstOrDefault() ?? Engine.Items.SelectEntities( i =>
+                        Predicate( i ) && ( range == -1 || i.Distance < range ) && i.Owner == 0 )?.FirstOrDefault();
             }
 
             if ( entity == null )
@@ -215,20 +213,21 @@ namespace ClassicAssist.Data.Macros.Commands
 
             bool Predicate( Entity i )
             {
-                return i.Serial == serial &&
-                       ( range == -1 || i.Distance < range );
+                return i.Serial == serial;
             }
 
             if ( owner != 0 )
             {
-                entity = Engine.Items.SelectEntities( i => Predicate( i ) && i.IsDescendantOf( owner ) )
+                entity = Engine.Items.SelectEntities( i => Predicate( i ) && i.IsDescendantOf( owner, range ) )
                     ?.FirstOrDefault();
             }
             else
             {
                 entity =
-                    (Entity) Engine.Mobiles.SelectEntities( Predicate )?.FirstOrDefault() ??
-                    Engine.Items.SelectEntities( i => Predicate( i ) && i.Owner == 0 )?.FirstOrDefault();
+                    (Entity) Engine.Mobiles
+                        .SelectEntities( i => Predicate( i ) && ( range == -1 || i.Distance < range ) )
+                        ?.FirstOrDefault() ?? Engine.Items.SelectEntities( i =>
+                        Predicate( i ) && ( range == -1 || i.Distance < range ) && i.Owner == 0 )?.FirstOrDefault();
             }
 
             if ( entity == null )
@@ -354,8 +353,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static void MoveType( int id, object sourceContainer, object destinationContainer, int x = -1,
-            int y = -1, int z = 0,
-            int hue = -1, int amount = -1 )
+            int y = -1, int z = 0, int hue = -1, int amount = -1 )
         {
             int sourceSerial = AliasCommands.ResolveSerial( sourceContainer );
 

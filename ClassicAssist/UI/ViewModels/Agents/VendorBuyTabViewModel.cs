@@ -145,13 +145,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             IEnumerable<VendorBuyAgentEntry> items = Items.Where( i => i.Enabled );
 
+            List<ShopListEntry> buyList = new List<ShopListEntry>();
+
             foreach ( VendorBuyAgentEntry entry in items )
             {
                 IEnumerable<ShopListEntry> matches = entries.Where( i =>
                     i.Item.ID == entry.Graphic && ( entry.Hue == -1 || i.Item.Hue == entry.Hue ) &&
                     ( entry.MaxPrice == -1 || i.Price <= entry.MaxPrice ) );
-
-                List<ShopListEntry> buyList = new List<ShopListEntry>();
 
                 foreach ( ShopListEntry match in matches )
                 {
@@ -179,13 +179,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     }
                 }
 
-                if ( !MacroManager.QuietMode && buyList.Count == 0 )
-                {
-                    UOC.SystemMessage( Strings.Buy_Agent__No_matches_found_ );
-                    return;
-                }
-
                 UOC.VendorBuy( serial, buyList.ToArray() );
+            }
+
+            if ( !MacroManager.QuietMode && buyList.Count == 0 )
+            {
+                UOC.SystemMessage( Strings.Buy_Agent__No_matches_found_ );
             }
         }
 

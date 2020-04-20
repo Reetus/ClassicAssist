@@ -11,7 +11,7 @@ namespace ClassicAssist.Data.Macros.Commands
     public static class JournalCommands
     {
         [CommandsDisplay( Category = nameof( Strings.Journal ) )]
-        public static bool InJournal( string text, string author = "" )
+        public static bool InJournal( string text, string author = "", int hue = -1 )
         {
             bool match;
 
@@ -19,14 +19,15 @@ namespace ClassicAssist.Data.Macros.Commands
             {
                 match = Engine.Journal.GetBuffer().Any( je =>
                     je.Text.ToLower().Contains( text.ToLower() ) &&
-                    ( je.SpeechType == JournalSpeech.System || je.Name == "System" ) );
+                    ( je.SpeechType == JournalSpeech.System || je.Name == "System" ) &&
+                    ( hue == -1 || je.SpeechHue == hue ) );
             }
             else
             {
-                match = Engine.Journal.GetBuffer()
-                    .Any( je => je.Text.ToLower().Contains( text.ToLower() ) &&
-                                ( string.IsNullOrEmpty( author ) || string.Equals( je.Name, author,
-                                      StringComparison.CurrentCultureIgnoreCase ) ) );
+                match = Engine.Journal.GetBuffer().Any( je =>
+                    je.Text.ToLower().Contains( text.ToLower() ) &&
+                    ( string.IsNullOrEmpty( author ) || string.Equals( je.Name, author,
+                          StringComparison.CurrentCultureIgnoreCase ) ) && ( hue == -1 || je.SpeechHue == hue ) );
             }
 
             return match;

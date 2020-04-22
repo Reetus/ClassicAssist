@@ -671,10 +671,26 @@ namespace ClassicAssist.UO.Network
                 }
             }
 
-            Gump gump = GumpParser.Parse( senderSerial, gumpId, x, y, layout, text );
-            Engine.Gumps.Add( gump );
+            try
+            {
+                Gump gump = GumpParser.Parse( senderSerial, gumpId, x, y, layout, text );
+                Engine.Gumps.Add( gump );
 
-            GumpEvent?.Invoke( gumpId, senderSerial, gump );
+                GumpEvent?.Invoke( gumpId, senderSerial, gump );
+            }
+            catch ( Exception e )
+            {
+                e.ToExceptionless()
+                    .SetProperty( "Serial", senderSerial )
+                    .SetProperty( "GumpID", gumpId )
+                    .SetProperty( "Layout", layout )
+                    .SetProperty( "Text", text )
+                    .SetProperty( "Packet", reader.GetData() )
+                    .SetProperty( "Player", Engine.Player.ToString() )
+                    .SetProperty( "WorldItemCount", Engine.Items.Count() )
+                    .SetProperty( "WorldMobileCount", Engine.Mobiles.Count() )
+                    .Submit();
+            }
         }
 
         private static void OnMobileName( PacketReader reader )

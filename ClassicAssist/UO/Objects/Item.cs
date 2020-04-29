@@ -1,4 +1,5 @@
-﻿using Assistant;
+﻿using System.Text;
+using Assistant;
 using ClassicAssist.Misc;
 using ClassicAssist.UO.Data;
 
@@ -81,6 +82,16 @@ namespace ClassicAssist.UO.Objects
             while ( owner != 0 );
 
             return false;
+        }
+
+        protected override void ToString( StringBuilder sb )
+        {
+            base.ToString( sb );
+
+            if ( Container != null )
+            {
+                sb.AppendLine( Container.ToString() );
+            }
         }
     }
 }

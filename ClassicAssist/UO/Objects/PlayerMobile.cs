@@ -1,4 +1,5 @@
-﻿using ClassicAssist.Data.Abilities;
+﻿using System.Text;
+using ClassicAssist.Data.Abilities;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.UO.Data;
@@ -109,6 +110,15 @@ namespace ClassicAssist.UO.Objects
 
             AbilitiesManager manager = AbilitiesManager.GetInstance();
             manager.ResendGump( manager.Enabled );
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine( $"Name: {Name}" );
+            sb.AppendLine( $"Serial: 0x{Serial:x}" );
+
+            return sb.ToString();
         }
     }
 }

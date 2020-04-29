@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using Assistant;
 using ClassicAssist.Data.Vendors;
@@ -103,6 +104,13 @@ namespace ClassicAssist.UO.Objects
             }
 
             return itemList.ToArray();
+        }
+
+        protected override void ToString( StringBuilder sb )
+        {
+            base.ToString( sb );
+            sb.Append( $"Flags: {Status}\n" );
+            sb.Append( $"Notoriety: {Notoriety}\n" );
         }
     }
 }

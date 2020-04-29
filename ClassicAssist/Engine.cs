@@ -219,9 +219,7 @@ namespace Assistant
         {
             Options.Save( Options.CurrentOptions );
             AssistantOptions.Save();
-#if !DEBUG
             ExceptionlessClient.Default.SubmitSessionEnd( AssistantOptions.UserId );
-#endif
         }
 
         private static void OnPlayerPositionChanged( int x, int y, int z )
@@ -282,28 +280,52 @@ namespace Assistant
 
         private static void ProcessIncomingQueue( Packet packet )
         {
-            PacketReceivedEvent?.Invoke( packet.GetPacket(), packet.GetLength() );
+            try
+            {
+                PacketReceivedEvent?.Invoke( packet.GetPacket(), packet.GetLength() );
 
-            PacketHandler handler = IncomingPacketHandlers.GetHandler( packet.GetPacketID() );
+                PacketHandler handler = IncomingPacketHandlers.GetHandler( packet.GetPacketID() );
 
-            int length = _getPacketLength( packet.GetPacketID() );
+                int length = _getPacketLength( packet.GetPacketID() );
 
-            handler?.OnReceive?.Invoke( new PacketReader( packet.GetPacket(), packet.GetLength(), length > 0 ) );
+                handler?.OnReceive?.Invoke( new PacketReader( packet.GetPacket(), packet.GetLength(), length > 0 ) );
 
-            PacketWaitEntries.CheckWait( packet.GetPacket(), PacketDirection.Incoming );
+                PacketWaitEntries.CheckWait( packet.GetPacket(), PacketDirection.Incoming );
+            }
+            catch ( Exception e )
+            {
+                e.ToExceptionless()
+                    .SetProperty( "Packet", packet.GetPacket() )
+                    .SetProperty( "Player", Player.ToString() )
+                    .SetProperty( "WorldItemCount", Items.Count() )
+                    .SetProperty( "WorldMobileCount", Mobiles.Count() )
+                    .Submit();
+            }
         }
 
         private static void ProcessOutgoingQueue( Packet packet )
         {
-            PacketSentEvent?.Invoke( packet.GetPacket(), packet.GetLength() );
+            try
+            {
+                PacketSentEvent?.Invoke( packet.GetPacket(), packet.GetLength() );
 
-            PacketHandler handler = OutgoingPacketHandlers.GetHandler( packet.GetPacketID() );
+                PacketHandler handler = OutgoingPacketHandlers.GetHandler( packet.GetPacketID() );
 
-            int length = _getPacketLength( packet.GetPacketID() );
+                int length = _getPacketLength( packet.GetPacketID() );
 
-            handler?.OnReceive?.Invoke( new PacketReader( packet.GetPacket(), packet.GetLength(), length > 0 ) );
+                handler?.OnReceive?.Invoke( new PacketReader( packet.GetPacket(), packet.GetLength(), length > 0 ) );
 
-            PacketWaitEntries.CheckWait( packet.GetPacket(), PacketDirection.Outgoing );
+                PacketWaitEntries.CheckWait( packet.GetPacket(), PacketDirection.Outgoing );
+            }
+            catch ( Exception e )
+            {
+                e.ToExceptionless()
+                    .SetProperty( "Packet", packet.GetPacket() )
+                    .SetProperty( "Player", Player.ToString() )
+                    .SetProperty( "WorldItemCount", Items.Count() )
+                    .SetProperty( "WorldMobileCount", Mobiles.Count() )
+                    .Submit();
+            }
         }
 
         private static Assembly OnAssemblyResolve( object sender, ResolveEventArgs args )

@@ -1184,4 +1184,10 @@ for i in GetList("food"):
   UseObject("found") 
   break</value>
   </data>
+  <data name="REPLAY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Replay the current macro</value>
+  </data>
+  <data name="REPLAY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Replay()</value>
+  </data>
 </root>

@@ -36,5 +36,15 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             MacroManager.GetInstance().StopAll();
         }
+
+        [CommandsDisplay( Category = nameof( Strings.Macros ) )]
+        public static void Replay()
+        {
+            MacroManager manager = MacroManager.GetInstance();
+
+            MacroEntry current = manager.GetCurrentMacro();
+
+            Task.Run( () => current.Action( current ) );
+        }
     }
 }

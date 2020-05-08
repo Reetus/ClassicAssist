@@ -1137,4 +1137,10 @@ MoveType(0x170f, "backpack", -1, 1928, 2526, 0)
 #Optional parameters exist for Hue and Amount, to move 10 maximum with the a Hue of 50...
 MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
   </data>
+  <data name="REPLAY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ripeti la Script corrente</value>
+  </data>
+  <data name="REPLAY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Replay()</value>
+  </data>
 </root>

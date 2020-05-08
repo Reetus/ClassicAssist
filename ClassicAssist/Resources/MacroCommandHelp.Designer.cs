@@ -2206,6 +2206,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Replay the current macro.
+        /// </summary>
+        public static string REPLAY_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("REPLAY_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replay().
+        /// </summary>
+        public static string REPLAY_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("REPLAY_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sends a button reply to server gump, parameters are gumpID and buttonID..
         /// </summary>
         public static string REPLYGUMP_COMMAND_DESCRIPTION {

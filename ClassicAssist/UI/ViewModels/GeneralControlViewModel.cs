@@ -306,6 +306,7 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             LoadProfile( profileName );
+            Engine.UpdateWindowTitle();
         }
 
         private void LinkUnlinkProfile( object obj )

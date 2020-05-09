@@ -1,4 +1,6 @@
-﻿using System;
+﻿// ReSharper disable once RedundantUsingDirective
+
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,7 +30,6 @@ using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using CUO_API;
-// ReSharper disable once RedundantUsingDirective
 using Exceptionless;
 using Octokit;
 
@@ -46,6 +47,8 @@ namespace Assistant
         public delegate void dPlayerInitialized( PlayerMobile player );
 
         public delegate void dSendRecvPacket( byte[] data, int length );
+
+        public delegate void dUpdateWindowTitle();
 
         private const int MAX_DISTANCE = 32;
 
@@ -106,6 +109,8 @@ namespace Assistant
         public static TargetType TargetType { get; set; }
         public static bool WaitingForTarget { get; set; }
         internal static ConcurrentDictionary<uint, int> GumpList { get; set; } = new ConcurrentDictionary<uint, int>();
+
+        public static event dUpdateWindowTitle UpdateWindowTitleEvent;
 
         internal static event dSendRecvPacket InternalPacketSentEvent;
         internal static event dSendRecvPacket InternalPacketReceivedEvent;
@@ -193,8 +198,7 @@ namespace Assistant
                 {
                     TimeSpan diff = DateTime.Now - _lastMouseAction[(int) mouse];
 
-                    if ( diff <
-                         TimeSpan.FromMilliseconds( Options.CurrentOptions.LimitMouseWheelTriggerMS ) )
+                    if ( diff < TimeSpan.FromMilliseconds( Options.CurrentOptions.LimitMouseWheelTriggerMS ) )
                     {
                         return;
                     }
@@ -294,12 +298,9 @@ namespace Assistant
             }
             catch ( Exception e )
             {
-                e.ToExceptionless()
-                    .SetProperty( "Packet", packet.GetPacket() )
-                    .SetProperty( "Player", Player.ToString() )
-                    .SetProperty( "WorldItemCount", Items.Count() )
-                    .SetProperty( "WorldMobileCount", Mobiles.Count() )
-                    .Submit();
+                e.ToExceptionless().SetProperty( "Packet", packet.GetPacket() )
+                    .SetProperty( "Player", Player.ToString() ).SetProperty( "WorldItemCount", Items.Count() )
+                    .SetProperty( "WorldMobileCount", Mobiles.Count() ).Submit();
             }
         }
 
@@ -319,12 +320,9 @@ namespace Assistant
             }
             catch ( Exception e )
             {
-                e.ToExceptionless()
-                    .SetProperty( "Packet", packet.GetPacket() )
-                    .SetProperty( "Player", Player.ToString() )
-                    .SetProperty( "WorldItemCount", Items.Count() )
-                    .SetProperty( "WorldMobileCount", Mobiles.Count() )
-                    .Submit();
+                e.ToExceptionless().SetProperty( "Packet", packet.GetPacket() )
+                    .SetProperty( "Player", Player.ToString() ).SetProperty( "WorldItemCount", Items.Count() )
+                    .SetProperty( "WorldMobileCount", Mobiles.Count() ).Submit();
             }
         }
 
@@ -383,8 +381,7 @@ namespace Assistant
                 if ( newStatus.HasFlag( MobileStatus.Hidden ) )
                 {
                     SendPacketToClient( new MobileUpdate( mobile.Serial, mobile.ID == 0x191 ? 0x193 : 0x192, mobile.Hue,
-                        newStatus, mobile.X,
-                        mobile.Y, mobile.Z, mobile.Direction ) );
+                        newStatus, mobile.X, mobile.Y, mobile.Z, mobile.Direction ) );
                 }
             };
 
@@ -395,8 +392,7 @@ namespace Assistant
                     GitHubClient client = new GitHubClient( new ProductHeaderValue( "ClassicAssist" ) );
 
                     IReadOnlyList<Release> releases =
-                        await client.Repository.Release.GetAll( "Reetus",
-                            "ClassicAssist" );
+                        await client.Repository.Release.GetAll( "Reetus", "ClassicAssist" );
 
                     Release latestRelease = releases.FirstOrDefault();
 
@@ -409,8 +405,7 @@ namespace Assistant
 
                     if ( !Version.TryParse(
                         FileVersionInfo.GetVersionInfo( Path.Combine( StartupPath, "ClassicAssist.dll" ) )
-                            .ProductVersion,
-                        out Version localVersion ) )
+                            .ProductVersion, out Version localVersion ) )
                     {
                         return;
                     }
@@ -549,6 +544,11 @@ namespace Assistant
         public static bool Move( Direction direction, bool run )
         {
             return _requestMove?.Invoke( (int) direction, run ) ?? false;
+        }
+
+        public static void UpdateWindowTitle()
+        {
+            UpdateWindowTitleEvent?.Invoke();
         }
 
         #region ClassicUO Events

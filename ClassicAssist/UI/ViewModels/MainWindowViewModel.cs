@@ -2,11 +2,9 @@
 using System.Windows.Input;
 using System.Windows.Threading;
 using Assistant;
+using ClassicAssist.Data;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.Views;
-using ClassicAssist.UO.Objects;
-using Exceptionless;
-using Exceptionless.Extensions;
 
 namespace ClassicAssist.UI.ViewModels
 {
@@ -20,8 +18,8 @@ namespace ClassicAssist.UI.ViewModels
 
         public MainWindowViewModel()
         {
-            Engine.PlayerInitializedEvent += PlayerInitialized;
             Engine.Dispatcher = Dispatcher.CurrentDispatcher;
+            Engine.UpdateWindowTitleEvent += OnUpdateWindowTitleEvent;
         }
 
         [OptionsBinding( Property = "AlwaysOnTop" )]
@@ -46,11 +44,11 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _title, value );
         }
 
-        private void PlayerInitialized( PlayerMobile player )
+        private void OnUpdateWindowTitleEvent()
         {
-            Title = string.IsNullOrEmpty( player.Name )
+            Title = string.IsNullOrEmpty( Engine.Player?.Name )
                 ? Strings.ProductName
-                : $"{Strings.ProductName} - {player.Name}";
+                : $"{Engine.Player?.Name} - {( Options.CurrentOptions.ShowProfileNameWindowTitle ? $"({Options.CurrentOptions.Name}) - " : "" )}{Strings.ProductName}";
         }
 
         private void ShowDebugWindow( object obj )

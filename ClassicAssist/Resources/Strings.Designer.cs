@@ -2482,6 +2482,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show Profile Name In Title.
+        /// </summary>
+        public static string Show_Profile_Name_In_Title {
+            get {
+                return ResourceManager.GetString("Show Profile Name In Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show World Items.
         /// </summary>
         public static string Show_World_Items {

@@ -143,6 +143,8 @@
                       IsChecked="{Binding CurrentOptions.GetFriendEnemyUsesIgnoreList}" />
             <CheckBox Content="{x:Static resources:Strings.Abilities_Gump}"
                       IsChecked="{Binding CurrentOptions.AbilitiesGump}" />
+            <CheckBox Content="{x:Static resources:Strings.Show_Profile_Name_In_Title}"
+                      IsChecked="{Binding CurrentOptions.ShowProfileNameWindowTitle}" />
         </StackPanel>
     </Grid>
 </UserControl>

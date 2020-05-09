@@ -50,6 +50,7 @@ namespace ClassicAssist.Data
         private bool _queueLastTarget;
         private bool _rangeCheckLastTarget;
         private int _rangeCheckLastTargetAmount = 11;
+        private bool _showProfileNameWindowTitle;
         private SmartTargetOption _smartTargetOption;
         private bool _useDeathScreenWhilstHidden;
         private bool _useExperimentalFizzleDetection;
@@ -230,6 +231,16 @@ namespace ClassicAssist.Data
         {
             get => _rangeCheckLastTargetAmount;
             set => SetProperty( ref _rangeCheckLastTargetAmount, value );
+        }
+
+        public bool ShowProfileNameWindowTitle
+        {
+            get => _showProfileNameWindowTitle;
+            set
+            {
+                SetProperty( ref _showProfileNameWindowTitle, value );
+                Engine.UpdateWindowTitle();
+            }
         }
 
         public SmartTargetOption SmartTargetOption

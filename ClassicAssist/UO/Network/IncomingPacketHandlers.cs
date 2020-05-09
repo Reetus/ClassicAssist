@@ -680,16 +680,11 @@ namespace ClassicAssist.UO.Network
             }
             catch ( Exception e )
             {
-                e.ToExceptionless()
-                    .SetProperty( "Serial", senderSerial )
-                    .SetProperty( "GumpID", gumpId )
-                    .SetProperty( "Layout", layout )
-                    .SetProperty( "Text", text )
-                    .SetProperty( "Packet", reader.GetData() )
-                    .SetProperty( "Player", Engine.Player.ToString() )
+                e.ToExceptionless().SetProperty( "Serial", senderSerial ).SetProperty( "GumpID", gumpId )
+                    .SetProperty( "Layout", layout ).SetProperty( "Text", text )
+                    .SetProperty( "Packet", reader.GetData() ).SetProperty( "Player", Engine.Player.ToString() )
                     .SetProperty( "WorldItemCount", Engine.Items.Count() )
-                    .SetProperty( "WorldMobileCount", Engine.Mobiles.Count() )
-                    .Submit();
+                    .SetProperty( "WorldMobileCount", Engine.Mobiles.Count() ).Submit();
             }
         }
 
@@ -928,8 +923,8 @@ namespace ClassicAssist.UO.Network
             if ( !UOMath.IsMobile( containerSerial ) )
             {
                 Layer layer = Engine.Player?.GetAllLayers().Select( ( s, i ) => new { i, s } )
-                                  .Where( t => t.s == serial )
-                                  .Select( t => (Layer) t.i ).FirstOrDefault() ?? Layer.Invalid;
+                                  .Where( t => t.s == serial ).Select( t => (Layer) t.i ).FirstOrDefault() ??
+                              Layer.Invalid;
 
                 if ( layer != Layer.Invalid )
                 {
@@ -939,8 +934,7 @@ namespace ClassicAssist.UO.Network
                 {
                     Mobile mobile = Engine.Mobiles.SelectEntity( m => m.GetAllLayers().Contains( serial ) );
 
-                    layer = mobile?.GetAllLayers().Select( ( s, i ) => new { i, s } )
-                                .Where( t => t.s == serial )
+                    layer = mobile?.GetAllLayers().Select( ( s, i ) => new { i, s } ).Where( t => t.s == serial )
                                 .Select( t => (Layer) t.i ).FirstOrDefault() ?? Layer.Invalid;
 
                     if ( layer != Layer.Invalid )
@@ -985,8 +979,7 @@ namespace ClassicAssist.UO.Network
         {
             int serial = reader.ReadInt32();
 
-            Mobile mobile = Engine.Mobiles
-                .FirstOrDefault( m => m.GetEquippedItems().Any( i => i.Serial == serial ) );
+            Mobile mobile = Engine.Mobiles.FirstOrDefault( m => m.GetEquippedItems().Any( i => i.Serial == serial ) );
 
             if ( mobile != null )
             {
@@ -1072,6 +1065,7 @@ namespace ClassicAssist.UO.Network
             {
                 Engine.Player.Name = name;
                 Engine.Player.Properties = list.ToArray();
+                Engine.UpdateWindowTitle();
             }
             else if ( UOMath.IsMobile( serial ) )
             {
@@ -1175,6 +1169,8 @@ namespace ClassicAssist.UO.Network
                 player.FasterCasting = reader.ReadInt16();
                 player.LowerManaCost = reader.ReadInt16();
             }
+
+            Engine.UpdateWindowTitle();
         }
 
         private static void OnMobileIncoming( PacketReader reader )
@@ -1332,14 +1328,12 @@ namespace ClassicAssist.UO.Network
             }
             catch ( Exception e )
             {
-                e.ToExceptionless()
-                    .SetProperty( "ContainerSerial", containerItem?.Serial )
-                    .SetProperty( "Count", count )
-                    .SetProperty( "Packet", reader.GetData() )
-                    .SetProperty( "WorldContainsContainerSerial", Engine.Items.Any(i => containerItem != null && i.Serial == containerItem.Serial) )
+                e.ToExceptionless().SetProperty( "ContainerSerial", containerItem?.Serial )
+                    .SetProperty( "Count", count ).SetProperty( "Packet", reader.GetData() )
+                    .SetProperty( "WorldContainsContainerSerial",
+                        Engine.Items.Any( i => containerItem != null && i.Serial == containerItem.Serial ) )
                     .SetProperty( "WorldItemCount", Engine.Items.Count() )
-                    .SetProperty( "WorldMobileCount", Engine.Mobiles.Count() )
-                    .Submit();
+                    .SetProperty( "WorldMobileCount", Engine.Mobiles.Count() ).Submit();
             }
         }
 

@@ -1164,4 +1164,7 @@
   <data name="Context menu request" xml:space="preserve">
     <value>Richiesta del menu di scelta rapida</value>
   </data>
+  <data name="Show Profile Name In Title" xml:space="preserve">
+    <value>Mostra nome profilo nel titolo</value>
+  </data>
 </root>

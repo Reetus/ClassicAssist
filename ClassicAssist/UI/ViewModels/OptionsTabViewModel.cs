@@ -66,6 +66,7 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "AbilitiesGump", CurrentOptions.AbilitiesGump );
             options.Add( "AbilitiesGumpX", CurrentOptions.AbilitiesGumpX );
             options.Add( "AbilitiesGumpY", CurrentOptions.AbilitiesGumpY );
+            options.Add( "ShowProfileNameWindowTitle", CurrentOptions.ShowProfileNameWindowTitle );
 
             json?.Add( "Options", options );
         }
@@ -125,6 +126,8 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.AbilitiesGump = config?["AbilitiesGump"]?.ToObject<bool>() ?? true;
             CurrentOptions.AbilitiesGumpX = config?["AbilitiesGumpX"]?.ToObject<int>() ?? 100;
             CurrentOptions.AbilitiesGumpY = config?["AbilitiesGumpY"]?.ToObject<int>() ?? 100;
+            CurrentOptions.ShowProfileNameWindowTitle =
+                config?["ShowProfileNameWindowTitle"]?.ToObject<bool>() ?? false;
 
             if ( CurrentOptions.AbilitiesGumpX < 0 )
             {

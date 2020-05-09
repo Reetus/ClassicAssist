@@ -1164,4 +1164,7 @@
   <data name="Context menu request" xml:space="preserve">
     <value>컨텍스트 메뉴 요청</value>
   </data>
+  <data name="Show Profile Name In Title" xml:space="preserve">
+    <value>제목에 프로필 이름 표시</value>
+  </data>
 </root>

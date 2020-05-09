@@ -1164,4 +1164,7 @@
   <data name="Context menu request" xml:space="preserve">
     <value>Context menu request</value>
   </data>
+  <data name="Show Profile Name In Title" xml:space="preserve">
+    <value>Show Profile Name In Title</value>
+  </data>
 </root>

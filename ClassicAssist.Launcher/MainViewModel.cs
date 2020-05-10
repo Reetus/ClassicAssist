@@ -107,7 +107,8 @@ namespace ClassicAssist.Launcher
                             Name = token["Name"]?.ToObject<string>() ?? "Unknown",
                             Address = token["Address"]?.ToObject<string>() ?? "localhost",
                             Port = token["Port"]?.ToObject<int>() ?? 2593,
-                            HasStatusProtocol = token["HasStatusProtocol"]?.ToObject<bool>() ?? true
+                            HasStatusProtocol = token["HasStatusProtocol"]?.ToObject<bool>() ?? true,
+                            Encryption = token["Encryption"]?.ToObject<bool>() ?? false
                         };
 
                         ShardEntries.Add( shard );
@@ -372,6 +373,7 @@ namespace ClassicAssist.Launcher
             args.Append( $"-plugins \"{plugins}\" " );
             args.Append( $"-ip \"{ip}\" -port \"{SelectedShard.Port}\" " );
             args.Append( $"-uopath \"{SelectedDataPath}\" " );
+            args.Append( $"-encryption {( SelectedShard.Encryption ? 1 : 0 )} " );
 
             BuildClassicOptions( args );
 
@@ -477,7 +479,8 @@ namespace ClassicAssist.Launcher
                     { "Name", shard.Name },
                     { "Address", shard.Address },
                     { "Port", shard.Port },
-                    { "HasStatusProtocol", shard.HasStatusProtocol }
+                    { "HasStatusProtocol", shard.HasStatusProtocol },
+                    { "Encryption", shard.Encryption }
                 };
 
                 shardArray.Add( shardObj );

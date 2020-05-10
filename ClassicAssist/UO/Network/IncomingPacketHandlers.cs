@@ -1308,7 +1308,7 @@ namespace ClassicAssist.UO.Network
                     return;
                 }
 
-                containerItem = Engine.Items.GetItem( container.Serial );
+                containerItem = Engine.GetOrCreateItem( container.Serial );
 
                 if ( containerItem.Container == null )
                 {

@@ -119,6 +119,7 @@
                     <Label Content="{x:Static r:Strings.Name_}" />
                     <Label Content="{x:Static r:Strings.Serial_}" />
                     <Label Content="{x:Static r:Strings.Last_Target_}" />
+                    <Label Content="{x:Static r:Strings.Status_}" />
                 </StackPanel>
                 <StackPanel DockPanel.Dock="Right">
                     <StackPanel.Resources>
@@ -130,6 +131,7 @@
                     <Label Content="{Binding PlayerSerial, Converter={StaticResource IntToHexStringValueConverter}}" />
                     <Label
                         Content="{Binding LastTargetSerial, Converter={StaticResource IntToHexStringValueConverter}}" />
+                    <Label Content="{Binding PlayerStatus}" />
                 </StackPanel>
             </DockPanel>
         </GroupBox>

@@ -9,6 +9,7 @@ namespace ClassicAssist.Launcher
     {
         private const string RUNUO_REGEX = @".*Clients=(\d+),.*";
         private string _address;
+        private bool _encryption;
         private string _name;
         private string _ping;
         private int _port;
@@ -19,6 +20,12 @@ namespace ClassicAssist.Launcher
         {
             get => _address;
             set => SetProperty( ref _address, value );
+        }
+
+        public bool Encryption
+        {
+            get => _encryption;
+            set => SetProperty( ref _encryption, value );
         }
 
         public bool HasStatusProtocol { get; set; } = true;

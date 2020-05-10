@@ -75,9 +75,16 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{x:Static properties:Resources.Players}" Width="100"
+                    <GridViewColumn Header="Encryption" Width="75">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Encryption}" IsEnabled="{Binding IsPreset, Converter={StaticResource InverseBooleanConverter}}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="{x:Static properties:Resources.Players}" Width="75"
                                     DisplayMemberBinding="{Binding Status}" />
-                    <GridViewColumn Header="{x:Static properties:Resources.Ping}" Width="100"
+                    <GridViewColumn Header="{x:Static properties:Resources.Ping}" Width="75"
                                     DisplayMemberBinding="{Binding Ping}" />
                 </GridView>
             </ListView.View>

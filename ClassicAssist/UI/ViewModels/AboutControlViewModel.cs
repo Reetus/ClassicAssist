@@ -8,6 +8,7 @@ using System.Windows.Threading;
 using Assistant;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.Views;
+using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
@@ -28,6 +29,7 @@ namespace ClassicAssist.UI.ViewModels
         private Timer _pingTimer;
         private string _playerName;
         private int _playerSerial;
+        private string _playerStatus;
         private ICommand _showItemsCommand;
         private Timer _timer;
 
@@ -104,6 +106,12 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _playerSerial, value );
         }
 
+        public string PlayerStatus
+        {
+            get => _playerStatus;
+            set => SetProperty( ref _playerStatus, value );
+        }
+
         public string Product { get; } = Strings.ProductName;
 
         public ICommand ShowItemsCommand =>
@@ -147,9 +155,7 @@ namespace ClassicAssist.UI.ViewModels
             {
                 EntityCollectionViewer window = new EntityCollectionViewer
                 {
-                    DataContext =
-                        new EntityCollectionViewerViewModel(
-                            new ItemCollection( 0 ) { e } )
+                    DataContext = new EntityCollectionViewerViewModel( new ItemCollection( 0 ) { e } )
                 };
 
                 window.Show();
@@ -160,7 +166,14 @@ namespace ClassicAssist.UI.ViewModels
         {
             PlayerSerial = player.Serial;
             PlayerName = player.Name;
+            PlayerStatus = player.Status.ToString();
             player.LastTargetChangedEvent += LastTargetChangedEvent;
+            player.MobileStatusUpdated += OnMobileStatusUpdated;
+        }
+
+        private void OnMobileStatusUpdated( MobileStatus oldstatus, MobileStatus newstatus )
+        {
+            PlayerStatus = newstatus.ToString();
         }
 
         private void OnDisconnectedEvent()

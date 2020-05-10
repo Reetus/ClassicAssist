@@ -11,6 +11,16 @@ namespace ClassicAssist.Launcher
         {
             Shards.Add( new ShardEntry
             {
+                Name = "Official EA Servers",
+                Address = "login.ultimaonline.com",
+                Port = 7775,
+                IsPreset = true,
+                HasStatusProtocol = false,
+                Encryption = true
+            } );
+
+            Shards.Add( new ShardEntry
+            {
                 Name = "UOGamers: Demise", Address = "login.uodemise.com", Port = 2593, IsPreset = true
             } );
 

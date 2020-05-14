@@ -210,4 +210,7 @@
   <data name="Client Version" xml:space="preserve">
     <value>Client Version</value>
   </data>
+  <data name="Encryption" xml:space="preserve">
+    <value>Encryption</value>
+  </data>
 </root>

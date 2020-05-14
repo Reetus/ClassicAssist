@@ -14,6 +14,8 @@ Add the full path to ClassicAssist.dll to the plugin section of the ClassicUO se
 
 Alternatively, use ClassicAssist.Launcher.exe and it will launch ClassicUO with the required path to the plugin.
 
+[Installation Video](https://www.youtube.com/watch?v=SQ5QhR1TS1U&feature=youtu.be)
+
 ## Zone.Identifier
 
 If ClassicAssist fails to run or you receive an error message about loading from the network, follow the instructions here to unblock the files:

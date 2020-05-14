@@ -637,6 +637,11 @@ namespace ClassicAssist.UO.Network
 
             string layout = Encoding.ASCII.GetString( decompressedBuffer );
 
+            if ( string.IsNullOrEmpty( layout ) )
+            {
+                return;
+            }
+
             int linesCount = reader.ReadInt32();
 
             compressedLength = reader.ReadInt32();

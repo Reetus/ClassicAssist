@@ -210,4 +210,7 @@
   <data name="Client Version" xml:space="preserve">
     <value>客户端版本</value>
   </data>
+  <data name="Encryption" xml:space="preserve">
+    <value>加密</value>
+  </data>
 </root>

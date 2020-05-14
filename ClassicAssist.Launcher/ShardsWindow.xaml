@@ -12,7 +12,7 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     x:Class="ClassicAssist.Launcher.ShardsWindow"
     mc:Ignorable="d"
-    Title="{x:Static properties:Resources.Shards}" Height="350" Width="600" WindowStartupLocation="CenterScreen">
+    Title="{x:Static properties:Resources.Shards}" Height="400" Width="620" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ValueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <ValueConverters:BooleanToOpacityValueConverter x:Key="BooleanToOpacityValueConverter" />
@@ -27,7 +27,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ToolBar Grid.Row="0">
+        <ToolBar Grid.Row="0" Style="{DynamicResource ToolBarStyle1}">
             <Button Height="24" Margin="0,0,5,0" Command="{Binding AddCommand, Mode=OneWay}">
                 <Image Source="{StaticResource AddIcon}" ToolTip="{x:Static properties:Resources.Add}"
                        Opacity="{Binding IsEnabled, Converter={StaticResource BooleanToOpacityValueConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" />
@@ -75,10 +75,11 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Encryption" Width="75">
+                    <GridViewColumn Header="{x:Static properties:Resources.Encryption}" Width="75">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding Encryption}" IsEnabled="{Binding IsPreset, Converter={StaticResource InverseBooleanConverter}}" />
+                                <CheckBox IsChecked="{Binding Encryption}"
+                                          IsEnabled="{Binding IsPreset, Converter={StaticResource InverseBooleanConverter}}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

@@ -32,6 +32,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="PresentationFramework.Aero2" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Controls\EditTextBlock.xaml.cs">

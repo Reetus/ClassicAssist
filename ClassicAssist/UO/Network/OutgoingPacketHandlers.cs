@@ -33,8 +33,19 @@ namespace ClassicAssist.UO.Network
             Register( 0x13, 10, OnEquipRequest );
             Register( 0x6C, 19, OnTargetSent );
             Register( 0xB1, 0, OnGumpButtonPressed );
+            Register( 0xBD, 0, OnClientVersion );
             Register( 0xD7, 0, OnEncodedCommand );
             Register( 0xEF, 31, OnNewClientVersion );
+        }
+
+        private static void OnClientVersion( PacketReader reader )
+        {
+            string version = reader.ReadString();
+
+            string[] versionArray = version.Split( '.' );
+
+            Engine.ClientVersion = new Version( int.Parse( versionArray[0] ), int.Parse( versionArray[1] ),
+                int.Parse( versionArray[2] ), versionArray.Length > 3 ? int.Parse( versionArray[3] ) : 0 );
         }
 
         private static void OnEquipRequest( PacketReader reader )

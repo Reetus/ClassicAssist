@@ -38,6 +38,7 @@
         <Grid Margin="5" Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
@@ -46,7 +47,9 @@
             </Grid.Resources>
             <CheckBox Content="{x:Static resources:Strings.Move_conflicting_items}"
                       IsChecked="{Binding MoveConflictingItems}" Grid.Row="0" />
-            <ListBox x:Name="listBox1" Grid.Row="1" Margin="0,5" ItemsSource="{Binding Items}"
+            <CheckBox Content="{x:Static resources:Strings.Use_UO3D_Packets}"
+                      IsChecked="{Binding UseUO3DPackets}" Grid.Row="1" ToolTip="{x:Static resources:Strings.Requires_Server_Support}"/>
+            <ListBox x:Name="listBox1" Grid.Row="2" Margin="0,5" ItemsSource="{Binding Items}"
                      SelectedItem="{Binding SelectedItem}" SelectedIndex="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -55,7 +58,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="10" />

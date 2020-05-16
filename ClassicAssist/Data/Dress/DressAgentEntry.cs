@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Misc;
-using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
@@ -72,49 +72,74 @@ namespace ClassicAssist.Data.Dress
                 return;
             }
 
-            await Task.Run( async () =>
+            if ( DressManager.GetInstance().UseUO3DPackets )
             {
-                foreach ( DressAgentItem dai in Items )
+                //TODO DressAgentItemType.ID
+
+                if ( moveConflicting )
                 {
-                    Item item = Engine.Items.GetItem( dai.Serial );
+                    int[] conflictingLayers = Engine.Player.GetEquippedItems()
+                        .Where( i => Items.Any( ii => i.Layer == ii.Layer && i.Serial != ii.Serial ) )
+                        .Select( l => (int) l.Layer ).ToArray();
 
-                    if ( item == null && dai.Type == DressAgentItemType.Serial )
+                    if ( conflictingLayers.Length > 0 )
                     {
-                        continue;
-                    }
-
-                    int currentInLayer = Engine.Player?.GetLayer( dai.Layer ) ?? 0;
-
-                    if ( currentInLayer == item?.Serial )
-                    {
-                        continue;
-                    }
-
-                    if ( currentInLayer != 0 && moveConflicting && container != -1 )
-                    {
-                        await ActionPacketQueue.EnqueueDragDrop( currentInLayer, 1, container, QueuePriority.Medium );
-
-                        currentInLayer = 0;
-                    }
-
-                    if ( currentInLayer != 0 )
-                    {
-                        continue;
-                    }
-
-                    switch ( dai.Type )
-                    {
-                        case DressAgentItemType.Serial:
-                            await UOC.EquipItem( item, dai.Layer );
-                            break;
-                        case DressAgentItemType.ID:
-                            await UOC.EquipType( dai.ID, dai.Layer );
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
+                        UOC.UO3DUnequipItems( conflictingLayers );
+                        Thread.Sleep( Options.CurrentOptions.ActionDelayMS );
                     }
                 }
-            } );
+
+                int[] dressItems = Items.Select( i => i.Serial ).ToArray();
+
+                UOC.UO3DEquipItems( dressItems );
+            }
+            else
+            {
+                await Task.Run( async () =>
+                {
+                    foreach ( DressAgentItem dai in Items )
+                    {
+                        Item item = Engine.Items.GetItem( dai.Serial );
+
+                        if ( item == null && dai.Type == DressAgentItemType.Serial )
+                        {
+                            continue;
+                        }
+
+                        int currentInLayer = Engine.Player?.GetLayer( dai.Layer ) ?? 0;
+
+                        if ( currentInLayer == item?.Serial )
+                        {
+                            continue;
+                        }
+
+                        if ( currentInLayer != 0 && moveConflicting && container != -1 )
+                        {
+                            await ActionPacketQueue.EnqueueDragDrop( currentInLayer, 1, container,
+                                QueuePriority.Medium );
+
+                            currentInLayer = 0;
+                        }
+
+                        if ( currentInLayer != 0 )
+                        {
+                            continue;
+                        }
+
+                        switch ( dai.Type )
+                        {
+                            case DressAgentItemType.Serial:
+                                await UOC.EquipItem( item, dai.Layer );
+                                break;
+                            case DressAgentItemType.ID:
+                                await UOC.EquipType( dai.ID, dai.Layer );
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                } );
+            }
         }
 
         public async Task Undress()
@@ -133,12 +158,22 @@ namespace ClassicAssist.Data.Dress
 
             IEnumerable<int> serials = Items.Select( dai => dai.Serial );
 
-            IEnumerable<Item> itemsToUnequip =
-                Engine.Player.GetEquippedItems().Where( i => serials.Contains( i.Serial ) );
-
-            foreach ( Item item in itemsToUnequip )
+            if ( DressManager.GetInstance().UseUO3DPackets )
             {
-                await ActionPacketQueue.EnqueueDragDrop( item.Serial, 1, container, QueuePriority.Medium );
+                int[] layers = Engine.Player.GetEquippedItems().Where( i => serials.Contains( i.Serial ) )
+                    .Select( i => (int) i.Layer ).ToArray();
+
+                UOC.UO3DUnequipItems( layers );
+            }
+            else
+            {
+                IEnumerable<Item> itemsToUnequip =
+                    Engine.Player.GetEquippedItems().Where( i => serials.Contains( i.Serial ) );
+
+                foreach ( Item item in itemsToUnequip )
+                {
+                    await ActionPacketQueue.EnqueueDragDrop( item.Serial, 1, container, QueuePriority.Medium );
+                }
             }
         }
     }

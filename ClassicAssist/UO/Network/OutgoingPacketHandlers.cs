@@ -42,10 +42,7 @@ namespace ClassicAssist.UO.Network
         {
             string version = reader.ReadString();
 
-            string[] versionArray = version.Split( '.' );
-
-            Engine.ClientVersion = new Version( int.Parse( versionArray[0] ), int.Parse( versionArray[1] ),
-                int.Parse( versionArray[2] ), versionArray.Length > 3 ? int.Parse( versionArray[3] ) : 0 );
+            Engine.ClientVersion = Version.Parse( version );
         }
 
         private static void OnEquipRequest( PacketReader reader )

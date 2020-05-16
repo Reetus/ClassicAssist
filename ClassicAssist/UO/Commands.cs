@@ -145,8 +145,7 @@ namespace ClassicAssist.UO
             Engine.SendPacketToClient( pw );
         }
 
-        public static void MobileQuery( int serial,
-            MobileQueryType queryType = MobileQueryType.StatsRequest )
+        public static void MobileQuery( int serial, MobileQueryType queryType = MobileQueryType.StatsRequest )
         {
             Engine.SendPacketToServer( new MobileQuery( serial, queryType ) );
         }
@@ -181,8 +180,7 @@ namespace ClassicAssist.UO
                 int serial = -1;
 
                 PacketFilterInfo pfi = new PacketFilterInfo( 0x6C,
-                    new[] { PacketFilterConditions.UIntAtPositionCondition( value, 2 ) },
-                    ( packet, info ) =>
+                    new[] { PacketFilterConditions.UIntAtPositionCondition( value, 2 ) }, ( packet, info ) =>
                     {
                         serial = ( packet[7] << 24 ) | ( packet[8] << 16 ) | ( packet[9] << 8 ) | packet[10];
 
@@ -563,7 +561,8 @@ namespace ClassicAssist.UO
             }
         }
 
-        public static async Task<bool> WaitForIncomingPacketFilterAsync( PacketFilterInfo pfi, int timeout, bool invokeHandler = true, bool fixedSize = false )
+        public static async Task<bool> WaitForIncomingPacketFilterAsync( PacketFilterInfo pfi, int timeout,
+            bool invokeHandler = true, bool fixedSize = false )
         {
             AutoResetEvent are = new AutoResetEvent( false );
             byte[] packet = null;
@@ -822,6 +821,50 @@ namespace ClassicAssist.UO
             pw.Write( (byte) ( force ? 2 : 0 ) );
 
             Engine.SendPacketToClient( pw );
+        }
+
+        public static void UO3DEquipItems( int[] serials )
+        {
+            if ( serials == null || serials.Length == 0 )
+            {
+                return;
+            }
+
+            int len = 4 + (serials.Length * 4);
+
+            PacketWriter pw = new PacketWriter( len );
+
+            pw.Write( (byte) 0xEC );
+            pw.Write( (short) len ); //size
+            pw.Write( (byte) serials.Length );
+
+            foreach ( int serial in serials )
+            {
+                pw.Write( serial );
+            }
+
+            Engine.SendPacketToServer( pw );
+        }
+
+        public static void UO3DUnequipItems( int[] layers )
+        {
+            if ( layers == null || layers.Length == 0 )
+            {
+                return;
+            }
+
+            PacketWriter pw = new PacketWriter( 4 + layers.Length * 2 );
+
+            pw.Write( (byte) 0xED );
+            pw.Write( (short) ( 4 + layers.Length * 2 ) );
+            pw.Write( (byte) layers.Length );
+
+            foreach ( int layer in layers )
+            {
+                pw.Write( (short) layer );
+            }
+
+            Engine.SendPacketToServer( pw );
         }
     }
 }

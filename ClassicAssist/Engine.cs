@@ -85,6 +85,8 @@ namespace Assistant
         private static DateTime _nextPacketSendTime;
         private static IntPtr _hWnd;
 
+        public static Assembly ClassicAssembly { get; set; }
+
         public static string ClientPath { get; set; }
         public static Version ClientVersion { get; set; }
         public static bool Connected { get; set; }
@@ -167,6 +169,8 @@ namespace Assistant
             _requestMove = Marshal.GetDelegateForFunctionPointer<RequestMove>( plugin->RequestMove );
 
             ClientPath = _getUOFilePath();
+            ClientVersion = new Version( (byte) ( plugin->ClientVersion >> 24 ), (byte) ( plugin->ClientVersion >> 16 ),
+                (byte) ( plugin->ClientVersion >> 8 ), (byte) plugin->ClientVersion );
 
             if ( !Path.IsPathRooted( ClientPath ) )
             {
@@ -179,6 +183,9 @@ namespace Assistant
             Skills.Initialize( ClientPath );
             Speech.Initialize( ClientPath );
             TileData.Initialize( ClientPath );
+
+            ClassicAssembly = AppDomain.CurrentDomain.GetAssemblies()
+                .FirstOrDefault( a => a.FullName.StartsWith( "ClassicUO," ) );
         }
 
         private static void OnMouse( int button, int wheel )
@@ -549,6 +556,39 @@ namespace Assistant
         public static void UpdateWindowTitle()
         {
             UpdateWindowTitleEvent?.Invoke();
+        }
+
+        public static void GetMapZ( int x, int y, out sbyte groundZ, out sbyte staticZ )
+        {
+            groundZ = staticZ = (sbyte) ( Player?.Z ?? 0 );
+
+            if ( ClassicAssembly == null )
+            {
+                return;
+            }
+
+            PropertyInfo mapProperty = ClassicAssembly.GetType( "ClassicUO.Game.World" )?.GetProperty( "Map" );
+
+            if ( mapProperty == null )
+            {
+                return;
+            }
+
+            object mapInstance = mapProperty.GetMethod.Invoke( mapProperty, null );
+
+            MethodInfo getMapZMethod = mapInstance?.GetType().GetMethod( "GetMapZ" );
+
+            if ( getMapZMethod == null )
+            {
+                return;
+            }
+
+            object[] parameters = { x, y, null, null };
+
+            getMapZMethod.Invoke( mapInstance, parameters );
+
+            groundZ = (sbyte) parameters[2];
+            staticZ = (sbyte) parameters[3];
         }
 
         #region ClassicUO Events

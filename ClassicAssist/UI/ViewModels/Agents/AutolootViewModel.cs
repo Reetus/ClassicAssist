@@ -14,6 +14,7 @@ using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UI.Views;
+using ClassicAssist.UI.Views.Autoloot;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
@@ -30,12 +31,20 @@ namespace ClassicAssist.UI.ViewModels.Agents
     {
         private const int LOOT_TIMEOUT = 5000;
         private readonly object _autolootLock = new object();
+
+        private readonly string _propertiesFile = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
+            "Data", "Properties.json" );
+
+        private readonly string _propertiesFileCustom =
+            Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data", "Properties.Custom.json" );
+
         private ICommand _clipboardCopyCommand;
         private ICommand _clipboardPasteCommand;
 
         private ObservableCollection<PropertyEntry> _constraints = new ObservableCollection<PropertyEntry>();
 
         private int _containerSerial;
+        private ICommand _defineCustomPropertiesCommand;
 
         private bool _disableInGuardzone;
         private bool _enabled;
@@ -44,6 +53,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private ICommand _insertConstraintCommand;
 
         private ObservableCollectionEx<AutolootEntry> _items = new ObservableCollectionEx<AutolootEntry>();
+
         private ICommand _removeCommand;
         private ICommand _removeConstraintCommand;
         private RelayCommand _resetContainerCommand;
@@ -54,28 +64,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public AutolootViewModel()
         {
-            string constraintsFile = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data",
-                "Properties.json" );
-
-            if ( !File.Exists( constraintsFile ) )
+            if ( !File.Exists( _propertiesFile ) )
             {
                 return;
             }
 
-            JsonSerializer serializer = new JsonSerializer();
-
-            using ( StreamReader sr = new StreamReader( constraintsFile ) )
-            {
-                using ( JsonTextReader reader = new JsonTextReader( sr ) )
-                {
-                    PropertyEntry[] constraints = serializer.Deserialize<PropertyEntry[]>( reader );
-
-                    foreach ( PropertyEntry constraint in constraints )
-                    {
-                        Constraints.AddSorted( constraint );
-                    }
-                }
-            }
+            LoadProperties();
+            LoadCustomProperties();
 
             AutolootHelpers.SetAutolootContainer = serial => ContainerSerial = serial;
             IncomingPacketHandlers.CorpseContainerDisplayEvent += OnCorpseContainerDisplayEvent;
@@ -98,6 +93,10 @@ namespace ClassicAssist.UI.ViewModels.Agents
             get => _containerSerial;
             set => SetProperty( ref _containerSerial, value );
         }
+
+        public ICommand DefineCustomPropertiesCommand =>
+            _defineCustomPropertiesCommand ??
+            ( _defineCustomPropertiesCommand = new RelayCommand( DefineCustomProperties, o => true ) );
 
         public bool DisableInGuardzone
         {
@@ -272,6 +271,47 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
         }
 
+        private void LoadCustomProperties()
+        {
+            if ( !File.Exists( _propertiesFileCustom ) )
+            {
+                return;
+            }
+
+            JsonSerializer serializer = new JsonSerializer();
+
+            using ( StreamReader sr = new StreamReader( _propertiesFileCustom ) )
+            {
+                using ( JsonTextReader reader = new JsonTextReader( sr ) )
+                {
+                    PropertyEntry[] constraints = serializer.Deserialize<PropertyEntry[]>( reader );
+
+                    foreach ( PropertyEntry constraint in constraints )
+                    {
+                        Constraints.AddSorted( constraint );
+                    }
+                }
+            }
+        }
+
+        private void LoadProperties()
+        {
+            JsonSerializer serializer = new JsonSerializer();
+
+            using ( StreamReader sr = new StreamReader( _propertiesFile ) )
+            {
+                using ( JsonTextReader reader = new JsonTextReader( sr ) )
+                {
+                    PropertyEntry[] constraints = serializer.Deserialize<PropertyEntry[]>( reader );
+
+                    foreach ( PropertyEntry constraint in constraints )
+                    {
+                        Constraints.AddSorted( constraint );
+                    }
+                }
+            }
+        }
+
         private void ClipboardPaste( object obj )
         {
             string text = Clipboard.GetText();
@@ -422,6 +462,19 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 };
 
             SelectedItem.Constraints = new ObservableCollection<AutolootConstraintEntry>( constraints );
+        }
+
+        private void DefineCustomProperties( object obj )
+        {
+            Engine.Dispatcher.Invoke( () =>
+            {
+                CustomPropertiesWindow window = new CustomPropertiesWindow();
+                window.ShowDialog();
+
+                Constraints.Clear();
+                LoadProperties();
+                LoadCustomProperties();
+            } );
         }
 
         private void ResetContainer( object obj )

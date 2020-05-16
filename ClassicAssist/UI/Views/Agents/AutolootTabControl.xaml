@@ -118,6 +118,7 @@
                         <Image.ContextMenu>
                             <ContextMenu IsOpen="False">
                                 <MenuItem Header="{x:Static resources:Strings.Reset_Container}" Command="{Binding Source={StaticResource Proxy}, Path=Data.ResetContainerCommand}" />
+                                <MenuItem Header="{x:Static resources:Strings.Define_Custom_Properties}" Command="{Binding Source={StaticResource Proxy}, Path=Data.DefineCustomPropertiesCommand}" />
                             </ContextMenu>
                         </Image.ContextMenu>
                     </Image>

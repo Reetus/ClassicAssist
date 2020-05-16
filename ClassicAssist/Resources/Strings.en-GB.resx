@@ -1170,4 +1170,19 @@
   <data name="Use UO3D Packets" xml:space="preserve">
     <value>Use UO3D Packets</value>
   </data>
+  <data name="Define Custom Properties" xml:space="preserve">
+    <value>Define Custom Properties</value>
+  </data>
+  <data name="Cliloc" xml:space="preserve">
+    <value>Cliloc</value>
+  </data>
+  <data name="Arguments" xml:space="preserve">
+    <value>Arguments</value>
+  </data>
+  <data name="Choose by Cliloc" xml:space="preserve">
+    <value>Choose by Cliloc</value>
+  </data>
+  <data name="Choose from Item" xml:space="preserve">
+    <value>Choose from Item</value>
+  </data>
 </root>

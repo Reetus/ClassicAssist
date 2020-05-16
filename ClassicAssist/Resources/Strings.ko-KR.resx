@@ -1170,4 +1170,19 @@
   <data name="Use UO3D Packets" xml:space="preserve">
     <value>UO3D 패킷 사용</value>
   </data>
+  <data name="Define Custom Properties" xml:space="preserve">
+    <value>사용자 지정 속성 정의</value>
+  </data>
+  <data name="Cliloc" xml:space="preserve">
+    <value>Cliloc</value>
+  </data>
+  <data name="Arguments" xml:space="preserve">
+    <value>인수</value>
+  </data>
+  <data name="Choose by Cliloc" xml:space="preserve">
+    <value>Cliloc에 의해 선택</value>
+  </data>
+  <data name="Choose from Item" xml:space="preserve">
+    <value>항목 중에서 선택</value>
+  </data>
 </root>

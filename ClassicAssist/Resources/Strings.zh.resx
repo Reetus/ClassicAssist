@@ -1170,4 +1170,19 @@
   <data name="Use UO3D Packets" xml:space="preserve">
     <value>使用 UO3D 数据包</value>
   </data>
+  <data name="Define Custom Properties" xml:space="preserve">
+    <value>定义自定义属性</value>
+  </data>
+  <data name="Cliloc" xml:space="preserve">
+    <value>Cliloc</value>
+  </data>
+  <data name="Arguments" xml:space="preserve">
+    <value>参数</value>
+  </data>
+  <data name="Choose by Cliloc" xml:space="preserve">
+    <value>由克利洛克选择</value>
+  </data>
+  <data name="Choose from Item" xml:space="preserve">
+    <value>从项目中进行选择</value>
+  </data>
 </root>

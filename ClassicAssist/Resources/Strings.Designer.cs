@@ -241,6 +241,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Arguments.
+        /// </summary>
+        public static string Arguments {
+            get {
+                return ResourceManager.GetString("Arguments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Attack Enemy.
         /// </summary>
         public static string Attack_Enemy {
@@ -502,6 +511,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose by Cliloc.
+        /// </summary>
+        public static string Choose_by_Cliloc {
+            get {
+                return ResourceManager.GetString("Choose by Cliloc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose from Item.
+        /// </summary>
+        public static string Choose_from_Item {
+            get {
+                return ResourceManager.GetString("Choose from Item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear.
         /// </summary>
         public static string Clear {
@@ -552,6 +579,15 @@ namespace ClassicAssist.Resources {
         public static string Clear_Weapon_Ability {
             get {
                 return ResourceManager.GetString("Clear Weapon Ability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cliloc.
+        /// </summary>
+        public static string Cliloc {
+            get {
+                return ResourceManager.GetString("Cliloc", resourceCulture);
             }
         }
         
@@ -741,6 +777,15 @@ namespace ClassicAssist.Resources {
         public static string Current_Location_ {
             get {
                 return ResourceManager.GetString("Current Location:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Define Custom Properties.
+        /// </summary>
+        public static string Define_Custom_Properties {
+            get {
+                return ResourceManager.GetString("Define Custom Properties", resourceCulture);
             }
         }
         

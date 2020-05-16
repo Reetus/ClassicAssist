@@ -3058,6 +3058,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use UO3D Packets.
+        /// </summary>
+        public static string Use_UO3D_Packets {
+            get {
+                return ResourceManager.GetString("Use UO3D Packets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UseOnce: Cannot find type....
         /// </summary>
         public static string UseOnce__Cannot_find_type___ {

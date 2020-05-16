@@ -122,7 +122,15 @@ namespace ClassicAssist.UI.ViewModels.Agents
         public bool UseUO3DPackets
         {
             get => _useUo3DPackets;
-            set => SetProperty( ref _useUo3DPackets, value );
+            set
+            {
+                SetProperty( ref _useUo3DPackets, value );
+
+                if ( _manager != null )
+                {
+                    _manager.UseUO3DPackets = value;
+                }
+            }
         }
 
         public void Serialize( JObject json )
@@ -184,7 +192,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             JToken dress = json["Dress"];
 
             MoveConflictingItems = GetJsonValue( dress["Options"], "MoveConflictingItems", false );
-            UseUO3DPackets = GetJsonValue( dress["Options"], "UseUO3DPackets", false );
+            UseUO3DPackets = _manager.UseUO3DPackets = GetJsonValue( dress["Options"], "UseUO3DPackets", false );
 
             foreach ( JToken entry in dress["Entries"] )
             {

@@ -28,6 +28,7 @@ namespace ClassicAssist.Data.Dress
 
         private ObservableCollectionEx<DressAgentEntry> _items = new ObservableCollectionEx<DressAgentEntry>();
         private DressAgentEntry _temporaryDress;
+        private bool _useUo3DPackets;
 
         private DressManager()
         {
@@ -46,6 +47,12 @@ namespace ClassicAssist.Data.Dress
         {
             get => _temporaryDress;
             set => SetProperty( ref _temporaryDress, value );
+        }
+
+        public bool UseUO3DPackets
+        {
+            get => _useUo3DPackets;
+            set => SetProperty( ref _useUo3DPackets, value );
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -105,14 +112,22 @@ namespace ClassicAssist.Data.Dress
                     return;
                 }
 
-                int[] items = player.GetEquippedItems().Where( i => IsValidLayer( i.Layer ) ).Select( i => i.Serial )
-                    .ToArray();
-
-                foreach ( int item in items )
+                if ( _useUo3DPackets )
                 {
-                    Item itemObj = Engine.Items.GetItem( item );
+                    int[] layers = player.GetEquippedItems().Where( i => IsValidLayer( i.Layer ) )
+                        .Select( i => (int) i.Layer ).ToArray();
 
-                    await ActionPacketQueue.EnqueueDragDrop( item, 1, backpack, QueuePriority.Medium );
+                    UO.Commands.UO3DUnequipItems( layers );
+                }
+                else
+                {
+                    int[] items = player.GetEquippedItems().Where( i => IsValidLayer( i.Layer ) )
+                        .Select( i => i.Serial ).ToArray();
+
+                    foreach ( int item in items )
+                    {
+                        await ActionPacketQueue.EnqueueDragDrop( item, 1, backpack, QueuePriority.Medium );
+                    }
                 }
             }
             finally
@@ -143,11 +158,12 @@ namespace ClassicAssist.Data.Dress
         {
             PlayerMobile player = Engine.Player;
 
-            List<DressAgentItem> items = player.GetEquippedItems().Where( i => IsValidLayer( i.Layer ) )
-                .Select( i => new DressAgentItem
-                {
-                    Serial = i.Serial, Layer = i.Layer, ID = i.ID, Type = DressAgentItemType.Serial
-                } ).ToList();
+            List<DressAgentItem> items = player.GetEquippedItems().Where( i => IsValidLayer( i.Layer ) ).Select( i =>
+                    new DressAgentItem
+                        {
+                            Serial = i.Serial, Layer = i.Layer, ID = i.ID, Type = DressAgentItemType.Serial
+                        } )
+                .ToList();
 
             dae.Items = items;
         }

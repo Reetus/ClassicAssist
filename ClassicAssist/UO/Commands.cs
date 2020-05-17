@@ -469,12 +469,29 @@ namespace ClassicAssist.UO
                     PacketFilterConditions.ShortAtPositionCondition( 0x3735, 10 )
                 } );
 
-            PacketFilterInfo fizzMessagePfi = new PacketFilterInfo( 0xC1, 
+            PacketFilterInfo fizzMessagePfi = new PacketFilterInfo( 0xC1,
+                new[] { PacketFilterConditions.IntAtPositionCondition( 502632, 14 ) /* The spell fizzles. */ } );
+
+            PacketFilterInfo recoveredMessagePfi = new PacketFilterInfo( 0xC1,
                 new[]
                 {
-                    PacketFilterConditions.IntAtPositionCondition( Engine.Player.Serial,3 ),
-                    PacketFilterConditions.IntAtPositionCondition( 502632, 14 ) /* The spell fizzles. */
-                });
+                    PacketFilterConditions.IntAtPositionCondition( 502644,
+                        14 ) /* You have not yet recovered from casting a spell. */
+                } );
+
+            PacketFilterInfo alreadyCastingPfi = new PacketFilterInfo( 0xC1,
+                new[]
+                {
+                    PacketFilterConditions.IntAtPositionCondition( 502642,
+                        14 ) /* You are already casting a spell. */
+                } );
+
+            PacketFilterInfo alreadyCasting2Pfi = new PacketFilterInfo( 0xC1,
+                new[]
+                {
+                    PacketFilterConditions.IntAtPositionCondition( 502645,
+                        14 ) /* You are already casting a spell. */
+                } );
 
             PacketFilterInfo fizzChivPFI = new PacketFilterInfo( 0x54,
                 new[]
@@ -490,6 +507,12 @@ namespace ClassicAssist.UO
             PacketWaitEntry targetWe = Engine.PacketWaitEntries.Add( targetPfi, PacketDirection.Incoming );
             PacketWaitEntry fizzWe = Engine.PacketWaitEntries.Add( fizzPfi, PacketDirection.Incoming );
             PacketWaitEntry fizzMessageWe = Engine.PacketWaitEntries.Add( fizzMessagePfi, PacketDirection.Incoming );
+            PacketWaitEntry receoveredMessageWe =
+                Engine.PacketWaitEntries.Add( recoveredMessagePfi, PacketDirection.Incoming );
+            PacketWaitEntry alreadyCastingWe =
+                Engine.PacketWaitEntries.Add( alreadyCastingPfi, PacketDirection.Incoming );
+            PacketWaitEntry alreadyCasting2We =
+                Engine.PacketWaitEntries.Add( alreadyCasting2Pfi, PacketDirection.Incoming );
             PacketWaitEntry fizzChivWe = Engine.PacketWaitEntries.Add( fizzChivPFI, PacketDirection.Incoming );
 
             try
@@ -519,9 +542,25 @@ namespace ClassicAssist.UO
 
                 Task fizzMessageTask = Task.Run( () => fizzMessageWe.Lock.WaitOne( timeout ) );
 
+                Task recoveredMessageTask = Task.Run( () => receoveredMessageWe.Lock.WaitOne( timeout ) );
+
+                Task alreadyCastingTask = Task.Run( () => alreadyCastingWe.Lock.WaitOne( timeout ) );
+
+                Task alreadyCasting2Task = Task.Run( () => alreadyCasting2We.Lock.WaitOne( timeout ) );
+
                 Task fizzChivTask = Task.Run( () => fizzChivWe.Lock.WaitOne( timeout ) );
 
-                int index = Task.WaitAny( targetTask, fizzTask, fizzMessageTask, fizzChivTask );
+                int index;
+
+                try
+                {
+                    index = Task.WaitAny( targetTask, fizzTask, fizzMessageTask, recoveredMessageTask,
+                        alreadyCastingTask, alreadyCasting2Task, fizzChivTask );
+                }
+                catch ( ThreadInterruptedException )
+                {
+                    return false;
+                }
 
                 return index == 0 && targetTask.Result;
             }
@@ -530,6 +569,9 @@ namespace ClassicAssist.UO
                 Engine.PacketWaitEntries.Remove( targetWe );
                 Engine.PacketWaitEntries.Remove( fizzWe );
                 Engine.PacketWaitEntries.Remove( fizzMessageWe );
+                Engine.PacketWaitEntries.Remove( receoveredMessageWe );
+                Engine.PacketWaitEntries.Remove( alreadyCastingWe );
+                Engine.PacketWaitEntries.Remove( alreadyCasting2We );
                 Engine.PacketWaitEntries.Remove( fizzChivWe );
 
                 Engine.WaitingForTarget = false;

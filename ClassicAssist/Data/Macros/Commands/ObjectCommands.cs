@@ -415,5 +415,21 @@ namespace ClassicAssist.Data.Macros.Commands
                 ActionPacketQueue.EnqueueDragDrop( entity.Serial, amount, destinationSerial );
             }
         }
+
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        public static bool InIgnoreList( object obj )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial > 0 )
+            {
+                return IgnoreList.Contains( serial );
+            }
+
+            UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+
+            return false;
+
+        }
     }
 }

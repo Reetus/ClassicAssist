@@ -517,7 +517,7 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
     <value>Returns true if supplied mobile exists in the friends list.</value>
   </data>
   <data name="INFRIENDLIST_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>if InFriendsList("last"):</value>
+    <value>if InFriendList("last"):</value>
   </data>
   <data name="INNOCENT_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Returns true if the mobile's notoriety is Innocent</value>
@@ -1189,5 +1189,29 @@ for i in GetList("food"):
   </data>
   <data name="REPLAY_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>Replay()</value>
+  </data>
+  <data name="INIGNORELIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Check whether the given serial / alias exists in the ignore list.</value>
+  </data>
+  <data name="INIGNORELIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if InIgnoreList("mount"):</value>
+  </data>
+  <data name="SETFRIEND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sets the friend to the given serial/alias.</value>
+  </data>
+  <data name="SETFRIEND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetFriend("mount")</value>
+  </data>
+  <data name="SETENEMY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sets the enemy to the given serial/alias.</value>
+  </data>
+  <data name="SETENEMY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetEnemy("mount")</value>
+  </data>
+  <data name="SETLASTTARGET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sets the last target to the given serial/alias.</value>
+  </data>
+  <data name="SETLASTTARGET_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetLastTarget("mount")</value>
   </data>
 </root>

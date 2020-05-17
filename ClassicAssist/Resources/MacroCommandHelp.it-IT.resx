@@ -949,7 +949,7 @@
     <value>if InGump(0xf00f, "lethal darts"):</value>
   </data>
   <data name="INFRIENDLIST_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>if InFriendsList("last"):</value>
+    <value>if InFriendList("last"):</value>
   </data>
   <data name="HUE_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>if Hue("mount") == 0:</value>

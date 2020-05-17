@@ -1315,7 +1315,7 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to if InFriendsList(&quot;last&quot;):.
+        ///   Looks up a localized string similar to if InFriendList(&quot;last&quot;):.
         /// </summary>
         public static string INFRIENDLIST_COMMAND_INSERTTEXT {
             get {
@@ -1338,6 +1338,24 @@ namespace ClassicAssist.Resources {
         public static string INGUMP_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("INGUMP_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check whether the given serial / alias exists in the ignore list..
+        /// </summary>
+        public static string INIGNORELIST_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("INIGNORELIST_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if InIgnoreList(&quot;mount&quot;):.
+        /// </summary>
+        public static string INIGNORELIST_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("INIGNORELIST_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         
@@ -2332,6 +2350,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sets the enemy to the given serial/alias..
+        /// </summary>
+        public static string SETENEMY_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETENEMY_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetEnemy(&quot;mount&quot;).
+        /// </summary>
+        public static string SETENEMY_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETENEMY_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set force walk, True or False.
         /// </summary>
         public static string SETFORCEWALK_COMMAND_DESCRIPTION {
@@ -2346,6 +2382,42 @@ namespace ClassicAssist.Resources {
         public static string SETFORCEWALK_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SETFORCEWALK_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets the friend to the given serial/alias..
+        /// </summary>
+        public static string SETFRIEND_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETFRIEND_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetFriend(&quot;mount&quot;).
+        /// </summary>
+        public static string SETFRIEND_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETFRIEND_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets the last target to the given serial/alias..
+        /// </summary>
+        public static string SETLASTTARGET_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETLASTTARGET_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetLastTarget(&quot;mount&quot;).
+        /// </summary>
+        public static string SETLASTTARGET_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETLASTTARGET_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

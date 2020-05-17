@@ -26,8 +26,8 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = nameof( Strings.Target ) )]
         public static void CancelTarget()
         {
-            Engine.SendPacketToServer( new Target( TargetTypeEnum.Object, -1, TargetFlags.Cancel, -1, -1, -1,
-                0, 0, true ) );
+            Engine.SendPacketToServer( new Target( TargetTypeEnum.Object, -1, TargetFlags.Cancel, -1, -1, -1, 0, 0,
+                true ) );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Target ) )]
@@ -223,8 +223,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 bt = TargetBodyType.Any;
             }
 
-            return TargetManager.GetInstance()
-                .GetFriend( TargetNotoriety.Any, bt, td, TargetFriendType.Only, ti );
+            return TargetManager.GetInstance().GetFriend( TargetNotoriety.Any, bt, td, TargetFriendType.Only, ti );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Target ) )]
@@ -344,10 +343,11 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            Entity entity = (Entity) Engine.Items.SelectEntity( i =>
-                                i.ID == id && ( hue == -1 || i.Hue == hue ) &&
-                                ( range == -1 || i.Distance < range ) ) ?? Engine.Mobiles.SelectEntity( m =>
-                                m.ID == id && ( hue == -1 || m.Hue == hue ) && ( range == -1 || m.Distance < range ) );
+            Entity entity =
+                (Entity) Engine.Items.SelectEntity( i =>
+                    i.ID == id && ( hue == -1 || i.Hue == hue ) && ( range == -1 || i.Distance < range ) ) ??
+                Engine.Mobiles.SelectEntity( m =>
+                    m.ID == id && ( hue == -1 || m.Hue == hue ) && ( range == -1 || m.Distance < range ) );
 
             if ( entity == null )
             {
@@ -356,6 +356,75 @@ namespace ClassicAssist.Data.Macros.Commands
             }
 
             Target( entity.Serial, false, Options.CurrentOptions.QueueLastTarget );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Target ) )]
+        public static void SetEnemy( object obj )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial <= 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+
+                return;
+            }
+
+            Entity entity = Engine.Items.GetItem( serial ) ?? (Entity) Engine.Mobiles.GetMobile( serial );
+
+            if ( entity == null )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return;
+            }
+
+            TargetManager.GetInstance().SetEnemy( entity );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Target ) )]
+        public static void SetFriend( object obj )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial <= 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+
+                return;
+            }
+
+            Entity entity = Engine.Items.GetItem( serial ) ?? (Entity) Engine.Mobiles.GetMobile( serial );
+
+            if ( entity == null )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return;
+            }
+
+            TargetManager.GetInstance().SetFriend( entity );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Target ) )]
+        public static void SetLastTarget( object obj )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial <= 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+
+                return;
+            }
+
+            Entity entity = Engine.Items.GetItem( serial ) ?? (Entity) Engine.Mobiles.GetMobile( serial );
+
+            if ( entity == null )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return;
+            }
+
+            TargetManager.GetInstance().SetLastTarget( entity );
         }
     }
 }

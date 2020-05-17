@@ -96,6 +96,9 @@
     <Compile Update="UI\Controls\TextBoxKey.xaml.cs">
       <DependentUpon>TextBoxKey.xaml</DependentUpon>
     </Compile>
+    <Compile Update="UI\Views\Autoloot\ClilocSelectionWindow.xaml.cs">
+      <DependentUpon>ClilocSelectionWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\Views\HotkeysTabControl.xaml.cs">
       <DependentUpon>HotkeysTabControl.xaml</DependentUpon>
     </Compile>

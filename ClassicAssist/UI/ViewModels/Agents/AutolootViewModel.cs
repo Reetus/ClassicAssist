@@ -74,6 +74,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             AutolootHelpers.SetAutolootContainer = serial => ContainerSerial = serial;
             IncomingPacketHandlers.CorpseContainerDisplayEvent += OnCorpseContainerDisplayEvent;
+            AutolootManager.GetInstance().GetEntries = () => _items.ToList();
         }
 
         public ICommand ClipboardCopyCommand =>
@@ -378,6 +379,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 }
 
                 List<Item> lootItems = new List<Item>();
+
+                // If change logic, also change in DebugAutolootViewModel
 
                 foreach ( AutolootEntry entry in Items )
                 {

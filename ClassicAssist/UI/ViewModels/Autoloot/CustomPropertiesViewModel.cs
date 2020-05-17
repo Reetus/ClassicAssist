@@ -27,6 +27,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data.Autoloot;
+using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.Views.Autoloot;
 using ClassicAssist.UO;
@@ -51,6 +52,8 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
             LoadCustomProperties();
         }
 
+        public ICommand ChooseFromClilocCommand => new RelayCommand( ChooseFromCliloc, o => true );
+
         public ICommand ChooseFromItemCommand =>
             _chooseFromItemCommand ?? ( _chooseFromItemCommand = new RelayCommandAsync( ChooseFromItem, o => true ) );
 
@@ -69,6 +72,31 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
         {
             get => _selectedProperty;
             set => SetProperty( ref _selectedProperty, value );
+        }
+
+        private void ChooseFromCliloc( object obj )
+        {
+            ClilocSelectionViewModel vm = new ClilocSelectionViewModel();
+            ClilocSelectionWindow window = new ClilocSelectionWindow { DataContext = vm };
+
+            window.ShowDialog();
+
+            if ( vm.DialogResult != DialogResult.OK )
+            {
+                return;
+            }
+
+            if ( Properties.Any( p => p.Cliloc == vm.SelectedCliloc.Key ) )
+            {
+                return;
+            }
+
+            Properties.AddSorted( new CustomProperty
+            {
+                Cliloc = vm.SelectedCliloc.Key,
+                Name = vm.SelectedCliloc.Value,
+                Arguments = vm.SelectedCliloc.Value.Contains( "~" )
+            } );
         }
 
         private async Task ChooseFromItem( object obj )
@@ -108,7 +136,12 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
 
             foreach ( SelectProperties property in selectedProperties )
             {
-                Properties.Add( new CustomProperty
+                if ( Properties.Any( p => p.Cliloc == property.Property.Cliloc ) )
+                {
+                    continue;
+                }
+
+                Properties.AddSorted( new CustomProperty
                 {
                     Name = property.Name,
                     Cliloc = property.Property.Cliloc,
@@ -169,17 +202,29 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
                             Arguments = constraint.ClilocIndex == 0
                         };
 
-                        Properties.Add( customProperty );
+                        Properties.AddSorted( customProperty );
                     }
                 }
             }
         }
     }
 
-    public class CustomProperty
+    public class CustomProperty : IComparable<CustomProperty>
     {
         public bool Arguments { get; set; }
         public int Cliloc { get; set; }
         public string Name { get; set; }
+
+        public int CompareTo( CustomProperty other )
+        {
+            if ( ReferenceEquals( this, other ) )
+            {
+                return 0;
+            }
+
+            return ReferenceEquals( null, other )
+                ? 1
+                : string.Compare( Name, other.Name, StringComparison.InvariantCultureIgnoreCase );
+        }
     }
 }

@@ -49,7 +49,7 @@ namespace ClassicAssist.Data.Autoloot
                 return 1;
             }
 
-            int nameComparison = string.Compare( _name, other._name, StringComparison.Ordinal );
+            int nameComparison = string.Compare( _name, other._name, StringComparison.InvariantCultureIgnoreCase );
 
             return nameComparison;
         }

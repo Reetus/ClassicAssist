@@ -318,7 +318,7 @@
                                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </ScrollViewer>
 
-                            <ScrollContentPresenter Name="PART_ScrollContentPresenter"
+                            <ScrollContentPresenter Name="PART_ScrollContentPresenter" CanContentScroll="True"
                                                     KeyboardNavigation.DirectionalNavigation="Local" />
                         </DockPanel>
 

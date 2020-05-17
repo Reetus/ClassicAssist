@@ -1,0 +1,202 @@
+﻿<UserControl x:Class="ClassicAssist.UI.Views.Debug.DebugAutolootControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ClassicAssist.UI.Views.Debug"
+             xmlns:debug="clr-namespace:ClassicAssist.UI.ViewModels.Debug"
+             xmlns:resources="clr-namespace:ClassicAssist.Resources"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="550">
+    <d:DesignerProperties.DesignStyle>
+        <Style TargetType="UserControl">
+            <Setter Property="Background" Value="White" />
+        </Style>
+    </d:DesignerProperties.DesignStyle>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/Icons.xaml" />
+                <ResourceDictionary Source="../Debug/DebugToolBarStyle.xaml" />
+                <ResourceDictionary>
+                    <DrawingImage x:Key="RefreshIcon">
+                        <DrawingImage.Drawing>
+                            <DrawingGroup ClipGeometry="M0,0 V50 H50 V0 H0 Z">
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing Brush="#FF000000"
+                                                     Geometry="F1 M50,50z M0,0z M25,5C14.351563,5 5.632813,13.378906 5.054688,23.890625 5.007813,24.609375 5.347656,25.296875 5.949219,25.695313 6.550781,26.089844 7.320313,26.132813 7.960938,25.804688 8.601563,25.476563 9.019531,24.828125 9.046875,24.109375 9.511719,15.675781 16.441406,9 25,9 29.585938,9 33.699219,10.925781 36.609375,14L34,14C33.277344,13.988281 32.609375,14.367188 32.246094,14.992188 31.878906,15.613281 31.878906,16.386719 32.246094,17.007813 32.609375,17.632813 33.277344,18.011719 34,18L40.261719,18C40.488281,18.039063,40.71875,18.039063,40.949219,18L44,18 44,8C44.007813,7.460938 43.796875,6.941406 43.414063,6.558594 43.03125,6.175781 42.511719,5.964844 41.96875,5.972656 40.867188,5.988281 39.984375,6.894531 40,8L40,11.777344C36.332031,7.621094,30.964844,5,25,5z M43.03125,23.972656C41.925781,23.925781 40.996094,24.785156 40.953125,25.890625 40.488281,34.324219 33.558594,41 25,41 20.414063,41 16.304688,39.074219 13.390625,36L16,36C16.722656,36.011719 17.390625,35.632813 17.753906,35.007813 18.121094,34.386719 18.121094,33.613281 17.753906,32.992188 17.390625,32.367188 16.722656,31.988281 16,32L9.71875,32C9.507813,31.96875,9.296875,31.96875,9.085938,32L6,32 6,42C5.988281,42.722656 6.367188,43.390625 6.992188,43.753906 7.613281,44.121094 8.386719,44.121094 9.007813,43.753906 9.632813,43.390625 10.011719,42.722656 10,42L10,38.222656C13.667969,42.378906 19.035156,45 25,45 35.648438,45 44.367188,36.621094 44.945313,26.109375 44.984375,25.570313 44.800781,25.039063 44.441406,24.636719 44.078125,24.234375 43.570313,23.996094 43.03125,23.972656z" />
+                                </DrawingGroup>
+                            </DrawingGroup>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+                    <DrawingImage x:Key="ContainerIcon">
+                        <DrawingImage.Drawing>
+                            <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                                <DrawingGroup.Transform>
+                                    <TranslateTransform X="0" Y="0.00013560117804445326" />
+                                </DrawingGroup.Transform>
+                                <GeometryDrawing Brush="#FFC6C5CB"
+                                                 Geometry="F1 M512,512z M0,0z M234.536,85.605L22.362,208.103 22.362,363.766 49.45,379.507 261.624,257.008 261.624,101.346 234.536,85.605z M216.743,230.876L67.682,316.936 67.682,234.236 216.508,148.311 216.743,230.876z" />
+                                <DrawingGroup Opacity="1">
+                                    <DrawingGroup Opacity="1">
+                                        <GeometryDrawing Brush="#FFE0E0E2"
+                                                         Geometry="F1 M512,512z M0,0z M243.508,246.617L243.508,246.617 216.743,230.876 216.421,116.982 243.508,132.723z" />
+                                        <GeometryDrawing Brush="#FFE0E0E2"
+                                                         Geometry="F1 M512,512z M0,0z M67.682,348.13L67.682,348.13 40.918,332.389 216.743,230.876 243.508,246.617z" />
+                                    </DrawingGroup>
+                                    <GeometryDrawing Brush="#FFD8D8DA"
+                                                     Geometry="F1 M512,512z M0,0z M49.449,379.508L49.449,379.508 22.362,363.765 22.362,208.103 49.449,223.845z" />
+                                    <GeometryDrawing Brush="#FFE0E0E2"
+                                                     Geometry="F1 M512,512z M0,0z M49.449,223.845L49.449,223.845 22.362,208.103 234.536,85.605 261.623,101.346z" />
+                                    <GeometryDrawing Brush="#FFC6C5CB"
+                                                     Geometry="F1 M512,512z M0,0z M49.449,223.845L261.623,101.346 261.623,257.008 49.449,379.508 49.449,223.845z M243.508,246.617L243.508,132.723 67.682,234.235 67.682,348.13 243.508,246.617" />
+                                </DrawingGroup>
+                                <GeometryDrawing Brush="#FFC6C5CB"
+                                                 Geometry="F1 M512,512z M0,0z M261.594,90.904C261.499,57.403 249.59,33.844 230.428,22.815 230.49,22.851 230.553,22.883 230.615,22.918L203.527,7.177C184.226,-4.04 157.511,-2.486 128.074,14.51 69.574,48.284 22.141,130.441 22.331,197.661L22.36,208.104 49.448,223.845 261.622,101.346 261.594,90.904z M215.835,75.483L215.835,75.483 75.351,156.591C89.108,113.677 119.698,71.643 155.22,51.135 172.683,41.053 188.979,37.555 202.704,39.777 209.741,48.512 214.376,60.543 215.835,75.483z" />
+                                <DrawingGroup Opacity="1">
+                                    <DrawingGroup Opacity="1">
+                                        <GeometryDrawing Brush="#FFE0E0E2"
+                                                         Geometry="F1 M512,512z M0,0z M190.656,29.321L217.744,45.062C231.523,53.07,240.744,68.929,242.924,91.224L215.836,75.483C213.657,53.189,204.436,37.329,190.656,29.321z" />
+                                        <GeometryDrawing Brush="#FFE0E0E2"
+                                                         Geometry="F1 M512,512z M0,0z M68.03,192.199L68.03,192.199 40.943,176.456 215.835,75.483 242.923,91.224z" />
+                                    </DrawingGroup>
+                                    <GeometryDrawing Brush="#FFD8D8DA"
+                                                     Geometry="F1 M512,512z M0,0z M49.449,223.845L49.449,223.845 22.362,208.103 22.331,197.661 49.419,213.402z" />
+                                    <GeometryDrawing Brush="#FFE0E0E2"
+                                                     Geometry="F1 M512,512z M0,0z M203.527,7.177L230.615,22.918C211.314,11.701,184.599,13.255,155.162,30.251L128.074,14.51C157.511,-2.486,184.226,-4.04,203.527,7.177z" />
+                                    <GeometryDrawing Brush="#FFD8D8DA"
+                                                     Geometry="F1 M512,512z M0,0z M49.419,213.402L22.331,197.661C22.141,130.441,69.574,48.283,128.073,14.51L155.161,30.251C96.662,64.026,49.229,146.183,49.419,213.402z" />
+                                    <GeometryDrawing Brush="#FFC6C5CB"
+                                                     Geometry="F1 M512,512z M0,0z M155.161,30.251C213.66,-3.524,261.403,23.684,261.594,90.903L261.623,101.346 49.449,223.845 49.42,213.402C49.229,146.183,96.662,64.026,155.161,30.251z M68.03,192.199L242.923,91.224C238.215,43.05 200.624,24.921 155.22,51.135 109.808,77.354 72.45,138.754 68.03,192.199" />
+                                </DrawingGroup>
+                                <GeometryDrawing Brush="#FFF18700"
+                                                 Geometry="F1 M512,512z M0,0z M253.127,117.946L253.127,117.946 59.128,229.951 59.51,364.73 284.857,495.91 478.856,383.903 478.856,249.125z" />
+                                <DrawingGroup Opacity="1">
+                                    <DrawingGroup Opacity="1">
+                                        <GeometryDrawing Brush="#FFFF9911"
+                                                         Geometry="F1 M512,512z M0,0z M284.857,495.91L284.857,495.91 59.51,364.73 59.128,229.951 284.857,361.131z" />
+                                        <GeometryDrawing Brush="#FFFF9911"
+                                                         Geometry="F1 M512,512z M0,0z M284.857,361.131L284.857,361.131 59.128,229.951 253.127,117.946 478.856,249.125z" />
+                                    </DrawingGroup>
+                                    <GeometryDrawing Brush="#FFF18700"
+                                                     Geometry="F1 M512,512z M0,0z M478.856,249.125L478.856,249.125 478.856,383.903 284.857,495.91 284.857,361.131z" />
+                                </DrawingGroup>
+                                <GeometryDrawing Brush="#FFD8D8DA"
+                                                 Geometry="F1 M512,512z M0,0z M59.388,347.329L59.388,347.329 48.793,353.447 35.891,345.946 35.891,371.551 277.465,512 277.465,486.395 287.212,480.627z" />
+                                <GeometryDrawing Brush="#FFE0E0E2"
+                                                 Geometry="F1 M512,512z M0,0z M277.465,486.395L277.465,486.395 287.212,480.627 59.388,347.329 48.793,353.447z" />
+                                <GeometryDrawing Brush="#FFC6C5CB"
+                                                 Geometry="F1 M512,512z M0,0z M462.581,218.097L250.407,340.596 250.407,496.259 277.495,512 489.669,389.501 489.669,233.838 462.581,218.097z M444.789,363.368L295.729,449.428 295.729,366.728 444.555,280.803 444.789,363.368z" />
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing Brush="#FFACABB1"
+                                                     Geometry="F1 M512,512z M0,0z M471.554,379.111L471.554,379.111 444.789,363.368 444.466,249.474 471.554,265.216z" />
+                                    <DrawingGroup Opacity="1">
+                                        <GeometryDrawing Brush="#FFD8D8DA"
+                                                         Geometry="F1 M512,512z M0,0z M295.729,480.623L295.729,480.623 268.965,464.881 444.789,363.368 471.554,379.111z" />
+                                        <GeometryDrawing Brush="#FFD8D8DA"
+                                                         Geometry="F1 M512,512z M0,0z M277.495,512L277.495,512 250.407,496.259 250.407,340.596 277.495,356.337z" />
+                                    </DrawingGroup>
+                                    <GeometryDrawing Brush="#FFE0E0E2"
+                                                     Geometry="F1 M512,512z M0,0z M277.495,356.337L277.495,356.337 250.407,340.596 462.581,218.097 489.669,233.838z" />
+                                    <GeometryDrawing Brush="#FFC6C5CB"
+                                                     Geometry="F1 M512,512z M0,0z M277.495,356.337L489.669,233.838 489.669,389.5 277.495,512 277.495,356.337z M471.554,379.111L471.554,265.216 295.729,366.729 295.729,480.623 471.554,379.111" />
+                                </DrawingGroup>
+                                <GeometryDrawing Brush="#FFF18700"
+                                                 Geometry="F1 M512,512z M0,0z M450.462,167.464C450.518,167.496,450.576,167.526,450.632,167.558L224.903,36.378C207.266,26.129 182.841,27.575 155.881,43.139 102.306,74.071 59.022,149.04 59.197,210.602L284.926,341.782 478.925,229.777C478.839,199.096,467.973,177.541,450.462,167.464z" />
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing Brush="#FFFFA834"
+                                                     Geometry="F1 M512,512z M0,0z M224.903,36.378L450.632,167.558C432.995,157.309,408.57,158.755,381.61,174.319L155.881,43.14C182.841,27.575,207.266,26.129,224.903,36.378z" />
+                                    <GeometryDrawing Brush="#FFFF9911"
+                                                     Geometry="F1 M512,512z M0,0z M284.927,341.783L59.197,210.603C59.023,149.041,102.306,74.071,155.881,43.14L381.61,174.32C328.035,205.251,284.752,280.221,284.927,341.783z" />
+                                    <GeometryDrawing Brush="#FFF18700"
+                                                     Geometry="F1 M512,512z M0,0z M381.61,174.32C435.185,143.388,478.752,168.215,478.926,229.777L284.927,341.783C284.752,280.221,328.035,205.251,381.61,174.32z" />
+                                </DrawingGroup>
+                                <GeometryDrawing Brush="#FFD8D8DA"
+                                                 Geometry="F1 M512,512z M0,0z M287.863,328.139L287.863,328.139 60.039,194.841 49.951,200.666 35.891,192.492 35.891,243.702 277.465,384.151 277.465,332.943 278.639,333.605z" />
+                                <GeometryDrawing Brush="#FFE0E0E2"
+                                                 Geometry="F1 M512,512z M0,0z M278.639,333.605L278.639,333.605 287.863,328.139 60.039,194.841 49.968,200.657z" />
+                                <GeometryDrawing Brush="#FFC6C5CB"
+                                                 Geometry="F1 M512,512z M0,0z M489.64,223.397C489.545,189.896 477.636,166.336 458.474,155.308 458.536,155.344 458.599,155.376 458.66,155.411L431.572,139.67C412.271,128.453 385.556,130.007 356.119,147.003 297.62,180.777 250.187,262.934 250.378,330.153L250.407,340.596 277.495,356.337 489.669,233.838 489.64,223.397z M443.881,207.975L303.398,289.083C317.155,246.169 347.745,204.135 383.267,183.627 400.73,173.545 417.026,170.047 430.751,172.269 437.786,181.004 442.421,193.037 443.881,207.975z" />
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing Brush="#FFACABB1"
+                                                     Geometry="F1 M512,512z M0,0z M418.702,161.814L445.79,177.555C459.569,185.563,468.79,201.422,470.97,223.717L443.882,207.976C441.703,185.681,432.481,169.821,418.702,161.814z" />
+                                    <GeometryDrawing Brush="#FFD8D8DA"
+                                                     Geometry="F1 M512,512z M0,0z M296.076,324.691L296.076,324.691 268.989,308.95 443.881,207.975 470.969,223.717z" />
+                                    <DrawingGroup Opacity="1">
+                                        <GeometryDrawing Brush="#FFE0E0E2"
+                                                         Geometry="F1 M512,512z M0,0z M277.495,356.337L277.495,356.337 250.407,340.596 250.378,330.154 277.466,345.896z" />
+                                        <GeometryDrawing Brush="#FFE0E0E2"
+                                                         Geometry="F1 M512,512z M0,0z M431.572,139.669L458.66,155.41C439.359,144.193,412.644,145.747,383.207,162.743L356.119,147.002C385.557,130.006,412.271,128.452,431.572,139.669z" />
+                                    </DrawingGroup>
+                                    <GeometryDrawing Brush="#FFD8D8DA"
+                                                     Geometry="F1 M512,512z M0,0z M277.466,345.896L250.378,330.155C250.188,262.936,297.62,180.777,356.119,147.004L383.207,162.745C324.708,196.518,277.275,278.675,277.466,345.896z" />
+                                    <GeometryDrawing Brush="#FFC6C5CB"
+                                                     Geometry="F1 M512,512z M0,0z M383.207,162.743C441.706,128.968,489.449,156.176,489.64,223.395L489.669,233.838 277.495,356.337 277.466,345.894C277.275,278.675,324.708,196.518,383.207,162.743z M296.076,324.691L470.969,223.717C466.261,175.543 428.67,157.414 383.266,183.628 337.854,209.847 300.497,271.246 296.076,324.691" />
+                                </DrawingGroup>
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing Brush="#FFD8D8DA"
+                                                     Geometry="F1 M512,512z M0,0z M277.465,384.151L277.465,384.151 35.891,243.702 35.891,192.492 277.465,332.942z" />
+                                    <GeometryDrawing Brush="#FFD8D8DA"
+                                                     Geometry="F1 M512,512z M0,0z M277.465,512L277.465,512 35.891,371.551 35.891,345.946 277.465,486.395z" />
+                                </DrawingGroup>
+                                <DrawingGroup Opacity="1">
+                                    <DrawingGroup Opacity="1">
+                                        <GeometryDrawing Brush="#FF898890"
+                                                         Geometry="F1 M512,512z M0,0z M126.232,246.05L126.232,246.05 113.766,253.294 113.766,302.734 156.651,327.574 169.258,320.33 169.258,270.89z" />
+                                        <GeometryDrawing Brush="#FF898890"
+                                                         Geometry="F1 M512,512z M0,0z M156.791,278.135L156.791,278.135 169.258,270.89 169.258,320.33 156.651,327.574z" />
+                                    </DrawingGroup>
+                                    <GeometryDrawing Brush="#FFC6C5CB"
+                                                     Geometry="F1 M512,512z M0,0z M113.766,253.294L113.766,253.294 126.232,246.05 169.258,270.89 156.791,278.135z" />
+                                    <GeometryDrawing Brush="#FFACABB1"
+                                                     Geometry="F1 M512,512z M0,0z M156.791,278.135L156.791,278.135 156.651,327.574 113.766,302.734 113.766,253.294z" />
+                                </DrawingGroup>
+                                <GeometryDrawing Brush="#FF77767E"
+                                                 Geometry="F1 M512,512z M0,0z M134.399,277.238C130.349,274.9 127.05,276.773 127.037,281.426 127.028,284.73 128.674,288.545 131.079,291.315L131.05,301.748 137.601,305.53 137.63,295.097C140.035,295.103 141.698,293.199 141.707,289.896 141.721,285.242 138.449,279.575 134.399,277.238z" />
+                            </DrawingGroup>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+                    <DrawingImage x:Key="RemoveIcon">
+                        <DrawingImage.Drawing>
+                            <DrawingGroup ClipGeometry="M0,0 V512.001 H512.001 V0 H0 Z">
+                                <DrawingGroup Opacity="1">
+                                    <DrawingGroup Opacity="1">
+                                        <GeometryDrawing Brush="#FF000000"
+                                                         Geometry="F1 M512.001,512.001z M0,0z M294.111,256.001L504.109,46.003C514.632,35.479 514.632,18.417 504.109,7.894 493.585,-2.63 476.522,-2.63 465.999,7.894L256,217.892 46.002,7.894C35.478,-2.63 18.416,-2.63 7.893,7.894 -2.63,18.418 -2.631,35.48 7.893,46.003L217.891,256.001 7.893,465.999C-2.631,476.523 -2.631,493.585 7.893,504.108 18.417,514.632 35.479,514.631 46.002,504.108L256,294.11 465.997,504.108C476.521,514.632 493.584,514.631 504.107,504.108 514.63,493.584 514.63,476.522 504.107,465.999L294.111,256.001z" />
+                                    </DrawingGroup>
+                                </DrawingGroup>
+                            </DrawingGroup>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <debug:DebugAutolootViewModel />
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ToolBar Style="{DynamicResource ToolBarStyle1}" Grid.Row="0">
+            <Button ToolTip="Test Autoloot" Command="{Binding TestContainerCommand}">
+                <Image Source="{StaticResource ContainerIcon}" Height="16" />
+            </Button>
+            <Button ToolTip="Retest Container" Command="{Binding RetestContainerCommand}">
+                <Image Source="{StaticResource RefreshIcon}" Height="16" />
+            </Button>
+            <Button ToolTip="{x:Static resources:Strings.Clear}" Command="{Binding ClearResultsCommand}">
+                <Image Source="{StaticResource RemoveIcon}" Height="11" />
+            </Button>
+        </ToolBar>
+        <TextBox Grid.Row="1" VerticalScrollBarVisibility="Visible" Text="{Binding TestResults}">
+            <i:Interaction.Behaviors>
+                <misc:AutoScrollTextBoxBehaviour />
+            </i:Interaction.Behaviors>
+        </TextBox>
+    </Grid>
+</UserControl>

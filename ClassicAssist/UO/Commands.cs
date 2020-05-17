@@ -469,6 +469,13 @@ namespace ClassicAssist.UO
                     PacketFilterConditions.ShortAtPositionCondition( 0x3735, 10 )
                 } );
 
+            PacketFilterInfo fizzMessagePfi = new PacketFilterInfo( 0xC1, 
+                new[]
+                {
+                    PacketFilterConditions.IntAtPositionCondition( Engine.Player.Serial,3 ),
+                    PacketFilterConditions.IntAtPositionCondition( 502632, 14 ) /* The spell fizzles. */
+                });
+
             PacketFilterInfo fizzChivPFI = new PacketFilterInfo( 0x54,
                 new[]
                 {
@@ -482,6 +489,7 @@ namespace ClassicAssist.UO
 
             PacketWaitEntry targetWe = Engine.PacketWaitEntries.Add( targetPfi, PacketDirection.Incoming );
             PacketWaitEntry fizzWe = Engine.PacketWaitEntries.Add( fizzPfi, PacketDirection.Incoming );
+            PacketWaitEntry fizzMessageWe = Engine.PacketWaitEntries.Add( fizzMessagePfi, PacketDirection.Incoming );
             PacketWaitEntry fizzChivWe = Engine.PacketWaitEntries.Add( fizzChivPFI, PacketDirection.Incoming );
 
             try
@@ -509,9 +517,11 @@ namespace ClassicAssist.UO
 
                 Task fizzTask = Task.Run( () => fizzWe.Lock.WaitOne( timeout ) );
 
+                Task fizzMessageTask = Task.Run( () => fizzMessageWe.Lock.WaitOne( timeout ) );
+
                 Task fizzChivTask = Task.Run( () => fizzChivWe.Lock.WaitOne( timeout ) );
 
-                int index = Task.WaitAny( targetTask, fizzTask, fizzChivTask );
+                int index = Task.WaitAny( targetTask, fizzTask, fizzMessageTask, fizzChivTask );
 
                 return index == 0 && targetTask.Result;
             }
@@ -519,6 +529,7 @@ namespace ClassicAssist.UO
             {
                 Engine.PacketWaitEntries.Remove( targetWe );
                 Engine.PacketWaitEntries.Remove( fizzWe );
+                Engine.PacketWaitEntries.Remove( fizzMessageWe );
                 Engine.PacketWaitEntries.Remove( fizzChivWe );
 
                 Engine.WaitingForTarget = false;

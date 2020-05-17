@@ -10,8 +10,8 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:autoloot1="clr-namespace:ClassicAssist.UI.ViewModels.Autoloot"
         mc:Ignorable="d"
-        Title="{x:Static resources:Strings.Define_Custom_Properties}" Height="350" Width="600"
-        Background="{DynamicResource ThemeWindowBackgroundBrush}">
+        Title="{x:Static resources:Strings.Define_Custom_Properties}" Height="350" Width="650"
+        Background="{DynamicResource ThemeWindowBackgroundBrush}" Topmost="True">
     <Window.DataContext>
         <autoloot1:CustomPropertiesViewModel/>
     </Window.DataContext>
@@ -32,14 +32,14 @@
                   ItemsSource="{Binding Properties}" SelectedItem="{Binding SelectedProperty}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="{x:Static resources:Strings.Property}" Width="150"
+                    <GridViewColumn Header="{x:Static resources:Strings.Property}" Width="200"
                                     DisplayMemberBinding="{Binding Name}" />
                     <GridViewColumn Header="{x:Static resources:Strings.Cliloc}" Width="100" DisplayMemberBinding="{Binding Cliloc}">
                     </GridViewColumn>
                     <GridViewColumn Header="{x:Static resources:Strings.Arguments}" Width="75" x:Name="ValueColumn">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding Arguments}" IsEnabled="False"/>
+                                <CheckBox IsChecked="{Binding Arguments}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -57,8 +57,8 @@
                 </Style>
             </Grid.Resources>
             <StackPanel Grid.Row="0">
-                <Button Content="{x:Static resources:Strings.Choose_by_Cliloc}" IsEnabled="False"/>
                 <Button Content="{x:Static resources:Strings.Choose_from_Item}" Command="{Binding ChooseFromItemCommand}"/>
+                <Button Content="{x:Static resources:Strings.Choose_by_Cliloc}" Command="{Binding ChooseFromClilocCommand}"/>
                 <Button Content="{x:Static resources:Strings.Remove}" Command="{Binding RemoveCommand}"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Margin="0,0,0,10">

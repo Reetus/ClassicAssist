@@ -1185,4 +1185,28 @@
   <data name="Choose from Item" xml:space="preserve">
     <value>从项目中进行选择</value>
   </data>
+  <data name="Toggle mounted" xml:space="preserve">
+    <value>安装的切换</value>
+  </data>
+  <data name="Target Acquisition - Enemy" xml:space="preserve">
+    <value>目标获取 - 敌人</value>
+  </data>
+  <data name="Target Acquisition - Friend" xml:space="preserve">
+    <value>目标获取 - 朋友</value>
+  </data>
+  <data name="Get Next Friend" xml:space="preserve">
+    <value>获取下一个好友</value>
+  </data>
+  <data name="Get Next Any" xml:space="preserve">
+    <value>获取下一个任意</value>
+  </data>
+  <data name="Get Next Criminal" xml:space="preserve">
+    <value>获取下一个犯罪</value>
+  </data>
+  <data name="Get Next Enemy" xml:space="preserve">
+    <value>获取下一个敌人</value>
+  </data>
+  <data name="Get Next Gray / Criminal" xml:space="preserve">
+    <value>获取下一个灰色 / 犯罪</value>
+  </data>
 </root>

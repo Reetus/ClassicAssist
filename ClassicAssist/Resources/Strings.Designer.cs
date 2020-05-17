@@ -1069,11 +1069,56 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Get Next Any.
+        /// </summary>
+        public static string Get_Next_Any {
+            get {
+                return ResourceManager.GetString("Get Next Any", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Next Criminal.
+        /// </summary>
+        public static string Get_Next_Criminal {
+            get {
+                return ResourceManager.GetString("Get Next Criminal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Next Enemy.
+        /// </summary>
+        public static string Get_Next_Enemy {
+            get {
+                return ResourceManager.GetString("Get Next Enemy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Next Friend.
+        /// </summary>
+        public static string Get_Next_Friend {
+            get {
+                return ResourceManager.GetString("Get Next Friend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Get Next Gray.
         /// </summary>
         public static string Get_Next_Gray {
             get {
                 return ResourceManager.GetString("Get Next Gray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Next Gray / Criminal.
+        /// </summary>
+        public static string Get_Next_Gray___Criminal {
+            get {
+                return ResourceManager.GetString("Get Next Gray / Criminal", resourceCulture);
             }
         }
         
@@ -2680,6 +2725,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Target Acquisition - Enemy.
+        /// </summary>
+        public static string Target_Acquisition___Enemy {
+            get {
+                return ResourceManager.GetString("Target Acquisition - Enemy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target Acquisition - Friend.
+        /// </summary>
+        public static string Target_Acquisition___Friend {
+            get {
+                return ResourceManager.GetString("Target Acquisition - Friend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Target blocked... try again....
         /// </summary>
         public static string Target_blocked____try_again___ {
@@ -2883,6 +2946,15 @@ namespace ClassicAssist.Resources {
         public static string Toggle_item_properties {
             get {
                 return ResourceManager.GetString("Toggle item properties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle mounted.
+        /// </summary>
+        public static string Toggle_mounted {
+            get {
+                return ResourceManager.GetString("Toggle mounted", resourceCulture);
             }
         }
         

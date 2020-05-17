@@ -1185,4 +1185,28 @@
   <data name="Choose from Item" xml:space="preserve">
     <value>항목 중에서 선택</value>
   </data>
+  <data name="Toggle mounted" xml:space="preserve">
+    <value>토글 장착</value>
+  </data>
+  <data name="Target Acquisition - Enemy" xml:space="preserve">
+    <value>대상 획득 - 적</value>
+  </data>
+  <data name="Target Acquisition - Friend" xml:space="preserve">
+    <value>대상 획득 - 친구</value>
+  </data>
+  <data name="Get Next Friend" xml:space="preserve">
+    <value>다음 친구 얻기</value>
+  </data>
+  <data name="Get Next Any" xml:space="preserve">
+    <value>다음 에 대한 모든 것</value>
+  </data>
+  <data name="Get Next Criminal" xml:space="preserve">
+    <value>다음 범죄자 받기</value>
+  </data>
+  <data name="Get Next Enemy" xml:space="preserve">
+    <value>다음 적을 얻으십시오</value>
+  </data>
+  <data name="Get Next Gray / Criminal" xml:space="preserve">
+    <value>다음 회색 / 범죄자 받기</value>
+  </data>
 </root>

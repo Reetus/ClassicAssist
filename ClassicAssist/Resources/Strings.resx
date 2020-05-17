@@ -1185,4 +1185,28 @@
   <data name="Choose from Item" xml:space="preserve">
     <value>Choose from Item</value>
   </data>
+  <data name="Toggle mounted" xml:space="preserve">
+    <value>Toggle mounted</value>
+  </data>
+  <data name="Target Acquisition - Enemy" xml:space="preserve">
+    <value>Target Acquisition - Enemy</value>
+  </data>
+  <data name="Target Acquisition - Friend" xml:space="preserve">
+    <value>Target Acquisition - Friend</value>
+  </data>
+  <data name="Get Next Friend" xml:space="preserve">
+    <value>Get Next Friend</value>
+  </data>
+  <data name="Get Next Any" xml:space="preserve">
+    <value>Get Next Any</value>
+  </data>
+  <data name="Get Next Criminal" xml:space="preserve">
+    <value>Get Next Criminal</value>
+  </data>
+  <data name="Get Next Enemy" xml:space="preserve">
+    <value>Get Next Enemy</value>
+  </data>
+  <data name="Get Next Gray / Criminal" xml:space="preserve">
+    <value>Get Next Gray / Criminal</value>
+  </data>
 </root>

@@ -47,7 +47,14 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = nameof( Strings.Main ) )]
         public static void Pause( int milliseconds )
         {
-            Thread.Sleep( milliseconds );
+            try
+            {
+                Thread.Sleep( milliseconds );
+            }
+            catch ( ThreadInterruptedException )
+            {
+                // Squash
+            }
         }
 
         [CommandsDisplay( Category = nameof( Strings.Main ) )]

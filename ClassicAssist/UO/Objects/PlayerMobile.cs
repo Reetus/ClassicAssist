@@ -108,6 +108,11 @@ namespace ClassicAssist.UO.Objects
         {
             base.SetLayer( layer, serial );
 
+            if ( layer != Layer.OneHanded && layer != Layer.TwoHanded )
+            {
+                return;
+            }
+
             AbilitiesManager manager = AbilitiesManager.GetInstance();
             manager.ResendGump( manager.Enabled );
         }

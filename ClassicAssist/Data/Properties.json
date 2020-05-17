@@ -1,200 +1,611 @@
 [
   {
     "Name": "Count",
-    "Clilocs": [0],
+    "Clilocs": [
+      0
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 1
   },
   {
     "Name": "Hue",
-    "Clilocs": [0],
+    "Clilocs": [
+      0
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 1
   },
   {
     "Name": "Faster Casting",
-    "Clilocs": [1060413],
+    "Clilocs": [
+      1060413
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Faster Cast Recovery",
-    "Clilocs": [1060412],
+    "Clilocs": [
+      1060412
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Mana Regeneration",
-    "Clilocs": [1060440],
+    "Clilocs": [
+      1060440
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Balanced",
-    "Clilocs": [1072792],
+    "Clilocs": [
+      1072792
+    ],
     "ClilocIndex": -1,
     "ConstraintType": 0
   },
   {
     "Name": "Cold Resist",
-    "Clilocs": [1060445],
+    "Clilocs": [
+      1060445
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Damage Increase",
-    "Clilocs": [1060401, 1060402],
+    "Clilocs": [
+      1060401,
+      1060402
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Defense Chance Increase",
-    "Clilocs": [1060408],
+    "Clilocs": [
+      1060408
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Dexterity Bonus",
-    "Clilocs": [1060409],
+    "Clilocs": [
+      1060409
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Energy Resist",
-    "Clilocs": [1060446],
+    "Clilocs": [
+      1060446
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Fire Resist",
-    "Clilocs": [1060447],
+    "Clilocs": [
+      1060447
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Hit Chance Increase",
-    "Clilocs": [1060415],
+    "Clilocs": [
+      1060415
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Hit Fireball",
-    "Clilocs": [1060420],
+    "Clilocs": [
+      1060420
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Hit Life Leech",
-    "Clilocs": [1060422],
+    "Clilocs": [
+      1060422
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Hit Lightning",
-    "Clilocs": [1060423],
+    "Clilocs": [
+      1060423
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Hit Mana Leech",
-    "Clilocs": [1060427],
+    "Clilocs": [
+      1060427
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Hit Point Increase",
-    "Clilocs": [1060431],
+    "Clilocs": [
+      1060431
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Hit Point Regeneration",
-    "Clilocs": [1060444],
+    "Clilocs": [
+      1060444
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Hit Stamina Leech",
-    "Clilocs": [1060430],
+    "Clilocs": [
+      1060430
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Intelligence Bonus",
-    "Clilocs": [1060432],
+    "Clilocs": [
+      1060432
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Lower Mana Cost",
-    "Clilocs": [1060433],
+    "Clilocs": [
+      1060433
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Lower Reagent Cost",
-    "Clilocs": [1060434],
+    "Clilocs": [
+      1060434
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Luck",
-    "Clilocs": [1060436],
+    "Clilocs": [
+      1060436
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Mana Increase",
-    "Clilocs": [1060439],
+    "Clilocs": [
+      1060439
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Physical Resist",
-    "Clilocs": [1060448],
+    "Clilocs": [
+      1060448
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Poison Resist",
-    "Clilocs": [1060449],
+    "Clilocs": [
+      1060449
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Spell Channeling",
-    "Clilocs": [1060482],
+    "Clilocs": [
+      1060482
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Spell Damage Increase",
-    "Clilocs": [1060483],
+    "Clilocs": [
+      1060483
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Stamina Increase",
-    "Clilocs": [1060484],
+    "Clilocs": [
+      1060484
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Strength Bonus",
-    "Clilocs": [1060485],
+    "Clilocs": [
+      1060485
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Swing Speed Increase",
-    "Clilocs": [1060486],
+    "Clilocs": [
+      1060486
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
   },
   {
     "Name": "Velocity",
-    "Clilocs": [1072793],
+    "Clilocs": [
+      1072793
+    ],
     "ClilocIndex": 0,
     "ConstraintType": 0
+  },
+  {
+    "ClilocIndex": -1,
+    "Clilocs": [
+      1152714
+    ],
+    "ConstraintType": 0,
+    "Name": "Antique"
+  },
+  {
+    "ClilocIndex": -1,
+    "Clilocs": [
+      1113710
+    ],
+    "ConstraintType": 0,
+    "Name": "Battle Lust"
+  },
+  {
+    "ClilocIndex": -1,
+    "Clilocs": [
+      1116209
+    ],
+    "ConstraintType": 0,
+    "Name": "Brittle"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1113696
+    ],
+    "ConstraintType": 0,
+    "Name": "Casting Focus"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1072846
+    ],
+    "ConstraintType": 0,
+    "Name": "Chaos Damage"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1060404
+    ],
+    "ConstraintType": 0,
+    "Name": "Cold Damage"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1113594
+    ],
+    "ConstraintType": 0,
+    "Name": "Cold Eater"
+  },
+  {
+    "ClilocIndex": -1,
+    "Clilocs": [
+      1049643
+    ],
+    "ConstraintType": 0,
+    "Name": "Cursed"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1113598
+    ],
+    "ConstraintType": 0,
+    "Name": "Damage Eater"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1151780
+    ],
+    "ConstraintType": 0,
+    "Name": "Durability"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1060407
+    ],
+    "ConstraintType": 0,
+    "Name": "Energy Damage"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1113596
+    ],
+    "ConstraintType": 0,
+    "Name": "Energy Eater"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1060411
+    ],
+    "ConstraintType": 0,
+    "Name": "Enhance Potions"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1060405
+    ],
+    "ConstraintType": 0,
+    "Name": "Fire Damage"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1113593
+    ],
+    "ConstraintType": 0,
+    "Name": "Fire Eater"
+  },
+  {
+    "ClilocIndex": -1,
+    "Clilocs": [
+      1111709
+    ],
+    "ConstraintType": 0,
+    "Name": "Gargoyles Only"
+  },
+  {
+    "ClilocIndex": -1,
+    "Clilocs": [
+      1151493
+    ],
+    "ConstraintType": 0,
+    "Name": "Greater Artifact"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1060417
+    ],
+    "ConstraintType": 0,
+    "Name": "Hit Dispel"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1113700
+    ],
+    "ConstraintType": 0,
+    "Name": "Hit Fatigue"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1060424
+    ],
+    "ConstraintType": 0,
+    "Name": "Hit Lower Attack"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1060425
+    ],
+    "ConstraintType": 0,
+    "Name": "Hit Lower Defense"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1113699
+    ],
+    "ConstraintType": 0,
+    "Name": "Hit Mana Drain"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1113597
+    ],
+    "ConstraintType": 0,
+    "Name": "Kinetic Eater"
+  },
+  {
+    "ClilocIndex": -1,
+    "Clilocs": [
+      1151495
+    ],
+    "ConstraintType": 0,
+    "Name": "Legendary Artifact"
+  },
+  {
+    "ClilocIndex": -1,
+    "Clilocs": [
+      1151489
+    ],
+    "ConstraintType": 0,
+    "Name": "Lesser Magic Item"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1060435
+    ],
+    "ConstraintType": 0,
+    "Name": "Lower Requirements"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1060438
+    ],
+    "ConstraintType": 0,
+    "Name": "Mage Weapon"
+  },
+  {
+    "ClilocIndex": -1,
+    "Clilocs": [
+      1151494
+    ],
+    "ConstraintType": 0,
+    "Name": "Major Artifact"
+  },
+  {
+    "ClilocIndex": -1,
+    "Clilocs": [
+      1151491
+    ],
+    "ConstraintType": 0,
+    "Name": "Major Magic Item"
+  },
+  {
+    "ClilocIndex": -1,
+    "Clilocs": [
+      1116158
+    ],
+    "ConstraintType": 0,
+    "Name": "Mana Phase"
+  },
+  {
+    "ClilocIndex": -1,
+    "Clilocs": [
+      1151488
+    ],
+    "ConstraintType": 0,
+    "Name": "Minor Magic Item"
+  },
+  {
+    "ClilocIndex": -1,
+    "Clilocs": [
+      1060441
+    ],
+    "ConstraintType": 0,
+    "Name": "Night Sight"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1060403
+    ],
+    "ConstraintType": 0,
+    "Name": "Physical Damage"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1060406
+    ],
+    "ConstraintType": 0,
+    "Name": "Poison Damage"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1113595
+    ],
+    "ConstraintType": 0,
+    "Name": "Poison Eater"
+  },
+  {
+    "ClilocIndex": -1,
+    "Clilocs": [
+      1154910
+    ],
+    "ConstraintType": 0,
+    "Name": "Prized"
+  },
+  {
+    "ClilocIndex": -1,
+    "Clilocs": [
+      1112364
+    ],
+    "ConstraintType": 0,
+    "Name": "Reactive Paralyze"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1060442
+    ],
+    "ConstraintType": 0,
+    "Name": "Reflect Physical Damage"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1060450
+    ],
+    "ConstraintType": 0,
+    "Name": "Self Repair"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1113630
+    ],
+    "ConstraintType": 0,
+    "Name": "Soul Charge"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1112857
+    ],
+    "ConstraintType": 0,
+    "Name": "Splintering Weapon"
+  },
+  {
+    "ClilocIndex": 0,
+    "Clilocs": [
+      1060443
+    ],
+    "ConstraintType": 0,
+    "Name": "Stamina Regeneration"
+  },
+  {
+    "ClilocIndex": -1,
+    "Clilocs": [
+      1060400
+    ],
+    "ConstraintType": 0,
+    "Name": "Use Best Weapon Skill"
   }
 ]

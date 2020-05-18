@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Annotations;
 using ClassicAssist.Data.Hotkeys.Commands;
+using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.UI.Misc;
 
 namespace ClassicAssist.Data.Hotkeys
@@ -179,6 +180,8 @@ namespace ClassicAssist.Data.Hotkeys
 
                             filter = !hks.PassToUO;
 
+                            AliasCommands.SetDefaultAliases();
+
                             Task.Run( () => hks.Action.Invoke( hks ) );
 
                             break;
@@ -226,6 +229,8 @@ namespace ClassicAssist.Data.Hotkeys
                             {
                                 continue;
                             }
+
+                            AliasCommands.SetDefaultAliases();
 
                             Task.Run( () => hks.Action.Invoke( hks ) );
 

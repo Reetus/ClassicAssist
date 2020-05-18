@@ -66,7 +66,6 @@
     <PackageReference Include="OptimizedPriorityQueue" Version="4.2.0" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.7.0" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
-    <PackageReference Include="WpfPlus.Plus" Version="1.2.8" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="cuoapi">

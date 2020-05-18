@@ -58,6 +58,10 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private ICommand _removeConstraintCommand;
         private RelayCommand _resetContainerCommand;
         private AutolootEntry _selectedItem;
+
+        private ObservableCollection<AutolootConstraintEntry> _selectedProperties =
+            new ObservableCollection<AutolootConstraintEntry>();
+
         private AutolootConstraintEntry _selectedProperty;
         private ICommand _selectHueCommand;
         private ICommand _setContainerCommand;
@@ -137,6 +141,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
         {
             get => _selectedItem;
             set => SetProperty( ref _selectedItem, value );
+        }
+
+        public ObservableCollection<AutolootConstraintEntry> SelectedProperties
+        {
+            get => _selectedProperties;
+            set => SetProperty( ref _selectedProperties, value );
         }
 
         public AutolootConstraintEntry SelectedProperty
@@ -319,11 +329,20 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             try
             {
-                AutolootConstraintEntry entry = JsonConvert.DeserializeObject<AutolootConstraintEntry>( text );
+                IEnumerable<AutolootConstraintEntry> entries =
+                    JsonConvert.DeserializeObject<IEnumerable<AutolootConstraintEntry>>( text );
 
-                if ( entry != null )
+                if ( entries == null )
                 {
-                    SelectedItem?.Constraints.Add( entry );
+                    return;
+                }
+
+                foreach ( AutolootConstraintEntry entry in entries )
+                {
+                    if ( !SelectedItem.Constraints.Contains( entry ) )
+                    {
+                        SelectedItem?.Constraints.Add( entry );
+                    }
                 }
             }
             catch ( Exception )
@@ -334,12 +353,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private static void ClipboardCopy( object obj )
         {
-            if ( !( obj is AutolootConstraintEntry entry ) )
+            if ( !( obj is IList<AutolootConstraintEntry> entries ) )
             {
                 return;
             }
 
-            string text = JsonConvert.SerializeObject( entry );
+            string text = JsonConvert.SerializeObject( entries );
 
             Clipboard.SetText( text );
         }
@@ -443,12 +462,15 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private void RemoveConstraint( object obj )
         {
-            if ( !( obj is AutolootConstraintEntry constraint ) )
+            if ( !( obj is IEnumerable<AutolootConstraintEntry> constraints ) )
             {
                 return;
             }
 
-            SelectedItem.Constraints.Remove( constraint );
+            foreach ( AutolootConstraintEntry constraintEntry in constraints.ToList() )
+            {
+                SelectedItem?.Constraints.Remove( constraintEntry );
+            }
         }
 
         private void InsertConstraint( object obj )
@@ -554,7 +576,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             return items == null
                 ? null
                 : ( from item in items
-                    where item.ID == entry.ID
+                    where (entry.ID == -1 || item.ID == entry.ID)
                     let predicates = ConstraintsToPredicates( entry.Constraints )
                     where !predicates.Any() || CheckPredicates( item, predicates )
                     select item ).ToList();

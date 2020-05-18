@@ -12,6 +12,7 @@
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:misc1="clr-namespace:ClassicAssist.Misc"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     x:Class="ClassicAssist.UI.Views.Agents.AutolootTabControl"
     mc:Ignorable="d"
     d:DesignHeight="250" d:DesignWidth="600" x:Name="userControl">
@@ -72,11 +73,11 @@
         <agents:AutolootViewModel />
     </UserControl.DataContext>
     <Grid>
-        <b:Interaction.Behaviors>
+        <i:Interaction.Behaviors>
             <misc:ClipboardBehaviour CopyCommand="{Binding ClipboardCopyCommand}"
                                      PasteCommand="{Binding ClipboardPasteCommand}"
-                                     CommandParameter="{Binding SelectedItem, ElementName=listView1}" />
-        </b:Interaction.Behaviors>
+                                     CommandParameter="{Binding SelectedProperties}" />
+        </i:Interaction.Behaviors>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="*" />
@@ -138,6 +139,9 @@
                       IsChecked="{Binding SelectedItem.Enabled}" />
             <ListView x:Name="listView1" Grid.Row="2" Margin="0,10,0,10"
                       ItemsSource="{Binding SelectedItem.Constraints}" SelectedItem="{Binding SelectedProperty}">
+                <i:Interaction.Behaviors>
+                    <misc:ListViewMultiSelectionBehaviour SelectedItems="{Binding SelectedProperties}" />
+                </i:Interaction.Behaviors>
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="{x:Static resources:Strings.Property}" Width="150"
@@ -171,7 +175,7 @@
                     </Grid.ColumnDefinitions>
                     <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="0" Margin="0,0,5,0"
                             Command="{Binding RemoveConstraintCommand}"
-                            CommandParameter="{Binding SelectedItem, ElementName=listView1}" />
+                            CommandParameter="{Binding SelectedProperties}" />
                     <Button Content="{x:Static resources:Strings.Insert}" Grid.Column="1" Margin="5,0,0,0"
                             Command="{Binding InsertConstraintCommand}"
                             CommandParameter="{Binding SelectedValue, ElementName=comboBox}" />

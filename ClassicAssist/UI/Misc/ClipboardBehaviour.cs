@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using Microsoft.Xaml.Behaviors;
+using System.Windows.Interactivity;
 
 namespace ClassicAssist.UI.Misc
 {
@@ -15,8 +15,7 @@ namespace ClassicAssist.UI.Misc
             new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.None ) );
 
         public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register(
-            "CommandParameter",
-            typeof( object ), typeof( ClipboardBehaviour ),
+            "CommandParameter", typeof( object ), typeof( ClipboardBehaviour ),
             new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.None ) );
 
         public object CommandParameter

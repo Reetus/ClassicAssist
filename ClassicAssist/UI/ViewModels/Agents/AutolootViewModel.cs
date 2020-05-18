@@ -379,11 +379,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     return;
                 }
 
+                ActionPacketQueue.EnqueueActionPacket( new UseObject( serial ), QueuePriority.Medium );
+
                 PacketWaitEntry we = Engine.PacketWaitEntries.Add(
                     new PacketFilterInfo( 0x3C, new[] { PacketFilterConditions.IntAtPositionCondition( serial, 19 ) } ),
                     PacketDirection.Incoming );
 
-                bool result = we.Lock.WaitOne( 5000 );
+                bool result = we.Lock.WaitOne( 3000 );
 
                 if ( !result )
                 {
@@ -396,6 +398,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 {
                     return;
                 }
+
+                Engine.SendPacketToServer( new BatchQueryProperties( items.Select( i => i.Serial ).ToArray() ) );
 
                 List<Item> lootItems = new List<Item>();
 
@@ -576,7 +580,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             return items == null
                 ? null
                 : ( from item in items
-                    where (entry.ID == -1 || item.ID == entry.ID)
+                    where entry.ID == -1 || item.ID == entry.ID
                     let predicates = ConstraintsToPredicates( entry.Constraints )
                     where !predicates.Any() || CheckPredicates( item, predicates )
                     select item ).ToList();
@@ -597,9 +601,20 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 switch ( constraint.Property.ConstraintType )
                 {
                     case PropertyType.Properties:
-                        predicates.Add( i => i.Properties != null && constraint.Property.Clilocs.Any( cliloc =>
-                                                 i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc,
-                                                     constraint.Property, constraint.Operator, constraint.Value ) ) ) );
+                        if ( constraint.Operator != AutolootOperator.NotPresent )
+                        {
+                            predicates.Add( i => i.Properties != null && constraint.Property.Clilocs.Any( cliloc =>
+                                                     i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc,
+                                                         constraint.Property, constraint.Operator,
+                                                         constraint.Value ) ) ) );
+                        }
+                        else
+                        {
+                            predicates.Add( i =>
+                                i.Properties != null && !constraint.Property.Clilocs.Any( cliloc =>
+                                    i.Properties.Any( p => p.Cliloc == cliloc ) ) );
+                        }
+
                         break;
                     case PropertyType.Object:
 

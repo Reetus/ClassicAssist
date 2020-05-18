@@ -1,4 +1,5 @@
-﻿using ClassicAssist.UO.Data;
+﻿using System.Collections.Generic;
+using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.UO.Network.Packets
 {
@@ -10,6 +11,18 @@ namespace ClassicAssist.UO.Network.Packets
             _writer.Write( (byte) 0xD6 );
             _writer.Write( (short) 7 );
             _writer.Write( serial );
+        }
+
+        public BatchQueryProperties( IReadOnlyCollection<int> serials )
+        {
+            _writer = new PacketWriter();
+            _writer.Write( (byte) 0xD6 );
+            _writer.Write( (short) ( 3 + serials.Count * 4 ) );
+
+            foreach ( int serial in serials )
+            {
+                _writer.Write( serial );
+            }
         }
     }
 }

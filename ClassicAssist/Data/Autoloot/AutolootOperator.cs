@@ -16,6 +16,9 @@ namespace ClassicAssist.Data.Autoloot
         GreaterThan,
 
         [Description( "<=" )]
-        LessThan
+        LessThan,
+
+        [Description( "X" )]
+        NotPresent
     }
 }

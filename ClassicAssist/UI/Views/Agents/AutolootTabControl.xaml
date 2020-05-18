@@ -94,7 +94,13 @@
                           IsChecked="{Binding DisableInGuardzone}" />
             </StackPanel>
             <ListBox x:Name="listView" Grid.Row="1" Margin="0,10,0,10" ItemsSource="{Binding Items}"
-                     SelectedItem="{Binding SelectedItem}" />
+                     SelectedItem="{Binding SelectedItem}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <controls:EditTextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Label="{Binding}" MinWidth="160" ShowIcon="True"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
             <StackPanel Grid.Row="2">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -105,7 +111,13 @@
                             Command="{Binding RemoveCommand}"
                             CommandParameter="{Binding SelectedItem, ElementName=listView}" />
                     <Button Content="{x:Static resources:Strings.Insert}" Grid.Column="1" Margin="5,0,0,0"
-                            Command="{Binding InsertCommand}" />
+                            Command="{Binding InsertCommand}">
+                        <Button.ContextMenu>
+                            <ContextMenu IsOpen="False">
+                                <MenuItem Header="{x:Static resources:Strings.Match_Any_ID}" Command="{Binding Source={StaticResource Proxy}, Path=Data.InsertMatchAnyCommand}"/>
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                    </Button>
                 </Grid>
                 <Grid>
                     <Grid.ColumnDefinitions>

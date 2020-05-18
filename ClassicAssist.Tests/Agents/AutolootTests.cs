@@ -1,7 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading;
 using Assistant;
 using ClassicAssist.Data.Autoloot;
@@ -225,9 +227,9 @@ namespace ClassicAssist.Tests.Agents
             AutolootConstraintEntry autolootConstraint =
                 new AutolootConstraintEntry
                 {
-                    Property = vm.Constraints.FirstOrDefault( c => c.Name == "Hue" ),
+                    Property = vm.Constraints.FirstOrDefault( c => c.Name == "ID" ),
                     Operator = AutolootOperator.Equal,
-                    Value = 0
+                    Value = 0x108a
                 };
             lootEntry.Constraints.Add( autolootConstraint );
 
@@ -243,6 +245,10 @@ namespace ClassicAssist.Tests.Agents
                 {
                     are.Set();
                 }
+                else if ( data[0] == 0xD6 || data[0] == 0x06)
+                {
+
+                }
                 else
                 {
                     Assert.Fail();
@@ -256,7 +262,7 @@ namespace ClassicAssist.Tests.Agents
                 byte[] containerContentsPacket =
                 {
                     0x3C, 0x00, 0x19, 0x00, 0x01, 0x43, 0x13, 0xFC, 0x5E, 0x10, 0x8A, 0x00, 0x00, 0x01, 0x00, 0x13,
-                    0x00, 0x82, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00
+                    0x00, 0x82, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x64
                 };
 
                 PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x3C );
@@ -326,6 +332,11 @@ namespace ClassicAssist.Tests.Agents
 
             void OnPacketSentEvent( byte[] data, int length )
             {
+                if ( data[0] == 0xD6 || data[0] == 0x06 )
+                {
+                    return;
+                }
+
                 Assert.Fail();
             }
 
@@ -459,6 +470,54 @@ namespace ClassicAssist.Tests.Agents
             Engine.PacketWaitEntries = null;
 
             Engine.InternalPacketReceivedEvent -= OnPacketReceivedEvent;
+        }
+
+        [TestMethod]
+        public void WontMatchNotIncluded()
+        {
+            PropertyEntry property1 = new PropertyEntry { ClilocIndex = -1, Clilocs = new[] { 1 }, Name = "Test" };
+            PropertyEntry property2 = new PropertyEntry { ClilocIndex = -1, Clilocs = new[] { 2 }, Name = "Test 2" };
+
+            ItemCollection container = new ItemCollection( 2 )
+            {
+                new Item( 1 ) { Properties = new[] { new Property { Cliloc = 1, Text = "Test" } } }
+            };
+
+            AutolootEntry filter = new AutolootEntry
+            {
+                Constraints = new ObservableCollection<AutolootConstraintEntry>
+                {
+                    new AutolootConstraintEntry
+                    {
+                        Operator = AutolootOperator.Equal, Property = property1, Value = 0
+                    }
+                }
+            };
+
+            IEnumerable<Item> matchItems = AutolootHelpers.AutolootFilter( container.GetItems(), filter );
+
+            Assert.IsTrue( matchItems.Any() );
+
+            container.Clear();
+
+            container.Add( new Item( 3 )
+            {
+                Properties = new[]
+                {
+                    new Property { Cliloc = 1, Text = "Test" }, new Property { Cliloc = 2, Text = "Test 2" }
+                }
+            } );
+
+            filter.Constraints.Add( new AutolootConstraintEntry
+            {
+                Operator = AutolootOperator.NotPresent, Property = property2, Value = 0
+            } );
+
+            matchItems = AutolootHelpers.AutolootFilter( container.GetItems(), filter );
+
+            Assert.IsTrue( !matchItems.Any() );
+
+            Engine.Items.Clear();
         }
 
         [TestCleanup]

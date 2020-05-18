@@ -18,6 +18,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Assistant;
@@ -25,6 +26,7 @@ using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.ViewModels.Agents;
 using ClassicAssist.UO;
+using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UI.ViewModels.Debug
@@ -93,6 +95,8 @@ namespace ClassicAssist.UI.ViewModels.Debug
                 return;
             }
 
+            Engine.SendPacketToServer( new BatchQueryProperties( items.Select( i => i.Serial ).ToArray() ) );
+
             foreach ( AutolootEntry entry in AutolootManager.GetInstance().GetEntries() )
             {
                 if ( !entry.Enabled )
@@ -103,7 +107,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
                 TestResults += $"Entry {entry.Name}...\n\n";
 
-                IEnumerable<Item> matchItems = AutolootViewModel.AutolootFilter( items, entry );
+                IEnumerable<Item> matchItems = AutolootHelpers.AutolootFilter( items, entry );
 
                 if ( matchItems == null )
                 {

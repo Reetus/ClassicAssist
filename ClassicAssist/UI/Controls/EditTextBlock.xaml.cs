@@ -15,13 +15,22 @@ namespace ClassicAssist.UI.Controls
             typeof( EditTextBlock ),
             new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
 
+        public static readonly DependencyProperty LabelProperty = DependencyProperty.Register( "Label",
+            typeof( string ), typeof( EditTextBlock ),
+            new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.None ) );
+
         public static readonly DependencyProperty ShowIconProperty = DependencyProperty.Register( "ShowIcon",
-            typeof( bool ),
-            typeof( EditTextBlock ), new UIPropertyMetadata() );
+            typeof( bool ), typeof( EditTextBlock ), new UIPropertyMetadata() );
 
         public EditTextBlock()
         {
             InitializeComponent();
+        }
+
+        public string Label
+        {
+            get => (string) GetValue( LabelProperty );
+            set => SetValue( LabelProperty, value );
         }
 
         public bool ShowIcon

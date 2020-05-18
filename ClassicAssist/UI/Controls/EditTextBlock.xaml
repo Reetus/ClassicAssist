@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -21,12 +22,20 @@
                     </DrawingGroup>
                 </DrawingImage.Drawing>
             </DrawingImage>
+            <valueConverters:PriorityMultiValueConverter x:Key="PriorityMultiValueConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <TextBlock x:Name="textBlock" Text="{Binding ElementName=root, Path=Text}" VerticalAlignment="Center"
+        <TextBlock x:Name="textBlock" VerticalAlignment="Center"
                    MouseDown="TextBlock_OnMouseDown" Background="Transparent"
-                   Foreground="{Binding Foreground, ElementName=root}" />
+                   Foreground="{Binding Foreground, ElementName=root}">
+            <TextBlock.Text>
+                <MultiBinding Converter="{StaticResource PriorityMultiValueConverter}">
+                    <Binding Path="Label" ElementName="root"/>
+                    <Binding Path="Text" ElementName="root"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
         <TextBox x:Name="textBox"
                  Text="{Binding ElementName=root, Path=Text, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                  VerticalAlignment="Center" Visibility="Collapsed" KeyDown="TextBox_OnKeyDown"

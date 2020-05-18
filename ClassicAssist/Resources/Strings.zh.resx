@@ -1209,4 +1209,10 @@
   <data name="Get Next Gray / Criminal" xml:space="preserve">
     <value>获取下一个灰色 / 犯罪</value>
   </data>
+  <data name="Match Any ID" xml:space="preserve">
+    <value>匹配任何 ID</value>
+  </data>
+  <data name="Any" xml:space="preserve">
+    <value>任何</value>
+  </data>
 </root>

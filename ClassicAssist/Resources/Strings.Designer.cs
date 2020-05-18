@@ -223,6 +223,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Any.
+        /// </summary>
+        public static string Any {
+            get {
+                return ResourceManager.GetString("Any", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Applies to hotkeys / macros only..
         /// </summary>
         public static string Applies_to_hotkeys___macros_only_ {
@@ -1686,6 +1695,15 @@ namespace ClassicAssist.Resources {
         public static string Masteries {
             get {
                 return ResourceManager.GetString("Masteries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match Any ID.
+        /// </summary>
+        public static string Match_Any_ID {
+            get {
+                return ResourceManager.GetString("Match Any ID", resourceCulture);
             }
         }
         

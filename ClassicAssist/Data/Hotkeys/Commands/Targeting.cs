@@ -1,6 +1,9 @@
-﻿using Assistant;
+﻿using System;
+using Assistant;
+using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Targeting;
+using ClassicAssist.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;
@@ -163,6 +166,37 @@ namespace ClassicAssist.Data.Hotkeys.Commands
             public override void Execute()
             {
                 ActionCommands.Attack( "enemy" );
+            }
+        }
+
+        [HotkeyCommand( Name = "Show Next Target In Queue", Category = "Targeting" )]
+        public class ShowNextTargetQueue : HotkeyCommand
+        {
+            public override void Execute()
+            {
+                if ( !Options.CurrentOptions.QueueLastTarget )
+                {
+                    UOC.SystemMessage( Strings.Target_queue_is_not_enabled___ );
+                    return;
+                }
+
+                object nextTarget = Engine.LastTargetQueue.Peek();
+
+                switch ( nextTarget )
+                {
+                    case string targetAlias:
+                        MsgCommands.HeadMsg( string.Format( Strings.Next_Target___0_, targetAlias ),
+                            Engine.Player?.Serial );
+                        break;
+                    case int targetSerial:
+                    {
+                        Mobile entity = Engine.Mobiles.GetMobile( targetSerial );
+
+                        MsgCommands.HeadMsg( string.Format( Strings.Next_Target___0_, $"0x{targetSerial:x} - {entity?.Name ?? "Unknown"}" ),
+                            Engine.Player?.Serial );
+                        break;
+                    }
+                }
             }
         }
     }

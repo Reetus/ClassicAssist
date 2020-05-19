@@ -127,6 +127,7 @@
         <GroupBox Header="{x:Static r:Strings.Player}" Grid.Row="1" Grid.Column="1">
             <DockPanel>
                 <StackPanel DockPanel.Dock="Left">
+                    <Label Content="{x:Static r:Strings.Shard_}" />
                     <Label Content="{x:Static r:Strings.Name_}" />
                     <Label Content="{x:Static r:Strings.Serial_}" />
                     <Label Content="{x:Static r:Strings.Last_Target_}" />
@@ -138,6 +139,7 @@
                             <Setter Property="Margin" Value="10,0,0,0" />
                         </Style>
                     </StackPanel.Resources>
+                    <Label Content="{Binding ShardName}"/>
                     <Label Content="{Binding PlayerName}" />
                     <Label Content="{Binding PlayerSerial, Converter={StaticResource IntToHexStringValueConverter}}" />
                     <Label

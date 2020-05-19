@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Assistant;
 using ClassicAssist.Data.Abilities;
 using ClassicAssist.Data.Macros.Commands;
@@ -32,10 +33,18 @@ namespace ClassicAssist.UO.Network
             Register( 0x08, 15, OnDropRequest );
             Register( 0x13, 10, OnEquipRequest );
             Register( 0x6C, 19, OnTargetSent );
+            Register( 0xA0, 3, OnPlayServer );
             Register( 0xB1, 0, OnGumpButtonPressed );
             Register( 0xBD, 0, OnClientVersion );
             Register( 0xD7, 0, OnEncodedCommand );
             Register( 0xEF, 31, OnNewClientVersion );
+        }
+
+        private static void OnPlayServer( PacketReader reader )
+        {
+            int index = reader.ReadInt16();
+
+            Engine.CurrentShard = Engine.Shards.FirstOrDefault( i => i.Index == index );
         }
 
         private static void OnClientVersion( PacketReader reader )

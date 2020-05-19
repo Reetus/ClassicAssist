@@ -31,6 +31,7 @@ namespace ClassicAssist.UI.ViewModels
         private string _playerName;
         private int _playerSerial;
         private string _playerStatus;
+        private string _shardName = "Unknown";
         private ICommand _showItemsCommand;
         private Timer _timer;
 
@@ -118,6 +119,12 @@ namespace ClassicAssist.UI.ViewModels
 
         public string Product { get; } = Strings.ProductName;
 
+        public string ShardName
+        {
+            get => _shardName;
+            set => SetProperty( ref _shardName, value );
+        }
+
         public ICommand ShowItemsCommand =>
             _showItemsCommand ?? ( _showItemsCommand = new RelayCommand( ShowItems, o => Connected ) );
 
@@ -178,6 +185,7 @@ namespace ClassicAssist.UI.ViewModels
             PlayerStatus = player.Status.ToString();
             player.LastTargetChangedEvent += LastTargetChangedEvent;
             player.MobileStatusUpdated += OnMobileStatusUpdated;
+            ShardName = Engine.CurrentShard?.Name ?? "Unknown";
         }
 
         private void OnMobileStatusUpdated( MobileStatus oldstatus, MobileStatus newstatus )

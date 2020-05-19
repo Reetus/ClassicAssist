@@ -91,6 +91,7 @@ namespace ClassicAssist.UO.Network
             Register( 0xA1, 9, OnMobileHits );
             Register( 0xA2, 9, OnMobileMana );
             Register( 0xA3, 9, OnMobileStamina );
+            Register( 0xA8, 0, OnShardList );
             Register( 0xAE, 0, OnUnicodeText );
             Register( 0xB9, 5, OnSupportedFeatures );
             Register( 0xBF, 0, OnExtendedCommand );
@@ -108,6 +109,34 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x10, 0, OnDisplayEquipmentInfo );
             RegisterExtended( 0x21, 0, OnClearWeaponAbility );
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
+        }
+
+        private static void OnShardList( PacketReader reader )
+        {
+            reader.ReadByte();
+            int count = reader.ReadInt16();
+
+            List<ShardEntry> shards = new List<ShardEntry>();
+
+            for ( int i = 0; i < count; i++ )
+            {
+                int index = reader.ReadInt16();
+                string name = reader.ReadStringSafe( 32 );
+                int full = reader.ReadByte();
+                int timezone = reader.ReadSByte();
+                int ip = reader.ReadInt32();
+
+                shards.Add( new ShardEntry
+                {
+                    Index = index,
+                    IP = ip,
+                    Name = name,
+                    PercentFull = full,
+                    Timezone = timezone
+                } );
+            }
+
+            Engine.Shards = shards;
         }
 
         private static void OnDisplayEquipmentInfo( PacketReader reader )

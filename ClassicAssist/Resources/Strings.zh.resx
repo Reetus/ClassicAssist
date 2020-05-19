@@ -1227,4 +1227,22 @@
   <data name="Donating helps support continued development, your support is appreciated." xml:space="preserve">
     <value>捐赠有助于支持持续发展，您的支持是值得赞赏的。</value>
   </data>
+  <data name="Max Target Queue Length:" xml:space="preserve">
+    <value>最大目标队列长度：</value>
+  </data>
+  <data name="Target queue is not enabled..." xml:space="preserve">
+    <value>未启用目标队列...</value>
+  </data>
+  <data name="Next Target: {0}" xml:space="preserve">
+    <value>下一个目标：{0}</value>
+  </data>
+  <data name="No Target" xml:space="preserve">
+    <value>无目标</value>
+  </data>
+  <data name="Show Next Target In Queue" xml:space="preserve">
+    <value>在队列中显示下一个目标</value>
+  </data>
+  <data name="Shard:" xml:space="preserve">
+    <value>碎片：</value>
+  </data>
 </root>

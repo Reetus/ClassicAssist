@@ -1227,4 +1227,22 @@
   <data name="Donating helps support continued development, your support is appreciated." xml:space="preserve">
     <value>기부는 지속적인 개발을 지원하는 데 도움이, 당신의 지원을 주셔서 감사합니다.</value>
   </data>
+  <data name="Max Target Queue Length:" xml:space="preserve">
+    <value>최대 대상 큐 길이:</value>
+  </data>
+  <data name="Target queue is not enabled..." xml:space="preserve">
+    <value>대상 큐가 활성화되지 않았습니다...</value>
+  </data>
+  <data name="Next Target: {0}" xml:space="preserve">
+    <value>다음 대상: {0}</value>
+  </data>
+  <data name="No Target" xml:space="preserve">
+    <value>대상 없음</value>
+  </data>
+  <data name="Show Next Target In Queue" xml:space="preserve">
+    <value>큐에서 다음 대상 표시</value>
+  </data>
+  <data name="Shard:" xml:space="preserve">
+    <value>파편:</value>
+  </data>
 </root>

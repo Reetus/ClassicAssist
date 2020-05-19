@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Windows;
 using System.Windows.Interactivity;
+using Assistant;
 using ClassicAssist.Data;
 using Exceptionless;
 
@@ -30,6 +31,8 @@ namespace ClassicAssist.UI.Misc
             ExceptionlessClient.Default.Configuration.UseSessions();
             ExceptionlessClient.Default.Configuration.DefaultData.Add( "Locale",
                 Thread.CurrentThread?.CurrentUICulture?.Name );
+            ExceptionlessClient.Default.Configuration.DefaultData.Add( "Shard",
+                Engine.CurrentShard?.Name ?? "Unknown" );
             ExceptionlessClient.Default.Startup( "T8v0i7nL90cVRc4sr2pgo5hviThMPRF3OtQ0bK60" );
         }
 

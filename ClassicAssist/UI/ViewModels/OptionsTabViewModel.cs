@@ -51,6 +51,7 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "UseObjectQueue", CurrentOptions.UseObjectQueue );
             options.Add( "UseObjectQueueAmount", CurrentOptions.UseObjectQueueAmount );
             options.Add( "QueueLastTarget", CurrentOptions.QueueLastTarget );
+            options.Add( "MaxTargetQueueLength", CurrentOptions.MaxTargetQueueLength );
             options.Add( "SmartTargetOption", CurrentOptions.SmartTargetOption.ToString() );
             options.Add( "LimitMouseWheelTrigger", CurrentOptions.LimitMouseWheelTrigger );
             options.Add( "LimitMouseWheelTriggerMS", CurrentOptions.LimitMouseWheelTriggerMS );
@@ -106,6 +107,7 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.UseObjectQueue = config?["UseObjectQueue"]?.ToObject<bool>() ?? false;
             CurrentOptions.UseObjectQueueAmount = config?["UseObjectQueueAmount"]?.ToObject<int>() ?? 5;
             CurrentOptions.QueueLastTarget = config?["QueueLastTarget"]?.ToObject<bool>() ?? false;
+            CurrentOptions.MaxTargetQueueLength = config?["MaxTargetQueueLength"]?.ToObject<int>() ?? 1;
             CurrentOptions.SmartTargetOption =
                 config?["SmartTargetOption"]?.ToObject<SmartTargetOption>() ?? SmartTargetOption.None;
             CurrentOptions.LimitMouseWheelTrigger = config?["LimitMouseWheelTrigger"]?.ToObject<bool>() ?? false;

@@ -101,7 +101,25 @@ namespace ClassicAssist.UO.Data
 
         public string ReadStringSafe( int fixedLength )
         {
-            throw new NotImplementedException();
+            StringBuilder output = new StringBuilder();
+
+            for ( int i = 0; i < fixedLength; i++ )
+            {
+                char c = (char) ReadByte();
+
+                if ( c == '\0' )
+                {
+                    ReadByteArray( fixedLength - i - 1 );
+                    break;
+                }
+
+                if ( IsSafeChar( c ) )
+                {
+                    output.Append( c );
+                }
+            }
+
+            return output.ToString();
         }
 
         public ushort ReadUInt16()

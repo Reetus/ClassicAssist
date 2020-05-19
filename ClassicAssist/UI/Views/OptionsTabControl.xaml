@@ -9,6 +9,7 @@
     xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
     xmlns:data="clr-namespace:ClassicAssist.Data"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     x:Class="ClassicAssist.UI.Views.OptionsTabControl"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="500">
@@ -93,8 +94,6 @@
                     </ItemContainerTemplate>
                 </CheckBox.ContentTemplate>
             </CheckBox>
-            <CheckBox Content="{x:Static resources:Strings.Queue_Last_Target___Target_Self}"
-                      IsChecked="{Binding CurrentOptions.QueueLastTarget}" />
             <CheckBox IsChecked="{Binding CurrentOptions.LimitMouseWheelTrigger}" DataContext="{Binding}">
                 <CheckBox.ContentTemplate>
                     <ItemContainerTemplate>
@@ -145,6 +144,12 @@
                       IsChecked="{Binding CurrentOptions.AbilitiesGump}" />
             <CheckBox Content="{x:Static resources:Strings.Show_Profile_Name_In_Title}"
                       IsChecked="{Binding CurrentOptions.ShowProfileNameWindowTitle}" />
+            <CheckBox Content="{x:Static resources:Strings.Queue_Last_Target___Target_Self}"
+                      IsChecked="{Binding CurrentOptions.QueueLastTarget}" />
+            <DockPanel IsEnabled="{Binding CurrentOptions.QueueLastTarget}">
+                <Label Content="{x:Static resources:Strings.Max_Target_Queue_Length_}" DockPanel.Dock="Left" />
+                <xctk:IntegerUpDown Minimum="1" Maximum="100" Value="{Binding CurrentOptions.MaxTargetQueueLength}" Width="50" UpdateValueOnEnterKey="True" DockPanel.Dock="Right" Margin="10,0,0,0" />
+            </DockPanel>
         </StackPanel>
     </Grid>
 </UserControl>

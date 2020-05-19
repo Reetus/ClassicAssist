@@ -1,11 +1,18 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
-                    xmlns:controls="clr-namespace:ClassicAssist.UI.Controls">
+                    xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
+                    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Colours.xaml" />
     </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="{x:Type xctk:IntegerUpDown}" TargetType="{x:Type xctk:IntegerUpDown}">
+        <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}"/>
+    </Style>
 
     <Style x:Key="TreeViewStyle" TargetType="{x:Type TreeView}">
         <Style.Resources>

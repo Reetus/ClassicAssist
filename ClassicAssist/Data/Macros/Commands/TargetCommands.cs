@@ -72,6 +72,8 @@ namespace ClassicAssist.Data.Macros.Commands
                 Mobile mobile = Engine.Mobiles.GetMobile( serial );
 
                 if ( mobile != null && mobile.Notoriety == Notoriety.Innocent &&
+                     mobile.Serial != Engine.Player?.Serial &&
+                     Engine.TargetFlags == TargetFlags.Harmful &&
                      mobile.GetRegion().Attributes.HasFlag( RegionAttributes.Guarded ) )
                 {
                     UOC.SystemMessage( Strings.Target_blocked____try_again___ );

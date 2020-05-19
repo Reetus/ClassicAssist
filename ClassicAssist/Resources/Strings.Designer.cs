@@ -1744,6 +1744,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Max Target Queue Length:.
+        /// </summary>
+        public static string Max_Target_Queue_Length_ {
+            get {
+                return ResourceManager.GetString("Max Target Queue Length:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Messages.
         /// </summary>
         public static string Messages {
@@ -1884,6 +1893,24 @@ namespace ClassicAssist.Resources {
         public static string New_version_available_ {
             get {
                 return ResourceManager.GetString("New version available:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next Target: {0}.
+        /// </summary>
+        public static string Next_Target___0_ {
+            get {
+                return ResourceManager.GetString("Next Target: {0}", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Target.
+        /// </summary>
+        public static string No_Target {
+            get {
+                return ResourceManager.GetString("No Target", resourceCulture);
             }
         }
         
@@ -2617,11 +2644,29 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Shard:.
+        /// </summary>
+        public static string Shard_ {
+            get {
+                return ResourceManager.GetString("Shard:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show GIF Capture.
         /// </summary>
         public static string Show_GIF_Capture {
             get {
                 return ResourceManager.GetString("Show GIF Capture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Next Target In Queue.
+        /// </summary>
+        public static string Show_Next_Target_In_Queue {
+            get {
+                return ResourceManager.GetString("Show Next Target In Queue", resourceCulture);
             }
         }
         
@@ -2910,6 +2955,15 @@ namespace ClassicAssist.Resources {
         public static string Target_queue_cleared___ {
             get {
                 return ResourceManager.GetString("Target queue cleared...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target queue is not enabled....
+        /// </summary>
+        public static string Target_queue_is_not_enabled___ {
+            get {
+                return ResourceManager.GetString("Target queue is not enabled...", resourceCulture);
             }
         }
         

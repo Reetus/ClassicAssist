@@ -20,6 +20,7 @@ using ClassicAssist.Data.Commands;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Scavenger;
+using ClassicAssist.Data.Targeting;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.Views;
@@ -99,7 +100,7 @@ namespace Assistant
         public static DateTime LastActionPacket { get; set; }
         public static int LastPromptID { get; set; }
         public static int LastPromptSerial { get; set; }
-        public static Queue<object> LastTargetQueue { get; set; } = new Queue<object>();
+        public static TargetQueue<object> LastTargetQueue { get; set; } = new TargetQueue<object>();
         public static MobileCollection Mobiles { get; set; } = new MobileCollection( Items );
         public static PacketWaitEntries PacketWaitEntries { get; set; }
         public static PlayerMobile Player { get; set; }
@@ -110,6 +111,8 @@ namespace Assistant
         public static int TargetSerial { get; set; }
         public static TargetType TargetType { get; set; }
         public static bool WaitingForTarget { get; set; }
+        public static List<ShardEntry> Shards { get; set; }
+        public static ShardEntry CurrentShard { get; set; }
         internal static ConcurrentDictionary<uint, int> GumpList { get; set; } = new ConcurrentDictionary<uint, int>();
 
         public static event dUpdateWindowTitle UpdateWindowTitleEvent;

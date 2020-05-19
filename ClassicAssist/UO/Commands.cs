@@ -837,6 +837,7 @@ namespace ClassicAssist.UO
             pw.Write( (short) 0 );
             pw.Write( (short) 0 );
 
+            Engine.TargetExists = true;
             Engine.SendPacketToClient( pw );
         }
 

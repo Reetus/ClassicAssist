@@ -773,16 +773,21 @@ namespace ClassicAssist.UO.Network
                 return;
             }
 
-            object obj = Engine.LastTargetQueue.Dequeue();
-
-            if ( obj == null )
+            if ( flags == TargetFlags.Cancel )
             {
-                return;
+                Engine.TargetExists = false;
             }
+            else
+            {
+                object obj = Engine.LastTargetQueue.Dequeue();
 
-            TargetCommands.Target( obj, Options.CurrentOptions.RangeCheckLastTarget );
+                if ( obj == null )
+                {
+                    return;
+                }
 
-            Engine.TargetExists = false;
+                TargetCommands.Target( obj, Options.CurrentOptions.RangeCheckLastTarget );
+            }
         }
 
         private static void OnMobileStamina( PacketReader reader )

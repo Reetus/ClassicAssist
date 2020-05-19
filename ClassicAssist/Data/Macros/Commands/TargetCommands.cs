@@ -90,6 +90,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             Engine.SendPacketToServer( new Target( TargetTypeEnum.Object, -1, TargetFlags.None, serial, -1, -1, -1, 0,
                 true ) );
+            Engine.TargetExists = false;
         }
 
         [CommandsDisplay( Category = nameof( Strings.Target ) )]

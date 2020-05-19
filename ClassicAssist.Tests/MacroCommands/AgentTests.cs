@@ -47,8 +47,7 @@ namespace ClassicAssist.Tests.MacroCommands
         [TestMethod]
         public void WillOrganizeLimitAmount()
         {
-            AppDomain appDomain = AppDomain.CreateDomain( "WillOrganizeLimitAmount",
-                AppDomain.CurrentDomain.Evidence,
+            AppDomain appDomain = AppDomain.CreateDomain( "WillOrganizeLimitAmount", AppDomain.CurrentDomain.Evidence,
                 AppDomain.CurrentDomain.SetupInformation );
 
             appDomain.DoCallBack( () =>
@@ -126,8 +125,7 @@ namespace ClassicAssist.Tests.MacroCommands
         [TestMethod]
         public void WillOrganizeNoLimit()
         {
-            AppDomain appDomain = AppDomain.CreateDomain( "WillOrganizeNoLimit",
-                AppDomain.CurrentDomain.Evidence,
+            AppDomain appDomain = AppDomain.CreateDomain( "WillOrganizeNoLimit", AppDomain.CurrentDomain.Evidence,
                 AppDomain.CurrentDomain.SetupInformation );
 
             appDomain.DoCallBack( () =>
@@ -205,8 +203,7 @@ namespace ClassicAssist.Tests.MacroCommands
         public void WillOrganizeNoLimitMultiple()
         {
             AppDomain appDomain = AppDomain.CreateDomain( "WillOrganizeNoLimitMultiple",
-                AppDomain.CurrentDomain.Evidence,
-                AppDomain.CurrentDomain.SetupInformation );
+                AppDomain.CurrentDomain.Evidence, AppDomain.CurrentDomain.SetupInformation );
 
             appDomain.DoCallBack( () =>
             {

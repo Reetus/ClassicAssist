@@ -64,8 +64,7 @@ namespace ClassicAssist.UI.ViewModels
             _setAllSkillLocksCommand ?? ( _setAllSkillLocksCommand = new RelayCommand( SetAllSkillLocks, o => true ) );
 
         public ICommand SetSkillLocksCommand =>
-            _setSkillLocksCommand ??
-            ( _setSkillLocksCommand = new RelayCommand( SetSkillLocks, o => true ) );
+            _setSkillLocksCommand ?? ( _setSkillLocksCommand = new RelayCommand( SetSkillLocks, o => true ) );
 
         public float TotalBase
         {

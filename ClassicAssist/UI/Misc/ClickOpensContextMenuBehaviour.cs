@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (C) 2020 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -13,6 +14,7 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 #endregion
 
 using System.Windows;
@@ -26,10 +28,8 @@ namespace ClassicAssist.UI.Misc
     public class ClickOpensContextMenuBehaviour
     {
         private static readonly DependencyProperty ClickOpensContextMenuProperty =
-            DependencyProperty.RegisterAttached(
-                "Enabled", typeof( bool ), typeof( ClickOpensContextMenuBehaviour ),
-                new PropertyMetadata( HandlePropertyChanged )
-            );
+            DependencyProperty.RegisterAttached( "Enabled", typeof( bool ), typeof( ClickOpensContextMenuBehaviour ),
+                new PropertyMetadata( HandlePropertyChanged ) );
 
         public static bool GetEnabled( DependencyObject obj )
         {
@@ -41,8 +41,7 @@ namespace ClassicAssist.UI.Misc
             obj.SetValue( ClickOpensContextMenuProperty, value );
         }
 
-        private static void HandlePropertyChanged(
-            DependencyObject obj, DependencyPropertyChangedEventArgs args )
+        private static void HandlePropertyChanged( DependencyObject obj, DependencyPropertyChangedEventArgs args )
         {
             switch ( obj )
             {
@@ -60,7 +59,9 @@ namespace ClassicAssist.UI.Misc
         private static void ExecuteMouseDown( object sender, MouseButtonEventArgs args )
         {
             if ( !( sender is DependencyObject obj ) )
+            {
                 return;
+            }
 
             bool enabled = (bool) obj.GetValue( ClickOpensContextMenuProperty );
 
@@ -70,14 +71,19 @@ namespace ClassicAssist.UI.Misc
             }
 
             Image image = sender as Image;
+
             if ( image?.ContextMenu != null )
+            {
                 image.ContextMenu.IsOpen = true;
+            }
         }
 
         private static void ExecuteClick( object sender, RoutedEventArgs args )
         {
             if ( !( sender is DependencyObject obj ) )
+            {
                 return;
+            }
 
             bool enabled = (bool) obj.GetValue( ClickOpensContextMenuProperty );
 
@@ -92,7 +98,9 @@ namespace ClassicAssist.UI.Misc
             }
 
             if ( hyperlink.ContextMenu != null )
+            {
                 hyperlink.ContextMenu.IsOpen = true;
+            }
         }
     }
 }

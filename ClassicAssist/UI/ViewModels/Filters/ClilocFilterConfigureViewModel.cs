@@ -107,9 +107,8 @@ namespace ClassicAssist.UI.ViewModels.Filters
 
         private void UpdateEntries( string filterText )
         {
-            IEnumerable<ClilocEntry> matches =
-                AllClilocs.Where( m =>
-                    string.IsNullOrEmpty( filterText ) || m.Value.ToLower().Contains( filterText.ToLower() ) );
+            IEnumerable<ClilocEntry> matches = AllClilocs.Where( m =>
+                string.IsNullOrEmpty( filterText ) || m.Value.ToLower().Contains( filterText.ToLower() ) );
             FilteredClilocs.Clear();
 
             foreach ( ClilocEntry clilocEntry in matches )

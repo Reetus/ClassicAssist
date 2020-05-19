@@ -26,6 +26,7 @@ namespace ClassicAssist.UI.ViewModels
         private double _latency;
         private ICommand _launchHomepageCommand;
         private int _mobileCount;
+        private ICommand _openPayPalCommand;
         private Timer _pingTimer;
         private string _playerName;
         private int _playerSerial;
@@ -94,6 +95,9 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _mobileCount, value );
         }
 
+        public ICommand OpenPayPalCommand =>
+            _openPayPalCommand ?? ( _openPayPalCommand = new RelayCommand( OpenPayPal, o => true ) );
+
         public string PlayerName
         {
             get => _playerName;
@@ -118,6 +122,11 @@ namespace ClassicAssist.UI.ViewModels
             _showItemsCommand ?? ( _showItemsCommand = new RelayCommand( ShowItems, o => Connected ) );
 
         public string Version { get; set; }
+
+        private static void OpenPayPal( object obj )
+        {
+            Process.Start( "https://www.paypal.me/reeeetus" );
+        }
 
         private void LastTargetChangedEvent( int serial )
         {

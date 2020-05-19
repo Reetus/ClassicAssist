@@ -21,7 +21,7 @@
                 <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary Source="../../../Resources/ResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <ValueConverters:HexToIntValueConverter x:Key="HexToIntValueConverter"/>
+            <ValueConverters:HexToIntValueConverter x:Key="HexToIntValueConverter" />
             <ValueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
@@ -60,9 +60,11 @@
                     <GridViewColumn Header="{x:Static resources:Strings.Graphic}" Width="70" x:Name="ItemIDColumn">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <controls:EditTextBlock Text="{Binding Graphic, Converter={StaticResource HexToIntValueConverter}, StringFormat=0x\{0:x\}}" TabIndex="1"
-                                                        Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=ItemIDColumn}"
-                                                        ShowIcon="True" />
+                                <controls:EditTextBlock
+                                    Text="{Binding Graphic, Converter={StaticResource HexToIntValueConverter}, StringFormat=0x\{0:x\}}"
+                                    TabIndex="1"
+                                    Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=ItemIDColumn}"
+                                    ShowIcon="True" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

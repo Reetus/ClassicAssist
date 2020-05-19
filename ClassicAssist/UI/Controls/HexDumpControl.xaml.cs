@@ -17,8 +17,7 @@ namespace ClassicAssist.UI.Controls
     public partial class HexDumpControl
     {
         public static readonly DependencyProperty PacketProperty = DependencyProperty.Register( "Packet",
-            typeof( PacketEntry ),
-            typeof( HexDumpControl ), new UIPropertyMetadata() );
+            typeof( PacketEntry ), typeof( HexDumpControl ), new UIPropertyMetadata() );
 
         public HexDumpControl()
         {

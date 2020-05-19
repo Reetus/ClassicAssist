@@ -313,7 +313,7 @@ namespace ClassicAssist.Tests.MacroCommands
 
             void OnInternalPacketSentEvent( byte[] data, int length )
             {
-                if (data[0] != 0x07)
+                if ( data[0] != 0x07 )
                 {
                     return;
                 }

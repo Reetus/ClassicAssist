@@ -95,10 +95,8 @@ namespace ClassicAssist.Data.Macros.Commands
             return false;
         }
 
-
         [CommandsDisplay( Category = nameof( Strings.Entity ) )]
-        public static bool FindWand( string wandName, object containerSource = null,
-            int minimumCharges = -1 )
+        public static bool FindWand( string wandName, object containerSource = null, int minimumCharges = -1 )
         {
             try
             {

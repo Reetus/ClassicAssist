@@ -9,15 +9,15 @@ namespace ClassicAssist.UI.Misc
 {
     public class AvalonBindingBehaviour : Behavior<TextEditor>
     {
-        public static readonly DependencyProperty DocumentBindingProperty =
-            DependencyProperty.Register( "DocumentBinding", typeof( TextDocument ), typeof( AvalonBindingBehaviour ),
-                new FrameworkPropertyMetadata( default( TextDocument ),
-                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, PropertyChangedCallback ) );
+        public static readonly DependencyProperty DocumentBindingProperty = DependencyProperty.Register(
+            "DocumentBinding", typeof( TextDocument ), typeof( AvalonBindingBehaviour ),
+            new FrameworkPropertyMetadata( default( TextDocument ),
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, PropertyChangedCallback ) );
 
-        public static readonly DependencyProperty CaretBindingProperty =
-            DependencyProperty.Register( "CaretBinding", typeof( int ), typeof( AvalonBindingBehaviour ),
-                new FrameworkPropertyMetadata( default( int ), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                    PropertyChangedCallback ) );
+        public static readonly DependencyProperty CaretBindingProperty = DependencyProperty.Register( "CaretBinding",
+            typeof( int ), typeof( AvalonBindingBehaviour ),
+            new FrameworkPropertyMetadata( default( int ), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                PropertyChangedCallback ) );
 
         public int CaretBinding
         {

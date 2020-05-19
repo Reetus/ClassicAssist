@@ -182,7 +182,7 @@ namespace ClassicAssist.Tests.MacroCommands
 
             result = _are.WaitOne( 5000 );
 
-            if (!result)
+            if ( !result )
             {
                 Assert.Fail();
             }

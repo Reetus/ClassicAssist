@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading;
 using Assistant;
 using ClassicAssist.Data.Autoloot;
@@ -135,13 +134,12 @@ namespace ClassicAssist.Tests.Agents
                 ID = 0x108a
             };
 
-            AutolootConstraintEntry autolootConstraint =
-                new AutolootConstraintEntry
-                {
-                    Property = vm.Constraints.FirstOrDefault( c => c.Name == "Hue" ),
-                    Operator = AutolootOperator.Equal,
-                    Value = 0
-                };
+            AutolootConstraintEntry autolootConstraint = new AutolootConstraintEntry
+            {
+                Property = vm.Constraints.FirstOrDefault( c => c.Name == "Hue" ),
+                Operator = AutolootOperator.Equal,
+                Value = 0
+            };
             lootEntry.Constraints.Add( autolootConstraint );
 
             vm.Items.Add( lootEntry );
@@ -224,13 +222,12 @@ namespace ClassicAssist.Tests.Agents
                 ID = 0x108a
             };
 
-            AutolootConstraintEntry autolootConstraint =
-                new AutolootConstraintEntry
-                {
-                    Property = vm.Constraints.FirstOrDefault( c => c.Name == "ID" ),
-                    Operator = AutolootOperator.Equal,
-                    Value = 0x108a
-                };
+            AutolootConstraintEntry autolootConstraint = new AutolootConstraintEntry
+            {
+                Property = vm.Constraints.FirstOrDefault( c => c.Name == "ID" ),
+                Operator = AutolootOperator.Equal,
+                Value = 0x108a
+            };
             lootEntry.Constraints.Add( autolootConstraint );
 
             vm.Items.Add( lootEntry );
@@ -245,9 +242,8 @@ namespace ClassicAssist.Tests.Agents
                 {
                     are.Set();
                 }
-                else if ( data[0] == 0xD6 || data[0] == 0x06)
+                else if ( data[0] == 0xD6 || data[0] == 0x06 )
                 {
-
                 }
                 else
                 {
@@ -317,13 +313,12 @@ namespace ClassicAssist.Tests.Agents
                 ID = 0x108a
             };
 
-            AutolootConstraintEntry autolootConstraint =
-                new AutolootConstraintEntry
-                {
-                    Property = vm.Constraints.FirstOrDefault( c => c.Name == "Hue" ),
-                    Operator = AutolootOperator.Equal,
-                    Value = 0
-                };
+            AutolootConstraintEntry autolootConstraint = new AutolootConstraintEntry
+            {
+                Property = vm.Constraints.FirstOrDefault( c => c.Name == "Hue" ),
+                Operator = AutolootOperator.Equal,
+                Value = 0
+            };
             lootEntry.Constraints.Add( autolootConstraint );
 
             vm.Items.Add( lootEntry );

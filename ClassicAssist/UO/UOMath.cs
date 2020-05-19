@@ -14,8 +14,7 @@ namespace ClassicAssist.UO
                 return Direction.Invalid;
             }
 
-            if ( slope >= 2f && slope <= float.PositiveInfinity ||
-                 slope <= -2f && slope >= float.NegativeInfinity )
+            if ( slope >= 2f && slope <= float.PositiveInfinity || slope <= -2f && slope >= float.NegativeInfinity )
             {
                 return y2 < y1 ? Direction.North : Direction.South;
             }

@@ -43,8 +43,7 @@ namespace ClassicAssist.UO.Network
                 if ( queueItem.DelaySend )
                 {
                     while ( Engine.LastActionPacket +
-                            TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) >
-                            DateTime.Now )
+                            TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) > DateTime.Now )
                     {
                         Thread.Sleep( 1 );
                     }
@@ -85,8 +84,7 @@ namespace ClassicAssist.UO.Network
         }
 
         public static Task EnqueueDragDropGround( int serial, int amount, int x, int y, int z,
-            QueuePriority priority = QueuePriority.Low,
-            bool delaySend = true )
+            QueuePriority priority = QueuePriority.Low, bool delaySend = true )
         {
             lock ( _actionPacketQueueLock )
             {
@@ -126,8 +124,7 @@ namespace ClassicAssist.UO.Network
         }
 
         public static Task EnqueueDragDrop( int serial, int amount, int containerSerial,
-            QueuePriority priority = QueuePriority.Low,
-            bool delaySend = true, int x = -1, int y = -1 )
+            QueuePriority priority = QueuePriority.Low, bool delaySend = true, int x = -1, int y = -1 )
         {
             return EnqueueActionPackets(
                 new BasePacket[] { new DragItem( serial, amount ), new DropItem( serial, containerSerial, -1, -1, 0 ) },

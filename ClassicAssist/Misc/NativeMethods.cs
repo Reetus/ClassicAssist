@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (C) 2020 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -13,26 +14,26 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 #endregion
 
 using System;
 using System.Runtime.InteropServices;
-using System.Windows;
 
 namespace ClassicAssist.Misc
 {
     public static class NativeMethods
     {
+        [DllImport( "user32" )]
+        public static extern bool GetWindowRect( IntPtr hWnd, out RECT rect );
+
         [StructLayout( LayoutKind.Sequential )]
         public struct RECT
         {
-            public int Left;        // x position of upper-left corner
-            public int Top;         // y position of upper-left corner
-            public int Right;       // x position of lower-right corner
-            public int Bottom;      // y position of lower-right corner
+            public int Left; // x position of upper-left corner
+            public int Top; // y position of upper-left corner
+            public int Right; // x position of lower-right corner
+            public int Bottom; // y position of lower-right corner
         }
-
-        [DllImport( "user32" )]
-        public static extern bool GetWindowRect( IntPtr hWnd, out RECT rect );
     }
 }

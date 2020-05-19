@@ -190,8 +190,7 @@ namespace ClassicAssist.UI.ViewModels
                     foreach ( HotkeyCommand category in _serializeCategories )
                     {
                         HotkeyEntry entry =
-                            category.Children.FirstOrDefault(
-                                o => o.GetType().FullName == type.ToObject<string>() );
+                            category.Children.FirstOrDefault( o => o.GetType().FullName == type.ToObject<string>() );
 
                         if ( entry == null )
                         {
@@ -341,8 +340,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private void ClearAllHotkeys()
         {
-            foreach ( HotkeyEntry entryChild in _serializeCategories.SelectMany(
-                hotkeyEntry => hotkeyEntry.Children ) )
+            foreach ( HotkeyEntry entryChild in _serializeCategories.SelectMany( hotkeyEntry => hotkeyEntry.Children ) )
             {
                 entryChild.Hotkey = ShortcutKeys.Default;
             }

@@ -13,8 +13,7 @@ namespace ClassicAssist.UO.Network
     {
         public delegate bool OnReceive( ref byte[] packet, ref int length );
 
-        private static readonly Dictionary<byte, OnReceive> _filters =
-            new Dictionary<byte, OnReceive>();
+        private static readonly Dictionary<byte, OnReceive> _filters = new Dictionary<byte, OnReceive>();
 
         public static void Initialize()
         {
@@ -119,8 +118,7 @@ namespace ClassicAssist.UO.Network
 
         public static bool CheckPacket( ref byte[] data, ref int length )
         {
-            if ( _filters.ContainsKey( data[0] ) &&
-                 _filters.TryGetValue( data[0], out OnReceive onReceive ) )
+            if ( _filters.ContainsKey( data[0] ) && _filters.TryGetValue( data[0], out OnReceive onReceive ) )
             {
                 return onReceive.Invoke( ref data, ref length );
             }

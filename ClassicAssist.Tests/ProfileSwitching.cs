@@ -19,8 +19,7 @@ namespace ClassicAssist.Tests
         public void WontDuplicateSkillsCategory()
         {
             AppDomain appDomain = AppDomain.CreateDomain( "WontThrowExceptionOnDeserializeNullConfig",
-                AppDomain.CurrentDomain.Evidence,
-                AppDomain.CurrentDomain.SetupInformation );
+                AppDomain.CurrentDomain.Evidence, AppDomain.CurrentDomain.SetupInformation );
 
             appDomain.DoCallBack( () =>
             {

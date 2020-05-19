@@ -94,7 +94,7 @@ namespace ClassicAssist.Tests.MacroCommands
         {
             const string localPath = @"C:\Users\johns\Desktop\KvG Client 2.0";
 
-            if (!Directory.Exists( localPath ))
+            if ( !Directory.Exists( localPath ) )
             {
                 Debug.WriteLine( "Not running test, requires Cliloc.enu" );
                 return;

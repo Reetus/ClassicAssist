@@ -34,7 +34,7 @@ namespace ClassicAssist.Tests.MacroCommands
         {
             Engine.Items.Add( new Item( 0x40000000 ) { Name = " need trim " } );
 
-            Assert.AreEqual( "need trim", EntityCommands.Name(0x40000000  ) );
+            Assert.AreEqual( "need trim", EntityCommands.Name( 0x40000000 ) );
 
             Assert.AreEqual( string.Empty, EntityCommands.Name( 0x40000001 ) );
 

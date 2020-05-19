@@ -1215,4 +1215,16 @@
   <data name="Any" xml:space="preserve">
     <value>Any</value>
   </data>
+  <data name="Macro Commands Wiki (Launches in Browser)" xml:space="preserve">
+    <value>Macro Commands Wiki (Launches in Browser)</value>
+  </data>
+  <data name="MACRO_WIKI_URL" xml:space="preserve">
+    <value>https://github.com/Reetus/ClassicAssist/wiki/Macro-Commands</value>
+  </data>
+  <data name="Really remove macro &quot;{0}&quot;?" xml:space="preserve">
+    <value>Really remove macro "{0}"?</value>
+  </data>
+  <data name="Donating helps support continued development, your support is appreciated." xml:space="preserve">
+    <value>Donating helps support continued development, your support is appreciated.</value>
+  </data>
 </root>

@@ -36,9 +36,9 @@ namespace ClassicAssist.UI.Misc
             set => SetValue( SelectedItemProperty, value );
         }
 
-        public static readonly DependencyProperty SelectedItemProperty =
-            DependencyProperty.Register( "SelectedItem", typeof( object ), typeof( BindableSelectedItemBehavior ),
-                new UIPropertyMetadata( null, OnSelectedItemChanged ) );
+        public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register( "SelectedItem",
+            typeof( object ), typeof( BindableSelectedItemBehavior ),
+            new UIPropertyMetadata( null, OnSelectedItemChanged ) );
 
         private static void OnSelectedItemChanged( DependencyObject sender, DependencyPropertyChangedEventArgs e )
         {

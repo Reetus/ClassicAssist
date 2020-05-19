@@ -46,8 +46,7 @@ namespace ClassicAssist.Data.Filters
                 return false;
             }
 
-            RepeatedMessageEntry entry =
-                RepeatedMessageEntries.FirstOrDefault( e => e.Message == journalEntry.Text );
+            RepeatedMessageEntry entry = RepeatedMessageEntries.FirstOrDefault( e => e.Message == journalEntry.Text );
 
             if ( entry == null )
             {

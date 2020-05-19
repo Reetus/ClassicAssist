@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
 using System.Threading;
 using System.Windows;
 using CommandLine;
@@ -19,7 +18,8 @@ namespace ClassicAssist.Updater
 
         private void Application_Startup( object sender, StartupEventArgs e )
         {
-            ExceptionlessClient.Default.Configuration.DefaultData.Add( "Locale", Thread.CurrentThread.CurrentUICulture.Name );
+            ExceptionlessClient.Default.Configuration.DefaultData.Add( "Locale",
+                Thread.CurrentThread.CurrentUICulture.Name );
             ExceptionlessClient.Default.Startup( "T8v0i7nL90cVRc4sr2pgo5hviThMPRF3OtQ0bK60" );
 
             Parser.Default.ParseArguments<Options>( e.Args ).WithParsed( o => CurrentOptions = o );
@@ -38,8 +38,7 @@ namespace ClassicAssist.Updater
             {
                 if ( Version.TryParse(
                     FileVersionInfo.GetVersionInfo( IOPath.Combine( CurrentOptions.Path, "ClassicAssist.dll" ) )
-                        .ProductVersion,
-                    out Version version ) )
+                        .ProductVersion, out Version version ) )
                 {
                     CurrentOptions.CurrentVersion = version;
                 }

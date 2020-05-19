@@ -15,8 +15,7 @@ namespace ClassicAssist.Misc
 
             string enumValue = enumValues.FirstOrDefault( ev => ev.ToLower() == value );
 
-            T enumEntry = (T) Enum.Parse( typeof( T ),
-                enumValue ?? throw new InvalidOperationException() );
+            T enumEntry = (T) Enum.Parse( typeof( T ), enumValue ?? throw new InvalidOperationException() );
 
             return enumEntry;
         }

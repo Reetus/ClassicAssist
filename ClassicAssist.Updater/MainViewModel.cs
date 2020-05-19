@@ -8,7 +8,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using ClassicAssist.Updater.Annotations;
@@ -182,8 +181,7 @@ namespace ClassicAssist.Updater
 
                     AddText( $"{Resources.Downloading} {assest.Name}..." );
 
-                    string fileName = await DownloadFile( assest.BrowserDownloadUrl,
-                        assest.Size );
+                    string fileName = await DownloadFile( assest.BrowserDownloadUrl, assest.Size );
 
                     AddText( Resources.Extracting_package___ );
 
@@ -228,8 +226,7 @@ namespace ClassicAssist.Updater
 
             try
             {
-                await Task.Run(
-                    () => ZipFile.ExtractToDirectory( fileName, path ) );
+                await Task.Run( () => ZipFile.ExtractToDirectory( fileName, path ) );
             }
             catch ( Exception )
             {

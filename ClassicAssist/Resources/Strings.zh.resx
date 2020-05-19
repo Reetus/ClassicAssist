@@ -1215,4 +1215,16 @@
   <data name="Any" xml:space="preserve">
     <value>任何</value>
   </data>
+  <data name="Macro Commands Wiki (Launches in Browser)" xml:space="preserve">
+    <value>宏命令维基（在浏览器中启动）</value>
+  </data>
+  <data name="MACRO_WIKI_URL" xml:space="preserve">
+    <value>https://github.com/Reetus/ClassicAssist/wiki/Macro-Commands</value>
+  </data>
+  <data name="Really remove macro &quot;{0}&quot;?" xml:space="preserve">
+    <value>真的删除宏"{0}"？</value>
+  </data>
+  <data name="Donating helps support continued development, your support is appreciated." xml:space="preserve">
+    <value>捐赠有助于支持持续发展，您的支持是值得赞赏的。</value>
+  </data>
 </root>

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -31,10 +32,12 @@ namespace ClassicAssist.UI.ViewModels
         private RelayCommand _newMacroCommand;
         private ICommand _recordCommand;
         private RelayCommand _removeMacroCommand;
+        private ICommand _removeMacroConfirmCommand;
         private ICommand _saveMacroCommand;
         private MacroEntry _selectedItem;
         private ICommand _showActiveObjectsWindowCommand;
         private ICommand _showCommandsCommand;
+        private ICommand _showMacrosWikiCommand;
         private ICommand _stopCommand;
 
         public MacrosTabViewModel() : base( Strings.Macros )
@@ -64,8 +67,7 @@ namespace ClassicAssist.UI.ViewModels
         }
 
         public ICommand ExecuteCommand =>
-            _executeCommand ??
-            ( _executeCommand = new RelayCommandAsync( Execute, CanExecute ) );
+            _executeCommand ?? ( _executeCommand = new RelayCommandAsync( Execute, CanExecute ) );
 
         public ShortcutKeys Hotkey
         {
@@ -96,6 +98,10 @@ namespace ClassicAssist.UI.ViewModels
             _removeMacroCommand ?? ( _removeMacroCommand =
                 new RelayCommand( RemoveMacro, o => !SelectedItem?.IsRunning ?? SelectedItem != null ) );
 
+        public ICommand RemoveMacroConfirmCommand =>
+            _removeMacroConfirmCommand ?? ( _removeMacroConfirmCommand =
+                new RelayCommand( RemoveMacroConfirm, o => SelectedItem != null ) );
+
         public ICommand SaveMacroCommand =>
             _saveMacroCommand ?? ( _saveMacroCommand = new RelayCommand( SaveMacro, o => true ) );
 
@@ -115,6 +121,9 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand ShowCommandsCommand =>
             _showCommandsCommand ?? ( _showCommandsCommand = new RelayCommand( ShowCommands, o => true ) );
+
+        public ICommand ShowMacrosWikiCommand =>
+            _showMacrosWikiCommand ?? ( _showMacrosWikiCommand = new RelayCommand( ShowMacrosWiki, o => true ) );
 
         public ICommand StopCommand =>
             _stopCommand ?? ( _stopCommand = new RelayCommandAsync( Stop, o => SelectedItem?.IsRunning ?? false ) );
@@ -216,6 +225,29 @@ namespace ClassicAssist.UI.ViewModels
                     AliasCommands.SetAlias( token["Name"].ToObject<string>(), token["Value"].ToObject<int>() );
                 }
             }
+        }
+
+        private void RemoveMacroConfirm( object obj )
+        {
+            if ( !( obj is MacroEntry entry ) )
+            {
+                return;
+            }
+
+            MessageBoxResult result = MessageBox.Show( string.Format( Strings.Really_remove_macro___0___, entry.Name ),
+                Strings.Warning, MessageBoxButton.YesNo, MessageBoxImage.Warning );
+
+            if ( result == MessageBoxResult.No )
+            {
+                return;
+            }
+
+            RemoveMacro( entry );
+        }
+
+        private static void ShowMacrosWiki( object obj )
+        {
+            Process.Start( Strings.MACRO_WIKI_URL );
         }
 
         private bool CanExecute( object arg )
@@ -335,8 +367,6 @@ namespace ClassicAssist.UI.ViewModels
             macro.Action = async hks => await Execute( macro );
 
             Items.Add( macro );
-
-            SelectedItem = macro;
         }
 
         private void RemoveMacro( object obj )

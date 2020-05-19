@@ -15,8 +15,7 @@ namespace ClassicAssist.UO.Network.Packets
         }
 
         public Target( int senderSerial, Entity entity, bool cancelClientCursor ) : this( TargetType.Object,
-            senderSerial, TargetFlags.None,
-            entity.Serial, -1, -1, -1, entity.ID, cancelClientCursor )
+            senderSerial, TargetFlags.None, entity.Serial, -1, -1, -1, entity.ID, cancelClientCursor )
         {
         }
 

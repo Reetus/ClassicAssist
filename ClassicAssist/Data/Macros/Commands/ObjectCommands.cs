@@ -429,7 +429,6 @@ namespace ClassicAssist.Data.Macros.Commands
             UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
 
             return false;
-
         }
     }
 }

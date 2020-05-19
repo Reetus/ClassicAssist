@@ -95,9 +95,19 @@
             </StackPanel>
             <ListBox x:Name="listView" Grid.Row="1" Margin="0,10,0,10" ItemsSource="{Binding Items}"
                      SelectedItem="{Binding SelectedItem}">
+                <ListBox.InputBindings>
+                    <KeyBinding Key="Delete"
+                                Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedItem}" />
+                </ListBox.InputBindings>
+
+                <i:Interaction.Behaviors>
+                    <misc:ItemsControlSelectNewEntryBehaviour SelectedItem="{Binding SelectedItem}"
+                                                              Type="{x:Type autoloot:AutolootEntry}" />
+                </i:Interaction.Behaviors>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <controls:EditTextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Label="{Binding}" MinWidth="160" ShowIcon="True"/>
+                        <controls:EditTextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                                Label="{Binding}" MinWidth="160" ShowIcon="True" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
@@ -114,7 +124,8 @@
                             Command="{Binding InsertCommand}">
                         <Button.ContextMenu>
                             <ContextMenu IsOpen="False">
-                                <MenuItem Header="{x:Static resources:Strings.Match_Any_ID}" Command="{Binding Source={StaticResource Proxy}, Path=Data.InsertMatchAnyCommand}"/>
+                                <MenuItem Header="{x:Static resources:Strings.Match_Any_ID}"
+                                          Command="{Binding Source={StaticResource Proxy}, Path=Data.InsertMatchAnyCommand}" />
                             </ContextMenu>
                         </Button.ContextMenu>
                     </Button>
@@ -130,8 +141,10 @@
                            misc:ClickOpensContextMenuBehaviour.Enabled="True">
                         <Image.ContextMenu>
                             <ContextMenu IsOpen="False">
-                                <MenuItem Header="{x:Static resources:Strings.Reset_Container}" Command="{Binding Source={StaticResource Proxy}, Path=Data.ResetContainerCommand}" />
-                                <MenuItem Header="{x:Static resources:Strings.Define_Custom_Properties}" Command="{Binding Source={StaticResource Proxy}, Path=Data.DefineCustomPropertiesCommand}" />
+                                <MenuItem Header="{x:Static resources:Strings.Reset_Container}"
+                                          Command="{Binding Source={StaticResource Proxy}, Path=Data.ResetContainerCommand}" />
+                                <MenuItem Header="{x:Static resources:Strings.Define_Custom_Properties}"
+                                          Command="{Binding Source={StaticResource Proxy}, Path=Data.DefineCustomPropertiesCommand}" />
                             </ContextMenu>
                         </Image.ContextMenu>
                     </Image>

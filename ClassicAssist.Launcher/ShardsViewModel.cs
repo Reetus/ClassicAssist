@@ -122,12 +122,11 @@ namespace ClassicAssist.Launcher
                         NotifyPropertyChanged( nameof( Shards ) );
                     } );
 
-                    Task.Run( async () => await GetPing( shard ) )
-                        .ContinueWith( result =>
-                        {
-                            shard.Ping = result.Result;
-                            NotifyPropertyChanged( nameof( Shards ) );
-                        } );
+                    Task.Run( async () => await GetPing( shard ) ).ContinueWith( result =>
+                    {
+                        shard.Ping = result.Result;
+                        NotifyPropertyChanged( nameof( Shards ) );
+                    } );
                 }
             }
             finally

@@ -12,7 +12,7 @@
         Title="{x:Static resources:Strings.Choose_by_Cliloc}" Height="350" Width="600"
         Background="{DynamicResource ThemeWindowBackgroundBrush}" Topmost="True">
     <Window.DataContext>
-        <autoloot:ClilocSelectionViewModel/>
+        <autoloot:ClilocSelectionViewModel />
     </Window.DataContext>
     <Window.Resources>
         <ResourceDictionary>
@@ -24,20 +24,23 @@
     </Window.Resources>
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="150" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <TextBox Grid.Row="0" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"/>
-            <ListView Grid.Row="1" Margin="0,10,0,0" ItemsSource="{Binding FilteredClilocs}" SelectedItem="{Binding SelectedCliloc}">
+            <TextBox Grid.Row="0" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" />
+            <ListView Grid.Row="1" Margin="0,10,0,0" ItemsSource="{Binding FilteredClilocs}"
+                      SelectedItem="{Binding SelectedCliloc}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="{x:Static resources:Strings.Property}" Width="300" DisplayMemberBinding="{Binding Value}"/>
-                        <GridViewColumn Header="{x:Static resources:Strings.Cliloc}" Width="80" DisplayMemberBinding="{Binding Key}"/>
+                        <GridViewColumn Header="{x:Static resources:Strings.Property}" Width="300"
+                                        DisplayMemberBinding="{Binding Value}" />
+                        <GridViewColumn Header="{x:Static resources:Strings.Cliloc}" Width="80"
+                                        DisplayMemberBinding="{Binding Key}" />
                     </GridView>
                 </ListView.View>
             </ListView>

@@ -22,18 +22,17 @@ namespace ClassicAssist.UI.ViewModels.Debug
                 }
             }
 
-            IncomingPacketHandlers.GumpEvent += ( id, serial, gump ) =>
-                _dispatcher.Invoke( () =>
+            IncomingPacketHandlers.GumpEvent += ( id, serial, gump ) => _dispatcher.Invoke( () =>
+            {
+                if ( Items.Contains( gump ) )
                 {
-                    if ( Items.Contains( gump ) )
-                    {
-                        UpdateText( gump );
-                    }
-                    else
-                    {
-                        Items.Add( gump );
-                    }
-                } );
+                    UpdateText( gump );
+                }
+                else
+                {
+                    Items.Add( gump );
+                }
+            } );
 
             OutgoingPacketHandlers.GumpEvent +=
                 ( id, serial, gump ) => _dispatcher.Invoke( () => Items.Remove( gump ) );

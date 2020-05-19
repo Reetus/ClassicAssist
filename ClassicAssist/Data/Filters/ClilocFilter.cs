@@ -80,8 +80,7 @@ namespace ClassicAssist.Data.Filters
             KeyValuePair<int, string> match = Filters.FirstOrDefault( f => f.Key == journalEntry.Cliloc );
 
             Engine.SendPacketToClient( new UnicodeText( journalEntry.Serial, journalEntry.ID, journalEntry.SpeechType,
-                journalEntry.SpeechHue,
-                journalEntry.SpeechFont, Strings.UO_LOCALE, journalEntry.Name, match.Value ) );
+                journalEntry.SpeechHue, journalEntry.SpeechFont, Strings.UO_LOCALE, journalEntry.Name, match.Value ) );
 
             return true;
         }
@@ -105,8 +104,7 @@ namespace ClassicAssist.Data.Filters
                 : $"{match.Value}{affix}";
 
             Engine.SendPacketToClient( new UnicodeText( journalEntry.Serial, journalEntry.ID, JournalSpeech.Say,
-                journalEntry.SpeechHue,
-                journalEntry.SpeechFont, Strings.UO_LOCALE, journalEntry.Name, text ) );
+                journalEntry.SpeechHue, journalEntry.SpeechFont, Strings.UO_LOCALE, journalEntry.Name, text ) );
 
             return true;
         }

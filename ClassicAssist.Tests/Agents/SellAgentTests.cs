@@ -23,15 +23,14 @@ namespace ClassicAssist.Tests.Agents
 
             VendorSellTabViewModel vsvm = new VendorSellTabViewModel();
 
-            vsvm.Items.Add(
-                new VendorSellAgentEntry
-                {
-                    Enabled = true,
-                    Graphic = 0xff,
-                    MinPrice = 10,
-                    Name = "Shmoo",
-                    Hue = 0xff
-                } );
+            vsvm.Items.Add( new VendorSellAgentEntry
+            {
+                Enabled = true,
+                Graphic = 0xff,
+                MinPrice = 10,
+                Name = "Shmoo",
+                Hue = 0xff
+            } );
 
             IncomingPacketHandlers.Initialize();
             PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x9E );
@@ -68,8 +67,10 @@ namespace ClassicAssist.Tests.Agents
 
             VendorSellTabViewModel vsvm = new VendorSellTabViewModel();
 
-            vsvm.Items.Add(
-                new VendorSellAgentEntry { Enabled = true, Graphic = 0xff, MinPrice = 10, Name = "Shmoo" } );
+            vsvm.Items.Add( new VendorSellAgentEntry
+            {
+                Enabled = true, Graphic = 0xff, MinPrice = 10, Name = "Shmoo"
+            } );
 
             IncomingPacketHandlers.Initialize();
             PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x9E );
@@ -111,8 +112,7 @@ namespace ClassicAssist.Tests.Agents
 
             VendorSellTabViewModel vsvm = new VendorSellTabViewModel();
 
-            vsvm.Items.Add(
-                new VendorSellAgentEntry { Enabled = true, Graphic = 0xff, MinPrice = 9, Name = "Shmoo" } );
+            vsvm.Items.Add( new VendorSellAgentEntry { Enabled = true, Graphic = 0xff, MinPrice = 9, Name = "Shmoo" } );
 
             IncomingPacketHandlers.Initialize();
             PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x9E );

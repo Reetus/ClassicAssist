@@ -883,7 +883,7 @@ namespace ClassicAssist.UO
                 return;
             }
 
-            int len = 4 + (serials.Length * 4);
+            int len = 4 + serials.Length * 4;
 
             PacketWriter pw = new PacketWriter( len );
 

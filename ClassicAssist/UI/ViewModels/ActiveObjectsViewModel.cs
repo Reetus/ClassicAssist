@@ -88,13 +88,11 @@ namespace ClassicAssist.UI.ViewModels
             ( _removeIgnoreEntryCommand = new RelayCommand( RemoveIgnoreEntry, o => true ) );
 
         public ICommand RemoveInstanceAliasCommand =>
-            _removeInstanceAliasCommand ??
-            ( _removeInstanceAliasCommand =
+            _removeInstanceAliasCommand ?? ( _removeInstanceAliasCommand =
                 new RelayCommand( RemoveInstanceAlias, o => SelectedInstanceAlias != null ) );
 
         public ICommand RemoveListCommand =>
-            _removeListCommand ??
-            ( _removeListCommand = new RelayCommand( RemoveList, o => SelectedList != null ) );
+            _removeListCommand ?? ( _removeListCommand = new RelayCommand( RemoveList, o => SelectedList != null ) );
 
         public AliasEntry SelectedAlias
         {

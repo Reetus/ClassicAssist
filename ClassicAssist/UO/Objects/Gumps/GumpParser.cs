@@ -457,8 +457,7 @@ namespace ClassicAssist.UO.Objects.Gumps
                     case "radio":
                         try
                         {
-                            if ( int.TryParse( formatted[1], out int rX ) &&
-                                 int.TryParse( formatted[2], out int rY ) &&
+                            if ( int.TryParse( formatted[1], out int rX ) && int.TryParse( formatted[2], out int rY ) &&
                                  int.TryParse( formatted[3], out int rInactiveID ) &&
                                  int.TryParse( formatted[4], out int rActiveID ) &&
                                  int.TryParse( formatted[5], out int rState ) &&
@@ -523,8 +522,7 @@ namespace ClassicAssist.UO.Objects.Gumps
                     case "text":
                         try
                         {
-                            if ( int.TryParse( formatted[1], out int tX ) &&
-                                 int.TryParse( formatted[2], out int tY ) &&
+                            if ( int.TryParse( formatted[1], out int tX ) && int.TryParse( formatted[2], out int tY ) &&
                                  int.TryParse( formatted[3], out int tHue ) &&
                                  int.TryParse( formatted[4], out int tText ) )
                             {

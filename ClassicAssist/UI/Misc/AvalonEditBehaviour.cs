@@ -7,10 +7,10 @@ namespace ClassicAssist.UI.Misc
 {
     public sealed class AvalonEditBehaviour : Behavior<TextEditor>
     {
-        public static readonly DependencyProperty TextBindingProperty =
-            DependencyProperty.Register( "TextBinding", typeof( string ), typeof( AvalonEditBehaviour ),
-                new FrameworkPropertyMetadata( default( string ), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                    PropertyChangedCallback ) );
+        public static readonly DependencyProperty TextBindingProperty = DependencyProperty.Register( "TextBinding",
+            typeof( string ), typeof( AvalonEditBehaviour ),
+            new FrameworkPropertyMetadata( default( string ), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                PropertyChangedCallback ) );
 
         public string TextBinding
         {
@@ -70,8 +70,7 @@ namespace ClassicAssist.UI.Misc
             textEditor.CaretOffset = carot;
         }
 
-        private static void PropertyChangedCallback(
-            DependencyObject dependencyObject,
+        private static void PropertyChangedCallback( DependencyObject dependencyObject,
             DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs )
         {
             AvalonEditBehaviour behavior = dependencyObject as AvalonEditBehaviour;

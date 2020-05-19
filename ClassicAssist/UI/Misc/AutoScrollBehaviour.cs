@@ -9,14 +9,10 @@ namespace ClassicAssist.UI.Misc
 {
     internal class ListBoxBehavior
     {
-        private static readonly Dictionary<ListBox, Capture> Associations =
-            new Dictionary<ListBox, Capture>();
+        private static readonly Dictionary<ListBox, Capture> Associations = new Dictionary<ListBox, Capture>();
 
         public static readonly DependencyProperty ScrollOnNewItemProperty =
-            DependencyProperty.RegisterAttached(
-                "ScrollOnNewItem",
-                typeof( bool ),
-                typeof( ListBoxBehavior ),
+            DependencyProperty.RegisterAttached( "ScrollOnNewItem", typeof( bool ), typeof( ListBoxBehavior ),
                 new UIPropertyMetadata( false, OnScrollOnNewItemChanged ) );
 
         public static bool GetScrollOnNewItem( DependencyObject obj )
@@ -29,9 +25,7 @@ namespace ClassicAssist.UI.Misc
             obj.SetValue( ScrollOnNewItemProperty, value );
         }
 
-        public static void OnScrollOnNewItemChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e )
+        public static void OnScrollOnNewItemChanged( DependencyObject d, DependencyPropertyChangedEventArgs e )
         {
             ListBox listBox = d as ListBox;
 

@@ -15,9 +15,8 @@ namespace ClassicAssist.UI.Misc
             LockStatus
         }
 
-        public static readonly DependencyProperty SortFieldProperty =
-            DependencyProperty.Register( "SortField", typeof( Enums ), typeof( SkillsGridViewColumn ),
-                new UIPropertyMetadata( null ) );
+        public static readonly DependencyProperty SortFieldProperty = DependencyProperty.Register( "SortField",
+            typeof( Enums ), typeof( SkillsGridViewColumn ), new UIPropertyMetadata( null ) );
 
         public Enums SortField
         {

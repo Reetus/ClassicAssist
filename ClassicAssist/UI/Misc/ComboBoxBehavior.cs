@@ -9,18 +9,18 @@ namespace ClassicAssist.UI.Misc
     {
         public static readonly DependencyProperty CommandBindingProperty =
             DependencyProperty.Register( "CommandBinding", typeof( ICommand ), typeof( ComboBoxBehavior ),
-                new FrameworkPropertyMetadata( default( ICommand ),
-                    FrameworkPropertyMetadataOptions.None, PropertyChangedCallback ) );
+                new FrameworkPropertyMetadata( default( ICommand ), FrameworkPropertyMetadataOptions.None,
+                    PropertyChangedCallback ) );
 
         public static readonly DependencyProperty CommandParameterProperty =
             DependencyProperty.Register( "CommandParameter", typeof( object ), typeof( ComboBoxBehavior ),
-                new FrameworkPropertyMetadata( default,
-                    FrameworkPropertyMetadataOptions.None, PropertyChangedCallback ) );
+                new FrameworkPropertyMetadata( default, FrameworkPropertyMetadataOptions.None,
+                    PropertyChangedCallback ) );
 
         public static readonly DependencyProperty OnlyUserTriggeredProperty =
             DependencyProperty.Register( "OnlyUserTriggered", typeof( bool ), typeof( ComboBoxBehavior ),
-                new FrameworkPropertyMetadata( false,
-                    FrameworkPropertyMetadataOptions.None, PropertyChangedCallback ) );
+                new FrameworkPropertyMetadata( false, FrameworkPropertyMetadataOptions.None,
+                    PropertyChangedCallback ) );
 
         private bool _userTriggered;
 

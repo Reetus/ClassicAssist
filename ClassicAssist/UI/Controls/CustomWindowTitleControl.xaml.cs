@@ -12,8 +12,7 @@ namespace ClassicAssist.UI.Controls
                 new PropertyMetadata( null ) );
 
         public static readonly DependencyProperty CustomTitleProperty = DependencyProperty.Register( "CustomTitle",
-            typeof( string ),
-            typeof( CustomWindowTitleControl ),
+            typeof( string ), typeof( CustomWindowTitleControl ),
             new FrameworkPropertyMetadata( default( string ), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
 
         public static readonly DependencyProperty CanCloseProperty = DependencyProperty.Register( "CanClose",

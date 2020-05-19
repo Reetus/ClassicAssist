@@ -24,7 +24,6 @@ using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Resources;
-using ClassicAssist.UI.ViewModels.Agents;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;

@@ -21,7 +21,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+                <ResourceDictionary Source="../../Resources/Icons.xaml" />
                 <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
@@ -52,6 +52,15 @@
                          MinHeight="40"
                          IsEnabled="{Binding IsRecording, Converter={StaticResource InverseBooleanConverter}}"
                          misc:ListBoxBehavior.ScrollOnNewItem="True">
+                    <ListBox.InputBindings>
+                        <KeyBinding Key="Delete"
+                                    Command="{Binding RemoveMacroConfirmCommand}"
+                                    CommandParameter="{Binding SelectedItem}" />
+                    </ListBox.InputBindings>
+                    <i:Interaction.Behaviors>
+                        <misc:ItemsControlSelectNewEntryBehaviour SelectedItem="{Binding SelectedItem}"
+                                                                  Type="{x:Type local:MacroEntry}" />
+                    </i:Interaction.Behaviors>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <controls:EditTextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
@@ -72,7 +81,7 @@
                         </Style>
                     </Grid.Resources>
                     <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="0" Margin="0,0,2.5,0"
-                            Command="{Binding RemoveMacroCommand, Mode=OneWay}"
+                            Command="{Binding RemoveMacroConfirmCommand, Mode=OneWay}"
                             CommandParameter="{Binding SelectedItem, ElementName=ListBox}">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
@@ -180,7 +189,7 @@
             <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
                 <StackPanel.Resources>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                        <Setter Property="Margin" Value="10,10,10,0" />
+                        <Setter Property="Margin" Value="0,10,10,0" />
                         <Setter Property="Padding" Value="10,0,10,0" />
                         <Setter Property="Height" Value="25" />
                     </Style>
@@ -188,6 +197,10 @@
                 <Button Content="{x:Static resources:Strings.Object_Inspector}"
                         Command="{Binding InspectObjectCommand, Mode=OneWay}" />
                 <Button Content="{x:Static resources:Strings.Commands}" Command="{Binding ShowCommandsCommand}" />
+                <Button Command="{Binding ShowMacrosWikiCommand}" Padding="5,0,5,0"
+                        ToolTip="{x:Static resources:Strings.Macro_Commands_Wiki__Launches_in_Browser_}">
+                    <Image Source="{StaticResource WebIcon}" Height="16" />
+                </Button>
                 <Button Content="{x:Static resources:Strings.Active_Objects}"
                         Command="{Binding ShowActiveObjectsWindowCommand}" />
             </StackPanel>

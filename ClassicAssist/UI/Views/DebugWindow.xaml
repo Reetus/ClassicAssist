@@ -93,10 +93,10 @@
             <debug:DebugBuffIconsControl />
         </TabItem>
         <TabItem Header="{x:Static resources:Strings.Vendor_Buy}">
-            <debug:DebugVendorBuyControl/>
+            <debug:DebugVendorBuyControl />
         </TabItem>
         <TabItem Header="{x:Static resources:Strings.Autoloot}">
-            <debug:DebugAutolootControl/>
+            <debug:DebugAutolootControl />
         </TabItem>
     </TabControl>
 </Window>

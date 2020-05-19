@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (C) 2020 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -13,6 +14,7 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 #endregion
 
 using System;
@@ -25,7 +27,7 @@ namespace ClassicAssist.UI.Misc.ValueConverters
     {
         public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
         {
-            if ( value is string val && val.StartsWith( "0x" ))
+            if ( value is string val && val.StartsWith( "0x" ) )
             {
                 return System.Convert.ToInt32( val, 16 );
             }

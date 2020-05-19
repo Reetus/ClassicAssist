@@ -12,9 +12,9 @@ namespace ClassicAssist.UO.Network
         private readonly bool _secondaryEnable;
         private readonly int _secondaryId;
 
-        public WeaponAbilitiesGump( int primaryId, bool primaryEnable, int secondaryId, bool secondaryEnable ) :
-            base( Options.CurrentOptions.AbilitiesGumpX, Options.CurrentOptions.AbilitiesGumpY, GumpSerial++,
-                (uint) GumpSerial++ )
+        public WeaponAbilitiesGump( int primaryId, bool primaryEnable, int secondaryId, bool secondaryEnable ) : base(
+            Options.CurrentOptions.AbilitiesGumpX, Options.CurrentOptions.AbilitiesGumpY, GumpSerial++,
+            (uint) GumpSerial++ )
         {
             if ( Engine.Gumps.GetGumps( out Gump[] gumps ) )
             {

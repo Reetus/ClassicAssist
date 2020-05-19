@@ -12,9 +12,8 @@ namespace ClassicAssist.UI.Misc
 
     public class MultiSelectionBehaviour : Behavior<ListBox>
     {
-        public static readonly DependencyProperty SelectedItemsProperty =
-            DependencyProperty.Register( "SelectedItems", typeof( IList ), typeof( MultiSelectionBehaviour ),
-                new UIPropertyMetadata( null, SelectedItemsChanged ) );
+        public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register( "SelectedItems",
+            typeof( IList ), typeof( MultiSelectionBehaviour ), new UIPropertyMetadata( null, SelectedItemsChanged ) );
 
         private bool _isUpdatingSource;
 

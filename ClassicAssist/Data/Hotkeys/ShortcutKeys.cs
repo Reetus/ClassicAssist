@@ -70,9 +70,7 @@ namespace ClassicAssist.Data.Hotkeys
 
         public override bool Equals( object obj )
         {
-            return obj is ShortcutKeys keys &&
-                   Key == keys.Key &&
-                   Modifier == keys.Modifier && Mouse == keys.Mouse;
+            return obj is ShortcutKeys keys && Key == keys.Key && Modifier == keys.Modifier && Mouse == keys.Mouse;
         }
 
         public override int GetHashCode()

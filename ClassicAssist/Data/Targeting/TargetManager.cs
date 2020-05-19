@@ -101,19 +101,18 @@ namespace ClassicAssist.Data.Targeting
                     break;
                 case TargetBodyType.Humanoid:
                     bodyTypePredicate = i =>
-                        _bodyData.Where( bd => bd.BodyType == TargetBodyType.Humanoid )
-                            .Select( bd => bd.Graphic ).Contains( i );
+                        _bodyData.Where( bd => bd.BodyType == TargetBodyType.Humanoid ).Select( bd => bd.Graphic )
+                            .Contains( i );
                     break;
                 case TargetBodyType.Transformation:
                     bodyTypePredicate = i =>
-                        _bodyData.Where( bd => bd.BodyType == TargetBodyType.Transformation )
-                            .Select( bd => bd.Graphic ).Contains( i );
+                        _bodyData.Where( bd => bd.BodyType == TargetBodyType.Transformation ).Select( bd => bd.Graphic )
+                            .Contains( i );
                     break;
                 case TargetBodyType.Both:
                     bodyTypePredicate = i =>
                         _bodyData.Where( bd =>
-                                bd.BodyType == TargetBodyType.Humanoid ||
-                                bd.BodyType == TargetBodyType.Transformation )
+                                bd.BodyType == TargetBodyType.Humanoid || bd.BodyType == TargetBodyType.Transformation )
                             .Select( bd => bd.Graphic ).Contains( i );
                     break;
                 default:
@@ -126,19 +125,16 @@ namespace ClassicAssist.Data.Targeting
                     .SelectEntities( m => MobileCommands.InFriendList( m.Serial ) && bodyTypePredicate( m.ID ) &&
                                           ( !Options.CurrentOptions.GetFriendEnemyUsesIgnoreList ||
                                             !ObjectCommands.IgnoreList.Contains( m.Serial ) ) )
-                    .OrderBy( m => m.Distance )
-                    .ByInflication( inflictionType ).FirstOrDefault();
+                    .OrderBy( m => m.Distance ).ByInflication( inflictionType ).FirstOrDefault();
             }
             else
             {
                 mobile = Engine.Mobiles.SelectEntities( m =>
-                        notoriety.Contains( m.Notoriety ) && m.Distance < MAX_DISTANCE &&
-                        bodyTypePredicate( m.ID ) &&
+                        notoriety.Contains( m.Notoriety ) && m.Distance < MAX_DISTANCE && bodyTypePredicate( m.ID ) &&
                         ( friendType == TargetFriendType.Include || !MobileCommands.InFriendList( m.Serial ) ) &&
                         ( !Options.CurrentOptions.GetFriendEnemyUsesIgnoreList ||
-                          !ObjectCommands.IgnoreList.Contains( m.Serial ) ) )
-                    .OrderBy( m => m.Distance ).ByInflication( inflictionType )?
-                    .FirstOrDefault();
+                          !ObjectCommands.IgnoreList.Contains( m.Serial ) ) ).OrderBy( m => m.Distance )
+                    .ByInflication( inflictionType )?.FirstOrDefault();
             }
 
             return mobile;
@@ -163,8 +159,8 @@ namespace ClassicAssist.Data.Targeting
                         break;
                     case TargetBodyType.Humanoid:
                         bodyTypePredicate = i =>
-                            _bodyData.Where( bd => bd.BodyType == TargetBodyType.Humanoid )
-                                .Select( bd => bd.Graphic ).Contains( i );
+                            _bodyData.Where( bd => bd.BodyType == TargetBodyType.Humanoid ).Select( bd => bd.Graphic )
+                                .Contains( i );
                         break;
                     case TargetBodyType.Transformation:
                         bodyTypePredicate = i =>
@@ -193,8 +189,8 @@ namespace ClassicAssist.Data.Targeting
                 else
                 {
                     mobiles = Engine.Mobiles.SelectEntities( m =>
-                        notoriety.Contains( m.Notoriety ) && m.Distance < distance &&
-                        bodyTypePredicate( m.ID ) && !_ignoreList.Contains( m ) &&
+                        notoriety.Contains( m.Notoriety ) && m.Distance < distance && bodyTypePredicate( m.ID ) &&
+                        !_ignoreList.Contains( m ) &&
                         ( friendType == TargetFriendType.Include || !MobileCommands.InFriendList( m.Serial ) ) &&
                         ( !Options.CurrentOptions.GetFriendEnemyUsesIgnoreList ||
                           !ObjectCommands.IgnoreList.Contains( m.Serial ) ) );
@@ -373,8 +369,7 @@ namespace ClassicAssist.Data.Targeting
 
     public static class MobileEnumerableExtensionMethods
     {
-        public static Mobile[] ByInflication( this IEnumerable<Mobile> mobiles,
-            TargetInfliction inflictionType )
+        public static Mobile[] ByInflication( this IEnumerable<Mobile> mobiles, TargetInfliction inflictionType )
         {
             switch ( inflictionType )
             {

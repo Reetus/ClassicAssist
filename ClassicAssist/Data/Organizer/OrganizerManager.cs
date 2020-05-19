@@ -124,8 +124,8 @@ namespace ClassicAssist.Data.Organizer
 
                     if ( entry.Complete )
                     {
-                        int existingCount = destinationContainerItem.Container?
-                                                .SelectEntities( i => entryItem.ID == i.ID )?.Select( i => i.Count )
+                        int existingCount = destinationContainerItem.Container
+                                                ?.SelectEntities( i => entryItem.ID == i.ID )?.Select( i => i.Count )
                                                 .Sum() ?? 0;
 
                         moved += existingCount;
@@ -158,8 +158,7 @@ namespace ClassicAssist.Data.Organizer
                         else
                         {
                             await ActionPacketQueue.EnqueueDragDrop( moveItem.Serial, amount,
-                                destinationContainerItem.Serial,
-                                x: 0, y: 0 );
+                                destinationContainerItem.Serial, x: 0, y: 0 );
                         }
 
                         if ( _cancellationTokenSource.IsCancellationRequested )
@@ -191,8 +190,7 @@ namespace ClassicAssist.Data.Organizer
                 return;
             }
 
-            int desintationContainer =
-                await UOC.GetTargeSerialAsync( Strings.Select_destination_container___ );
+            int desintationContainer = await UOC.GetTargeSerialAsync( Strings.Select_destination_container___ );
 
             if ( desintationContainer <= 0 )
             {

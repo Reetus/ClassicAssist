@@ -34,13 +34,13 @@
         </Grid.RowDefinitions>
         <ToolBar Style="{DynamicResource ToolBarStyle1}" Grid.Row="0">
             <Button Height="24" Padding="0" Command="{Binding RefreshCommand}"
-                        ToolTip="{x:Static resources:Strings.Refresh}"
-                        Style="{StaticResource ToolbarButtonStyle}">
+                    ToolTip="{x:Static resources:Strings.Refresh}"
+                    Style="{StaticResource ToolbarButtonStyle}">
                 <Image Source="{StaticResource RefreshIcon}" />
             </Button>
             <ToggleButton Height="24" ToolTip="{x:Static resources:Strings.Toggle_item_properties}"
-                              Command="{Binding TogglePropertiesCommand}"
-                              CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}">
+                          Command="{Binding TogglePropertiesCommand}"
+                          CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}">
                 <Image Source="{StaticResource ListIcon}" />
             </ToggleButton>
             <ToggleButton x:Name="toggleButton" Height="24">
@@ -52,24 +52,24 @@
                         <Image Source="{StaticResource SortIcon}" />
                     </MenuItem.Header>
                     <MenuItem Header="{x:Static resources:Strings.Name}" Command="{Binding ChangeSortStyleCommand}"
-                                  CommandParameter="{x:Static models:EntityCollectionSortStyle.Name}" />
+                              CommandParameter="{x:Static models:EntityCollectionSortStyle.Name}" />
                     <MenuItem Header="{x:Static resources:Strings.Serial}"
-                                  Command="{Binding ChangeSortStyleCommand}"
-                                  CommandParameter="{x:Static models:EntityCollectionSortStyle.Serial}" />
+                              Command="{Binding ChangeSortStyleCommand}"
+                              CommandParameter="{x:Static models:EntityCollectionSortStyle.Serial}" />
                     <MenuItem Header="{x:Static resources:Strings.Color}"
-                                  Command="{Binding ChangeSortStyleCommand}"
-                                  CommandParameter="{x:Static models:EntityCollectionSortStyle.Hue}" />
+                              Command="{Binding ChangeSortStyleCommand}"
+                              CommandParameter="{x:Static models:EntityCollectionSortStyle.Hue}" />
                     <MenuItem Header="{x:Static resources:Strings.Graphic}"
-                                  Command="{Binding ChangeSortStyleCommand}"
-                                  CommandParameter="{x:Static models:EntityCollectionSortStyle.ID}" />
+                              Command="{Binding ChangeSortStyleCommand}"
+                              CommandParameter="{x:Static models:EntityCollectionSortStyle.ID}" />
                     <MenuItem Header="{x:Static resources:Strings.Amount}"
-                                  Command="{Binding ChangeSortStyleCommand}"
-                                  CommandParameter="{x:Static models:EntityCollectionSortStyle.Quantity}" />
+                              Command="{Binding ChangeSortStyleCommand}"
+                              CommandParameter="{x:Static models:EntityCollectionSortStyle.Quantity}" />
                 </MenuItem>
             </Menu>
             <Button Height="24" Padding="0" Command="{Binding CancelActionCommand}"
-                        ToolTip="{x:Static resources:Strings.Cancel_action}" IsEnabled="{Binding IsPerformingAction}"
-                        Style="{StaticResource ToolbarButtonStyle}">
+                    ToolTip="{x:Static resources:Strings.Cancel_action}" IsEnabled="{Binding IsPerformingAction}"
+                    Style="{StaticResource ToolbarButtonStyle}">
                 <Image Source="{StaticResource CancelIcon}" />
             </Button>
         </ToolBar>

@@ -160,17 +160,15 @@ namespace ClassicAssist.UI.ViewModels
             return items.ToArray();
         }
 
-        private void AddEquipmentProperty( Item[] items, int cliloc, int argumentIndex, string name,
-            string category )
+        private void AddEquipmentProperty( Item[] items, int cliloc, int argumentIndex, string name, string category )
         {
             AddEquipmentProperty( items, new[] { cliloc }, new[] { argumentIndex }, name, category );
         }
 
-        private void AddEquipmentProperty( Item[] items, IReadOnlyList<int> clilocs,
-            IReadOnlyList<int> argumentIndexs, string name, string category )
+        private void AddEquipmentProperty( Item[] items, IReadOnlyList<int> clilocs, IReadOnlyList<int> argumentIndexs,
+            string name, string category )
         {
-            int amount = clilocs
-                .Select( ( t, i ) => CountPropertyList( items.ToArray(), t, argumentIndexs[i] ) ).Sum();
+            int amount = clilocs.Select( ( t, i ) => CountPropertyList( items.ToArray(), t, argumentIndexs[i] ) ).Sum();
 
             if ( amount > 0 )
             {
@@ -181,8 +179,8 @@ namespace ClassicAssist.UI.ViewModels
             }
         }
 
-        private void AddEquipmentPropertyWithSymbol( Item[] items, int cliloc, int symbolIndex,
-            int argumentIndex, string name, string category )
+        private void AddEquipmentPropertyWithSymbol( Item[] items, int cliloc, int symbolIndex, int argumentIndex,
+            string name, string category )
         {
             Task.Run( () =>
             {
@@ -221,8 +219,8 @@ namespace ClassicAssist.UI.ViewModels
             return items.Sum( t => CountProperty( t.Serial, cliloc, argumentIndex ) );
         }
 
-        private static int CountPropertyListWithSymbol( IReadOnlyList<Item> items, int cliloc,
-            int symbolIndex, int argumentIndex )
+        private static int CountPropertyListWithSymbol( IReadOnlyList<Item> items, int cliloc, int symbolIndex,
+            int argumentIndex )
         {
             int total = 0;
 
@@ -392,8 +390,10 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            ObjectInspectorWindow window =
-                new ObjectInspectorWindow { DataContext = new ObjectInspectorViewModel( entity ), Topmost = true };
+            ObjectInspectorWindow window = new ObjectInspectorWindow
+            {
+                DataContext = new ObjectInspectorViewModel( entity ), Topmost = true
+            };
             window.ShowDialog();
         }
 
@@ -404,11 +404,10 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            EntityCollectionViewer window =
-                new EntityCollectionViewer
-                {
-                    DataContext = new EntityCollectionViewerViewModel( collection ), Topmost = true
-                };
+            EntityCollectionViewer window = new EntityCollectionViewer
+            {
+                DataContext = new EntityCollectionViewerViewModel( collection ), Topmost = true
+            };
 
             window.ShowDialog();
         }

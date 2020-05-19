@@ -530,10 +530,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private void InsertMatchAny( object obj )
         {
-            Items.Add( new AutolootEntry
+            AutolootEntry entry = new AutolootEntry
             {
                 Name = Strings.Any, ID = -1, Constraints = new ObservableCollection<AutolootConstraintEntry>()
-            } );
+            };
+
+            Items.Add( entry );
         }
 
         private async Task Insert( object arg )
@@ -554,12 +556,14 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            Items.Add( new AutolootEntry
+            AutolootEntry entry = new AutolootEntry
             {
                 Name = TileData.GetStaticTile( item.ID ).Name,
                 ID = item.ID,
                 Constraints = new ObservableCollection<AutolootConstraintEntry>()
-            } );
+            };
+
+            Items.Add( entry );
         }
 
         private async Task Remove( object arg )

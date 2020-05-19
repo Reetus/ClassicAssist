@@ -10,8 +10,8 @@ namespace ClassicAssist.Data.Autoloot
     {
         private bool _autoloot;
 
-        private ObservableCollection<AutolootConstraintEntry>
-            _constraints = new ObservableCollection<AutolootConstraintEntry>();
+        private ObservableCollection<AutolootConstraintEntry> _constraints =
+            new ObservableCollection<AutolootConstraintEntry>();
 
         private bool _enabled = true;
         private int _id;

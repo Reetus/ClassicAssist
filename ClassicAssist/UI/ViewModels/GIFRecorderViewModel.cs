@@ -108,8 +108,7 @@ namespace ClassicAssist.UI.ViewModels
                         using ( AnimatedGifCreator gif = new AnimatedGifCreator( ms, frameInterval.Milliseconds ) )
                         {
                             Rectangle rect = new Rectangle();
-                            _dispatcher.Invoke( () =>
-                                GetWindowRect( wih.Handle, ref rect ) );
+                            _dispatcher.Invoke( () => GetWindowRect( wih.Handle, ref rect ) );
 
                             Bitmap bmp = new Bitmap( rect.Width - rect.Left - 10, rect.Height - rect.Top - 70 );
 
@@ -118,8 +117,7 @@ namespace ClassicAssist.UI.ViewModels
 
                             while ( true )
                             {
-                                _dispatcher.Invoke( () =>
-                                    GetWindowRect( wih.Handle, ref rect ) );
+                                _dispatcher.Invoke( () => GetWindowRect( wih.Handle, ref rect ) );
 
                                 using ( Graphics g = Graphics.FromImage( bmp ) )
                                 {

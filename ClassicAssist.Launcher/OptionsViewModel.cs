@@ -82,14 +82,13 @@ namespace ClassicAssist.Launcher
 
         private void AddPlugin( object obj )
         {
-            OpenFileDialog ofd =
-                new OpenFileDialog
-                {
-                    Multiselect = false,
-                    InitialDirectory = Environment.CurrentDirectory,
-                    CheckFileExists = true,
-                    Filter = "Executable / DLL Files (*.exe, *.dll)|*.dll;*.exe"
-                };
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Multiselect = false,
+                InitialDirectory = Environment.CurrentDirectory,
+                CheckFileExists = true,
+                Filter = "Executable / DLL Files (*.exe, *.dll)|*.dll;*.exe"
+            };
 
             bool? result = ofd.ShowDialog();
 

@@ -48,10 +48,9 @@ namespace ClassicAssist.Launcher.Annotations
     /// }
     /// </code>
     /// </example>
-    [AttributeUsage(
-        AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-        AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event |
-        AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.GenericParameter )]
+    [AttributeUsage( AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
+                     AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event |
+                     AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.GenericParameter )]
     public sealed class CanBeNullAttribute : Attribute
     {
     }
@@ -66,10 +65,9 @@ namespace ClassicAssist.Launcher.Annotations
     /// }
     /// </code>
     /// </example>
-    [AttributeUsage(
-        AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-        AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event |
-        AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.GenericParameter )]
+    [AttributeUsage( AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
+                     AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event |
+                     AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.GenericParameter )]
     public sealed class NotNullAttribute : Attribute
     {
     }
@@ -90,9 +88,8 @@ namespace ClassicAssist.Launcher.Annotations
     /// }
     /// </code>
     /// </example>
-    [AttributeUsage(
-        AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-        AttributeTargets.Delegate | AttributeTargets.Field )]
+    [AttributeUsage( AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
+                     AttributeTargets.Delegate | AttributeTargets.Field )]
     public sealed class ItemNotNullAttribute : Attribute
     {
     }
@@ -114,9 +111,8 @@ namespace ClassicAssist.Launcher.Annotations
     /// }
     /// </code>
     /// </example>
-    [AttributeUsage(
-        AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-        AttributeTargets.Delegate | AttributeTargets.Field )]
+    [AttributeUsage( AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
+                     AttributeTargets.Delegate | AttributeTargets.Field )]
     public sealed class ItemCanBeNullAttribute : Attribute
     {
     }
@@ -136,9 +132,8 @@ namespace ClassicAssist.Launcher.Annotations
     /// }
     /// </code>
     /// </example>
-    [AttributeUsage(
-        AttributeTargets.Constructor | AttributeTargets.Method |
-        AttributeTargets.Property | AttributeTargets.Delegate )]
+    [AttributeUsage( AttributeTargets.Constructor | AttributeTargets.Method | AttributeTargets.Property |
+                     AttributeTargets.Delegate )]
     public sealed class StringFormatMethodAttribute : Attribute
     {
         /// <param name="formatParameterName">
@@ -182,9 +177,8 @@ namespace ClassicAssist.Launcher.Annotations
     /// }
     /// </code>
     /// </example>
-    [AttributeUsage(
-        AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field,
-        AllowMultiple = true )]
+    [AttributeUsage( AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field, AllowMultiple =
+        true )]
     public sealed class ValueProviderAttribute : Attribute
     {
         public ValueProviderAttribute( [NotNull] string name )
@@ -346,8 +340,7 @@ namespace ClassicAssist.Launcher.Annotations
     [AttributeUsage( AttributeTargets.Method, AllowMultiple = true )]
     public sealed class ContractAnnotationAttribute : Attribute
     {
-        public ContractAnnotationAttribute( [NotNull] string contract )
-            : this( contract, false )
+        public ContractAnnotationAttribute( [NotNull] string contract ) : this( contract, false )
         {
         }
 
@@ -449,18 +442,17 @@ namespace ClassicAssist.Launcher.Annotations
     [AttributeUsage( AttributeTargets.All )]
     public sealed class UsedImplicitlyAttribute : Attribute
     {
-        public UsedImplicitlyAttribute()
-            : this( ImplicitUseKindFlags.Default, ImplicitUseTargetFlags.Default )
+        public UsedImplicitlyAttribute() : this( ImplicitUseKindFlags.Default, ImplicitUseTargetFlags.Default )
         {
         }
 
-        public UsedImplicitlyAttribute( ImplicitUseKindFlags useKindFlags )
-            : this( useKindFlags, ImplicitUseTargetFlags.Default )
+        public UsedImplicitlyAttribute( ImplicitUseKindFlags useKindFlags ) : this( useKindFlags,
+            ImplicitUseTargetFlags.Default )
         {
         }
 
-        public UsedImplicitlyAttribute( ImplicitUseTargetFlags targetFlags )
-            : this( ImplicitUseKindFlags.Default, targetFlags )
+        public UsedImplicitlyAttribute( ImplicitUseTargetFlags targetFlags ) : this( ImplicitUseKindFlags.Default,
+            targetFlags )
         {
         }
 
@@ -486,18 +478,17 @@ namespace ClassicAssist.Launcher.Annotations
     [AttributeUsage( AttributeTargets.Class | AttributeTargets.GenericParameter | AttributeTargets.Parameter )]
     public sealed class MeansImplicitUseAttribute : Attribute
     {
-        public MeansImplicitUseAttribute()
-            : this( ImplicitUseKindFlags.Default, ImplicitUseTargetFlags.Default )
+        public MeansImplicitUseAttribute() : this( ImplicitUseKindFlags.Default, ImplicitUseTargetFlags.Default )
         {
         }
 
-        public MeansImplicitUseAttribute( ImplicitUseKindFlags useKindFlags )
-            : this( useKindFlags, ImplicitUseTargetFlags.Default )
+        public MeansImplicitUseAttribute( ImplicitUseKindFlags useKindFlags ) : this( useKindFlags,
+            ImplicitUseTargetFlags.Default )
         {
         }
 
-        public MeansImplicitUseAttribute( ImplicitUseTargetFlags targetFlags )
-            : this( ImplicitUseKindFlags.Default, targetFlags )
+        public MeansImplicitUseAttribute( ImplicitUseTargetFlags targetFlags ) : this( ImplicitUseKindFlags.Default,
+            targetFlags )
         {
         }
 
@@ -648,10 +639,9 @@ namespace ClassicAssist.Launcher.Annotations
     /// }
     /// </code>
     /// </example>
-    [AttributeUsage(
-        AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Method |
-        AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct |
-        AttributeTargets.GenericParameter )]
+    [AttributeUsage( AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter |
+                     AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Interface |
+                     AttributeTargets.Struct | AttributeTargets.GenericParameter )]
     public sealed class ProvidesContextAttribute : Attribute
     {
     }
@@ -1222,8 +1212,8 @@ namespace ClassicAssist.Launcher.Annotations
     /// <remarks>
     ///     The attribute must be mentioned in your member reordering patterns.
     /// </remarks>
-    [AttributeUsage(
-        AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct | AttributeTargets.Enum )]
+    [AttributeUsage( AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct |
+                     AttributeTargets.Enum )]
     public sealed class NoReorderAttribute : Attribute
     {
     }

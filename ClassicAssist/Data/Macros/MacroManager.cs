@@ -60,8 +60,7 @@ namespace ClassicAssist.Data.Macros
 
         private void PacketSentReceived( byte[] data, int length, PacketDirection direction )
         {
-            foreach ( string result in _parsers
-                .Select( parser => parser.Parse( data, length, direction ) )
+            foreach ( string result in _parsers.Select( parser => parser.Parse( data, length, direction ) )
                 .Where( result => !string.IsNullOrEmpty( result ) ) )
             {
                 InsertDocument?.Invoke( result );

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Windows;
 using Exceptionless;
 
@@ -12,7 +11,8 @@ namespace ClassicAssist.Launcher
     {
         protected override void OnStartup( StartupEventArgs e )
         {
-            ExceptionlessClient.Default.Configuration.DefaultData.Add( "Locale", Thread.CurrentThread.CurrentUICulture.Name );
+            ExceptionlessClient.Default.Configuration.DefaultData.Add( "Locale",
+                Thread.CurrentThread.CurrentUICulture.Name );
             ExceptionlessClient.Default.Startup( "T8v0i7nL90cVRc4sr2pgo5hviThMPRF3OtQ0bK60" );
             base.OnStartup( e );
         }

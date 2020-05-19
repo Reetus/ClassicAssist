@@ -25,16 +25,15 @@ namespace ClassicAssist.UI.Views
     /// </summary>
     public partial class EntityCollectionFilterControl : INotifyPropertyChanged
     {
-        public static readonly DependencyProperty CommandProperty =
-            DependencyProperty.Register( nameof( Command ), typeof( ICommand ), typeof( EntityCollectionFilterControl ),
-                new FrameworkPropertyMetadata( default( ICommand ) ) );
+        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register( nameof( Command ),
+            typeof( ICommand ), typeof( EntityCollectionFilterControl ),
+            new FrameworkPropertyMetadata( default( ICommand ) ) );
 
         private ICommand _addCommand;
 
         private ICommand _applyCommand;
 
-        private ObservableCollection<PropertyEntry>
-            _constraints = new ObservableCollection<PropertyEntry>();
+        private ObservableCollection<PropertyEntry> _constraints = new ObservableCollection<PropertyEntry>();
 
         private ObservableCollection<EntityCollectionFilter>
             _items = new ObservableCollection<EntityCollectionFilter>();
@@ -112,12 +111,11 @@ namespace ClassicAssist.UI.Views
 
         private void LoadFilter( object obj )
         {
-            OpenFileDialog ofd =
-                new OpenFileDialog
-                {
-                    InitialDirectory = Engine.StartupPath ?? Environment.CurrentDirectory,
-                    Filter = "JSON Filter Files|*.filter.json"
-                };
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                InitialDirectory = Engine.StartupPath ?? Environment.CurrentDirectory,
+                Filter = "JSON Filter Files|*.filter.json"
+            };
 
             bool? result = ofd.ShowDialog();
 
@@ -165,12 +163,11 @@ namespace ClassicAssist.UI.Views
 
         private void SaveFilter( object obj )
         {
-            SaveFileDialog sfd =
-                new SaveFileDialog
-                {
-                    InitialDirectory = Engine.StartupPath ?? Environment.CurrentDirectory,
-                    Filter = "JSON Filter Files|*.filter.json"
-                };
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                InitialDirectory = Engine.StartupPath ?? Environment.CurrentDirectory,
+                Filter = "JSON Filter Files|*.filter.json"
+            };
 
             bool? result = sfd.ShowDialog();
 

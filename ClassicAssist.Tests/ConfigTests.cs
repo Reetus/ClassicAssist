@@ -21,8 +21,7 @@ namespace ClassicAssist.Tests
         public void WontThrowExceptionOnDeserializeNullConfig()
         {
             AppDomain appDomain = AppDomain.CreateDomain( "WontThrowExceptionOnDeserializeNullConfig",
-                AppDomain.CurrentDomain.Evidence,
-                AppDomain.CurrentDomain.SetupInformation );
+                AppDomain.CurrentDomain.Evidence, AppDomain.CurrentDomain.SetupInformation );
 
             appDomain.DoCallBack( () => TestConfig( null ) );
         }
@@ -31,8 +30,7 @@ namespace ClassicAssist.Tests
         public void WontThrowExceptionOnDeserializeEmptyConfig()
         {
             AppDomain appDomain = AppDomain.CreateDomain( "WontThrowExceptionOnDeserializeEmptyConfig",
-                AppDomain.CurrentDomain.Evidence,
-                AppDomain.CurrentDomain.SetupInformation );
+                AppDomain.CurrentDomain.Evidence, AppDomain.CurrentDomain.SetupInformation );
 
             appDomain.DoCallBack( () => TestConfig( new JObject() ) );
         }
@@ -48,7 +46,8 @@ namespace ClassicAssist.Tests
                 File.Delete( Path.Combine( _profilePath, "settings.json" ) );
             }
 
-            IEnumerable<Type> allSettingProvider = Assembly.GetAssembly( typeof( Engine ) ).GetTypes().Where( t => typeof( ISettingProvider ).IsAssignableFrom( t ) && t.IsClass );
+            IEnumerable<Type> allSettingProvider = Assembly.GetAssembly( typeof( Engine ) ).GetTypes()
+                .Where( t => typeof( ISettingProvider ).IsAssignableFrom( t ) && t.IsClass );
 
             Options options = new Options();
 

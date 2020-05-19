@@ -62,10 +62,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 o => SelectedItem != null && SelectedItem.Items.Any() ) );
 
         public ICommand DressAllItemsCommand =>
-            _dressAllItemsCommand ??
-            ( _dressAllItemsCommand =
-                new RelayCommandAsync( DressAllItems,
-                    o => SelectedItem != null && Engine.Connected && !IsDressingOrUndressing ) );
+            _dressAllItemsCommand ?? ( _dressAllItemsCommand = new RelayCommandAsync( DressAllItems,
+                o => SelectedItem != null && Engine.Connected && !IsDressingOrUndressing ) );
 
         public ICommand ImportItemsCommand =>
             _importItemsCommand ?? ( _importItemsCommand = new RelayCommand( ImportItems, o => SelectedItem != null ) );
@@ -86,8 +84,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
             _newDressEntryCommand ?? ( _newDressEntryCommand = new RelayCommand( NewDressEntry, o => true ) );
 
         public ICommand RemoveDressEntryCommand =>
-            _removeDressEntryCommand ??
-            ( _removeDressEntryCommand = new RelayCommand( RemoveDressEntry, o => SelectedItem != null ) );
+            _removeDressEntryCommand ?? ( _removeDressEntryCommand =
+                new RelayCommand( RemoveDressEntry, o => SelectedItem != null ) );
 
         public ICommand RemoveDressItemCommand =>
             _removeDressItemCommand ?? ( _removeDressItemCommand =
@@ -110,13 +108,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 new RelayCommandAsync( SetUndressContainer, o => _selectedItem != null ) );
 
         public ICommand UndressAllItemsCommand =>
-            _undressAllItemsCommand ??
-            ( _undressAllItemsCommand =
+            _undressAllItemsCommand ?? ( _undressAllItemsCommand =
                 new RelayCommandAsync( UndressAllItems, o => Engine.Connected && !IsDressingOrUndressing ) );
 
         public ICommand UndressItemsCommand =>
-            _undressItemsCommand ??
-            ( _undressItemsCommand = new RelayCommandAsync( UndressItems,
+            _undressItemsCommand ?? ( _undressItemsCommand = new RelayCommandAsync( UndressItems,
                 o => SelectedItem != null && Engine.Connected && !IsDressingOrUndressing ) );
 
         public bool UseUO3DPackets

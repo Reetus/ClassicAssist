@@ -162,8 +162,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 name = item.Name;
             }
 
-            CountersAgentEntry entry =
-                new CountersAgentEntry { Name = name, Graphic = item.ID, Color = item.Hue };
+            CountersAgentEntry entry = new CountersAgentEntry { Name = name, Graphic = item.ID, Color = item.Hue };
 
             entry.Recount();
 

@@ -51,8 +51,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             ( _newOrganizerEntryCommand = new RelayCommand( NewOrganizerEntry, o => !IsOrganizing ) );
 
         public ICommand OrganizeCommand =>
-            _organizeCommand ??
-            ( _organizeCommand = new RelayCommandAsync( Organize, o => SelectedItem != null ) );
+            _organizeCommand ?? ( _organizeCommand = new RelayCommandAsync( Organize, o => SelectedItem != null ) );
 
         public string PlayStopButtonText => IsOrganizing ? Strings.Stop : Strings.Play;
 
@@ -175,7 +174,6 @@ namespace ClassicAssist.UI.ViewModels.Agents
             };
 
             Items.Add( entry );
-            SelectedItem = entry;
         }
 
         private void RemoveOrganizerAgentEntry( object obj )

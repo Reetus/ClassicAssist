@@ -826,6 +826,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Donating helps support continued development, your support is appreciated..
+        /// </summary>
+        public static string Donating_helps_support_continued_development__your_support_is_appreciated_ {
+            get {
+                return ResourceManager.GetString("Donating helps support continued development, your support is appreciated.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dress.
         /// </summary>
         public static string Dress {
@@ -1618,6 +1627,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Macro Commands Wiki (Launches in Browser).
+        /// </summary>
+        public static string Macro_Commands_Wiki__Launches_in_Browser_ {
+            get {
+                return ResourceManager.GetString("Macro Commands Wiki (Launches in Browser)", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Macro error: {0}.
         /// </summary>
         public static string Macro_error___0_ {
@@ -1632,6 +1650,15 @@ namespace ClassicAssist.Resources {
         public static string Macro_name_must_be_unique_ {
             get {
                 return ResourceManager.GetString("Macro name must be unique.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/Reetus/ClassicAssist/wiki/Macro-Commands.
+        /// </summary>
+        public static string MACRO_WIKI_URL {
+            get {
+                return ResourceManager.GetString("MACRO_WIKI_URL", resourceCulture);
             }
         }
         
@@ -2199,6 +2226,15 @@ namespace ClassicAssist.Resources {
         public static string Ready___ {
             get {
                 return ResourceManager.GetString("Ready...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Really remove macro &quot;{0}&quot;?.
+        /// </summary>
+        public static string Really_remove_macro___0___ {
+            get {
+                return ResourceManager.GetString("Really remove macro \"{0}\"?", resourceCulture);
             }
         }
         

@@ -368,11 +368,10 @@ namespace ClassicAssist.Tests.MacroCommands
 
             for ( int i = 0; i < 5; i++ )
             {
-                Item subitem =
-                    new Item( container.Serial + 1, container.Serial )
-                    {
-                        Container = new ItemCollection( container.Serial + 1 ), Owner = container.Serial
-                    };
+                Item subitem = new Item( container.Serial + 1, container.Serial )
+                {
+                    Container = new ItemCollection( container.Serial + 1 ), Owner = container.Serial
+                };
 
                 container.Add( subitem );
 
@@ -418,11 +417,10 @@ namespace ClassicAssist.Tests.MacroCommands
 
             for ( int i = 0; i < 5; i++ )
             {
-                Item subitem =
-                    new Item( container.Serial + 1, container.Serial )
-                    {
-                        Container = new ItemCollection( container.Serial + 1 ), Owner = container.Serial
-                    };
+                Item subitem = new Item( container.Serial + 1, container.Serial )
+                {
+                    Container = new ItemCollection( container.Serial + 1 ), Owner = container.Serial
+                };
 
                 container.Add( subitem );
 
@@ -978,7 +976,7 @@ namespace ClassicAssist.Tests.MacroCommands
 
             Assert.IsFalse( result );
 
-            result = TargetCommands.GetFriendListOnly( "Next" );
+            result = TargetCommands.GetFriendListOnly();
 
             Assert.IsTrue( result );
             Assert.AreEqual( mobile.Serial, AliasCommands.GetAlias( "friend" ) );

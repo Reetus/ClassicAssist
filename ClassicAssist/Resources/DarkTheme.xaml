@@ -4,7 +4,7 @@
                     xmlns:controls="clr-namespace:ClassicAssist.UI.Controls">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Colours.xaml"/>
+        <ResourceDictionary Source="Colours.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="TreeViewStyle" TargetType="{x:Type TreeView}">
@@ -63,7 +63,8 @@
                                                         </Border>
                                                         <ControlTemplate.Triggers>
                                                             <Trigger Property="ToggleButton.IsChecked" Value="True">
-                                                                <Setter TargetName="ExpandPath" Property="Data" Value="M0,1 L0,3 L4,7 L8,3 L8,1 L4,5 z" />
+                                                                <Setter TargetName="ExpandPath" Property="Data"
+                                                                        Value="M0,1 L0,3 L4,7 L8,3 L8,1 L4,5 z" />
                                                             </Trigger>
                                                             <Trigger Property="UIElement.IsMouseOver" Value="True">
                                                                 <Setter TargetName="ExpandPath" Property="Shape.Stroke">
@@ -121,9 +122,12 @@
                                         <Condition Property="UIElement.IsKeyboardFocused" Value="True" />
                                     </MultiTrigger.Conditions>
                                     <MultiTrigger.Setters>
-                                        <Setter TargetName="Bd" Property="Panel.Background" Value="{DynamicResource TreeViewSelectecBackgroudBrush}" />
-                                        <Setter Property="TextElement.Foreground" Value="{DynamicResource TreeViewForegroundBrush}" />
-                                        <Setter Property="BorderBrush" Value="{DynamicResource TreeViewItemBorderBrush}" />
+                                        <Setter TargetName="Bd" Property="Panel.Background"
+                                                Value="{DynamicResource TreeViewSelectecBackgroudBrush}" />
+                                        <Setter Property="TextElement.Foreground"
+                                                Value="{DynamicResource TreeViewForegroundBrush}" />
+                                        <Setter Property="BorderBrush"
+                                                Value="{DynamicResource TreeViewItemBorderBrush}" />
 
                                     </MultiTrigger.Setters>
                                 </MultiTrigger>
@@ -133,13 +137,17 @@
                                         <Condition Property="UIElement.IsKeyboardFocused" Value="False" />
                                     </MultiTrigger.Conditions>
                                     <MultiTrigger.Setters>
-                                        <Setter TargetName="Bd" Property="Panel.Background" Value="{DynamicResource TreeViewInactiveSelectecBackgroudBrush}" />
-                                        <Setter Property="TextElement.Foreground" Value="{DynamicResource TreeViewForegroundBrush}" />
-                                        <Setter Property="BorderBrush" Value="{DynamicResource TreeViewItemInactiveBorderBrush}" />
+                                        <Setter TargetName="Bd" Property="Panel.Background"
+                                                Value="{DynamicResource TreeViewInactiveSelectecBackgroudBrush}" />
+                                        <Setter Property="TextElement.Foreground"
+                                                Value="{DynamicResource TreeViewForegroundBrush}" />
+                                        <Setter Property="BorderBrush"
+                                                Value="{DynamicResource TreeViewItemInactiveBorderBrush}" />
                                     </MultiTrigger.Setters>
                                 </MultiTrigger>
                                 <Trigger Property="UIElement.IsEnabled" Value="False">
-                                    <Setter Property="TextElement.Foreground" Value="{DynamicResource TreeViewDisabledForegroundBrush}" />
+                                    <Setter Property="TextElement.Foreground"
+                                            Value="{DynamicResource TreeViewDisabledForegroundBrush}" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -1116,7 +1124,7 @@
                         </Grid.RowDefinitions>
                         <ScrollContentPresenter Grid.Row="0"
                                                 Grid.Column="0"
-                                                CanContentScroll="{TemplateBinding CanContentScroll}"/>
+                                                CanContentScroll="{TemplateBinding CanContentScroll}" />
                         <ScrollBar x:Name="PART_VerticalScrollBar"
                                    Grid.Row="0"
                                    Grid.Column="1"

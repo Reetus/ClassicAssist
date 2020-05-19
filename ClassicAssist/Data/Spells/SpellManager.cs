@@ -20,8 +20,7 @@ namespace ClassicAssist.Data.Spells
             string dataPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data" );
 
             _spellData = JsonConvert
-                .DeserializeObject<SpellData[]>( File.ReadAllText( Path.Combine( dataPath, "Spells.json" ) ) )
-                .ToList();
+                .DeserializeObject<SpellData[]>( File.ReadAllText( Path.Combine( dataPath, "Spells.json" ) ) ).ToList();
 
             _masteryData = JsonConvert
                 .DeserializeObject<SpellData[]>( File.ReadAllText( Path.Combine( dataPath, "Masteries.json" ) ) )

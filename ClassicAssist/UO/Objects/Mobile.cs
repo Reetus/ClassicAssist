@@ -33,10 +33,7 @@ namespace ClassicAssist.UO.Objects
         public bool IsDead
         {
             get =>
-                ID == 0x0192 ||
-                ID == 0x0193 ||
-                ID >= 0x025F && ID <= 0x0260 ||
-                ID == 0x2B6 || ID == 0x02B7 || _isDead;
+                ID == 0x0192 || ID == 0x0193 || ID >= 0x025F && ID <= 0x0260 || ID == 0x2B6 || ID == 0x02B7 || _isDead;
             set => _isDead = value;
         }
 

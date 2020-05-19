@@ -8,7 +8,6 @@ using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
-using Xceed.Wpf.Toolkit.Primitives;
 
 namespace ClassicAssist.Tests.Agents
 {
@@ -24,8 +23,7 @@ namespace ClassicAssist.Tests.Agents
         {
             _packetLengths = new int[byte.MaxValue];
 
-            string json = File.ReadAllText( Path.Combine( Environment.CurrentDirectory,
-                "packetlengths.json" ) );
+            string json = File.ReadAllText( Path.Combine( Environment.CurrentDirectory, "packetlengths.json" ) );
 
             JObject jsonObj = JObject.Parse( json );
 
@@ -88,7 +86,6 @@ namespace ClassicAssist.Tests.Agents
                 int serial = ( data[1] << 24 ) | ( data[2] << 16 ) | ( data[3] << 8 ) | data[4];
                 Layer layer = (Layer) data[5];
                 int containerSerial = ( data[6] << 24 ) | ( data[7] << 16 ) | ( data[8] << 8 ) | data[9];
-
 
                 Mobile mobile = Engine.Mobiles.GetMobile( containerSerial );
 
@@ -209,7 +206,7 @@ namespace ClassicAssist.Tests.Agents
             Item dressItem = new Item( 0x40000003 );
             Engine.Items.Add( dressItem );
 
-            Item conflictingItem = new Item( 0x40000004 ) { Owner = _player.Serial};
+            Item conflictingItem = new Item( 0x40000004 ) { Owner = _player.Serial };
             Engine.Items.Add( conflictingItem );
             _player.SetLayer( Layer.Talisman, conflictingItem.Serial );
 
@@ -224,7 +221,7 @@ namespace ClassicAssist.Tests.Agents
 
             Assert.AreEqual( conflictingItem.Serial, _player.GetLayer( Layer.Talisman ) );
 
-            dae.Dress(false).Wait();
+            dae.Dress( false ).Wait();
 
             Assert.AreEqual( conflictingItem.Serial, _player.GetLayer( Layer.Talisman ) );
 
@@ -252,7 +249,7 @@ namespace ClassicAssist.Tests.Agents
 
             Assert.AreEqual( conflictingItem.Serial, _player.GetLayer( Layer.Talisman ) );
 
-            dae.Dress( true ).Wait();
+            dae.Dress().Wait();
 
             Assert.AreEqual( dressItem.Serial, _player.GetLayer( Layer.Talisman ) );
 

@@ -14,6 +14,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/Icons.xaml" />
                 <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -111,6 +112,16 @@
                 </DockPanel>
                 <Button Content="{x:Static r:Strings.Show_World_Items}" IsEnabled="{Binding Connected}"
                         Command="{Binding ShowItemsCommand}" />
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="{x:Static r:Strings.Misc}" Grid.Row="1" Grid.Column="0">
+            <StackPanel Margin="10">
+                <Button Width="50" Background="Transparent" BorderThickness="0" Command="{Binding OpenPayPalCommand}">
+                    <Image Source="{StaticResource PayPalIcon}" />
+                </Button>
+                <TextBlock
+                    Text="{x:Static r:Strings.Donating_helps_support_continued_development__your_support_is_appreciated_}"
+                    TextWrapping="Wrap" TextAlignment="Center" />
             </StackPanel>
         </GroupBox>
         <GroupBox Header="{x:Static r:Strings.Player}" Grid.Row="1" Grid.Column="1">

@@ -214,7 +214,14 @@ namespace ClassicAssist.UI.ViewModels
 
                     entry.Action = async hks => await Execute( entry );
 
-                    Items.AddSorted( entry );
+                    if ( Options.CurrentOptions.SortMacrosAlphabetical )
+                    {
+                        Items.AddSorted( entry );
+                    }
+                    else
+                    {
+                        Items.Add( entry );
+                    }
                 }
             }
 

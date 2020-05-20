@@ -53,6 +53,7 @@ namespace ClassicAssist.Data
         private int _rangeCheckLastTargetAmount = 11;
         private bool _showProfileNameWindowTitle;
         private SmartTargetOption _smartTargetOption;
+        private bool _sortMacrosAlphabetical;
         private bool _useDeathScreenWhilstHidden;
         private bool _useExperimentalFizzleDetection;
         private bool _useObjectQueue;
@@ -254,6 +255,12 @@ namespace ClassicAssist.Data
         {
             get => _smartTargetOption;
             set => SetProperty( ref _smartTargetOption, value );
+        }
+
+        public bool SortMacrosAlphabetical
+        {
+            get => _sortMacrosAlphabetical;
+            set => SetProperty( ref _sortMacrosAlphabetical, value );
         }
 
         public bool UseDeathScreenWhilstHidden

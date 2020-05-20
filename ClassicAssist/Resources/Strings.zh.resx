@@ -1245,4 +1245,7 @@
   <data name="Shard:" xml:space="preserve">
     <value>碎片：</value>
   </data>
+  <data name="Sort Macros Alphabetical" xml:space="preserve">
+    <value>按字母顺序对宏进行排序</value>
+  </data>
 </root>

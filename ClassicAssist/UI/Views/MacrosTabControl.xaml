@@ -53,6 +53,9 @@
                          IsEnabled="{Binding IsRecording, Converter={StaticResource InverseBooleanConverter}}"
                          misc:ListBoxBehavior.ScrollOnNewItem="True">
                     <ListBox.InputBindings>
+                        <KeyBinding Modifiers="Control" Key="Delete"
+                                    Command="{Binding RemoveMacroCommand}"
+                                    CommandParameter="{Binding SelectedItem}" />
                         <KeyBinding Key="Delete"
                                     Command="{Binding RemoveMacroConfirmCommand}"
                                     CommandParameter="{Binding SelectedItem}" />

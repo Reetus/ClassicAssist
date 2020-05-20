@@ -1245,4 +1245,7 @@
   <data name="Shard:" xml:space="preserve">
     <value>파편:</value>
   </data>
+  <data name="Sort Macros Alphabetical" xml:space="preserve">
+    <value>정렬 매크로 알파벳 순</value>
+  </data>
 </root>

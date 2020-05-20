@@ -44,6 +44,8 @@ namespace ClassicAssist.Data.Macros.Commands
 
             MacroEntry current = manager.GetCurrentMacro();
 
+            manager.Replay = true;
+
             Task.Run( () => current.Action( current ) );
         }
     }

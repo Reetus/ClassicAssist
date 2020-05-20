@@ -37,6 +37,7 @@ namespace ClassicAssist.Data.Macros
         public Func<bool> IsRecording { get; set; }
         public ObservableCollectionEx<MacroEntry> Items { get; set; }
         public static bool QuietMode { get; set; }
+        public bool Replay { get; set; }
 
         private void PacketSentEvent( byte[] data, int length )
         {
@@ -105,7 +106,7 @@ namespace ClassicAssist.Data.Macros
             {
                 if ( CurrentMacro != null && CurrentMacro.IsRunning )
                 {
-                    if ( macro == CurrentMacro && macro.DoNotAutoInterrupt )
+                    if ( macro == CurrentMacro && macro.DoNotAutoInterrupt && !Replay)
                     {
                         return;
                     }
@@ -113,6 +114,7 @@ namespace ClassicAssist.Data.Macros
                     CurrentMacro.Stop();
                 }
 
+                Replay = false;
                 CurrentMacro = macro;
                 CurrentMacro.Execute();
             }

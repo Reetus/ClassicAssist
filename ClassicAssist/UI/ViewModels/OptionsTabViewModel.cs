@@ -68,6 +68,7 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "AbilitiesGumpX", CurrentOptions.AbilitiesGumpX );
             options.Add( "AbilitiesGumpY", CurrentOptions.AbilitiesGumpY );
             options.Add( "ShowProfileNameWindowTitle", CurrentOptions.ShowProfileNameWindowTitle );
+            options.Add( "SortMacrosAlphabetical", CurrentOptions.SortMacrosAlphabetical );
 
             json?.Add( "Options", options );
         }
@@ -130,6 +131,7 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.AbilitiesGumpY = config?["AbilitiesGumpY"]?.ToObject<int>() ?? 100;
             CurrentOptions.ShowProfileNameWindowTitle =
                 config?["ShowProfileNameWindowTitle"]?.ToObject<bool>() ?? false;
+            CurrentOptions.SortMacrosAlphabetical = config?["SortMacrosAlphabetical"]?.ToObject<bool>() ?? false;
 
             if ( CurrentOptions.AbilitiesGumpX < 0 )
             {

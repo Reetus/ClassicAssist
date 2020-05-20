@@ -1245,4 +1245,7 @@
   <data name="Shard:" xml:space="preserve">
     <value>Shard:</value>
   </data>
+  <data name="Sort Macros Alphabetical" xml:space="preserve">
+    <value>Sort Macros Alphabetical</value>
+  </data>
 </root>

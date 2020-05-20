@@ -2725,6 +2725,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sort Macros Alphabetical.
+        /// </summary>
+        public static string Sort_Macros_Alphabetical {
+            get {
+                return ResourceManager.GetString("Sort Macros Alphabetical", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Spells.
         /// </summary>
         public static string Spells {

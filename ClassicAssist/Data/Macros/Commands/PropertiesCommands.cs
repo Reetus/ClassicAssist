@@ -76,7 +76,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             Entity entity = (Entity) Engine.Items.GetItem( serial ) ?? Engine.Mobiles.GetMobile( serial );
 
-            if ( entity.Properties != null )
+            if ( entity?.Properties != null )
             {
                 Property p = entity.Properties.FirstOrDefault( pe => pe.Text.ToLower().Contains( property.ToLower() ) );
 

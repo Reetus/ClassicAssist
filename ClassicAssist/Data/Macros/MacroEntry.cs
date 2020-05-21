@@ -5,7 +5,9 @@ using System.Windows;
 using System.Windows.Threading;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Resources;
+using IronPython.Runtime.Operations;
 using Microsoft.Scripting;
+using Microsoft.Scripting.Runtime;
 
 namespace ClassicAssist.Data.Macros
 {
@@ -156,6 +158,15 @@ namespace ClassicAssist.Data.Macros
             if ( exception is SyntaxErrorException syntaxError )
             {
                 UO.Commands.SystemMessage( $"{Strings.Line_Number}: {syntaxError.RawSpan.Start.Line}" );
+            }
+            else
+            {
+                DynamicStackFrame sf = PythonOps.GetDynamicStackFrames( exception ).FirstOrDefault();
+
+                if ( sf != null )
+                {
+                    UO.Commands.SystemMessage( $"{Strings.Line_Number}: {sf.GetFileLineNumber()}" );
+                }
             }
         }
     }

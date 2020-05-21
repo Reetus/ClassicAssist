@@ -1,4 +1,6 @@
-﻿using Assistant;
+﻿using System.Threading;
+using System.Windows.Threading;
+using Assistant;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UI.Views;
@@ -14,28 +16,44 @@ namespace ClassicAssist.Data.Hotkeys.Commands
         {
             int serial = UOC.GetTargeSerialAsync( Strings.Target_container___ ).Result;
 
-            Item item = Engine.Items.GetItem( serial );
+            Entity entity = Engine.Items.GetItem( serial ) ?? (Entity) Engine.Mobiles.GetMobile( serial );
 
-            if ( item == null )
+            if ( entity == null )
             {
+                UOC.SystemMessage( Strings.Cannot_find_item___ );
                 return;
             }
 
-            if ( item.Container == null )
+            ItemCollection collection = new ItemCollection( entity.Serial );
+
+            switch ( entity )
             {
-                UOC.WaitForContainerContents( item.Serial, 1000 );
+                case Item item:
+                    if ( item.Container == null )
+                    {
+                        UOC.WaitForContainerContents( item.Serial, 1000 );
+                    }
+
+                    collection = item.Container;
+                    break;
+                case Mobile mobile:
+                    collection = new ItemCollection( entity.Serial ) { mobile.GetEquippedItems() };
+                    break;
             }
 
-            Engine.Dispatcher.Invoke( () =>
+            Thread t = new Thread( () =>
             {
                 EntityCollectionViewer window = new EntityCollectionViewer
                 {
-                    DataContext =
-                        new EntityCollectionViewerViewModel( item.Container ?? new ItemCollection( item.Serial ) )
+                    DataContext = new EntityCollectionViewerViewModel( collection )
                 };
 
                 window.Show();
-            } );
+                Dispatcher.Run();
+            } ) { IsBackground = true };
+
+            t.SetApartmentState( ApartmentState.STA );
+            t.Start();
         }
     }
 }

@@ -58,9 +58,9 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = nameof( Strings.Main ) )]
-        public static void SysMessage( string text )
+        public static void SysMessage( string text, int hue = 0x03b2 )
         {
-            UOC.SystemMessage( text );
+            UOC.SystemMessage( text, hue );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Main ) )]

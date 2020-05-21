@@ -877,6 +877,22 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to # Find on ground
+        ///FindObject(&quot;mount&quot;)
+        ///
+        ///# Find on ground with range
+        ///FindObject(&quot;mount&quot;, 10)
+        ///
+        ///# Find in container, must specify search level or -1
+        ///FindObject(&quot;weapon&quot;, -1, &quot;backpack&quot;)  .
+        /// </summary>
+        public static string FINDOBJECT_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("FINDOBJECT_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to FindObject(&quot;mount&quot;).
         /// </summary>
         public static string FINDOBJECT_COMMAND_INSERTTEXT {
@@ -2625,6 +2641,18 @@ namespace ClassicAssist.Resources {
         public static string SYSMESSAGE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SYSMESSAGE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to # default hue
+        ///SysMessage(&quot;Hello&quot;)
+        ///# specifying hue
+        ///SysMessage(&quot;Hello&quot;, 35).
+        /// </summary>
+        public static string SYSMESSAGE_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("SYSMESSAGE_COMMAND_EXAMPLE", resourceCulture);
             }
         }
         

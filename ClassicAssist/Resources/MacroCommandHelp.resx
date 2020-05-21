@@ -1220,4 +1220,20 @@ for i in GetList("food"):
   <data name="WAITFORTARGETORFIZZLE_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>WaitForTargetOrFizzle(5000)</value>
   </data>
+  <data name="SYSMESSAGE_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># default hue
+SysMessage("Hello")
+# specifying hue
+SysMessage("Hello", 35)</value>
+  </data>
+  <data name="FINDOBJECT_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># Find on ground
+FindObject("mount")
+
+# Find on ground with range
+FindObject("mount", 10)
+
+# Find in container, must specify search level or -1
+FindObject("weapon", -1, "backpack")  </value>
+  </data>
 </root>

@@ -8,11 +8,9 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:uimisc="clr-namespace:ClassicAssist.UI.Misc"
         xmlns:views="clr-namespace:ClassicAssist.UI.Views"
-        xmlns:local="clr-namespace:ClassicAssist"
         xmlns:models="clr-namespace:ClassicAssist.UI.Models"
         mc:Ignorable="d"
-        Width="600" Height="400" Title="{x:Static resources:Strings.Entity_Collection_Viewer}"
-        Topmost="{Binding Topmost}">
+        Width="600" Height="400" Title="{x:Static resources:Strings.Entity_Collection_Viewer}">
     <Window.DataContext>
         <viewModels:EntityCollectionViewerViewModel />
     </Window.DataContext>

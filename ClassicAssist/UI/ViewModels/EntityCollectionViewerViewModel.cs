@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Assistant;
@@ -33,6 +34,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _contextMoveToContainerCommand;
         private ICommand _contextUseItemCommand;
         private ObservableCollection<EntityCollectionData> _entities;
+        private ICommand _equipItemCommand;
         private IEnumerable<EntityCollectionFilter> _filters;
         private bool _isPerformingAction;
         private ICommand _itemDoubleClickCommand;
@@ -113,6 +115,9 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _entities, value );
         }
 
+        public ICommand EquipItemCommand =>
+            _equipItemCommand ?? ( _equipItemCommand = new RelayCommand( EquipItem, o => SelectedItems != null ) );
+
         public bool IsPerformingAction
         {
             get => _isPerformingAction;
@@ -150,6 +155,31 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _topmost;
             set => SetProperty( ref _topmost, value );
+        }
+
+        private void EquipItem( object obj )
+        {
+            foreach ( EntityCollectionData item in SelectedItems )
+            {
+                StaticTile td = TileData.GetStaticTile( item.Entity.ID );
+
+                if ( !td.Flags.HasFlag( TileFlags.Wearable ) )
+                {
+                    continue;
+                }
+
+                Layer layer = (Layer) td.Quality;
+
+                if ( layer == Layer.Invalid )
+                {
+                    continue;
+                }
+
+                if ( item.Entity is Item equipItem )
+                {
+                    Commands.EquipItem( equipItem, layer );
+                }
+            }
         }
 
         private void ApplyFilters( object obj )
@@ -219,13 +249,38 @@ namespace ClassicAssist.UI.ViewModels
 
         private void Refresh( object obj )
         {
-            if ( Engine.Items.GetItem( _collection.Serial, out Item item ) )
+            ItemCollection collection = new ItemCollection( _collection.Serial );
+
+            Entity entity = Engine.Items.GetItem( _collection.Serial ) ??
+                            (Entity) Engine.Mobiles.GetMobile( _collection.Serial );
+
+            if ( entity == null )
             {
-                if ( item.Container != null )
-                {
-                    _collection = item.Container;
-                }
+                Commands.SystemMessage( Strings.Cannot_find_item___ );
+                return;
             }
+
+            switch ( entity )
+            {
+                case Item item:
+                    if ( item.Container == null )
+                    {
+                        Commands.WaitForContainerContents( item.Serial, 1000 );
+                    }
+
+                    collection = item.Container;
+                    break;
+                case Mobile mobile:
+                    collection = new ItemCollection( entity.Serial ) { mobile.GetEquippedItems() };
+                    break;
+            }
+
+            if ( collection == null )
+            {
+                return;
+            }
+
+            _collection = collection;
 
             Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter ) );
         }

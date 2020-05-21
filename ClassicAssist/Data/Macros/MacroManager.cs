@@ -106,7 +106,7 @@ namespace ClassicAssist.Data.Macros
             {
                 if ( CurrentMacro != null && CurrentMacro.IsRunning )
                 {
-                    if ( macro == CurrentMacro && macro.DoNotAutoInterrupt && !Replay)
+                    if ( macro == CurrentMacro && macro.DoNotAutoInterrupt && !Replay )
                     {
                         return;
                     }

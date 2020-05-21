@@ -511,6 +511,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chat.
+        /// </summary>
+        public static string Chat {
+            get {
+                return ResourceManager.GetString("Chat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check For Updates.
         /// </summary>
         public static string Check_For_Updates {
@@ -930,6 +939,15 @@ namespace ClassicAssist.Resources {
         public static string Entity_Viewer {
             get {
                 return ResourceManager.GetString("Entity Viewer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Equip Item.
+        /// </summary>
+        public static string Equip_Item {
+            get {
+                return ResourceManager.GetString("Equip Item", resourceCulture);
             }
         }
         
@@ -2649,6 +2667,15 @@ namespace ClassicAssist.Resources {
         public static string Shard_ {
             get {
                 return ResourceManager.GetString("Shard:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Chat Window.
+        /// </summary>
+        public static string Show_Chat_Window {
+            get {
+                return ResourceManager.GetString("Show Chat Window", resourceCulture);
             }
         }
         

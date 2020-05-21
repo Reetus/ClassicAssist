@@ -91,6 +91,7 @@ namespace Assistant
         public static string ClientPath { get; set; }
         public static Version ClientVersion { get; set; }
         public static bool Connected { get; set; }
+        public static ShardEntry CurrentShard { get; set; }
         public static Dispatcher Dispatcher { get; set; }
         public static FeatureFlags Features { get; set; }
         public static GumpCollection Gumps { get; set; } = new GumpCollection();
@@ -105,14 +106,13 @@ namespace Assistant
         public static PacketWaitEntries PacketWaitEntries { get; set; }
         public static PlayerMobile Player { get; set; }
         public static RehueList RehueList { get; set; } = new RehueList();
+        public static List<ShardEntry> Shards { get; set; }
         public static string StartupPath { get; set; }
         public static bool TargetExists { get; set; }
         public static TargetFlags TargetFlags { get; set; }
         public static int TargetSerial { get; set; }
         public static TargetType TargetType { get; set; }
         public static bool WaitingForTarget { get; set; }
-        public static List<ShardEntry> Shards { get; set; }
-        public static ShardEntry CurrentShard { get; set; }
         internal static ConcurrentDictionary<uint, int> GumpList { get; set; } = new ConcurrentDictionary<uint, int>();
 
         public static event dUpdateWindowTitle UpdateWindowTitleEvent;

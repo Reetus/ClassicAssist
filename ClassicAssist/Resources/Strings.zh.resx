@@ -1248,4 +1248,13 @@
   <data name="Sort Macros Alphabetical" xml:space="preserve">
     <value>按字母顺序对宏进行排序</value>
   </data>
+  <data name="Equip Item" xml:space="preserve">
+    <value>装备项目</value>
+  </data>
+  <data name="Show Chat Window" xml:space="preserve">
+    <value>显示聊天窗口</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>聊天</value>
+  </data>
 </root>

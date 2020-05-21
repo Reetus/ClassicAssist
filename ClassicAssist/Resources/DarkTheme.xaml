@@ -9,9 +9,9 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="{x:Type xctk:IntegerUpDown}" TargetType="{x:Type xctk:IntegerUpDown}">
-        <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
     </Style>
 
     <Style x:Key="TreeViewStyle" TargetType="{x:Type TreeView}">

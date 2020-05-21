@@ -1,6 +1,4 @@
-﻿using System;
-using Assistant;
-using ClassicAssist.Data.Macros;
+﻿using Assistant;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Resources;
@@ -192,8 +190,9 @@ namespace ClassicAssist.Data.Hotkeys.Commands
                     {
                         Mobile entity = Engine.Mobiles.GetMobile( targetSerial );
 
-                        MsgCommands.HeadMsg( string.Format( Strings.Next_Target___0_, $"0x{targetSerial:x} - {entity?.Name ?? "Unknown"}" ),
-                            Engine.Player?.Serial );
+                        MsgCommands.HeadMsg(
+                            string.Format( Strings.Next_Target___0_,
+                                $"0x{targetSerial:x} - {entity?.Name ?? "Unknown"}" ), Engine.Player?.Serial );
                         break;
                     }
                 }

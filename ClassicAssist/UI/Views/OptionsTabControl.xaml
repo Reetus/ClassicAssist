@@ -148,7 +148,8 @@
                       IsChecked="{Binding CurrentOptions.QueueLastTarget}" />
             <DockPanel IsEnabled="{Binding CurrentOptions.QueueLastTarget}">
                 <Label Content="{x:Static resources:Strings.Max_Target_Queue_Length_}" DockPanel.Dock="Left" />
-                <xctk:IntegerUpDown Minimum="1" Maximum="100" Value="{Binding CurrentOptions.MaxTargetQueueLength}" Width="50" UpdateValueOnEnterKey="True" DockPanel.Dock="Right" Margin="10,0,0,0" />
+                <xctk:IntegerUpDown Minimum="1" Maximum="100" Value="{Binding CurrentOptions.MaxTargetQueueLength}"
+                                    Width="50" UpdateValueOnEnterKey="True" DockPanel.Dock="Right" Margin="10,0,0,0" />
             </DockPanel>
             <CheckBox Content="{x:Static resources:Strings.Sort_Macros_Alphabetical}"
                       IsChecked="{Binding CurrentOptions.SortMacrosAlphabetical}" />

@@ -139,7 +139,7 @@
                             <Setter Property="Margin" Value="10,0,0,0" />
                         </Style>
                     </StackPanel.Resources>
-                    <Label Content="{Binding ShardName}"/>
+                    <Label Content="{Binding ShardName}" />
                     <Label Content="{Binding PlayerName}" />
                     <Label Content="{Binding PlayerSerial, Converter={StaticResource IntToHexStringValueConverter}}" />
                     <Label

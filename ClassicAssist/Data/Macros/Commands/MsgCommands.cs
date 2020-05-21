@@ -92,5 +92,11 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             Engine.SendPacketToServer( new UnicodePromptCancel( Engine.LastPromptSerial, Engine.LastPromptID ) );
         }
+
+        [CommandsDisplay( Category = nameof( Strings.Messages ) )]
+        public static void ChatMsg( string message )
+        {
+            UOC.ChatMsg( message );
+        }
     }
 }

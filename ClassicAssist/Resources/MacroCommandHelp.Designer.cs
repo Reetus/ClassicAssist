@@ -223,6 +223,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sends a chat message..
+        /// </summary>
+        public static string CHATMSG_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CHATMSG_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ChatMsg(&quot;Mary had a little lamb&quot;).
+        /// </summary>
+        public static string CHATMSG_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CHATMSG_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear weapon ability..
         /// </summary>
         public static string CLEARABILITY_COMMAND_DESCRIPTION {

@@ -1236,4 +1236,10 @@ FindObject("mount", 10)
 # Find in container, must specify search level or -1
 FindObject("weapon", -1, "backpack")  </value>
   </data>
+  <data name="CHATMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sends a chat message.</value>
+  </data>
+  <data name="CHATMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ChatMsg("Mary had a little lamb")</value>
+  </data>
 </root>

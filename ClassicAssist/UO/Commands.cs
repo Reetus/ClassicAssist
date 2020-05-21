@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data;
-using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Skills;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Misc;
@@ -953,6 +952,19 @@ namespace ClassicAssist.UO
             {
                 pw.Write( (short) layer );
             }
+
+            Engine.SendPacketToServer( pw );
+        }
+
+        public static void ChatMsg( string text )
+        {
+            PacketWriter pw = new PacketWriter( 11 + text.Length * 2 );
+
+            pw.Write( (byte) 0xB3 );
+            pw.Write( (short) ( 11 + text.Length * 2 ) );
+            pw.WriteAsciiFixed( Strings.UO_LOCALE, 4 );
+            pw.Write( (short) 0x61 );
+            pw.WriteBigUniNull( text );
 
             Engine.SendPacketToServer( pw );
         }

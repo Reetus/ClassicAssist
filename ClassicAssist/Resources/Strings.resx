@@ -1248,4 +1248,13 @@
   <data name="Sort Macros Alphabetical" xml:space="preserve">
     <value>Sort Macros Alphabetical</value>
   </data>
+  <data name="Equip Item" xml:space="preserve">
+    <value>Equip Item</value>
+  </data>
+  <data name="Show Chat Window" xml:space="preserve">
+    <value>Show Chat Window</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>Chat</value>
+  </data>
 </root>

@@ -141,5 +141,17 @@ namespace ClassicAssist.UO.Network.PacketFilter
                 WaitEntryRemovedEvent?.Invoke( we );
             }
         }
+
+        public void RemoveRange( IEnumerable<PacketWaitEntry> wes )
+        {
+            lock ( _waitEntryLock )
+            {
+                foreach ( PacketWaitEntry we in wes )
+                {
+                    _waitEntries.Remove( we );
+                    WaitEntryRemovedEvent?.Invoke( we );
+                }
+            }
+        }
     }
 }

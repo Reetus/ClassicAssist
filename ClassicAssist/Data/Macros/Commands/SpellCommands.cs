@@ -41,13 +41,26 @@ namespace ClassicAssist.Data.Macros.Commands
 
             _manager.CastSpell( sd.ID );
 
-            bool result = Options.CurrentOptions.UseExperimentalFizzleDetection
-                ? UOC.WaitForTargetOrFizzle( sd.Timeout + 1000 )
-                : TargetCommands.WaitForTarget( sd.Timeout + 500 );
+            int index = 0;
+            bool result;
+
+            if ( Options.CurrentOptions.UseExperimentalFizzleDetection )
+            {
+                ( index, result ) = UOC.WaitForTargetOrFizzle( sd.Timeout + 1000 );
+            }
+            else
+            {
+                result = TargetCommands.WaitForTarget( sd.Timeout + 500 );
+            }
+
+            if ( index == 0 && !result )
+            {
+                UOC.SystemMessage( Strings.Timeout___ );
+                return false;
+            }
 
             if ( !result )
             {
-                UOC.SystemMessage( Strings.Timeout___ );
                 return false;
             }
 

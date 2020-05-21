@@ -1214,4 +1214,10 @@ for i in GetList("food"):
   <data name="SETLASTTARGET_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>SetLastTarget("mount")</value>
   </data>
+  <data name="WAITFORTARGETORFIZZLE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Waits the specified timeout for target cursor whilst returning false if the spell is fizzled / uncastable beforehand.</value>
+  </data>
+  <data name="WAITFORTARGETORFIZZLE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForTargetOrFizzle(5000)</value>
+  </data>
 </root>

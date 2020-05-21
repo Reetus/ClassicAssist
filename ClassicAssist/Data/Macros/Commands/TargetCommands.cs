@@ -72,8 +72,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 Mobile mobile = Engine.Mobiles.GetMobile( serial );
 
                 if ( mobile != null && mobile.Notoriety == Notoriety.Innocent &&
-                     mobile.Serial != Engine.Player?.Serial &&
-                     Engine.TargetFlags == TargetFlags.Harmful &&
+                     mobile.Serial != Engine.Player?.Serial && Engine.TargetFlags == TargetFlags.Harmful &&
                      mobile.GetRegion().Attributes.HasFlag( RegionAttributes.Guarded ) )
                 {
                     UOC.SystemMessage( Strings.Target_blocked____try_again___ );
@@ -428,6 +427,14 @@ namespace ClassicAssist.Data.Macros.Commands
             }
 
             TargetManager.GetInstance().SetLastTarget( entity );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Target ) )]
+        public static bool WaitForTargetOrFizzle( int timeout )
+        {
+            ( _, bool result ) = UOC.WaitForTargetOrFizzle( timeout );
+
+            return result;
         }
     }
 }

@@ -114,7 +114,6 @@ namespace ClassicAssist.Data.Macros
                     CurrentMacro.Stop();
                 }
 
-                Replay = false;
                 CurrentMacro = macro;
                 CurrentMacro.Execute();
             }

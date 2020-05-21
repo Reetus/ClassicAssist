@@ -3088,6 +3088,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Waits the specified timeout for target cursor whilst returning false if the spell is fizzled / uncastable beforehand..
+        /// </summary>
+        public static string WAITFORTARGETORFIZZLE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WAITFORTARGETORFIZZLE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WaitForTargetOrFizzle(5000).
+        /// </summary>
+        public static string WAITFORTARGETORFIZZLE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WAITFORTARGETORFIZZLE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns true whenever the core is internally waiting for a server target.
         /// </summary>
         public static string WAITINGFORTARGET_COMMAND_DESCRIPTION {

@@ -232,10 +232,10 @@
     <value>Pulisci tutti gli Oggetti</value>
   </data>
   <data name="Clear Object Queue" xml:space="preserve">
-    <value>Pulisci coda dei Oggetti</value>
+    <value>Pulisci Coda Oggetti</value>
   </data>
   <data name="Clear Target Queue" xml:space="preserve">
-    <value>Pulisci coda Target</value>
+    <value>Pulisci Coda Target</value>
   </data>
   <data name="Close" xml:space="preserve">
     <value>Chiudi</value>
@@ -298,7 +298,7 @@
     <value>Dress</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
-    <value>Duplicato</value>
+    <value>Duplica</value>
   </data>
   <data name="Enabled" xml:space="preserve">
     <value>Abilitato</value>
@@ -322,7 +322,7 @@
     <value>Visualizzatore Elementi</value>
   </data>
   <data name="Equip Last Weapon (Quick Weapon Switch)" xml:space="preserve">
-    <value>Equipaggia l'ultima arma (Cambio Rapido Armi) *</value>
+    <value>Equipaggia l'ultima arma (Quick Weapon Switch)</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Errore</value>
@@ -1186,67 +1186,67 @@
     <value>Scegli tra l'elemento</value>
   </data>
   <data name="Toggle mounted" xml:space="preserve">
-    <value>Attiva/disattiva montata</value>
+    <value>Attiva/disattiva Mount</value>
   </data>
   <data name="Target Acquisition - Enemy" xml:space="preserve">
-    <value>Acquisizione bersaglio - Nemico</value>
+    <value>Acquisizione Target - Enemy</value>
   </data>
   <data name="Target Acquisition - Friend" xml:space="preserve">
-    <value>Acquisizione Target - Amico</value>
+    <value>Acquisizione Target - Friend</value>
   </data>
   <data name="Get Next Friend" xml:space="preserve">
-    <value>Ottieni il prossimo amico</value>
+    <value>Ottieni il prossimo Friend</value>
   </data>
   <data name="Get Next Any" xml:space="preserve">
-    <value>Ottieni il prossimo qualsiasi</value>
+    <value>Ottieni il prossimo Any</value>
   </data>
   <data name="Get Next Criminal" xml:space="preserve">
-    <value>Ottieni il prossimo criminale</value>
+    <value>Ottieni il prossimo Criminal</value>
   </data>
   <data name="Get Next Enemy" xml:space="preserve">
-    <value>Ottieni il prossimo nemico</value>
+    <value>Ottieni il prossimo Enemy</value>
   </data>
   <data name="Get Next Gray / Criminal" xml:space="preserve">
-    <value>Ottieni il prossimo grigio / criminale</value>
+    <value>Ottieni il prossimo Gray / Criminal</value>
   </data>
   <data name="Match Any ID" xml:space="preserve">
-    <value>Corrispondenza di qualsiasi ID</value>
+    <value>Corrispondenza ID Any</value>
   </data>
   <data name="Any" xml:space="preserve">
-    <value>Qualsiasi</value>
+    <value>Any</value>
   </data>
   <data name="Macro Commands Wiki (Launches in Browser)" xml:space="preserve">
-    <value>Wiki sui comandi macro (avviamenti nel browser)</value>
+    <value>Wiki online dei comandi (apri nel browser)</value>
   </data>
   <data name="MACRO_WIKI_URL" xml:space="preserve">
     <value>https://github.com/Reetus/ClassicAssist/wiki/Macro-Commands-(it-IT)</value>
   </data>
   <data name="Really remove macro &quot;{0}&quot;?" xml:space="preserve">
-    <value>Rimuovere davvero la macro "{0}"?</value>
+    <value>Rimuovere lo Script "{0}"?</value>
   </data>
   <data name="Donating helps support continued development, your support is appreciated." xml:space="preserve">
     <value>Donare aiuta a sostenere lo sviluppo continuo, il vostro sostegno è apprezzato.</value>
   </data>
   <data name="Max Target Queue Length:" xml:space="preserve">
-    <value>Lunghezza massima coda destinazione:</value>
+    <value>Lunghezza massima Coda Target:</value>
   </data>
   <data name="Target queue is not enabled..." xml:space="preserve">
-    <value>La coda di destinazione non è abilitata...</value>
+    <value>Coda Target non è abilitata...</value>
   </data>
   <data name="Next Target: {0}" xml:space="preserve">
-    <value>Destinazione successiva: {0}</value>
+    <value>Next Target: {0}</value>
   </data>
   <data name="No Target" xml:space="preserve">
-    <value>Nessun obiettivo</value>
+    <value>Nessun Target</value>
   </data>
   <data name="Show Next Target In Queue" xml:space="preserve">
-    <value>Mostra destinazione successiva in coda</value>
+    <value>Mostra prossimo Target in Coda</value>
   </data>
   <data name="Shard:" xml:space="preserve">
     <value>Shard:</value>
   </data>
   <data name="Sort Macros Alphabetical" xml:space="preserve">
-    <value>Ordina macro alfabetica</value>
+    <value>Script in ordine alfabetico</value>
   </data>
   <data name="Equip Item" xml:space="preserve">
     <value>Equipaggia l'oggetto</value>

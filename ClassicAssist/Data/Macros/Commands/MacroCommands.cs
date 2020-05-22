@@ -7,7 +7,8 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class MacroCommands
     {
-        [CommandsDisplay( Category = nameof( Strings.Macros ) )]
+        [CommandsDisplay( Category = nameof( Strings.Macros ),
+            Parameters = new[] { nameof( ParameterType.MacroName ) } )]
         public static void PlayMacro( string name )
         {
             MacroManager manager = MacroManager.GetInstance();

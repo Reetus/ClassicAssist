@@ -11,7 +11,8 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class MobileCommands
     {
-        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static bool InFriendList( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -37,7 +38,8 @@ namespace ClassicAssist.Data.Macros.Commands
             return false;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static void AddFriend( object obj = null )
         {
             int serial = obj != null
@@ -66,7 +68,8 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static void RemoveFriend( object obj = null )
         {
             int serial = obj != null
@@ -89,13 +92,15 @@ namespace ClassicAssist.Data.Macros.Commands
             Engine.Dispatcher?.Invoke( () => Options.CurrentOptions.Friends.Remove( entry ) );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static bool Dead( object obj = null )
         {
             return GetMobileProperty<bool>( obj, nameof( Mobile.IsDead ) );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static bool Hidden( object obj = null )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -147,19 +152,22 @@ namespace ClassicAssist.Data.Macros.Commands
             return val;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static int MaxMana( object obj = null )
         {
             return GetMobileProperty<int>( obj, nameof( Mobile.ManaMax ) );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static int MaxStam( object obj = null )
         {
             return GetMobileProperty<int>( obj, nameof( Mobile.StaminaMax ) );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static int Hits( object obj = null )
         {
             return GetMobileProperty<int>( obj, nameof( Mobile.Hits ) );
@@ -183,13 +191,15 @@ namespace ClassicAssist.Data.Macros.Commands
             return GetMobileProperty<int>( "self", nameof( PlayerMobile.Int ) );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static int MaxHits( object obj = null )
         {
             return GetMobileProperty<int>( obj, nameof( Mobile.HitsMax ) );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static int DiffHits( object obj = null )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -211,19 +221,22 @@ namespace ClassicAssist.Data.Macros.Commands
             return 0;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static int Stam( object obj = null )
         {
             return GetMobileProperty<int>( obj, nameof( Mobile.Stamina ) );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static int Mana( object obj = null )
         {
             return GetMobileProperty<int>( obj, nameof( Mobile.Mana ) );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static bool War( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -292,25 +305,29 @@ namespace ClassicAssist.Data.Macros.Commands
             return Engine.Player?.TithingPoints ?? 0;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static bool Poisoned( object obj )
         {
             return GetMobileProperty<bool>( obj, nameof( Mobile.IsPoisoned ) );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static bool YellowHits( object obj )
         {
             return GetMobileProperty<bool>( obj, nameof( Mobile.IsYellowHits ) );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static bool Paralyzed( object obj )
         {
             return GetMobileProperty<bool>( obj, nameof( Mobile.IsFrozen ) );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static bool Mounted( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -332,7 +349,8 @@ namespace ClassicAssist.Data.Macros.Commands
             return false;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static bool InParty( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );

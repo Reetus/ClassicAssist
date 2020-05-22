@@ -9,7 +9,8 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class RegionCommands
     {
-        [CommandsDisplay( Category = nameof( Strings.Actions ) )]
+        [CommandsDisplay( Category = nameof( Strings.Actions ),
+            Parameters = new[] { nameof( ParameterType.String ), nameof( ParameterType.SerialOrAlias ) } )]
         public static bool InRegion( string attribute, object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );

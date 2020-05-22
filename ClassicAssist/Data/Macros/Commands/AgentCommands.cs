@@ -9,7 +9,8 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class AgentCommands
     {
-        [CommandsDisplay( Category = nameof( Strings.Agents ) )]
+        [CommandsDisplay( Category = nameof( Strings.Agents ),
+            Parameters = new[] { nameof( ParameterType.AgentEntryName ) } )]
         public static void Dress( string name = null )
         {
             DressManager manager = DressManager.GetInstance();
@@ -40,7 +41,8 @@ namespace ClassicAssist.Data.Macros.Commands
             dressAgentEntry.Action( dressAgentEntry );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Agents ) )]
+        [CommandsDisplay( Category = nameof( Strings.Agents ),
+            Parameters = new[] { nameof( ParameterType.AgentEntryName ) } )]
         public static void Undress( string name )
         {
             DressManager manager = DressManager.GetInstance();
@@ -73,7 +75,8 @@ namespace ClassicAssist.Data.Macros.Commands
             manager.ImportItems( manager.TemporaryDress );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Agents ) )]
+        [CommandsDisplay( Category = nameof( Strings.Agents ),
+            Parameters = new[] { nameof( ParameterType.AgentEntryName ) } )]
         public static int Counter( string name )
         {
             CountersManager manager = CountersManager.GetInstance();
@@ -89,7 +92,8 @@ namespace ClassicAssist.Data.Macros.Commands
             return 0;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Agents ) )]
+        [CommandsDisplay( Category = nameof( Strings.Agents ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static void SetAutolootContainer( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );

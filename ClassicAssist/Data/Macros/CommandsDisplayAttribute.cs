@@ -44,6 +44,7 @@ namespace ClassicAssist.Data.Macros
         public string Description { get; set; }
         public string Example { get; set; }
         public string InsertText { get; set; }
+        public string[] Parameters { get; set; }
 
         private void SetCategory( string value )
         {

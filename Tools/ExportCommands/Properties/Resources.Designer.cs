@@ -106,11 +106,380 @@ namespace ExportCommands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Optional.
+        /// </summary>
+        public static string Optional {
+            get {
+                return ResourceManager.GetString("Optional", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name of the ability, &quot;primary&quot;, &quot;secondary&quot;, &quot;stun&quot; or &quot;disarm&quot;.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_ABILITY {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_ABILITY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agent entry name.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_AGENTENTRYNAME {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_AGENTENTRYNAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alias name.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_ALIASNAME {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_ALIASNAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Integer representing an amount, ie 10.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_AMOUNT {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_AMOUNT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target type - &quot;harmful&quot;, &quot;beneficial&quot;, or &quot;neutral&quot;.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_BENEFICIALHARMFULNEUTRAL {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_BENEFICIALHARMFULNEUTRAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buff name.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_BUFFNAME {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_BUFFNAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Context menu entry index number.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_CONTEXTMENUINDEX {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_CONTEXTMENUINDEX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Direction, ie &quot;West&quot;.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_DIRECTION {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_DIRECTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distance.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_DISTANCE {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_DISTANCE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gump button ID.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_GUMPBUTTONINDEX {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_GUMPBUTTONINDEX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Hue or -1 for any.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_HUE {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_HUE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Integer value - See description for usage.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_INTEGERVALUE {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_INTEGERVALUE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ItemID / Graphic such as  0x3db.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_ITEMID {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_ITEMID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to String representing a layer, such as &quot;OneHanded&quot; or &quot;Talisman&quot; etc.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_LAYER {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_LAYER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hand - &quot;left&quot;, &quot;right&quot;, or &quot;both&quot;.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_LEFTRIGHTBOTH {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_LEFTRIGHTBOTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List name.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_LISTNAME {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_LISTNAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Macro name.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_MACRONAME {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_MACRONAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to String representing a name, ie &quot;Snoopy&quot;.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_NAME {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;on&quot; or &quot;off&quot;.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_ONOFF {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_ONOFF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Range, ie 10.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_RANGE {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_RANGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An entity serial such as 0xf00ff00f.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_SERIAL {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_SERIAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An entity serial in integer or hex format, or an alias string such as &quot;self&quot;.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_SERIALORALIAS {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_SERIALORALIAS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show type - &quot;mobiles&quot; or &quot;corpses&quot;.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_SHOWTYPE {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_SHOWTYPE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skill name.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_SKILLNAME {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_SKILLNAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Special move name.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_SPECIALMOVENAME {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_SPECIALMOVENAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spell name.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_SPELLNAME {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_SPELLNAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to String value - See description for usage.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_STRING {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timeout specified in milliseconds.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_TIMEOUT {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_TIMEOUT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timer name.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_TIMERNAME {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_TIMERNAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not specified - See description for usage.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_UNKNOWN {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_UNKNOWN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lock Status - &quot;up&quot;, &quot;down&quot;, or &quot;locked&quot;.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_UPDOWNLOCKED {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_UPDOWNLOCKED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wand name.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_WANDNAME {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_WANDNAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X Coordinate.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_XCOORDINATE {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_XCOORDINATE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X Coordinate offset.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_XCOORDINATEOFFSET {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_XCOORDINATEOFFSET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Y Coordinate.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_YCOORDINATE {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_YCOORDINATE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Y Coordinate offset.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_YCOORDINATEOFFSET {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_YCOORDINATEOFFSET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Z Coordinate.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_ZCOORDINATE {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_ZCOORDINATE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Z Coordinate offset.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_ZCOORDINATEOFFSET {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_ZCOORDINATEOFFSET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameters.
+        /// </summary>
+        public static string Parameters {
+            get {
+                return ResourceManager.GetString("Parameters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         public static string TRANSLATE_CREDIT {
             get {
                 return ResourceManager.GetString("TRANSLATE_CREDIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        public static string Unknown {
+            get {
+                return ResourceManager.GetString("Unknown", resourceCulture);
             }
         }
         

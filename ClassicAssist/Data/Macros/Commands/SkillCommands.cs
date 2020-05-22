@@ -11,7 +11,8 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class SkillCommands
     {
-        [CommandsDisplay( Category = nameof( Strings.Skills ) )]
+        [CommandsDisplay( Category = nameof( Strings.Skills ),
+            Parameters = new[] { nameof( ParameterType.SkillName ) } )]
         public static void UseSkill( string skill )
         {
             try
@@ -49,7 +50,8 @@ namespace ClassicAssist.Data.Macros.Commands
             throw new ArgumentOutOfRangeException();
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Skills ) )]
+        [CommandsDisplay( Category = nameof( Strings.Skills ),
+            Parameters = new[] { nameof( ParameterType.SkillName ) } )]
         public static double Skill( string name )
         {
             SkillManager manager = SkillManager.GetInstance();
@@ -59,7 +61,8 @@ namespace ClassicAssist.Data.Macros.Commands
             return s?.Value ?? 0;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Skills ) )]
+        [CommandsDisplay( Category = nameof( Strings.Skills ),
+            Parameters = new[] { nameof( ParameterType.SkillName ) } )]
         public static string SkillState( string name )
         {
             SkillManager manager = SkillManager.GetInstance();
@@ -69,7 +72,8 @@ namespace ClassicAssist.Data.Macros.Commands
             return s?.LockStatus.ToString().ToLower() ?? "up";
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Skills ) )]
+        [CommandsDisplay( Category = nameof( Strings.Skills ),
+            Parameters = new[] { nameof( ParameterType.SkillName ), nameof( ParameterType.UpDownLocked ) } )]
         public static void SetSkill( string skill, string status )
         {
             SkillManager manager = SkillManager.GetInstance();

@@ -571,7 +571,7 @@
     <value>Cancella il Target aperto corrente</value>
   </data>
   <data name="CLEARTARGETQUEUE_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Pulisti in Target accodato corrente</value>
+    <value>Pulisti la Coda Target quando la Coda Target è abilitata</value>
   </data>
   <data name="GETENEMY_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Acquisisci un mobile e impostalo come Enemy</value>
@@ -1138,9 +1138,36 @@ MoveType(0x170f, "backpack", -1, 1928, 2526, 0)
 MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
   </data>
   <data name="REPLAY_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Ripeti la Script corrente</value>
+    <value>Ripeti lo Script corrente</value>
   </data>
   <data name="REPLAY_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>Replay()</value>
+  </data>
+  <data name="FINDWAND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Cerca una Want e la imposta come Alias "found"</value>
+  </data>
+  <data name="EQUIPWAND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Cerca una Wand nel tuo Zaino e la Equippa</value>
+  </data>
+  <data name="SETAUTOLOOTCONTAINER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Imposta il contenitore per l'Autoloot Agent, dove mettere gli oggetti lotati.</value>
+  </data>
+  <data name="INIGNORELIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Controlla se un Serial o un Alias è presente nella Ignore List</value>
+  </data>
+  <data name="SETFRIEND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Imposta come Friend un Serial o un Alias</value>
+  </data>
+  <data name="SETENEMY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Imposta come Enemy un Serial o un Alias</value>
+  </data>
+  <data name="SETLASTTARGET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Imposta come Last Target un Serial o un Alias</value>
+  </data>
+  <data name="WAITFORTARGETORFIZZLE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Attende un ammontare di tempo specifico che il Target si apra, interrompendo l'attesa in caso di flizz / impossibilità di cast.</value>
+  </data>
+  <data name="CHATMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Invia un messaggio in chat.</value>
   </data>
 </root>

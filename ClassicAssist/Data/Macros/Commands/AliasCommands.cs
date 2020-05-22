@@ -59,7 +59,8 @@ namespace ClassicAssist.Data.Macros.Commands
             return serial;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Aliases ) )]
+        [CommandsDisplay( Category = nameof( Strings.Aliases ),
+            Parameters = new[] { nameof( ParameterType.AliasName ), nameof( ParameterType.SerialOrAlias ) } )]
         public static void SetAlias( string aliasName, object obj )
         {
             int value = ResolveSerial( obj );
@@ -74,7 +75,8 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Aliases ) )]
+        [CommandsDisplay( Category = nameof( Strings.Aliases ),
+            Parameters = new[] { nameof( ParameterType.AliasName ), nameof( ParameterType.SerialOrAlias ) } )]
         public static void SetMacroAlias( string aliasName, object obj )
         {
             int value = ResolveSerial( obj );
@@ -97,7 +99,8 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Aliases ) )]
+        [CommandsDisplay( Category = nameof( Strings.Aliases ),
+            Parameters = new[] { nameof( ParameterType.AliasName ) } )]
         public static void UnsetAlias( string aliasName )
         {
             MacroEntry macro = MacroManager.GetInstance().GetCurrentMacro();
@@ -116,7 +119,8 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Aliases ) )]
+        [CommandsDisplay( Category = nameof( Strings.Aliases ),
+            Parameters = new[] { nameof( ParameterType.AliasName ) } )]
         public static int GetAlias( string aliasName )
         {
             MacroEntry macro = MacroManager.GetInstance().GetCurrentMacro();
@@ -142,14 +146,16 @@ namespace ClassicAssist.Data.Macros.Commands
             return _aliases;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Aliases ) )]
+        [CommandsDisplay( Category = nameof( Strings.Aliases ),
+            Parameters = new[] { nameof( ParameterType.AliasName ) } )]
         public static void PromptAlias( string aliasName )
         {
             int serial = UOC.GetTargeSerialAsync( Strings.Target_object___ ).Result;
             SetAlias( aliasName.ToLower(), serial );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Aliases ) )]
+        [CommandsDisplay( Category = nameof( Strings.Aliases ),
+            Parameters = new[] { nameof( ParameterType.AliasName ) } )]
         public static bool FindAlias( string aliasName )
         {
             int serial;

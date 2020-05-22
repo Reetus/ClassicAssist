@@ -17,7 +17,12 @@ namespace ClassicAssist.Data.Macros.Commands
             return organizing;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Agents ) )]
+        [CommandsDisplay( Category = nameof( Strings.Agents ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.AgentEntryName ), nameof( ParameterType.SerialOrAlias ),
+                nameof( ParameterType.SerialOrAlias )
+            } )]
         public static void Organizer( string name, object sourceContainer = null, object destinationContainer = null )
         {
             OrganizerManager manager = OrganizerManager.GetInstance();

@@ -13,7 +13,8 @@ namespace ClassicAssist.Data.Macros.Commands
         private const int MOVEMENT_TIMEOUT = 500;
         private static bool _forceWalk;
 
-        [CommandsDisplay( Category = nameof( Strings.Movement ) )]
+        [CommandsDisplay( Category = nameof( Strings.Movement ),
+            Parameters = new[] { nameof( ParameterType.Direction ) } )]
         public static bool Walk( string direction )
         {
             return Move( direction, false );
@@ -35,7 +36,8 @@ namespace ClassicAssist.Data.Macros.Commands
             UOC.SystemMessage( _forceWalk ? Strings.Force_Walk_On : Strings.Force_Walk_Off );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Movement ) )]
+        [CommandsDisplay( Category = nameof( Strings.Movement ),
+            Parameters = new[] { nameof( ParameterType.Direction ) } )]
         public static void Turn( string direction )
         {
             Direction directionEnum = Utility.GetEnumValueByName<Direction>( direction );
@@ -49,7 +51,8 @@ namespace ClassicAssist.Data.Macros.Commands
             UOC.WaitForIncomingPacket( new PacketFilterInfo( 22 ), MOVEMENT_TIMEOUT );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Movement ) )]
+        [CommandsDisplay( Category = nameof( Strings.Movement ),
+            Parameters = new[] { nameof( ParameterType.Direction ) } )]
         public static bool Run( string direction )
         {
             return Move( direction, true );

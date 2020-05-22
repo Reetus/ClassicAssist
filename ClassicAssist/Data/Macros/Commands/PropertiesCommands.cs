@@ -11,7 +11,8 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class PropertiesCommands
     {
-        [CommandsDisplay( Category = nameof( Strings.Properties ) )]
+        [CommandsDisplay( Category = nameof( Strings.Properties ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Timeout ) } )]
         public static bool WaitForProperties( object obj, int timeout )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -41,7 +42,8 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Properties ) )]
+        [CommandsDisplay( Category = nameof( Strings.Properties ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.String ) } )]
         public static bool Property( object obj, string value )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -63,7 +65,12 @@ namespace ClassicAssist.Data.Macros.Commands
             return false;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Properties ) )]
+        [CommandsDisplay( Category = nameof( Strings.Properties ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.String ),
+                nameof( ParameterType.IntegerValue )
+            } )]
         public static T PropertyValue<T>( object obj, string property, int argument = 0 )
         {
             int serial = AliasCommands.ResolveSerial( obj );

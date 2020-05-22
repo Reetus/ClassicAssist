@@ -21,12 +21,14 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows.Input;
 using System.Windows.Media;
 using Assistant;
 using ClassicAssist.Data.Chat;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
+using ClassicAssist.UO;
 
 namespace ClassicAssist.UI.ViewModels
 {
@@ -41,8 +43,13 @@ namespace ClassicAssist.UI.ViewModels
 
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ChatManager _manager;
+        private ICommand _changeChannelCommand;
+        private ObservableCollection<string> _channels = new ObservableCollection<string>();
+        private string _currentChannel;
         private ObservableCollection<ChatMessage> _messages = new ObservableCollection<ChatMessage>();
+        private string _selectedChannel;
         private string _title;
+        private ICommand _toggleOptionCommand;
         private bool _topmost = true;
         private ObservableCollection<ChatUser> _users = new ObservableCollection<ChatUser>();
 
@@ -56,6 +63,8 @@ namespace ClassicAssist.UI.ViewModels
             _manager.JoinedChatChannelEvent += OnJoinedChatChannel;
             _manager.LeftChatChannelEvent += OnLeftChatChannel;
             Engine.DisconnectedEvent += () => OnLeftChatChannel( string.Empty );
+            _manager.ChannelCreatedEvent += OnChannelCreated;
+            _manager.ChannelRemovedEvent += OnChannelRemoved;
 
             if ( !string.IsNullOrEmpty( _manager.CurrentChannel ) )
             {
@@ -71,6 +80,11 @@ namespace ClassicAssist.UI.ViewModels
                 Users.AddSorted( new ChatUser { Username = user, Colour = GetUserColour( user ) } );
             }
 
+            foreach ( string channel in _manager.Channels )
+            {
+                OnChannelCreated( channel );
+            }
+
             //foreach ( ChatMessage message in _manager.Messages )
             //{
             //    Messages.Add( message );
@@ -79,10 +93,32 @@ namespace ClassicAssist.UI.ViewModels
             _manager.ChatMessageEvent += OnChatMessage;
         }
 
+        public ICommand ChangeChannelCommand =>
+            _changeChannelCommand ??
+            ( _changeChannelCommand = new RelayCommand( ChangeChannel, o => Channels.Count != 0 ) );
+
+        public ObservableCollection<string> Channels
+        {
+            get => _channels;
+            set => SetProperty( ref _channels, value );
+        }
+
+        public string CurrentChannel
+        {
+            get => _currentChannel;
+            set => SetProperty( ref _currentChannel, value );
+        }
+
         public ObservableCollection<ChatMessage> Messages
         {
             get => _messages;
             set => SetProperty( ref _messages, value );
+        }
+
+        public string SelectedChannel
+        {
+            get => _selectedChannel;
+            set => SetProperty( ref _selectedChannel, value );
         }
 
         public string Title
@@ -90,6 +126,9 @@ namespace ClassicAssist.UI.ViewModels
             get => _title;
             set => SetProperty( ref _title, value );
         }
+
+        public ICommand ToggleOptionCommand =>
+            _toggleOptionCommand ?? ( _toggleOptionCommand = new RelayCommand( ToggleOption, o => true ) );
 
         public bool Topmost
         {
@@ -101,6 +140,30 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _users;
             set => SetProperty( ref _users, value );
+        }
+
+        private static void ToggleOption( object obj )
+        {
+        }
+
+        private void ChangeChannel( object obj )
+        {
+            if ( !( obj is string channel ) )
+            {
+                return;
+            }
+
+            _dispatcher.Invoke( () => { Commands.JoinChatChannel( channel ); } );
+        }
+
+        private void OnChannelRemoved( string channel )
+        {
+            _dispatcher.Invoke( () => { Channels.Remove( channel ); } );
+        }
+
+        private void OnChannelCreated( string channel )
+        {
+            _dispatcher.Invoke( () => { Channels.Add( channel ); } );
         }
 
         private void OnChatMessage( string username, string channel, string message )
@@ -116,6 +179,8 @@ namespace ClassicAssist.UI.ViewModels
             _dispatcher.Invoke( () =>
             {
                 Users.Clear();
+                CurrentChannel = null;
+                SelectedChannel = null;
                 UpdateTitle( string.Empty );
             } );
         }
@@ -133,7 +198,12 @@ namespace ClassicAssist.UI.ViewModels
 
         private void OnJoinedChatChannel( string channel )
         {
-            _dispatcher.Invoke( () => UpdateTitle( channel ) );
+            _dispatcher.Invoke( () =>
+            {
+                CurrentChannel = channel;
+                SelectedChannel = channel;
+                UpdateTitle( channel );
+            } );
         }
 
         private void OnClearUsers()

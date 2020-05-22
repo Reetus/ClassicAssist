@@ -9,13 +9,15 @@ namespace ClassicAssist.Data.Macros.Commands
     {
         private static readonly SpellManager _manager = SpellManager.GetInstance();
 
-        [CommandsDisplay( Category = nameof( Strings.Spells ) )]
+        [CommandsDisplay( Category = nameof( Strings.Spells ),
+            Parameters = new[] { nameof( ParameterType.SpellName ) } )]
         public static void Cast( string name )
         {
             _manager?.CastSpell( name );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Spells ) )]
+        [CommandsDisplay( Category = nameof( Strings.Spells ),
+            Parameters = new[] { nameof( ParameterType.SpellName ), nameof( ParameterType.SerialOrAlias ) } )]
         public static bool Cast( string name, object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );

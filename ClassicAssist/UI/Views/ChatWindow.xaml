@@ -1,4 +1,4 @@
-﻿<Window x:Class="ClassicAssist.UI.Views.ChatWindow"
+﻿<Window x:Name="window" x:Class="ClassicAssist.UI.Views.ChatWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,9 +7,11 @@
         xmlns:resources="clr-namespace:ClassicAssist.Resources"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+        xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
+        xmlns:misc1="clr-namespace:ClassicAssist.Misc"
         mc:Ignorable="d"
-        Title="{Binding Title}" Height="350" Width="650" Background="{DynamicResource ThemeBackgroundBrush}"
-        Topmost="{Binding Topmost}">
+        Title="{Binding Title}" Height="350" Width="650" Background="{DynamicResource ThemeWindowBackgroundBrush}"
+        Topmost="{Binding Topmost}" WindowStyle="None" ResizeMode="CanResizeWithGrip" AllowsTransparency="True">
     <Window.DataContext>
         <viewModels:ChatViewModel />
     </Window.DataContext>
@@ -18,48 +20,108 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Resources/Icons.xaml" />
                 <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
+                <ResourceDictionary>
+                    <DrawingImage x:Key="PersonIcon">
+                        <DrawingImage.Drawing>
+                            <DrawingGroup ClipGeometry="M-42,0 V512 H470 V-42 H0 Z">
+                                <DrawingGroup.Transform>
+                                    <TranslateTransform X="42" Y="0" />
+                                </DrawingGroup.Transform>
+                                <GeometryDrawing Brush="#FFFFBB85"
+                                                 Geometry="F1 M512,512z M0,0z M333.671875,123.308594C333.671875,157.195312 321.519531,186.527344 297.546875,210.503906 273.574219,234.476562 244.238281,246.628906 210.351562,246.628906L210.292969,246.628906C176.449219,246.617188 147.132812,234.464844 123.160156,210.503906 99.183594,186.527344 87.035156,157.195312 87.035156,123.308594 87.035156,89.433594 99.183594,60.097656 123.160156,36.125 147.121094,12.160156 176.4375,0.011718799999997 210.292969,0L210.351562,0C244.226562,0 273.5625,12.152344 297.546875,36.125 321.519531,60.097656 333.671875,89.433594 333.671875,123.308594z M333.671875,123.308594" />
+                                <GeometryDrawing Brush="#FF6AA9FF"
+                                                 Geometry="F1 M512,512z M0,0z M427.167969,423.945312C427.167969,450.679688 418.664062,472.324219 401.914062,488.265625 385.359375,504.019531 363.464844,512 336.84375,512L90.3125,512C63.691406,512 41.796875,504.019531 25.253906,488.265625 8.492188,472.3125 0,450.671875 0,423.945312 0,413.664062 0.339844,403.492188 1.019531,393.710938 1.710938,383.710938 3.109375,372.828125 5.171875,361.347656 7.25,349.773438 9.921875,338.832031 13.121094,328.832031 16.441406,318.480469 20.933594,308.269531 26.492188,298.488281 32.265625,288.335938 39.046875,279.492188 46.648438,272.210938 54.617188,264.589844 64.359375,258.46875 75.621094,254.007812 86.84375,249.570312 99.285156,247.320312 112.597656,247.320312 117.820312,247.320312 122.878906,249.457031 132.628906,255.808594 138.730469,259.789062 145.761719,264.320312 153.523438,269.28125 160.226562,273.554688 169.304688,277.5625 180.527344,281.183594 190.390625,284.375 200.402344,286.15625 210.292969,286.464844 211.382812,286.503906 212.472656,286.523438 213.5625,286.523438 224.546875,286.523438 235.65625,284.722656 246.609375,281.183594 257.832031,277.5625 266.921875,273.554688 273.621094,269.28125 281.464844,264.269531 288.496094,259.742188 294.507812,255.820312 304.265625,249.457031 309.316406,247.320312 314.550781,247.320312 327.851562,247.320312 340.292969,249.570312 351.523438,254.007812 362.785156,258.46875 372.527344,264.601562 380.488281,272.210938 388.101562,279.492188 394.882812,288.335938 400.652344,298.488281 406.214844,308.277344 410.714844,318.480469 414.023438,328.820312 417.226562,338.832031 419.90625,349.773438 421.984375,361.355469 424.035156,372.847656 425.4375,383.730469 426.125,393.703125 426.816406,403.453125 427.15625,413.625 427.167969,423.945312z M427.167969,423.945312" />
+                                <GeometryDrawing Brush="#FFF5A86C"
+                                                 Geometry="F1 M512,512z M0,0z M210.351562,246.628906L210.292969,246.628906 210.292969,0 210.351562,0C244.226562,0 273.5625,12.152344 297.546875,36.125 321.519531,60.097656 333.671875,89.433594 333.671875,123.308594 333.671875,157.195312 321.519531,186.527344 297.546875,210.503906 273.574219,234.476562 244.238281,246.628906 210.351562,246.628906z M210.351562,246.628906" />
+                                <GeometryDrawing Brush="#FF2682FF"
+                                                 Geometry="F1 M512,512z M0,0z M427.167969,423.945312C427.167969,450.679688 418.664062,472.324219 401.914062,488.265625 385.359375,504.019531 363.464844,512 336.84375,512L210.292969,512 210.292969,286.464844C211.382812,286.503906 212.472656,286.523438 213.5625,286.523438 224.546875,286.523438 235.65625,284.722656 246.609375,281.183594 257.832031,277.5625 266.921875,273.554688 273.621094,269.28125 281.464844,264.269531 288.496094,259.742188 294.507812,255.820312 304.265625,249.457031 309.316406,247.320312 314.550781,247.320312 327.851562,247.320312 340.292969,249.570312 351.523438,254.007812 362.785156,258.46875 372.527344,264.601562 380.488281,272.210938 388.101562,279.492188 394.882812,288.335938 400.652344,298.488281 406.214844,308.277344 410.714844,318.480469 414.023438,328.820312 417.226562,338.832031 419.90625,349.773438 421.984375,361.355469 424.035156,372.847656 425.4375,383.730469 426.125,393.703125 426.816406,403.453125 427.15625,413.625 427.167969,423.945312z M427.167969,423.945312" />
+                            </DrawingGroup>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
+            <misc1:BindingProxy x:Key="Proxy" Data="{Binding}" />
         </ResourceDictionary>
     </Window.Resources>
+    <DockPanel>
+        <controls:CustomWindowTitleControl DockPanel.Dock="Top" CustomTitle="{Binding Title, ElementName=window}"
+                                           CanClose="True">
+            <controls:CustomWindowTitleControl.AdditionalContent>
+                <Image Source="{DynamicResource configureIcon}" misc:ClickOpensContextMenuBehaviour.Enabled="True"
+                       Width="16" HorizontalAlignment="Right" Margin="0,0,80,0">
+                    <Image.ContextMenu>
+                        <ContextMenu IsOpen="False">
+                            <MenuItem Header="{x:Static resources:Strings.Topmost}"
+                                      Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:ChatViewModel.ToggleOptionCommand)}"
+                                      IsCheckable="True" />
+                        </ContextMenu>
+                    </Image.ContextMenu>
+                </Image>
+            </controls:CustomWindowTitleControl.AdditionalContent>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="3" />
-            <ColumnDefinition Width="200" />
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <ScrollViewer x:Name="ScrollViewer" Grid.Row="0">
-                <ItemsControl Background="{DynamicResource ThemeBackgroundBrush}"
-                              ItemsSource="{Binding Messages}" ScrollViewer.VerticalScrollBarVisibility="Visible">
-                    <ItemsControl.ItemTemplate>
+        </controls:CustomWindowTitleControl>
+
+        <Grid Margin="10" Background="{DynamicResource ThemeBackgroundBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3" />
+                <ColumnDefinition Width="220" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ScrollViewer x:Name="ScrollViewer" Grid.Row="0">
+                    <ItemsControl Background="{DynamicResource ThemeBackgroundBrush}"
+                                  ItemsSource="{Binding Messages}" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" Margin="5" Foreground="{Binding Colour}"
+                                           VerticalAlignment="Center" TextWrapping="WrapWithOverflow" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <i:Interaction.Behaviors>
+                            <misc:ItemsControlAutoScrollBehaviour ScrollViewer="{Binding ElementName=ScrollViewer}" />
+                        </i:Interaction.Behaviors>
+                    </ItemsControl>
+                </ScrollViewer>
+                <TextBox Grid.Row="1" KeyDown="TextBox_KeyDown" />
+            </Grid>
+            <GridSplitter Grid.Column="1" ResizeDirection="Columns"
+                          ResizeBehavior="PreviousAndNext"
+                          HorizontalAlignment="Stretch" />
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ListBox Background="{DynamicResource ThemeBackgroundBrush}" ItemsSource="{Binding Users}" Grid.Row="0">
+                    <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding}" Margin="5" Foreground="{Binding Colour}"
-                                       VerticalAlignment="Center" TextWrapping="WrapWithOverflow" />
+                            <TextBlock Text="{Binding}" Foreground="{Binding Colour}" />
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <i:Interaction.Behaviors>
-                        <misc:ItemsControlAutoScrollBehaviour ScrollViewer="{Binding ElementName=ScrollViewer}" />
-                    </i:Interaction.Behaviors>
-                </ItemsControl>
-            </ScrollViewer>
-            <TextBox Grid.Row="1" KeyDown="TextBox_KeyDown" />
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <Image Source="{DynamicResource PersonIcon}" Height="16" />
+                        <TextBlock Text="{Binding Users.Count, Mode=OneWay}" Margin="3,0,0,0" />
+                    </StackPanel>
+                    <ComboBox x:Name="comboBox" Grid.Column="1" ItemsSource="{Binding Channels}"
+                              SelectedItem="{Binding SelectedChannel}">
+                        <i:Interaction.Behaviors>
+                            <misc:ComboBoxBehavior CommandBinding="{Binding ChangeChannelCommand}"
+                                                   OnlyUserTriggered="True"
+                                                   CommandParameter="{Binding SelectedItem, ElementName=comboBox}" />
+                        </i:Interaction.Behaviors>
+                    </ComboBox>
+                </Grid>
+            </Grid>
         </Grid>
-        <GridSplitter Grid.Column="1" ResizeDirection="Columns"
-                      ResizeBehavior="PreviousAndNext"
-                      HorizontalAlignment="Stretch" />
-        <Grid Grid.Column="2">
-            <ListBox Background="{DynamicResource ThemeBackgroundBrush}" ItemsSource="{Binding Users}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}" Foreground="{Binding Colour}" />
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Grid>
-    </Grid>
+    </DockPanel>
 </Window>

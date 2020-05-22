@@ -127,7 +127,7 @@
     <value>Method Signature</value>
   </data>
   <data name="TRANSLATE_CREDIT" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>
@@ -137,5 +137,128 @@
   </data>
   <data name="ClassicAssist Macro Commands" xml:space="preserve">
     <value>ClassicAssist Macro Commands</value>
+  </data>
+  <data name="Optional" xml:space="preserve">
+    <value>Optional</value>
+  </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ABILITY" xml:space="preserve">
+    <value>The name of the ability, "primary", "secondary", "stun" or "disarm"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_AMOUNT" xml:space="preserve">
+    <value>Integer representing an amount, ie 10</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_CONTEXTMENUINDEX" xml:space="preserve">
+    <value>Context menu entry index number</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_HUE" xml:space="preserve">
+    <value>Item Hue or -1 for any</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ITEMID" xml:space="preserve">
+    <value>ItemID / Graphic such as  0x3db</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_LAYER" xml:space="preserve">
+    <value>String representing a layer, such as "OneHanded" or "Talisman" etc</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_LEFTRIGHTBOTH" xml:space="preserve">
+    <value>Hand - "left", "right", or "both"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_NAME" xml:space="preserve">
+    <value>String representing a name, ie "Snoopy"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ONOFF" xml:space="preserve">
+    <value>"on" or "off"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_SERIALORALIAS" xml:space="preserve">
+    <value>An entity serial in integer or hex format, or an alias string such as "self"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_SHOWTYPE" xml:space="preserve">
+    <value>Show type - "mobiles" or "corpses"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_TIMEOUT" xml:space="preserve">
+    <value>Timeout specified in milliseconds</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_AGENTENTRYNAME" xml:space="preserve">
+    <value>Agent entry name</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ALIASNAME" xml:space="preserve">
+    <value>Alias name</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_BENEFICIALHARMFULNEUTRAL" xml:space="preserve">
+    <value>Target type - "harmful", "beneficial", or "neutral"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_BUFFNAME" xml:space="preserve">
+    <value>Buff name</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_DIRECTION" xml:space="preserve">
+    <value>Direction, ie "West"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_DISTANCE" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_GUMPBUTTONINDEX" xml:space="preserve">
+    <value>Gump button ID</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_INTEGERVALUE" xml:space="preserve">
+    <value>Integer value - See description for usage</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_LISTNAME" xml:space="preserve">
+    <value>List name</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_MACRONAME" xml:space="preserve">
+    <value>Macro name</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_RANGE" xml:space="preserve">
+    <value>Range, ie 10</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_SERIAL" xml:space="preserve">
+    <value>An entity serial such as 0xf00ff00f</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_SKILLNAME" xml:space="preserve">
+    <value>Skill name</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_SPECIALMOVENAME" xml:space="preserve">
+    <value>Special move name</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_SPELLNAME" xml:space="preserve">
+    <value>Spell name</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_STRING" xml:space="preserve">
+    <value>String value - See description for usage</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_TIMERNAME" xml:space="preserve">
+    <value>Timer name</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_UNKNOWN" xml:space="preserve">
+    <value>Not specified - See description for usage</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_UPDOWNLOCKED" xml:space="preserve">
+    <value>Lock Status - "up", "down", or "locked"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_WANDNAME" xml:space="preserve">
+    <value>Wand name</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_XCOORDINATE" xml:space="preserve">
+    <value>X Coordinate</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_XCOORDINATEOFFSET" xml:space="preserve">
+    <value>X Coordinate offset</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_YCOORDINATE" xml:space="preserve">
+    <value>Y Coordinate</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_YCOORDINATEOFFSET" xml:space="preserve">
+    <value>Y Coordinate offset</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ZCOORDINATE" xml:space="preserve">
+    <value>Z Coordinate</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ZCOORDINATEOFFSET" xml:space="preserve">
+    <value>Z Coordinate offset</value>
   </data>
 </root>

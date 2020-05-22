@@ -21,7 +21,8 @@ namespace ClassicAssist.Data.Macros.Commands
     {
         internal static UseOnceList UseOnceList { get; set; } = new UseOnceList();
 
-        [CommandsDisplay( Category = nameof( Strings.Actions ) )]
+        [CommandsDisplay( Category = nameof( Strings.Actions ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Timeout ) } )]
         public static bool WaitForContents( object obj, int timeout = 5000 )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -35,7 +36,8 @@ namespace ClassicAssist.Data.Macros.Commands
             return UOC.WaitForContainerContents( serial, timeout );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Actions ) )]
+        [CommandsDisplay( Category = nameof( Strings.Actions ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static int Contents( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -63,7 +65,8 @@ namespace ClassicAssist.Data.Macros.Commands
             Engine.SendPacketToServer( new EquipLastWeapon() );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Actions ) )]
+        [CommandsDisplay( Category = nameof( Strings.Actions ),
+            Parameters = new[] { nameof( ParameterType.ItemID ), nameof( ParameterType.Hue ) } )]
         public static bool UseOnce( int graphic, int hue = -1 )
         {
             //TODO hue?
@@ -97,7 +100,8 @@ namespace ClassicAssist.Data.Macros.Commands
             UOC.SystemMessage( Strings.UseOnce_cleared___ );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Actions ) )]
+        [CommandsDisplay( Category = nameof( Strings.Actions ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static void Attack( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -125,7 +129,8 @@ namespace ClassicAssist.Data.Macros.Commands
             Engine.SendPacketToServer( new AttackRequest( serial ) );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Actions ) )]
+        [CommandsDisplay( Category = nameof( Strings.Actions ),
+            Parameters = new[] { nameof( ParameterType.LeftRightBoth ) } )]
         public static void ClearHands( string hand = "both" )
         {
             hand = hand.ToLower();
@@ -158,7 +163,8 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Actions ) )]
+        [CommandsDisplay( Category = nameof( Strings.Actions ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static void ClickObject( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -206,7 +212,12 @@ namespace ClassicAssist.Data.Macros.Commands
             ObjectCommands.UseObject( mountSerial );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Actions ) )]
+        [CommandsDisplay( Category = nameof( Strings.Actions ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.ItemID ),
+                nameof( ParameterType.Amount ), nameof( ParameterType.Hue )
+            } )]
         public static void Feed( object obj, int graphic, int amount = 1, int hue = -1 )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -235,7 +246,8 @@ namespace ClassicAssist.Data.Macros.Commands
             ActionPacketQueue.EnqueueDragDrop( foodItem.Serial, amount, serial );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Actions ) )]
+        [CommandsDisplay( Category = nameof( Strings.Actions ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Name ) } )]
         public static void Rename( object obj, string name )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -249,7 +261,8 @@ namespace ClassicAssist.Data.Macros.Commands
             UOC.RenameRequest( serial, name );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Actions ) )]
+        [CommandsDisplay( Category = nameof( Strings.Actions ),
+            Parameters = new[] { nameof( ParameterType.ShowType ) } )]
         public static void ShowNames( string showType )
         {
             const int MAX_DISTANCE = 32;
@@ -294,7 +307,8 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Actions ) )]
+        [CommandsDisplay( Category = nameof( Strings.Actions ),
+            Parameters = new[] { nameof( ParameterType.ItemID ), nameof( ParameterType.Layer ) } )]
         public static void EquipType( int id, object layer )
         {
             Layer layerValue = Layer.Invalid;
@@ -321,7 +335,8 @@ namespace ClassicAssist.Data.Macros.Commands
             UOC.EquipType( id, layerValue );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Actions ) )]
+        [CommandsDisplay( Category = nameof( Strings.Actions ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Layer ) } )]
         public static void EquipItem( object obj, object layer )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -364,7 +379,8 @@ namespace ClassicAssist.Data.Macros.Commands
             UOC.EquipItem( item, layerValue );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Actions ) )]
+        [CommandsDisplay( Category = nameof( Strings.Actions ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Layer ) } )]
         public static bool FindLayer( object layer, object obj = null )
         {
             if ( obj == null )
@@ -457,15 +473,34 @@ namespace ClassicAssist.Data.Macros.Commands
             return -1;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Actions ) )]
-        public static void ContextMenu( int serial, int entry )
+        [CommandsDisplay( Category = nameof( Strings.Actions ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.ContextMenuIndex ) } )]
+        public static void ContextMenu( object obj, int entry )
         {
+            if ( obj == null )
+            {
+                obj = "self";
+            }
+
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return;
+            }
+
             Engine.SendPacketToServer( new ContextMenuRequest( serial ) );
             Thread.Sleep( 400 );
             Engine.SendPacketToServer( new ContextMenuClick( serial, entry ) );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Actions ) )]
+        [CommandsDisplay( Category = nameof( Strings.Actions ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.ContextMenuIndex ),
+                nameof( ParameterType.Timeout )
+            } )]
         public static bool WaitForContext( object obj, int entry, int timeout )
         {
             int serial = AliasCommands.ResolveSerial( obj );

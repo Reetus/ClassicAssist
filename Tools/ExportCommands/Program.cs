@@ -64,19 +64,95 @@ namespace ExportCommands
 
                 Type cda = assembly.GetType( "ClassicAssist.Data.Macros.CommandsDisplayAttribute" );
 
-                List<Commands> commands = ( from type in types
-                    from memberInfo in type.GetMembers( BindingFlags.Public | BindingFlags.Static )
-                    let attr = memberInfo.GetCustomAttribute( cda )
-                    where (dynamic) attr != null
-                    select new Commands
+                List<Commands> commands = new List<Commands>();
+
+                // ReSharper disable once LoopCanBeConvertedToQuery
+                foreach ( Type type in types )
+                {
+                    // ReSharper disable once LoopCanBeConvertedToQuery
+                    foreach ( MemberInfo memberInfo in type.GetMembers( BindingFlags.Public | BindingFlags.Static ) )
                     {
-                        Category = ( (dynamic) attr ).Category,
-                        Description = ( (dynamic) attr ).Description,
-                        Example = ( (dynamic) attr ).Example,
-                        InsertText = ( (dynamic) attr ).InsertText,
-                        Signature = memberInfo.ToString(),
-                        Name = memberInfo.Name
-                    } ).ToList();
+                        Attribute attr = memberInfo.GetCustomAttribute( cda );
+
+                        if ( attr == null )
+                        {
+                            continue;
+                        }
+
+                        List<Parameter> param = new List<Parameter>();
+
+                        dynamic attrParams = ( (dynamic) attr ).Parameters;
+
+                        if ( memberInfo.MemberType == MemberTypes.Method && attrParams != null )
+                        {
+                            MethodInfo methodInfo = memberInfo as MethodInfo;
+                            ParameterInfo[] parameters = methodInfo?.GetParameters();
+
+                            int i = 0;
+
+                            if ( parameters != null )
+                            {
+                                foreach ( ParameterInfo parameterInfo in parameters )
+                                {
+                                    Parameter parameter = new Parameter();
+
+                                    object defaultValue = parameterInfo.RawDefaultValue;
+
+                                    if ( i + 1 > attrParams.Length )
+                                    {
+                                        parameter.Name = parameterInfo.Name.ToLower();
+                                        parameter.Optional =
+                                            defaultValue == null || defaultValue.GetType() != typeof( DBNull );
+                                        parameter.Description = Resources.ResourceManager.GetString(
+                                            "PARAMETER_DESCRIPTION_UNKNOWN" );
+                                        param.Add( parameter );
+                                        i++;
+                                    }
+                                    else
+                                    {
+                                        dynamic attrParam = attrParams[i];
+
+                                        if ( attrParam == null )
+                                        {
+                                            continue;
+                                        }
+
+                                        parameter.Name = parameterInfo.Name.ToLower();
+                                        parameter.Optional =
+                                            defaultValue == null || defaultValue.GetType() != typeof( DBNull );
+
+                                        string resourceName = $"PARAMETER_DESCRIPTION_{attrParam.ToUpper()}";
+
+                                        string resourceValue = Resources.ResourceManager.GetString( resourceName );
+
+                                        if ( string.IsNullOrEmpty( resourceValue ) )
+                                        {
+                                            throw new InvalidOperationException( resourceName );
+                                        }
+
+                                        parameter.Description = !string.IsNullOrEmpty( resourceValue )
+                                            ? resourceValue
+                                            : Resources.Unknown;
+
+                                        param.Add( parameter );
+                                        i++;
+                                    }
+                                }
+                            }
+                        }
+
+                        commands.Add( new Commands
+                        {
+                            Category = ( (dynamic) attr ).Category,
+                            Description = ( (dynamic) attr ).Description,
+                            Example = ( (dynamic) attr ).Example,
+                            InsertText = ( (dynamic) attr ).InsertText,
+                            Signature = memberInfo.ToString(),
+                            Name = memberInfo.Name,
+                            Parameters = param
+                        } );
+                    }
+                }
 
                 commands.Sort( new CommandComparer() );
 
@@ -111,6 +187,20 @@ namespace ExportCommands
 
                         markDown += $"### {command.Name}  \n  \n";
                         markDown += $"{Resources.Method_Signature}:  \n  \n**{command.Signature}**  \n  \n";
+
+                        if ( command.Parameters.Any() )
+                        {
+                            markDown += $"#### {Resources.Parameters}  \n";
+
+                            foreach ( Parameter parameter in command.Parameters )
+                            {
+                                markDown = markDown +
+                                           $"* {parameter.Name}: {parameter.Description}.{( parameter.Optional ? $" ({Resources.Optional})" : "" )}  \n";
+                            }
+
+                            markDown += "  \n";
+                        }
+
                         markDown += $"{Resources.Description}:  \n  \n**{command.Description}**  \n  \n";
                         markDown += $"{Resources.Example}:  \n  \n```python  \n{example}  \n```  \n  \n";
                     }
@@ -186,13 +276,21 @@ namespace ExportCommands
         }
     }
 
-    public class Commands
+    internal class Parameter
+    {
+        public string Description { get; set; } = "Unknown";
+        public string Name { get; set; } = "Unknown";
+        public bool Optional { get; set; }
+    }
+
+    internal class Commands
     {
         public string Category { get; set; }
         public string Description { get; set; }
         public string Example { get; set; }
         public string InsertText { get; set; }
         public string Name { get; set; }
+        public List<Parameter> Parameters { get; set; }
         public string Signature { get; set; }
     }
 }

@@ -30,13 +30,14 @@ namespace ClassicAssist.Data.Macros.Commands
                 true ) );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Target ) )]
+        [CommandsDisplay( Category = nameof( Strings.Target ), Parameters = new[] { nameof( ParameterType.Timeout ) } )]
         public static bool WaitForTarget( int timeout = 5000 )
         {
             return UOC.WaitForTarget( timeout );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Target ) )]
+        [CommandsDisplay( Category = nameof( Strings.Target ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static void Target( object obj, bool checkRange = false, bool useQueue = false )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -94,7 +95,8 @@ namespace ClassicAssist.Data.Macros.Commands
             Engine.TargetExists = false;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Target ) )]
+        [CommandsDisplay( Category = nameof( Strings.Target ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static void TargetTileRelative( object obj, int distance, bool reverse = false )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -260,7 +262,8 @@ namespace ClassicAssist.Data.Macros.Commands
             return TargetManager.GetInstance().GetFriend( notoFlags, bt, td, TargetFriendType.Include, ti );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Target ) )]
+        [CommandsDisplay( Category = nameof( Strings.Target ),
+            Parameters = new[] { nameof( ParameterType.BeneficialHarmfulNeutral ) } )]
         public static bool TargetExists( string targetExistsType = "Any" )
         {
             if ( !Enum.TryParse( targetExistsType, out TargetExistsType enumValue ) )
@@ -304,7 +307,11 @@ namespace ClassicAssist.Data.Macros.Commands
             UOC.SystemMessage( Strings.Target_queue_cleared___ );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Target ) )]
+        [CommandsDisplay( Category = nameof( Strings.Target ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Hue ), nameof( ParameterType.Range )
+            } )]
         public static void TargetType( object obj, int hue = -1, int range = -1 )
         {
             int id = AliasCommands.ResolveSerial( obj );
@@ -334,7 +341,11 @@ namespace ClassicAssist.Data.Macros.Commands
             Target( item.Serial, false, Options.CurrentOptions.QueueLastTarget );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Target ) )]
+        [CommandsDisplay( Category = nameof( Strings.Target ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Hue ), nameof( ParameterType.Range )
+            } )]
         public static void TargetGround( object obj, int hue = -1, int range = -1 )
         {
             int id = AliasCommands.ResolveSerial( obj );
@@ -360,7 +371,8 @@ namespace ClassicAssist.Data.Macros.Commands
             Target( entity.Serial, false, Options.CurrentOptions.QueueLastTarget );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Target ) )]
+        [CommandsDisplay( Category = nameof( Strings.Target ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static void SetEnemy( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -383,7 +395,8 @@ namespace ClassicAssist.Data.Macros.Commands
             TargetManager.GetInstance().SetEnemy( entity );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Target ) )]
+        [CommandsDisplay( Category = nameof( Strings.Target ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static void SetFriend( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -406,7 +419,8 @@ namespace ClassicAssist.Data.Macros.Commands
             TargetManager.GetInstance().SetFriend( entity );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Target ) )]
+        [CommandsDisplay( Category = nameof( Strings.Target ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static void SetLastTarget( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -429,7 +443,7 @@ namespace ClassicAssist.Data.Macros.Commands
             TargetManager.GetInstance().SetLastTarget( entity );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Target ) )]
+        [CommandsDisplay( Category = nameof( Strings.Target ), Parameters = new[] { nameof( ParameterType.Timeout ) } )]
         public static bool WaitForTargetOrFizzle( int timeout )
         {
             ( _, bool result ) = UOC.WaitForTargetOrFizzle( timeout );

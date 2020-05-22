@@ -25,7 +25,8 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Abilities ) )]
+        [CommandsDisplay( Category = nameof( Strings.Abilities ),
+            Parameters = new[] { nameof( ParameterType.Ability ), nameof( ParameterType.OnOff ) } )]
         public static void SetAbility( string ability, string onOff = "toggle" )
         {
             AbilitiesManager manager = AbilitiesManager.GetInstance();
@@ -111,7 +112,8 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Abilities ) )]
+        [CommandsDisplay( Category = nameof( Strings.Abilities ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static bool Flying( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );

@@ -582,14 +582,14 @@ namespace ClassicAssist.UO
                 }
                 catch ( OperationCanceledException )
                 {
-                    return ( -1, false );
+                    return (-1, false);
                 }
                 catch ( ThreadInterruptedException )
                 {
-                    return ( -1, false );
+                    return (-1, false);
                 }
 
-                return ( index, index == 0 && targetTask.Result );
+                return (index, index == 0 && targetTask.Result);
             }
             finally
             {
@@ -965,6 +965,31 @@ namespace ClassicAssist.UO
             pw.WriteAsciiFixed( Strings.UO_LOCALE, 4 );
             pw.Write( (short) 0x61 );
             pw.WriteBigUniNull( text );
+
+            Engine.SendPacketToServer( pw );
+        }
+
+        public static void JoinChatChannel( string channel )
+        {
+            /*
+             * Text 0x62 (Join Conference):
+                BYTE[2] Holder (0x0022)
+                BYTE[?] Unicode conference name
+                BYTE[2] Holder (0x0022)
+                BYTE[2] Holder (0x0020)
+                BYTE[?] Unicode password if pass req'd
+                BYTE[2] Null Teriminator (0x0000)
+             */
+
+            PacketWriter pw = new PacketWriter();
+            pw.Write( (byte) 0xB3 );
+            pw.Write( (short) ( 17 + channel.Length * 2 ) );
+            pw.WriteAsciiFixed( Strings.UO_LOCALE, 4 );
+            pw.Write( (short) 0x62 );
+            pw.WriteBigUniNull( channel );
+            pw.Write( (short) 0x22 );
+            pw.Write( (short) 0x20 );
+            pw.Write( (short) 0 );
 
             Engine.SendPacketToServer( pw );
         }

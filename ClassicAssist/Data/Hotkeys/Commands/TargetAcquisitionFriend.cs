@@ -87,7 +87,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
             public override void Execute()
             {
                 TargetManager.GetInstance()
-                    .GetFriend( TargetNotoriety.Criminal, TargetBodyType.Any, TargetDistance.Next );
+                    .GetFriend( TargetNotoriety.Murderer, TargetBodyType.Any, TargetDistance.Next );
             }
         }
 

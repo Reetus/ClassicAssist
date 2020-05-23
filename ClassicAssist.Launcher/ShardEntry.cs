@@ -13,6 +13,7 @@ namespace ClassicAssist.Launcher
         private string _name;
         private string _ping;
         private int _port;
+        private int _shardType;
 
         private string _status;
 
@@ -47,6 +48,12 @@ namespace ClassicAssist.Launcher
         {
             get => _port;
             set => SetProperty( ref _port, value );
+        }
+
+        public int ShardType
+        {
+            get => _shardType;
+            set => SetProperty( ref _shardType, value );
         }
 
         public string Status

@@ -355,13 +355,13 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
     <value>Sets the value of the given alias name.</value>
   </data>
   <data name="SETALIAS_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>SetAlias("mount", 0x40000001")</value>
+    <value>SetAlias("mount", 0x40000001)</value>
   </data>
   <data name="SETMACROALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Sets the value of the given alias name, alias is valid only in the current macro.</value>
   </data>
   <data name="SETMACROALIAS_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>SetMacroAlias("mount", 0x40000001")</value>
+    <value>SetMacroAlias("mount", 0x40000001)</value>
   </data>
   <data name="UNSETALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Removes the alias name given.</value>
@@ -607,7 +607,7 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
     <value>Move the given serial/alias to the specified x,y,z offset of the player, no amount specified or -1 will move the full stack.</value>
   </data>
   <data name="MOVEITEMOFFSET_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>MoveItemOffset("trashitem", 0, 1, 0, -1")</value>
+    <value>MoveItemOffset("trashitem", 0, 1, 0, -1)</value>
   </data>
   <data name="MOVETYPE_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Move a type from source to destintion.</value>
@@ -985,7 +985,7 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
     <value>Returns true if the given text appears in the items item properties.</value>
   </data>
   <data name="PROPERTY_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>if Property("item", "Defense Chance Increase")</value>
+    <value>if Property("item", "Defense Chance Increase"):</value>
   </data>
   <data name="PROPERTYVALUE_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Returns the argument value of the given property name. Optional argument index.</value>

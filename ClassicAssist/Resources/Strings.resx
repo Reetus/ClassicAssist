@@ -1257,4 +1257,7 @@
   <data name="Chat" xml:space="preserve">
     <value>Chat</value>
   </data>
+  <data name="Target object '{0}'..." xml:space="preserve">
+    <value>Target object '{0}'...</value>
+  </data>
 </root>

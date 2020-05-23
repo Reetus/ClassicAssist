@@ -1799,7 +1799,7 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MoveItemOffset(&quot;trashitem&quot;, 0, 1, 0, -1&quot;).
+        ///   Looks up a localized string similar to MoveItemOffset(&quot;trashitem&quot;, 0, 1, 0, -1).
         /// </summary>
         public static string MOVEITEMOFFSET_COMMAND_INSERTTEXT {
             get {
@@ -2141,7 +2141,7 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to if Property(&quot;item&quot;, &quot;Defense Chance Increase&quot;).
+        ///   Looks up a localized string similar to if Property(&quot;item&quot;, &quot;Defense Chance Increase&quot;):.
         /// </summary>
         public static string PROPERTY_COMMAND_INSERTTEXT {
             get {
@@ -2357,7 +2357,7 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SetAlias(&quot;mount&quot;, 0x40000001&quot;).
+        ///   Looks up a localized string similar to SetAlias(&quot;mount&quot;, 0x40000001).
         /// </summary>
         public static string SETALIAS_COMMAND_INSERTTEXT {
             get {
@@ -2465,7 +2465,7 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SetMacroAlias(&quot;mount&quot;, 0x40000001&quot;).
+        ///   Looks up a localized string similar to SetMacroAlias(&quot;mount&quot;, 0x40000001).
         /// </summary>
         public static string SETMACROALIAS_COMMAND_INSERTTEXT {
             get {

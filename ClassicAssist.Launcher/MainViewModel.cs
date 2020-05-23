@@ -372,6 +372,7 @@ namespace ClassicAssist.Launcher
             args.Append( $"-ip \"{ip}\" -port \"{SelectedShard.Port}\" " );
             args.Append( $"-uopath \"{SelectedDataPath}\" " );
             args.Append( $"-encryption {( SelectedShard.Encryption ? 1 : 0 )} " );
+            args.Append( SelectedShard.ShardType > 0 ? $"-shard {SelectedShard.ShardType} " : "-shard 0 " );
 
             BuildClassicOptions( args );
 

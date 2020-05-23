@@ -45,7 +45,8 @@ namespace ClassicAssist.Launcher
                 Address = "play.uooutlands.com",
                 Port = 2593,
                 IsPreset = true,
-                HasStatusProtocol = false
+                HasStatusProtocol = false,
+                ShardType = 2,
             } );
         }
 

@@ -1257,4 +1257,7 @@
   <data name="Chat" xml:space="preserve">
     <value>聊天</value>
   </data>
+  <data name="Target object '{0}'..." xml:space="preserve">
+    <value>目标对象"{0}"...</value>
+  </data>
 </root>

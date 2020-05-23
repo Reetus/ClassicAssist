@@ -823,7 +823,7 @@
     <value>MoveType(0xff, "backpack", "bank")</value>
   </data>
   <data name="MOVEITEMOFFSET_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>MoveItemOffset("trashitem", 0, 1, 0, -1")</value>
+    <value>MoveItemOffset("trashitem", 0, 1, 0, -1)</value>
   </data>
   <data name="MOVEITEM_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>MoveItem("source", "destination")</value>

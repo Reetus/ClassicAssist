@@ -150,7 +150,7 @@ namespace ClassicAssist.Data.Macros.Commands
             Parameters = new[] { nameof( ParameterType.AliasName ) } )]
         public static void PromptAlias( string aliasName )
         {
-            int serial = UOC.GetTargeSerialAsync( Strings.Target_object___ ).Result;
+            int serial = UOC.GetTargeSerialAsync( string.Format( Strings.Target_object___0_____, aliasName ) ).Result;
             SetAlias( aliasName.ToLower(), serial );
         }
 

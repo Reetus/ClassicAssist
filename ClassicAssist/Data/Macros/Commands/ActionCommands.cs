@@ -380,7 +380,7 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = nameof( Strings.Actions ),
-            Parameters = new[] { nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Layer ) } )]
+            Parameters = new[] { nameof( ParameterType.Layer ), nameof( ParameterType.SerialOrAlias ) } )]
         public static bool FindLayer( object layer, object obj = null )
         {
             if ( obj == null )

@@ -2977,6 +2977,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Target object &apos;{0}&apos;....
+        /// </summary>
+        public static string Target_object___0_____ {
+            get {
+                return ResourceManager.GetString("Target object \'{0}\'...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Target out of range, try again....
         /// </summary>
         public static string Target_out_of_range__try_again___ {

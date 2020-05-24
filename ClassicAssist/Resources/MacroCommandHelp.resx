@@ -1242,4 +1242,30 @@ FindObject("weapon", -1, "backpack")  </value>
   <data name="CHATMSG_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>ChatMsg("Mary had a little lamb")</value>
   </data>
+  <data name="OPENVIRTUEGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Opens the Virtue gump of the given serial/alias (defaults to current player)</value>
+  </data>
+  <data name="OPENVIRTUEGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>OpenVirtueGump("enemy")</value>
+  </data>
+  <data name="OPENGUILDGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Opens the Guild gump</value>
+  </data>
+  <data name="OPENQUESTSGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Opens the Quests gump</value>
+  </data>
+  <data name="OPENGUILDGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>OpenGuildGump()</value>
+  </data>
+  <data name="OPENQUESTSGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>OpenQuestsGump()</value>
+  </data>
+  <data name="GETENEMY_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>#get murderer
+GetEnemy(['Murderer'])
+#get closest murderer, any body type
+GetEnemy(['Murderer'], 'Any', 'Closest')
+#get next any notoriety, humanoid or transformation - unmounted
+GetEnemy(['Any'], 'Both', 'Next', 'Unmounted')</value>
+  </data>
 </root>

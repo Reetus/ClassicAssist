@@ -367,6 +367,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Base.
+        /// </summary>
+        public static string Base {
+            get {
+                return ResourceManager.GetString("Base", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Blank.
         /// </summary>
         public static string Blank {
@@ -489,6 +498,15 @@ namespace ClassicAssist.Resources {
         public static string Cannot_PlayMacro_from_background_macro___ {
             get {
                 return ResourceManager.GetString("Cannot PlayMacro from background macro...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cap.
+        /// </summary>
+        public static string Cap {
+            get {
+                return ResourceManager.GetString("Cap", resourceCulture);
             }
         }
         
@@ -1798,6 +1816,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Miscellaneous.
+        /// </summary>
+        public static string Miscellaneous {
+            get {
+                return ResourceManager.GetString("Miscellaneous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mobile.
         /// </summary>
         public static string Mobile {
@@ -2788,6 +2815,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Status:.
         /// </summary>
         public static string Status_ {
@@ -3135,6 +3171,15 @@ namespace ClassicAssist.Resources {
         public static string Topmost {
             get {
                 return ResourceManager.GetString("Topmost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total base:.
+        /// </summary>
+        public static string Total_base_ {
+            get {
+                return ResourceManager.GetString("Total base:", resourceCulture);
             }
         }
         

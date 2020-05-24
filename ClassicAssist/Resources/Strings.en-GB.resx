@@ -1260,4 +1260,19 @@
   <data name="Target object '{0}'..." xml:space="preserve">
     <value>Target object '{0}'...</value>
   </data>
+  <data name="Miscellaneous" xml:space="preserve">
+    <value>Miscellaneous</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Base" xml:space="preserve">
+    <value>Base</value>
+  </data>
+  <data name="Cap" xml:space="preserve">
+    <value>Cap</value>
+  </data>
+  <data name="Total base:" xml:space="preserve">
+    <value>Total base:</value>
+  </data>
 </root>

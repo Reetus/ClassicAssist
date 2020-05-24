@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Assistant;
 using ClassicAssist.Resources;
+using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects.Gumps;
 using UOC = ClassicAssist.UO.Commands;
 
@@ -23,10 +24,14 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = nameof( Strings.Gumps ),
-            Parameters = new[] { nameof( ParameterType.ItemID ), nameof( ParameterType.GumpButtonIndex ) } )]
-        public static void ReplyGump( uint gumpId, int buttonId )
+            Parameters = new[]
+            {
+                nameof( ParameterType.ItemID ), nameof( ParameterType.GumpButtonIndex ),
+                nameof( ParameterType.IntegerValue )
+            } )]
+        public static void ReplyGump( uint gumpId, int buttonId, int[] switches = null )
         {
-            UOC.GumpButtonClick( gumpId, buttonId );
+            UOC.GumpButtonClick( gumpId, buttonId, switches );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Gumps ) )]
@@ -55,6 +60,33 @@ namespace ClassicAssist.Data.Macros.Commands
             {
                 gump.CloseGump();
             }
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Gumps ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        public static void OpenVirtueGump( object obj = null )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Mobile_not_found___ );
+                return;
+            }
+
+            Engine.SendPacketToServer( new GumpButtonClick( 0x1CD, Engine.Player.Serial, 1, new[] { serial } ) );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Gumps ) )]
+        public static void OpenGuildGump()
+        {
+            Engine.SendPacketToServer( new GuildButtonRequest() );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Gumps ) )]
+        public static void OpenQuestsGump()
+        {
+            Engine.SendPacketToServer( new QuestsButtonRequest() );
         }
     }
 }

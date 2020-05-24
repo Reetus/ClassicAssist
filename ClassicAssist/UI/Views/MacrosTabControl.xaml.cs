@@ -11,6 +11,7 @@ using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
+using ICSharpCode.AvalonEdit.Search;
 using Microsoft.Scripting.Utils;
 
 namespace ClassicAssist.UI.Views
@@ -58,6 +59,7 @@ namespace ClassicAssist.UI.Views
             }
 
             CodeTextEditor.TextArea.TextEntered += OnTextEntered;
+            SearchPanel.Install( CodeTextEditor );
         }
 
         private void OnTextEntered( object sender, TextCompositionEventArgs e )

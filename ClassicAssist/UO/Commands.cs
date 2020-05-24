@@ -218,14 +218,14 @@ namespace ClassicAssist.UO
             } );
         }
 
-        public static bool GumpButtonClick( uint gumpID, int buttonID )
+        public static bool GumpButtonClick( uint gumpID, int buttonID, int[] switches = null )
         {
             if ( !Engine.GumpList.TryGetValue( gumpID, out int serial ) )
             {
                 return false;
             }
 
-            Engine.SendPacketToServer( new GumpButtonClick( (int) gumpID, serial, buttonID ) );
+            Engine.SendPacketToServer( new GumpButtonClick( (int) gumpID, serial, buttonID, switches ) );
 
             Engine.GumpList.TryRemove( gumpID, out _ );
             CloseClientGump( gumpID );

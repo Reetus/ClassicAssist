@@ -587,6 +587,73 @@ namespace ClassicAssist.Tests.MacroCommands
         }
 
         [TestMethod]
+        public void WillGetUnmounted()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            for ( int i = 2; i < 10; i++ )
+            {
+                Mobile m = new Mobile( i )
+                {
+                    Notoriety = Notoriety.Criminal,
+                    Hits = 25,
+                    HitsMax = 25,
+                    X = i,
+                    Y = i
+                };
+
+                m.SetLayer( Layer.Mount, 1 );
+                Engine.Mobiles.Add( m );
+            }
+
+            Engine.Mobiles.GetMobile( 7 ).SetLayer( Layer.Mount, 0 );
+
+            TargetCommands.GetEnemy( new[] { "Criminal" }, "Any", "Closest", "Unmounted" );
+
+            Assert.AreEqual( 7, AliasCommands.GetAlias( "enemy" ) );
+
+            TargetCommands.GetFriend( new[] { "Criminal" }, "Any", "Closest", "Unmounted" );
+
+            Assert.AreEqual( 7, AliasCommands.GetAlias( "friend" ) );
+
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillGetUnmountedFriendOnly()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+            Options.CurrentOptions.Friends = new ObservableCollection<FriendEntry>();
+
+            for ( int i = 2; i < 10; i++ )
+            {
+                Mobile m = new Mobile( i )
+                {
+                    Notoriety = Notoriety.Criminal,
+                    Hits = 25,
+                    HitsMax = 25,
+                    X = i,
+                    Y = i
+                };
+                m.SetLayer( Layer.Mount, 1 );
+                Engine.Mobiles.Add( m );
+                Options.CurrentOptions.Friends.Add( new FriendEntry { Name = "Friend", Serial = i } );
+            }
+
+            Engine.Mobiles.GetMobile( 7 ).SetLayer( Layer.Mount, 0 );
+
+            TargetCommands.GetFriendListOnly( "Closest", "Unmounted" );
+
+            Assert.AreEqual( 7, AliasCommands.GetAlias( "friend" ) );
+
+            Options.CurrentOptions.Friends.Clear();
+            Engine.Mobiles.Clear();
+            Engine.Player = null;
+            AliasCommands.SetAlias( "friend", -1 );
+        }
+
+        [TestMethod]
         public void WillGetLowestFriendOnly()
         {
             Engine.Player = new PlayerMobile( 0x01 );

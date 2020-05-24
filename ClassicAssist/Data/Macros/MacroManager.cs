@@ -150,7 +150,7 @@ namespace ClassicAssist.Data.Macros
         {
             Thread currentThread = Thread.CurrentThread;
 
-            return Items.FirstOrDefault( m => m.MacroInvoker.Thread?.Equals( currentThread ) ?? false );
+            return Items?.FirstOrDefault( m => m.MacroInvoker.Thread?.Equals( currentThread ) ?? false );
         }
     }
 }

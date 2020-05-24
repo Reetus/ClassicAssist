@@ -1061,6 +1061,20 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to #get murderer
+        ///GetEnemy([&apos;Murderer&apos;])
+        ///#get closest murderer, any body type
+        ///GetEnemy([&apos;Murderer&apos;], &apos;Any&apos;, &apos;Closest&apos;)
+        ///#get next any notoriety, humanoid or transformation - unmounted
+        ///GetEnemy([&apos;Any&apos;], &apos;Both&apos;, &apos;Next&apos;, &apos;Unmounted&apos;).
+        /// </summary>
+        public static string GETENEMY_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("GETENEMY_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GetEnemy([&quot;Murderer&quot;]).
         /// </summary>
         public static string GETENEMY_COMMAND_INSERTTEXT {
@@ -1912,6 +1926,60 @@ namespace ClassicAssist.Resources {
         public static string NAME_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("NAME_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opens the Guild gump.
+        /// </summary>
+        public static string OPENGUILDGUMP_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("OPENGUILDGUMP_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OpenGuildGump().
+        /// </summary>
+        public static string OPENGUILDGUMP_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("OPENGUILDGUMP_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opens the Quests gump.
+        /// </summary>
+        public static string OPENQUESTSGUMP_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("OPENQUESTSGUMP_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OpenQuestsGump().
+        /// </summary>
+        public static string OPENQUESTSGUMP_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("OPENQUESTSGUMP_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opens the Virtue gump of the given serial/alias (defaults to current player).
+        /// </summary>
+        public static string OPENVIRTUEGUMP_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("OPENVIRTUEGUMP_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OpenVirtueGump(&quot;enemy&quot;).
+        /// </summary>
+        public static string OPENVIRTUEGUMP_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("OPENVIRTUEGUMP_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

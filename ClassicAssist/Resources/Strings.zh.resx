@@ -1260,4 +1260,19 @@
   <data name="Target object '{0}'..." xml:space="preserve">
     <value>目标对象"{0}"...</value>
   </data>
+  <data name="Miscellaneous" xml:space="preserve">
+    <value>杂项</value>
+  </data>
+  <data name="Base" xml:space="preserve">
+    <value>基地</value>
+  </data>
+  <data name="Cap" xml:space="preserve">
+    <value>帽</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>地位</value>
+  </data>
+  <data name="Total base:" xml:space="preserve">
+    <value>总基数：</value>
+  </data>
 </root>

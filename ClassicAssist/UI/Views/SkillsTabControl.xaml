@@ -60,17 +60,17 @@
                   SelectedItem="{Binding SelectedItem}" ContextMenu="{StaticResource ItemContextMenu}">
             <ListView.View>
                 <GridView>
-                    <misc1:SkillsGridViewColumn Header="Name" DisplayMemberBinding="{Binding Skill}" Width="170"
+                    <misc1:SkillsGridViewColumn Header="{x:Static resources:Strings.Name}" DisplayMemberBinding="{Binding Skill}" Width="170"
                                                 SortField="Name" />
-                    <misc1:SkillsGridViewColumn Header="Value" Width="50" SortField="Value"
+                    <misc1:SkillsGridViewColumn Header="{x:Static resources:Strings.Value}" Width="70" SortField="Value"
                                                 DisplayMemberBinding="{Binding Value}" />
-                    <misc1:SkillsGridViewColumn Header="Base" Width="50" SortField="Base"
+                    <misc1:SkillsGridViewColumn Header="{x:Static resources:Strings.Base}" Width="70" SortField="Base"
                                                 DisplayMemberBinding="{Binding Base}" />
                     <misc1:SkillsGridViewColumn Header="+/-" Width="30" SortField="Delta"
                                                 DisplayMemberBinding="{Binding Delta, StringFormat={}{0:0.#}}" />
-                    <misc1:SkillsGridViewColumn Header="Cap" Width="50" SortField="Cap"
+                    <misc1:SkillsGridViewColumn Header="{x:Static resources:Strings.Cap}" Width="70" SortField="Cap"
                                                 DisplayMemberBinding="{Binding Cap}" />
-                    <misc1:SkillsGridViewColumn Header="Status" Width="40" SortField="LockStatus">
+                    <misc1:SkillsGridViewColumn Header="{x:Static resources:Strings.Status}" Width="40" SortField="LockStatus">
                         <misc1:SkillsGridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Image
@@ -98,7 +98,7 @@
                       Margin="0,5,0,0" SelectedIndex="0" />
             <Button Content="{x:Static resources:Strings.Set}" Command="{Binding SetAllSkillLocksCommand, Mode=OneWay}"
                     CommandParameter="{Binding SelectedIndex, ElementName=comboBox}" />
-            <TextBlock Text="Total base:" Margin="0,30,0,0" />
+            <TextBlock Text="{x:Static resources:Strings.Total_base_}" Margin="0,30,0,0" />
             <TextBlock Text="{Binding TotalBase}" FontWeight="Bold" Margin="0,3,0,0" />
         </StackPanel>
     </Grid>

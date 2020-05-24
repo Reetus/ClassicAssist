@@ -13,7 +13,7 @@
         mc:Ignorable="d"
         Height="500" Width="625" Topmost="{Binding AlwaysOnTop}"
         Background="{DynamicResource ThemeWindowBackgroundBrush}"
-        AllowsTransparency="True" WindowStyle="None"
+        AllowsTransparency="True" WindowStyle="None" WindowState="Normal"
         Title="{Binding Title}" x:Name="window" ResizeMode="CanResizeWithGrip">
     <i:Interaction.Behaviors>
         <misc:LoadOptionsOnWindowLoaded />

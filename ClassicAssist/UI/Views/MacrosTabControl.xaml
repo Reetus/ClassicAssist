@@ -121,7 +121,7 @@
                             IsEnabled="{Binding SelectedItem.IsRunning, ElementName=ListBox}"
                             Command="{Binding StopCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
                 </Grid>
-                <GroupBox Header="Hotkey" Grid.Row="5" Padding="5" Margin="0,5,0,0">
+                <GroupBox Header="{x:Static resources:Strings.Hotkeys}" Grid.Row="5" Padding="5" Margin="0,5,0,0">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -148,6 +148,9 @@
             <avalon:TextEditor ShowLineNumbers="True" x:Name="CodeTextEditor" Grid.Row="0"
                                HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
                                FontFamily="Consolas">
+                <avalon:TextEditor.InputBindings>
+                    <KeyBinding Modifiers="Control" Key="S" Command="{Binding SaveMacroCommand}" />
+                </avalon:TextEditor.InputBindings>
                 <avalon:TextEditor.Style>
                     <Style TargetType="{x:Type avalon:TextEditor}"
                            BasedOn="{StaticResource {x:Type avalon:TextEditor}}">

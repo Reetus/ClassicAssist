@@ -385,6 +385,8 @@ namespace ClassicAssist.Data.Targeting
                     return mobiles.Where( m => m.IsFrozen ).ToArray();
                 case TargetInfliction.Dead:
                     return mobiles.Where( m => m.IsDead ).ToArray();
+                case TargetInfliction.Unmounted:
+                    return mobiles.Where( m => m.GetLayer( Layer.Mount ) == 0 ).ToArray();
                 default:
                     throw new ArgumentOutOfRangeException( nameof( inflictionType ), inflictionType, null );
             }

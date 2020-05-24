@@ -1110,9 +1110,6 @@
   <data name="Cannot PlayMacro from background macro..." xml:space="preserve">
     <value>배경 매크로에서 매크로를 재생할 수 없습니다...</value>
   </data>
-  <data name="Autostart" xml:space="preserve">
-    <value>Autostart</value>
-  </data>
   <data name="When checked macro will execute automatically after login." xml:space="preserve">
     <value>확인되면 매크로는 로그인 후 자동으로 실행됩니다.</value>
   </data>
@@ -1259,5 +1256,23 @@
   </data>
   <data name="Target object '{0}'..." xml:space="preserve">
     <value>타겟 오브젝트 '{0}'...</value>
+  </data>
+  <data name="Miscellaneous" xml:space="preserve">
+    <value>기타</value>
+  </data>
+  <data name="Base" xml:space="preserve">
+    <value>기본</value>
+  </data>
+  <data name="Cap" xml:space="preserve">
+    <value>모자</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>상태</value>
+  </data>
+  <data name="Autostart" xml:space="preserve">
+    <value>Autostart</value>
+  </data>
+  <data name="Total base:" xml:space="preserve">
+    <value>총 기준:</value>
   </data>
 </root>

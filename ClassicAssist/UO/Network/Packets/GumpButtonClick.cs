@@ -1,4 +1,5 @@
-﻿using ClassicAssist.UO.Data;
+﻿using System.Collections.Generic;
+using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
 
 namespace ClassicAssist.UO.Network.Packets
@@ -9,15 +10,26 @@ namespace ClassicAssist.UO.Network.Packets
         {
         }
 
-        public GumpButtonClick( int gumpID, int serial, int buttonID )
+        public GumpButtonClick( int gumpID, int serial, int buttonID, IReadOnlyCollection<int> switches = null )
         {
             //TODO switches etc
-            _writer = new PacketWriter( 23 );
+            _writer = new PacketWriter( 23 + ( switches?.Count * 4 ?? 0 ) );
             _writer.Write( (byte) 0xB1 );
-            _writer.Write( (short) 23 );
+            _writer.Write( (short) ( 23 + ( switches?.Count * 4 ?? 0 ) ) );
             _writer.Write( serial );
             _writer.Write( gumpID );
             _writer.Write( buttonID );
+
+            if (switches != null)
+            {
+                _writer.Write( switches.Count );
+
+                foreach ( int @switch in switches )
+                {
+                    _writer.Write( @switch );
+                }
+            }
+
             _writer.Fill();
         }
 

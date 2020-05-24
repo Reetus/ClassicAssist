@@ -45,6 +45,7 @@ namespace ClassicAssist.Data.Targeting
         Poisoned,
         Mortaled,
         Paralyzed,
-        Dead
+        Dead,
+        Unmounted
     }
 }

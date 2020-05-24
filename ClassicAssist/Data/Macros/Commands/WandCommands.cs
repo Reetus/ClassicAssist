@@ -68,6 +68,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = nameof( Strings.Entity ),
             Parameters = new[] { nameof( ParameterType.WandName ), nameof( ParameterType.IntegerValue ) } )]
+        [CommandsDisplayStringSeeAlso( new[] { nameof( WandTypes ) } )]
         public static bool EquipWand( string wandName, int minimumCharges = -1 )
         {
             try
@@ -102,6 +103,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 nameof( ParameterType.WandName ), nameof( ParameterType.SerialOrAlias ),
                 nameof( ParameterType.IntegerValue )
             } )]
+        [CommandsDisplayStringSeeAlso( new[] { nameof( WandTypes ) } )]
         public static bool FindWand( string wandName, object containerSource = null, int minimumCharges = -1 )
         {
             try

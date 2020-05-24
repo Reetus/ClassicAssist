@@ -63,8 +63,10 @@ namespace ExportCommands
                     t.Namespace != null && t.Namespace.StartsWith( "ClassicAssist.Data.Macros.Commands" ) );
 
                 Type cda = assembly.GetType( "ClassicAssist.Data.Macros.CommandsDisplayAttribute" );
+                Type cdsaa = assembly.GetType( "ClassicAssist.Data.Macros.CommandsDisplayStringSeeAlsoAttribute" );
 
                 List<Commands> commands = new List<Commands>();
+                List<Type> seeAlsoTypes = new List<Type>();
 
                 // ReSharper disable once LoopCanBeConvertedToQuery
                 foreach ( Type type in types )
@@ -72,16 +74,27 @@ namespace ExportCommands
                     // ReSharper disable once LoopCanBeConvertedToQuery
                     foreach ( MemberInfo memberInfo in type.GetMembers( BindingFlags.Public | BindingFlags.Static ) )
                     {
-                        Attribute attr = memberInfo.GetCustomAttribute( cda );
+                        Attribute attrCD = memberInfo.GetCustomAttribute( cda );
+                        Attribute attrCDSA = memberInfo.GetCustomAttribute( cdsaa );
 
-                        if ( attr == null )
+                        if ( attrCDSA != null )
+                        {
+                        }
+
+                        if ( attrCD == null )
                         {
                             continue;
                         }
 
                         List<Parameter> param = new List<Parameter>();
 
-                        dynamic attrParams = ( (dynamic) attr ).Parameters;
+                        dynamic attrParams = ( (dynamic) attrCD ).Parameters;
+                        dynamic attr2Params = null;
+
+                        if ( attrCDSA != null )
+                        {
+                            attr2Params = ( (dynamic) attrCDSA ).Enums;
+                        }
 
                         if ( memberInfo.MemberType == MemberTypes.Method && attrParams != null )
                         {
@@ -134,6 +147,18 @@ namespace ExportCommands
                                             ? resourceValue
                                             : Resources.Unknown;
 
+                                        if ( attr2Params != null && attr2Params?.Length >= i + 1 &&
+                                             attr2Params?[i] != null )
+                                        {
+                                            dynamic typeSA = FindEnumType( attr2Params?[i], assembly );
+                                            parameter.SeeAlso = typeSA;
+
+                                            if ( typeSA != null && !seeAlsoTypes.Contains( typeSA ) )
+                                            {
+                                                seeAlsoTypes.Add( typeSA );
+                                            }
+                                        }
+
                                         param.Add( parameter );
                                         i++;
                                     }
@@ -143,10 +168,10 @@ namespace ExportCommands
 
                         commands.Add( new Commands
                         {
-                            Category = ( (dynamic) attr ).Category,
-                            Description = ( (dynamic) attr ).Description,
-                            Example = ( (dynamic) attr ).Example,
-                            InsertText = ( (dynamic) attr ).InsertText,
+                            Category = ( (dynamic) attrCD ).Category,
+                            Description = ( (dynamic) attrCD ).Description,
+                            Example = ( (dynamic) attrCD ).Example,
+                            InsertText = ( (dynamic) attrCD ).InsertText,
                             Signature = memberInfo.ToString(),
                             Name = memberInfo.Name,
                             Parameters = param
@@ -194,8 +219,18 @@ namespace ExportCommands
 
                             foreach ( Parameter parameter in command.Parameters )
                             {
-                                markDown = markDown +
-                                           $"* {parameter.Name}: {parameter.Description}.{( parameter.Optional ? $" ({Resources.Optional})" : "" )}  \n";
+                                markDown +=
+                                    $"* {parameter.Name}: {parameter.Description}.{( parameter.Optional ? $" ({Resources.Optional})" : "" )}";
+
+                                if ( parameter.SeeAlso != null )
+                                {
+                                    markDown += string.Format( $" {Resources.See_Also___0_}  \n",
+                                        $"[{parameter.SeeAlso.Name}](#{parameter.SeeAlso.Name})" );
+                                }
+                                else
+                                {
+                                    markDown += "  \n";
+                                }
                             }
 
                             markDown += "  \n";
@@ -206,6 +241,26 @@ namespace ExportCommands
                     }
 
                     markDown += "\n\n\n";
+                }
+
+                markDown += $"## {Resources.Types}  \n";
+
+                seeAlsoTypes = seeAlsoTypes.OrderBy( t => t.Name ).ToList();
+
+                foreach ( Type seeAlsoType in seeAlsoTypes )
+                {
+                    markDown += $"### {seeAlsoType.Name}  \n";
+
+                    string[] enumNames = seeAlsoType.GetEnumNames();
+
+                    if ( enumNames == null )
+                    {
+                        continue;
+                    }
+
+                    markDown = enumNames.Aggregate( markDown, ( current, enumName ) => current + $"* {enumName}  \n" );
+
+                    markDown += "  \n";
                 }
 
                 string fileName = $"Macro-Commands ({locale}).md";
@@ -221,6 +276,13 @@ namespace ExportCommands
             sw.Stop();
 
             Console.WriteLine( $"Finished in {sw.Elapsed}" );
+        }
+
+        private static Type FindEnumType( string shortName, Assembly assembly )
+        {
+            Type matchingType = assembly.GetTypes().FirstOrDefault( t => t.Name == shortName );
+
+            return matchingType;
         }
 
         private static Assembly OnAssemblyResolve( object sender, ResolveEventArgs args )
@@ -281,6 +343,7 @@ namespace ExportCommands
         public string Description { get; set; } = "Unknown";
         public string Name { get; set; } = "Unknown";
         public bool Optional { get; set; }
+        public Type SeeAlso { get; set; }
     }
 
     internal class Commands

@@ -1039,7 +1039,7 @@
     <value>GetList("list")</value>
   </data>
   <data name="GETFRIENDLISTONLY_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>GetFriendListOnly(["Closest"])</value>
+    <value>GetFriendListOnly("Closest")</value>
   </data>
   <data name="GETFRIEND_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>GetFriend(["Murderer"])</value>

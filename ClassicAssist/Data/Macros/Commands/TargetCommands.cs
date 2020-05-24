@@ -176,13 +176,23 @@ namespace ClassicAssist.Data.Macros.Commands
                 destinationY, entity.Z, 0, true ) );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Target ) )]
-        public static bool GetEnemy( IEnumerable<string> notos, string bodyType = "Any", string distance = "Next",
+        [CommandsDisplay( Category = nameof( Strings.Target ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.Empty ), nameof( ParameterType.Empty ), nameof( ParameterType.Empty ),
+                nameof( ParameterType.Empty )
+            } )]
+        [CommandsDisplayStringSeeAlso( new[]
+        {
+            nameof( TargetNotoriety ), nameof( TargetBodyType ), nameof( TargetDistance ),
+            nameof( TargetInfliction )
+        } )]
+        public static bool GetEnemy( IEnumerable<string> notorieties, string bodyType = "Any", string distance = "Next",
             string infliction = "Any" )
         {
             TargetNotoriety notoFlags = TargetNotoriety.None;
 
-            foreach ( string noto in notos )
+            foreach ( string noto in notorieties )
             {
                 if ( Enum.TryParse( noto, true, out TargetNotoriety flag ) )
                 {
@@ -208,7 +218,15 @@ namespace ClassicAssist.Data.Macros.Commands
             return TargetManager.GetInstance().GetEnemy( notoFlags, bt, td, TargetFriendType.None, ti );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Target ) )]
+        [CommandsDisplay( Category = nameof( Strings.Target ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.Empty ), nameof( ParameterType.Empty ), nameof( ParameterType.Empty )
+            } )]
+        [CommandsDisplayStringSeeAlso( new[]
+        {
+            nameof( TargetDistance ), nameof( TargetInfliction ), nameof( TargetBodyType )
+        } )]
         public static bool GetFriendListOnly( string distance = "Next", string targetInfliction = "Any",
             string bodyType = "Any" )
         {
@@ -230,13 +248,23 @@ namespace ClassicAssist.Data.Macros.Commands
             return TargetManager.GetInstance().GetFriend( TargetNotoriety.Any, bt, td, TargetFriendType.Only, ti );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Target ) )]
-        public static bool GetFriend( IEnumerable<string> notos, string bodyType = "Any", string distance = "Next",
+        [CommandsDisplay( Category = nameof( Strings.Target ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.Empty ), nameof( ParameterType.Empty ), nameof( ParameterType.Empty ),
+                nameof( ParameterType.Empty )
+            } )]
+        [CommandsDisplayStringSeeAlso( new[]
+        {
+            nameof( TargetNotoriety ), nameof( TargetBodyType ), nameof( TargetDistance ),
+            nameof( TargetInfliction )
+        } )]
+        public static bool GetFriend( IEnumerable<string> notorieties, string bodyType = "Any", string distance = "Next",
             string infliction = "Any" )
         {
             TargetNotoriety notoFlags = TargetNotoriety.None;
 
-            foreach ( string noto in notos )
+            foreach ( string noto in notorieties )
             {
                 if ( Enum.TryParse( noto, true, out TargetNotoriety flag ) )
                 {
@@ -264,6 +292,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = nameof( Strings.Target ),
             Parameters = new[] { nameof( ParameterType.BeneficialHarmfulNeutral ) } )]
+        [CommandsDisplayStringSeeAlso( new[] { nameof( TargetExistsType ) } )]
         public static bool TargetExists( string targetExistsType = "Any" )
         {
             if ( !Enum.TryParse( targetExistsType, out TargetExistsType enumValue ) )

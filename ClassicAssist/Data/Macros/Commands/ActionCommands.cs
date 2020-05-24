@@ -263,6 +263,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = nameof( Strings.Actions ),
             Parameters = new[] { nameof( ParameterType.ShowType ) } )]
+        [CommandsDisplayStringSeeAlso( new[] { nameof( ShowNamesType ) } )]
         public static void ShowNames( string showType )
         {
             const int MAX_DISTANCE = 32;
@@ -309,6 +310,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = nameof( Strings.Actions ),
             Parameters = new[] { nameof( ParameterType.ItemID ), nameof( ParameterType.Layer ) } )]
+        [CommandsDisplayStringSeeAlso( new[] { null, nameof( Layer ) } )]
         public static void EquipType( int id, object layer )
         {
             Layer layerValue = Layer.Invalid;
@@ -337,6 +339,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = nameof( Strings.Actions ),
             Parameters = new[] { nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Layer ) } )]
+        [CommandsDisplayStringSeeAlso( new[] { null, nameof( Layer ) } )]
         public static void EquipItem( object obj, object layer )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -381,6 +384,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = nameof( Strings.Actions ),
             Parameters = new[] { nameof( ParameterType.Layer ), nameof( ParameterType.SerialOrAlias ) } )]
+        [CommandsDisplayStringSeeAlso( new[] { nameof( Layer ), null } )]
         public static bool FindLayer( object layer, object obj = null )
         {
             if ( obj == null )

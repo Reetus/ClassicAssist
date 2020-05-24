@@ -261,4 +261,13 @@
   <data name="PARAMETER_DESCRIPTION_ZCOORDINATEOFFSET" xml:space="preserve">
     <value>Z Coordinate offset</value>
   </data>
+  <data name="See Also: {0}" xml:space="preserve">
+    <value>See Also: {0}</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_EMPTY" xml:space="preserve">
+    <value> </value>
+  </data>
+  <data name="Types" xml:space="preserve">
+    <value>Types</value>
+  </data>
 </root>

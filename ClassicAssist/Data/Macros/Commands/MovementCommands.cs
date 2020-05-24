@@ -38,6 +38,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = nameof( Strings.Movement ),
             Parameters = new[] { nameof( ParameterType.Direction ) } )]
+        [CommandsDisplayStringSeeAlso( new[] { nameof( Direction ) } )]
         public static void Turn( string direction )
         {
             Direction directionEnum = Utility.GetEnumValueByName<Direction>( direction );
@@ -53,6 +54,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = nameof( Strings.Movement ),
             Parameters = new[] { nameof( ParameterType.Direction ) } )]
+        [CommandsDisplayStringSeeAlso( new[] { nameof( Direction ) } )]
         public static bool Run( string direction )
         {
             return Move( direction, true );

@@ -196,6 +196,15 @@ namespace ExportCommands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  .
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_EMPTY {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gump button ID.
         /// </summary>
         public static string PARAMETER_DESCRIPTION_GUMPBUTTONINDEX {
@@ -466,11 +475,29 @@ namespace ExportCommands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to See Also: {0}.
+        /// </summary>
+        public static string See_Also___0_ {
+            get {
+                return ResourceManager.GetString("See Also: {0}", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         public static string TRANSLATE_CREDIT {
             get {
                 return ResourceManager.GetString("TRANSLATE_CREDIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Types.
+        /// </summary>
+        public static string Types {
+            get {
+                return ResourceManager.GetString("Types", resourceCulture);
             }
         }
         

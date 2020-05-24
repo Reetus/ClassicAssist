@@ -1097,7 +1097,7 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GetFriendListOnly([&quot;Closest&quot;]).
+        ///   Looks up a localized string similar to GetFriendListOnly(&quot;Closest&quot;).
         /// </summary>
         public static string GETFRIENDLISTONLY_COMMAND_INSERTTEXT {
             get {

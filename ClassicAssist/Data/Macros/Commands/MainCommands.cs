@@ -26,6 +26,7 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = nameof( Strings.Main ), Parameters = new[] { nameof( ParameterType.String ) } )]
+        [CommandsDisplayStringSeeAlso( new[] { nameof( Virtues ) } )]
         public static void InvokeVirtue( string virtue )
         {
             Virtues v = Utility.GetEnumValueByName<Virtues>( virtue );

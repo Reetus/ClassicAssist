@@ -1057,7 +1057,7 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
     <value>Get friend that only exists in the friends list, parameter distance 'Closest'/'Nearest'/'Next'</value>
   </data>
   <data name="GETFRIENDLISTONLY_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>GetFriendListOnly(["Closest"])</value>
+    <value>GetFriendListOnly("Closest")</value>
   </data>
   <data name="TARGET_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Targets the given object (parameter can be serial or alias).</value>

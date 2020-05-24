@@ -74,6 +74,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = nameof( Strings.Skills ),
             Parameters = new[] { nameof( ParameterType.SkillName ), nameof( ParameterType.UpDownLocked ) } )]
+        [CommandsDisplayStringSeeAlso( new[] { null, nameof( LockStatus ) } )]
         public static void SetSkill( string skill, string status )
         {
             SkillManager manager = SkillManager.GetInstance();

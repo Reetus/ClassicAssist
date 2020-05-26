@@ -36,6 +36,8 @@ namespace ClassicAssist.UI.Views
             {
                 Items.Add( new HuePickerEntry { Index = i + 1, Entry = Hues._lazyHueEntries.Value[i] } );
             }
+
+            ApplyFilter( _filterText );
         }
 
         public string FilterText

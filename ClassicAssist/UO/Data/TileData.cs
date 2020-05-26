@@ -34,13 +34,21 @@ namespace ClassicAssist.UO.Data
 
             using ( BinaryReader reader = new BinaryReader( ms ) )
             {
+                ms.Seek( 36, SeekOrigin.Begin );
+                string name = Encoding.ASCII.GetString( reader.ReadBytes( 20 ) ).TrimEnd( '\0' );
+
+                if ( name == "VOID!!!!!!" )
+                {
+                    _oldFormat = true;
+                }
+
                 if ( _oldFormat )
                 {
                     const int offset = 428032;
 
                     ms.Seek( offset, SeekOrigin.Begin );
 
-                    for ( int i = 0; i < 0x8000; ++i )
+                    for ( int i = 0; i < 0x4000; ++i )
                     {
                         if ( ( i & 0x1F ) == 0 )
                         {

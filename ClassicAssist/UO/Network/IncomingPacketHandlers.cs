@@ -88,6 +88,7 @@ namespace ClassicAssist.UO.Network
             Register( 0x77, 17, OnMobileMoving );
             Register( 0x78, 0, OnMobileIncoming );
             Register( 0x98, 0, OnMobileName );
+            Register( 0x99, 30, OnTarget );
             Register( 0x9E, 0, OnShopSell );
             Register( 0xA1, 9, OnMobileHits );
             Register( 0xA2, 9, OnMobileMana );

@@ -479,5 +479,12 @@ namespace ClassicAssist.Data.Macros.Commands
 
             return result;
         }
+
+        [CommandsDisplay( Category = nameof( Strings.Target ), Parameters = new[] { nameof( ParameterType.XCoordinate ), nameof(ParameterType.YCoordinate), nameof(ParameterType.ZCoordinate) } )]
+        public static void TargetXYZ( int x, int y, int z )
+        {
+            Engine.SendPacketToServer( new Target( TargetTypeEnum.Tile, -1, TargetFlags.None, 0, x, y, z, 0, true ) );
+            Engine.TargetExists = false;
+        }
     }
 }

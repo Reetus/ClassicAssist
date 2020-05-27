@@ -75,9 +75,18 @@ namespace ClassicAssist.UO.Network.Packets
                 return "WaitForTarget(5000)\r\n";
             }
 
-            uint serial = (uint) ( ( packet[7] << 24 ) | ( packet[8] << 16 ) | ( packet[9] << 8 ) | packet[10] );
+            if ( packet[1] == 0 )
+            {
+                uint serial = (uint) ( ( packet[7] << 24 ) | ( packet[8] << 16 ) | ( packet[9] << 8 ) | packet[10] );
 
-            return $"Target(0x{serial:x})\r\n";
+                return $"Target(0x{serial:x})\r\n";
+            }
+
+            int x = ( packet[11] << 8 ) | packet[12];
+            int y = ( packet[13] << 8 ) | packet[14];
+            int z = (sbyte) ( packet[15] << 8 ) | (sbyte) packet[16];
+
+            return $"TargetXYZ({x}, {y}, {z})\r\n";
         }
     }
 }

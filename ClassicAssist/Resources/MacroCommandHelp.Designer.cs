@@ -2842,6 +2842,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Targets the ground at the given coordinates..
+        /// </summary>
+        public static string TARGETXYZ_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TARGETXYZ_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TargetXYZ(1000, 1000, 0).
+        /// </summary>
+        public static string TARGETXYZ_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TARGETXYZ_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check for a named timer value..
         /// </summary>
         public static string TIMER_COMMAND_DESCRIPTION {

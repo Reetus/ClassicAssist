@@ -127,7 +127,7 @@ namespace ClassicAssist.UO.Network
             QueuePriority priority = QueuePriority.Low, bool delaySend = true, int x = -1, int y = -1 )
         {
             return EnqueueActionPackets(
-                new BasePacket[] { new DragItem( serial, amount ), new DropItem( serial, containerSerial, -1, -1, 0 ) },
+                new BasePacket[] { new DragItem( serial, amount ), new DropItem( serial, containerSerial, x, y, 0 ) },
                 priority, delaySend );
         }
 

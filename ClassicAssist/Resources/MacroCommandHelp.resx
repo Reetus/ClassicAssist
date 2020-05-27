@@ -1268,4 +1268,10 @@ GetEnemy(['Murderer'], 'Any', 'Closest')
 #get next any notoriety, humanoid or transformation - unmounted
 GetEnemy(['Any'], 'Both', 'Next', 'Unmounted')</value>
   </data>
+  <data name="TARGETXYZ_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Targets the ground at the given coordinates.</value>
+  </data>
+  <data name="TARGETXYZ_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TargetXYZ(1000, 1000, 0)</value>
+  </data>
 </root>

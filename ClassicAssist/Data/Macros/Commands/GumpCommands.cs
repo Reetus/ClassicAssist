@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using Assistant;
 using ClassicAssist.Resources;
+using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects.Gumps;
 using UOC = ClassicAssist.UO.Commands;
@@ -88,5 +90,29 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             Engine.SendPacketToServer( new QuestsButtonRequest() );
         }
+
+        //public static int SendCustomGump( Gump gump )
+        //{
+        //    PacketFilterInfo pfi = new PacketFilterInfo( 0xB1,
+        //        new[] { PacketFilterConditions.IntAtPositionCondition( (int) gump.ID, 7 ) } );
+
+        //    Engine.AddSendFilter( pfi );
+        //    gump.SendGump();
+
+        //    PacketWaitEntry we = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Outgoing, true, true );
+
+        //    we.Lock.WaitOne();
+
+        //    if ( we.Packet == null )
+        //    {
+        //        return -1;
+        //    }
+
+        //    PacketReader reader = new PacketReader( we.Packet, we.Packet.Length, false );
+        //    reader.ReadInt32();
+        //    reader.ReadInt32();
+        //    int buttonId = reader.ReadInt32();
+        //    return buttonId;
+        //}
     }
 }

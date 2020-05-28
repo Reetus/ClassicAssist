@@ -17,20 +17,26 @@
 
 #endregion
 
-using ClassicAssist.UO.Network.PacketFilter;
+using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UO.Network.Packets
 {
-    public class MultiTarget : BasePacket, IMacroCommandParser
+    public class MobileMoving : BasePacket
     {
-        public string Parse( byte[] packet, int length, PacketDirection direction )
+        public MobileMoving( Mobile mobile, int hueOverride = 0 )
         {
-            if ( packet[0] != 0x99 )
-            {
-                return null;
-            }
-
-            return direction == PacketDirection.Incoming ? "WaitForTarget(5000)\r\n" : null;
+            _writer = new PacketWriter( 17 );
+            _writer.Write( (byte) 0x77 );
+            _writer.Write( mobile.Serial );
+            _writer.Write( (short) mobile.ID );
+            _writer.Write( (short) mobile.X );
+            _writer.Write( (short) mobile.Y );
+            _writer.Write( (sbyte) mobile.Z );
+            _writer.Write( (byte) mobile.Direction );
+            _writer.Write( (short) ( hueOverride > 0 ? hueOverride : mobile.Hue ) );
+            _writer.Write( (byte) mobile.Status );
+            _writer.Write( (byte) mobile.Notoriety );
         }
     }
 }

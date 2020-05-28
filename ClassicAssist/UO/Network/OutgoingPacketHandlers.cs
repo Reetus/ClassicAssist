@@ -2,6 +2,7 @@
 using System.Linq;
 using Assistant;
 using ClassicAssist.Data.Abilities;
+using ClassicAssist.Data.Counters;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.UO.Data;
@@ -63,6 +64,9 @@ namespace ClassicAssist.UO.Network
         private static void OnLiftRequest( PacketReader reader )
         {
             Engine.LastActionPacket = DateTime.Now;
+            Engine.Player.Holding = reader.ReadInt32();
+            Engine.Player.HoldingAmount = reader.ReadUInt16();
+            CountersManager.GetInstance().RecountAll?.Invoke();
         }
 
         private static void OnDropRequest( PacketReader reader )

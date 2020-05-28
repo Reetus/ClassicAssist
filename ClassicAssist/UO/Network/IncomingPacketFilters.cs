@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Filters;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.UO.Network
@@ -14,8 +17,168 @@ namespace ClassicAssist.UO.Network
 
         public static void Initialize()
         {
+            Register( 0x20, OnMobileUpdate );
+            Register( 0x77, OnMobileMoving );
+            Register( 0x78, OnMobileIncoming );
             Register( 0xC1, OnLocalizedMessage );
             Register( 0xCC, OnLocalizedMessageAffix );
+            Register( 0xF3, OnSAWorldItem );
+        }
+
+        private static bool OnMobileUpdate( byte[] packet, int length )
+        {
+            PacketReader reader = new PacketReader( packet, length, true );
+            int serial = reader.ReadInt32();
+            int id = reader.ReadInt16();
+            reader.ReadByte(); // BYTE 0x00;
+            int hue = reader.ReadUInt16();
+            int status = reader.ReadByte();
+            int x = reader.ReadInt16();
+            int y = reader.ReadInt16();
+            reader.ReadInt16(); // WORD 0x00;
+            int direction = reader.ReadByte() & 0x07;
+            int z = reader.ReadSByte();
+
+            Mobile mobile = new Mobile( serial )
+            {
+                ID = id,
+                Hue = hue,
+                Status = (MobileStatus) status,
+                X = x,
+                Y = y,
+                Direction = (Direction) direction,
+                Z = z
+            };
+
+            if ( !Engine.RehueList.CheckMobileUpdate( mobile ) )
+            {
+                return false;
+            }
+
+            // Will need to send to handler ourselves because we won't see packet again
+            PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x20 );
+            handler?.OnReceive( new PacketReader( packet, length, true ) );
+            return true;
+        }
+
+        private static bool OnSAWorldItem( byte[] packet, int length )
+        {
+            if ( !Engine.RehueList.CheckSAWorldItem( ref packet, ref length ) )
+            {
+                return false;
+            }
+
+            // Will need to send to handler ourselves because we won't see packet again
+            PacketHandler handler = IncomingPacketHandlers.GetHandler( 0xF3 );
+            handler?.OnReceive( new PacketReader( packet, length, true ) );
+            return true;
+        }
+
+        private static bool OnMobileMoving( byte[] packet, int length )
+        {
+            PacketReader reader = new PacketReader( packet, length, true );
+            int serial = reader.ReadInt32();
+            int id = reader.ReadInt16();
+            int x = reader.ReadInt16();
+            int y = reader.ReadInt16();
+            int z = reader.ReadSByte();
+            int direction = reader.ReadByte() & 0x07;
+            int hue = reader.ReadUInt16();
+            int status = reader.ReadByte();
+            int notoriety = reader.ReadByte();
+
+            Mobile mobile = new Mobile( serial )
+            {
+                ID = id,
+                X = x,
+                Y = y,
+                Z = z,
+                Direction = (Direction) direction,
+                Hue = hue,
+                Status = (MobileStatus) status,
+                Notoriety = (Notoriety) notoriety
+            };
+
+            if ( !Engine.RehueList.CheckMobileMoving( mobile ) )
+            {
+                return false;
+            }
+
+            // Will need to send to handler ourselves because we won't see packet again
+            reader.Seek( 1, SeekOrigin.Begin );
+            PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x77 );
+            handler?.OnReceive( reader );
+            return true;
+        }
+
+        private static bool OnMobileIncoming( byte[] packet, int length )
+        {
+            PacketReader reader = new PacketReader( packet, length, false );
+
+            int serial = reader.ReadInt32();
+            ItemCollection container = new ItemCollection( serial );
+
+            Mobile mobile = serial == Engine.Player?.Serial ? Engine.Player : Engine.GetOrCreateMobile( serial );
+
+            mobile.ID = reader.ReadInt16();
+            mobile.X = reader.ReadInt16();
+            mobile.Y = reader.ReadInt16();
+            mobile.Z = reader.ReadSByte();
+            mobile.Direction = (Direction) ( reader.ReadByte() & 0x07 );
+            mobile.Hue = reader.ReadUInt16();
+            mobile.Status = (MobileStatus) reader.ReadByte();
+            mobile.Notoriety = (Notoriety) reader.ReadByte();
+
+            bool useNewIncoming = Engine.ClientVersion >= new Version( 7, 0, 33, 1 );
+
+            for ( ;; )
+            {
+                int itemSerial = reader.ReadInt32();
+
+                if ( itemSerial == 0 )
+                {
+                    break;
+                }
+
+                Item item = Engine.GetOrCreateItem( itemSerial );
+                item.Owner = serial;
+                item.ID = reader.ReadUInt16();
+                item.Layer = (Layer) reader.ReadByte();
+
+                if ( useNewIncoming )
+                {
+                    item.Hue = reader.ReadUInt16();
+                }
+                else
+                {
+                    if ( ( item.ID & 0x8000 ) != 0 )
+                    {
+                        item.ID ^= 0x8000;
+                        item.Hue = reader.ReadUInt16();
+                    }
+                }
+
+                container.Add( item );
+            }
+
+            mobile.Equipment.Clear();
+            mobile.Equipment.Add( container.GetItems() );
+
+            foreach ( Item item in container.GetItems() )
+            {
+                mobile.SetLayer( item.Layer, item.Serial );
+            }
+
+            if ( !Engine.RehueList.CheckMobileIncoming( mobile, container ) )
+            {
+                return false;
+            }
+
+            // Will need to send to handler ourselves because we won't see packet again
+            reader.Seek( 3, SeekOrigin.Begin );
+            PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x78 );
+            handler?.OnReceive( reader );
+            return true;
         }
 
         private static bool OnLocalizedMessage( byte[] packet, int length )

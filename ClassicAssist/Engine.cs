@@ -307,7 +307,7 @@ namespace Assistant
 
                 handler?.OnReceive?.Invoke( new PacketReader( packet.GetPacket(), packet.GetLength(), length > 0 ) );
 
-                PacketWaitEntries.CheckWait( packet.GetPacket(), PacketDirection.Incoming );
+                PacketWaitEntries?.CheckWait( packet.GetPacket(), PacketDirection.Incoming );
             }
             catch ( Exception e )
             {
@@ -329,7 +329,7 @@ namespace Assistant
 
                 handler?.OnReceive?.Invoke( new PacketReader( packet.GetPacket(), packet.GetLength(), length > 0 ) );
 
-                PacketWaitEntries.CheckWait( packet.GetPacket(), PacketDirection.Outgoing );
+                PacketWaitEntries?.CheckWait( packet.GetPacket(), PacketDirection.Outgoing );
             }
             catch ( Exception e )
             {
@@ -481,6 +481,8 @@ namespace Assistant
 
                 InternalPacketSentEvent?.Invoke( packet, length );
 
+                PacketWaitEntries?.CheckWait( packet, PacketDirection.Outgoing, true );
+
                 _sendToServer?.Invoke( ref packet, ref length );
 
                 _nextPacketSendTime = DateTime.Now + PACKET_SEND_DELAY;
@@ -617,6 +619,8 @@ namespace Assistant
 
                 SentPacketFilteredEvent?.Invoke( data, data.Length );
 
+                PacketWaitEntries.CheckWait( data, PacketDirection.Outgoing, true );
+
                 return false;
             }
 
@@ -642,6 +646,8 @@ namespace Assistant
                 }
 
                 ReceivedPacketFilteredEvent?.Invoke( data, data.Length );
+
+                PacketWaitEntries.CheckWait( data, PacketDirection.Incoming, true );
 
                 return false;
             }

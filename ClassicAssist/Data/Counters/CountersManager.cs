@@ -23,6 +23,7 @@ namespace ClassicAssist.Data.Counters
             Items.CollectionChanged += OnCollectionChanged;
 
             IncomingPacketHandlers.ContainerContentsEvent += OnContainerContentsEvent;
+            IncomingPacketHandlers.NewWorldItemEvent += OnNewWorldItemEvent;
 
             Engine.DisconnectedEvent += () =>
             {
@@ -44,6 +45,11 @@ namespace ClassicAssist.Data.Counters
         public Action RecountAll { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnNewWorldItemEvent( Item item )
+        {
+            RecountAll?.Invoke();
+        }
 
         private void OnContainerContentsEvent( int serial, ItemCollection container )
         {

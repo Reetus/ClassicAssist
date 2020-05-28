@@ -29,18 +29,63 @@ namespace ClassicAssist.UO.Data
             return _rehueList.ContainsKey( serial );
         }
 
-        public void CheckRehue( Item item )
+        public void CheckItem( Item item )
         {
             if ( !_rehueList.TryGetValue( item.Serial, out int hueOverride ) )
             {
                 return;
             }
 
-            Engine.SendPacketToClient( new ContainerContentUpdate( item.Serial, item.ID, item.Direction, item.Count,
-                item.X, item.Y, item.Grid, item.Owner, hueOverride ) );
+            if ( item.Owner != 0 && !UOMath.IsMobile( item.Serial ) )
+            {
+                Engine.SendPacketToClient( new ContainerContentUpdate( item.Serial, item.ID, item.Direction, item.Count,
+                    item.X, item.Y, item.Grid, item.Owner, hueOverride ) );
+            }
+            else
+            {
+                // TODO
+                Commands.Resync();
+            }
         }
 
-        public void CheckRehue( ItemCollection collection )
+        public bool CheckSAWorldItem( ref byte[] packet, ref int length )
+        {
+            int serial = ( packet[4] << 24 ) | ( packet[5] << 16 ) | ( packet[6] << 8 ) | packet[7];
+
+            if ( !_rehueList.TryGetValue( serial, out int hueOverride ) )
+            {
+                return false;
+            }
+
+            Engine.SendPacketToClient( new SAWorldItem( packet, length, hueOverride ) );
+            return true;
+        }
+
+        public bool CheckMobileIncoming( Mobile mobile, ItemCollection equipment )
+        {
+            if ( !_rehueList.TryGetValue( mobile.Serial, out int hueOverride ) )
+            {
+                return false;
+            }
+
+            Engine.SendPacketToClient( new MobileIncoming( mobile, equipment, hueOverride ) );
+            return true;
+        }
+
+        public bool CheckMobileUpdate( Mobile mobile )
+        {
+            if ( !_rehueList.TryGetValue( mobile.Serial, out int hueOverride ) )
+            {
+                return false;
+            }
+
+            Engine.SendPacketToClient( new MobileUpdate( mobile.Serial, mobile.ID,
+                hueOverride > 0 ? hueOverride : mobile.Hue, mobile.Status, mobile.X, mobile.Y, mobile.Z,
+                mobile.Direction ) );
+            return true;
+        }
+
+        public void CheckContainer( ItemCollection collection )
         {
             int backpack = Engine.Player?.Backpack?.Serial ?? 0;
 
@@ -48,9 +93,20 @@ namespace ClassicAssist.UO.Data
             {
                 if ( item.IsDescendantOf( backpack ) )
                 {
-                    CheckRehue( item );
+                    CheckItem( item );
                 }
             }
+        }
+
+        public bool CheckMobileMoving( Mobile mobile )
+        {
+            if ( !_rehueList.TryGetValue( mobile.Serial, out int hueOverride ) )
+            {
+                return false;
+            }
+
+            Engine.SendPacketToClient( new MobileMoving( mobile, hueOverride ) );
+            return true;
         }
     }
 }

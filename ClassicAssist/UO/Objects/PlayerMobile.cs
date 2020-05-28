@@ -61,6 +61,8 @@ namespace ClassicAssist.UO.Objects
 
         public int Gold { get; set; }
         public int HitChanceIncrease { get; set; }
+        public int Holding { get; set; }
+        public int HoldingAmount { get; set; }
         public int Int { get; set; }
 
         [DisplayFormat( typeof( HexFormatProvider ) )]

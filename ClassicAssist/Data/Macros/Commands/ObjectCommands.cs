@@ -4,6 +4,7 @@ using System.Linq;
 using Assistant;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
+using ClassicAssist.UO;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
@@ -480,6 +481,52 @@ namespace ClassicAssist.Data.Macros.Commands
             UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
 
             return false;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Hue ) } )]
+        public static void Rehue( object obj, int hue )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial > 0 )
+            {
+                if ( hue > 0 )
+                {
+                    Engine.RehueList.Add( serial, hue );
+                }
+                else
+                {
+                    Engine.RehueList.Remove( serial );
+                }
+
+                if ( UOMath.IsMobile( serial ) )
+                {
+                    Mobile m = Engine.Mobiles.GetMobile( serial );
+
+                    if ( m == null )
+                    {
+                        return;
+                    }
+
+                    Engine.SendPacketToClient( new MobileIncoming( m, m.Equipment, hue ) );
+                }
+                else
+                {
+                    Item i = Engine.Items.GetItem( serial );
+
+                    if ( i == null )
+                    {
+                        return;
+                    }
+
+                    Engine.RehueList.CheckItem( i );
+                }
+
+                return;
+            }
+
+            UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
         }
     }
 }

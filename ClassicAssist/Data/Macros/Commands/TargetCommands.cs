@@ -259,8 +259,8 @@ namespace ClassicAssist.Data.Macros.Commands
             nameof( TargetNotoriety ), nameof( TargetBodyType ), nameof( TargetDistance ),
             nameof( TargetInfliction )
         } )]
-        public static bool GetFriend( IEnumerable<string> notorieties, string bodyType = "Any", string distance = "Next",
-            string infliction = "Any" )
+        public static bool GetFriend( IEnumerable<string> notorieties, string bodyType = "Any",
+            string distance = "Next", string infliction = "Any" )
         {
             TargetNotoriety notoFlags = TargetNotoriety.None;
 
@@ -480,7 +480,12 @@ namespace ClassicAssist.Data.Macros.Commands
             return result;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Target ), Parameters = new[] { nameof( ParameterType.XCoordinate ), nameof(ParameterType.YCoordinate), nameof(ParameterType.ZCoordinate) } )]
+        [CommandsDisplay( Category = nameof( Strings.Target ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.XCoordinate ), nameof( ParameterType.YCoordinate ),
+                nameof( ParameterType.ZCoordinate )
+            } )]
         public static void TargetXYZ( int x, int y, int z )
         {
             Engine.SendPacketToServer( new Target( TargetTypeEnum.Tile, -1, TargetFlags.None, 0, x, y, z, 0, true ) );

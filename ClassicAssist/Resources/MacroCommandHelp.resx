@@ -1274,4 +1274,10 @@ GetEnemy(['Any'], 'Both', 'Next', 'Unmounted')</value>
   <data name="TARGETXYZ_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>TargetXYZ(1000, 1000, 0)</value>
   </data>
+  <data name="REHUE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Rehue an item/mobile the specified hue value, set to 0 to remove. (Experimental)</value>
+  </data>
+  <data name="REHUE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Rehue("mount", 1176)</value>
+  </data>
 </root>

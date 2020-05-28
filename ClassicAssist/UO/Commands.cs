@@ -582,14 +582,14 @@ namespace ClassicAssist.UO
                 }
                 catch ( OperationCanceledException )
                 {
-                    return (-1, false);
+                    return ( -1, false );
                 }
                 catch ( ThreadInterruptedException )
                 {
-                    return (-1, false);
+                    return ( -1, false );
                 }
 
-                return (index, index == 0 && targetTask.Result);
+                return ( index, index == 0 && targetTask.Result );
             }
             finally
             {

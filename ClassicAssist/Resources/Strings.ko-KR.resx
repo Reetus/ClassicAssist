@@ -1275,4 +1275,7 @@
   <data name="Total base:" xml:space="preserve">
     <value>총 기준:</value>
   </data>
+  <data name="Drop Holding Object" xml:space="preserve">
+    <value>드롭 홀딩 오브젝트</value>
+  </data>
 </root>

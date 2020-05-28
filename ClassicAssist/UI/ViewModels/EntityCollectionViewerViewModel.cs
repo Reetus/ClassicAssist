@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,6 +24,8 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class EntityCollectionViewerViewModel : BaseViewModel
     {
+        private const int _defaultShrinkValue = 0x2106;
+
         private ICommand _applyFiltersCommand;
         private ICommand _cancelActionCommand;
         private CancellationTokenSource _cancellationToken;
@@ -43,6 +46,7 @@ namespace ClassicAssist.UI.ViewModels
             new ObservableCollection<EntityCollectionData>();
 
         private bool _showProperties;
+        private Lazy<int[]> _shrinkEntries = new Lazy<int[]>( LoadShrinkTable );
 
         private IComparer<Entity> _sorter = new IDThenSerialComparer();
         private string _statusLabel;
@@ -154,6 +158,41 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _topmost;
             set => SetProperty( ref _topmost, value );
+        }
+
+        private static int[] LoadShrinkTable()
+        {
+            int[] table = new int[ushort.MaxValue];
+
+            using ( StringReader reader = new StringReader( Properties.Resources.Shrink ) )
+            {
+                string line;
+
+                while ( ( line = reader.ReadLine() ) != null )
+                {
+                    if ( line.Length == 0 || line.StartsWith( "#" ) )
+                    {
+                        continue;
+                    }
+
+                    string[] split = line.Split( '\t' );
+
+                    if ( split.Length < 2 )
+                    {
+                        continue;
+                    }
+
+                    int body = Convert.ToInt32( split[0] );
+                    int item = Convert.ToInt32( split[1], 16 );
+
+                    if ( body >= 0 && body < table.Length )
+                    {
+                        table[body] = item;
+                    }
+                }
+            }
+
+            return table;
         }
 
         private void EquipItem( object obj )

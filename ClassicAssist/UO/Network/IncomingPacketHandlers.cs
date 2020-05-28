@@ -8,6 +8,7 @@ using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Abilities;
 using ClassicAssist.Data.Chat;
+using ClassicAssist.Data.Counters;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Skills;
 using ClassicAssist.Data.Vendors;
@@ -38,6 +39,8 @@ namespace ClassicAssist.UO.Network
 
         public delegate void dMobileUpdated( Mobile mobile );
 
+        public delegate void dNewWorldItem( Item item );
+
         public delegate void dSkillList( SkillInfo[] skills );
 
         public delegate void dSkillUpdated( int id, float value, float baseValue, LockStatus lockStatus,
@@ -60,6 +63,8 @@ namespace ClassicAssist.UO.Network
         public static event dSkillList SkillsListEvent;
         public static event dMobileUpdated MobileUpdatedEvent;
         public static event dMobileIncoming MobileIncomingEvent;
+
+        public static event dNewWorldItem NewWorldItemEvent;
         public static event dContainerContents ContainerContentsEvent;
         public static event dGump GumpEvent;
         public static event dBufficonEnabledDisabled BufficonEnabledDisabledEvent;
@@ -71,6 +76,7 @@ namespace ClassicAssist.UO.Network
             _extendedHandlers = new PacketHandler[0x100];
 
             Register( 0x11, 0, OnMobileStatus );
+            Register( 0x1A, 0, OnWorldItem );
             Register( 0x17, 0, OnHealthbarColour );
             Register( 0x1B, 37, OnInitializePlayer );
             Register( 0x1C, 0, OnASCIIText );
@@ -80,6 +86,9 @@ namespace ClassicAssist.UO.Network
             Register( 0x22, 3, OnMoveAccepted );
             Register( 0x24, 9, OnContainerDisplay );
             Register( 0x25, 21, OnItemAddedToContainer );
+            Register( 0x27, 2, OnResetHolding );
+            Register( 0x28, 5, OnResetHolding );
+            Register( 0x29, 1, OnResetHolding );
             Register( 0x2E, 15, OnItemEquipped );
             Register( 0x3A, 0, OnSkillsList );
             Register( 0x3C, 0, OnContainerContents );
@@ -112,6 +121,77 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x10, 0, OnDisplayEquipmentInfo );
             RegisterExtended( 0x21, 0, OnClearWeaponAbility );
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
+        }
+
+        private static void OnWorldItem( PacketReader reader )
+        {
+            byte[] packet = reader.GetData();
+            Item item;
+            uint serial = (uint) ( ( packet[3] << 24 ) | ( packet[4] << 16 ) | ( packet[5] << 8 ) | packet[6] );
+            int offset = 9;
+
+            if ( ( serial & 0x80000000 ) != 0 )
+            {
+                serial ^= 0x80000000;
+                item = Engine.GetOrCreateItem( (int) serial );
+                item.Count = ( packet[offset] << 8 ) | packet[offset + 1];
+                offset += 2;
+            }
+            else
+            {
+                item = Engine.GetOrCreateItem( (int) serial );
+            }
+
+            int id = ( packet[7] << 8 ) | packet[8];
+
+            if ( ( id & 0x8000 ) != 0 )
+            {
+                id ^= 0x8000;
+                id += packet[offset]; // stack id
+                offset++;
+            }
+
+            item.ID = id;
+            int x = ( packet[offset] << 8 ) | packet[offset + 1];
+            int y = ( packet[offset + 2] << 8 ) | packet[offset + 3];
+            offset += 4;
+
+            if ( ( x & 0x8000 ) != 0 )
+            {
+                x ^= 0x8000;
+                item.Direction = (Direction) packet[offset];
+                offset++;
+            }
+
+            item.X = x;
+            item.Z = (sbyte) packet[offset];
+            offset++;
+
+            if ( ( y & 0x8000 ) != 0 )
+            {
+                y ^= 0x8000;
+                item.Hue = ( packet[offset] << 8 ) | packet[offset + 1];
+                offset += 2;
+            }
+
+            if ( ( y & 0x4000 ) != 0 )
+            {
+                y ^= 0x4000;
+                item.Flags = packet[offset]; // ???
+            }
+
+            item.Y = y;
+
+            Engine.Items.Add( item );
+
+            NewWorldItemEvent?.Invoke( item );
+        }
+
+        private static void OnResetHolding( PacketReader reader )
+        {
+            Engine.Player.Holding = 0;
+            Engine.Player.HoldingAmount = 0;
+            CountersManager.GetInstance().RecountAll?.Invoke();
         }
 
         private static void OnChatMessage( PacketReader reader )
@@ -953,7 +1033,7 @@ namespace ClassicAssist.UO.Network
             int count = reader.ReadUInt16();
             int x = reader.ReadInt16();
             int y = reader.ReadInt16();
-            int grid = reader.ReadByte();
+            int grid = Engine.ClientVersion > new Version( 6, 0, 1, 7 ) ? reader.ReadByte() : 0;
             int containerSerial = reader.ReadInt32();
             int hue = reader.ReadUInt16();
 
@@ -1016,7 +1096,7 @@ namespace ClassicAssist.UO.Network
 
             if ( item.IsDescendantOf( backpack ) )
             {
-                Engine.RehueList.CheckRehue( item );
+                Engine.RehueList.CheckItem( item );
             }
 
             //rehueList
@@ -1371,7 +1451,7 @@ namespace ClassicAssist.UO.Network
 
                 ContainerContentsEvent?.Invoke( container.Serial, container );
 
-                Engine.RehueList.CheckRehue( container );
+                Engine.RehueList.CheckContainer( container );
             }
             catch ( Exception e )
             {
@@ -1405,6 +1485,7 @@ namespace ClassicAssist.UO.Network
             item.Owner = 0;
 
             Engine.Items.Add( item );
+            NewWorldItemEvent?.Invoke( item );
         }
 
         private static void OnInitializePlayer( PacketReader reader )

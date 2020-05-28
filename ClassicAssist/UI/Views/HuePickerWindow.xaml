@@ -19,14 +19,15 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <DockPanel>
-                <TextBlock Text="{x:Static resources:Strings.Filter_}" DockPanel.Dock="Left" Margin="0,0,10,0"/>
-                <TextBox Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="{x:Static resources:Strings.Filter_}" DockPanel.Dock="Left" Margin="0,0,10,0" />
+                <TextBox Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
-            <ListView x:Name="listView" ItemsSource="{Binding FilteredItems}" SelectedItem="{Binding SelectedItem}" Grid.Row="1" Margin="0,10,0,0">
+            <ListView x:Name="listView" ItemsSource="{Binding FilteredItems}" SelectedItem="{Binding SelectedItem}"
+                      Grid.Row="1" Margin="0,10,0,0">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" ToolTip="{Binding EntryName}">

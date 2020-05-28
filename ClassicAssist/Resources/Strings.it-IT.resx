@@ -1275,4 +1275,7 @@
   <data name="Total base:" xml:space="preserve">
     <value>Base totale:</value>
   </data>
+  <data name="Drop Holding Object" xml:space="preserve">
+    <value>Oggetto Drop Holding</value>
+  </data>
 </root>

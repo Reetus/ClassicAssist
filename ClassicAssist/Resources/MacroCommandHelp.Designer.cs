@@ -2254,6 +2254,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rehue an item/mobile the specified hue value, set to 0 to remove. (Experimental).
+        /// </summary>
+        public static string REHUE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("REHUE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rehue(&quot;mount&quot;, 1176).
+        /// </summary>
+        public static string REHUE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("REHUE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Removes a mobile from the friends list, will display target cursor if no serial/alias supplied..
         /// </summary>
         public static string REMOVEFRIEND_COMMAND_DESCRIPTION {

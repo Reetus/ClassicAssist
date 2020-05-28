@@ -17,37 +17,26 @@
 
 #endregion
 
-using Assistant;
+using System.IO;
 using ClassicAssist.UO.Data;
-using ClassicAssist.UO.Network.PacketFilter;
 
 namespace ClassicAssist.UO.Network.Packets
 {
-    public class GuildButtonRequest : BasePacket, IMacroCommandParser
+    public class SAWorldItem : BasePacket
     {
-        public GuildButtonRequest()
+        public SAWorldItem( byte[] packet, int length, int hueOverride )
         {
-            if ( Engine.Player == null )
+            _writer = new PacketWriter( length );
+            _writer.Write( packet, 0, length );
+
+            if ( hueOverride <= 0 )
             {
                 return;
             }
 
-            _writer = new PacketWriter( 10 );
-            _writer.Write( (byte) 0xD7 );
-            _writer.Write( (short) 10 ); // size
-            _writer.Write( Engine.Player.Serial );
-            _writer.Write( (short) 0x28 );
-            _writer.Write( (byte) 0x0A );
-        }
-
-        public string Parse( byte[] packet, int length, PacketDirection direction )
-        {
-            if ( packet[0] != 0xD7 || packet[8] != 0x28 || packet[9] != 0x0A || direction != PacketDirection.Outgoing )
-            {
-                return null;
-            }
-
-            return "OpenGuildGump()\r\n";
+            _writer.Seek( 21, SeekOrigin.Begin );
+            _writer.Write( (short) hueOverride );
+            _writer.Seek( 0, SeekOrigin.End );
         }
     }
 }

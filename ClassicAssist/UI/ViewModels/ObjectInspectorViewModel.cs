@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Assistant;
@@ -174,10 +173,7 @@ namespace ClassicAssist.UI.ViewModels
             {
                 AddData( new ObjectInspectorData
                 {
-                    Name = name,
-                    Value = amount.ToString(),
-                    Category = category,
-                    IsExpanded = false
+                    Name = name, Value = amount.ToString(), Category = category, IsExpanded = false
                 } );
             }
         }
@@ -185,15 +181,15 @@ namespace ClassicAssist.UI.ViewModels
         private void AddEquipmentPropertyWithSymbol( Item[] items, int cliloc, int symbolIndex, int argumentIndex,
             string name, string category )
         {
-                int amount = CountPropertyListWithSymbol( items.ToArray(), cliloc, symbolIndex, argumentIndex );
+            int amount = CountPropertyListWithSymbol( items.ToArray(), cliloc, symbolIndex, argumentIndex );
 
-                if ( amount != 0 )
+            if ( amount != 0 )
+            {
+                AddData( new ObjectInspectorData
                 {
-                    AddData( new ObjectInspectorData
-                    {
-                        Name = name, Value = amount.ToString(), Category = category, IsExpanded = false
-                    } );
-                }
+                    Name = name, Value = amount.ToString(), Category = category, IsExpanded = false
+                } );
+            }
         }
 
         private static int CountProperty( int serial, int cliloc, int argumentIndex )
@@ -389,8 +385,7 @@ namespace ClassicAssist.UI.ViewModels
 
             ObjectInspectorWindow window = new ObjectInspectorWindow
             {
-                DataContext = new ObjectInspectorViewModel( entity ),
-                Topmost = true
+                DataContext = new ObjectInspectorViewModel( entity ), Topmost = true
             };
             window.ShowDialog();
         }
@@ -404,8 +399,7 @@ namespace ClassicAssist.UI.ViewModels
 
             EntityCollectionViewer window = new EntityCollectionViewer
             {
-                DataContext = new EntityCollectionViewerViewModel( collection ),
-                Topmost = true
+                DataContext = new EntityCollectionViewerViewModel( collection ), Topmost = true
             };
 
             window.ShowDialog();

@@ -35,7 +35,7 @@ namespace ClassicAssist.Data.Macros
 
             if ( item.IsDescendantOf( backpack ) )
             {
-                Engine.RehueList.CheckRehue( item );
+                Engine.RehueList.CheckItem( item );
             }
         }
 

@@ -20,7 +20,7 @@ namespace ClassicAssist.UO.Network.Packets
             _writer.Write( gumpID );
             _writer.Write( buttonID );
 
-            if (switches != null)
+            if ( switches != null )
             {
                 _writer.Write( switches.Count );
 

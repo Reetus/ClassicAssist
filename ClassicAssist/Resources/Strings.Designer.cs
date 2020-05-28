@@ -880,6 +880,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Drop Holding Object.
+        /// </summary>
+        public static string Drop_Holding_Object {
+            get {
+                return ResourceManager.GetString("Drop Holding Object", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duplicate.
         /// </summary>
         public static string Duplicate {

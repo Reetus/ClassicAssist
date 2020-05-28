@@ -47,6 +47,9 @@ namespace ClassicAssist.Data.Macros.Commands
                 case uint i:
                     serial = (int) i;
                     break;
+                case Entity i:
+                    serial = i.Serial;
+                    break;
                 case null:
                     serial = Engine.Player == null ? 0 : Engine.Player.Serial;
 

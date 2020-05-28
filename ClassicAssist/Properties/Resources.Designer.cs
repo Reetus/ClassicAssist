@@ -128,5 +128,51 @@ namespace ClassicAssist.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to # All lines are trimmed. Empty lines and lines starting with &apos;#&apos; are ignored
+        ///# Table for converting body values to item numbers
+        ///# Format:
+        ///# Body&lt;tab&gt;Item
+        ///
+        ///1	0x20DF
+        ///2	0x20D8
+        ///3	0x25B8
+        ///4	0x20D9
+        ///5	0x211D
+        ///6	0x211A
+        ///7	0x25AF
+        ///8	0x2582
+        ///9	0x2584
+        ///10	0x2584
+        ///11	0x25C4
+        ///12	0x20D6
+        ///13	0x25D7
+        ///14	0x20D7
+        ///15	0x25D9
+        ///16	0x25DD
+        ///17	0x25AE
+        ///18	0x20D8
+        ///19	0x25C4
+        ///20	0x25C5
+        ///21	0x25BF
+        ///22	0x258F
+        ///23	0x25D0
+        ///24	0x25A4
+        ///25	0x25D1
+        ///26	0x25C7
+        ///27	0x25D1
+        ///28	0x25C6
+        ///29	0x2592
+        ///30	0x20DC
+        ///31	0x2595
+        ///33	0x20DE
+        ///34	0x25D2 [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Shrink {
+            get {
+                return ResourceManager.GetString("Shrink", resourceCulture);
+            }
+        }
     }
 }

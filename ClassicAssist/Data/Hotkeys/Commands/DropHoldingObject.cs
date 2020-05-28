@@ -17,20 +17,21 @@
 
 #endregion
 
-using ClassicAssist.UO.Network.PacketFilter;
+using Assistant;
+using ClassicAssist.UO.Network.Packets;
 
-namespace ClassicAssist.UO.Network.Packets
+namespace ClassicAssist.Data.Hotkeys.Commands
 {
-    public class MultiTarget : BasePacket, IMacroCommandParser
+    [HotkeyCommand( Name = "Drop Holding Object" )]
+    public class DropHoldingObject : HotkeyCommand
     {
-        public string Parse( byte[] packet, int length, PacketDirection direction )
+        public override void Execute()
         {
-            if ( packet[0] != 0x99 )
+            if ( Engine.Player != null && Engine.Player.Holding != 0 )
             {
-                return null;
+                Engine.SendPacketToServer( new DropItem( Engine.Player.Holding, Engine.Player.Backpack.Serial, -1, -1,
+                    0 ) );
             }
-
-            return direction == PacketDirection.Incoming ? "WaitForTarget(5000)\r\n" : null;
         }
     }
 }

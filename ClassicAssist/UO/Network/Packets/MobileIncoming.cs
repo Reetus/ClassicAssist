@@ -29,7 +29,7 @@ namespace ClassicAssist.UO.Network.Packets
     {
         public MobileIncoming( Mobile mobile, ItemCollection equipment, int overrideHue = 0 )
         {
-            bool useNewIncoming = Engine.ClientVersion >= new Version( 7, 0, 33, 1 );
+            bool useNewIncoming = Engine.ClientVersion == null || Engine.ClientVersion >= new Version( 7, 0, 33, 1 );
 
             int len = 23 + equipment.Count() * 9;
 

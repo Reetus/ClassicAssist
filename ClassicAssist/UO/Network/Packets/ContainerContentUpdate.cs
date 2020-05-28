@@ -10,7 +10,7 @@ namespace ClassicAssist.UO.Network.Packets
         public ContainerContentUpdate( int serial, int id, Direction direction, int amount, int x, int y, int grid,
             int parentSerial, int hue ) : base( PacketDirection.Incoming )
         {
-            bool isNew = Engine.ClientVersion >= new Version( 6, 0, 1, 7 );
+            bool isNew = Engine.ClientVersion == null || Engine.ClientVersion >= new Version( 6, 0, 1, 7 );
 
             _writer = new PacketWriter( isNew ? 21 : 20 );
             _writer.Write( (byte) 0x25 );
@@ -21,7 +21,7 @@ namespace ClassicAssist.UO.Network.Packets
             _writer.Write( (short) x );
             _writer.Write( (short) y );
 
-            if ( Engine.ClientVersion >= new Version( 6, 0, 1, 7 ) )
+            if ( isNew )
             {
                 _writer.Write( (byte) grid );
             }

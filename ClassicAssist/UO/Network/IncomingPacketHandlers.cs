@@ -1033,7 +1033,9 @@ namespace ClassicAssist.UO.Network
             int count = reader.ReadUInt16();
             int x = reader.ReadInt16();
             int y = reader.ReadInt16();
-            int grid = Engine.ClientVersion > new Version( 6, 0, 1, 7 ) ? reader.ReadByte() : 0;
+            int grid = Engine.ClientVersion == null || Engine.ClientVersion >= new Version( 6, 0, 1, 7 )
+                ? reader.ReadByte()
+                : 0;
             int containerSerial = reader.ReadInt32();
             int hue = reader.ReadUInt16();
 
@@ -1316,7 +1318,7 @@ namespace ClassicAssist.UO.Network
             mobile.Status = (MobileStatus) reader.ReadByte();
             mobile.Notoriety = (Notoriety) reader.ReadByte();
 
-            bool useNewIncoming = Engine.ClientVersion >= new Version( 7, 0, 33, 1 );
+            bool useNewIncoming = Engine.ClientVersion == null || Engine.ClientVersion >= new Version( 7, 0, 33, 1 );
 
             for ( ;; )
             {

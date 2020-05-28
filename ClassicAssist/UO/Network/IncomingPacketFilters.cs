@@ -129,7 +129,7 @@ namespace ClassicAssist.UO.Network
             mobile.Status = (MobileStatus) reader.ReadByte();
             mobile.Notoriety = (Notoriety) reader.ReadByte();
 
-            bool useNewIncoming = Engine.ClientVersion >= new Version( 7, 0, 33, 1 );
+            bool useNewIncoming = Engine.ClientVersion == null || Engine.ClientVersion >= new Version( 7, 0, 33, 1 );
 
             for ( ;; )
             {

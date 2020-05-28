@@ -1,4 +1,6 @@
-﻿using ClassicAssist.UO.Data;
+﻿using System;
+using Assistant;
+using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
 
 namespace ClassicAssist.UO.Network.Packets
@@ -17,7 +19,12 @@ namespace ClassicAssist.UO.Network.Packets
             _writer.Write( (short) x );
             _writer.Write( (short) y );
             _writer.Write( (sbyte) z );
-            _writer.Write( (byte) 0 );
+
+            if ( Engine.ClientVersion == null || Engine.ClientVersion >= new Version( 6, 0, 1, 7 ) )
+            {
+                _writer.Write( (byte) 0 );
+            }
+
             _writer.Write( containerSerial );
         }
 

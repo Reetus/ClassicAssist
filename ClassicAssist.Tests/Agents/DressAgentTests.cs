@@ -50,7 +50,7 @@ namespace ClassicAssist.Tests.Agents
 
             IncomingPacketHandlers.Initialize();
             OutgoingPacketHandlers.Initialize();
-            Engine.ClientVersion = new Version( 7, 0, 85, 1 );
+            Engine.ClientVersion = new Version( 7, 0, 45, 1 );
 
             Engine.InternalPacketSentEvent += OnInternalPacketSentEvent;
         }

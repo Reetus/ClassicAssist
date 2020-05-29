@@ -1,19 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ClassicAssist.UI.Views.Filters;
 using ClassicAssist.UO.Data;
+using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.Data.Filters
 {
     [FilterOptions( Name = "Repeated Messages", DefaultEnabled = false )]
-    public class RepeatedMessagesFilter : FilterEntry
+    public class RepeatedMessagesFilter : FilterEntry, IConfigurableFilter
     {
         private const int MESSAGE_LIMIT = 5;
         private static readonly TimeSpan RESET_DELAY = TimeSpan.FromSeconds( 5 );
+        public static MessageFilterOptions FilterOptions { get; set; } = new MessageFilterOptions();
 
         public static bool IsEnabled { get; set; }
 
         private static List<RepeatedMessageEntry> RepeatedMessageEntries { get; } = new List<RepeatedMessageEntry>();
+
+        public void Configure()
+        {
+            RepeatedMessagesFilterConfigureWindow window = new RepeatedMessagesFilterConfigureWindow( FilterOptions );
+            window.ShowDialog();
+        }
+
+        public void Deserialize( JToken token )
+        {
+            if ( token == null )
+            {
+                return;
+            }
+
+            FilterOptions =
+                new MessageFilterOptions { SendToJournal = token["SendToJournal"]?.ToObject<bool>() ?? false };
+        }
+
+        public JObject Serialize()
+        {
+            return new JObject { { "SendToJournal", FilterOptions.SendToJournal } };
+        }
+
+        public void ResetOptions()
+        {
+            FilterOptions = new MessageFilterOptions();
+        }
 
         protected override void OnChanged( bool enabled )
         {
@@ -81,6 +111,12 @@ namespace ClassicAssist.Data.Filters
             public DateTime FirstReceived { get; set; }
             public DateTime LastReceived { get; set; }
             public string Message { get; set; }
+        }
+
+        public class MessageFilterOptions
+        {
+            public bool SendToJournal { get; set; }
+            //TODO Configurable Limit/Cooldown
         }
     }
 }

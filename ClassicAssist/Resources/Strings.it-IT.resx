@@ -1278,4 +1278,7 @@
   <data name="Drop Holding Object" xml:space="preserve">
     <value>Oggetto Drop Holding</value>
   </data>
+  <data name="Journal receives filtered messages" xml:space="preserve">
+    <value>Il diario riceve i messaggi filtrati</value>
+  </data>
 </root>

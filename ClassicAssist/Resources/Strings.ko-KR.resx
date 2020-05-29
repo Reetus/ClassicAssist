@@ -1278,4 +1278,7 @@
   <data name="Drop Holding Object" xml:space="preserve">
     <value>드롭 홀딩 오브젝트</value>
   </data>
+  <data name="Journal receives filtered messages" xml:space="preserve">
+    <value>저널은 필터링된 메시지를 수신합니다.</value>
+  </data>
 </root>

@@ -1278,4 +1278,7 @@
   <data name="Drop Holding Object" xml:space="preserve">
     <value>放置保持对象</value>
   </data>
+  <data name="Journal receives filtered messages" xml:space="preserve">
+    <value>日志接收筛选的消息</value>
+  </data>
 </root>

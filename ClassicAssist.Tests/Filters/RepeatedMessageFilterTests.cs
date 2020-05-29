@@ -18,6 +18,7 @@
 #endregion
 
 using System;
+using Assistant;
 using ClassicAssist.Data.Filters;
 using ClassicAssist.UO.Network;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -57,6 +58,76 @@ namespace ClassicAssist.Tests.Filters
                 bool result = IncomingPacketFilters.CheckPacket( packet, packet.Length );
 
                 Assert.IsTrue( result );
+            } );
+        }
+
+        [TestMethod]
+        public void WillSendToJournalFilteredMessages()
+        {
+            AppDomain appDomain = AppDomain.CreateDomain( "WillSendToJournalFilteredMessages",
+                AppDomain.CurrentDomain.Evidence, AppDomain.CurrentDomain.SetupInformation );
+
+            appDomain.DoCallBack( () =>
+            {
+                byte[] packet =
+                {
+                    0x1C, 0x00, 0x4B, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x04, 0x81, 0x00, 0x03, 0x53, 0x79,
+                    0x73, 0x74, 0x65, 0x6D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x54, 0x61, 0x72, 0x67,
+                    0x65, 0x74, 0x20, 0x69, 0x73, 0x20, 0x6E, 0x6F, 0x74, 0x20, 0x69, 0x6E, 0x20, 0x6C, 0x69, 0x6E,
+                    0x65, 0x20, 0x6F, 0x66, 0x20, 0x73, 0x69, 0x67, 0x68, 0x74, 0x00
+                };
+
+                IncomingPacketFilters.Initialize();
+                RepeatedMessagesFilter.IsEnabled = true;
+                RepeatedMessagesFilter.FilterOptions.SendToJournal = true;
+
+                IncomingPacketFilters.CheckPacket( packet, packet.Length );
+                IncomingPacketFilters.CheckPacket( packet, packet.Length );
+                IncomingPacketFilters.CheckPacket( packet, packet.Length );
+                IncomingPacketFilters.CheckPacket( packet, packet.Length );
+                IncomingPacketFilters.CheckPacket( packet, packet.Length );
+                IncomingPacketFilters.CheckPacket( packet, packet.Length );
+
+                bool result = IncomingPacketFilters.CheckPacket( packet, packet.Length );
+
+                Assert.IsTrue( result );
+                Assert.IsTrue( Engine.Journal.Count > 0 );
+            } );
+        }
+
+        [TestMethod]
+        public void WontSendToJournalFilteredMessagesDisabled()
+        {
+            AppDomain appDomain = AppDomain.CreateDomain( "WontSendToJournalFilteredMessagesDisabled",
+                AppDomain.CurrentDomain.Evidence, AppDomain.CurrentDomain.SetupInformation );
+
+            appDomain.DoCallBack( () =>
+            {
+                byte[] packet =
+                {
+                    0x1C, 0x00, 0x4B, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x04, 0x81, 0x00, 0x03, 0x53, 0x79,
+                    0x73, 0x74, 0x65, 0x6D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x54, 0x61, 0x72, 0x67,
+                    0x65, 0x74, 0x20, 0x69, 0x73, 0x20, 0x6E, 0x6F, 0x74, 0x20, 0x69, 0x6E, 0x20, 0x6C, 0x69, 0x6E,
+                    0x65, 0x20, 0x6F, 0x66, 0x20, 0x73, 0x69, 0x67, 0x68, 0x74, 0x00
+                };
+
+                IncomingPacketFilters.Initialize();
+                RepeatedMessagesFilter.IsEnabled = true;
+                RepeatedMessagesFilter.FilterOptions.SendToJournal = false;
+
+                IncomingPacketFilters.CheckPacket( packet, packet.Length );
+                IncomingPacketFilters.CheckPacket( packet, packet.Length );
+                IncomingPacketFilters.CheckPacket( packet, packet.Length );
+                IncomingPacketFilters.CheckPacket( packet, packet.Length );
+                IncomingPacketFilters.CheckPacket( packet, packet.Length );
+                IncomingPacketFilters.CheckPacket( packet, packet.Length );
+
+                bool result = IncomingPacketFilters.CheckPacket( packet, packet.Length );
+
+                Assert.IsTrue( result );
+                Assert.AreEqual( 0, Engine.Journal.Count );
             } );
         }
     }

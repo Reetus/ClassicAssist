@@ -1546,6 +1546,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Journal receives filtered messages.
+        /// </summary>
+        public static string Journal_receives_filtered_messages {
+            get {
+                return ResourceManager.GetString("Journal receives filtered messages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string Language {

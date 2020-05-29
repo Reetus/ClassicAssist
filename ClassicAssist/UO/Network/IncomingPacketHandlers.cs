@@ -492,8 +492,7 @@ namespace ClassicAssist.UO.Network
                 }
             }
 
-            Engine.Journal.Write( journalEntry );
-            JournalEntryAddedEvent?.Invoke( journalEntry );
+            AddToJournal( journalEntry );
         }
 
         private static void OnLocalizedTextAffix( PacketReader reader )
@@ -533,8 +532,7 @@ namespace ClassicAssist.UO.Network
                 journalEntry.Text = $"{text}{affix}";
             }
 
-            Engine.Journal.Write( journalEntry );
-            JournalEntryAddedEvent?.Invoke( journalEntry );
+            AddToJournal( journalEntry );
         }
 
         private static void OnPartyCommand( PacketReader reader )
@@ -675,8 +673,7 @@ namespace ClassicAssist.UO.Network
                 Text = reader.ReadString()
             };
 
-            Engine.Journal.Write( journalEntry );
-            JournalEntryAddedEvent?.Invoke( journalEntry );
+            AddToJournal( journalEntry );
         }
 
         private static void OnUnicodeText( PacketReader reader )
@@ -693,8 +690,7 @@ namespace ClassicAssist.UO.Network
                 Text = reader.ReadUnicodeString()
             };
 
-            Engine.Journal.Write( journalEntry );
-            JournalEntryAddedEvent?.Invoke( journalEntry );
+            AddToJournal( journalEntry );
         }
 
         private static void OnMoveAccepted( PacketReader reader )
@@ -1540,6 +1536,12 @@ namespace ClassicAssist.UO.Network
         private static PacketHandler GetExtendedHandler( int packetId )
         {
             return _extendedHandlers[packetId];
+        }
+
+        public static void AddToJournal( JournalEntry entry )
+        {
+            Engine.Journal.Write( entry );
+            JournalEntryAddedEvent?.Invoke( entry );
         }
     }
 }

@@ -41,7 +41,14 @@ namespace ClassicAssist.UO.Network
                 Text = reader.ReadString()
             };
 
-            return RepeatedMessagesFilter.CheckMessage( journalEntry );
+            bool block = RepeatedMessagesFilter.CheckMessage( journalEntry );
+
+            if ( block && RepeatedMessagesFilter.FilterOptions.SendToJournal )
+            {
+                IncomingPacketHandlers.AddToJournal( journalEntry );
+            }
+
+            return block;
         }
 
         private static bool OnMobileUpdate( byte[] packet, int length )
@@ -220,6 +227,11 @@ namespace ClassicAssist.UO.Network
 
             bool block = RepeatedMessagesFilter.CheckMessage( journalEntry );
 
+            if ( block && RepeatedMessagesFilter.FilterOptions.SendToJournal )
+            {
+                IncomingPacketHandlers.AddToJournal( journalEntry );
+            }
+
             return block || ClilocFilter.CheckMessage( journalEntry );
         }
 
@@ -263,6 +275,11 @@ namespace ClassicAssist.UO.Network
             }
 
             bool block = RepeatedMessagesFilter.CheckMessage( journalEntry );
+
+            if ( block && RepeatedMessagesFilter.FilterOptions.SendToJournal )
+            {
+                IncomingPacketHandlers.AddToJournal( journalEntry );
+            }
 
             return block || ClilocFilter.CheckMessageAffix( journalEntry, affixType, affix );
         }

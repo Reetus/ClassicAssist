@@ -17,12 +17,31 @@ namespace ClassicAssist.UO.Network
 
         public static void Initialize()
         {
+            Register( 0x1C, OnASCIIMessage );
             Register( 0x20, OnMobileUpdate );
             Register( 0x77, OnMobileMoving );
             Register( 0x78, OnMobileIncoming );
             Register( 0xC1, OnLocalizedMessage );
             Register( 0xCC, OnLocalizedMessageAffix );
             Register( 0xF3, OnSAWorldItem );
+        }
+
+        private static bool OnASCIIMessage( byte[] packet, int length )
+        {
+            PacketReader reader = new PacketReader( packet, length, false );
+
+            JournalEntry journalEntry = new JournalEntry
+            {
+                Serial = reader.ReadInt32(),
+                ID = reader.ReadInt16(),
+                SpeechType = (JournalSpeech) reader.ReadByte(),
+                SpeechHue = reader.ReadInt16(),
+                SpeechFont = reader.ReadInt16(),
+                Name = reader.ReadString( 30 ),
+                Text = reader.ReadString()
+            };
+
+            return RepeatedMessagesFilter.CheckMessage( journalEntry );
         }
 
         private static bool OnMobileUpdate( byte[] packet, int length )

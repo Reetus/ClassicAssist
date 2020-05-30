@@ -196,6 +196,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Enabled.
+        /// </summary>
+        public static string All_Enabled {
+            get {
+                return ResourceManager.GetString("All Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Packets.
+        /// </summary>
+        public static string All_Packets {
+            get {
+                return ResourceManager.GetString("All Packets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All skills:.
         /// </summary>
         public static string All_skills_ {
@@ -903,6 +921,15 @@ namespace ClassicAssist.Resources {
         public static string Enabled {
             get {
                 return ResourceManager.GetString("Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled Packets:.
+        /// </summary>
+        public static string Enabled_Packets_ {
+            get {
+                return ResourceManager.GetString("Enabled Packets:", resourceCulture);
             }
         }
         

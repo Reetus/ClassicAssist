@@ -1,25 +1,47 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Assistant;
+using ClassicAssist.Annotations;
 using ClassicAssist.Data;
 using ClassicAssist.Misc;
+using ClassicAssist.Resources;
 using ClassicAssist.UI.Controls;
 using ClassicAssist.UI.Views;
+using ClassicAssist.UO.Network.PacketFilter;
+using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.UI.ViewModels
 {
     public class DebugViewModel : BaseViewModel, ISettingProvider
     {
+        private ICommand _changePacketEnabledCommand;
         private ICommand _clearCommand;
-        private bool _ignorePingPackets = true;
+        private ICommand _exportLogCommand;
         private ObservableCollection<PacketEntry> _items = new ObservableCollection<PacketEntry>();
+
+        private ObservableCollection<PacketEnabledEntry>
+            _packetEntries = new ObservableCollection<PacketEnabledEntry>();
+
         private bool _running = true;
         private bool _topmost = true;
         private ICommand _viewPlayerEquipmentCommand;
 
         public DebugViewModel()
         {
+            PacketEntries.Add( new PacketEnabledEntry { Name = Strings.All_Packets, PacketID = -1, Enabled = true } );
+
+            for ( byte i = 0; i < 0xFF; i++ )
+            {
+                PacketEntries.Add( new PacketEnabledEntry { Name = $"0x{i:x2}", PacketID = i, Enabled = i != 0x73 } );
+            }
+
             Queue = new ThreadQueue<PacketEntry>( ProcessQueue );
             Engine.PacketReceivedEvent += OnPacketReceivedEvent;
             Engine.PacketSentEvent += OnPacketSentEvent;
@@ -27,18 +49,25 @@ namespace ClassicAssist.UI.ViewModels
             Engine.InternalPacketSentEvent += OnInternalPacketSentEvent;
         }
 
+        public ICommand ChangePacketEnabledCommand =>
+            _changePacketEnabledCommand ??
+            ( _changePacketEnabledCommand = new RelayCommand( EnableDisable, o => true ) );
+
         public ICommand ClearCommand => _clearCommand ?? ( _clearCommand = new RelayCommand( Clear, o => true ) );
 
-        public bool IgnorePingPackets
-        {
-            get => _ignorePingPackets;
-            set => SetProperty( ref _ignorePingPackets, value );
-        }
+        public ICommand ExportLogCommand =>
+            _exportLogCommand ?? ( _exportLogCommand = new RelayCommand( ExportLog, o => true ) );
 
         public ObservableCollection<PacketEntry> Items
         {
             get => _items;
             set => SetProperty( ref _items, value );
+        }
+
+        public ObservableCollection<PacketEnabledEntry> PacketEntries
+        {
+            get => _packetEntries;
+            set => SetProperty( ref _packetEntries, value );
         }
 
         public ThreadQueue<PacketEntry> Queue { get; set; }
@@ -66,7 +95,7 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            JObject options = new JObject { { "IgnorePingPackets", IgnorePingPackets } };
+            JObject options = new JObject();
 
             json?.Add( "Debug", options );
         }
@@ -77,10 +106,48 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( json?["Debug"] == null )
             {
+            }
+        }
+
+        private void ExportLog( object obj )
+        {
+            if ( !( obj is IEnumerable<PacketEntry> items ) )
+            {
                 return;
             }
 
-            IgnorePingPackets = json["Debug"]["IgnorePingPackets"].ToObject<bool>();
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                InitialDirectory = Engine.StartupPath ?? Environment.CurrentDirectory,
+                Filter = "JSON Packet Log|*.packets.json",
+                FileName = "export.packets.json"
+            };
+
+            bool? result = sfd.ShowDialog();
+
+            if ( !result.HasValue || !result.Value || string.IsNullOrEmpty( sfd.FileName ) )
+            {
+                return;
+            }
+
+            string fileName = sfd.FileName;
+
+            JArray jArray = new JArray();
+
+            foreach ( PacketEntry packetEntry in items )
+            {
+                jArray.Add( new JObject
+                {
+                    { "Title", packetEntry.Title },
+                    { "DateTime", packetEntry.DateTime },
+                    { "Direction", packetEntry.Direction.ToString() },
+                    { "Length", packetEntry.Length },
+                    { "Data", packetEntry.Data.Aggregate( string.Empty, ( current, b ) => current + $"{b:x2} " ) },
+                    { "Base64", Convert.ToBase64String( packetEntry.Data ) }
+                } );
+            }
+
+            File.WriteAllText( fileName, jArray.ToString() );
         }
 
         private void ProcessQueue( PacketEntry entry )
@@ -90,7 +157,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private void OnInternalPacketSentEvent( byte[] data, int length )
         {
-            if ( IgnorePingPackets && data[0] == 0x73 )
+            if ( PacketEntries.FirstOrDefault( e => e.PacketID == data[0] )?.Enabled == false )
             {
                 return;
             }
@@ -100,14 +167,17 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            PacketEntry entry = new PacketEntry { Title = "Internal Outgoing Packet", Data = data };
+            PacketEntry entry = new PacketEntry
+            {
+                Title = "Internal Outgoing Packet", Data = data, Direction = PacketDirection.Outgoing
+            };
 
             Queue.Enqueue( entry );
         }
 
         private void OnInternalPacketReceivedEvent( byte[] data, int length )
         {
-            if ( IgnorePingPackets && data[0] == 0x73 )
+            if ( PacketEntries.FirstOrDefault( e => e.PacketID == data[0] )?.Enabled == false )
             {
                 return;
             }
@@ -117,14 +187,17 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            PacketEntry entry = new PacketEntry { Title = "Internal Incoming Packet", Data = data };
+            PacketEntry entry = new PacketEntry
+            {
+                Title = "Internal Incoming Packet", Data = data, Direction = PacketDirection.Incoming
+            };
 
             Queue.Enqueue( entry );
         }
 
         private void OnPacketSentEvent( byte[] data, int length )
         {
-            if ( IgnorePingPackets && data[0] == 0x73 )
+            if ( PacketEntries.FirstOrDefault( e => e.PacketID == data[0] )?.Enabled == false )
             {
                 return;
             }
@@ -134,14 +207,17 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            PacketEntry entry = new PacketEntry { Title = "Outgoing Packet", Data = data };
+            PacketEntry entry = new PacketEntry
+            {
+                Title = "Outgoing Packet", Data = data, Direction = PacketDirection.Outgoing
+            };
 
             Queue.Enqueue( entry );
         }
 
         private void OnPacketReceivedEvent( byte[] data, int length )
         {
-            if ( IgnorePingPackets && data[0] == 0x73 )
+            if ( PacketEntries.FirstOrDefault( e => e.PacketID == data[0] )?.Enabled == false )
             {
                 return;
             }
@@ -151,7 +227,10 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            PacketEntry entry = new PacketEntry { Title = "Incoming Packet", Data = data };
+            PacketEntry entry = new PacketEntry
+            {
+                Title = "Incoming Packet", Data = data, Direction = PacketDirection.Incoming
+            };
 
             Queue.Enqueue( entry );
         }
@@ -169,6 +248,65 @@ namespace ClassicAssist.UI.ViewModels
         private void Clear( object obj )
         {
             Items.Clear();
+        }
+
+        private void EnableDisable( object obj )
+        {
+            if ( !( obj is PacketEnabledEntry packetEnabledEntry ) )
+            {
+                return;
+            }
+
+            if ( packetEnabledEntry.PacketID != -1 )
+            {
+                return;
+            }
+
+            foreach ( PacketEnabledEntry entry in PacketEntries )
+            {
+                entry.Enabled = packetEnabledEntry.Enabled;
+            }
+        }
+
+        public class PacketEnabledEntry : INotifyPropertyChanged
+        {
+            private bool _enabled;
+            private string _name;
+            private int _packetId;
+
+            public bool Enabled
+            {
+                get => _enabled;
+                set => SetProperty( ref _enabled, value );
+            }
+
+            public string Name
+            {
+                get => _name;
+                set => SetProperty( ref _name, value );
+            }
+
+            public int PacketID
+            {
+                get => _packetId;
+                set => SetProperty( ref _packetId, value );
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            [NotifyPropertyChangedInvocator]
+            protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
+            {
+                PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+            }
+
+            // ReSharper disable once RedundantAssignment
+            public virtual void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
+            {
+                obj = value;
+                OnPropertyChanged( propertyName );
+                CommandManager.InvalidateRequerySuggested();
+            }
         }
     }
 }

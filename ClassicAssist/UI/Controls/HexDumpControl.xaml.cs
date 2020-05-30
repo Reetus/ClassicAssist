@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Text;
 using System.Windows;
+using ClassicAssist.UO.Network.PacketFilter;
 
 namespace ClassicAssist.UI.Controls
 {
     public class PacketEntry
     {
         public byte[] Data { get; set; }
+        public DateTime DateTime { get; set; } = DateTime.Now;
+        public PacketDirection Direction { get; set; }
         public int Length => Data.Length;
         public string Title { get; set; }
     }

@@ -183,7 +183,7 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             MacroManager manager = MacroManager.GetInstance();
 
-            return manager.CurrentMacro != null && manager.CurrentMacro.IsRunning;
+            return manager.CurrentMacro != null && ( manager.CurrentMacro.IsRunning || manager.Replay );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Main ), Parameters = new[] { nameof( ParameterType.MacroName ) } )]
@@ -193,7 +193,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             MacroEntry macro = manager.Items.FirstOrDefault( m => m.Name.Equals( macroName ) );
 
-            return macro != null && macro.IsRunning;
+            return macro != null && ( macro.IsRunning || manager.Replay );
         }
     }
 }

@@ -9,7 +9,7 @@
     xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
     xmlns:debug="clr-namespace:ClassicAssist.UI.Views.Debug"
     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
-    xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
+    xmlns:controls="clr-namespace:ClassicAssist.UI.Controls" x:Name="window"
     x:Class="ClassicAssist.UI.Views.DebugWindow"
     mc:Ignorable="d"
     Title="Debug Window" Height="450" Width="600" Topmost="{Binding Topmost}">
@@ -43,6 +43,30 @@
                             </DrawingGroup>
                         </DrawingImage.Drawing>
                     </DrawingImage>
+                    <DrawingImage x:Key="exportIcon">
+                        <DrawingImage.Drawing>
+                            <DrawingGroup ClipGeometry="M0,0 V502 H502 V0 H0 Z">
+                                <DrawingGroup Opacity="1">
+                                    <DrawingGroup Opacity="1">
+                                        <DrawingGroup Opacity="1">
+                                            <GeometryDrawing Brush="#FF000000"
+                                                             Geometry="F1 M502,502z M0,0z M491.951,414.346L425.581,347.976C418.61,341.006 408.221,338.94 399.113,342.712 390.005,346.484 384.12,355.292 384.12,365.15L384.12,375.13C384.12,377.494,382.197,379.417,379.833,379.417L373.12,379.417 373.12,103C373.12,100.348,372.066,97.804,370.191,95.929L277.191,2.929C275.316,1.054,272.772,0,270.12,0L17.12,0C11.597,0,7.12,4.477,7.12,10L7.12,492C7.12,497.523,11.597,502,17.12,502L363.12,502C368.643,502,373.12,497.523,373.12,492L373.12,463.417 379.833,463.417C382.197,463.417,384.12,465.34,384.12,467.704L384.12,477.684C384.12,487.542 390.005,496.35 399.113,500.122 402.136,501.374 405.299,501.983 408.432,501.983 414.74,501.983 420.924,499.514 425.581,494.858L491.951,428.488C493.826,426.613 494.88,424.069 494.88,421.417 494.88,418.765 493.826,416.221 491.951,414.346z M280.12,34.142L338.978,93 280.12,93 280.12,34.142z M353.12,482L27.12,482 27.12,20 260.12,20 260.12,103C260.12,108.523,264.597,113,270.12,113L353.12,113 353.12,379.417 332.12,379.417C326.597,379.417,322.12,383.894,322.12,389.417L322.12,453.417C322.12,458.94,326.597,463.417,332.12,463.417L353.12,463.417 353.12,482z M411.438,480.716C409.676,482.479 407.755,482.054 406.766,481.645 405.778,481.235 404.12,480.177 404.12,477.684L404.12,467.704C404.12,454.312,393.225,443.417,379.833,443.417L342.12,443.417 342.12,399.417 379.833,399.417C393.225,399.417,404.12,388.522,404.12,375.13L404.12,365.15C404.12,362.658 405.778,361.599 406.766,361.19 407.754,360.78 409.676,360.356 411.438,362.119L470.737,421.417 411.438,480.716z" />
+                                            <GeometryDrawing Brush="#FF000000"
+                                                             Geometry="F1 M502,502z M0,0z M77.62,174L243.12,174C248.643,174 253.12,169.523 253.12,164 253.12,158.477 248.643,154 243.12,154L77.62,154C72.097,154 67.62,158.477 67.62,164 67.62,169.523 72.097,174 77.62,174z" />
+                                            <GeometryDrawing Brush="#FF000000"
+                                                             Geometry="F1 M502,502z M0,0z M302.62,220L77.62,220C72.097,220 67.62,224.477 67.62,230 67.62,235.523 72.097,240 77.62,240L302.62,240C308.143,240 312.62,235.523 312.62,230 312.62,224.477 308.143,220 302.62,220z" />
+                                            <GeometryDrawing Brush="#FF000000"
+                                                             Geometry="F1 M502,502z M0,0z M302.62,286L77.62,286C72.097,286 67.62,290.477 67.62,296 67.62,301.523 72.097,306 77.62,306L302.62,306C308.143,306 312.62,301.523 312.62,296 312.62,290.477 308.143,286 302.62,286z" />
+                                            <GeometryDrawing Brush="#FF000000"
+                                                             Geometry="F1 M502,502z M0,0z M302.62,352L77.62,352C72.097,352 67.62,356.477 67.62,362 67.62,367.523 72.097,372 77.62,372L302.62,372C308.143,372 312.62,367.523 312.62,362 312.62,356.477 308.143,352 302.62,352z" />
+                                            <GeometryDrawing Brush="#FF000000"
+                                                             Geometry="F1 M502,502z M0,0z M302.62,154L280.62,154C275.097,154 270.62,158.477 270.62,164 270.62,169.523 275.097,174 280.62,174L302.62,174C308.143,174 312.62,169.523 312.62,164 312.62,158.477 308.143,154 302.62,154z" />
+                                        </DrawingGroup>
+                                    </DrawingGroup>
+                                </DrawingGroup>
+                            </DrawingGroup>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -63,9 +87,26 @@
                         <Image Source="{StaticResource RemoveIcon}" Height="16"
                                ToolTip="{x:Static resources:Strings.Clear_All}" />
                     </Button>
-                    <Button Command="{Binding ViewPlayerEquipmentCommand}">
+                    <Button Command="{Binding ViewPlayerEquipmentCommand}" Margin="0,0,5,0">
                         <Image Source="{StaticResource PersonIcon}" Height="16" ToolTip="View Player Equipment" />
                     </Button>
+                    <Button Command="{Binding ExportLogCommand}" CommandParameter="{Binding Items}" Margin="0,0,5,0">
+                        <Image Source="{StaticResource exportIcon}" Height="16"
+                               ToolTip="{x:Static resources:Strings.Save}" />
+                    </Button>
+                    <TextBlock Text="{x:Static resources:Strings.Enabled_Packets_}" Margin="0,0,10,0"
+                               VerticalAlignment="Center" />
+                    <ComboBox ItemsSource="{Binding PacketEntries}" Width="100" BorderThickness="1">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding Enabled}"
+                                              Command="{Binding DataContext.ChangePacketEnabledCommand, ElementName=window}"
+                                              CommandParameter="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </ToolBar>
                 <ListBox ItemsSource="{Binding Items}" Margin="10" Grid.Row="1"
                          misc:ListBoxBehavior.ScrollOnNewItem="true">
@@ -81,8 +122,6 @@
                     <CheckBox Content="{x:Static resources:Strings.Topmost}" VerticalAlignment="Center"
                               Margin="0,0,10,0"
                               IsChecked="{Binding Topmost}" />
-                    <CheckBox Content="{x:Static resources:Strings.Ignore_ping_packets}" VerticalAlignment="Center"
-                              Margin="0,0,10,0" IsChecked="{Binding IgnorePingPackets}" />
                 </StackPanel>
             </Grid>
         </TabItem>
@@ -94,9 +133,6 @@
         </TabItem>
         <TabItem Header="{x:Static resources:Strings.Vendor_Buy}">
             <debug:DebugVendorBuyControl />
-        </TabItem>
-        <TabItem Header="{x:Static resources:Strings.Autoloot}">
-            <debug:DebugAutolootControl />
         </TabItem>
         <TabItem Header="{x:Static resources:Strings.Autoloot}">
             <debug:DebugAutolootControl />

@@ -609,30 +609,7 @@ namespace ClassicAssist.UO.Network
         private static void OnHealthbarColour( PacketReader reader )
         {
             int serial = reader.ReadInt32();
-            reader.ReadInt16(); // 0x01;
-
-            int status = reader.ReadInt16();
-            int flags = reader.ReadByte();
-
-            HealthbarColour healthbar = HealthbarColour.None;
-
-            switch ( status )
-            {
-                case 0x01:
-                    healthbar = HealthbarColour.Green;
-
-                    break;
-
-                case 0x02:
-                    healthbar = HealthbarColour.Yellow;
-
-                    break;
-
-                case 0x03:
-                    healthbar = HealthbarColour.Red;
-
-                    break;
-            }
+            int count = reader.ReadInt16();
 
             Mobile mobile = Engine.Mobiles.GetMobile( serial );
 
@@ -641,13 +618,71 @@ namespace ClassicAssist.UO.Network
                 return;
             }
 
-            if ( flags >= 1 )
+            HealthbarColour healthbar = HealthbarColour.None;
+
+            if ( Engine.ClientVersion < new Version( 7, 0, 0, 0 ) )
             {
-                mobile.HealthbarColour |= healthbar;
+                for ( int i = 0; i < count; i++ )
+                {
+                    int type = reader.ReadInt16();
+                    bool enabled = reader.ReadBoolean();
+
+                    switch ( type )
+                    {
+                        case 1 when enabled:
+                            healthbar |= HealthbarColour.Green;
+                            break;
+                        case 1:
+                            healthbar &= ~HealthbarColour.Green;
+                            break;
+                        case 2 when enabled:
+                            healthbar |= HealthbarColour.Yellow;
+                            break;
+                        case 2:
+                            healthbar &= ~HealthbarColour.Yellow;
+                            break;
+                        case 3 when enabled:
+                            healthbar |= HealthbarColour.Red;
+                            break;
+                        case 3:
+                            healthbar &= ~HealthbarColour.Red;
+                            break;
+                    }
+                }
+
+                mobile.HealthbarColour = healthbar;
             }
             else
             {
-                mobile.HealthbarColour &= ~healthbar;
+                int status = reader.ReadInt16();
+                int flags = reader.ReadByte();
+
+                switch ( status )
+                {
+                    case 0x01:
+                        healthbar = HealthbarColour.Green;
+
+                        break;
+
+                    case 0x02:
+                        healthbar = HealthbarColour.Yellow;
+
+                        break;
+
+                    case 0x03:
+                        healthbar = HealthbarColour.Red;
+
+                        break;
+                }
+
+                if ( flags >= 1 )
+                {
+                    mobile.HealthbarColour |= healthbar;
+                }
+                else
+                {
+                    mobile.HealthbarColour &= ~healthbar;
+                }
             }
         }
 
@@ -1313,6 +1348,18 @@ namespace ClassicAssist.UO.Network
             mobile.Hue = reader.ReadUInt16();
             mobile.Status = (MobileStatus) reader.ReadByte();
             mobile.Notoriety = (Notoriety) reader.ReadByte();
+
+            if ( Engine.ClientVersion < new Version( 7, 0, 0, 0 ) )
+            {
+                if ( mobile.Status.HasFlag( MobileStatus.Flying ) )
+                {
+                    mobile.HealthbarColour |= HealthbarColour.Green;
+                }
+                else
+                {
+                    mobile.HealthbarColour &= ~HealthbarColour.Green;
+                }
+            }
 
             bool useNewIncoming = Engine.ClientVersion == null || Engine.ClientVersion >= new Version( 7, 0, 33, 1 );
 

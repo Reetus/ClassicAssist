@@ -213,4 +213,7 @@
   <data name="Encryption" xml:space="preserve">
     <value>Crittografia</value>
   </data>
+  <data name="Open a GitHub issue to have your shard added to the list." xml:space="preserve">
+    <value>Aprire un problema di GitHub per aggiungere la partizione all'elenco.</value>
+  </data>
 </root>

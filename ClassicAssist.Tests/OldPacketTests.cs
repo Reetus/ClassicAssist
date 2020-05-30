@@ -76,8 +76,8 @@ namespace ClassicAssist.Tests
         [TestMethod]
         public void WillParseOldContainerContents()
         {
-            AppDomain appDomain = AppDomain.CreateDomain( "WillParseOldContainerContents", AppDomain.CurrentDomain.Evidence,
-                AppDomain.CurrentDomain.SetupInformation );
+            AppDomain appDomain = AppDomain.CreateDomain( "WillParseOldContainerContents",
+                AppDomain.CurrentDomain.Evidence, AppDomain.CurrentDomain.SetupInformation );
 
             appDomain.DoCallBack( () =>
             {
@@ -102,6 +102,34 @@ namespace ClassicAssist.Tests
                 Assert.AreEqual( 2, container.Container.GetItemCount() );
                 Engine.Items = null;
                 Engine.ClientVersion = new Version( 7, 0, 45, 1 );
+            } );
+        }
+
+        [TestMethod]
+        public void WillParseOldHealthbarColour()
+        {
+            AppDomain appDomain = AppDomain.CreateDomain( "WillParseOldHealthbarColour",
+                AppDomain.CurrentDomain.Evidence, AppDomain.CurrentDomain.SetupInformation );
+
+            appDomain.DoCallBack( () =>
+            {
+                Engine.ClientVersion = new Version( 5, 0, 9, 1 );
+
+                byte[] packet =
+                {
+                    0x17, 0x00, 0x0F, 0x00, 0x07, 0x5D, 0x67, 0x00, 0x02, 0x00, 0x01, 0x01, 0x00, 0x02, 0x00
+                };
+
+                IncomingPacketHandlers.Initialize();
+
+                Mobile mobile = new Mobile( 0x00075D67 );
+
+                Engine.Mobiles.Add( mobile );
+
+                PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x17 );
+                handler?.OnReceive( new PacketReader( packet, packet.Length, false ) );
+
+                Assert.IsTrue( mobile.IsPoisoned );
             } );
         }
     }

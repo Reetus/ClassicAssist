@@ -213,4 +213,7 @@
   <data name="Encryption" xml:space="preserve">
     <value>Encryption</value>
   </data>
+  <data name="Open a GitHub issue to have your shard added to the list." xml:space="preserve">
+    <value>Open a GitHub issue to have your shard added to the list.</value>
+  </data>
 </root>

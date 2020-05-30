@@ -196,6 +196,15 @@ namespace ClassicAssist.Launcher.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open a GitHub issue to have your shard added to the list..
+        /// </summary>
+        public static string Open_a_GitHub_issue_to_have_your_shard_added_to_the_list_ {
+            get {
+                return ResourceManager.GetString("Open a GitHub issue to have your shard added to the list.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Options.
         /// </summary>
         public static string Options {

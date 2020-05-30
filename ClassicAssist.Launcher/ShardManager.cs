@@ -46,7 +46,25 @@ namespace ClassicAssist.Launcher
                 Port = 2593,
                 IsPreset = true,
                 HasStatusProtocol = false,
-                ShardType = 2,
+                ShardType = 2
+            } );
+
+            Shards.Add( new ShardEntry
+            {
+                Name = "UO Players",
+                Address = "login.uoplayers.com",
+                Port = 2593,
+                IsPreset = true,
+                HasStatusProtocol = true
+            } );
+
+            Shards.Add( new ShardEntry
+            {
+                Name = "UO:Renaissance",
+                Address = "login.uorenaissance.com",
+                Port = 2593,
+                IsPreset = true,
+                HasStatusProtocol = true
             } );
         }
 

@@ -213,4 +213,7 @@
   <data name="Encryption" xml:space="preserve">
     <value>암호화</value>
   </data>
+  <data name="Open a GitHub issue to have your shard added to the list." xml:space="preserve">
+    <value>GitHub 문제를 열어 샤드를 목록에 추가합니다.</value>
+  </data>
 </root>

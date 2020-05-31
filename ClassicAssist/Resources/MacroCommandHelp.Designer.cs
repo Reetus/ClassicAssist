@@ -2596,6 +2596,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sets the lock state of the given stat, up, down or locked..
+        /// </summary>
+        public static string SETSTATUS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETSTATUS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetStatus(&apos;str&apos;, &apos;locked&apos;).
+        /// </summary>
+        public static string SETSTATUS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETSTATUS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set a timer value and create in case it does not exist..
         /// </summary>
         public static string SETTIMER_COMMAND_DESCRIPTION {
@@ -2718,6 +2736,24 @@ namespace ClassicAssist.Resources {
         public static string STOP_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("STOP_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stops all running macros including background macros..
+        /// </summary>
+        public static string STOPALL_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("STOPALL_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to StopAll().
+        /// </summary>
+        public static string STOPALL_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("STOPALL_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

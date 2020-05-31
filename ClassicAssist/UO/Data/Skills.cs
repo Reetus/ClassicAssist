@@ -12,6 +12,13 @@ namespace ClassicAssist.UO.Data
         Locked
     }
 
+    public enum StatType : byte
+    {
+        Str,
+        Dex,
+        Int
+    }
+
     internal class SkillData
     {
         public bool Invokable { get; internal set; }

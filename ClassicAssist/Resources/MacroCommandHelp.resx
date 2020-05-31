@@ -1280,4 +1280,16 @@ GetEnemy(['Any'], 'Both', 'Next', 'Unmounted')</value>
   <data name="REHUE_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>Rehue("mount", 1176)</value>
   </data>
+  <data name="STOPALL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Stops all running macros including background macros.</value>
+  </data>
+  <data name="STOPALL_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>StopAll()</value>
+  </data>
+  <data name="SETSTATUS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sets the lock state of the given stat, up, down or locked.</value>
+  </data>
+  <data name="SETSTATUS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetStatus('str', 'locked')</value>
+  </data>
 </root>

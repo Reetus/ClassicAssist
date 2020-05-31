@@ -91,5 +91,16 @@ namespace ClassicAssist.Data.Macros.Commands
 
             UOC.ChangeSkillLock( s, ls );
         }
+
+        [CommandsDisplay( Category = nameof( Strings.Skills ),
+            Parameters = new[] { nameof( ParameterType.String ), nameof( ParameterType.UpDownLocked ) } )]
+        [CommandsDisplayStringSeeAlso( new[] { nameof( StatType ), nameof( LockStatus ) } )]
+        public static void SetStatus( string stat, string lockStatus )
+        {
+            StatType st = Utility.GetEnumValueByName<StatType>( stat );
+            LockStatus ls = Utility.GetEnumValueByName<LockStatus>( lockStatus );
+
+            UOC.ChangeStatLock( st, ls );
+        }
     }
 }

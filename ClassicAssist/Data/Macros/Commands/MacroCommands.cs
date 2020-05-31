@@ -35,6 +35,12 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = nameof( Strings.Macros ) )]
         public static void Stop()
         {
+            MacroManager.GetInstance().Stop();
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Macros ) )]
+        public static void StopAll()
+        {
             MacroManager.GetInstance().StopAll();
         }
 

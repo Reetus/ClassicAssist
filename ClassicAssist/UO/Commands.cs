@@ -274,6 +274,11 @@ namespace ClassicAssist.UO
             }
         }
 
+        public static void ChangeStatLock( StatType stat, LockStatus lockStatus )
+        {
+            Engine.SendPacketToServer( new ChangeStatLock( stat, lockStatus ) );
+        }
+
         public static void UseSkill( Skill skill )
         {
             byte[] shortBaseSkillPacket = { 0x12, 0x00, 0x08, 0x24, 0x00, 0x20, 0x30, 0x00 };

@@ -783,7 +783,7 @@ namespace ClassicAssist.UO.Network
                 return;
             }
 
-            string layout = Encoding.ASCII.GetString( decompressedBuffer );
+            string layout = Encoding.ASCII.GetString( decompressedBuffer ).TrimEnd( '\0' );
 
             if ( string.IsNullOrEmpty( layout ) )
             {

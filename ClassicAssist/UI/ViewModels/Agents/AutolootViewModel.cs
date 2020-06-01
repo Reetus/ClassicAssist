@@ -392,7 +392,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     we.Lock.WaitOne( 2000 );
                 }
 
-                IEnumerable<Item> items = Engine.Items.GetItem( serial )?.Container.GetItems();
+                IEnumerable<Item> items = Engine.Items.GetItem( serial )?.Container?.GetItems();
 
                 if ( items == null )
                 {

@@ -1591,6 +1591,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last Object.
+        /// </summary>
+        public static string Last_Object {
+            get {
+                return ResourceManager.GetString("Last Object", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last Target.
         /// </summary>
         public static string Last_Target {

@@ -858,7 +858,7 @@ namespace ClassicAssist.UO.Objects.Gumps
                                 }
 
                                 ge.Text = Cliloc.GetLocalString( xtCliloc, args );
-                                ge.Args = string.Join( "\t", args );
+                                ge.Args = args != null ? string.Join( "\t", args ) : string.Empty;
                                 ge.X = xtX;
                                 ge.Y = xtY;
                                 ge.Width = xtWidth;

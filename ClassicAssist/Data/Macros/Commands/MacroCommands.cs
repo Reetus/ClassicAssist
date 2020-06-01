@@ -13,14 +13,6 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             MacroManager manager = MacroManager.GetInstance();
 
-            MacroEntry current = manager.GetCurrentMacro();
-
-            if ( current != null && current.IsBackground )
-            {
-                UOC.SystemMessage( Strings.Cannot_PlayMacro_from_background_macro___ );
-                return;
-            }
-
             MacroEntry macro = manager.Items.FirstOrDefault( m => m.Name == name );
 
             if ( macro == null )
@@ -49,7 +41,12 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             MacroManager manager = MacroManager.GetInstance();
 
-            MacroEntry current = manager.GetCurrentMacro();
+            MacroEntry current = manager?.GetCurrentMacro();
+
+            if ( current?.Action == null )
+            {
+                return;
+            }
 
             manager.Replay = true;
 

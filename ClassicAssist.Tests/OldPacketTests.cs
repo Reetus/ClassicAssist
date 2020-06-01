@@ -132,5 +132,79 @@ namespace ClassicAssist.Tests
                 Assert.IsTrue( mobile.IsPoisoned );
             } );
         }
+
+        [TestMethod]
+        public void WillSetPoisonedFromOldMoving()
+        {
+            AppDomain appDomain = AppDomain.CreateDomain( "WillSetPoisonedFromOldMoving",
+                AppDomain.CurrentDomain.Evidence, AppDomain.CurrentDomain.SetupInformation );
+
+            appDomain.DoCallBack( () =>
+            {
+                Engine.ClientVersion = new Version( 5, 0, 9, 1 );
+
+                byte[] packet =
+                {
+                    0x77, 0x00, 0x25, 0x49, 0xbb, 0x01, 0x90, 0x0d, 0xf9, 0x0a, 0x37, 0x00, 0x84, 0x83, 0xea, 0x04,
+                    0x01
+                };
+
+                IncomingPacketHandlers.Initialize();
+
+                PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x77 );
+                handler?.OnReceive( new PacketReader( packet, packet.Length, true ) );
+
+                Mobile mobile = Engine.Mobiles.GetMobile( 0x2549bb );
+
+                Assert.IsNotNull( mobile );
+                Assert.IsTrue( mobile.IsPoisoned );
+
+                byte[] packet2 =
+                {
+                    0x77, 0x00, 0x06, 0xbc, 0x06, 0x01, 0x90, 0x09, 0xd0, 0x02, 0x2b, 0x00, 0x02, 0x83, 0xea, 0x44,
+                    0x01
+                };
+
+                handler?.OnReceive( new PacketReader( packet2, packet2.Length, true ) );
+
+                mobile = Engine.Mobiles.GetMobile( 0x6bc06 );
+
+                Assert.IsNotNull( mobile );
+                Assert.IsTrue( mobile.IsPoisoned );
+            } );
+        }
+
+        //[TestMethod]
+        //public void WillSetPoisonedFromOldIncoming()
+        //{
+        //    AppDomain appDomain = AppDomain.CreateDomain( "WillSetPoisonedFromOldIncoming",
+        //        AppDomain.CurrentDomain.Evidence, AppDomain.CurrentDomain.SetupInformation );
+
+        //    appDomain.DoCallBack( () =>
+        //    {
+        //        Engine.ClientVersion = new Version( 5, 0, 9, 1 );
+
+        //        byte[] packet =
+        //        {
+        //            0x78, 0x00, 0x6e, 0x00, 0x05, 0xca, 0x65, 0x01, 0x90, 0x09, 0xba, 0x02, 0x23, 0x00, 0x03, 0x03,
+        //            0xff, 0x00, 0x01, 0x40, 0x05, 0xca, 0x5d, 0xa0, 0x48, 0x0b, 0x04, 0x65, 0x40, 0x05, 0xca, 0x58,
+        //            0xa0, 0x3e, 0x10, 0x04, 0x65, 0x40, 0x05, 0xca, 0x57, 0x95, 0x17, 0x05, 0x03, 0x1c, 0x40, 0x05,
+        //            0xca, 0x54, 0x95, 0x2e, 0x04, 0x01, 0xb6, 0x40, 0x05, 0xca, 0x53, 0x14, 0x15, 0x0d, 0x40, 0x05,
+        //            0xca, 0x51, 0x14, 0x11, 0x18, 0x40, 0x05, 0xca, 0x4f, 0x14, 0x10, 0x13, 0x40, 0x05, 0xca, 0x46,
+        //            0x95, 0x41, 0x11, 0x03, 0xaf, 0x40, 0x05, 0xca, 0x3b, 0x0e, 0x75, 0x15, 0x40, 0x05, 0xca, 0x35,
+        //            0x3e, 0xa0, 0x19, 0x40, 0x05, 0xca, 0x42, 0x14, 0x3e, 0x02, 0x00, 0x00, 0x00, 0x00
+        //        };
+
+        //        IncomingPacketHandlers.Initialize();
+
+        //        PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x78 );
+        //        handler?.OnReceive( new PacketReader( packet, packet.Length, false ) );
+
+        //        Mobile mobile = Engine.Mobiles.GetMobile( 0x5ca65 );
+
+        //        Assert.IsNotNull( mobile );
+        //        Assert.IsTrue( mobile.IsPoisoned );
+        //    } );
+        //}
     }
 }

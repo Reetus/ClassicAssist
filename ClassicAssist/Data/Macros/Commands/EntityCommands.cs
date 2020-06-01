@@ -48,7 +48,6 @@ namespace ClassicAssist.Data.Macros.Commands
                 return entity.Distance < distance;
             }
 
-            UOC.SystemMessage( Strings.Cannot_find_item___ );
             return false;
         }
 

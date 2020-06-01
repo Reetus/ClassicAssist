@@ -383,17 +383,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     return;
                 }
 
-                ActionPacketQueue.EnqueueActionPacket( new UseObject( serial ), QueuePriority.Medium );
-
-                PacketWaitEntry we = Engine.PacketWaitEntries.Add(
-                    new PacketFilterInfo( 0x3C, new[] { PacketFilterConditions.IntAtPositionCondition( serial, 19 ) } ),
-                    PacketDirection.Incoming );
-
-                bool result = we.Lock.WaitOne( 3000 );
-
-                if ( !result )
+                if ( item.Container == null )
                 {
-                    return;
+                    PacketWaitEntry we = Engine.PacketWaitEntries.Add(
+                        new PacketFilterInfo( 0x3C, new[] { PacketFilterConditions.IntAtPositionCondition( serial, 19 ) } ),
+                        PacketDirection.Incoming );
+
+                    we.Lock.WaitOne( 2000 );
                 }
 
                 IEnumerable<Item> items = Engine.Items.GetItem( serial )?.Container.GetItems();

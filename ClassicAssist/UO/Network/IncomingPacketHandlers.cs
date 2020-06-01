@@ -872,6 +872,8 @@ namespace ClassicAssist.UO.Network
             mobile.Hue = hue;
             mobile.Status = (MobileStatus) status;
             mobile.Notoriety = (Notoriety) notoriety;
+
+            Engine.Mobiles.Add( mobile );
         }
 
         private static void OnMobileUpdated( PacketReader reader )
@@ -895,6 +897,8 @@ namespace ClassicAssist.UO.Network
             mobile.Y = y;
             mobile.Direction = (Direction) direction;
             mobile.Z = z;
+
+            Engine.Mobiles.Add( mobile );
 
             MobileUpdatedEvent?.Invoke( mobile );
         }
@@ -1348,18 +1352,6 @@ namespace ClassicAssist.UO.Network
             mobile.Hue = reader.ReadUInt16();
             mobile.Status = (MobileStatus) reader.ReadByte();
             mobile.Notoriety = (Notoriety) reader.ReadByte();
-
-            if ( Engine.ClientVersion < new Version( 7, 0, 0, 0 ) )
-            {
-                if ( mobile.Status.HasFlag( MobileStatus.Flying ) )
-                {
-                    mobile.HealthbarColour |= HealthbarColour.Green;
-                }
-                else
-                {
-                    mobile.HealthbarColour &= ~HealthbarColour.Green;
-                }
-            }
 
             bool useNewIncoming = Engine.ClientVersion == null || Engine.ClientVersion >= new Version( 7, 0, 33, 1 );
 

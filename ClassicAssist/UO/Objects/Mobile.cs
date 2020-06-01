@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -39,7 +40,19 @@ namespace ClassicAssist.UO.Objects
 
         public bool IsFrozen => Status.HasFlag( MobileStatus.Frozen );
         public bool IsMounted => Mount != null;
-        public bool IsPoisoned => HealthbarColour.HasFlag( HealthbarColour.Green );
+        public bool IsPoisoned
+        {
+            get
+            {
+                if ( Engine.ClientVersion != null && Engine.ClientVersion < new Version( 7, 0, 0, 0 ) )
+                {
+                    return Status.HasFlag( MobileStatus.Flying ) || HealthbarColour.HasFlag( HealthbarColour.Green );
+                }
+
+                return HealthbarColour.HasFlag( HealthbarColour.Green );
+            }
+        }
+
         public bool IsRenamable { get; set; }
         public bool IsYellowHits => HealthbarColour.HasFlag( HealthbarColour.Yellow );
 

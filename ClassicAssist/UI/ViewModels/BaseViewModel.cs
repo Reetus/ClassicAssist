@@ -69,7 +69,6 @@ namespace ClassicAssist.UI.ViewModels
         {
             obj = value;
             NotifyPropertyChanged( propertyName );
-            CommandManager.InvalidateRequerySuggested();
         }
 
         protected void NotifyPropertyChanged( [CallerMemberName] string propertyName = "" )

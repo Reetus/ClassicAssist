@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -399,7 +400,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     return;
                 }
 
-                Engine.SendPacketToServer( new BatchQueryProperties( items.Select( i => i.Serial ).ToArray() ) );
+                if ( Engine.Features.HasFlag( FeatureFlags.AOS ) )
+                {
+                    Engine.SendPacketToServer( new BatchQueryProperties( items.Select( i => i.Serial ).ToArray() ) );
+                    Thread.Sleep( 2000 );
+                }
 
                 List<Item> lootItems = new List<Item>();
 
@@ -455,7 +460,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         containerSerial = Engine.Player.Backpack.Serial;
                     }
 
-                    UOC.SystemMessage( string.Format( Strings.Autolooting___0__, lootItem.Name ) );
+                    UOC.SystemMessage( string.Format( Strings.Autolooting___0__, lootItem.Name ), 61 );
                     Task t = ActionPacketQueue.EnqueueDragDrop( lootItem.Serial, lootItem.Count, containerSerial,
                         QueuePriority.Medium );
 

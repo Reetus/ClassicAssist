@@ -1293,4 +1293,7 @@
   <data name="Last Object" xml:space="preserve">
     <value>Last Object</value>
   </data>
+  <data name="Features:" xml:space="preserve">
+    <value>Features:</value>
+  </data>
 </root>

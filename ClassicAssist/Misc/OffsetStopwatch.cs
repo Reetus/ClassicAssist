@@ -10,6 +10,7 @@ namespace ClassicAssist.Misc
         public OffsetStopwatch( TimeSpan offset )
         {
             _offset = offset;
+            Start();
         }
 
         public new long ElapsedMilliseconds => base.ElapsedMilliseconds + (long) _offset.TotalMilliseconds;

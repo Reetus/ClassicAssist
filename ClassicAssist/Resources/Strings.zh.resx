@@ -1290,4 +1290,10 @@
   <data name="All Packets" xml:space="preserve">
     <value>所有数据包</value>
   </data>
+  <data name="Last Object" xml:space="preserve">
+    <value>最后一个对象</value>
+  </data>
+  <data name="Features:" xml:space="preserve">
+    <value>特征：</value>
+  </data>
 </root>

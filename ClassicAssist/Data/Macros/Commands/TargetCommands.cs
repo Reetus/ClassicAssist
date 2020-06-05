@@ -179,6 +179,17 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = nameof( Strings.Target ),
             Parameters = new[]
             {
+                nameof( ParameterType.XCoordinateOffset ), nameof( ParameterType.YCoordinateOffset ),
+                nameof( ParameterType.YCoordinateOffset )
+            } )]
+        public static void TargetTileOffset( int xOffset, int yOffset, int zOffset )
+        {
+            TargetXYZ( Engine.Player.X + xOffset, Engine.Player.Y + yOffset, Engine.Player.Z + zOffset );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Target ),
+            Parameters = new[]
+            {
                 nameof( ParameterType.Empty ), nameof( ParameterType.Empty ), nameof( ParameterType.Empty ),
                 nameof( ParameterType.Empty )
             } )]

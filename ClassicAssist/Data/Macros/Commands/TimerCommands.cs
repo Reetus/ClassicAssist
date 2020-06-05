@@ -20,7 +20,6 @@ namespace ClassicAssist.Data.Macros.Commands
             }
 
             OffsetStopwatch timer = new OffsetStopwatch( TimeSpan.Zero );
-            timer.Start();
 
             _timers.Add( name, timer );
         }

@@ -1290,4 +1290,10 @@
   <data name="All Packets" xml:space="preserve">
     <value>Tutti i pacchetti</value>
   </data>
+  <data name="Last Object" xml:space="preserve">
+    <value>Ultimo oggetto</value>
+  </data>
+  <data name="Features:" xml:space="preserve">
+    <value>Caratteristiche:</value>
+  </data>
 </root>

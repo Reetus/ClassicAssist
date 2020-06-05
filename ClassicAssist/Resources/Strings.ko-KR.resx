@@ -1290,4 +1290,10 @@
   <data name="All Packets" xml:space="preserve">
     <value>모든 패킷</value>
   </data>
+  <data name="Last Object" xml:space="preserve">
+    <value>마지막 개체</value>
+  </data>
+  <data name="Features:" xml:space="preserve">
+    <value>기능:</value>
+  </data>
 </root>

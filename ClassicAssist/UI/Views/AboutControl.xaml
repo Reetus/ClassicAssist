@@ -128,6 +128,7 @@
             <DockPanel>
                 <StackPanel DockPanel.Dock="Left">
                     <Label Content="{x:Static r:Strings.Shard_}" />
+                    <Label Content="{x:Static r:Strings.Features_}" />
                     <Label Content="{x:Static r:Strings.Name_}" />
                     <Label Content="{x:Static r:Strings.Serial_}" />
                     <Label Content="{x:Static r:Strings.Last_Target_}" />
@@ -140,6 +141,7 @@
                         </Style>
                     </StackPanel.Resources>
                     <Label Content="{Binding ShardName}" />
+                    <Label Content="{Binding ShardFeatures}" />
                     <Label Content="{Binding PlayerName}" />
                     <Label Content="{Binding PlayerSerial, Converter={StaticResource IntToHexStringValueConverter}}" />
                     <Label

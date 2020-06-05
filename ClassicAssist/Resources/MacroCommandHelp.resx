@@ -1292,4 +1292,14 @@ GetEnemy(['Any'], 'Both', 'Next', 'Unmounted')</value>
   <data name="SETSTATUS_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>SetStatus('str', 'locked')</value>
   </data>
+  <data name="TARGETTILEOFFSET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Targets the tile at the given offsets relative to the player</value>
+  </data>
+  <data name="TARGETTILEOFFSET_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TargetTileOffset(0, 1, 0)</value>
+  </data>
+  <data name="TARGETTILEOFFSET_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>#Targets the tile at the current Y coordinate + 1
+TargetTileOffset(0, 1, 0)</value>
+  </data>
 </root>

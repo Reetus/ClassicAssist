@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Filters;
+using ClassicAssist.Data.Macros;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.Misc;
@@ -305,6 +306,7 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
+            MacroManager.GetInstance().StopAll();
             LoadProfile( profileName );
             Engine.UpdateWindowTitle();
         }

@@ -2860,6 +2860,34 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Targets the tile at the given offsets relative to the player.
+        /// </summary>
+        public static string TARGETTILEOFFSET_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TARGETTILEOFFSET_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #Targets the tile at the current Y coordinate + 1
+        ///TargetTileOffset(0, 1, 0).
+        /// </summary>
+        public static string TARGETTILEOFFSET_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("TARGETTILEOFFSET_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TargetTileOffset(0, 1, 0).
+        /// </summary>
+        public static string TARGETTILEOFFSET_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TARGETTILEOFFSET_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Target tile the given distance relative to the specified alias/serial, optional boolean for reverse mode..
         /// </summary>
         public static string TARGETTILERELATIVE_COMMAND_DESCRIPTION {

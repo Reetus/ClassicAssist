@@ -1069,6 +1069,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Features:.
+        /// </summary>
+        public static string Features_ {
+            get {
+                return ResourceManager.GetString("Features:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter:.
         /// </summary>
         public static string Filter_ {

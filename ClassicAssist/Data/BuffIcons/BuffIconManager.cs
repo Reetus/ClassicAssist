@@ -16,6 +16,7 @@ namespace ClassicAssist.Data.BuffIcons
         private static readonly object _lock = new object();
         private readonly List<BuffIconData> _buffIconData;
         private bool[] _enabledIds;
+        private DateTime[] _expireTimes;
 
         private BuffIconManager()
         {
@@ -26,6 +27,7 @@ namespace ClassicAssist.Data.BuffIcons
                 .ToList();
 
             _enabledIds = new bool[short.MaxValue];
+            _expireTimes = new DateTime[short.MaxValue];
 
             IncomingPacketHandlers.BufficonEnabledDisabledEvent += SetID;
             Engine.PlayerInitializedEvent += p => Clear();
@@ -34,11 +36,13 @@ namespace ClassicAssist.Data.BuffIcons
         private void Clear()
         {
             _enabledIds = new bool[short.MaxValue];
+            _expireTimes = new DateTime[short.MaxValue];
         }
 
-        private void SetID( int type, bool enabled )
+        private void SetID( int type, bool enabled, int duration )
         {
             _enabledIds[type] = enabled;
+            _expireTimes[type] = DateTime.Now.AddSeconds( duration );
         }
 
         public bool BuffExists( string name )
@@ -54,6 +58,31 @@ namespace ClassicAssist.Data.BuffIcons
 
             UOC.SystemMessage( Strings.Unknown_buff_name___ );
             return false;
+        }
+
+        public double BuffTime( string name )
+        {
+            name = name.ToLower();
+
+            BuffIconData data = _buffIconData.FirstOrDefault( bd => bd.Name.ToLower().Equals( name ) );
+
+            if ( data == null )
+            {
+                UOC.SystemMessage( Strings.Unknown_buff_name___ );
+                return 0;
+            }
+
+            if ( !BuffExists( name ) )
+            {
+                return 0;
+            }
+
+            if ( _expireTimes[data.ID] < DateTime.Now )
+            {
+                return 0;
+            }
+
+            return ( _expireTimes[data.ID] - DateTime.Now ).TotalMilliseconds;
         }
 
         public string[] GetEnabledNames()

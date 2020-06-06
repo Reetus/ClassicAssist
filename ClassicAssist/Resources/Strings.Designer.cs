@@ -1312,6 +1312,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hotkey will still trigger with hotkeys disabled.
+        /// </summary>
+        public static string Hotkey_will_still_trigger_with_hotkeys_disabled {
+            get {
+                return ResourceManager.GetString("Hotkey will still trigger with hotkeys disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hotkeys.
         /// </summary>
         public static string Hotkeys {
@@ -3261,6 +3270,15 @@ namespace ClassicAssist.Resources {
         public static string Type {
             get {
                 return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Undisableable.
+        /// </summary>
+        public static string Undisableable {
+            get {
+                return ResourceManager.GetString("Undisableable", resourceCulture);
             }
         }
         

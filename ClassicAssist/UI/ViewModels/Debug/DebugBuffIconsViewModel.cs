@@ -39,7 +39,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
             set => SetProperty( ref _selectedItem, value );
         }
 
-        private void OnBufficonEnabledDisabledEvent( int type, bool enabled )
+        private void OnBufficonEnabledDisabledEvent( int type, bool enabled, int duration )
         {
             BuffIconData data = _manager.GetDataByID( type );
 

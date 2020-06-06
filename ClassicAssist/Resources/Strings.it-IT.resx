@@ -1296,4 +1296,10 @@
   <data name="Features:" xml:space="preserve">
     <value>Caratteristiche:</value>
   </data>
+  <data name="Undisableable" xml:space="preserve">
+    <value>Non disabilitabile</value>
+  </data>
+  <data name="Hotkey will still trigger with hotkeys disabled" xml:space="preserve">
+    <value>Il tasto di scelta rapida si attiverà ancora con i tasti di scelta rapida disabilitati</value>
+  </data>
 </root>

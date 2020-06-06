@@ -1302,4 +1302,15 @@ GetEnemy(['Any'], 'Both', 'Next', 'Unmounted')</value>
     <value>#Targets the tile at the current Y coordinate + 1
 TargetTileOffset(0, 1, 0)</value>
   </data>
+  <data name="BUFFTIME_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns milliseconds remaining for given buff name, or 0 if expired/not enabled.</value>
+  </data>
+  <data name="BUFFTIME_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if BuffTime('Enemy Of One') &lt; 5000:</value>
+  </data>
+  <data name="BUFFTIME_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>if not BuffExists('Enemy Of One') or BuffTime('Enemy Of One') &lt; 5000:
+    Cast('Enemy Of One')
+</value>
+  </data>
 </root>

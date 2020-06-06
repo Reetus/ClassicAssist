@@ -204,6 +204,13 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.BuffName ) } )]
+        public static double BuffTime( string name )
+        {
+            return BuffIconManager.GetInstance().BuffTime( name );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
             Parameters = new[] { nameof( ParameterType.SpecialMoveName ) } )]
         public static bool SpecialMoveExists( string name )
         {

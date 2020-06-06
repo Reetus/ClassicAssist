@@ -169,6 +169,35 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Returns milliseconds remaining for given buff name, or 0 if expired/not enabled..
+        /// </summary>
+        public static string BUFFTIME_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("BUFFTIME_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if not BuffExists(&apos;Enemy Of One&apos;) or BuffTime(&apos;Enemy Of One&apos;) &lt; 5000:
+        ///    Cast(&apos;Enemy Of One&apos;)
+        ///.
+        /// </summary>
+        public static string BUFFTIME_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("BUFFTIME_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if BuffTime(&apos;Enemy Of One&apos;) &lt; 5000:.
+        /// </summary>
+        public static string BUFFTIME_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("BUFFTIME_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancels the current prompt..
         /// </summary>
         public static string CANCELPROMPT_COMMAND_DESCRIPTION {

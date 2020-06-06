@@ -144,6 +144,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <avalon:TextEditor ShowLineNumbers="True" x:Name="CodeTextEditor" Grid.Row="0"
                                HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
@@ -188,11 +189,26 @@
                           IsChecked="{Binding SelectedItem.DoNotAutoInterrupt, ElementName=ListBox}" />
                 <CheckBox Content="{x:Static resources:Strings.Run_in_background}" Margin="0,0,5,0"
                           IsChecked="{Binding SelectedItem.IsBackground, ElementName=ListBox}" />
-                <CheckBox Content="{x:Static resources:Strings.Autostart}" Margin="0,0,5,0"
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0">
+                <StackPanel.Resources>
+                    <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=ListBox}"
+                                         Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Resources>
+                <CheckBox Content="{x:Static resources:Strings.Autostart}" Margin="5,0,0,0"
                           IsChecked="{Binding SelectedItem.IsAutostart, ElementName=ListBox}"
                           ToolTip="{x:Static resources:Strings.When_checked_macro_will_execute_automatically_after_login_}" />
+                <CheckBox Content="{x:Static resources:Strings.Undisableable}" Margin="5,0,0,0"
+                          ToolTip="{x:Static resources:Strings.Hotkey_will_still_trigger_with_hotkeys_disabled}"
+                          IsChecked="{Binding SelectedItem.Disableable, Converter={StaticResource InverseBooleanConverter}}" />
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center">
                 <StackPanel.Resources>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                         <Setter Property="Margin" Value="0,10,10,0" />

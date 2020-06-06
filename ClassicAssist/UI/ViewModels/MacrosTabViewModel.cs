@@ -145,7 +145,8 @@ namespace ClassicAssist.UI.ViewModels
                     { "PassToUO", macroEntry.PassToUO },
                     { "Keys", macroEntry.Hotkey.ToJObject() },
                     { "IsBackground", macroEntry.IsBackground },
-                    { "IsAutostart", macroEntry.IsAutostart }
+                    { "IsAutostart", macroEntry.IsAutostart },
+                    { "Disableable", macroEntry.Disableable }
                 };
 
                 JArray aliasesArray = new JArray();
@@ -200,7 +201,8 @@ namespace ClassicAssist.UI.ViewModels
                         PassToUO = GetJsonValue( token, "PassToUO", true ),
                         Hotkey = new ShortcutKeys( token["Keys"] ),
                         IsBackground = GetJsonValue( token, "IsBackground", false ),
-                        IsAutostart = GetJsonValue( token, "IsAutostart", false )
+                        IsAutostart = GetJsonValue( token, "IsAutostart", false ),
+                        Disableable = GetJsonValue( token, "Disableable", true )
                     };
 
                     if ( token["Aliases"] != null )

@@ -1296,4 +1296,10 @@
   <data name="Features:" xml:space="preserve">
     <value>特征：</value>
   </data>
+  <data name="Undisableable" xml:space="preserve">
+    <value>不可禁用</value>
+  </data>
+  <data name="Hotkey will still trigger with hotkeys disabled" xml:space="preserve">
+    <value>热键仍将触发，禁用热键</value>
+  </data>
 </root>

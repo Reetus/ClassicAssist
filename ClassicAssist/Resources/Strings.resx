@@ -1296,4 +1296,10 @@
   <data name="Features:" xml:space="preserve">
     <value>Features:</value>
   </data>
+  <data name="Undisableable" xml:space="preserve">
+    <value>Undisableable</value>
+  </data>
+  <data name="Hotkey will still trigger with hotkeys disabled" xml:space="preserve">
+    <value>Hotkey will still trigger with hotkeys disabled</value>
+  </data>
 </root>

@@ -23,7 +23,7 @@ namespace ClassicAssist.UO.Network
 {
     public static class IncomingPacketHandlers
     {
-        public delegate void dBufficonEnabledDisabled( int type, bool enabled );
+        public delegate void dBufficonEnabledDisabled( int type, bool enabled, int duration );
 
         public delegate void dContainerContents( int serial, ItemCollection container );
 
@@ -453,8 +453,15 @@ namespace ClassicAssist.UO.Network
             }
 
             bool enabled = count > 0;
+            int duration = 0;
 
-            BufficonEnabledDisabledEvent?.Invoke( type, enabled );
+            if ( count == 1 )
+            {
+                reader.Seek( 12, SeekOrigin.Current );
+                duration = reader.ReadInt16();
+            }
+
+            BufficonEnabledDisabledEvent?.Invoke( type, enabled, duration );
         }
 
         private static void OnLocalizedText( PacketReader reader )

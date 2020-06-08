@@ -2853,6 +2853,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Uses tool and targets specified resource type (Requires server support (OSI / ServUO)).
+        /// </summary>
+        public static string TARGETBYRESOURCE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TARGETBYRESOURCE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TargetByResource(&apos;pickaxe&apos;, &apos;Ore&apos;).
+        /// </summary>
+        public static string TARGETBYRESOURCE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TARGETBYRESOURCE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns true if a target cursor is displayed and the notoriety matches the supplied value, defaults to &apos;Any&apos;, options are &apos;Any&apos;, &apos;Beneficial&apos;, &apos;Harmful&apos; or &apos;Neutral&apos;.
         /// </summary>
         public static string TARGETEXISTS_COMMAND_DESCRIPTION {

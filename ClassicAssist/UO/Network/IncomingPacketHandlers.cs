@@ -181,6 +181,7 @@ namespace ClassicAssist.UO.Network
             }
 
             item.Y = y;
+            item.Owner = 0;
 
             Engine.Items.Add( item );
 

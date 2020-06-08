@@ -151,10 +151,11 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = nameof( Strings.Aliases ),
             Parameters = new[] { nameof( ParameterType.AliasName ) } )]
-        public static void PromptAlias( string aliasName )
+        public static int PromptAlias( string aliasName )
         {
             int serial = UOC.GetTargeSerialAsync( string.Format( Strings.Target_object___0_____, aliasName ) ).Result;
             SetAlias( aliasName.ToLower(), serial );
+            return serial;
         }
 
         [CommandsDisplay( Category = nameof( Strings.Aliases ),

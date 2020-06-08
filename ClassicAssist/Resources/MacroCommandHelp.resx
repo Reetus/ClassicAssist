@@ -1313,4 +1313,10 @@ TargetTileOffset(0, 1, 0)</value>
     Cast('Enemy Of One')
 </value>
   </data>
+  <data name="TARGETBYRESOURCE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Uses tool and targets specified resource type (Requires server support (OSI / ServUO))</value>
+  </data>
+  <data name="TARGETBYRESOURCE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TargetByResource('pickaxe', 'Ore')</value>
+  </data>
 </root>

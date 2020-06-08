@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assistant;
 using ClassicAssist.Data.Regions;
 using ClassicAssist.Data.Targeting;
+using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
@@ -21,6 +22,15 @@ namespace ClassicAssist.Data.Macros.Commands
             Beneficial,
             Harmful,
             Neutral
+        }
+
+        public enum TargetResourceType
+        {
+            Ore,
+            Sand,
+            Wood,
+            Graves,
+            Red_Mushrooms
         }
 
         [CommandsDisplay( Category = nameof( Strings.Target ) )]
@@ -93,6 +103,30 @@ namespace ClassicAssist.Data.Macros.Commands
             Engine.SendPacketToServer( new Target( TargetTypeEnum.Object, -1, TargetFlags.None, serial, -1, -1, -1, 0,
                 true ) );
             Engine.TargetExists = false;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Target ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.String ) } )]
+        [CommandsDisplayStringSeeAlso( new[] { null, nameof( TargetResourceType ) } )]
+        public static void TargetByResource( object toolObj, string resourceType )
+        {
+            int serial = AliasCommands.ResolveSerial( toolObj );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return;
+            }
+
+            try
+            {
+                TargetResourceType resourceEnum = Utility.GetEnumValueByName<TargetResourceType>( resourceType );
+
+                Engine.SendPacketToServer( new TargetByResource( serial, (int) resourceEnum ) );
+            }
+            catch ( InvalidOperationException )
+            {
+            }
         }
 
         [CommandsDisplay( Category = nameof( Strings.Target ),

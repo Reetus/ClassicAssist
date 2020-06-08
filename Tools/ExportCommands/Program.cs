@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using ExportCommands.Properties;
 
@@ -199,69 +200,43 @@ namespace ExportCommands
                     IEnumerable<Commands> categoryCommands =
                         commands.Where( c => c.Category == category ).OrderBy( c => c.Name );
 
-                    markDown += $"## {category}  \n";
+                    GenerateCategory( assembly, category, categoryCommands, seeAlsoTypes, locale );
 
-                    foreach ( Commands command in categoryCommands )
+                    string categoryFileName = $"{RemoveAccents( category )}-{locale}.md".Replace( ' ', '-' );
+
+                    if ( locale.Equals( "en-US" ) )
                     {
-                        string example = command.InsertText;
-
-                        if ( !string.IsNullOrEmpty( command.Example ) )
-                        {
-                            example = command.Example;
-                        }
-
-                        markDown += $"### {command.Name}  \n  \n";
-                        markDown += $"{Resources.Method_Signature}:  \n  \n**{command.Signature}**  \n  \n";
-
-                        if ( command.Parameters.Any() )
-                        {
-                            markDown += $"#### {Resources.Parameters}  \n";
-
-                            foreach ( Parameter parameter in command.Parameters )
-                            {
-                                markDown +=
-                                    $"* {parameter.Name}: {parameter.Description}.{( parameter.Optional ? $" ({Resources.Optional})" : "" )}";
-
-                                if ( parameter.SeeAlso != null )
-                                {
-                                    markDown += string.Format( $" {Resources.See_Also___0_}  \n",
-                                        $"[{parameter.SeeAlso.Name}](#{parameter.SeeAlso.Name})" );
-                                }
-                                else
-                                {
-                                    markDown += "  \n";
-                                }
-                            }
-
-                            markDown += "  \n";
-                        }
-
-                        markDown += $"{Resources.Description}:  \n  \n**{command.Description}**  \n  \n";
-                        markDown += $"{Resources.Example}:  \n  \n```python  \n{example}  \n```  \n  \n";
+                        categoryFileName = $"{category}.md";
                     }
 
-                    markDown += "\n\n\n";
-                }
+                    markDown += $"## [{category}]({Path.GetFileNameWithoutExtension( categoryFileName )})  \n";
 
-                markDown += $"## {Resources.Types}  \n";
-
-                seeAlsoTypes = seeAlsoTypes.OrderBy( t => t.Name ).ToList();
-
-                foreach ( Type seeAlsoType in seeAlsoTypes )
-                {
-                    markDown += $"### {seeAlsoType.Name}  \n";
-
-                    string[] enumNames = seeAlsoType.GetEnumNames();
-
-                    if ( enumNames == null )
+                    foreach ( Commands categoryCommand in categoryCommands )
                     {
-                        continue;
+                        markDown +=
+                            $"[{categoryCommand.Name}]({Path.GetFileNameWithoutExtension( categoryFileName )}#{categoryCommand.Name})  \n";
                     }
-
-                    markDown = enumNames.Aggregate( markDown, ( current, enumName ) => current + $"* {enumName}  \n" );
-
-                    markDown += "  \n";
                 }
+
+                //markDown += $"## {Resources.Types}  \n";
+
+                //seeAlsoTypes = seeAlsoTypes.OrderBy( t => t.Name ).ToList();
+
+                //foreach ( Type seeAlsoType in seeAlsoTypes )
+                //{
+                //    markDown += $"### {seeAlsoType.Name}  \n";
+
+                //    string[] enumNames = seeAlsoType.GetEnumNames();
+
+                //    if ( enumNames == null )
+                //    {
+                //        continue;
+                //    }
+
+                //    markDown = enumNames.Aggregate( markDown, ( current, enumName ) => current + $"* {enumName}  \n" );
+
+                //    markDown += "  \n";
+                //}
 
                 string fileName = $"Macro-Commands ({locale}).md";
 
@@ -276,6 +251,104 @@ namespace ExportCommands
             sw.Stop();
 
             Console.WriteLine( $"Finished in {sw.Elapsed}" );
+        }
+
+        private static void GenerateCategory( Assembly assembly, string category,
+            IEnumerable<Commands> categoryCommands, List<Type> seeAlsoTypes, string locale )
+        {
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo( assembly.Location );
+
+            string markDown =
+                $"# {Resources.ClassicAssist_Macro_Commands}  \n{Resources.Generated_on} {DateTime.UtcNow}  \n{Resources.Version}: {fvi.ProductVersion}  \n  \n";
+
+            if ( !string.IsNullOrEmpty( Resources.TRANSLATE_CREDIT ) )
+            {
+                markDown =
+                    $"# {Resources.ClassicAssist_Macro_Commands}  \n{Resources.Generated_on} {DateTime.UtcNow}  \n{Resources.Version}: {fvi.ProductVersion}  \n{Resources.TRANSLATE_CREDIT}  \n  \n";
+            }
+
+            markDown += $"## {category}  \n";
+
+            List<string> seeAlsoNames = new List<string>();
+
+            foreach ( Commands command in categoryCommands )
+            {
+                string example = command.InsertText;
+
+                if ( !string.IsNullOrEmpty( command.Example ) )
+                {
+                    example = command.Example;
+                }
+
+                markDown += $"### {command.Name}  \n  \n";
+                markDown += $"{Resources.Method_Signature}:  \n  \n**{command.Signature}**  \n  \n";
+
+                if ( command.Parameters.Any() )
+                {
+                    markDown += $"#### {Resources.Parameters}  \n";
+
+                    foreach ( Parameter parameter in command.Parameters )
+                    {
+                        markDown +=
+                            $"* {parameter.Name}: {parameter.Description}.{( parameter.Optional ? $" ({Resources.Optional})" : "" )}";
+
+                        if ( parameter.SeeAlso != null )
+                        {
+                            if ( !seeAlsoNames.Contains( parameter.SeeAlso.Name ) )
+                            {
+                                seeAlsoNames.Add( parameter.SeeAlso.Name );
+                            }
+
+                            markDown += string.Format( $" {Resources.See_Also___0_}  \n",
+                                $"[{parameter.SeeAlso.Name}](#{parameter.SeeAlso.Name})" );
+                        }
+                        else
+                        {
+                            markDown += "  \n";
+                        }
+                    }
+
+                    markDown += "  \n";
+                }
+
+                markDown += $"{Resources.Description}:  \n  \n**{command.Description}**  \n  \n";
+                markDown += $"{Resources.Example}:  \n  \n```python  \n{example}  \n```  \n  \n";
+            }
+
+            markDown += "\n\n\n";
+
+            IOrderedEnumerable<Type> includedSeeAlso =
+                seeAlsoTypes.Where( i => seeAlsoNames.Contains( i.Name ) ).OrderBy( i => i.Name );
+
+            if ( includedSeeAlso.Any() )
+            {
+                markDown += $"## {Resources.Types}  \n";
+
+                foreach ( Type seeAlsoType in includedSeeAlso )
+                {
+                    markDown += $"### {seeAlsoType.Name}  \n";
+
+                    string[] enumNames = seeAlsoType.GetEnumNames();
+
+                    if ( enumNames == null )
+                    {
+                        continue;
+                    }
+
+                    markDown = enumNames.Aggregate( markDown, ( current, enumName ) => current + $"* {enumName}  \n" );
+
+                    markDown += "  \n";
+                }
+            }
+
+            string fileName = $"{RemoveAccents(category)}-{locale}.md".Replace( ' ', '-' );
+
+            if ( locale.Equals( "en-US" ) )
+            {
+                fileName = $"{category}.md";
+            }
+
+            File.WriteAllText( Path.Combine( Environment.CurrentDirectory, fileName ), markDown );
         }
 
         private static Type FindEnumType( string shortName, Assembly assembly )
@@ -325,6 +398,12 @@ namespace ExportCommands
             Console.WriteLine( $"Couldn't locate {assemblyname}..." );
 
             return null;
+        }
+
+        private static string RemoveAccents( string input )
+        {
+            byte[] tempBytes = Encoding.GetEncoding( "ISO-8859-8" ).GetBytes( input );
+            return Encoding.UTF8.GetString( tempBytes );
         }
     }
 

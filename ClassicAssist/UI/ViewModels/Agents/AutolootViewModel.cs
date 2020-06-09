@@ -384,14 +384,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     return;
                 }
 
-                if ( item.Container == null )
-                {
-                    PacketWaitEntry we = Engine.PacketWaitEntries.Add(
-                        new PacketFilterInfo( 0x3C, new[] { PacketFilterConditions.IntAtPositionCondition( serial, 19 ) } ),
-                        PacketDirection.Incoming );
+                PacketWaitEntry we = Engine.PacketWaitEntries.Add(
+                    new PacketFilterInfo( 0x3C, new[] { PacketFilterConditions.IntAtPositionCondition( serial, 19 ) } ),
+                    PacketDirection.Incoming );
 
-                    we.Lock.WaitOne( 2000 );
-                }
+                we.Lock.WaitOne( 2000 );
 
                 IEnumerable<Item> items = Engine.Items.GetItem( serial )?.Container?.GetItems();
 
@@ -403,7 +400,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 if ( Engine.Features.HasFlag( FeatureFlags.AOS ) )
                 {
                     Engine.SendPacketToServer( new BatchQueryProperties( items.Select( i => i.Serial ).ToArray() ) );
-                    Thread.Sleep( 2000 );
+                    Thread.Sleep( 1000 );
                 }
 
                 List<Item> lootItems = new List<Item>();

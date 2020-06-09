@@ -238,6 +238,8 @@ namespace ClassicAssist.UO.Network
             List<Property> properties =
                 new List<Property> { new Property { Cliloc = cliloc, Text = Cliloc.GetProperty( cliloc ) } };
 
+            string journalOutput = Cliloc.GetProperty( cliloc );
+
             do
             {
                 string attrName;
@@ -256,6 +258,8 @@ namespace ClassicAssist.UO.Network
 
                         properties.Add( new Property { Cliloc = -3, Text = craftedBy } );
 
+                        journalOutput += $" {craftedBy}";
+
                         break;
                     }
                     case 0xFFFFFFFC:
@@ -269,6 +273,8 @@ namespace ClassicAssist.UO.Network
                         {
                             Cliloc = (int) number, Text = attrName, Arguments = new[] { charges.ToString() }
                         } );
+
+                        journalOutput += $" {attrName}";
 
                         break;
                     }
@@ -284,6 +290,8 @@ namespace ClassicAssist.UO.Network
                             Cliloc = (int) number, Text = attrName, Arguments = new[] { charges.ToString() }
                         } );
 
+                        journalOutput += $" {attrName}";
+
                         break;
                     }
                 }
@@ -296,6 +304,11 @@ namespace ClassicAssist.UO.Network
                 next = reader.ReadUInt32();
             }
             while ( next != 0xFFFFFFFF );
+
+            Engine.Journal.Write( new JournalEntry
+            {
+                Serial = -1, SpeechType = JournalSpeech.Label, Name = "System", Text = journalOutput
+            } );
 
             Item item = Engine.Items.GetItem( serial );
 

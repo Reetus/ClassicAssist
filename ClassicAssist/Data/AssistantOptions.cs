@@ -224,6 +224,9 @@ namespace ClassicAssist.Data
                 case Language.Italian:
                     locale = new CultureInfo( "it-IT" );
                     break;
+                case Language.Polish:
+                    locale = new CultureInfo( "pl-PL" );
+                    break;
                 case Language.Default:
                     break;
                 default:

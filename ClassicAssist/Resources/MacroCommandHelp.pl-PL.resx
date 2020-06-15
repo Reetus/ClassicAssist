@@ -1,0 +1,1261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CLEARABILITY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wyczyść zaznaczenie umiejętności broni</value>
+  </data>
+  <data name="CLEARABILITY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ClearAbility()</value>
+  </data>
+  <data name="FLY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>(Gargoyle) Zaczyna latać o ile już nie lata.</value>
+  </data>
+  <data name="FLY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Fly()</value>
+  </data>
+  <data name="FLYING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca true jeśli obiekt mobile obecnie lata.</value>
+  </data>
+  <data name="FLYING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Flying("self"):</value>
+  </data>
+  <data name="LAND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>(Gargoyle) Przestaje latać jeżeli obecnie lata.</value>
+  </data>
+  <data name="LAND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Land()</value>
+  </data>
+  <data name="SETABILITY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ustawia broń jako "primary" lub "secondary".</value>
+  </data>
+  <data name="SETABILITY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetAbility("primary")</value>
+  </data>
+  <data name="ATTACK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Atakuj obiek mobile (przekazywany parametr może być serialem lub aliasem).</value>
+  </data>
+  <data name="ATTACK_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Attack("last")</value>
+  </data>
+  <data name="BANDAGESELF_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Używa bandaży bezpośrednio na postaci.</value>
+  </data>
+  <data name="BANDAGESELF_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>BandageSelf()</value>
+  </data>
+  <data name="CLEARHANDS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odkłada przedmioty z dłoni. Możlie wartości: "left", 'right", "both"</value>
+  </data>
+  <data name="CLEARHANDS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ClearHands("both")</value>
+  </data>
+  <data name="CLEARUSEONCE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Czyści listę przedmiotów dla komendy UseOnce.</value>
+  </data>
+  <data name="CLEARUSEONCE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Clear UseOnce()</value>
+  </data>
+  <data name="CLICKOBJECT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pojedyńczy klik w przedmiot (parametr może być serialem albo aliasem)</value>
+  </data>
+  <data name="CLICKOBJECT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ClockObject("last")</value>
+  </data>
+  <data name="CONTENTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca liczbę przedmiotów w podanym kontenerze.</value>
+  </data>
+  <data name="CONTENTS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Contents("backpack") &gt; 120:</value>
+  </data>
+  <data name="CONTEXTMENU_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Żądanie otwarcia menu kontekstowego.</value>
+  </data>
+  <data name="CONTEXTMENU_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ContextMenu(0x00aabbcc, 1)</value>
+  </data>
+  <data name="EQUIPITEM_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zakłada wskazany przedmiot w podany layer (layer można sprawdzić za pomocją Inspektora Obiektów)</value>
+  </data>
+  <data name="EQUIPITEM_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>EquipItem("axe", "TwoHanded")</value>
+  </data>
+  <data name="EQUIPLASTWEAPON_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wysyła szybki pakiet założenia ostatniej broni. UWAGA! może nie działać przed wersją serwera AoS!</value>
+  </data>
+  <data name="EQUIPLASTWEAPON_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>EquipLastWeapon()</value>
+  </data>
+  <data name="EQUIPTYPE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zakłada wybrany typ przedmiotu w podany layer (layer można sprawdzić za pomocą Inspektora Obiektów)</value>
+  </data>
+  <data name="EQUIPTYPE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>EquipType(0xff, "TwoHanded")</value>
+  </data>
+  <data name="FEED_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Uzupełnia podany alias albo serial grafiką.</value>
+  </data>
+  <data name="FEED_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Feed("mount", 0xff)</value>
+  </data>
+  <data name="FINDLAYER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" oraz aktualizuje obiekt "found" o ile przedmiot istnieje w specyficznym layerze, opcjonalny seria/alias dla sprawdzenia obiektów typu mobile".</value>
+  </data>
+  <data name="FINDLAYER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if FindLayer("OneHanded"):</value>
+  </data>
+  <data name="INREGION_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true"  o ile w podanym zakresie celu jest podany atrybut.</value>
+  </data>
+  <data name="INREGION_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if InRegion("Guarded", "self")</value>
+  </data>
+  <data name="PING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca wyliczony ping z serwera. W przypadku błędu zwraca "-1"</value>
+  </data>
+  <data name="PING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Ping()</value>
+  </data>
+  <data name="RENAME_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wysyła żadanie zmiany nazwy.</value>
+  </data>
+  <data name="RENAME_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Rename("mount", "Snoopy")</value>
+  </data>
+  <data name="SHOWNAMES_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wyświetla ciała lub/i nazwy mobile. Możliwe parametry: "mobiles", "corpses".</value>
+  </data>
+  <data name="SHOWNAMES_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ShowNames("corpses")</value>
+  </data>
+  <data name="TOGGLEMOUNTED_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zejście ze zwierzęcia jeśli w siodle lub wejśćie na zwierzę jeśli nie w siodle. Polecenie poprosi o zwierze jeśli nie podany jest jego alias.</value>
+  </data>
+  <data name="TOGGLEMOUNTED_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ToggleMounted()</value>
+  </data>
+  <data name="USEOBJECT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Używa przedmiotu (dwuklik). Parametrem może być serial albo alias.</value>
+  </data>
+  <data name="USEOBJECT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>UseObject("mount")</value>
+  </data>
+  <data name="USEONCE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Używa tylko raz podanego typu obiektu (grafiki) z twojego plecaka.</value>
+  </data>
+  <data name="USEONCE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>UseOnce(0xff)</value>
+  </data>
+  <data name="USETYPE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Używa przedmiotu o podanym typie (dwuklik). Opcjonalne parametry to kolor i obiekt kontenera (domyślnie ustawiony jest plecak gracza). Parametry mogą być serialem lub aliasem.</value>
+  </data>
+  <data name="USETYPE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>UseType(0xff)</value>
+  </data>
+  <data name="WAITFORCONTENTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Czeka na zawartość podanego kontenera.</value>
+  </data>
+  <data name="WAITFORCONTENTS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForContents("backpack", 5000)</value>
+  </data>
+  <data name="WAITFORCONTEXT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Żądanie lub oczekiwanie na opcję wybraną z menu kontekstowego.</value>
+  </data>
+  <data name="WAITFORCONTEXT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForContext(0x00aabbcc, 1, 5000)</value>
+  </data>
+  <data name="COUNTER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca obecną liczbę z licznika podanego agenta zliczania (Counter Agent).</value>
+  </data>
+  <data name="COUNTER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Counter("bm")</value>
+  </data>
+  <data name="DRESS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zakłada wszystkie przedmioty z wybranego agenra ubioru (Dress Agent).</value>
+  </data>
+  <data name="DRESS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Dress("Dress-1")</value>
+  </data>
+  <data name="DRESSCONFIG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Dodaje wszystkie założone przedmioty to temporalnej listy, która nie jest persystentna. Po zamknięciu klienta lista jest niszczona.</value>
+  </data>
+  <data name="DRESSCONFIG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>DressConfig()</value>
+  </data>
+  <data name="DRESSING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeżeli agent ubioru obecnie wykonuje czynność zakładania/zdejmowania.</value>
+  </data>
+  <data name="DRESSING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Dressing():</value>
+  </data>
+  <data name="ORGANIZER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wykonuje wybranego agenta organizacji.</value>
+  </data>
+  <data name="ORGANIZER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Organize("Organizer-1")</value>
+  </data>
+  <data name="ORGANIZING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeżeli obecnie jest uruchomiony agnet organizacji.</value>
+  </data>
+  <data name="ORGANIZING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Organizing():</value>
+  </data>
+  <data name="UNDRESS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zdejmij wszystkie przedmioty podanego agenta ubioru.</value>
+  </data>
+  <data name="UNDRESS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Undress("Dress-1")</value>
+  </data>
+  <data name="FINDALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeśli podany alias zostanie znaleziony na ekranie. Zwraca false w przypadku nie znalezienia.</value>
+  </data>
+  <data name="FINDALIAS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if FindAlias("mount"):</value>
+  </data>
+  <data name="GETALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca wartość podanego aliasu.</value>
+  </data>
+  <data name="GETALIAS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>GetAlias("mount")</value>
+  </data>
+  <data name="PROMPTALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wybiera za pomocą wbudowego w grę kursora szukania i przypisuje do podanego aliasu.</value>
+  </data>
+  <data name="PROMPTALIAS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>PromptAlias("mount")</value>
+  </data>
+  <data name="SETALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ustawia wartość podanego aliasu.</value>
+  </data>
+  <data name="SETALIAS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetAlias("mount", 0x40000001)</value>
+  </data>
+  <data name="SETMACROALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ustawia wartość podanego aliasu w obrębie skryptu.</value>
+  </data>
+  <data name="SETMACROALIAS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetMacroAlias("mount", 0x40000001)</value>
+  </data>
+  <data name="UNSETALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Usuwa podany alias.</value>
+  </data>
+  <data name="UNSETALIAS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>UnsetAlias("mount")</value>
+  </data>
+  <data name="ADDFRIEND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Dodaje mobile do listy przyjaciół, jeśli nie jest podany serial/alias zostanie wywołany wbudowany w grę kursor szukania celem ustawienia.</value>
+  </data>
+  <data name="ADDFRIEND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>AddFriend()</value>
+  </data>
+  <data name="ALLY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeśli dany mobile jest sprzymierzeńcem.</value>
+  </data>
+  <data name="ALLY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Criminal("mount"):</value>
+  </data>
+  <data name="BUFFEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sprawdza specyficzny buff.</value>
+  </data>
+  <data name="BUFFEXISTS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if BuffExists("Blood Oath"):</value>
+  </data>
+  <data name="CLEARIGNORELIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Czyści listę ignorowanych.</value>
+  </data>
+  <data name="CLEARIGNORELIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ClearIgnoreList()</value>
+  </data>
+  <data name="COUNTTYPE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zlicza podany typ przedmiotów wewnątrz kontenera.</value>
+  </data>
+  <data name="COUNTTYPE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>CountType(0xff, "backpack")</value>
+  </data>
+  <data name="COUNTTYPEGROUND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zlicza i porównuje przedmioty lub obiekty mobile na ziemi.</value>
+  </data>
+  <data name="COUNTTYPEGROUND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if CountGround(0xff, 0, 10) &lt; 1:</value>
+  </data>
+  <data name="CRIMINAL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeśli obiekt mobile jest kryminalistą.</value>
+  </data>
+  <data name="CRIMINAL_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Criminal("mount"):</value>
+  </data>
+  <data name="DEAD_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeśli obiekt mobole jest martwy. Jeżeli parametr jest pusty (null), zwraca watość dla gracza (parametrem może być serialem albo aliasem).</value>
+  </data>
+  <data name="DEAD_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Dead("self"):</value>
+  </data>
+  <data name="DEX_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca wartość zręcznści gracza.</value>
+  </data>
+  <data name="DEX_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Str() &lt; 100:</value>
+  </data>
+  <data name="DIFFHITS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca wartość różnicy pomiędzy pełnym zdrowiem a obecnym dla podanego obiektu mobile. W przypadku braku parametru zwraca obecną wartość dla gracza (parametrem może być serial lub alias).</value>
+  </data>
+  <data name="DIFFHITS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if DiffHits("self") &gt; 50:</value>
+  </data>
+  <data name="DIFFWEIGHT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca różnicę pomiędzy maksymalnym udźwigiem a obecnym obciązeniem gracza.</value>
+  </data>
+  <data name="DIFFWEIGHT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if DiffWeight() &gt; 50:</value>
+  </data>
+  <data name="DIRECTIONTO_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca obecny kierunek obiektu względem gracza.</value>
+  </data>
+  <data name="DIRECTIONTO_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Run(DirectionTo("enemy"))</value>
+  </data>
+  <data name="DISTANCE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca odległość od danego obiektu.</value>
+  </data>
+  <data name="DISTANCE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Distance("mount") &lt; 4:</value>
+  </data>
+  <data name="ENEMY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeśli obiekt mobile jest wrogiem.</value>
+  </data>
+  <data name="ENEMY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Criminal("mount"):</value>
+  </data>
+  <data name="FINDOBJECT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Szuka obiektu po serialu a następnie ustawia aliast "found". Domyślnie wybrana ziemia jeśli ne podano źódła.</value>
+  </data>
+  <data name="FINDOBJECT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>FindObject("mount")</value>
+  </data>
+  <data name="FINDTYPE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Szuka obiektu po ID grafiki i ustawia alias "found". Domyślnie wybrana ziemia jeśli nie podano źródła.</value>
+  </data>
+  <data name="FINDTYPE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>FindType(0xff)</value>
+  </data>
+  <data name="FOLLOWERS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca liczbę podązających zwerząt zgodnie z oknem statusu postaci.</value>
+  </data>
+  <data name="FOLLOWERS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Followers() &lt; 1:</value>
+  </data>
+  <data name="GOLD_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca liczbę złota zgodnie z oknej statusu postaci.</value>
+  </data>
+  <data name="GOLD_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Gold() &lt; 2000:</value>
+  </data>
+  <data name="GRAPHIC_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca ID przedmiotu (parametrem może być serial albo alias).</value>
+  </data>
+  <data name="GRAPHIC_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Graphic("mount")</value>
+  </data>
+  <data name="GRAY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeśli obiekt mobile jest możliwy do zaatakowania.</value>
+  </data>
+  <data name="GRAY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Criminal("mount"):</value>
+  </data>
+  <data name="HIDDEN_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeśli obiekt mobile jest ukryty, "false" w odwrotnym wypadku. Jeżeli parametr jest pusty, wtedy zwracana jest wartość dla gracza (parametrem może być serial albo alias).</value>
+  </data>
+  <data name="HIDDEN_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Hidden("self"):</value>
+  </data>
+  <data name="HITS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca podane punkty życia dla obiektu mobile. Jeżeli parametr jest pusty, wtedy zwracana jest wartość dla gracza (parametrem może być serial albo alias).</value>
+  </data>
+  <data name="HITS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>hits = Hits("self")</value>
+  </data>
+  <data name="HUE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca kolor dla podanego obiektu (parametrem może być serial albo alias).</value>
+  </data>
+  <data name="HUE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Hue("mount") == 0:</value>
+  </data>
+  <data name="IGNOREOBJECT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ignoruje wskazany biekt z komend szukania.</value>
+  </data>
+  <data name="IGNOREOBJECT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>IgnoreObject("self")</value>
+  </data>
+  <data name="INFRIENDLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jesli obiekt mobile istnieje na liście przyjaciół.</value>
+  </data>
+  <data name="INFRIENDLIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if InFriendList("last"):</value>
+  </data>
+  <data name="INNOCENT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeśli obiekt mobile jest niewinny.</value>
+  </data>
+  <data name="INNOCENT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Criminal("mount"):</value>
+  </data>
+  <data name="INPARTY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeśli obiekt mobile jest z Tobą w drużynie (parametrem może być serial albo alias).</value>
+  </data>
+  <data name="INPARTY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if InParty("friend"):</value>
+  </data>
+  <data name="INRANGE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sprawdza odległość pomiędzy Twoją postacią a innym obiektem mobile lub przedmiotem.</value>
+  </data>
+  <data name="INRANGE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if InRange("enemy", 10):</value>
+  </data>
+  <data name="INT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca liczbę inteligencji gracza.</value>
+  </data>
+  <data name="INT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Str() &lt; 100:</value>
+  </data>
+  <data name="INVULNERABLE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeśli obiekt mobile jest niezniszczalny/nietykalny.</value>
+  </data>
+  <data name="INVULNERABLE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Criminal("mount"):</value>
+  </data>
+  <data name="LUCK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca liczbę punktów szczęscia zgodnie z oknem statusu gracza.</value>
+  </data>
+  <data name="LUCK_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Luck() &lt; 800:</value>
+  </data>
+  <data name="MANA_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value> Zwraca liczbę punktów many wybranego obiektu mobile. Jesli paramter jest pusty, zwraca liczbę punktów many gracza (parametrem może być serial albo alias).</value>
+  </data>
+  <data name="MANA_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Mana("self") &lt; 25:</value>
+  </data>
+  <data name="MAXFOLLOWERS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca liczbę maksylanych podązających zwierząt zgodnie z oknem statusu gracza.</value>
+  </data>
+  <data name="MAXFOLLOWERS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Followers() == MaxFollowers():</value>
+  </data>
+  <data name="MAXHITS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value> Zwraca liczbę punktów życia wybranego obiektu mobile. Jesli paramter jest pusty, zwraca liczbę punktów życia gracza (parametrem może być serial albo alias).</value>
+  </data>
+  <data name="MAXHITS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>hits = MaxHits("self")</value>
+  </data>
+  <data name="MAXMANA_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value> Zwraca maksymalną liczbę punktów many wybranego obiektu mobile. Jesli paramter jest pusty, zwraca maksymalną liczbę punktów many gracza (parametrem może być serial albo alias).</value>
+  </data>
+  <data name="MAXMANA_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>mana = MaxMana("self")</value>
+  </data>
+  <data name="MAXSTAM_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value> Zwraca maksymalną liczbę punktów staminy wybranego obiektu mobile. Jesli paramter jest pusty, zwraca maksymalną liczbę punktów staminy gracza (parametrem może być serial albo alias).</value>
+  </data>
+  <data name="MAXSTAM_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>stam = MaxStam("self")</value>
+  </data>
+  <data name="MAXWEIGHT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca maksymalne obciązenie zgodnie z oknem statusu gracza.</value>
+  </data>
+  <data name="MAXWEIGHT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if MaxWeight() &lt; 300:</value>
+  </data>
+  <data name="MOUNTED_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeśli podany obiekt mobile jest w siodle.</value>
+  </data>
+  <data name="MOUNTED_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Mounted("self"):</value>
+  </data>
+  <data name="MOVEITEM_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Przenosi przedmiot do kontenera (parametrem może być serial lub alias).</value>
+  </data>
+  <data name="MOVEITEM_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>MoveItem("source", "destination")</value>
+  </data>
+  <data name="MOVEITEMOFFSET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Przenosi podany serial/alias do lokacji oddalonej od gracza o koordynaty x,y,z. Brak podanej ilości lub wartość "-1" przenosi cały stos.</value>
+  </data>
+  <data name="MOVEITEMOFFSET_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>MoveItemOffset("trashitem", 0, 1, 0, -1)</value>
+  </data>
+  <data name="MOVETYPE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Przenieś typ obiektów ze źródła do podanej lokacji.</value>
+  </data>
+  <data name="MOVETYPE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>MoveType(0xff, "backpack", "bank")</value>
+  </data>
+  <data name="MOVETYPEOFFSET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Przenosi typ obiektów ze źródłowego kontenera do lokalizacji oddalonej od gracza o koordynaty x,y,z. Brak podanej ilości lub wartość "-1" przenosi cały stos.</value>
+  </data>
+  <data name="MOVETYPEOFFSET_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>MoveTypeOffset(0xf0e, "backpack", 0, 1, 0, -1)</value>
+  </data>
+  <data name="MURDERER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeśli obiekt mobile jest mordercą.</value>
+  </data>
+  <data name="MURDERER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Criminal("mount"):</value>
+  </data>
+  <data name="NAME_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca nazwę podanego obiektu mobile.</value>
+  </data>
+  <data name="NAME_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Name("self") == "Shmoo":</value>
+  </data>
+  <data name="PARALYZED_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeśli podany obiekt mobile jest sparaliżowany/zamrożony.</value>
+  </data>
+  <data name="PARALYZED_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Paralyzed("self"):</value>
+  </data>
+  <data name="POISONED_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeśli podany obiekt mobile jest zatruty.</value>
+  </data>
+  <data name="POISONED_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Poisoned("self"):</value>
+  </data>
+  <data name="REMOVEFRIEND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Usuwa obiekt mobile z listy przyjaciół. W przypadku podania serial/alias zostanie użyty kursor szukania z klienta gry.</value>
+  </data>
+  <data name="REMOVEFRIEND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>RemoveFriend()</value>
+  </data>
+  <data name="SPECIALMOVEEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sprawdź podany atak specjalny.</value>
+  </data>
+  <data name="SPECIALMOVEEXISTS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if SpecialMoveExists("Death Strike"):</value>
+  </data>
+  <data name="STAM_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca liczbę punktów staminy obiektu mobile. Jeśli parametr jest pusty, zwraca liczbę punktów staminy gracza (parametrem może być serial/alias).</value>
+  </data>
+  <data name="STAM_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Stam("self") &lt; 25:</value>
+  </data>
+  <data name="STR_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca liczbe punktów siły gracza.</value>
+  </data>
+  <data name="STR_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Str() &lt; 100:</value>
+  </data>
+  <data name="TITHINGPOINTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the current players' tithing points.</value>
+  </data>
+  <data name="TITHINGPOINTS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if TithingPoints() &lt; 1000:</value>
+  </data>
+  <data name="WAR_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sprwadza, czy obiekt mobile jest w trybie walki.</value>
+  </data>
+  <data name="WAR_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if War("self"):</value>
+  </data>
+  <data name="WEIGHT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca obecne obiciążenie zgodnie z oknem statusu gracza.</value>
+  </data>
+  <data name="WEIGHT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Weight() &gt; 300:</value>
+  </data>
+  <data name="X_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca koordynatę X dla podanego obiektu (parametrem może być serial lub alias).</value>
+  </data>
+  <data name="X_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>x = X("self")</value>
+  </data>
+  <data name="Y_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca koordynatę Y dla podanego obiektu (parametrem może być serial lub alias).</value>
+  </data>
+  <data name="Y_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>y = Y("self")</value>
+  </data>
+  <data name="YELLOWHITS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns true if the specified mobile is yellowhits.</value>
+  </data>
+  <data name="YELLOWHITS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if YellowHits("self"):</value>
+  </data>
+  <data name="Z_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca koordynatę Z dla podanego obiektu (parametrem może być serial lub alias).</value>
+  </data>
+  <data name="Z_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>y = Y("self")</value>
+  </data>
+  <data name="CLOSEGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zamyka podanego gumpa.</value>
+  </data>
+  <data name="CLOSEGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>CloseGump(0x454ddef)</value>
+  </data>
+  <data name="GUMPEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sprawdza czy gump istnieje czy nie</value>
+  </data>
+  <data name="GUMPEXISTS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if GumpExists(0xff):</value>
+  </data>
+  <data name="INGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sprawdza czy podany tekst występuje w gumpie</value>
+  </data>
+  <data name="INGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if InGump(0xf00f, "lethal darts"):</value>
+  </data>
+  <data name="REPLYGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wysyła polecenie ponownego wciśnięcia przycisku. Parametrami są gumpID i buttonID</value>
+  </data>
+  <data name="REPLYGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ReplyGump(0xff, 0)</value>
+  </data>
+  <data name="WAITFORGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Czeka na pakiet gumpa, opcjonalne parametry to gumpID oraz timeout.</value>
+  </data>
+  <data name="WAITFORGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForGump(0xff, 5000)</value>
+  </data>
+  <data name="CLEARJOURNAL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wyczyść dziennik. (Nie powoduje wyczyszczenia dziennika widocznego w grze, ale jego kopię w Classic Assist).</value>
+  </data>
+  <data name="CLEARJOURNAL_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ClearJournal()</value>
+  </data>
+  <data name="INJOURNAL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sprawdź czy podany tekst występuje w dzienniku. Opcjonalnie można podać źródło wpisu do dziennika.</value>
+  </data>
+  <data name="INJOURNAL_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if InJournal("town guards", "system"):</value>
+  </data>
+  <data name="WAITFORJOURNAL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Czeka określoną ilość czasu aż pojawi się szukany tekst w dzienniku.</value>
+  </data>
+  <data name="WAITFORJOURNAL_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if WaitForJournal("town guards", 5000, "system"):</value>
+  </data>
+  <data name="CLEARLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Czyści elementy listy.</value>
+  </data>
+  <data name="CLEARLIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ClearList("list")</value>
+  </data>
+  <data name="CREATELIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Tworzy liste o podanej nazwie. Jeśli taka lista istnieje - jest nadpisywana.</value>
+  </data>
+  <data name="CREATELIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>CreateList("list")</value>
+  </data>
+  <data name="GETLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca wszystkie elementy listy, do używania wraz z pętlami itd.</value>
+  </data>
+  <data name="GETLIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>GetList("list")</value>
+  </data>
+  <data name="INLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sprwadza, czy lista zawiera podany element.</value>
+  </data>
+  <data name="INLIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if InList("shmoo", 1):</value>
+  </data>
+  <data name="LIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca liczbę elementów w liście.</value>
+  </data>
+  <data name="LIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if List("list") &lt; 5:</value>
+  </data>
+  <data name="LISTEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeśli lista istnieje, "false" jeśli nie istnieje.</value>
+  </data>
+  <data name="LISTEXISTS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if ListExists("list"):</value>
+  </data>
+  <data name="PUSHLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Dodaje element na koniec listy. Polecenie utworzy listę jeśli nie istnieje.</value>
+  </data>
+  <data name="PUSHLIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>PushList("list", 1)</value>
+  </data>
+  <data name="REMOVELIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Usuwa listę o podanej nazwie.</value>
+  </data>
+  <data name="REMOVELIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>RemoveList("list")</value>
+  </data>
+  <data name="PLAYMACRO_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Uruchamia podane makro.</value>
+  </data>
+  <data name="PLAYMACRO_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>PlayMacro("beep")</value>
+  </data>
+  <data name="STOP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zatrzymuje obecne makro.</value>
+  </data>
+  <data name="STOP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Stop()</value>
+  </data>
+  <data name="HOTKEYS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Włącza lub wyłacza skróty klawiszowe.</value>
+  </data>
+  <data name="HOTKEYS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Hotkeys()</value>
+  </data>
+  <data name="INFO_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pokazuje inspektora obiektów dla zadanego aliasu lub seriala. Poprosi o wskazanie jeśli brak parametru.</value>
+  </data>
+  <data name="INFO_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Info("self")</value>
+  </data>
+  <data name="INVOKEVIRTUE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Użyj virtue po nazwie.</value>
+  </data>
+  <data name="INVOKEVIRTUE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>InvokeVirtue("Honor")</value>
+  </data>
+  <data name="MESSAGEBOX_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pokazuje proste okno z wpisaną nazwą oraz tekstem.</value>
+  </data>
+  <data name="MESSAGEBOX_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>MessageBox("title", "message")</value>
+  </data>
+  <data name="PAUSE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zarzymuje wykonanie makra na podaną liczbę milisekund.</value>
+  </data>
+  <data name="PAUSE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Pause(1000)</value>
+  </data>
+  <data name="PLAYING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeśli makro jest uruchomione, do używania w makrach uruchomionych w tle.</value>
+  </data>
+  <data name="PLAYING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Playing():</value>
+  </data>
+  <data name="PLAYSOUND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odegraj dźwięk po id albo plik .wav</value>
+  </data>
+  <data name="PLAYSOUND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>PlaySound("Bike Horn.wav")</value>
+  </data>
+  <data name="RESYNC_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wyślij żądanie resynchronizacji do serwera.</value>
+  </data>
+  <data name="RESYNC_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Resync()</value>
+  </data>
+  <data name="SETQUIETMODE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ustawia tryb cichy dla makra, dzięki któremu redukuje się liczba komunikatów na wyjścu z makra.</value>
+  </data>
+  <data name="SETQUIETMODE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetQuietMode(True)</value>
+  </data>
+  <data name="SYSMESSAGE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wyślij wiadomość tekstową.</value>
+  </data>
+  <data name="SYSMESSAGE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SysMessage("hello")</value>
+  </data>
+  <data name="WARMODE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ustawia status trybu walki. Dopuszczalne parametry: "on", "off". Domyślnie ustawione w trybie przełącznika.</value>
+  </data>
+  <data name="WARMODE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WarMode("on")</value>
+  </data>
+  <data name="ALLYMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wysyła wiadomość do sojuszników na czacie.</value>
+  </data>
+  <data name="ALLYMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>AllyMsg("alert")</value>
+  </data>
+  <data name="CANCELPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Anuluje prompt (np. podczas zapytania o wskazanie obiektu).</value>
+  </data>
+  <data name="CANCELPROMPT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>CancelPrompt()</value>
+  </data>
+  <data name="EMOTEMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Użycie emocji w grze.</value>
+  </data>
+  <data name="EMOTEMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>EmoteMsg("hi")</value>
+  </data>
+  <data name="GUILDMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wysyła wiadomość do czatu gildii.</value>
+  </data>
+  <data name="GUILDMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>GuildMsg("alert")</value>
+  </data>
+  <data name="HEADMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wyświetla wiadomość nad głową obiektu mobile lub nad przedmiotem.</value>
+  </data>
+  <data name="HEADMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>HeadMsg("hi", "backpack")</value>
+  </data>
+  <data name="MSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Używanie mówienia postaci. Opcjonalnie można podać kolor.</value>
+  </data>
+  <data name="MSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Msg("hi")</value>
+  </data>
+  <data name="PARTYMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wysyła wiadomść do czatu sprzymieżeńców.</value>
+  </data>
+  <data name="PARTYMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>PartyMsg("alert")</value>
+  </data>
+  <data name="PROMPTMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sends the specified message as a prompt response</value>
+  </data>
+  <data name="PROMPTMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>PromptMsg("hello")</value>
+  </data>
+  <data name="WAITFORPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Czeka określoną ilość czasu aż pojawi się pakiet z wybranym obiektem za pomocą wbudowanego narzędzia gry.</value>
+  </data>
+  <data name="WAITFORPROMPT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForPrompt(5000)</value>
+  </data>
+  <data name="WHISPERMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Szepcze postacią gracza dany tekst.</value>
+  </data>
+  <data name="WHISPERMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WhisperMsg("hi")</value>
+  </data>
+  <data name="YELLMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wyrzykuje postacią gracza dany tekst.</value>
+  </data>
+  <data name="YELLMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>YellMsg("hi")</value>
+  </data>
+  <data name="RUN_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Biegnie postacią gracza w określonym kierunku. Dopuszczalne wartości: "east", "west", "north", "south".</value>
+  </data>
+  <data name="RUN_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Run("east")</value>
+  </data>
+  <data name="SETFORCEWALK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ustawia wymuszenie chodzenia. Dopuszczalne wartości: "True", "False".</value>
+  </data>
+  <data name="SETFORCEWALK_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetForceWalk(True)</value>
+  </data>
+  <data name="TOGGLEFORCEWALK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Przełącza wymuszone chodzenie.</value>
+  </data>
+  <data name="TOGGLEFORCEWALK_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ToggleForceWalk()</value>
+  </data>
+  <data name="TURN_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odwraca postać gracza w zadanym kierunku. Dopuszczalne wartości: "east", "west", "north", "south".</value>
+  </data>
+  <data name="TURN_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Turn("east")</value>
+  </data>
+  <data name="WALK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Idzie postacią gracza w zadanym kierunku. Dopuszczalne wartości: "east", "west", "north", "south".</value>
+  </data>
+  <data name="WALK_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Walk("east")</value>
+  </data>
+  <data name="PROPERTY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeśli dany tekst pojawi się we właściwościach przedmiotu.</value>
+  </data>
+  <data name="PROPERTY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Property("item", "Defense Chance Increase"):</value>
+  </data>
+  <data name="PROPERTYVALUE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca wartość danej właściwości przedmiotu. Opcjonalnym argumentem jest index właściwości.</value>
+  </data>
+  <data name="PROPERTYVALUE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>val = PropertyValue[int]("backpack", "Contents")</value>
+  </data>
+  <data name="WAITFORPROPERTIES_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Oczekuje na pakiet z właściwościami przedmiotu.</value>
+  </data>
+  <data name="WAITFORPROPERTIES_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForProperties("backpack", 5000)</value>
+  </data>
+  <data name="SETSKILL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ustawia tryb przyrostu danej umiejętności. Dopuszczalne wartości: "up", "down", "locked".</value>
+  </data>
+  <data name="SETSKILL_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetSkill("hiding", "locked")</value>
+  </data>
+  <data name="SKILL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca bazową wartość umiejętności.</value>
+  </data>
+  <data name="SKILL_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Skill("hiding") &lt; 100:</value>
+  </data>
+  <data name="SKILLSTATE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca obecny status trybu przyrostu umiejętności. Dopuszczalne wartości zwracane: "up", "down", "locked".</value>
+  </data>
+  <data name="SKILLSTATE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if SkillState("hiding') == "locked":</value>
+  </data>
+  <data name="USESKILL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Używa wybraną umiejętność.</value>
+  </data>
+  <data name="USESKILL_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>UseSkill("Hiding")</value>
+  </data>
+  <data name="CAST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Używa wybrany czas i automatycznie ustawia na cel wybrany obiekt.</value>
+  </data>
+  <data name="CAST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Cast("Recall", "runebook")</value>
+  </data>
+  <data name="CANCELTARGET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Anuluje istniejący kursor celu.</value>
+  </data>
+  <data name="CANCELTARGET_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>CancelTarget()</value>
+  </data>
+  <data name="CLEARTARGETQUEUE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Czyści kolejkę celów kiedy włączone jet kolejkowanie last target/target self.</value>
+  </data>
+  <data name="CLEARTARGETQUEUE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ClearTargetQueue()</value>
+  </data>
+  <data name="GETENEMY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pobranie wartości obiektu mobile oraz ustawienie go jako aliasu wroga ("enemy").</value>
+  </data>
+  <data name="GETENEMY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>GetEnemy(["Murderer"])</value>
+  </data>
+  <data name="GETFRIEND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pobranie wartości obiektu mobile oraz ustawienie go jako aliasu przyjaciela ("friend").</value>
+  </data>
+  <data name="GETFRIEND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>GetFriend(["Murderer"])</value>
+  </data>
+  <data name="GETFRIENDLISTONLY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pobiera przyjaciela tylko z listy przyjaciół. Możliwe parametry dystansu od przyjaciela: "Closest", "Nearest", "Next".</value>
+  </data>
+  <data name="GETFRIENDLISTONLY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>GetFriendListOnly("Closest")</value>
+  </data>
+  <data name="TARGET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wybiera za cel podany obiekt (parametr może być serialem lub aliasem).</value>
+  </data>
+  <data name="TARGET_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Target("self")</value>
+  </data>
+  <data name="TARGETEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" w przypadku kiedy pokazywany jest kursor wskazywania a status gracza odpowiada podanej wartości. Możliwe parametry: "Any", "Beneficial", "Harmful", "Neutral". Domyśla wartość to "Any".</value>
+  </data>
+  <data name="TARGETEXISTS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if TargetExists("Harmful"):</value>
+  </data>
+  <data name="TARGETGROUND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wybiera za cel wskazany typ przedmiotu na ziemi. Opcjonalnym parameternem jet dystans.</value>
+  </data>
+  <data name="TARGETGROUND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TargetGround(0x190, -1, 10)</value>
+  </data>
+  <data name="TARGETTILERELATIVE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wybiera za cel tile we wskazanym dystansie relatywnie do podanego aliasu/seriala. Opcjonalnie można podać boolean dla odwrotnego zachowania komendy.</value>
+  </data>
+  <data name="TARGETTILERELATIVE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TargetTileRelative("self", 1, False)</value>
+  </data>
+  <data name="TARGETTYPE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Używa podanego typu w pleaku gracza. Opcjonalnymi parametrami są kolor i poziom szukania.</value>
+  </data>
+  <data name="TARGETTYPE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>UseType(0xff, 0, 3)</value>
+  </data>
+  <data name="WAITFORTARGET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Czeka na pakiet z wybranym celem od serwera. Opcjonalnie można podać timeout (domyślnie 5000 milisekund).</value>
+  </data>
+  <data name="WAITFORTARGET_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForTarget(5000)</value>
+  </data>
+  <data name="WAITINGFORTARGET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeśli core czeka wewnętrznie na odpowiedź o wybranym celu gracza z serwera.</value>
+  </data>
+  <data name="WAITINGFORTARGET_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if WaitingForTarget():</value>
+  </data>
+  <data name="CREATETIMER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Tworzy nowy licznilk o podanej nazwie.</value>
+  </data>
+  <data name="CREATETIMER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>CreateTimer("shmoo")</value>
+  </data>
+  <data name="REMOVETIMER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Usuwa licznik o podanej nazwie.</value>
+  </data>
+  <data name="REMOVETIMER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>RemoveTimer("shmoo")</value>
+  </data>
+  <data name="SETTIMER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ustawia licznik czasu dla podanej wartości. Jeśli takiego nie ma jest tworzony nowy.</value>
+  </data>
+  <data name="SETTIMER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetTimer("shmoo", 0)</value>
+  </data>
+  <data name="TIMER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sprawdza wartość podanego licznika czasu.</value>
+  </data>
+  <data name="TIMER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Timer("shmoo") &gt; 10000:</value>
+  </data>
+  <data name="TIMEREXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "true" jeśli podany licznik czasu istnieje.</value>
+  </data>
+  <data name="TIMEREXISTS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if TimerExists("shmoo"):</value>
+  </data>
+  <data name="TIMERMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca czas naliczony poprzez licznik czasu jako "SysMessage".</value>
+  </data>
+  <data name="TIMERMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TimerMsg("shmoo")</value>
+  </data>
+  <data name="FINDWAND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Szuka różdżki po czym ustawia alias "found".</value>
+  </data>
+  <data name="FINDWAND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>FindWand("fireball", "backpack", 10)</value>
+  </data>
+  <data name="EQUIPWAND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Szuka podanej różdżki wewnątrz plecaka gracza i bierze ją do ręki.</value>
+  </data>
+  <data name="EQUIPWAND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>EquipWand("fireball", 10)</value>
+  </data>
+  <data name="EQUIPWAND_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>#Equip a fireball wand if one can be found in our backpack..
+if FindWand("fireball", "backpack", 5):
+ #Remove current item in hand
+ if FindLayer("OneHanded"):
+  ClearHands("left")
+ #Equip the wand
+ EquipWand("fireball")</value>
+  </data>
+  <data name="SETAUTOLOOTCONTAINER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ustawia kontener przechowywania obiektów dla agenta autoloot.</value>
+  </data>
+  <data name="SETAUTOLOOTCONTAINER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetAutolootContainer("backpack")</value>
+  </data>
+  <data name="REPLAY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odgrywa ponownie obecne makro.</value>
+  </data>
+  <data name="REPLAY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Replay()</value>
+  </data>
+  <data name="INIGNORELIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sprawdza czy podany serial lub alias istnieje w liście ignorowanych.</value>
+  </data>
+  <data name="INIGNORELIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if InIgnoreList("mount"):</value>
+  </data>
+  <data name="SETFRIEND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ustawia przyjaciela dla podanego serialu lub aliasu.</value>
+  </data>
+  <data name="SETFRIEND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetFriend("mount")</value>
+  </data>
+  <data name="SETENEMY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ustawia przeciwnika dla podanego serialu lub aliasu.</value>
+  </data>
+  <data name="SETENEMY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetEnemy("mount")</value>
+  </data>
+  <data name="SETLASTTARGET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ustawia Last Target na wskazany serial lub alias.</value>
+  </data>
+  <data name="SETLASTTARGET_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetLastTarget("mount")</value>
+  </data>
+  <data name="WAITFORTARGETORFIZZLE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Czeka podaną ilość czasu na kursor szukania celu lub niepowodzenie jego rzucania.</value>
+  </data>
+  <data name="WAITFORTARGETORFIZZLE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForTargetOrFizzle(5000)</value>
+  </data>
+  <data name="CHATMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wysyła wiadomość na chacie.</value>
+  </data>
+  <data name="CHATMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ChatMsg("Mary had a little lamb")</value>
+  </data>
+  <data name="OPENVIRTUEGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Otwiera gump Cnót podanego serialu/aliasu (domyślnie wybrana jest postać gracza).</value>
+  </data>
+  <data name="OPENVIRTUEGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>OpenVirtueGump("enemy")</value>
+  </data>
+  <data name="OPENGUILDGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Otwiera gump Gildii.</value>
+  </data>
+  <data name="OPENQUESTSGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Otwiera ugump Questów.</value>
+  </data>
+  <data name="OPENGUILDGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>OpenGuildGump()</value>
+  </data>
+  <data name="OPENQUESTSGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>OpenQuestsGump()</value>
+  </data>
+  <data name="TARGETXYZ_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wybiera za cel ziemie o podanych koordynatach.</value>
+  </data>
+  <data name="TARGETXYZ_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TargetXYZ(1000, 1000, 0)</value>
+  </data>
+  <data name="REHUE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Koloruje podany item/obiekt mobile na podaną wartość koloru. Ustawienie 0 usuwa kolor. (Eksperymentalna funkcjonalność!).</value>
+  </data>
+  <data name="REHUE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Rehue("mount", 1176)</value>
+  </data>
+  <data name="STOPALL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zatrzymuje wszystkie makra włącznie z tymi działającymi w tle.</value>
+  </data>
+  <data name="STOPALL_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>StopAll()</value>
+  </data>
+  <data name="SETSTATUS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ustawia status przyrostu skilli. Możliwe wartości: "up", "down", "locked".</value>
+  </data>
+  <data name="SETSTATUS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetStatus('str', 'locked')</value>
+  </data>
+  <data name="TARGETTILEOFFSET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ustawia za cel podane tile w podanym odstępie relatywnie do postaci gracza.</value>
+  </data>
+  <data name="TARGETTILEOFFSET_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TargetTileOffset(0, 1, 0)</value>
+  </data>
+  <data name="TARGETTILEOFFSET_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>#Targets the tile at the current Y coordinate + 1
+TargetTileOffset(0, 1, 0)</value>
+  </data>
+  <data name="BUFFTIME_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca ilość czasu pozostałego dla  podaneg buffa, lub 0 jeśli już się skończył lub nie był aktywny.</value>
+  </data>
+  <data name="BUFFTIME_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if BuffTime('Enemy Of One') &lt; 5000:</value>
+  </data>
+  <data name="TARGETBYRESOURCE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Używa narzędzi oraz celów o podanym typie (wymaga supportowania serwera (OSI/ServUO)).</value>
+  </data>
+  <data name="TARGETBYRESOURCE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TargetByResource('pickaxe', 'Ore')</value>
+  </data>
+</root>

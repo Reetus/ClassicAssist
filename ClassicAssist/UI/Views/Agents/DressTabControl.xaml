@@ -35,7 +35,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="120" />
         </Grid.ColumnDefinitions>
         <Grid Margin="5" Grid.Column="0">
             <Grid.RowDefinitions>
@@ -47,8 +47,9 @@
             <Grid.Resources>
                 <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
             </Grid.Resources>
-            <CheckBox Content="{x:Static resources:Strings.Move_conflicting_items}"
-                      IsChecked="{Binding MoveConflictingItems}" Grid.Row="0" />
+            <CheckBox IsChecked="{Binding MoveConflictingItems}" Grid.Row="0">
+                <TextBlock Text="{x:Static resources:Strings.Move_conflicting_items}" TextWrapping="Wrap" />
+            </CheckBox>
             <CheckBox Content="{x:Static resources:Strings.Use_UO3D_Packets}"
                       IsChecked="{Binding UseUO3DPackets}" Grid.Row="1"
                       ToolTip="{x:Static resources:Strings.Requires_Server_Support}" />

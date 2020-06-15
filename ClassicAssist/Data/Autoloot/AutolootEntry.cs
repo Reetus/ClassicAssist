@@ -8,7 +8,7 @@ namespace ClassicAssist.Data.Autoloot
 {
     public class AutolootEntry : INotifyPropertyChanged
     {
-        private bool _autoloot;
+        private bool _autoloot = true;
 
         private ObservableCollection<AutolootConstraintEntry> _constraints =
             new ObservableCollection<AutolootConstraintEntry>();

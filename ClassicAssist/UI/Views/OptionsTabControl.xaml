@@ -72,8 +72,8 @@
                 <CheckBox.ContentTemplate>
                     <ItemContainerTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="{x:Static resources:Strings.Range_check_last_target}" />
-                            <TextBox Width="40"
+                            <TextBlock Text="{x:Static resources:Strings.Range_check_last_target}" TextWrapping="Wrap" />
+                            <TextBox Width="40" Margin="5,0,0,0"
                                      Text="{Binding Path=Data.CurrentOptions.RangeCheckLastTargetAmount, Source={StaticResource proxy}}" />
                         </StackPanel>
                     </ItemContainerTemplate>
@@ -98,29 +98,34 @@
                 <CheckBox.ContentTemplate>
                     <ItemContainerTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="{x:Static resources:Strings.Limit_Mouse_Wheel_Retrigger}" Margin="0" />
+                            <TextBlock Text="{x:Static resources:Strings.Limit_Mouse_Wheel_Retrigger}" Margin="0" TextWrapping="Wrap" VerticalAlignment="Center" />
                             <TextBox Width="40" Margin="10,0,10,0"
-                                     Text="{Binding Path=Data.CurrentOptions.LimitMouseWheelTriggerMS, Source={StaticResource proxy}}" />
-                            <Label Content="ms" Margin="0"
-                                   Padding="0,0,0,0" />
+                                     Text="{Binding Path=Data.CurrentOptions.LimitMouseWheelTriggerMS, Source={StaticResource proxy}}" TextWrapping="Wrap" />
+                            <TextBlock Text="ms" TextWrapping="Wrap"
+                                   Margin="5,0,0,0"  VerticalAlignment="Center" />
                         </StackPanel>
                     </ItemContainerTemplate>
                 </CheckBox.ContentTemplate>
             </CheckBox>
             <CheckBox Content="{x:Static resources:Strings.Auto_accept_party_invites}"
                       IsChecked="{Binding CurrentOptions.AutoAcceptPartyInvite}" />
-            <CheckBox Content="{x:Static resources:Strings.Auto_accept_only_from_friends}"
-                      IsChecked="{Binding CurrentOptions.AutoAcceptPartyOnlyFromFriends}" />
+            <CheckBox IsChecked="{Binding CurrentOptions.AutoAcceptPartyOnlyFromFriends}">
+                <TextBlock Text="{x:Static resources:Strings.Auto_accept_only_from_friends}" TextWrapping="Wrap"/>
+            </CheckBox>
             <CheckBox Content="{x:Static resources:Strings.Macros_default_to_quiet_mode}"
                       IsChecked="{Binding CurrentOptions.DefaultMacroQuietMode}" />
         </StackPanel>
         <StackPanel x:Name="stackPanel" Grid.Column="1">
-            <CheckBox Content="{x:Static resources:Strings.Prevent_targeting_innocents_in_guardzone}"
-                      IsChecked="{Binding CurrentOptions.PreventTargetingInnocentsInGuardzone}"
-                      ToolTip="{x:Static resources:Strings.Applies_to_hotkeys___macros_only_}" />
-            <CheckBox Content="{x:Static resources:Strings.Prevent_attacking_innocents_in_guardzone}"
-                      IsChecked="{Binding CurrentOptions.PreventAttackingInnocentsInGuardzone}"
-                      ToolTip="{x:Static resources:Strings.Applies_to_hotkeys___macros_only_}" />
+            <CheckBox IsChecked="{Binding CurrentOptions.PreventTargetingInnocentsInGuardzone}"
+                      ToolTip="{x:Static resources:Strings.Applies_to_hotkeys___macros_only_}">
+                <TextBlock Text="{x:Static resources:Strings.Prevent_targeting_innocents_in_guardzone}"
+                           TextWrapping="Wrap" />
+            </CheckBox>
+            <CheckBox IsChecked="{Binding CurrentOptions.PreventAttackingInnocentsInGuardzone}"
+                      ToolTip="{x:Static resources:Strings.Applies_to_hotkeys___macros_only_}">
+                <TextBlock Text="{x:Static resources:Strings.Prevent_attacking_innocents_in_guardzone}"
+                           TextWrapping="Wrap" />
+            </CheckBox>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />

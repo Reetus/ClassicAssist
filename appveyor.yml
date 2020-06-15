@@ -82,7 +82,7 @@ after_build:
 
     cd ClassicAssist.wiki
 
-    copy ..\ClassicAssist\Output\net48\*.md .
+    copy ..\ClassicAssist\Output\net48\Docs\*.md .
 
     & cmd /c 'git add *'
 

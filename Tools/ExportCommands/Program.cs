@@ -16,7 +16,7 @@ namespace ExportCommands
 {
     internal class Program
     {
-        private static readonly string[] _locales = { "en-US", "it-IT" };
+        private static readonly string[] _locales = { "en-US", "it-IT", "pl-PL" };
 
         private static void Main( string[] args )
         {
@@ -36,6 +36,13 @@ namespace ExportCommands
             string originalDirectory = Environment.CurrentDirectory;
 
             Environment.CurrentDirectory = Path.GetDirectoryName( args[0] ) ?? throw new InvalidOperationException();
+
+            string docPath = Path.Combine( originalDirectory, "Docs" );
+
+            if ( !Directory.Exists( docPath ) )
+            {
+                Directory.CreateDirectory( docPath );
+            }
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
@@ -245,7 +252,7 @@ namespace ExportCommands
                     fileName = "Macro-Commands.md";
                 }
 
-                File.WriteAllText( Path.Combine( originalDirectory, fileName ), markDown );
+                File.WriteAllText( Path.Combine( originalDirectory, "Docs", fileName ), markDown );
             }
 
             sw.Stop();
@@ -348,7 +355,7 @@ namespace ExportCommands
                 fileName = $"{category}.md";
             }
 
-            File.WriteAllText( Path.Combine( Environment.CurrentDirectory, fileName ), markDown );
+            File.WriteAllText( Path.Combine( Environment.CurrentDirectory, "Docs", fileName ), markDown );
         }
 
         private static Type FindEnumType( string shortName, Assembly assembly )

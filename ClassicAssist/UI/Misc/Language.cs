@@ -6,6 +6,7 @@
         English,
         Korean,
         Chinese,
-        Italian
+        Italian,
+        Polish
     }
 }

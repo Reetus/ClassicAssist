@@ -1302,4 +1302,10 @@
   <data name="Hotkey will still trigger with hotkeys disabled" xml:space="preserve">
     <value>단축키는 여전히 단축키를 사용하지 않도록 설정하면 트리거됩니다.</value>
   </data>
+  <data name="Menu" xml:space="preserve">
+    <value>메뉴</value>
+  </data>
+  <data name="Menus" xml:space="preserve">
+    <value>메뉴</value>
+  </data>
 </root>

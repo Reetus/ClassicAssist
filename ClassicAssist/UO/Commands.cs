@@ -239,6 +239,30 @@ namespace ClassicAssist.UO
             Engine.SendPacketToClient( new CloseClientGump( gumpID ) );
         }
 
+        public static bool WaitForMenu( int gumpId, int timeout = 30000 )
+        {
+            PacketFilterInfo pfi = new PacketFilterInfo( 0x7C );
+
+            if ( gumpId != 0 )
+            {
+                pfi = new PacketFilterInfo( 0x7C,
+                    new[] { PacketFilterConditions.ShortAtPositionCondition( gumpId, 7 ) } );
+            }
+
+            PacketWaitEntry packetWaitEntry = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );
+
+            try
+            {
+                bool result = packetWaitEntry.Lock.WaitOne( timeout );
+
+                return result;
+            }
+            finally
+            {
+                Engine.PacketWaitEntries.Remove( packetWaitEntry );
+            }
+        }
+
         public static bool WaitForGump( uint gumpId, int timeout = 30000 )
         {
             PacketFilterInfo pfi = new PacketFilterInfo( 0xDD );

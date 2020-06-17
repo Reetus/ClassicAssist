@@ -1302,4 +1302,10 @@
   <data name="Hotkey will still trigger with hotkeys disabled" xml:space="preserve">
     <value>热键仍将触发，禁用热键</value>
   </data>
+  <data name="Menu" xml:space="preserve">
+    <value>菜单</value>
+  </data>
+  <data name="Menus" xml:space="preserve">
+    <value>菜单</value>
+  </data>
 </root>

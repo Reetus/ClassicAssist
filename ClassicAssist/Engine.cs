@@ -102,6 +102,7 @@ namespace Assistant
         public static int LastPromptID { get; set; }
         public static int LastPromptSerial { get; set; }
         public static TargetQueue<object> LastTargetQueue { get; set; } = new TargetQueue<object>();
+        public static MenuCollection Menus { get; set; } = new MenuCollection();
         public static MobileCollection Mobiles { get; set; } = new MobileCollection( Items );
         public static PacketWaitEntries PacketWaitEntries { get; set; }
         public static PlayerMobile Player { get; set; }

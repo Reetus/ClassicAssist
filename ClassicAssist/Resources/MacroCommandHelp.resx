@@ -1319,4 +1319,16 @@ TargetTileOffset(0, 1, 0)</value>
   <data name="TARGETBYRESOURCE_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>TargetByResource('pickaxe', 'Ore')</value>
   </data>
+  <data name="WAITFORMENU_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pauses until incoming menu packet is received, optional paramters of gump ID and timeout</value>
+  </data>
+  <data name="WAITFORMENU_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForMenu(0xff, 5000)</value>
+  </data>
+  <data name="REPLYMENU_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sends a button reply to server menu</value>
+  </data>
+  <data name="REPLYMENU_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ReplyMenu(0xff, 0, 0xff, 0)</value>
+  </data>
 </root>

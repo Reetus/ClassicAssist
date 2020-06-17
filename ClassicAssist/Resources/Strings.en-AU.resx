@@ -1302,4 +1302,10 @@
   <data name="Hotkey will still trigger with hotkeys disabled" xml:space="preserve">
     <value>Hotkey will still trigger with hotkeys disabled</value>
   </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="Menus" xml:space="preserve">
+    <value>Menus</value>
+  </data>
 </root>

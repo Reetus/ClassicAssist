@@ -95,6 +95,7 @@ namespace ClassicAssist.UO.Network
             Register( 0x6C, 19, OnTarget );
             Register( 0x74, 0, OnShopList );
             Register( 0x77, 17, OnMobileMoving );
+            Register( 0x7C, 0, OnDisplayItemListMenu );
             Register( 0x78, 0, OnMobileIncoming );
             Register( 0x98, 0, OnMobileName );
             Register( 0x99, 30, OnTarget );
@@ -121,6 +122,28 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x10, 0, OnDisplayEquipmentInfo );
             RegisterExtended( 0x21, 0, OnClearWeaponAbility );
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
+        }
+
+        private static void OnDisplayItemListMenu( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+            int gumpId = reader.ReadInt16();
+            string title = reader.ReadString( reader.ReadByte() );
+
+            int numLines = reader.ReadByte();
+
+            List<MenuEntry> entries = new List<MenuEntry>();
+
+            for ( int i = 0; i < numLines; i++ )
+            {
+                int id = reader.ReadInt16();
+                int hue = reader.ReadInt16();
+                string line = reader.ReadString( reader.ReadByte() );
+
+                entries.Add( new MenuEntry { Index = i + 1, ID = id, Hue = hue, Title = line } );
+            }
+
+            Engine.Menus.Add( new Menu { Serial = serial, ID = gumpId, Lines = entries.ToArray(), Title = title } );
         }
 
         private static void OnWorldItem( PacketReader reader )

@@ -2409,6 +2409,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sends a button reply to server menu.
+        /// </summary>
+        public static string REPLYMENU_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("REPLYMENU_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ReplyMenu(0xff, 0, 0xff, 0).
+        /// </summary>
+        public static string REPLYMENU_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("REPLYMENU_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sends Resync request to server..
         /// </summary>
         public static string RESYNC_COMMAND_DESCRIPTION {
@@ -3291,6 +3309,24 @@ namespace ClassicAssist.Resources {
         public static string WAITFORJOURNAL_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WAITFORJOURNAL_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pauses until incoming menu packet is received, optional paramters of gump ID and timeout.
+        /// </summary>
+        public static string WAITFORMENU_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WAITFORMENU_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WaitForMenu(0xff, 5000).
+        /// </summary>
+        public static string WAITFORMENU_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WAITFORMENU_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

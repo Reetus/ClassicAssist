@@ -206,5 +206,47 @@ namespace ClassicAssist.Tests
         //        Assert.IsTrue( mobile.IsPoisoned );
         //    } );
         //}
+
+        [TestMethod]
+        public void WillParseItemListMenu()
+        {
+            /*
+             * Display Item List Menu Packet.
+                from server
+                byte	ID (7C)
+                word	Packet Size
+                dword	Sender Serial
+                word	Gump ID
+                byte	Title Length
+                char[Title Length]	Title
+                byte	Number Of Lines
+                loop	Lines
+                word	Choice ID
+                word	Hue
+                byte	Line Length
+                char[Line Length]	Texte
+                endloop	Lines
+             */
+            byte[] packet =
+            {
+                0x7C, 0x00, 0x39, 0x00, 0x07, 0x76, 0x7C, 0x01, 0xCF, 0x0D, 0x42, 0x6C, 0x61, 0x63, 0x6B, 0x73,
+                0x6D, 0x69, 0x74, 0x68, 0x69, 0x6E, 0x67, 0x03, 0x0F, 0xAF, 0x00, 0x00, 0x06, 0x52, 0x65, 0x70,
+                0x61, 0x69, 0x72, 0x0F, 0xB1, 0x00, 0x00, 0x05, 0x53, 0x6D, 0x65, 0x6C, 0x74, 0x13, 0xB9, 0x00,
+                0x00, 0x07, 0x57, 0x65, 0x61, 0x70, 0x6F, 0x6E, 0x73
+            };
+
+            /*
+             * Item List Menu Response Packet.
+                13 bytesfrom server
+                byte	ID (7D)
+                dword	Sender Serial
+                word	Gump ID
+                word	Index
+                word	Item ID
+                word	Hue 
+             */
+
+            byte[] packet2 = { 0x7D, 0x00, 0x07, 0x76, 0x7C, 0x01, 0xCF, 0x00, 0x03, 0x13, 0xB9, 0x00, 0x00 };
+        }
     }
 }

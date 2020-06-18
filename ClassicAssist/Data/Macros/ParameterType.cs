@@ -59,6 +59,7 @@ namespace ClassicAssist.Data.Macros
         BeneficialHarmfulNeutral,
         TimerName,
         WandName,
-        Empty
+        Empty,
+        Boolean
     }
 }

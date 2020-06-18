@@ -270,4 +270,7 @@
   <data name="Types" xml:space="preserve">
     <value>Types</value>
   </data>
+  <data name="PARAMETER_DESCRIPTION_BOOLEAN" xml:space="preserve">
+    <value>True/False value, see description for usage</value>
+  </data>
 </root>

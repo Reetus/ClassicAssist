@@ -10,7 +10,8 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class TimerCommands
     {
-        private static readonly ConcurrentDictionary<string, OffsetStopwatch> _timers = new ConcurrentDictionary<string, OffsetStopwatch>();
+        private static readonly ConcurrentDictionary<string, OffsetStopwatch> _timers =
+            new ConcurrentDictionary<string, OffsetStopwatch>();
 
         [CommandsDisplay( Category = nameof( Strings.Timers ),
             Parameters = new[] { nameof( ParameterType.TimerName ) } )]
@@ -18,7 +19,7 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             OffsetStopwatch timer = new OffsetStopwatch( TimeSpan.Zero );
 
-            _timers.AddOrUpdate( name, t => timer, (t,o) => timer );
+            _timers.AddOrUpdate( name, t => timer, ( t, o ) => timer );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Timers ),

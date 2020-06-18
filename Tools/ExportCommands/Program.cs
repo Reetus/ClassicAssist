@@ -348,7 +348,7 @@ namespace ExportCommands
                 }
             }
 
-            string fileName = $"{RemoveAccents(category)}-{locale}.md".Replace( ' ', '-' );
+            string fileName = $"{RemoveAccents( category )}-{locale}.md".Replace( ' ', '-' );
 
             if ( locale.Equals( "en-US" ) )
             {

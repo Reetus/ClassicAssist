@@ -40,6 +40,7 @@ namespace ClassicAssist.UO.Objects
 
         public bool IsFrozen => Status.HasFlag( MobileStatus.Frozen );
         public bool IsMounted => Mount != null;
+
         public bool IsPoisoned
         {
             get

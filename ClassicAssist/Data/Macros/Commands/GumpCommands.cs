@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 using Assistant;
 using ClassicAssist.Resources;
-using ClassicAssist.UO.Data;
-using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects.Gumps;
 using UOC = ClassicAssist.UO.Commands;

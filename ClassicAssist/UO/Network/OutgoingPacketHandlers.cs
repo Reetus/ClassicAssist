@@ -15,6 +15,8 @@ namespace ClassicAssist.UO.Network
     {
         public delegate void dGump( uint gumpId, int serial, Gump gump );
 
+        public delegate void dMenuClick( int serial, int gumpId, int index, int id, int hue );
+
         public delegate void dTargetSentEvent( TargetType targetType, int senderSerial, int flags, int serial, int x,
             int y, int z, int id );
 
@@ -22,6 +24,8 @@ namespace ClassicAssist.UO.Network
         private static PacketHandler[] _extendedHandlers;
         public static event dTargetSentEvent TargetSentEvent;
         public static event dGump GumpEvent;
+
+        public static event dMenuClick MenuClickedEvent;
 
         public static void Initialize()
         {
@@ -34,11 +38,25 @@ namespace ClassicAssist.UO.Network
             Register( 0x08, 15, OnDropRequest );
             Register( 0x13, 10, OnEquipRequest );
             Register( 0x6C, 19, OnTargetSent );
+            Register( 0x7D, 13, OnMenuResponse );
             Register( 0xA0, 3, OnPlayServer );
             Register( 0xB1, 0, OnGumpButtonPressed );
             Register( 0xBD, 0, OnClientVersion );
             Register( 0xD7, 0, OnEncodedCommand );
             Register( 0xEF, 31, OnNewClientVersion );
+        }
+
+        private static void OnMenuResponse( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+            int gumpId = reader.ReadInt16();
+            int index = reader.ReadInt16();
+            int id = reader.ReadInt16();
+            int hue = reader.ReadInt16();
+
+            Engine.Menus.Remove( gumpId );
+
+            MenuClickedEvent?.Invoke( serial, gumpId, index, id, hue );
         }
 
         private static void OnPlayServer( PacketReader reader )

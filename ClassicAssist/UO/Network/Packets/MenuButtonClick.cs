@@ -35,7 +35,9 @@ namespace ClassicAssist.UO.Network.Packets
             if ( serial == -1 )
             {
                 if ( !Engine.Menus.GetMenu( gumpId, out Menu menu ) )
+                {
                     return;
+                }
 
                 serial = menu.Serial;
             }
@@ -47,6 +49,8 @@ namespace ClassicAssist.UO.Network.Packets
             _writer.Write( (short) index );
             _writer.Write( (short) id );
             _writer.Write( (short) hue );
+
+            Engine.Menus?.Remove( gumpId );
         }
 
         public string Parse( byte[] packet, int length, PacketDirection direction )
@@ -62,7 +66,6 @@ namespace ClassicAssist.UO.Network.Packets
             int hue = ( packet[11] << 8 ) | packet[12];
 
             return $"ReplyMenu(0x{gumpId:x}, {index}, 0x{id:x}, {hue})\r\n";
-
         }
     }
 }

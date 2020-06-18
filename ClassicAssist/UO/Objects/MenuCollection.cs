@@ -24,12 +24,16 @@ namespace ClassicAssist.UO.Objects
 {
     public class MenuCollection
     {
+        public delegate void dCollectionChanged( Menu[] menus );
+
         private readonly ConcurrentDictionary<int, Menu> _dictionary;
 
         public MenuCollection()
         {
             _dictionary = new ConcurrentDictionary<int, Menu>();
         }
+
+        public event dCollectionChanged CollectionChangedEvent;
 
         public void Add( Menu menu )
         {
@@ -41,11 +45,9 @@ namespace ClassicAssist.UO.Objects
             }
         }
 
-        public bool Remove( int id, int buttonId = 0 )
+        public bool Remove( int id )
         {
             bool result = _dictionary.TryRemove( id, out Menu m );
-
-            m?.OnResponse( buttonId );
 
             if ( result )
             {
@@ -95,6 +97,7 @@ namespace ClassicAssist.UO.Objects
 
         private void OnCollectionChanged()
         {
+            CollectionChangedEvent?.Invoke( _dictionary.Values.ToArray() );
         }
     }
 }

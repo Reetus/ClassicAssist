@@ -98,11 +98,13 @@
                 <CheckBox.ContentTemplate>
                     <ItemContainerTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{x:Static resources:Strings.Limit_Mouse_Wheel_Retrigger}" Margin="0" TextWrapping="Wrap" VerticalAlignment="Center" />
+                            <TextBlock Text="{x:Static resources:Strings.Limit_Mouse_Wheel_Retrigger}" Margin="0"
+                                       TextWrapping="Wrap" VerticalAlignment="Center" />
                             <TextBox Width="40" Margin="10,0,10,0"
-                                     Text="{Binding Path=Data.CurrentOptions.LimitMouseWheelTriggerMS, Source={StaticResource proxy}}" TextWrapping="Wrap" />
+                                     Text="{Binding Path=Data.CurrentOptions.LimitMouseWheelTriggerMS, Source={StaticResource proxy}}"
+                                     TextWrapping="Wrap" />
                             <TextBlock Text="ms" TextWrapping="Wrap"
-                                   Margin="5,0,0,0"  VerticalAlignment="Center" />
+                                       Margin="5,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
                     </ItemContainerTemplate>
                 </CheckBox.ContentTemplate>
@@ -110,7 +112,7 @@
             <CheckBox Content="{x:Static resources:Strings.Auto_accept_party_invites}"
                       IsChecked="{Binding CurrentOptions.AutoAcceptPartyInvite}" />
             <CheckBox IsChecked="{Binding CurrentOptions.AutoAcceptPartyOnlyFromFriends}">
-                <TextBlock Text="{x:Static resources:Strings.Auto_accept_only_from_friends}" TextWrapping="Wrap"/>
+                <TextBlock Text="{x:Static resources:Strings.Auto_accept_only_from_friends}" TextWrapping="Wrap" />
             </CheckBox>
             <CheckBox Content="{x:Static resources:Strings.Macros_default_to_quiet_mode}"
                       IsChecked="{Binding CurrentOptions.DefaultMacroQuietMode}" />

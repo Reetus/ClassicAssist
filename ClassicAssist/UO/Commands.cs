@@ -239,7 +239,7 @@ namespace ClassicAssist.UO
             Engine.SendPacketToClient( new CloseClientGump( gumpID ) );
         }
 
-        public static bool WaitForMenu( int gumpId, int timeout = 30000 )
+        public static bool WaitForMenu( int gumpId, int timeout = 30000, bool filter = true )
         {
             PacketFilterInfo pfi = new PacketFilterInfo( 0x7C );
 
@@ -247,6 +247,31 @@ namespace ClassicAssist.UO
             {
                 pfi = new PacketFilterInfo( 0x7C,
                     new[] { PacketFilterConditions.ShortAtPositionCondition( gumpId, 7 ) } );
+            }
+
+            if ( filter )
+            {
+                AutoResetEvent are = new AutoResetEvent( false );
+
+                pfi.Action = ( bytes, info ) =>
+                {
+                    are.Set();
+                    PacketHandler handler = IncomingPacketHandlers.GetHandler( bytes[0] );
+                    handler?.OnReceive( new PacketReader( bytes, bytes.Length, false ) );
+                };
+
+                try
+                {
+                    Engine.AddReceiveFilter( pfi );
+
+                    bool result = are.WaitOne( timeout );
+
+                    return result;
+                }
+                finally
+                {
+                    Engine.RemoveReceiveFilter( pfi );
+                }
             }
 
             PacketWaitEntry packetWaitEntry = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );

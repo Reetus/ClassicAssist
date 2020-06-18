@@ -160,6 +160,15 @@ namespace ExportCommands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to True/False value, see description for usage.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_BOOLEAN {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_BOOLEAN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Buff name.
         /// </summary>
         public static string PARAMETER_DESCRIPTION_BUFFNAME {

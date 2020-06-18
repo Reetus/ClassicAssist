@@ -1473,6 +1473,40 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Returns True if the menu title or entry titles contains the given text..
+        /// </summary>
+        public static string INMENU_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("INMENU_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UseSkill(&apos;Tracking&apos;)
+        ///WaitForMenu(0x1d0, 5000)
+        ///ReplyMenu(0x1d0, 3, 0x2106, 0)
+        ///# Pass False to allow the menu to be displayed
+        ///WaitForMenu(0x1d1, 5000, False)
+        ///if InMenu(0x1d1, &apos;Omar&apos;):
+        /// HeadMsg(&apos;Omar is in range&apos;, &apos;self&apos;)
+        ///.
+        /// </summary>
+        public static string INMENU_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("INMENU_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if InMenu(0x1d1, &apos;Omar&apos;):.
+        /// </summary>
+        public static string INMENU_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("INMENU_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns true if the mobile&apos;s notoriety is Innocent.
         /// </summary>
         public static string INNOCENT_COMMAND_DESCRIPTION {
@@ -1775,6 +1809,24 @@ namespace ClassicAssist.Resources {
         public static string MAXWEIGHT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("MAXWEIGHT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return true if the given menu id exists..
+        /// </summary>
+        public static string MENUEXISTS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MENUEXISTS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if MenuExists(0x1d1):.
+        /// </summary>
+        public static string MENUEXISTS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MENUEXISTS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         
@@ -2418,7 +2470,7 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ReplyMenu(0xff, 0, 0xff, 0).
+        ///   Looks up a localized string similar to ReplyMenu(0x1d0, 3, 0x2106, 0).
         /// </summary>
         public static string REPLYMENU_COMMAND_INSERTTEXT {
             get {
@@ -3322,7 +3374,20 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to WaitForMenu(0xff, 5000).
+        ///   Looks up a localized string similar to UseSkill(&apos;Tracking&apos;)
+        ///WaitForMenu(0x1d0, 5000)
+        ///ReplyMenu(0x1d0, 3, 0x2106, 0)
+        ///# Pass False to allow the menu to be displayed
+        ///WaitForMenu(0x1d1, 5000, False).
+        /// </summary>
+        public static string WAITFORMENU_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("WAITFORMENU_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WaitForMenu(0x1d0, 5000).
         /// </summary>
         public static string WAITFORMENU_COMMAND_INSERTTEXT {
             get {

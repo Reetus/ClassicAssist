@@ -101,7 +101,7 @@
                       Margin="0,5,0,0" SelectedIndex="0" />
             <Button Content="{x:Static resources:Strings.Set}" Command="{Binding SetAllSkillLocksCommand, Mode=OneWay}"
                     CommandParameter="{Binding SelectedIndex, ElementName=comboBox}" />
-            <TextBlock Text="{x:Static resources:Strings.Total_base_}" Margin="0,30,0,0" TextWrapping="Wrap"/>
+            <TextBlock Text="{x:Static resources:Strings.Total_base_}" Margin="0,30,0,0" TextWrapping="Wrap" />
             <TextBlock Text="{Binding TotalBase}" FontWeight="Bold" Margin="0,3,0,0" />
         </StackPanel>
     </Grid>

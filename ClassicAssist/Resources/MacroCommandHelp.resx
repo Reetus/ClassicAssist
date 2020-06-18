@@ -1323,12 +1323,41 @@ TargetTileOffset(0, 1, 0)</value>
     <value>Pauses until incoming menu packet is received, optional paramters of gump ID and timeout</value>
   </data>
   <data name="WAITFORMENU_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>WaitForMenu(0xff, 5000)</value>
+    <value>WaitForMenu(0x1d0, 5000)</value>
   </data>
   <data name="REPLYMENU_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Sends a button reply to server menu</value>
   </data>
   <data name="REPLYMENU_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>ReplyMenu(0xff, 0, 0xff, 0)</value>
+    <value>ReplyMenu(0x1d0, 3, 0x2106, 0)</value>
+  </data>
+  <data name="INMENU_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns True if the menu title or entry titles contains the given text.</value>
+  </data>
+  <data name="INMENU_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if InMenu(0x1d1, 'Omar'):</value>
+  </data>
+  <data name="MENUEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Return true if the given menu id exists.</value>
+  </data>
+  <data name="MENUEXISTS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if MenuExists(0x1d1):</value>
+  </data>
+  <data name="INMENU_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>UseSkill('Tracking')
+WaitForMenu(0x1d0, 5000)
+ReplyMenu(0x1d0, 3, 0x2106, 0)
+# Pass False to allow the menu to be displayed
+WaitForMenu(0x1d1, 5000, False)
+if InMenu(0x1d1, 'Omar'):
+ HeadMsg('Omar is in range', 'self')
+</value>
+  </data>
+  <data name="WAITFORMENU_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>UseSkill('Tracking')
+WaitForMenu(0x1d0, 5000)
+ReplyMenu(0x1d0, 3, 0x2106, 0)
+# Pass False to allow the menu to be displayed
+WaitForMenu(0x1d1, 5000, False)</value>
   </data>
 </root>

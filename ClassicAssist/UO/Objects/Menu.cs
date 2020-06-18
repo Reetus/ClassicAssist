@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (C) 2020 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -13,41 +14,24 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
-#endregion
 
-using System.Linq;
-using Assistant;
-using ClassicAssist.UO.Network.Packets;
+#endregion
 
 namespace ClassicAssist.UO.Objects
 {
     public class Menu
     {
-        public int Serial { get; set; }
         public int ID { get; set; }
-        public string Title { get; set; }
         public MenuEntry[] Lines { get; set; }
-
-        public void OnResponse( int buttonId )
-        {
-            int id = 0;
-            int hue = 0;
-
-            if ( buttonId > 0 )
-            {
-                id = Lines.FirstOrDefault( i => i.Index == buttonId )?.ID ?? 0;
-                hue = Lines.FirstOrDefault( i => i.Index == buttonId )?.Hue ?? 0;
-            }
-
-            Engine.SendPacketToServer( new MenuButtonClick( ID, Serial, id, hue ) );
-        }
+        public int Serial { get; set; }
+        public string Title { get; set; }
     }
 
     public class MenuEntry
     {
-        public int Index { get; set; }
-        public int ID { get; set; }
         public int Hue { get; set; }
+        public int ID { get; set; }
+        public int Index { get; set; }
         public string Title { get; set; }
     }
 }

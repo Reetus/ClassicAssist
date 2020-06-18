@@ -35,6 +35,8 @@ namespace ClassicAssist.UO.Network
 
         public delegate void dMapChanged( Map newMap );
 
+        public delegate void dMenuAdded( int gumpId, Menu menu );
+
         public delegate void dMobileIncoming( Mobile mobile, ItemCollection equipment );
 
         public delegate void dMobileUpdated( Mobile mobile );
@@ -69,6 +71,8 @@ namespace ClassicAssist.UO.Network
         public static event dGump GumpEvent;
         public static event dBufficonEnabledDisabled BufficonEnabledDisabledEvent;
         public static event dCorpseContainerDisplay CorpseContainerDisplayEvent;
+
+        public static event dMenuAdded MenuAddedEvent;
 
         public static void Initialize()
         {
@@ -143,7 +147,11 @@ namespace ClassicAssist.UO.Network
                 entries.Add( new MenuEntry { Index = i + 1, ID = id, Hue = hue, Title = line } );
             }
 
-            Engine.Menus.Add( new Menu { Serial = serial, ID = gumpId, Lines = entries.ToArray(), Title = title } );
+            Menu menu = new Menu { Serial = serial, ID = gumpId, Lines = entries.ToArray(), Title = title };
+
+            Engine.Menus.Add( menu );
+
+            MenuAddedEvent?.Invoke( gumpId, menu );
         }
 
         private static void OnWorldItem( PacketReader reader )

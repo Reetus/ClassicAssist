@@ -432,6 +432,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Closes the specified menu id.
+        /// </summary>
+        public static string CLOSEMENU_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CLOSEMENU_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CloseMenu(0x1d1).
+        /// </summary>
+        public static string CLOSEMENU_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CLOSEMENU_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns the item count for given container..
         /// </summary>
         public static string CONTENTS_COMMAND_DESCRIPTION {
@@ -1485,11 +1503,10 @@ namespace ClassicAssist.Resources {
         ///   Looks up a localized string similar to UseSkill(&apos;Tracking&apos;)
         ///WaitForMenu(0x1d0, 5000)
         ///ReplyMenu(0x1d0, 3, 0x2106, 0)
-        ///# Pass False to allow the menu to be displayed
-        ///WaitForMenu(0x1d1, 5000, False)
+        ///WaitForMenu(0x1d1, 5000)
         ///if InMenu(0x1d1, &apos;Omar&apos;):
         /// HeadMsg(&apos;Omar is in range&apos;, &apos;self&apos;)
-        ///.
+        ///CloseMenu(0x1d1).
         /// </summary>
         public static string INMENU_COMMAND_EXAMPLE {
             get {
@@ -3377,8 +3394,7 @@ namespace ClassicAssist.Resources {
         ///   Looks up a localized string similar to UseSkill(&apos;Tracking&apos;)
         ///WaitForMenu(0x1d0, 5000)
         ///ReplyMenu(0x1d0, 3, 0x2106, 0)
-        ///# Pass False to allow the menu to be displayed
-        ///WaitForMenu(0x1d1, 5000, False).
+        ///WaitForMenu(0x1d1, 5000).
         /// </summary>
         public static string WAITFORMENU_COMMAND_EXAMPLE {
             get {

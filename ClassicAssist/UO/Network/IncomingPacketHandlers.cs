@@ -147,7 +147,7 @@ namespace ClassicAssist.UO.Network
                 entries.Add( new MenuEntry { Index = i + 1, ID = id, Hue = hue, Title = line } );
             }
 
-            Menu menu = new Menu { Serial = serial, ID = gumpId, Lines = entries.ToArray(), Title = title };
+            Menu menu = new Menu { Serial = serial, ID = gumpId, Entries = entries.ToArray(), Title = title };
 
             Engine.Menus.Add( menu );
 

@@ -1347,17 +1347,21 @@ TargetTileOffset(0, 1, 0)</value>
     <value>UseSkill('Tracking')
 WaitForMenu(0x1d0, 5000)
 ReplyMenu(0x1d0, 3, 0x2106, 0)
-# Pass False to allow the menu to be displayed
-WaitForMenu(0x1d1, 5000, False)
+WaitForMenu(0x1d1, 5000)
 if InMenu(0x1d1, 'Omar'):
  HeadMsg('Omar is in range', 'self')
-</value>
+CloseMenu(0x1d1)</value>
   </data>
   <data name="WAITFORMENU_COMMAND_EXAMPLE" xml:space="preserve">
     <value>UseSkill('Tracking')
 WaitForMenu(0x1d0, 5000)
 ReplyMenu(0x1d0, 3, 0x2106, 0)
-# Pass False to allow the menu to be displayed
-WaitForMenu(0x1d1, 5000, False)</value>
+WaitForMenu(0x1d1, 5000)</value>
+  </data>
+  <data name="CLOSEMENU_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Closes the specified menu id</value>
+  </data>
+  <data name="CLOSEMENU_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>CloseMenu(0x1d1)</value>
   </data>
 </root>

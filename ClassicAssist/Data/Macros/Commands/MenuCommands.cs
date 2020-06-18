@@ -17,6 +17,7 @@
 
 #endregion
 
+using System.Linq;
 using Assistant;
 using ClassicAssist.Resources;
 using ClassicAssist.UO.Network.Packets;
@@ -28,13 +29,10 @@ namespace ClassicAssist.Data.Macros.Commands
     public static class MenuCommands
     {
         [CommandsDisplay( Category = nameof( Strings.Menus ),
-            Parameters = new[]
-            {
-                nameof( ParameterType.ItemID ), nameof( ParameterType.Timeout ), nameof( ParameterType.Boolean )
-            } )]
-        public static bool WaitForMenu( int gumpId = 0, int timeout = 30000, bool filter = true )
+            Parameters = new[] { nameof( ParameterType.ItemID ), nameof( ParameterType.Timeout ) } )]
+        public static bool WaitForMenu( int gumpId = 0, int timeout = 30000 )
         {
-            bool result = UOC.WaitForMenu( gumpId, timeout, filter );
+            bool result = UOC.WaitForMenu( gumpId, timeout );
 
             if ( !result )
             {
@@ -53,6 +51,18 @@ namespace ClassicAssist.Data.Macros.Commands
         public static void ReplyMenu( int gumpId, int buttonId, int itemId = 0, int hue = 0 )
         {
             Engine.SendPacketToServer( new MenuButtonClick( gumpId, -1, buttonId, itemId, hue ) );
+            Engine.SendPacketToClient( new CloseClientGump( (uint) gumpId ) );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Menu ), Parameters = new[] { nameof( ParameterType.ItemID ) } )]
+        public static void CloseMenu( int gumpId )
+        {
+            if ( Engine.Menus.GetMenu( gumpId, out Menu menu ) )
+            {
+                Engine.SendPacketToServer( new MenuButtonClick( gumpId, menu.Serial, 0 ) );
+            }
+
+            Engine.SendPacketToClient( new CloseClientGump( (uint) gumpId ) );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Menus ),
@@ -71,18 +81,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return true;
             }
 
-            bool? any = false;
-
-            foreach ( MenuEntry l in menu.Lines )
-            {
-                if ( l.Title.ToLower().Contains( text ) )
-                {
-                    any = true;
-                    break;
-                }
-            }
-
-            return any ?? false;
+            return menu.Entries.Any( l => l.Title.ToLower().Contains( text ) );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Menus ) )]

@@ -22,7 +22,7 @@ namespace ClassicAssist.UO.Objects
     public class Menu
     {
         public int ID { get; set; }
-        public MenuEntry[] Lines { get; set; }
+        public MenuEntry[] Entries { get; set; }
         public int Serial { get; set; }
         public string Title { get; set; }
     }

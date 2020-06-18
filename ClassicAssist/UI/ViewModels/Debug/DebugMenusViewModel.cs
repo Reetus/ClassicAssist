@@ -77,13 +77,13 @@ namespace ClassicAssist.UI.ViewModels.Debug
             sb.AppendLine( $"GumpID: 0x{menu.ID:x4}" );
             sb.AppendLine( $"Serial: 0x{menu.Serial:x8}" );
             sb.AppendLine( $"Title: {menu.Title}" );
-            sb.AppendLine( $"Entries: {menu.Lines?.Length ?? 0}" );
+            sb.AppendLine( $"Entries: {menu.Entries?.Length ?? 0}" );
             sb.AppendLine();
             sb.AppendLine( "Entries:" );
 
-            if ( menu.Lines != null )
+            if ( menu.Entries != null )
             {
-                foreach ( MenuEntry menuEntry in menu.Lines )
+                foreach ( MenuEntry menuEntry in menu.Entries )
                 {
                     sb.AppendLine( $"Index: {menuEntry.Index}" );
                     sb.AppendLine( $"ID: 0x{menuEntry.ID:x4}" );

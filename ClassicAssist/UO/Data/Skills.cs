@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -27,28 +28,23 @@ namespace ClassicAssist.UO.Data
 
     public static class Skills
     {
-        private static Lazy<SkillData[]> _lazySkillData;
+        private static Lazy<Dictionary<int, SkillData>> _lazySkillData;
         private static string _dataPath;
 
         internal static void Initialize( string dataPath )
         {
             _dataPath = dataPath;
-            _lazySkillData = new Lazy<SkillData[]>( LoadSkills );
+            _lazySkillData = new Lazy<Dictionary<int, SkillData>>( LoadSkills );
         }
 
         public static string GetSkillName( int skillID )
         {
-            if ( skillID >= 0 && skillID <= _lazySkillData.Value.Length - 1 )
-            {
-                return _lazySkillData.Value[skillID].Name;
-            }
-
-            return "";
+            return _lazySkillData.Value.ContainsKey( skillID ) ? _lazySkillData.Value[skillID].Name : string.Empty;
         }
 
         public static bool IsInvokable( int skillID )
         {
-            if ( skillID >= 0 && skillID <= _lazySkillData.Value.Length - 1 )
+            if ( skillID >= 0 && skillID <= _lazySkillData.Value.Count - 1 )
             {
                 return _lazySkillData.Value[skillID].Invokable;
             }
@@ -62,20 +58,26 @@ namespace ClassicAssist.UO.Data
         /// </summary>
         public static string[] GetSkillNames()
         {
-            string[] skillNames = (string[]) _lazySkillData.Value.Select( s => s.Name );
+            string[] skillNames = (string[]) _lazySkillData.Value.Values.Select( s => s.Name );
 
             return skillNames;
         }
 
-        internal static SkillData[] GetSkills()
+        internal static SkillData[] GetSkillsArray()
         {
-            return (SkillData[]) _lazySkillData?.Value.Clone();
+            return _lazySkillData?.Value.Values.ToArray();
         }
 
-        internal static SkillData[] LoadSkills()
+        internal static Dictionary<int, SkillData> GetSkills()
+        {
+            return _lazySkillData.Value;
+        }
+
+        internal static Dictionary<int, SkillData> LoadSkills()
         {
             string skillIndexFile = Path.Combine( _dataPath, "Skills.idx" );
             string skillMulFile = Path.Combine( _dataPath, "skills.mul" );
+            Dictionary<int, SkillData> skills = new Dictionary<int, SkillData>();
 
             if ( !File.Exists( skillIndexFile ) )
             {
@@ -90,9 +92,7 @@ namespace ClassicAssist.UO.Data
             byte[] indexBytes = File.ReadAllBytes( skillIndexFile );
             byte[] mulBytes = File.ReadAllBytes( skillMulFile );
 
-            SkillData[] skillArray = new SkillData[indexBytes.Length / 12];
-
-            for ( int x = 0; x < skillArray.Length; x++ )
+            for ( int x = 0; x < indexBytes.Length / 12; x++ )
             {
                 int offset = x * 12;
                 int start = BitConverter.ToInt32( indexBytes, offset );
@@ -100,20 +100,18 @@ namespace ClassicAssist.UO.Data
 
                 if ( length == 0 )
                 {
-                    SkillData[] newArray = new SkillData[x];
-                    Array.Copy( skillArray, 0, newArray, 0, x );
-                    skillArray = newArray;
                     break;
                 }
 
-                skillArray[x] = new SkillData
-                {
-                    Invokable = mulBytes[start] == 1,
-                    Name = Encoding.ASCII.GetString( mulBytes, start + 1, length - 2 )
-                };
+                skills.Add( x,
+                    new SkillData
+                    {
+                        Invokable = mulBytes[start] == 1,
+                        Name = Encoding.ASCII.GetString( mulBytes, start + 1, length - 2 )
+                    } );
             }
 
-            return skillArray;
+            return skills;
         }
     }
 }

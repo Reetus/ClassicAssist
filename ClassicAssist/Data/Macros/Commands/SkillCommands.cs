@@ -1,10 +1,11 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Assistant;
 using ClassicAssist.Data.Skills;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UO.Data;
-using Skill = ClassicAssist.UO.Data.Skill;
+using ClassicAssist.UO.Network.Packets;
 using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.Data.Macros.Commands
@@ -15,39 +16,30 @@ namespace ClassicAssist.Data.Macros.Commands
             Parameters = new[] { nameof( ParameterType.SkillName ) } )]
         public static void UseSkill( string skill )
         {
-            try
-            {
-                Skill sk = ResolveSkillName( skill );
+            int id = GetSkillID( skill );
 
-                UOC.UseSkill( sk );
-            }
-            catch ( ArgumentOutOfRangeException )
+            if ( id == -1 )
             {
                 UOC.SystemMessage( string.Format( Strings.Invalid_skill_name___0__, skill ) );
+                return;
             }
+
+            Engine.SendPacketToServer( new UseSkill( id ) );
         }
 
-        private static Skill ResolveSkillName( string skill )
+        private static int GetSkillID( string skill )
         {
-            skill = skill.ToLower();
+            skill = skill.ToLower().Replace( '_', ' ' );
 
-            string[] enumNames = typeof( Skill ).GetEnumNames();
+            KeyValuePair<int, SkillData> sk = UO.Data.Skills.GetSkills()
+                .FirstOrDefault( s => s.Value.Name.ToLower().Equals( skill ) );
 
-            foreach ( string t in enumNames )
+            if ( sk.Value == null )
             {
-                string normalizedName = t.Replace( '_', ' ' ).ToLower();
-
-                if ( !skill.Equals( normalizedName ) )
-                {
-                    continue;
-                }
-
-                Skill s = (Skill) Enum.Parse( typeof( Skill ), t );
-
-                return s;
+                return -1;
             }
 
-            throw new ArgumentOutOfRangeException();
+            return sk.Key;
         }
 
         [CommandsDisplay( Category = nameof( Strings.Skills ),

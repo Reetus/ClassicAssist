@@ -13,8 +13,8 @@ using ClassicAssist.UI.Misc;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
+using ClassicAssist.UO.Network.Packets;
 using Newtonsoft.Json.Linq;
-using Skill = ClassicAssist.Data.Skills.Skill;
 
 namespace ClassicAssist.UI.ViewModels
 {
@@ -105,12 +105,13 @@ namespace ClassicAssist.UI.ViewModels
         {
             HotkeyManager hotkey = HotkeyManager.GetInstance();
 
-            if ( Skills.GetSkills() == null )
+            if ( Skills.GetSkillsArray() == null )
             {
                 return;
             }
 
-            IOrderedEnumerable<SkillData> skills = Skills.GetSkills().Where( s => s.Invokable ).OrderBy( s => s.Name );
+            IOrderedEnumerable<SkillData> skills =
+                Skills.GetSkillsArray().Where( s => s.Invokable ).OrderBy( s => s.Name );
 
             ObservableCollectionEx<HotkeyEntry> hotkeyEntries = new ObservableCollectionEx<HotkeyEntry>();
 
@@ -216,7 +217,10 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            Commands.UseSkill( (UO.Data.Skill) SelectedItem.Skill.ID );
+            if ( SelectedItem.Skill.Invokable )
+            {
+                Engine.SendPacketToServer( new UseSkill( SelectedItem.Skill.ID ) );
+            }
         }
 
         private void OnSkillUpdatedEvent( int skillID, float value, float baseValue, LockStatus lockStatus,

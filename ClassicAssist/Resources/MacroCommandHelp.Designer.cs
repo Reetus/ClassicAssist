@@ -2784,6 +2784,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Returns the skill cap for the specified skill.
+        /// </summary>
+        public static string SKILLCAP_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SKILLCAP_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if SkillCap(&quot;Blacksmithy&quot;) == 120:.
+        /// </summary>
+        public static string SKILLCAP_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SKILLCAP_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns the lock status of the given skill, up, down, or locked..
         /// </summary>
         public static string SKILLSTATE_COMMAND_DESCRIPTION {

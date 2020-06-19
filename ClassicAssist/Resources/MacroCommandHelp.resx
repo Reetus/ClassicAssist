@@ -1364,4 +1364,10 @@ WaitForMenu(0x1d1, 5000)</value>
   <data name="CLOSEMENU_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>CloseMenu(0x1d1)</value>
   </data>
+  <data name="SKILLCAP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the skill cap for the specified skill</value>
+  </data>
+  <data name="SKILLCAP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if SkillCap("Blacksmithy") == 120:</value>
+  </data>
 </root>

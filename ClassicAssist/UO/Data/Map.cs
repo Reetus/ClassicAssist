@@ -38,6 +38,11 @@ namespace ClassicAssist.UO.Data
             int cellY = y % 8;
             string fileName = GetMapFilename( map );
 
+            if ( string.IsNullOrEmpty( fileName ) )
+            {
+                return new LandTile();
+            }
+
             using ( FileStream fileStream = File.OpenRead( fileName ) )
             {
                 if ( fileName.EndsWith( ".uop", StringComparison.InvariantCultureIgnoreCase ) &&
@@ -101,6 +106,11 @@ namespace ClassicAssist.UO.Data
 
         private static string GetMapFilename( int map )
         {
+            if ( string.IsNullOrEmpty( _dataPath ) )
+            {
+                return null;
+            }
+
             string uopFilename = Path.Combine( _dataPath, $"map{map}LegacyMUL.uop" );
 
             if ( File.Exists( uopFilename ) )
@@ -115,7 +125,7 @@ namespace ClassicAssist.UO.Data
                 return mulFilename;
             }
 
-            throw new FileNotFoundException( "File not found...", mulFilename );
+            return null;
         }
     }
 }

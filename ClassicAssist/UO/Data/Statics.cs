@@ -102,7 +102,7 @@ namespace ClassicAssist.UO.Data
 
         public static StaticTile[] GetStatics( int map, int x, int y )
         {
-            if ( _staticData[map].Value == null )
+            if ( _staticData?[map]?.Value == null )
             {
                 return null;
             }

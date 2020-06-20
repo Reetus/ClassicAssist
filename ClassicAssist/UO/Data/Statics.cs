@@ -53,12 +53,12 @@ namespace ClassicAssist.UO.Data
 
             if ( !File.Exists( staticIndexFile ) )
             {
-                throw new FileNotFoundException( "File not found!", staticIndexFile );
+                return null;
             }
 
             if ( !File.Exists( staticMulFile ) )
             {
-                throw new FileNotFoundException( "File not found!", staticMulFile );
+                return null;
             }
 
             byte[] indexBytes = File.ReadAllBytes( staticIndexFile );

@@ -15,7 +15,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            ( TargetType targetType, TargetFlags targetFlags, int serial, int x, int y, int z, int itemID ) =
+            ( TargetType targetType, TargetFlags _, int serial, int x, int y, int z, int itemID ) =
                 UO.Commands.GetTargeInfoAsync( Strings.Target_object___ ).Result;
 
             if ( targetType == TargetType.Object && serial != 0 )
@@ -44,35 +44,57 @@ namespace ClassicAssist.Data.Hotkeys.Commands
             {
                 if ( itemID == 0 )
                 {
-                    return;
-                }
-
-                StaticTile[] statics = Statics.GetStatics( (int) Engine.Player.Map, x, y );
-
-                if ( statics == null )
-                {
-                    return;
-                }
-
-                StaticTile selectedStatic = statics.FirstOrDefault( i => i.ID == itemID );
-
-                if ( selectedStatic.ID == 0 )
-                {
-                    return;
-                }
-
-                Thread t = new Thread( () =>
-                {
-                    ObjectInspectorWindow window = new ObjectInspectorWindow
+                    if ( x == 65535 && y == 65535 )
                     {
-                        DataContext = new ObjectInspectorViewModel( selectedStatic )
-                    };
+                        return;
+                    }
 
-                    window.ShowDialog();
-                } ) { IsBackground = true };
+                    LandTile landTile = MapInfo.GetLandTile( (int) Engine.Player.Map, x, y );
+                    Thread t = new Thread( () =>
+                    {
+                        ObjectInspectorWindow window = new ObjectInspectorWindow
+                        {
+                            DataContext = new ObjectInspectorViewModel( landTile )
+                        };
 
-                t.SetApartmentState( ApartmentState.STA );
-                t.Start();
+                        window.ShowDialog();
+                    } ) { IsBackground = true };
+
+                    t.SetApartmentState( ApartmentState.STA );
+                    t.Start();
+                }
+                else
+                {
+                    StaticTile[] statics = Statics.GetStatics( (int) Engine.Player.Map, x, y );
+
+                    if ( statics == null )
+                    {
+                        return;
+                    }
+
+                    StaticTile selectedStatic = statics.FirstOrDefault( i => i.ID == itemID );
+
+                    if ( selectedStatic.ID == 0 )
+                    {
+                        selectedStatic = TileData.GetStaticTile( itemID );
+                        selectedStatic.X = x;
+                        selectedStatic.Y = y;
+                        selectedStatic.Z = z;
+                    }
+
+                    Thread t = new Thread( () =>
+                    {
+                        ObjectInspectorWindow window = new ObjectInspectorWindow
+                        {
+                            DataContext = new ObjectInspectorViewModel( selectedStatic )
+                        };
+
+                        window.ShowDialog();
+                    } ) { IsBackground = true };
+
+                    t.SetApartmentState( ApartmentState.STA );
+                    t.Start();
+                }
             }
         }
     }

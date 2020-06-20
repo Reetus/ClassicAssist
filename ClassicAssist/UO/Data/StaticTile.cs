@@ -12,5 +12,6 @@
         public int Y { get; set; }
         public int Z { get; set; }
         public int Hue { get; set; }
+        public int Height { get; set; }
     }
 }

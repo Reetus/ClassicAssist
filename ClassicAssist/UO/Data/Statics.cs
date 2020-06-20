@@ -30,7 +30,7 @@ namespace ClassicAssist.UO.Data
 
         private static readonly Lazy<StaticRecord[][]>[] _staticData = new Lazy<StaticRecord[][]>[6];
 
-        public static int[,] _defaultMapSize { get; set; } =
+        private static int[,] _defaultMapSize { get; } =
         {
             { 7168, 4096 }, { 7168, 4096 }, { 2304, 1600 }, { 2560, 2048 }, { 1448, 1448 }, { 1280, 4096 }
         };
@@ -53,12 +53,12 @@ namespace ClassicAssist.UO.Data
 
             if ( !File.Exists( staticIndexFile ) )
             {
-                throw new FileNotFoundException( "File not found!", staticIndexFile );
+                return null;
             }
 
             if ( !File.Exists( staticMulFile ) )
             {
-                throw new FileNotFoundException( "File not found!", staticMulFile );
+                return null;
             }
 
             byte[] indexBytes = File.ReadAllBytes( staticIndexFile );
@@ -102,7 +102,7 @@ namespace ClassicAssist.UO.Data
 
         public static StaticTile[] GetStatics( int map, int x, int y )
         {
-            if ( _staticData[map].Value == null )
+            if ( _staticData?[map]?.Value == null )
             {
                 return null;
             }

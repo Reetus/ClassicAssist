@@ -238,7 +238,7 @@ namespace ClassicAssist.UO
                 //TODO
                 PacketWriter pw = new PacketWriter( 19 );
                 pw.Write( (byte) 0x6C );
-                pw.Write( (byte) 0 );
+                pw.Write( (byte) 1 );
                 pw.Write( value );
                 pw.Write( (byte) 0 );
                 pw.Fill();

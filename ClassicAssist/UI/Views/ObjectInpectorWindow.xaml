@@ -32,8 +32,13 @@
                 <GridView>
                     <GridViewColumn Width="150" Header="{x:Static r:Strings.Property}"
                                     DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Width="250" Header="{x:Static r:Strings.Value}"
-                                    DisplayMemberBinding="{Binding Value}" />
+                    <GridViewColumn Width="250" Header="{x:Static r:Strings.Value}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Value}" TextWrapping="Wrap" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
             <ListView.GroupStyle>

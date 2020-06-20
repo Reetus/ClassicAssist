@@ -8,5 +8,9 @@
         public byte Quantity { get; set; }
         public ushort ID { get; set; }
         public string Name { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Z { get; set; }
+        public int Hue { get; set; }
     }
 }

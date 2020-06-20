@@ -39,6 +39,11 @@ namespace ClassicAssist.UI.ViewModels
             AddPublicProperties( entity );
         }
 
+        public ObjectInspectorViewModel( StaticTile staticTile )
+        {
+            AddStaticProperties( staticTile );
+        }
+
         public ICommand CopyToClipboardCommand
         {
             get
@@ -58,6 +63,18 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _selectedItem;
             set => SetProperty( ref _selectedItem, value );
+        }
+
+        private void AddStaticProperties( StaticTile staticTile )
+        {
+            AddData( typeof( Entity ), nameof( Entity.Name ), staticTile.Name, Strings.Entity );
+            AddData( "Flags", staticTile.Flags.ToString(), Strings.Entity );
+            AddData( typeof( Entity ), nameof( Entity.ID ), staticTile.ID, Strings.Entity, Strings.Graphic );
+            AddData( typeof( Entity ), nameof( Entity.Hue ), staticTile.Hue, Strings.Entity, Strings.Color );
+            AddData( "Position", $"{staticTile.X}, {staticTile.Y}, {staticTile.Z}", Strings.Entity );
+            AddData( "Weight", staticTile.Weight.ToString(), Strings.Entity );
+            AddData( "Quality", staticTile.Quality.ToString(), Strings.Entity );
+            AddData( "Quantity", staticTile.Quantity.ToString(), Strings.Entity );
         }
 
         private void AddEntityProperties( Entity entity )

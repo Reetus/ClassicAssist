@@ -45,6 +45,7 @@ namespace ClassicAssist.Tests.MacroCommands
 
             AliasCommands.SetAlias( "self", 0x01 );
 
+            Engine.TargetType = TargetType.Object;
             TargetCommands.TargetTileRelative( "self", 1 );
 
             bool result = are.WaitOne( 5000 );

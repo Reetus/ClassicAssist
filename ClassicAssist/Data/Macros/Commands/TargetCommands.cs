@@ -226,7 +226,15 @@ namespace ClassicAssist.Data.Macros.Commands
             int destinationX = x + totalOffsetX;
             int destinationY = y + totalOffsetY;
 
-            TargetXYZ( destinationX, destinationY, entity.Z, itemID );
+            ( int surfaceZ, int surfaceID ) =
+                MapInfo.GetMapSurface( (int) Engine.Player.Map, destinationX, destinationY );
+
+            if ( itemID == 0 )
+            {
+                itemID = surfaceID;
+            }
+
+            TargetXYZ( destinationX, destinationY, surfaceZ, itemID );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Target ),

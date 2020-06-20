@@ -30,7 +30,7 @@ namespace ClassicAssist.UO.Data
 
         private static readonly Lazy<StaticRecord[][]>[] _staticData = new Lazy<StaticRecord[][]>[6];
 
-        public static int[,] _defaultMapSize { get; set; } =
+        private static int[,] _defaultMapSize { get; } =
         {
             { 7168, 4096 }, { 7168, 4096 }, { 2304, 1600 }, { 2560, 2048 }, { 1448, 1448 }, { 1280, 4096 }
         };

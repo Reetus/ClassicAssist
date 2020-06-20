@@ -189,6 +189,7 @@ namespace Assistant
             Speech.Initialize( ClientPath );
             TileData.Initialize( ClientPath );
             Statics.Initialize( ClientPath );
+            MapInfo.Initialize( ClientPath );
 
             ClassicAssembly = AppDomain.CurrentDomain.GetAssemblies()
                 .FirstOrDefault( a => a.FullName.StartsWith( "ClassicUO," ) );

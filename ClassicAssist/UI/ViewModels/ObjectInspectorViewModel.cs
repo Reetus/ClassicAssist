@@ -44,6 +44,11 @@ namespace ClassicAssist.UI.ViewModels
             AddStaticProperties( staticTile );
         }
 
+        public ObjectInspectorViewModel( LandTile landTile )
+        {
+            AddLandProperties( landTile );
+        }
+
         public ICommand CopyToClipboardCommand
         {
             get
@@ -65,6 +70,14 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _selectedItem, value );
         }
 
+        private void AddLandProperties( LandTile landTile )
+        {
+            AddData( typeof( Entity ), nameof( Entity.Name ), landTile.Name, Strings.Entity );
+            AddData( "Flags", landTile.Flags.ToString(), Strings.Entity );
+            AddData( typeof( Entity ), nameof( Entity.ID ), landTile.ID, Strings.Entity, Strings.Graphic );
+            AddData( "Position", $"{landTile.X}, {landTile.Y}, {landTile.Z}", Strings.Entity );
+        }
+
         private void AddStaticProperties( StaticTile staticTile )
         {
             AddData( typeof( Entity ), nameof( Entity.Name ), staticTile.Name, Strings.Entity );
@@ -73,6 +86,7 @@ namespace ClassicAssist.UI.ViewModels
             AddData( typeof( Entity ), nameof( Entity.Hue ), staticTile.Hue, Strings.Entity, Strings.Color );
             AddData( "Position", $"{staticTile.X}, {staticTile.Y}, {staticTile.Z}", Strings.Entity );
             AddData( "Weight", staticTile.Weight.ToString(), Strings.Entity );
+            AddData( "Height", staticTile.Height.ToString(), Strings.Entity );
             AddData( "Quality", staticTile.Quality.ToString(), Strings.Entity );
             AddData( "Quantity", staticTile.Quantity.ToString(), Strings.Entity );
         }

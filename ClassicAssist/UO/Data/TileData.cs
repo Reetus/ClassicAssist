@@ -66,8 +66,7 @@ namespace ClassicAssist.UO.Data
                         reader.ReadByte();
                         reader.ReadByte();
                         reader.ReadInt16();
-                        /*int height = */
-                        reader.ReadByte();
+                        staticTiles[i].Height = reader.ReadByte();
                         staticTiles[i].Name = Encoding.ASCII.GetString( reader.ReadBytes( 20 ) ).TrimEnd( '\0' );
                     }
                 }
@@ -95,8 +94,7 @@ namespace ClassicAssist.UO.Data
                         reader.ReadByte();
                         /*int value = */
                         reader.ReadByte();
-                        /*int height = */
-                        reader.ReadByte();
+                        staticTiles[i].Height = reader.ReadByte();
                         staticTiles[i].Name = Encoding.ASCII.GetString( reader.ReadBytes( 20 ) ).TrimEnd( '\0' );
                     }
                 }

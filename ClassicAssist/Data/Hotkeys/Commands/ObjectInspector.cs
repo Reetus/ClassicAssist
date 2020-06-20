@@ -1,9 +1,11 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using Assistant;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
+using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.Data.Hotkeys.Commands
@@ -13,32 +15,65 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            int serial = UO.Commands.GetTargeSerialAsync( Strings.Target_object___ ).Result;
+            ( TargetType targetType, TargetFlags targetFlags, int serial, int x, int y, int z, int itemID ) =
+                UO.Commands.GetTargeInfoAsync( Strings.Target_object___ ).Result;
 
-            if ( serial <= 0 )
+            if ( targetType == TargetType.Object && serial != 0 )
             {
-                return;
+                Entity entity = UOMath.IsMobile( serial )
+                    ? (Entity) Engine.Mobiles.GetMobile( serial )
+                    : Engine.Items.GetItem( serial );
+
+                if ( entity == null )
+                {
+                    return;
+                }
+
+                Thread t = new Thread( () =>
+                {
+                    ObjectInspectorWindow window =
+                        new ObjectInspectorWindow { DataContext = new ObjectInspectorViewModel( entity ) };
+
+                    window.ShowDialog();
+                } ) { IsBackground = true };
+
+                t.SetApartmentState( ApartmentState.STA );
+                t.Start();
             }
-
-            Entity entity = UOMath.IsMobile( serial )
-                ? (Entity) Engine.Mobiles.GetMobile( serial )
-                : Engine.Items.GetItem( serial );
-
-            if ( entity == null )
+            else
             {
-                return;
+                if ( itemID == 0 )
+                {
+                    return;
+                }
+
+                StaticTile[] statics = Statics.GetStatics( (int) Engine.Player.Map, x, y );
+
+                if ( statics == null )
+                {
+                    return;
+                }
+
+                StaticTile selectedStatic = statics.FirstOrDefault( i => i.ID == itemID );
+
+                if ( selectedStatic.ID == 0 )
+                {
+                    return;
+                }
+
+                Thread t = new Thread( () =>
+                {
+                    ObjectInspectorWindow window = new ObjectInspectorWindow
+                    {
+                        DataContext = new ObjectInspectorViewModel( selectedStatic )
+                    };
+
+                    window.ShowDialog();
+                } ) { IsBackground = true };
+
+                t.SetApartmentState( ApartmentState.STA );
+                t.Start();
             }
-
-            Thread t = new Thread( () =>
-            {
-                ObjectInspectorWindow window =
-                    new ObjectInspectorWindow { DataContext = new ObjectInspectorViewModel( entity ) };
-
-                window.ShowDialog();
-            } ) { IsBackground = true };
-
-            t.SetApartmentState( ApartmentState.STA );
-            t.Start();
         }
     }
 }

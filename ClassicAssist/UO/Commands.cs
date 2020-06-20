@@ -217,6 +217,87 @@ namespace ClassicAssist.UO
             } );
         }
 
+        public static async Task<(TargetType, TargetFlags, int, int, int, int, int)> GetTargeInfoAsync(
+            string message = "", int timeout = 30000 )
+        {
+            if ( string.IsNullOrEmpty( message ) )
+            {
+                message = Strings.Target_object___;
+            }
+
+            SystemMessage( message );
+
+            Random random = new Random();
+
+            return await Task.Run( () =>
+            {
+                bool wasTargetting = Engine.TargetExists;
+
+                uint value = (uint) random.Next( 1, int.MaxValue );
+
+                //TODO
+                PacketWriter pw = new PacketWriter( 19 );
+                pw.Write( (byte) 0x6C );
+                pw.Write( (byte) 0 );
+                pw.Write( value );
+                pw.Write( (byte) 0 );
+                pw.Fill();
+
+                AutoResetEvent are = new AutoResetEvent( false );
+
+                TargetType targetType = TargetType.Object;
+                TargetFlags targetFlags = TargetFlags.None;
+                int serial = 0;
+                int x = 0;
+                int y = 0;
+                int z = 0;
+                int itemID = 0;
+
+                PacketFilterInfo pfi = new PacketFilterInfo( 0x6C,
+                    new[] { PacketFilterConditions.UIntAtPositionCondition( value, 2 ) }, ( packet, info ) =>
+                    {
+                        targetType = (TargetType) packet[1];
+                        targetFlags = (TargetFlags) packet[6];
+                        serial = ( packet[7] << 24 ) | ( packet[8] << 16 ) | ( packet[9] << 8 ) | packet[10];
+                        x = ( packet[11] << 8 ) | packet[12];
+                        y = ( packet[13] << 8 ) | packet[14];
+                        z = ( packet[15] << 8 ) | packet[16];
+                        itemID = ( packet[17] << 8 ) | packet[18];
+
+                        are.Set();
+                    } );
+
+                try
+                {
+                    Engine.AddSendFilter( pfi );
+
+                    Engine.SendPacketToClient( pw );
+
+                    bool result = are.WaitOne( timeout );
+
+                    if ( result )
+                    {
+                        return ( targetType, targetFlags, serial, x, y, z, itemID );
+                    }
+
+                    Engine.SendPacketToClient( new CancelTargetCursor( value ) );
+
+                    SystemMessage( Strings.Timeout___ );
+
+                    return ( targetType, targetFlags, serial, x, y, z, itemID );
+                }
+                finally
+                {
+                    Engine.RemoveSendFilter( pfi );
+
+                    if ( wasTargetting )
+                    {
+                        ResendTargetToClient();
+                    }
+                }
+            } );
+        }
+
         public static bool GumpButtonClick( uint gumpID, int buttonID, int[] switches = null )
         {
             if ( !Engine.GumpList.TryGetValue( gumpID, out int serial ) )

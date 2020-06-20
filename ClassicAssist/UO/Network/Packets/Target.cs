@@ -85,8 +85,9 @@ namespace ClassicAssist.UO.Network.Packets
             int x = ( packet[11] << 8 ) | packet[12];
             int y = ( packet[13] << 8 ) | packet[14];
             int z = (sbyte) ( packet[15] << 8 ) | (sbyte) packet[16];
+            int id = ( packet[17] << 8 ) | packet[18];
 
-            return $"TargetXYZ({x}, {y}, {z})\r\n";
+            return id == 0 ? $"TargetXYZ({x}, {y}, {z})\r\n" : $"TargetXYZ({x}, {y}, {z}, {id})\r\n";
         }
     }
 }

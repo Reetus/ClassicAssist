@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Assistant;
 using ClassicAssist.Data.Regions;
 using ClassicAssist.Data.Targeting;
@@ -32,6 +33,21 @@ namespace ClassicAssist.Data.Macros.Commands
             Graves,
             Red_Mushrooms
         }
+
+        private static readonly ushort[] _treeTiles =
+        {
+            0x0CCA, 0x0CCB, 0x0CCC, 0x0CCD, 0x0CD0, 0x0CD3, 0x0CD6, 0x0CD8, 0x0CDA, 0x0CDD, 0x0CE0, 0x0CE3, 0x0CE6,
+            0x0D41, 0x0D42, 0x0D43, 0x0D44, 0x0D57, 0x0D58, 0x0D59, 0x0D5A, 0x0D5B, 0x0D6E, 0x0D6F, 0x0D70, 0x0D71,
+            0x0D72, 0x0D84, 0x0D85, 0x0D86, 0x0D94, 0x0D98, 0x0D9C, 0x0DA0, 0x0DA4, 0x0DA8, 0x0C9E, 0x0CA8, 0x0CAA,
+            0x0CAB, 0x0CC9, 0x0CF8, 0x0CFB, 0x0CFE, 0x0D01, 0x12B6, 0x12B7, 0x12B8, 0x12B9, 0x12BA, 0x12BB, 0x12BC,
+            0x12BD
+        };
+
+        private static readonly ushort[] _caveTiles =
+        {
+            1339, 1340, 1341, 1342, 1343, 1344, 1345, 1346, 1347, 1348, 1349, 1350, 1351, 1352, 1353, 1354, 1355,
+            1356, 1357, 1358, 1359, 1361, 1362, 1363
+        };
 
         [CommandsDisplay( Category = nameof( Strings.Target ) )]
         public static void CancelTarget()
@@ -130,8 +146,12 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = nameof( Strings.Target ),
-            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
-        public static void TargetTileRelative( object obj, int distance, bool reverse = false )
+            Parameters = new[]
+            {
+                nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.IntegerValue ),
+                nameof( ParameterType.Boolean ), nameof( ParameterType.ItemID )
+            } )]
+        public static void TargetTileRelative( object obj, int distance, bool reverse = false, int itemID = 0 )
         {
             int serial = AliasCommands.ResolveSerial( obj );
 
@@ -206,19 +226,18 @@ namespace ClassicAssist.Data.Macros.Commands
             int destinationX = x + totalOffsetX;
             int destinationY = y + totalOffsetY;
 
-            Engine.SendPacketToServer( new Target( TargetTypeEnum.Tile, -1, TargetFlags.None, 0, destinationX,
-                destinationY, entity.Z, 0, true ) );
+            TargetXYZ( destinationX, destinationY, entity.Z, itemID );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Target ),
             Parameters = new[]
             {
                 nameof( ParameterType.XCoordinateOffset ), nameof( ParameterType.YCoordinateOffset ),
-                nameof( ParameterType.YCoordinateOffset )
+                nameof( ParameterType.YCoordinateOffset ), nameof( ParameterType.ItemID )
             } )]
-        public static void TargetTileOffset( int xOffset, int yOffset, int zOffset )
+        public static void TargetTileOffset( int xOffset, int yOffset, int zOffset, int itemID = 0 )
         {
-            TargetXYZ( Engine.Player.X + xOffset, Engine.Player.Y + yOffset, Engine.Player.Z + zOffset );
+            TargetXYZ( Engine.Player.X + xOffset, Engine.Player.Y + yOffset, Engine.Player.Z + zOffset, itemID );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Target ),
@@ -529,11 +548,28 @@ namespace ClassicAssist.Data.Macros.Commands
             Parameters = new[]
             {
                 nameof( ParameterType.XCoordinate ), nameof( ParameterType.YCoordinate ),
-                nameof( ParameterType.ZCoordinate )
+                nameof( ParameterType.ZCoordinate ), nameof( ParameterType.ItemID )
             } )]
-        public static void TargetXYZ( int x, int y, int z )
+        public static void TargetXYZ( int x, int y, int z, int itemID = 0 )
         {
-            Engine.SendPacketToServer( new Target( TargetTypeEnum.Tile, -1, TargetFlags.None, 0, x, y, z, 0, true ) );
+            if ( itemID == 0 && Engine.TargetType == TargetTypeEnum.Object )
+            {
+                StaticTile[] staticTiles = Statics.GetStatics( (int) Engine.Player.Map, x, y );
+
+                StaticTile selectedStatic =
+                    staticTiles.FirstOrDefault( i => _treeTiles.Contains( i.ID ) || _caveTiles.Contains( i.ID ) );
+
+                if ( selectedStatic.ID == 0 )
+                {
+                    selectedStatic = staticTiles.FirstOrDefault();
+                }
+
+                itemID = selectedStatic.ID;
+                z = selectedStatic.Z;
+            }
+
+            Engine.SendPacketToServer(
+                new Target( TargetTypeEnum.Tile, -1, TargetFlags.None, 0, x, y, z, itemID, true ) );
             Engine.TargetExists = false;
         }
     }

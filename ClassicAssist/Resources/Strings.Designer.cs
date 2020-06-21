@@ -2563,6 +2563,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resurrection Point: {0} - Direction: {1} - Distance: {2}.
+        /// </summary>
+        public static string Resurrection_Point___0____Direction___1____Distance___2_ {
+            get {
+                return ResourceManager.GetString("Resurrection Point: {0} - Direction: {1} - Distance: {2}", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resync.
         /// </summary>
         public static string Resync {
@@ -2847,6 +2856,15 @@ namespace ClassicAssist.Resources {
         public static string Show_Profile_Name_In_Title {
             get {
                 return ResourceManager.GetString("Show Profile Name In Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show resurrection waypoints.
+        /// </summary>
+        public static string Show_resurrection_waypoints {
+            get {
+                return ResourceManager.GetString("Show resurrection waypoints", resourceCulture);
             }
         }
         

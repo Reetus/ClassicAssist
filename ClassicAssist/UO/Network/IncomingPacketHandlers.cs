@@ -118,6 +118,8 @@ namespace ClassicAssist.UO.Network
             Register( 0xD6, 0, OnProperties );
             Register( 0xDD, 0, OnCompressedGump );
             Register( 0xDF, 0, OnBuffAndAttributes );
+            Register( 0xE5, 0, OnDisplayWaypoint );
+            Register( 0xE6, 0, OnHideWaypoint );
             Register( 0xF3, 26, OnSAWorldItem );
 
             RegisterExtended( 0x04, 0, OnCloseGump );
@@ -126,6 +128,67 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x10, 0, OnDisplayEquipmentInfo );
             RegisterExtended( 0x21, 0, OnClearWeaponAbility );
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
+        }
+
+        private static void OnHideWaypoint( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+
+            QuestPointer pointer = Engine.QuestPointers.FirstOrDefault( p => p.Serial == serial );
+
+            if ( pointer != null )
+            {
+                Engine.QuestPointers.Remove( pointer );
+            }
+        }
+
+        private static void OnDisplayWaypoint( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+            int x = reader.ReadInt16();
+            int y = reader.ReadInt16();
+            int z = reader.ReadSByte();
+            Map map = (Map) reader.ReadByte();
+            int type = reader.ReadInt16();
+            int ignoreObjectSerial = reader.ReadInt16();
+            int clilocDescription = reader.ReadInt32();
+            string clilocArguments = reader.ReadUnicodeStringLE();
+            string cliloc = Cliloc.GetLocalString( clilocDescription, new[] { clilocArguments } );
+
+            switch ( type )
+            {
+                case 0x01:
+                {
+                    Engine.QuestPointers.Add( new QuestPointer
+                    {
+                        Serial = serial, Type = QuestPointerType.Corpse, X = x, Y = y
+                    } );
+
+                    break;
+                }
+                case 0x06:
+                {
+                    if ( Engine.Player != null )
+                    {
+                        int distance = Math.Max( Math.Abs( x - Engine.Player.X ), Math.Abs( y - Engine.Player.Y ) );
+                        Direction direction = UOMath.MapDirection( Engine.Player.X, Engine.Player.Y, x, y );
+
+                        if ( distance < 250 )
+                        {
+                            Commands.SystemMessage( string.Format(
+                                Strings.Resurrection_Point___0____Direction___1____Distance___2_, cliloc,
+                                direction.ToString(), distance ) );
+                        }
+                    }
+
+                    Engine.QuestPointers.Add( new QuestPointer
+                    {
+                        Serial = serial, Type = QuestPointerType.Resurrection, X = x, Y = y
+                    } );
+
+                    break;
+                }
+            }
         }
 
         private static void OnDisplayItemListMenu( PacketReader reader )

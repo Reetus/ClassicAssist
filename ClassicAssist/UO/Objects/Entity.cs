@@ -22,7 +22,7 @@ namespace ClassicAssist.UO.Objects
         public int Hue { get; set; }
 
         [DisplayFormat( typeof( HexFormatProvider ) )]
-        public int ID { get; set; }
+        public virtual int ID { get; set; }
 
         public virtual string Name { get; set; }
 

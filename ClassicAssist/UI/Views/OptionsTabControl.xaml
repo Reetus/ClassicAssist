@@ -160,6 +160,9 @@
             </DockPanel>
             <CheckBox Content="{x:Static resources:Strings.Sort_Macros_Alphabetical}"
                       IsChecked="{Binding CurrentOptions.SortMacrosAlphabetical}" />
+            <CheckBox Content="{x:Static resources:Strings.Show_resurrection_waypoints}"
+                      IsChecked="{Binding CurrentOptions.ShowResurrectionWaypoints}"
+                      ToolTip="{x:Static resources:Strings.Requires_Server_Support}" />
         </StackPanel>
     </Grid>
 </UserControl>

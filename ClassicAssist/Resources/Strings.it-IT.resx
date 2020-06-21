@@ -1317,4 +1317,13 @@
   <data name="Filtered Time:" xml:space="preserve">
     <value>Ora filtrata:</value>
   </data>
+  <data name="seconds" xml:space="preserve">
+    <value>Secondi</value>
+  </data>
+  <data name="Resurrection Point: {0} - Direction: {1} - Distance: {2}" xml:space="preserve">
+    <value>Punto di risurrezione: {0} - Direzione: {1} - Distanza: {2}</value>
+  </data>
+  <data name="Show resurrection waypoints" xml:space="preserve">
+    <value>Mostra waypoint di resurrezione</value>
+  </data>
 </root>

@@ -1317,4 +1317,13 @@
   <data name="Filtered Time:" xml:space="preserve">
     <value>过滤时间：</value>
   </data>
+  <data name="seconds" xml:space="preserve">
+    <value>秒</value>
+  </data>
+  <data name="Resurrection Point: {0} - Direction: {1} - Distance: {2}" xml:space="preserve">
+    <value>复活点： {0} - 方向： {1} - 距离： {2}</value>
+  </data>
+  <data name="Show resurrection waypoints" xml:space="preserve">
+    <value>显示复活航点</value>
+  </data>
 </root>

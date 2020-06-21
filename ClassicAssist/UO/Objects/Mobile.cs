@@ -33,8 +33,7 @@ namespace ClassicAssist.UO.Objects
 
         public bool IsDead
         {
-            get =>
-                ID == 0x0192 || ID == 0x0193 || ID >= 0x025F && ID <= 0x0260 || ID == 0x2B6 || ID == 0x02B7 || _isDead;
+            get => IsGhostType( ID ) || _isDead;
             set => _isDead = value;
         }
 
@@ -74,6 +73,11 @@ namespace ClassicAssist.UO.Objects
 
                 _status = value;
             }
+        }
+
+        protected static bool IsGhostType( int id )
+        {
+            return id == 0x0192 || id == 0x0193 || id >= 0x025F && id <= 0x0260 || id == 0x2B6 || id == 0x02B7;
         }
 
         public event dMobileStatusUpdated MobileStatusUpdated;

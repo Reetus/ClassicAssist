@@ -106,6 +106,7 @@ namespace Assistant
         public static MobileCollection Mobiles { get; set; } = new MobileCollection( Items );
         public static PacketWaitEntries PacketWaitEntries { get; set; }
         public static PlayerMobile Player { get; set; }
+        public static QuestPointerList QuestPointers { get; set; } = new QuestPointerList();
         public static RehueList RehueList { get; set; } = new RehueList();
         public static List<ShardEntry> Shards { get; set; }
         public static string StartupPath { get; set; }

@@ -1087,6 +1087,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filtered Time:.
+        /// </summary>
+        public static string Filtered_Time_ {
+            get {
+                return ResourceManager.GetString("Filtered Time:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filters.
         /// </summary>
         public static string Filters {
@@ -1879,6 +1888,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Message Limit:.
+        /// </summary>
+        public static string Message_Limit_ {
+            get {
+                return ResourceManager.GetString("Message Limit:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Messages.
         /// </summary>
         public static string Messages {
@@ -2599,6 +2617,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to seconds.
+        /// </summary>
+        public static string seconds {
+            get {
+                return ResourceManager.GetString("seconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to See More.
         /// </summary>
         public static string See_More {
@@ -3180,6 +3207,15 @@ namespace ClassicAssist.Resources {
         public static string The_item_needs_to_be_equipped___ {
             get {
                 return ResourceManager.GetString("The item needs to be equipped...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time Limit:.
+        /// </summary>
+        public static string Time_Limit_ {
+            get {
+                return ResourceManager.GetString("Time Limit:", resourceCulture);
             }
         }
         

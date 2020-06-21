@@ -1075,7 +1075,7 @@
     <value>Używa podanego typu w pleaku gracza. Opcjonalnymi parametrami są kolor i poziom szukania.</value>
   </data>
   <data name="TARGETTYPE_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>UseType(0xff, 0, 3)</value>
+    <value>TargetType(0xff, 0, 3)</value>
   </data>
   <data name="WAITFORTARGET_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Czeka na pakiet z wybranym celem od serwera. Opcjonalnie można podać timeout (domyślnie 5000 milisekund).</value>

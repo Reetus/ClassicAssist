@@ -688,7 +688,7 @@
     <value>val = PropertyValue[int]("backpack", "Contents")</value>
   </data>
   <data name="TARGETTYPE_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>UseType(0xff, 0, 3)</value>
+    <value>TargetType(0xff, 0, 3)</value>
   </data>
   <data name="USETYPE_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>UseType(0xff)</value>

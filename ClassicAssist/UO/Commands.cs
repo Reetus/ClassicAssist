@@ -917,5 +917,10 @@ namespace ClassicAssist.UO
 
             Engine.SendPacketToServer( pw );
         }
+
+        public static void RemoveObject( int serial )
+        {
+            Engine.SendPacketToClient( new RemoveObject( serial ) );
+        }
     }
 }

@@ -157,7 +157,16 @@ namespace ClassicAssist.UO.Data
 
         public string ReadUnicodeStringLE()
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+
+            int c;
+
+            while ( Index + 1 < Size && ( c = ReadByte() | ( ReadByte() << 8 ) ) != 0 )
+            {
+                sb.Append( (char) c );
+            }
+
+            return sb.ToString();
         }
 
         public string ReadUnicodeStringLESafe( int fixedLength )

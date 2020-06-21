@@ -17,21 +17,26 @@
 
 #endregion
 
-namespace ClassicAssist.UO.Objects
-{
-    public class Menu
-    {
-        public MenuEntry[] Entries { get; set; }
-        public int ID { get; set; }
-        public int Serial { get; set; }
-        public string Title { get; set; }
-    }
+using System;
+using Assistant;
+using ClassicAssist.UO.Data;
 
-    public class MenuEntry
+namespace ClassicAssist.UO.Network.Packets
+{
+    public class DisplayQuestPointer : BasePacket
     {
-        public int Hue { get; set; }
-        public int ID { get; set; }
-        public int Index { get; set; }
-        public string Title { get; set; }
+        public DisplayQuestPointer( bool active, int x, int y, int serial = 0 )
+        {
+            _writer = new PacketWriter( 10 );
+            _writer.Write( (byte) 0xBA );
+            _writer.Write( (byte) ( active ? 1 : 0 ) );
+            _writer.Write( (short) x );
+            _writer.Write( (short) y );
+
+            if ( Engine.ClientVersion >= new Version( 7, 0, 9, 0 ) )
+            {
+                _writer.Write( serial );
+            }
+        }
     }
 }

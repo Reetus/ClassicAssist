@@ -45,7 +45,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
             _dispatcher.Invoke( () =>
             {
-                Messages.Add( enabled ? $"Enabled: {data.Name}" : $"Disabled: {data.Name}" );
+                Messages.Add( enabled ? $"Enabled: {data.Name}" : $"Disabled: {data?.Name}" );
 
                 Items.Clear();
                 Items.AddRange( _manager.GetEnabledNames() );

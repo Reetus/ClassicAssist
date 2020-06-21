@@ -1320,4 +1320,10 @@
   <data name="seconds" xml:space="preserve">
     <value>seconds</value>
   </data>
+  <data name="Resurrection Point: {0} - Direction: {1} - Distance: {2}" xml:space="preserve">
+    <value>Resurrection Point: {0} - Direction: {1} - Distance: {2}</value>
+  </data>
+  <data name="Show resurrection waypoints" xml:space="preserve">
+    <value>Show resurrection waypoints</value>
+  </data>
 </root>

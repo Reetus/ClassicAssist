@@ -12,6 +12,7 @@ namespace ClassicAssist.UO.Objects
 
         private int _enemyTargetSerial;
         private int _friendTargetSerial;
+        private int _id;
         private int _lastTargetSerial;
 
         public PlayerMobile( int serial ) : base( serial )

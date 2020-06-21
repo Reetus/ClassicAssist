@@ -1317,4 +1317,13 @@
   <data name="Filtered Time:" xml:space="preserve">
     <value>필터링된 시간:</value>
   </data>
+  <data name="seconds" xml:space="preserve">
+    <value>초</value>
+  </data>
+  <data name="Resurrection Point: {0} - Direction: {1} - Distance: {2}" xml:space="preserve">
+    <value>부활 지점: {0} - 방향: {1} - 거리: {2}</value>
+  </data>
+  <data name="Show resurrection waypoints" xml:space="preserve">
+    <value>부활 웨이포인트 표시</value>
+  </data>
 </root>

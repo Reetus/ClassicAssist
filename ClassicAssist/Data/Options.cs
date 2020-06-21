@@ -52,6 +52,7 @@ namespace ClassicAssist.Data
         private bool _rangeCheckLastTarget;
         private int _rangeCheckLastTargetAmount = 11;
         private bool _showProfileNameWindowTitle;
+        private bool _showResurrectionWaypoints;
         private SmartTargetOption _smartTargetOption;
         private bool _sortMacrosAlphabetical;
         private bool _useDeathScreenWhilstHidden;
@@ -249,6 +250,12 @@ namespace ClassicAssist.Data
                 SetProperty( ref _showProfileNameWindowTitle, value );
                 Engine.UpdateWindowTitle();
             }
+        }
+
+        public bool ShowResurrectionWaypoints
+        {
+            get => _showResurrectionWaypoints;
+            set => SetProperty( ref _showResurrectionWaypoints, value );
         }
 
         public SmartTargetOption SmartTargetOption

@@ -1084,10 +1084,10 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
     <value>TargetTileRelative("self", 1, False)</value>
   </data>
   <data name="TARGETTYPE_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Use specified type in player backpack, optional parameters for hue and search level.</value>
+    <value>Target specified type in player backpack, optional parameters for hue and search level.</value>
   </data>
   <data name="TARGETTYPE_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>UseType(0xff, 0, 3)</value>
+    <value>TargetType(0xff, 0, 3)</value>
   </data>
   <data name="WAITFORTARGET_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Wait for target packet from server, optional timeout parameter (default 5000 milliseconds).</value>

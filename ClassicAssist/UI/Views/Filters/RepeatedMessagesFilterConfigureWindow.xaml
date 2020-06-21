@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:ClassicAssist.UI.Views.Filters"
         xmlns:resources="clr-namespace:ClassicAssist.Resources"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:misc="clr-namespace:ClassicAssist.UI.Misc" Topmost="True"
+        xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Topmost="True"
         mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         DataContext="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}"
         Title="{x:Static resources:Strings.Repeated_Messages}" Height="350" Width="400">
@@ -23,9 +25,28 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <GroupBox Header="{x:Static resources:Strings.Options}">
+            <GroupBox.Resources>
+                <Style TargetType="{x:Type xctk:IntegerUpDown}" BasedOn="{StaticResource {x:Type xctk:IntegerUpDown}}">
+                    <Setter Property="Margin" Value="10,0,10,0" />
+                </Style>
+            </GroupBox.Resources>
             <StackPanel Margin="10">
                 <CheckBox Content="{x:Static resources:Strings.Journal_receives_filtered_messages}"
                           IsChecked="{Binding Options.SendToJournal}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{x:Static resources:Strings.Message_Limit_}" />
+                    <xctk:IntegerUpDown Minimum="0" Value="{Binding Options.MessageLimit}" UpdateValueOnEnterKey="True" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{x:Static resources:Strings.Time_Limit_}" />
+                    <xctk:IntegerUpDown Minimum="0" Value="{Binding Options.TimeLimit}" UpdateValueOnEnterKey="True" />
+                    <TextBlock Text="{x:Static resources:Strings.seconds}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{x:Static resources:Strings.Filtered_Time_}" />
+                    <xctk:IntegerUpDown Minimum="0" Value="{Binding Options.BlockedTime}" UpdateValueOnEnterKey="True" />
+                    <TextBlock Text="{x:Static resources:Strings.seconds}" />
+                </StackPanel>
             </StackPanel>
         </GroupBox>
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,0,0">

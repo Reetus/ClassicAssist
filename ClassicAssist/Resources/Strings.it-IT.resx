@@ -1308,4 +1308,13 @@
   <data name="Menus" xml:space="preserve">
     <value>Menu</value>
   </data>
+  <data name="Message Limit:" xml:space="preserve">
+    <value>Limite messaggi:</value>
+  </data>
+  <data name="Time Limit:" xml:space="preserve">
+    <value>Limite di tempo:</value>
+  </data>
+  <data name="Filtered Time:" xml:space="preserve">
+    <value>Ora filtrata:</value>
+  </data>
 </root>

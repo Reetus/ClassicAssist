@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ClassicAssist.UI.Views.Filters;
 using ClassicAssist.UO.Data;
+using Exceptionless;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.Data.Filters
@@ -10,18 +11,17 @@ namespace ClassicAssist.Data.Filters
     [FilterOptions( Name = "Repeated Messages", DefaultEnabled = false )]
     public class RepeatedMessagesFilter : FilterEntry, IConfigurableFilter
     {
-        private const int MESSAGE_LIMIT = 5;
-        private static readonly TimeSpan RESET_DELAY = TimeSpan.FromSeconds( 5 );
         public static MessageFilterOptions FilterOptions { get; set; } = new MessageFilterOptions();
 
         public static bool IsEnabled { get; set; }
-
         private static List<RepeatedMessageEntry> RepeatedMessageEntries { get; } = new List<RepeatedMessageEntry>();
 
         public void Configure()
         {
             RepeatedMessagesFilterConfigureWindow window = new RepeatedMessagesFilterConfigureWindow( FilterOptions );
             window.ShowDialog();
+            ExceptionlessClient.Default.CreateFeatureUsage( "Configure RepeatedMessagesFilter" )
+                .SetUserIdentity( AssistantOptions.UserId ).AddObject( FilterOptions );
         }
 
         public void Deserialize( JToken token )
@@ -31,13 +31,31 @@ namespace ClassicAssist.Data.Filters
                 return;
             }
 
-            FilterOptions =
-                new MessageFilterOptions { SendToJournal = token["SendToJournal"]?.ToObject<bool>() ?? false };
+            try
+            {
+                FilterOptions = new MessageFilterOptions
+                {
+                    SendToJournal = token["SendToJournal"]?.ToObject<bool>() ?? false,
+                    MessageLimit = token["MessageLimit"]?.ToObject<int>() ?? 5,
+                    TimeLimit = token["TimeLimit"]?.ToObject<int>() ?? 5,
+                    BlockedTime = token["BlockedTime"]?.ToObject<int>() ?? 5
+                };
+            }
+            catch ( Exception )
+            {
+                FilterOptions = new MessageFilterOptions();
+            }
         }
 
         public JObject Serialize()
         {
-            return new JObject { { "SendToJournal", FilterOptions.SendToJournal } };
+            return new JObject
+            {
+                { "SendToJournal", FilterOptions.SendToJournal },
+                { "MessageLimit", FilterOptions.MessageLimit },
+                { "TimeLimit", FilterOptions.TimeLimit },
+                { "BlockedTime", FilterOptions.BlockedTime }
+            };
         }
 
         public void ResetOptions()
@@ -63,6 +81,23 @@ namespace ClassicAssist.Data.Filters
                 return false;
             }
 
+            if ( FilterOptions.MessageLimit == 0 )
+            {
+                return true;
+            }
+
+            RepeatedMessageEntry entry = RepeatedMessageEntries.FirstOrDefault( e => e.Message == journalEntry.Text );
+
+            if ( entry != null && entry.Blocked && entry.Expires < DateTime.Now )
+            {
+                RepeatedMessageEntries.Remove( entry );
+            }
+
+            if ( entry != null && entry.Blocked && entry.Expires > DateTime.Now )
+            {
+                return true;
+            }
+
             if ( RepeatedMessageEntries.All( e => e.Message != journalEntry.Text ) )
             {
                 RepeatedMessageEntries.Add( new RepeatedMessageEntry
@@ -76,20 +111,20 @@ namespace ClassicAssist.Data.Filters
                 return false;
             }
 
-            RepeatedMessageEntry entry = RepeatedMessageEntries.FirstOrDefault( e => e.Message == journalEntry.Text );
+            entry = RepeatedMessageEntries.FirstOrDefault( e => e.Message == journalEntry.Text );
 
             if ( entry == null )
             {
                 return false;
             }
 
-            if ( entry.LastReceived < DateTime.Now - RESET_DELAY )
+            if ( entry.LastReceived < DateTime.Now - TimeSpan.FromSeconds( FilterOptions.TimeLimit ) )
             {
                 RepeatedMessageEntries.Remove( entry );
                 return false;
             }
 
-            if ( entry.Count < MESSAGE_LIMIT )
+            if ( entry.Count < FilterOptions.MessageLimit )
             {
                 entry.Count++;
                 entry.LastReceived = DateTime.Now;
@@ -102,12 +137,17 @@ namespace ClassicAssist.Data.Filters
                 UO.Commands.SystemMessage( $"Filtering message: {journalEntry.Text}" );
             }
 
+            entry.Blocked = true;
+            entry.Expires = DateTime.Now + TimeSpan.FromSeconds( FilterOptions.BlockedTime );
+
             return true;
         }
 
         internal class RepeatedMessageEntry
         {
+            public bool Blocked { get; set; }
             public int Count { get; set; }
+            public DateTime Expires { get; set; } = DateTime.Now;
             public DateTime FirstReceived { get; set; }
             public DateTime LastReceived { get; set; }
             public string Message { get; set; }
@@ -115,8 +155,10 @@ namespace ClassicAssist.Data.Filters
 
         public class MessageFilterOptions
         {
+            public int BlockedTime { get; set; } = 5;
+            public int MessageLimit { get; set; } = 5;
             public bool SendToJournal { get; set; }
-            //TODO Configurable Limit/Cooldown
+            public int TimeLimit { get; set; } = 5;
         }
     }
 }

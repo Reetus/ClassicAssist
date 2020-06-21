@@ -26,13 +26,15 @@ namespace ClassicAssist.UI.Misc
         private static void OnLoaded( object sender, RoutedEventArgs e )
         {
             AssistantOptions.OnWindowLoaded();
-            ExceptionlessClient.Default.Configuration.SetUserIdentity( AssistantOptions.UserId,
-                AssistantOptions.UserId );
+            ExceptionlessClient.Default.Configuration.SetUserIdentity( AssistantOptions.UserId );
             ExceptionlessClient.Default.Configuration.UseSessions();
-            ExceptionlessClient.Default.Configuration.DefaultData.Add( "Locale",
-                Thread.CurrentThread?.CurrentUICulture?.Name );
-            ExceptionlessClient.Default.Configuration.DefaultData.Add( "Shard",
-                Engine.CurrentShard?.Name ?? "Unknown" );
+            ExceptionlessClient.Default.SubmittingEvent += ( o, args ) =>
+            {
+                args.Event.SetProperty( "Locale", Thread.CurrentThread?.CurrentUICulture?.Name );
+                args.Event.SetProperty( "PlayerName", Engine.Player?.Name ?? "Unknown" );
+                args.Event.SetProperty( "PlayerSerial", Engine.Player?.Serial ?? 0 );
+                args.Event.SetProperty( "Shard", Engine.CurrentShard?.Name ?? "Unknown" );
+            };
             ExceptionlessClient.Default.Startup( "T8v0i7nL90cVRc4sr2pgo5hviThMPRF3OtQ0bK60" );
         }
 

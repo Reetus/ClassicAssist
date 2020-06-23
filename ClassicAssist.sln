@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{5D66EE29
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExportCommands", "Tools\ExportCommands\ExportCommands.csproj", "{52BF9AF6-77E1-487D-9996-44258B0F519D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicAssist.MacroBrowser", "ClassicAssist.MacroBrowser\ClassicAssist.MacroBrowser.csproj", "{18941B9C-9344-4F94-8F36-3CD5ABF090B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{52BF9AF6-77E1-487D-9996-44258B0F519D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52BF9AF6-77E1-487D-9996-44258B0F519D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52BF9AF6-77E1-487D-9996-44258B0F519D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18941B9C-9344-4F94-8F36-3CD5ABF090B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18941B9C-9344-4F94-8F36-3CD5ABF090B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18941B9C-9344-4F94-8F36-3CD5ABF090B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18941B9C-9344-4F94-8F36-3CD5ABF090B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

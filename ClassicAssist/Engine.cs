@@ -24,8 +24,8 @@ using ClassicAssist.Data.Targeting;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.Views;
-using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Gumps;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
@@ -84,7 +84,6 @@ namespace Assistant
 
         private static readonly TimeSpan PACKET_SEND_DELAY = TimeSpan.FromMilliseconds( 5 );
         private static DateTime _nextPacketSendTime;
-        private static IntPtr _hWnd;
 
         public static Assembly ClassicAssembly { get; set; }
 
@@ -157,7 +156,7 @@ namespace Assistant
             _onClientClosing = OnClientClosing;
             _onHotkeyPressed = OnHotkeyPressed;
             _onMouse = OnMouse;
-            _hWnd = plugin->HWND;
+            WindowHandle = plugin->HWND;
 
             plugin->OnConnected = Marshal.GetFunctionPointerForDelegate( _onConnected );
             plugin->OnDisconnected = Marshal.GetFunctionPointerForDelegate( _onDisconnected );
@@ -452,7 +451,8 @@ namespace Assistant
                         message.AppendLine(
                             $"<A HREF=\"https://github.com/Reetus/ClassicAssist/commits/master\">{Strings.See_More}</A>" );
 
-                        UpdateMessageGump gump = new UpdateMessageGump( _hWnd, message.ToString(), latestVersion );
+                        UpdateMessageGump gump =
+                            new UpdateMessageGump( WindowHandle, message.ToString(), latestVersion );
                         gump.SendGump();
                     }
                 }
@@ -637,6 +637,8 @@ namespace Assistant
 
             return !filter;
         }
+
+        public static IntPtr WindowHandle { get; private set; }
 
         private static bool OnPacketReceive( ref byte[] data, ref int length )
         {

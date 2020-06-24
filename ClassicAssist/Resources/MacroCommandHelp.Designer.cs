@@ -450,6 +450,33 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Displays an ingame prompt with the specified message, returns True if Okay was press, False if not..
+        /// </summary>
+        public static string CONFIRMPROMPT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CONFIRMPROMPT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CONFIRMPROMPT_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("CONFIRMPROMPT_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ConfirmPrompt(&quot;Self Destruct?&quot;).
+        /// </summary>
+        public static string CONFIRMPROMPT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CONFIRMPROMPT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns the item count for given container..
         /// </summary>
         public static string CONTENTS_COMMAND_DESCRIPTION {

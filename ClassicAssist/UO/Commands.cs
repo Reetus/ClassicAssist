@@ -188,7 +188,7 @@ namespace ClassicAssist.UO
 
                 try
                 {
-                    Engine.AddSendFilter( pfi );
+                    Engine.AddSendPreFilter( pfi );
 
                     Engine.SendPacketToClient( pw );
 
@@ -207,7 +207,7 @@ namespace ClassicAssist.UO
                 }
                 finally
                 {
-                    Engine.RemoveSendFilter( pfi );
+                    Engine.RemoveSendPreFilter( pfi );
 
                     if ( wasTargetting )
                     {
@@ -269,7 +269,7 @@ namespace ClassicAssist.UO
 
                 try
                 {
-                    Engine.AddSendFilter( pfi );
+                    Engine.AddSendPreFilter( pfi );
 
                     Engine.SendPacketToClient( pw );
 
@@ -288,7 +288,7 @@ namespace ClassicAssist.UO
                 }
                 finally
                 {
-                    Engine.RemoveSendFilter( pfi );
+                    Engine.RemoveSendPreFilter( pfi );
 
                     if ( wasTargetting )
                     {

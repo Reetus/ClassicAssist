@@ -1377,6 +1377,9 @@ WaitForMenu(0x1d1, 5000)</value>
     <value>ConfirmPrompt("Self Destruct?")</value>
   </data>
   <data name="CONFIRMPROMPT_COMMAND_EXAMPLE" xml:space="preserve">
-    <value></value>
+    <value>res = ConfirmPrompt("Play macro?")
+
+if res:
+ PlayMacro("Macro")</value>
   </data>
 </root>

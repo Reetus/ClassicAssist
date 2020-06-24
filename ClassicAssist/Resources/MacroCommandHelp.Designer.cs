@@ -459,7 +459,10 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to res = ConfirmPrompt(&quot;Play macro?&quot;)
+        ///
+        ///if res:
+        /// PlayMacro(&quot;Macro&quot;).
         /// </summary>
         public static string CONFIRMPROMPT_COMMAND_EXAMPLE {
             get {

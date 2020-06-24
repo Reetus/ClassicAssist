@@ -3,7 +3,7 @@ using ClassicAssist.Data;
 using ClassicAssist.Misc;
 using ClassicAssist.UO.Objects.Gumps;
 
-namespace ClassicAssist.UO
+namespace ClassicAssist.UO.Gumps
 {
     public sealed class UpdateMessageGump : Gump
     {

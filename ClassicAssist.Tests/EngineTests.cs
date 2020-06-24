@@ -154,7 +154,7 @@ namespace ClassicAssist.Tests
 
             try
             {
-                Engine.AddSendFilter( new PacketFilterInfo( 0x06 ) );
+                Engine.AddSendPreFilter( new PacketFilterInfo( 0x06 ) );
 
                 using ( AutoResetEvent are = new AutoResetEvent( false ) )
                 {
@@ -185,7 +185,7 @@ namespace ClassicAssist.Tests
             }
             finally
             {
-                Engine.ClearSendFilter();
+                Engine.ClearSendPreFilter();
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Assistant;
 using ClassicAssist.Resources;
+using ClassicAssist.UO.Gumps;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects.Gumps;
 using UOC = ClassicAssist.UO.Commands;
@@ -87,6 +88,12 @@ namespace ClassicAssist.Data.Macros.Commands
         public static void OpenQuestsGump()
         {
             Engine.SendPacketToServer( new QuestsButtonRequest() );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Gumps ) )]
+        public static bool ConfirmPrompt( string message, bool closable = false )
+        {
+            return ConfirmPromptGump.ConfirmPrompt( message, closable );
         }
 
         //public static int SendCustomGump( Gump gump )

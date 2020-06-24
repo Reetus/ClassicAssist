@@ -140,5 +140,8 @@
         <TabItem Header="{x:Static resources:Strings.Autoloot}">
             <debug:DebugAutolootControl />
         </TabItem>
+        <TabItem Header="{x:Static resources:Strings.Property}">
+            <debug:DebugPropertiesControl />
+        </TabItem>
     </TabControl>
 </Window>

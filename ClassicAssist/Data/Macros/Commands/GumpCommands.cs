@@ -90,6 +90,7 @@ namespace ClassicAssist.Data.Macros.Commands
             Engine.SendPacketToServer( new QuestsButtonRequest() );
         }
 
+        [CommandsDisplay( Category = nameof( Strings.Gumps ) )]
         public static bool ConfirmPrompt( string message, bool closable = false )
         {
             return ConfirmPromptGump.ConfirmPrompt( message, closable );

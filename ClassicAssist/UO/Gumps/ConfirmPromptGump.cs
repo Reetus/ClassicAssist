@@ -20,6 +20,7 @@
 using System.Drawing;
 using System.Threading;
 using Assistant;
+using ClassicAssist.Helpers;
 using ClassicAssist.Misc;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Objects.Gumps;
@@ -62,13 +63,13 @@ namespace ClassicAssist.UO.Gumps
             PacketFilterInfo pfi = new PacketFilterInfo( 0xB1,
                 new[] { PacketFilterConditions.UIntAtPositionCondition( gump.ID, 7 ) } );
 
-            //Engine.AddSendFilter( pfi );
+            Engine.AddSendPostFilter( pfi );
 
             gump.SendGump();
 
             gump.AutoResetEvent.WaitOne();
 
-            Engine.RemoveSendFilter( pfi );
+            Engine.RemoveSendPostFilter( pfi );
 
             return gump.Result;
         }
@@ -86,12 +87,46 @@ namespace ClassicAssist.UO.Gumps
             return new Point( windowWidth, windowHeight );
         }
 
+        public static Point GetGameWindowCenter()
+        {
+            dynamic currentProfile =
+                Reflection.GetTypePropertyValue<dynamic>( "ClassicUO.Configuration.ProfileManager", "Current", null );
+
+            if ( currentProfile == null )
+            {
+                return Point.Empty;
+            }
+
+            dynamic gameWindowSize =
+                Reflection.GetTypePropertyValue<dynamic>( currentProfile.GetType(), "GameWindowSize", currentProfile );
+            dynamic gameWindowPosition = Reflection.GetTypePropertyValue<dynamic>( currentProfile.GetType(),
+                "GameWindowPosition", currentProfile );
+
+            if ( gameWindowSize == null || gameWindowPosition == null )
+            {
+                return Point.Empty;
+            }
+
+            return new Point( gameWindowPosition.X + ( gameWindowSize.X >> 1 ),
+                gameWindowPosition.Y + ( gameWindowSize.Y >> 1 ) );
+        }
+
         private void SetCenterPosition( int width, int height )
         {
-            Point size = GetWindowSize();
+            Point gameCenterPosition = GetGameWindowCenter();
 
-            X = ( size.X - width - 100) / 2;
-            Y = ( size.Y - (height + 200)) / 2;
+            if ( gameCenterPosition == Point.Empty )
+            {
+                Point size = GetWindowSize();
+
+                X = ( size.X - ( width  ) ) >> 1;
+                Y = ( size.Y - ( height ) ) >> 1;
+
+                return;
+            }
+
+            X = gameCenterPosition.X - width / 2;
+            Y = gameCenterPosition.Y - height / 2;
         }
     }
 }

@@ -39,7 +39,7 @@ using Octokit;
 // ReSharper disable once CheckNamespace
 namespace Assistant
 {
-    public static class Engine
+    public static partial class Engine
     {
         public delegate void dConnected();
 
@@ -68,7 +68,8 @@ namespace Assistant
         private static Thread _mainThread;
         private static OnClientClose _onClientClosing;
         private static readonly PacketFilter _incomingPacketFilter = new PacketFilter();
-        private static readonly PacketFilter _outgoingPacketFilter = new PacketFilter();
+        private static readonly PacketFilter _outgoingPacketPreFilter = new PacketFilter();
+        private static readonly PacketFilter _outgoingPacketPostFilter = new PacketFilter();
         private static OnHotkey _onHotkeyPressed;
         private static RequestMove _requestMove;
 
@@ -612,7 +613,7 @@ namespace Assistant
                 filter = CommandsManager.CheckCommand( data, length );
             }
 
-            if ( _outgoingPacketFilter.MatchFilterAll( data, out PacketFilterInfo[] pfis ) > 0 )
+            if ( _outgoingPacketPreFilter.MatchFilterAll( data, out PacketFilterInfo[] pfis ) > 0 )
             {
                 foreach ( PacketFilterInfo pfi in pfis )
                 {
@@ -634,6 +635,21 @@ namespace Assistant
             }
 
             _outgoingQueue.Enqueue( new Packet( data, length ) );
+
+            // ReSharper disable once InvertIf
+            if ( _outgoingPacketPostFilter.MatchFilterAll( data, out PacketFilterInfo[] pfisPost ) > 0 )
+            {
+                foreach ( PacketFilterInfo pfi in pfis )
+                {
+                    pfi.Action?.Invoke( data, pfi );
+                }
+
+                SentPacketFilteredEvent?.Invoke( data, data.Length );
+
+                PacketWaitEntries.CheckWait( data, PacketDirection.Outgoing, true );
+
+                return false;
+            }
 
             return !filter;
         }
@@ -694,40 +710,6 @@ namespace Assistant
             Player = null;
 
             DisconnectedEvent?.Invoke();
-        }
-
-        #endregion
-
-        #region Filters
-
-        public static void AddSendFilter( PacketFilterInfo pfi )
-        {
-            _outgoingPacketFilter.Add( pfi );
-        }
-
-        public static void AddReceiveFilter( PacketFilterInfo pfi )
-        {
-            _incomingPacketFilter.Add( pfi );
-        }
-
-        public static void RemoveReceiveFilter( PacketFilterInfo pfi )
-        {
-            _incomingPacketFilter.Remove( pfi );
-        }
-
-        public static void RemoveSendFilter( PacketFilterInfo pfi )
-        {
-            _outgoingPacketFilter.Remove( pfi );
-        }
-
-        public static void ClearSendFilter()
-        {
-            _outgoingPacketFilter?.Clear();
-        }
-
-        public static void ClearReceiveFilter()
-        {
-            _incomingPacketFilter?.Clear();
         }
 
         #endregion

@@ -12,6 +12,7 @@
         xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
         mc:Ignorable="d"
         Height="500" Width="625" Topmost="{Binding AlwaysOnTop}"
+        MinHeight="400" MinWidth="400"
         Background="{DynamicResource ThemeWindowBackgroundBrush}"
         AllowsTransparency="True" WindowStyle="None" WindowState="Normal"
         Title="{Binding Title}" x:Name="window" ResizeMode="CanResizeWithGrip">

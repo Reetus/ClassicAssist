@@ -450,7 +450,7 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Displays an ingame prompt with the specified message, returns True if Okay was press, False if not..
+        ///   Looks up a localized string similar to Displays an ingame prompt with the specified message, returns True if Okay was pressed, False if not..
         /// </summary>
         public static string CONFIRMPROMPT_COMMAND_DESCRIPTION {
             get {

@@ -1371,7 +1371,7 @@ WaitForMenu(0x1d1, 5000)</value>
     <value>if SkillCap("Blacksmithy") == 120:</value>
   </data>
   <data name="CONFIRMPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Displays an ingame prompt with the specified message, returns True if Okay was press, False if not.</value>
+    <value>Displays an ingame prompt with the specified message, returns True if Okay was pressed, False if not.</value>
   </data>
   <data name="CONFIRMPROMPT_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>ConfirmPrompt("Self Destruct?")</value>

@@ -52,13 +52,13 @@
             <Grid.Resources>
                 <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
             </Grid.Resources>
-            <DockPanel Grid.Row="0">
-                <Button DockPanel.Dock="Left" Content="{Binding PlayStopButtonText}"
+            <controls:StretchyWrapPanel Grid.Row="0" Orientation="Horizontal">
+                <Button Content="{Binding PlayStopButtonText}"
                         Command="{Binding OrganizeCommand}" CommandParameter="{Binding SelectedItem}" />
-                <StackPanel DockPanel.Dock="Right" Margin="5">
+                <StackPanel Margin="5">
                     <CheckBox Content="{x:Static resources:Strings.Stack}" IsChecked="{Binding SelectedItem.Stack}" />
                 </StackPanel>
-            </DockPanel>
+            </controls:StretchyWrapPanel>
             <Grid Grid.Row="1">
                 <ListBox x:Name="listBox" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
                     <ListBox.InputBindings>

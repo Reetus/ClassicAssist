@@ -23,6 +23,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Resources/Icons.xaml" />
                 <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
+                <ResourceDictionary Source="../../Resources/LeftRightIconToggleButton.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
             <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
@@ -33,7 +34,18 @@
     </UserControl.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150" />
+            <ColumnDefinition>
+                <ColumnDefinition.Style>
+                    <Style TargetType="{x:Type ColumnDefinition}">
+                        <Setter Property="Width" Value="155"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked, ElementName=ToggleButton}" Value="True">
+                                <Setter Property="Width" Value="0"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ColumnDefinition.Style>
+            </ColumnDefinition>
             <ColumnDefinition Width="5" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -99,7 +111,7 @@
                     </Button>
                     <Button Content="{x:Static resources:Strings.New}" Grid.Column="1" Margin="2.5,0"
                             Command="{Binding NewMacroCommand, Mode=OneWay}" />
-                    <Button Content="{x:Static resources:Strings.Save}" Grid.Column="2" Margin="2.5,0"
+                    <Button Content="{x:Static resources:Strings.Save}" Grid.Column="2" Margin="2.5,0,0,0"
                             Command="{Binding SaveMacroCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
                 </Grid>
                 <Grid Grid.Row="2" Margin="0,5,0,5">
@@ -172,9 +184,10 @@
                                                  CaretBinding="{Binding CaretPosition}" />
                 </i:Interaction.Behaviors>
             </avalon:TextEditor>
-            <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="5">
-                <StackPanel.Resources>
+            <WrapPanel Orientation="Horizontal" Grid.Row="1" Margin="5">
+                <WrapPanel.Resources>
                     <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                        <Setter Property="Margin" Value="0,0,10,0"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=ListBox}"
                                          Value="{x:Null}">
@@ -182,50 +195,45 @@
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </StackPanel.Resources>
-                <CheckBox Content="{x:Static resources:Strings.Loop}" Margin="0,0,5,0"
+                </WrapPanel.Resources>
+                <CheckBox Content="{x:Static resources:Strings.Loop}"
                           IsChecked="{Binding SelectedItem.Loop, ElementName=ListBox}" />
-                <CheckBox Content="{x:Static resources:Strings.Do_not_auto_interupt}" Margin="0,0,5,0"
+                <CheckBox Content="{x:Static resources:Strings.Do_not_auto_interupt}"
                           IsChecked="{Binding SelectedItem.DoNotAutoInterrupt, ElementName=ListBox}" />
-                <CheckBox Content="{x:Static resources:Strings.Run_in_background}" Margin="0,0,5,0"
+                <CheckBox Content="{x:Static resources:Strings.Run_in_background}"
                           IsChecked="{Binding SelectedItem.IsBackground, ElementName=ListBox}" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0">
-                <StackPanel.Resources>
-                    <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=ListBox}"
-                                         Value="{x:Null}">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </StackPanel.Resources>
-                <CheckBox Content="{x:Static resources:Strings.Autostart}" Margin="5,0,0,0"
+                <CheckBox Content="{x:Static resources:Strings.Autostart}"
                           IsChecked="{Binding SelectedItem.IsAutostart, ElementName=ListBox}"
                           ToolTip="{x:Static resources:Strings.When_checked_macro_will_execute_automatically_after_login_}" />
-                <CheckBox Content="{x:Static resources:Strings.Undisableable}" Margin="5,0,0,0"
+                <CheckBox Content="{x:Static resources:Strings.Undisableable}"
                           ToolTip="{x:Static resources:Strings.Hotkey_will_still_trigger_with_hotkeys_disabled}"
                           IsChecked="{Binding SelectedItem.Disableable, Converter={StaticResource InverseBooleanConverter}}" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center">
-                <StackPanel.Resources>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                        <Setter Property="Margin" Value="0,10,10,0" />
-                        <Setter Property="Padding" Value="10,0,10,0" />
-                        <Setter Property="Height" Value="25" />
-                    </Style>
-                </StackPanel.Resources>
-                <Button Content="{x:Static resources:Strings.Object_Inspector}"
-                        Command="{Binding InspectObjectCommand, Mode=OneWay}" />
-                <Button Content="{x:Static resources:Strings.Commands}" Command="{Binding ShowCommandsCommand}" />
-                <Button Command="{Binding ShowMacrosWikiCommand}" Padding="5,0,5,0"
-                        ToolTip="{x:Static resources:Strings.Macro_Commands_Wiki__Launches_in_Browser_}">
-                    <Image Source="{StaticResource WebIcon}" Height="16" />
-                </Button>
-                <Button Content="{x:Static resources:Strings.Active_Objects}"
-                        Command="{Binding ShowActiveObjectsWindowCommand}" />
-            </StackPanel>
+            </WrapPanel>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <ToggleButton x:Name="ToggleButton" Height="15" Grid.Column="0" Margin="0" Style="{DynamicResource LeftRightIconToggleButton}" VerticalAlignment="Bottom"/>
+                <controls:StretchyWrapPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
+                    <controls:StretchyWrapPanel.Resources>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Margin" Value="0,10,10,0" />
+                            <Setter Property="Padding" Value="10,0,10,0" />
+                            <Setter Property="Height" Value="25" />
+                        </Style>
+                    </controls:StretchyWrapPanel.Resources>
+                    <Button Content="{x:Static resources:Strings.Object_Inspector}"
+                            Command="{Binding InspectObjectCommand, Mode=OneWay}" />
+                    <Button Content="{x:Static resources:Strings.Commands}" Command="{Binding ShowCommandsCommand}" />
+                    <Button Command="{Binding ShowMacrosWikiCommand}" Padding="5,0,5,0"
+                            ToolTip="{x:Static resources:Strings.Macro_Commands_Wiki__Launches_in_Browser_}">
+                        <Image Source="{StaticResource WebIcon}" Height="16" />
+                    </Button>
+                    <Button Content="{x:Static resources:Strings.Active_Objects}"
+                            Command="{Binding ShowActiveObjectsWindowCommand}" />
+                </controls:StretchyWrapPanel>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

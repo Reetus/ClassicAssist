@@ -1326,4 +1326,10 @@
   <data name="Show resurrection waypoints" xml:space="preserve">
     <value>Mostra waypoint di resurrezione</value>
   </data>
+  <data name="Show" xml:space="preserve">
+    <value>Visualizza</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Nascondere</value>
+  </data>
 </root>

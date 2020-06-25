@@ -1321,6 +1321,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hide.
+        /// </summary>
+        public static string Hide {
+            get {
+                return ResourceManager.GetString("Hide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hotkey will still trigger with hotkeys disabled.
         /// </summary>
         public static string Hotkey_will_still_trigger_with_hotkeys_disabled {
@@ -2820,6 +2829,15 @@ namespace ClassicAssist.Resources {
         public static string Shard_ {
             get {
                 return ResourceManager.GetString("Shard:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show.
+        /// </summary>
+        public static string Show {
+            get {
+                return ResourceManager.GetString("Show", resourceCulture);
             }
         }
         

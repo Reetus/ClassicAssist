@@ -1326,4 +1326,10 @@
   <data name="Show resurrection waypoints" xml:space="preserve">
     <value>显示复活航点</value>
   </data>
+  <data name="Show" xml:space="preserve">
+    <value>显示</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>隐藏</value>
+  </data>
 </root>

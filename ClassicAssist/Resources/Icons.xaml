@@ -270,6 +270,20 @@
                     </DrawingGroup>
                 </DrawingImage.Drawing>
             </DrawingImage>
+            <DrawingImage x:Key="LeftChevron">
+                <DrawingImage.Drawing>
+                    <DrawingGroup ClipGeometry="M0,0 V407.436 H407.436 V0 H0 Z">
+                        <GeometryDrawing Brush="{DynamicResource IconForegroundBrush}" Geometry="F1 M407.436,407.436z M0,0z M315.869,21.178L315.869,21.178 294.621,0 91.566,203.718 294.621,407.436 315.869,386.258 133.924,203.718z" />
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
+            <DrawingImage x:Key="RightChevron">
+                <DrawingImage.Drawing>
+                    <DrawingGroup ClipGeometry="M0,0 V407.436 H407.436 V0 H0 Z">
+                        <GeometryDrawing Brush="{DynamicResource IconForegroundBrush}" Geometry="F1 M407.436,407.436z M0,0z M112.814,0L112.814,0 91.566,21.178 273.512,203.718 91.566,386.258 112.814,407.436 315.869,203.718z" />
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

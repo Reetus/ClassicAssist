@@ -1374,4 +1374,13 @@ Are you sure you wish to continue?</value>
   <data name="Failed to download macro..." xml:space="preserve">
     <value>Failed to download macro...</value>
   </data>
+  <data name="Additional Assemblies" xml:space="preserve">
+    <value>Additional Assemblies</value>
+  </data>
+  <data name="Additional assemblies to load:" xml:space="preserve">
+    <value>Additional assemblies to load:</value>
+  </data>
+  <data name="Error loading assembly: {0}" xml:space="preserve">
+    <value>Error loading assembly: {0}</value>
+  </data>
 </root>

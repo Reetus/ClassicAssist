@@ -143,5 +143,8 @@
         <TabItem Header="{x:Static resources:Strings.Property}">
             <debug:DebugPropertiesControl />
         </TabItem>
+        <TabItem Header="{x:Static resources:Strings.Additional_Assemblies}">
+            <debug:DebugAssembliesControl />
+        </TabItem>
     </TabControl>
 </Window>

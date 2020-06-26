@@ -30,6 +30,18 @@ namespace ClassicAssist.Data.Macros
             ScriptRuntime runtime = _engine.Runtime;
             runtime.LoadAssembly( Assembly.GetExecutingAssembly() );
 
+            foreach ( string assembly in AssistantOptions.Assemblies )
+            {
+                try
+                {
+                    runtime.LoadAssembly( Assembly.LoadFile( assembly ) );
+                }
+                catch ( Exception )
+                {
+                    // ignored
+                }
+            }
+
             if ( _importCache == null )
             {
                 _importCache = InitializeImports( _engine );

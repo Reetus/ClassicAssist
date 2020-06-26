@@ -149,18 +149,6 @@ namespace ClassicAssist.Data
                 BackupProfiles();
             }
 
-            foreach ( string assembly in Assemblies )
-            {
-                try
-                {
-                    Assembly.LoadFile( assembly );
-                }
-                catch ( Exception )
-                {
-                    // ignored
-                }
-            }
-
             OptionsLoaded?.Invoke( null, EventArgs.Empty );
         }
 

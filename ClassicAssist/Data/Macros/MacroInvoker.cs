@@ -30,7 +30,7 @@ namespace ClassicAssist.Data.Macros
             ScriptRuntime runtime = _engine.Runtime;
             runtime.LoadAssembly( Assembly.GetExecutingAssembly() );
 
-            foreach ( string assembly in AssistantOptions.Assemblies )
+            foreach ( string assembly in AssistantOptions.Assemblies ?? new string[0] )
             {
                 try
                 {

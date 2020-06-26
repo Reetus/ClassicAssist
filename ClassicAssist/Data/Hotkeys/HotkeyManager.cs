@@ -140,9 +140,8 @@ namespace ClassicAssist.Data.Hotkeys
                     modifier = _modifiers[0];
                 }
 
-                bool down = modifier != Key.None
-                    ? Engine.Dispatcher.Invoke( () => Keyboard.IsKeyDown( modifier ) )
-                    : false;
+                Key modifier1 = modifier;
+                bool down = modifier != Key.None && Engine.Dispatcher.Invoke( () => Keyboard.IsKeyDown( modifier1 ) );
 
                 if ( !down )
                 {
@@ -150,7 +149,7 @@ namespace ClassicAssist.Data.Hotkeys
                 }
 
                 // Sanity check
-                if ( keys == Key.None && modifier == Key.None )
+                if ( keys == Key.None )
                 {
                     return false;
                 }
@@ -164,15 +163,12 @@ namespace ClassicAssist.Data.Hotkeys
 
                     try
                     {
-                        foreach ( HotkeyEntry t in hke.Children )
+                        IEnumerable<HotkeyEntry> hotkeyEntries = hke.Children.Where( t =>
+                            t.Hotkey.Modifier == modifier && t.Hotkey.Key == keys &&
+                            t.Hotkey.Mouse == MouseOptions.None );
+
+                        foreach ( HotkeyEntry hks in hotkeyEntries )
                         {
-                            HotkeyEntry hks = t;
-
-                            if ( hks.Hotkey.Key != keys || hks.Hotkey.Modifier != modifier )
-                            {
-                                continue;
-                            }
-
                             if ( hks.Disableable && !Enabled )
                             {
                                 continue;
@@ -199,6 +195,12 @@ namespace ClassicAssist.Data.Hotkeys
 
         public void OnMouseAction( MouseOptions mouse )
         {
+            // Sanity check
+            if ( mouse == MouseOptions.None )
+            {
+                return;
+            }
+
             lock ( _lock )
             {
                 foreach ( HotkeyCommand hke in Items )
@@ -210,22 +212,15 @@ namespace ClassicAssist.Data.Hotkeys
 
                     try
                     {
-                        foreach ( HotkeyEntry hks in hke.Children )
+                        Key modifier = _modifierKeys.FirstOrDefault( key =>
+                            Engine.Dispatcher.Invoke( () => Keyboard.IsKeyDown( key ) ) );
+
+                        IEnumerable<HotkeyEntry> hotkeyEntries = hke.Children.Where( t =>
+                            t.Hotkey.Modifier == modifier && t.Hotkey.Key == Key.None && t.Hotkey.Mouse == mouse );
+
+                        foreach ( HotkeyEntry hks in hotkeyEntries )
                         {
-                            if ( hks.Hotkey.Mouse != mouse )
-                            {
-                                continue;
-                            }
-
                             if ( hks.Disableable && !Enabled )
-                            {
-                                continue;
-                            }
-
-                            Key modifier = _modifierKeys.FirstOrDefault( key =>
-                                Engine.Dispatcher.Invoke( () => Keyboard.IsKeyDown( key ) ) );
-
-                            if ( hks.Hotkey.Modifier != modifier )
                             {
                                 continue;
                             }

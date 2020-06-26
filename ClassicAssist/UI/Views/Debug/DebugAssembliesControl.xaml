@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="ClassicAssist.UI.Views.Debug.DebugAssembliesControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ClassicAssist.UI.Views.Debug"
+             xmlns:debug="clr-namespace:ClassicAssist.UI.ViewModels.Debug"
+             xmlns:resources="clr-namespace:ClassicAssist.Resources"
+             mc:Ignorable="d" Background="White"
+             d:DesignHeight="250" d:DesignWidth="300">
+    <UserControl.DataContext>
+        <debug:DebugAssembliesViewModel />
+    </UserControl.DataContext>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <TextBlock Text="{x:Static resources:Strings.Additional_assemblies_to_load_}" DockPanel.Dock="Top" />
+            <ListView x:Name="listView" Margin="0,10,0,10" ItemsSource="{Binding Items}"
+                      SelectedItem="{Binding SelectedItem}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="{x:Static resources:Strings.Name}"
+                                        Width="{Binding ActualWidth, ElementName=listView, Mode=OneWay}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" ToolTip="{Binding Location, Mode=OneWay}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </DockPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Padding" Value="20,2,20,2" />
+                    <Setter Property="Margin" Value="0,0,10,0" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="{x:Static resources:Strings.Load}" Command="{Binding LoadCommand}" />
+            <Button Content="{x:Static resources:Strings.Remove}" Command="{Binding RemoveCommand}"
+                    CommandParameter="{Binding SelectedItem, ElementName=listView}" />
+            <Button Content="{x:Static resources:Strings.Save}" Command="{Binding SaveCommand}" />
+        </StackPanel>
+
+    </Grid>
+
+</UserControl>

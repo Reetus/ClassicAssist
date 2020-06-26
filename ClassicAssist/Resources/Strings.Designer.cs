@@ -160,6 +160,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Additional Assemblies.
+        /// </summary>
+        public static string Additional_Assemblies {
+            get {
+                return ResourceManager.GetString("Additional Assemblies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Additional assemblies to load:.
+        /// </summary>
+        public static string Additional_assemblies_to_load_ {
+            get {
+                return ResourceManager.GetString("Additional assemblies to load:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Address:.
         /// </summary>
         public static string Address_ {
@@ -1092,6 +1110,15 @@ namespace ClassicAssist.Resources {
         public static string Error__No_Player {
             get {
                 return ResourceManager.GetString("Error: No Player", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error loading assembly: {0}.
+        /// </summary>
+        public static string Error_loading_assembly___0_ {
+            get {
+                return ResourceManager.GetString("Error loading assembly: {0}", resourceCulture);
             }
         }
         

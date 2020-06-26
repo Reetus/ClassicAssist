@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Assistant;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UO.Objects;
@@ -19,6 +20,7 @@ namespace ClassicAssist.Data
         private const string DEFAULT_BACKUP_PATH = "Backup";
 
         private static readonly Dictionary<int, string> _linkedProfiles = new Dictionary<int, string>();
+        public static string[] Assemblies { get; set; }
         public static bool AutoBackupProfiles { get; set; }
         public static int AutoBackupProfilesDays { get; set; }
         public static string AutoBackupProfilesDirectory { get; set; }
@@ -53,7 +55,7 @@ namespace ClassicAssist.Data
                 { "UserId", UserId },
 #if !DEVELOP
                 { "WindowWidth", WindowWidth },
-                { "WindowHeight", WindowHeight }
+                { "WindowHeight", WindowHeight },
 #endif
             };
 
@@ -78,6 +80,15 @@ namespace ClassicAssist.Data
             }
 
             json.Add( "SavedPasswords", savedPasswordsArray );
+
+            JArray assembliesArray = new JArray();
+
+            foreach ( string assembly in Assemblies ?? new string[0] )
+            {
+                assembliesArray.Add( assembly );
+            }
+
+            json.Add( "Assemblies", assembliesArray );
 
             File.WriteAllText( Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Assistant.json" ),
                 json.ToString( Formatting.Indented ) );
@@ -110,6 +121,7 @@ namespace ClassicAssist.Data
             UserId = json?["UserId"]?.ToObject<string>() ?? Guid.NewGuid().ToString();
             WindowWidth = json?["WindowWidth"]?.ToObject<int>() ?? 625;
             WindowHeight = json?["WindowHeight"]?.ToObject<int>() ?? 500;
+            Assemblies = json?["Assemblies"]?.ToObject<string[]>() ?? new string[0];
 
             if ( json?["Profiles"] != null )
             {

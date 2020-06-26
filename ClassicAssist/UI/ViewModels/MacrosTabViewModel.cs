@@ -48,6 +48,7 @@ namespace ClassicAssist.UI.ViewModels
 
             _manager.IsRecording = () => _isRecording;
             _manager.InsertDocument = str => { _dispatcher.Invoke( () => { SelectedItem.Macro += str; } ); };
+            _manager.NewMacro = NewMacro;
             _manager.Items = Items;
         }
 
@@ -376,6 +377,17 @@ namespace ClassicAssist.UI.ViewModels
             macro.Action = async hks => await Execute( macro );
 
             Items.Add( macro );
+        }
+
+        private void NewMacro( string name, string macroText )
+        {
+            MacroEntry macro = new MacroEntry() { Name = name, Macro = macroText};
+
+            macro.Action = async hks => await Execute( macro );
+
+            Items.Add( macro );
+
+            SelectedItem = macro;
         }
 
         private void RemoveMacro( object obj )

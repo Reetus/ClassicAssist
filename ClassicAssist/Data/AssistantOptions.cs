@@ -30,8 +30,12 @@ namespace ClassicAssist.Data
         public static bool SavePasswordsOnlyBlank { get; set; }
         public static Version UpdateGumpVersion { get; set; }
         public static string UserId { get; set; }
+        public static double WindowHeight { get; set; }
+
+        public static double WindowWidth { get; set; }
 
         public static event EventHandler SavedPasswordsChanged;
+        public static event EventHandler OptionsLoaded;
 
         public static void Save()
         {
@@ -46,7 +50,11 @@ namespace ClassicAssist.Data
                 { "AutoBackupProfilesLast", AutoBackupProfilesLast },
                 { "SavePasswords", SavePasswords },
                 { "SavePasswordsOnlyBlank", SavePasswordsOnlyBlank },
-                { "UserId", UserId }
+                { "UserId", UserId },
+#if !DEVELOP
+                { "WindowWidth", WindowWidth },
+                { "WindowHeight", WindowHeight }
+#endif
             };
 
             JArray linkedProfilesArray = new JArray();
@@ -100,6 +108,8 @@ namespace ClassicAssist.Data
             SavePasswords = json?["SavePasswords"]?.ToObject<bool>() ?? false;
             SavePasswordsOnlyBlank = json?["SavePasswordsOnlyBlank"]?.ToObject<bool>() ?? false;
             UserId = json?["UserId"]?.ToObject<string>() ?? Guid.NewGuid().ToString();
+            WindowWidth = json?["WindowWidth"]?.ToObject<int>() ?? 625;
+            WindowHeight = json?["WindowHeight"]?.ToObject<int>() ?? 500;
 
             if ( json?["Profiles"] != null )
             {
@@ -126,6 +136,8 @@ namespace ClassicAssist.Data
             {
                 BackupProfiles();
             }
+
+            OptionsLoaded?.Invoke( null, EventArgs.Empty );
         }
 
         public static void OnPasswordsChanged()

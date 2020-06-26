@@ -8,8 +8,12 @@
     <Product>ExportCommands</Product>
     <Copyright>Copyright ©  2020</Copyright>
     <OutputPath>..\..\Output</OutputPath>
+    <Configurations>Debug;Release;Develop</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|AnyCPU'">
     <DebugType>full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">

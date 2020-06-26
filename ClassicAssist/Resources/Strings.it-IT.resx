@@ -1210,7 +1210,7 @@
     <value>Ottieni il prossimo Gray / Criminal</value>
   </data>
   <data name="Match Any ID" xml:space="preserve">
-    <value>Corrispondenza ID Any</value>
+    <value>Tutti i Type</value>
   </data>
   <data name="Any" xml:space="preserve">
     <value>Any</value>
@@ -1276,10 +1276,10 @@
     <value>Base totale:</value>
   </data>
   <data name="Drop Holding Object" xml:space="preserve">
-    <value>Oggetto Drop Holding</value>
+    <value>Rilascia Oggetto trascinato</value>
   </data>
   <data name="Journal receives filtered messages" xml:space="preserve">
-    <value>Il diario riceve i messaggi filtrati</value>
+    <value>Il Journal riceve i messaggi filtrati</value>
   </data>
   <data name="Enabled Packets:" xml:space="preserve">
     <value>Pacchetti abilitati:</value>
@@ -1291,7 +1291,7 @@
     <value>Tutti i pacchetti</value>
   </data>
   <data name="Last Object" xml:space="preserve">
-    <value>Ultimo oggetto</value>
+    <value>Ultimo Oggetto</value>
   </data>
   <data name="Features:" xml:space="preserve">
     <value>Caratteristiche:</value>
@@ -1300,7 +1300,7 @@
     <value>Non disabilitabile</value>
   </data>
   <data name="Hotkey will still trigger with hotkeys disabled" xml:space="preserve">
-    <value>Il tasto di scelta rapida si attiverà ancora con i tasti di scelta rapida disabilitati</value>
+    <value>Il Tasto Rapido si attiverà anche con i Tasti Rapidi Disabilitati</value>
   </data>
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
@@ -1309,13 +1309,13 @@
     <value>Menu</value>
   </data>
   <data name="Message Limit:" xml:space="preserve">
-    <value>Limite messaggi:</value>
+    <value>Limite messaggio:</value>
   </data>
   <data name="Time Limit:" xml:space="preserve">
-    <value>Limite di tempo:</value>
+    <value>Tempo Limite:</value>
   </data>
   <data name="Filtered Time:" xml:space="preserve">
-    <value>Ora filtrata:</value>
+    <value>Tempo filtrato:</value>
   </data>
   <data name="seconds" xml:space="preserve">
     <value>Secondi</value>

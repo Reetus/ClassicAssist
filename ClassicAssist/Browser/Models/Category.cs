@@ -17,21 +17,16 @@
 
 #endregion
 
-using System;
-
-namespace ClassicAssist.MacroBrowser.Models
+namespace ClassicAssist.Browser.Models
 {
-    public class Metadata
+    public class Category
     {
-        public string Author { get; set; }
-        public string[] Categories { get; set; }
-        public string Description { get; set; }
-        public string Era { get; set; }
-        public string FileName { get; set; }
-        public DateTime ModifiedDate { get; set; }
         public string Name { get; set; }
-        public string SHA1 { get; set; }
-        public string Shard { get; set; }
-        public int Size { get; set; }
+        public string[] Values { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

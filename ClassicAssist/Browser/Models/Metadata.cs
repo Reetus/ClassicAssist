@@ -18,16 +18,25 @@
 #endregion
 
 using System;
-using LiteDB;
+using ClassicAssist.Browser.Data;
+using Newtonsoft.Json;
 
-namespace ClassicAssist.MacroBrowser.Models
+namespace ClassicAssist.Browser.Models
 {
-    public class Manifest
+    public class Metadata
     {
-        public DateTime DateTime { get; set; } = DateTime.Now;
-        public Metadata[] Files { get; set; }
+        public string Author { get; set; }
 
-        [BsonId]
-        public int Id { get; set; }
+        [JsonConverter( typeof( CategoriesConverter ) )]
+        public string[] Categories { get; set; }
+
+        public string Description { get; set; }
+        public string Era { get; set; }
+        public string FileName { get; set; }
+        public DateTime ModifiedDate { get; set; }
+        public string Name { get; set; }
+        public string SHA1 { get; set; }
+        public string Shard { get; set; }
+        public int Size { get; set; }
     }
 }

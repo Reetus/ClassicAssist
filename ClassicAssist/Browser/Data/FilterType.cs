@@ -17,17 +17,13 @@
 
 #endregion
 
-using System;
-using LiteDB;
-
-namespace ClassicAssist.MacroBrowser.Models
+namespace ClassicAssist.Browser.Data
 {
-    public class Repository
+    public enum FilterType
     {
-        public string CommitHash { get; set; }
-        public DateTime DateTime { get; set; } = DateTime.Now;
-
-        [BsonId]
-        public int Id { get; set; }
+        Shard,
+        Era,
+        Author,
+        Category
     }
 }

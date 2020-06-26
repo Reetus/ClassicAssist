@@ -1332,4 +1332,46 @@
   <data name="Hide" xml:space="preserve">
     <value>Hide</value>
   </data>
+  <data name="Author" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Copy to clipboard" xml:space="preserve">
+    <value>Copy to clipboard</value>
+  </data>
+  <data name="Create Macro" xml:space="preserve">
+    <value>Create Macro</value>
+  </data>
+  <data name="Era" xml:space="preserve">
+    <value>Era</value>
+  </data>
+  <data name="Open in Github" xml:space="preserve">
+    <value>Open in Github</value>
+  </data>
+  <data name="Shard" xml:space="preserve">
+    <value>Shard</value>
+  </data>
+  <data name="Macro Warning" xml:space="preserve">
+    <value>Running malicious macros could compromise your account or computer!
+
+You should understand what the macro is doing before running.
+
+Whist all care has been taken to ensure macros are not malicious, no responsibility will be taken.
+
+Are you sure you wish to continue?</value>
+  </data>
+  <data name="Public Macros" xml:space="preserve">
+    <value>Public Macros</value>
+  </data>
+  <data name="Learn how to contribute your own macros..." xml:space="preserve">
+    <value>Learn how to contribute your own macros...</value>
+  </data>
+  <data name="Failed to download manifest..." xml:space="preserve">
+    <value>Failed to download manifest...</value>
+  </data>
+  <data name="Failed to download macro..." xml:space="preserve">
+    <value>Failed to download macro...</value>
+  </data>
 </root>

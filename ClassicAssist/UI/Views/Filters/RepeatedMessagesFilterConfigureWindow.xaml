@@ -31,8 +31,9 @@
                 </Style>
             </GroupBox.Resources>
             <StackPanel Margin="10">
-                <CheckBox Content="{x:Static resources:Strings.Journal_receives_filtered_messages}"
-                          IsChecked="{Binding Options.SendToJournal}" />
+                <CheckBox IsChecked="{Binding Options.SendToJournal}">
+                    <TextBlock Text="{x:Static resources:Strings.Journal_receives_filtered_messages}" TextWrapping="Wrap"/>
+                </CheckBox>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{x:Static resources:Strings.Message_Limit_}" />
                     <xctk:IntegerUpDown Minimum="0" Value="{Binding Options.MessageLimit}" UpdateValueOnEnterKey="True" />

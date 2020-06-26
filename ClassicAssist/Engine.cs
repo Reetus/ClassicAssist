@@ -486,7 +486,9 @@ namespace Assistant
 
                 PacketWaitEntries?.CheckWait( packet, PacketDirection.Outgoing, true );
 
-                _sendToServer?.Invoke( ref packet, ref length );
+                ( byte[] data, int dataLength ) = Utility.CopyBuffer( packet, length );
+
+                _sendToServer?.Invoke( ref data, ref dataLength );
 
                 _nextPacketSendTime = DateTime.Now + PACKET_SEND_DELAY;
             }
@@ -639,7 +641,7 @@ namespace Assistant
             // ReSharper disable once InvertIf
             if ( _outgoingPacketPostFilter.MatchFilterAll( data, out PacketFilterInfo[] pfisPost ) > 0 )
             {
-                foreach ( PacketFilterInfo pfi in pfis )
+                foreach ( PacketFilterInfo pfi in pfisPost )
                 {
                     pfi.Action?.Invoke( data, pfi );
                 }

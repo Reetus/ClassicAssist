@@ -19,5 +19,15 @@ namespace ClassicAssist.Misc
 
             return enumEntry;
         }
+
+        public static (byte[] data, int length) CopyBuffer( byte[] source, int sourceLength )
+        {
+            byte[] data = new byte[sourceLength];
+            int dataLength = sourceLength;
+
+            Buffer.BlockCopy( source, 0, data, 0, sourceLength );
+
+            return ( data, dataLength );
+        }
     }
 }

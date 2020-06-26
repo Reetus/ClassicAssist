@@ -157,10 +157,10 @@
     <value>Ostatni release:</value>
   </data>
   <data name="No new release available..." xml:space="preserve">
-    <value>Nowy release dostępny...</value>
+    <value>Brak dostępnych nowych wersji...</value>
   </data>
   <data name="No release asset..." xml:space="preserve">
-    <value>Brak częsci release...</value>
+    <value>Brak częsci aktualizacji...</value>
   </data>
   <data name="Relaunching updater..." xml:space="preserve">
     <value>Ponowne uruchomienie aktualizacji...</value>

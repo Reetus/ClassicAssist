@@ -144,4 +144,88 @@
   <data name="Parameters" xml:space="preserve">
     <value>Parametry</value>
   </data>
+  <data name="PARAMETER_DESCRIPTION_AGENTENTRYNAME" xml:space="preserve">
+    <value>Nazwa agenta</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ALIASNAME" xml:space="preserve">
+    <value>Nazwa aliasu</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_BUFFNAME" xml:space="preserve">
+    <value>Nazwa buffu</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_DIRECTION" xml:space="preserve">
+    <value>Kierunek, np. "West"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_DISTANCE" xml:space="preserve">
+    <value>Dystans</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_GUMPBUTTONINDEX" xml:space="preserve">
+    <value>ID przycisku Gump</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_INTEGERVALUE" xml:space="preserve">
+    <value>Zmianna typu integer - zobacz opis, aby zobaczyć użycie</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_LISTNAME" xml:space="preserve">
+    <value>Nazwa listy</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_MACRONAME" xml:space="preserve">
+    <value>Nazwa makra</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_RANGE" xml:space="preserve">
+    <value>Odległość, np. 10</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_SERIAL" xml:space="preserve">
+    <value>Numer serial dla entity, np. 0xf00f0x0</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_SKILLNAME" xml:space="preserve">
+    <value>Nazwa skilla</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_SPECIALMOVENAME" xml:space="preserve">
+    <value>Nazwa specjalinego ruchu</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_SPELLNAME" xml:space="preserve">
+    <value>Nazwa czaru</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_STRING" xml:space="preserve">
+    <value>Zmienna typu string - zobacz opis, aby zobaczyć użycie</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_TIMERNAME" xml:space="preserve">
+    <value>Nazwa timera</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_UNKNOWN" xml:space="preserve">
+    <value>Nie zdefiniowano - zobacz opis, aby zobaczyć użycie</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_UPDOWNLOCKED" xml:space="preserve">
+    <value>Status zablokowania skilla - "up", "down", "locked"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_WANDNAME" xml:space="preserve">
+    <value>Nazwa różdżki</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_XCOORDINATE" xml:space="preserve">
+    <value>Koordynata X</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_XCOORDINATEOFFSET" xml:space="preserve">
+    <value>Odstęp dla koordynaty X</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_YCOORDINATE" xml:space="preserve">
+    <value>Koordynata Y</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_YCOORDINATEOFFSET" xml:space="preserve">
+    <value>Odstęp dla koordynaty Y</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ZCOORDINATE" xml:space="preserve">
+    <value>Koordynata Z</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ZCOORDINATEOFFSET" xml:space="preserve">
+    <value>Odstęp dla koordynaty Z</value>
+  </data>
+  <data name="See Also: {0}" xml:space="preserve">
+    <value>Zobacz też: {0}</value>
+  </data>
+  <data name="Types" xml:space="preserve">
+    <value>Typy</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_BOOLEAN" xml:space="preserve">
+    <value>Wartość True/False - zobacz opis, aby zobaczyć użycie</value>
+  </data>
 </root>

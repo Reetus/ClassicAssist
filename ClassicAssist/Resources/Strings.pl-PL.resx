@@ -1330,6 +1330,48 @@
     <value>Pokaż</value>
   </data>
   <data name="Hide" xml:space="preserve">
-    <value>Ukryć</value>
+    <value>Ukryj</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>Autor</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Kategoria</value>
+  </data>
+  <data name="Copy to clipboard" xml:space="preserve">
+    <value>Skopiuj do schowka</value>
+  </data>
+  <data name="Create Macro" xml:space="preserve">
+    <value>Stwórz makro</value>
+  </data>
+  <data name="Era" xml:space="preserve">
+    <value>Era</value>
+  </data>
+  <data name="Open in Github" xml:space="preserve">
+    <value>Otwórz na GitHub</value>
+  </data>
+  <data name="Shard" xml:space="preserve">
+    <value>Shard:</value>
+  </data>
+  <data name="Public Macros" xml:space="preserve">
+    <value>Makra publiczne</value>
+  </data>
+  <data name="Macro Warning" xml:space="preserve">
+    <value>Uwaga! Uruchamianie złośiwych makro może skutkować uzyskaniem hasła do konta przez osoby trzecie lub uszkodzić komputer!
+
+Przed uruchomieniem makra, pownieneś zrozumieć do ono robi.
+
+Dołożyliśmy wszelkich starań, by makra tutaj zawarte nie były złośliwe, jednakże nie da sę sprawdzić wszystkiego. Nie ponosimy odpowiedzialności za używanie makr.
+
+Czy chcesz kontynuować?</value>
+  </data>
+  <data name="Learn how to contribute your own macros..." xml:space="preserve">
+    <value>Zobacz, jak  przekazać własne makro dla innych...</value>
+  </data>
+  <data name="Failed to download manifest..." xml:space="preserve">
+    <value>Nie udało się pobrać manifestu...</value>
+  </data>
+  <data name="Failed to download macro..." xml:space="preserve">
+    <value>Nie udało się pobrać makra...</value>
   </data>
 </root>

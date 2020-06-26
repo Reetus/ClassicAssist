@@ -125,7 +125,7 @@ namespace ClassicAssist.Browser.Data
                 CategoryToPredicate( filter.FirstOrDefault( t => t.FilterType == FilterType.Category ) );
 
             IEnumerable<string> macros = manifest.Files.Where( m =>
-                ( string.IsNullOrEmpty( shardFilter ) || m.Shard == null || m.Shard.Equals( shardFilter ) ) &&
+                ( string.IsNullOrEmpty( shardFilter ) || m.Shard != null && m.Shard.Equals( shardFilter ) ) &&
                 ( string.IsNullOrEmpty( eraFilter ) || m.Era == null || m.Era.Equals( eraFilter ) ) &&
                 ( string.IsNullOrEmpty( authorFilter ) || m.Author == null || m.Author.Equals( authorFilter ) ) &&
                 categoryPredicate( m.Categories ) ).Select( m => m.Name );

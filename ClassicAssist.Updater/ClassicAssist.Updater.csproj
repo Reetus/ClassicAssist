@@ -6,6 +6,7 @@
     <Product>ClassicAssist.Updater</Product>
     <OutputPath>..\Output\</OutputPath>
     <UseWPF>true</UseWPF>
+    <Configurations>Debug;Release;Develop</Configurations>
   </PropertyGroup>
   <PropertyGroup>
     <BuildDate>$([System.DateTime]::op_Subtraction($([System.DateTime]::get_Now().get_Date()),$([System.DateTime]::new(2020,2,27))).get_TotalDays())</BuildDate>
@@ -17,7 +18,7 @@
     <PackageReference Include="CommandLineParser" Version="2.6.0" />
     <PackageReference Include="Exceptionless" Version="4.3.2027" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="Octokit" Version="0.36.0" />
+    <PackageReference Include="Octokit" Version="0.48.0" />
     <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />

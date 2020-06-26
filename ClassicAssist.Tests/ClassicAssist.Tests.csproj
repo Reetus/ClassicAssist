@@ -3,6 +3,7 @@
     <TargetFramework>net48</TargetFramework>
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Configurations>Debug;Release;Develop</Configurations>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="packetlengths.json" />

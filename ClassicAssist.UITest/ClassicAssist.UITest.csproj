@@ -6,6 +6,7 @@
     <ApplicationIcon />
     <OutputType>Exe</OutputType>
     <StartupObject />
+    <Configurations>Debug;Release;Develop</Configurations>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassicAssist\ClassicAssist.csproj" />

@@ -304,6 +304,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Author.
+        /// </summary>
+        public static string Author {
+            get {
+                return ResourceManager.GetString("Author", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto accept only from friends.
         /// </summary>
         public static string Auto_accept_only_from_friends {
@@ -534,6 +543,15 @@ namespace ClassicAssist.Resources {
         public static string Capture_Packets {
             get {
                 return ResourceManager.GetString("Capture Packets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category.
+        /// </summary>
+        public static string Category {
+            get {
+                return ResourceManager.GetString("Category", resourceCulture);
             }
         }
         
@@ -781,6 +799,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy to clipboard.
+        /// </summary>
+        public static string Copy_to_clipboard {
+            get {
+                return ResourceManager.GetString("Copy to clipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Count.
         /// </summary>
         public static string Count {
@@ -804,6 +831,15 @@ namespace ClassicAssist.Resources {
         public static string Counters {
             get {
                 return ResourceManager.GetString("Counters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Macro.
+        /// </summary>
+        public static string Create_Macro {
+            get {
+                return ResourceManager.GetString("Create Macro", resourceCulture);
             }
         }
         
@@ -1015,6 +1051,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Era.
+        /// </summary>
+        public static string Era {
+            get {
+                return ResourceManager.GetString("Era", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {
@@ -1065,6 +1110,24 @@ namespace ClassicAssist.Resources {
         public static string Explosion_Potion {
             get {
                 return ResourceManager.GetString("Explosion Potion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to download macro....
+        /// </summary>
+        public static string Failed_to_download_macro___ {
+            get {
+                return ResourceManager.GetString("Failed to download macro...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to download manifest....
+        /// </summary>
+        public static string Failed_to_download_manifest___ {
+            get {
+                return ResourceManager.GetString("Failed to download manifest...", resourceCulture);
             }
         }
         
@@ -1672,6 +1735,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Learn how to contribute your own macros....
+        /// </summary>
+        public static string Learn_how_to_contribute_your_own_macros___ {
+            get {
+                return ResourceManager.GetString("Learn how to contribute your own macros...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Light.
         /// </summary>
         public static string Light {
@@ -1776,6 +1848,21 @@ namespace ClassicAssist.Resources {
         public static string Macro_name_must_be_unique_ {
             get {
                 return ResourceManager.GetString("Macro name must be unique.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Running malicious macros could compromise your account or computer!
+        ///
+        ///You should understand what the macro is doing before running.
+        ///
+        ///Whist all care has been taken to ensure macros are not malicious, no responsibility will be taken.
+        ///
+        ///Are you sure you wish to continue?.
+        /// </summary>
+        public static string Macro_Warning {
+            get {
+                return ResourceManager.GetString("Macro Warning", resourceCulture);
             }
         }
         
@@ -2140,6 +2227,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open in Github.
+        /// </summary>
+        public static string Open_in_Github {
+            get {
+                return ResourceManager.GetString("Open in Github", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operator.
         /// </summary>
         public static string Operator {
@@ -2379,6 +2475,15 @@ namespace ClassicAssist.Resources {
         public static string Property {
             get {
                 return ResourceManager.GetString("Property", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public Macros.
+        /// </summary>
+        public static string Public_Macros {
+            get {
+                return ResourceManager.GetString("Public Macros", resourceCulture);
             }
         }
         
@@ -2820,6 +2925,15 @@ namespace ClassicAssist.Resources {
         public static string Setting_ability___0_____ {
             get {
                 return ResourceManager.GetString("Setting ability \"{0}\"...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shard.
+        /// </summary>
+        public static string Shard {
+            get {
+                return ResourceManager.GetString("Shard", resourceCulture);
             }
         }
         

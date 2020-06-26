@@ -36,6 +36,7 @@ namespace ClassicAssist.Data.Macros
         public Action<string> InsertDocument { get; set; }
         public Func<bool> IsRecording { get; set; }
         public ObservableCollectionEx<MacroEntry> Items { get; set; }
+        public Action<string, string> NewMacro { get; set; }
         public static bool QuietMode { get; set; }
         public bool Replay { get; set; }
 

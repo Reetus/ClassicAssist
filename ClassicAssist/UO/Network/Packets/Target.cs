@@ -60,6 +60,9 @@ namespace ClassicAssist.UO.Network.Packets
             {
                 Engine.SendPacketToClient( new Target( targetType, senderSerial, TargetFlags.Cancel, targetSerial, x, y,
                     z, id, false ) );
+                Engine.AddSendPreFilter( new PacketFilterInfo( 0x6C,
+                    new[] { PacketFilterConditions.IntAtPositionCondition( senderSerial, 2 ) },
+                    ( p, pfi ) => { Engine.RemoveSendPreFilter( pfi ); } ) );
             }
         }
 

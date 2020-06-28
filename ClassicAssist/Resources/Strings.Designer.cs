@@ -3082,6 +3082,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Special Moves.
+        /// </summary>
+        public static string Special_Moves {
+            get {
+                return ResourceManager.GetString("Special Moves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Spells.
         /// </summary>
         public static string Spells {

@@ -92,12 +92,6 @@ namespace ClassicAssist.UI.Misc
         private static void ListBox_Loaded( object sender, RoutedEventArgs e )
         {
             ListBox listBox = (ListBox) sender;
-            INotifyCollectionChanged incc = listBox.Items;
-
-            if ( incc == null )
-            {
-                return;
-            }
 
             listBox.Loaded -= ListBox_Loaded;
             Associations[listBox] = new Capture( listBox );
@@ -155,7 +149,10 @@ namespace ClassicAssist.UI.Misc
             }
             else
             {
-                scrollViewer.ScrollChanged -= ScrollViewer_ScrollChanged;
+                if ( scrollViewer != null )
+                {
+                    scrollViewer.ScrollChanged -= ScrollViewer_ScrollChanged;
+                }
             }
         }
 

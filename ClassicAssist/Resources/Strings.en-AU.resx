@@ -1383,4 +1383,7 @@ Are you sure you wish to continue?</value>
   <data name="Error loading assembly: {0}" xml:space="preserve">
     <value>Error loading assembly: {0}</value>
   </data>
+  <data name="Special Moves" xml:space="preserve">
+    <value>Special Moves</value>
+  </data>
 </root>

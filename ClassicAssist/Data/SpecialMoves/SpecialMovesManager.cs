@@ -10,6 +10,8 @@ namespace ClassicAssist.Data.SpecialMoves
 {
     public class SpecialMovesManager
     {
+        public delegate void dSpecialMovesChanged( string name, bool enabled );
+
         private static SpecialMovesManager _instance;
         private static readonly object _lock = new object();
         private bool[] _enabledIds = new bool[ushort.MaxValue];
@@ -20,9 +22,22 @@ namespace ClassicAssist.Data.SpecialMoves
             Engine.PlayerInitializedEvent += p => Clear();
         }
 
+        public event dSpecialMovesChanged SpecialMovesChanged;
+
         private void SetID( int spellid, bool enabled )
         {
             _enabledIds[spellid] = enabled;
+
+            OnSpecialMovesChanged( spellid, enabled );
+        }
+
+        private void OnSpecialMovesChanged( int spellid, bool enabled )
+        {
+            SpellManager manager = SpellManager.GetInstance();
+
+            SpellData spellData = manager.GetSpellData( spellid );
+
+            SpecialMovesChanged?.Invoke( spellData?.Name ?? string.Empty, enabled );
         }
 
         private void Clear()

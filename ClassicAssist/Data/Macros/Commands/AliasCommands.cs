@@ -33,7 +33,7 @@ namespace ClassicAssist.Data.Macros.Commands
             switch ( obj )
             {
                 case string str:
-                    serial = GetAlias( str.ToLower() );
+                    serial = GetAlias( str );
 
                     if ( serial == -1 && !MacroManager.QuietMode )
                     {
@@ -66,15 +66,17 @@ namespace ClassicAssist.Data.Macros.Commands
             Parameters = new[] { nameof( ParameterType.AliasName ), nameof( ParameterType.SerialOrAlias ) } )]
         public static void SetAlias( string aliasName, object obj )
         {
+            aliasName = aliasName.ToLower();
+
             int value = ResolveSerial( obj );
 
-            if ( _aliases.ContainsKey( aliasName.ToLower() ) )
+            if ( _aliases.ContainsKey( aliasName ) )
             {
-                _aliases[aliasName.ToLower()] = value;
+                _aliases[aliasName] = value;
             }
             else
             {
-                _aliases.Add( aliasName.ToLower(), value );
+                _aliases.Add( aliasName, value );
             }
         }
 
@@ -82,6 +84,8 @@ namespace ClassicAssist.Data.Macros.Commands
             Parameters = new[] { nameof( ParameterType.AliasName ), nameof( ParameterType.SerialOrAlias ) } )]
         public static void SetMacroAlias( string aliasName, object obj )
         {
+            aliasName = aliasName.ToLower();
+
             int value = ResolveSerial( obj );
 
             MacroEntry macro = MacroManager.GetInstance().GetCurrentMacro();
@@ -92,13 +96,13 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            if ( macro.Aliases.ContainsKey( aliasName.ToLower() ) )
+            if ( macro.Aliases.ContainsKey( aliasName ) )
             {
-                macro.Aliases[aliasName.ToLower()] = value;
+                macro.Aliases[aliasName] = value;
             }
             else
             {
-                macro.Aliases.Add( aliasName.ToLower(), value );
+                macro.Aliases.Add( aliasName, value );
             }
         }
 
@@ -106,6 +110,8 @@ namespace ClassicAssist.Data.Macros.Commands
             Parameters = new[] { nameof( ParameterType.AliasName ) } )]
         public static void UnsetAlias( string aliasName )
         {
+            aliasName = aliasName.ToLower();
+
             MacroEntry macro = MacroManager.GetInstance().GetCurrentMacro();
 
             if ( macro != null )
@@ -126,19 +132,21 @@ namespace ClassicAssist.Data.Macros.Commands
             Parameters = new[] { nameof( ParameterType.AliasName ) } )]
         public static int GetAlias( string aliasName )
         {
+            aliasName = aliasName.ToLower();
+
             MacroEntry macro = MacroManager.GetInstance().GetCurrentMacro();
 
             if ( macro != null )
             {
-                if ( macro.Aliases.ContainsKey( aliasName.ToLower() ) )
+                if ( macro.Aliases.ContainsKey( aliasName ) )
                 {
-                    return macro.Aliases[aliasName.ToLower()];
+                    return macro.Aliases[aliasName];
                 }
             }
 
-            if ( _aliases.ContainsKey( aliasName.ToLower() ) )
+            if ( _aliases.ContainsKey( aliasName ) )
             {
-                return _aliases[aliasName.ToLower()];
+                return _aliases[aliasName];
             }
 
             return -1;
@@ -154,7 +162,7 @@ namespace ClassicAssist.Data.Macros.Commands
         public static int PromptAlias( string aliasName )
         {
             int serial = UOC.GetTargeSerialAsync( string.Format( Strings.Target_object___0_____, aliasName ) ).Result;
-            SetAlias( aliasName.ToLower(), serial );
+            SetAlias( aliasName, serial );
             return serial;
         }
 
@@ -162,9 +170,11 @@ namespace ClassicAssist.Data.Macros.Commands
             Parameters = new[] { nameof( ParameterType.AliasName ) } )]
         public static bool FindAlias( string aliasName )
         {
+            aliasName = aliasName.ToLower();
+
             int serial;
 
-            if ( ( serial = GetAlias( aliasName.ToLower() ) ) == -1 )
+            if ( ( serial = GetAlias( aliasName ) ) == -1 )
             {
                 return false;
             }

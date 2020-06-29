@@ -101,8 +101,21 @@
                         <GridView>
                             <GridViewColumn Header="{x:Static resources:Strings.Item}" Width="120"
                                             DisplayMemberBinding="{Binding Item}" />
-                            <GridViewColumn Header="{x:Static resources:Strings.Graphic}" Width="120"
+                            <GridViewColumn Header="{x:Static resources:Strings.Graphic}" Width="100"
                                             DisplayMemberBinding="{Binding ID, StringFormat={}0x{0:x}}" />
+                            <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="80"
+                                            x:Name="HueColumn">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <controls:EditTextBlock
+                                                Text="{Binding Hue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                                Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=AmountColumn, Mode=OneWay}"
+                                                ShowIcon="True" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Header="{x:Static resources:Strings.Amount}" Width="120"
                                             x:Name="AmountColumn">
                                 <GridViewColumn.CellTemplate>

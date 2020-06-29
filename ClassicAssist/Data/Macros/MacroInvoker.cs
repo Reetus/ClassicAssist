@@ -21,7 +21,6 @@ namespace ClassicAssist.Data.Macros
 
         private static readonly ScriptEngine _engine = Python.CreateEngine();
         private static Dictionary<string, object> _importCache;
-        private readonly Stopwatch _stopWatch = new Stopwatch();
         private CancellationTokenSource _cancellationToken;
         private MacroEntry _macro;
 
@@ -54,6 +53,8 @@ namespace ClassicAssist.Data.Macros
         public bool IsRunning => Thread?.IsAlive ?? false;
 
         public Thread Thread { get; set; }
+
+        public Stopwatch StopWatch { get; set; } = new Stopwatch();
 
         public event dMacroStartStop StartedEvent;
         public event dMacroStartStop StoppedEvent;
@@ -119,8 +120,8 @@ namespace ClassicAssist.Data.Macros
 
                     ScriptScope macroScope = _engine.CreateScope( importCache );
 
-                    _stopWatch.Reset();
-                    _stopWatch.Start();
+                    StopWatch.Reset();
+                    StopWatch.Start();
 
                     do
                     {
@@ -128,7 +129,7 @@ namespace ClassicAssist.Data.Macros
 
                         source.Execute( macroScope );
 
-                        _stopWatch.Stop();
+                        StopWatch.Stop();
 
                         bool willLoop = _macro.Loop && !IsFaulted && !_cancellationToken.IsCancellationRequested;
 
@@ -139,10 +140,10 @@ namespace ClassicAssist.Data.Macros
 
                         if ( Options.CurrentOptions.Debug )
                         {
-                            UO.Commands.SystemMessage( string.Format( Strings.Loop_time___0_, _stopWatch.Elapsed ) );
+                            UO.Commands.SystemMessage( string.Format( Strings.Loop_time___0_, StopWatch.Elapsed ) );
                         }
 
-                        int diff = 50 - (int) _stopWatch.ElapsedMilliseconds;
+                        int diff = 50 - (int) StopWatch.ElapsedMilliseconds;
 
                         if ( diff > 0 )
                         {
@@ -201,6 +202,15 @@ namespace ClassicAssist.Data.Macros
 
             try
             {
+                StopWatch.Stop();
+
+                int diff = 50 - (int) StopWatch.ElapsedMilliseconds;
+
+                if ( diff > 0 )
+                {
+                    Thread.Sleep( diff );
+                }
+
                 Thread?.Interrupt();
                 Thread?.Abort();
                 Thread?.Join( 100 );

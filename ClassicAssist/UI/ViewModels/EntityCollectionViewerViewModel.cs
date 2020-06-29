@@ -19,13 +19,12 @@ using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
+using Newtonsoft.Json;
 
 namespace ClassicAssist.UI.ViewModels
 {
     public class EntityCollectionViewerViewModel : BaseViewModel
     {
-        private const int _defaultShrinkValue = 0x2106;
-
         private ICommand _applyFiltersCommand;
         private ICommand _cancelActionCommand;
         private CancellationTokenSource _cancellationToken;
@@ -46,7 +45,6 @@ namespace ClassicAssist.UI.ViewModels
             new ObservableCollection<EntityCollectionData>();
 
         private bool _showProperties;
-        private Lazy<int[]> _shrinkEntries = new Lazy<int[]>( LoadShrinkTable );
 
         private IComparer<Entity> _sorter = new IDThenSerialComparer();
         private string _statusLabel;
@@ -130,6 +128,9 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ItemDoubleClickCommand =>
             _itemDoubleClickCommand ?? ( _itemDoubleClickCommand = new RelayCommand( ItemDoubleClick, o => true ) );
 
+        public static Lazy<Dictionary<int, int>> MountIDEntries { get; set; } =
+            new Lazy<Dictionary<int, int>>( LoadMountIDEntries );
+
         public ICommand RefreshCommand =>
             _refreshCommand ?? ( _refreshCommand = new RelayCommand( Refresh, o => _collection?.Serial != 0 ) );
 
@@ -145,6 +146,8 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _showProperties, value );
         }
 
+        public static Lazy<int[]> ShrinkEntries { get; set; } = new Lazy<int[]>( LoadShrinkTable );
+
         public string StatusLabel
         {
             get => _statusLabel;
@@ -158,6 +161,29 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _topmost;
             set => SetProperty( ref _topmost, value );
+        }
+
+        private static Dictionary<int, int> LoadMountIDEntries()
+        {
+            Dictionary<int, int> entries = new Dictionary<int, int>();
+
+            string fileName = Path.Combine( Engine.StartupPath, "Data", "MountID.json" );
+
+            if ( !File.Exists( fileName ) )
+            {
+                return entries;
+            }
+
+            try
+            {
+                entries = JsonConvert.DeserializeObject<Dictionary<int, int>>( File.ReadAllText( fileName ) );
+            }
+            catch ( Exception )
+            {
+                // ignored
+            }
+
+            return entries;
         }
 
         private static int[] LoadShrinkTable()
@@ -444,17 +470,64 @@ namespace ClassicAssist.UI.ViewModels
 
     public class EntityCollectionData
     {
-        public BitmapSource Bitmap => Art.GetStatic( Entity.ID, Entity.Hue ).ToBitmapSource();
+        public BitmapSource Bitmap
+        {
+            get
+            {
+                BitmapSource result = Art.GetStatic( Entity.ID, Entity.Hue ).ToBitmapSource();
+
+                if ( !( Entity is Item item ) || item.Layer != Layer.Mount )
+                {
+                    return result;
+                }
+
+                if ( !( EntityCollectionViewerViewModel.MountIDEntries.Value?.ContainsKey( Entity.ID ) ?? false ) )
+                {
+                    return result;
+                }
+
+                int id = (int) EntityCollectionViewerViewModel.MountIDEntries.Value?[Entity.ID];
+
+                result = Art.GetStatic( id, Entity.Hue ).ToBitmapSource();
+
+                return result;
+            }
+        }
+
         public Entity Entity { get; set; }
         public string FullName => GetProperties( Entity );
-        public string Name => Entity.Name;
+        public string Name => GetName( Entity );
 
         private static string GetProperties( Entity entity )
         {
             return entity.Properties == null
-                ? entity.Name
+                ? GetName( entity )
                 : entity.Properties.Aggregate( "",
                     ( current, entityProperty ) => current + entityProperty.Text + "\r\n" ).TrimTrailingNewLine();
+        }
+
+        private static string GetName( Entity entity )
+        {
+            if ( !( entity is Item item ) || item.Layer != Layer.Mount )
+            {
+                return entity.Name;
+            }
+
+            if ( !( EntityCollectionViewerViewModel.MountIDEntries.Value?.ContainsKey( entity.ID ) ?? false ) )
+            {
+                return entity.Name;
+            }
+
+            int id = (int) EntityCollectionViewerViewModel.MountIDEntries.Value?[entity.ID];
+
+            if ( id == 0 )
+            {
+                return entity.Name;
+            }
+
+            StaticTile tileData = TileData.GetStaticTile( id );
+
+            return !string.IsNullOrEmpty( tileData.Name ) ? tileData.Name : entity.Name;
         }
     }
 

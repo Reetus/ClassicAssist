@@ -95,6 +95,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                     SetJsonValue( itemsObj, "Item", organizerItem.Item );
                     SetJsonValue( itemsObj, "ID", organizerItem.ID );
+                    SetJsonValue( itemsObj, "Hue", organizerItem.Hue );
                     SetJsonValue( itemsObj, "Amount", organizerItem.Amount );
 
                     itemsArray.Add( itemsObj );
@@ -138,6 +139,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     {
                         Item = GetJsonValue( itemToken, "Item", string.Empty ),
                         ID = GetJsonValue( itemToken, "ID", 0 ),
+                        Hue = GetJsonValue( itemToken, "Hue", -1 ),
                         Amount = GetJsonValue( itemToken, "Amount", -1 )
                     };
 
@@ -221,7 +223,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             OrganizerItem organizerItem = new OrganizerItem
             {
-                Item = TileData.GetStaticTile( item.ID ).Name, ID = item.ID, Amount = -1
+                Item = TileData.GetStaticTile( item.ID ).Name, ID = item.ID, Hue = item.Hue, Amount = -1
             };
 
             entry.Items.Add( organizerItem );

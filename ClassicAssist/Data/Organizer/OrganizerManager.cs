@@ -111,7 +111,8 @@ namespace ClassicAssist.Data.Organizer
 
                 foreach ( OrganizerItem entryItem in entry.Items )
                 {
-                    Item[] moveItems = sourceContainerItem.Container.SelectEntities( i => entryItem.ID == i.ID );
+                    Item[] moveItems = sourceContainerItem.Container.SelectEntities( i =>
+                        entryItem.ID == i.ID && ( entryItem.Hue == -1 || i.Hue == entryItem.Hue ) );
 
                     if ( moveItems == null )
                     {
@@ -125,8 +126,10 @@ namespace ClassicAssist.Data.Organizer
                     if ( entry.Complete )
                     {
                         int existingCount = destinationContainerItem.Container
-                                                ?.SelectEntities( i => entryItem.ID == i.ID )?.Select( i => i.Count )
-                                                .Sum() ?? 0;
+                                                ?.SelectEntities( i =>
+                                                    entryItem.ID == i.ID &&
+                                                    ( entryItem.Hue == -1 || i.Hue == entryItem.Hue ) )
+                                                ?.Select( i => i.Count ).Sum() ?? 0;
 
                         moved += existingCount;
                     }

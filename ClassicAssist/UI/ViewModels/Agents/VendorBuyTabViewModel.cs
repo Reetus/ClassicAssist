@@ -178,7 +178,10 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         buyList.Add( match );
                     }
                 }
+            }
 
+            if ( buyList.Count > 0 )
+            {
                 UOC.VendorBuy( serial, buyList.ToArray() );
             }
 

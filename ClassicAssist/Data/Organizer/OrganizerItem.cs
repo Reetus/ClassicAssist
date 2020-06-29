@@ -7,6 +7,7 @@ namespace ClassicAssist.Data.Organizer
     public class OrganizerItem : INotifyPropertyChanged
     {
         private int _amount;
+        private int _hue;
         private int _id;
         private string _item;
 
@@ -14,6 +15,12 @@ namespace ClassicAssist.Data.Organizer
         {
             get => _amount;
             set => SetProperty( ref _amount, value );
+        }
+
+        public int Hue
+        {
+            get => _hue;
+            set => SetProperty( ref _hue, value );
         }
 
         public int ID

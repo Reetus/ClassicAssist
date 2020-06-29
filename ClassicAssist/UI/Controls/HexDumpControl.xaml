@@ -17,7 +17,8 @@
         <Grid>
             <Grid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Copy byte[] declaration" Click="MenuItem_OnClick" />
+                    <MenuItem Header="Copy byte[] declaration" Click="Copy_OnClick" />
+                    <MenuItem Header="Replay" Click="Replay_OnClick" />
                 </ContextMenu>
             </Grid.ContextMenu>
             <Grid.ColumnDefinitions>

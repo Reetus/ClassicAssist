@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Windows;
+using Assistant;
 using ClassicAssist.UO.Network.PacketFilter;
 
 namespace ClassicAssist.UI.Controls
@@ -110,7 +111,7 @@ namespace ClassicAssist.UI.Controls
             }
         }
 
-        private void MenuItem_OnClick( object sender, RoutedEventArgs e )
+        private void Copy_OnClick( object sender, RoutedEventArgs e )
         {
             try
             {
@@ -133,6 +134,28 @@ namespace ClassicAssist.UI.Controls
             catch ( Exception )
             {
                 // ignored
+            }
+        }
+
+        private void Replay_OnClick( object sender, RoutedEventArgs e )
+        {
+            if ( Packet == null )
+            {
+                return;
+            }
+
+            switch ( Packet.Direction )
+            {
+                case PacketDirection.Incoming:
+                    Engine.SendPacketToClient( Packet.Data, Packet.Data.Length );
+                    break;
+                case PacketDirection.Outgoing:
+                    Engine.SendPacketToServer( Packet.Data, Packet.Data.Length );
+                    break;
+                case PacketDirection.Any:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

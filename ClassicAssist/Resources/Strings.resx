@@ -1386,4 +1386,7 @@ Are you sure you wish to continue?</value>
   <data name="Special Moves" xml:space="preserve">
     <value>Special Moves</value>
   </data>
+  <data name="Loaded to all profiles" xml:space="preserve">
+    <value>Loaded to all profiles</value>
+  </data>
 </root>

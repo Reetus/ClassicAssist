@@ -1,4 +1,7 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,6 +18,7 @@ using ClassicAssist.UI.Views;
 using ClassicAssist.UI.Views.Macros;
 using ClassicAssist.UO;
 using ICSharpCode.AvalonEdit.Document;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.UI.ViewModels
@@ -134,7 +138,17 @@ namespace ClassicAssist.UI.ViewModels
 
             JArray macroArray = new JArray();
 
-            foreach ( MacroEntry macroEntry in Items )
+            IEnumerable<MacroEntry> globalMacros = Items.Where( e => e.Global );
+
+            if ( globalMacros.Any() )
+            {
+                string globalJson = JsonConvert.SerializeObject( globalMacros, Formatting.Indented );
+
+                File.WriteAllText( Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Macros.json" ),
+                    globalJson );
+            }
+
+            foreach ( MacroEntry macroEntry in Items.Where( e => !e.Global ) )
             {
                 JObject entry = new JObject
                 {
@@ -180,6 +194,32 @@ namespace ClassicAssist.UI.ViewModels
         public void Deserialize( JObject json, Options options )
         {
             Items.Clear();
+
+            string globalPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Macros.json" );
+
+            if ( File.Exists( globalPath ) )
+            {
+                string globalJson = File.ReadAllText( globalPath );
+
+                MacroEntry[] globalMacros = JsonConvert.DeserializeObject<MacroEntry[]>( globalJson );
+
+                if ( globalMacros != null )
+                {
+                    foreach ( MacroEntry entry in globalMacros )
+                    {
+                        entry.Action = async hks => await Execute( entry );
+
+                        if ( Options.CurrentOptions.SortMacrosAlphabetical )
+                        {
+                            Items.AddSorted( entry );
+                        }
+                        else
+                        {
+                            Items.Add( entry );
+                        }
+                    }
+                }
+            }
 
             JToken config = json?["Macros"];
 

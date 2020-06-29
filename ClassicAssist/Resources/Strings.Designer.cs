@@ -1825,6 +1825,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loaded to all profiles.
+        /// </summary>
+        public static string Loaded_to_all_profiles {
+            get {
+                return ResourceManager.GetString("Loaded to all profiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Location:.
         /// </summary>
         public static string Location_ {

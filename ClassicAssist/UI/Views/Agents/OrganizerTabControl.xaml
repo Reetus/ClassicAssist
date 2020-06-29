@@ -110,13 +110,13 @@
                                         <Grid>
                                             <controls:EditTextBlock
                                                 Text="{Binding Hue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                                Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=AmountColumn, Mode=OneWay}"
+                                                Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=HueColumn, Mode=OneWay}"
                                                 ShowIcon="True" />
                                         </Grid>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="{x:Static resources:Strings.Amount}" Width="120"
+                            <GridViewColumn Header="{x:Static resources:Strings.Amount}" Width="80"
                                             x:Name="AmountColumn">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>

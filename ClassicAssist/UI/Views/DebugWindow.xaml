@@ -8,7 +8,6 @@
     xmlns:resources="clr-namespace:ClassicAssist.Resources"
     xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
     xmlns:debug="clr-namespace:ClassicAssist.UI.Views.Debug"
-    xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
     xmlns:controls="clr-namespace:ClassicAssist.UI.Controls" x:Name="window"
     x:Class="ClassicAssist.UI.Views.DebugWindow"
     mc:Ignorable="d"

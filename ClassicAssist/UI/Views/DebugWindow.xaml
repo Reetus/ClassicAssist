@@ -83,7 +83,7 @@
             <debug:DebugBuffIconsControl />
         </TabItem>
         <TabItem Header="{x:Static resources:Strings.Special_Moves}">
-            <debug:DebugSpecialMovesControl/>
+            <debug:DebugSpecialMovesControl />
         </TabItem>
         <TabItem Header="{x:Static resources:Strings.Vendor_Buy}">
             <debug:DebugVendorBuyControl />

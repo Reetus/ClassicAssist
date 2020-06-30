@@ -239,17 +239,17 @@
                                            PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
                                            Placement="Bottom" StaysOpen="false">
                                         <Border x:Name="ToolBarSubMenuBorder"
-                                                    BorderBrush="{StaticResource ToolBarMenuBorder}"
-                                                    BorderThickness="1"
-                                                    Background="{StaticResource ToolBarSubMenuBackground}"
-                                                    RenderOptions.ClearTypeHint="Enabled">
+                                                BorderBrush="{StaticResource ToolBarMenuBorder}"
+                                                BorderThickness="1"
+                                                Background="{StaticResource ToolBarSubMenuBackground}"
+                                                RenderOptions.ClearTypeHint="Enabled">
                                             <ToolBarOverflowPanel x:Name="PART_ToolBarOverflowPanel"
-                                                                      KeyboardNavigation.DirectionalNavigation="Cycle"
-                                                                      FocusVisualStyle="{x:Null}" Focusable="true"
-                                                                      Margin="2"
-                                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                                      KeyboardNavigation.TabNavigation="Cycle"
-                                                                      WrapWidth="200" />
+                                                                  KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                                  FocusVisualStyle="{x:Null}" Focusable="true"
+                                                                  Margin="2"
+                                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                                  KeyboardNavigation.TabNavigation="Cycle"
+                                                                  WrapWidth="200" />
                                         </Border>
                                     </Popup>
                                 </Grid>

@@ -189,6 +189,13 @@
     "Twohanded": true
   },
   {
+    "Graphic": 3919,
+    "Name": "Crossbow",
+    "Primary": 3,
+    "Secondary": 9,
+    "Twohanded": true
+  },
+  {
     "Graphic": 3920,
     "Name": "Crossbow",
     "Primary": 3,

@@ -17,7 +17,6 @@
 
 using System;
 using System.Collections.Generic;
-using ClassicAssist.Browser.Data;
 using ClassicAssist.UO.Network.PacketFilter;
 
 namespace ClassicAssist.Data.Filters
@@ -31,7 +30,7 @@ namespace ClassicAssist.Data.Filters
 
         public static List<DynamicFilterEntry> Filters { get; set; } = new List<DynamicFilterEntry>();
 
-        public virtual bool CheckPacket( byte[] packet, int length, PacketDirection direction )
+        public virtual bool CheckPacket( ref byte[] packet, ref int length, PacketDirection direction )
         {
             throw new NotImplementedException();
         }

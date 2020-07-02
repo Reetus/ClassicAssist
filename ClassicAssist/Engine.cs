@@ -693,16 +693,16 @@ namespace Assistant
                     pfi.Action?.Invoke( data, pfi );
                 }
 
-                ReceivedPacketFilteredEvent?.Invoke( data, data.Length );
+                ReceivedPacketFilteredEvent?.Invoke( data, length );
 
                 PacketWaitEntries.CheckWait( data, PacketDirection.Incoming, true );
 
                 return false;
             }
 
-            if ( IncomingPacketFilters.CheckPacket( data, data.Length ) )
+            if ( IncomingPacketFilters.CheckPacket( ref data, ref length ) )
             {
-                ReceivedPacketFilteredEvent?.Invoke( data, data.Length );
+                ReceivedPacketFilteredEvent?.Invoke( data, length );
 
                 return false;
             }

@@ -33,7 +33,7 @@ namespace ClassicAssist.Data.Filters
             _isEnabled = enabled;
         }
 
-        public override bool CheckPacket( byte[] packet, int length, PacketDirection direction )
+        public override bool CheckPacket( ref byte[] packet, ref int length, PacketDirection direction )
         {
             if ( packet == null || !_isEnabled )
             {

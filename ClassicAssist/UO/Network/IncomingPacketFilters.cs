@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Filters;
@@ -13,8 +12,9 @@ namespace ClassicAssist.UO.Network
 {
     public static class IncomingPacketFilters
     {
-        private static readonly Dictionary<byte, Func<byte[], int, bool>> _filters =
-            new Dictionary<byte, Func<byte[], int, bool>>();
+        public delegate bool OnReceive( ref byte[] packet, ref int length );
+
+        private static readonly Dictionary<byte, OnReceive> _filters = new Dictionary<byte, OnReceive>();
 
         public static void Initialize()
         {
@@ -27,7 +27,7 @@ namespace ClassicAssist.UO.Network
             Register( 0xF3, OnSAWorldItem );
         }
 
-        private static bool OnASCIIMessage( byte[] packet, int length )
+        private static bool OnASCIIMessage( ref byte[] packet, ref int length )
         {
             PacketReader reader = new PacketReader( packet, length, false );
 
@@ -52,7 +52,7 @@ namespace ClassicAssist.UO.Network
             return block;
         }
 
-        private static bool OnMobileUpdate( byte[] packet, int length )
+        private static bool OnMobileUpdate( ref byte[] packet, ref int length )
         {
             PacketReader reader = new PacketReader( packet, length, true );
             int serial = reader.ReadInt32();
@@ -88,7 +88,7 @@ namespace ClassicAssist.UO.Network
             return true;
         }
 
-        private static bool OnSAWorldItem( byte[] packet, int length )
+        private static bool OnSAWorldItem( ref byte[] packet, ref int length )
         {
             if ( !Engine.RehueList.CheckSAWorldItem( ref packet, ref length ) )
             {
@@ -101,7 +101,7 @@ namespace ClassicAssist.UO.Network
             return true;
         }
 
-        private static bool OnMobileMoving( byte[] packet, int length )
+        private static bool OnMobileMoving( ref byte[] packet, ref int length )
         {
             PacketReader reader = new PacketReader( packet, length, true );
             int serial = reader.ReadInt32();
@@ -138,7 +138,7 @@ namespace ClassicAssist.UO.Network
             return true;
         }
 
-        private static bool OnMobileIncoming( byte[] packet, int length )
+        private static bool OnMobileIncoming( ref byte[] packet, ref int length )
         {
             PacketReader reader = new PacketReader( packet, length, false );
 
@@ -208,7 +208,7 @@ namespace ClassicAssist.UO.Network
             return true;
         }
 
-        private static bool OnLocalizedMessage( byte[] packet, int length )
+        private static bool OnLocalizedMessage( ref byte[] packet, ref int length )
         {
             PacketReader reader = new PacketReader( packet, length, false );
 
@@ -236,7 +236,7 @@ namespace ClassicAssist.UO.Network
             return block || ClilocFilter.CheckMessage( journalEntry );
         }
 
-        private static bool OnLocalizedMessageAffix( byte[] packet, int length )
+        private static bool OnLocalizedMessageAffix( ref byte[] packet, ref int length )
         {
             PacketReader reader = new PacketReader( packet, length, false );
 
@@ -285,7 +285,7 @@ namespace ClassicAssist.UO.Network
             return block || ClilocFilter.CheckMessageAffix( journalEntry, affixType, affix );
         }
 
-        private static void Register( byte packetId, Func<byte[], int, bool> action )
+        private static void Register( byte packetId, OnReceive action )
         {
             if ( !_filters.ContainsKey( packetId ) )
             {
@@ -293,15 +293,24 @@ namespace ClassicAssist.UO.Network
             }
         }
 
-        public static bool CheckPacket( byte[] data, int length )
+        public static bool CheckPacket( ref byte[] data, ref int length )
         {
-            if ( _filters.ContainsKey( data[0] ) &&
-                 _filters.TryGetValue( data[0], out Func<byte[], int, bool> action ) )
+            if ( _filters.ContainsKey( data[0] ) && _filters.TryGetValue( data[0], out OnReceive onReceive ) )
             {
-                return action.Invoke( data, length );
+                return onReceive.Invoke( ref data, ref length );
             }
 
-            return DynamicFilterEntry.Filters.Any( e => e.CheckPacket( data, length, PacketDirection.Incoming ) );
+            foreach ( DynamicFilterEntry dynamicFilterEntry in DynamicFilterEntry.Filters )
+            {
+                bool result = dynamicFilterEntry.CheckPacket( ref data, ref length, PacketDirection.Incoming );
+
+                if ( result )
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -58,6 +59,9 @@ namespace ClassicAssist.UO.Network
 
         private static PacketHandler[] _handlers;
         private static PacketHandler[] _extendedHandlers;
+
+        public static ConcurrentDictionary<int, Property[]> PropertyCache { get; set; } =
+            new ConcurrentDictionary<int, Property[]>();
 
         public static event dVendorSellDisplay VendorSellDisplayEvent;
         public static event dJournalEntryAdded JournalEntryAddedEvent;
@@ -1267,6 +1271,7 @@ namespace ClassicAssist.UO.Network
                 if ( item != null )
                 {
                     mobile.SetLayer( item.Layer, 0 );
+                    mobile.Equipment.Remove( serial );
                 }
             }
 
@@ -1297,7 +1302,20 @@ namespace ClassicAssist.UO.Network
             item.Hue = hue;
             item.ID = id;
 
+            if ( item.Properties == null && PropertyCache.TryGetValue( serial, out Property[] properties ) )
+            {
+                item.Properties = properties;
+            }
+
             Mobile mobile = Engine.GetOrCreateMobile( mobileSerial );
+
+            Item existing = mobile.Equipment.FirstOrDefault( i => i.Layer == (Layer) layer );
+
+            if ( existing != null && item.Layer != Layer.Backpack )
+            {
+                mobile.Equipment.Remove( existing );
+            }
+
             mobile.Equipment.Add( item );
             Engine.Items.Add( item );
 
@@ -1340,10 +1358,14 @@ namespace ClassicAssist.UO.Network
                 list.Add( property );
             }
 
+            Property[] propertyArray = list.ToArray();
+
+            PropertyCache.AddOrUpdate( serial, v => propertyArray, ( k, v ) => propertyArray );
+
             if ( Engine.Player?.Serial == serial )
             {
                 Engine.Player.Name = name;
-                Engine.Player.Properties = list.ToArray();
+                Engine.Player.Properties = propertyArray;
                 Engine.UpdateWindowTitle();
             }
             else if ( UOMath.IsMobile( serial ) )
@@ -1351,14 +1373,14 @@ namespace ClassicAssist.UO.Network
                 Mobile mobile = Engine.GetOrCreateMobile( serial );
 
                 mobile.Name = name;
-                mobile.Properties = list.ToArray();
+                mobile.Properties = propertyArray;
             }
             else
             {
                 Item item = Engine.GetOrCreateItem( serial );
 
                 item.Name = name;
-                item.Properties = list.ToArray();
+                item.Properties = propertyArray;
             }
         }
 

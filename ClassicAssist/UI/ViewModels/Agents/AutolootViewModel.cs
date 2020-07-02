@@ -447,14 +447,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 {
                     int containerSerial = ContainerSerial;
 
-                    if ( containerSerial == 0 )
+                    if ( containerSerial == 0 || Engine.Items.GetItem( containerSerial ) == null )
                     {
-                        if ( Engine.Player.Backpack == null )
-                        {
-                            return;
-                        }
-
-                        containerSerial = Engine.Player.Backpack.Serial;
+                        containerSerial = Engine.Player.GetLayer( Layer.Backpack );
                     }
 
                     UOC.SystemMessage( string.Format( Strings.Autolooting___0__, lootItem.Name ), 61 );

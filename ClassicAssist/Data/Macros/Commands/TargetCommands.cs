@@ -560,20 +560,23 @@ namespace ClassicAssist.Data.Macros.Commands
             } )]
         public static void TargetXYZ( int x, int y, int z, int itemID = 0 )
         {
-            if ( itemID == 0 && Engine.TargetType == TargetTypeEnum.Object )
+            if ( itemID == 0 )
             {
                 StaticTile[] staticTiles = Statics.GetStatics( (int) Engine.Player.Map, x, y );
 
-                StaticTile selectedStatic =
-                    staticTiles.FirstOrDefault( i => _treeTiles.Contains( i.ID ) || _caveTiles.Contains( i.ID ) );
-
-                if ( selectedStatic.ID == 0 )
+                if ( staticTiles != null )
                 {
-                    selectedStatic = staticTiles.FirstOrDefault();
-                }
+                    StaticTile selectedStatic =
+                        staticTiles.FirstOrDefault( i => _treeTiles.Contains( i.ID ) || _caveTiles.Contains( i.ID ) );
 
-                itemID = selectedStatic.ID;
-                z = selectedStatic.Z;
+                    if ( selectedStatic.ID == 0 )
+                    {
+                        selectedStatic = staticTiles.FirstOrDefault();
+                    }
+
+                    itemID = selectedStatic.ID;
+                    z = selectedStatic.Z;
+                }
             }
 
             Engine.SendPacketToServer(

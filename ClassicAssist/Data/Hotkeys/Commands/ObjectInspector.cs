@@ -1,101 +1,11 @@
-﻿using System.Linq;
-using System.Threading;
-using Assistant;
-using ClassicAssist.Resources;
-using ClassicAssist.UI.ViewModels;
-using ClassicAssist.UI.Views;
-using ClassicAssist.UO;
-using ClassicAssist.UO.Data;
-using ClassicAssist.UO.Objects;
-
-namespace ClassicAssist.Data.Hotkeys.Commands
+﻿namespace ClassicAssist.Data.Hotkeys.Commands
 {
     [HotkeyCommand( Name = "Object Inspector" )]
     public class ObjectInspector : HotkeyCommand
     {
-        public override void Execute()
+        public override async void Execute()
         {
-            ( TargetType targetType, TargetFlags _, int serial, int x, int y, int z, int itemID ) =
-                UO.Commands.GetTargeInfoAsync( Strings.Target_object___ ).Result;
-
-            if ( targetType == TargetType.Object && serial != 0 )
-            {
-                Entity entity = UOMath.IsMobile( serial )
-                    ? (Entity) Engine.Mobiles.GetMobile( serial )
-                    : Engine.Items.GetItem( serial );
-
-                if ( entity == null )
-                {
-                    return;
-                }
-
-                Thread t = new Thread( () =>
-                {
-                    ObjectInspectorWindow window =
-                        new ObjectInspectorWindow { DataContext = new ObjectInspectorViewModel( entity ) };
-
-                    window.ShowDialog();
-                } ) { IsBackground = true };
-
-                t.SetApartmentState( ApartmentState.STA );
-                t.Start();
-            }
-            else
-            {
-                if ( itemID == 0 )
-                {
-                    if ( x == 65535 && y == 65535 )
-                    {
-                        return;
-                    }
-
-                    LandTile landTile = MapInfo.GetLandTile( (int) Engine.Player.Map, x, y );
-                    Thread t = new Thread( () =>
-                    {
-                        ObjectInspectorWindow window = new ObjectInspectorWindow
-                        {
-                            DataContext = new ObjectInspectorViewModel( landTile )
-                        };
-
-                        window.ShowDialog();
-                    } ) { IsBackground = true };
-
-                    t.SetApartmentState( ApartmentState.STA );
-                    t.Start();
-                }
-                else
-                {
-                    StaticTile[] statics = Statics.GetStatics( (int) Engine.Player.Map, x, y );
-
-                    if ( statics == null )
-                    {
-                        return;
-                    }
-
-                    StaticTile selectedStatic = statics.FirstOrDefault( i => i.ID == itemID );
-
-                    if ( selectedStatic.ID == 0 )
-                    {
-                        selectedStatic = TileData.GetStaticTile( itemID );
-                        selectedStatic.X = x;
-                        selectedStatic.Y = y;
-                        selectedStatic.Z = z;
-                    }
-
-                    Thread t = new Thread( () =>
-                    {
-                        ObjectInspectorWindow window = new ObjectInspectorWindow
-                        {
-                            DataContext = new ObjectInspectorViewModel( selectedStatic )
-                        };
-
-                        window.ShowDialog();
-                    } ) { IsBackground = true };
-
-                    t.SetApartmentState( ApartmentState.STA );
-                    t.Start();
-                }
-            }
+            await UO.Commands.InspectObjectAsync();
         }
     }
 }

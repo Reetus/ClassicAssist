@@ -14,7 +14,6 @@ using ClassicAssist.UI.ViewModels.Macros;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UI.Views.Macros;
 using ClassicAssist.UO;
-using ClassicAssist.UO.Objects;
 using ICSharpCode.AvalonEdit.Document;
 using Newtonsoft.Json.Linq;
 
@@ -348,24 +347,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private static async Task InspectObject( object arg )
         {
-            int serial = await Commands.GetTargeSerialAsync( Strings.Target_object___ );
-
-            if ( serial > 0 )
-            {
-                Entity entity = UOMath.IsMobile( serial )
-                    ? (Entity) Engine.Mobiles.GetMobile( serial )
-                    : Engine.Items.GetItem( serial );
-
-                if ( entity == null )
-                {
-                    return;
-                }
-
-                ObjectInspectorWindow window =
-                    new ObjectInspectorWindow { DataContext = new ObjectInspectorViewModel( entity ) };
-
-                window.Show();
-            }
+            await Commands.InspectObjectAsync();
         }
 
         private void NewMacro( object obj )
@@ -381,7 +363,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private void NewMacro( string name, string macroText )
         {
-            MacroEntry macro = new MacroEntry() { Name = name, Macro = macroText};
+            MacroEntry macro = new MacroEntry { Name = name, Macro = macroText };
 
             macro.Action = async hks => await Execute( macro );
 

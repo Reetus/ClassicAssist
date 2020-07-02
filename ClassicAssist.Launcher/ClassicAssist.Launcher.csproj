@@ -3,8 +3,8 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net48</TargetFramework>
     <UseWPF>true</UseWPF>
-    <BuildDate>$([System.DateTime]::op_Subtraction($([System.DateTime]::get_Now().get_Date()),$([System.DateTime]::new(2020,2,27))).get_TotalDays())</BuildDate>
-    <Version>0.2.$(BuildDate).0</Version>
+    <BuildDate>$([System.DateTime]::op_Subtraction($([System.DateTime]::get_Now().get_Date()),$([System.DateTime]::new(2020,7,3))).get_TotalDays())</BuildDate>
+    <Version>0.3.$(BuildDate).0</Version>
     <ApplicationIcon>Properties\cog.ico</ApplicationIcon>
     <Product>ClassicAssist Launcher</Product>
     <Authors>Reetus</Authors>

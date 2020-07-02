@@ -7,11 +7,18 @@ namespace ClassicAssist.Data.Vendors
 {
     public class VendorSellAgentEntry : INotifyPropertyChanged
     {
+        private int _amount;
         private bool _enabled;
         private int _graphic;
         private int _hue;
         private int _minPrice;
         private string _name;
+
+        public int Amount
+        {
+            get => _amount;
+            set => SetProperty( ref _amount, value );
+        }
 
         public bool Enabled
         {

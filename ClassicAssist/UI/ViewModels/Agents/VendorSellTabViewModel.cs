@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -62,6 +63,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     { "Enabled", item.Enabled },
                     { "Graphic", item.Graphic },
                     { "Hue", item.Hue },
+                    { "Amount", item.Amount },
                     { "MinPrice", item.MinPrice },
                     { "Name", item.Name }
                 };
@@ -92,6 +94,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     Enabled = items["Enabled"]?.ToObject<bool>() ?? true,
                     Graphic = items["Graphic"]?.ToObject<int>() ?? 0,
                     Hue = items["Hue"]?.ToObject<int>() ?? 0,
+                    Amount = items["Amount"]?.ToObject<int>() ?? -1,
                     MinPrice = items["MinPrice"]?.ToObject<int>() ?? 0,
                     Name = items["Name"]?.ToObject<string>() ?? string.Empty
                 };
@@ -114,12 +117,24 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private void OnVendorSellDisplayEvent( int serial, SellListEntry[] entries )
         {
-            List<SellListEntry> sellList = ( from entry in entries
-                let match = Items.FirstOrDefault( i =>
+            List<SellListEntry> sellList = new List<SellListEntry>();
+
+            foreach ( SellListEntry entry in entries )
+            {
+                VendorSellAgentEntry match = Items.FirstOrDefault( i =>
                     i.Graphic == entry.ID && ( i.Hue == -1 || i.Hue == entry.Hue ) && entry.Price >= i.MinPrice &&
-                    i.Enabled )
-                where match != null
-                select entry ).ToList();
+                    i.Enabled );
+
+                if ( match != null && match.Amount != -1 )
+                {
+                    entry.Amount = Math.Min( match.Amount, entry.Amount );
+                }
+
+                if ( match != null )
+                {
+                    sellList.Add( entry );
+                }
+            }
 
             if ( sellList.Count > 0 )
             {
@@ -177,6 +192,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 Name = name,
                 Graphic = item.ID,
                 Hue = item.Hue,
+                Amount = -1,
                 MinPrice = 0
             } );
         }

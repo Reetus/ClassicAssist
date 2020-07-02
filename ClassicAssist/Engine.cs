@@ -257,7 +257,21 @@ namespace Assistant
 
         public static Item GetOrCreateItem( int serial, int containerSerial = -1 )
         {
-            return Items.GetItem( serial ) ?? new Item( serial, containerSerial );
+            Item item = Items.GetItem( serial );
+
+            if ( item != null )
+            {
+                return item;
+            }
+
+            item = new Item( serial, containerSerial );
+
+            if ( IncomingPacketHandlers.PropertyCache.TryGetValue( serial, out Property[] properties ) )
+            {
+                item.Properties = properties;
+            }
+
+            return item;
         }
 
         public static Mobile GetOrCreateMobile( int serial )
@@ -267,7 +281,19 @@ namespace Assistant
                 return Player;
             }
 
-            return Mobiles.GetMobile( serial, out Mobile mobile ) ? mobile : new Mobile( serial );
+            if ( Mobiles.GetMobile( serial, out Mobile mobile ) )
+            {
+                return mobile;
+            }
+
+            mobile = new Mobile( serial );
+
+            if ( IncomingPacketHandlers.PropertyCache.TryGetValue( serial, out Property[] properties ) )
+            {
+                mobile.Properties = properties;
+            }
+
+            return mobile;
         }
 
         private static void Initialize()

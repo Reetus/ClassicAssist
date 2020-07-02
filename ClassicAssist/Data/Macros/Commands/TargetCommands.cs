@@ -564,16 +564,19 @@ namespace ClassicAssist.Data.Macros.Commands
             {
                 StaticTile[] staticTiles = Statics.GetStatics( (int) Engine.Player.Map, x, y );
 
-                StaticTile selectedStatic =
-                    staticTiles.FirstOrDefault( i => _treeTiles.Contains( i.ID ) || _caveTiles.Contains( i.ID ) );
-
-                if ( selectedStatic.ID == 0 )
+                if ( staticTiles != null )
                 {
-                    selectedStatic = staticTiles.FirstOrDefault();
-                }
+                    StaticTile selectedStatic =
+                        staticTiles.FirstOrDefault( i => _treeTiles.Contains( i.ID ) || _caveTiles.Contains( i.ID ) );
 
-                itemID = selectedStatic.ID;
-                z = selectedStatic.Z;
+                    if ( selectedStatic.ID == 0 )
+                    {
+                        selectedStatic = staticTiles.FirstOrDefault();
+                    }
+
+                    itemID = selectedStatic.ID;
+                    z = selectedStatic.Z;
+                }
             }
 
             Engine.SendPacketToServer(

@@ -37,7 +37,7 @@ namespace ClassicAssist.UI.ViewModels
             Type[] filterTypes =
             {
                 typeof( WeatherFilter ), typeof( SeasonFilter ), typeof( LightLevelFilter ),
-                typeof( RepeatedMessagesFilter ), typeof( ClilocFilter )
+                typeof( RepeatedMessagesFilter ), typeof( ClilocFilter ), typeof( BardsMusicFilter )
             };
 
             foreach ( Type type in filterTypes )
@@ -332,6 +332,11 @@ namespace ClassicAssist.UI.ViewModels
 
         private void LoadProfile( string profile )
         {
+            foreach ( FilterEntry filterEntry in Filters )
+            {
+                filterEntry?.Action( false );
+            }
+
             Options.ClearOptions();
             Options.CurrentOptions = new Options();
             Options.Load( profile, Options.CurrentOptions );

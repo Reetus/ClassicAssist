@@ -1389,4 +1389,7 @@ Are you sure you wish to continue?</value>
   <data name="Loaded to all profiles" xml:space="preserve">
     <value>Loaded to all profiles</value>
   </data>
+  <data name="Bards Music" xml:space="preserve">
+    <value>Bards Music</value>
+  </data>
 </root>

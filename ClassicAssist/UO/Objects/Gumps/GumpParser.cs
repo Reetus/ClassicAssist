@@ -684,8 +684,9 @@ namespace ClassicAssist.UO.Objects.Gumps
                         try
                         {
                             if ( int.TryParse( formatted[1], out int tpX ) &&
-                                 int.TryParse( formatted[2], out int tpY ) &&
-                                 int.TryParse( formatted[3], out int tpID ) )
+                                 int.TryParse( formatted[2], out int tpY ) && int.TryParse(
+                                     formatted[3].Split( new[] { ',' }, StringSplitOptions.RemoveEmptyEntries )?[0] ??
+                                     "0", out int tpID ) )
                             {
                                 GumpElement ge = new GumpElement
                                 {

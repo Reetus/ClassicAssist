@@ -45,17 +45,19 @@ namespace ClassicAssist.Tests.Filters
                     0x65, 0x20, 0x6F, 0x66, 0x20, 0x73, 0x69, 0x67, 0x68, 0x74, 0x00
                 };
 
+                int length = packet.Length;
+
                 IncomingPacketFilters.Initialize();
                 RepeatedMessagesFilter.IsEnabled = true;
 
-                IncomingPacketFilters.CheckPacket( packet, packet.Length );
-                IncomingPacketFilters.CheckPacket( packet, packet.Length );
-                IncomingPacketFilters.CheckPacket( packet, packet.Length );
-                IncomingPacketFilters.CheckPacket( packet, packet.Length );
-                IncomingPacketFilters.CheckPacket( packet, packet.Length );
-                IncomingPacketFilters.CheckPacket( packet, packet.Length );
+                IncomingPacketFilters.CheckPacket( ref packet, ref length );
+                IncomingPacketFilters.CheckPacket( ref packet, ref length );
+                IncomingPacketFilters.CheckPacket( ref packet, ref length );
+                IncomingPacketFilters.CheckPacket( ref packet, ref length );
+                IncomingPacketFilters.CheckPacket( ref packet, ref length );
+                IncomingPacketFilters.CheckPacket( ref packet, ref length );
 
-                bool result = IncomingPacketFilters.CheckPacket( packet, packet.Length );
+                bool result = IncomingPacketFilters.CheckPacket( ref packet, ref length );
 
                 Assert.IsTrue( result );
             } );
@@ -78,18 +80,20 @@ namespace ClassicAssist.Tests.Filters
                     0x65, 0x20, 0x6F, 0x66, 0x20, 0x73, 0x69, 0x67, 0x68, 0x74, 0x00
                 };
 
+                int length = packet.Length;
+
                 IncomingPacketFilters.Initialize();
                 RepeatedMessagesFilter.IsEnabled = true;
                 RepeatedMessagesFilter.FilterOptions.SendToJournal = true;
 
-                IncomingPacketFilters.CheckPacket( packet, packet.Length );
-                IncomingPacketFilters.CheckPacket( packet, packet.Length );
-                IncomingPacketFilters.CheckPacket( packet, packet.Length );
-                IncomingPacketFilters.CheckPacket( packet, packet.Length );
-                IncomingPacketFilters.CheckPacket( packet, packet.Length );
-                IncomingPacketFilters.CheckPacket( packet, packet.Length );
+                IncomingPacketFilters.CheckPacket( ref packet, ref length );
+                IncomingPacketFilters.CheckPacket( ref packet, ref length );
+                IncomingPacketFilters.CheckPacket( ref packet, ref length );
+                IncomingPacketFilters.CheckPacket( ref packet, ref length );
+                IncomingPacketFilters.CheckPacket( ref packet, ref length );
+                IncomingPacketFilters.CheckPacket( ref packet, ref length );
 
-                bool result = IncomingPacketFilters.CheckPacket( packet, packet.Length );
+                bool result = IncomingPacketFilters.CheckPacket( ref packet, ref length );
 
                 Assert.IsTrue( result );
                 Assert.IsTrue( Engine.Journal.Count > 0 );
@@ -113,18 +117,20 @@ namespace ClassicAssist.Tests.Filters
                     0x65, 0x20, 0x6F, 0x66, 0x20, 0x73, 0x69, 0x67, 0x68, 0x74, 0x00
                 };
 
+                int length = packet.Length;
+
                 IncomingPacketFilters.Initialize();
                 RepeatedMessagesFilter.IsEnabled = true;
                 RepeatedMessagesFilter.FilterOptions.SendToJournal = false;
 
-                IncomingPacketFilters.CheckPacket( packet, packet.Length );
-                IncomingPacketFilters.CheckPacket( packet, packet.Length );
-                IncomingPacketFilters.CheckPacket( packet, packet.Length );
-                IncomingPacketFilters.CheckPacket( packet, packet.Length );
-                IncomingPacketFilters.CheckPacket( packet, packet.Length );
-                IncomingPacketFilters.CheckPacket( packet, packet.Length );
+                IncomingPacketFilters.CheckPacket( ref packet, ref length );
+                IncomingPacketFilters.CheckPacket( ref packet, ref length );
+                IncomingPacketFilters.CheckPacket( ref packet, ref length );
+                IncomingPacketFilters.CheckPacket( ref packet, ref length );
+                IncomingPacketFilters.CheckPacket( ref packet, ref length );
+                IncomingPacketFilters.CheckPacket( ref packet, ref length );
 
-                bool result = IncomingPacketFilters.CheckPacket( packet, packet.Length );
+                bool result = IncomingPacketFilters.CheckPacket( ref packet, ref length );
 
                 Assert.IsTrue( result );
                 Assert.AreEqual( 0, Engine.Journal.Count );

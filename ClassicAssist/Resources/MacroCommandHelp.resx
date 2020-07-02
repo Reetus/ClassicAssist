@@ -1382,4 +1382,10 @@ WaitForMenu(0x1d1, 5000)</value>
 if res:
  PlayMacro("Macro")</value>
   </data>
+  <data name="STOP_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># Stop the current macro
+Stop()
+# Stop a macro by name
+Stop("Background Macro")</value>
+  </data>
 </root>

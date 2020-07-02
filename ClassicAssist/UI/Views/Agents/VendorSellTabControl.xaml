@@ -58,6 +58,15 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    <GridViewColumn Header="{x:Static resources:Strings.Amount}" Width="70" x:Name="AmountColumn">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <controls:EditTextBlock Text="{Binding Amount}" TabIndex="0"
+                                                        Width="{Binding Path=Width, ElementName=AmountColumn, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15}"
+                                                        ShowIcon="True" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="{x:Static resources:Strings.Min_Price}" Width="100" x:Name="MinPriceColumn">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>

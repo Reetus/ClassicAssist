@@ -131,9 +131,17 @@ namespace ClassicAssist.Data.Macros
             }
         }
 
-        public void Stop()
+        public void Stop( string name = null )
         {
-            CurrentMacro?.Stop();
+            if ( string.IsNullOrEmpty( name ) )
+            {
+                CurrentMacro?.Stop();
+            }
+            else
+            {
+                MacroEntry macro = Items.FirstOrDefault( m => m.Name.ToLower().Equals( name.ToLower() ) );
+                macro?.Stop();
+            }
         }
 
         public void Autostart()

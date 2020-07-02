@@ -2895,6 +2895,18 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to # Stop the current macro
+        ///Stop()
+        ///# Stop a macro by name
+        ///Stop(&quot;Background Macro&quot;).
+        /// </summary>
+        public static string STOP_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("STOP_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stop().
         /// </summary>
         public static string STOP_COMMAND_INSERTTEXT {

@@ -24,10 +24,10 @@ namespace ClassicAssist.Data.Macros.Commands
             Task.Run( () => macro.Action( macro ) );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Macros ) )]
-        public static void Stop()
+        [CommandsDisplay( Category = nameof( Strings.Macros ), Parameters = new[] { nameof( ParameterType.String ) } )]
+        public static void Stop( string name = null )
         {
-            MacroManager.GetInstance().Stop();
+            MacroManager.GetInstance().Stop( name );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Macros ) )]

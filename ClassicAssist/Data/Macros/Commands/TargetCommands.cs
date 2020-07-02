@@ -560,7 +560,7 @@ namespace ClassicAssist.Data.Macros.Commands
             } )]
         public static void TargetXYZ( int x, int y, int z, int itemID = 0 )
         {
-            if ( itemID == 0 && Engine.TargetType == TargetTypeEnum.Object )
+            if ( itemID == 0 )
             {
                 StaticTile[] staticTiles = Statics.GetStatics( (int) Engine.Player.Map, x, y );
 

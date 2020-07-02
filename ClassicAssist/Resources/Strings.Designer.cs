@@ -412,6 +412,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bards Music.
+        /// </summary>
+        public static string Bards_Music {
+            get {
+                return ResourceManager.GetString("Bards Music", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Base.
         /// </summary>
         public static string Base {

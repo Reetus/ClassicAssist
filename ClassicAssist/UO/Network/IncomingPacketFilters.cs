@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Filters;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Objects;
-using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.UO.Network
 {
@@ -300,7 +301,7 @@ namespace ClassicAssist.UO.Network
                 return action.Invoke( data, length );
             }
 
-            return false;
+            return DynamicFilterEntry.Filters.Any( e => e.CheckPacket( data, length, PacketDirection.Incoming ) );
         }
     }
 }

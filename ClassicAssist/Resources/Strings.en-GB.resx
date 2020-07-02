@@ -1386,4 +1386,7 @@ Are you sure you wish to continue?</value>
   <data name="Special Moves" xml:space="preserve">
     <value>Special Moves</value>
   </data>
+  <data name="Bards Music" xml:space="preserve">
+    <value>Bards Music</value>
+  </data>
 </root>

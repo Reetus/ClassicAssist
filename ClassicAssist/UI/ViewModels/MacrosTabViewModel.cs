@@ -1,4 +1,7 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,8 +17,8 @@ using ClassicAssist.UI.ViewModels.Macros;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UI.Views.Macros;
 using ClassicAssist.UO;
-using ClassicAssist.UO.Objects;
 using ICSharpCode.AvalonEdit.Document;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.UI.ViewModels
@@ -135,7 +138,17 @@ namespace ClassicAssist.UI.ViewModels
 
             JArray macroArray = new JArray();
 
-            foreach ( MacroEntry macroEntry in Items )
+            IEnumerable<MacroEntry> globalMacros = Items.Where( e => e.Global );
+
+            if ( globalMacros.Any() )
+            {
+                string globalJson = JsonConvert.SerializeObject( globalMacros, Formatting.Indented );
+
+                File.WriteAllText( Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Macros.json" ),
+                    globalJson );
+            }
+
+            foreach ( MacroEntry macroEntry in Items.Where( e => !e.Global ) )
             {
                 JObject entry = new JObject
                 {
@@ -181,6 +194,32 @@ namespace ClassicAssist.UI.ViewModels
         public void Deserialize( JObject json, Options options )
         {
             Items.Clear();
+
+            string globalPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Macros.json" );
+
+            if ( File.Exists( globalPath ) )
+            {
+                string globalJson = File.ReadAllText( globalPath );
+
+                MacroEntry[] globalMacros = JsonConvert.DeserializeObject<MacroEntry[]>( globalJson );
+
+                if ( globalMacros != null )
+                {
+                    foreach ( MacroEntry entry in globalMacros )
+                    {
+                        entry.Action = async hks => await Execute( entry );
+
+                        if ( Options.CurrentOptions.SortMacrosAlphabetical )
+                        {
+                            Items.AddSorted( entry );
+                        }
+                        else
+                        {
+                            Items.Add( entry );
+                        }
+                    }
+                }
+            }
 
             JToken config = json?["Macros"];
 
@@ -348,24 +387,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private static async Task InspectObject( object arg )
         {
-            int serial = await Commands.GetTargeSerialAsync( Strings.Target_object___ );
-
-            if ( serial > 0 )
-            {
-                Entity entity = UOMath.IsMobile( serial )
-                    ? (Entity) Engine.Mobiles.GetMobile( serial )
-                    : Engine.Items.GetItem( serial );
-
-                if ( entity == null )
-                {
-                    return;
-                }
-
-                ObjectInspectorWindow window =
-                    new ObjectInspectorWindow { DataContext = new ObjectInspectorViewModel( entity ) };
-
-                window.Show();
-            }
+            await Commands.InspectObjectAsync();
         }
 
         private void NewMacro( object obj )
@@ -381,7 +403,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private void NewMacro( string name, string macroText )
         {
-            MacroEntry macro = new MacroEntry() { Name = name, Macro = macroText};
+            MacroEntry macro = new MacroEntry { Name = name, Macro = macroText };
 
             macro.Action = async hks => await Execute( macro );
 

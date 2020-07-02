@@ -246,7 +246,7 @@ namespace ClassicAssist.UI.ViewModels
 
                 return serial == AliasCommands.GetAlias( "enemy" ) ? _enemyBrush : _defaultBrush;
             }
-            catch ( Exception e )
+            catch ( Exception )
             {
                 return _defaultBrush;
             }

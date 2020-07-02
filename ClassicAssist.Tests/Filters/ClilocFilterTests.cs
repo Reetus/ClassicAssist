@@ -34,12 +34,14 @@ namespace ClassicAssist.Tests.Filters
                 0x00, 0x00
             };
 
+            int length = packet.Length;
+
             const int cliloc = 500118;
             const string replaceText = "The quick brown fox jumped over the lazy dog.";
 
             AutoResetEvent are = new AutoResetEvent( false );
 
-            void OnReceivedEvent( byte[] data, int length )
+            void OnReceivedEvent( byte[] data, int _ )
             {
                 if ( data[0] != 0xAE )
                 {
@@ -62,7 +64,7 @@ namespace ClassicAssist.Tests.Filters
             ClilocFilter.Filters.Add( cliloc, replaceText );
 
             IncomingPacketFilters.Initialize();
-            IncomingPacketFilters.CheckPacket( packet, packet.Length );
+            IncomingPacketFilters.CheckPacket( ref packet, ref length );
 
             bool result = are.WaitOne( 5000 );
 
@@ -92,12 +94,14 @@ namespace ClassicAssist.Tests.Filters
                 0x00, 0x31, 0x34, 0x00, 0x00, 0x00
             };
 
+            int length = packet.Length;
+
             const int cliloc = 1008158;
             const string replaceText = "The value is: ";
 
             AutoResetEvent are = new AutoResetEvent( false );
 
-            void OnReceivedEvent( byte[] data, int length )
+            void OnReceivedEvent( byte[] data, int _ )
             {
                 if ( data[0] != 0xAE )
                 {
@@ -120,7 +124,7 @@ namespace ClassicAssist.Tests.Filters
             ClilocFilter.Filters.Add( cliloc, replaceText );
 
             IncomingPacketFilters.Initialize();
-            IncomingPacketFilters.CheckPacket( packet, packet.Length );
+            IncomingPacketFilters.CheckPacket( ref packet, ref length );
 
             bool result = are.WaitOne( 5000 );
 

@@ -23,7 +23,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Resources/Icons.xaml" />
                 <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
-                <ResourceDictionary Source="../../Resources/LeftRightIconToggleButton.xaml"/>
+                <ResourceDictionary Source="../../Resources/LeftRightIconToggleButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
             <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
@@ -37,10 +37,10 @@
             <ColumnDefinition>
                 <ColumnDefinition.Style>
                     <Style TargetType="{x:Type ColumnDefinition}">
-                        <Setter Property="Width" Value="155"/>
+                        <Setter Property="Width" Value="155" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsChecked, ElementName=ToggleButton}" Value="True">
-                                <Setter Property="Width" Value="0"/>
+                                <Setter Property="Width" Value="0" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -79,7 +79,24 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <controls:EditTextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                                    Width="{Binding ActualWidth, ConverterParameter=20, Converter={StaticResource CellWidthValueConverter}, ElementName=ListBox, Mode=OneWay}" />
+                                                    Width="{Binding ActualWidth, ConverterParameter=20, Converter={StaticResource CellWidthValueConverter}, ElementName=ListBox, Mode=OneWay}">
+                                <controls:EditTextBlock.Resources>
+                                    <Style TargetType="{x:Type TextBlock}"
+                                           BasedOn="{StaticResource {x:Type TextBlock}}">
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding Global}" Value="True">
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                            </DataTrigger>
+                                            <DataTrigger
+                                                Binding="{Binding IsRunning}" Value="True">
+                                                <Setter Property="FontStyle" Value="Italic" />
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </controls:EditTextBlock.Resources>
+                            </controls:EditTextBlock>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -187,7 +204,7 @@
             <WrapPanel Orientation="Horizontal" Grid.Row="1" Margin="5">
                 <WrapPanel.Resources>
                     <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
-                        <Setter Property="Margin" Value="0,0,10,0"/>
+                        <Setter Property="Margin" Value="0,0,10,0" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=ListBox}"
                                          Value="{x:Null}">
@@ -208,13 +225,17 @@
                 <CheckBox Content="{x:Static resources:Strings.Undisableable}"
                           ToolTip="{x:Static resources:Strings.Hotkey_will_still_trigger_with_hotkeys_disabled}"
                           IsChecked="{Binding SelectedItem.Disableable, Converter={StaticResource InverseBooleanConverter}}" />
+                <CheckBox Content="{x:Static resources:Strings.Global}"
+                          ToolTip="{x:Static resources:Strings.Loaded_to_all_profiles}"
+                          IsChecked="{Binding SelectedItem.Global}" />
             </WrapPanel>
             <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <ToggleButton x:Name="ToggleButton" Height="15" Grid.Column="0" Margin="0" Style="{DynamicResource LeftRightIconToggleButton}" VerticalAlignment="Bottom"/>
+                <ToggleButton x:Name="ToggleButton" Height="15" Grid.Column="0" Margin="0"
+                              Style="{DynamicResource LeftRightIconToggleButton}" VerticalAlignment="Bottom" />
                 <controls:StretchyWrapPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
                     <controls:StretchyWrapPanel.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">

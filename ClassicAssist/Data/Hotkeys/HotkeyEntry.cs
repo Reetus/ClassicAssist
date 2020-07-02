@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 using ClassicAssist.Annotations;
 using ClassicAssist.Misc;
 using ClassicAssist.UI.Misc;
+using Newtonsoft.Json;
 
 namespace ClassicAssist.Data.Hotkeys
 {
@@ -23,8 +24,10 @@ namespace ClassicAssist.Data.Hotkeys
         private string _name;
         private bool _passToUo = true;
 
+        [JsonIgnore]
         public Action<HotkeyEntry> Action { get; set; }
 
+        [JsonIgnore]
         public ObservableCollectionEx<HotkeyEntry> Children
         {
             get
@@ -61,7 +64,7 @@ namespace ClassicAssist.Data.Hotkeys
             }
         }
 
-        [XmlIgnore]
+        [JsonIgnore]
         public ImageSource Image =>
             Equals( Hotkey, ShortcutKeys.Default )
                 ? Properties.Resources.red_circle.ToImageSource()

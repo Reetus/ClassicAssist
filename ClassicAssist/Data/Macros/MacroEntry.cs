@@ -8,6 +8,7 @@ using ClassicAssist.Resources;
 using IronPython.Runtime.Operations;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Runtime;
+using Newtonsoft.Json;
 
 namespace ClassicAssist.Data.Macros
 {
@@ -16,6 +17,7 @@ namespace ClassicAssist.Data.Macros
         private readonly Dispatcher _dispatcher;
         private Dictionary<string, int> _aliases = new Dictionary<string, int>();
         private bool _doNotAutoInterrupt;
+        private bool _global;
         private bool _isAutostart;
         private bool _isBackground;
         private bool _isRunning;
@@ -41,6 +43,12 @@ namespace ClassicAssist.Data.Macros
         {
             get => _doNotAutoInterrupt;
             set => SetProperty( ref _doNotAutoInterrupt, value );
+        }
+
+        public bool Global
+        {
+            get => _global;
+            set => SetProperty( ref _global, value );
         }
 
         public bool IsAutostart
@@ -73,6 +81,7 @@ namespace ClassicAssist.Data.Macros
             set => SetProperty( ref _macro, value );
         }
 
+        [JsonIgnore]
         public MacroInvoker MacroInvoker
         {
             get => _macroInvoker;

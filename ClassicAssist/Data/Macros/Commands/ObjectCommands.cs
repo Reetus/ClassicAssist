@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assistant;
+using ClassicAssist.Data.Abilities;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UO;
+using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
@@ -14,6 +16,7 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class ObjectCommands
     {
+        private static readonly int[] _potionTypes = { 0xf06, 0xf07, 0xf08, 0xf09, 0xf0b, 0xf0c, 0xf0d };
         internal static List<int> IgnoreList { get; set; } = new List<int>();
 
         [CommandsDisplay( Category = nameof( Strings.Entity ),
@@ -68,7 +71,7 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             int serial = AliasCommands.ResolveSerial( type );
 
-            if ( serial <= 0 )
+            if ( serial == 0 )
             {
                 UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
 
@@ -100,7 +103,46 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
+            if ( Options.CurrentOptions.CheckHandsPotions && _potionTypes.Contains( serial ) )
+            {
+                CheckHands( useItem.Serial );
+                return;
+            }
+
             Engine.SendPacketToServer( new UseObject( useItem.Serial ) );
+        }
+
+        private static void CheckHands( int serial )
+        {
+            Item leftHand = Engine.Player?.Equipment.FirstOrDefault( i => i.Layer == Layer.TwoHanded );
+            Item rightHand = Engine.Player?.Equipment.FirstOrDefault( i => i.Layer == Layer.OneHanded );
+
+            WeaponData leftHandWD = null;
+
+            if ( leftHand != null )
+            {
+                leftHandWD = AbilitiesManager.GetInstance().GetWeaponData( leftHand.ID );
+            }
+
+            if ( ( ( leftHandWD?.Twohanded ?? false ) ||
+                   ( leftHand?.Properties?.Any( p => p.Cliloc == 1061171 /* Two-Handed Weapon */ ) ?? false ) ) &&
+                 ( leftHand.Properties?.All( p => p.Cliloc != 1072792 /* Balanced */ ) ?? false ) ||
+                 rightHand != null && leftHand != null )
+            {
+                ActionPacketQueue.EnqueueDragDrop( leftHand.Serial, 1, Engine.Player.GetLayer( Layer.Backpack ),
+                    QueuePriority.High );
+                ActionPacketQueue.EnqueueActionPacket( new UseObject( serial ), QueuePriority.High );
+                ActionPacketQueue.EnqueueActionPackets(
+                    new BasePacket[]
+                    {
+                        new DragItem( leftHand.Serial, 1 ),
+                        new EquipRequest( leftHand.Serial, leftHand.Layer, (int) Engine.Player?.Serial )
+                    }, QueuePriority.High );
+            }
+            else
+            {
+                Engine.SendPacketToServer( new UseObject( serial ) );
+            }
         }
 
         [CommandsDisplay( Category = nameof( Strings.Entity ),

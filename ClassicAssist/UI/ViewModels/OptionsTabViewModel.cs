@@ -72,6 +72,7 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "ShowResurrectionWaypoints", CurrentOptions.ShowResurrectionWaypoints );
             options.Add( "RehueFriends", CurrentOptions.RehueFriends );
             options.Add( "RehueFriendsHue", CurrentOptions.RehueFriendsHue );
+            options.Add( "CheckHandsPotions", CurrentOptions.CheckHandsPotions );
 
             json?.Add( "Options", options );
         }
@@ -138,6 +139,7 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.ShowResurrectionWaypoints = config?["ShowResurrectionWaypoints"]?.ToObject<bool>() ?? true;
             CurrentOptions.RehueFriends = config?["RehueFriends"]?.ToObject<bool>() ?? false;
             CurrentOptions.RehueFriendsHue = config?["RehueFriendsHue"]?.ToObject<int>() ?? 35;
+            CurrentOptions.CheckHandsPotions = config?["CheckHandsPotions"]?.ToObject<bool>() ?? false;
 
             if ( CurrentOptions.AbilitiesGumpX < 0 )
             {

@@ -174,6 +174,11 @@ namespace ClassicAssist.Data.Abilities
             return _instance;
         }
 
+        internal WeaponData GetWeaponData( int id )
+        {
+            return _weaponData?.FirstOrDefault( w => w.Graphic == id );
+        }
+
         private static void LoadWeaponData( string basePath )
         {
             string dataPath = Path.Combine( basePath, "Data" );

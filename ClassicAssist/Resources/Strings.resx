@@ -1391,6 +1391,9 @@ Are you sure you wish to continue?</value>
   </data>
   <data name="Bards Music" xml:space="preserve">
     <value>Bards Music</value>
+    </data>
+  <data name="Check hands before potions" xml:space="preserve">
+    <value>Check hands before potions</value>
   </data>
   <data name="Scavenging '{0}'" xml:space="preserve">
     <value>Scavenging '{0}'...</value>

@@ -3082,6 +3082,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Targets the tile at the given offsets relative to the player (automatically targeting trees/cave tiles/water if present).
+        /// </summary>
+        public static string TARGETTILEOFFSETRESOURCE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TARGETTILEOFFSETRESOURCE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TargetTileOffsetResource(0, -1, 0).
+        /// </summary>
+        public static string TARGETTILEOFFSETRESOURCE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TARGETTILEOFFSETRESOURCE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Target tile the given distance relative to the specified alias/serial, optional boolean for reverse mode..
         /// </summary>
         public static string TARGETTILERELATIVE_COMMAND_DESCRIPTION {

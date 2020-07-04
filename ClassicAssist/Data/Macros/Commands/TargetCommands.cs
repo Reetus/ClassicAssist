@@ -251,6 +251,41 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = nameof( Strings.Target ),
             Parameters = new[]
             {
+                nameof( ParameterType.XCoordinateOffset ), nameof( ParameterType.YCoordinateOffset ),
+                nameof( ParameterType.YCoordinateOffset ), nameof( ParameterType.ItemID )
+            } )]
+        public static void TargetTileOffsetResource( int xOffset, int yOffset, int zOffset, int itemID = 0 )
+        {
+            int x = Engine.Player.X + xOffset;
+            int y = Engine.Player.Y + yOffset;
+            int z = Engine.Player.Z + zOffset;
+
+            if ( itemID == 0 )
+            {
+                StaticTile[] staticTiles = Statics.GetStatics( (int) Engine.Player.Map, x, y );
+
+                if ( staticTiles != null )
+                {
+                    StaticTile selectedStatic = staticTiles.FirstOrDefault( i =>
+                        _treeTiles.Contains( i.ID ) || _caveTiles.Contains( i.ID ) ||
+                        i.Flags.HasFlag( TileFlags.Wet ) );
+
+                    if ( selectedStatic.ID == 0 )
+                    {
+                        selectedStatic = staticTiles.FirstOrDefault();
+                    }
+
+                    itemID = selectedStatic.ID;
+                    z = selectedStatic.Z;
+                }
+            }
+
+            TargetXYZ( x, y, z, itemID );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Target ),
+            Parameters = new[]
+            {
                 nameof( ParameterType.Empty ), nameof( ParameterType.Empty ), nameof( ParameterType.Empty ),
                 nameof( ParameterType.Empty )
             } )]
@@ -560,27 +595,8 @@ namespace ClassicAssist.Data.Macros.Commands
             } )]
         public static void TargetXYZ( int x, int y, int z, int itemID = 0 )
         {
-            if ( itemID == 0 )
-            {
-                StaticTile[] staticTiles = Statics.GetStatics( (int) Engine.Player.Map, x, y );
-
-                if ( staticTiles != null )
-                {
-                    StaticTile selectedStatic =
-                        staticTiles.FirstOrDefault( i => _treeTiles.Contains( i.ID ) || _caveTiles.Contains( i.ID ) );
-
-                    if ( selectedStatic.ID == 0 )
-                    {
-                        selectedStatic = staticTiles.FirstOrDefault();
-                    }
-
-                    itemID = selectedStatic.ID;
-                    z = selectedStatic.Z;
-                }
-            }
-
-            Engine.SendPacketToServer(
-                new Target( TargetTypeEnum.Tile, -1, TargetFlags.None, 0, x, y, z, itemID, true ) );
+            Engine.SendPacketToServer( new Target( TargetTypeEnum.Tile, -1, Engine.TargetFlags, 0, x, y, z, itemID,
+                true ) );
             Engine.TargetExists = false;
         }
     }

@@ -25,13 +25,13 @@ environment:
     secure: xIXqJg4atQ4QWCrvSU0ar/eFXWujui0MG8+gijwdx8+IF+5Lg/QkftiLawcT5pzg
 before_build:
 - ps: >-
-    $d = [datetime]"2/27/2020 00:00"
+    $d = [datetime]"7/4/2020 00:00"
 
     $sd = Get-Date
 
     $env:version = [math]::floor((New-TimeSpan -Start $d -End $sd).TotalDays)
 
-    $env:full_version = "0.2.$env:version.$env:APPVEYOR_BUILD_NUMBER"
+    $env:full_version = "0.3.$env:version.$env:APPVEYOR_BUILD_NUMBER"
 
     Update-AppveyorBuild -Version "$env:full_version"
 

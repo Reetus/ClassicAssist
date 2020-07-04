@@ -1388,4 +1388,10 @@ Stop()
 # Stop a macro by name
 Stop("Background Macro")</value>
   </data>
+  <data name="TARGETTILEOFFSETRESOURCE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Targets the tile at the given offsets relative to the player (automatically targeting trees/cave tiles/water if present)</value>
+  </data>
+  <data name="TARGETTILEOFFSETRESOURCE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TargetTileOffsetResource(0, -1, 0)</value>
+  </data>
 </root>

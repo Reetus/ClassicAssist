@@ -52,9 +52,9 @@ namespace ClassicAssist.Data.Macros
 
         public bool IsRunning => Thread?.IsAlive ?? false;
 
-        public Thread Thread { get; set; }
-
         public Stopwatch StopWatch { get; set; } = new Stopwatch();
+
+        public Thread Thread { get; set; }
 
         public event dMacroStartStop StartedEvent;
         public event dMacroStartStop StoppedEvent;
@@ -66,6 +66,24 @@ namespace ClassicAssist.Data.Macros
                 .Where( t =>
                     t.Namespace != null && t.IsPublic && t.IsClass && t.Namespace.EndsWith( "Macros.Commands" ) )
                 .Aggregate( string.Empty, ( current, t ) => current + $"from {t.FullName} import * \n" );
+
+            foreach ( string assemblyName in AssistantOptions.Assemblies )
+            {
+                try
+                {
+                    Assembly assembly = Assembly.LoadFile( assemblyName );
+
+                    prepend += assembly.GetTypes()
+                        .Where( t =>
+                            t.Namespace != null && t.IsPublic && t.IsClass &&
+                            t.Namespace.EndsWith( "Macros.Commands" ) ).Aggregate( string.Empty,
+                            ( current, t ) => current + $"from {t.FullName} import * \n" );
+                }
+                catch ( Exception )
+                {
+                    // ignored
+                }
+            }
 
             return prepend;
         }

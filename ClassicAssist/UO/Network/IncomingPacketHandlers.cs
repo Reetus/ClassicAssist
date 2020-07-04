@@ -148,6 +148,11 @@ namespace ClassicAssist.UO.Network
 
         private static void OnDisplayWaypoint( PacketReader reader )
         {
+            if ( !Options.CurrentOptions.ShowResurrectionWaypoints )
+            {
+                return;
+            }
+
             int serial = reader.ReadInt32();
             int x = reader.ReadInt16();
             int y = reader.ReadInt16();

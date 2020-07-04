@@ -17,6 +17,8 @@ namespace ClassicAssist.Data.Targeting
 {
     public class TargetManager
     {
+        public delegate void dTargetChanged( int newSerial, int oldSerial );
+
         private const int MAX_DISTANCE = 18;
         private static TargetManager _instance;
         private static readonly object _lock = new object();
@@ -32,6 +34,10 @@ namespace ClassicAssist.Data.Targeting
                 .ToList();
         }
 
+        public static event dTargetChanged EnemyChangedEvent;
+        public static event dTargetChanged FriendChangedEvent;
+        public static event dTargetChanged LastTargetChangedEvent;
+
         public void SetEnemy( Entity m )
         {
             if ( !UOMath.IsMobile( m.Serial ) )
@@ -45,6 +51,13 @@ namespace ClassicAssist.Data.Targeting
             }
 
             MsgCommands.HeadMsg( $"Target: {m.Name?.Trim() ?? "Unknown"}" );
+
+            if ( m.Serial != Engine.Player.EnemyTargetSerial )
+            {
+                EnemyChangedEvent?.Invoke( m.Serial, Engine.Player.EnemyTargetSerial );
+                LastTargetChangedEvent?.Invoke( m.Serial, Engine.Player.LastTargetSerial );
+            }
+
             Engine.Player.LastTargetSerial = m.Serial;
             Engine.Player.EnemyTargetSerial = m.Serial;
             Engine.SendPacketToClient( new ChangeCombatant( m.Serial ) );
@@ -63,6 +76,13 @@ namespace ClassicAssist.Data.Targeting
             }
 
             MsgCommands.HeadMsg( $"Target: {m.Name?.Trim() ?? "Unknown"}" );
+
+            if ( m.Serial != Engine.Player.FriendTargetSerial )
+            {
+                FriendChangedEvent?.Invoke( m.Serial, Engine.Player.FriendTargetSerial );
+                LastTargetChangedEvent?.Invoke( m.Serial, Engine.Player.LastTargetSerial );
+            }
+
             Engine.Player.LastTargetSerial = m.Serial;
             Engine.Player.FriendTargetSerial = m.Serial;
             Engine.SendPacketToClient( new ChangeCombatant( m.Serial ) );
@@ -70,6 +90,11 @@ namespace ClassicAssist.Data.Targeting
 
         public void SetLastTarget( Entity m )
         {
+            if ( m.Serial != Engine.Player.LastTargetSerial )
+            {
+                LastTargetChangedEvent?.Invoke( m.Serial, Engine.Player.LastTargetSerial );
+            }
+
             Engine.Player.LastTargetSerial = m.Serial;
 
             if ( !UOMath.IsMobile( m.Serial ) )

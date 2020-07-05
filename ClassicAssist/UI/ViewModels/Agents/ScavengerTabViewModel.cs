@@ -18,6 +18,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 {
     public class ScavengerTabViewModel : BaseViewModel, ISettingProvider
     {
+        private const int SCAVENGER_DISTANCE = 2;
         private readonly List<int> _ignoreList;
         private readonly object _scavengeLock = new object();
         private ICommand _clearAllCommand;
@@ -75,6 +76,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public void Serialize( JObject json )
         {
+            Engine.Items.CollectionChanged -= ItemsOnCollectionChanged;
+
             if ( json == null )
             {
                 return;
@@ -102,6 +105,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public void Deserialize( JObject json, Options options )
         {
+            Engine.Items.CollectionChanged += ItemsOnCollectionChanged;
             Items.Clear();
 
             if ( json?["Scavenger"] == null )
@@ -138,6 +142,21 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
         }
 
+        private void ItemsOnCollectionChanged( int totalcount, bool added, Item[] items )
+        {
+            if ( !added || !Enabled )
+            {
+                return;
+            }
+
+            bool hasNearby = items.Any( i => i.Distance <= SCAVENGER_DISTANCE );
+
+            if ( hasNearby )
+            {
+                CheckArea();
+            }
+        }
+
         private void CheckArea()
         {
             if ( !Enabled || Engine.Player == null )
@@ -147,7 +166,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             List<Item> scavengerItems = new List<Item>();
 
-            if ( Engine.Player.WeightMax - Engine.Player.Weight <= 50 )
+            if ( Engine.Player.WeightMax - Engine.Player.Weight <= 25 )
             {
                 return;
             }
@@ -157,8 +176,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 foreach ( ScavengerEntry entry in Items )
                 {
                     Item[] matches = Engine.Items.SelectEntities( i =>
-                        i.Distance <= 2 && i.Owner == 0 && i.ID == entry.Graphic && i.Hue == entry.Hue &&
-                        !_ignoreList.Contains( i.Serial ) );
+                        i.Distance <= SCAVENGER_DISTANCE && i.Owner == 0 && i.ID == entry.Graphic &&
+                        i.Hue == entry.Hue && !_ignoreList.Contains( i.Serial ) );
 
                     if ( matches == null )
                     {
@@ -180,9 +199,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     return;
                 }
 
-                foreach ( Item scavengerItem in scavengerItems )
+                foreach ( Item scavengerItem in scavengerItems.Where( scavengerItem =>
+                    scavengerItem.Distance <= SCAVENGER_DISTANCE ) )
                 {
                     _ignoreList.Add( scavengerItem.Serial );
+                    UOC.SystemMessage( string.Format( Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown" ), 61 );
                     ActionPacketQueue.EnqueueDragDrop( scavengerItem.Serial, scavengerItem.Count, container.Serial )
                         .Wait();
                 }

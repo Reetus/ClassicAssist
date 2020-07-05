@@ -6,7 +6,7 @@ namespace ClassicAssist.UO.Objects
 {
     public abstract class EntityCollection<T> where T : Entity
     {
-        public delegate void dCollectionChanged( int totalCount );
+        public delegate void dCollectionChanged( int totalCount, bool added, T[] entities );
 
         protected ConcurrentDictionary<int, T> EntityList;
 
@@ -31,7 +31,7 @@ namespace ClassicAssist.UO.Objects
 
             if ( changed )
             {
-                OnCollectionChanged();
+                OnCollectionChanged( true, new[] { entity } );
             }
 
             return changed;
@@ -53,7 +53,7 @@ namespace ClassicAssist.UO.Objects
 
             if ( changed )
             {
-                OnCollectionChanged();
+                OnCollectionChanged( true, entities );
             }
 
             return changed;
@@ -77,7 +77,7 @@ namespace ClassicAssist.UO.Objects
 
             if ( val != null )
             {
-                OnCollectionChanged();
+                OnCollectionChanged( false, new[] { val } );
             }
 
             return val != null;
@@ -100,16 +100,18 @@ namespace ClassicAssist.UO.Objects
 
         internal virtual void Clear()
         {
+            T[] all = EntityList.Values.ToArray();
+
             EntityList.Clear();
 
-            OnCollectionChanged();
+            OnCollectionChanged( false, all );
         }
 
         public event dCollectionChanged CollectionChanged;
 
-        public virtual void OnCollectionChanged()
+        public virtual void OnCollectionChanged( bool added, T[] entities )
         {
-            CollectionChanged?.Invoke( EntityList.Count );
+            CollectionChanged?.Invoke( EntityList.Count, added, entities );
         }
 
         public virtual void RemoveByDistance( int maxDistance, int x, int y )
@@ -126,7 +128,7 @@ namespace ClassicAssist.UO.Objects
 
             if ( changed )
             {
-                OnCollectionChanged();
+                OnCollectionChanged( false, items );
             }
         }
 

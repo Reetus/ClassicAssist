@@ -149,6 +149,29 @@ namespace ClassicAssist.Data
                 BackupProfiles();
             }
 
+            foreach ( string assembly in Assemblies )
+            {
+                try
+                {
+                    Assembly asm = Assembly.LoadFile( assembly );
+
+                    IEnumerable<MethodInfo> initializeMethods = asm.GetTypes()
+                        .Where( e => e.IsClass && e.IsPublic && e.GetMethod( "Initialize",
+                                         BindingFlags.Public | BindingFlags.Static, null, Type.EmptyTypes, null ) !=
+                                     null ).Select( e => e.GetMethod( "Initialize",
+                            BindingFlags.Public | BindingFlags.Static, null, Type.EmptyTypes, null ) );
+
+                    foreach ( MethodInfo initializeMethod in initializeMethods )
+                    {
+                        initializeMethod?.Invoke( null, null );
+                    }
+                }
+                catch ( Exception )
+                {
+                    // ignored
+                }
+            }
+
             OptionsLoaded?.Invoke( null, EventArgs.Empty );
         }
 

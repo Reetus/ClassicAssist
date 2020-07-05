@@ -160,12 +160,12 @@ namespace ClassicAssist.UI.ViewModels
             Process.Start( "https://github.com/Reetus/ClassicAssist" );
         }
 
-        private void MobilesOnCollectionChanged( int totalcount )
+        private void MobilesOnCollectionChanged( int totalcount, bool added, Mobile[] mobiles )
         {
             MobileCount = totalcount;
         }
 
-        private void ItemsOnCollectionChanged( int totalcount )
+        private void ItemsOnCollectionChanged( int totalcount, bool added, Item[] items )
         {
             ItemCount = Engine.Items.GetTotalItemCount();
         }

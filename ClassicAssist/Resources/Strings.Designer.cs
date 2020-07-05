@@ -2776,6 +2776,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scavenging &apos;{0}&apos;....
+        /// </summary>
+        public static string Scavenging___0__ {
+            get {
+                return ResourceManager.GetString("Scavenging \'{0}\'", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seasons.
         /// </summary>
         public static string Seasons {

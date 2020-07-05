@@ -86,7 +86,7 @@ namespace ClassicAssist.Data.Counters
             }
         }
 
-        private void OnBackpackContentsChanged( int totalcount )
+        private void OnBackpackContentsChanged( int totalcount, bool added, Item[] items )
         {
             RecountAll?.Invoke();
         }

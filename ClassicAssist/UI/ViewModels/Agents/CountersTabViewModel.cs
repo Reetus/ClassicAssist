@@ -129,10 +129,10 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                 item.Recount();
 
-                if ( Warn && item.Count <= WarnAmount && count > WarnAmount )
+                if ( Warn && item.Count <= WarnAmount && count >= WarnAmount )
                 {
-                    Commands.SystemMessage( string.Format( Strings.Counter___0___amount_is_now__1____, item.Name,
-                        item.Count ) );
+                    Commands.SystemMessage(
+                        string.Format( Strings.Counter___0___amount_is_now__1____, item.Name, item.Count ), 61 );
                 }
             }
         }

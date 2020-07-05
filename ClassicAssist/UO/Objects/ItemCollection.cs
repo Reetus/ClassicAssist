@@ -48,7 +48,7 @@ namespace ClassicAssist.UO.Objects
 
             if ( added )
             {
-                OnCollectionChanged( true );
+                OnCollectionChanged( true, true, new[] { entity } );
             }
 
             return added;
@@ -60,7 +60,7 @@ namespace ClassicAssist.UO.Objects
 
             if ( added )
             {
-                OnCollectionChanged( true );
+                OnCollectionChanged( true, true, entities );
             }
 
             return added;
@@ -206,7 +206,7 @@ namespace ClassicAssist.UO.Objects
 
             if ( changed )
             {
-                OnCollectionChanged( true );
+                OnCollectionChanged( true, false, new[] { entity } );
             }
 
             return changed;
@@ -239,6 +239,11 @@ namespace ClassicAssist.UO.Objects
                 }
             }
 
+            if ( changed )
+            {
+                OnCollectionChanged( true, false, entities );
+            }
+
             return changed;
         }
 
@@ -269,7 +274,7 @@ namespace ClassicAssist.UO.Objects
 
             if ( changed && item != null )
             {
-                OnCollectionChanged( true );
+                OnCollectionChanged( true, false, new[] { item } );
             }
 
             return changed;
@@ -339,9 +344,9 @@ namespace ClassicAssist.UO.Objects
             return null;
         }
 
-        public void OnCollectionChanged( bool rippleDown )
+        public void OnCollectionChanged( bool rippleDown, bool added, Item[] items )
         {
-            base.OnCollectionChanged();
+            OnCollectionChanged( added, items );
 
             // Ripple down
 
@@ -357,7 +362,7 @@ namespace ClassicAssist.UO.Objects
 
             if ( Engine.Items.GetItem( item.Owner, out Item parent ) )
             {
-                parent.Container?.OnCollectionChanged( false );
+                parent.Container?.OnCollectionChanged( false, added, items );
             }
         }
 

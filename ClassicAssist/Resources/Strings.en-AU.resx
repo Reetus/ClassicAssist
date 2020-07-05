@@ -1392,4 +1392,7 @@ Are you sure you wish to continue?</value>
   <data name="Bards Music" xml:space="preserve">
     <value>Bards Music</value>
   </data>
+  <data name="Scavenging '{0}'" xml:space="preserve">
+    <value>Scavenging '{0}'...</value>
+  </data>
 </root>

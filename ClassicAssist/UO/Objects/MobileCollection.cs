@@ -63,7 +63,7 @@ namespace ClassicAssist.UO.Objects
 
             if ( changed )
             {
-                OnCollectionChanged();
+                OnCollectionChanged( false, mobiles );
             }
         }
     }

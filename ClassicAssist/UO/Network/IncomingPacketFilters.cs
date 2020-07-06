@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Filters;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
+using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UO.Network
@@ -83,9 +85,7 @@ namespace ClassicAssist.UO.Network
                 return false;
             }
 
-            // Will need to send to handler ourselves because we won't see packet again
-            PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x20 );
-            handler?.OnReceive( new PacketReader( packet, length, true ) );
+            Engine.IncomingQueue.Enqueue( new Packet( packet, length ) );
             return true;
         }
 
@@ -133,10 +133,7 @@ namespace ClassicAssist.UO.Network
                 return false;
             }
 
-            // Will need to send to handler ourselves because we won't see packet again
-            reader.Seek( 1, SeekOrigin.Begin );
-            PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x77 );
-            handler?.OnReceive( reader );
+            Engine.IncomingQueue.Enqueue( new Packet( packet, length ) );
             return true;
         }
 
@@ -204,10 +201,7 @@ namespace ClassicAssist.UO.Network
                 return false;
             }
 
-            // Will need to send to handler ourselves because we won't see packet again
-            reader.Seek( 3, SeekOrigin.Begin );
-            PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x78 );
-            handler?.OnReceive( reader );
+            Engine.IncomingQueue.Enqueue( new Packet( packet, length ) );
             return true;
         }
 

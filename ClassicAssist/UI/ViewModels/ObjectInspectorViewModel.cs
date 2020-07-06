@@ -291,7 +291,7 @@ namespace ClassicAssist.UI.ViewModels
 
             DisplayFormatAttribute attr = type.GetPropertyAttribute<DisplayFormatAttribute>( propertyName );
 
-            return attr != null ? attr.ToString( value ) : value.ToString();
+            return attr != null ? attr.ToString( value ) : value?.ToString() ?? string.Empty;
         }
 
         private void AddData( Type type, string propertyName, object value, string category, string nameOverride = "",

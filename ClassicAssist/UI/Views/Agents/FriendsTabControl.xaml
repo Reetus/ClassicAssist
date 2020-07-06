@@ -56,7 +56,7 @@
                       IsChecked="{Binding Options.PreventTargetingFriendsWithHarmful}" />
             <StackPanel Orientation="Horizontal">
                 <CheckBox Content="{x:Static resources:Strings.Rehue_friends}"
-                          IsChecked="{Binding Options.CurrentOptions.RehueFriends}" />
+                          IsChecked="{Binding Options.CurrentOptions.RehueFriends}" Command="{Binding ChangeRehueOption}" />
                 <Button Margin="10,0,0,0" Command="{Binding SelectHueCommand}" CommandParameter="{Binding Options.CurrentOptions.RehueFriendsHue}">
                     <Image Source="{StaticResource ColorWheelIcon}" Height="12" Width="12" />
                 </Button>

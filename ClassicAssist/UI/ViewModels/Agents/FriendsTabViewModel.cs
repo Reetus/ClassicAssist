@@ -1,20 +1,22 @@
 ﻿using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Friends;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
+using ClassicAssist.Resources;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO.Data;
 using Newtonsoft.Json.Linq;
-using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.UI.ViewModels.Agents
 {
     public class FriendsTabViewModel : BaseViewModel, ISettingProvider
     {
         private ICommand _addFriendCommand;
+        private ICommand _changeRehueOption;
         private Options _options;
         private ICommand _removeFriendCommand;
         private FriendEntry _selectedItem;
@@ -22,6 +24,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public ICommand AddFriendCommand =>
             _addFriendCommand ?? ( _addFriendCommand = new RelayCommandAsync( AddFriend, o => true ) );
+
+        public ICommand ChangeRehueOption =>
+            _changeRehueOption ?? ( _changeRehueOption = new RelayCommand( ChangeRehue, o => true ) );
 
         public Options Options
         {
@@ -104,6 +109,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         RehueType.Friends );
                 }
             }
+        }
+
+        private void ChangeRehue( object obj )
+        {
+            MessageBox.Show( Strings.Restart_game_for_changes_to_take_effect___, Strings.ProductName,
+                MessageBoxButton.OK, MessageBoxImage.Information );
         }
 
         private static void SelectHue( object obj )

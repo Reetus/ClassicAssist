@@ -51,6 +51,8 @@ namespace ClassicAssist.Data
         private bool _queueLastTarget;
         private bool _rangeCheckLastTarget;
         private int _rangeCheckLastTargetAmount = 11;
+        private bool _rehueFriends;
+        private int _rehueFriendsHue;
         private bool _showProfileNameWindowTitle;
         private bool _showResurrectionWaypoints;
         private SmartTargetOption _smartTargetOption;
@@ -240,6 +242,18 @@ namespace ClassicAssist.Data
         {
             get => _rangeCheckLastTargetAmount;
             set => SetProperty( ref _rangeCheckLastTargetAmount, value );
+        }
+
+        public bool RehueFriends
+        {
+            get => _rehueFriends;
+            set => SetProperty( ref _rehueFriends, value );
+        }
+
+        public int RehueFriendsHue
+        {
+            get => _rehueFriendsHue;
+            set => SetProperty( ref _rehueFriendsHue, value );
         }
 
         public bool ShowProfileNameWindowTitle

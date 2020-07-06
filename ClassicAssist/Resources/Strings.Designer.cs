@@ -2623,6 +2623,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rehue friends.
+        /// </summary>
+        public static string Rehue_friends {
+            get {
+                return ResourceManager.GetString("Rehue friends", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rehue matching items.
         /// </summary>
         public static string Rehue_matching_items {

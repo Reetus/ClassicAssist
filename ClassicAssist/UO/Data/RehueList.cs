@@ -1,27 +1,50 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using Assistant;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UO.Data
 {
+    public enum RehueType
+    {
+        Custom,
+        Friends,
+        Enemies
+    }
+
+    public class RehueEntry
+    {
+        public int Hue { get; set; }
+        public int Serial { get; set; }
+        public RehueType Type { get; set; }
+    }
+
     public class RehueList
     {
-        private readonly Dictionary<int, int> _rehueList = new Dictionary<int, int>();
+        private readonly ConcurrentDictionary<int, RehueEntry> _rehueList = new ConcurrentDictionary<int, RehueEntry>();
 
-        public void Add( int serial, int hue )
+        public void Add( int serial, int hue, RehueType type = RehueType.Custom )
         {
-            if ( _rehueList.ContainsKey( serial ) )
-            {
-                _rehueList.Remove( serial );
-            }
+            RehueEntry entry = new RehueEntry { Serial = serial, Hue = hue, Type = type };
 
-            _rehueList.Add( serial, hue );
+            _rehueList.AddOrUpdate( serial, i => entry, ( i, rehueEntry ) => entry );
         }
 
         public bool Remove( int serial )
         {
-            return _rehueList.ContainsKey( serial ) && _rehueList.Remove( serial );
+            return _rehueList.TryRemove( serial, out _ );
+        }
+
+        public void ChangeHue( RehueType type, int hue )
+        {
+            IEnumerable<RehueEntry> entries = _rehueList.Where( kvp => kvp.Value.Type == type ).Select( e => e.Value );
+
+            foreach ( RehueEntry rehueEntry in entries )
+            {
+                Add( rehueEntry.Serial, hue, RehueType.Friends );
+            }
         }
 
         public bool Contains( int serial )
@@ -29,9 +52,19 @@ namespace ClassicAssist.UO.Data
             return _rehueList.ContainsKey( serial );
         }
 
+        public void RemoveByType( RehueType type )
+        {
+            IEnumerable<int> keys = _rehueList.Where( kvp => kvp.Value.Type == type ).Select( kvp => kvp.Key );
+
+            foreach ( int key in keys )
+            {
+                Remove( key );
+            }
+        }
+
         public void CheckItem( Item item )
         {
-            if ( !_rehueList.TryGetValue( item.Serial, out int hueOverride ) )
+            if ( !_rehueList.TryGetValue( item.Serial, out RehueEntry entry ) )
             {
                 return;
             }
@@ -39,7 +72,7 @@ namespace ClassicAssist.UO.Data
             if ( item.Owner != 0 && !UOMath.IsMobile( item.Serial ) )
             {
                 Engine.SendPacketToClient( new ContainerContentUpdate( item.Serial, item.ID, item.Direction, item.Count,
-                    item.X, item.Y, item.Grid, item.Owner, hueOverride ) );
+                    item.X, item.Y, item.Grid, item.Owner, entry.Hue ) );
             }
             else
             {
@@ -52,35 +85,35 @@ namespace ClassicAssist.UO.Data
         {
             int serial = ( packet[4] << 24 ) | ( packet[5] << 16 ) | ( packet[6] << 8 ) | packet[7];
 
-            if ( !_rehueList.TryGetValue( serial, out int hueOverride ) )
+            if ( !_rehueList.TryGetValue( serial, out RehueEntry entry ) )
             {
                 return false;
             }
 
-            Engine.SendPacketToClient( new SAWorldItem( packet, length, hueOverride ) );
+            Engine.SendPacketToClient( new SAWorldItem( packet, length, entry.Hue ) );
             return true;
         }
 
         public bool CheckMobileIncoming( Mobile mobile, ItemCollection equipment )
         {
-            if ( !_rehueList.TryGetValue( mobile.Serial, out int hueOverride ) )
+            if ( !_rehueList.TryGetValue( mobile.Serial, out RehueEntry entry ) )
             {
                 return false;
             }
 
-            Engine.SendPacketToClient( new MobileIncoming( mobile, equipment, hueOverride ) );
+            Engine.SendPacketToClient( new MobileIncoming( mobile, equipment, entry.Hue ) );
             return true;
         }
 
         public bool CheckMobileUpdate( Mobile mobile )
         {
-            if ( !_rehueList.TryGetValue( mobile.Serial, out int hueOverride ) )
+            if ( !_rehueList.TryGetValue( mobile.Serial, out RehueEntry entry ) )
             {
                 return false;
             }
 
             Engine.SendPacketToClient( new MobileUpdate( mobile.Serial, mobile.ID,
-                hueOverride > 0 ? hueOverride : mobile.Hue, mobile.Status, mobile.X, mobile.Y, mobile.Z,
+                entry.Hue > 0 ? entry.Hue : mobile.Hue, mobile.Status, mobile.X, mobile.Y, mobile.Z,
                 mobile.Direction ) );
             return true;
         }
@@ -100,12 +133,12 @@ namespace ClassicAssist.UO.Data
 
         public bool CheckMobileMoving( Mobile mobile )
         {
-            if ( !_rehueList.TryGetValue( mobile.Serial, out int hueOverride ) )
+            if ( !_rehueList.TryGetValue( mobile.Serial, out RehueEntry entry ) )
             {
                 return false;
             }
 
-            Engine.SendPacketToClient( new MobileMoving( mobile, hueOverride ) );
+            Engine.SendPacketToClient( new MobileMoving( mobile, entry.Hue ) );
             return true;
         }
     }

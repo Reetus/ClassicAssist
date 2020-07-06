@@ -40,7 +40,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = nameof( Strings.Entity ),
             Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
-        public static void AddFriend( object obj = null )
+        public static int AddFriend( object obj = null )
         {
             int serial = obj != null
                 ? AliasCommands.ResolveSerial( obj )
@@ -49,7 +49,7 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( serial == 0 )
             {
                 UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
-                return;
+                return 0;
             }
 
             Mobile m = Engine.Mobiles.GetMobile( serial );
@@ -57,7 +57,7 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( m == null )
             {
                 UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
-                return;
+                return 0;
             }
 
             FriendEntry fe = new FriendEntry { Name = m.Name.Trim(), Serial = m.Serial };
@@ -66,6 +66,8 @@ namespace ClassicAssist.Data.Macros.Commands
             {
                 Engine.Dispatcher?.Invoke( () => Options.CurrentOptions.Friends.Add( fe ) );
             }
+
+            return m.Serial;
         }
 
         [CommandsDisplay( Category = nameof( Strings.Entity ),

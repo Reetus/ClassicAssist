@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assistant;
+using ClassicAssist.Data;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 
@@ -35,16 +36,6 @@ namespace ClassicAssist.UO.Data
         public bool Remove( int serial )
         {
             return _rehueList.TryRemove( serial, out _ );
-        }
-
-        public void ChangeHue( RehueType type, int hue )
-        {
-            IEnumerable<RehueEntry> entries = _rehueList.Where( kvp => kvp.Value.Type == type ).Select( e => e.Value );
-
-            foreach ( RehueEntry rehueEntry in entries )
-            {
-                Add( rehueEntry.Serial, hue, RehueType.Friends );
-            }
         }
 
         public bool Contains( int serial )
@@ -96,24 +87,45 @@ namespace ClassicAssist.UO.Data
 
         public bool CheckMobileIncoming( Mobile mobile, ItemCollection equipment )
         {
-            if ( !_rehueList.TryGetValue( mobile.Serial, out RehueEntry entry ) )
+            bool result = _rehueList.TryGetValue( mobile.Serial, out RehueEntry entry );
+
+            if ( result )
             {
-                return false;
+                Engine.SendPacketToClient( new MobileIncoming( mobile, equipment, entry.Hue ) );
+                return true;
             }
 
-            Engine.SendPacketToClient( new MobileIncoming( mobile, equipment, entry.Hue ) );
-            return true;
+            if ( Options.CurrentOptions.RehueFriends &&
+                 Options.CurrentOptions.Friends.Any( e => e.Serial == mobile.Serial ) )
+            {
+                Engine.SendPacketToClient( new MobileIncoming( mobile, equipment,
+                    Options.CurrentOptions.RehueFriendsHue ) );
+                return true;
+            }
+
+            return false;
         }
 
         public bool CheckMobileUpdate( Mobile mobile )
         {
-            if ( !_rehueList.TryGetValue( mobile.Serial, out RehueEntry entry ) )
+            bool result = _rehueList.TryGetValue( mobile.Serial, out RehueEntry entry );
+
+            if ( result )
+            {
+                Engine.SendPacketToClient( new MobileUpdate( mobile.Serial, mobile.ID,
+                    entry.Hue > 0 ? entry.Hue : mobile.Hue, mobile.Status, mobile.X, mobile.Y, mobile.Z,
+                    mobile.Direction ) );
+                return true;
+            }
+
+            if ( !Options.CurrentOptions.RehueFriends ||
+                 Options.CurrentOptions.Friends.All( e => e.Serial != mobile.Serial ) )
             {
                 return false;
             }
 
             Engine.SendPacketToClient( new MobileUpdate( mobile.Serial, mobile.ID,
-                entry.Hue > 0 ? entry.Hue : mobile.Hue, mobile.Status, mobile.X, mobile.Y, mobile.Z,
+                Options.CurrentOptions.RehueFriendsHue, mobile.Status, mobile.X, mobile.Y, mobile.Z,
                 mobile.Direction ) );
             return true;
         }
@@ -133,12 +145,21 @@ namespace ClassicAssist.UO.Data
 
         public bool CheckMobileMoving( Mobile mobile )
         {
-            if ( !_rehueList.TryGetValue( mobile.Serial, out RehueEntry entry ) )
+            bool result = _rehueList.TryGetValue( mobile.Serial, out RehueEntry entry );
+
+            if ( result )
+            {
+                Engine.SendPacketToClient( new MobileMoving( mobile, entry.Hue ) );
+                return true;
+            }
+
+            if ( !Options.CurrentOptions.RehueFriends ||
+                 Options.CurrentOptions.Friends.All( e => e.Serial != mobile.Serial ) )
             {
                 return false;
             }
 
-            Engine.SendPacketToClient( new MobileMoving( mobile, entry.Hue ) );
+            Engine.SendPacketToClient( new MobileMoving( mobile, Options.CurrentOptions.RehueFriendsHue ) );
             return true;
         }
     }

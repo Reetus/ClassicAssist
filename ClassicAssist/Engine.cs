@@ -61,9 +61,7 @@ namespace Assistant
         private static OnPacketSendRecv _sendToClient;
         private static OnPacketSendRecv _sendToServer;
         private static OnGetPacketLength _getPacketLength;
-        private static ThreadQueue<Packet> _incomingQueue;
         private static OnUpdatePlayerPosition _onPlayerPositionChanged;
-        private static ThreadQueue<Packet> _outgoingQueue;
         private static MainWindow _window;
         private static Thread _mainThread;
         private static OnClientClose _onClientClosing;
@@ -309,8 +307,8 @@ namespace Assistant
 
             PacketWaitEntries = new PacketWaitEntries();
 
-            _incomingQueue = new ThreadQueue<Packet>( ProcessIncomingQueue );
-            _outgoingQueue = new ThreadQueue<Packet>( ProcessOutgoingQueue );
+            IncomingQueue = new ThreadQueue<Packet>( ProcessIncomingQueue );
+            OutgoingQueue = new ThreadQueue<Packet>( ProcessOutgoingQueue );
 
             IncomingPacketHandlers.Initialize();
             OutgoingPacketHandlers.Initialize();
@@ -662,7 +660,7 @@ namespace Assistant
                 return false;
             }
 
-            _outgoingQueue.Enqueue( new Packet( data, length ) );
+            OutgoingQueue.Enqueue( new Packet( data, length ) );
 
             // ReSharper disable once InvertIf
             if ( _outgoingPacketPostFilter.MatchFilterAll( data, out PacketFilterInfo[] pfisPost ) > 0 )
@@ -683,6 +681,10 @@ namespace Assistant
         }
 
         public static IntPtr WindowHandle { get; private set; }
+
+        public static ThreadQueue<Packet> IncomingQueue { get; set; }
+
+        public static ThreadQueue<Packet> OutgoingQueue { get; set; }
 
         private static bool OnPacketReceive( ref byte[] data, ref int length )
         {
@@ -707,7 +709,7 @@ namespace Assistant
                 return false;
             }
 
-            _incomingQueue.Enqueue( new Packet( data, length ) );
+            IncomingQueue.Enqueue( new Packet( data, length ) );
 
             return true;
         }

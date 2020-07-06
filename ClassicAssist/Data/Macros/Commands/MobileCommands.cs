@@ -60,7 +60,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return 0;
             }
 
-            FriendEntry fe = new FriendEntry { Name = m.Name.Trim(), Serial = m.Serial };
+            FriendEntry fe = new FriendEntry { Name = m.Name?.Trim(), Serial = m.Serial };
 
             if ( !Options.CurrentOptions.Friends.Contains( fe ) )
             {

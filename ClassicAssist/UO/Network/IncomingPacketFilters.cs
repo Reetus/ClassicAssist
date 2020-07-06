@@ -63,7 +63,8 @@ namespace ClassicAssist.UO.Network
             int x = reader.ReadInt16();
             int y = reader.ReadInt16();
             reader.ReadInt16(); // WORD 0x00;
-            int direction = reader.ReadByte() & 0x07;
+            //TODO Removed & 0x07 to not strip running flag, think of better solution
+            int direction = reader.ReadByte();
             int z = reader.ReadSByte();
 
             Mobile mobile = new Mobile( serial )
@@ -109,7 +110,8 @@ namespace ClassicAssist.UO.Network
             int x = reader.ReadInt16();
             int y = reader.ReadInt16();
             int z = reader.ReadSByte();
-            int direction = reader.ReadByte() & 0x07;
+            //TODO Removed & 0x07 to not strip running flag, think of better solution
+            int direction = reader.ReadByte();
             int hue = reader.ReadUInt16();
             int status = reader.ReadByte();
             int notoriety = reader.ReadByte();
@@ -151,7 +153,8 @@ namespace ClassicAssist.UO.Network
             mobile.X = reader.ReadInt16();
             mobile.Y = reader.ReadInt16();
             mobile.Z = reader.ReadSByte();
-            mobile.Direction = (Direction) ( reader.ReadByte() & 0x07 );
+            //TODO Removed & 0x07 to not strip running flag, think of better solution
+            mobile.Direction = (Direction)reader.ReadByte();
             mobile.Hue = reader.ReadUInt16();
             mobile.Status = (MobileStatus) reader.ReadByte();
             mobile.Notoriety = (Notoriety) reader.ReadByte();

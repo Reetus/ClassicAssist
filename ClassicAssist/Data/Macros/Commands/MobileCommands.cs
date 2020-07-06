@@ -64,7 +64,15 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( !Options.CurrentOptions.Friends.Contains( fe ) )
             {
-                Engine.Dispatcher?.Invoke( () => Options.CurrentOptions.Friends.Add( fe ) );
+                Engine.Dispatcher?.Invoke( () =>
+                {
+                    Options.CurrentOptions.Friends.Add( fe );
+
+                    if ( Options.CurrentOptions.RehueFriends )
+                    {
+                        MainCommands.Resync();
+                    }
+                } );
             }
 
             return m.Serial;
@@ -91,7 +99,20 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            Engine.Dispatcher?.Invoke( () => Options.CurrentOptions.Friends.Remove( entry ) );
+            Engine.Dispatcher?.Invoke( () =>
+            {
+                bool result = Options.CurrentOptions.Friends.Remove( entry );
+
+                if ( !Options.CurrentOptions.RehueFriends )
+                {
+                    return result;
+                }
+
+                Engine.RehueList.Remove( serial );
+                MainCommands.Resync();
+
+                return result;
+            } );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Entity ),

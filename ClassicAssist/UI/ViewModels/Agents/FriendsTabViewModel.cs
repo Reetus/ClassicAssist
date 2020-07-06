@@ -73,7 +73,6 @@ namespace ClassicAssist.UI.ViewModels.Agents
         {
             Options = options;
             Options.Friends.Clear();
-            Engine.RehueList.RemoveByType( RehueType.Friends );
 
             if ( json?["Friends"] == null )
             {
@@ -100,42 +99,27 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     Name = token["Name"].ToObject<string>(), Serial = token["Serial"].ToObject<int>()
                 } );
             }
-
-            if ( Options.RehueFriends && Options.RehueFriendsHue != 0 )
-            {
-                foreach ( FriendEntry friendEntry in Options.Friends )
-                {
-                    Engine.RehueList.Add( friendEntry.Serial, Options.CurrentOptions.RehueFriendsHue,
-                        RehueType.Friends );
-                }
-            }
         }
 
-        private void ChangeRehue( object obj )
+        private static void ChangeRehue( object obj )
         {
-            MessageBox.Show( Strings.Restart_game_for_changes_to_take_effect___, Strings.ProductName,
-                MessageBoxButton.OK, MessageBoxImage.Information );
+            MainCommands.Resync();
         }
 
         private static void SelectHue( object obj )
         {
-            if ( HuePickerWindow.GetHue( out int hue ) )
+            if ( !HuePickerWindow.GetHue( out int hue ) )
             {
-                Options.CurrentOptions.RehueFriendsHue = hue;
-                Engine.RehueList.ChangeHue( RehueType.Friends, hue );
-                MainCommands.Resync();
+                return;
             }
+
+            Options.CurrentOptions.RehueFriendsHue = hue;
+            MainCommands.Resync();
         }
 
         private static async Task AddFriend( object arg )
         {
-            int serial = await Task.Run( () => MobileCommands.AddFriend() );
-
-            if ( serial != 0 && Options.CurrentOptions.RehueFriends )
-            {
-                Engine.RehueList.Add( serial, Options.CurrentOptions.RehueFriendsHue, RehueType.Friends );
-                MainCommands.Resync();
-            }
+            await Task.Run( () => MobileCommands.AddFriend() );
         }
 
         private static Task RemoveFriend( object arg )
@@ -146,12 +130,6 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
 
             MobileCommands.RemoveFriend( fe.Serial );
-
-            if ( fe.Serial != 0 && Options.CurrentOptions.RehueFriends )
-            {
-                Engine.RehueList.Remove( fe.Serial );
-                MainCommands.Resync();
-            }
 
             return Task.CompletedTask;
         }

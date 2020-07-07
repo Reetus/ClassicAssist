@@ -146,10 +146,10 @@ namespace ClassicAssist.Data.Targeting
 
             if ( friendType == TargetFriendType.Only )
             {
-                mobile = Engine.Mobiles
-                    .SelectEntities( m => MobileCommands.InFriendList( m.Serial ) && bodyTypePredicate( m.ID ) &&
-                                          ( !Options.CurrentOptions.GetFriendEnemyUsesIgnoreList ||
-                                            !ObjectCommands.IgnoreList.Contains( m.Serial ) ) )
+                mobile = Engine.Mobiles.SelectEntities( m =>
+                        MobileCommands.InFriendList( m.Serial ) && bodyTypePredicate( m.ID ) &&
+                        ( !Options.CurrentOptions.GetFriendEnemyUsesIgnoreList ||
+                          !ObjectCommands.IgnoreList.Contains( m.Serial ) ) && m.Serial != Engine.Player?.Serial )
                     .OrderBy( m => m.Distance ).ByInflication( inflictionType ).FirstOrDefault();
             }
             else
@@ -158,8 +158,8 @@ namespace ClassicAssist.Data.Targeting
                         notoriety.Contains( m.Notoriety ) && m.Distance < MAX_DISTANCE && bodyTypePredicate( m.ID ) &&
                         ( friendType == TargetFriendType.Include || !MobileCommands.InFriendList( m.Serial ) ) &&
                         ( !Options.CurrentOptions.GetFriendEnemyUsesIgnoreList ||
-                          !ObjectCommands.IgnoreList.Contains( m.Serial ) ) ).OrderBy( m => m.Distance )
-                    .ByInflication( inflictionType )?.FirstOrDefault();
+                          !ObjectCommands.IgnoreList.Contains( m.Serial ) ) && m.Serial != Engine.Player?.Serial )
+                    .OrderBy( m => m.Distance ).ByInflication( inflictionType )?.FirstOrDefault();
             }
 
             return mobile;
@@ -209,7 +209,8 @@ namespace ClassicAssist.Data.Targeting
                     mobiles = Engine.Mobiles.SelectEntities( m =>
                         m.Distance < distance && MobileCommands.InFriendList( m.Serial ) && bodyTypePredicate( m.ID ) &&
                         !_ignoreList.Contains( m ) && ( !Options.CurrentOptions.GetFriendEnemyUsesIgnoreList ||
-                                                        !ObjectCommands.IgnoreList.Contains( m.Serial ) ) );
+                                                        !ObjectCommands.IgnoreList.Contains( m.Serial ) ) &&
+                        m.Serial != Engine.Player?.Serial );
                 }
                 else
                 {
@@ -218,7 +219,7 @@ namespace ClassicAssist.Data.Targeting
                         !_ignoreList.Contains( m ) &&
                         ( friendType == TargetFriendType.Include || !MobileCommands.InFriendList( m.Serial ) ) &&
                         ( !Options.CurrentOptions.GetFriendEnemyUsesIgnoreList ||
-                          !ObjectCommands.IgnoreList.Contains( m.Serial ) ) );
+                          !ObjectCommands.IgnoreList.Contains( m.Serial ) ) && m.Serial != Engine.Player?.Serial );
                 }
 
                 if ( reverse )

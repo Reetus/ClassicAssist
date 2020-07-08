@@ -16,7 +16,7 @@ namespace ExportCommands
 {
     internal class Program
     {
-        private static readonly string[] _locales = { "en-US", "it-IT", "pl-PL" };
+        private static readonly string[] _locales = { "en-US", "it-IT", "pl-PL", "ko-KR" };
 
         private static void Main( string[] args )
         {
@@ -82,6 +82,14 @@ namespace ExportCommands
                     // ReSharper disable once LoopCanBeConvertedToQuery
                     foreach ( MemberInfo memberInfo in type.GetMembers( BindingFlags.Public | BindingFlags.Static ) )
                     {
+                        Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+                        Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+
+                        Attribute attrCDLN = memberInfo.GetCustomAttribute( cda );
+
+                        Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo( locale );
+                        Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo( locale );
+
                         Attribute attrCD = memberInfo.GetCustomAttribute( cda );
                         Attribute attrCDSA = memberInfo.GetCustomAttribute( cdsaa );
 
@@ -177,6 +185,7 @@ namespace ExportCommands
                         commands.Add( new Commands
                         {
                             Category = ( (dynamic) attrCD ).Category,
+                            CategoryLN = ( (dynamic) attrCDLN ).Category,
                             Description = ( (dynamic) attrCD ).Description,
                             Example = ( (dynamic) attrCD ).Example,
                             InsertText = ( (dynamic) attrCD ).InsertText,
@@ -189,7 +198,8 @@ namespace ExportCommands
 
                 commands.Sort( new CommandComparer() );
 
-                IEnumerable<string> categories = commands.Select( c => c.Category ).Distinct();
+                // Localized, Language Neutral Category
+                IEnumerable<(string L, string LN)> categories = commands.Select( c => (c.Category, c.CategoryLN) ).Distinct();
 
                 FileVersionInfo fvi = FileVersionInfo.GetVersionInfo( assembly.Location );
 
@@ -202,21 +212,21 @@ namespace ExportCommands
                         $"# {Resources.ClassicAssist_Macro_Commands}  \n{Resources.Generated_on} {DateTime.UtcNow}  \n{Resources.Version}: {fvi.ProductVersion}  \n{Resources.TRANSLATE_CREDIT}  \n  \n";
                 }
 
-                foreach ( string category in categories )
+                foreach ( var category in categories )
                 {
                     IEnumerable<Commands> categoryCommands =
-                        commands.Where( c => c.Category == category ).OrderBy( c => c.Name );
+                        commands.Where( c => c.Category == category.L ).OrderBy( c => c.Name );
 
-                    GenerateCategory( assembly, category, categoryCommands, seeAlsoTypes, locale );
+                    GenerateCategory( assembly, category.L, category.LN, categoryCommands, seeAlsoTypes, locale );
 
-                    string categoryFileName = $"{RemoveAccents( category )}-{locale}.md".Replace( ' ', '-' );
+                    string categoryFileName = $"{RemoveAccents( category.LN )}-{locale}.md".Replace( ' ', '-' );
 
                     if ( locale.Equals( "en-US" ) )
                     {
                         categoryFileName = $"{category}.md";
                     }
 
-                    markDown += $"## [{category}]({Path.GetFileNameWithoutExtension( categoryFileName )})  \n";
+                    markDown += $"## [{category.L}]({Path.GetFileNameWithoutExtension( categoryFileName )})  \n";
 
                     foreach ( Commands categoryCommand in categoryCommands )
                     {
@@ -260,7 +270,7 @@ namespace ExportCommands
             Console.WriteLine( $"Finished in {sw.Elapsed}" );
         }
 
-        private static void GenerateCategory( Assembly assembly, string category,
+        private static void GenerateCategory( Assembly assembly, string category, string categoryLN,
             IEnumerable<Commands> categoryCommands, List<Type> seeAlsoTypes, string locale )
         {
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo( assembly.Location );
@@ -348,11 +358,11 @@ namespace ExportCommands
                 }
             }
 
-            string fileName = $"{RemoveAccents( category )}-{locale}.md".Replace( ' ', '-' );
+            string fileName = $"{RemoveAccents( categoryLN )}-{locale}.md".Replace( ' ', '-' );
 
             if ( locale.Equals( "en-US" ) )
             {
-                fileName = $"{category}.md";
+                fileName = $"{categoryLN}.md";
             }
 
             File.WriteAllText( Path.Combine( Environment.CurrentDirectory, "Docs", fileName ), markDown );
@@ -441,5 +451,6 @@ namespace ExportCommands
         public string Name { get; set; }
         public List<Parameter> Parameters { get; set; }
         public string Signature { get; set; }
+        public string CategoryLN { get; set; }
     }
 }

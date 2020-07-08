@@ -261,6 +261,11 @@ namespace ClassicAssist.Data.Abilities
 
         public bool CheckHands( int serial )
         {
+            if ( !Options.CurrentOptions.CheckHandsPotions )
+            {
+                return false;
+            }
+
             Item item = Engine.Items?.GetItem( serial );
 
             if ( item == null || !_potionTypes.Contains( item.ID ) )

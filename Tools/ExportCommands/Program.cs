@@ -223,7 +223,7 @@ namespace ExportCommands
 
                     if ( locale.Equals( "en-US" ) )
                     {
-                        categoryFileName = $"{category}.md";
+                        categoryFileName = $"{category.LN}.md";
                     }
 
                     markDown += $"## [{category.L}]({Path.GetFileNameWithoutExtension( categoryFileName )})  \n";

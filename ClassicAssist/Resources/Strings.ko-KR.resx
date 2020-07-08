@@ -1216,7 +1216,7 @@
     <value>매크로 명령 위키 (브라우저에서 실행)</value>
   </data>
   <data name="MACRO_WIKI_URL" xml:space="preserve">
-    <value>https://github.com/Reetus/ClassicAssist/wiki/Macro-Commands</value>
+    <value>https://github.com/Reetus/ClassicAssist/wiki/Macro-Commands-(ko-KR)</value>
   </data>
   <data name="Really remove macro &quot;{0}&quot;?" xml:space="preserve">
     <value>정말 매크로 "{0}"를 제거?</value>
@@ -1270,7 +1270,7 @@
     <value>상태</value>
   </data>
   <data name="Autostart" xml:space="preserve">
-    <value>Autostart</value>
+    <value>자동시작</value>
   </data>
   <data name="Total base:" xml:space="preserve">
     <value>총 기준:</value>
@@ -1331,5 +1331,65 @@
   </data>
   <data name="Hide" xml:space="preserve">
     <value>숨기기</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>저자</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>카테고리</value>
+  </data>
+  <data name="Copy to clipboard" xml:space="preserve">
+    <value>복사하기</value>
+  </data>
+  <data name="Create Macro" xml:space="preserve">
+    <value>매크로 만들기</value>
+  </data>
+  <data name="Era" xml:space="preserve">
+    <value>버젼</value>
+  </data>
+  <data name="Open in Github" xml:space="preserve">
+    <value>Github에서 열기</value>
+  </data>
+  <data name="Shard" xml:space="preserve">
+    <value>서버</value>
+  </data>
+  <data name="Macro Warning" xml:space="preserve">
+    <value>악성 매크로를 실행하면 계정이나 컴퓨터가 손상 될 수 있습니다!
+
+실행하기 전에 매크로가 수행하는 작업을 이해해야합니다.
+
+매크로가 악의적으로 사용되지 않도록 했지만, 매크로 제작자는 책임지지 않습니다.
+
+계속 하시겠습니까?</value>
+  </data>
+  <data name="Public Macros" xml:space="preserve">
+    <value>공개된 매크로</value>
+  </data>
+  <data name="Learn how to contribute your own macros..." xml:space="preserve">
+    <value>자신의 만든 매크로를 공유하는 방법에 대해 알아봅니다.</value>
+  </data>
+  <data name="Failed to download manifest..." xml:space="preserve">
+    <value>목록을 다운로드하는데 실패했습니다.</value>
+  </data>
+  <data name="Failed to download macro..." xml:space="preserve">
+    <value>메크로를 다운로드하는데 실패했습니다.</value>
+  </data>
+  <data name="Additional Assemblies" xml:space="preserve">
+    <value>추가 조합</value>
+  </data>
+  <data name="Additional assemblies to load:" xml:space="preserve">
+    <value>추가 조합을 불러오기:</value>
+  </data>
+  <data name="Error loading assembly: {0}" xml:space="preserve">
+    <value>조합을 불러오기를 실패했습니다.</value>
+  </data>
+  <data name="Special Moves" xml:space="preserve">
+    <value>특별한 움직임</value>
+  </data>
+  <data name="Loaded to all profiles" xml:space="preserve">
+    <value>모든 프로파일을 불러옴</value>
+  </data>
+  <data name="Check hands before potions" xml:space="preserve">
+    <value>포션을 마시기전 손이 빈것 확인</value>
   </data>
 </root>

@@ -23,8 +23,10 @@ namespace ClassicAssist.Data.Macros
 
         private static readonly ScriptEngine _engine = Python.CreateEngine();
         private static Dictionary<string, object> _importCache;
+        private readonly MemoryStream _memoryStream = new MemoryStream();
         private CancellationTokenSource _cancellationToken;
         private MacroEntry _macro;
+        private readonly SystemMessageTextWriter _textWriter = new SystemMessageTextWriter();
 
         public MacroInvoker()
         {
@@ -47,6 +49,9 @@ namespace ClassicAssist.Data.Macros
             {
                 _importCache = InitializeImports( _engine );
             }
+
+            _engine.Runtime.IO.SetOutput( _memoryStream, _textWriter );
+            _engine.Runtime.IO.SetErrorOutput( _memoryStream, _textWriter );
 
             string modulePath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Modules" );
             ICollection<string> searchPaths = _engine.GetSearchPaths();

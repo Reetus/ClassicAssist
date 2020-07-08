@@ -1,4 +1,6 @@
-﻿using ClassicAssist.Data.Macros.Commands;
+﻿using Assistant;
+using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.Data.Hotkeys.Commands
 {
@@ -7,7 +9,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            ObjectCommands.UseType( 0xf07, 0, "backpack" );
+            ObjectCommands.UseType( 0xf07, 0, Engine.Player.GetLayer( Layer.Backpack ) );
         }
     }
 
@@ -16,7 +18,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            ObjectCommands.UseType( 0xf0c, 0, "backpack" );
+            ObjectCommands.UseType( 0xf0c, 0, Engine.Player.GetLayer( Layer.Backpack ) );
         }
     }
 
@@ -25,7 +27,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            ObjectCommands.UseType( 0xf0b, 0, "backpack" );
+            ObjectCommands.UseType( 0xf0b, 0, Engine.Player.GetLayer( Layer.Backpack ) );
         }
     }
 
@@ -34,7 +36,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            ObjectCommands.UseType( 0xf09, 0, "backpack" );
+            ObjectCommands.UseType( 0xf09, 0, Engine.Player.GetLayer( Layer.Backpack ) );
         }
     }
 
@@ -43,7 +45,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            ObjectCommands.UseType( 0xf08, 0, "backpack" );
+            ObjectCommands.UseType( 0xf08, 0, Engine.Player.GetLayer( Layer.Backpack ) );
         }
     }
 
@@ -52,7 +54,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            ObjectCommands.UseType( 0xf0d, 0, "backpack" );
+            ObjectCommands.UseType( 0xf0d, 0, Engine.Player.GetLayer( Layer.Backpack ) );
         }
     }
 
@@ -61,7 +63,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            ObjectCommands.UseType( 0xf06, 306, "backpack" );
+            ObjectCommands.UseType( 0xf06, 306, Engine.Player.GetLayer( Layer.Backpack ) );
         }
     }
 
@@ -70,7 +72,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            ObjectCommands.UseType( 0xf06, 1165, "backpack" );
+            ObjectCommands.UseType( 0xf06, 1165, Engine.Player.GetLayer( Layer.Backpack ) );
         }
     }
 
@@ -79,7 +81,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            ObjectCommands.UseType( 0xf06, 1161, "backpack" );
+            ObjectCommands.UseType( 0xf06, 1161, Engine.Player.GetLayer( Layer.Backpack ) );
         }
     }
 
@@ -88,7 +90,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            ObjectCommands.UseType( 0x2808, 0, "backpack" );
+            ObjectCommands.UseType( 0x2808, 0, Engine.Player.GetLayer( Layer.Backpack ) );
         }
     }
 
@@ -97,7 +99,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            ObjectCommands.UseType( 0x2fd7, 1154, "backpack" );
+            ObjectCommands.UseType( 0x2fd7, 1154, Engine.Player.GetLayer( Layer.Backpack ) );
         }
     }
 
@@ -106,7 +108,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            ObjectCommands.UseType( 0x2d4f, 0, "backpack" );
+            ObjectCommands.UseType( 0x2d4f, 0, Engine.Player.GetLayer( Layer.Backpack ) );
         }
     }
 
@@ -115,7 +117,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            ObjectCommands.UseType( 0x2fd8, 1160, "backpack" );
+            ObjectCommands.UseType( 0x2fd8, 1160, Engine.Player.GetLayer( Layer.Backpack ) );
         }
     }
 
@@ -124,7 +126,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            ObjectCommands.UseType( 0x1021, 14, "backpack" );
+            ObjectCommands.UseType( 0x1021, 14, Engine.Player.GetLayer( Layer.Backpack ) );
         }
     }
 
@@ -133,7 +135,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            ObjectCommands.UseType( 0x1021, 43, "backpack" );
+            ObjectCommands.UseType( 0x1021, 43, Engine.Player.GetLayer( Layer.Backpack ) );
         }
     }
 
@@ -142,7 +144,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            ObjectCommands.UseType( 0x26ac, 0, "backpack" );
+            ObjectCommands.UseType( 0x26ac, 0, Engine.Player.GetLayer( Layer.Backpack ) );
         }
     }
 }

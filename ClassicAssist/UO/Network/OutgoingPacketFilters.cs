@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ClassicAssist.Data;
+using ClassicAssist.Data.Abilities;
 using ClassicAssist.Resources;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.UO.Network
@@ -18,8 +20,21 @@ namespace ClassicAssist.UO.Network
         public static void Initialize()
         {
             Register( 0x05, OnAttackRequested );
+            Register( 0x06, OnUseRequest );
             Register( 0x80, OnAccountLoginRequest );
             Register( 0x91, OnGameServerLogin );
+        }
+
+        private static bool OnUseRequest( ref byte[] packet, ref int length )
+        {
+            if ( !Options.CurrentOptions.CheckHandsPotions )
+            {
+                return false;
+            }
+
+            int serial = ( packet[1] << 24 ) | ( packet[2] << 16 ) | ( packet[3] << 8 ) | packet[4];
+
+            return AbilitiesManager.GetInstance().CheckHands( serial );
         }
 
         private static bool OnGameServerLogin( ref byte[] packet, ref int length )

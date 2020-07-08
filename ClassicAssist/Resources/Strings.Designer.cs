@@ -610,6 +610,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check hands before potions.
+        /// </summary>
+        public static string Check_hands_before_potions {
+            get {
+                return ResourceManager.GetString("Check hands before potions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose by Cliloc.
         /// </summary>
         public static string Choose_by_Cliloc {

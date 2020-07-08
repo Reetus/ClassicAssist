@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Assistant;
+using ClassicAssist.Misc;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
+using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using Newtonsoft.Json;
 using UOC = ClassicAssist.UO.Commands;
@@ -20,6 +22,7 @@ namespace ClassicAssist.Data.Abilities
 
     public class AbilitiesManager
     {
+        private static readonly int[] _potionTypes = { 0xf06, 0xf07, 0xf08, 0xf09, 0xf0b, 0xf0c, 0xf0d };
         private static AbilitiesManager _instance;
         private static readonly object _lock = new object();
         private static List<WeaponData> _weaponData;
@@ -174,6 +177,11 @@ namespace ClassicAssist.Data.Abilities
             return _instance;
         }
 
+        internal WeaponData GetWeaponData( int id )
+        {
+            return _weaponData?.FirstOrDefault( w => w.Graphic == id );
+        }
+
         private static void LoadWeaponData( string basePath )
         {
             string dataPath = Path.Combine( basePath, "Data" );
@@ -249,6 +257,64 @@ namespace ClassicAssist.Data.Abilities
             }
 
             ResendGump( 5, 11, abilityType );
+        }
+
+        public bool CheckHands( int serial )
+        {
+            if ( !Options.CurrentOptions.CheckHandsPotions )
+            {
+                return false;
+            }
+
+            Item item = Engine.Items?.GetItem( serial );
+
+            if ( item == null || !_potionTypes.Contains( item.ID ) )
+            {
+                return false;
+            }
+
+            Item leftHand = Engine.Player?.Equipment.FirstOrDefault( i => i.Layer == Layer.TwoHanded );
+            Item rightHand = Engine.Player?.Equipment.FirstOrDefault( i => i.Layer == Layer.OneHanded );
+
+            if ( leftHand == null && rightHand != null )
+            {
+                //OSI crossbow in OneHanded layer??
+                leftHand = rightHand;
+                rightHand = null;
+            }
+
+            WeaponData leftHandWD = null;
+
+            if ( leftHand != null )
+            {
+                leftHandWD = GetWeaponData( leftHand.ID );
+            }
+
+            if ( ( !( leftHandWD?.Twohanded ?? false ) && leftHand?.Properties != null &&
+                   !( leftHand.Properties?.Any( p => p.Cliloc == 1061171 /* Two-Handed Weapon */ ) ?? false ) ||
+                   leftHand?.Properties != null &&
+                   !( leftHand.Properties?.All( p => p.Cliloc != 1072792 /* Balanced */ ) ?? false ) ) &&
+                 ( rightHand == null || leftHand == null ) )
+            {
+                return false;
+            }
+
+            if ( leftHand == null )
+            {
+                return false;
+            }
+
+            ActionPacketQueue.EnqueueDragDrop( leftHand.Serial, 1, Engine.Player.GetLayer( Layer.Backpack ),
+                QueuePriority.High );
+            ActionPacketQueue.EnqueueActionPacket( new UseObject( serial ), QueuePriority.High );
+            ActionPacketQueue.EnqueueActionPackets(
+                new BasePacket[]
+                {
+                    new DragItem( leftHand.Serial, 1 ),
+                    new EquipRequest( leftHand.Serial, leftHand.Layer, (int) Engine.Player?.Serial )
+                }, QueuePriority.High );
+
+            return true;
         }
     }
 }

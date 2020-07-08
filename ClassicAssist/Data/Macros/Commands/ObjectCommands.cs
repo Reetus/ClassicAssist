@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assistant;
+using ClassicAssist.Data.Abilities;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UO;
@@ -68,7 +69,7 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             int serial = AliasCommands.ResolveSerial( type );
 
-            if ( serial <= 0 )
+            if ( serial == 0 )
             {
                 UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
 
@@ -90,8 +91,8 @@ namespace ClassicAssist.Data.Macros.Commands
             }
 
             Item useItem = hue == -1
-                ? containerItem.Container.SelectEntity( i => i.ID == serial )
-                : containerItem.Container.SelectEntity( i => i.ID == serial && i.Hue == hue );
+                ? containerItem.Container?.SelectEntity( i => i.ID == serial )
+                : containerItem.Container?.SelectEntity( i => i.ID == serial && i.Hue == hue );
 
             if ( useItem == null )
             {
@@ -100,7 +101,10 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            Engine.SendPacketToServer( new UseObject( useItem.Serial ) );
+            if ( !AbilitiesManager.GetInstance().CheckHands( useItem.Serial ) )
+            {
+                Engine.SendPacketToServer( new UseObject( useItem.Serial ) );
+            }
         }
 
         [CommandsDisplay( Category = nameof( Strings.Entity ),

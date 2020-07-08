@@ -116,6 +116,8 @@
             </CheckBox>
             <CheckBox Content="{x:Static resources:Strings.Macros_default_to_quiet_mode}"
                       IsChecked="{Binding CurrentOptions.DefaultMacroQuietMode}" />
+            <CheckBox Content="{x:Static resources:Strings.Check_hands_before_potions}"
+                      IsChecked="{Binding CurrentOptions.CheckHandsPotions}" />
         </StackPanel>
         <StackPanel x:Name="stackPanel" Grid.Column="1">
             <CheckBox IsChecked="{Binding CurrentOptions.PreventTargetingInnocentsInGuardzone}"

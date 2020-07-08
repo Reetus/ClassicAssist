@@ -254,6 +254,12 @@ namespace ClassicAssist.UI.ViewModels
                         }
                     }
 
+                    // Global macro takes precedence for hotkey
+                    if ( Items.Any( e => Equals( e.Hotkey, entry.Hotkey ) && e.Global ) )
+                    {
+                        entry.Hotkey = ShortcutKeys.Default;
+                    }
+
                     entry.Action = async hks => await Execute( entry );
 
                     if ( Options.CurrentOptions.SortMacrosAlphabetical )
@@ -273,6 +279,13 @@ namespace ClassicAssist.UI.ViewModels
                 {
                     AliasCommands.SetAlias( token["Name"].ToObject<string>(), token["Value"].ToObject<int>() );
                 }
+            }
+
+            string modulePath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Modules" );
+
+            if ( !Directory.Exists( modulePath ) )
+            {
+                Directory.CreateDirectory( modulePath );
             }
         }
 

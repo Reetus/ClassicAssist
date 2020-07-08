@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading;
 using Assistant;
 using ClassicAssist.UI.Misc;
+using ClassicAssist.UO.Gumps;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 
@@ -12,9 +13,12 @@ namespace ClassicAssist.Data.Macros
 {
     public class MacroManager
     {
+        public delegate void dMacroStartStop();
         private static readonly object _lock = new object();
         private static MacroManager _instance;
         private readonly List<IMacroCommandParser> _parsers = new List<IMacroCommandParser>();
+        public event dMacroStartStop MacroStartedEvent;
+        public event dMacroStartStop MacroStoppedEvent;
 
         private MacroManager()
         {
@@ -160,6 +164,16 @@ namespace ClassicAssist.Data.Macros
             Thread currentThread = Thread.CurrentThread;
 
             return Items?.FirstOrDefault( m => m.MacroInvoker.Thread?.Equals( currentThread ) ?? false );
+        }
+
+        public void OnMacroStarted()
+        {
+            MacroStartedEvent?.Invoke();
+        }
+
+        public void OnMacroStopped()
+        {
+            MacroStoppedEvent?.Invoke();
         }
     }
 }

@@ -154,9 +154,10 @@ namespace ClassicAssist.Data.Macros
 
         public void Stop()
         {
-            if ( _macroInvoker.IsRunning )
+            if ( IsRunning )
             {
                 _macroInvoker.Stop();
+                _dispatcher.Invoke( () => IsRunning = false );
             }
         }
 

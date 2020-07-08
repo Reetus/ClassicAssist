@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Assistant;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Resources;
 using IronPython.Hosting;
@@ -45,6 +47,17 @@ namespace ClassicAssist.Data.Macros
             {
                 _importCache = InitializeImports( _engine );
             }
+
+            string modulePath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Modules" );
+            ICollection<string> searchPaths = _engine.GetSearchPaths();
+
+            if ( searchPaths.Contains( modulePath ) )
+            {
+                return;
+            }
+
+            searchPaths.Add( modulePath );
+            _engine.SetSearchPaths( searchPaths );
         }
 
         public Exception Exception { get; set; }
@@ -192,12 +205,14 @@ namespace ClassicAssist.Data.Macros
                 finally
                 {
                     StoppedEvent?.Invoke();
+                    MacroManager.GetInstance().OnMacroStopped();
                 }
             } ) { IsBackground = true };
 
             try
             {
                 Thread.Start();
+                MacroManager.GetInstance().OnMacroStarted();
             }
             catch ( ThreadStateException )
             {
@@ -229,10 +244,16 @@ namespace ClassicAssist.Data.Macros
                     Thread.Sleep( diff );
                 }
 
-                Thread?.Interrupt();
-                Thread?.Abort();
-                Thread?.Join( 100 );
-                MacroManager.GetInstance().Replay = false;
+                Task.Run( () =>
+                {
+                    Thread?.Interrupt();
+                    Thread?.Abort();
+                    Thread?.Join( 100 );
+                } ).ContinueWith( t =>
+                {
+                    MacroManager.GetInstance().Replay = false;
+                    MacroManager.GetInstance().OnMacroStopped();
+                } );
             }
             catch ( ThreadStateException e )
             {

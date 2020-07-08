@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Made_For_Malo" xml:space="preserve">
-    <value>"호주 친구 Reetus가 한국을 위해 만들었습니다"</value>
+    <value>Translated by Mark Hunt &amp; Andy H.</value>
   </data>
   <data name="UO_LOCALE" xml:space="preserve">
     <value>KOR</value>

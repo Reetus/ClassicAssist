@@ -251,9 +251,16 @@ namespace ClassicAssist.Data.Macros
 
                 Task.Run( () =>
                 {
-                    Thread?.Interrupt();
-                    Thread?.Abort();
-                    Thread?.Join( 100 );
+                    try
+                    {
+                        Thread?.Interrupt();
+                        Thread?.Abort();
+                        Thread?.Join( 100 );
+                    }
+                    catch ( Exception )
+                    {
+                        // ignored
+                    }
                 } ).ContinueWith( t =>
                 {
                     MacroManager.GetInstance().Replay = false;

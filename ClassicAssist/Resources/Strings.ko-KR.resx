@@ -1222,7 +1222,7 @@
     <value>정말 매크로 "{0}"를 제거?</value>
   </data>
   <data name="Donating helps support continued development, your support is appreciated." xml:space="preserve">
-    <value>기부는 지속적인 개발을 지원하는 데 도움이, 당신의 지원을 주셔서 감사합니다.</value>
+    <value>여러분의 기부는 지속적인 개발에 큰 도움이 됩니다. 페이팔을 통해서 많은 지원 부탁드립니다.</value>
   </data>
   <data name="Max Target Queue Length:" xml:space="preserve">
     <value>최대 대상 큐 길이:</value>

@@ -17,6 +17,7 @@ using ClassicAssist.UI.ViewModels.Macros;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UI.Views.Macros;
 using ClassicAssist.UO;
+using ClassicAssist.UO.Gumps;
 using ICSharpCode.AvalonEdit.Document;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -280,6 +281,9 @@ namespace ClassicAssist.UI.ViewModels
                     AliasCommands.SetAlias( token["Name"].ToObject<string>(), token["Value"].ToObject<int>() );
                 }
             }
+
+            _manager.MacroStartedEvent += () => Task.Run( MacrosGump.ResendGump );
+            _manager.MacroStoppedEvent += () => Task.Run( MacrosGump.ResendGump );
 
             string modulePath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Modules" );
 

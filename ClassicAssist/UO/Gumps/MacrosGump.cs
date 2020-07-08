@@ -28,8 +28,6 @@ namespace ClassicAssist.UO.Gumps
 {
     public class MacrosGump : Gump
     {
-        private static readonly object _lock = new object();
-
         public MacrosGump( string html ) : base( 100, 100 )
         {
             Movable = true;
@@ -43,41 +41,29 @@ namespace ClassicAssist.UO.Gumps
 
         public static async Task ResendGump()
         {
-            if ( !Monitor.TryEnter( _lock ) )
+            MacroManager _macroManager = MacroManager.GetInstance();
+
+            IEnumerable<MacroEntry> macro = _macroManager.Items.Where( e => e.IsRunning );
+
+            string html = string.Empty;
+
+            foreach ( MacroEntry entry in macro )
             {
-                return;
-            }
-
-            try
-            {
-                MacroManager _macroManager = MacroManager.GetInstance();
-
-                IEnumerable<MacroEntry> macro = _macroManager.Items.Where( e => e.IsRunning );
-
-                string html = string.Empty;
-
-                foreach ( MacroEntry entry in macro )
+                if ( entry.IsBackground )
                 {
-                    if ( entry.IsBackground )
-                    {
-                        html += $"<BASEFONT COLOR=#000000><I>{entry.Name}</I></FONT>\n";
-                    }
-                    else
-                    {
-                        html += $"<BASEFONT COLOR=#000000>{entry.Name}</FONT>\n";
-                    }
+                    html += $"<BASEFONT COLOR=#000000><I>{entry.Name}</I></FONT>\n";
                 }
-
-                MacrosGump gump = new MacrosGump( html );
-                Commands.CloseClientGump( gump.ID );
-                gump.SendGump();
-
-                await Task.Delay( 50 );
+                else
+                {
+                    html += $"<BASEFONT COLOR=#000000>{entry.Name}</FONT>\n";
+                }
             }
-            finally
-            {
-                Monitor.Exit( _lock );
-            }
+
+            MacrosGump gump = new MacrosGump( html );
+            Commands.CloseClientGump( gump.ID );
+            gump.SendGump();
+
+            await Task.Delay( 50 );
         }
     }
 }

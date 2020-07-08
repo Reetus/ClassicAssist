@@ -29,6 +29,7 @@ namespace ClassicAssist.Data
         private bool _alwaysOnTop;
         private bool _autoAcceptPartyInvite;
         private bool _autoAcceptPartyOnlyFromFriends;
+        private bool _checkHandsPotions;
         private char _commandPrefix = '+';
         private bool _debug;
         private bool _defaultMacroQuietMode;
@@ -108,6 +109,12 @@ namespace ClassicAssist.Data
         {
             get => _autoAcceptPartyOnlyFromFriends;
             set => SetProperty( ref _autoAcceptPartyOnlyFromFriends, value );
+        }
+
+        public bool CheckHandsPotions
+        {
+            get => _checkHandsPotions;
+            set => SetProperty( ref _checkHandsPotions, value );
         }
 
         public char CommandPrefix

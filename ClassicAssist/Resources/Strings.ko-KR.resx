@@ -1270,7 +1270,7 @@
     <value>상태</value>
   </data>
   <data name="Autostart" xml:space="preserve">
-    <value>Autostart</value>
+    <value>자동시작</value>
   </data>
   <data name="Total base:" xml:space="preserve">
     <value>총 기준:</value>
@@ -1388,5 +1388,8 @@
   </data>
   <data name="Loaded to all profiles" xml:space="preserve">
     <value>모든 프로파일을 불러옴</value>
+  </data>
+  <data name="Check hands before potions" xml:space="preserve">
+    <value>포션을 마시기전 손이 빈것 확인</value>
   </data>
 </root>

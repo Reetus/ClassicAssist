@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
-using System.Xml.Serialization;
 using ClassicAssist.Annotations;
 using ClassicAssist.Misc;
 using ClassicAssist.UI.Misc;

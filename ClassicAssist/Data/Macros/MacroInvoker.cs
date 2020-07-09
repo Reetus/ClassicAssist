@@ -249,23 +249,11 @@ namespace ClassicAssist.Data.Macros
                     Thread.Sleep( diff );
                 }
 
-                Task.Run( () =>
-                {
-                    try
-                    {
-                        Thread?.Interrupt();
-                        Thread?.Abort();
-                        Thread?.Join( 100 );
-                    }
-                    catch ( Exception )
-                    {
-                        // ignored
-                    }
-                } ).ContinueWith( t =>
-                {
-                    MacroManager.GetInstance().Replay = false;
-                    MacroManager.GetInstance().OnMacroStopped();
-                } );
+                Thread?.Interrupt();
+                Thread?.Abort();
+                Thread?.Join( 100 );
+                MacroManager.GetInstance().Replay = false;
+                MacroManager.GetInstance().OnMacroStopped();
             }
             catch ( ThreadStateException e )
             {

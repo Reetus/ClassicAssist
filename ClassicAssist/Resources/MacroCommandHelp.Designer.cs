@@ -1341,6 +1341,37 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove an item/mobile from the screen.
+        /// </summary>
+        public static string HIDEENTITY_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("HIDEENTITY_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ClearIgnoreList()
+        ///# Hide all corpses on screen
+        ///while FindType(0x2006):
+        /// HideEntity(&apos;found&apos;)
+        /// IgnoreObject(&apos;found&apos;).
+        /// </summary>
+        public static string HIDEENTITY_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("HIDEENTITY_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HideEntity(&apos;corpse&apos;).
+        /// </summary>
+        public static string HIDEENTITY_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("HIDEENTITY_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns the given mobiles hitpoints, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
         /// </summary>
         public static string HITS_COMMAND_DESCRIPTION {

@@ -278,5 +278,20 @@ namespace ClassicAssist.Data.Macros.Commands
 
             return val;
         }
+
+        [CommandsDisplay( Category = nameof( Strings.Main ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        public static void HideEntity( object obj )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Cannot_find_item___ );
+                return;
+            }
+
+            UOC.RemoveObject( serial );
+        }
     }
 }

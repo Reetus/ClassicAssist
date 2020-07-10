@@ -39,6 +39,8 @@
                                         <MenuItem Header="{x:Static resources:Strings.Remove}"
                                                   Command="{Binding Data.RemoveAliasCommand, Source={StaticResource Proxy}}"
                                                   CommandParameter="{Binding SelectedAlias}" />
+                                        <MenuItem Header="{x:Static resources:Strings.Set}" Command="{Binding Data.SetAliasCommand, Source={StaticResource Proxy}}"
+                                                  CommandParameter="{Binding SelectedAlias}" />
                                     </ContextMenu>
                                 </ListView.ContextMenu>
                                 <ListView.View>

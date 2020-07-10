@@ -26,8 +26,43 @@ namespace ClassicAssist.Data.Commands
                 { "help", OnHelp },
                 { "where", OnSendLocation },
                 { "addfriend", OnAddFriend },
-                { "removefriend", OnRemoveFriend }
+                { "removefriend", OnRemoveFriend },
+                { "info", OnInfo },
+                { "resync", OnResync },
+                { "hide", OnHide }
             };
+        }
+
+        private static bool OnHide( string[] arg )
+        {
+            Task.Run( async () =>
+            {
+                int serial = await UOC.GetTargeSerialAsync();
+
+                if ( serial == 0 )
+                {
+                    UOC.SystemMessage( Strings.Cannot_find_item___ );
+                    return;
+                }
+
+                UOC.RemoveObject( serial );
+            } );
+
+            return true;
+        }
+
+        private static bool OnResync( string[] arg )
+        {
+            MainCommands.Resync();
+
+            return true;
+        }
+
+        private static bool OnInfo( string[] arg )
+        {
+            Task.Run( async () => await UOC.InspectObjectAsync() );
+
+            return true;
         }
 
         private static bool OnRemoveFriend( string[] args )

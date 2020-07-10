@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
+using ClassicAssist.Resources;
+using ClassicAssist.UO;
 
 namespace ClassicAssist.UI.ViewModels
 {
@@ -33,6 +37,7 @@ namespace ClassicAssist.UI.ViewModels
         private InstanceAliasEntry _selectedInstanceAlias;
         private ListEntry _selectedList;
         private TimerData _selectedTimer;
+        private ICommand _setAliasCommand;
         private ObservableCollection<TimerData> _timers = new ObservableCollection<TimerData>();
 
         public ActiveObjectsViewModel()
@@ -123,6 +128,9 @@ namespace ClassicAssist.UI.ViewModels
             get => _selectedTimer;
             set => SetProperty( ref _selectedTimer, value );
         }
+
+        public ICommand SetAliasCommand =>
+            _setAliasCommand ?? ( _setAliasCommand = new RelayCommandAsync( SetAlias, o => o != null ) );
 
         public ObservableCollection<TimerData> Timers
         {
@@ -256,7 +264,7 @@ namespace ClassicAssist.UI.ViewModels
 
             foreach ( KeyValuePair<string, int> alias in AliasCommands.GetAllAliases() )
             {
-                Aliases.Add( new AliasEntry { Name = alias.Key, Serial = alias.Value } );
+                Aliases.AddSorted( new AliasEntry { Name = alias.Key, Serial = alias.Value } );
             }
         }
 
@@ -273,6 +281,24 @@ namespace ClassicAssist.UI.ViewModels
             RefreshAliases();
         }
 
+        private static async Task SetAlias( object arg )
+        {
+            if ( !( arg is AliasEntry entry ) )
+            {
+                return;
+            }
+
+            int serial =
+                await Commands.GetTargeSerialAsync( string.Format( Strings.Target_object___0_____, entry.Name ) );
+
+            if ( serial == 0 )
+            {
+                return;
+            }
+
+            AliasCommands.SetAlias( entry.Name, serial );
+        }
+
         public class InstanceAliasEntry
         {
             public MacroEntry Macro { get; set; }
@@ -280,10 +306,25 @@ namespace ClassicAssist.UI.ViewModels
             public int Serial { get; set; }
         }
 
-        public class AliasEntry
+        public class AliasEntry : IComparable<AliasEntry>
         {
             public string Name { get; set; }
             public int Serial { get; set; }
+
+            public int CompareTo( AliasEntry other )
+            {
+                if ( ReferenceEquals( this, other ) )
+                {
+                    return 0;
+                }
+
+                if ( ReferenceEquals( null, other ) )
+                {
+                    return 1;
+                }
+
+                return string.Compare( Name, other.Name, StringComparison.InvariantCultureIgnoreCase );
+            }
         }
 
         public class ListEntry

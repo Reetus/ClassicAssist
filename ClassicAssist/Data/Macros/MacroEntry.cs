@@ -137,11 +137,6 @@ namespace ClassicAssist.Data.Macros
 
         public void Execute()
         {
-            if ( _macroInvoker.IsRunning )
-            {
-                _macroInvoker.Stop();
-            }
-
             _dispatcher.Invoke( () => IsRunning = true );
 
             if ( IsBackground && !MacroManager.QuietMode )

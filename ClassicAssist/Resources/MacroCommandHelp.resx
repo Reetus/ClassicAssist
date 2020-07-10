@@ -1394,4 +1394,17 @@ Stop("Background Macro")</value>
   <data name="TARGETTILEOFFSETRESOURCE_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>TargetTileOffsetResource(0, -1, 0)</value>
   </data>
+  <data name="HIDEENTITY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Remove an item/mobile from the screen</value>
+  </data>
+  <data name="HIDEENTITY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>HideEntity('corpse')</value>
+  </data>
+  <data name="HIDEENTITY_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>ClearIgnoreList()
+# Hide all corpses on screen
+while FindType(0x2006):
+ HideEntity('found')
+ IgnoreObject('found')</value>
+  </data>
 </root>

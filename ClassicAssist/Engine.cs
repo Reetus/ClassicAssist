@@ -518,15 +518,18 @@ namespace Assistant
             }
         }
 
-        public static void SendPacketToClient( byte[] packet, int length )
+        public static void SendPacketToClient( byte[] packet, int length, bool delay = true )
         {
             try
             {
                 lock ( _clientSendLock )
                 {
-                    while ( DateTime.Now < _nextPacketRecvTime )
+                    if ( delay )
                     {
-                        Thread.Sleep( 1 );
+                        while ( DateTime.Now < _nextPacketRecvTime )
+                        {
+                            Thread.Sleep( 1 );
+                        }
                     }
 
                     InternalPacketReceivedEvent?.Invoke( packet, length );
@@ -549,7 +552,7 @@ namespace Assistant
             SendPacketToClient( data, data.Length );
         }
 
-        public static void SendPacketToClient( BasePacket basePacket )
+        public static void SendPacketToClient( BasePacket basePacket, bool delay = true )
         {
             if ( basePacket.Direction != PacketDirection.Any && basePacket.Direction != PacketDirection.Incoming )
             {
@@ -558,7 +561,7 @@ namespace Assistant
 
             byte[] data = basePacket.ToArray();
 
-            SendPacketToClient( data, data.Length );
+            SendPacketToClient( data, data.Length, delay );
         }
 
         public static void SendPacketToServer( PacketWriter packet )

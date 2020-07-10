@@ -92,12 +92,12 @@ namespace ClassicAssist.UO.Objects
             Interlocked.Exchange( ref _layerArray[(int) layer], serial );
         }
 
-        internal int[] GetAllLayers()
+        public int[] GetAllLayers()
         {
             return _layerArray;
         }
 
-        internal int GetLayer( Layer layer )
+        public int GetLayer( Layer layer )
         {
             return (int) layer >= _layerArray.Length ? 0 : Thread.VolatileRead( ref _layerArray[(int) layer] );
         }

@@ -51,11 +51,11 @@ namespace ClassicAssist.UO.Gumps
             {
                 if ( entry.IsBackground )
                 {
-                    html += $"<BASEFONT COLOR=#000000><I>{entry.Name}</I></FONT>\n";
+                    html += $"<BASEFONT COLOR=#000000><I>{entry.Name}</I></BASEFONT>\n";
                 }
                 else
                 {
-                    html += $"<BASEFONT COLOR=#000000>{entry.Name}</FONT>\n";
+                    html += $"<BASEFONT COLOR=#000000>{entry.Name}</BASEFONT>\n";
                 }
             }
 

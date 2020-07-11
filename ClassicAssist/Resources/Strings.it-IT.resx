@@ -1332,4 +1332,73 @@
   <data name="Hide" xml:space="preserve">
     <value>Nascondere</value>
   </data>
+  <data name="Author" xml:space="preserve">
+    <value>Autore</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Categoria</value>
+  </data>
+  <data name="Copy to clipboard" xml:space="preserve">
+    <value>Copia negli appunti</value>
+  </data>
+  <data name="Create Macro" xml:space="preserve">
+    <value>Crea Script</value>
+  </data>
+  <data name="Era" xml:space="preserve">
+    <value>Era</value>
+  </data>
+  <data name="Open in Github" xml:space="preserve">
+    <value>Apri su Github</value>
+  </data>
+  <data name="Shard" xml:space="preserve">
+    <value>Shard</value>
+  </data>
+  <data name="Macro Warning" xml:space="preserve">
+    <value>Eseguire script dannosi potrebbe compromettere il tuo account o il tuo computer!
+
+Dovresti comprendere cosa fa lo script prima di avviarlo.
+
+Nonostante siano state poste tutte le attenzioni per evitare scirpt dannosi, ClassicAssist non si assume nessuna responsabilità.
+
+Sei sicuro di voler continuare?</value>
+  </data>
+  <data name="Public Macros" xml:space="preserve">
+    <value>Script Pubblici</value>
+  </data>
+  <data name="Learn how to contribute your own macros..." xml:space="preserve">
+    <value>Impara come contribuire con i tuoi script...</value>
+  </data>
+  <data name="Failed to download manifest..." xml:space="preserve">
+    <value>Impossibile scaricare...</value>
+  </data>
+  <data name="Failed to download macro..." xml:space="preserve">
+    <value>Impossibile scaricare lo script...</value>
+  </data>
+  <data name="Additional Assemblies" xml:space="preserve">
+    <value>Assiemi aggiuntivi</value>
+  </data>
+  <data name="Additional assemblies to load:" xml:space="preserve">
+    <value>Assiemi aggiuntivi da caricare:</value>
+  </data>
+  <data name="Error loading assembly: {0}" xml:space="preserve">
+    <value>Errore caricamento assiemi: {0}</value>
+  </data>
+  <data name="Special Moves" xml:space="preserve">
+    <value>Mosse Speciali</value>
+  </data>
+  <data name="Loaded to all profiles" xml:space="preserve">
+    <value>Caricato in tutti i profili</value>
+  </data>
+  <data name="Bards Music" xml:space="preserve">
+    <value>Musica Bardi</value>
+  </data>
+  <data name="Check hands before potions" xml:space="preserve">
+    <value>Check equip prima di bere pozioni</value>
+  </data>
+  <data name="Scavenging '{0}'" xml:space="preserve">
+    <value>Scavenging '{0}'</value>
+  </data>
+  <data name="Rehue friends" xml:space="preserve">
+    <value>Ricolora amici</value>
+  </data>
 </root>

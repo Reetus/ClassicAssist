@@ -1170,4 +1170,55 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
   <data name="CHATMSG_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Invia un messaggio in chat.</value>
   </data>
+  <data name="OPENGUILDGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Apre il Gump di gilda</value>
+  </data>
+  <data name="OPENQUESTSGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Apre il Gump quests</value>
+  </data>
+  <data name="TARGETXYZ_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Targetta il pavimento alle coordinate fornite</value>
+  </data>
+  <data name="REHUE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ricolora un elemento / mobile con la tonalità specificata, impostare su 0 per rimuovere. (Sperimentale)</value>
+  </data>
+  <data name="STOPALL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ferma tutti gli scripts, compresi quelli in background</value>
+  </data>
+  <data name="SETSTATUS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Imposta lo stato di una Stat, su, giù o bloccata.</value>
+  </data>
+  <data name="TARGETTILEOFFSET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Targetta il pavimento alla distanza data, relativa a se</value>
+  </data>
+  <data name="BUFFTIME_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Risulta i millisecondi rimanenti di un buff. 0 se scaduto / non abilitato.</value>
+  </data>
+  <data name="TARGETBYRESOURCE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Usa un Tool e targetta uno specifico Type di risorse (Richiede supporto server OSI / ServUO)</value>
+  </data>
+  <data name="WAITFORMENU_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Aspetta fino alla ricezione del menu packet, parametri opzionali di gump ID e timeout</value>
+  </data>
+  <data name="REPLYMENU_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Invia risposta tasto ad un menu del server</value>
+  </data>
+  <data name="INMENU_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Risulta True se il titolo del menu o i titoli inseriti contengono il testo dato</value>
+  </data>
+  <data name="MENUEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Risulta True se l'ID di un menu esiste</value>
+  </data>
+  <data name="CLOSEMENU_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Chiude uno specifico menu (ID)</value>
+  </data>
+  <data name="SKILLCAP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Risulta lo SkillCap di una skill</value>
+  </data>
+  <data name="CONFIRMPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Visualizza in game una finestra con un messaggio. Ritorna True se si preme Ok, altrimenti False</value>
+  </data>
+  <data name="TARGETTILEOFFSETRESOURCE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Targetta un Tile ad una distanza relativa a se (targetta automaticamente alberi/grotte/acqua tiles se presenti)</value>
+  </data>
 </root>

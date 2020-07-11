@@ -30,9 +30,9 @@ namespace ClassicAssist.Data
         public static Dictionary<string, string> SavedPasswords { get; set; } = new Dictionary<string, string>();
         public static bool SavePasswords { get; set; }
         public static bool SavePasswordsOnlyBlank { get; set; }
+        public static string SessionId { get; set; }
         public static Version UpdateGumpVersion { get; set; }
         public static string UserId { get; set; }
-        public static string SessionId { get; set; }
         public static double WindowHeight { get; set; }
 
         public static double WindowWidth { get; set; }
@@ -104,6 +104,8 @@ namespace ClassicAssist.Data
             if ( !File.Exists( configPath ) )
             {
                 LastProfile = Options.DEFAULT_SETTINGS_FILENAME;
+                UserId = Guid.NewGuid().ToString();
+                SessionId = Guid.NewGuid().ToString();
                 return;
             }
 

@@ -85,7 +85,7 @@ namespace ClassicAssist.Data.Macros
                     t.Namespace != null && t.IsPublic && t.IsClass && t.Namespace.EndsWith( "Macros.Commands" ) )
                 .Aggregate( string.Empty, ( current, t ) => current + $"from {t.FullName} import * \n" );
 
-            foreach ( string assemblyName in AssistantOptions.Assemblies )
+            foreach ( string assemblyName in AssistantOptions.Assemblies ?? new string[0] )
             {
                 try
                 {

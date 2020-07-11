@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Assistant;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Resources;
+using ClassicAssist.UI.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ClassicAssist.Tests
@@ -20,6 +22,28 @@ namespace ClassicAssist.Tests
             MacroManager mi = MacroManager.GetInstance();
 
             mi.Execute( me );
+        }
+
+        [TestMethod]
+        public void WontThrowExceptionNewMacroNoAssistantOptions()
+        {
+            try
+            {
+                string path = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Assistant.json" );
+
+                if ( File.Exists( path ) )
+                {
+                    File.Delete( path );
+                }
+
+                MacrosTabViewModel vm = new MacrosTabViewModel();
+
+                vm.NewMacroCommand.Execute( null );
+            }
+            catch ( Exception )
+            {
+                Assert.Fail();
+            }
         }
 
         //[TestMethod]

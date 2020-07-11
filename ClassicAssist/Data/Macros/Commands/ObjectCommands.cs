@@ -107,6 +107,22 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
+        [CommandsDisplay( Category = nameof( Strings.Actions ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.SerialOrAlias ) } )]
+        public static void UseTargetedItem( object item, object target )
+        {
+            int serial = AliasCommands.ResolveSerial( item );
+            int targetSerial = AliasCommands.ResolveSerial( target );
+
+            if ( serial == 0 || targetSerial == 0 )
+            {
+                UOC.SystemMessage( Strings.Cannot_find_item___ );
+                return;
+            }
+
+            Engine.SendPacketToServer( new UseTargetedItem( serial, targetSerial ) );
+        }
+
         [CommandsDisplay( Category = nameof( Strings.Entity ),
             Parameters = new[]
             {

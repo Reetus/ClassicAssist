@@ -31,8 +31,8 @@ using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using CUO_API;
-using Exceptionless;
 using Octokit;
+using Sentry;
 
 [assembly: InternalsVisibleTo( "ClassicAssist.Tests" )]
 
@@ -236,7 +236,7 @@ namespace Assistant
         {
             Options.Save( Options.CurrentOptions );
             AssistantOptions.Save();
-            ExceptionlessClient.Default.SubmitSessionEnd( AssistantOptions.UserId );
+            SentrySdk.Close();
         }
 
         private static void OnPlayerPositionChanged( int x, int y, int z )
@@ -337,9 +337,14 @@ namespace Assistant
             }
             catch ( Exception e )
             {
-                e.ToExceptionless().SetProperty( "Packet", packet.GetPacket() )
-                    .SetProperty( "Player", Player.ToString() ).SetProperty( "WorldItemCount", Items.Count() )
-                    .SetProperty( "WorldMobileCount", Mobiles.Count() ).Submit();
+                SentrySdk.WithScope( scope =>
+                {
+                    scope.SetExtra( "Packet", packet.GetPacket() );
+                    scope.SetExtra( "Player", Player.ToString() );
+                    scope.SetExtra( "WorldItemCount", Items.Count() );
+                    scope.SetExtra( "WorldMobileCount", Mobiles.Count() );
+                    SentrySdk.CaptureException( e );
+                } );
             }
         }
 
@@ -359,9 +364,14 @@ namespace Assistant
             }
             catch ( Exception e )
             {
-                e.ToExceptionless().SetProperty( "Packet", packet.GetPacket() )
-                    .SetProperty( "Player", Player.ToString() ).SetProperty( "WorldItemCount", Items.Count() )
-                    .SetProperty( "WorldMobileCount", Mobiles.Count() ).Submit();
+                SentrySdk.WithScope( scope =>
+                {
+                    scope.SetExtra( "Packet", packet.GetPacket() );
+                    scope.SetExtra( "Player", Player.ToString() );
+                    scope.SetExtra( "WorldItemCount", Items.Count() );
+                    scope.SetExtra( "WorldMobileCount", Mobiles.Count() );
+                    SentrySdk.CaptureException( e );
+                } );
             }
         }
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using ClassicAssist.UI.Views.Filters;
 using ClassicAssist.UO.Data;
-using Exceptionless;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.Data.Filters
@@ -20,8 +19,6 @@ namespace ClassicAssist.Data.Filters
         {
             RepeatedMessagesFilterConfigureWindow window = new RepeatedMessagesFilterConfigureWindow( FilterOptions );
             window.ShowDialog();
-            ExceptionlessClient.Default.CreateFeatureUsage( "Configure RepeatedMessagesFilter" )
-                .SetUserIdentity( AssistantOptions.UserId ).AddObject( FilterOptions );
         }
 
         public void Deserialize( JToken token )

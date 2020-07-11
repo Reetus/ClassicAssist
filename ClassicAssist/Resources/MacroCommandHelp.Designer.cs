@@ -3401,6 +3401,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Uses specified item and targets target in one action. Requires server support (OSI / ServUO).
+        /// </summary>
+        public static string USETARGETEDITEM_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("USETARGETEDITEM_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UseTargetedItem(&apos;bandage&apos;, &apos;pet&apos;).
+        /// </summary>
+        public static string USETARGETEDITEM_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("USETARGETEDITEM_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sends use (doubleclick) request for given type, optional parameters of hue and container object (defaults to player backpack) (parameters can be serial or alias)..
         /// </summary>
         public static string USETYPE_COMMAND_DESCRIPTION {

@@ -1407,4 +1407,10 @@ while FindType(0x2006):
  HideEntity('found')
  IgnoreObject('found')</value>
   </data>
+  <data name="USETARGETEDITEM_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Uses specified item and targets target in one action. Requires server support (OSI / ServUO)</value>
+  </data>
+  <data name="USETARGETEDITEM_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>UseTargetedItem('bandage', 'pet')</value>
+  </data>
 </root>

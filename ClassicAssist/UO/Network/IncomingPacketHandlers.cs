@@ -18,7 +18,7 @@ using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using ClassicAssist.UO.Objects.Gumps;
-using Exceptionless;
+using Sentry;
 
 namespace ClassicAssist.UO.Network
 {
@@ -957,11 +957,18 @@ namespace ClassicAssist.UO.Network
             }
             catch ( Exception e )
             {
-                e.ToExceptionless().SetProperty( "Serial", senderSerial ).SetProperty( "GumpID", gumpId )
-                    .SetProperty( "Layout", layout ).SetProperty( "Text", text )
-                    .SetProperty( "Packet", reader.GetData() ).SetProperty( "Player", Engine.Player.ToString() )
-                    .SetProperty( "WorldItemCount", Engine.Items.Count() )
-                    .SetProperty( "WorldMobileCount", Engine.Mobiles.Count() ).Submit();
+                SentrySdk.WithScope( scope =>
+                {
+                    scope.SetExtra( "Serial", senderSerial );
+                    scope.SetExtra( "GumpID", gumpId );
+                    scope.SetExtra( "Layout", layout );
+                    scope.SetExtra( "Text", text );
+                    scope.SetExtra( "Packet", reader.GetData() );
+                    scope.SetExtra( "Player", Engine.Player.ToString() );
+                    scope.SetExtra( "WorldItemCount", Engine.Items.Count() );
+                    scope.SetExtra( "WorldMobileCount", Engine.Mobiles.Count() );
+                    SentrySdk.CaptureException( e );
+                } );
             }
         }
 
@@ -1634,12 +1641,15 @@ namespace ClassicAssist.UO.Network
             }
             catch ( Exception e )
             {
-                e.ToExceptionless().SetProperty( "ContainerSerial", containerItem?.Serial )
-                    .SetProperty( "Count", count ).SetProperty( "Packet", reader.GetData() )
-                    .SetProperty( "WorldContainsContainerSerial",
-                        Engine.Items.Any( i => containerItem != null && i.Serial == containerItem.Serial ) )
-                    .SetProperty( "WorldItemCount", Engine.Items.Count() )
-                    .SetProperty( "WorldMobileCount", Engine.Mobiles.Count() ).Submit();
+                SentrySdk.WithScope( scope =>
+                {
+                    scope.SetExtra( "ContainerSerial", containerItem?.Serial );
+                    scope.SetExtra( "Count", count );
+                    scope.SetExtra( "Packet", reader.GetData() );
+                    scope.SetExtra( "WorldItemCount", Engine.Items.Count() );
+                    scope.SetExtra( "WorldMobileCount", Engine.Mobiles.Count() );
+                    SentrySdk.CaptureException( e );
+                } );
             }
         }
 

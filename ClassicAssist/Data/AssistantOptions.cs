@@ -32,6 +32,7 @@ namespace ClassicAssist.Data
         public static bool SavePasswordsOnlyBlank { get; set; }
         public static Version UpdateGumpVersion { get; set; }
         public static string UserId { get; set; }
+        public static string SessionId { get; set; }
         public static double WindowHeight { get; set; }
 
         public static double WindowWidth { get; set; }
@@ -122,6 +123,7 @@ namespace ClassicAssist.Data
             WindowWidth = json?["WindowWidth"]?.ToObject<int>() ?? 625;
             WindowHeight = json?["WindowHeight"]?.ToObject<int>() ?? 500;
             Assemblies = json?["Assemblies"]?.ToObject<string[]>() ?? new string[0];
+            SessionId = Guid.NewGuid().ToString();
 
             if ( json?["Profiles"] != null )
             {

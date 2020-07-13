@@ -1,0 +1,70 @@
+﻿<Window x:Class="ClassicAssist.UI.Views.RepositionableGumpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClassicAssist.UI.Views"
+        xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
+        xmlns:resources="clr-namespace:ClassicAssist.Resources"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" Opacity="0.5" WindowStyle="None"
+        AllowsTransparency="True" Topmost="True"
+        Title="Position" Height="130" Width="200" Background="{DynamicResource ThemeWindowBackgroundBrush}"
+        ResizeMode="NoResize">
+    <Window.DataContext>
+        <viewModels:RepositionableGumpViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+                <ResourceDictionary>
+                    <DrawingImage x:Key="TickIcon">
+                        <DrawingImage.Drawing>
+                            <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                                <GeometryDrawing Brush="#FF8CA82F" Geometry="F1 M512,512z M0,0z M504.5,118.618L504.5,118.618 483.287,97.405 151.954,378.738 151.954,428.738 173.167,449.951z" />
+                                <GeometryDrawing Brush="#FFA5C244" Geometry="F1 M512,512z M0,0z M447.932,62.049L447.932,62.049 173.167,336.814 64.068,227.716 7.5,284.284 151.954,428.738 483.287,97.405z" />
+                                <GeometryDrawing Brush="#FF000000" Geometry="F1 M512,512z M0,0z M509.803,113.315L453.235,56.746C451.829,55.34 449.921,54.549 447.932,54.549 445.943,54.549 444.036,55.339 442.629,56.746L173.167,326.208 69.372,222.413C67.965,221.007 66.058,220.216 64.069,220.216 62.08,220.216 60.172,221.006 58.766,222.413L2.197,278.981C-0.732,281.91,-0.732,286.659,2.197,289.587L167.864,455.254C169.328,456.719 171.248,457.451 173.167,457.451 175.086,457.451 177.006,456.719 178.47,455.254L509.803,123.921C512.733,120.992,512.733,116.244,509.803,113.315z M173.167,439.344L18.107,284.285 64.069,238.323 167.864,342.118C170.793,345.047,175.542,345.047,178.47,342.118L447.932,72.656 493.894,118.618 173.167,439.344z" />
+                            </DrawingGroup>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Slider Grid.Row="0" Grid.Column="0" Orientation="Vertical" Maximum="{Binding VerticalMax}"
+                    Value="{Binding Y}" IsDirectionReversed="True" />
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="X:" Margin="5" />
+                <TextBox Width="130" Text="{Binding X, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Y:" Margin="5" />
+                <TextBox Width="130" Text="{Binding Y, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="2" VerticalAlignment="Top">
+            <Button Background="Transparent" BorderBrush="Transparent" BorderThickness="0">
+                <Image Source="{StaticResource TickIcon}" Height="16"/>
+                <i:Interaction.Behaviors>
+                    <misc:CloseOnClickBehaviour />
+                </i:Interaction.Behaviors>
+            </Button>
+        </StackPanel>
+
+        <Slider Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0"
+                    Maximum="{Binding HorizontalMax}" Value="{Binding X}" />
+    </Grid>
+</Window>

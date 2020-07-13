@@ -1401,4 +1401,7 @@ Are you sure you wish to continue?</value>
   <data name="Check hands before potions" xml:space="preserve">
     <value>Check hands before potions</value>
   </data>
+  <data name="Show running macros gump" xml:space="preserve">
+    <value>Show running macros gump</value>
+  </data>
 </root>

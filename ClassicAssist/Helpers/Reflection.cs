@@ -49,7 +49,7 @@ namespace ClassicAssist.Helpers
                 assembly = Engine.ClassicAssembly;
             }
 
-            Type t = assembly.GetType( type );
+            Type t = assembly?.GetType( type );
 
             return t == null ? default : GetTypePropertyValue<T>( t, property, obj, bindingFlags );
         }

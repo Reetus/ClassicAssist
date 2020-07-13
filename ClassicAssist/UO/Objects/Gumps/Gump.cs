@@ -346,7 +346,7 @@ namespace ClassicAssist.UO.Objects.Gumps
         {
         }
 
-        public void SendGump()
+        public virtual void SendGump()
         {
             byte[] bytes = Compile();
 

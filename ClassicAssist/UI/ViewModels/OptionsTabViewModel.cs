@@ -6,6 +6,7 @@ using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.Misc;
+using ClassicAssist.UO.Gumps;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.UI.ViewModels
@@ -73,6 +74,9 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "RehueFriends", CurrentOptions.RehueFriends );
             options.Add( "RehueFriendsHue", CurrentOptions.RehueFriendsHue );
             options.Add( "CheckHandsPotions", CurrentOptions.CheckHandsPotions );
+            options.Add( "MacrosGump", CurrentOptions.MacrosGump );
+            options.Add( "MacrosGumpX", CurrentOptions.MacrosGumpX );
+            options.Add( "MacrosGumpY", CurrentOptions.MacrosGumpY );
 
             json?.Add( "Options", options );
         }
@@ -140,6 +144,9 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.RehueFriends = config?["RehueFriends"]?.ToObject<bool>() ?? false;
             CurrentOptions.RehueFriendsHue = config?["RehueFriendsHue"]?.ToObject<int>() ?? 35;
             CurrentOptions.CheckHandsPotions = config?["CheckHandsPotions"]?.ToObject<bool>() ?? false;
+            CurrentOptions.MacrosGump = config?["MacrosGump"]?.ToObject<bool>() ?? true;
+            CurrentOptions.MacrosGumpX = config?["MacrosGumpX"]?.ToObject<int>() ?? 100;
+            CurrentOptions.MacrosGumpY = config?["MacrosGumpY"]?.ToObject<int>() ?? 100;
 
             if ( CurrentOptions.AbilitiesGumpX < 0 )
             {
@@ -149,6 +156,11 @@ namespace ClassicAssist.UI.ViewModels
             if ( CurrentOptions.AbilitiesGumpY < 0 )
             {
                 CurrentOptions.AbilitiesGumpY = 100;
+            }
+
+            if ( CurrentOptions.MacrosGump )
+            {
+                MacrosGump.Initialize( CurrentOptions.MacrosGumpX, CurrentOptions.MacrosGumpY );
             }
         }
 

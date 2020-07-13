@@ -282,9 +282,6 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            _manager.MacroStartedEvent += () => Task.Run( MacrosGump.ResendGump );
-            _manager.MacroStoppedEvent += () => Task.Run( MacrosGump.ResendGump );
-
             string modulePath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Modules" );
 
             if ( !Directory.Exists( modulePath ) )

@@ -3073,6 +3073,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show running macros gump.
+        /// </summary>
+        public static string Show_running_macros_gump {
+            get {
+                return ResourceManager.GetString("Show running macros gump", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show World Items.
         /// </summary>
         public static string Show_World_Items {

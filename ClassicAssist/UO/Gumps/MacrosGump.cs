@@ -20,26 +20,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
+using Assistant;
+using ClassicAssist.Data;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.UO.Objects.Gumps;
 
 namespace ClassicAssist.UO.Gumps
 {
-    public class MacrosGump : Gump
+    public class MacrosGump : RepositionableGump
     {
-        public MacrosGump( string html ) : base( 100, 100 )
+        private static Timer _timer;
+        private static string _lastList;
+        private static int _serial = 0x0fe00000;
+
+        public MacrosGump( string html ) : base( 190, 180, _serial++, (uint) _serial++ )
         {
-            Movable = true;
-            Closable = true;
+            Movable = false;
+            Closable = false;
             Resizable = false;
             Disposable = false;
             AddPage( 0 );
-            AddBackground( 450, 180, 190, 180, 3500 );
-            AddHtml( 470, 200, 150, 140, html, false, true );
+            AddBackground( 0, 0, 190, 180, 3500 );
+            AddHtml( 20, 20, 150, 140, html, false, true );
         }
 
-        public static async Task ResendGump()
+        public static void ResendGump( bool force = false )
         {
             MacroManager _macroManager = MacroManager.GetInstance();
 
@@ -59,11 +64,40 @@ namespace ClassicAssist.UO.Gumps
                 }
             }
 
+            if ( html.Equals( _lastList ) && !force )
+            {
+                return;
+            }
+
+            if ( Engine.Gumps.GetGumps( out Gump[] gumps ) )
+            {
+                foreach ( Gump macrosGump in gumps.Where( g => g is MacrosGump ) )
+                {
+                    Commands.CloseClientGump( macrosGump.ID );
+                }
+            }
+
             MacrosGump gump = new MacrosGump( html );
-            Commands.CloseClientGump( gump.ID );
             gump.SendGump();
 
-            await Task.Delay( 50 );
+            _lastList = html;
+        }
+
+        public static void Initialize( int x, int y )
+        {
+            GumpX = x;
+            GumpY = y;
+            _timer = new Timer( o => ResendGump(), null, 1000, 250 );
+        }
+
+        public override void SetPosition( int x, int y )
+        {
+            base.SetPosition( x, y );
+
+            Options.CurrentOptions.MacrosGumpX = x;
+            Options.CurrentOptions.MacrosGumpY = y;
+
+            ResendGump( true );
         }
     }
 }

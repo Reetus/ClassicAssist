@@ -83,6 +83,7 @@ namespace Assistant
 
         private static readonly TimeSpan PACKET_SEND_DELAY = TimeSpan.FromMilliseconds( 5 );
         private static DateTime _nextPacketSendTime;
+        private static unsafe PluginHeader* _plugin;
 
         public static Assembly ClassicAssembly { get; set; }
 
@@ -130,6 +131,8 @@ namespace Assistant
 
         public static unsafe void Install( PluginHeader* plugin )
         {
+            _plugin = plugin;
+
             Initialize();
 
             InitializePlugin( plugin );

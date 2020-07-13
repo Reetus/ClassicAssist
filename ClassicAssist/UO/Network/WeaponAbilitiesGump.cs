@@ -14,7 +14,7 @@ namespace ClassicAssist.UO.Network
         private readonly int _secondaryId;
 
         public WeaponAbilitiesGump( int primaryId, bool primaryEnable, int secondaryId, bool secondaryEnable ) : base(
-            86, 20, GumpSerial++, (uint) GumpSerial++ )
+            90, 40, GumpSerial++, (uint) GumpSerial++ )
         {
             if ( Engine.Gumps.GetGumps( out Gump[] gumps ) )
             {

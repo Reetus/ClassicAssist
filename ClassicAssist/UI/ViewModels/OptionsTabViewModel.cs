@@ -160,7 +160,7 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( CurrentOptions.MacrosGump )
             {
-                MacrosGump.Initialize( CurrentOptions.MacrosGumpX, CurrentOptions.MacrosGumpY );
+                MacrosGump.Initialize();
             }
         }
 

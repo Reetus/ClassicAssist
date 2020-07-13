@@ -35,6 +35,9 @@ namespace ClassicAssist.UO.Gumps
 
         public MacrosGump( string html ) : base( 190, 180, _serial++, (uint) _serial++ )
         {
+            GumpX = Options.CurrentOptions.MacrosGumpX;
+            GumpY = Options.CurrentOptions.MacrosGumpY;
+
             Movable = false;
             Closable = false;
             Resizable = false;
@@ -83,10 +86,8 @@ namespace ClassicAssist.UO.Gumps
             _lastList = html;
         }
 
-        public static void Initialize( int x, int y )
+        public static void Initialize()
         {
-            GumpX = x;
-            GumpY = y;
             _timer = new Timer( o => ResendGump(), null, 1000, 250 );
         }
 

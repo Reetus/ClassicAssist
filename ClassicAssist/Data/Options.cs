@@ -42,6 +42,9 @@ namespace ClassicAssist.Data
         private int _lightLevel;
         private bool _limitMouseWheelTrigger;
         private int _limitMouseWheelTriggerMS;
+        private bool _macrosGump;
+        private int _macrosGumpX;
+        private int _macrosGumpY;
         private int _maxTargetQueueLength = 1;
         private string _name;
         private bool _persistUseOnce;
@@ -189,6 +192,24 @@ namespace ClassicAssist.Data
         {
             get => _limitMouseWheelTriggerMS;
             set => SetProperty( ref _limitMouseWheelTriggerMS, value );
+        }
+
+        public bool MacrosGump
+        {
+            get => _macrosGump;
+            set => SetProperty( ref _macrosGump, value );
+        }
+
+        public int MacrosGumpX
+        {
+            get => _macrosGumpX;
+            set => SetProperty( ref _macrosGumpX, value );
+        }
+
+        public int MacrosGumpY
+        {
+            get => _macrosGumpY;
+            set => SetProperty( ref _macrosGumpY, value );
         }
 
         public int MaxTargetQueueLength

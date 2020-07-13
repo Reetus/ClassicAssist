@@ -1401,4 +1401,7 @@ Are you sure you wish to continue?</value>
   <data name="Rehue friends" xml:space="preserve">
     <value>Rehue friends</value>
   </data>
+  <data name="Show running macros gump" xml:space="preserve">
+    <value>Show running macros gump</value>
+  </data>
 </root>

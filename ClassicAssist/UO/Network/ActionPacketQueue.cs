@@ -23,46 +23,74 @@ using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data;
+using ClassicAssist.Data.Macros;
 using ClassicAssist.Misc;
+using ClassicAssist.Resources;
 using ClassicAssist.UO.Network.Packets;
+using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UO.Network
 {
     public static class ActionPacketQueue
     {
-        private static readonly ThreadPriorityQueue<ActionPacketQueueItem> _actionPacketQueue =
-            new ThreadPriorityQueue<ActionPacketQueueItem>( ProcessActionPacketQueue );
+        private const int DRAG_DROP_DISTANCE = 3;
+
+        private static readonly ThreadPriorityQueue<BaseQueueItem> _actionPacketQueue =
+            new ThreadPriorityQueue<BaseQueueItem>( ProcessActionPacketQueue );
 
         private static readonly object _actionPacketQueueLock = new object();
 
-        private static void ProcessActionPacketQueue( ActionPacketQueueItem queueItem )
+        private static void ProcessActionPacketQueue( BaseQueueItem queueItem )
         {
             // Lock here so wait don't set the WaitHandle before we've called ToTask(?)
             lock ( _actionPacketQueueLock )
             {
-                if ( queueItem.DelaySend )
+                if ( queueItem is PacketQueueItem actionQueueItem )
                 {
-                    while ( Engine.LastActionPacket +
-                            TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) > DateTime.Now )
+                    if ( actionQueueItem.DelaySend )
                     {
-                        Thread.Sleep( 1 );
+                        while ( Engine.LastActionPacket +
+                                TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) > DateTime.Now )
+                        {
+                            Thread.Sleep( 1 );
+                        }
                     }
+
+                    byte[] data = actionQueueItem.Packet;
+                    int length = actionQueueItem.Length;
+
+                    Engine.LastActionPacket = DateTime.Now;
+                    Engine.SendPacketToServer( data, length );
+
+                    actionQueueItem.WaitHandle.Set();
                 }
+                else if ( queueItem is ActionQueueItem actionItem )
+                {
+                    if ( actionItem.DelaySend )
+                    {
+                        while ( Engine.LastActionPacket +
+                                TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) > DateTime.Now )
+                        {
+                            Thread.Sleep( 1 );
+                        }
+                    }
 
-                byte[] data = queueItem.Packet;
-                int length = queueItem.Length;
+                    bool? result = actionItem.Action?.Invoke( actionItem.CheckRange );
 
-                Engine.LastActionPacket = DateTime.Now;
-                Engine.SendPacketToServer( data, length );
+                    if ( result.HasValue && result.Value )
+                    {
+                        Engine.LastActionPacket = DateTime.Now;
+                    }
 
-                queueItem.WaitHandle.Set();
+                    actionItem.WaitHandle.Set();
+                }
             }
         }
 
         // ReSharper disable once UnusedMember.Global
         public static Task EnqueueActionPacket( byte[] packet, int length, QueuePriority priority, bool delaySend )
         {
-            return EnqueueActionPacket( new ActionPacketQueueItem( packet, length, delaySend ), priority );
+            return EnqueueActionPacket( new PacketQueueItem( packet, length, delaySend ), priority );
         }
 
         public static Task EnqueueActionPacket( BasePacket packet, QueuePriority priority = QueuePriority.Low,
@@ -70,16 +98,16 @@ namespace ClassicAssist.UO.Network
         {
             byte[] data = packet.ToArray();
 
-            return EnqueueActionPacket( new ActionPacketQueueItem( data, data.Length, delaySend ), priority );
+            return EnqueueActionPacket( new PacketQueueItem( data, data.Length, delaySend ), priority );
         }
 
-        public static Task EnqueueActionPacket( ActionPacketQueueItem queueItem, QueuePriority priority )
+        public static Task EnqueueActionPacket( PacketQueueItem packetQueueItem, QueuePriority priority )
         {
             lock ( _actionPacketQueueLock )
             {
-                _actionPacketQueue.Enqueue( queueItem, priority );
+                _actionPacketQueue.Enqueue( packetQueueItem, priority );
 
-                return queueItem.WaitHandle.ToTask();
+                return packetQueueItem.WaitHandle.ToTask();
             }
         }
 
@@ -91,14 +119,13 @@ namespace ClassicAssist.UO.Network
                 byte[] dragPacket = new DragItem( serial, amount ).ToArray();
                 byte[] dropItem = new DropItem( serial, -1, x, y, z ).ToArray();
 
-                ActionPacketQueueItem dragQueueItem =
-                    new ActionPacketQueueItem( dragPacket, dragPacket.Length, delaySend );
-                _actionPacketQueue.Enqueue( dragQueueItem, priority );
+                PacketQueueItem dragPacketQueueItem = new PacketQueueItem( dragPacket, dragPacket.Length, delaySend );
+                _actionPacketQueue.Enqueue( dragPacketQueueItem, priority );
 
-                ActionPacketQueueItem dropQueueItem = new ActionPacketQueueItem( dropItem, dropItem.Length, delaySend );
-                _actionPacketQueue.Enqueue( dropQueueItem, priority );
+                PacketQueueItem dropPacketQueueItem = new PacketQueueItem( dropItem, dropItem.Length, delaySend );
+                _actionPacketQueue.Enqueue( dropPacketQueueItem, priority );
 
-                return new[] { dragQueueItem.WaitHandle, dropQueueItem.WaitHandle }.ToTask();
+                return new[] { dragPacketQueueItem.WaitHandle, dropPacketQueueItem.WaitHandle }.ToTask();
             }
         }
 
@@ -113,10 +140,10 @@ namespace ClassicAssist.UO.Network
                 {
                     byte[] data = packet.ToArray();
 
-                    ActionPacketQueueItem queueItem = new ActionPacketQueueItem( data, data.Length, delaySend );
-                    handles.Add( queueItem.WaitHandle );
+                    PacketQueueItem packetQueueItem = new PacketQueueItem( data, data.Length, delaySend );
+                    handles.Add( packetQueueItem.WaitHandle );
 
-                    _actionPacketQueue.Enqueue( queueItem, priority );
+                    _actionPacketQueue.Enqueue( packetQueueItem, priority );
                 }
 
                 return handles.ToTask();
@@ -124,11 +151,44 @@ namespace ClassicAssist.UO.Network
         }
 
         public static Task EnqueueDragDrop( int serial, int amount, int containerSerial,
-            QueuePriority priority = QueuePriority.Low, bool delaySend = true, int x = -1, int y = -1 )
+            QueuePriority priority = QueuePriority.Low, bool checkRange = false, bool checkExisting = false, bool delaySend = true, int x = -1,
+            int y = -1 )
         {
-            return EnqueueActionPackets(
-                new BasePacket[] { new DragItem( serial, amount ), new DropItem( serial, containerSerial, x, y, 0 ) },
-                priority, delaySend );
+            lock ( _actionPacketQueueLock )
+            {
+                if ( checkExisting && _actionPacketQueue.Contains( e => e is ActionQueueItem aqi && aqi.Serial == serial ) )
+                {
+                    return Task.CompletedTask;
+                }
+
+                ActionQueueItem actionQueueItem = new ActionQueueItem( check =>
+                {
+                    if ( check )
+                    {
+                        Item item = Engine.Items.GetItem( serial );
+
+                        if ( item == null || item.Distance >= DRAG_DROP_DISTANCE )
+                        {
+                            if ( !MacroManager.QuietMode )
+                            {
+                                Commands.SystemMessage( Strings.Item_out_of_range___ );
+                            }
+
+                            return false;
+                        }
+                    }
+
+                    Engine.SendPacketToServer( new DragItem( serial, amount ) );
+                    Thread.Sleep( 50 );
+                    Engine.SendPacketToServer( new DropItem( serial, containerSerial, x, y, 0 ) );
+
+                    return true;
+                } ) { CheckRange = checkRange, DelaySend = delaySend, Serial = serial };
+
+                _actionPacketQueue.Enqueue( actionQueueItem, priority );
+
+                return actionQueueItem.WaitHandle.ToTask();
+            }
         }
 
         public static int Count()

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using Assistant;
 using ClassicAssist.Misc;
 using ClassicAssist.UO.Data;
@@ -21,6 +22,24 @@ namespace ClassicAssist.UO.Objects
         public int ArtDataID { get; set; }
         public ItemCollection Container { get; set; }
         public int Count { get; set; } = 1;
+
+        public override int Distance
+        {
+            get
+            {
+                if ( Owner == 0 )
+                {
+                    return Math.Max( Math.Abs( X - Engine.Player?.X ?? X ), Math.Abs( Y - Engine.Player?.Y ?? Y ) );
+                }
+
+                Entity entity = UOMath.IsMobile( Owner )
+                    ? (Entity) Engine.Mobiles.GetMobile( Owner )
+                    : Engine.Items.GetItem( Owner );
+
+                return entity?.Distance ?? 0;
+            }
+        }
+
         public int Flags { get; set; }
         public int Grid { get; set; }
         public bool IsContainer => Container != null;

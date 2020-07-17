@@ -333,7 +333,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            ActionPacketQueue.EnqueueDragDrop( itemSerial, amount, containerSerial, QueuePriority.Low, true, x, y );
+            ActionPacketQueue.EnqueueDragDrop( itemSerial, amount, containerSerial, QueuePriority.Low, false, true, false, x, y );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Entity ),

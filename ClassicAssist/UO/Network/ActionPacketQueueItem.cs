@@ -17,23 +17,44 @@
 
 #endregion
 
+using System;
 using System.Threading;
 
 namespace ClassicAssist.UO.Network
 {
-    public class ActionPacketQueueItem
+    public abstract class BaseQueueItem
     {
-        public ActionPacketQueueItem( byte[] packet, int length, bool delaySend )
+        protected BaseQueueItem()
         {
-            Packet = packet;
-            Length = length;
-            DelaySend = delaySend;
             WaitHandle = new AutoResetEvent( false );
         }
 
         public bool DelaySend { get; set; }
+        public EventWaitHandle WaitHandle { get; set; }
+    }
+
+    public class PacketQueueItem : BaseQueueItem
+    {
+        public PacketQueueItem( byte[] packet, int length, bool delaySend )
+        {
+            Packet = packet;
+            Length = length;
+            DelaySend = delaySend;
+        }
+
         public int Length { get; set; }
         public byte[] Packet { get; set; }
-        public EventWaitHandle WaitHandle { get; set; }
+    }
+
+    public class ActionQueueItem : BaseQueueItem
+    {
+        public ActionQueueItem( Func<bool, bool> action )
+        {
+            Action = action;
+        }
+
+        public Func<bool, bool> Action { get; set; }
+        public int Serial { get; set; }
+        public bool CheckRange { get; set; }
     }
 }

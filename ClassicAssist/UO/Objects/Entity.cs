@@ -17,7 +17,7 @@ namespace ClassicAssist.UO.Objects
 
         public Direction Direction { get; set; }
 
-        public int Distance => Math.Max( Math.Abs( X - Engine.Player?.X ?? X ), Math.Abs( Y - Engine.Player?.Y ?? Y ) );
+        public virtual int Distance => Math.Max( Math.Abs( X - Engine.Player?.X ?? X ), Math.Abs( Y - Engine.Player?.Y ?? Y ) );
 
         public int Hue { get; set; }
 

@@ -1681,6 +1681,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item out of range....
+        /// </summary>
+        public static string Item_out_of_range___ {
+            get {
+                return ResourceManager.GetString("Item out of range...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item properties null or not loaded....
         /// </summary>
         public static string Item_properties_null_or_not_loaded___ {

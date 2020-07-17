@@ -29,6 +29,9 @@ namespace ClassicAssist.UI.Views
             typeof( ICommand ), typeof( EntityCollectionFilterControl ),
             new FrameworkPropertyMetadata( default( ICommand ) ) );
 
+        private readonly string _propertiesFileCustom =
+            Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data", "Properties.Custom.json" );
+
         private ICommand _addCommand;
 
         private ICommand _applyCommand;
@@ -70,6 +73,11 @@ namespace ClassicAssist.UI.Views
                 }
             }
 
+            if ( File.Exists( _propertiesFileCustom ) )
+            {
+                LoadCustomProperties();
+            }
+
             Items.Add( new EntityCollectionFilter { Constraint = Constraints.FirstOrDefault() } );
         }
 
@@ -108,6 +116,24 @@ namespace ClassicAssist.UI.Views
         public EntityCollectionFilter SelectedItem { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private void LoadCustomProperties()
+        {
+            JsonSerializer serializer = new JsonSerializer();
+
+            using ( StreamReader sr = new StreamReader( _propertiesFileCustom ) )
+            {
+                using ( JsonTextReader reader = new JsonTextReader( sr ) )
+                {
+                    PropertyEntry[] constraints = serializer.Deserialize<PropertyEntry[]>( reader );
+
+                    foreach ( PropertyEntry constraint in constraints )
+                    {
+                        Constraints.AddSorted( constraint );
+                    }
+                }
+            }
+        }
 
         private void LoadFilter( object obj )
         {

@@ -10,6 +10,8 @@ namespace ClassicAssist.UO.Objects
     {
         public delegate void dLastTargetChanged( int serial );
 
+        public delegate void dLayerChanged( Layer layer, int serial );
+
         private int _enemyTargetSerial;
         private int _friendTargetSerial;
         private int _lastTargetSerial;
@@ -104,19 +106,22 @@ namespace ClassicAssist.UO.Objects
         public int Weight { get; set; }
         public int WeightMax { get; set; }
 
+        public static event dLayerChanged LayerChangedEvent;
+
         public event dLastTargetChanged LastTargetChangedEvent;
 
         internal override void SetLayer( Layer layer, int serial )
         {
             base.SetLayer( layer, serial );
 
-            if ( layer != Layer.OneHanded && layer != Layer.TwoHanded )
+            LayerChangedEvent?.Invoke( layer, serial );
+
+            if ( layer != Layer.Bank )
             {
                 return;
             }
 
-            AbilitiesManager manager = AbilitiesManager.GetInstance();
-            manager.ResendGump( manager.Enabled );
+            AliasCommands.SetAlias( "bank", serial );
         }
 
         public override string ToString()

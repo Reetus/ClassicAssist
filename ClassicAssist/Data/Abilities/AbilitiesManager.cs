@@ -33,11 +33,24 @@ namespace ClassicAssist.Data.Abilities
             {
                 LoadWeaponData( Engine.StartupPath ?? Environment.CurrentDirectory );
             }
+
+            PlayerMobile.LayerChangedEvent += OnLayerChangedEvent;
         }
 
         public AbilityType Enabled { get; set; }
         public bool IsPrimaryEnabled => Enabled == AbilityType.Primary;
         public bool IsSecondaryEnabled => Enabled == AbilityType.Secondary;
+
+        private void OnLayerChangedEvent( Layer layer, int serial )
+        {
+            if ( layer != Layer.OneHanded && layer != Layer.TwoHanded )
+            {
+                return;
+            }
+
+            AbilitiesManager manager = GetInstance();
+            manager.ResendGump( manager.Enabled );
+        }
 
         public void SetAbility( AbilityType abilityType )
         {

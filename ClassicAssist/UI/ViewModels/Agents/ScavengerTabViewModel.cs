@@ -157,7 +157,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
         }
 
-        private void CheckArea()
+        internal void CheckArea()
         {
             if ( !Enabled || Engine.Player == null )
             {
@@ -175,9 +175,14 @@ namespace ClassicAssist.UI.ViewModels.Agents
             {
                 foreach ( ScavengerEntry entry in Items )
                 {
+                    if ( !entry.Enabled )
+                    {
+                        continue;
+                    }
+
                     Item[] matches = Engine.Items.SelectEntities( i =>
                         i.Distance <= SCAVENGER_DISTANCE && i.Owner == 0 && i.ID == entry.Graphic &&
-                        i.Hue == entry.Hue && !_ignoreList.Contains( i.Serial ) );
+                        (entry.Hue == -1 || i.Hue == entry.Hue) && !_ignoreList.Contains( i.Serial ) );
 
                     if ( matches == null )
                     {
@@ -200,7 +205,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 }
 
                 foreach ( Item scavengerItem in scavengerItems.Where( scavengerItem =>
-                    scavengerItem.Distance <= SCAVENGER_DISTANCE ) )
+                    scavengerItem.Distance <= SCAVENGER_DISTANCE ).Distinct() )
                 {
                     _ignoreList.Add( scavengerItem.Serial );
                     UOC.SystemMessage( string.Format( Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown" ), 61 );

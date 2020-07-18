@@ -61,14 +61,14 @@
             <ListView.View>
                 <GridView>
                     <misc1:SkillsGridViewColumn Header="{x:Static resources:Strings.Name}"
-                                                DisplayMemberBinding="{Binding Skill}" Width="150"
+                                                DisplayMemberBinding="{Binding Skill}" Width="130"
                                                 SortField="Name" />
                     <misc1:SkillsGridViewColumn Header="{x:Static resources:Strings.Value}" Width="70"
                                                 SortField="Value"
                                                 DisplayMemberBinding="{Binding Value}" />
                     <misc1:SkillsGridViewColumn Header="{x:Static resources:Strings.Base}" Width="70" SortField="Base"
                                                 DisplayMemberBinding="{Binding Base}" />
-                    <misc1:SkillsGridViewColumn Header="+/-" Width="30" SortField="Delta"
+                    <misc1:SkillsGridViewColumn Header="+/-" Width="50" SortField="Delta"
                                                 DisplayMemberBinding="{Binding Delta, StringFormat={}{0:0.#}}" />
                     <misc1:SkillsGridViewColumn Header="{x:Static resources:Strings.Cap}" Width="70" SortField="Cap"
                                                 DisplayMemberBinding="{Binding Cap}" />

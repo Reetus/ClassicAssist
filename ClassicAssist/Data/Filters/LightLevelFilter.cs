@@ -1,34 +1,25 @@
-﻿using Assistant;
-using ClassicAssist.UO.Network.PacketFilter;
+﻿using ClassicAssist.UO.Network.PacketFilter;
 
 namespace ClassicAssist.Data.Filters
 {
     [FilterOptions( Name = "Light Level", DefaultEnabled = true )]
-    public class LightLevelFilter : FilterEntry
+    public class LightLevelFilter : DynamicFilterEntry
     {
-        protected override void OnChanged( bool enabled )
+        public override bool CheckPacket( ref byte[] packet, ref int length, PacketDirection direction )
         {
-            PacketFilterInfo pfi = new PacketFilterInfo( 0x4F, OnLightLevel );
-
-            if ( enabled )
+            if ( packet[0] == 0x4E && Enabled )
             {
-                Engine.AddReceiveFilter( pfi );
-
-                byte[] packet = { 0x4F, (byte) Options.CurrentOptions.LightLevel };
-
-                Engine.SendPacketToClient( packet, packet.Length );
+                return true;
             }
-            else
+
+            if ( packet[0] != 0x4F || !Enabled )
             {
-                Engine.RemoveReceiveFilter( pfi );
+                return false;
             }
-        }
 
-        private static void OnLightLevel( byte[] arg1, PacketFilterInfo arg2 )
-        {
-            byte[] packet = { 0x4F, (byte) Options.CurrentOptions.LightLevel };
+            packet[1] = (byte) Options.CurrentOptions.LightLevel;
 
-            Engine.SendPacketToClient( packet, packet.Length );
+            return false;
         }
     }
 }

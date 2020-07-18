@@ -3347,6 +3347,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Uses object in the specified layer, optional parameter for mobile.
+        /// </summary>
+        public static string USELAYER_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("USELAYER_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UseLayer(&quot;Talisman&quot;).
+        /// </summary>
+        public static string USELAYER_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("USELAYER_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sends use (doubleclick) request for given object (parameter can be serial or alias)..
         /// </summary>
         public static string USEOBJECT_COMMAND_DESCRIPTION {

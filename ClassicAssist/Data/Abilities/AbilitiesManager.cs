@@ -286,6 +286,12 @@ namespace ClassicAssist.Data.Abilities
                 return false;
             }
 
+            // Explosion / Conflagaration pot doesn't need hand free
+            if ( item.ID == 0xf0d && item.Hue == 0 || item.ID == 0xf06 && item.Hue == 1161 )
+            {
+                return false;
+            }
+
             Item leftHand = Engine.Player?.Equipment.FirstOrDefault( i => i.Layer == Layer.TwoHanded );
             Item rightHand = Engine.Player?.Equipment.FirstOrDefault( i => i.Layer == Layer.OneHanded );
 

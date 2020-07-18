@@ -574,6 +574,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cast Last Spell.
+        /// </summary>
+        public static string Cast_Last_Spell {
+            get {
+                return ResourceManager.GetString("Cast Last Spell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Category.
         /// </summary>
         public static string Category {

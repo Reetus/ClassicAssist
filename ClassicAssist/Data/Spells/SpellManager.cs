@@ -97,6 +97,7 @@ namespace ClassicAssist.Data.Spells
 
         public void CastSpell( int id )
         {
+            Engine.LastSpellID = id;
             Engine.SendPacketToServer( new CastSpell( id ) );
         }
 

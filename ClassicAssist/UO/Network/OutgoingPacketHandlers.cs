@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using Assistant;
 using ClassicAssist.Data.Abilities;
@@ -42,8 +43,30 @@ namespace ClassicAssist.UO.Network
             Register( 0xA0, 3, OnPlayServer );
             Register( 0xB1, 0, OnGumpButtonPressed );
             Register( 0xBD, 0, OnClientVersion );
+            Register( 0xBF, 0, OnExtendedCommand );
             Register( 0xD7, 0, OnEncodedCommand );
             Register( 0xEF, 31, OnNewClientVersion );
+            RegisterExtended( 0x1C, 0, OnSpellCast );
+        }
+
+        private static void OnSpellCast( PacketReader reader )
+        {
+            int type = reader.ReadInt16();
+
+            if ( type == 0 )
+            {
+                reader.Seek( 4, SeekOrigin.Current );
+            }
+
+            Engine.LastSpellID = reader.ReadInt16();
+        }
+
+        private static void OnExtendedCommand( PacketReader reader )
+        {
+            int command = reader.ReadInt16();
+
+            PacketHandler handler = GetExtendedHandler( command );
+            handler?.OnReceive( reader );
         }
 
         private static void OnMenuResponse( PacketReader reader )
@@ -206,7 +229,7 @@ namespace ClassicAssist.UO.Network
 
         private static void RegisterExtended( int packetId, int length, OnPacketReceive onReceive )
         {
-            _handlers[packetId] = new PacketHandler( packetId, length, onReceive );
+            _extendedHandlers[packetId] = new PacketHandler( packetId, length, onReceive );
         }
 
         internal static PacketHandler GetHandler( int packetId )
@@ -216,7 +239,7 @@ namespace ClassicAssist.UO.Network
 
         private static PacketHandler GetExtendedHandler( int packetId )
         {
-            return _handlers[packetId];
+            return _extendedHandlers[packetId];
         }
     }
 }

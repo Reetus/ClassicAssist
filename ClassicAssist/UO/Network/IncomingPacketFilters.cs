@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Filters;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
-using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UO.Network
@@ -151,7 +149,7 @@ namespace ClassicAssist.UO.Network
             mobile.Y = reader.ReadInt16();
             mobile.Z = reader.ReadSByte();
             //TODO Removed & 0x07 to not strip running flag, think of better solution
-            mobile.Direction = (Direction)reader.ReadByte();
+            mobile.Direction = (Direction) reader.ReadByte();
             mobile.Hue = reader.ReadUInt16();
             mobile.Status = (MobileStatus) reader.ReadByte();
             mobile.Notoriety = (Notoriety) reader.ReadByte();
@@ -297,7 +295,7 @@ namespace ClassicAssist.UO.Network
                 return onReceive.Invoke( ref data, ref length );
             }
 
-            foreach ( DynamicFilterEntry dynamicFilterEntry in DynamicFilterEntry.Filters )
+            foreach ( DynamicFilterEntry dynamicFilterEntry in DynamicFilterEntry.Filters.Where( e => e.Enabled ) )
             {
                 bool result = dynamicFilterEntry.CheckPacket( ref data, ref length, PacketDirection.Incoming );
 

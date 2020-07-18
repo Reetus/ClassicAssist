@@ -84,6 +84,7 @@ namespace Assistant
         private static readonly TimeSpan PACKET_SEND_DELAY = TimeSpan.FromMilliseconds( 5 );
         private static DateTime _nextPacketSendTime;
         private static unsafe PluginHeader* _plugin;
+        public static int LastSpellID;
 
         public static Assembly ClassicAssembly { get; set; }
 

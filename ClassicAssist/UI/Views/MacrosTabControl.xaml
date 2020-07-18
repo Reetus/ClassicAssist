@@ -11,6 +11,7 @@
              xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
              xmlns:resources="clr-namespace:ClassicAssist.Resources"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+             xmlns:hotkeys="clr-namespace:ClassicAssist.Data.Hotkeys"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500" Padding="5">
     <d:DesignerProperties.DesignStyle>
@@ -61,7 +62,7 @@
                 </Grid.RowDefinitions>
                 <ListBox Grid.Row="0" ItemsSource="{Binding Items}" x:Name="ListBox"
                          SelectedItem="{Binding SelectedItem}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                         MinHeight="40"
+                         MinHeight="40" HorizontalContentAlignment="Stretch"
                          IsEnabled="{Binding IsRecording, Converter={StaticResource InverseBooleanConverter}}"
                          misc:ListBoxBehavior.ScrollOnNewItem="True">
                     <ListBox.InputBindings>
@@ -78,25 +79,47 @@
                     </i:Interaction.Behaviors>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <controls:EditTextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                                    Width="{Binding ActualWidth, ConverterParameter=20, Converter={StaticResource CellWidthValueConverter}, ElementName=ListBox, Mode=OneWay}">
-                                <controls:EditTextBlock.Resources>
-                                    <Style TargetType="{x:Type TextBlock}"
-                                           BasedOn="{StaticResource {x:Type TextBlock}}">
-                                        <Style.Triggers>
-                                            <DataTrigger
-                                                Binding="{Binding Global}" Value="True">
-                                                <Setter Property="FontWeight" Value="Bold" />
-                                            </DataTrigger>
-                                            <DataTrigger
-                                                Binding="{Binding IsRunning}" Value="True">
-                                                <Setter Property="FontStyle" Value="Italic" />
-                                                <Setter Property="FontWeight" Value="Bold" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </controls:EditTextBlock.Resources>
-                            </controls:EditTextBlock>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" x:Name="LeftColumn" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <controls:EditTextBlock
+                                    Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Column="0"
+                                    Width="{Binding ActualWidth, ConverterParameter=20, Converter={StaticResource CellWidthValueConverter}, ElementName=LeftColumn, Mode=OneWay}">
+                                    <controls:EditTextBlock.Resources>
+                                        <Style TargetType="{x:Type TextBlock}"
+                                               BasedOn="{StaticResource {x:Type TextBlock}}">
+                                            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                            <Style.Triggers>
+                                                <DataTrigger
+                                                    Binding="{Binding Global}" Value="True">
+                                                    <Setter Property="FontWeight" Value="Bold" />
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                    Binding="{Binding IsRunning}" Value="True">
+                                                    <Setter Property="FontStyle" Value="Italic" />
+                                                    <Setter Property="FontWeight" Value="Bold" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </controls:EditTextBlock.Resources>
+                                </controls:EditTextBlock>
+                                <TextBlock x:Name="Hotkey" Text="{Binding Hotkey}" Margin="2,0,0,0"
+                                           Grid.Column="1" FontSize="7" Foreground="SpringGreen" TextAlignment="Right"
+                                           VerticalAlignment="Center" HorizontalAlignment="Right">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Hotkey}"
+                                                             Value="{x:Static hotkeys:ShortcutKeys.Default}">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>

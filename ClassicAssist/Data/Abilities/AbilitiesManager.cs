@@ -33,11 +33,24 @@ namespace ClassicAssist.Data.Abilities
             {
                 LoadWeaponData( Engine.StartupPath ?? Environment.CurrentDirectory );
             }
+
+            PlayerMobile.LayerChangedEvent += OnLayerChangedEvent;
         }
 
         public AbilityType Enabled { get; set; }
         public bool IsPrimaryEnabled => Enabled == AbilityType.Primary;
         public bool IsSecondaryEnabled => Enabled == AbilityType.Secondary;
+
+        private void OnLayerChangedEvent( Layer layer, int serial )
+        {
+            if ( layer != Layer.OneHanded && layer != Layer.TwoHanded )
+            {
+                return;
+            }
+
+            AbilitiesManager manager = GetInstance();
+            manager.ResendGump( manager.Enabled );
+        }
 
         public void SetAbility( AbilityType abilityType )
         {
@@ -269,6 +282,12 @@ namespace ClassicAssist.Data.Abilities
             Item item = Engine.Items?.GetItem( serial );
 
             if ( item == null || !_potionTypes.Contains( item.ID ) )
+            {
+                return false;
+            }
+
+            // Explosion / Conflagaration pot doesn't need hand free
+            if ( item.ID == 0xf0d && item.Hue == 0 || item.ID == 0xf06 && item.Hue == 1161 )
             {
                 return false;
             }

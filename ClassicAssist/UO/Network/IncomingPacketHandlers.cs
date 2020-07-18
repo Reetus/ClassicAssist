@@ -98,6 +98,7 @@ namespace ClassicAssist.UO.Network
             Register( 0x28, 5, OnResetHolding );
             Register( 0x29, 1, OnResetHolding );
             Register( 0x2E, 15, OnItemEquipped );
+            Register( 0x31, 0, OnUO3DPetWindow );
             Register( 0x3A, 0, OnSkillsList );
             Register( 0x3C, 0, OnContainerContents );
             Register( 0x6C, 19, OnTarget );
@@ -132,6 +133,28 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x10, 0, OnDisplayEquipmentInfo );
             RegisterExtended( 0x21, 0, OnClearWeaponAbility );
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
+        }
+
+        private static void OnUO3DPetWindow( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+            int count = reader.ReadByte();
+
+            List<int> pets = new List<int>();
+
+            for ( int i = 0; i < count; i++ )
+            {
+                int petSerial = reader.ReadInt32();
+                reader.ReadByte();
+                pets.Add( petSerial );
+            }
+
+            Mobile mobile = Engine.Mobiles.GetMobile( serial );
+
+            if ( mobile != null )
+            {
+                mobile.Pets = pets.ToArray();
+            }
         }
 
         private static void OnHideWaypoint( PacketReader reader )

@@ -3,6 +3,7 @@
 **/obj/Debug/**
 */obj/**
 Output/
+Output2/
 packages/
 ClassicAssist/ClassicAssist.csproj.user
 ClassicAssist.sln.DotSettings.user

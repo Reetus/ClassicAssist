@@ -99,6 +99,11 @@ namespace ClassicAssist.Misc
             }
         }
 
+        public bool Contains( Predicate<T> predicate )
+        {
+            return _queue.Any( predicate.Invoke );
+        }
+
         private void StopThread()
         {
             _queue.Enqueue( default, (float) QueuePriority.Immediate );

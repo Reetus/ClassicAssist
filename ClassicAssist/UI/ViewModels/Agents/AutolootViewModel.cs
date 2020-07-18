@@ -79,7 +79,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             LoadCustomProperties();
 
             AutolootHelpers.SetAutolootContainer = serial => ContainerSerial = serial;
-            IncomingPacketHandlers.CorpseContainerDisplayEvent += OnCorpseContainerDisplayEvent;
+            IncomingPacketHandlers.CorpseContainerDisplayEvent += OnCorpseEvent;
             AutolootManager.GetInstance().GetEntries = () => _items.ToList();
         }
 
@@ -368,7 +368,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             Clipboard.SetText( text );
         }
 
-        internal void OnCorpseContainerDisplayEvent( int serial )
+        internal void OnCorpseEvent( int serial )
         {
             if ( !Enabled )
             {
@@ -443,7 +443,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     }
                 }
 
-                foreach ( Item lootItem in lootItems )
+                foreach ( Item lootItem in lootItems.Distinct() )
                 {
                     int containerSerial = ContainerSerial;
 
@@ -454,7 +454,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                     UOC.SystemMessage( string.Format( Strings.Autolooting___0__, lootItem.Name ), 61 );
                     Task t = ActionPacketQueue.EnqueueDragDrop( lootItem.Serial, lootItem.Count, containerSerial,
-                        QueuePriority.Medium );
+                        QueuePriority.Medium, true, true );
 
                     t.Wait( LOOT_TIMEOUT );
                 }

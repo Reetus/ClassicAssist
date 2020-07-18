@@ -60,6 +60,8 @@ namespace ClassicAssist.UO.Objects
         public int ManaMax { get; set; }
         public Item Mount => Engine.Items.GetItem( GetLayer( Layer.Mount ) );
         public Notoriety Notoriety { get; set; }
+
+        public int[] Pets { get; set; }
         public ShopListEntry[] ShopBuy { get; set; }
         public int Stamina { get; set; }
         public int StaminaMax { get; set; }

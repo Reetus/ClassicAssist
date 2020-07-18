@@ -1404,4 +1404,10 @@ Are you sure you wish to continue?</value>
   <data name="Show running macros gump" xml:space="preserve">
     <value>Show running macros gump</value>
   </data>
+  <data name="Item out of range..." xml:space="preserve">
+    <value>Item out of range...</value>
+  </data>
+  <data name="Cast Last Spell" xml:space="preserve">
+    <value>Cast Last Spell</value>
+  </data>
 </root>

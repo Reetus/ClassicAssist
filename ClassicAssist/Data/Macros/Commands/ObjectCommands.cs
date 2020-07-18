@@ -6,6 +6,7 @@ using ClassicAssist.Data.Abilities;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UO;
+using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
@@ -333,7 +334,8 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            ActionPacketQueue.EnqueueDragDrop( itemSerial, amount, containerSerial, QueuePriority.Low, true, x, y );
+            ActionPacketQueue.EnqueueDragDrop( itemSerial, amount, containerSerial, QueuePriority.Low, false, true,
+                false, x, y );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Entity ),
@@ -485,6 +487,54 @@ namespace ClassicAssist.Data.Macros.Commands
             {
                 ActionPacketQueue.EnqueueDragDrop( entity.Serial, amount, destinationSerial );
             }
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.Layer ), nameof( ParameterType.SerialOrAlias ) } )]
+        public static bool UseLayer( object layer, object obj = null )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 || !UOMath.IsMobile( serial ) )
+            {
+                UOC.SystemMessage( Strings.Cannot_find_item___ );
+                return false;
+            }
+
+            Layer layerValue = Layer.Invalid;
+
+            switch ( layer )
+            {
+                case string s:
+                    layerValue = Utility.GetEnumValueByName<Layer>( s );
+                    break;
+                case int i:
+                    layerValue = (Layer) i;
+                    break;
+                case Layer l:
+                    layerValue = l;
+                    break;
+            }
+
+            Mobile mobile = Engine.Mobiles.GetMobile( serial );
+
+            if ( mobile == null )
+            {
+                UOC.SystemMessage( Strings.Mobile_not_found___ );
+                return false;
+            }
+
+            int layerSerial = mobile.GetLayer( layerValue );
+
+            if ( layerSerial == 0 )
+            {
+                UOC.SystemMessage( Strings.Cannot_find_item___ );
+                return false;
+            }
+
+            UseObject( layerSerial );
+
+            return true;
         }
 
         [CommandsDisplay( Category = nameof( Strings.Entity ),

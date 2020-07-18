@@ -574,6 +574,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cast Last Spell.
+        /// </summary>
+        public static string Cast_Last_Spell {
+            get {
+                return ResourceManager.GetString("Cast Last Spell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Category.
         /// </summary>
         public static string Category {
@@ -1677,6 +1686,15 @@ namespace ClassicAssist.Resources {
         public static string Item {
             get {
                 return ResourceManager.GetString("Item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item out of range....
+        /// </summary>
+        public static string Item_out_of_range___ {
+            get {
+                return ResourceManager.GetString("Item out of range...", resourceCulture);
             }
         }
         

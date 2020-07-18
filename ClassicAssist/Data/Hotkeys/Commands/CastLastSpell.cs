@@ -17,28 +17,20 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
-using ClassicAssist.UO.Network.PacketFilter;
+using Assistant;
+using ClassicAssist.UO.Network.Packets;
 
-namespace ClassicAssist.Data.Filters
+namespace ClassicAssist.Data.Hotkeys.Commands
 {
-    public abstract class DynamicFilterEntry : FilterEntry
+    [HotkeyCommand( Name = "Cast Last Spell" )]
+    public class CastLastSpell : HotkeyCommand
     {
-        protected DynamicFilterEntry()
+        public override void Execute()
         {
-            Filters.Add( this );
-        }
-
-        public static List<DynamicFilterEntry> Filters { get; set; } = new List<DynamicFilterEntry>();
-
-        protected override void OnChanged( bool enabled )
-        {
-        }
-
-        public virtual bool CheckPacket( ref byte[] packet, ref int length, PacketDirection direction )
-        {
-            throw new NotImplementedException();
+            if ( Engine.LastSpellID != 0 )
+            {
+                Engine.SendPacketToServer( new CastSpell( Engine.LastSpellID ) );
+            }
         }
     }
 }

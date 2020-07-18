@@ -41,6 +41,11 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
         public DebugAssembliesViewModel()
         {
+            if ( AssistantOptions.Assemblies == null )
+            {
+                return;
+            }
+
             foreach ( string assemblyName in AssistantOptions.Assemblies )
             {
                 Assembly assembly = LoadAssembly( assemblyName );

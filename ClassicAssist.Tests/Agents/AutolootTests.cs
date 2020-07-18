@@ -104,7 +104,7 @@ namespace ClassicAssist.Tests.Agents
                 handler.OnReceive( new PacketReader( propertiesPacket, propertiesPacket.Length, false ) );
             };
 
-            vm.OnCorpseContainerDisplayEvent( corpse.Serial );
+            vm.OnCorpseEvent( corpse.Serial );
 
             bool result = are.WaitOne( 5000 );
 
@@ -177,7 +177,7 @@ namespace ClassicAssist.Tests.Agents
                 entry.Lock.Set();
             };
 
-            vm.OnCorpseContainerDisplayEvent( corpse.Serial );
+            vm.OnCorpseEvent( corpse.Serial );
 
             bool result = are.WaitOne( 5000 );
 
@@ -268,7 +268,7 @@ namespace ClassicAssist.Tests.Agents
                 entry.Lock.Set();
             };
 
-            vm.OnCorpseContainerDisplayEvent( corpse.Serial );
+            vm.OnCorpseEvent( corpse.Serial );
 
             bool result = are.WaitOne( 5000 );
 
@@ -352,7 +352,7 @@ namespace ClassicAssist.Tests.Agents
                 entry.Lock.Set();
             };
 
-            vm.OnCorpseContainerDisplayEvent( corpse.Serial );
+            vm.OnCorpseEvent( corpse.Serial );
 
             Engine.Items.Clear();
             Engine.PacketWaitEntries = null;
@@ -405,7 +405,7 @@ namespace ClassicAssist.Tests.Agents
                 entry.Lock.Set();
             };
 
-            vm.OnCorpseContainerDisplayEvent( corpse.Serial );
+            vm.OnCorpseEvent( corpse.Serial );
 
             Engine.Items.Clear();
             Engine.PacketWaitEntries = null;
@@ -459,7 +459,7 @@ namespace ClassicAssist.Tests.Agents
                 entry.Lock.Set();
             };
 
-            vm.OnCorpseContainerDisplayEvent( corpse.Serial );
+            vm.OnCorpseEvent( corpse.Serial );
 
             Engine.Items.Clear();
             Engine.PacketWaitEntries = null;

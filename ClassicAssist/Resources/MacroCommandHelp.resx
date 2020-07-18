@@ -1413,4 +1413,10 @@ while FindType(0x2006):
   <data name="USETARGETEDITEM_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>UseTargetedItem('bandage', 'pet')</value>
   </data>
+  <data name="USELAYER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Uses object in the specified layer, optional parameter for mobile</value>
+  </data>
+  <data name="USELAYER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>UseLayer("Talisman")</value>
+  </data>
 </root>

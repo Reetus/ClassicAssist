@@ -52,7 +52,16 @@
                           IsChecked="{Binding DisableInGuardzone}" />
             </StackPanel>
             <ListBox x:Name="listView" Grid.Row="1" Margin="0,10,0,10" ItemsSource="{Binding Items}"
-                     SelectedItem="{Binding SelectedItem}">
+                     SelectedItem="{Binding SelectedItem}" HorizontalContentAlignment="Stretch">
+                <ListBox.Resources>
+                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Enabled}" Value="False">
+                                <Setter Property="TextDecorations" Value="Strikethrough"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.Resources>
                 <ListBox.InputBindings>
                     <KeyBinding Key="Delete"
                                 Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedItem}" />

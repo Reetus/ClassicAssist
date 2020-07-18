@@ -79,7 +79,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             LoadCustomProperties();
 
             AutolootHelpers.SetAutolootContainer = serial => ContainerSerial = serial;
-            IncomingPacketHandlers.CorpseContainerDisplayEvent += OnCorpseContainerDisplayEvent;
+            IncomingPacketHandlers.CorpseContainerDisplayEvent += OnCorpseEvent;
             AutolootManager.GetInstance().GetEntries = () => _items.ToList();
         }
 
@@ -368,7 +368,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             Clipboard.SetText( text );
         }
 
-        internal void OnCorpseContainerDisplayEvent( int serial )
+        internal void OnCorpseEvent( int serial )
         {
             if ( !Enabled )
             {
@@ -443,7 +443,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     }
                 }
 
-                foreach ( Item lootItem in lootItems )
+                foreach ( Item lootItem in lootItems.Distinct() )
                 {
                     int containerSerial = ContainerSerial;
 

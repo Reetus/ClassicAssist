@@ -10,7 +10,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using AnimatedGif;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.UI.Views;
 using Point = System.Drawing.Point;
 using Size = System.Drawing.Size;
@@ -33,7 +33,6 @@ namespace ClassicAssist.UI.ViewModels
 
         public GIFRecorderViewModel()
         {
-            _dispatcher = Dispatcher.CurrentDispatcher;
         }
 
         public bool IsRecording

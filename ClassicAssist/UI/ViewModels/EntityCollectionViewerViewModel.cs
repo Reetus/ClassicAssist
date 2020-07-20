@@ -7,11 +7,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Models;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
@@ -241,7 +242,7 @@ namespace ClassicAssist.UI.ViewModels
 
                 if ( item.Entity is Item equipItem )
                 {
-                    Commands.EquipItem( equipItem, layer );
+                    Shared.UO.Commands.EquipItem( equipItem, layer );
                 }
             }
         }
@@ -320,7 +321,7 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( entity == null )
             {
-                Commands.SystemMessage( Strings.Cannot_find_item___ );
+                Shared.UO.Commands.SystemMessage( Strings.Cannot_find_item___ );
                 return;
             }
 
@@ -329,7 +330,7 @@ namespace ClassicAssist.UI.ViewModels
                 case Item item:
                     if ( item.Container == null )
                     {
-                        Commands.WaitForContainerContents( item.Serial, 1000 );
+                        Shared.UO.Commands.WaitForContainerContents( item.Serial, 1000 );
                     }
 
                     collection = item.Container;
@@ -391,12 +392,12 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( serial == 0 )
             {
-                serial = await Commands.GetTargeSerialAsync( Strings.Target_container___ );
+                serial = await Shared.UO.Commands.GetTargeSerialAsync( Strings.Target_container___ );
             }
 
             if ( serial == 0 )
             {
-                Commands.SystemMessage( Strings.Invalid_container___ );
+                Shared.UO.Commands.SystemMessage( Strings.Invalid_container___ );
                 return;
             }
 

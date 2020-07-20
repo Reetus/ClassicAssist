@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.UO.Network;
 

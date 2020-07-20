@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Threading;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;

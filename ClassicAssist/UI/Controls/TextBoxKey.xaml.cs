@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using ClassicAssist.Data.Hotkeys;
+using Key = ClassicAssist.Misc.Key;
 
 namespace ClassicAssist.UI.Controls
 {
@@ -37,7 +38,7 @@ namespace ClassicAssist.UI.Controls
 
         private Key CheckModifiers()
         {
-            return _modifiers.FirstOrDefault( Keyboard.IsKeyDown );
+            return _modifiers.FirstOrDefault( e => Keyboard.IsKeyDown( (System.Windows.Input.Key) e ) );
         }
 
         private bool IsModifier( Key key )
@@ -48,11 +49,11 @@ namespace ClassicAssist.UI.Controls
         private void TextBox_PreviewKeyDown( object sender, KeyEventArgs e )
         {
             e.Handled = true;
-            Key key = e.Key;
+            Key key = (Key) e.Key;
 
             if ( key == Key.System )
             {
-                key = e.SystemKey;
+                key = (Key) e.SystemKey;
             }
 
             if ( IsModifier( key ) )
@@ -67,8 +68,6 @@ namespace ClassicAssist.UI.Controls
             Key = key;
 
             Shortcut = new ShortcutKeys { Modifier = Modifier, Key = Key };
-
-            //ShortcutChanged?.Execute( new ShortcutKeys { Modifier = Modifier, Key = Key } );
         }
 
         private void UIElement_OnPreviewMouseDown( object sender, MouseButtonEventArgs e )

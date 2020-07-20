@@ -17,7 +17,7 @@
 
 #endregion
 
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Misc;
 using ClassicAssist.UO.Gumps;
 

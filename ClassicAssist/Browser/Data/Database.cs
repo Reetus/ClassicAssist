@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Browser.Models;
 using LiteDB;
 using Newtonsoft.Json;

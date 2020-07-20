@@ -3,13 +3,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:resources="clr-namespace:ClassicAssist.Resources"
+    xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
     xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
     xmlns:misc="clr-namespace:ClassicAssist.Misc"
     xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
     xmlns:data="clr-namespace:ClassicAssist.Data"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:misc11="clr-namespace:ClassicAssist.Data;assembly=ClassicAssist.Shared"
     x:Class="ClassicAssist.UI.Views.OptionsTabControl"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="500">
@@ -40,8 +41,8 @@
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Content="{x:Static resources:Strings.Language}" />
                 <ComboBox Margin="10,0,10,0"
-                          ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type misc1:Language}}}"
-                          x:Name="langCombo" SelectedItem="{x:Static data:AssistantOptions.LanguageOverride}"
+                          ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type misc11:Language}}}"
+                          x:Name="langCombo" SelectedItem="{x:Static misc11:AssistantOptions.LanguageOverride}"
                           MinWidth="100">
                     <i:Interaction.Behaviors>
                         <misc1:ComboBoxBehavior CommandBinding="{Binding SetLanguageOverrideCommand}"
@@ -61,7 +62,7 @@
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Content="{x:Static resources:Strings.Smart_last_target_}" />
                 <ComboBox Text="{Binding CurrentOptions.SmartTargetOption, Mode=TwoWay}" Margin="10,0,10,0"
-                          ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type data:SmartTargetOption}}}"
+                          ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type misc11:SmartTargetOption}}}"
                           MinWidth="100" />
             </StackPanel>
             <CheckBox Content="{x:Static resources:Strings.Persist_Use_Once}"

@@ -25,9 +25,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
@@ -51,7 +52,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
         private async Task Target( object arg )
         {
-            int serial = await Commands.GetTargeSerialAsync( Strings.Target_object___ );
+            int serial = await Shared.UO.Commands.GetTargeSerialAsync( Strings.Target_object___ );
 
             if ( serial == 0 )
             {
@@ -76,7 +77,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
                 if ( entity.Properties == null )
                 {
-                    Commands.SystemMessage( Strings.Item_properties_null_or_not_loaded___ );
+                    Shared.UO.Commands.SystemMessage( Strings.Item_properties_null_or_not_loaded___ );
                     return;
                 }
             }

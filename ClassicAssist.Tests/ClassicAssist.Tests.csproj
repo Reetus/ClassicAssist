@@ -19,14 +19,14 @@
     <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClassicAssist\ClassicAssist.csproj" />
+    <ProjectReference Include="..\ClassicAssist.Shared\ClassicAssist.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="cuoapi">
-      <HintPath>..\ClassicAssist\cuoapi.dll</HintPath>
+      <HintPath>..\ClassicAssist.Shared\cuoapi.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>

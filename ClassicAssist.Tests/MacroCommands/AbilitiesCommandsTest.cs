@@ -1,5 +1,5 @@
 ﻿using System.Threading;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data.Abilities;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.UO.Objects;

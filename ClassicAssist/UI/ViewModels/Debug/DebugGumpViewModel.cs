@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects.Gumps;
 

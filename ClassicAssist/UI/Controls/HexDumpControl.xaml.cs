@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Windows;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.UO.Network.PacketFilter;
 
 namespace ClassicAssist.UI.Controls

@@ -4,12 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:misc="clr-namespace:ClassicAssist.Misc"
-             xmlns:data="clr-namespace:ClassicAssist.UO.Data"
              xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
-             xmlns:resources="clr-namespace:ClassicAssist.Resources"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:data="clr-namespace:ClassicAssist.UO.Data;assembly=ClassicAssist.Shared"
              mc:Ignorable="d">
     <d:DesignerProperties.DesignStyle>
         <Style TargetType="UserControl">

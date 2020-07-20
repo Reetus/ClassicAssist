@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Organizer;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
@@ -205,11 +206,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            int serial = await Commands.GetTargeSerialAsync( Strings.Target_new_item___ );
+            int serial = await Shared.UO.Commands.GetTargeSerialAsync( Strings.Target_new_item___ );
 
             if ( serial <= 0 )
             {
-                Commands.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                Shared.UO.Commands.SystemMessage( Strings.Invalid_or_unknown_object_id );
                 return;
             }
 
@@ -217,7 +218,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             if ( item == null )
             {
-                Commands.SystemMessage( Strings.Cannot_find_item___ );
+                Shared.UO.Commands.SystemMessage( Strings.Cannot_find_item___ );
                 return;
             }
 

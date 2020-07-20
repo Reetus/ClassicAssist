@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:ClassicAssist.UI.Views"
-    xmlns:resources="clr-namespace:ClassicAssist.Resources"
+    xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
     xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
     xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"

@@ -1,11 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Counters;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
@@ -131,7 +132,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                 if ( Warn && item.Count <= WarnAmount && count > WarnAmount )
                 {
-                    Commands.SystemMessage(
+                    Shared.UO.Commands.SystemMessage(
                         string.Format( Strings.Counter___0___amount_is_now__1____, item.Name, item.Count ), 61 );
                 }
             }
@@ -139,11 +140,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private async Task InsertEntry( object arg )
         {
-            int serial = await Commands.GetTargeSerialAsync( Strings.Target_object___ );
+            int serial = await Shared.UO.Commands.GetTargeSerialAsync( Strings.Target_object___ );
 
             if ( serial == 0 )
             {
-                Commands.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                Shared.UO.Commands.SystemMessage( Strings.Invalid_or_unknown_object_id );
                 return;
             }
 
@@ -151,7 +152,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             if ( item == null )
             {
-                Commands.SystemMessage( Strings.Cannot_find_item___ );
+                Shared.UO.Commands.SystemMessage( Strings.Cannot_find_item___ );
                 return;
             }
 

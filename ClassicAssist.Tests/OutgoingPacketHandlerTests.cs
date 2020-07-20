@@ -17,7 +17,7 @@
 
 #endregion
 
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;

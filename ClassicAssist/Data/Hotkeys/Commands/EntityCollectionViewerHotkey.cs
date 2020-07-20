@@ -1,11 +1,12 @@
 ﻿using System.Threading;
 using System.Windows.Threading;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO.Objects;
-using UOC = ClassicAssist.UO.Commands;
+using UOC = ClassicAssist.Shared.UO.Commands;
 
 namespace ClassicAssist.Data.Hotkeys.Commands
 {

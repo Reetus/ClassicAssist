@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Hotkeys.Commands;
@@ -9,6 +9,7 @@ using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Skills;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
@@ -38,7 +39,7 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( Engine.Player != null && Engine.Connected )
             {
-                Commands.MobileQuery( Engine.Player.Serial, MobileQueryType.SkillsRequest );
+                Shared.UO.Commands.MobileQuery( Engine.Player.Serial, MobileQueryType.SkillsRequest );
             }
 
             SkillManager manager = SkillManager.GetInstance();
@@ -164,7 +165,7 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            Commands.ChangeSkillLock( SelectedItem, lockStatus );
+            Shared.UO.Commands.ChangeSkillLock( SelectedItem, lockStatus );
         }
 
         private void SetAllSkillLocks( object obj )
@@ -175,10 +176,10 @@ namespace ClassicAssist.UI.ViewModels
 
             foreach ( SkillEntry skillEntry in skillsToSet )
             {
-                Commands.ChangeSkillLock( skillEntry, lockStatus, false );
+                Shared.UO.Commands.ChangeSkillLock( skillEntry, lockStatus, false );
             }
 
-            Commands.MobileQuery( Engine.Player.Serial, MobileQueryType.SkillsRequest );
+            Shared.UO.Commands.MobileQuery( Engine.Player.Serial, MobileQueryType.SkillsRequest );
         }
 
         private void UpdateTotalBase()

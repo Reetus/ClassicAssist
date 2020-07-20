@@ -3,18 +3,19 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 using Newtonsoft.Json.Linq;
-using UOC = ClassicAssist.UO.Commands;
+using UOC = ClassicAssist.Shared.UO.Commands;
 
 namespace ClassicAssist.UI.ViewModels.Agents
 {

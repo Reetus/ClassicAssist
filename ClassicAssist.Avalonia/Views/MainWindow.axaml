@@ -1,0 +1,21 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+        xmlns:local="clr-namespace:ClassicAssist.Avalonia"
+        xmlns:views="clr-namespace:ClassicAssist.Avalonia.Views"
+        mc:Ignorable="d"
+        Height="400" Width="625"
+        x:Class="ClassicAssist.Avalonia.Views.MainWindow"
+        DataContext="{Binding RelativeSource={RelativeSource Self}, Path=ViewModel}"
+        Title="{x:Static resources:Strings.ProductName}" Topmost="{Binding AlwaysOnTop}">
+  <TabControl Padding="5">
+    <TabItem Header="{x:Static resources:Strings.General}">
+      <views:GeneralControl/>
+    </TabItem>
+    <TabItem Header="{x:Static resources:Strings.About}">
+      <views:AboutControl/>
+    </TabItem>
+  </TabControl>
+</Window>

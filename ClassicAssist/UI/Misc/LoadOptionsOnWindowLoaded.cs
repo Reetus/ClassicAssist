@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Interactivity;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using Sentry;
 using Sentry.Protocol;

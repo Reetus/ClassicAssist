@@ -21,7 +21,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data.Organizer;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;

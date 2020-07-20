@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.UI.Misc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

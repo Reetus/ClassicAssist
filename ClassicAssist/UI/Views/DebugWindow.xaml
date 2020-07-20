@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:ClassicAssist.UI.Views"
     xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
-    xmlns:resources="clr-namespace:ClassicAssist.Resources"
+    xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
     xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
     xmlns:debug="clr-namespace:ClassicAssist.UI.Views.Debug"
     xmlns:controls="clr-namespace:ClassicAssist.UI.Controls" x:Name="window"

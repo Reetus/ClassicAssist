@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.UI.Misc;
 using ClassicAssist.UI.Views;
 
 namespace ClassicAssist.UI.ViewModels
@@ -18,7 +20,6 @@ namespace ClassicAssist.UI.ViewModels
 
         public MainWindowViewModel()
         {
-            Engine.Dispatcher = Dispatcher.CurrentDispatcher;
             Engine.UpdateWindowTitleEvent += OnUpdateWindowTitleEvent;
         }
 
@@ -56,10 +57,5 @@ namespace ClassicAssist.UI.ViewModels
             _debugWindow = new DebugWindow();
             _debugWindow.Show();
         }
-    }
-
-    public class OptionsBindingAttribute : Attribute
-    {
-        public string Property { get; set; }
     }
 }

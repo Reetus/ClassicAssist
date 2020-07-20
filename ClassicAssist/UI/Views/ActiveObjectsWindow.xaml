@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:resources="clr-namespace:ClassicAssist.Resources"
+    xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
     xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"

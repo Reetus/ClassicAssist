@@ -6,10 +6,10 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
              xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
-             xmlns:local="clr-namespace:ClassicAssist.Data.Hotkeys"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
-             xmlns:resources="clr-namespace:ClassicAssist.Resources"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+             xmlns:hotkeys="clr-namespace:ClassicAssist.Data.Hotkeys;assembly=ClassicAssist.Shared"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500">
     <UserControl.DataContext>
@@ -67,7 +67,7 @@
                                 <DataTrigger Binding="{Binding Path=SelectedItem.IsCategory}" Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding Path=SelectedItem.(local:HotkeyEntry.Hotkey)}"
+                                <DataTrigger Binding="{Binding Path=SelectedItem.(hotkeys:HotkeyEntry.Hotkey)}"
                                              Value="{x:Null}">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
@@ -88,7 +88,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <CheckBox Content="{x:Static resources:Strings.Pass_to_UO}" Margin="10,0,10,5"
-                              IsChecked="{Binding Path=SelectedItem.(local:HotkeyEntry.PassToUO), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              IsChecked="{Binding Path=SelectedItem.(hotkeys:HotkeyEntry.PassToUO), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               Grid.Column="0" IsEnabled="{Binding IsEnabled, ElementName=textBoxKey}" />
                 </Grid>
                 <Grid Grid.Row="3">

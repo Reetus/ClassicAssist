@@ -24,10 +24,11 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using ClassicAssist.Browser.Data;
 using ClassicAssist.Browser.Models;
 using ClassicAssist.Data.Macros;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.ViewModels;
 using Microsoft.Scripting.Utils;
 
@@ -58,6 +59,7 @@ namespace ClassicAssist.Browser
         private string _selectedMacro;
         private string _shardFilter;
         private ObservableCollection<string> _shards = new ObservableCollection<string>();
+        private Dispatcher _test;
 
         public MacroBrowserViewModel()
         {
@@ -65,6 +67,8 @@ namespace ClassicAssist.Browser
             _data.Add( nameof( Shards ), async () => await _database.GetShards() );
             _data.Add( nameof( Eras ), async () => await _database.GetEras() );
             _data.Add( nameof( Authors ), async () => await _database.GetAuthors() );
+
+            _test = Dispatcher.CurrentDispatcher;
 
             Task.Run( async () =>
             {
@@ -319,7 +323,7 @@ namespace ClassicAssist.Browser
                         continue;
                     }
 
-                    _dispatcher.Invoke( () =>
+                    _test.Invoke( () =>
                     {
                         obj.Clear();
                         obj.AddRange( data );

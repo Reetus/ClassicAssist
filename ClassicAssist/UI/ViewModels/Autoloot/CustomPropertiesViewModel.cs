@@ -25,10 +25,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Views.Autoloot;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Objects;
@@ -101,11 +102,11 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
 
         private async Task ChooseFromItem( object obj )
         {
-            int serial = await Commands.GetTargeSerialAsync( Strings.Target_object___, 90000 );
+            int serial = await Shared.UO.Commands.GetTargeSerialAsync( Strings.Target_object___, 90000 );
 
             if ( serial == 0 )
             {
-                Commands.SystemMessage( Strings.Cannot_find_item___ );
+                Shared.UO.Commands.SystemMessage( Strings.Cannot_find_item___ );
                 return;
             }
 
@@ -113,13 +114,13 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
 
             if ( item == null )
             {
-                Commands.SystemMessage( Strings.Cannot_find_item___ );
+                Shared.UO.Commands.SystemMessage( Strings.Cannot_find_item___ );
                 return;
             }
 
             if ( item.Properties == null )
             {
-                Commands.SystemMessage( Strings.Item_properties_null_or_not_loaded___ );
+                Shared.UO.Commands.SystemMessage( Strings.Item_properties_null_or_not_loaded___ );
                 return;
             }
 

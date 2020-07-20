@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data.Dress;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;

@@ -8,6 +8,7 @@ using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 
 namespace ClassicAssist.UI.ViewModels
@@ -289,7 +290,7 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             int serial =
-                await Commands.GetTargeSerialAsync( string.Format( Strings.Target_object___0_____, entry.Name ) );
+                await Shared.UO.Commands.GetTargeSerialAsync( string.Format( Strings.Target_object___0_____, entry.Name ) );
 
             if ( serial == 0 )
             {

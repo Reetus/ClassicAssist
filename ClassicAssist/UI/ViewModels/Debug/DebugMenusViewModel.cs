@@ -19,7 +19,7 @@
 
 using System.Collections.ObjectModel;
 using System.Text;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UI.ViewModels.Debug

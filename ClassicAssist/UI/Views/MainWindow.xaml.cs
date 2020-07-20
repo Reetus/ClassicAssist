@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using System.Windows.Threading;
+using ClassicAssist.Shared;
 
 namespace ClassicAssist.UI.Views
 {

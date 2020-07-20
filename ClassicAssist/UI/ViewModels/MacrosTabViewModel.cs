@@ -6,18 +6,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.ViewModels.Macros;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UI.Views.Macros;
 using ClassicAssist.UO;
-using ClassicAssist.UO.Gumps;
 using ICSharpCode.AvalonEdit.Document;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -46,6 +45,7 @@ namespace ClassicAssist.UI.ViewModels
 
         public MacrosTabViewModel() : base( Strings.Macros )
         {
+            Engine.ConnectedEvent += OnConnectedEvent;
             Engine.DisconnectedEvent += OnDisconnectedEvent;
 
             _manager = MacroManager.GetInstance();
@@ -54,6 +54,11 @@ namespace ClassicAssist.UI.ViewModels
             _manager.InsertDocument = str => { _dispatcher.Invoke( () => { SelectedItem.Macro += str; } ); };
             _manager.NewMacro = NewMacro;
             _manager.Items = Items;
+        }
+
+        private void OnConnectedEvent()
+        {
+            CommandManager.InvalidateRequerySuggested();
         }
 
         public int CaretPosition
@@ -80,9 +85,10 @@ namespace ClassicAssist.UI.ViewModels
             set => CheckOverwriteHotkey( SelectedItem, value );
         }
 
+        //TODO
         public ICommand InspectObjectCommand =>
             _inspectObjectCommand ??
-            ( _inspectObjectCommand = new RelayCommandAsync( InspectObject, o => Engine.Connected ) );
+            ( _inspectObjectCommand = new RelayCommandAsync( InspectObject, o => true ) );
 
         public bool IsRecording
         {
@@ -261,7 +267,8 @@ namespace ClassicAssist.UI.ViewModels
                         entry.Hotkey = ShortcutKeys.Default;
                     }
 
-                    entry.Action = async hks => await Execute( entry );
+                    entry.Action = async hks =>
+                        await Engine.Dispatcher.InvokeAsync( async () => await Execute( entry ) );
 
                     if ( Options.CurrentOptions.SortMacrosAlphabetical )
                     {

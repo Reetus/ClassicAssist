@@ -9,9 +9,10 @@
              xmlns:local="clr-namespace:ClassicAssist.Data.Macros"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
-             xmlns:resources="clr-namespace:ClassicAssist.Resources"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
-             xmlns:hotkeys="clr-namespace:ClassicAssist.Data.Hotkeys"
+             xmlns:macros="clr-namespace:ClassicAssist.Data.Macros;assembly=ClassicAssist.Shared"
+             xmlns:hotkeys1="clr-namespace:ClassicAssist.Data.Hotkeys;assembly=ClassicAssist.Shared"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500" Padding="5">
     <d:DesignerProperties.DesignStyle>
@@ -75,7 +76,7 @@
                     </ListBox.InputBindings>
                     <i:Interaction.Behaviors>
                         <misc:ItemsControlSelectNewEntryBehaviour SelectedItem="{Binding SelectedItem}"
-                                                                  Type="{x:Type local:MacroEntry}" />
+                                                                  Type="{x:Type macros:MacroEntry}" />
                     </i:Interaction.Behaviors>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -112,7 +113,7 @@
                                         <Style TargetType="TextBlock">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Hotkey}"
-                                                             Value="{x:Static hotkeys:ShortcutKeys.Default}">
+                                                             Value="{x:Static hotkeys1:ShortcutKeys.Default}">
                                                     <Setter Property="Visibility" Value="Collapsed" />
                                                 </DataTrigger>
                                             </Style.Triggers>

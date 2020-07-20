@@ -20,7 +20,7 @@
 using System;
 using System.Linq;
 using System.Threading;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.Packets;

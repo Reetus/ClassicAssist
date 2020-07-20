@@ -1,4 +1,4 @@
-﻿using Assistant;
+﻿using ClassicAssist.Shared;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.SpecialMoves;
 using ClassicAssist.UO.Data;

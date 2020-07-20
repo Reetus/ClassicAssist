@@ -23,12 +23,13 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 using System.Windows.Media;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data.Chat;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
-using ClassicAssist.UO;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UO;
 
 namespace ClassicAssist.UI.ViewModels
 {
@@ -77,7 +78,8 @@ namespace ClassicAssist.UI.ViewModels
 
             foreach ( string user in _manager.Users )
             {
-                Users.AddSorted( new ChatUser { Username = user, Colour = GetUserColour( user ) } );
+                //TODO2
+                Users.AddSorted( new ChatUser { Username = user/*, Colour = GetUserColour( user )*/ } );
             }
 
             foreach ( string channel in _manager.Channels )
@@ -170,7 +172,10 @@ namespace ClassicAssist.UI.ViewModels
         {
             _dispatcher.Invoke( () => Messages.Add( new ChatMessage
             {
-                Username = username, Channel = channel, Text = message, Colour = GetUserColour( username )
+                //TODO2
+                Username = username,
+                Channel = channel,
+                Text = message/*, Colour = GetUserColour( username )*/
             } ) );
         }
 
@@ -220,7 +225,8 @@ namespace ClassicAssist.UI.ViewModels
         {
             _dispatcher.Invoke( () =>
             {
-                ChatUser user = new ChatUser { Username = username, Colour = GetUserColour( username ) };
+                //TODO2
+                ChatUser user = new ChatUser { Username = username/*, Colour = GetUserColour( username )*/ };
 
                 Users.AddSorted( user );
             } );

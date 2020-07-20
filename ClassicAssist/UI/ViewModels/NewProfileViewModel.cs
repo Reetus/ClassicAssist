@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using ClassicAssist.Data;
 using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 
 namespace ClassicAssist.UI.ViewModels
 {

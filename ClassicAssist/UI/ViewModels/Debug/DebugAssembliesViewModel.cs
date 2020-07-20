@@ -25,9 +25,10 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using Microsoft.Win32;
 
 namespace ClassicAssist.UI.ViewModels.Debug

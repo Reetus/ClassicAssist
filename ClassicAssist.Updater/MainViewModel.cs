@@ -261,7 +261,7 @@ namespace ClassicAssist.Updater
 
         private void AddText( string message )
         {
-            _dispatcher?.Invoke( () => Items.Add( message ) );
+            _dispatcher.Invoke( () => Items.Add( message ) );
         }
 
         [NotifyPropertyChangedInvocator]

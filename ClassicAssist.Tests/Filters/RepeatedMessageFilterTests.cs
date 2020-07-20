@@ -18,7 +18,7 @@
 #endregion
 
 using System;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data.Filters;
 using ClassicAssist.UO.Network;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

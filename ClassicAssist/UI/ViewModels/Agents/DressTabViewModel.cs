@@ -2,13 +2,14 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Dress;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
-using ClassicAssist.UO;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
 using Newtonsoft.Json.Linq;

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;

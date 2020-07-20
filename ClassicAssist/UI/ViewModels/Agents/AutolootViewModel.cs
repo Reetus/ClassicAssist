@@ -7,12 +7,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Data.Regions;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UI.Views.Autoloot;
@@ -24,7 +25,7 @@ using ClassicAssist.UO.Objects;
 using Microsoft.Scripting.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using UOC = ClassicAssist.UO.Commands;
+using UOC = ClassicAssist.Shared.UO.Commands;
 
 namespace ClassicAssist.UI.ViewModels.Agents
 {
@@ -368,7 +369,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             Clipboard.SetText( text );
         }
 
-        internal void OnCorpseEvent( int serial )
+        public void OnCorpseEvent( int serial )
         {
             if ( !Enabled )
             {

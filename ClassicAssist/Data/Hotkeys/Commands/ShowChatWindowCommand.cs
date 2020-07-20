@@ -19,7 +19,7 @@
 
 using System.Threading;
 using System.Windows.Threading;
-using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.UI.Views;
 
 namespace ClassicAssist.Data.Hotkeys.Commands
@@ -37,7 +37,8 @@ namespace ClassicAssist.Data.Hotkeys.Commands
 
                     window.Show();
                     Dispatcher.Run();
-                } ) { IsBackground = true };
+                } )
+                { IsBackground = true };
 
                 t.SetApartmentState( ApartmentState.STA );
                 t.Start();

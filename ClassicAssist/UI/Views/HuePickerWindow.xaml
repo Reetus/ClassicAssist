@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ClassicAssist.UI.Views"
         xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
         xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
-        xmlns:resources="clr-namespace:ClassicAssist.Resources"
+        xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
         mc:Ignorable="d"

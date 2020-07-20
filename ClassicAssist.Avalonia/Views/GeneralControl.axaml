@@ -1,0 +1,45 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels;assembly=ClassicAssist.Shared"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ClassicAssist.Avalonia.Views.GeneralControl">
+  <UserControl.DataContext>
+    <viewModels:GeneralControlViewModel/>
+  </UserControl.DataContext>
+  <Grid ColumnDefinitions="200,*">
+    <Grid Grid.Column="0" RowDefinitions="*,Auto">
+      <ListBox Items="{Binding Filters}" Grid.Row="0">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+              <CheckBox IsChecked="{Binding Enabled}" Margin="0,0,10,0" />
+              <TextBlock Text="{Binding Name}" />
+            </StackPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+      <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
+        <TextBlock Text="{x:Static resources:Strings.Light}" Grid.Column="0" />
+        <Slider Value="{Binding Options.LightLevel}" Minimum="0" Maximum="31" Grid.Column="1" />
+      </Grid>
+    </Grid>
+    <Grid Grid.Column="1" Margin="10, 0, 0, 0" RowDefinitions="*,Auto,Auto">
+      <StackPanel Orientation="Vertical" Grid.Row="0" VerticalAlignment="Top">
+        <CheckBox IsChecked="{Binding Options.AlwaysOnTop}" Margin="0,0,0,10">
+          <TextBlock Text="{x:Static resources:Strings.Always_On_Top}"/>
+        </CheckBox>
+        <CheckBox Margin="0,0,0,10" IsChecked="{Binding Options.ActionDelay}">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{x:Static resources:Strings.Action_Delay_}" VerticalAlignment="Center"/>
+            <TextBox Width="40" Margin="10,0,10,0"
+                     Text="{Binding Options.ActionDelayMS}"/>
+            <TextBlock Text="ms" Margin="0" VerticalAlignment="Center" />
+          </StackPanel>
+        </CheckBox>
+      </StackPanel>
+    </Grid>
+  </Grid>
+</UserControl>

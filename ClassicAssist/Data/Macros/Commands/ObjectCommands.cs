@@ -462,7 +462,7 @@ namespace ClassicAssist.Data.Macros.Commands
             }
 
             Item entity = sourceItem.Container.SelectEntities( i => i.ID == id && ( hue == -1 || i.Hue == hue ) )
-                .FirstOrDefault();
+                ?.FirstOrDefault();
 
             if ( entity == null )
             {

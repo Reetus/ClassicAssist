@@ -1374,4 +1374,37 @@ Czy chcesz kontynuować?</value>
   <data name="Failed to download macro..." xml:space="preserve">
     <value>Nie udało się pobrać makra...</value>
   </data>
+  <data name="Additional Assemblies" xml:space="preserve">
+    <value>Dodatkowe składowe</value>
+  </data>
+  <data name="Additional assemblies to load:" xml:space="preserve">
+    <value>Dodatkowe składowe do załadowania:</value>
+  </data>
+  <data name="Error loading assembly: {0}" xml:space="preserve">
+    <value>Wystąpił bład podczas ładowania składowych: {0}</value>
+  </data>
+  <data name="Special Moves" xml:space="preserve">
+    <value>Specjalne ruchy</value>
+  </data>
+  <data name="Loaded to all profiles" xml:space="preserve">
+    <value>Załadowane do wszystkich profili</value>
+  </data>
+  <data name="Bards Music" xml:space="preserve">
+    <value>Muzyka Barda</value>
+  </data>
+  <data name="Check hands before potions" xml:space="preserve">
+    <value>Sprawdź ręce przed piciem mikstur</value>
+  </data>
+  <data name="Rehue friends" xml:space="preserve">
+    <value>Pokoloruj znajomych</value>
+  </data>
+  <data name="Show running macros gump" xml:space="preserve">
+    <value>Pokaż listę działających makr</value>
+  </data>
+  <data name="Item out of range..." xml:space="preserve">
+    <value>Przedmiot poza granicą...</value>
+  </data>
+  <data name="Cast Last Spell" xml:space="preserve">
+    <value>Rzuć ostatni czar</value>
+  </data>
 </root>

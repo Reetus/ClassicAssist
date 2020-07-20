@@ -17,6 +17,7 @@ using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
+using ClassicAssist.UO.Objects.Gumps;
 
 namespace ClassicAssist.UO
 {
@@ -314,6 +315,18 @@ namespace ClassicAssist.UO
             CloseClientGump( gumpID );
 
             return true;
+        }
+
+        public static void CloseClientGump( Type gumpType )
+        {
+            Engine.Gumps.GetGumps( out Gump[] gumps );
+
+            IEnumerable<Gump> closeGumps = gumps.Where( t => t.GetType() == gumpType );
+
+            foreach ( Gump closeGump in closeGumps )
+            {
+                CloseClientGump( closeGump.ID );
+            }
         }
 
         public static void CloseClientGump( uint gumpID )

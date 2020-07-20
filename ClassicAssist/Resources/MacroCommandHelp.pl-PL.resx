@@ -1258,4 +1258,31 @@ TargetTileOffset(0, 1, 0)</value>
   <data name="TARGETBYRESOURCE_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>TargetByResource('pickaxe', 'Ore')</value>
   </data>
+  <data name="WAITFORMENU_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zatrzymuje działanie dopóki nie odbierze pakietu . Opcjonalne parametry gumpId lub timeout.</value>
+  </data>
+  <data name="REPLYMENU_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wysyła żadanie powtórzenia przycisku do menu serwera</value>
+  </data>
+  <data name="INMENU_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "True" jeśli tutył menu lub wpisy tytułó zawierają podany tekst.</value>
+  </data>
+  <data name="MENUEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca "True" jeśli podane menu o zadanym id występuje</value>
+  </data>
+  <data name="CLOSEMENU_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zamyka podane menu o zadanym id</value>
+  </data>
+  <data name="SKILLCAP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca skill cap podanego skilla</value>
+  </data>
+  <data name="HIDEENTITY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Usuwa przedmiot/obiekt mobile z ekranu</value>
+  </data>
+  <data name="USETARGETEDITEM_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Używa podanego przedmiotu lub celu w jednej akcji. Wymaga wsparcia OSI/ServUO</value>
+  </data>
+  <data name="USELAYER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Używa obiektu w podanym layerze, opcjonalnie można podać parametr obiektu mobile</value>
+  </data>
 </root>

@@ -6,6 +6,7 @@ using ClassicAssist.Data;
 using ClassicAssist.Data.Filters;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
+using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UO.Network
@@ -54,8 +55,17 @@ namespace ClassicAssist.UO.Network
 
         private static bool OnMobileUpdate( ref byte[] packet, ref int length )
         {
+            int serial = ( packet[1] << 24 ) | ( packet[2] << 16 ) | ( packet[3] << 8 ) | packet[4];
+
+            if ( Options.CurrentOptions.RehueFriends && Options.CurrentOptions.Friends.Any( e => e.Serial == serial ) )
+            {
+                packet[8] = (byte) ( Options.CurrentOptions.RehueFriendsHue >> 8 );
+                packet[9] = (byte) Options.CurrentOptions.RehueFriendsHue;
+                return false;
+            }
+
             PacketReader reader = new PacketReader( packet, length, true );
-            int serial = reader.ReadInt32();
+            serial = reader.ReadInt32();
             int id = reader.ReadInt16();
             reader.ReadByte(); // BYTE 0x00;
             int hue = reader.ReadUInt16();
@@ -102,8 +112,17 @@ namespace ClassicAssist.UO.Network
 
         private static bool OnMobileMoving( ref byte[] packet, ref int length )
         {
+            int serial = ( packet[1] << 24 ) | ( packet[2] << 16 ) | ( packet[3] << 8 ) | packet[4];
+
+            if ( Options.CurrentOptions.RehueFriends && Options.CurrentOptions.Friends.Any( e => e.Serial == serial ) )
+            {
+                packet[13] = (byte) ( Options.CurrentOptions.RehueFriendsHue >> 16 );
+                packet[14] = (byte) Options.CurrentOptions.RehueFriendsHue;
+                return false;
+            }
+
             PacketReader reader = new PacketReader( packet, length, true );
-            int serial = reader.ReadInt32();
+            serial = reader.ReadInt32();
             int id = reader.ReadInt16();
             int x = reader.ReadInt16();
             int y = reader.ReadInt16();
@@ -137,6 +156,8 @@ namespace ClassicAssist.UO.Network
 
         private static bool OnMobileIncoming( ref byte[] packet, ref int length )
         {
+            bool useNewIncoming = Engine.ClientVersion == null || Engine.ClientVersion >= new Version( 7, 0, 33, 1 );
+
             PacketReader reader = new PacketReader( packet, length, false );
 
             int serial = reader.ReadInt32();
@@ -153,8 +174,6 @@ namespace ClassicAssist.UO.Network
             mobile.Hue = reader.ReadUInt16();
             mobile.Status = (MobileStatus) reader.ReadByte();
             mobile.Notoriety = (Notoriety) reader.ReadByte();
-
-            bool useNewIncoming = Engine.ClientVersion == null || Engine.ClientVersion >= new Version( 7, 0, 33, 1 );
 
             for ( ;; )
             {
@@ -192,6 +211,25 @@ namespace ClassicAssist.UO.Network
             foreach ( Item item in container.GetItems() )
             {
                 mobile.SetLayer( item.Layer, item.Serial );
+            }
+
+            try
+            {
+                if ( Options.CurrentOptions.RehueFriends &&
+                     Options.CurrentOptions.Friends.Any( e => e.Serial == serial ) )
+                {
+                    MobileIncoming newPacket =
+                        new MobileIncoming( mobile, container, Options.CurrentOptions.RehueFriendsHue );
+
+                    packet = newPacket.ToArray();
+                    length = packet.Length;
+
+                    return false;
+                }
+            }
+            catch ( InvalidOperationException e )
+            {
+                Console.WriteLine( e.ToString() );
             }
 
             if ( !Engine.RehueList.CheckMobileIncoming( mobile, container ) )

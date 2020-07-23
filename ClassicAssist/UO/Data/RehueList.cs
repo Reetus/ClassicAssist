@@ -95,14 +95,6 @@ namespace ClassicAssist.UO.Data
                 return true;
             }
 
-            if ( Options.CurrentOptions.RehueFriends &&
-                 Options.CurrentOptions.Friends.Any( e => e.Serial == mobile.Serial ) )
-            {
-                Engine.SendPacketToClient( new MobileIncoming( mobile, equipment,
-                    Options.CurrentOptions.RehueFriendsHue ) );
-                return true;
-            }
-
             return false;
         }
 
@@ -116,12 +108,6 @@ namespace ClassicAssist.UO.Data
                     entry.Hue > 0 ? entry.Hue : mobile.Hue, mobile.Status, mobile.X, mobile.Y, mobile.Z,
                     mobile.Direction ) );
                 return true;
-            }
-
-            if ( !Options.CurrentOptions.RehueFriends ||
-                 Options.CurrentOptions.Friends.All( e => e.Serial != mobile.Serial ) )
-            {
-                return false;
             }
 
             Engine.SendPacketToClient( new MobileUpdate( mobile.Serial, mobile.ID,
@@ -147,20 +133,14 @@ namespace ClassicAssist.UO.Data
         {
             bool result = _rehueList.TryGetValue( mobile.Serial, out RehueEntry entry );
 
-            if ( result )
-            {
-                Engine.SendPacketToClient( new MobileMoving( mobile, entry.Hue ) );
-                return true;
-            }
-
-            if ( !Options.CurrentOptions.RehueFriends ||
-                 Options.CurrentOptions.Friends.All( e => e.Serial != mobile.Serial ) )
+            if ( !result )
             {
                 return false;
             }
 
-            Engine.SendPacketToClient( new MobileMoving( mobile, Options.CurrentOptions.RehueFriendsHue ) );
+            Engine.SendPacketToClient( new MobileMoving( mobile, entry.Hue ) );
             return true;
+
         }
     }
 }

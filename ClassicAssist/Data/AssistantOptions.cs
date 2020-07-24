@@ -186,6 +186,7 @@ namespace ClassicAssist.Data
 
         private static void BackupProfiles()
         {
+            string[] additionalFiles = { "Assistant.json", "Macros.json" };
             string profileDirectory = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Profiles" );
 
             if ( !Directory.Exists( profileDirectory ) )
@@ -227,6 +228,17 @@ namespace ClassicAssist.Data
                     string outputFile = Path.Combine( outputPath,
                         Path.GetFileName( file ) ?? throw new InvalidOperationException() );
                     File.Copy( file, outputFile, true );
+                }
+
+                foreach ( string additionalFile in additionalFiles )
+                {
+                    string fullPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
+                        additionalFile );
+
+                    if ( File.Exists( fullPath ) )
+                    {
+                        File.Copy( fullPath, Path.Combine( outputPath, additionalFile ) );
+                    }
                 }
             }
             catch ( Exception )

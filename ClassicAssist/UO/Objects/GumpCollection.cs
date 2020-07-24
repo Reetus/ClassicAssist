@@ -40,11 +40,11 @@ namespace ClassicAssist.UO.Objects
             }
         }
 
-        public bool Remove( uint id, int buttonId = 0 )
+        public bool Remove( uint id, int buttonId = 0, int[] switches = null )
         {
             bool result = _dictionary.TryRemove( id, out Gump g );
 
-            g?.OnResponse( buttonId, null );
+            g?.OnResponse( buttonId, switches );
 
             if ( result )
             {

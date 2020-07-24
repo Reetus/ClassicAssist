@@ -295,6 +295,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Arm / Disarm already in progress....
+        /// </summary>
+        public static string Arm___Disarm_already_in_progress___ {
+            get {
+                return ResourceManager.GetString("Arm / Disarm already in progress...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Attack Enemy.
         /// </summary>
         public static string Attack_Enemy {
@@ -966,6 +975,15 @@ namespace ClassicAssist.Resources {
         public static string Dress {
             get {
                 return ResourceManager.GetString("Dress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dress already in progress....
+        /// </summary>
+        public static string Dress_already_in_progress___ {
+            get {
+                return ResourceManager.GetString("Dress already in progress...", resourceCulture);
             }
         }
         

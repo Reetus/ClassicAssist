@@ -447,7 +447,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 {
                     int containerSerial = ContainerSerial;
 
-                    if ( containerSerial == 0 || Engine.Items.GetItem( containerSerial ) == null )
+                    if ( containerSerial == 0 || Engine.Player?.Backpack?.Container?.GetItem( containerSerial ) == null )
                     {
                         containerSerial = Engine.Player.GetLayer( Layer.Backpack );
                     }

@@ -133,6 +133,37 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Setup an automated reply to the incoming dye color gump, allowing you to define dye tubs color.
+        ///That command should be added prior to the action that opens the color pick gump..
+        /// </summary>
+        public static string AUTOCOLORPICK_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("AUTOCOLORPICK_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AutoColorPick(666)
+        ///UseObject(&apos;dyes&apos;)
+        ///WaitForTarget(1000)
+        ///Target(&apos;tub&apos;).
+        /// </summary>
+        public static string AUTOCOLORPICK_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("AUTOCOLORPICK_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AutoColorPick(35).
+        /// </summary>
+        public static string AUTOCOLORPICK_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("AUTOCOLORPICK_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Applies a bandage to the player..
         /// </summary>
         public static string BANDAGESELF_COMMAND_DESCRIPTION {

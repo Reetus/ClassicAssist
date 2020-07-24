@@ -17,6 +17,7 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -49,41 +50,48 @@ namespace ClassicAssist.UO.Gumps
 
         public static void ResendGump( bool force = false )
         {
-            MacroManager _macroManager = MacroManager.GetInstance();
-
-            IEnumerable<MacroEntry> macro = _macroManager.Items.Where( e => e.IsRunning );
-
-            string html = string.Empty;
-
-            foreach ( MacroEntry entry in macro )
+            try
             {
-                if ( entry.IsBackground )
-                {
-                    html += $"<BASEFONT COLOR=#000000><I>{entry.Name}</I></BASEFONT>\n";
-                }
-                else
-                {
-                    html += $"<BASEFONT COLOR=#000000>{entry.Name}</BASEFONT>\n";
-                }
-            }
+                MacroManager _macroManager = MacroManager.GetInstance();
 
-            if ( html.Equals( _lastList ) && !force )
+                IEnumerable<MacroEntry> macro = _macroManager.Items.Where( e => e.IsRunning );
+
+                string html = string.Empty;
+
+                foreach ( MacroEntry entry in macro )
+                {
+                    if ( entry.IsBackground )
+                    {
+                        html += $"<BASEFONT COLOR=#000000><I>{entry.Name}</I></BASEFONT>\n";
+                    }
+                    else
+                    {
+                        html += $"<BASEFONT COLOR=#000000>{entry.Name}</BASEFONT>\n";
+                    }
+                }
+
+                if ( html.Equals( _lastList ) && !force )
+                {
+                    return;
+                }
+
+                if ( Engine.Gumps.GetGumps( out Gump[] gumps ) )
+                {
+                    foreach ( Gump macrosGump in gumps.Where( g => g is MacrosGump ) )
+                    {
+                        Commands.CloseClientGump( macrosGump.ID );
+                    }
+                }
+
+                MacrosGump gump = new MacrosGump( html );
+                gump.SendGump();
+
+                _lastList = html;
+            }
+            catch ( InvalidOperationException e )
             {
-                return;
+                Console.WriteLine( e.ToString() );
             }
-
-            if ( Engine.Gumps.GetGumps( out Gump[] gumps ) )
-            {
-                foreach ( Gump macrosGump in gumps.Where( g => g is MacrosGump ) )
-                {
-                    Commands.CloseClientGump( macrosGump.ID );
-                }
-            }
-
-            MacrosGump gump = new MacrosGump( html );
-            gump.SendGump();
-
-            _lastList = html;
         }
 
         public static void Initialize()

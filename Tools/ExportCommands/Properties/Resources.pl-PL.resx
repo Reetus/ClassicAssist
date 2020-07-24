@@ -228,4 +228,43 @@
   <data name="PARAMETER_DESCRIPTION_BOOLEAN" xml:space="preserve">
     <value>Wartość True/False - zobacz opis, aby zobaczyć użycie</value>
   </data>
+  <data name="PARAMETER_DESCRIPTION_ABILITY" xml:space="preserve">
+    <value>Nazwa umiejętności broni. Możliwe wartości: "primary", "secondary", "stun" or "disarm"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_AMOUNT" xml:space="preserve">
+    <value>Zmienna integer reprezentująca liczbę, np. 10</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_CONTEXTMENUINDEX" xml:space="preserve">
+    <value>Numer indeksu kontekstowego menu</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_HUE" xml:space="preserve">
+    <value>Kolor przedmiotu (-1 jeśli jakikolwiek)</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ITEMID" xml:space="preserve">
+    <value>ItemId/Grafika np. 0x3db</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_LAYER" xml:space="preserve">
+    <value>Zmienna String reprezentująca layer, np. "OneHanded" lub "Talisman" itp...</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_LEFTRIGHTBOTH" xml:space="preserve">
+    <value>Ręka. Możliwe wartości:  "left", "right", lub "both"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_NAME" xml:space="preserve">
+    <value>Zmienna string reprezentująca nazwę, np. "Snoopy"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ONOFF" xml:space="preserve">
+    <value>"on" lub "off"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_SHOWTYPE" xml:space="preserve">
+    <value>Pokaż typy obiektów. Możliwe wartości "mobiles", lub "corpses"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_TIMEOUT" xml:space="preserve">
+    <value>Timeout w milisekundach</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Nieznany</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_EMPTY" xml:space="preserve">
+    <value>Zobacz również: {0}</value>
+  </data>
 </root>

@@ -29,6 +29,8 @@ namespace ClassicAssist.Data
         private bool _alwaysOnTop;
         private bool _autoAcceptPartyInvite;
         private bool _autoAcceptPartyOnlyFromFriends;
+        private double _chatWindowHeight = 350;
+        private double _chatWindowWidth = 650;
         private bool _checkHandsPotions;
         private char _commandPrefix = '+';
         private bool _debug;
@@ -114,6 +116,18 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _autoAcceptPartyOnlyFromFriends, value );
         }
 
+        public double ChatWindowHeight
+        {
+            get => _chatWindowHeight;
+            set => SetProperty( ref _chatWindowHeight, value );
+        }
+
+        public double ChatWindowWidth
+        {
+            get => _chatWindowWidth;
+            set => SetProperty( ref _chatWindowWidth, value );
+        }
+
         public bool CheckHandsPotions
         {
             get => _checkHandsPotions;
@@ -179,7 +193,11 @@ namespace ClassicAssist.Data
         public int LightLevel
         {
             get => _lightLevel;
-            set => SetProperty( ref _lightLevel, value );
+            set
+            {
+                SetProperty( ref _lightLevel, value );
+                Engine.SendPacketToClient( new byte[] { 0x4F, (byte) CurrentOptions.LightLevel }, 2 );
+            }
         }
 
         public bool LimitMouseWheelTrigger

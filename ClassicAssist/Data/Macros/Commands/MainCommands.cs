@@ -110,12 +110,29 @@ namespace ClassicAssist.Data.Macros.Commands
             t.Start();
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Main ) )]
-        public static void Hotkeys()
+        [CommandsDisplay( Category = nameof( Strings.Main ), Parameters = new[] { nameof( ParameterType.OnOff ) } )]
+        public static void Hotkeys( string onOff = "toggle" )
         {
             HotkeyManager manager = HotkeyManager.GetInstance();
 
-            manager.Enabled = !manager.Enabled;
+            switch ( onOff.Trim().ToLower() )
+            {
+                case "on":
+                {
+                    manager.Enabled = true;
+                    break;
+                }
+                case "off":
+                {
+                    manager.Enabled = false;
+                    break;
+                }
+                default:
+                {
+                    manager.Enabled = !manager.Enabled;
+                    break;
+                }
+            }
 
             UOC.SystemMessage( manager.Enabled ? Strings.Hotkeys_enabled___ : Strings.Hotkeys_disabled___,
                 manager.Enabled ? 0x3F : 36 );

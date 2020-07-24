@@ -196,6 +196,27 @@ namespace Assistant
 
             ClassicAssembly = AppDomain.CurrentDomain.GetAssemblies()
                 .FirstOrDefault( a => a.FullName.StartsWith( "ClassicUO," ) );
+
+            InitializeExtensions();
+        }
+
+        private static void InitializeExtensions()
+        {
+            IEnumerable<Type> types = Assembly.GetExecutingAssembly().GetTypes()
+                .Where( t => typeof( IExtension ).IsAssignableFrom( t ) && t.IsClass );
+
+            foreach ( Type type in types )
+            {
+                try
+                {
+                    IExtension instance = (IExtension) Activator.CreateInstance( type );
+                    instance?.Initialize();
+                }
+                catch ( Exception e )
+                {
+                    Console.WriteLine( e.ToString() );
+                }
+            }
         }
 
         private static void OnMouse( int button, int wheel )

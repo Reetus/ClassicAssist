@@ -15,6 +15,12 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             DressManager manager = DressManager.GetInstance();
 
+            if ( manager.IsDressing )
+            {
+                UOC.SystemMessage( Strings.Dress_already_in_progress___, 35 );
+                return;
+            }
+
             DressAgentEntry dressAgentEntry;
 
             if ( string.IsNullOrEmpty( name ) )

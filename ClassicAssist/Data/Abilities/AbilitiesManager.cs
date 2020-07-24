@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Assistant;
 using ClassicAssist.Misc;
+using ClassicAssist.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.Packets;
@@ -26,6 +27,7 @@ namespace ClassicAssist.Data.Abilities
         private static AbilitiesManager _instance;
         private static readonly object _lock = new object();
         private static List<WeaponData> _weaponData;
+        private static bool _checkHandsInProgress;
 
         private AbilitiesManager()
         {
@@ -292,6 +294,14 @@ namespace ClassicAssist.Data.Abilities
                 return false;
             }
 
+            if ( _checkHandsInProgress )
+            {
+                UOC.SystemMessage( Strings.Arm___Disarm_already_in_progress___, 35 );
+                return false;
+            }
+
+            _checkHandsInProgress = true;
+
             Item leftHand = Engine.Player?.Equipment.FirstOrDefault( i => i.Layer == Layer.TwoHanded );
             Item rightHand = Engine.Player?.Equipment.FirstOrDefault( i => i.Layer == Layer.OneHanded );
 
@@ -325,13 +335,13 @@ namespace ClassicAssist.Data.Abilities
 
             ActionPacketQueue.EnqueueDragDrop( leftHand.Serial, 1, Engine.Player.GetLayer( Layer.Backpack ),
                 QueuePriority.High );
-            ActionPacketQueue.EnqueueActionPacket( new UseObject( serial ), QueuePriority.High );
             ActionPacketQueue.EnqueueActionPackets(
                 new BasePacket[]
                 {
+                    new UseObject( serial ),
                     new DragItem( leftHand.Serial, 1 ),
                     new EquipRequest( leftHand.Serial, leftHand.Layer, (int) Engine.Player?.Serial )
-                }, QueuePriority.High );
+                }, QueuePriority.High ).ContinueWith( t => _checkHandsInProgress = false );
 
             return true;
         }

@@ -1410,4 +1410,10 @@ Are you sure you wish to continue?</value>
   <data name="Cast Last Spell" xml:space="preserve">
     <value>Cast Last Spell</value>
   </data>
+  <data name="Arm / Disarm already in progress..." xml:space="preserve">
+    <value>Arm / Disarm already in progress...</value>
+  </data>
+  <data name="Dress already in progress..." xml:space="preserve">
+    <value>Dress already in progress...</value>
+  </data>
 </root>

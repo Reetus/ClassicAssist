@@ -45,21 +45,7 @@
     </Window.Resources>
     <DockPanel>
         <controls:CustomWindowTitleControl DockPanel.Dock="Top" CustomTitle="{Binding Title, ElementName=window}"
-                                           CanClose="True">
-            <controls:CustomWindowTitleControl.AdditionalContent>
-                <Image Source="{DynamicResource configureIcon}" misc:ClickOpensContextMenuBehaviour.Enabled="True"
-                       Width="16" HorizontalAlignment="Right" Margin="0,0,80,0">
-                    <Image.ContextMenu>
-                        <ContextMenu IsOpen="False">
-                            <MenuItem Header="{x:Static resources:Strings.Topmost}"
-                                      Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:ChatViewModel.ToggleOptionCommand)}"
-                                      IsCheckable="True" />
-                        </ContextMenu>
-                    </Image.ContextMenu>
-                </Image>
-            </controls:CustomWindowTitleControl.AdditionalContent>
-
-        </controls:CustomWindowTitleControl>
+                                           CanClose="True"/>
 
         <Grid Margin="10" Background="{DynamicResource ThemeBackgroundBrush}">
             <Grid.ColumnDefinitions>

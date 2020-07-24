@@ -77,6 +77,8 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "MacrosGump", CurrentOptions.MacrosGump );
             options.Add( "MacrosGumpX", CurrentOptions.MacrosGumpX );
             options.Add( "MacrosGumpY", CurrentOptions.MacrosGumpY );
+            options.Add( "ChatWindowWidth", CurrentOptions.ChatWindowWidth );
+            options.Add( "ChatWindowHeight", CurrentOptions.ChatWindowHeight );
 
             json?.Add( "Options", options );
         }
@@ -147,6 +149,8 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.MacrosGump = config?["MacrosGump"]?.ToObject<bool>() ?? true;
             CurrentOptions.MacrosGumpX = config?["MacrosGumpX"]?.ToObject<int>() ?? 100;
             CurrentOptions.MacrosGumpY = config?["MacrosGumpY"]?.ToObject<int>() ?? 100;
+            CurrentOptions.ChatWindowWidth = config?["ChatWindowWidth"]?.ToObject<double>() ?? 650;
+            CurrentOptions.ChatWindowHeight = config?["ChatWindowHeight"]?.ToObject<double>() ?? 350;
 
             if ( CurrentOptions.AbilitiesGumpX < 0 )
             {

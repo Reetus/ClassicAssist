@@ -39,9 +39,9 @@ namespace ClassicAssist.Data.Autoloot
                         if ( constraint.Operator != AutolootOperator.NotPresent )
                         {
                             predicates.Add( i => i.Properties != null && constraint.Property.Clilocs.Any( cliloc =>
-                                                     i.Properties.Any( p => MatchProperty( p, cliloc,
-                                                         constraint.Property, constraint.Operator,
-                                                         constraint.Value ) ) ) );
+                                i.Properties.Any( p => MatchProperty( p, cliloc,
+                                    constraint.Property, constraint.Operator,
+                                    constraint.Value ) ) ) );
                         }
                         else
                         {
@@ -112,9 +112,16 @@ namespace ClassicAssist.Data.Autoloot
         public static bool MatchProperty( Property property, int cliloc, PropertyEntry constraint,
             AutolootOperator @operator, int value )
         {
-            return property.Cliloc == cliloc && ( constraint.ClilocIndex == -1 || Operation( @operator,
-                                                      int.Parse( property.Arguments[constraint.ClilocIndex] ),
-                                                      value ) );
+            try
+            {
+                return property.Cliloc == cliloc && ( constraint.ClilocIndex == -1 || Operation( @operator,
+                    int.Parse( property.Arguments[constraint.ClilocIndex] ),
+                    value ) );
+            }
+            catch ( IndexOutOfRangeException )
+            {
+                return false;
+            }
         }
     }
 }

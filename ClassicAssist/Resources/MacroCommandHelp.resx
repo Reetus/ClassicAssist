@@ -1419,4 +1419,17 @@ while FindType(0x2006):
   <data name="USELAYER_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>UseLayer("Talisman")</value>
   </data>
+  <data name="AUTOCOLORPICK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Setup an automated reply to the incoming dye color gump, allowing you to define dye tubs color.
+That command should be added prior to the action that opens the color pick gump.</value>
+  </data>
+  <data name="AUTOCOLORPICK_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>AutoColorPick(35)</value>
+  </data>
+  <data name="AUTOCOLORPICK_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>AutoColorPick(666)
+UseObject('dyes')
+WaitForTarget(1000)
+Target('tub')</value>
+  </data>
 </root>

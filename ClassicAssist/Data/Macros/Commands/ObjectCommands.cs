@@ -8,6 +8,7 @@ using ClassicAssist.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
+using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
@@ -597,6 +598,20 @@ namespace ClassicAssist.Data.Macros.Commands
             }
 
             UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Entity ), Parameters = new[] { nameof( ParameterType.Hue ) } )]
+        public static void AutoColorPick( int hue )
+        {
+            Engine.RemoveReceiveFilter( new PacketFilterInfo( 0x95 ) );
+            Engine.AddReceiveFilter( new PacketFilterInfo( 0x95, ( p, pfi ) =>
+            {
+                int serial = ( p[1] << 24 ) | ( p[2] << 16 ) | ( p[3] << 8 ) | p[4];
+                int itemid = ( p[5] << 8 ) | p[6];
+
+                Engine.SendPacketToServer( new HuePickerResponse( serial, itemid, hue ) );
+                Engine.RemoveReceiveFilter( pfi );
+            } ) );
         }
     }
 }

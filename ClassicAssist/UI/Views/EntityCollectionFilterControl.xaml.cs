@@ -78,7 +78,48 @@ namespace ClassicAssist.UI.Views
                 LoadCustomProperties();
             }
 
-            Items.Add( new EntityCollectionFilter { Constraint = Constraints.FirstOrDefault() } );
+            if ( File.Exists( Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
+                "EntityViewer.json" ) ) )
+            {
+                try
+                {
+                    serializer = new JsonSerializer();
+
+                    using ( JsonTextReader jtr = new JsonTextReader( new StreamReader(
+                        Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "EntityViewer.json" ) ) ) )
+                    {
+                        EntityCollectionFilter[] entries = serializer.Deserialize<EntityCollectionFilter[]>( jtr );
+
+                        if ( entries != null && entries.Length > 0 )
+                        {
+                            ResetCommand?.Execute( null );
+                            Items.Clear();
+
+                            foreach ( EntityCollectionFilter entry in entries )
+                            {
+                                PropertyEntry constraint =
+                                    Constraints.FirstOrDefault( c => c.Name == entry.Constraint.Name );
+
+                                if ( constraint != null )
+                                {
+                                    Items.Add( new EntityCollectionFilter
+                                    {
+                                        Constraint = constraint, Operator = entry.Operator, Value = entry.Value
+                                    } );
+                                }
+                            }
+                        }
+                    }
+                }
+                catch ( Exception e )
+                {
+                    MessageBox.Show( e.Message, Strings.Error );
+                }
+            }
+            else
+            {
+                Items.Add( new EntityCollectionFilter { Constraint = Constraints.FirstOrDefault() } );
+            }
         }
 
         public ICommand AddCommand => _addCommand ?? ( _addCommand = new RelayCommand( AddItem, o => true ) );
@@ -214,7 +255,22 @@ namespace ClassicAssist.UI.Views
 
         private void Apply( object obj )
         {
+            SaveDefault( Items );
             Command?.Execute( Items.ToList() );
+        }
+
+        private void SaveDefault( ObservableCollection<EntityCollectionFilter> items )
+        {
+            try
+            {
+                string json = JsonConvert.SerializeObject( Items, Formatting.Indented );
+
+                File.WriteAllText(
+                    Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "EntityViewer.json" ), json );
+            }
+            catch ( IOException )
+            {
+            }
         }
 
         private void Reset( object obj )

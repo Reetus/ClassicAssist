@@ -9,7 +9,7 @@
         xmlns:uimisc="clr-namespace:ClassicAssist.UI.Misc"
         xmlns:views="clr-namespace:ClassicAssist.UI.Views"
         xmlns:models="clr-namespace:ClassicAssist.UI.Models"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
         Width="600" Height="400" Title="{x:Static resources:Strings.Entity_Collection_Viewer}">
     <Window.DataContext>
         <viewModels:EntityCollectionViewerViewModel />
@@ -17,6 +17,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary Source="EntityCollectionViewerResourceDictionary.xaml" />
                 <ResourceDictionary Source="Debug/DebugToolBarStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -30,7 +31,8 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ToolBar Style="{DynamicResource ToolBarStyle1}" Grid.Row="0">
+        <ToolBar Style="{DynamicResource ToolBarStyle1}" Grid.Row="0"
+                 Background="{DynamicResource ThemeBackgroundBrush}">
             <Button Height="24" Padding="0" Command="{Binding RefreshCommand}"
                     ToolTip="{x:Static resources:Strings.Refresh}"
                     Style="{StaticResource ToolbarButtonStyle}">
@@ -79,6 +81,8 @@
                 PresentationTraceSources.TraceLevel="High" />
         </ScrollViewer>
         <ListView x:Name="listView" ItemsSource="{Binding Entities}"
+                  BorderThickness="0"
+                  Background="{DynamicResource ThemeInnerControlBackgroundBrush}"
                   ItemContainerStyle="{StaticResource FileItemStyle}"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="2"
                   Style="{StaticResource EntityListViewStyle}">
@@ -86,7 +90,10 @@
                 <uimisc:MultiSelectionBehaviour SelectedItems="{Binding SelectedItems}" />
             </i:Interaction.Behaviors>
         </ListView>
-        <StatusBar Grid.Row="3">
+        <StatusBar Grid.Row="3" Background="{DynamicResource ThemeBackgroundBrush}"
+                   Foreground="{DynamicResource ThemeForegroundBrush}"
+                   BorderBrush="{DynamicResource ThemeWindowBackgroundBrush
+            }">
             <TextBlock Text="{Binding StatusLabel}" />
         </StatusBar>
     </Grid>

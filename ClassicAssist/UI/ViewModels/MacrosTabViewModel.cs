@@ -17,7 +17,6 @@ using ClassicAssist.UI.ViewModels.Macros;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UI.Views.Macros;
 using ClassicAssist.UO;
-using ClassicAssist.UO.Gumps;
 using ICSharpCode.AvalonEdit.Document;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -240,11 +239,18 @@ namespace ClassicAssist.UI.ViewModels
                         DoNotAutoInterrupt = GetJsonValue( token, "DoNotAutoInterrupt", false ),
                         Macro = GetJsonValue( token, "Macro", string.Empty ),
                         PassToUO = GetJsonValue( token, "PassToUO", true ),
-                        Hotkey = new ShortcutKeys( token["Keys"] ),
                         IsBackground = GetJsonValue( token, "IsBackground", false ),
                         IsAutostart = GetJsonValue( token, "IsAutostart", false ),
                         Disableable = GetJsonValue( token, "Disableable", true )
                     };
+
+                    // Global macros take precedence for hotkey
+                    ShortcutKeys hotkey = new ShortcutKeys( token["Keys"] );
+
+                    if ( !Items.Any( e => e.Global && Equals( e.Hotkey, hotkey ) ) )
+                    {
+                        entry.Hotkey = hotkey;
+                    }
 
                     if ( token["Aliases"] != null )
                     {
@@ -253,12 +259,6 @@ namespace ClassicAssist.UI.ViewModels
                             entry.Aliases.Add( aliasToken["Key"].ToObject<string>(),
                                 aliasToken["Value"].ToObject<int>() );
                         }
-                    }
-
-                    // Global macro takes precedence for hotkey
-                    if ( Items.Any( e => Equals( e.Hotkey, entry.Hotkey ) && e.Global ) )
-                    {
-                        entry.Hotkey = ShortcutKeys.Default;
                     }
 
                     entry.Action = async hks => await Execute( entry );

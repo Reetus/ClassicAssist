@@ -179,7 +179,11 @@ namespace ClassicAssist.Data
         public int LightLevel
         {
             get => _lightLevel;
-            set => SetProperty( ref _lightLevel, value );
+            set
+            {
+                SetProperty( ref _lightLevel, value );
+                Engine.SendPacketToClient( new byte[] { 0x4F, (byte) CurrentOptions.LightLevel }, 2 );
+            }
         }
 
         public bool LimitMouseWheelTrigger

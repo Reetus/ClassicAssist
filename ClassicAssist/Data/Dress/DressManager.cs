@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Annotations;
 using ClassicAssist.Misc;
+using ClassicAssist.Resources;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
@@ -172,6 +173,12 @@ namespace ClassicAssist.Data.Dress
         {
             try
             {
+                if (IsDressing)
+                {
+                    UO.Commands.SystemMessage(Strings.Dress_already_in_progress___, 35);
+                    return;
+                }
+
                 IsDressing = true;
 
                 await dae.Dress( moveConflictingItems );

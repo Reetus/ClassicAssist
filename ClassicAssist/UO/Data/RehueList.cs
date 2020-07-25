@@ -110,10 +110,7 @@ namespace ClassicAssist.UO.Data
                 return true;
             }
 
-            Engine.SendPacketToClient( new MobileUpdate( mobile.Serial, mobile.ID,
-                Options.CurrentOptions.RehueFriendsHue, mobile.Status, mobile.X, mobile.Y, mobile.Z,
-                mobile.Direction ) );
-            return true;
+            return false;
         }
 
         public void CheckContainer( ItemCollection collection )

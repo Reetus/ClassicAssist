@@ -59,12 +59,6 @@ namespace ClassicAssist.Data.Dress
 
         public async Task Dress( bool moveConflicting = true )
         {
-            if ( DressManager.GetInstance().IsDressing )
-            {
-                UOC.SystemMessage( Strings.Dress_already_in_progress___ );
-                return;
-            }
-
             PlayerMobile player = Engine.Player;
 
             if ( player == null )

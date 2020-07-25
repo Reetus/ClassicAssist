@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Misc;
+using ClassicAssist.Resources;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
@@ -58,6 +59,12 @@ namespace ClassicAssist.Data.Dress
 
         public async Task Dress( bool moveConflicting = true )
         {
+            if ( DressManager.GetInstance().IsDressing )
+            {
+                UOC.SystemMessage( Strings.Dress_already_in_progress___ );
+                return;
+            }
+
             PlayerMobile player = Engine.Player;
 
             if ( player == null )

@@ -81,7 +81,7 @@ namespace ClassicAssist.UO.Network
         public static void Initialize()
         {
             _handlers = new PacketHandler[0x100];
-            _extendedHandlers = new PacketHandler[ushort.MaxValue]; // Sphere id > 255
+            _extendedHandlers = new PacketHandler[0x10000]; // Sphere id > 255
 
             Register( 0x11, 0, OnMobileStatus );
             Register( 0x1A, 0, OnWorldItem );

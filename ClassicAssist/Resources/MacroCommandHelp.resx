@@ -1432,4 +1432,17 @@ UseObject('dyes')
 WaitForTarget(1000)
 Target('tub')</value>
   </data>
+  <data name="DISPLAYQUESTPOINTER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Display quest arrow pointer to specified coordinates</value>
+  </data>
+  <data name="DISPLAYQUESTPOINTER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>DisplayQuestPointer(1000, 1000, True)</value>
+  </data>
+  <data name="DISPLAYQUESTPOINTER_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># add pointer
+DisplayQuestPointer(1000, 1000, True)
+Pause(2000)
+# remove pointer
+DisplayQuestPointer(1000, 1000, False)</value>
+  </data>
 </root>

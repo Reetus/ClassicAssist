@@ -745,6 +745,37 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Display quest arrow pointer to specified coordinates.
+        /// </summary>
+        public static string DISPLAYQUESTPOINTER_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("DISPLAYQUESTPOINTER_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to # add pointer
+        ///DisplayQuestPointer(1000, 1000, True)
+        ///Pause(2000)
+        ///# remove pointer
+        ///DisplayQuestPointer(1000, 1000, False).
+        /// </summary>
+        public static string DISPLAYQUESTPOINTER_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("DISPLAYQUESTPOINTER_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DisplayQuestPointer(1000, 1000, True).
+        /// </summary>
+        public static string DISPLAYQUESTPOINTER_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("DISPLAYQUESTPOINTER_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns the distance to the given entity..
         /// </summary>
         public static string DISTANCE_COMMAND_DESCRIPTION {

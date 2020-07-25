@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Misc;
+using ClassicAssist.Resources;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;

@@ -325,11 +325,13 @@ namespace ClassicAssist.Data.Abilities
                    !( leftHand.Properties?.All( p => p.Cliloc != 1072792 /* Balanced */ ) ?? false ) ) &&
                  ( rightHand == null || leftHand == null ) )
             {
+                _checkHandsInProgress = false;
                 return false;
             }
 
             if ( leftHand == null )
             {
+                _checkHandsInProgress = false;
                 return false;
             }
 
@@ -338,8 +340,7 @@ namespace ClassicAssist.Data.Abilities
             ActionPacketQueue.EnqueueActionPackets(
                 new BasePacket[]
                 {
-                    new UseObject( serial ),
-                    new DragItem( leftHand.Serial, 1 ),
+                    new UseObject( serial ), new DragItem( leftHand.Serial, 1 ),
                     new EquipRequest( leftHand.Serial, leftHand.Layer, (int) Engine.Player?.Serial )
                 }, QueuePriority.High ).ContinueWith( t => _checkHandsInProgress = false );
 

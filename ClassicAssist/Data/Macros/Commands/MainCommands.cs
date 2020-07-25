@@ -212,5 +212,16 @@ namespace ClassicAssist.Data.Macros.Commands
 
             return macro != null && ( macro.IsRunning || manager.Replay );
         }
+
+        [CommandsDisplay( Category = nameof( Strings.Main ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.XCoordinate ), nameof( ParameterType.YCoordinate ),
+                nameof( ParameterType.Boolean )
+            } )]
+        public static void DisplayQuestPointer( int x, int y, bool enabled = true )
+        {
+            Engine.SendPacketToClient( new DisplayQuestPointer( enabled, x, y ) );
+        }
     }
 }

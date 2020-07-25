@@ -20,6 +20,7 @@
     <PackageReference Include="Avalonia" Version="0.9.11" />
     <PackageReference Include="Avalonia.Desktop" Version="0.9.11" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.11" />
+    <PackageReference Include="Avalonia.Skia.Linux.Natives" Version="1.68.0.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassicAssist.Shared\ClassicAssist.Shared.csproj" />

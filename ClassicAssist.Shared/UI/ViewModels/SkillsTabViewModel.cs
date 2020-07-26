@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using ClassicAssist.Shared;
@@ -8,7 +9,6 @@ using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Skills;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UO;

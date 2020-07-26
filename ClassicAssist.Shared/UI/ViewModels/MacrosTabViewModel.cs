@@ -13,11 +13,6 @@ using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared;
 using ClassicAssist.Shared.Resources;
-using ClassicAssist.UI.ViewModels.Macros;
-using ClassicAssist.UI.Views;
-using ClassicAssist.UI.Views.Macros;
-using ClassicAssist.UO;
-using ICSharpCode.AvalonEdit.Document;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -28,7 +23,8 @@ namespace ClassicAssist.UI.ViewModels
         private readonly MacroManager _manager;
         private int _caretPosition;
         private ICommand _clearHotkeyCommand;
-        private TextDocument _document;
+        //TODO
+        //private TextDocument _document;
         private ICommand _executeCommand;
         private ICommand _inspectObjectCommand;
         private bool _isRecording;
@@ -45,7 +41,6 @@ namespace ClassicAssist.UI.ViewModels
 
         public MacrosTabViewModel() : base( Strings.Macros )
         {
-            Engine.ConnectedEvent += OnConnectedEvent;
             Engine.DisconnectedEvent += OnDisconnectedEvent;
 
             _manager = MacroManager.GetInstance();
@@ -54,11 +49,6 @@ namespace ClassicAssist.UI.ViewModels
             _manager.InsertDocument = str => { _dispatcher.Invoke( () => { SelectedItem.Macro += str; } ); };
             _manager.NewMacro = NewMacro;
             _manager.Items = Items;
-        }
-
-        private void OnConnectedEvent()
-        {
-            CommandManager.InvalidateRequerySuggested();
         }
 
         public int CaretPosition
@@ -70,11 +60,12 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ClearHotkeyCommand =>
             _clearHotkeyCommand ?? ( _clearHotkeyCommand = new RelayCommand( ClearHotkey, o => SelectedItem != null ) );
 
-        public TextDocument Document
-        {
-            get => _document;
-            set => SetProperty( ref _document, value );
-        }
+        //TODO
+        //public TextDocument Document
+        //{
+        //    get => _document;
+        //    set => SetProperty( ref _document, value );
+        //}
 
         public ICommand ExecuteCommand =>
             _executeCommand ?? ( _executeCommand = new RelayCommandAsync( Execute, CanExecute ) );
@@ -304,13 +295,14 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            MessageBoxResult result = MessageBox.Show( string.Format( Strings.Really_remove_macro___0___, entry.Name ),
-                Strings.Warning, MessageBoxButton.YesNo, MessageBoxImage.Warning );
+            //TODO
+            //MessageBoxResult result = MessageBox.Show( string.Format( Strings.Really_remove_macro___0___, entry.Name ),
+            //    Strings.Warning, MessageBoxButton.YesNo, MessageBoxImage.Warning );
 
-            if ( result == MessageBoxResult.No )
-            {
-                return;
-            }
+            //if ( result == MessageBoxResult.No )
+            //{
+            //    return;
+            //}
 
             RemoveMacro( entry );
         }
@@ -352,15 +344,16 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( conflict != null && !ReferenceEquals( selectedItem, conflict ) )
             {
-                MessageBoxResult result =
-                    MessageBox.Show( string.Format( Strings.Overwrite_existing_hotkey___0____, conflict ),
-                        Strings.Warning, MessageBoxButton.YesNo );
+                //TODO
+                //MessageBoxResult result =
+                //    MessageBox.Show( string.Format( Strings.Overwrite_existing_hotkey___0____, conflict ),
+                //        Strings.Warning, MessageBoxButton.YesNo );
 
-                if ( result == MessageBoxResult.No )
-                {
-                    NotifyPropertyChanged( nameof( Hotkey ) );
-                    return;
-                }
+                //if ( result == MessageBoxResult.No )
+                //{
+                //    NotifyPropertyChanged( nameof( Hotkey ) );
+                //    return;
+                //}
             }
 
             SelectedItem.Hotkey = hotkey;
@@ -387,8 +380,9 @@ namespace ClassicAssist.UI.ViewModels
 
         private static void ShowActiveObjectsWindow( object obj )
         {
-            ActiveObjectsWindow window = new ActiveObjectsWindow();
-            window.Show();
+            //TODO UI
+            //ActiveObjectsWindow window = new ActiveObjectsWindow();
+            //window.Show();
         }
 
         private void OnDisconnectedEvent()
@@ -408,7 +402,8 @@ namespace ClassicAssist.UI.ViewModels
 
         private static async Task InspectObject( object arg )
         {
-            await Commands.InspectObjectAsync();
+            //TODO UI
+            //await Commands.InspectObjectAsync();
         }
 
         private void NewMacro( object obj )
@@ -455,8 +450,9 @@ namespace ClassicAssist.UI.ViewModels
 
         private void ShowCommands( object obj )
         {
-            MacrosCommandWindow window = new MacrosCommandWindow { DataContext = new MacrosCommandViewModel( this ) };
-            window.ShowDialog();
+            //TODO UI
+            //MacrosCommandWindow window = new MacrosCommandWindow { DataContext = new MacrosCommandViewModel( this ) };
+            //window.ShowDialog();
         }
 
         private void Record( object obj )

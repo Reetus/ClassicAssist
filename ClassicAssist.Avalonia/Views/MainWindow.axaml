@@ -14,6 +14,12 @@
     <TabItem Header="{x:Static resources:Strings.General}">
       <views:GeneralControl/>
     </TabItem>
+    <TabItem Header="{x:Static resources:Strings.Macros}">
+      <views:MacrosTabControl/>
+    </TabItem>
+    <TabItem Header="{x:Static resources:Strings.Skills}">
+      <views:SkillsTabControl/>
+    </TabItem>
     <TabItem Header="{x:Static resources:Strings.About}">
       <views:AboutControl/>
     </TabItem>

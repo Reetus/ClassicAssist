@@ -64,10 +64,10 @@ namespace Assistant
 
             _mainThread = new Thread( () =>
             {
+                SEngine.Dispatcher = new AvaloniaDispatcher(Dispatcher.UIThread);
                 AppBuilder.Configure<App>().UsePlatformDetect().LogToDebug().StartWithClassicDesktopLifetime( null );
                 _window = new MainWindow();
                 _window.Show();
-                SEngine.Dispatcher = new AvaloniaDispatcher( Dispatcher.UIThread );
             } ) { IsBackground = true };
 
             _mainThread.Start();

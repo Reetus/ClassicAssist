@@ -3,12 +3,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
-             xmlns:viewmodels="clr-namespace:ClassicAssist.UI.ViewModels;assembly=ClassicAssist.Shared"
+             xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels;assembly=ClassicAssist.Shared"
              xmlns:misc="clr-namespace:ClassicAssist.Avalonia.Misc"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ClassicAssist.Avalonia.Views.AboutControl"             >
   <UserControl.DataContext>
-    <viewmodels:AboutControlViewModel/>
+    <viewModels:AboutControlViewModel/>
   </UserControl.DataContext>
   <UserControl.Styles>
     <Style Selector="TextBlock.h1">

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reactive;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
@@ -15,6 +15,7 @@ using ClassicAssist.Shared;
 using ClassicAssist.Shared.Resources;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ReactiveUI;
 
 namespace ClassicAssist.UI.ViewModels
 {
@@ -22,10 +23,12 @@ namespace ClassicAssist.UI.ViewModels
     {
         private readonly MacroManager _manager;
         private int _caretPosition;
+
         private ICommand _clearHotkeyCommand;
+
         //TODO
         //private TextDocument _document;
-        private ICommand _executeCommand;
+        private ReactiveCommand<MacroEntry, Unit> _executeCommand;
         private ICommand _inspectObjectCommand;
         private bool _isRecording;
         private RelayCommand _newMacroCommand;
@@ -37,7 +40,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _showActiveObjectsWindowCommand;
         private ICommand _showCommandsCommand;
         private ICommand _showMacrosWikiCommand;
-        private ICommand _stopCommand;
+        private ReactiveCommand<MacroEntry, Unit> _stopCommand;
 
         public MacrosTabViewModel() : base( Strings.Macros )
         {
@@ -67,8 +70,10 @@ namespace ClassicAssist.UI.ViewModels
         //    set => SetProperty( ref _document, value );
         //}
 
-        public ICommand ExecuteCommand =>
-            _executeCommand ?? ( _executeCommand = new RelayCommandAsync( Execute, CanExecute ) );
+        public ReactiveCommand<MacroEntry, Unit> ExecuteCommand =>
+            _executeCommand ?? ( _executeCommand = ReactiveCommand.CreateFromTask<MacroEntry>( Execute,
+                this.WhenAnyValue( x => x.IsRecording, x => x.SelectedItem, x => x.SelectedItem.IsRunning,
+                    ( b, entry, running ) => !b && entry != null && !running ) ) );
 
         public ShortcutKeys Hotkey
         {
@@ -78,8 +83,7 @@ namespace ClassicAssist.UI.ViewModels
 
         //TODO
         public ICommand InspectObjectCommand =>
-            _inspectObjectCommand ??
-            ( _inspectObjectCommand = new RelayCommandAsync( InspectObject, o => true ) );
+            _inspectObjectCommand ?? ( _inspectObjectCommand = new RelayCommandAsync( InspectObject, o => true ) );
 
         public bool IsRecording
         {
@@ -127,8 +131,12 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ShowMacrosWikiCommand =>
             _showMacrosWikiCommand ?? ( _showMacrosWikiCommand = new RelayCommand( ShowMacrosWiki, o => true ) );
 
-        public ICommand StopCommand =>
-            _stopCommand ?? ( _stopCommand = new RelayCommandAsync( Stop, o => SelectedItem?.IsRunning ?? false ) );
+        //public ICommand StopCommand =>
+        //    _stopCommand ?? ( _stopCommand = new RelayCommandAsync( Stop, o => SelectedItem?.IsRunning ?? false ) );
+
+        public ReactiveCommand<MacroEntry, Unit> StopCommand =>
+            _stopCommand ?? ( _stopCommand = ReactiveCommand.CreateFromTask<MacroEntry>( Stop,
+                this.WhenAnyValue( e => e.SelectedItem.IsRunning ) ) );
 
         public void Serialize( JObject json )
         {

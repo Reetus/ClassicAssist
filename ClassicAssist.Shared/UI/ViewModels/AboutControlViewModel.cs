@@ -198,7 +198,7 @@ namespace ClassicAssist.UI.ViewModels
         {
             Connected = false;
 
-            _timer.Stop();
+            _timer?.Stop();
         }
 
         private static void CheckForUpdates( object obj )

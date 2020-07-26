@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>Library</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFrameworks>net48;netcoreapp3.1</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>x64</PlatformTarget>
@@ -11,15 +11,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
-    <OutputType>WinExe</OutputType>
   </PropertyGroup>
-  <Choose>
-    <When Condition="'$(Configuration)'=='Debug'">
-      <ItemGroup>
-        <PackageReference Include="SkiaSharp" Version="1.68.0.2" />
-      </ItemGroup>
-    </When>
-  </Choose>
   <Choose>
     <When Condition="'$(Configuration)'=='Linux'">
       <ItemGroup>
@@ -32,16 +24,21 @@
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.9.11" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.9.11" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.11" />
-    <PackageReference Include="Avalonia.Skia" Version="0.9.11" />
+    <PackageReference Include="Avalonia" Version="0.10.0-preview1" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.0-preview1" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.0-preview1" />
+    <PackageReference Include="Avalonia.Skia" Version="0.10.0-preview1" />
+    <PackageReference Include="Avalonia.Xaml.Interactions" Version="0.10.0-preview1" />
+    <PackageReference Include="Avalonia.Xaml.Interactivity" Version="0.10.0-preview1" />
     <PackageReference Include="System.Resources.Extensions" Version="4.7.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassicAssist.Shared\ClassicAssist.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="AvaloniaEdit">
+      <HintPath>AvaloniaEdit.dll</HintPath>
+    </Reference>
     <Reference Include="cuoapi">
       <HintPath>..\ClassicAssist.Shared\cuoapi.dll</HintPath>
     </Reference>

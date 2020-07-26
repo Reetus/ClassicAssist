@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ClassicAssist.Avalonia"
         xmlns:views="clr-namespace:ClassicAssist.Avalonia.Views"
         mc:Ignorable="d"
+        Icon="/Assets/avalonia-logo.ico"
         Height="400" Width="625"
         x:Class="ClassicAssist.Avalonia.Views.MainWindow"
         DataContext="{Binding RelativeSource={RelativeSource Self}, Path=ViewModel}"

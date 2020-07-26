@@ -10,9 +10,12 @@
     <Authors>Reetus</Authors>
     <Company>Reetus</Company>
     <OutputPath>..\Output\</OutputPath>
-    <Configurations>Debug;Release;Develop</Configurations>
+    <Configurations>Debug;Release;Develop;Linux</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Linux|AnyCPU'">
     <DebugType>full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|AnyCPU'">

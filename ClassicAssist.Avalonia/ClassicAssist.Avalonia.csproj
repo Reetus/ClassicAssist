@@ -6,12 +6,27 @@
     <PlatformTarget>x64</PlatformTarget>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <OutputPath>..\Output\</OutputPath>
+    <Configurations>Debug;Release;Linux</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp3.1|AnyCPU'">
+  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
     <OutputType>WinExe</OutputType>
   </PropertyGroup>
+  <Choose>
+    <When Condition="'$(Configuration)'=='Debug'">
+      <ItemGroup>
+        <PackageReference Include="SkiaSharp" Version="1.68.0.2" />
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="'$(Configuration)'=='Linux'">
+      <ItemGroup>
+        <PackageReference Include="Avalonia.Skia.Linux.Natives" Version="1.68.0.2" />
+      </ItemGroup>
+    </When>
+  </Choose>
   <ItemGroup>
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
@@ -20,9 +35,7 @@
     <PackageReference Include="Avalonia" Version="0.9.11" />
     <PackageReference Include="Avalonia.Desktop" Version="0.9.11" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.11" />
-    <!--<PackageReference Include="Avalonia.Skia.Linux.Natives" Version="1.68.0.2" />-->
     <PackageReference Include="Avalonia.Skia" Version="0.9.11" />
-    <PackageReference Include="SkiaSharp" Version="1.68.3" />
     <PackageReference Include="System.Resources.Extensions" Version="4.7.1" />
   </ItemGroup>
   <ItemGroup>

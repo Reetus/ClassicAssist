@@ -6,7 +6,7 @@
     <Product>ClassicAssist.Updater</Product>
     <OutputPath>..\Output\</OutputPath>
     <UseWPF>true</UseWPF>
-    <Configurations>Debug;Release;Develop</Configurations>
+    <Configurations>Debug;Release;Develop;Linux</Configurations>
   </PropertyGroup>
   <PropertyGroup>
     <BuildDate>$([System.DateTime]::op_Subtraction($([System.DateTime]::get_Now().get_Date()),$([System.DateTime]::new(2020,7,4))).get_TotalDays())</BuildDate>

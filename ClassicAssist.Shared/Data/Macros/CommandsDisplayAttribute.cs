@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 
 namespace ClassicAssist.Data.Macros

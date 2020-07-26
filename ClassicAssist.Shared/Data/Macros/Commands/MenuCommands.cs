@@ -19,7 +19,6 @@
 
 using System.Linq;
 using ClassicAssist.Shared;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;

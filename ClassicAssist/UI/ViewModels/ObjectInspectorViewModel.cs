@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Input;
 using ClassicAssist.Shared;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Models;
 using ClassicAssist.UI.Views;

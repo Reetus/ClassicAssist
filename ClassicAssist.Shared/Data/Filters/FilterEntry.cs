@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 
 namespace ClassicAssist.Data.Filters

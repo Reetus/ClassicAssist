@@ -27,7 +27,6 @@ using System.Windows.Data;
 using System.Windows.Input;
 using ClassicAssist.Shared;
 using ClassicAssist.Data.Macros.Commands;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;

@@ -5,7 +5,6 @@ using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Organizer;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;

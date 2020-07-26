@@ -1,7 +1,6 @@
 ﻿using ClassicAssist.Shared;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Targeting;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;

@@ -13,7 +13,6 @@ using ClassicAssist.Data.Counters;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Skills;
 using ClassicAssist.Data.Vendors;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UO;
 using ClassicAssist.UO.Data;

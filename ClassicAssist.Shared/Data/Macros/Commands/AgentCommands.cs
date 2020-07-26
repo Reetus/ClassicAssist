@@ -2,7 +2,6 @@
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Data.Counters;
 using ClassicAssist.Data.Dress;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using UOC = ClassicAssist.Shared.UO.Commands;
 

@@ -1410,4 +1410,13 @@ Are you sure you wish to continue?</value>
   <data name="Cast Last Spell" xml:space="preserve">
     <value>Cast Last Spell</value>
   </data>
+  <data name="Up" xml:space="preserve">
+    <value>Up</value>
+  </data>
+  <data name="Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
+  <data name="Locked" xml:space="preserve">
+    <value>Locked</value>
+  </data>
 </root>

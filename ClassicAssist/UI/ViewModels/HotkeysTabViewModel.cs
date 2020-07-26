@@ -9,7 +9,6 @@ using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Data.Spells;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Misc;
 using Newtonsoft.Json.Linq;

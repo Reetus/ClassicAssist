@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using ClassicAssist.Data.Spells;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using UOC = ClassicAssist.Shared.UO.Commands;
 

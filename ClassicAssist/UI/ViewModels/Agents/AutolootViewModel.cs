@@ -12,7 +12,6 @@ using ClassicAssist.Data;
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Data.Regions;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UI.Views;

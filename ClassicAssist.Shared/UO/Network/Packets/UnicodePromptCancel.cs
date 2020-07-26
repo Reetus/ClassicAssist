@@ -17,7 +17,6 @@
 
 #endregion
 
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;

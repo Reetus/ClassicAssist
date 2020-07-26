@@ -4,7 +4,6 @@ using System.Linq;
 using ClassicAssist.Shared;
 using ClassicAssist.Data.Abilities;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;

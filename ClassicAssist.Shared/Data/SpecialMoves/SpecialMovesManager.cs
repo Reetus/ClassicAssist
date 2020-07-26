@@ -2,7 +2,6 @@
 using System.Linq;
 using ClassicAssist.Shared;
 using ClassicAssist.Data.Spells;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Network;
 using UOC = ClassicAssist.Shared.UO.Commands;

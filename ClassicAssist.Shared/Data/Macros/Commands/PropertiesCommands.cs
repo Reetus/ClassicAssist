@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using ClassicAssist.Shared;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;

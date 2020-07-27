@@ -62,15 +62,16 @@ namespace Assistant
 
             Initialize( plugin );
 
-            _mainThread = new Thread( () =>
-            {
-                AppBuilder.Configure<App>().UsePlatformDetect().LogToDebug().StartWithClassicDesktopLifetime( null );
+            AppBuilder.Configure<App>()
+                .UsePlatformDetect()
+                .LogToDebug()
+                .SetupWithoutStarting();
+
+            SEngine.Dispatcher = new AvaloniaDispatcher( Dispatcher.UIThread );
+            SEngine.Dispatcher.InvokeAsync( () => {
                 _window = new MainWindow();
                 _window.Show();
-                SEngine.Dispatcher = new AvaloniaDispatcher( Dispatcher.UIThread );
-            } ) { IsBackground = true };
-
-            _mainThread.Start();
+            } );
         }
 
         private static void Initialize( PluginHeader* plugin )

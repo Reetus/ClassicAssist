@@ -2,8 +2,11 @@
 using Assistant;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
+using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
+using ClassicAssist.UO.Network.Packets;
+using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.Data.Macros.Commands
@@ -80,6 +83,45 @@ namespace ClassicAssist.Data.Macros.Commands
             }
 
             return false;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Movement ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.XCoordinate ), nameof( ParameterType.YCoordinate ),
+                nameof( ParameterType.ZCoordinate )
+            } )]
+        public static void Pathfind( int x, int y, int z )
+        {
+            Engine.SendPacketToClient( new Pathfind( x, y, z ) );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Movement ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.SerialOrAlias )
+            } )]
+        public static void Pathfind( object obj )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Entity_not_found___ );
+                return;
+            }
+
+            Entity entity = UOMath.IsMobile( serial )
+                ? (Entity) Engine.Mobiles.GetMobile( serial )
+                : Engine.Items.GetItem( serial );
+
+            if ( entity == null )
+            {
+                UOC.SystemMessage( Strings.Entity_not_found___ );
+                return;
+            }
+
+            Pathfind( entity.X, entity.Y, entity.Z );
         }
     }
 }

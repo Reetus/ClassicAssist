@@ -2277,6 +2277,38 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Requests client to pathfind to given coordinates / entity.
+        /// </summary>
+        public static string PATHFIND_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("PATHFIND_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #Pathfind to coordinates
+        ///Pathfind(1438, 1630, 20)
+        ///
+        ///#Pathfind to entity
+        ///SetEnemy(0x3c9)
+        ///Pathfind(&apos;enemy&apos;).
+        /// </summary>
+        public static string PATHFIND_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("PATHFIND_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pathfind(1000, 1000, 0).
+        /// </summary>
+        public static string PATHFIND_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("PATHFIND_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pauses execution for the given amount in milliseconds..
         /// </summary>
         public static string PAUSE_COMMAND_DESCRIPTION {

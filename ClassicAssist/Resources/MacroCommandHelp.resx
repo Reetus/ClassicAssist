@@ -1445,4 +1445,18 @@ Pause(2000)
 # remove pointer
 DisplayQuestPointer(1000, 1000, False)</value>
   </data>
+  <data name="PATHFIND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Requests client to pathfind to given coordinates / entity</value>
+  </data>
+  <data name="PATHFIND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Pathfind(1000, 1000, 0)</value>
+  </data>
+  <data name="PATHFIND_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>#Pathfind to coordinates
+Pathfind(1438, 1630, 20)
+
+#Pathfind to entity
+SetEnemy(0x3c9)
+Pathfind('enemy')</value>
+  </data>
 </root>

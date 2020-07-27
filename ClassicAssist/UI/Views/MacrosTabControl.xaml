@@ -8,7 +8,7 @@
              xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
              xmlns:local="clr-namespace:ClassicAssist.Data.Macros"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
-             xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
+             xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels;assembly=ClassicAssist.Shared"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              xmlns:macros="clr-namespace:ClassicAssist.Data.Macros;assembly=ClassicAssist.Shared"
              xmlns:hotkeys1="clr-namespace:ClassicAssist.Data.Hotkeys;assembly=ClassicAssist.Shared"

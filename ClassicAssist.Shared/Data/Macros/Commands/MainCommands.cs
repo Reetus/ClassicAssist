@@ -5,7 +5,6 @@ using System.Windows;
 using ClassicAssist.Shared;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;

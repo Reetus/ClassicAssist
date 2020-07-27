@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 
 namespace ClassicAssist.Data.Macros.Commands

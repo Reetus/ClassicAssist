@@ -3,7 +3,6 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using ClassicAssist.Shared;
 using ClassicAssist.Data;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UI.Views;

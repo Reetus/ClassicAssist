@@ -7,7 +7,6 @@ using ClassicAssist.Data;
 using ClassicAssist.Data.Dress;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UO;
 using ClassicAssist.UO.Data;

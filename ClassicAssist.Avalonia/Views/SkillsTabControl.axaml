@@ -1,0 +1,56 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels;assembly=ClassicAssist.Shared"
+             xmlns:misc="clr-namespace:ClassicAssist.Avalonia.Misc"
+             xmlns:data="clr-namespace:ClassicAssist.UO.Data;assembly=ClassicAssist.Shared"
+             xmlns:properties="clr-namespace:ClassicAssist.Avalonia.Properties"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ClassicAssist.Avalonia.Views.SkillsTabControl">
+  <UserControl.DataContext>
+    <viewModels:SkillsTabViewModel/>
+  </UserControl.DataContext>
+  <UserControl.Resources>
+    <misc:LockStatusValueConverter x:Key="LockStatusValueConverter" />
+  </UserControl.Resources>
+  <Grid ColumnDefinitions="*, 110" Margin="10">
+    <ListBox Items="{Binding Items}" Grid.Column="0" SelectedItem="{Binding SelectedItem}">
+      <ListBox.ContextMenu>
+        <ContextMenu>
+          <MenuItem Header="{x:Static resources:Strings.Set_Up}" Command="{Binding SetSkillLocksCommand}" CommandParameter="{x:Static data:LockStatus.Up}"/>
+          <MenuItem Header="{x:Static resources:Strings.Set_Down}" Command="{Binding SetSkillLocksCommand}" CommandParameter="{x:Static data:LockStatus.Down}"/>
+          <MenuItem Header="{x:Static resources:Strings.Set_Locked}" Command="{Binding SetSkillLocksCommand}" CommandParameter="{x:Static data:LockStatus.Locked}"/>
+          <Separator/>
+          <MenuItem Header="{x:Static resources:Strings.Use_skill}" Command="{Binding UseSkillCommand}"/>
+        </ContextMenu>
+      </ListBox.ContextMenu>
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <Grid ColumnDefinitions="*,100,100,50,50">
+            <TextBlock Text="{Binding Skill}" Grid.Column="0"/>
+            <TextBlock Text="{Binding Value}" Grid.Column="1"/>
+            <TextBlock Text="{Binding Base}" Grid.Column="2"/>
+            <TextBlock Text="{Binding Delta}" Grid.Column="3"/>
+            <Image Source="{Binding LockStatus, Converter={StaticResource LockStatusValueConverter}}" Grid.Column="4" Stretch="None"/>
+          </Grid>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+    <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Top">
+      <Button Content="{x:Static resources:Strings.Reset____}"
+              Command="{Binding ResetDeltasCommand, Mode=OneWay}" />
+      <TextBlock Text="{x:Static resources:Strings.All_skills_}" Margin="0,20,0,0" />
+      <ComboBox x:Name="comboBox" SelectedIndex="0">
+        <ComboBoxItem Content="{x:Static resources:Strings.Up}"/>
+        <ComboBoxItem Content="{x:Static resources:Strings.Down}"/>
+        <ComboBoxItem Content="{x:Static resources:Strings.Locked}"/>
+      </ComboBox>
+      <Button Content="{x:Static resources:Strings.Set}" Command="{Binding SetAllSkillLocksCommand, Mode=OneWay}" Margin="0,10,0,0"
+              CommandParameter="{Binding SelectedIndex, ElementName=comboBox}" />
+      <TextBlock Text="{x:Static resources:Strings.Total_base_}" Margin="0,30,0,0" TextWrapping="Wrap" />
+      <TextBlock Text="{Binding TotalBase}" FontWeight="Bold" Margin="0,3,0,0" />
+    </StackPanel>
+  </Grid>
+</UserControl>

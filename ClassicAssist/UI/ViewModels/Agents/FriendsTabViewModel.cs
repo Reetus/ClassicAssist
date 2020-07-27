@@ -6,7 +6,6 @@ using ClassicAssist.Data;
 using ClassicAssist.Data.Friends;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO.Data;
 using Newtonsoft.Json.Linq;

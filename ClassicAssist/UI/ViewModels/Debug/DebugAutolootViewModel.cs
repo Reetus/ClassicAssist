@@ -23,7 +23,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ClassicAssist.Shared;
 using ClassicAssist.Data.Autoloot;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Network.Packets;

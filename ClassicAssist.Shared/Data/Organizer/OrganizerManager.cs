@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using ClassicAssist.Shared;
 using ClassicAssist.Annotations;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UO.Network;

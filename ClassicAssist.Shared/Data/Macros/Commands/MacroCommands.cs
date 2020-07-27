@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using UOC = ClassicAssist.Shared.UO.Commands;
 

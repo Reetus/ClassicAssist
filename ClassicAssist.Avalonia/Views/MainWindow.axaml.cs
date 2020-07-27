@@ -1,17 +1,18 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media;
+using AvaloniaEdit;
 
 namespace ClassicAssist.Avalonia.Views
 {
     public class MainWindow : Window
     {
+        private readonly TextEditor _textEditor;
+
         public MainWindow()
         {
             InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
         }
 
         private void InitializeComponent()

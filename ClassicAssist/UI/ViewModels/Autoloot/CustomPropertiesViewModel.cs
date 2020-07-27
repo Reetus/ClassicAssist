@@ -28,7 +28,6 @@ using System.Windows.Input;
 using ClassicAssist.Shared;
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Views.Autoloot;
 using ClassicAssist.UO;

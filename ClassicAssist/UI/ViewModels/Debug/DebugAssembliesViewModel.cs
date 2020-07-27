@@ -27,7 +27,6 @@ using System.Windows;
 using System.Windows.Input;
 using ClassicAssist.Shared;
 using ClassicAssist.Data;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using Microsoft.Win32;
 

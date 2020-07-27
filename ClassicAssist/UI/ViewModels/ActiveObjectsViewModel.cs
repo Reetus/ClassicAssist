@@ -7,7 +7,6 @@ using System.Windows.Input;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 

@@ -3,78 +3,81 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
-             xmlns:viewmodels="clr-namespace:ClassicAssist.UI.ViewModels;assembly=ClassicAssist.Shared"
+             xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels;assembly=ClassicAssist.Shared"
              xmlns:misc="clr-namespace:ClassicAssist.Avalonia.Misc"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ClassicAssist.Avalonia.Views.AboutControl"             >
   <UserControl.DataContext>
-    <viewmodels:AboutControlViewModel/>
+    <viewModels:AboutControlViewModel/>
   </UserControl.DataContext>
   <UserControl.Styles>
     <Style Selector="TextBlock.h1">
-      <Setter Property="FontSize" Value="16"/>
+      <Setter Property="FontSize" Value="14"/>
       <Setter Property="FontWeight" Value="Bold"/>
+      <Setter Property="Margin" Value="0,0,10,0"/>
     </Style>
   </UserControl.Styles>
   <UserControl.Resources>
     <misc:DateTimeToTimeSpanValueConverter x:Key="DateTimeToTimeSpanValueConverter" />
   </UserControl.Resources>
 
-  <Grid RowDefinitions="*,*" ColumnDefinitions="*,*">
-    <Grid Grid.Row="0" VerticalAlignment="Top" Grid.Column="0">
-      <DockPanel>
-        <TextBlock Text="{x:Static resources:Strings.Software}" Classes="h1" DockPanel.Dock="Top"/>
-        <StackPanel DockPanel.Dock="Left" Margin="0,0,10,0">
-          <TextBlock Text="{x:Static resources:Strings.Product_}"/>
-          <TextBlock Text="{x:Static resources:Strings.Version_}"/>
-          <TextBlock Text="{x:Static resources:Strings.Build_Date_}"/>
-        </StackPanel>
-        <StackPanel DockPanel.Dock="Right">
-          <TextBlock Text="{Binding Product}"/>
-          <TextBlock Text="{Binding Version}"/>
-          <TextBlock Text="{Binding BuildDate}"/>
-        </StackPanel>
-      </DockPanel>
+  <DockPanel>
+    <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" Margin="10" DockPanel.Dock="Top">
+      <Grid Grid.Row="0" VerticalAlignment="Top" Grid.Column="0" Margin="10">
+        <DockPanel>
+          <TextBlock Text="{x:Static resources:Strings.Software}" Classes="h1" DockPanel.Dock="Top"/>
+          <StackPanel DockPanel.Dock="Left" Margin="0,0,10,0">
+            <TextBlock Text="{x:Static resources:Strings.Product_}"/>
+            <TextBlock Text="{x:Static resources:Strings.Version_}"/>
+            <TextBlock Text="{x:Static resources:Strings.Build_Date_}"/>
+          </StackPanel>
+          <StackPanel DockPanel.Dock="Right">
+            <TextBlock Text="{Binding Product}"/>
+            <TextBlock Text="{Binding Version}"/>
+            <TextBlock Text="{Binding BuildDate}"/>
+          </StackPanel>
+        </DockPanel>
+      </Grid>
+      <Grid Grid.Row="0" VerticalAlignment="Top" Grid.Column="1" Margin="10">
+        <DockPanel>
+          <TextBlock Text="{x:Static resources:Strings.World_Status}" Classes="h1" DockPanel.Dock="Top"/>
+          <StackPanel DockPanel.Dock="Left" Margin="0,0,10,0">
+            <TextBlock Text="{x:Static resources:Strings.Connected_}"/>
+            <TextBlock Text="{x:Static resources:Strings.Items_}"/>
+            <TextBlock Text="{x:Static resources:Strings.Mobiles_}"/>
+            <TextBlock Text="{x:Static resources:Strings.Latency_}"/>
+          </StackPanel>
+          <StackPanel DockPanel.Dock="Right">
+            <TextBlock Text="{Binding ConnectedTime, Converter={StaticResource DateTimeToTimeSpanValueConverter}}"/>
+            <TextBlock Text="{Binding ItemCount}"/>
+            <TextBlock Text="{Binding MobileCount}"/>
+            <TextBlock Text="{Binding Latency, StringFormat={}{0}ms}"/>
+          </StackPanel>
+        </DockPanel>
+      </Grid>
+      <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">
+      </Grid>
+      <Grid Grid.Row="1" VerticalAlignment="Top" Grid.Column="1" Margin="10">
+        <DockPanel>
+          <TextBlock Text="{x:Static resources:Strings.Player}" Classes="h1" DockPanel.Dock="Top"/>
+          <StackPanel DockPanel.Dock="Left" Margin="0,0,10,0">
+            <TextBlock Text="{x:Static resources:Strings.Name_}"/>
+            <TextBlock Text="{x:Static resources:Strings.Serial_}"/>
+            <TextBlock Text="{x:Static resources:Strings.Last_Target_}"/>
+            <TextBlock Text="{x:Static resources:Strings.Status_}"/>
+          </StackPanel>
+          <StackPanel DockPanel.Dock="Right">
+            <TextBlock Text="{Binding PlayerName}"/>
+            <TextBlock Text="{Binding PlayerSerial, StringFormat={}0x{0:x}}"/>
+            <TextBlock Text="{Binding LastTargetSerial, StringFormat={}0x{0:x}}"/>
+            <TextBlock Text="{Binding PlayerStatus}"/>
+          </StackPanel>
+        </DockPanel>
+      </Grid>
     </Grid>
-    <Grid Grid.Row="0" VerticalAlignment="Top" Grid.Column="1">
-      <DockPanel>
-        <TextBlock Text="{x:Static resources:Strings.World_Status}" Classes="h1" DockPanel.Dock="Top"/>
-        <StackPanel DockPanel.Dock="Left" Margin="0,0,10,0">
-          <TextBlock Text="{x:Static resources:Strings.Connected_}"/>
-          <TextBlock Text="{x:Static resources:Strings.Items_}"/>
-          <TextBlock Text="{x:Static resources:Strings.Mobiles_}"/>
-          <TextBlock Text="{x:Static resources:Strings.Latency_}"/>
-        </StackPanel>
-        <StackPanel DockPanel.Dock="Right">
-          <TextBlock Text="{Binding ConnectedTime, Converter={StaticResource DateTimeToTimeSpanValueConverter}}"/>
-          <TextBlock Text="{Binding ItemCount}"/>
-          <TextBlock Text="{Binding MobileCount}"/>
-          <TextBlock Text="{Binding Latency, StringFormat={}{0}ms}"/>
-        </StackPanel>
-      </DockPanel>
-    </Grid>
-    <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">
-      <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Height="25">
-        <Button Content="{x:Static resources:Strings.Project_Homepage}" Margin="0,0,10,0" Command="{Binding LaunchHomepageCommand}"/>
-        <Button Content="{x:Static resources:Strings.Check_For_Updates}" IsEnabled="false"/>
-      </StackPanel>
-    </Grid>
-    <Grid Grid.Row="1" VerticalAlignment="Top" Grid.Column="1">
-      <DockPanel>
-        <TextBlock Text="{x:Static resources:Strings.Player}" Classes="h1" DockPanel.Dock="Top"/>
-        <StackPanel DockPanel.Dock="Left" Margin="0,0,10,0">
-          <TextBlock Text="{x:Static resources:Strings.Name_}"/>
-          <TextBlock Text="{x:Static resources:Strings.Serial_}"/>
-          <TextBlock Text="{x:Static resources:Strings.Last_Target_}"/>
-          <TextBlock Text="{x:Static resources:Strings.Status_}"/>
-        </StackPanel>
-        <StackPanel DockPanel.Dock="Right">
-          <TextBlock Text="{Binding PlayerName}"/>
-          <TextBlock Text="{Binding PlayerSerial, StringFormat={}0x{0:x}}"/>
-          <TextBlock Text="{Binding LastTargetSerial, StringFormat={}0x{0:x}}"/>
-          <TextBlock Text="{Binding PlayerStatus}"/>
-        </StackPanel>
-      </DockPanel>
-    </Grid>
-  </Grid>
+    <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Height="25" HorizontalAlignment="Center" Margin="10">
+      <Button Content="{x:Static resources:Strings.Project_Homepage}" Margin="0,0,10,0" Command="{Binding LaunchHomepageCommand}"/>
+      <Button Content="{x:Static resources:Strings.Check_For_Updates}" IsEnabled="false"/>
+    </StackPanel>
+  </DockPanel>
 </UserControl>

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ClassicAssist.Resources {
+namespace ClassicAssist.Shared.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ClassicAssist.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ClassicAssist.Resources.MacroCommandHelp", typeof(MacroCommandHelp).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ClassicAssist.Shared.Resources.MacroCommandHelp", typeof(MacroCommandHelp).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

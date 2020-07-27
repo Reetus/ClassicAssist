@@ -10,7 +10,6 @@ using ClassicAssist.Shared;
 using ClassicAssist.Annotations;
 using ClassicAssist.Data;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Controls;
 using ClassicAssist.UI.Views;

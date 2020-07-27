@@ -90,7 +90,8 @@ namespace ClassicAssist.UI.ViewModels.Macros
 
             if ( cd.Attribute != null )
             {
-                _macrosViewModel?.Document.Insert( _macrosViewModel.CaretPosition, cd.Attribute.InsertText );
+                //TODO UI
+                //_macrosViewModel?.Document.Insert( _macrosViewModel.CaretPosition, cd.Attribute.InsertText );
             }
         }
     }

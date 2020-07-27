@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using ClassicAssist.Shared;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;

@@ -8,7 +8,6 @@ using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;

@@ -5,8 +5,8 @@ using System.Reactive.Linq;
 using System.Reflection;
 using System.Timers;
 using System.Windows.Input;
-using ClassicAssist.Shared;
 using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
@@ -198,7 +198,7 @@ namespace ClassicAssist.UI.ViewModels
         {
             Connected = false;
 
-            _timer.Stop();
+            _timer?.Stop();
         }
 
         private static void CheckForUpdates( object obj )

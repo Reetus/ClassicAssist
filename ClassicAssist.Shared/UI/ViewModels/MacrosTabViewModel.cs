@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reactive;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
@@ -13,13 +13,9 @@ using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared;
 using ClassicAssist.Shared.Resources;
-using ClassicAssist.UI.ViewModels.Macros;
-using ClassicAssist.UI.Views;
-using ClassicAssist.UI.Views.Macros;
-using ClassicAssist.UO;
-using ICSharpCode.AvalonEdit.Document;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ReactiveUI;
 
 namespace ClassicAssist.UI.ViewModels
 {
@@ -27,9 +23,12 @@ namespace ClassicAssist.UI.ViewModels
     {
         private readonly MacroManager _manager;
         private int _caretPosition;
+
         private ICommand _clearHotkeyCommand;
-        private TextDocument _document;
-        private ICommand _executeCommand;
+
+        //TODO
+        //private TextDocument _document;
+        private ReactiveCommand<MacroEntry, Unit> _executeCommand;
         private ICommand _inspectObjectCommand;
         private bool _isRecording;
         private RelayCommand _newMacroCommand;
@@ -41,11 +40,10 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _showActiveObjectsWindowCommand;
         private ICommand _showCommandsCommand;
         private ICommand _showMacrosWikiCommand;
-        private ICommand _stopCommand;
+        private ReactiveCommand<MacroEntry, Unit> _stopCommand;
 
         public MacrosTabViewModel() : base( Strings.Macros )
         {
-            Engine.ConnectedEvent += OnConnectedEvent;
             Engine.DisconnectedEvent += OnDisconnectedEvent;
 
             _manager = MacroManager.GetInstance();
@@ -54,11 +52,6 @@ namespace ClassicAssist.UI.ViewModels
             _manager.InsertDocument = str => { _dispatcher.Invoke( () => { SelectedItem.Macro += str; } ); };
             _manager.NewMacro = NewMacro;
             _manager.Items = Items;
-        }
-
-        private void OnConnectedEvent()
-        {
-            CommandManager.InvalidateRequerySuggested();
         }
 
         public int CaretPosition
@@ -70,14 +63,17 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ClearHotkeyCommand =>
             _clearHotkeyCommand ?? ( _clearHotkeyCommand = new RelayCommand( ClearHotkey, o => SelectedItem != null ) );
 
-        public TextDocument Document
-        {
-            get => _document;
-            set => SetProperty( ref _document, value );
-        }
+        //TODO
+        //public TextDocument Document
+        //{
+        //    get => _document;
+        //    set => SetProperty( ref _document, value );
+        //}
 
-        public ICommand ExecuteCommand =>
-            _executeCommand ?? ( _executeCommand = new RelayCommandAsync( Execute, CanExecute ) );
+        public ReactiveCommand<MacroEntry, Unit> ExecuteCommand =>
+            _executeCommand ?? ( _executeCommand = ReactiveCommand.CreateFromTask<MacroEntry>( Execute,
+                this.WhenAnyValue( x => x.IsRecording, x => x.SelectedItem, x => x.SelectedItem.IsRunning,
+                    ( b, entry, running ) => !b && entry != null && !running ) ) );
 
         public ShortcutKeys Hotkey
         {
@@ -87,8 +83,7 @@ namespace ClassicAssist.UI.ViewModels
 
         //TODO
         public ICommand InspectObjectCommand =>
-            _inspectObjectCommand ??
-            ( _inspectObjectCommand = new RelayCommandAsync( InspectObject, o => true ) );
+            _inspectObjectCommand ?? ( _inspectObjectCommand = new RelayCommandAsync( InspectObject, o => true ) );
 
         public bool IsRecording
         {
@@ -136,8 +131,12 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ShowMacrosWikiCommand =>
             _showMacrosWikiCommand ?? ( _showMacrosWikiCommand = new RelayCommand( ShowMacrosWiki, o => true ) );
 
-        public ICommand StopCommand =>
-            _stopCommand ?? ( _stopCommand = new RelayCommandAsync( Stop, o => SelectedItem?.IsRunning ?? false ) );
+        //public ICommand StopCommand =>
+        //    _stopCommand ?? ( _stopCommand = new RelayCommandAsync( Stop, o => SelectedItem?.IsRunning ?? false ) );
+
+        public ReactiveCommand<MacroEntry, Unit> StopCommand =>
+            _stopCommand ?? ( _stopCommand = ReactiveCommand.CreateFromTask<MacroEntry>( Stop,
+                this.WhenAnyValue( e => e.SelectedItem.IsRunning ) ) );
 
         public void Serialize( JObject json )
         {
@@ -304,13 +303,14 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            MessageBoxResult result = MessageBox.Show( string.Format( Strings.Really_remove_macro___0___, entry.Name ),
-                Strings.Warning, MessageBoxButton.YesNo, MessageBoxImage.Warning );
+            //TODO
+            //MessageBoxResult result = MessageBox.Show( string.Format( Strings.Really_remove_macro___0___, entry.Name ),
+            //    Strings.Warning, MessageBoxButton.YesNo, MessageBoxImage.Warning );
 
-            if ( result == MessageBoxResult.No )
-            {
-                return;
-            }
+            //if ( result == MessageBoxResult.No )
+            //{
+            //    return;
+            //}
 
             RemoveMacro( entry );
         }
@@ -352,15 +352,16 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( conflict != null && !ReferenceEquals( selectedItem, conflict ) )
             {
-                MessageBoxResult result =
-                    MessageBox.Show( string.Format( Strings.Overwrite_existing_hotkey___0____, conflict ),
-                        Strings.Warning, MessageBoxButton.YesNo );
+                //TODO
+                //MessageBoxResult result =
+                //    MessageBox.Show( string.Format( Strings.Overwrite_existing_hotkey___0____, conflict ),
+                //        Strings.Warning, MessageBoxButton.YesNo );
 
-                if ( result == MessageBoxResult.No )
-                {
-                    NotifyPropertyChanged( nameof( Hotkey ) );
-                    return;
-                }
+                //if ( result == MessageBoxResult.No )
+                //{
+                //    NotifyPropertyChanged( nameof( Hotkey ) );
+                //    return;
+                //}
             }
 
             SelectedItem.Hotkey = hotkey;
@@ -387,8 +388,9 @@ namespace ClassicAssist.UI.ViewModels
 
         private static void ShowActiveObjectsWindow( object obj )
         {
-            ActiveObjectsWindow window = new ActiveObjectsWindow();
-            window.Show();
+            //TODO UI
+            //ActiveObjectsWindow window = new ActiveObjectsWindow();
+            //window.Show();
         }
 
         private void OnDisconnectedEvent()
@@ -408,7 +410,8 @@ namespace ClassicAssist.UI.ViewModels
 
         private static async Task InspectObject( object arg )
         {
-            await Commands.InspectObjectAsync();
+            //TODO UI
+            //await Commands.InspectObjectAsync();
         }
 
         private void NewMacro( object obj )
@@ -455,8 +458,9 @@ namespace ClassicAssist.UI.ViewModels
 
         private void ShowCommands( object obj )
         {
-            MacrosCommandWindow window = new MacrosCommandWindow { DataContext = new MacrosCommandViewModel( this ) };
-            window.ShowDialog();
+            //TODO UI
+            //MacrosCommandWindow window = new MacrosCommandWindow { DataContext = new MacrosCommandViewModel( this ) };
+            //window.ShowDialog();
         }
 
         private void Record( object obj )

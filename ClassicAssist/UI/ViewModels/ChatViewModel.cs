@@ -27,7 +27,6 @@ using ClassicAssist.Shared;
 using ClassicAssist.Data.Chat;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UO;
 

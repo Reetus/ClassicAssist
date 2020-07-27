@@ -23,7 +23,6 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Avalonia;
-using Avalonia.Logging.Serilog;
 using Avalonia.Threading;
 using ClassicAssist.Avalonia;
 using ClassicAssist.Avalonia.Views;

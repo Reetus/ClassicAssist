@@ -25,7 +25,6 @@ using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UO;
 using ClassicAssist.UO.Network.Packets;

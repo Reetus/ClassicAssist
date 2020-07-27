@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using ClassicAssist.Shared;
 using ClassicAssist.Data.Macros.Commands;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;

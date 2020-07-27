@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using ClassicAssist.Data.Hotkeys;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared;
 using ClassicAssist.Shared.Resources;
 using IronPython.Runtime.Operations;

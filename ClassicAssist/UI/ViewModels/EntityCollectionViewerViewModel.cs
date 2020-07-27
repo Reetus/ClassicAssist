@@ -11,7 +11,6 @@ using ClassicAssist.Shared;
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Models;
 using ClassicAssist.UI.Views;

@@ -5,7 +5,6 @@ using System.Linq;
 using ClassicAssist.Shared;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
-using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;

@@ -1,0 +1,46 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels;assembly=ClassicAssist.Shared"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:AvalonEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
+             xmlns:misc="clr-namespace:ClassicAssist.Avalonia.Misc"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ClassicAssist.Avalonia.Views.MacrosTabControl">
+  <UserControl.DataContext>
+    <viewModels:MacrosTabViewModel/>
+  </UserControl.DataContext>
+  <Grid ColumnDefinitions="155,5,*" Margin="10">
+    <Grid Grid.Column="0" RowDefinitions="*, Auto, Auto">
+      <ListBox x:Name="ListBox" Items="{Binding Items}" Grid.Row="0" SelectedItem="{Binding SelectedItem}"/>
+      <Grid Grid.Row="1" ColumnDefinitions="*,*,*" Margin="0,5,0,0">
+        <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="0" Margin="0,0,2.5,0"
+                Command="{Binding RemoveMacroConfirmCommand, Mode=OneWay}"
+                CommandParameter="{Binding SelectedItem, ElementName=ListBox}"/>
+        <Button Content="{x:Static resources:Strings.New}" Grid.Column="1" Margin="2.5,0"
+                Command="{Binding NewMacroCommand, Mode=OneWay}" />
+        <Button Content="{x:Static resources:Strings.Save}" Grid.Column="2" Margin="2.5,0,0,0"
+                Command="{Binding SaveMacroCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
+      </Grid>
+      <Grid Grid.Row="2" ColumnDefinitions="*,*" Margin="0,5,0,0">
+        <Button Content="{x:Static resources:Strings.Play}" Grid.Column="0" Margin="0,0,2.5,0"
+                Command="{Binding ExecuteCommand, Mode=OneWay}"
+                CommandParameter="{Binding SelectedItem, ElementName=ListBox}"/>
+        <!--IsEnabled="{Binding SelectedItem.IsRunning, Converter={StaticResource InverseBooleanConverter}, ElementName=ListBox}" />-->
+        <Button Content="{x:Static resources:Strings.Stop}" Grid.Column="1" Margin="2.5,0,0,0"
+                Command="{Binding StopCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
+        <!--IsEnabled="{Binding SelectedItem.IsRunning, ElementName=ListBox}"-->
+      </Grid>
+    </Grid>
+    <GridSplitter Grid.Column="1" Margin="5,0,5,0"/>
+    <Grid Grid.Column="2">
+      <AvalonEdit:TextEditor x:Name="Editor">
+        <i:Interaction.Behaviors>
+          <misc:AvalonEditBehaviour Text="{Binding SelectedItem.Macro}"/>
+        </i:Interaction.Behaviors>
+      </AvalonEdit:TextEditor>
+    </Grid>
+  </Grid>
+</UserControl>

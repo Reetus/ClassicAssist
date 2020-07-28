@@ -31,6 +31,7 @@
     <PackageReference Include="Avalonia.Xaml.Interactions" Version="0.10.0-preview1" />
     <PackageReference Include="Avalonia.Xaml.Interactivity" Version="0.10.0-preview1" />
     <PackageReference Include="System.Resources.Extensions" Version="4.7.1" />
+    <PackageReference Include="System.Collections.Immutable" Version="1.7.1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassicAssist.Shared\ClassicAssist.Shared.csproj" />

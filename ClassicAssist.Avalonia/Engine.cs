@@ -21,7 +21,6 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Threading;
 using Avalonia;
 using Avalonia.Threading;
 using ClassicAssist.Avalonia;
@@ -39,7 +38,6 @@ namespace Assistant
     public static unsafe class Engine
     {
         private static PluginHeader* _plugin;
-        private static Thread _mainThread;
         private static MainWindow _window;
 
         public static string StartupPath { get; set; }
@@ -61,15 +59,28 @@ namespace Assistant
 
             Initialize( plugin );
 
-            _mainThread = new Thread( () =>
+            // The Avalonia APIs must be used in a separate method _after_ the
+            // AssemblyResolve property has been set. Otherwise, the static
+            // run-time type initializer for Engine.Install will fail to load 
+            // the Avalonia.Controls.dll that are in the plugin's output folder.
+            LoadUI();
+        }
+
+        private static void LoadUI()
+        {
+            // Set up the Avalonia application without starting. This
+            // initializes the Avalonia APIs.
+            AppBuilder.Configure<App>().UsePlatformDetect().LogToDebug().SetupWithoutStarting();
+
+            // Avalonia is set up, so can create dispatcher.
+            SEngine.Dispatcher = new AvaloniaDispatcher( Dispatcher.UIThread );
+
+            // Invoke on the dispatcher an async action.
+            SEngine.Dispatcher.InvokeAsync( () =>
             {
-                SEngine.Dispatcher = new AvaloniaDispatcher(Dispatcher.UIThread);
-                AppBuilder.Configure<App>().UsePlatformDetect().LogToDebug().StartWithClassicDesktopLifetime( null );
                 _window = new MainWindow();
                 _window.Show();
-            } ) { IsBackground = true };
-
-            _mainThread.Start();
+            } );
         }
 
         private static void Initialize( PluginHeader* plugin )

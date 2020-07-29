@@ -23,7 +23,11 @@
       </ListBox>
       <Grid ColumnDefinitions="Auto,*" Grid.Row="1">
         <TextBlock Text="{x:Static resources:Strings.Light}" Grid.Column="0" />
-        <Slider Value="{Binding Options.LightLevel}" Minimum="0" Maximum="31" Grid.Column="1" />
+        <Slider Value="{Binding Options.LightLevel}" Minimum="0" Maximum="31" Grid.Column="1">
+          <Slider.RenderTransform>
+            <RotateTransform Angle="180"/>
+          </Slider.RenderTransform>
+        </Slider>
       </Grid>
     </Grid>
     <Grid Grid.Column="1" Margin="10, 0, 0, 0" RowDefinitions="*,Auto,Auto">

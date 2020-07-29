@@ -5,12 +5,15 @@
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:local="clr-namespace:ClassicAssist.Avalonia"
         xmlns:views="clr-namespace:ClassicAssist.Avalonia.Views"
+        xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels;assembly=ClassicAssist.Shared"
         mc:Ignorable="d"
         Icon="/Assets/avalonia-logo.ico"
         Height="400" Width="625"
         x:Class="ClassicAssist.Avalonia.Views.MainWindow"
-        DataContext="{Binding RelativeSource={RelativeSource Self}, Path=ViewModel}"
-        Title="{x:Static resources:Strings.ProductName}" Topmost="{Binding AlwaysOnTop}">
+        Title="{Binding Title}" Topmost="{Binding AlwaysOnTop}">
+  <Window.DataContext>
+    <viewModels:MainWindowViewModel />
+  </Window.DataContext>
   <TabControl Padding="5">
     <TabItem Header="{x:Static resources:Strings.General}">
       <views:GeneralControl/>

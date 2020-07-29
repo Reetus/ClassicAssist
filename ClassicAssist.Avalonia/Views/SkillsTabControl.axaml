@@ -16,38 +16,50 @@
     <misc:LockStatusValueConverter x:Key="LockStatusValueConverter" />
   </UserControl.Resources>
   <Grid ColumnDefinitions="*, 110" Margin="10">
-    <ListBox Items="{Binding Items}" Grid.Column="0" SelectedItem="{Binding SelectedItem}">
-      <ListBox.ContextMenu>
-        <ContextMenu>
-          <MenuItem Header="{x:Static resources:Strings.Set_Up}" Command="{Binding SetSkillLocksCommand}" CommandParameter="{x:Static data:LockStatus.Up}"/>
-          <MenuItem Header="{x:Static resources:Strings.Set_Down}" Command="{Binding SetSkillLocksCommand}" CommandParameter="{x:Static data:LockStatus.Down}"/>
-          <MenuItem Header="{x:Static resources:Strings.Set_Locked}" Command="{Binding SetSkillLocksCommand}" CommandParameter="{x:Static data:LockStatus.Locked}"/>
-          <Separator/>
-          <MenuItem Header="{x:Static resources:Strings.Use_skill}" Command="{Binding UseSkillCommand}"/>
-        </ContextMenu>
-      </ListBox.ContextMenu>
-      <ListBox.ItemTemplate>
-        <DataTemplate>
-          <Grid ColumnDefinitions="*,100,100,50,50">
-            <TextBlock Text="{Binding Skill}" Grid.Column="0"/>
-            <TextBlock Text="{Binding Value}" Grid.Column="1"/>
-            <TextBlock Text="{Binding Base}" Grid.Column="2"/>
-            <TextBlock Text="{Binding Delta}" Grid.Column="3"/>
-            <Image Source="{Binding LockStatus, Converter={StaticResource LockStatusValueConverter}}" Grid.Column="4" Stretch="None"/>
-          </Grid>
-        </DataTemplate>
-      </ListBox.ItemTemplate>
-    </ListBox>
+    <Border Grid.Column="0" BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderMidBrush}" Padding="2">
+      <DataGrid Items="{Binding Items}" Grid.Column="0" CanUserSortColumns="True" CanUserResizeColumns="True"
+                HorizontalScrollBarVisibility="Disabled" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                IsReadOnly="True">
+        <DataGrid.ContextMenu>
+          <ContextMenu>
+            <MenuItem Header="{x:Static resources:Strings.Set_Up}" Command="{Binding SetSkillLocksCommand}"
+                      CommandParameter="{x:Static data:LockStatus.Up}" />
+            <MenuItem Header="{x:Static resources:Strings.Set_Down}" Command="{Binding SetSkillLocksCommand}"
+                      CommandParameter="{x:Static data:LockStatus.Down}" />
+            <MenuItem Header="{x:Static resources:Strings.Set_Locked}" Command="{Binding SetSkillLocksCommand}"
+                      CommandParameter="{x:Static data:LockStatus.Locked}" />
+            <Separator />
+            <MenuItem Header="{x:Static resources:Strings.Use_skill}" Command="{Binding UseSkillCommand}" />
+          </ContextMenu>
+        </DataGrid.ContextMenu>
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="{x:Static resources:Strings.Name}" Binding="{Binding Skill.Name}" Width="4*" SortMemberPath="Skill"/>
+          <DataGridTextColumn Header="{x:Static resources:Strings.Value}" Binding="{Binding Value}" Width="2*" />
+          <DataGridTextColumn Header="{x:Static resources:Strings.Base}" Binding="{Binding Base}" Width="2*" />
+          <DataGridTextColumn Header="+/-" Binding="{Binding Delta}" Width="2*" />
+          <DataGridTextColumn Header="{x:Static resources:Strings.Cap}" Binding="{Binding Cap}" Width="2*" />
+          <DataGridTemplateColumn Header="{x:Static resources:Strings.Status}" Width="40">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Image Source="{Binding LockStatus, Converter={StaticResource LockStatusValueConverter}}"
+                       Stretch="Uniform" Height="10" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+        </DataGrid.Columns>
+      </DataGrid>
+    </Border>
     <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Top">
       <Button Content="{x:Static resources:Strings.Reset____}"
               Command="{Binding ResetDeltasCommand, Mode=OneWay}" />
       <TextBlock Text="{x:Static resources:Strings.All_skills_}" Margin="0,20,0,0" />
       <ComboBox x:Name="comboBox" SelectedIndex="0">
-        <ComboBoxItem Content="{x:Static resources:Strings.Up}"/>
-        <ComboBoxItem Content="{x:Static resources:Strings.Down}"/>
-        <ComboBoxItem Content="{x:Static resources:Strings.Locked}"/>
+        <ComboBoxItem Content="{x:Static resources:Strings.Up}" />
+        <ComboBoxItem Content="{x:Static resources:Strings.Down}" />
+        <ComboBoxItem Content="{x:Static resources:Strings.Locked}" />
       </ComboBox>
-      <Button Content="{x:Static resources:Strings.Set}" Command="{Binding SetAllSkillLocksCommand, Mode=OneWay}" Margin="0,10,0,0"
+      <Button Content="{x:Static resources:Strings.Set}" Command="{Binding SetAllSkillLocksCommand, Mode=OneWay}"
+              Margin="0,10,0,0"
               CommandParameter="{Binding SelectedIndex, ElementName=comboBox}" />
       <TextBlock Text="{x:Static resources:Strings.Total_base_}" Margin="0,30,0,0" TextWrapping="Wrap" />
       <TextBlock Text="{Binding TotalBase}" FontWeight="Bold" Margin="0,3,0,0" />

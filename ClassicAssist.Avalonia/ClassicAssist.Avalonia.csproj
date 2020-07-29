@@ -22,9 +22,11 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.0-preview1" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.0-preview1" />
     <PackageReference Include="Avalonia.Desktop" Version="0.10.0-preview1" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.0-preview1" />
     <PackageReference Include="Avalonia.Skia" Version="0.10.0-preview1" />

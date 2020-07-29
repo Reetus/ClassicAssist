@@ -20,7 +20,6 @@
   <UserControl.Resources>
     <misc:DateTimeToTimeSpanValueConverter x:Key="DateTimeToTimeSpanValueConverter" />
   </UserControl.Resources>
-
   <DockPanel>
     <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" Margin="10" DockPanel.Dock="Top">
       <Grid Grid.Row="0" VerticalAlignment="Top" Grid.Column="0" Margin="10">
@@ -55,18 +54,24 @@
           </StackPanel>
         </DockPanel>
       </Grid>
-      <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">
-      </Grid>
+      <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Margin="10">
+        <Button Background="Transparent" BorderThickness="0" Command="{Binding OpenPayPalCommand}">
+          <Image Source="{StaticResource PayPalIcon}" Height="35"/>
+        </Button>
+        <TextBlock Text="{x:Static resources:Strings.Donating_helps_support_continued_development__your_support_is_appreciated_}" TextWrapping="Wrap" TextAlignment="Center"/>
+      </StackPanel>
       <Grid Grid.Row="1" VerticalAlignment="Top" Grid.Column="1" Margin="10">
         <DockPanel>
           <TextBlock Text="{x:Static resources:Strings.Player}" Classes="h1" DockPanel.Dock="Top"/>
           <StackPanel DockPanel.Dock="Left" Margin="0,0,10,0">
+            <TextBlock Text="{x:Static resources:Strings.Shard_}"/>
             <TextBlock Text="{x:Static resources:Strings.Name_}"/>
             <TextBlock Text="{x:Static resources:Strings.Serial_}"/>
             <TextBlock Text="{x:Static resources:Strings.Last_Target_}"/>
             <TextBlock Text="{x:Static resources:Strings.Status_}"/>
           </StackPanel>
           <StackPanel DockPanel.Dock="Right">
+            <TextBlock Text="{Binding ShardName}"/>
             <TextBlock Text="{Binding PlayerName}"/>
             <TextBlock Text="{Binding PlayerSerial, StringFormat={}0x{0:x}}"/>
             <TextBlock Text="{Binding LastTargetSerial, StringFormat={}0x{0:x}}"/>

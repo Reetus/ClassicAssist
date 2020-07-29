@@ -25,12 +25,17 @@ namespace ClassicAssist.Avalonia.Misc
 {
     public class DateTimeToTimeSpanValueConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
         {
-            return !(value is DateTime dt) ? null : (DateTime.Now - dt).ToString();
+            if ( value is DateTime dateTime && dateTime == DateTime.MinValue )
+            {
+                return TimeSpan.Zero;
+            }
+
+            return !( value is DateTime dt ) ? null : ( DateTime.Now - dt ).ToString();
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture )
         {
             throw new NotImplementedException();
         }

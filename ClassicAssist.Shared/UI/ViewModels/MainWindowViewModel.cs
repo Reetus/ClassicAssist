@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Windows.Input;
-using System.Windows.Threading;
 using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Misc;
-using ClassicAssist.UI.Views;
 
 namespace ClassicAssist.UI.ViewModels
 {
@@ -13,7 +11,8 @@ namespace ClassicAssist.UI.ViewModels
     {
         private bool _alwaysOnTop;
         private ICommand _debugCommand;
-        private DebugWindow _debugWindow;
+        //TODO UI
+        //private DebugWindow _debugWindow;
         private string _status = Strings.Ready___;
         private string _title = Strings.ProductName;
 
@@ -53,8 +52,9 @@ namespace ClassicAssist.UI.ViewModels
 
         private void ShowDebugWindow( object obj )
         {
-            _debugWindow = new DebugWindow();
-            _debugWindow.Show();
+            //TODO UI
+            //_debugWindow = new DebugWindow();
+            //_debugWindow.Show();
         }
     }
 }

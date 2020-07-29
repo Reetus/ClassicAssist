@@ -1,8 +1,8 @@
 ﻿using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using ClassicAssist.Avalonia.ViewModels;
 using ClassicAssist.Avalonia.Views;
+using ClassicAssist.UI.ViewModels;
 
 namespace ClassicAssist.Avalonia
 {

@@ -2056,6 +2056,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maximum distance exceeded..
+        /// </summary>
+        public static string Maximum_distance_exceeded_ {
+            get {
+                return ResourceManager.GetString("Maximum distance exceeded.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Menu.
         /// </summary>
         public static string Menu {
@@ -2313,6 +2322,15 @@ namespace ClassicAssist.Resources {
         public static string Only_overwrite_blank_password {
             get {
                 return ResourceManager.GetString("Only overwrite blank password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open All Containers.
+        /// </summary>
+        public static string Open_All_Containers {
+            get {
+                return ResourceManager.GetString("Open All Containers", resourceCulture);
             }
         }
         
@@ -3069,6 +3087,15 @@ namespace ClassicAssist.Resources {
         public static string Show_Chat_Window {
             get {
                 return ResourceManager.GetString("Show Chat Window", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Child Items.
+        /// </summary>
+        public static string Show_Child_Items {
+            get {
+                return ResourceManager.GetString("Show Child Items", resourceCulture);
             }
         }
         

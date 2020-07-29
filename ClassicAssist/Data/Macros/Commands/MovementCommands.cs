@@ -14,6 +14,7 @@ namespace ClassicAssist.Data.Macros.Commands
     public static class MovementCommands
     {
         private const int MOVEMENT_TIMEOUT = 500;
+        private const int PATHFIND_MAX_DISTANCE = 32;
         private static bool _forceWalk;
 
         [CommandsDisplay( Category = nameof( Strings.Movement ),
@@ -93,6 +94,14 @@ namespace ClassicAssist.Data.Macros.Commands
             } )]
         public static void Pathfind( int x, int y, int z )
         {
+            int distance = Math.Max( Math.Abs( x - Engine.Player?.X ?? x ), Math.Abs( y - Engine.Player?.Y ?? y ) );
+
+            if ( distance > PATHFIND_MAX_DISTANCE )
+            {
+                UOC.SystemMessage( Strings.Maximum_distance_exceeded_ );
+                return;
+            }
+
             Engine.SendPacketToClient( new Pathfind( x, y, z ) );
         }
 

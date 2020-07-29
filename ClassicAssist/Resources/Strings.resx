@@ -1416,4 +1416,7 @@ Are you sure you wish to continue?</value>
   <data name="Dress already in progress..." xml:space="preserve">
     <value>Dress already in progress...</value>
   </data>
+  <data name="Maximum distance exceeded." xml:space="preserve">
+    <value>Maximum distance exceeded.</value>
+  </data>
 </root>

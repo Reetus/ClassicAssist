@@ -1410,4 +1410,7 @@ Are you sure you wish to continue?</value>
   <data name="Cast Last Spell" xml:space="preserve">
     <value>Cast Last Spell</value>
   </data>
+  <data name="Maximum distance exceeded." xml:space="preserve">
+    <value>Maximum distance exceeded.</value>
+  </data>
 </root>

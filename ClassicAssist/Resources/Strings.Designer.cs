@@ -2056,6 +2056,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maximum distance exceeded..
+        /// </summary>
+        public static string Maximum_distance_exceeded_ {
+            get {
+                return ResourceManager.GetString("Maximum distance exceeded.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Menu.
         /// </summary>
         public static string Menu {

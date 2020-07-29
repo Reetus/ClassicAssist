@@ -261,7 +261,7 @@
                     </DrawingGroup>
                 </DrawingImage.Drawing>
             </DrawingImage>
-            <DrawingImage x:Key="crosshairIcon">
+            <DrawingImage x:Key="CrosshairIcon">
                 <DrawingImage.Drawing>
                     <DrawingGroup ClipGeometry="M0,0 V937.4 H937.4 V0 H0 Z">
                         <DrawingGroup Opacity="1">

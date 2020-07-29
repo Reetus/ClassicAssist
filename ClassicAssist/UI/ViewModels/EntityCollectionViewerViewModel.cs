@@ -137,7 +137,7 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand OpenAllContainersCommand =>
             _openAllContainersCommand ??
-            ( _openAllContainersCommand = new RelayCommandAsync( OpenAllContainers, o => true ) );
+            ( _openAllContainersCommand = new RelayCommand( OpenAllContainers, o => true ) );
 
         public ICommand RefreshCommand =>
             _refreshCommand ?? ( _refreshCommand = new RelayCommand( Refresh, o => _collection?.Serial != 0 ) );
@@ -180,15 +180,20 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _topmost, value );
         }
 
-        private async Task OpenAllContainers( object obj )
+        private void OpenAllContainers( object obj )
         {
-            List<Task> tasks = _collection
-                .Where( i => TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) ).Select( item =>
-                    ActionPacketQueue.EnqueueActionPacket( new UseObject( item.Serial ) ) ).ToList();
+            Task.Run( () =>
+            {
+                List<Task> tasks = _collection
+                    .Where( i => TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) ).Select( item =>
+                        ActionPacketQueue.EnqueueActionPacket( new UseObject( item.Serial ) ) ).ToList();
 
-            await Task.WhenAll( tasks );
-
-            RefreshCommand.Execute( null );
+                Task.WhenAll( tasks ).ContinueWith( t =>
+                {
+                    Thread.Sleep( 1000 );
+                    RefreshCommand.Execute( null );
+                } );
+            } );
         }
 
         private static Dictionary<int, int> LoadMountIDEntries()
@@ -612,8 +617,8 @@ namespace ClassicAssist.UI.ViewModels
                     case PropertyType.Properties:
                     {
                         predicates.Add( i => i.Properties != null && constraint.Clilocs.Any( cliloc =>
-                            i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc,
-                                constraint, filter.Operator, filter.Value ) ) ) );
+                                                 i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc,
+                                                     constraint, filter.Operator, filter.Value ) ) ) );
 
                         break;
                     }

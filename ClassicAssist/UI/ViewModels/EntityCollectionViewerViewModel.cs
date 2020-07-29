@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using Assistant;
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Data.Misc;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.Models;
@@ -40,17 +41,17 @@ namespace ClassicAssist.UI.ViewModels
         private bool _isPerformingAction;
         private ICommand _itemDoubleClickCommand;
         private ICommand _openAllContainersCommand;
+        private EntityCollectionViewerOptions _options;
         private ICommand _refreshCommand;
 
         private ObservableCollection<EntityCollectionData> _selectedItems =
             new ObservableCollection<EntityCollectionData>();
 
-        private bool _showChildItems;
-
         private bool _showProperties;
 
         private IComparer<Entity> _sorter = new IDThenSerialComparer();
         private string _statusLabel;
+        private ICommand _toggleAlwaysOnTopCommand;
         private ICommand _toggleChildItemsCommand;
         private ICommand _togglePropertiesCommand;
         private bool _topmost;
@@ -72,6 +73,7 @@ namespace ClassicAssist.UI.ViewModels
         public EntityCollectionViewerViewModel( ItemCollection collection )
         {
             _collection = collection;
+            Options = Data.Options.CurrentOptions.EntityCollectionViewerOptions;
 
             Entities = new ObservableCollection<EntityCollectionData>( collection.ToEntityCollectionData( _sorter ) );
 
@@ -139,6 +141,12 @@ namespace ClassicAssist.UI.ViewModels
             _openAllContainersCommand ??
             ( _openAllContainersCommand = new RelayCommand( OpenAllContainers, o => true ) );
 
+        public EntityCollectionViewerOptions Options
+        {
+            get => _options;
+            set => SetProperty( ref _options, value );
+        }
+
         public ICommand RefreshCommand =>
             _refreshCommand ?? ( _refreshCommand = new RelayCommand( Refresh, o => _collection?.Serial != 0 ) );
 
@@ -146,12 +154,6 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _selectedItems;
             set => SetProperty( ref _selectedItems, value );
-        }
-
-        public bool ShowChildItems
-        {
-            get => _showChildItems;
-            set => SetProperty( ref _showChildItems, value );
         }
 
         public bool ShowProperties
@@ -168,6 +170,10 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _statusLabel, value );
         }
 
+        public ICommand ToggleAlwaysOnTopCommand =>
+            _toggleAlwaysOnTopCommand ??
+            ( _toggleAlwaysOnTopCommand = new RelayCommand( ToggleAlwaysOnTop, o => true ) );
+
         public ICommand ToggleChildItemsCommand =>
             _toggleChildItemsCommand ?? ( _toggleChildItemsCommand = new RelayCommand( ToggleChildItems, o => true ) );
 
@@ -178,6 +184,21 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _topmost;
             set => SetProperty( ref _topmost, value );
+        }
+
+        ~EntityCollectionViewerViewModel()
+        {
+            Data.Options.CurrentOptions.EntityCollectionViewerOptions = Options;
+        }
+
+        private void ToggleAlwaysOnTop( object obj )
+        {
+            if ( !( obj is bool alwaysOnTop ) )
+            {
+                return;
+            }
+
+            Options.AlwaysOnTop = alwaysOnTop;
         }
 
         private void OpenAllContainers( object obj )
@@ -377,7 +398,7 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            _collection = !ShowChildItems
+            _collection = !Options.ShowChildItems
                 ? collection
                 : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) };
 
@@ -476,7 +497,7 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            ShowChildItems = showChildItems;
+            Options.ShowChildItems = showChildItems;
 
             RefreshCommand.Execute( null );
         }
@@ -617,8 +638,8 @@ namespace ClassicAssist.UI.ViewModels
                     case PropertyType.Properties:
                     {
                         predicates.Add( i => i.Properties != null && constraint.Clilocs.Any( cliloc =>
-                                                 i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc,
-                                                     constraint, filter.Operator, filter.Value ) ) ) );
+                            i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc,
+                                constraint, filter.Operator, filter.Value ) ) ) );
 
                         break;
                     }

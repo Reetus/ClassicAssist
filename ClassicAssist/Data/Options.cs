@@ -10,6 +10,7 @@ using ClassicAssist.Data.Friends;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Data.Misc;
 using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Misc;
 using ClassicAssist.UI.ViewModels;
@@ -36,6 +37,7 @@ namespace ClassicAssist.Data
         private bool _debug;
         private bool _defaultMacroQuietMode;
         private string _enemyTargetMessage;
+        private EntityCollectionViewerOptions _entityCollectionViewerOptions = new EntityCollectionViewerOptions();
         private ObservableCollection<FriendEntry> _friends = new ObservableCollection<FriendEntry>();
         private string _friendTargetMessage;
         private bool _getFriendEnemyUsesIgnoreList;
@@ -158,6 +160,12 @@ namespace ClassicAssist.Data
         {
             get => _enemyTargetMessage;
             set => SetProperty( ref _enemyTargetMessage, value );
+        }
+
+        public EntityCollectionViewerOptions EntityCollectionViewerOptions
+        {
+            get => _entityCollectionViewerOptions;
+            set => SetProperty( ref _entityCollectionViewerOptions, value );
         }
 
         public ObservableCollection<FriendEntry> Friends

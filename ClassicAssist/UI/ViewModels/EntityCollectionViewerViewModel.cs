@@ -39,15 +39,19 @@ namespace ClassicAssist.UI.ViewModels
         private IEnumerable<EntityCollectionFilter> _filters;
         private bool _isPerformingAction;
         private ICommand _itemDoubleClickCommand;
+        private ICommand _openAllContainersCommand;
         private ICommand _refreshCommand;
 
         private ObservableCollection<EntityCollectionData> _selectedItems =
             new ObservableCollection<EntityCollectionData>();
 
+        private bool _showChildItems;
+
         private bool _showProperties;
 
         private IComparer<Entity> _sorter = new IDThenSerialComparer();
         private string _statusLabel;
+        private ICommand _toggleChildItemsCommand;
         private ICommand _togglePropertiesCommand;
         private bool _topmost;
 
@@ -131,6 +135,10 @@ namespace ClassicAssist.UI.ViewModels
         public static Lazy<Dictionary<int, int>> MountIDEntries { get; set; } =
             new Lazy<Dictionary<int, int>>( LoadMountIDEntries );
 
+        public ICommand OpenAllContainersCommand =>
+            _openAllContainersCommand ??
+            ( _openAllContainersCommand = new RelayCommandAsync( OpenAllContainers, o => true ) );
+
         public ICommand RefreshCommand =>
             _refreshCommand ?? ( _refreshCommand = new RelayCommand( Refresh, o => _collection?.Serial != 0 ) );
 
@@ -138,6 +146,12 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _selectedItems;
             set => SetProperty( ref _selectedItems, value );
+        }
+
+        public bool ShowChildItems
+        {
+            get => _showChildItems;
+            set => SetProperty( ref _showChildItems, value );
         }
 
         public bool ShowProperties
@@ -154,6 +168,9 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _statusLabel, value );
         }
 
+        public ICommand ToggleChildItemsCommand =>
+            _toggleChildItemsCommand ?? ( _toggleChildItemsCommand = new RelayCommand( ToggleChildItems, o => true ) );
+
         public ICommand TogglePropertiesCommand =>
             _togglePropertiesCommand ?? ( _togglePropertiesCommand = new RelayCommand( ToggleProperties, o => true ) );
 
@@ -161,6 +178,17 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _topmost;
             set => SetProperty( ref _topmost, value );
+        }
+
+        private async Task OpenAllContainers( object obj )
+        {
+            List<Task> tasks = _collection
+                .Where( i => TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) ).Select( item =>
+                    ActionPacketQueue.EnqueueActionPacket( new UseObject( item.Serial ) ) ).ToList();
+
+            await Task.WhenAll( tasks );
+
+            RefreshCommand.Execute( null );
         }
 
         private static Dictionary<int, int> LoadMountIDEntries()
@@ -344,7 +372,9 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            _collection = collection;
+            _collection = !ShowChildItems
+                ? collection
+                : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) };
 
             Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter ) );
         }
@@ -432,6 +462,18 @@ namespace ClassicAssist.UI.ViewModels
             _cancellationToken?.Cancel();
 
             await Task.CompletedTask;
+        }
+
+        private void ToggleChildItems( object obj )
+        {
+            if ( !( obj is bool showChildItems ) )
+            {
+                return;
+            }
+
+            ShowChildItems = showChildItems;
+
+            RefreshCommand.Execute( null );
         }
 
         private void ToggleProperties( object obj )
@@ -570,8 +612,8 @@ namespace ClassicAssist.UI.ViewModels
                     case PropertyType.Properties:
                     {
                         predicates.Add( i => i.Properties != null && constraint.Clilocs.Any( cliloc =>
-                                                 i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc,
-                                                     constraint, filter.Operator, filter.Value ) ) ) );
+                            i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc,
+                                constraint, filter.Operator, filter.Value ) ) ) );
 
                         break;
                     }

@@ -21,6 +21,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading;
 using Avalonia;
 using Avalonia.Threading;
 using ClassicAssist.Avalonia;
@@ -38,7 +39,6 @@ namespace Assistant
     public static unsafe class Engine
     {
         private static PluginHeader* _plugin;
-        private static MainWindow _window;
 
         public static string StartupPath { get; set; }
 
@@ -68,19 +68,37 @@ namespace Assistant
 
         private static void LoadUI()
         {
-            // Set up the Avalonia application without starting. This
-            // initializes the Avalonia APIs.
-            AppBuilder.Configure<App>().UsePlatformDetect().LogToDebug().SetupWithoutStarting();
-
-            // Avalonia is set up, so can create dispatcher.
-            SEngine.Dispatcher = new AvaloniaDispatcher( Dispatcher.UIThread );
-
-            // Invoke on the dispatcher an async action.
-            SEngine.Dispatcher.InvokeAsync( () =>
+            MainWindow window;
+            
+            if ( Environment.OSVersion.Platform == PlatformID.Unix )
             {
-                _window = new MainWindow();
-                _window.Show();
-            } );
+                // Launch UI in a thread on Linux
+                Thread mainThread = new Thread( () =>
+                {
+                    SEngine.Dispatcher = new AvaloniaDispatcher(Dispatcher.UIThread);
+                    AppBuilder.Configure<App>().UsePlatformDetect().LogToDebug().StartWithClassicDesktopLifetime( null );
+                    window = new MainWindow();
+                    window.Show();
+                } ) { IsBackground = true };
+
+                mainThread.Start();                
+            }
+            else
+            {
+                // Set up the Avalonia application without starting. This
+                // initializes the Avalonia APIs.
+                AppBuilder.Configure<App>().UsePlatformDetect().LogToDebug().SetupWithoutStarting();
+
+                // Avalonia is set up, so can create dispatcher.
+                SEngine.Dispatcher = new AvaloniaDispatcher( Dispatcher.UIThread );
+
+                // Invoke on the dispatcher an async action.
+                SEngine.Dispatcher.InvokeAsync( () =>
+                {
+                    window = new MainWindow();
+                    window.Show();
+                } );
+            }
         }
 
         private static void Initialize( PluginHeader* plugin )

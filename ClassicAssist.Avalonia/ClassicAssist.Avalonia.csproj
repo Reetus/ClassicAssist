@@ -15,7 +15,7 @@
   <Choose>
     <When Condition="'$(Configuration)'=='Linux'">
       <ItemGroup>
-        <PackageReference Include="Avalonia.Skia.Linux.Natives" Version="1.68.0.2" />
+        <PackageReference Include="HarfBuzzSharp.NativeAssets.Linux" Version="2.6.1.6" />        
       </ItemGroup>
     </When>
   </Choose>

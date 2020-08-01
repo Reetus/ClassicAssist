@@ -10,18 +10,11 @@
   <UserControl.DataContext>
     <viewModels:AboutControlViewModel/>
   </UserControl.DataContext>
-  <UserControl.Styles>
-    <Style Selector="TextBlock.h1">
-      <Setter Property="FontSize" Value="14"/>
-      <Setter Property="FontWeight" Value="Bold"/>
-      <Setter Property="Margin" Value="0,0,10,0"/>
-    </Style>
-  </UserControl.Styles>
   <UserControl.Resources>
     <misc:DateTimeToTimeSpanValueConverter x:Key="DateTimeToTimeSpanValueConverter" />
   </UserControl.Resources>
   <DockPanel>
-    <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" Margin="10" DockPanel.Dock="Top">
+    <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" DockPanel.Dock="Top">
       <Grid Grid.Row="0" VerticalAlignment="Top" Grid.Column="0" Margin="10">
         <DockPanel>
           <TextBlock Text="{x:Static resources:Strings.Software}" Classes="h1" DockPanel.Dock="Top"/>

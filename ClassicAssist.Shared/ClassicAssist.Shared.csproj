@@ -64,6 +64,7 @@
 
   <ItemGroup>
     <PackageReference Include="IronPython" Version="2.7.10-candidate1" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Octokit" Version="0.48.0" />
     <PackageReference Include="OptimizedPriorityQueue" Version="4.2.0" />

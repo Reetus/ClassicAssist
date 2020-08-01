@@ -15,7 +15,7 @@
   <UserControl.Resources>
     <misc:LockStatusValueConverter x:Key="LockStatusValueConverter" />
   </UserControl.Resources>
-  <Grid ColumnDefinitions="*, 110" Margin="10">
+  <Grid ColumnDefinitions="*, 110">
     <Border Grid.Column="0" BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderMidBrush}" Padding="2">
       <DataGrid Items="{Binding Items}" Grid.Column="0" CanUserSortColumns="True" CanUserResizeColumns="True"
                 HorizontalScrollBarVisibility="Disabled" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"

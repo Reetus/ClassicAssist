@@ -24,7 +24,7 @@ namespace ClassicAssist.UI.ViewModels
         private readonly MacroManager _manager;
         private int _caretPosition;
 
-        private ICommand _clearHotkeyCommand;
+        private ReactiveCommand<MacroEntry, Unit> _clearHotkeyCommand;
 
         //TODO
         //private TextDocument _document;
@@ -34,7 +34,7 @@ namespace ClassicAssist.UI.ViewModels
         private RelayCommand _newMacroCommand;
         private ICommand _recordCommand;
         private RelayCommand _removeMacroCommand;
-        private ICommand _removeMacroConfirmCommand;
+        private ReactiveCommand<MacroEntry, Unit> _removeMacroConfirmCommand;
         private ICommand _saveMacroCommand;
         private MacroEntry _selectedItem;
         private ICommand _showActiveObjectsWindowCommand;
@@ -60,8 +60,9 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _caretPosition, value );
         }
 
-        public ICommand ClearHotkeyCommand =>
-            _clearHotkeyCommand ?? ( _clearHotkeyCommand = new RelayCommand( ClearHotkey, o => SelectedItem != null ) );
+        public ReactiveCommand<MacroEntry, Unit> ClearHotkeyCommand =>
+            _clearHotkeyCommand ?? ( _clearHotkeyCommand = ReactiveCommand.Create<MacroEntry>( ClearHotkey,
+                this.WhenAnyValue( e => e.SelectedItem, selector: e => e != null ) ) );
 
         //TODO
         //public TextDocument Document
@@ -104,9 +105,9 @@ namespace ClassicAssist.UI.ViewModels
             _removeMacroCommand ?? ( _removeMacroCommand =
                 new RelayCommand( RemoveMacro, o => !SelectedItem?.IsRunning ?? SelectedItem != null ) );
 
-        public ICommand RemoveMacroConfirmCommand =>
+        public ReactiveCommand<MacroEntry, Unit> RemoveMacroConfirmCommand =>
             _removeMacroConfirmCommand ?? ( _removeMacroConfirmCommand =
-                new RelayCommand( RemoveMacroConfirm, o => SelectedItem != null ) );
+                ReactiveCommand.Create<MacroEntry, Unit>( RemoveMacroConfirm, this.WhenAnyValue(o => o.SelectedItem, selector: o => o != null ) ));
 
         public ICommand SaveMacroCommand =>
             _saveMacroCommand ?? ( _saveMacroCommand = new RelayCommand( SaveMacro, o => true ) );
@@ -296,11 +297,11 @@ namespace ClassicAssist.UI.ViewModels
             }
         }
 
-        private void RemoveMacroConfirm( object obj )
+        private Unit RemoveMacroConfirm( object obj )
         {
             if ( !( obj is MacroEntry entry ) )
             {
-                return;
+                return Unit.Default;
             }
 
             //TODO
@@ -313,6 +314,8 @@ namespace ClassicAssist.UI.ViewModels
             //}
 
             RemoveMacro( entry );
+
+            return Unit.Default;
         }
 
         private static void ShowMacrosWiki( object obj )
@@ -398,7 +401,7 @@ namespace ClassicAssist.UI.ViewModels
             _manager.StopAll();
         }
 
-        private static void ClearHotkey( object obj )
+        private void ClearHotkey( object obj )
         {
             if ( !( obj is MacroEntry entry ) )
             {
@@ -406,6 +409,8 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             entry.Hotkey = ShortcutKeys.Default;
+
+            this.RaisePropertyChanged( nameof( Hotkey ) );
         }
 
         private static async Task InspectObject( object arg )

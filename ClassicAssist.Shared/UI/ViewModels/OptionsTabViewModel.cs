@@ -199,8 +199,9 @@ namespace ClassicAssist.UI.ViewModels
 
             AssistantOptions.LanguageOverride = language;
 
-            MessageBox.Show( Strings.Restart_game_for_changes_to_take_effect___,
-                Strings.Restart_game_for_changes_to_take_effect___ );
+            //TODO UI
+            //MessageBox.Show( Strings.Restart_game_for_changes_to_take_effect___,
+            //    Strings.Restart_game_for_changes_to_take_effect___ );
         }
     }
 }

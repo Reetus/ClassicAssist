@@ -51,7 +51,7 @@ namespace ClassicAssist.Avalonia.Misc
         {
             if ( AssociatedObject != null )
             {
-                AssociatedObject.Document.Text = value;
+                AssociatedObject.Document.Text = value ?? string.Empty;
             }
         }
 
@@ -89,7 +89,7 @@ namespace ClassicAssist.Avalonia.Misc
                 return;
             }
 
-            if ( Text.Equals( textEditor.Document.Text ) )
+            if ( Text == null || Text.Equals( textEditor.Document.Text ) )
             {
                 return;
             }

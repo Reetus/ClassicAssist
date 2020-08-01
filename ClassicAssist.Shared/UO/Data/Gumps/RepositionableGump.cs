@@ -18,10 +18,8 @@
 #endregion
 
 using System.Threading;
-using System.Windows.Interop;
 using ClassicAssist.Shared;
 using ClassicAssist.UI.ViewModels;
-using ClassicAssist.UI.Views;
 using ClassicAssist.UO.Objects.Gumps;
 
 namespace ClassicAssist.UO.Gumps
@@ -61,10 +59,11 @@ namespace ClassicAssist.UO.Gumps
                     {
                         SetPosition( GumpX, GumpY );
                         RepositionableGumpViewModel vm = new RepositionableGumpViewModel( this, GumpX, GumpY );
-                        RepositionableGumpWindow window = new RepositionableGumpWindow { DataContext = vm };
-                        WindowInteropHelper helper = new WindowInteropHelper( window ) { Owner = Engine.WindowHandle };
-                        window.ShowInTaskbar = false;
-                        window.ShowDialog();
+                        //TODO UI
+                        //RepositionableGumpWindow window = new RepositionableGumpWindow { DataContext = vm };
+                        //WindowInteropHelper helper = new WindowInteropHelper( window ) { Owner = Engine.WindowHandle };
+                        //window.ShowInTaskbar = false;
+                        //window.ShowDialog();
                     } )
                     { IsBackground = true };
 

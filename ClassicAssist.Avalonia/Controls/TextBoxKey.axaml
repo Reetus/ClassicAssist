@@ -1,0 +1,24 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             Background="{DynamicResource ThemeBackgroundBrush}"
+             MinHeight="20"
+             Focusable="True"
+             Name="control"
+             x:Class="ClassicAssist.Avalonia.Controls.TextBoxKey">
+  <!--TODO-->
+  <!--<i:Interaction.Behaviors>
+    <ia:DataTriggerBehavior Binding="{Binding Shortcut}" ComparisonCondition="Equal" Value="{x:Null}">
+      <ia:ChangePropertyAction TargetObject="{Binding #control}" PropertyName="IsEnabled" Value="False"/>
+    </ia:DataTriggerBehavior>
+  </i:Interaction.Behaviors>-->
+  <Border BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderMidBrush}" Height="25">
+    <TextBlock x:Name="TextBox" Text="{Binding Shortcut}" TextAlignment="Center" VerticalAlignment="Center"
+               Focusable="False"/>
+  </Border>
+</UserControl>

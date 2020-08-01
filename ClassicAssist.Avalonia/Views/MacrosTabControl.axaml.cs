@@ -21,6 +21,7 @@ namespace ClassicAssist.Avalonia.Views
             TextEditor textEditor = this.FindControl<TextEditor>( "Editor" );
             textEditor.Background = Brushes.Transparent;
             textEditor.ShowLineNumbers = true;
+            textEditor.Options.ConvertTabsToSpaces = true;
 
             Stream stream = AvaloniaLocator.Current.GetService<IAssetLoader>()
                 .Open( new Uri( "avares://ClassicAssist.Avalonia/Assets/Python.Dark.xshd" ) );

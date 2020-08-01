@@ -4,19 +4,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:local="clr-namespace:ClassicAssist.Avalonia"
+        xmlns:misc="clr-namespace:ClassicAssist.Avalonia.Misc"
         xmlns:views="clr-namespace:ClassicAssist.Avalonia.Views"
         xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels;assembly=ClassicAssist.Shared"
+        xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
         mc:Ignorable="d"
         Icon="/Assets/avalonia-logo.ico"
         Height="400" Width="625"
         x:Class="ClassicAssist.Avalonia.Views.MainWindow"
         Title="{Binding Title}" Topmost="{Binding AlwaysOnTop}">
+  <i:Interaction.Behaviors>
+    <misc:WindowInitializedBehaviour/>
+  </i:Interaction.Behaviors>
   <Window.DataContext>
     <viewModels:MainWindowViewModel />
   </Window.DataContext>
-  <TabControl Padding="5">
+  <TabControl Padding="10">
     <TabItem Header="{x:Static resources:Strings.General}">
       <views:GeneralControl/>
+    </TabItem>
+    <TabItem Header="{x:Static resources:Strings.Options}">
+      <views:OptionsTabControl/>
     </TabItem>
     <TabItem Header="{x:Static resources:Strings.Macros}">
       <views:MacrosTabControl/>

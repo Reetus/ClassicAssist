@@ -3,9 +3,9 @@ using Avalonia.Markup.Xaml;
 
 namespace ClassicAssist.Avalonia.Views
 {
-    public class MainWindow : Window
+    public class OptionsTabControl : UserControl
     {
-        public MainWindow()
+        public OptionsTabControl()
         {
             InitializeComponent();
         }

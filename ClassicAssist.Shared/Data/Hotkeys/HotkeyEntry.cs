@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using ClassicAssist.Annotations;
-using ClassicAssist.Misc;
 using ClassicAssist.UI.Misc;
 using Newtonsoft.Json;
 
@@ -62,12 +61,8 @@ namespace ClassicAssist.Data.Hotkeys
             }
         }
 
-        //TODO
-        //[JsonIgnore]
-        //public ImageSource Image =>
-        //    Equals( Hotkey, ShortcutKeys.Default )
-        //        ? Properties.Resources.red_circle.ToImageSource()
-        //        : Properties.Resources.green_circle.ToImageSource();
+        [JsonIgnore]
+        public string Image => Equals( Hotkey, ShortcutKeys.Default ) ? "red-circle.png" : "green-circle.png";
 
         public bool IsCategory
         {

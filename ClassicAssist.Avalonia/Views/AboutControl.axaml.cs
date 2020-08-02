@@ -1,11 +1,9 @@
-﻿using System;
-using System.Media;
+﻿using System.Media;
 using System.Timers;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
-using Avalonia.Platform;
+using ClassicAssist.Shared;
 
 namespace ClassicAssist.Avalonia.Views
 {
@@ -41,8 +39,7 @@ namespace ClassicAssist.Avalonia.Views
                     return;
                 }
 
-                using ( SoundPlayer sound = new SoundPlayer( AvaloniaLocator.Current.GetService<IAssetLoader>()
-                    .Open( new Uri( "avares://ClassicAssist.Avalonia/Assets/kiss.wav" ) ) ) )
+                using ( SoundPlayer sound = new SoundPlayer( Engine.GetResourceStream( "kiss.wav" ) ) )
                 {
                     sound.Play();
                 }

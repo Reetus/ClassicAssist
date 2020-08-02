@@ -1,0 +1,48 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels;assembly=ClassicAssist.Shared"
+             xmlns:controls="clr-namespace:ClassicAssist.Avalonia.Controls"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:misc="clr-namespace:ClassicAssist.Avalonia.Misc"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Name="UserControl"
+             x:Class="ClassicAssist.Avalonia.Views.HotkeysTabControl">
+	<UserControl.DataContext>
+		<viewModels:HotkeysTabViewModel/>
+	</UserControl.DataContext>
+    <UserControl.Resources>
+		<misc:StringToResourceConverter x:Key="StringToResourceConverter" />
+	</UserControl.Resources>
+	<Grid ColumnDefinitions="*, 150" Margin="10">
+		<Grid Grid.Column="0" RowDefinitions="*,Auto">
+			<TreeView x:Name="TreeView" Items="{Binding Items}" SelectedItem="{Binding SelectedItem}">
+				<TreeView.ItemTemplate>
+					<TreeDataTemplate ItemsSource="{Binding Children}">
+						<StackPanel Orientation="Horizontal" Margin="0, 2, 0, 2">
+							<Image Source="{Binding Image, Converter={StaticResource StringToResourceConverter}}" Stretch="Uniform" Margin="0,0,5,0"
+									   IsVisible="{Binding !IsCategory}" />
+							<TextBlock Text="{Binding Name}"/>
+						</StackPanel>
+					</TreeDataTemplate>
+				</TreeView.ItemTemplate>
+			</TreeView>
+		</Grid>
+		<Grid Grid.Column="1" Margin="10, 0, 0, 0" RowDefinitions="*,Auto,Auto">
+			<controls:GroupBox Header="{x:Static resources:Strings.Hotkeys}">
+				<StackPanel Orientation="Vertical" Grid.Row="0" VerticalAlignment="Top">
+					<controls:TextBoxKey Shortcut="{Binding DataContext.Hotkey, ElementName=UserControl}" Margin="10" />
+					<Button Content="{x:Static resources:Strings.Clear}" Margin="10,0,10,5"
+							Command="{Binding ClearHotkeyCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
+					<CheckBox Content="{x:Static resources:Strings.Pass_to_UO}" Margin="10,0,10,5"
+						IsChecked="{Binding SelectedItem.PassToUO}" />
+					<Button Content="{x:Static resources:Strings.Execute}" Margin="10,0,10,5"
+									  Command="{Binding ExecuteCommand, Mode=OneWay}"
+									CommandParameter="{Binding SelectedItem, ElementName=TreeView}" />
+				</StackPanel>
+			</controls:GroupBox>
+		</Grid>
+	</Grid>
+</UserControl>

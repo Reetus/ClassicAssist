@@ -48,6 +48,7 @@
     <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseDark.xaml"/>
     <StyleInclude Source="avares://AvaloniaEdit/AvaloniaEdit.xaml" />
     <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Default.xaml"/>
+    <StyleInclude Source="avares://ClassicAssist.Avalonia/Controls/GroupBox.Theme.xaml"/>
     <Style Selector="TextBlock.h1">
       <Setter Property="FontSize" Value="14"/>
       <Setter Property="FontWeight" Value="Bold"/>

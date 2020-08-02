@@ -1,0 +1,16 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:ClassicAssist.Avalonia.Controls">
+    <Style Selector="controls|GroupBox">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <DockPanel>
+                    <TextBlock Text="{TemplateBinding Header}" DockPanel.Dock="Top" Background="{DynamicResource ThemeControlMidBrush}" Padding="10,5,10,5" Foreground="{DynamicResource ThemeForegroundBrush}" HorizontalAlignment="Left"/>
+                    <Border BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderMidBrush}" Padding="5">
+                        <ContentPresenter x:Name="PART_ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Padding="{TemplateBinding Padding}"/>
+                    </Border>
+                </DockPanel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

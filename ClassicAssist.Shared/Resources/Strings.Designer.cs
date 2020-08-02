@@ -385,6 +385,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Avalonia port assistance provided by Kevin_.
+        /// </summary>
+        public static string Avalonia_port_assistance_provided_by_Kevin_ {
+            get {
+                return ResourceManager.GetString("Avalonia port assistance provided by Kevin_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Background macro &apos;{0}&apos; started....
         /// </summary>
         public static string Background_macro___0___started___ {

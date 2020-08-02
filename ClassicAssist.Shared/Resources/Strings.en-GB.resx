@@ -1419,4 +1419,7 @@ Are you sure you wish to continue?</value>
   <data name="Locked" xml:space="preserve">
     <value>Locked</value>
   </data>
+  <data name="Avalonia port assistance provided by Kevin_" xml:space="preserve">
+    <value>Avalonia port assistance provided by Kevin_</value>
+  </data>
 </root>

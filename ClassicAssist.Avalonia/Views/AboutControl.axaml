@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels;assembly=ClassicAssist.Shared"
+             xmlns:controls="clr-namespace:ClassicAssist.Avalonia.Controls"
              xmlns:misc="clr-namespace:ClassicAssist.Avalonia.Misc"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ClassicAssist.Avalonia.Views.AboutControl"             >
@@ -15,24 +16,32 @@
   </UserControl.Resources>
   <DockPanel>
     <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" DockPanel.Dock="Top">
-      <Grid Grid.Row="0" VerticalAlignment="Top" Grid.Column="0" Margin="10">
+      <Grid.Styles>
+        <Style Selector="controls|GroupBox">
+          <Setter Property="Margin" Value="5"/>
+        </Style>
+      </Grid.Styles>
+      <controls:GroupBox Header="{x:Static resources:Strings.Software}" Grid.Row="0" Grid.Column="0">
+        <StackPanel>
+          <DockPanel>
+            <StackPanel DockPanel.Dock="Left" Margin="0,0,10,0">
+              <TextBlock Text="{x:Static resources:Strings.Product_}"/>
+              <TextBlock Text="{x:Static resources:Strings.Version_}"/>
+              <TextBlock Text="{x:Static resources:Strings.Build_Date_}"/>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Right">
+              <TextBlock Text="{Binding Product}"/>
+              <TextBlock Text="{Binding Version}"/>
+              <TextBlock Text="{Binding BuildDate}"/>
+            </StackPanel>
+          </DockPanel>
+          <Grid Margin="5">
+            <TextBlock x:Name="CreditText" Text="{x:Static resources:Strings.Avalonia_port_assistance_provided_by_Kevin_}" HorizontalAlignment="Center" FontWeight="Bold" TextDecorations="Underline" TextWrapping="Wrap"/>
+          </Grid>
+        </StackPanel>
+      </controls:GroupBox>
+      <controls:GroupBox Header="{x:Static resources:Strings.World_Status}" Grid.Row="0" Grid.Column="1">
         <DockPanel>
-          <TextBlock Text="{x:Static resources:Strings.Software}" Classes="h1" DockPanel.Dock="Top"/>
-          <StackPanel DockPanel.Dock="Left" Margin="0,0,10,0">
-            <TextBlock Text="{x:Static resources:Strings.Product_}"/>
-            <TextBlock Text="{x:Static resources:Strings.Version_}"/>
-            <TextBlock Text="{x:Static resources:Strings.Build_Date_}"/>
-          </StackPanel>
-          <StackPanel DockPanel.Dock="Right">
-            <TextBlock Text="{Binding Product}"/>
-            <TextBlock Text="{Binding Version}"/>
-            <TextBlock Text="{Binding BuildDate}"/>
-          </StackPanel>
-        </DockPanel>
-      </Grid>
-      <Grid Grid.Row="0" VerticalAlignment="Top" Grid.Column="1" Margin="10">
-        <DockPanel>
-          <TextBlock Text="{x:Static resources:Strings.World_Status}" Classes="h1" DockPanel.Dock="Top"/>
           <StackPanel DockPanel.Dock="Left" Margin="0,0,10,0">
             <TextBlock Text="{x:Static resources:Strings.Connected_}"/>
             <TextBlock Text="{x:Static resources:Strings.Items_}"/>
@@ -46,16 +55,17 @@
             <TextBlock Text="{Binding Latency, StringFormat={}{0}ms}"/>
           </StackPanel>
         </DockPanel>
-      </Grid>
-      <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Margin="10">
-        <Button Background="Transparent" BorderThickness="0" Command="{Binding OpenPayPalCommand}">
-          <Image Source="{StaticResource PayPalIcon}" Height="35"/>
-        </Button>
-        <TextBlock Text="{x:Static resources:Strings.Donating_helps_support_continued_development__your_support_is_appreciated_}" TextWrapping="Wrap" TextAlignment="Center"/>
-      </StackPanel>
-      <Grid Grid.Row="1" VerticalAlignment="Top" Grid.Column="1" Margin="10">
+      </controls:GroupBox>
+      <controls:GroupBox Header="{x:Static resources:Strings.Misc}" Grid.Row="1">
+        <StackPanel>
+          <Button Background="Transparent" BorderThickness="0" Command="{Binding OpenPayPalCommand}">
+            <Image Source="{StaticResource PayPalIcon}" Height="35"/>
+          </Button>
+          <TextBlock Text="{x:Static resources:Strings.Donating_helps_support_continued_development__your_support_is_appreciated_}" TextWrapping="Wrap" TextAlignment="Center"/>
+        </StackPanel>
+      </controls:GroupBox>
+      <controls:GroupBox Header="{x:Static resources:Strings.Player}" Grid.Row="1" Grid.Column="1">
         <DockPanel>
-          <TextBlock Text="{x:Static resources:Strings.Player}" Classes="h1" DockPanel.Dock="Top"/>
           <StackPanel DockPanel.Dock="Left" Margin="0,0,10,0">
             <TextBlock Text="{x:Static resources:Strings.Shard_}"/>
             <TextBlock Text="{x:Static resources:Strings.Name_}"/>
@@ -71,7 +81,7 @@
             <TextBlock Text="{Binding PlayerStatus}"/>
           </StackPanel>
         </DockPanel>
-      </Grid>
+      </controls:GroupBox>
     </Grid>
     <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Height="25" HorizontalAlignment="Center" Margin="10">
       <Button Content="{x:Static resources:Strings.Project_Homepage}" Margin="0,0,10,0" Command="{Binding LaunchHomepageCommand}"/>

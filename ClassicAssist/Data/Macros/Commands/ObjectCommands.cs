@@ -198,7 +198,8 @@ namespace ClassicAssist.Data.Macros.Commands
 
             bool Predicate( Entity i )
             {
-                return i.ID == graphic && ( hue == -1 || i.Hue == hue ) && !IgnoreList.Contains( i.Serial );
+                return ( graphic == -1 || i.ID == graphic ) && ( hue == -1 || i.Hue == hue ) &&
+                       !IgnoreList.Contains( i.Serial );
             }
 
             if ( owner != 0 )

@@ -50,7 +50,7 @@
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
-        <GroupBox Grid.Column="1" Header="{x:Static resources:Strings.Hotkeys}">
+        <GroupBox Grid.Column="1" Header="{x:Static resources:Strings.Hotkeys}" Margin="0,5">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />

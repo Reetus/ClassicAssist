@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using Assistant;
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Data.Misc;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.Models;
@@ -39,6 +40,8 @@ namespace ClassicAssist.UI.ViewModels
         private IEnumerable<EntityCollectionFilter> _filters;
         private bool _isPerformingAction;
         private ICommand _itemDoubleClickCommand;
+        private ICommand _openAllContainersCommand;
+        private EntityCollectionViewerOptions _options;
         private ICommand _refreshCommand;
 
         private ObservableCollection<EntityCollectionData> _selectedItems =
@@ -48,6 +51,8 @@ namespace ClassicAssist.UI.ViewModels
 
         private IComparer<Entity> _sorter = new IDThenSerialComparer();
         private string _statusLabel;
+        private ICommand _toggleAlwaysOnTopCommand;
+        private ICommand _toggleChildItemsCommand;
         private ICommand _togglePropertiesCommand;
         private bool _topmost;
 
@@ -68,6 +73,7 @@ namespace ClassicAssist.UI.ViewModels
         public EntityCollectionViewerViewModel( ItemCollection collection )
         {
             _collection = collection;
+            Options = Data.Options.CurrentOptions.EntityCollectionViewerOptions;
 
             Entities = new ObservableCollection<EntityCollectionData>( collection.ToEntityCollectionData( _sorter ) );
 
@@ -131,6 +137,16 @@ namespace ClassicAssist.UI.ViewModels
         public static Lazy<Dictionary<int, int>> MountIDEntries { get; set; } =
             new Lazy<Dictionary<int, int>>( LoadMountIDEntries );
 
+        public ICommand OpenAllContainersCommand =>
+            _openAllContainersCommand ??
+            ( _openAllContainersCommand = new RelayCommand( OpenAllContainers, o => true ) );
+
+        public EntityCollectionViewerOptions Options
+        {
+            get => _options;
+            set => SetProperty( ref _options, value );
+        }
+
         public ICommand RefreshCommand =>
             _refreshCommand ?? ( _refreshCommand = new RelayCommand( Refresh, o => _collection?.Serial != 0 ) );
 
@@ -154,6 +170,13 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _statusLabel, value );
         }
 
+        public ICommand ToggleAlwaysOnTopCommand =>
+            _toggleAlwaysOnTopCommand ??
+            ( _toggleAlwaysOnTopCommand = new RelayCommand( ToggleAlwaysOnTop, o => true ) );
+
+        public ICommand ToggleChildItemsCommand =>
+            _toggleChildItemsCommand ?? ( _toggleChildItemsCommand = new RelayCommand( ToggleChildItems, o => true ) );
+
         public ICommand TogglePropertiesCommand =>
             _togglePropertiesCommand ?? ( _togglePropertiesCommand = new RelayCommand( ToggleProperties, o => true ) );
 
@@ -161,6 +184,37 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _topmost;
             set => SetProperty( ref _topmost, value );
+        }
+
+        ~EntityCollectionViewerViewModel()
+        {
+            Data.Options.CurrentOptions.EntityCollectionViewerOptions = Options;
+        }
+
+        private void ToggleAlwaysOnTop( object obj )
+        {
+            if ( !( obj is bool alwaysOnTop ) )
+            {
+                return;
+            }
+
+            Options.AlwaysOnTop = alwaysOnTop;
+        }
+
+        private void OpenAllContainers( object obj )
+        {
+            Task.Run( () =>
+            {
+                List<Task> tasks = _collection
+                    .Where( i => TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) ).Select( item =>
+                        ActionPacketQueue.EnqueueActionPacket( new UseObject( item.Serial ) ) ).ToList();
+
+                Task.WhenAll( tasks ).ContinueWith( t =>
+                {
+                    Thread.Sleep( 1000 );
+                    RefreshCommand.Execute( null );
+                } );
+            } );
         }
 
         private static Dictionary<int, int> LoadMountIDEntries()
@@ -329,7 +383,7 @@ namespace ClassicAssist.UI.ViewModels
                 case Item item:
                     if ( item.Container == null )
                     {
-                        Commands.WaitForContainerContents( item.Serial, 1000 );
+                        Commands.WaitForContainerContentsUse( item.Serial, 1000 );
                     }
 
                     collection = item.Container;
@@ -344,7 +398,9 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            _collection = collection;
+            _collection = !Options.ShowChildItems
+                ? collection
+                : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) };
 
             Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter ) );
         }
@@ -432,6 +488,18 @@ namespace ClassicAssist.UI.ViewModels
             _cancellationToken?.Cancel();
 
             await Task.CompletedTask;
+        }
+
+        private void ToggleChildItems( object obj )
+        {
+            if ( !( obj is bool showChildItems ) )
+            {
+                return;
+            }
+
+            Options.ShowChildItems = showChildItems;
+
+            RefreshCommand.Execute( null );
         }
 
         private void ToggleProperties( object obj )
@@ -570,8 +638,8 @@ namespace ClassicAssist.UI.ViewModels
                     case PropertyType.Properties:
                     {
                         predicates.Add( i => i.Properties != null && constraint.Clilocs.Any( cliloc =>
-                                                 i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc,
-                                                     constraint, filter.Operator, filter.Value ) ) ) );
+                            i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc,
+                                constraint, filter.Operator, filter.Value ) ) ) );
 
                         break;
                     }

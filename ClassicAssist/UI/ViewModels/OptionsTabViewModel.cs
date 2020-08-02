@@ -79,6 +79,7 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "MacrosGumpY", CurrentOptions.MacrosGumpY );
             options.Add( "ChatWindowWidth", CurrentOptions.ChatWindowWidth );
             options.Add( "ChatWindowHeight", CurrentOptions.ChatWindowHeight );
+            options.Add( "EntityCollectionViewerOptions", CurrentOptions.EntityCollectionViewerOptions.Serialize() );
 
             json?.Add( "Options", options );
         }
@@ -166,6 +167,8 @@ namespace ClassicAssist.UI.ViewModels
             {
                 MacrosGump.Initialize();
             }
+
+            CurrentOptions.EntityCollectionViewerOptions.Deserialize( config?["EntityCollectionViewerOptions"] );
         }
 
         // Replay CurrentOptions changes onto Options.CurrentOptions

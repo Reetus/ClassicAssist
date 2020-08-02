@@ -56,5 +56,6 @@ namespace ClassicAssist.UO.Network
         public Func<bool, bool> Action { get; set; }
         public int Serial { get; set; }
         public bool CheckRange { get; set; }
+        public bool Result { get; set; }
     }
 }

@@ -36,6 +36,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
         private int _containerSerial;
         private ICommand _retestContainerCommand;
         private ICommand _testContainerCommand;
+        private ICommand _testItemCommand;
         private string _testResults;
 
         public ICommand ClearResultsCommand =>
@@ -54,10 +55,22 @@ namespace ClassicAssist.UI.ViewModels.Debug
         public ICommand TestContainerCommand =>
             _testContainerCommand ?? ( _testContainerCommand = new RelayCommandAsync( TestContainerAsync, o => true ) );
 
+        public ICommand TestItemCommand =>
+            _testItemCommand ?? ( _testItemCommand = new RelayCommandAsync( TestItemAsync, o => true ) );
+
         public string TestResults
         {
             get => _testResults;
             set => SetProperty( ref _testResults, value );
+        }
+
+        private async Task TestItemAsync( object arg )
+        {
+            int serial = await Commands.GetTargeSerialAsync( Strings.Target_new_item___, 60000 );
+
+            ItemCollection container = new ItemCollection( serial ) { Engine.Items.GetItem( serial ) };
+
+            TestContainer( container );
         }
 
         private void ClearResults( object obj )
@@ -67,7 +80,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
         private void RetestContainer( object obj )
         {
-            TestContainer( ContainerSerial );
+            TestContainer( Engine.Items.GetItem( ContainerSerial ).Container );
         }
 
         private async Task TestContainerAsync( object arg )
@@ -79,12 +92,6 @@ namespace ClassicAssist.UI.ViewModels.Debug
                 Commands.SystemMessage( Strings.Invalid_container___ );
             }
 
-            ContainerSerial = serial;
-            TestContainer( serial );
-        }
-
-        private void TestContainer( int serial )
-        {
             Item[] items = Engine.Items.GetItem( serial )?.Container?.GetItems();
 
             if ( items == null )
@@ -94,7 +101,14 @@ namespace ClassicAssist.UI.ViewModels.Debug
                 return;
             }
 
-            Engine.SendPacketToServer( new BatchQueryProperties( items.Select( i => i.Serial ).ToArray() ) );
+            ContainerSerial = serial;
+            TestContainer( Engine.Items.GetItem( serial )?.Container );
+        }
+
+        private void TestContainer( ItemCollection container )
+        {
+            Engine.SendPacketToServer(
+                new BatchQueryProperties( container.GetItems().Select( i => i.Serial ).ToArray() ) );
 
             foreach ( AutolootEntry entry in AutolootManager.GetInstance().GetEntries() )
             {
@@ -106,7 +120,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
                 TestResults += $"Entry {entry.Name}...\n\n";
 
-                IEnumerable<Item> matchItems = AutolootHelpers.AutolootFilter( items, entry );
+                IEnumerable<Item> matchItems = AutolootHelpers.AutolootFilter( container.GetItems(), entry );
 
                 if ( matchItems == null )
                 {

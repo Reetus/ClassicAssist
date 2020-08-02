@@ -2326,6 +2326,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open All Containers.
+        /// </summary>
+        public static string Open_All_Containers {
+            get {
+                return ResourceManager.GetString("Open All Containers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open in Github.
         /// </summary>
         public static string Open_in_Github {
@@ -2731,6 +2740,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Requeue failed items.
+        /// </summary>
+        public static string Requeue_failed_items {
+            get {
+                return ResourceManager.GetString("Requeue failed items", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Requires Server Support.
         /// </summary>
         public static string Requires_Server_Support {
@@ -3078,6 +3096,15 @@ namespace ClassicAssist.Resources {
         public static string Show_Chat_Window {
             get {
                 return ResourceManager.GetString("Show Chat Window", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Child Items.
+        /// </summary>
+        public static string Show_Child_Items {
+            get {
+                return ResourceManager.GetString("Show Child Items", resourceCulture);
             }
         }
         

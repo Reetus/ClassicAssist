@@ -58,6 +58,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private ICommand _removeCommand;
         private ICommand _removeConstraintCommand;
+        private bool _requeueFailedItems;
         private RelayCommand _resetContainerCommand;
         private AutolootEntry _selectedItem;
 
@@ -140,6 +141,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
             _removeConstraintCommand ?? ( _removeConstraintCommand =
                 new RelayCommand( RemoveConstraint, o => SelectedProperty != null ) );
 
+        public bool RequeueFailedItems
+        {
+            get => _requeueFailedItems;
+            set => SetProperty( ref _requeueFailedItems, value );
+        }
+
         public ICommand ResetContainerCommand => _resetContainerCommand = new RelayCommand( ResetContainer, o => true );
 
         public AutolootEntry SelectedItem
@@ -177,7 +184,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
             {
                 { "Enabled", Enabled },
                 { "DisableInGuardzone", DisableInGuardzone },
-                { "Container", ContainerSerial }
+                { "Container", ContainerSerial },
+                { "RequeueFailedItems", RequeueFailedItems }
             };
 
             JArray itemsArray = new JArray();
@@ -235,6 +243,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             Enabled = config["Enabled"]?.ToObject<bool>() ?? true;
             DisableInGuardzone = config["DisableInGuardzone"]?.ToObject<bool>() ?? false;
             ContainerSerial = config["Container"]?.ToObject<int>() ?? 0;
+            RequeueFailedItems = config["RequeueFailedItems"]?.ToObject<bool>() ?? false;
 
             if ( config["Items"] != null )
             {
@@ -447,18 +456,27 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 {
                     int containerSerial = ContainerSerial;
 
-                    if ( containerSerial == 0 || Engine.Player?.Backpack?.Container?.GetItem( containerSerial ) == null )
+                    if ( containerSerial == 0 ||
+                         Engine.Player?.Backpack?.Container?.GetItem( containerSerial ) == null )
                     {
                         containerSerial = Engine.Player.GetLayer( Layer.Backpack );
                     }
 
                     UOC.SystemMessage( string.Format( Strings.Autolooting___0__, lootItem.Name ), 61 );
                     Task t = ActionPacketQueue.EnqueueDragDrop( lootItem.Serial, lootItem.Count, containerSerial,
-                        QueuePriority.Medium, true, true );
+                        QueuePriority.Medium, true, true, requeueOnFailure: RequeueFailedItems,
+                        successPredicate: CheckItemContainer );
 
                     t.Wait( LOOT_TIMEOUT );
                 }
             }
+        }
+
+        private static bool CheckItemContainer( int serial, int containerSerial )
+        {
+            Item item = Engine.Items.GetItem( serial );
+
+            return item == null || item.Owner == containerSerial;
         }
 
         private void RemoveConstraint( object obj )

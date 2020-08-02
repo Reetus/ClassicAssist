@@ -27,7 +27,7 @@
         </Grid.RowDefinitions>
         <ToolBar Grid.Row="0" Style="{DynamicResource ToolBarStyle1}">
             <Button ToolTip="{x:Static resources:Strings.Target_object___}" Command="{Binding TargetCommand}">
-                <Image Source="{StaticResource crosshairIcon}" Height="16" />
+                <Image Source="{StaticResource CrosshairIcon}" Height="16" />
             </Button>
         </ToolBar>
         <ListView Grid.Row="1" ItemsSource="{Binding Items}" Margin="5">

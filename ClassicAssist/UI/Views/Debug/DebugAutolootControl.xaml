@@ -183,7 +183,10 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <ToolBar Style="{DynamicResource ToolBarStyle1}" Grid.Row="0">
-            <Button ToolTip="Test Autoloot" Command="{Binding TestContainerCommand}">
+            <Button ToolTip="Test Item" Command="{Binding TestItemCommand}">
+                <Image Source="{StaticResource CrosshairIcon}" Height="16" />
+            </Button>
+            <Button ToolTip="Test Container" Command="{Binding TestContainerCommand}">
                 <Image Source="{StaticResource ContainerIcon}" Height="16" />
             </Button>
             <Button ToolTip="Retest Container" Command="{Binding RetestContainerCommand}">

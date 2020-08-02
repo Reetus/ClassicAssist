@@ -57,7 +57,7 @@
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Enabled}" Value="False">
-                                <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                <Setter Property="TextDecorations" Value="Strikethrough" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -172,16 +172,27 @@
                             Command="{Binding InsertConstraintCommand}"
                             CommandParameter="{Binding SelectedValue, ElementName=comboBox}" />
                 </Grid>
-                <StackPanel Orientation="Horizontal">
-                    <CheckBox Content="{x:Static resources:Strings.Rehue_matching_items}"
-                              IsChecked="{Binding SelectedItem.Rehue}" />
-                    <Button Margin="10,0,0,0" Command="{Binding SelectHueCommand}"
-                            CommandParameter="{Binding SelectedItem, ElementName=listView}">
-                        <Image Source="{StaticResource ColorWheelIcon}" Height="12" Width="12" />
-                    </Button>
-                </StackPanel>
-                <CheckBox Content="{x:Static resources:Strings.Autoloot_matching_items}"
-                          IsChecked="{Binding SelectedItem.Autoloot}" />
+                <WrapPanel Orientation="Horizontal">
+                    <WrapPanel.Resources>
+                        <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
+                            <Setter Property="Margin" Value="0,0,10,0" />
+                        </Style>
+                    </WrapPanel.Resources>
+                    <CheckBox IsChecked="{Binding SelectedItem.Rehue}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{x:Static resources:Strings.Rehue_matching_items}"
+                                       VerticalAlignment="Center" />
+                            <Button Margin="10,0,0,0" Command="{Binding SelectHueCommand}"
+                                    CommandParameter="{Binding SelectedItem, ElementName=listView}">
+                                <Image Source="{StaticResource ColorWheelIcon}" Height="12" Width="12" />
+                            </Button>
+                        </StackPanel>
+                    </CheckBox>
+                    <CheckBox Content="{x:Static resources:Strings.Autoloot_matching_items}"
+                              IsChecked="{Binding SelectedItem.Autoloot}" />
+                    <CheckBox Content="{x:Static resources:Strings.Requeue_failed_items}"
+                              IsChecked="{Binding RequeueFailedItems}" />
+                </WrapPanel>
             </StackPanel>
         </Grid>
     </Grid>

@@ -10,7 +10,8 @@
         xmlns:views="clr-namespace:ClassicAssist.UI.Views"
         xmlns:models="clr-namespace:ClassicAssist.UI.Models"
         mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
-        Width="600" Height="400" Title="{x:Static resources:Strings.Entity_Collection_Viewer}">
+        Width="600" Height="400" Title="{x:Static resources:Strings.Entity_Collection_Viewer}"
+        Topmost="{Binding Options.AlwaysOnTop}">
     <Window.DataContext>
         <viewModels:EntityCollectionViewerViewModel />
     </Window.DataContext>
@@ -46,6 +47,22 @@
             <ToggleButton x:Name="toggleButton" Height="24">
                 <Image Source="{StaticResource FilterIcon}" />
             </ToggleButton>
+            <ToggleButton Height="24" ToolTip="{x:Static resources:Strings.Show_Child_Items}"
+                          Command="{Binding ToggleChildItemsCommand}" IsChecked="{Binding Options.ShowChildItems}"
+                          CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}">
+                <Image Source="{StaticResource BabyIcon}" />
+            </ToggleButton>
+            <ToggleButton Height="24" ToolTip="{x:Static resources:Strings.Always_On_Top}"
+                          Command="{Binding ToggleAlwaysOnTopCommand}"
+                          CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                          IsChecked="{Binding Options.AlwaysOnTop}">
+                <Image Source="{StaticResource PinIcon}" />
+            </ToggleButton>
+            <Button Height="24" Padding="0" Command="{Binding OpenAllContainersCommand}"
+                    ToolTip="{x:Static resources:Strings.Open_All_Containers}"
+                    Style="{StaticResource ToolbarButtonStyle}">
+                <Image Source="{StaticResource ContainerIcon}" Height="19" />
+            </Button>
             <Menu Background="Transparent" Height="24">
                 <MenuItem Height="24">
                     <MenuItem.Header>

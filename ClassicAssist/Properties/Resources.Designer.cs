@@ -83,25 +83,6 @@ namespace ClassicAssist.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap green_circle {
-            get {
-                object obj = ResourceManager.GetObject("green_circle", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        public static System.IO.UnmanagedMemoryStream kiss {
-            get {
-                return ResourceManager.GetStream("kiss", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         public static System.Drawing.Bitmap padlock {
             get {
                 object obj = ResourceManager.GetObject("padlock", resourceCulture);
@@ -115,16 +96,6 @@ namespace ClassicAssist.Properties {
         public static System.Drawing.Bitmap python {
             get {
                 object obj = ResourceManager.GetObject("python", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap red_circle {
-            get {
-                object obj = ResourceManager.GetObject("red_circle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

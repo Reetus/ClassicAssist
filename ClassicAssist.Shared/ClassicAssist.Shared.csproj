@@ -63,6 +63,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\arrow_down.png" />
+    <EmbeddedResource Include="Resources\arrow_up.png" />
+    <EmbeddedResource Include="Resources\green-circle.png" />
+    <EmbeddedResource Include="Resources\kiss.wav" />
+    <EmbeddedResource Include="Resources\lock.png" />
+    <EmbeddedResource Include="Resources\python.png" />
+    <EmbeddedResource Include="Resources\red-circle.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="IronPython" Version="2.7.10-candidate1" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />

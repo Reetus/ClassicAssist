@@ -26,6 +26,9 @@
     <TabItem Header="{x:Static resources:Strings.Options}">
       <views:OptionsTabControl/>
     </TabItem>
+	<TabItem Header="{x:Static resources:Strings.Hotkeys}">
+		<views:HotkeysTabControl/>
+	</TabItem>
     <TabItem Header="{x:Static resources:Strings.Macros}">
       <views:MacrosTabControl/>
     </TabItem>

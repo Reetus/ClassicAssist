@@ -648,6 +648,12 @@ namespace ClassicAssist.Shared
             staticZ = (sbyte) parameters[3];
         }
 
+        public static Stream GetResourceStream( string name )
+        {
+            return Assembly.GetAssembly( typeof( Engine ) )
+                .GetManifestResourceStream( $"ClassicAssist.Shared.Resources.{name}" );
+        }
+
         #region ClassicUO Events
 
         private static bool OnPacketSend( ref byte[] data, ref int length )

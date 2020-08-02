@@ -2,6 +2,7 @@
 using System.Timers;
 using System.Windows.Controls;
 using System.Windows.Input;
+using ClassicAssist.Shared;
 
 namespace ClassicAssist.UI.Views
 {
@@ -34,7 +35,7 @@ namespace ClassicAssist.UI.Views
                     return;
                 }
 
-                using ( SoundPlayer sound = new SoundPlayer( Properties.Resources.kiss ) )
+                using ( SoundPlayer sound = new SoundPlayer( Engine.GetResourceStream( "kiss.wav" ) ) )
                 {
                     sound.Play();
                 }

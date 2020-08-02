@@ -27,6 +27,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private ICommand _insertCommand;
         private ObservableCollection<ScavengerEntry> _items = new ObservableCollection<ScavengerEntry>();
         private ICommand _removeCommand;
+        private bool _requeueFailedItems;
         private ScavengerEntry _selectedItem;
         private ICommand _setContainerCommand;
 
@@ -182,7 +183,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                     Item[] matches = Engine.Items.SelectEntities( i =>
                         i.Distance <= SCAVENGER_DISTANCE && i.Owner == 0 && i.ID == entry.Graphic &&
-                        (entry.Hue == -1 || i.Hue == entry.Hue) && !_ignoreList.Contains( i.Serial ) );
+                        ( entry.Hue == -1 || i.Hue == entry.Hue ) && !_ignoreList.Contains( i.Serial ) );
 
                     if ( matches == null )
                     {
@@ -207,12 +208,24 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 foreach ( Item scavengerItem in scavengerItems.Where( scavengerItem =>
                     scavengerItem.Distance <= SCAVENGER_DISTANCE ).Distinct() )
                 {
-                    _ignoreList.Add( scavengerItem.Serial );
                     UOC.SystemMessage( string.Format( Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown" ), 61 );
-                    ActionPacketQueue.EnqueueDragDrop( scavengerItem.Serial, scavengerItem.Count, container.Serial,
-                        QueuePriority.Low, true ).Wait();
+                    Task<bool> t = ActionPacketQueue.EnqueueDragDrop( scavengerItem.Serial, scavengerItem.Count,
+                        container.Serial, QueuePriority.Low, true, true, requeueOnFailure: false,
+                        successPredicate: CheckItemContainer );
+
+                    if ( t.Result && CheckItemContainer( scavengerItem.Serial, container.Serial ))
+                    {
+                        _ignoreList.Add( scavengerItem.Serial );
+                    }
                 }
             }
+        }
+
+        private static bool CheckItemContainer( int serial, int containerSerial )
+        {
+            Item item = Engine.Items.GetItem( serial );
+
+            return item == null || item.Owner == containerSerial;
         }
 
         private async Task Insert( object arg )

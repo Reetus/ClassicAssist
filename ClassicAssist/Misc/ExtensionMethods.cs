@@ -113,7 +113,7 @@ namespace ClassicAssist.Misc
         }
 
         // https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/interop-with-other-asynchronous-patterns-and-types?redirectedfrom=MSDN#WHToTap
-        public static Task ToTask( this EventWaitHandle waitHandle )
+        public static Task<bool> ToTask( this EventWaitHandle waitHandle, Func<bool> resultAction = null )
         {
             if ( waitHandle == null )
             {
@@ -123,7 +123,7 @@ namespace ClassicAssist.Misc
             TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 
             RegisteredWaitHandle rwh = ThreadPool.RegisterWaitForSingleObject( waitHandle,
-                delegate { tcs.TrySetResult( true ); }, null, -1, true );
+                delegate { tcs.TrySetResult( resultAction?.Invoke() ?? true ); }, null, -1, true );
 
             Task<bool> t = tcs.Task;
 
@@ -134,7 +134,7 @@ namespace ClassicAssist.Misc
 
         public static Task ToTask( this IEnumerable<EventWaitHandle> waitHandles )
         {
-            List<Task> tasks = waitHandles.Select( waitHandle => waitHandle.ToTask() ).ToList();
+            List<Task<bool>> tasks = waitHandles.Select( waitHandle => waitHandle.ToTask() ).ToList();
 
             return Task.WhenAll( tasks );
         }

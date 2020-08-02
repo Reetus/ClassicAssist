@@ -2740,6 +2740,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Requeue failed items.
+        /// </summary>
+        public static string Requeue_failed_items {
+            get {
+                return ResourceManager.GetString("Requeue failed items", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Requires Server Support.
         /// </summary>
         public static string Requires_Server_Support {

@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
@@ -34,6 +35,8 @@ namespace ClassicAssist.UO.Network
     public static class ActionPacketQueue
     {
         private const int DRAG_DROP_DISTANCE = 3;
+        private const int DROP_DELAY = 50;
+        private const int MAX_ATTEMPTS = 5;
 
         private static readonly ThreadPriorityQueue<BaseQueueItem> _actionPacketQueue =
             new ThreadPriorityQueue<BaseQueueItem>( ProcessActionPacketQueue );
@@ -82,6 +85,7 @@ namespace ClassicAssist.UO.Network
                         Engine.LastActionPacket = DateTime.Now;
                     }
 
+                    actionItem.Result = result ?? true;
                     actionItem.WaitHandle.Set();
                 }
             }
@@ -150,19 +154,26 @@ namespace ClassicAssist.UO.Network
             }
         }
 
-        public static Task EnqueueDragDrop( int serial, int amount, int containerSerial,
-            QueuePriority priority = QueuePriority.Low, bool checkRange = false, bool checkExisting = false, bool delaySend = true, int x = -1,
-            int y = -1 )
+        public static Task<bool> EnqueueDragDrop( int serial, int amount, int containerSerial,
+            QueuePriority priority = QueuePriority.Low, bool checkRange = false, bool checkExisting = false,
+            bool delaySend = true, int x = -1, int y = -1, CancellationToken cancellationToken = default,
+            bool requeueOnFailure = false, Func<int, int, bool> successPredicate = null, int attempt = 0 )
         {
             lock ( _actionPacketQueueLock )
             {
-                if ( checkExisting && _actionPacketQueue.Contains( e => e is ActionQueueItem aqi && aqi.Serial == serial ) )
+                if ( checkExisting &&
+                     _actionPacketQueue.Contains( e => e is ActionQueueItem aqi && aqi.Serial == serial ) )
                 {
-                    return Task.CompletedTask;
+                    return Task.FromResult( true );
                 }
 
                 ActionQueueItem actionQueueItem = new ActionQueueItem( check =>
                 {
+                    if ( cancellationToken.IsCancellationRequested )
+                    {
+                        return false;
+                    }
+
                     if ( check )
                     {
                         Item item = Engine.Items.GetItem( serial );
@@ -179,15 +190,48 @@ namespace ClassicAssist.UO.Network
                     }
 
                     Engine.SendPacketToServer( new DragItem( serial, amount ) );
-                    Thread.Sleep( 50 );
+                    Thread.Sleep( DROP_DELAY );
                     Engine.SendPacketToServer( new DropItem( serial, containerSerial, x, y, 0 ) );
 
-                    return true;
+                    if ( !requeueOnFailure || successPredicate == null || attempt >= MAX_ATTEMPTS )
+                    {
+                        return true;
+                    }
+
+                    Stopwatch stopWatch = new Stopwatch();
+                    stopWatch.Start();
+
+                    Commands.WaitForContainerContents( containerSerial, Options.CurrentOptions.ActionDelayMS );
+
+                    bool result = successPredicate.Invoke( serial, containerSerial );
+
+                    if ( result )
+                    {
+                        return true;
+                    }
+
+#if DEBUG
+                    Commands.SystemMessage( $"Requeue: 0x{serial:x8}" );
+#endif
+                    EnqueueDragDrop( serial, amount, containerSerial, priority, checkRange, checkExisting, delaySend, x,
+                        y, cancellationToken, true, successPredicate, attempt++ );
+
+                    stopWatch.Stop();
+
+                    int delayRemaining = Options.CurrentOptions.ActionDelayMS - (int) stopWatch.ElapsedMilliseconds;
+
+                    if ( delayRemaining > 0 )
+                    {
+                        Thread.Sleep( delayRemaining );
+                    }
+
+                    // Return false so we don't rewait the action delay
+                    return false;
                 } ) { CheckRange = checkRange, DelaySend = delaySend, Serial = serial };
 
                 _actionPacketQueue.Enqueue( actionQueueItem, priority );
 
-                return actionQueueItem.WaitHandle.ToTask();
+                return actionQueueItem.WaitHandle.ToTask( () => actionQueueItem.Result );
             }
         }
 

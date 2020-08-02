@@ -149,6 +149,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Develop|AnyCPU'">
     <DefineConstants>DEBUG</DefineConstants>
-    <DefineConstants>DEVELOP</DefineConstants>
+    <DefineConstants>DEBUG;DEVELOP</DefineConstants>
   </PropertyGroup>
 </Project>

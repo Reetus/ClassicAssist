@@ -1425,4 +1425,7 @@ Are you sure you wish to continue?</value>
   <data name="Open All Containers" xml:space="preserve">
     <value>Open All Containers</value>
   </data>
+  <data name="Requeue failed items" xml:space="preserve">
+    <value>Requeue failed items</value>
+  </data>
 </root>

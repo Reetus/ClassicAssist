@@ -57,6 +57,7 @@ namespace ClassicAssist.Data.Hotkeys
                 }
 
                 SetProperty( ref _hotkey, value );
+                OnPropertyChanged( nameof(Image) );
                 HotkeyChanged?.Invoke( this, new HotkeyChangedEventArgs( _hotkey, value ) );
             }
         }

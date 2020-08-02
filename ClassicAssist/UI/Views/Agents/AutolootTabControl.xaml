@@ -178,16 +178,16 @@
                             <Setter Property="Margin" Value="0,0,10,0" />
                         </Style>
                     </WrapPanel.Resources>
-                    <CheckBox IsChecked="{Binding SelectedItem.Rehue}">
-                        <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding SelectedItem.Rehue}">
                             <TextBlock Text="{x:Static resources:Strings.Rehue_matching_items}"
-                                       VerticalAlignment="Center" />
-                            <Button Margin="10,0,0,0" Command="{Binding SelectHueCommand}"
-                                    CommandParameter="{Binding SelectedItem, ElementName=listView}">
-                                <Image Source="{StaticResource ColorWheelIcon}" Height="12" Width="12" />
-                            </Button>
-                        </StackPanel>
-                    </CheckBox>
+                                       VerticalAlignment="Center"/>
+                        </CheckBox>
+                        <Button Margin="0,0,10,0" Command="{Binding SelectHueCommand}"
+                                CommandParameter="{Binding SelectedItem, ElementName=listView}">
+                            <Image Source="{StaticResource ColorWheelIcon}" Height="12" Width="12" />
+                        </Button>
+                    </StackPanel>
                     <CheckBox Content="{x:Static resources:Strings.Autoloot_matching_items}"
                               IsChecked="{Binding SelectedItem.Autoloot}" />
                     <CheckBox Content="{x:Static resources:Strings.Requeue_failed_items}"

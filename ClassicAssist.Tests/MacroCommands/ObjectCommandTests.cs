@@ -236,6 +236,33 @@ namespace ClassicAssist.Tests.MacroCommands
             Engine.Player = null;
         }
 
+        [TestMethod]
+        public void WillFindTypeAnyGraphic()
+        {
+            Item container = new Item( 0x40000000 ) { Container = new ItemCollection( 0x40000000 ) };
+
+            for ( int i = 1; i < 11; i++ )
+            {
+                container.Container.Add( new Item( 0x40000000 + i, 0x40000000 ) { ID = i } );
+            }
+
+            Engine.Items.Add( container );
+            ObjectCommands.ClearIgnoreList();
+
+            int count = 0;
+
+            while ( ObjectCommands.FindType( -1, -1, 0x40000000 ) )
+            {
+                ObjectCommands.IgnoreObject( AliasCommands.GetAlias( "found" ) );
+                count++;
+            }
+
+            Assert.AreEqual( 10, count );
+
+            Engine.Items.Remove( container );
+            ObjectCommands.ClearIgnoreList();
+        }
+
         [TestCleanup]
         public void Cleanup()
         {

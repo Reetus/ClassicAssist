@@ -1136,13 +1136,13 @@ namespace ClassicAssist.UO.Network
 
         private static void OnSkillsList( PacketReader reader )
         {
-            /*byte type = */
-            reader.ReadByte();
+            byte type = reader.ReadByte();
             int id = reader.ReadInt16();
             int value = reader.ReadInt16();
             int baseValue = reader.ReadInt16();
             LockStatus lockStatus = (LockStatus) reader.ReadByte();
-            int skillCap = reader.ReadInt16();
+            bool haveCap = (((type != 0u) && type <= 0x03) || type == 0xDF);
+            int skillCap = haveCap ? reader.ReadInt16() : 1000;
 
             if ( reader.Size <= 13 )
             {
@@ -1174,7 +1174,7 @@ namespace ClassicAssist.UO.Network
                     value = reader.ReadInt16();
                     baseValue = reader.ReadInt16();
                     lockStatus = (LockStatus) reader.ReadByte();
-                    skillCap = reader.ReadInt16();
+                    skillCap = haveCap ? reader.ReadInt16() : 1000;
 
                     si = new SkillInfo
                     {

@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Abilities;
+using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 
@@ -27,14 +29,21 @@ namespace ClassicAssist.UO.Network
 
         private static bool OnUseRequest( ref byte[] packet, ref int length )
         {
-            if ( !Options.CurrentOptions.CheckHandsPotions )
+            int serial = (packet[1] << 24) | (packet[2] << 16) | (packet[3] << 8) | packet[4];
+
+            if ( Options.CurrentOptions.CheckHandsPotions )
             {
-                return false;
+                return AbilitiesManager.GetInstance().CheckHands( serial );
             }
 
-            int serial = ( packet[1] << 24 ) | ( packet[2] << 16 ) | ( packet[3] << 8 ) | packet[4];
+            if ( Options.CurrentOptions.UseObjectQueue )
+            {
+                ActionPacketQueue.EnqueueActionPacket( new UseObject( serial ), QueuePriority.High );
 
-            return AbilitiesManager.GetInstance().CheckHands( serial );
+                return true;
+            }
+
+            return false;
         }
 
         private static bool OnGameServerLogin( ref byte[] packet, ref int length )

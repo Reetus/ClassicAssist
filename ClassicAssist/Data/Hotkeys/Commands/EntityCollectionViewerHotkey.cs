@@ -31,7 +31,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
                 case Item item:
                     if ( item.Container == null )
                     {
-                        UOC.WaitForContainerContents( item.Serial, 1000 );
+                        UOC.WaitForContainerContentsUse( item.Serial, 1000 );
                     }
 
                     collection = item.Container;

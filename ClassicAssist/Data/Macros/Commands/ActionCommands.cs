@@ -33,7 +33,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
-            return UOC.WaitForContainerContents( serial, timeout );
+            return UOC.WaitForContainerContentsUse( serial, timeout );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Actions ),

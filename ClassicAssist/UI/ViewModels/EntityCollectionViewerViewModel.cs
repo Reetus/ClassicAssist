@@ -383,7 +383,7 @@ namespace ClassicAssist.UI.ViewModels
                 case Item item:
                     if ( item.Container == null )
                     {
-                        Commands.WaitForContainerContents( item.Serial, 1000 );
+                        Commands.WaitForContainerContentsUse( item.Serial, 1000 );
                     }
 
                     collection = item.Container;

@@ -670,6 +670,25 @@ namespace ClassicAssist.UO
 
             PacketWaitEntry we = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );
 
+            try
+            {
+                bool result = we.Lock.WaitOne( timeout );
+
+                return result;
+            }
+            finally
+            {
+                Engine.PacketWaitEntries.Remove( we );
+            }
+        }
+
+        public static bool WaitForContainerContentsUse( int serial, int timeout )
+        {
+            PacketFilterInfo pfi = new PacketFilterInfo( 0x3C,
+                new[] { PacketFilterConditions.IntAtPositionCondition( serial, 19 ) } );
+
+            PacketWaitEntry we = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );
+
             Engine.SendPacketToServer( new UseObject( serial ) );
 
             try

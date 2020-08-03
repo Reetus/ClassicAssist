@@ -171,4 +171,7 @@
   <data name="Updating files..." xml:space="preserve">
     <value>正在更新文件...</value>
   </data>
+  <data name="Project Homepage" xml:space="preserve">
+    <value>项目主页</value>
+  </data>
 </root>

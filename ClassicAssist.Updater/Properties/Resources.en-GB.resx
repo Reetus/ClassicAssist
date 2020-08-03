@@ -171,4 +171,13 @@
   <data name="Updating files..." xml:space="preserve">
     <value>Updating files...</value>
   </data>
+  <data name="GitHub rate limit, try again after {0}" xml:space="preserve">
+    <value>GitHub rate limit, try again after {0}</value>
+  </data>
+  <data name="Releases" xml:space="preserve">
+    <value>Releases</value>
+  </data>
+  <data name="Project Homepage" xml:space="preserve">
+    <value>Project Homepage</value>
+  </data>
 </root>

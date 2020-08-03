@@ -171,4 +171,7 @@
   <data name="Updating files..." xml:space="preserve">
     <value>Aggiornamento dei file in corso...</value>
   </data>
+  <data name="Project Homepage" xml:space="preserve">
+    <value>Homepage</value>
+  </data>
 </root>

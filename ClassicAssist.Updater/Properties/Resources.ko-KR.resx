@@ -171,4 +171,7 @@
   <data name="Downloaded size doesn't match expected..." xml:space="preserve">
     <value>다운로드 크기가 올바르지 않습니다...</value>
   </data>
+  <data name="Project Homepage" xml:space="preserve">
+    <value>프로젝트 홈페이지</value>
+  </data>
 </root>

@@ -244,8 +244,38 @@
   {
     "Circle": 70,
     "Flag": 0,
+    "ID": 726,
+    "Name": "Pierce",
+    "Reagents": [],
+    "Target": false,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 727,
+    "Name": "Stagger",
+    "Reagents": [],
+    "Target": false,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
     "ID": 728,
     "Name": "Toughness",
+    "Reagents": [],
+    "Target": false,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 729,
+    "Name": "Onslaught",
     "Reagents": [],
     "Target": false,
     "Timeout": -1,
@@ -276,6 +306,16 @@
     "Flag": 0,
     "ID": 732,
     "Name": "Called Shot",
+    "Reagents": [],
+    "Target": false,
+    "Timeout": -1,
+    "Words": ""
+  },
+  {
+    "Circle": 70,
+    "Flag": 0,
+    "ID": 733,
+    "Name": "Warrior's Gifts",
     "Reagents": [],
     "Target": false,
     "Timeout": -1,

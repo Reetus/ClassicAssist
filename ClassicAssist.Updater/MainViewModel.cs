@@ -196,7 +196,7 @@ namespace ClassicAssist.Updater
 
                     ProcessStartInfo psi = new ProcessStartInfo(
                         Path.Combine( updatePath, "ClassicAssist.Updater.exe" ),
-                        $"--stage Install --updatepath {updatePath} --path {App.CurrentOptions.Path}" );
+                        $"--stage Install --updatepath \"{updatePath}\" --path \"{App.CurrentOptions.Path}\"" );
                     Process.Start( psi );
 
                     _dispatcher.Invoke( () => Application.Current.Shutdown() );
@@ -207,6 +207,10 @@ namespace ClassicAssist.Updater
                 {
                     AddText( Resources.No_new_release_available___ );
                 }
+            }
+            catch ( RateLimitExceededException e )
+            {
+                AddText( string.Format( Resources.GitHub_rate_limit__try_again_after__0_, e.Reset.ToLocalTime() ) );
             }
             catch ( Exception e )
             {

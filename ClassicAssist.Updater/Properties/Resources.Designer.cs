@@ -169,6 +169,15 @@ namespace ClassicAssist.Updater.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GitHub rate limit, try again after {0}.
+        /// </summary>
+        public static string GitHub_rate_limit__try_again_after__0_ {
+            get {
+                return ResourceManager.GetString("GitHub rate limit, try again after {0}", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Latest Release:.
         /// </summary>
         public static string Latest_Release_ {
@@ -196,11 +205,29 @@ namespace ClassicAssist.Updater.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Project Homepage.
+        /// </summary>
+        public static string Project_Homepage {
+            get {
+                return ResourceManager.GetString("Project Homepage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Relaunching updater....
         /// </summary>
         public static string Relaunching_updater___ {
             get {
                 return ResourceManager.GetString("Relaunching updater...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Releases.
+        /// </summary>
+        public static string Releases {
+            get {
+                return ResourceManager.GetString("Releases", resourceCulture);
             }
         }
         

@@ -1,0 +1,95 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+        xmlns:misc="clr-namespace:ClassicAssist.Avalonia.Misc"
+        xmlns:viewModels="clr-namespace:ClassicAssist.Shared.UI.ViewModels;assembly=ClassicAssist.Shared"
+        xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+        xmlns:controls="clr-namespace:ClassicAssist.Avalonia.Controls"
+        xmlns:debug="clr-namespace:ClassicAssist.Avalonia.Views.Debug"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ClassicAssist.Avalonia.Views.DebugWindow" x:Name="Window"
+        Title="Debug Window" Height="450" Width="600" Topmost="{Binding Topmost}">
+  <Window.DataContext>
+    <viewModels:DebugViewModel/>
+  </Window.DataContext>
+  <Window.Styles>
+    <Style Selector="TabItem">
+      <Setter Property="FontSize" Value="12"/>
+    </Style>
+  </Window.Styles>
+  <TabControl Padding="10">
+    <TabItem Header="{x:Static resources:Strings.Main}">
+      <Grid RowDefinitions="Auto, *, Auto">
+        <WrapPanel Grid.Row="0" Classes="ToolBar">
+          <Button Command="{Binding ClearCommand}" Margin="0,0,5,0" ToolTip.Tip="{x:Static resources:Strings.Clear_All}">
+            <Image Source="{StaticResource RemoveIcon}" Height="16"/>
+          </Button>
+          <Button Command="{Binding ViewPlayerEquipmentCommand}" Margin="0,0,5,0" ToolTip.Tip="View Player Equipment">
+            <Image Source="{StaticResource PersonIcon}" Height="16"/>
+          </Button>
+          <Button Command="{Binding ExportLogCommand}" CommandParameter="{Binding Items}" Margin="0,0,5,0" ToolTip.Tip="{x:Static resources:Strings.Save}">
+            <Image Source="{StaticResource ExportIcon}" Height="16"/>
+          </Button>
+          <TextBlock Text="{x:Static resources:Strings.Enabled_Packets_}" Margin="0,0,10,0"
+                     VerticalAlignment="Center" />
+          <ComboBox Items="{Binding PacketEntries}" Width="100" BorderThickness="1">
+            <ComboBox.ItemTemplate>
+              <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                  <CheckBox Content="{Binding Name}" IsChecked="{Binding Enabled}"
+                            Command="{Binding DataContext.ChangePacketEnabledCommand, ElementName=Window}"
+                            CommandParameter="{Binding}" />
+                </StackPanel>
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+        </WrapPanel>
+        <ListBox x:Name="ListBox" Items="{Binding Items}" Grid.Row="1" AutoScrollToSelectedItem="True" SelectedItem="{Binding SelectedItem}" VirtualizationMode="Simple" Margin="0,10,0,0">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <controls:HexDumpControl Packet="{Binding $parent.DataContext}"/>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+          <i:Interaction.Behaviors>
+            <misc:ListBoxAutoScrollBehaviour/>
+          </i:Interaction.Behaviors>
+        </ListBox>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,10,0,0">
+          <CheckBox Content="{x:Static resources:Strings.Capture_Packets}" VerticalAlignment="Center"
+                    Margin="0,0,10,0" IsChecked="{Binding Running}" />
+          <CheckBox Content="{x:Static resources:Strings.Topmost}" VerticalAlignment="Center"
+                    Margin="0,0,10,0"
+                    IsChecked="{Binding Topmost}" />
+        </StackPanel>
+      </Grid>
+    </TabItem>
+    <TabItem Header="{x:Static resources:Strings.Gumps}">
+      <debug:DebugGumpControl/>
+    </TabItem>
+    <TabItem Header="{x:Static resources:Strings.Menus}">
+      <debug:DebugMenusControl/>
+    </TabItem>
+    <TabItem Header="{x:Static resources:Strings.BuffIcon}">
+      <debug:DebugBuffIconsControl/>
+    </TabItem>
+    <TabItem Header="{x:Static resources:Strings.Special_Moves}">
+      <debug:DebugSpecialMovesControl/>
+    </TabItem>
+    <TabItem Header="{x:Static resources:Strings.Vendor_Buy}">
+      <debug:DebugVendorBuyControl/>
+    </TabItem>
+    <TabItem Header="{x:Static resources:Strings.Autoloot}">
+      <debug:DebugAutolootControl/>
+    </TabItem>
+    <TabItem Header="{x:Static resources:Strings.Property}">
+      <debug:DebugPropertiesControl/>
+    </TabItem>
+    <TabItem Header="{x:Static resources:Strings.Journal}">
+      <debug:DebugJournalControl/>
+    </TabItem>
+    <!--<TabItem Header="{x:Static resources:Strings.Additional_Assemblies}">
+    </TabItem>-->
+  </TabControl>
+</Window>

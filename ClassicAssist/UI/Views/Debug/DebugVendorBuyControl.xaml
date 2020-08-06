@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ClassicAssist.UI.Views.Debug"
-             xmlns:debug="clr-namespace:ClassicAssist.UI.ViewModels.Debug"
+             xmlns:debug="clr-namespace:ClassicAssist.Shared.UI.ViewModels.Debug;assembly=ClassicAssist.Shared"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              mc:Ignorable="d"

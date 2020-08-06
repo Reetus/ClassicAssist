@@ -21,14 +21,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ClassicAssist.Shared;
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Shared.Resources;
-using ClassicAssist.UO;
+using ClassicAssist.Shared.UO;
+using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 
-namespace ClassicAssist.UI.ViewModels.Debug
+namespace ClassicAssist.Shared.UI.ViewModels.Debug
 {
     public class DebugAutolootViewModel : BaseViewModel
     {
@@ -48,8 +48,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
         }
 
         public ICommand RetestContainerCommand =>
-            _retestContainerCommand ??
-            ( _retestContainerCommand = new RelayCommand( RetestContainer, o => ContainerSerial != 0 ) );
+            _retestContainerCommand ?? ( _retestContainerCommand = new RelayCommand( RetestContainer, o => true ) );
 
         public ICommand TestContainerCommand =>
             _testContainerCommand ?? ( _testContainerCommand = new RelayCommandAsync( TestContainerAsync, o => true ) );
@@ -72,11 +71,11 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
         private async Task TestContainerAsync( object arg )
         {
-            int serial = await Shared.UO.Commands.GetTargeSerialAsync( "Choose container...", 60000 );
+            int serial = await Commands.GetTargeSerialAsync( "Choose container...", 60000 );
 
             if ( serial == 0 )
             {
-                Shared.UO.Commands.SystemMessage( Strings.Invalid_container___ );
+                Commands.SystemMessage( Strings.Invalid_container___ );
             }
 
             ContainerSerial = serial;
@@ -90,7 +89,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
             if ( items == null )
             {
                 TestResults += $"{Strings.Cannot_find_container___}\n";
-                Shared.UO.Commands.SystemMessage( Strings.Cannot_find_container___ );
+                Commands.SystemMessage( Strings.Cannot_find_container___ );
                 return;
             }
 

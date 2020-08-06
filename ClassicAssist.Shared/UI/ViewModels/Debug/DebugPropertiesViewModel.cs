@@ -17,23 +17,21 @@
 
 #endregion
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Data;
 using System.Windows.Input;
-using ClassicAssist.Shared;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UO;
+using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
 using Microsoft.Scripting.Utils;
 
-namespace ClassicAssist.UI.ViewModels.Debug
+namespace ClassicAssist.Shared.UI.ViewModels.Debug
 {
     public class DebugPropertiesViewModel : BaseViewModel
     {
@@ -47,11 +45,11 @@ namespace ClassicAssist.UI.ViewModels.Debug
         }
 
         public ICommand TargetCommand =>
-            _targetCommand ?? ( _targetCommand = new RelayCommandAsync( Target, o => Engine.Connected ) );
+            _targetCommand ?? ( _targetCommand = new RelayCommandAsync( Target, o => true ) );
 
         private async Task Target( object arg )
         {
-            int serial = await Shared.UO.Commands.GetTargeSerialAsync( Strings.Target_object___ );
+            int serial = await Commands.GetTargeSerialAsync( Strings.Target_object___ );
 
             if ( serial == 0 )
             {
@@ -76,7 +74,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
                 if ( entity.Properties == null )
                 {
-                    Shared.UO.Commands.SystemMessage( Strings.Item_properties_null_or_not_loaded___ );
+                    Commands.SystemMessage( Strings.Item_properties_null_or_not_loaded___ );
                     return;
                 }
             }
@@ -90,24 +88,6 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
             Items.Clear();
             Items.AddRange( properties );
-        }
-    }
-
-    public class JoinArrayValueConverter : IValueConverter
-    {
-        public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
-        {
-            if ( !( value is string[] array ) )
-            {
-                return null;
-            }
-
-            return string.Join( (string) parameter ?? ", ", array );
-        }
-
-        public object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture )
-        {
-            throw new NotImplementedException();
         }
     }
 }

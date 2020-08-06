@@ -78,7 +78,6 @@ namespace Assistant
         private static void Initialize( PluginHeader* plugin )
         {
             SEngine.Install( plugin, new WPFMessageBoxProvider() );
-            Art.Initialize( SEngine.ClientPath );
 
             Options.LoadEvent += OnOptionsLoad;
             Options.SaveEvent += OnOptionsSave;

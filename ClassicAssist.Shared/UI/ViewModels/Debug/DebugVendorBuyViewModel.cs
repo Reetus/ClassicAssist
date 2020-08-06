@@ -20,10 +20,11 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using ClassicAssist.Data.Vendors;
+using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 
-namespace ClassicAssist.UI.ViewModels.Debug
+namespace ClassicAssist.Shared.UI.ViewModels.Debug
 {
     public class DebugVendorBuyViewModel : BaseViewModel
     {

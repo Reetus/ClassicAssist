@@ -1,11 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
-using ClassicAssist.Shared;
 using ClassicAssist.Data;
+using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Network;
 
-namespace ClassicAssist.UI.ViewModels.Debug
+namespace ClassicAssist.Shared.UI.ViewModels.Debug
 {
     public class DebugJournalViewModel : BaseViewModel
     {

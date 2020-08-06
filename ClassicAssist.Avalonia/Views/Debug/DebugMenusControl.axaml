@@ -1,0 +1,22 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:ClassicAssist.Shared.UI.ViewModels.Debug;assembly=ClassicAssist.Shared"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ClassicAssist.Avalonia.Views.Debug.DebugMenusControl">
+  <UserControl.DataContext>
+    <viewModels:DebugMenusViewModel/>
+  </UserControl.DataContext>
+  <Grid ColumnDefinitions="Auto, *">
+    <ListBox Grid.Column="0" MinWidth="120" Margin="0,0,5,0" Items="{Binding Items}"
+             SelectedItem="{Binding SelectedItem}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <TextBlock Text="{Binding ID, StringFormat={}0x{0:x8}}" />
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+    <TextBox Grid.Column="1" Text="{Binding Text}" IsReadOnly="True"/>
+  </Grid>
+</UserControl>

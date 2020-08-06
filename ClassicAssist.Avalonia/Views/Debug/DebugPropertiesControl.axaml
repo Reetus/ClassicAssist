@@ -1,0 +1,31 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:misc="clr-namespace:ClassicAssist.Avalonia.Misc"
+             xmlns:viewModels="clr-namespace:ClassicAssist.Shared.UI.ViewModels.Debug;assembly=ClassicAssist.Shared"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ClassicAssist.Avalonia.Views.Debug.DebugPropertiesControl">
+  <UserControl.DataContext>
+    <viewModels:DebugPropertiesViewModel/>
+  </UserControl.DataContext>
+  <UserControl.Resources>
+    <misc:JoinArrayValueConverter x:Key="JoinArrayValueConverter"/>
+  </UserControl.Resources>  
+  <Grid RowDefinitions="Auto, *">
+    <WrapPanel Grid.Row="0" Classes="ToolBar" Margin="0,0,0,10">
+      <Button ToolTip.Tip="{x:Static resources:Strings.Target_object___}" Command="{Binding TargetCommand}">
+        <Image Source="{DynamicResource CrosshairIcon}" />
+      </Button>
+    </WrapPanel>
+    <DataGrid Items="{Binding Items}" Grid.Row="1" IsReadOnly="True">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="{x:Static resources:Strings.Cliloc}" Width="1*" Binding="{Binding Cliloc}"/>
+        <DataGridTextColumn Header="{x:Static resources:Strings.Name}" Width="3*" Binding="{Binding Text}"/>
+        <DataGridTextColumn Header="{x:Static resources:Strings.Arguments}" Width="3*" Binding="{Binding Arguments, Converter={StaticResource JoinArrayValueConverter}}"/>
+      </DataGrid.Columns>
+    </DataGrid>
+  </Grid>
+</UserControl>

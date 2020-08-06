@@ -13,6 +13,7 @@ using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared;
 using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactiveUI;
@@ -107,7 +108,8 @@ namespace ClassicAssist.UI.ViewModels
 
         public ReactiveCommand<MacroEntry, Unit> RemoveMacroConfirmCommand =>
             _removeMacroConfirmCommand ?? ( _removeMacroConfirmCommand =
-                ReactiveCommand.Create<MacroEntry, Unit>( RemoveMacroConfirm, this.WhenAnyValue(o => o.SelectedItem, selector: o => o != null ) ));
+                ReactiveCommand.Create<MacroEntry, Unit>( RemoveMacroConfirm,
+                    this.WhenAnyValue( o => o.SelectedItem, selector: o => o != null ) ) );
 
         public ICommand SaveMacroCommand =>
             _saveMacroCommand ?? ( _saveMacroCommand = new RelayCommand( SaveMacro, o => true ) );
@@ -415,8 +417,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private static async Task InspectObject( object arg )
         {
-            //TODO UI
-            //await Commands.InspectObjectAsync();
+            await Commands.InspectObjectAsync();
         }
 
         private void NewMacro( object obj )

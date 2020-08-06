@@ -19,10 +19,10 @@
 
 using System.Collections.ObjectModel;
 using System.Text;
-using ClassicAssist.Shared;
+using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Objects;
 
-namespace ClassicAssist.UI.ViewModels.Debug
+namespace ClassicAssist.Shared.UI.ViewModels.Debug
 {
     public class DebugMenusViewModel : BaseViewModel
     {

@@ -50,11 +50,9 @@ namespace ClassicAssist.UI.ViewModels
                 : $"{Engine.Player?.Name} - {( Options.CurrentOptions.ShowProfileNameWindowTitle ? $"({Options.CurrentOptions.Name}) - " : "" )}{Strings.ProductName}";
         }
 
-        private void ShowDebugWindow( object obj )
+        private static void ShowDebugWindow( object obj )
         {
-            //TODO UI
-            //_debugWindow = new DebugWindow();
-            //_debugWindow.Show();
+            Engine.UIInvoker.Invoke( "DebugWindow" );
         }
     }
 }

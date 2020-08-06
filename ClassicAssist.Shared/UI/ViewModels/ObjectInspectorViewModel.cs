@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
-using System.Windows;
 using System.Windows.Input;
-using ClassicAssist.Shared;
 using ClassicAssist.Misc;
+using ClassicAssist.Shared;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Models;
-using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
@@ -25,6 +23,10 @@ namespace ClassicAssist.UI.ViewModels
 
         public ObjectInspectorViewModel()
         {
+            Items.AddRange( new List<ObjectInspectorData>
+            {
+                new ObjectInspectorData { Name = "Name", Value = "Value", Category = "Category" }
+            } );
         }
 
         public ObjectInspectorViewModel( Entity entity )
@@ -36,7 +38,7 @@ namespace ClassicAssist.UI.ViewModels
                 AddMobileProperties( mobile );
             }
 
-            AddPublicProperties( entity );
+            //AddPublicProperties( entity );
         }
 
         public ObjectInspectorViewModel( StaticTile staticTile )
@@ -54,7 +56,7 @@ namespace ClassicAssist.UI.ViewModels
             get
             {
                 return _copyToClipboardCommand ?? ( _copyToClipboardCommand =
-                           new RelayCommand( o => CopyToClipboard(), o => _selectedItem != null ) );
+                    new RelayCommand( o => CopyToClipboard(), o => _selectedItem != null ) );
             }
         }
 
@@ -204,10 +206,7 @@ namespace ClassicAssist.UI.ViewModels
             {
                 AddData( new ObjectInspectorData
                 {
-                    Name = name,
-                    Value = amount.ToString(),
-                    Category = category,
-                    IsExpanded = false
+                    Name = name, Value = amount.ToString(), Category = category, IsExpanded = false
                 } );
             }
         }
@@ -221,10 +220,7 @@ namespace ClassicAssist.UI.ViewModels
             {
                 AddData( new ObjectInspectorData
                 {
-                    Name = name,
-                    Value = amount.ToString(),
-                    Category = category,
-                    IsExpanded = false
+                    Name = name, Value = amount.ToString(), Category = category, IsExpanded = false
                 } );
             }
         }
@@ -326,7 +322,8 @@ namespace ClassicAssist.UI.ViewModels
         {
             try
             {
-                Clipboard.SetData( DataFormats.Text, _selectedItem.Value );
+                //TODO
+                //Clipboard.SetData( DataFormats.Text, _selectedItem.Value );
             }
             catch ( Exception )
             {
@@ -413,28 +410,24 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            ObjectInspectorWindow window = new ObjectInspectorWindow
-            {
-                DataContext = new ObjectInspectorViewModel( entity ),
-                Topmost = true
-            };
-            window.ShowDialog();
+            Engine.UIInvoker.Invoke( "ObjectInspectorWindow", null, typeof( ObjectInspectorViewModel ),
+                new object[] { entity } );
         }
 
         private static void ShowItemCollection( ItemCollection collection )
         {
             if ( collection == null )
             {
-                return;
             }
 
-            EntityCollectionViewer window = new EntityCollectionViewer
-            {
-                DataContext = new EntityCollectionViewerViewModel( collection ),
-                Topmost = true
-            };
+            //TODO
+            //EntityCollectionViewer window = new EntityCollectionViewer
+            //{
+            //    DataContext = new EntityCollectionViewerViewModel( collection ),
+            //    Topmost = true
+            //};
 
-            window.ShowDialog();
+            //window.ShowDialog();
         }
     }
 

@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Skills;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
+using ClassicAssist.UI.ViewModels;
+using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
@@ -935,6 +936,63 @@ namespace ClassicAssist.Shared.UO
         public static void RemoveObject( int serial )
         {
             Engine.SendPacketToClient( new RemoveObject( serial ) );
+        }
+
+        public static async Task InspectObjectAsync()
+        {
+            ( TargetType targetType, TargetFlags _, int serial, int x, int y, int z, int itemID ) =
+                await GetTargeInfoAsync( Strings.Target_object___ );
+
+            if ( targetType == TargetType.Object && serial != 0 )
+            {
+                Entity entity = UOMath.IsMobile( serial )
+                    ? (Entity) Engine.Mobiles.GetMobile( serial )
+                    : Engine.Items.GetItem( serial );
+
+                if ( entity == null )
+                {
+                    return;
+                }
+
+                Engine.UIInvoker.Invoke( "ObjectInspectorWindow", null, typeof( ObjectInspectorViewModel ),
+                    new[] { entity } );
+            }
+            else
+            {
+                if ( itemID == 0 )
+                {
+                    if ( x == 65535 && y == 65535 )
+                    {
+                        return;
+                    }
+
+                    LandTile landTile = MapInfo.GetLandTile( (int) Engine.Player.Map, x, y );
+                    Engine.UIInvoker.Invoke( "ObjectInspectorWindow", null, typeof( ObjectInspectorViewModel ),
+                        new[] { (object) landTile } );
+                }
+                else
+                {
+                    StaticTile[] statics = Statics.GetStatics( (int) Engine.Player.Map, x, y );
+
+                    if ( statics == null )
+                    {
+                        return;
+                    }
+
+                    StaticTile selectedStatic = statics.FirstOrDefault( i => i.ID == itemID );
+
+                    if ( selectedStatic.ID == 0 )
+                    {
+                        selectedStatic = TileData.GetStaticTile( itemID );
+                        selectedStatic.X = x;
+                        selectedStatic.Y = y;
+                        selectedStatic.Z = z;
+                    }
+
+                    Engine.UIInvoker.Invoke( "ObjectInspectorWindow", null, typeof( ObjectInspectorViewModel ),
+                        new[] { (object) selectedStatic } );
+                }
+            }
         }
     }
 }

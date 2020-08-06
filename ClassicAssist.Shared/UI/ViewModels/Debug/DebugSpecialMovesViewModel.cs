@@ -1,24 +1,24 @@
 ﻿using System.Collections.ObjectModel;
-using ClassicAssist.Data.BuffIcons;
-using ClassicAssist.UO.Network;
+using ClassicAssist.Data.SpecialMoves;
+using ClassicAssist.UI.ViewModels;
 using Microsoft.Scripting.Utils;
 
-namespace ClassicAssist.UI.ViewModels.Debug
+namespace ClassicAssist.Shared.UI.ViewModels.Debug
 {
-    public class DebugBuffIconsViewModel : BaseViewModel
+    public class DebugSpecialMovesViewModel : BaseViewModel
     {
-        private readonly BuffIconManager _manager;
+        private readonly SpecialMovesManager _manager;
         private ObservableCollection<string> _items = new ObservableCollection<string>();
         private ObservableCollection<string> _messages = new ObservableCollection<string>();
         private string _selectedItem;
 
-        public DebugBuffIconsViewModel()
+        public DebugSpecialMovesViewModel()
         {
-            _manager = BuffIconManager.GetInstance();
+            _manager = SpecialMovesManager.GetInstance();
 
             Items.AddRange( _manager.GetEnabledNames() );
 
-            IncomingPacketHandlers.BufficonEnabledDisabledEvent += OnBufficonEnabledDisabledEvent;
+            _manager.SpecialMovesChanged += OnSpecialMovesChanged;
         }
 
         public ObservableCollection<string> Items
@@ -39,13 +39,11 @@ namespace ClassicAssist.UI.ViewModels.Debug
             set => SetProperty( ref _selectedItem, value );
         }
 
-        private void OnBufficonEnabledDisabledEvent( int type, bool enabled, int duration )
+        private void OnSpecialMovesChanged( string name, bool enabled )
         {
-            BuffIconData data = _manager.GetDataByID( type );
-
             _dispatcher.Invoke( () =>
             {
-                Messages.Add( enabled ? $"Enabled: {data.Name}" : $"Disabled: {data?.Name}" );
+                Messages.Add( enabled ? $"Enabled: {name}" : $"Disabled: {name}" );
 
                 Items.Clear();
                 Items.AddRange( _manager.GetEnabledNames() );

@@ -1,0 +1,26 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:ClassicAssist.Shared.UI.ViewModels.Debug;assembly=ClassicAssist.Shared"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ClassicAssist.Avalonia.Views.Debug.DebugAutolootControl">
+  <UserControl.DataContext>
+    <viewModels:DebugAutolootViewModel/>
+  </UserControl.DataContext>
+  <Grid RowDefinitions="Auto, *">
+    <WrapPanel Classes="ToolBar" Grid.Row="0" Margin="0,0,0,10">
+      <Button ToolTip.Tip="Test Autoloot" Command="{Binding TestContainerCommand}">
+        <Image Source="{DynamicResource ContainerIcon}" Height="16" />
+      </Button>
+      <Button ToolTip.Tip="Retest Container" Command="{Binding RetestContainerCommand}">
+        <Image Source="{DynamicResource RefreshIcon}" Height="16" />
+      </Button>
+      <Button ToolTip.Tip="{x:Static resources:Strings.Clear}" Command="{Binding ClearResultsCommand}">
+        <Image Source="{DynamicResource RemoveIcon}" Height="11" />
+      </Button>
+    </WrapPanel>
+    <TextBox Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Visible" Text="{Binding TestResults}"/>
+  </Grid>
+</UserControl>

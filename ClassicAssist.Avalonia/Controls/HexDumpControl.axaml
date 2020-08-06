@@ -1,0 +1,36 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:misc="clr-namespace:ClassicAssist.Avalonia.Misc"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             x:Class="ClassicAssist.Avalonia.Controls.HexDumpControl" Name="UserControl">
+  <UserControl.Resources>
+    <misc:PacketEntryBinaryValueConverter x:Key="PacketEntryBinaryValueConverter"/>
+    <misc:PacketEntryTextValueConverter x:Key="PacketEntryTextValueConverter"/>
+  </UserControl.Resources>
+  <StackPanel Margin="10">
+    <StackPanel.ContextMenu>
+      <ContextMenu>
+        <MenuItem Header="Copy byte[] declaration" x:Name="ContextCopy"/>
+        <MenuItem Header="Replay" x:Name="ContextReplay"/>
+      </ContextMenu>
+    </StackPanel.ContextMenu>
+    <StackPanel.Styles>
+      <Style Selector="TextBlock">
+        <Setter Property="FontFamily" Value="avares://ClassicAssist.Avalonia/Assets/Fonts/*.ttf#Ubuntu Mono"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="#CCCCCC"/>
+      </Style>
+    </StackPanel.Styles>
+    <TextBlock Text="{Binding #UserControl.DataContext.Packet.Title}"/>
+    <Grid ColumnDefinitions="Auto, Auto">
+      <TextBlock Text="{Binding #UserControl.DataContext.Packet, Converter={StaticResource PacketEntryBinaryValueConverter}}" Grid.Column="0"
+                 ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="10,10,0,0" Width="350"/>
+      <TextBlock Text="{Binding #UserControl.DataContext.Packet, Converter={StaticResource PacketEntryTextValueConverter}}" Grid.Column="1"
+                 Margin="10,10,0,0" ScrollViewer.VerticalScrollBarVisibility="Disabled" />
+    </Grid>
+    <TextBlock Text="{Binding #UserControl.DataContext.Packet.Length, StringFormat={}Length: {0}}"/>
+  </StackPanel>
+</UserControl>

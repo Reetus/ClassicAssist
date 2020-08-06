@@ -18,12 +18,26 @@
 #endregion
 
 using System;
+using System.Globalization;
+using System.Windows.Data;
 
-namespace ClassicAssist.Shared
+namespace ClassicAssist.UI.Misc.ValueConverters
 {
-    public interface IUIInvoker
+    public class JoinArrayValueConverter : IValueConverter
     {
-        void Invoke( string typeName, object[] ctorParam = null, Type dataContextType = null,
-            object[] dataContextParam = null );
+        public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
+        {
+            if ( !( value is string[] array ) )
+            {
+                return null;
+            }
+
+            return string.Join( (string) parameter ?? ", ", array );
+        }
+
+        public object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture )
+        {
+            throw new NotImplementedException();
+        }
     }
 }

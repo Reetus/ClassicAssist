@@ -1,0 +1,21 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:r="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+        xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+        xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels;assembly=ClassicAssist.Shared"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ClassicAssist.Avalonia.Views.ObjectInspectorWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="{x:Static r:Strings.Object_Inspector}" Height="396.8" Width="450" Topmost="True">
+  <Window.DataContext>
+    <viewModels:ObjectInspectorViewModel/>
+  </Window.DataContext>
+  <DataGrid Items="{Binding Items}" IsReadOnly="True" HorizontalScrollBarVisibility="Hidden" x:Name="DataGrid">
+    <DataGrid.Columns>
+      <DataGridTextColumn Header="{x:Static resources:Strings.Property}" Binding="{Binding Name}" Width="2*"/>
+      <DataGridTextColumn Header="{x:Static resources:Strings.Value}" Binding="{Binding Value}" Width="3*"/>
+    </DataGrid.Columns>
+  </DataGrid>
+</Window>

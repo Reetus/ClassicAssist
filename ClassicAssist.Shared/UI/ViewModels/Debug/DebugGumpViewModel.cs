@@ -1,10 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text;
-using ClassicAssist.Shared;
+using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects.Gumps;
 
-namespace ClassicAssist.UI.ViewModels.Debug
+namespace ClassicAssist.Shared.UI.ViewModels.Debug
 {
     public class DebugGumpViewModel : BaseViewModel
     {

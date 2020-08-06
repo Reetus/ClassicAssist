@@ -54,7 +54,6 @@ namespace ClassicAssist.Shared
         private static OnPacketSendRecv _sendToServer;
         private static OnGetPacketLength _getPacketLength;
         private static OnUpdatePlayerPosition _onPlayerPositionChanged;
-        private static Thread _mainThread;
         private static OnClientClose _onClientClosing;
         private static readonly PacketFilter _incomingPacketFilter = new PacketFilter();
         private static readonly PacketFilter _outgoingPacketPreFilter = new PacketFilter();
@@ -65,7 +64,7 @@ namespace ClassicAssist.Shared
         private static readonly int[] _sequenceList = new int[256];
         private static OnMouse _onMouse;
 
-        private static readonly DateTime[] _lastMouseAction = new DateTime[(int) MouseOptions.None];
+        private static readonly DateTime[] _lastMouseAction = new DateTime[(int)MouseOptions.None];
         private static readonly object _clientSendLock = new object();
         private static DateTime _nextPacketRecvTime;
 
@@ -161,14 +160,15 @@ namespace ClassicAssist.Shared
             _requestMove = Marshal.GetDelegateForFunctionPointer<RequestMove>( plugin->RequestMove );
 
             ClientPath = _getUOFilePath();
-            ClientVersion = new Version( (byte) ( plugin->ClientVersion >> 24 ), (byte) ( plugin->ClientVersion >> 16 ),
-                (byte) ( plugin->ClientVersion >> 8 ), (byte) plugin->ClientVersion );
+            ClientVersion = new Version( (byte)(plugin->ClientVersion >> 24), (byte)(plugin->ClientVersion >> 16),
+                (byte)(plugin->ClientVersion >> 8), (byte)plugin->ClientVersion );
 
-            if ( !Path.IsPathRooted( ClientPath ) )
+            if (!Path.IsPathRooted( ClientPath ))
             {
                 ClientPath = Path.GetFullPath( ClientPath );
             }
 
+            Art.Initialize( ClientPath );
             Hues.Initialize( ClientPath );
             Cliloc.Initialize( ClientPath );
             Skills.Initialize( ClientPath );
@@ -188,14 +188,14 @@ namespace ClassicAssist.Shared
             IEnumerable<Type> types = Assembly.GetExecutingAssembly().GetTypes()
                 .Where( t => typeof( IExtension ).IsAssignableFrom( t ) && t.IsClass );
 
-            foreach ( Type type in types )
+            foreach (Type type in types)
             {
                 try
                 {
-                    IExtension instance = (IExtension) Activator.CreateInstance( type );
+                    IExtension instance = (IExtension)Activator.CreateInstance( type );
                     instance?.Initialize();
                 }
-                catch ( Exception e )
+                catch (Exception e)
                 {
                     Console.WriteLine( e.ToString() );
                 }
@@ -206,26 +206,26 @@ namespace ClassicAssist.Shared
         {
             MouseOptions mouse = MouseOptions.None;
 
-            if ( button > 0 )
+            if (button > 0)
             {
                 mouse = SDLKeys.MouseButtonToMouseOptions( button );
             }
 
-            if ( wheel != 0 )
+            if (wheel != 0)
             {
                 mouse = wheel < 0 ? MouseOptions.MouseWheelDown : MouseOptions.MouseWheelUp;
 
-                if ( Options.CurrentOptions.LimitMouseWheelTrigger )
+                if (Options.CurrentOptions.LimitMouseWheelTrigger)
                 {
-                    TimeSpan diff = DateTime.Now - _lastMouseAction[(int) mouse];
+                    TimeSpan diff = DateTime.Now - _lastMouseAction[(int)mouse];
 
-                    if ( diff < TimeSpan.FromMilliseconds( Options.CurrentOptions.LimitMouseWheelTriggerMS ) )
+                    if (diff < TimeSpan.FromMilliseconds( Options.CurrentOptions.LimitMouseWheelTriggerMS ))
                     {
                         return;
                     }
                 }
 
-                _lastMouseAction[(int) mouse] = DateTime.Now;
+                _lastMouseAction[(int)mouse] = DateTime.Now;
             }
 
             HotkeyManager.GetInstance().OnMouseAction( mouse );
@@ -249,7 +249,7 @@ namespace ClassicAssist.Shared
 
         private static void OnPlayerPositionChanged( int x, int y, int z )
         {
-            if ( Player != null )
+            if (Player != null)
             {
                 Player.X = x;
                 Player.Y = y;
@@ -265,14 +265,14 @@ namespace ClassicAssist.Shared
         {
             Item item = Items.GetItem( serial );
 
-            if ( item != null )
+            if (item != null)
             {
                 return item;
             }
 
             item = new Item( serial, containerSerial );
 
-            if ( IncomingPacketHandlers.PropertyCache.TryGetValue( serial, out Property[] properties ) )
+            if (IncomingPacketHandlers.PropertyCache.TryGetValue( serial, out Property[] properties ))
             {
                 item.Properties = properties;
             }
@@ -282,19 +282,19 @@ namespace ClassicAssist.Shared
 
         public static Mobile GetOrCreateMobile( int serial )
         {
-            if ( Player?.Serial == serial )
+            if (Player?.Serial == serial)
             {
                 return Player;
             }
 
-            if ( Mobiles.GetMobile( serial, out Mobile mobile ) )
+            if (Mobiles.GetMobile( serial, out Mobile mobile ))
             {
                 return mobile;
             }
 
             mobile = new Mobile( serial );
 
-            if ( IncomingPacketHandlers.PropertyCache.TryGetValue( serial, out Property[] properties ) )
+            if (IncomingPacketHandlers.PropertyCache.TryGetValue( serial, out Property[] properties ))
             {
                 mobile.Properties = properties;
             }
@@ -306,7 +306,7 @@ namespace ClassicAssist.Shared
         {
             StartupPath = Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location );
 
-            if ( StartupPath == null )
+            if (StartupPath == null)
             {
                 throw new InvalidOperationException();
             }
@@ -343,7 +343,7 @@ namespace ClassicAssist.Shared
 
                 PacketWaitEntries?.CheckWait( packet.GetPacket(), PacketDirection.Incoming );
             }
-            catch ( Exception e )
+            catch (Exception e)
             {
                 SentrySdk.WithScope( scope =>
                 {
@@ -370,7 +370,7 @@ namespace ClassicAssist.Shared
 
                 PacketWaitEntries?.CheckWait( packet.GetPacket(), PacketDirection.Outgoing );
             }
-            catch ( Exception e )
+            catch (Exception e)
             {
                 SentrySdk.WithScope( scope =>
                 {
@@ -389,22 +389,22 @@ namespace ClassicAssist.Shared
 
             string[] searchPaths = { StartupPath, RuntimeEnvironment.GetRuntimeDirectory() };
 
-            if ( assemblyname.Contains( "Colletions" ) )
+            if (assemblyname.Contains( "Colletions" ))
             {
                 assemblyname = "System.Collections";
             }
 
-            foreach ( string searchPath in searchPaths )
+            foreach (string searchPath in searchPaths)
             {
                 string fullPath = Path.Combine( searchPath, assemblyname + ".dll" );
 
                 string culture = new AssemblyName( args.Name ).CultureName;
 
-                if ( !File.Exists( fullPath ) )
+                if (!File.Exists( fullPath ))
                 {
                     string culturePath = Path.Combine( searchPath, culture, assemblyname + ".dll" );
 
-                    if ( File.Exists( culturePath ) )
+                    if (File.Exists( culturePath ))
                     {
                         fullPath = culturePath;
                     }
@@ -430,12 +430,12 @@ namespace ClassicAssist.Shared
 
             mobile.MobileStatusUpdated += ( status, newStatus ) =>
             {
-                if ( !Options.CurrentOptions.UseDeathScreenWhilstHidden )
+                if (!Options.CurrentOptions.UseDeathScreenWhilstHidden)
                 {
                     return;
                 }
 
-                if ( newStatus.HasFlag( MobileStatus.Hidden ) )
+                if (newStatus.HasFlag( MobileStatus.Hidden ))
                 {
                     SendPacketToClient( new MobileUpdate( mobile.Serial, mobile.ID == 0x191 ? 0x193 : 0x192, mobile.Hue,
                         newStatus, mobile.X, mobile.Y, mobile.Z, mobile.Direction ) );
@@ -518,9 +518,9 @@ namespace ClassicAssist.Shared
 
         public static void SendPacketToServer( byte[] packet, int length )
         {
-            lock ( _serverSendLock )
+            lock (_serverSendLock)
             {
-                while ( DateTime.Now < _nextPacketSendTime )
+                while (DateTime.Now < _nextPacketSendTime)
                 {
                     Thread.Sleep( 1 );
                 }
@@ -529,7 +529,7 @@ namespace ClassicAssist.Shared
 
                 PacketWaitEntries?.CheckWait( packet, PacketDirection.Outgoing, true );
 
-                ( byte[] data, int dataLength ) = Utility.CopyBuffer( packet, length );
+                (byte[] data, int dataLength) = Utility.CopyBuffer( packet, length );
 
                 _sendToServer?.Invoke( ref data, ref dataLength );
 
@@ -541,11 +541,11 @@ namespace ClassicAssist.Shared
         {
             try
             {
-                lock ( _clientSendLock )
+                lock (_clientSendLock)
                 {
-                    if ( delay )
+                    if (delay)
                     {
-                        while ( DateTime.Now < _nextPacketRecvTime )
+                        while (DateTime.Now < _nextPacketRecvTime)
                         {
                             Thread.Sleep( 1 );
                         }
@@ -558,7 +558,7 @@ namespace ClassicAssist.Shared
                     _nextPacketRecvTime = DateTime.Now + PACKET_RECV_DELAY;
                 }
             }
-            catch ( ThreadInterruptedException )
+            catch (ThreadInterruptedException)
             {
                 // Macro was interupted whilst we were waiting...
             }
@@ -573,7 +573,7 @@ namespace ClassicAssist.Shared
 
         public static void SendPacketToClient( BasePacket basePacket, bool delay = true )
         {
-            if ( basePacket.Direction != PacketDirection.Any && basePacket.Direction != PacketDirection.Incoming )
+            if (basePacket.Direction != PacketDirection.Any && basePacket.Direction != PacketDirection.Incoming)
             {
                 throw new InvalidOperationException( "Send packet wrong direction." );
             }
@@ -592,14 +592,14 @@ namespace ClassicAssist.Shared
 
         public static void SendPacketToServer( BasePacket basePacket )
         {
-            if ( basePacket.Direction != PacketDirection.Any && basePacket.Direction != PacketDirection.Outgoing )
+            if (basePacket.Direction != PacketDirection.Any && basePacket.Direction != PacketDirection.Outgoing)
             {
                 throw new InvalidOperationException( "Send packet wrong direction." );
             }
 
             byte[] data = basePacket.ToArray();
 
-            if ( data == null )
+            if (data == null)
             {
                 return;
             }
@@ -609,7 +609,7 @@ namespace ClassicAssist.Shared
 
         public static bool Move( Direction direction, bool run )
         {
-            return _requestMove?.Invoke( (int) direction, run ) ?? false;
+            return _requestMove?.Invoke( (int)direction, run ) ?? false;
         }
 
         public static void UpdateWindowTitle()
@@ -619,16 +619,16 @@ namespace ClassicAssist.Shared
 
         public static void GetMapZ( int x, int y, out sbyte groundZ, out sbyte staticZ )
         {
-            groundZ = staticZ = (sbyte) ( Player?.Z ?? 0 );
+            groundZ = staticZ = (sbyte)(Player?.Z ?? 0);
 
-            if ( ClassicAssembly == null )
+            if (ClassicAssembly == null)
             {
                 return;
             }
 
             PropertyInfo mapProperty = ClassicAssembly.GetType( "ClassicUO.Game.World" )?.GetProperty( "Map" );
 
-            if ( mapProperty == null )
+            if (mapProperty == null)
             {
                 return;
             }
@@ -637,7 +637,7 @@ namespace ClassicAssist.Shared
 
             MethodInfo getMapZMethod = mapInstance?.GetType().GetMethod( "GetMapZ" );
 
-            if ( getMapZMethod == null )
+            if (getMapZMethod == null)
             {
                 return;
             }
@@ -646,8 +646,8 @@ namespace ClassicAssist.Shared
 
             getMapZMethod.Invoke( mapInstance, parameters );
 
-            groundZ = (sbyte) parameters[2];
-            staticZ = (sbyte) parameters[3];
+            groundZ = (sbyte)parameters[2];
+            staticZ = (sbyte)parameters[3];
         }
 
         public static Stream GetResourceStream( string name )
@@ -662,14 +662,14 @@ namespace ClassicAssist.Shared
         {
             bool filter = false;
 
-            if ( CommandsManager.IsSpeechPacket( data[0] ) )
+            if (CommandsManager.IsSpeechPacket( data[0] ))
             {
                 filter = CommandsManager.CheckCommand( data, length );
             }
 
-            if ( _outgoingPacketPreFilter.MatchFilterAll( data, out PacketFilterInfo[] pfis ) > 0 )
+            if (_outgoingPacketPreFilter.MatchFilterAll( data, out PacketFilterInfo[] pfis ) > 0)
             {
-                foreach ( PacketFilterInfo pfi in pfis )
+                foreach (PacketFilterInfo pfi in pfis)
                 {
                     pfi.Action?.Invoke( data, pfi );
                 }
@@ -681,7 +681,7 @@ namespace ClassicAssist.Shared
                 return false;
             }
 
-            if ( OutgoingPacketFilters.CheckPacket( ref data, ref length ) )
+            if (OutgoingPacketFilters.CheckPacket( ref data, ref length ))
             {
                 SentPacketFilteredEvent?.Invoke( data, data.Length );
 
@@ -691,9 +691,9 @@ namespace ClassicAssist.Shared
             OutgoingQueue.Enqueue( new Packet( data, length ) );
 
             // ReSharper disable once InvertIf
-            if ( _outgoingPacketPostFilter.MatchFilterAll( data, out PacketFilterInfo[] pfisPost ) > 0 )
+            if (_outgoingPacketPostFilter.MatchFilterAll( data, out PacketFilterInfo[] pfisPost ) > 0)
             {
-                foreach ( PacketFilterInfo pfi in pfisPost )
+                foreach (PacketFilterInfo pfi in pfisPost)
                 {
                     pfi.Action?.Invoke( data, pfi );
                 }
@@ -716,9 +716,9 @@ namespace ClassicAssist.Shared
 
         private static bool OnPacketReceive( ref byte[] data, ref int length )
         {
-            if ( _incomingPacketFilter.MatchFilterAll( data, out PacketFilterInfo[] pfis ) > 0 )
+            if (_incomingPacketFilter.MatchFilterAll( data, out PacketFilterInfo[] pfis ) > 0)
             {
-                foreach ( PacketFilterInfo pfi in pfis )
+                foreach (PacketFilterInfo pfi in pfis)
                 {
                     pfi.Action?.Invoke( data, pfi );
                 }
@@ -730,7 +730,7 @@ namespace ClassicAssist.Shared
                 return false;
             }
 
-            if ( IncomingPacketFilters.CheckPacket( ref data, ref length ) )
+            if (IncomingPacketFilters.CheckPacket( ref data, ref length ))
             {
                 ReceivedPacketFilteredEvent?.Invoke( data, length );
 
@@ -744,12 +744,12 @@ namespace ClassicAssist.Shared
 
         public static Direction GetSequence( int sequence )
         {
-            return (Direction) Thread.VolatileRead( ref _sequenceList[sequence] );
+            return (Direction)Thread.VolatileRead( ref _sequenceList[sequence] );
         }
 
         public static void SetSequence( int sequence, Direction direction )
         {
-            _sequenceList[sequence] = (int) direction;
+            _sequenceList[sequence] = (int)direction;
         }
 
         private static void OnConnected()

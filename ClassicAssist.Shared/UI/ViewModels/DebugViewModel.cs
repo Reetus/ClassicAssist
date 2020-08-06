@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using ClassicAssist.Shared;
 using ClassicAssist.Annotations;
 using ClassicAssist.Data;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
-using ClassicAssist.UI.Controls;
-using ClassicAssist.UI.Views;
+using ClassicAssist.UI.Misc;
+using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Network.PacketFilter;
-using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 
-namespace ClassicAssist.UI.ViewModels
+namespace ClassicAssist.Shared.UI.ViewModels
 {
     public class DebugViewModel : BaseViewModel, ISettingProvider
     {
@@ -30,6 +26,7 @@ namespace ClassicAssist.UI.ViewModels
             _packetEntries = new ObservableCollection<PacketEnabledEntry>();
 
         private bool _running = true;
+        private PacketEntry _selectedItem;
         private bool _topmost = true;
         private ICommand _viewPlayerEquipmentCommand;
 
@@ -78,6 +75,12 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _running, value );
         }
 
+        public PacketEntry SelectedItem
+        {
+            get => _selectedItem;
+            set => SetProperty( ref _selectedItem, value );
+        }
+
         public bool Topmost
         {
             get => _topmost;
@@ -113,41 +116,41 @@ namespace ClassicAssist.UI.ViewModels
         {
             if ( !( obj is IEnumerable<PacketEntry> items ) )
             {
-                return;
             }
 
-            SaveFileDialog sfd = new SaveFileDialog
-            {
-                InitialDirectory = Engine.StartupPath ?? Environment.CurrentDirectory,
-                Filter = "JSON Packet Log|*.packets.json",
-                FileName = "export.packets.json"
-            };
+            //TODO UI
+            //SaveFileDialog sfd = new SaveFileDialog
+            //{
+            //    InitialDirectory = Engine.StartupPath ?? Environment.CurrentDirectory,
+            //    Filter = "JSON Packet Log|*.packets.json",
+            //    FileName = "export.packets.json"
+            //};
 
-            bool? result = sfd.ShowDialog();
+            //bool? result = sfd.ShowDialog();
 
-            if ( !result.HasValue || !result.Value || string.IsNullOrEmpty( sfd.FileName ) )
-            {
-                return;
-            }
+            //if ( !result.HasValue || !result.Value || string.IsNullOrEmpty( sfd.FileName ) )
+            //{
+            //    return;
+            //}
 
-            string fileName = sfd.FileName;
+            //string fileName = sfd.FileName;
 
-            JArray jArray = new JArray();
+            //JArray jArray = new JArray();
 
-            foreach ( PacketEntry packetEntry in items )
-            {
-                jArray.Add( new JObject
-                {
-                    { "Title", packetEntry.Title },
-                    { "DateTime", packetEntry.DateTime },
-                    { "Direction", packetEntry.Direction.ToString() },
-                    { "Length", packetEntry.Length },
-                    { "Data", packetEntry.Data.Aggregate( string.Empty, ( current, b ) => current + $"{b:x2} " ) },
-                    { "Base64", Convert.ToBase64String( packetEntry.Data ) }
-                } );
-            }
+            //foreach ( PacketEntry packetEntry in items )
+            //{
+            //    jArray.Add( new JObject
+            //    {
+            //        { "Title", packetEntry.Title },
+            //        { "DateTime", packetEntry.DateTime },
+            //        { "Direction", packetEntry.Direction.ToString() },
+            //        { "Length", packetEntry.Length },
+            //        { "Data", packetEntry.Data.Aggregate( string.Empty, ( current, b ) => current + $"{b:x2} " ) },
+            //        { "Base64", Convert.ToBase64String( packetEntry.Data ) }
+            //    } );
+            //}
 
-            File.WriteAllText( fileName, jArray.ToString() );
+            //File.WriteAllText( fileName, jArray.ToString() );
         }
 
         private void ProcessQueue( PacketEntry entry )
@@ -237,12 +240,13 @@ namespace ClassicAssist.UI.ViewModels
 
         private void ViewPlayerEquipment( object obj )
         {
-            EntityCollectionViewer window = new EntityCollectionViewer
-            {
-                DataContext = new EntityCollectionViewerViewModel( Engine.Player?.Equipment ) { Topmost = Topmost }
-            };
+            //TODO UI
+            //EntityCollectionViewer window = new EntityCollectionViewer
+            //{
+            //    DataContext = new EntityCollectionViewerViewModel( Engine.Player?.Equipment ) { Topmost = Topmost }
+            //};
 
-            window.Show();
+            //window.Show();
         }
 
         private void Clear( object obj )
@@ -305,7 +309,6 @@ namespace ClassicAssist.UI.ViewModels
             {
                 obj = value;
                 OnPropertyChanged( propertyName );
-                CommandManager.InvalidateRequerySuggested();
             }
         }
     }

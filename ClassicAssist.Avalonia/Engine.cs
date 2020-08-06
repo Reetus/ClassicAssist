@@ -77,6 +77,7 @@ namespace Assistant
                 Thread mainThread = new Thread( () =>
                 {
                     SEngine.Dispatcher = new AvaloniaDispatcher( Dispatcher.UIThread );
+                    SEngine.UIInvoker = new AvaloniaUIInvoker( Dispatcher.UIThread );
                     AppBuilder.Configure<App>().UsePlatformDetect().LogToDebug()
                         .StartWithClassicDesktopLifetime( null );
                     MainWindow = new MainWindow();
@@ -93,6 +94,7 @@ namespace Assistant
 
                 // Avalonia is set up, so can create dispatcher.
                 SEngine.Dispatcher = new AvaloniaDispatcher( Dispatcher.UIThread );
+                SEngine.UIInvoker = new AvaloniaUIInvoker( Dispatcher.UIThread );
 
                 // Invoke on the dispatcher an async action.
                 SEngine.Dispatcher.InvokeAsync( () =>
@@ -106,7 +108,6 @@ namespace Assistant
         private static void Initialize( PluginHeader* plugin )
         {
             SEngine.Install( plugin, new AvaloniaMessageBoxProvider() );
-            //Art.Initialize(SEngine.ClientPath);
 
             Options.LoadEvent += OnOptionsLoad;
             Options.SaveEvent += OnOptionsSave;

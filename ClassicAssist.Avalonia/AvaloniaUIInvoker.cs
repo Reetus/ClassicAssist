@@ -20,17 +20,17 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using System.Windows;
-using System.Windows.Threading;
+using Avalonia.Controls;
+using Avalonia.Threading;
 using ClassicAssist.Shared;
 
-namespace ClassicAssist
+namespace ClassicAssist.Avalonia
 {
-    public class WPFUIInvoker : IUIInvoker
+    public class AvaloniaUIInvoker : IUIInvoker
     {
         private readonly Dispatcher _dispatcher;
 
-        public WPFUIInvoker( Dispatcher dispatcher )
+        public AvaloniaUIInvoker( Dispatcher dispatcher )
         {
             _dispatcher = dispatcher;
         }
@@ -59,7 +59,17 @@ namespace ClassicAssist
                 window.DataContext = dc;
             }
 
-            _dispatcher.Invoke( () => { window.Show(); } );
+            _dispatcher.InvokeAsync( () =>
+            {
+                try
+                {
+                    window.Show();
+                }
+                catch ( Exception e )
+                {
+                    Console.WriteLine( e.ToString() );
+                }
+            } );
         }
     }
 }

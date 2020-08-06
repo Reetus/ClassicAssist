@@ -18,12 +18,16 @@
 #endregion
 
 using System;
+using ClassicAssist.UO.Network.PacketFilter;
 
-namespace ClassicAssist.Shared
+namespace ClassicAssist.UI.Misc
 {
-    public interface IUIInvoker
+    public class PacketEntry
     {
-        void Invoke( string typeName, object[] ctorParam = null, Type dataContextType = null,
-            object[] dataContextParam = null );
+        public byte[] Data { get; set; }
+        public DateTime DateTime { get; set; } = DateTime.Now;
+        public PacketDirection Direction { get; set; }
+        public int Length => Data.Length;
+        public string Title { get; set; }
     }
 }

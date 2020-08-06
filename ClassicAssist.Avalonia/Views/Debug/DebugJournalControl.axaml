@@ -1,0 +1,27 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:misc="clr-namespace:ClassicAssist.Avalonia.Misc"             
+             xmlns:viewModels="clr-namespace:ClassicAssist.Shared.UI.ViewModels.Debug;assembly=ClassicAssist.Shared"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ClassicAssist.Avalonia.Views.Debug.DebugJournalControl">
+  <UserControl.DataContext>
+    <viewModels:DebugJournalViewModel/>
+  </UserControl.DataContext>
+  <DockPanel>
+    <WrapPanel DockPanel.Dock="Top" Classes="ToolBar" Margin="0,0,0,10">
+      <Button Command="{Binding ClearCommand}" Margin="0,0,5,0">
+        <Image Source="{DynamicResource RemoveIcon}" Height="16"
+               ToolTip.Tip="{x:Static resources:Strings.Clear_All}" />
+      </Button>
+    </WrapPanel>
+    <ListBox Items="{Binding Items}" SelectedItem="{Binding SelectedItem}">
+      <i:Interaction.Behaviors>
+        <misc:ListBoxAutoScrollBehaviour/>
+      </i:Interaction.Behaviors>
+    </ListBox>
+  </DockPanel>
+</UserControl>

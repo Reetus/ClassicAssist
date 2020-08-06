@@ -1,0 +1,33 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" x:Name="root"
+             Background="{Binding $parent.Background}"
+             x:Class="ClassicAssist.Avalonia.Controls.EditTextBlock">
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <DrawingImage x:Key="PencilIcon">
+        <DrawingImage.Drawing>
+          <DrawingGroup>
+            <DrawingGroup Opacity="1">
+              <DrawingGroup Opacity="1">
+                <GeometryDrawing
+                  Geometry="F1 M512,512z M0,0z M434.214,0L0,434.213 0,512 77.787,512 512,77.786 434.214,0z M65.359,481.998L30.002,481.998 30.002,446.641 50.125,426.518 85.482,461.875 65.359,481.998z M399.206,77.437L434.214,42.429 469.571,77.786 434.563,112.794 399.206,77.437z"
+                  Brush="{Binding Foreground, ElementName=root}" />
+              </DrawingGroup>
+            </DrawingGroup>
+          </DrawingGroup>
+        </DrawingImage.Drawing>
+      </DrawingImage>
+    </ResourceDictionary>
+  </UserControl.Resources>
+  <Grid>
+    <TextBlock x:Name="textBlock" Text="{Binding Text, ElementName=root}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+    <TextBox x:Name="textBox" IsVisible="False" Text="{Binding Text, ElementName=root}"/>
+    <Button Width="12" Height="12" BorderThickness="0" Background="Transparent" Margin="0" Padding="0"
+            HorizontalAlignment="Right" x:Name="pencilButton" IsVisible="{Binding ShowIcon, ElementName=root}">
+      <Image Source="{StaticResource PencilIcon}" Width="16" HorizontalAlignment="Center" />
+    </Button>
+  </Grid>
+</UserControl>

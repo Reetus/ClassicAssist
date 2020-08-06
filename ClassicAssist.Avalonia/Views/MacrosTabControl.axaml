@@ -19,7 +19,13 @@
   </UserControl.DataContext>
   <Grid ColumnDefinitions="155,5,*">
     <Grid Grid.Column="0" RowDefinitions="*, Auto, Auto, Auto">
-      <ListBox x:Name="ListBox" Items="{Binding Items}" Grid.Row="0" SelectedItem="{Binding SelectedItem}" />
+      <ListBox x:Name="ListBox" Items="{Binding Items}" Grid.Row="0" SelectedItem="{Binding SelectedItem}">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <controls:EditTextBlock Text="{Binding Name}" ShowIcon="False"/>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
       <Grid Grid.Row="1" ColumnDefinitions="*,*,*" Margin="0,5,0,0">
         <Grid.Styles>
           <Style Selector="Button">

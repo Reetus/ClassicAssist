@@ -23,12 +23,14 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Avalonia;
+using Avalonia.ReactiveUI;
 using Avalonia.Threading;
 using ClassicAssist.Avalonia;
 using ClassicAssist.Avalonia.Misc;
 using ClassicAssist.Avalonia.Views;
 using ClassicAssist.Data;
 using ClassicAssist.Misc;
+using ClassicAssist.Shared;
 using ClassicAssist.UI.ViewModels;
 using CUO_API;
 using Newtonsoft.Json.Linq;
@@ -71,7 +73,7 @@ namespace Assistant
 
         private static void LoadUI()
         {
-            if ( Environment.OSVersion.Platform == PlatformID.Unix )
+            if ( SEngine.GetPlatformType() == PlatformType.Unix )
             {
                 // Launch UI in a thread on Linux
                 Thread mainThread = new Thread( () =>
@@ -90,18 +92,15 @@ namespace Assistant
             {
                 // Set up the Avalonia application without starting. This
                 // initializes the Avalonia APIs.
-                AppBuilder.Configure<App>().UsePlatformDetect().LogToDebug().SetupWithoutStarting();
+                AppBuilder.Configure<App>().UsePlatformDetect().LogToDebug().UseReactiveUI().SetupWithoutStarting();
 
                 // Avalonia is set up, so can create dispatcher.
                 SEngine.Dispatcher = new AvaloniaDispatcher( Dispatcher.UIThread );
                 SEngine.UIInvoker = new AvaloniaUIInvoker( Dispatcher.UIThread );
 
-                // Invoke on the dispatcher an async action.
-                SEngine.Dispatcher.InvokeAsync( () =>
-                {
-                    MainWindow = new MainWindow();
-                    MainWindow.Show();
-                } );
+                // Showing a window is nonblocking; only `await window.ShowDialog(parent)` blocks
+                MainWindow = new MainWindow();
+                MainWindow.Show();
             }
         }
 

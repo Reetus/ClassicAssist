@@ -58,4 +58,11 @@
     <BuildDate>$([System.DateTime]::op_Subtraction($([System.DateTime]::get_Now().get_Date()),$([System.DateTime]::new(2020,7,3))).get_TotalDays())</BuildDate>
     <Version>0.3.$(BuildDate).0</Version>
   </PropertyGroup>
+  <ItemGroup>
+    <NativeLibs Include="$(NuGetPackageRoot)avalonia.native\0.10.0-preview1\runtimes\osx\native\libAvaloniaNative.dylib;$(NuGetPackageRoot)skiasharp\1.68.2.1\runtimes\osx\native\libSkiaSharp.dylib;$(NuGetPackageRoot)\harfbuzzsharp\2.6.1.6\runtimes\osx\native\libHarfBuzzSharp.dylib" />
+  </ItemGroup>
+  <Target Name="CopyNativeLibs" AfterTargets="CopyFilesToOutputDirectory" Condition="'$(TargetFramework)'=='net48' and '$(Configuration)'=='Linux'">
+    <Message Text="Copying native libraries to $(OutDir)" Importance="Normal" />
+    <Copy SourceFiles="@(NativeLibs)" DestinationFolder="$(OutDir)" />
+  </Target>
 </Project>

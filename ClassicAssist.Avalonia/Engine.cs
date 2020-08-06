@@ -25,6 +25,7 @@ using System.Threading;
 using Avalonia;
 using Avalonia.Threading;
 using ClassicAssist.Avalonia;
+using ClassicAssist.Avalonia.Misc;
 using ClassicAssist.Avalonia.Views;
 using ClassicAssist.Data;
 using ClassicAssist.Misc;
@@ -39,6 +40,8 @@ namespace Assistant
     public static unsafe class Engine
     {
         private static PluginHeader* _plugin;
+
+        public static MainWindow MainWindow { get; internal set; }
 
         public static string StartupPath { get; set; }
 
@@ -68,20 +71,19 @@ namespace Assistant
 
         private static void LoadUI()
         {
-            MainWindow window;
-            
             if ( Environment.OSVersion.Platform == PlatformID.Unix )
             {
                 // Launch UI in a thread on Linux
                 Thread mainThread = new Thread( () =>
                 {
-                    SEngine.Dispatcher = new AvaloniaDispatcher(Dispatcher.UIThread);
-                    AppBuilder.Configure<App>().UsePlatformDetect().LogToDebug().StartWithClassicDesktopLifetime( null );
-                    window = new MainWindow();
-                    window.Show();
+                    SEngine.Dispatcher = new AvaloniaDispatcher( Dispatcher.UIThread );
+                    AppBuilder.Configure<App>().UsePlatformDetect().LogToDebug()
+                        .StartWithClassicDesktopLifetime( null );
+                    MainWindow = new MainWindow();
+                    MainWindow.Show();
                 } ) { IsBackground = true };
 
-                mainThread.Start();                
+                mainThread.Start();
             }
             else
             {
@@ -95,15 +97,15 @@ namespace Assistant
                 // Invoke on the dispatcher an async action.
                 SEngine.Dispatcher.InvokeAsync( () =>
                 {
-                    window = new MainWindow();
-                    window.Show();
+                    MainWindow = new MainWindow();
+                    MainWindow.Show();
                 } );
             }
         }
 
         private static void Initialize( PluginHeader* plugin )
         {
-            SEngine.Install( plugin );
+            SEngine.Install( plugin, new AvaloniaMessageBoxProvider() );
             //Art.Initialize(SEngine.ClientPath);
 
             Options.LoadEvent += OnOptionsLoad;

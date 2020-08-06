@@ -1,0 +1,42 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels;assembly=ClassicAssist.Shared"
+		xmlns:shared="clr-namespace:ClassicAssist.Misc;assembly=ClassicAssist.Shared"
+		xmlns:misc="clr-namespace:ClassicAssist.Avalonia.Misc"
+		mc:Ignorable="d" d:DesignWidth="350" d:DesignHeight="225"
+        x:Name="Window" x:Class="ClassicAssist.Avalonia.Misc.DialogWindow"
+        WindowStartupLocation="CenterOwner"
+		Width="350" Height="{Binding Height}"
+		MaxWidth="350" SizeToContent="Manual"
+        Title="{Binding Caption}" CanResize="False">
+	<Window.Resources>
+		<misc:StringToResourceConverter x:Key="StringToResourceConverter" />
+	</Window.Resources>
+	<Window.KeyBindings>
+		<KeyBinding Gesture="Ctrl+C" Command="{Binding Copy}" />
+	</Window.KeyBindings>
+	<Window.Styles>
+		<Style Selector="Button">
+			<Setter Property="Margin" Value="15 0 0 0" />
+			<Setter Property="MinHeight" Value="24" />
+			<Setter Property="MinWidth" Value="75" />
+		</Style>
+	</Window.Styles>
+	<DockPanel Margin="10" LastChildFill="False">
+		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+			<Image MaxHeight="50" MaxWidth="50" VerticalAlignment="Top" Margin="0,0,10,0"
+				   Source="{Binding ImagePath, Converter={StaticResource StringToResourceConverter}}" IsVisible="{Binding Icon}" />
+			<TextBlock MaxWidth="{Binding TextWidth}" Text="{Binding Text}" TextWrapping="Wrap" />
+		</StackPanel>
+		<StackPanel DockPanel.Dock="Bottom"  Orientation="Horizontal" HorizontalAlignment="Right">
+			<Button Content="Ok" Tag="Colored" Command="{Binding ButtonClick}"
+					CommandParameter="{x:Static shared:MessageBoxResult.OK}" IsVisible="{Binding IsOkShowed}" />
+			<Button Content="Yes" Command="{Binding ButtonClick}" CommandParameter="{x:Static shared:MessageBoxResult.Yes}"
+					IsVisible="{Binding IsYesShowed}" />
+			<Button Content="No" Command="{Binding ButtonClick}" CommandParameter="{x:Static shared:MessageBoxResult.No}"
+					IsVisible="{Binding IsNoShowed}" />
+		</StackPanel>
+	</DockPanel>
+</Window>

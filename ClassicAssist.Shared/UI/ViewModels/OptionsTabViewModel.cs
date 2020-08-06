@@ -4,6 +4,7 @@ using System.Windows.Input;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
+using ClassicAssist.Shared;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UO.Gumps;
@@ -190,7 +191,7 @@ namespace ClassicAssist.UI.ViewModels
             }
         }
 
-        private static void SetLanguageOverride( object obj )
+        private static async void SetLanguageOverride( object obj )
         {
             if ( !( obj is Language language ) )
             {
@@ -199,9 +200,8 @@ namespace ClassicAssist.UI.ViewModels
 
             AssistantOptions.LanguageOverride = language;
 
-            //TODO UI
-            //MessageBox.Show( Strings.Restart_game_for_changes_to_take_effect___,
-            //    Strings.Restart_game_for_changes_to_take_effect___ );
+            await Engine.MessageBoxProvider.Show( Strings.Restart_game_for_changes_to_take_effect___,
+                Strings.Restart_game_for_changes_to_take_effect___ );
         }
     }
 }

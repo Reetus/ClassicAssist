@@ -8,6 +8,7 @@ using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Data.Spells;
 using ClassicAssist.Misc;
+using ClassicAssist.Shared;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Misc;
 using Newtonsoft.Json.Linq;
@@ -56,7 +57,7 @@ namespace ClassicAssist.UI.ViewModels
             get => _selectedItem;
             set
             {
-                SetProperty( ref _selectedItem, value.IsCategory ? null : value );
+                SetProperty( ref _selectedItem, value == null || !value.IsCategory ? value : null );
                 NotifyPropertyChanged( nameof( Hotkey ) );
             }
         }
@@ -308,7 +309,7 @@ namespace ClassicAssist.UI.ViewModels
             }
         }
 
-        private void CheckOverwriteHotkey( HotkeyEntry selectedItem, ShortcutKeys hotkey )
+        private async void CheckOverwriteHotkey( HotkeyEntry selectedItem, ShortcutKeys hotkey )
         {
             HotkeyEntry conflict = null;
 
@@ -323,19 +324,18 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            // TODO
-            //if ( conflict != null && !ReferenceEquals( selectedItem, conflict ) )
-            //{
-            //    MessageBoxResult result =
-            //        MessageBox.Show( string.Format( Strings.Overwrite_existing_hotkey___0____, conflict ),
-            //            Strings.Warning, MessageBoxButton.YesNo );
+            if ( conflict != null && !ReferenceEquals( selectedItem, conflict ) )
+            {
+                MessageBoxResult result = await Engine.MessageBoxProvider.Show(
+                    string.Format( Strings.Overwrite_existing_hotkey___0____, conflict ), Strings.Warning,
+                    MessageBoxButtons.YesNo );
 
-            //    if ( result == MessageBoxResult.No )
-            //    {
-            //        NotifyPropertyChanged( nameof( Hotkey ) );
-            //        return;
-            //    }
-            //}
+                if ( result == MessageBoxResult.No )
+                {
+                    NotifyPropertyChanged( nameof( Hotkey ) );
+                    return;
+                }
+            }
 
             SelectedItem.Hotkey = hotkey;
             NotifyPropertyChanged( nameof( Hotkey ) );

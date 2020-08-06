@@ -26,6 +26,7 @@ using System.Windows.Threading;
 using ClassicAssist;
 using ClassicAssist.Data;
 using ClassicAssist.Misc;
+using ClassicAssist.UI.Misc;
 using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO.Data;
@@ -76,7 +77,7 @@ namespace Assistant
 
         private static void Initialize( PluginHeader* plugin )
         {
-            SEngine.Install( plugin );
+            SEngine.Install( plugin, new WPFMessageBoxProvider() );
             Art.Initialize( SEngine.ClientPath );
 
             Options.LoadEvent += OnOptionsLoad;

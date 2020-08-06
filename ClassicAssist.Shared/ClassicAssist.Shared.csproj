@@ -28,6 +28,9 @@
     <None Remove="Data\Weapons.json" />
     <None Remove="Resources\Colours.xaml" />
     <None Remove="Resources\DarkTheme.xaml" />
+    <None Remove="Resources\dialog-error.png" />
+    <None Remove="Resources\dialog-info.png" />
+    <None Remove="Resources\dialog-warn.png" />
     <None Remove="Resources\Icons.xaml" />
     <None Remove="Resources\LeftRightIconToggleButton.xaml" />
     <None Remove="Resources\ResourceDictionary.xaml" />
@@ -65,6 +68,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\arrow_down.png" />
     <EmbeddedResource Include="Resources\arrow_up.png" />
+    <EmbeddedResource Include="Resources\dialog-error.png" />
+    <EmbeddedResource Include="Resources\dialog-info.png" />
+    <EmbeddedResource Include="Resources\dialog-warn.png" />
     <EmbeddedResource Include="Resources\green-circle.png" />
     <EmbeddedResource Include="Resources\kiss.wav" />
     <EmbeddedResource Include="Resources\lock.png" />

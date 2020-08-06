@@ -108,6 +108,7 @@ namespace ClassicAssist.Shared
         public static IUIInvoker UIInvoker { get; set; }
         public static bool WaitingForTarget { get; set; }
         internal static ConcurrentDictionary<uint, int> GumpList { get; set; } = new ConcurrentDictionary<uint, int>();
+        internal static IMessageBoxProvider MessageBoxProvider { get; private set; }
 
         public static event dUpdateWindowTitle UpdateWindowTitleEvent;
 
@@ -122,9 +123,10 @@ namespace ClassicAssist.Shared
         public static event dDisconnected DisconnectedEvent;
         public static event dPlayerInitialized PlayerInitializedEvent;
 
-        public static unsafe void Install( PluginHeader* plugin )
+        public static unsafe void Install( PluginHeader* plugin, IMessageBoxProvider provider )
         {
             _plugin = plugin;
+            MessageBoxProvider = provider;
 
             Initialize();
 

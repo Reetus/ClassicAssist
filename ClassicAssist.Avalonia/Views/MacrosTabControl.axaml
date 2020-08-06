@@ -3,6 +3,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+             xmlns:iac="clr-namespace:Avalonia.Xaml.Interactions.Custom;assembly=Avalonia.Xaml.Interactions.Custom"
              xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels;assembly=ClassicAssist.Shared"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:AvalonEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
@@ -19,10 +21,24 @@
   </UserControl.DataContext>
   <Grid ColumnDefinitions="155,5,*">
     <Grid Grid.Column="0" RowDefinitions="*, Auto, Auto, Auto">
-      <ListBox x:Name="ListBox" Items="{Binding Items}" Grid.Row="0" SelectedItem="{Binding SelectedItem}">
+      <ListBox x:Name="ListBox" Items="{Binding Items}" Grid.Row="0" SelectedItem="{Binding SelectedItem}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
         <ListBox.ItemTemplate>
           <DataTemplate>
-            <controls:EditTextBlock Text="{Binding Name}" ShowIcon="False"/>
+            <Grid ColumnDefinitions="*, Auto" Background="{Binding $parent.Background}">
+              <controls:EditTextBlock Text="{Binding Name}" ShowIcon="False" Grid.Column="0" HorizontalContentAlignment="Stretch"/>
+              <TextBlock x:Name="Hotkey" Text="{Binding Hotkey}" Margin="2,0,0,0"
+                         Grid.Column="1" FontSize="7" Foreground="SpringGreen" TextAlignment="Right"
+                         VerticalAlignment="Center" HorizontalAlignment="Right">
+                <i:Interaction.Behaviors>
+                  <ia:DataTriggerBehavior Binding="{Binding #Hotkey.Text}" ComparisonCondition="Equal" Value="None">
+                    <ia:ChangePropertyAction TargetObject="{Binding #Hotkey}" PropertyName="IsVisible" Value="False"/>
+                  </ia:DataTriggerBehavior>
+                  <ia:DataTriggerBehavior Binding="{Binding #Hotkey.Text}" ComparisonCondition="NotEqual" Value="None">
+                    <ia:ChangePropertyAction TargetObject="{Binding #Hotkey}" PropertyName="IsVisible" Value="True"/>
+                  </ia:DataTriggerBehavior>
+                </i:Interaction.Behaviors>
+              </TextBlock>
+            </Grid>
           </DataTemplate>
         </ListBox.ItemTemplate>
       </ListBox>

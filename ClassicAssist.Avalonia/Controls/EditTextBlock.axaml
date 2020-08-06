@@ -23,7 +23,7 @@
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
-    <TextBlock x:Name="textBlock" Text="{Binding Text, ElementName=root}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+    <TextBlock x:Name="textBlock" Text="{Binding Text, ElementName=root}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextTrimming="CharacterEllipsis"/>
     <TextBox x:Name="textBox" IsVisible="False" Text="{Binding Text, ElementName=root}"/>
     <Button Width="12" Height="12" BorderThickness="0" Background="Transparent" Margin="0" Padding="0"
             HorizontalAlignment="Right" x:Name="pencilButton" IsVisible="{Binding ShowIcon, ElementName=root}">

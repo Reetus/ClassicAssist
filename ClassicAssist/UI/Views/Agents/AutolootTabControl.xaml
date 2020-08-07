@@ -50,6 +50,7 @@
                 <CheckBox Content="{x:Static resources:Strings.Enabled}" IsChecked="{Binding Enabled}" />
                 <CheckBox Content="{x:Static resources:Strings.Disable_inside_guardzone}"
                           IsChecked="{Binding DisableInGuardzone}" />
+                <CheckBox Content="{x:Static resources:Strings.Loot_humanoids}" IsChecked="{Binding LootHumanoids}" />
             </StackPanel>
             <ListBox x:Name="listView" Grid.Row="1" Margin="0,10,0,10" ItemsSource="{Binding Items}"
                      SelectedItem="{Binding SelectedItem}" HorizontalContentAlignment="Stretch">
@@ -181,7 +182,7 @@
                     <StackPanel Orientation="Horizontal">
                         <CheckBox IsChecked="{Binding SelectedItem.Rehue}">
                             <TextBlock Text="{x:Static resources:Strings.Rehue_matching_items}"
-                                       VerticalAlignment="Center"/>
+                                       VerticalAlignment="Center" />
                         </CheckBox>
                         <Button Margin="0,0,10,0" Command="{Binding SelectHueCommand}"
                                 CommandParameter="{Binding SelectedItem, ElementName=listView}">

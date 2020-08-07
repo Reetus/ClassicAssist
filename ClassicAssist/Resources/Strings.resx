@@ -1431,4 +1431,7 @@ Are you sure you wish to continue?</value>
   <data name="Invalid organizer agent name..." xml:space="preserve">
     <value>Invalid organizer agent name...</value>
   </data>
+  <data name="Loot humanoids" xml:space="preserve">
+    <value>Loot humanoids</value>
+  </data>
 </root>

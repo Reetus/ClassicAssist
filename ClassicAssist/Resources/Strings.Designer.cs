@@ -1924,6 +1924,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loot humanoids.
+        /// </summary>
+        public static string Loot_humanoids {
+            get {
+                return ResourceManager.GetString("Loot humanoids", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Macro Commands Wiki (Launches in Browser).
         /// </summary>
         public static string Macro_Commands_Wiki__Launches_in_Browser_ {

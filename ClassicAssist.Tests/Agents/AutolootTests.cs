@@ -298,7 +298,8 @@ namespace ClassicAssist.Tests.Agents
             Engine.Player.SetLayer( Layer.Backpack, backpack.Serial );
             Engine.Items.Add( backpack );
 
-            Item corpse = new Item( 0x40000000 ) { ID = 0x2006 };
+            Item corpse = new Item( 0x40000000 ) { ID = 0x2006, Count = 400, Container = new ItemCollection( 0x40000000 ), X = 652, Y = 869 };
+            corpse.Container.Add( new Item( 0x4313FC5E ) { ID = 0x108a } );
 
             Engine.Items.Add( corpse );
 
@@ -519,6 +520,92 @@ namespace ClassicAssist.Tests.Agents
         public void Cleanup()
         {
             ActionPacketQueue.Clear();
+        }
+
+        [TestMethod]
+        public void WontLootDisabledLootHumanoids()
+        {
+            const string localPath = @"C:\Users\johns\Desktop\KvG Client 2.0";
+
+            if (!Directory.Exists( localPath ))
+            {
+                Debug.WriteLine( "Not running test, requires Cliloc.enu" );
+                return;
+            }
+
+            TileData.Initialize( localPath );
+
+            Engine.Player = new PlayerMobile( 0x01 ) { X = 652, Y = 869 };
+            Item backpack = new Item( 0x40000001, 0x01 ) { Container = new ItemCollection( 0x40000001 ) };
+            Engine.Player.SetLayer( Layer.Backpack, backpack.Serial );
+            Engine.Items.Add( backpack );
+
+            Item corpse = new Item( 0x40000000 ) { ID = 0x2006, Count = 400, Container = new ItemCollection( 0x40000000 ), X = 652, Y = 869 };
+            corpse.Container.Add( new Item( 0x4313FC5E ) { ID = 0x108a } );
+
+            Engine.Items.Add( corpse );
+
+            IncomingPacketHandlers.Initialize();
+            AutolootViewModel vm = new AutolootViewModel { Enabled = true, LootHumanoids = false};
+
+            AutolootEntry lootEntry = new AutolootEntry
+            {
+                Rehue = false,
+                Autoloot = true,
+                Constraints = new ObservableCollection<AutolootConstraintEntry>(),
+                ID = 0x108a
+            };
+
+            AutolootConstraintEntry autolootConstraint = new AutolootConstraintEntry
+            {
+                Property = vm.Constraints.FirstOrDefault( c => c.Name == "Hue" ),
+                Operator = AutolootOperator.Equal,
+                Value = 0
+            };
+            lootEntry.Constraints.Add( autolootConstraint );
+
+            vm.Items.Add( lootEntry );
+
+            Engine.PacketWaitEntries = new PacketWaitEntries();
+
+            var are = new AutoResetEvent( false );
+
+            void OnPacketSentEvent( byte[] data, int length )
+            {
+                if (data[0] == 0xD6 || data[0] == 0x06)
+                {
+                    return;
+                }
+
+                are.Set();
+                Assert.Fail();
+            }
+
+            Engine.InternalPacketSentEvent += OnPacketSentEvent;
+
+            Engine.PacketWaitEntries.WaitEntryAddedEvent += entry =>
+            {
+                byte[] containerContentsPacket =
+                {
+                    0x3C, 0x00, 0x19, 0x00, 0x01, 0x43, 0x13, 0xFC, 0x5E, 0x10, 0x8A, 0x00, 0x00, 0x01, 0x00, 0x13,
+                    0x00, 0x82, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00
+                };
+
+                PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x3C );
+
+                handler.OnReceive( new PacketReader( containerContentsPacket, containerContentsPacket.Length, false ) );
+                entry.Packet = containerContentsPacket;
+                entry.Lock.Set();
+            };
+
+            vm.OnCorpseEvent( corpse.Serial );
+
+            are.WaitOne( 2000 );
+
+            Engine.Items.Clear();
+            Engine.PacketWaitEntries = null;
+            Engine.InternalPacketSentEvent -= OnPacketSentEvent;
+            Engine.Player = null;
         }
     }
 }

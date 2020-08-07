@@ -11,6 +11,7 @@ using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Data.Regions;
+using ClassicAssist.Data.Targeting;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.Misc;
@@ -55,6 +56,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private ICommand _insertMatchAnyCommand;
 
         private ObservableCollectionEx<AutolootEntry> _items = new ObservableCollectionEx<AutolootEntry>();
+        private bool _lootHumanoids;
 
         private ICommand _removeCommand;
         private ICommand _removeConstraintCommand;
@@ -134,6 +136,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set => SetProperty( ref _items, value );
         }
 
+        public bool LootHumanoids
+        {
+            get => _lootHumanoids;
+            set => SetProperty( ref _lootHumanoids, value );
+        }
+
         public ICommand RemoveCommand =>
             _removeCommand ?? ( _removeCommand = new RelayCommandAsync( Remove, o => SelectedItem != null ) );
 
@@ -185,7 +193,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 { "Enabled", Enabled },
                 { "DisableInGuardzone", DisableInGuardzone },
                 { "Container", ContainerSerial },
-                { "RequeueFailedItems", RequeueFailedItems }
+                { "RequeueFailedItems", RequeueFailedItems },
+                { "LootHumanoids", LootHumanoids }
             };
 
             JArray itemsArray = new JArray();
@@ -244,6 +253,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             DisableInGuardzone = config["DisableInGuardzone"]?.ToObject<bool>() ?? false;
             ContainerSerial = config["Container"]?.ToObject<int>() ?? 0;
             RequeueFailedItems = config["RequeueFailedItems"]?.ToObject<bool>() ?? false;
+            LootHumanoids = config["LootHumanoids"]?.ToObject<bool>() ?? true;
 
             if ( config["Items"] != null )
             {
@@ -389,6 +399,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 Item item = Engine.Items.GetItem( serial );
 
                 if ( item == null || item.ID != 0x2006 )
+                {
+                    return;
+                }
+
+                if ( !LootHumanoids && TargetManager.GetInstance().BodyData
+                         .Where( bd => bd.BodyType == TargetBodyType.Humanoid ).Select( bd => bd.Graphic )
+                         .Contains( item.Count ) )
                 {
                     return;
                 }

@@ -20,8 +20,27 @@ namespace ClassicAssist.Data.Macros
         {
             DocumentLine line = textArea.Document.Lines[textArea.Caret.Line - 1];
 
-            textArea.Document.Replace(
-                new TextSegment { StartOffset = line.Offset, EndOffset = line.EndOffset, Length = line.Length }, Text );
+            string text = textArea.Document.GetText( line );
+
+            int offset = completionSegment.Offset;
+
+            // Walk backwards decrementing the offset if not ' ' || '\t'
+            for ( int i = completionSegment.Offset; i > line.Offset; i-- )
+            {
+                int stringOffset = i - line.Offset - 1;
+
+                if ( text[stringOffset] != ' ' && text[stringOffset] != '\t' )
+                {
+                    offset--;
+                    continue;
+                }
+
+                break;
+            }
+
+            ISegment segment = new AnchorSegment( textArea.Document, offset, line.EndOffset - offset );
+
+            textArea.Document.Replace( segment, Text );
         }
 
         public ImageSource Image => Properties.Resources.python.ToImageSource();

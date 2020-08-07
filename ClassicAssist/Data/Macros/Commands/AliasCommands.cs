@@ -26,7 +26,7 @@ namespace ClassicAssist.Data.Macros.Commands
             SetAlias( "self", player.Serial );
         }
 
-        internal static int ResolveSerial( object obj )
+        internal static int ResolveSerial( object obj, bool defaultSelf = true )
         {
             int serial;
 
@@ -35,7 +35,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 case string str:
                     serial = GetAlias( str );
 
-                    if ( serial == -1 && !MacroManager.QuietMode )
+                    if ( serial == 0 && !MacroManager.QuietMode )
                     {
                         UOC.SystemMessage( string.Format( Strings.Unknown_alias___0___, str ) );
                     }
@@ -50,13 +50,13 @@ namespace ClassicAssist.Data.Macros.Commands
                 case Entity i:
                     serial = i.Serial;
                     break;
-                case null:
+                case null when defaultSelf:
                     serial = Engine.Player == null ? 0 : Engine.Player.Serial;
 
                     break;
                 default:
                     UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
-                    return -1;
+                    return 0;
             }
 
             return serial;
@@ -149,7 +149,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return _aliases[aliasName];
             }
 
-            return -1;
+            return 0;
         }
 
         internal static Dictionary<string, int> GetAllAliases()

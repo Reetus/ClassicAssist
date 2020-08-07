@@ -1663,6 +1663,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid organizer agent name....
+        /// </summary>
+        public static string Invalid_organizer_agent_name___ {
+            get {
+                return ResourceManager.GetString("Invalid organizer agent name...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid skill name &quot;{0}&quot;.
         /// </summary>
         public static string Invalid_skill_name___0__ {

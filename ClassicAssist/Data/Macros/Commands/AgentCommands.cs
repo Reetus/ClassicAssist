@@ -2,6 +2,7 @@
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Data.Counters;
 using ClassicAssist.Data.Dress;
+using ClassicAssist.Data.Organizer;
 using ClassicAssist.Resources;
 using UOC = ClassicAssist.UO.Commands;
 
@@ -105,6 +106,37 @@ namespace ClassicAssist.Data.Macros.Commands
             int serial = AliasCommands.ResolveSerial( obj );
 
             AutolootHelpers.SetAutolootContainer?.Invoke( serial );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Agents ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.AgentEntryName ), nameof( ParameterType.SerialOrAlias ),
+                nameof( ParameterType.SerialOrAlias )
+            } )]
+        public static void SetOrganizerContainers( string entryName, object sourceContainer = null,
+            object destinationContainer = null )
+        {
+            int sourceSerial = AliasCommands.ResolveSerial( sourceContainer, false );
+            int destinationSerial = AliasCommands.ResolveSerial( destinationContainer, false );
+
+            OrganizerManager manager = OrganizerManager.GetInstance();
+
+            OrganizerEntry entry = manager.Items.FirstOrDefault( e => e.Name.ToLower().Equals( entryName.ToLower() ) );
+
+            if ( entry == null )
+            {
+                UOC.SystemMessage( Strings.Invalid_organizer_agent_name___ );
+                return;
+            }
+
+            entry.SourceContainer = sourceSerial;
+            entry.DestinationContainer = destinationSerial;
+
+            if ( !MacroManager.QuietMode )
+            {
+                UOC.SystemMessage( Strings.Organizer_containers_set___ );
+            }
         }
     }
 }

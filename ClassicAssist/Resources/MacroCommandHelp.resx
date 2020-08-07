@@ -319,7 +319,7 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
     <value>Executes the named Organizer agent.</value>
   </data>
   <data name="ORGANIZER_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>Organize("Organizer-1")</value>
+    <value>Organizer("Organizer-1")</value>
   </data>
   <data name="ORGANIZING_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Returns true if currently running an organizer agent, or false if not.</value>
@@ -1458,5 +1458,11 @@ Pathfind(1438, 1630, 20)
 #Pathfind to entity
 SetEnemy(0x3c9)
 Pathfind('enemy')</value>
+  </data>
+  <data name="SETORGANIZERCONTAINERS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Set the source and destination for the specified Organizer name</value>
+  </data>
+  <data name="SETORGANIZERCONTAINERS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetOrganizerContainers("Organizer-1", "backpack", "bank")</value>
   </data>
 </root>

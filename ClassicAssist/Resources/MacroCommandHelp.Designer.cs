@@ -2214,7 +2214,7 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Organize(&quot;Organizer-1&quot;).
+        ///   Looks up a localized string similar to Organizer(&quot;Organizer-1&quot;).
         /// </summary>
         public static string ORGANIZER_COMMAND_INSERTTEXT {
             get {
@@ -2827,6 +2827,24 @@ namespace ClassicAssist.Resources {
         public static string SETMACROALIAS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SETMACROALIAS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set the source and destination for the specified Organizer name.
+        /// </summary>
+        public static string SETORGANIZERCONTAINERS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETORGANIZERCONTAINERS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetOrganizerContainers(&quot;Organizer-1&quot;, &quot;backpack&quot;, &quot;bank&quot;).
+        /// </summary>
+        public static string SETORGANIZERCONTAINERS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETORGANIZERCONTAINERS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

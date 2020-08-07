@@ -432,7 +432,7 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             int sourceSerial = AliasCommands.ResolveSerial( sourceContainer );
 
-            if ( sourceSerial == -1 )
+            if ( sourceSerial == 0 )
             {
                 UOC.SystemMessage( Strings.Invalid_source_container___ );
                 return;
@@ -481,7 +481,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 amount = entity.Count;
             }
 
-            if ( destinationSerial == -1 )
+            if ( destinationSerial == 0 )
             {
                 ActionPacketQueue.EnqueueDragDropGround( entity.Serial, amount, x, y, z );
             }

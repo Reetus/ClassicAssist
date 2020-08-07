@@ -1663,6 +1663,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid organizer agent name....
+        /// </summary>
+        public static string Invalid_organizer_agent_name___ {
+            get {
+                return ResourceManager.GetString("Invalid organizer agent name...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid skill name &quot;{0}&quot;.
         /// </summary>
         public static string Invalid_skill_name___0__ {
@@ -1911,6 +1920,15 @@ namespace ClassicAssist.Resources {
         public static string Loop_time___0_ {
             get {
                 return ResourceManager.GetString("Loop time: {0}", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loot humanoids.
+        /// </summary>
+        public static string Loot_humanoids {
+            get {
+                return ResourceManager.GetString("Loot humanoids", resourceCulture);
             }
         }
         

@@ -23,13 +23,12 @@ namespace ClassicAssist.Data.Targeting
         private static TargetManager _instance;
         private static readonly object _lock = new object();
         private static readonly List<Mobile> _ignoreList = new List<Mobile>();
-        private readonly List<TargetBodyData> _bodyData;
 
         private TargetManager()
         {
             string dataPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data" );
 
-            _bodyData = JsonConvert
+            BodyData = JsonConvert
                 .DeserializeObject<TargetBodyData[]>( File.ReadAllText( Path.Combine( dataPath, "Bodies.json" ) ) )
                 .ToList();
         }
@@ -37,6 +36,8 @@ namespace ClassicAssist.Data.Targeting
         public static event dTargetChanged EnemyChangedEvent;
         public static event dTargetChanged FriendChangedEvent;
         public static event dTargetChanged LastTargetChangedEvent;
+
+        public List<TargetBodyData> BodyData { get; set; }
 
         public void SetEnemy( Entity m )
         {
@@ -126,17 +127,17 @@ namespace ClassicAssist.Data.Targeting
                     break;
                 case TargetBodyType.Humanoid:
                     bodyTypePredicate = i =>
-                        _bodyData.Where( bd => bd.BodyType == TargetBodyType.Humanoid ).Select( bd => bd.Graphic )
+                        BodyData.Where( bd => bd.BodyType == TargetBodyType.Humanoid ).Select( bd => bd.Graphic )
                             .Contains( i );
                     break;
                 case TargetBodyType.Transformation:
                     bodyTypePredicate = i =>
-                        _bodyData.Where( bd => bd.BodyType == TargetBodyType.Transformation ).Select( bd => bd.Graphic )
+                        BodyData.Where( bd => bd.BodyType == TargetBodyType.Transformation ).Select( bd => bd.Graphic )
                             .Contains( i );
                     break;
                 case TargetBodyType.Both:
                     bodyTypePredicate = i =>
-                        _bodyData.Where( bd =>
+                        BodyData.Where( bd =>
                                 bd.BodyType == TargetBodyType.Humanoid || bd.BodyType == TargetBodyType.Transformation )
                             .Select( bd => bd.Graphic ).Contains( i );
                     break;
@@ -184,17 +185,17 @@ namespace ClassicAssist.Data.Targeting
                         break;
                     case TargetBodyType.Humanoid:
                         bodyTypePredicate = i =>
-                            _bodyData.Where( bd => bd.BodyType == TargetBodyType.Humanoid ).Select( bd => bd.Graphic )
+                            BodyData.Where( bd => bd.BodyType == TargetBodyType.Humanoid ).Select( bd => bd.Graphic )
                                 .Contains( i );
                         break;
                     case TargetBodyType.Transformation:
                         bodyTypePredicate = i =>
-                            _bodyData.Where( bd => bd.BodyType == TargetBodyType.Transformation )
+                            BodyData.Where( bd => bd.BodyType == TargetBodyType.Transformation )
                                 .Select( bd => bd.Graphic ).Contains( i );
                         break;
                     case TargetBodyType.Both:
                         bodyTypePredicate = i =>
-                            _bodyData.Where( bd =>
+                            BodyData.Where( bd =>
                                     bd.BodyType == TargetBodyType.Humanoid ||
                                     bd.BodyType == TargetBodyType.Transformation )
                                 .Select( bd => bd.Graphic ).Contains( i );

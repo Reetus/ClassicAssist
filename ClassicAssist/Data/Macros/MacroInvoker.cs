@@ -250,8 +250,13 @@ namespace ClassicAssist.Data.Macros
                 }
 
                 Thread?.Interrupt();
-                Thread?.Abort();
-                Thread?.Join( 100 );
+
+                Task.Run( () =>
+                 {
+                     Thread?.Abort();
+                     Thread?.Join( 100 );
+                 } );
+
                 MacroManager.GetInstance().Replay = false;
                 MacroManager.GetInstance().OnMacroStopped();
             }

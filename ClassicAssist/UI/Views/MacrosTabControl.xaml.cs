@@ -81,7 +81,7 @@ namespace ClassicAssist.UI.Views
                 return;
             }
 
-            _completionWindow = new CompletionWindow( CodeTextEditor.TextArea );
+            _completionWindow = new CompletionWindow( CodeTextEditor.TextArea ) { CloseWhenCaretAtBeginning = true };
             _completionWindow.CompletionList.CompletionData.AddRange( data );
             _completionWindow.Show();
             _completionWindow.Closed += delegate { _completionWindow = null; };

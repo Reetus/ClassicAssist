@@ -8,29 +8,14 @@
              xmlns:resources="clr-namespace:ClassicAssist.Resources"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
-             mc:Ignorable="d"
+             mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
              d:DesignHeight="400" d:DesignWidth="550">
-    <d:DesignerProperties.DesignStyle>
-        <Style TargetType="UserControl">
-            <Setter Property="Background" Value="White" />
-        </Style>
-    </d:DesignerProperties.DesignStyle>
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../../Resources/Icons.xaml" />
-                <ResourceDictionary Source="../Debug/DebugToolBarStyle.xaml" />
+                <ResourceDictionary Source="Styles.xaml" />
                 <ResourceDictionary>
-                    <DrawingImage x:Key="RefreshIcon">
-                        <DrawingImage.Drawing>
-                            <DrawingGroup ClipGeometry="M0,0 V50 H50 V0 H0 Z">
-                                <DrawingGroup Opacity="1">
-                                    <GeometryDrawing Brush="#FF000000"
-                                                     Geometry="F1 M50,50z M0,0z M25,5C14.351563,5 5.632813,13.378906 5.054688,23.890625 5.007813,24.609375 5.347656,25.296875 5.949219,25.695313 6.550781,26.089844 7.320313,26.132813 7.960938,25.804688 8.601563,25.476563 9.019531,24.828125 9.046875,24.109375 9.511719,15.675781 16.441406,9 25,9 29.585938,9 33.699219,10.925781 36.609375,14L34,14C33.277344,13.988281 32.609375,14.367188 32.246094,14.992188 31.878906,15.613281 31.878906,16.386719 32.246094,17.007813 32.609375,17.632813 33.277344,18.011719 34,18L40.261719,18C40.488281,18.039063,40.71875,18.039063,40.949219,18L44,18 44,8C44.007813,7.460938 43.796875,6.941406 43.414063,6.558594 43.03125,6.175781 42.511719,5.964844 41.96875,5.972656 40.867188,5.988281 39.984375,6.894531 40,8L40,11.777344C36.332031,7.621094,30.964844,5,25,5z M43.03125,23.972656C41.925781,23.925781 40.996094,24.785156 40.953125,25.890625 40.488281,34.324219 33.558594,41 25,41 20.414063,41 16.304688,39.074219 13.390625,36L16,36C16.722656,36.011719 17.390625,35.632813 17.753906,35.007813 18.121094,34.386719 18.121094,33.613281 17.753906,32.992188 17.390625,32.367188 16.722656,31.988281 16,32L9.71875,32C9.507813,31.96875,9.296875,31.96875,9.085938,32L6,32 6,42C5.988281,42.722656 6.367188,43.390625 6.992188,43.753906 7.613281,44.121094 8.386719,44.121094 9.007813,43.753906 9.632813,43.390625 10.011719,42.722656 10,42L10,38.222656C13.667969,42.378906 19.035156,45 25,45 35.648438,45 44.367188,36.621094 44.945313,26.109375 44.984375,25.570313 44.800781,25.039063 44.441406,24.636719 44.078125,24.234375 43.570313,23.996094 43.03125,23.972656z" />
-                                </DrawingGroup>
-                            </DrawingGroup>
-                        </DrawingImage.Drawing>
-                    </DrawingImage>
                     <DrawingImage x:Key="ContainerIcon">
                         <DrawingImage.Drawing>
                             <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
@@ -158,18 +143,6 @@
                             </DrawingGroup>
                         </DrawingImage.Drawing>
                     </DrawingImage>
-                    <DrawingImage x:Key="RemoveIcon">
-                        <DrawingImage.Drawing>
-                            <DrawingGroup ClipGeometry="M0,0 V512.001 H512.001 V0 H0 Z">
-                                <DrawingGroup Opacity="1">
-                                    <DrawingGroup Opacity="1">
-                                        <GeometryDrawing Brush="#FF000000"
-                                                         Geometry="F1 M512.001,512.001z M0,0z M294.111,256.001L504.109,46.003C514.632,35.479 514.632,18.417 504.109,7.894 493.585,-2.63 476.522,-2.63 465.999,7.894L256,217.892 46.002,7.894C35.478,-2.63 18.416,-2.63 7.893,7.894 -2.63,18.418 -2.631,35.48 7.893,46.003L217.891,256.001 7.893,465.999C-2.631,476.523 -2.631,493.585 7.893,504.108 18.417,514.632 35.479,514.631 46.002,504.108L256,294.11 465.997,504.108C476.521,514.632 493.584,514.631 504.107,504.108 514.63,493.584 514.63,476.522 504.107,465.999L294.111,256.001z" />
-                                    </DrawingGroup>
-                                </DrawingGroup>
-                            </DrawingGroup>
-                        </DrawingImage.Drawing>
-                    </DrawingImage>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -196,7 +169,7 @@
                 <Image Source="{StaticResource RemoveIcon}" Height="11" />
             </Button>
         </ToolBar>
-        <TextBox Grid.Row="1" VerticalScrollBarVisibility="Visible" Text="{Binding TestResults}">
+        <TextBox Grid.Row="1" VerticalScrollBarVisibility="Visible" Text="{Binding TestResults}" Style="{DynamicResource TextBoxStyle}">
             <i:Interaction.Behaviors>
                 <misc:AutoScrollTextBoxBehaviour />
             </i:Interaction.Behaviors>

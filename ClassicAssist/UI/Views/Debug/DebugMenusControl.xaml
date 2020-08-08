@@ -3,19 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:ClassicAssist.UI.Views.Debug"
              xmlns:debug="clr-namespace:ClassicAssist.UI.ViewModels.Debug"
-             mc:Ignorable="d"
+             mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
              d:DesignHeight="400" d:DesignWidth="550">
-    <d:DesignerProperties.DesignStyle>
-        <Style TargetType="UserControl">
-            <Setter Property="Background" Value="White" />
-        </Style>
-    </d:DesignerProperties.DesignStyle>
     <UserControl.DataContext>
         <debug:DebugMenusViewModel />
     </UserControl.DataContext>
-    <Grid Margin="10">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/Icons.xaml" />
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="5" />
@@ -30,6 +32,6 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-        <TextBox Grid.Column="2" Text="{Binding Text}" VerticalScrollBarVisibility="Auto" />
+        <TextBox Grid.Column="2" Text="{Binding Text}" VerticalScrollBarVisibility="Auto" Style="{DynamicResource TextBoxStyle}"/>
     </Grid>
 </UserControl>

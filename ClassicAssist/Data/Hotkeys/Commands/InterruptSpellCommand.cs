@@ -47,7 +47,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
                 return;
             }
 
-            ActionPacketQueue.EnqueueActionPackets(
+            ActionPacketQueue.EnqueuePackets(
                 new BasePacket[]
                 {
                     new DragItem( serial, 1 ), new EquipRequest( serial, selectedLayer, player.Serial )

@@ -182,5 +182,19 @@ namespace ClassicAssist.UO.Data
                 return _staticTiles.Value[0];
             }
         }
+
+        public static Layer GetLayer( int id )
+        {
+            StaticTile td = TileData.GetStaticTile( id );
+
+            if (!td.Flags.HasFlag( TileFlags.Wearable ))
+            {
+                return Layer.Invalid;
+            }
+
+            Layer layer = (Layer)td.Quality;
+
+            return layer;
+        }
     }
 }

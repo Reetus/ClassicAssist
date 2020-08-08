@@ -38,7 +38,7 @@ namespace ClassicAssist.UO.Network
 
             if ( Options.CurrentOptions.UseObjectQueue )
             {
-                ActionPacketQueue.EnqueueActionPacket( new UseObject( serial ), QueuePriority.High );
+                ActionPacketQueue.EnqueuePacket( new UseObject( serial ), QueuePriority.High );
 
                 return true;
             }

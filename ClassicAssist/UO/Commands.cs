@@ -92,7 +92,7 @@ namespace ClassicAssist.UO
                 throw new ArgumentException( "EquipItem: Layer is invalid" );
             }
 
-            return ActionPacketQueue.EnqueueActionPackets(
+            return ActionPacketQueue.EnqueuePackets(
                 new BasePacket[]
                 {
                     new DragItem( item.Serial, 1 ), new EquipRequest( item.Serial, layer, containerSerial )
@@ -119,7 +119,7 @@ namespace ClassicAssist.UO
                 throw new ArgumentException( "EquipItem: Layer is invalid" );
             }
 
-            return ActionPacketQueue.EnqueueActionPackets(
+            return ActionPacketQueue.EnqueuePackets(
                 new BasePacket[]
                 {
                     new DragItem( item.Serial, 1 ), new EquipRequest( item.Serial, layer, containerSerial )

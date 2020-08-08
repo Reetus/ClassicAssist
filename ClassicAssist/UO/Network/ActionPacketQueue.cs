@@ -59,12 +59,20 @@ namespace ClassicAssist.UO.Network
                         }
                     }
 
+                    if ( actionQueueItem.Token.IsCancellationRequested )
+                    {
+                        actionQueueItem.Result = false;
+                        actionQueueItem.WaitHandle.Set();
+                        return;
+                    }
+
                     byte[] data = actionQueueItem.Packet;
                     int length = actionQueueItem.Length;
 
                     Engine.LastActionPacket = DateTime.Now;
                     Engine.SendPacketToServer( data, length );
 
+                    actionQueueItem.Result = true;
                     actionQueueItem.WaitHandle.Set();
                 }
                 else if ( queueItem is ActionQueueItem actionItem )
@@ -78,7 +86,7 @@ namespace ClassicAssist.UO.Network
                         }
                     }
 
-                    bool? result = actionItem.Action?.Invoke( actionItem.CheckRange );
+                    bool? result = actionItem.Action?.Invoke( actionItem.Arguments );
 
                     if ( result.HasValue && result.Value )
                     {
@@ -92,20 +100,23 @@ namespace ClassicAssist.UO.Network
         }
 
         // ReSharper disable once UnusedMember.Global
-        public static Task EnqueueActionPacket( byte[] packet, int length, QueuePriority priority, bool delaySend )
+        public static Task EnqueuePacket( byte[] packet, int length, QueuePriority priority, bool delaySend,
+            CancellationToken cancellationToken = default )
         {
-            return EnqueueActionPacket( new PacketQueueItem( packet, length, delaySend ), priority );
+            return EnqueuePacket( new PacketQueueItem( packet, length, delaySend ) { Token = cancellationToken },
+                priority );
         }
 
-        public static Task EnqueueActionPacket( BasePacket packet, QueuePriority priority = QueuePriority.Low,
-            bool delaySend = true )
+        public static Task EnqueuePacket( BasePacket packet, QueuePriority priority = QueuePriority.Low,
+            bool delaySend = true, CancellationToken cancellationToken = default )
         {
             byte[] data = packet.ToArray();
 
-            return EnqueueActionPacket( new PacketQueueItem( data, data.Length, delaySend ), priority );
+            return EnqueuePacket( new PacketQueueItem( data, data.Length, delaySend ) { Token = cancellationToken },
+                priority );
         }
 
-        public static Task EnqueueActionPacket( PacketQueueItem packetQueueItem, QueuePriority priority )
+        public static Task EnqueuePacket( PacketQueueItem packetQueueItem, QueuePriority priority )
         {
             lock ( _actionPacketQueueLock )
             {
@@ -115,6 +126,7 @@ namespace ClassicAssist.UO.Network
             }
         }
 
+        //TODO Change to ActionQueueItem with CancellationToken
         public static Task EnqueueDragDropGround( int serial, int amount, int x, int y, int z,
             QueuePriority priority = QueuePriority.Low, bool delaySend = true )
         {
@@ -133,8 +145,8 @@ namespace ClassicAssist.UO.Network
             }
         }
 
-        public static Task EnqueueActionPackets( IEnumerable<BasePacket> packets,
-            QueuePriority priority = QueuePriority.Low, bool delaySend = true )
+        public static Task EnqueuePackets( IEnumerable<BasePacket> packets, QueuePriority priority = QueuePriority.Low,
+            bool delaySend = true, CancellationToken cancellationToken = default )
         {
             lock ( _actionPacketQueueLock )
             {
@@ -144,7 +156,8 @@ namespace ClassicAssist.UO.Network
                 {
                     byte[] data = packet.ToArray();
 
-                    PacketQueueItem packetQueueItem = new PacketQueueItem( data, data.Length, delaySend );
+                    PacketQueueItem packetQueueItem =
+                        new PacketQueueItem( data, data.Length, delaySend ) { Token = cancellationToken };
                     handles.Add( packetQueueItem.WaitHandle );
 
                     _actionPacketQueue.Enqueue( packetQueueItem, priority );
@@ -167,14 +180,14 @@ namespace ClassicAssist.UO.Network
                     return Task.FromResult( true );
                 }
 
-                ActionQueueItem actionQueueItem = new ActionQueueItem( check =>
+                ActionQueueItem actionQueueItem = new ActionQueueItem( param =>
                 {
                     if ( cancellationToken.IsCancellationRequested )
                     {
                         return false;
                     }
 
-                    if ( check )
+                    if ( param is bool check && check )
                     {
                         Item item = Engine.Items.GetItem( serial );
 
@@ -227,7 +240,24 @@ namespace ClassicAssist.UO.Network
 
                     // Return false so we don't rewait the action delay
                     return false;
-                } ) { CheckRange = checkRange, DelaySend = delaySend, Serial = serial };
+                } ) { CheckRange = checkRange, DelaySend = delaySend, Serial = serial, Arguments = checkRange};
+
+                _actionPacketQueue.Enqueue( actionQueueItem, priority );
+
+                return actionQueueItem.WaitHandle.ToTask( () => actionQueueItem.Result );
+            }
+        }
+
+        public static Task<bool> EnqueueAction<T>( T arguments, Func<T, bool> action, QueuePriority priority = QueuePriority.Low,
+            bool delaySend = true, CancellationToken cancellationToken = default )
+        {
+            lock ( _actionPacketQueueLock )
+            {
+                ActionQueueItem actionQueueItem =
+                    new ActionQueueItem( e => !cancellationToken.IsCancellationRequested && action( (T) e ) )
+                    {
+                        DelaySend = delaySend, Token = cancellationToken, Arguments = arguments
+                    };
 
                 _actionPacketQueue.Enqueue( actionQueueItem, priority );
 

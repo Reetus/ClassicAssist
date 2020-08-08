@@ -11,6 +11,10 @@ namespace ClassicAssist.UI.Controls
             DependencyProperty.Register( "AdditionalContent", typeof( object ), typeof( CustomWindowTitleControl ),
                 new PropertyMetadata( null ) );
 
+        public static readonly DependencyProperty AdditionalButtonsProperty =
+            DependencyProperty.Register( "AdditionalButtons", typeof( object ), typeof( CustomWindowTitleControl ),
+                new PropertyMetadata( null ) );
+
         public static readonly DependencyProperty CustomTitleProperty = DependencyProperty.Register( "CustomTitle",
             typeof( string ), typeof( CustomWindowTitleControl ),
             new FrameworkPropertyMetadata( default( string ), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
@@ -36,6 +40,12 @@ namespace ClassicAssist.UI.Controls
         {
             get => GetValue( AdditionalContentProperty );
             set => SetValue( AdditionalContentProperty, value );
+        }
+
+        public object AdditionalButtons
+        {
+            get => GetValue( AdditionalButtonsProperty );
+            set => SetValue( AdditionalButtonsProperty, value );
         }
 
         public bool CanClose

@@ -89,6 +89,11 @@ namespace ClassicAssist.UI.Misc
 
             editor.Document.Text = dependencyPropertyChangedEventArgs.NewValue.ToString();
             editor.CaretOffset = 0;
+
+            if ( editor.Document.UndoStack.SizeLimit == 0 )
+            {
+                editor.Document.UndoStack.SizeLimit = int.MaxValue;
+            }
         }
     }
 }

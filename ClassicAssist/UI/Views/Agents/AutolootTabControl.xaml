@@ -24,7 +24,6 @@
             </ResourceDictionary.MergedDictionaries>
             <ValueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
             <misc1:BindingProxy x:Key="Proxy" Data="{Binding}" />
-            <SolidColorBrush x:Key="ListBorder" Color="#828790" />
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
@@ -67,7 +66,6 @@
                     <KeyBinding Key="Delete"
                                 Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedItem}" />
                 </ListBox.InputBindings>
-
                 <i:Interaction.Behaviors>
                     <misc:ItemsControlSelectNewEntryBehaviour SelectedItem="{Binding SelectedItem}"
                                                               Type="{x:Type autoloot:AutolootEntry}" />
@@ -75,7 +73,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <controls:EditTextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                                Label="{Binding}" MinWidth="160" ShowIcon="True" />
+                                                Label="{Binding}" ShowIcon="True" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

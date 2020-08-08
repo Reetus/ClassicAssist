@@ -1,4 +1,5 @@
-﻿using ClassicAssist.UO.Data;
+﻿using Assistant;
+using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
 
 namespace ClassicAssist.UO.Network.Packets
@@ -14,6 +15,11 @@ namespace ClassicAssist.UO.Network.Packets
             _writer = new PacketWriter( 5 );
             _writer.Write( (byte) 0x06 );
             _writer.Write( serial );
+
+            if ( Engine.Player != null )
+            {
+                Engine.Player.LastObjectSerial = serial;
+            }
         }
 
         public string Parse( byte[] packet, int length, PacketDirection direction )

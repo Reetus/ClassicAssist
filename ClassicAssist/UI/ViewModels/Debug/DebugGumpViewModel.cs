@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text;
 using Assistant;
+using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects.Gumps;
 
@@ -78,16 +79,24 @@ namespace ClassicAssist.UI.ViewModels.Debug
             sb.AppendLine();
             sb.AppendLine( $"Text: ({value.Strings.Length})\r\n\r\n{string.Join( "\r\n", value.Strings )}" );
             sb.AppendLine();
-            sb.AppendLine( $"Elements ({value.GumpElements?.Length}):" );
-            sb.AppendLine();
 
-            if ( value.GumpElements != null )
+            for ( int i = 0; i < value.Pages?.Length; i++ )
             {
-                foreach ( GumpElement element in value.GumpElements )
+                GumpPage page = value.Pages[i];
+
+                sb.AppendLine( $"Page {i} elements ({value.GumpElements?.Length}):" );
+                sb.AppendLine();
+
+                if ( page.GumpElements != null )
                 {
-                    sb.AppendLine(
-                        $"X: {element.X}, Y: {element.Y}, Type: {element.Type}, Cliloc: {element.Cliloc}, Text: {element.Text}" );
+                    foreach ( GumpElement element in page.GumpElements )
+                    {
+                        sb.AppendLine(
+                            $"X: {element.X}, Y: {element.Y}, Type: {element.Type}, Cliloc: {element.Cliloc}, Text: {element.Text}" );
+                    }
                 }
+
+                sb.AppendLine();
             }
 
             Text = sb.ToString();

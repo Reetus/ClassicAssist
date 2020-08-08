@@ -185,7 +185,7 @@ namespace ClassicAssist.Data.Organizer
                 return;
             }
 
-            int sourceContainer = await UOC.GetTargeSerialAsync( Strings.Select_source_container___ );
+            int sourceContainer = await UOC.GetTargetSerialAsync( Strings.Select_source_container___ );
 
             if ( sourceContainer <= 0 )
             {
@@ -193,7 +193,7 @@ namespace ClassicAssist.Data.Organizer
                 return;
             }
 
-            int desintationContainer = await UOC.GetTargeSerialAsync( Strings.Select_destination_container___ );
+            int desintationContainer = await UOC.GetTargetSerialAsync( Strings.Select_destination_container___ );
 
             if ( desintationContainer <= 0 )
             {

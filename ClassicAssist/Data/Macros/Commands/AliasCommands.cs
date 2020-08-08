@@ -161,7 +161,7 @@ namespace ClassicAssist.Data.Macros.Commands
             Parameters = new[] { nameof( ParameterType.AliasName ) } )]
         public static int PromptAlias( string aliasName )
         {
-            int serial = UOC.GetTargeSerialAsync( string.Format( Strings.Target_object___0_____, aliasName ) ).Result;
+            int serial = UOC.GetTargetSerialAsync( string.Format( Strings.Target_object___0_____, aliasName ) ).Result;
             SetAlias( aliasName, serial );
             return serial;
         }

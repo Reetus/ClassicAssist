@@ -153,7 +153,7 @@ namespace ClassicAssist.UO
             Engine.SendPacketToServer( new MobileQuery( serial, queryType ) );
         }
 
-        public static async Task<int> GetTargeSerialAsync( string message = "", int timeout = 30000 )
+        public static async Task<int> GetTargetSerialAsync( string message = "", int timeout = 30000 )
         {
             if ( string.IsNullOrEmpty( message ) )
             {
@@ -221,7 +221,7 @@ namespace ClassicAssist.UO
             } );
         }
 
-        public static async Task<(TargetType, TargetFlags, int, int, int, int, int)> GetTargeInfoAsync(
+        public static async Task<(TargetType, TargetFlags, int, int, int, int, int)> GetTargetInfoAsync(
             string message = "", int timeout = 30000 )
         {
             if ( string.IsNullOrEmpty( message ) )
@@ -961,7 +961,7 @@ namespace ClassicAssist.UO
         public static async Task InspectObjectAsync()
         {
             ( TargetType targetType, TargetFlags _, int serial, int x, int y, int z, int itemID ) =
-                await GetTargeInfoAsync( Strings.Target_object___ );
+                await GetTargetInfoAsync( Strings.Target_object___ );
 
             if ( targetType == TargetType.Object && serial != 0 )
             {

@@ -289,7 +289,7 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             int serial =
-                await Commands.GetTargeSerialAsync( string.Format( Strings.Target_object___0_____, entry.Name ) );
+                await Commands.GetTargetSerialAsync( string.Format( Strings.Target_object___0_____, entry.Name ) );
 
             if ( serial == 0 )
             {

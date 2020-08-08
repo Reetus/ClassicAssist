@@ -447,7 +447,7 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( serial == 0 )
             {
-                serial = await Commands.GetTargeSerialAsync( Strings.Target_container___ );
+                serial = await Commands.GetTargetSerialAsync( Strings.Target_container___ );
             }
 
             if ( serial == 0 )

@@ -37,7 +37,7 @@ namespace ClassicAssist.Data.Commands
         {
             Task.Run( async () =>
             {
-                int serial = await UOC.GetTargeSerialAsync();
+                int serial = await UOC.GetTargetSerialAsync();
 
                 if ( serial == 0 )
                 {

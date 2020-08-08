@@ -44,7 +44,7 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             int serial = obj != null
                 ? AliasCommands.ResolveSerial( obj )
-                : UOC.GetTargeSerialAsync( Strings.Target_new_friend___ ).Result;
+                : UOC.GetTargetSerialAsync( Strings.Target_new_friend___ ).Result;
 
             if ( serial == 0 )
             {
@@ -84,7 +84,7 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             int serial = obj != null
                 ? AliasCommands.ResolveSerial( obj )
-                : UOC.GetTargeSerialAsync( Strings.Target_friend_to_remove___ ).Result;
+                : UOC.GetTargetSerialAsync( Strings.Target_friend_to_remove___ ).Result;
 
             if ( serial == 0 )
             {

@@ -66,7 +66,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
         private async Task TestItemAsync( object arg )
         {
-            int serial = await Commands.GetTargeSerialAsync( Strings.Target_new_item___, 60000 );
+            int serial = await Commands.GetTargetSerialAsync( Strings.Target_new_item___, 60000 );
 
             ItemCollection container = new ItemCollection( serial ) { Engine.Items.GetItem( serial ) };
 
@@ -85,7 +85,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
         private async Task TestContainerAsync( object arg )
         {
-            int serial = await Commands.GetTargeSerialAsync( "Choose container...", 60000 );
+            int serial = await Commands.GetTargetSerialAsync( "Choose container...", 60000 );
 
             if ( serial == 0 )
             {

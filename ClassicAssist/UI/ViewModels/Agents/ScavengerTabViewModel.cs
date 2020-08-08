@@ -230,7 +230,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private async Task Insert( object arg )
         {
-            int serial = await UOC.GetTargeSerialAsync( Strings.Target_object___ );
+            int serial = await UOC.GetTargetSerialAsync( Strings.Target_object___ );
 
             if ( serial == 0 )
             {
@@ -275,7 +275,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private async Task SetContainer( object arg )
         {
-            int serial = await UOC.GetTargeSerialAsync( Strings.Select_destination_container___ );
+            int serial = await UOC.GetTargetSerialAsync( Strings.Select_destination_container___ );
 
             if ( serial == 0 )
             {

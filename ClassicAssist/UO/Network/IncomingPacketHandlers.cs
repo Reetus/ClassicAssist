@@ -102,6 +102,7 @@ namespace ClassicAssist.UO.Network
             Register( 0x3A, 0, OnSkillsList );
             Register( 0x3C, 0, OnContainerContents );
             Register( 0x6C, 19, OnTarget );
+            Register( 0x72, 5, OnWarMode );
             Register( 0x74, 0, OnShopList );
             Register( 0x77, 17, OnMobileMoving );
             Register( 0x7C, 0, OnDisplayItemListMenu );
@@ -1055,6 +1056,20 @@ namespace ClassicAssist.UO.Network
             Engine.Mobiles.Add( mobile );
 
             MobileUpdatedEvent?.Invoke( mobile );
+        }
+
+        private static void OnWarMode( PacketReader reader )
+        {
+            if ( reader.ReadBoolean() )
+            {
+                Engine.Player.Status |= MobileStatus.WarMode;
+            }
+            else
+            {
+                Engine.Player.Status &= ~MobileStatus.WarMode;
+            }
+
+            MobileUpdatedEvent?.Invoke( Engine.Player );
         }
 
         private static void OnTarget( PacketReader reader )

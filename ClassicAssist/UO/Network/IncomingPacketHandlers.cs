@@ -1209,7 +1209,7 @@ namespace ClassicAssist.UO.Network
 
         private static void OnExtendedCommand( PacketReader reader )
         {
-            int command = reader.ReadInt16();
+            int command = reader.ReadUInt16();
 
             PacketHandler handler = GetExtendedHandler( command );
             handler?.OnReceive( reader );

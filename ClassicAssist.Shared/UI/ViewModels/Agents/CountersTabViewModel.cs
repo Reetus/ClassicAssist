@@ -1,17 +1,19 @@
 ﻿using System.Collections.ObjectModel;
+using System.Reactive;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Counters;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
-using ClassicAssist.UO;
+using ClassicAssist.Shared.UO;
+using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
 using Newtonsoft.Json.Linq;
+using ReactiveUI;
 
-namespace ClassicAssist.UI.ViewModels.Agents
+namespace ClassicAssist.Shared.UI.ViewModels.Agents
 {
     public class CountersTabViewModel : BaseViewModel, ISettingProvider
     {
@@ -28,7 +30,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             CountersManager manager = CountersManager.GetInstance();
 
             manager.Items = Items;
-            manager.RecountAll = () => Recount( null );
+            manager.RecountAll = Recount;
         }
 
         public ICommand InsertEntryCommand =>
@@ -40,11 +42,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set => SetProperty( ref _items, value );
         }
 
-        public ICommand RecountCommand =>
-            _recountCommand ?? ( _recountCommand = new RelayCommand( Recount, o => Items.Count > 0 ) );
+        public ICommand RecountCommand => _recountCommand ?? ( _recountCommand = ReactiveCommand.Create( Recount ) );
 
         public ICommand RemoveEntryCommand =>
-            _removeEntryCommand ?? ( _removeEntryCommand = new RelayCommand( RemoveEntry, o => SelectedItem != null ) );
+            _removeEntryCommand ?? ( _removeEntryCommand = ReactiveCommand.Create<CountersAgentEntry>( RemoveEntry,
+                this.WhenAnyValue( e => e.SelectedItem, selector: e => e != null ) ) );
 
         public CountersAgentEntry SelectedItem
         {
@@ -121,7 +123,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             Items.Remove( entry );
         }
 
-        private void Recount( object obj )
+        private void Recount()
         {
             foreach ( CountersAgentEntry item in Items )
             {
@@ -131,7 +133,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                 if ( Warn && item.Count <= WarnAmount && count > WarnAmount )
                 {
-                    Shared.UO.Commands.SystemMessage(
+                    Commands.SystemMessage(
                         string.Format( Strings.Counter___0___amount_is_now__1____, item.Name, item.Count ), 61 );
                 }
             }
@@ -139,11 +141,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private async Task InsertEntry( object arg )
         {
-            int serial = await Shared.UO.Commands.GetTargeSerialAsync( Strings.Target_object___ );
+            int serial = await Commands.GetTargeSerialAsync( Strings.Target_object___ );
 
             if ( serial == 0 )
             {
-                Shared.UO.Commands.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                Commands.SystemMessage( Strings.Invalid_or_unknown_object_id );
                 return;
             }
 
@@ -151,7 +153,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             if ( item == null )
             {
-                Shared.UO.Commands.SystemMessage( Strings.Cannot_find_item___ );
+                Commands.SystemMessage( Strings.Cannot_find_item___ );
                 return;
             }
 

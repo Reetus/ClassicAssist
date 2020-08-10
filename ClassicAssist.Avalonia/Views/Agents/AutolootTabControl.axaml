@@ -1,0 +1,117 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:controls="clr-namespace:ClassicAssist.Avalonia.Controls"
+             xmlns:autoloot="clr-namespace:ClassicAssist.Data.Autoloot;assembly=ClassicAssist.Shared"
+             xmlns:agents="clr-namespace:ClassicAssist.Shared.UI.ViewModels.Agents;assembly=ClassicAssist.Shared"
+             xmlns:misc="clr-namespace:ClassicAssist.Avalonia.Misc"
+             xmlns:data="clr-namespace:ClassicAssist.Data.Autoloot;assembly=ClassicAssist.Shared"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ClassicAssist.Avalonia.Views.Agents.AutolootTabControl">
+  <UserControl.DataContext>
+    <agents:AutolootViewModel/>
+  </UserControl.DataContext>
+  <UserControl.Styles>
+    <Style Selector="controls|EditTextBlock">
+      <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+  </UserControl.Styles>
+  <Grid ColumnDefinitions="200, *">
+    <Grid Grid.Column="0" RowDefinitions="Auto, *, Auto">
+      <StackPanel Grid.Row="0">
+        <StackPanel.Styles>
+          <Style Selector="CheckBox">
+            <Setter Property="Margin" Value="0,0,0,5"/>
+          </Style>
+        </StackPanel.Styles>
+        <CheckBox Content="{x:Static resources:Strings.Enabled}" IsChecked="{Binding Enabled}"/>
+        <CheckBox Content="{x:Static resources:Strings.Disable_inside_guardzone}"
+                  IsChecked="{Binding DisableInGuardzone}" />
+      </StackPanel>
+      <ListBox Grid.Row="1" Items="{Binding Items}" SelectedItem="{Binding SelectedItem}">
+        <!--TODO-->
+      </ListBox>
+      <Grid Grid.Row="2" RowDefinitions="Auto, Auto" Margin="0,5,0,0">
+        <Grid Grid.Row="0" ColumnDefinitions="*, *">
+          <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="0" Margin="0,0,5,0"
+                  Command="{Binding RemoveCommand}"
+                  CommandParameter="{Binding SelectedItem}" />
+          <Button Content="{x:Static resources:Strings.Insert}" Grid.Column="1" Margin="5,0,0,0"
+                  Command="{Binding InsertCommand}">
+            <Button.ContextMenu>
+              <ContextMenu>
+                <MenuItem Header="{x:Static resources:Strings.Match_Any_ID}" Command="{Binding InsertMatchAnyCommand}" />
+              </ContextMenu>
+            </Button.ContextMenu>
+          </Button>
+        </Grid>
+        <Grid Grid.Row="1" ColumnDefinitions="*, Auto" Margin="0,5,0,0">
+          <Button Content="{x:Static resources:Strings.Set_Container}"
+                  Command="{Binding SetContainerCommand}" Grid.Column="0" />
+          <Image Source="{DynamicResource ConfigureIcon}" Height="16" Grid.Column="1" Margin="5,0,0,0">
+            <Image.ContextMenu>
+              <ContextMenu>
+                <MenuItem Header="{x:Static resources:Strings.Reset_Container}"
+                          Command="{Binding ResetContainerCommand}" />
+                <MenuItem Header="{x:Static resources:Strings.Define_Custom_Properties}"
+                          Command="{Binding DefineCustomPropertiesCommand}" />
+              </ContextMenu>
+            </Image.ContextMenu>
+          </Image>
+        </Grid>
+      </Grid>
+    </Grid>
+    <Grid Grid.Column="1" Margin="5,0,0,0" RowDefinitions="Auto, Auto, *, Auto">
+      <ComboBox x:Name="comboBox" Grid.Row="0" Items="{Binding Constraints}" SelectedIndex="0">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding Name}"/>
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+      <CheckBox Content="{x:Static resources:Strings.Enabled}" Grid.Row="1" Margin="0,10,0,0" IsChecked="{Binding SelectedItem.Enabled}" />
+      <DataGrid Grid.Row="2" Items="{Binding SelectedItem.Constraints}" SelectedItem="{Binding SelectedProperty, Mode=TwoWay}" Margin="0,5">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="{x:Static resources:Strings.Property}" Binding="{Binding Property.Name}" Width="1*"/>
+          <DataGridTemplateColumn Header="{x:Static resources:Strings.Operator}" Width="1*">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <ComboBox Items="{Binding Source={misc:EnumBindingSourceExtension {x:Type data:AutolootOperator}}}" SelectedItem="{Binding Operator}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="{x:Static resources:Strings.Value}" Width="1*">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <controls:EditTextBlock Text="{Binding Value}" ShowIcon="True"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+        </DataGrid.Columns>
+      </DataGrid>
+      <StackPanel Grid.Row="3">
+        <Grid Margin="0,0,0,10" ColumnDefinitions="*, *">
+          <!--TODO MultiSelect-->
+          <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="0" Margin="0,0,5,0"
+                  Command="{Binding RemoveSingleConstraintCommand}"
+                  CommandParameter="{Binding SelectedProperty}" />
+          <Button Content="{x:Static resources:Strings.Insert}" Grid.Column="1" Margin="5,0,0,0"
+                  Command="{Binding InsertConstraintCommand}"
+                  CommandParameter="{Binding SelectedItem, ElementName=comboBox}" />
+        </Grid>
+        <StackPanel Orientation="Horizontal">
+          <CheckBox Content="{x:Static resources:Strings.Rehue_matching_items}"
+                    IsChecked="{Binding SelectedItem.Rehue}" />
+          <Button Margin="10,0,0,0" Command="{Binding SelectHueCommand}"
+                  CommandParameter="{Binding SelectedItem, ElementName=listView}">
+            <Image Source="{StaticResource ColorWheelIcon}" Height="12" Width="12" />
+          </Button>
+        </StackPanel>
+        <CheckBox Content="{x:Static resources:Strings.Autoloot_matching_items}"
+                  IsChecked="{Binding SelectedItem.Autoloot}" />
+      </StackPanel>
+    </Grid>    
+  </Grid>
+</UserControl>

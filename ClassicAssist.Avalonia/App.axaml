@@ -35,5 +35,9 @@
       <Setter Property="Background" Value="Transparent"/>
       <Setter Property="BorderThickness" Value="0"/>
     </Style>
+    <Style Selector="DataGrid">
+      <Setter Property="IsReadOnly" Value="True"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderMidBrush}"/>
+    </Style>
   </Application.Styles>
 </Application>

@@ -3,8 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ClassicAssist.UI.Views"
-        xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
         xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -46,7 +44,7 @@
                     <Setter Property="Margin" Value="10,0,0,0" />
                 </Style>
             </StackPanel.Resources>
-            <Button Content="{x:Static resources:Strings.OK}" Command="{Binding OKCommand}"
+            <Button Content="{x:Static resources:Strings.OK}" Command="{Binding OKCommand}" IsDefault="True"
                     CommandParameter="{Binding SelectedItem, ElementName=listView}">
                 <i:Interaction.Behaviors>
                     <misc:CloseOnClickBehaviour />

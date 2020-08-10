@@ -1,0 +1,63 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:controls="clr-namespace:ClassicAssist.Avalonia.Controls"
+             xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+             xmlns:agents="clr-namespace:ClassicAssist.Shared.UI.ViewModels.Agents;assembly=ClassicAssist.Shared"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ClassicAssist.Avalonia.Views.Agents.CountersTabControl">
+  <UserControl.DataContext>
+    <agents:CountersTabViewModel/>
+  </UserControl.DataContext>
+  <Grid RowDefinitions="*, Auto, Auto">
+    <DataGrid Items="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" x:Name="DataGrid">
+      <DataGrid.Styles>
+        <Style Selector="controls|EditTextBlock">
+          <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+      </DataGrid.Styles>
+      <DataGrid.Columns>
+        <DataGridTemplateColumn Header="{x:Static resources:Strings.Name}" Width="2*">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <controls:EditTextBlock Text="{Binding Name}" ShowIcon="True"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTextColumn Header="{x:Static resources:Strings.Graphic}" Binding="{Binding Graphic, StringFormat={}0x{0:x}}" Width="*"/>
+        <DataGridTemplateColumn Header="{x:Static resources:Strings.Color}" Width="*">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <controls:EditTextBlock Text="{Binding Color}" ShowIcon="True"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTextColumn Header="{x:Static resources:Strings.Count}" Binding="{Binding Count}" Width="*"/>
+      </DataGrid.Columns>      
+    </DataGrid>
+    <DockPanel Grid.Row="1">
+      <CheckBox IsChecked="{Binding Warn}" Margin="0,10,0,0">
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="{x:Static resources:Strings.Warn_when_counter_amount_below_}" VerticalAlignment="Center"/>
+          <NumericUpDown Minimum="0" Value="{Binding WarnAmount}" Margin="10,0"/>
+        </StackPanel>
+      </CheckBox>
+    </DockPanel>
+    <DockPanel Grid.Row="2" Margin="0,10,0,10">
+      <DockPanel.Styles>
+        <Style Selector="Button">
+          <Setter Property="Width" Value="70" />
+          <Setter Property="Height" Value="25" />
+        </Style>
+      </DockPanel.Styles>
+      <Button Content="{x:Static resources:Strings.Remove}" HorizontalAlignment="Left" Margin="0,0,10,0"
+              Command="{Binding RemoveEntryCommand}" CommandParameter="{Binding SelectedItem, ElementName=DataGrid}" />
+      <Button Content="{x:Static resources:Strings.Insert}" HorizontalAlignment="Left"
+              Command="{Binding InsertEntryCommand}" />
+      <Button Content="{x:Static resources:Strings.Recount}" HorizontalAlignment="Right"
+              Command="{Binding RecountCommand}" />
+    </DockPanel>
+  </Grid>
+</UserControl>

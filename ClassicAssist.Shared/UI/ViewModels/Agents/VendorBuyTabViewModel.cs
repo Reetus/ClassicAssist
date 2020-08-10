@@ -1,22 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
+using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 using Newtonsoft.Json.Linq;
+using ReactiveUI;
 using UOC = ClassicAssist.Shared.UO.Commands;
 
-namespace ClassicAssist.UI.ViewModels.Agents
+namespace ClassicAssist.Shared.UI.ViewModels.Agents
 {
     public class VendorBuyTabViewModel : BaseViewModel, ISettingProvider
     {
@@ -52,7 +54,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         }
 
         public ICommand InsertCommand =>
-            _insertCommand ?? ( _insertCommand = new RelayCommandAsync( Insert, o => Engine.Connected ) );
+            _insertCommand ?? ( _insertCommand = ReactiveCommand.CreateFromTask( Insert ) );
 
         public ObservableCollection<VendorBuyAgentEntry> Items
         {
@@ -61,7 +63,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
         }
 
         public ICommand RemoveCommand =>
-            _removeCommand ?? ( _removeCommand = new RelayCommand( Remove, o => SelectedItem != null ) );
+            _removeCommand ?? ( _removeCommand = ReactiveCommand.Create<VendorBuyAgentEntry>( Remove,
+                this.WhenAnyValue( e => e.SelectedItem, selector: e => e != null ) ) );
 
         public VendorBuyAgentEntry SelectedItem
         {
@@ -191,7 +194,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
         }
 
-        private async Task Insert( object arg )
+        private async Task Insert( CancellationToken cancellationToken )
         {
             int serial = await UOC.GetTargeSerialAsync( Strings.Target_object___ );
 

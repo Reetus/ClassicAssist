@@ -1,0 +1,54 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:ClassicAssist.Avalonia.Controls"
+        xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+        xmlns:misc="clr-namespace:ClassicAssist.Avalonia.Misc"
+        xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="350"
+        x:Class="ClassicAssist.Avalonia.Views.HuePickerWindow"
+        Title="{x:Static resources:Strings.Hue_Picker}" Height="350" Width="450"
+        DataContext="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}">
+  <Window.Resources>
+    <misc:HueEntryToRectanglesValueConverter x:Key="HueEntryToRectanglesValueConverter"/>
+  </Window.Resources>
+  <Grid RowDefinitions="Auto, *, Auto" Margin="10">
+    <DockPanel Grid.Row="0" Margin="0,0,0,10">
+      <TextBlock Text="{x:Static resources:Strings.Filter_}" DockPanel.Dock="Left" Margin="0,0,10,0" VerticalAlignment="Center" />
+      <TextBox Text="{Binding FilterText}" />
+    </DockPanel>
+    <ListBox Grid.Row="1" Items="{Binding FilteredItems}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" x:Name="listBox" SelectedItem="{Binding SelectedItem}">
+      <ListBox.ItemsPanel>
+        <ItemsPanelTemplate>
+          <VirtualizingStackPanel/>
+        </ItemsPanelTemplate>
+      </ListBox.ItemsPanel>
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Horizontal" ToolTip.Tip="{Binding EntryName}">
+            <TextBlock Text="{Binding Index}" Padding="0,0,20,0" Width="50" />
+            <ContentControl Content="{Binding Entry, Converter={StaticResource HueEntryToRectanglesValueConverter}}"/>
+          </StackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+    <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="0,10,0,0">
+      <StackPanel.Styles>
+        <Style Selector="Button">
+          <Setter Property="Padding" Value="20,4"/>
+        </Style>
+      </StackPanel.Styles>
+      <Button Content="{x:Static resources:Strings.OK}" Margin="0,0,5,0" IsDefault="True">
+        <i:Interaction.Behaviors>
+          <misc:CloseOnClickBehaviour Command="{Binding OKCommand}" CommandParameter="{Binding SelectedItem, ElementName=listBox}"/>
+        </i:Interaction.Behaviors>
+      </Button>
+      <Button Content="{x:Static resources:Strings.Cancel}">
+        <i:Interaction.Behaviors>
+          <misc:CloseOnClickBehaviour/>
+        </i:Interaction.Behaviors>
+      </Button>
+    </StackPanel>
+  </Grid>
+</Window>

@@ -5,17 +5,14 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
-using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Data.Regions;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Misc;
-using ClassicAssist.UI.Views;
-using ClassicAssist.UI.Views.Autoloot;
+using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
@@ -24,14 +21,17 @@ using ClassicAssist.UO.Objects;
 using Microsoft.Scripting.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ReactiveUI;
 using UOC = ClassicAssist.Shared.UO.Commands;
 
-namespace ClassicAssist.UI.ViewModels.Agents
+namespace ClassicAssist.Shared.UI.ViewModels.Agents
 {
     public class AutolootViewModel : BaseViewModel, ISettingProvider
     {
         private const int LOOT_TIMEOUT = 5000;
         private readonly object _autolootLock = new object();
+        private readonly IObservable<bool> _entrySelected;
+        private readonly IObservable<bool> _itemSelected;
 
         private readonly string _propertiesFile = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
             "Data", "Properties.json" );
@@ -58,6 +58,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private ICommand _removeCommand;
         private ICommand _removeConstraintCommand;
+        private ICommand _removeSingleConstraintCommand;
         private RelayCommand _resetContainerCommand;
         private AutolootEntry _selectedItem;
 
@@ -81,6 +82,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
             AutolootHelpers.SetAutolootContainer = serial => ContainerSerial = serial;
             IncomingPacketHandlers.CorpseContainerDisplayEvent += OnCorpseEvent;
             AutolootManager.GetInstance().GetEntries = () => _items.ToList();
+
+            _entrySelected = this.WhenAnyValue( e => e.SelectedItem, selector: e => e != null );
+            _itemSelected = this.WhenAnyValue( e => e.SelectedProperty, selector: e => e != null );
         }
 
         public ICommand ClipboardCopyCommand =>
@@ -118,11 +122,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
         }
 
         public ICommand InsertCommand =>
-            _insertCommand ?? ( _insertCommand = new RelayCommandAsync( Insert, o => Engine.Connected ) );
+            _insertCommand ?? ( _insertCommand = ReactiveCommand.CreateFromTask( Insert ) );
 
         public ICommand InsertConstraintCommand =>
             _insertConstraintCommand ?? ( _insertConstraintCommand =
-                new RelayCommand( InsertConstraint, o => SelectedItem != null ) );
+                ReactiveCommand.Create<PropertyEntry>( InsertConstraint, _entrySelected ) );
 
         public ICommand InsertMatchAnyCommand =>
             _insertMatchAnyCommand ?? ( _insertMatchAnyCommand = new RelayCommand( InsertMatchAny, o => true ) );
@@ -134,11 +138,16 @@ namespace ClassicAssist.UI.ViewModels.Agents
         }
 
         public ICommand RemoveCommand =>
-            _removeCommand ?? ( _removeCommand = new RelayCommandAsync( Remove, o => SelectedItem != null ) );
+            _removeCommand ??
+            ( _removeCommand = ReactiveCommand.CreateFromTask<AutolootEntry>( Remove, _entrySelected ) );
 
         public ICommand RemoveConstraintCommand =>
             _removeConstraintCommand ?? ( _removeConstraintCommand =
-                new RelayCommand( RemoveConstraint, o => SelectedProperty != null ) );
+                ReactiveCommand.Create<IEnumerable<AutolootConstraintEntry>>( RemoveConstraint, _itemSelected ) );
+
+        public ICommand RemoveSingleConstraintCommand =>
+            _removeSingleConstraintCommand ?? ( _removeSingleConstraintCommand =
+                ReactiveCommand.Create<AutolootConstraintEntry>( RemoveSingleConstraint, _itemSelected ) );
 
         public ICommand ResetContainerCommand => _resetContainerCommand = new RelayCommand( ResetContainer, o => true );
 
@@ -287,6 +296,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
         }
 
+        private void RemoveSingleConstraint( AutolootConstraintEntry obj )
+        {
+            SelectedItem?.Constraints.Remove( obj );
+        }
+
         private void LoadCustomProperties()
         {
             if ( !File.Exists( _propertiesFileCustom ) )
@@ -330,7 +344,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private void ClipboardPaste( object obj )
         {
-            string text = Clipboard.GetText();
+            string text = Engine.UIInvoker.GetClipboardText();
 
             try
             {
@@ -365,7 +379,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             string text = JsonConvert.SerializeObject( entries );
 
-            Clipboard.SetText( text );
+            Engine.UIInvoker.SetClipboardText( text );
         }
 
         public void OnCorpseEvent( int serial )
@@ -492,15 +506,10 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private void DefineCustomProperties( object obj )
         {
-            Engine.Dispatcher.Invoke( () =>
-            {
-                CustomPropertiesWindow window = new CustomPropertiesWindow();
-                window.ShowDialog();
-
-                Constraints.Clear();
-                LoadProperties();
-                LoadCustomProperties();
-            } );
+            Engine.UIInvoker.Invoke( "CustomPropertiesWindow" );
+            Constraints.Clear();
+            LoadProperties();
+            LoadCustomProperties();
         }
 
         private void ResetContainer( object obj )
@@ -531,7 +540,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             Items.Add( entry );
         }
 
-        private async Task Insert( object arg )
+        private async Task Insert( CancellationToken cancellationToken )
         {
             int serial = await UOC.GetTargeSerialAsync( Strings.Target_object___ );
 
@@ -578,10 +587,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            if ( HuePickerWindow.GetHue( out int hue ) )
-            {
-                entry.RehueHue = hue;
-            }
+            int hue = Engine.UIInvoker.GetHueAsync().Result;
+
+            entry.RehueHue = hue;
         }
     }
 }

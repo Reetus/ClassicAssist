@@ -1,0 +1,75 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:ClassicAssist.Shared.UI.ViewModels.Agents;assembly=ClassicAssist.Shared"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:controls="clr-namespace:ClassicAssist.Avalonia.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ClassicAssist.Avalonia.Views.Agents.OrganizerTabControl">
+  <UserControl.DataContext>
+    <viewModels:OrganizerTabViewModel/>
+  </UserControl.DataContext>
+  <Grid ColumnDefinitions="150, *">
+    <Grid RowDefinitions="Auto, *,Auto,Auto" Margin="0,0,10,0">
+      <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,5">
+        <Button Content="{Binding PlayStopButtonText}" Command="{Binding OrganizeCommand}" CommandParameter="{Binding SelectedItem}" Grid.Column="0"/>
+        <StackPanel Margin="5" Grid.Column="1">
+          <CheckBox Content="{x:Static resources:Strings.Stack}" IsChecked="{Binding SelectedItem.Stack}" />
+        </StackPanel>
+      </Grid>
+      <ListBox Items="{Binding Items}" Grid.Row="1" SelectedItem="{Binding SelectedItem}">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <controls:EditTextBlock Text="{Binding Name}" ShowIcon="True"/>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+      <StackPanel Grid.Row="2" Margin="0,10,0,0">
+        <CheckBox Content="{x:Static resources:Strings.Complete}" IsChecked="{Binding SelectedItem.Complete}" />
+      </StackPanel>
+      <Grid Grid.Row="3" Margin="0,10,0,0" ColumnDefinitions="*,*">
+        <Button Content="{x:Static resources:Strings.Remove}" Margin="0" Grid.Column="0"
+                Command="{Binding RemoveOrganizerAgentEntryCommand}" CommandParameter="{Binding SelectedItem}"/>
+        <Button Content="{x:Static resources:Strings.New}" Margin="5,0,0,0" Grid.Column="1"
+                Command="{Binding NewOrganizerEntryCommand}" />
+      </Grid>
+    </Grid>
+    <Grid Grid.Column="1" Margin="0,0,0,0" RowDefinitions="*,Auto">
+      <DataGrid Items="{Binding SelectedItem.Items}" Grid.Row="0" x:Name="dataGrid" SelectedItem="{Binding SelectedOrganizerItem, Mode=TwoWay}" Padding="5">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="{x:Static resources:Strings.Item}" Binding="{Binding Item}" Width="2*"/>
+          <DataGridTextColumn Header="{x:Static resources:Strings.Graphic}" Binding="{Binding ID, StringFormat={}0x{0:x}}" Width="1*"/>
+          <DataGridTemplateColumn Header="{x:Static resources:Strings.Color}" Width="1*">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <controls:EditTextBlock Text="{Binding Hue}" ShowIcon="True" VerticalAlignment="Center"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="{x:Static resources:Strings.Amount}" Width="1*">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <controls:EditTextBlock Text="{Binding Amount}" ShowIcon="True" VerticalAlignment="Center"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>          
+        </DataGrid.Columns>
+      </DataGrid>
+      <StackPanel Orientation="Horizontal" Grid.Row="1">
+        <StackPanel.Styles>
+          <Style Selector="Button">
+            <Setter Property="Margin" Value="0,10,10,0"/>
+            <Setter Property="Padding" Value="25,4"/>
+          </Style>
+        </StackPanel.Styles>
+        <Button Content="{x:Static resources:Strings.Set_Containers}"
+                Command="{Binding SetContainersCommand}" CommandParameter="{Binding SelectedItem}" />
+        <Button Content="{x:Static resources:Strings.Remove}" Command="{Binding RemoveItemCommand}"
+                CommandParameter="{Binding SelectedItem, ElementName=dataGrid}" />
+        <Button Content="{x:Static resources:Strings.Insert}" Command="{Binding InsertItemCommand}"
+                CommandParameter="{Binding SelectedItem}" />
+      </StackPanel>
+    </Grid>
+  </Grid>
+</UserControl>

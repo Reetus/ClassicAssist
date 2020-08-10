@@ -1,29 +1,32 @@
-﻿using System.Threading.Tasks;
+﻿using System.Reactive;
+using System.Threading.Tasks;
 using System.Windows.Input;
-using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Organizer;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
-using ClassicAssist.UO;
+using ClassicAssist.Shared.UO;
+using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
 using Newtonsoft.Json.Linq;
+using ReactiveUI;
 
-namespace ClassicAssist.UI.ViewModels.Agents
+namespace ClassicAssist.Shared.UI.ViewModels.Agents
 {
     public class OrganizerTabViewModel : HotkeyEntryViewModel<OrganizerEntry>, ISettingProvider
     {
         private readonly OrganizerManager _manager;
-        private ICommand _insertItemCommand;
+        private ReactiveCommand<OrganizerEntry, Unit> _insertItemCommand;
         private bool _isOrganizing;
         private ICommand _newOrganizerEntryCommand;
-        private ICommand _organizeCommand;
-        private ICommand _removeItemCommand;
-        private ICommand _removeOrganizerAgentEntryCommand;
+        private ReactiveCommand<OrganizerEntry, Unit> _organizeCommand;
+        private ReactiveCommand<OrganizerItem, Unit> _removeItemCommand;
+        private ReactiveCommand<OrganizerEntry, Unit> _removeOrganizerAgentEntryCommand;
         private OrganizerEntry _selectedItem;
-        private ICommand _setContainersCommand;
+        private OrganizerItem _selectedOrganizerItem;
+        private ReactiveCommand<OrganizerEntry, Unit> _setContainersCommand;
 
         public OrganizerTabViewModel() : base( Strings.Organizer )
         {
@@ -32,9 +35,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
             _manager.Items = Items;
         }
 
-        public ICommand InsertItemCommand =>
-            _insertItemCommand ?? ( _insertItemCommand =
-                new RelayCommandAsync( InsertItem, o => SelectedItem != null && !IsOrganizing ) );
+        public ReactiveCommand<OrganizerEntry, Unit> InsertItemCommand =>
+            _insertItemCommand ?? ( _insertItemCommand = ReactiveCommand.CreateFromTask<OrganizerEntry>( InsertItem,
+                this.WhenAnyValue( e => e.SelectedItem, e => e.IsOrganizing, ( e, f ) => e != null && !f ) ) );
 
         public bool IsOrganizing
         {
@@ -50,17 +53,20 @@ namespace ClassicAssist.UI.ViewModels.Agents
             _newOrganizerEntryCommand ??
             ( _newOrganizerEntryCommand = new RelayCommand( NewOrganizerEntry, o => !IsOrganizing ) );
 
-        public ICommand OrganizeCommand =>
-            _organizeCommand ?? ( _organizeCommand = new RelayCommandAsync( Organize, o => SelectedItem != null ) );
+        public ReactiveCommand<OrganizerEntry, Unit> OrganizeCommand =>
+            _organizeCommand ?? ( _organizeCommand = ReactiveCommand.CreateFromTask<OrganizerEntry>( Organize,
+                this.WhenAnyValue( e => e.SelectedItem, selector: e => e != null ) ) );
 
         public string PlayStopButtonText => IsOrganizing ? Strings.Stop : Strings.Play;
 
-        public ICommand RemoveItemCommand =>
-            _removeItemCommand ?? ( _removeItemCommand = new RelayCommand( RemoveItem, o => !IsOrganizing ) );
+        public ReactiveCommand<OrganizerItem, Unit> RemoveItemCommand =>
+            _removeItemCommand ?? ( _removeItemCommand = ReactiveCommand.Create<OrganizerItem>( RemoveItem,
+                this.WhenAnyValue( e => e.IsOrganizing, e => e.SelectedOrganizerItem, ( e, f ) => !e && f != null ) ) );
 
-        public ICommand RemoveOrganizerAgentEntryCommand =>
+        public ReactiveCommand<OrganizerEntry, Unit> RemoveOrganizerAgentEntryCommand =>
             _removeOrganizerAgentEntryCommand ?? ( _removeOrganizerAgentEntryCommand =
-                new RelayCommand( RemoveOrganizerAgentEntry, o => !IsOrganizing ) );
+                ReactiveCommand.Create<OrganizerEntry>( RemoveOrganizerAgentEntry,
+                    this.WhenAnyValue( e => e.SelectedItem, selector: e => e != null ) ) );
 
         public OrganizerEntry SelectedItem
         {
@@ -68,9 +74,17 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set => SetProperty( ref _selectedItem, value );
         }
 
-        public ICommand SetContainersCommand =>
+        public OrganizerItem SelectedOrganizerItem
+        {
+            get => _selectedOrganizerItem;
+            set => SetProperty( ref _selectedOrganizerItem, value );
+        }
+
+        public ReactiveCommand<OrganizerEntry, Unit> SetContainersCommand =>
             _setContainersCommand ?? ( _setContainersCommand =
-                new RelayCommandAsync( _manager.SetContainers, o => SelectedItem != null && !IsOrganizing ) );
+                ReactiveCommand.CreateFromTask<OrganizerEntry>( _manager.SetContainers,
+                    this.WhenAnyValue( e => e.SelectedItem, f => f.IsOrganizing, ( e, f ) => e != null && !f ) ) );
+        //new RelayCommandAsync( _manager.SetContainers, o => SelectedItem != null && !IsOrganizing ) );
 
         public void Serialize( JObject json )
         {
@@ -205,11 +219,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            int serial = await Shared.UO.Commands.GetTargeSerialAsync( Strings.Target_new_item___ );
+            int serial = await Commands.GetTargeSerialAsync( Strings.Target_new_item___ );
 
             if ( serial <= 0 )
             {
-                Shared.UO.Commands.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                Commands.SystemMessage( Strings.Invalid_or_unknown_object_id );
                 return;
             }
 
@@ -217,7 +231,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             if ( item == null )
             {
-                Shared.UO.Commands.SystemMessage( Strings.Cannot_find_item___ );
+                Commands.SystemMessage( Strings.Cannot_find_item___ );
                 return;
             }
 

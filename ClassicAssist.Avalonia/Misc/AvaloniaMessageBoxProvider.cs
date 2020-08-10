@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Misc;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.ViewModels;
 using SEngine = ClassicAssist.Shared.Engine;
 
@@ -11,6 +12,11 @@ namespace ClassicAssist.Avalonia.Misc
         public Task<MessageBoxResult> Show( string text, string caption = null,
             MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxImage? icon = null )
         {
+            if ( string.IsNullOrEmpty( caption ) )
+            {
+                caption = Strings.Error;
+            }
+
             TaskCompletionSource<MessageBoxResult> promise = new TaskCompletionSource<MessageBoxResult>();
 
             SEngine.Dispatcher.Invoke( async () =>

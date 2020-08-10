@@ -20,9 +20,12 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using ClassicAssist.Shared;
+using ClassicAssist.UI.Views;
 
 namespace ClassicAssist
 {
@@ -60,6 +63,40 @@ namespace ClassicAssist
             }
 
             _dispatcher.Invoke( () => { window.Show(); } );
+        }
+
+        public async Task<int> GetHueAsync()
+        {
+            TaskCompletionSource<int> tcs = new TaskCompletionSource<int>();
+            Thread thread = new Thread( () =>
+            {
+                try
+                {
+                    HuePickerWindow window = new HuePickerWindow();
+                    window.ShowDialog();
+
+                    tcs.SetResult( window.SelectedHue );
+                }
+                catch ( Exception e )
+                {
+                    tcs.SetException( e );
+                }
+            } );
+
+            thread.SetApartmentState( ApartmentState.STA );
+            thread.Start();
+
+            return await tcs.Task;
+        }
+
+        public void SetClipboardText(string text)
+        {
+            Clipboard.SetText( text );
+        }
+
+        public string GetClipboardText()
+        {
+            return Clipboard.GetText();
         }
     }
 }

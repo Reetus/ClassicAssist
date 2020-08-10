@@ -1422,4 +1422,7 @@ Are you sure you wish to continue?</value>
   <data name="Avalonia port assistance provided by Kevin_" xml:space="preserve">
     <value>Avalonia port assistance provided by Kevin_</value>
   </data>
+  <data name="Toggle Dress Type" xml:space="preserve">
+    <value>Toggle Dress Type</value>
+  </data>
 </root>

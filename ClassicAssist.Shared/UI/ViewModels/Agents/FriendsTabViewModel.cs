@@ -1,16 +1,15 @@
-﻿using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
-using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Friends;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
-using ClassicAssist.UI.Views;
-using ClassicAssist.UO.Data;
+using ClassicAssist.UI.ViewModels;
 using Newtonsoft.Json.Linq;
+using ReactiveUI;
 
-namespace ClassicAssist.UI.ViewModels.Agents
+namespace ClassicAssist.Shared.UI.ViewModels.Agents
 {
     public class FriendsTabViewModel : BaseViewModel, ISettingProvider
     {
@@ -34,8 +33,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
         }
 
         public ICommand RemoveFriendCommand =>
-            _removeFriendCommand ??
-            ( _removeFriendCommand = new RelayCommandAsync( RemoveFriend, o => SelectedItem != null ) );
+            _removeFriendCommand ?? ( _removeFriendCommand = ReactiveCommand.CreateFromTask<FriendEntry>( RemoveFriend,
+                this.WhenAnyValue( e => e.SelectedItem, selector: e => e != null ) ) );
+        //new RelayCommandAsync( RemoveFriend, o => SelectedItem != null ) );
 
         public FriendEntry SelectedItem
         {
@@ -44,8 +44,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
         }
 
         public ICommand SelectHueCommand =>
-            _selectHueCommand ??
-            ( _selectHueCommand = new RelayCommand( SelectHue, o => Options.CurrentOptions.RehueFriends ) );
+            _selectHueCommand ?? ( _selectHueCommand = ReactiveCommand.CreateFromTask( SelectHue,
+                this.WhenAnyValue( e => e.Options.RehueFriends, selector: e => e ) ) );
 
         public void Serialize( JObject json )
         {
@@ -105,12 +105,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
             MainCommands.Resync();
         }
 
-        private static void SelectHue( object obj )
+        private static async Task SelectHue( CancellationToken token )
         {
-            if ( !HuePickerWindow.GetHue( out int hue ) )
-            {
-                return;
-            }
+            int hue = await Engine.UIInvoker.GetHueAsync();
 
             Options.CurrentOptions.RehueFriendsHue = hue;
             MainCommands.Resync();

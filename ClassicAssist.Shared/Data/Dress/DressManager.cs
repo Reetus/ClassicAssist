@@ -3,10 +3,11 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
-using ClassicAssist.Shared;
 using ClassicAssist.Annotations;
 using ClassicAssist.Misc;
+using ClassicAssist.Shared;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
@@ -92,7 +93,7 @@ namespace ClassicAssist.Data.Dress
             PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
         }
 
-        public async Task UndressAll()
+        public async Task UndressAll( CancellationToken cancellationToken = default )
         {
             try
             {
@@ -126,6 +127,11 @@ namespace ClassicAssist.Data.Dress
 
                     foreach ( int item in items )
                     {
+                        if ( cancellationToken.IsCancellationRequested )
+                        {
+                            return;
+                        }
+
                         await ActionPacketQueue.EnqueueDragDrop( item, 1, backpack, QueuePriority.Medium );
                     }
                 }

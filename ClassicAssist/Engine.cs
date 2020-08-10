@@ -68,6 +68,7 @@ namespace Assistant
                 SEngine.UIInvoker = new WPFUIInvoker( Dispatcher.CurrentDispatcher );
                 _window = new MainWindow();
                 _window.Show();
+
                 Dispatcher.Run();
             } ) { IsBackground = true };
 

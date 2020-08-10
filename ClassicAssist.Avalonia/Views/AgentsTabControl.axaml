@@ -1,0 +1,40 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:agents="clr-namespace:ClassicAssist.Avalonia.Views.Agents"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ClassicAssist.Avalonia.Views.AgentsTabControl">
+  <UserControl.Styles>
+    <Style Selector="TabItem">
+      <Setter Property="FontSize" Value="12"/>
+    </Style>
+  </UserControl.Styles>
+  <TabControl Margin="0">
+    <TabItem Header="{x:Static resources:Strings.Organizer}">
+      <agents:OrganizerTabControl/>
+    </TabItem>
+    <TabItem Header="{x:Static resources:Strings.Dress}">
+      <agents:DressTabControl/>
+    </TabItem>
+    <TabItem Header="{x:Static resources:Strings.Counters}">
+      <agents:CountersTabControl/>
+    </TabItem>
+    <TabItem Header="{x:Static resources:Strings.Friends}">
+      <agents:FriendsTabControl/>
+    </TabItem>
+    <TabItem Header="{x:Static resources:Strings.Vendor_Buy}">
+      <agents:VendorBuyTabControl/>
+    </TabItem>
+    <TabItem Header="{x:Static resources:Strings.Vendor_Sell}">
+      <agents:VendorSellTabControl/>
+    </TabItem>
+    <TabItem Header="{x:Static resources:Strings.Scavenger}">
+      <agents:ScavengerTabControl/>
+    </TabItem>
+    <TabItem Header="{x:Static resources:Strings.Autoloot}">
+      <agents:AutolootTabControl/>
+    </TabItem>
+  </TabControl>
+</UserControl>

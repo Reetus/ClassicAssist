@@ -3523,6 +3523,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toggle Dress Type.
+        /// </summary>
+        public static string Toggle_Dress_Type {
+            get {
+                return ResourceManager.GetString("Toggle Dress Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Toggle Force Walk.
         /// </summary>
         public static string Toggle_Force_Walk {

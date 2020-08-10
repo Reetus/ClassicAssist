@@ -1,0 +1,50 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:agents="clr-namespace:ClassicAssist.Shared.UI.ViewModels.Agents;assembly=ClassicAssist.Shared"
+             xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+             xmlns:controls="clr-namespace:ClassicAssist.Avalonia.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ClassicAssist.Avalonia.Views.Agents.ScavengerTabControl">
+  <UserControl.DataContext>
+    <agents:ScavengerTabViewModel/>
+  </UserControl.DataContext>
+  <Grid ColumnDefinitions="Auto, *">
+    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+      <StackPanel.Styles>
+        <Style Selector="Button">
+          <Setter Property="Margin" Value="0,5,0,0" />
+          <Setter Property="Padding" Value="20,5,20,5" />
+        </Style>
+      </StackPanel.Styles>
+      <CheckBox Content="{x:Static resources:Strings.Enabled}" IsChecked="{Binding Enabled}" />
+      <Button Content="{x:Static resources:Strings.Insert}" Command="{Binding InsertCommand}" />
+      <Button Content="{x:Static resources:Strings.Remove}" Command="{Binding RemoveCommand}"
+              CommandParameter="{Binding SelectedItem, ElementName=ListView}" />
+      <Button Content="{x:Static resources:Strings.Clear_All}" Command="{Binding ClearAllCommand}" />
+      <Button Content="{x:Static resources:Strings.Set_Container}" Command="{Binding SetContainerCommand}" />
+    </StackPanel>
+    <DataGrid Grid.Column="1" Items="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+      <DataGrid.Columns>
+        <DataGridTemplateColumn Header="✓">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <CheckBox IsChecked="{Binding Enabled}" Margin="5,0" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTextColumn Header="{x:Static resources:Strings.Name}" Binding="{Binding Name}" Width="2*"/>
+        <DataGridTextColumn Header="{x:Static resources:Strings.Graphic}" Binding="{Binding Graphic, StringFormat=0x\{0:x\}}" Width="*"/>
+        <DataGridTemplateColumn Header="{x:Static resources:Strings.Color}" Width="*">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <controls:EditTextBlock Text="{Binding Hue}" ShowIcon="True" VerticalContentAlignment="Center"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+    </DataGrid>
+  </Grid>
+</UserControl>

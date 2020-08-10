@@ -1,20 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
+using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 using Newtonsoft.Json.Linq;
+using ReactiveUI;
 using UOC = ClassicAssist.Shared.UO.Commands;
 
-namespace ClassicAssist.UI.ViewModels.Agents
+namespace ClassicAssist.Shared.UI.ViewModels.Agents
 {
     public class ScavengerTabViewModel : BaseViewModel, ISettingProvider
     {
@@ -39,7 +41,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         }
 
         public ICommand ClearAllCommand =>
-            _clearAllCommand ?? ( _clearAllCommand = new RelayCommandAsync( ClearAll, o => Items.Count > 0 ) );
+            _clearAllCommand ?? ( _clearAllCommand = ReactiveCommand.CreateFromTask( ClearAll ) );
 
         public int ContainerSerial
         {
@@ -63,7 +65,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
         }
 
         public ICommand RemoveCommand =>
-            _removeCommand ?? ( _removeCommand = new RelayCommandAsync( Remove, o => SelectedItem != null ) );
+            _removeCommand ?? ( _removeCommand = ReactiveCommand.CreateFromTask<ScavengerEntry>( Remove,
+                this.WhenAnyValue( e => e.SelectedItem, selector: e => e != null ) ) );
 
         public ScavengerEntry SelectedItem
         {
@@ -182,7 +185,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                     Item[] matches = Engine.Items.SelectEntities( i =>
                         i.Distance <= SCAVENGER_DISTANCE && i.Owner == 0 && i.ID == entry.Graphic &&
-                        (entry.Hue == -1 || i.Hue == entry.Hue) && !_ignoreList.Contains( i.Serial ) );
+                        ( entry.Hue == -1 || i.Hue == entry.Hue ) && !_ignoreList.Contains( i.Serial ) );
 
                     if ( matches == null )
                     {
@@ -253,7 +256,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             await Task.CompletedTask;
         }
 
-        private async Task ClearAll( object arg )
+        private async Task ClearAll( CancellationToken cancellationToken )
         {
             Items.Clear();
 

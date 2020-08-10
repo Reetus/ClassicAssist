@@ -2,29 +2,29 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using System.Windows.Input;
+using Avalonia.Controls;
+using Avalonia.Markup.Xaml;
 using ClassicAssist.Annotations;
 using ClassicAssist.UO.Data;
 using ReactiveUI;
 
-namespace ClassicAssist.UI.Views
+namespace ClassicAssist.Avalonia.Views
 {
-    /// <summary>
-    ///     Interaction logic for HuePickerWindow.xaml
-    /// </summary>
-    public partial class HuePickerWindow : Window, INotifyPropertyChanged
+    public class HuePickerWindow : Window, INotifyPropertyChanged
     {
         private ObservableCollection<HuePickerEntry> _filteredItems = new ObservableCollection<HuePickerEntry>();
         private string _filterText;
         private ObservableCollection<HuePickerEntry> _items = new ObservableCollection<HuePickerEntry>();
         private ICommand _okCommand;
-        private int _selectedHue = -1;
+        private int _selectedHue;
         private HuePickerEntry _selectedItem;
 
         public HuePickerWindow()
         {
             InitializeComponent();
+
+            Hues.Initialize( @"C:\Users\johns\Documents\UO\Ultima Online Classic" );
 
             for ( int i = 0; i < 3000; i++ )
             {
@@ -72,34 +72,7 @@ namespace ClassicAssist.UI.Views
             set => SetProperty( ref _selectedItem, value );
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void ApplyFilter( string value )
-        {
-            FilteredItems = new ObservableCollection<HuePickerEntry>( Items.Where( i =>
-                string.IsNullOrEmpty( value ) || i.Index.ToString().StartsWith( value ) ) );
-        }
-
-        public static bool GetHue( out int hue )
-        {
-            HuePickerWindow window = new HuePickerWindow();
-
-            window.ShowDialog();
-
-            hue = window.SelectedHue;
-
-            return hue != -1;
-        }
-
-        private void OK( object obj )
-        {
-            if ( !( obj is HuePickerEntry entry ) )
-            {
-                return;
-            }
-
-            SelectedHue = entry.Index;
-        }
+        public new event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
@@ -112,14 +85,34 @@ namespace ClassicAssist.UI.Views
         {
             obj = value;
             OnPropertyChanged( propertyName );
-            CommandManager.InvalidateRequerySuggested();
         }
 
-        public class HuePickerEntry
+        private void InitializeComponent()
         {
-            public HueEntry Entry { get; set; }
-            public string EntryName => Entry.Name ?? "Unknown";
-            public int Index { get; set; }
+            AvaloniaXamlLoader.Load( this );
         }
+
+        private void OK( object obj )
+        {
+            if ( !( obj is HuePickerEntry entry ) )
+            {
+                return;
+            }
+
+            SelectedHue = entry.Index;
+        }
+
+        private void ApplyFilter( string value )
+        {
+            FilteredItems = new ObservableCollection<HuePickerEntry>( Items.Where( i =>
+                string.IsNullOrEmpty( value ) || i.Index.ToString().StartsWith( value ) ) );
+        }
+    }
+
+    public class HuePickerEntry
+    {
+        public HueEntry Entry { get; set; }
+        public string EntryName => Entry.Name ?? "Unknown";
+        public int Index { get; set; }
     }
 }

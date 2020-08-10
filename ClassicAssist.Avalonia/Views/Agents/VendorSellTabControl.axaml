@@ -1,0 +1,59 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:agents="clr-namespace:ClassicAssist.Shared.UI.ViewModels.Agents;assembly=ClassicAssist.Shared"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:controls="clr-namespace:ClassicAssist.Avalonia.Controls"             
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ClassicAssist.Avalonia.Views.Agents.VendorSellTabControl">
+  <UserControl.DataContext>
+    <agents:VendorSellTabViewModel />
+  </UserControl.DataContext>
+  <Grid RowDefinitions="*, Auto">
+    <DataGrid Grid.Row="0" Items="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+      <DataGrid.Columns>
+        <DataGridTemplateColumn Header="✓">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <CheckBox IsChecked="{Binding Enabled}" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTextColumn Header="{x:Static resources:Strings.Graphic}" Binding="{Binding Graphic, StringFormat={}0x{0:x}, Mode=OneWay}" Width="1*"/>
+        <DataGridTextColumn Header="{x:Static resources:Strings.Name}" Binding="{Binding Name}" Width="1*"/>
+        <DataGridTemplateColumn Header="{x:Static resources:Strings.Color}" Width="1*">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <controls:EditTextBlock Text="{Binding Hue}" ShowIcon="True" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="{x:Static resources:Strings.Amount}" Width="1*">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <controls:EditTextBlock Text="{Binding Amount}" ShowIcon="True" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="{x:Static resources:Strings.Min_Price}" Width="1*">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <controls:EditTextBlock Text="{Binding MinPrice}" ShowIcon="True" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+    </DataGrid>
+    <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,10,0,0">
+      <StackPanel.Styles>
+        <Style Selector="Button">
+          <Setter Property="Padding" Value="10,5,10,5" />
+          <Setter Property="MinWidth" Value="80" />
+        </Style>
+      </StackPanel.Styles>
+      <Button Content="{x:Static resources:Strings.Insert}" Command="{Binding InsertCommand}" Margin="0,0,10,0"/>
+      <Button Content="{x:Static resources:Strings.Remove}" Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedItem}" />
+    </StackPanel>
+  </Grid>
+</UserControl>

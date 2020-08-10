@@ -1,0 +1,79 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:agents="clr-namespace:ClassicAssist.Shared.UI.ViewModels.Agents;assembly=ClassicAssist.Shared"
+             xmlns:controls="clr-namespace:ClassicAssist.Avalonia.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ClassicAssist.Avalonia.Views.Agents.VendorBuyTabControl">
+  <UserControl.DataContext>
+    <agents:VendorBuyTabViewModel/>
+  </UserControl.DataContext>
+  <UserControl.Styles>
+    <Style Selector="controls|EditTextBlock">
+      <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+  </UserControl.Styles>
+  <Grid RowDefinitions="Auto, *, Auto">
+    <DockPanel Grid.Row="0" Margin="0,0,0,10">
+      <DockPanel.Styles>
+        <Style Selector="CheckBox">
+          <Setter Property="Margin" Value="0,0,20,0" />
+        </Style>
+      </DockPanel.Styles>
+      <CheckBox Content="{x:Static resources:Strings.Enabled}" IsChecked="{Binding Enabled}" />
+      <CheckBox IsChecked="{Binding IncludeBackpackAmount}"
+                Content="{x:Static resources:Strings.Include_Backpack_Amount}" />
+    </DockPanel>
+    <DataGrid Grid.Row="1" Items="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+      <DataGrid.Columns>
+        <DataGridTemplateColumn Header="✓">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <CheckBox IsChecked="{Binding Enabled}" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="{x:Static resources:Strings.Graphic}" Width="1*">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <controls:EditTextBlock
+                  Text="{Binding Graphic}"
+                  ShowIcon="True" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTextColumn Header="{x:Static resources:Strings.Name}" Binding="{Binding Name}" Width="1*"/>
+        <DataGridTemplateColumn Header="{x:Static resources:Strings.Color}" Width="1*">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+                <controls:EditTextBlock Text="{Binding Hue}" ShowIcon="True" />
+            </DataTemplate>            
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="{x:Static resources:Strings.Amount}" Width="1*">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <controls:EditTextBlock Text="{Binding Amount}" ShowIcon="True" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="{x:Static resources:Strings.Max_Price}" Width="1*">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <controls:EditTextBlock Text="{Binding MaxPrice}" ShowIcon="True" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+    </DataGrid>
+    <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,10,0,0">
+      <Button Content="{x:Static resources:Strings.Insert}" MinWidth="80"
+              Command="{Binding InsertCommand}" Margin="0,0,10,0"/>
+      <Button Content="{x:Static resources:Strings.Remove}" MinWidth="80"
+              Command="{Binding RemoveCommand}"
+              CommandParameter="{Binding SelectedItem}"/>
+    </StackPanel>
+  </Grid>
+</UserControl>

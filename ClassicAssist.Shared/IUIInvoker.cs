@@ -18,6 +18,7 @@
 #endregion
 
 using System;
+using System.Threading.Tasks;
 
 namespace ClassicAssist.Shared
 {
@@ -25,5 +26,9 @@ namespace ClassicAssist.Shared
     {
         void Invoke( string typeName, object[] ctorParam = null, Type dataContextType = null,
             object[] dataContextParam = null );
+
+        Task<int> GetHueAsync();
+        void SetClipboardText( string text );
+        string GetClipboardText();
     }
 }

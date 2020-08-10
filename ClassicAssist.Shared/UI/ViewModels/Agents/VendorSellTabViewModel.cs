@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ClassicAssist.Shared;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
+using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 using Newtonsoft.Json.Linq;
+using ReactiveUI;
 using UOC = ClassicAssist.Shared.UO.Commands;
 
-namespace ClassicAssist.UI.ViewModels.Agents
+namespace ClassicAssist.Shared.UI.ViewModels.Agents
 {
     public class VendorSellTabViewModel : BaseViewModel, ISettingProvider
     {
@@ -30,7 +32,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         }
 
         public ICommand InsertCommand =>
-            _insertCommand ?? ( _insertCommand = new RelayCommandAsync( Insert, o => Engine.Connected ) );
+            _insertCommand ?? ( _insertCommand = ReactiveCommand.CreateFromTask( Insert ) );
 
         public ObservableCollection<VendorSellAgentEntry> Items
         {
@@ -39,7 +41,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
         }
 
         public ICommand RemoveCommand =>
-            _removeCommand ?? ( _removeCommand = new RelayCommandAsync( Remove, o => SelectedItem != null ) );
+            _removeCommand ?? ( _removeCommand = ReactiveCommand.Create<VendorSellAgentEntry>( Remove,
+                this.WhenAnyValue( e => e.SelectedItem, selector: e => e != null ) ) );
 
         public VendorSellAgentEntry SelectedItem
         {
@@ -103,7 +106,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
         }
 
-        private async Task Remove( object arg )
+        private void Remove( object arg )
         {
             if ( !( arg is VendorSellAgentEntry entry ) )
             {
@@ -111,8 +114,6 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
 
             Items.Remove( entry );
-
-            await Task.CompletedTask;
         }
 
         private void OnVendorSellDisplayEvent( int serial, SellListEntry[] entries )
@@ -166,7 +167,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             Engine.SendPacketToServer( pw );
         }
 
-        private async Task Insert( object arg )
+        private async Task Insert( CancellationToken cancellationToken )
         {
             int serial = await UOC.GetTargeSerialAsync( Strings.Target_object___ );
 

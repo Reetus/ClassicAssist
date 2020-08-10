@@ -8,6 +8,12 @@
     <Configurations>Debug;Release;Develop;Linux</Configurations>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="UO\**" />
+    <EmbeddedResource Remove="UO\**" />
+    <None Remove="UO\**" />
+    <Page Remove="UO\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Python.Dark.xshd" />
     <None Remove="Python.xshd" />
   </ItemGroup>
@@ -80,7 +86,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UO\Data\" />
+    <Folder Include="UI\ViewModels\Agents\" />
   </ItemGroup>
   <PropertyGroup>
     <BuildDate>$([System.DateTime]::op_Subtraction($([System.DateTime]::get_Now().get_Date()),$([System.DateTime]::new(2020,7,3))).get_TotalDays())</BuildDate>

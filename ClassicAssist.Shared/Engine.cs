@@ -55,6 +55,8 @@ namespace ClassicAssist.Shared
         private static OnGetPacketLength _getPacketLength;
         private static OnUpdatePlayerPosition _onPlayerPositionChanged;
         private static OnClientClose _onClientClosing;
+        private static OnFocusGained _onFocusGained;
+        private static OnFocusLost _onFocusLost;
         private static readonly PacketFilter _incomingPacketFilter = new PacketFilter();
         private static readonly PacketFilter _outgoingPacketPreFilter = new PacketFilter();
         private static readonly PacketFilter _outgoingPacketPostFilter = new PacketFilter();
@@ -85,6 +87,7 @@ namespace ClassicAssist.Shared
         public static IDispatcher Dispatcher { get; set; }
         public static FeatureFlags Features { get; set; }
         public static GumpCollection Gumps { get; set; } = new GumpCollection();
+        public static bool IsClientFocused { get; set; }
         public static ItemCollection Items { get; set; } = new ItemCollection( 0 );
         public static CircularBuffer<JournalEntry> Journal { get; set; } = new CircularBuffer<JournalEntry>( 1024 );
 
@@ -142,6 +145,8 @@ namespace ClassicAssist.Shared
             _onClientClosing = OnClientClosing;
             _onHotkeyPressed = OnHotkeyPressed;
             _onMouse = OnMouse;
+            _onFocusGained = OnFocusGained;
+            _onFocusLost = OnFocusLost;
             WindowHandle = plugin->HWND;
 
             plugin->OnConnected = Marshal.GetFunctionPointerForDelegate( _onConnected );
@@ -152,6 +157,8 @@ namespace ClassicAssist.Shared
             plugin->OnClientClosing = Marshal.GetFunctionPointerForDelegate( _onClientClosing );
             plugin->OnHotkeyPressed = Marshal.GetFunctionPointerForDelegate( _onHotkeyPressed );
             plugin->OnMouse = Marshal.GetFunctionPointerForDelegate( _onMouse );
+            plugin->OnFocusGained = Marshal.GetFunctionPointerForDelegate( _onFocusGained );
+            plugin->OnFocusLost = Marshal.GetFunctionPointerForDelegate( _onFocusLost );
 
             _getPacketLength = Marshal.GetDelegateForFunctionPointer<OnGetPacketLength>( plugin->GetPacketLength );
             _getUOFilePath = Marshal.GetDelegateForFunctionPointer<OnGetUOFilePath>( plugin->GetUOFilePath );
@@ -233,6 +240,11 @@ namespace ClassicAssist.Shared
 
         private static bool OnHotkeyPressed( int key, int mod, bool pressed )
         {
+            if ( !IsClientFocused )
+            {
+                return false;
+            }
+
             Key keys = SDLKeys.SDLKeyToKeys( key );
 
             bool pass = HotkeyManager.GetInstance().OnHotkeyPressed( keys );
@@ -768,6 +780,16 @@ namespace ClassicAssist.Shared
             Player = null;
 
             DisconnectedEvent?.Invoke();
+        }
+
+        private static void OnFocusGained()
+        {
+            IsClientFocused = true;
+        }
+
+        private static void OnFocusLost()
+        {
+            IsClientFocused = false;
         }
 
         #endregion

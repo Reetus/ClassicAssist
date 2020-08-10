@@ -92,11 +92,13 @@ namespace ClassicAssist.UO
                 throw new ArgumentException( "EquipItem: Layer is invalid" );
             }
 
-            return ActionPacketQueue.EnqueuePackets(
-                new BasePacket[]
-                {
-                    new DragItem( item.Serial, 1 ), new EquipRequest( item.Serial, layer, containerSerial )
-                }, QueuePriority.Medium );
+            return ActionPacketQueue.EnqueueAction( item, itm =>
+            {
+                Engine.SendPacketToServer( new DragItem( itm.Serial, 1 ) );
+                Thread.Sleep( 50 );
+                Engine.SendPacketToServer( new EquipRequest( itm.Serial, layer, containerSerial ) );
+                return true;
+            }, QueuePriority.Medium );
         }
 
         public static Task EquipItem( Item item, Layer layer )
@@ -119,11 +121,13 @@ namespace ClassicAssist.UO
                 throw new ArgumentException( "EquipItem: Layer is invalid" );
             }
 
-            return ActionPacketQueue.EnqueuePackets(
-                new BasePacket[]
-                {
-                    new DragItem( item.Serial, 1 ), new EquipRequest( item.Serial, layer, containerSerial )
-                }, QueuePriority.Medium );
+            return ActionPacketQueue.EnqueueAction( item, itm =>
+            {
+                Engine.SendPacketToServer( new DragItem( itm.Serial, 1 ) );
+                Thread.Sleep( 50 );
+                Engine.SendPacketToServer( new EquipRequest( itm.Serial, layer, containerSerial ) );
+                return true;
+            }, QueuePriority.Medium );
         }
 
         public static void SystemMessage( string text, int hue = 0x03b2 )

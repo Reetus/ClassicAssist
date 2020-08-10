@@ -61,6 +61,34 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Returns True if either the primary or secondary ability is set.
+        /// </summary>
+        public static string ACTIVEABILITY_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("ACTIVEABILITY_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if not ActiveAbility():
+        /// SetAbility(&quot;primary&quot;, &quot;on&quot;).
+        /// </summary>
+        public static string ACTIVEABILITY_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("ACTIVEABILITY_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if ActiveAbility():.
+        /// </summary>
+        public static string ACTIVEABILITY_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("ACTIVEABILITY_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adds a mobile to friends list, will display target cursor if no serial/alias supplied..
         /// </summary>
         public static string ADDFRIEND_COMMAND_DESCRIPTION {

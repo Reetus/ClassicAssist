@@ -1465,4 +1465,14 @@ Pathfind('enemy')</value>
   <data name="SETORGANIZERCONTAINERS_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>SetOrganizerContainers("Organizer-1", "backpack", "bank")</value>
   </data>
+  <data name="ACTIVEABILITY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns True if either the primary or secondary ability is set</value>
+  </data>
+  <data name="ACTIVEABILITY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if ActiveAbility():</value>
+  </data>
+  <data name="ACTIVEABILITY_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>if not ActiveAbility():
+ SetAbility("primary", "on")</value>
+  </data>
 </root>

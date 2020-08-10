@@ -250,7 +250,7 @@ namespace ClassicAssist.Tests
         }
 
         [TestMethod]
-        public void ExtendedWontThrowException()
+        public void WontThrowExceptionExtended()
         {
             // Shard: The Lost Chapter
             byte[] packet =
@@ -264,6 +264,21 @@ namespace ClassicAssist.Tests
             PacketHandler handler = IncomingPacketHandlers.GetHandler( 0xBF );
 
             handler?.OnReceive( new PacketReader( packet, packet.Length, false ) );
+        }
+
+        [TestMethod]
+        public void WontThrowExceptionVersionAlpha()
+        {
+            // 5.0.1j
+            byte[] packet = { 0xbd, 0x00, 0x0a, 0x35, 0x2e, 0x30, 0x2e, 0x31, 0x6a, 0x00 };
+
+            OutgoingPacketHandlers.Initialize();
+
+            PacketHandler handler = OutgoingPacketHandlers.GetHandler( 0xBD );
+
+            handler?.OnReceive( new PacketReader( packet, packet.Length, false ) );
+
+            Engine.ClientVersion = null;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Assistant;
 using ClassicAssist.Data.Abilities;
 using ClassicAssist.Data.Counters;
@@ -9,7 +10,6 @@ using ClassicAssist.Data.Targeting;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
 using ClassicAssist.UO.Objects.Gumps;
-using IronPython.Runtime;
 
 namespace ClassicAssist.UO.Network
 {
@@ -94,6 +94,8 @@ namespace ClassicAssist.UO.Network
         {
             string version = reader.ReadString();
 
+            version = Regex.Replace( version, "[^0-9\\.]", "" );
+
             Engine.ClientVersion = Version.Parse( version );
         }
 
@@ -175,7 +177,6 @@ namespace ClassicAssist.UO.Network
 
                 switches[i] = reader.ReadInt32();
             }
-
 
             Engine.GumpList.TryRemove( gumpId, out _ );
 

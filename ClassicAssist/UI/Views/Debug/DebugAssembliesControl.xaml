@@ -3,15 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:ClassicAssist.UI.Views.Debug"
              xmlns:debug="clr-namespace:ClassicAssist.UI.ViewModels.Debug"
              xmlns:resources="clr-namespace:ClassicAssist.Resources"
-             mc:Ignorable="d" Background="White"
+             xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+             mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
              d:DesignHeight="250" d:DesignWidth="300">
     <UserControl.DataContext>
         <debug:DebugAssembliesViewModel />
     </UserControl.DataContext>
-    <Grid Margin="10">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/Icons.xaml" />
+                <ResourceDictionary Source="Styles.xaml" />
+                <ResourceDictionary>
+                    <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
@@ -23,7 +34,7 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="{x:Static resources:Strings.Name}"
-                                        Width="{Binding ActualWidth, ElementName=listView, Mode=OneWay}">
+                                        Width="{Binding ActualWidth, ElementName=listView, Mode=OneWay, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=20}">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding}" ToolTip="{Binding Location, Mode=OneWay}" />

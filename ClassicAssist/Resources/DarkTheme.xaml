@@ -397,7 +397,7 @@
                             KeyboardNavigation.TabIndex="2">
                             <ContentPresenter
                                 Name="PART_SelectedContentHost"
-                                Margin="4"
+                                Margin="{TemplateBinding Padding}"
                                 ContentSource="SelectedContent" />
                         </Border>
                     </Grid>

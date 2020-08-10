@@ -6,30 +6,26 @@
              xmlns:debug="clr-namespace:ClassicAssist.UI.ViewModels.Debug"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:resources="clr-namespace:ClassicAssist.Resources"
-             mc:Ignorable="d"
+             mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
              d:DesignHeight="400" d:DesignWidth="550">
-    <d:DesignerProperties.DesignStyle>
-        <Style TargetType="UserControl">
-            <Setter Property="Background" Value="White" />
-        </Style>
-    </d:DesignerProperties.DesignStyle>
     <UserControl.DataContext>
         <debug:DebugJournalViewModel />
     </UserControl.DataContext>
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="DebugToolBarStyle.xaml" />
+                <ResourceDictionary Source="../../../Resources/Icons.xaml" />
+                <ResourceDictionary Source="Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
-        <ToolBar Margin="10,0,10,0" Style="{DynamicResource ToolBarStyle1}" DockPanel.Dock="Top">
+        <ToolBar Style="{DynamicResource ToolBarStyle1}" DockPanel.Dock="Top">
             <Button Command="{Binding ClearCommand}" Margin="0,0,5,0">
                 <Image Source="{StaticResource RemoveIcon}" Height="16"
                        ToolTip="{x:Static resources:Strings.Clear_All}" />
             </Button>
         </ToolBar>
-        <ListBox ItemsSource="{Binding Items}" Margin="10" misc:ListBoxBehavior.ScrollOnNewItem="True" />
+        <ListBox ItemsSource="{Binding Items}" misc:ListBoxBehavior.ScrollOnNewItem="True" />
     </DockPanel>
 </UserControl>

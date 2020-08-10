@@ -14,7 +14,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            int serial = UOC.GetTargeSerialAsync( Strings.Target_container___ ).Result;
+            int serial = UOC.GetTargetSerialAsync( Strings.Target_container___ ).Result;
 
             Entity entity = Engine.Items.GetItem( serial ) ?? (Entity) Engine.Mobiles.GetMobile( serial );
 

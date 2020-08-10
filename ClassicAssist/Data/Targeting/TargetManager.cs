@@ -267,7 +267,7 @@ namespace ClassicAssist.Data.Targeting
 
         public Entity PromptTarget()
         {
-            int serial = UOC.GetTargeSerialAsync( Strings.Target_object___ ).Result;
+            int serial = UOC.GetTargetSerialAsync( Strings.Target_object___ ).Result;
 
             if ( serial == 0 )
             {

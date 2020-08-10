@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text;
 using Assistant;
-using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects.Gumps;
 
@@ -80,16 +79,14 @@ namespace ClassicAssist.UI.ViewModels.Debug
             sb.AppendLine( $"Text: ({value.Strings.Length})\r\n\r\n{string.Join( "\r\n", value.Strings )}" );
             sb.AppendLine();
 
-            for ( int i = 0; i < value.Pages?.Length; i++ )
+            if ( value.Pages?.Length == 0 )
             {
-                GumpPage page = value.Pages[i];
-
-                sb.AppendLine( $"Page {i} elements ({value.GumpElements?.Length}):" );
+                sb.AppendLine( $"Elements ({value.GumpElements?.Length}):" );
                 sb.AppendLine();
 
-                if ( page.GumpElements != null )
+                if ( value.GumpElements != null )
                 {
-                    foreach ( GumpElement element in page.GumpElements )
+                    foreach ( GumpElement element in value.GumpElements )
                     {
                         sb.AppendLine(
                             $"X: {element.X}, Y: {element.Y}, Type: {element.Type}, Cliloc: {element.Cliloc}, Text: {element.Text}" );
@@ -97,6 +94,27 @@ namespace ClassicAssist.UI.ViewModels.Debug
                 }
 
                 sb.AppendLine();
+            }
+            else
+            {
+                for ( int i = 0; i < value.Pages?.Length; i++ )
+                {
+                    GumpPage page = value.Pages[i];
+
+                    sb.AppendLine( $"Page {i} elements ({page.GumpElements?.Length}):" );
+                    sb.AppendLine();
+
+                    if ( page.GumpElements != null )
+                    {
+                        foreach ( GumpElement element in page.GumpElements )
+                        {
+                            sb.AppendLine(
+                                $"X: {element.X}, Y: {element.Y}, Type: {element.Type}, Cliloc: {element.Cliloc}, Text: {element.Text}" );
+                        }
+                    }
+
+                    sb.AppendLine();
+                }
             }
 
             Text = sb.ToString();

@@ -247,7 +247,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            int serial = await Commands.GetTargeSerialAsync( Strings.Select_undress_container___ );
+            int serial = await Commands.GetTargetSerialAsync( Strings.Select_undress_container___ );
 
             if ( serial <= 0 )
             {
@@ -292,7 +292,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            int serial = await Commands.GetTargeSerialAsync( Strings.Target_clothing_item___ );
+            int serial = await Commands.GetTargetSerialAsync( Strings.Target_clothing_item___ );
 
             Item item = Engine.Items.GetItem( serial );
 

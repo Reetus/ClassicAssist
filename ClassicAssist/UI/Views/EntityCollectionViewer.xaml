@@ -19,8 +19,10 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
-                <ResourceDictionary Source="EntityCollectionViewerResourceDictionary.xaml" />
                 <ResourceDictionary Source="Debug/DebugToolBarStyle.xaml" />
+                <ResourceDictionary Source="EntityCollectionViewer/Icons.xaml" />
+                <ResourceDictionary Source="EntityCollectionViewer/Toolbar.xaml" />
+                <ResourceDictionary Source="EntityCollectionViewer/ListStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
@@ -109,8 +111,7 @@
         </ListView>
         <StatusBar Grid.Row="3" Background="{DynamicResource ThemeBackgroundBrush}"
                    Foreground="{DynamicResource ThemeForegroundBrush}"
-                   BorderBrush="{DynamicResource ThemeWindowBackgroundBrush
-            }">
+                   BorderBrush="{DynamicResource ThemeWindowBackgroundBrush}">
             <TextBlock Text="{Binding StatusLabel}" />
         </StatusBar>
     </Grid>

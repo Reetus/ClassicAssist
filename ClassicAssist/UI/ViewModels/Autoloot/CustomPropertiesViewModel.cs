@@ -101,7 +101,7 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
 
         private async Task ChooseFromItem( object obj )
         {
-            int serial = await Commands.GetTargeSerialAsync( Strings.Target_object___, 90000 );
+            int serial = await Commands.GetTargetSerialAsync( Strings.Target_object___, 90000 );
 
             if ( serial == 0 )
             {

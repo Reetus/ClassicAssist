@@ -31,6 +31,8 @@ namespace ClassicAssist.UO.Network
 
         public bool DelaySend { get; set; }
         public EventWaitHandle WaitHandle { get; set; }
+        public bool Result { get; set; }
+        public CancellationToken Token { get; set; } = CancellationToken.None;
     }
 
     public class PacketQueueItem : BaseQueueItem
@@ -42,20 +44,21 @@ namespace ClassicAssist.UO.Network
             DelaySend = delaySend;
         }
 
+
         public int Length { get; set; }
         public byte[] Packet { get; set; }
     }
 
     public class ActionQueueItem : BaseQueueItem
     {
-        public ActionQueueItem( Func<bool, bool> action )
+        public ActionQueueItem( Func<object, bool> action )
         {
             Action = action;
         }
 
-        public Func<bool, bool> Action { get; set; }
+        public Func<object, bool> Action { get; set; }
         public int Serial { get; set; }
         public bool CheckRange { get; set; }
-        public bool Result { get; set; }
+        public object Arguments { get; set; }
     }
 }

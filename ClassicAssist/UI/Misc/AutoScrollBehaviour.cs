@@ -126,7 +126,6 @@ namespace ClassicAssist.UI.Misc
                 if ( e.Action == NotifyCollectionChangedAction.Add )
                 {
                     listBox.ScrollIntoView( e.NewItems[0] );
-                    listBox.SelectedItem = e.NewItems[0];
                 }
             }
         }

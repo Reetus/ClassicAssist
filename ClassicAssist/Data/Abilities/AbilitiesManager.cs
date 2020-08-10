@@ -337,7 +337,7 @@ namespace ClassicAssist.Data.Abilities
 
             ActionPacketQueue.EnqueueDragDrop( leftHand.Serial, 1, Engine.Player.GetLayer( Layer.Backpack ),
                 QueuePriority.High );
-            ActionPacketQueue.EnqueueActionPackets(
+            ActionPacketQueue.EnqueuePackets(
                 new BasePacket[]
                 {
                     new UseObject( serial ), new DragItem( leftHand.Serial, 1 ),

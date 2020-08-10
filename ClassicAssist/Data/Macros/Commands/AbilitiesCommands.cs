@@ -25,6 +25,25 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
+        [CommandsDisplay( Category = nameof( Strings.Abilities ) )]
+        public static bool ActiveAbility()
+        {
+            AbilitiesManager manager = AbilitiesManager.GetInstance();
+
+            bool result = false;
+
+            if ( manager.IsPrimaryEnabled )
+            {
+                result = true;
+            }
+            else if ( manager.IsSecondaryEnabled )
+            {
+                result = true;
+            }
+
+            return result;
+        }
+
         [CommandsDisplay( Category = nameof( Strings.Abilities ),
             Parameters = new[] { nameof( ParameterType.Ability ), nameof( ParameterType.OnOff ) } )]
         public static void SetAbility( string ability, string onOff = "toggle" )

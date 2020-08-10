@@ -57,7 +57,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            ActionPacketQueue.EnqueueActionPacket( new UseObject( serial ),
+            ActionPacketQueue.EnqueuePacket( new UseObject( serial ),
                 skipQueue ? QueuePriority.Immediate : QueuePriority.Low );
         }
 

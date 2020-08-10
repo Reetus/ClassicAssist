@@ -7,12 +7,20 @@
              xmlns:debug="clr-namespace:ClassicAssist.UI.ViewModels.Debug"
              xmlns:resources="clr-namespace:ClassicAssist.Resources"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
-             mc:Ignorable="d"
+             mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
         <debug:DebugVendorBuyViewModel />
     </UserControl.DataContext>
-    <DockPanel Margin="10">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/Icons.xaml" />
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel>
         <CheckBox IsChecked="{Binding IsEnabled}" Content="{x:Static resources:Strings.Enabled}" DockPanel.Dock="Top"
                   Margin="0,0,0,10" />
         <ListBox ItemsSource="{Binding Messages}" misc:ListBoxBehavior.ScrollOnNewItem="True" />

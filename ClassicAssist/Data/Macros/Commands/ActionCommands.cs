@@ -196,7 +196,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( !AliasCommands.FindAlias( "mount" ) )
             {
-                int serial = UOC.GetTargeSerialAsync( Strings.Target_new_mount___ ).Result;
+                int serial = UOC.GetTargetSerialAsync( Strings.Target_new_mount___ ).Result;
 
                 if ( serial == -1 )
                 {

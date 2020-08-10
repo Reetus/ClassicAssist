@@ -51,7 +51,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
         private async Task Target( object arg )
         {
-            int serial = await Commands.GetTargeSerialAsync( Strings.Target_object___ );
+            int serial = await Commands.GetTargetSerialAsync( Strings.Target_object___ );
 
             if ( serial == 0 )
             {

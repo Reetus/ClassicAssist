@@ -248,5 +248,37 @@ namespace ClassicAssist.Tests
 
             byte[] packet2 = { 0x7D, 0x00, 0x07, 0x76, 0x7C, 0x01, 0xCF, 0x00, 0x03, 0x13, 0xB9, 0x00, 0x00 };
         }
+
+        [TestMethod]
+        public void WontThrowExceptionExtended()
+        {
+            // Shard: The Lost Chapter
+            byte[] packet =
+            {
+                0xbf, 0x00, 0x17, 0xfa, 0xce, 0x80, 0x01, 0xff, 0xff, 0xff, 0xff, 0xff, 0xc3, 0xf7, 0xff, 0xff,
+                0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
+            };
+
+            IncomingPacketHandlers.Initialize();
+
+            PacketHandler handler = IncomingPacketHandlers.GetHandler( 0xBF );
+
+            handler?.OnReceive( new PacketReader( packet, packet.Length, false ) );
+        }
+
+        [TestMethod]
+        public void WontThrowExceptionVersionAlpha()
+        {
+            // 5.0.1j
+            byte[] packet = { 0xbd, 0x00, 0x0a, 0x35, 0x2e, 0x30, 0x2e, 0x31, 0x6a, 0x00 };
+
+            OutgoingPacketHandlers.Initialize();
+
+            PacketHandler handler = OutgoingPacketHandlers.GetHandler( 0xBD );
+
+            handler?.OnReceive( new PacketReader( packet, packet.Length, false ) );
+
+            Engine.ClientVersion = null;
+        }
     }
 }

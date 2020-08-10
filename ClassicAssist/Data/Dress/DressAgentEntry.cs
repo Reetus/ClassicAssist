@@ -4,9 +4,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
+using ClassicAssist.Data.Abilities;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
@@ -79,13 +80,26 @@ namespace ClassicAssist.Data.Dress
 
                 if ( moveConflicting )
                 {
-                    int[] conflictingLayers = Engine.Player.GetEquippedItems()
+                    List<int> conflictingLayers = Engine.Player.GetEquippedItems()
                         .Where( i => Items.Any( ii => i.Layer == ii.Layer && i.Serial != ii.Serial ) )
-                        .Select( l => (int) l.Layer ).ToArray();
+                        .Select( l => (int) l.Layer ).ToList();
 
-                    if ( conflictingLayers.Length > 0 )
+                    IEnumerable<DressAgentItem> handLayers =
+                        Items.Where( i => i.Layer == Layer.OneHanded || i.Layer == Layer.TwoHanded );
+
+                    foreach ( DressAgentItem handLayer in handLayers )
                     {
-                        UOC.UO3DUnequipItems( conflictingLayers );
+                        ( int _, Layer layer ) = GetConflictingHand( handLayer.Layer );
+
+                        if ( layer != Layer.Invalid )
+                        {
+                            conflictingLayers.Add( (int) layer );
+                        }
+                    }
+
+                    if ( conflictingLayers.Count > 0 )
+                    {
+                        UOC.UO3DUnequipItems( conflictingLayers.ToArray() );
                         Thread.Sleep( Options.CurrentOptions.ActionDelayMS );
                     }
                 }
@@ -105,6 +119,13 @@ namespace ClassicAssist.Data.Dress
                         if ( item == null && dai.Type == DressAgentItemType.Serial )
                         {
                             continue;
+                        }
+
+                        ( int otherHand, Layer _ ) = GetConflictingHand( dai.Layer );
+
+                        if ( otherHand != 0 && moveConflicting )
+                        {
+                            await ActionPacketQueue.EnqueueDragDrop( otherHand, 1, container, QueuePriority.Medium );
                         }
 
                         int currentInLayer = Engine.Player?.GetLayer( dai.Layer ) ?? 0;
@@ -141,6 +162,33 @@ namespace ClassicAssist.Data.Dress
                     }
                 } );
             }
+        }
+
+        private (int, Layer) GetConflictingHand( Layer layer )
+        {
+            int otherHand = 0;
+
+            switch ( layer )
+            {
+                case Layer.OneHanded:
+                    otherHand = Engine.Player?.GetLayer( Layer.TwoHanded ) ?? 0;
+
+                    WeaponData wd = AbilitiesManager.GetInstance()
+                        .GetWeaponData( Engine.Items.GetItem( otherHand )?.ID ?? 0 );
+
+                    if ( wd == null || !wd.Twohanded )
+                    {
+                        otherHand = 0;
+                    }
+
+                    return ( otherHand, Layer.TwoHanded );
+                case Layer.TwoHanded:
+                    otherHand = Engine.Player?.GetLayer( Layer.OneHanded ) ?? 0;
+
+                    return ( otherHand, Layer.OneHanded );
+            }
+
+            return ( 0, Layer.Invalid );
         }
 
         public async Task Undress()

@@ -92,11 +92,11 @@ namespace ClassicAssist.UO
                 throw new ArgumentException( "EquipItem: Layer is invalid" );
             }
 
-            return ActionPacketQueue.EnqueueAction( item, itm =>
+            return ActionPacketQueue.EnqueueAction( item, ( i ) =>
             {
-                Engine.SendPacketToServer( new DragItem( itm.Serial, 1 ) );
+                Engine.SendPacketToServer( new DragItem( item.Serial, 1 ) );
                 Thread.Sleep( 50 );
-                Engine.SendPacketToServer( new EquipRequest( itm.Serial, layer, containerSerial ) );
+                Engine.SendPacketToServer( new EquipRequest( item.Serial, layer, containerSerial ) );
                 return true;
             }, QueuePriority.Medium );
         }
@@ -121,11 +121,11 @@ namespace ClassicAssist.UO
                 throw new ArgumentException( "EquipItem: Layer is invalid" );
             }
 
-            return ActionPacketQueue.EnqueueAction( item, itm =>
+            return ActionPacketQueue.EnqueueAction( item, ( i ) =>
             {
-                Engine.SendPacketToServer( new DragItem( itm.Serial, 1 ) );
+                Engine.SendPacketToServer( new DragItem( item.Serial, 1 ) );
                 Thread.Sleep( 50 );
-                Engine.SendPacketToServer( new EquipRequest( itm.Serial, layer, containerSerial ) );
+                Engine.SendPacketToServer( new EquipRequest( item.Serial, layer, containerSerial ) );
                 return true;
             }, QueuePriority.Medium );
         }

@@ -123,7 +123,33 @@ namespace ClassicAssist.Data
         public char CommandPrefix
         {
             get => _commandPrefix;
-            set => SetProperty( ref _commandPrefix, value );
+            set => SetProperty(ref _commandPrefix, value);
+        }
+
+        public int? CommandPrefixIndex
+        {
+            get
+            {
+                switch ( _commandPrefix )
+                {
+                    case '+': return 0;
+                    case '=': return 1;
+                }
+
+                return null;
+            }
+            set
+            {
+                switch ( value )
+                {
+                    case 0:
+                        CommandPrefix = '+';
+                        break;
+                    case 1:
+                        CommandPrefix = '=';
+                        break;
+                }
+            }
         }
 
         public static Options CurrentOptions { get; set; } = new Options();

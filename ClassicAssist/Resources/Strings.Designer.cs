@@ -2803,6 +2803,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset import cache.
+        /// </summary>
+        public static string Reset_import_cache {
+            get {
+                return ResourceManager.GetString("Reset import cache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resistances.
         /// </summary>
         public static string Resistances {

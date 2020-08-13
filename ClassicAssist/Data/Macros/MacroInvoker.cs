@@ -120,6 +120,16 @@ namespace ClassicAssist.Data.Macros
             return dictionary;
         }
 
+        public static void ResetImportCache()
+        {
+            _importCache = InitializeImports( _engine );
+
+            foreach ( string module in _engine.GetModuleFilenames() )
+            {
+                _engine.Execute( $"import {module};reload({module})" );
+            }
+        }
+
         public void Execute( MacroEntry macro )
         {
             _macro = macro;

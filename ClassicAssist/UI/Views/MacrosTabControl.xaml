@@ -12,6 +12,7 @@
              xmlns:resources="clr-namespace:ClassicAssist.Resources"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              xmlns:hotkeys="clr-namespace:ClassicAssist.Data.Hotkeys"
+             xmlns:misc1="clr-namespace:ClassicAssist.Misc"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500" Padding="5">
     <d:DesignerProperties.DesignStyle>
@@ -28,6 +29,7 @@
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
             <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+            <misc1:BindingProxy x:Key="Proxy" Data="{Binding}" />
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
@@ -168,7 +170,14 @@
                     <Button Content="{x:Static resources:Strings.Play}" Grid.Column="0" Margin="0,0,2.5,0"
                             Command="{Binding ExecuteCommand, Mode=OneWay}"
                             CommandParameter="{Binding SelectedItem, ElementName=ListBox}"
-                            IsEnabled="{Binding SelectedItem.IsRunning, Converter={StaticResource InverseBooleanConverter}, ElementName=ListBox}" />
+                            IsEnabled="{Binding SelectedItem.IsRunning, Converter={StaticResource InverseBooleanConverter}, ElementName=ListBox}">
+                        <Button.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="{x:Static resources:Strings.Reset_import_cache}"
+                                          Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:MacrosTabViewModel.ResetImportCacheCommand)}" />
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                    </Button>
                     <Button Content="{x:Static resources:Strings.Stop}" Grid.Column="1" Margin="2.5,0,0,0"
                             IsEnabled="{Binding SelectedItem.IsRunning, ElementName=ListBox}"
                             Command="{Binding StopCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />

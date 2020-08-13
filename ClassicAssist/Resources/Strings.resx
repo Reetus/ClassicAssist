@@ -1434,4 +1434,7 @@ Are you sure you wish to continue?</value>
   <data name="Loot humanoids" xml:space="preserve">
     <value>Loot humanoids</value>
   </data>
+  <data name="Reset import cache" xml:space="preserve">
+    <value>Reset import cache</value>
+  </data>
 </root>

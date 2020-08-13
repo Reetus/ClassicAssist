@@ -36,6 +36,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _recordCommand;
         private RelayCommand _removeMacroCommand;
         private ICommand _removeMacroConfirmCommand;
+        private ICommand _resetImportCacheCommand;
         private ICommand _saveMacroCommand;
         private MacroEntry _selectedItem;
         private ICommand _showActiveObjectsWindowCommand;
@@ -105,6 +106,10 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand RemoveMacroConfirmCommand =>
             _removeMacroConfirmCommand ?? ( _removeMacroConfirmCommand =
                 new RelayCommand( RemoveMacroConfirm, o => SelectedItem != null ) );
+
+        public ICommand ResetImportCacheCommand =>
+            _resetImportCacheCommand ?? ( _resetImportCacheCommand = new RelayCommand( ResetImportCache,
+                o => SelectedItem != null && !SelectedItem.IsRunning ) );
 
         public ICommand SaveMacroCommand =>
             _saveMacroCommand ?? ( _saveMacroCommand = new RelayCommand( SaveMacro, o => true ) );
@@ -293,6 +298,11 @@ namespace ClassicAssist.UI.ViewModels
             {
                 Directory.CreateDirectory( modulePath );
             }
+        }
+
+        private static void ResetImportCache( object obj )
+        {
+            MacroInvoker.ResetImportCache();
         }
 
         private void RemoveMacroConfirm( object obj )

@@ -39,7 +39,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <controls1:StretchyWrapPanel Orientation="Horizontal" Grid.Row="0" Margin="10,0,10,10">
+            <controls1:StretchyWrapPanel Orientation="Horizontal" Grid.Row="0" Margin="10,5,10,5">
                 <controls1:StretchyWrapPanel.Resources>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                         <Setter Property="Margin" Value="10,0,10,0" />
@@ -91,10 +91,11 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <ListBox x:Name="listBox" ItemsSource="{Binding Macros}" Grid.Column="0" Grid.Row="0"
-                             SelectedItem="{Binding SelectedItem}">
+                             SelectedItem="{Binding SelectedItem}"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding}" ToolTip="{Binding}" />
+                                <TextBlock Text="{Binding}" ToolTip="{Binding}" TextTrimming="CharacterEllipsis" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

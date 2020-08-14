@@ -30,8 +30,13 @@ namespace ClassicAssist.UO.Data
             for ( int x = 6; x < fileBytes.Length; x += 7 + len )
             {
                 len = BitConverter.ToUInt16( fileBytes, x + 5 );
-                clilocList.Add( BitConverter.ToInt32( fileBytes, x ),
-                    Encoding.UTF8.GetString( fileBytes, x + 7, len ) );
+                int cliloc = BitConverter.ToInt32( fileBytes, x );
+                string value = Encoding.UTF8.GetString( fileBytes, x + 7, len );
+
+                if ( !clilocList.ContainsKey( cliloc ) )
+                {
+                    clilocList.Add( cliloc, value );
+                }
             }
 
             return clilocList;

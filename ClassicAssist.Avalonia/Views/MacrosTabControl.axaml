@@ -79,7 +79,7 @@
     <GridSplitter Grid.Column="1" Margin="5,0,5,0" />
     <Grid Grid.Column="2" RowDefinitions="*, Auto, Auto">
       <Border BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderMidBrush}" Padding="2" Grid.Row="0">
-        <AvalonEdit:TextEditor x:Name="Editor">
+        <AvalonEdit:TextEditor x:Name="Editor" FontFamily="avares://ClassicAssist.Avalonia/Assets/Fonts/*.ttf#Ubuntu Mono">
           <i:Interaction.Behaviors>
             <misc:AvalonEditBehaviour Text="{Binding SelectedItem.Macro}" />
           </i:Interaction.Behaviors>

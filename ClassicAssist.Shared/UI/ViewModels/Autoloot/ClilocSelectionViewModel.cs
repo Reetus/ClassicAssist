@@ -20,16 +20,17 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Forms;
 using System.Windows.Input;
+using ClassicAssist.Misc;
+using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Data;
 
-namespace ClassicAssist.UI.ViewModels.Autoloot
+namespace ClassicAssist.Shared.UI.ViewModels.Autoloot
 {
     public class ClilocSelectionViewModel : BaseViewModel
     {
         private ObservableCollection<ClilocEntry> _allClilocs = new ObservableCollection<ClilocEntry>();
-        private DialogResult _dialogResult = DialogResult.Cancel;
+        private MessageBoxResult _dialogResult = MessageBoxResult.Cancel;
         private ObservableCollection<ClilocEntry> _filteredClilocs = new ObservableCollection<ClilocEntry>();
         private string _filterText;
         private ICommand _okCommand;
@@ -51,7 +52,7 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
             set => SetProperty( ref _allClilocs, value );
         }
 
-        public DialogResult DialogResult
+        public MessageBoxResult DialogResult
         {
             get => _dialogResult;
             set => SetProperty( ref _dialogResult, value );
@@ -83,7 +84,7 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
 
         private void OK( object obj )
         {
-            DialogResult = DialogResult.OK;
+            DialogResult = MessageBoxResult.OK;
         }
 
         private void UpdateEntries( string filterText )

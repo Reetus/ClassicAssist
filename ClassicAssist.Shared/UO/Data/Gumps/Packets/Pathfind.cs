@@ -1,5 +1,4 @@
 ﻿#region License
-
 // Copyright (C) 2020 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -14,22 +13,21 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
 #endregion
 
-using System;
-using System.Threading.Tasks;
+using ClassicAssist.UO.Data;
 
-namespace ClassicAssist.Shared
+namespace ClassicAssist.UO.Network.Packets
 {
-    public interface IUIInvoker
+    public class Pathfind : BasePacket
     {
-        Task Invoke( string typeName, object[] ctorParam = null, Type dataContextType = null,
-            object[] dataContextParam = null );
-        Task InvokeDialog<T>( string typeName, object[] ctorParam = null, T dataContext = default ) where T: class;
-
-        Task<int> GetHueAsync();
-        void SetClipboardText( string text );
-        string GetClipboardText();
+        public Pathfind(int x, int y, int z)
+        {
+            _writer = new PacketWriter(7);
+            _writer.Write((byte)0x38);
+            _writer.Write((short)x);
+            _writer.Write((short)y);
+            _writer.Write((short)z);
+        }
     }
 }

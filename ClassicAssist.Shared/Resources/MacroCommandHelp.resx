@@ -1419,4 +1419,44 @@ while FindType(0x2006):
   <data name="USELAYER_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>UseLayer("Talisman")</value>
   </data>
+  <data name="AUTOCOLORPICK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Setup an automated reply to the incoming dye color gump, allowing you to define dye tubs color.
+That command should be added prior to the action that opens the color pick gump.</value>
+  </data>
+  <data name="AUTOCOLORPICK_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>AutoColorPick(35)</value>
+  </data>
+  <data name="AUTOCOLORPICK_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>AutoColorPick(666)
+UseObject('dyes')
+WaitForTarget(1000)
+Target('tub')</value>
+  </data>
+  <data name="DISPLAYQUESTPOINTER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Display quest arrow pointer to specified coordinates</value>
+  </data>
+  <data name="DISPLAYQUESTPOINTER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>DisplayQuestPointer(1000, 1000, True)</value>
+  </data>
+  <data name="DISPLAYQUESTPOINTER_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># add pointer
+DisplayQuestPointer(1000, 1000, True)
+Pause(2000)
+# remove pointer
+DisplayQuestPointer(1000, 1000, False)</value>
+  </data>
+  <data name="PATHFIND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Requests client to pathfind to given coordinates / entity</value>
+  </data>
+  <data name="PATHFIND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Pathfind(1000, 1000, 0)</value>
+  </data>
+  <data name="PATHFIND_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>#Pathfind to coordinates
+Pathfind(1438, 1630, 20)
+
+#Pathfind to entity
+SetEnemy(0x3c9)
+Pathfind('enemy')</value>
+  </data>
 </root>

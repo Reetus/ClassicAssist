@@ -1,0 +1,49 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+        xmlns:viewModels="clr-namespace:ClassicAssist.Shared.UI.ViewModels;assembly=ClassicAssist.Shared"
+        xmlns:misc="clr-namespace:ClassicAssist.Avalonia.Misc"
+        xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+        mc:Ignorable="d"
+        x:Class="ClassicAssist.Avalonia.Views.NewProfileWindow"
+        Title="{x:Static resources:Strings.New_Profile}" Height="110" Width="290">
+  <!--<Window.DataContext>
+    <viewModels:NewProfileViewModel/>
+  </Window.DataContext>-->
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10,10,10,5">
+      <TextBlock Text="{x:Static resources:Strings.Name_}" Margin="0,0,20,0" VerticalAlignment="Center"/>
+      <TextBox Width="200" Text="{Binding Name, Mode=TwoWay}" />
+    </StackPanel>
+    <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10,5,10,10">
+      <RadioButton Content="{x:Static resources:Strings.Blank}" Margin="0,0,30,0" Command="{Binding ChangeOptionCommand}" CommandParameter="{x:Static viewModels:NewProfileOption.Blank}"/>
+      <RadioButton Content="{x:Static resources:Strings.Duplicate}" Command="{Binding ChangeOptionCommand}" CommandParameter="{x:Static viewModels:NewProfileOption.Duplicate}" IsChecked="True"/>
+    </StackPanel>
+    <StackPanel Orientation="Horizontal" Grid.Row="2">
+      <StackPanel.Styles>
+        <Style Selector="Button">
+          <Setter Property="MinWidth" Value="80" />
+          <Setter Property="Margin" Value="10,0,0,0" />
+          <Setter Property="Padding" Value="20,2,20,2" />
+        </Style>
+      </StackPanel.Styles>
+      <Button Content="{x:Static resources:Strings.OK}">
+        <i:Interaction.Behaviors>
+          <misc:CloseOnClickBehaviour Command="{Binding OkCommand}"/>
+        </i:Interaction.Behaviors>
+      </Button>
+      <Button Content="{x:Static resources:Strings.Cancel}">
+        <i:Interaction.Behaviors>
+          <misc:CloseOnClickBehaviour />
+        </i:Interaction.Behaviors>
+      </Button>
+    </StackPanel>
+  </Grid>
+</Window>

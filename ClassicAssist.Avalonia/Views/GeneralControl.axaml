@@ -4,6 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels;assembly=ClassicAssist.Shared"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:controls="clr-namespace:ClassicAssist.Avalonia.Controls"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"                          
+             xmlns:misc="clr-namespace:ClassicAssist.Avalonia.Misc"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ClassicAssist.Avalonia.Views.GeneralControl">
   <UserControl.DataContext>
@@ -44,6 +48,41 @@
           </StackPanel>
         </CheckBox>
       </StackPanel>
+      <Grid Grid.Row="2">
+        <controls:GroupBox Header="{x:Static resources:Strings.Profiles}" Margin="5">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+              <ComboBox Items="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}">
+                <i:Interaction.Behaviors>
+                  <misc:ComboBoxBehavior CommandBinding="{Binding ChangeProfileCommand}" CommandParameter="{Binding SelectedProfile}" OnlyUserTriggered="True" />
+                </i:Interaction.Behaviors>
+              </ComboBox>
+            </Grid>
+            <DockPanel Grid.Column="1" Margin="5,0,0,0">
+              <Button Content="{x:Static resources:Strings.New}" Margin="0,0,5,0" Padding="10,0,10,0"
+                      Command="{Binding NewProfileCommand}" />
+              <Button Content="{x:Static resources:Strings.Save}" Margin="0,0,5,0" Padding="10,0,10,0"
+                      Command="{Binding SaveProfileCommand}" />
+              <Button Command="{Binding LinkUnlinkProfileCommand}">
+                <i:Interaction.Behaviors>
+                  <ia:DataTriggerBehavior Binding="{Binding IsLinkedProfile}" ComparisonCondition="Equal" Value="False">
+                    <ia:ChangePropertyAction TargetObject="{Binding #image}" PropertyName="Source" Value="{DynamicResource UnlinkedIcon}"/>
+                  </ia:DataTriggerBehavior>
+                  <ia:DataTriggerBehavior Binding="{Binding IsLinkedProfile}" ComparisonCondition="Equal" Value="True">
+                    <ia:ChangePropertyAction TargetObject="{Binding #image}" PropertyName="Source" Value="{DynamicResource LinkedIcon}"/>
+                  </ia:DataTriggerBehavior>
+                </i:Interaction.Behaviors>
+                <Image x:Name="image" Width="16" Margin="3,0,3,0" Source="{DynamicResource UnlinkedIcon}">
+                </Image>
+              </Button>
+            </DockPanel>
+          </Grid>
+        </controls:GroupBox>
+      </Grid>
     </Grid>
   </Grid>
 </UserControl>

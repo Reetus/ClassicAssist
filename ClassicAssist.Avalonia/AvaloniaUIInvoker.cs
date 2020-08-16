@@ -43,7 +43,7 @@ namespace ClassicAssist.Avalonia
             _clipboard = AvaloniaLocator.Current.GetService<IClipboard>();
         }
 
-        public void Invoke( string typeName, object[] ctorParam = null, Type dataContextType = null,
+        public Task Invoke( string typeName, object[] ctorParam = null, Type dataContextType = null,
             object[] dataContextParam = null )
         {
             Type type = Assembly.GetExecutingAssembly().GetTypes()
@@ -52,7 +52,7 @@ namespace ClassicAssist.Avalonia
             if ( type == null )
             {
                 Shared.Engine.MessageBoxProvider.Show( $"Cannot find type: {typeName}" );
-                return;
+                return Task.CompletedTask;
             }
 
             Window window = (Window) Activator.CreateInstance( type, ctorParam );
@@ -68,7 +68,7 @@ namespace ClassicAssist.Avalonia
                 window.DataContext = dc;
             }
 
-            _dispatcher.InvokeAsync( () =>
+            return _dispatcher.InvokeAsync( () =>
             {
                 try
                 {
@@ -79,6 +79,47 @@ namespace ClassicAssist.Avalonia
                     Console.WriteLine( e.ToString() );
                 }
             } );
+        }
+
+        public Task InvokeDialog<T>( string typeName, object[] ctorParam = null, T dataContext = default ) where T: class
+        {
+            Type type = Assembly.GetExecutingAssembly().GetTypes()
+                .FirstOrDefault( t => t.Name == typeName && t.IsSubclassOf( typeof( Window ) ) );
+
+            if (type == null)
+            {
+                Shared.Engine.MessageBoxProvider.Show( $"Cannot find type: {typeName}" );
+                return Task.CompletedTask;
+            }
+
+            Window window = (Window)Activator.CreateInstance( type, ctorParam );
+
+            if (window == null)
+            {
+                throw new ArgumentNullException( $"Failed to create window of type: {typeName}" );
+            }
+
+            if ( dataContext != null )
+            {
+                window.DataContext = dataContext;
+            }
+
+            TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
+
+            _dispatcher.InvokeAsync( async () =>
+            {
+                try
+                {
+                    await window.ShowDialog( Engine.MainWindow );
+                    taskCompletionSource.TrySetResult( true );
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine( e.ToString() );
+                }
+            } );
+
+            return taskCompletionSource.Task;
         }
 
         public async Task<int> GetHueAsync()

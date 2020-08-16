@@ -23,18 +23,16 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Windows.Input;
-using ClassicAssist.Shared;
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
-using ClassicAssist.UI.Views.Autoloot;
-using ClassicAssist.UO;
+using ClassicAssist.Shared.UO;
+using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Objects;
 using Newtonsoft.Json;
 
-namespace ClassicAssist.UI.ViewModels.Autoloot
+namespace ClassicAssist.Shared.UI.ViewModels.Autoloot
 {
     public class CustomPropertiesViewModel : BaseViewModel
     {
@@ -77,11 +75,9 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
         private void ChooseFromCliloc( object obj )
         {
             ClilocSelectionViewModel vm = new ClilocSelectionViewModel();
-            ClilocSelectionWindow window = new ClilocSelectionWindow { DataContext = vm };
+            Engine.UIInvoker.InvokeDialog( "ClilocSelectionWindow", dataContext: vm );
 
-            window.ShowDialog();
-
-            if ( vm.DialogResult != DialogResult.OK )
+            if ( vm.DialogResult != MessageBoxResult.OK )
             {
                 return;
             }
@@ -101,11 +97,11 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
 
         private async Task ChooseFromItem( object obj )
         {
-            int serial = await Shared.UO.Commands.GetTargeSerialAsync( Strings.Target_object___, 90000 );
+            int serial = await Commands.GetTargeSerialAsync( Strings.Target_object___, 90000 );
 
             if ( serial == 0 )
             {
-                Shared.UO.Commands.SystemMessage( Strings.Cannot_find_item___ );
+                Commands.SystemMessage( Strings.Cannot_find_item___ );
                 return;
             }
 
@@ -113,21 +109,20 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
 
             if ( item == null )
             {
-                Shared.UO.Commands.SystemMessage( Strings.Cannot_find_item___ );
+                Commands.SystemMessage( Strings.Cannot_find_item___ );
                 return;
             }
 
             if ( item.Properties == null )
             {
-                Shared.UO.Commands.SystemMessage( Strings.Item_properties_null_or_not_loaded___ );
+                Commands.SystemMessage( Strings.Item_properties_null_or_not_loaded___ );
                 return;
             }
 
             PropertySelectionViewModel vm = new PropertySelectionViewModel( item.Properties );
-            PropertySelectionWindow window = new PropertySelectionWindow { DataContext = vm };
-            window.ShowDialog();
+            await Engine.UIInvoker.InvokeDialog( "PropertySelectionWindow", dataContext: vm );
 
-            if ( vm.DialogResult != DialogResult.OK )
+            if ( vm.DialogResult != MessageBoxResult.OK )
             {
                 return;
             }

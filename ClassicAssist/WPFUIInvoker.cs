@@ -38,7 +38,7 @@ namespace ClassicAssist
             _dispatcher = dispatcher;
         }
 
-        public void Invoke( string typeName, object[] ctorParam = null, Type dataContextType = null,
+        public Task Invoke( string typeName, object[] ctorParam = null, Type dataContextType = null,
             object[] dataContextParam = null )
         {
             Type type = Assembly.GetExecutingAssembly().GetTypes()
@@ -63,6 +63,35 @@ namespace ClassicAssist
             }
 
             _dispatcher.Invoke( () => { window.Show(); } );
+
+            return Task.CompletedTask;
+        }
+
+        public Task InvokeDialog<T>( string typeName, object[] ctorParam = null, T dataContext = default ) where T: class
+        {
+            Type type = Assembly.GetExecutingAssembly().GetTypes()
+                .FirstOrDefault( t => t.Name == typeName && t.IsSubclassOf( typeof( Window ) ) );
+
+            if ( type == null )
+            {
+                throw new ArgumentNullException( $"Cannot find type: ${typeName}" );
+            }
+
+            Window window = (Window) Activator.CreateInstance( type, ctorParam );
+
+            if ( window == null )
+            {
+                throw new ArgumentNullException( $"Failed to create window of type: ${typeName}" );
+            }
+
+            if ( dataContext != null )
+            {
+                window.DataContext = dataContext;
+            }
+
+            _dispatcher.Invoke( () => { window.ShowDialog(); } );
+
+            return Task.CompletedTask;
         }
 
         public async Task<int> GetHueAsync()
@@ -89,7 +118,7 @@ namespace ClassicAssist
             return await tcs.Task;
         }
 
-        public void SetClipboardText(string text)
+        public void SetClipboardText( string text )
         {
             Clipboard.SetText( text );
         }

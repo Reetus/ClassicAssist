@@ -11,6 +11,7 @@ using ClassicAssist.Data.Macros;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared;
 using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI.ViewModels;
 using ClassicAssist.Shared.UO;
 using ClassicAssist.UI.Misc;
 using Newtonsoft.Json.Linq;
@@ -349,21 +350,18 @@ namespace ClassicAssist.UI.ViewModels
 
         private async Task NewProfile( object arg )
         {
-            //TODO UI
-            //NewProfileWindow window = new NewProfileWindow();
+            NewProfileViewModel vm = new NewProfileViewModel();
 
-            //window.ShowDialog();
+            await Engine.UIInvoker.InvokeDialog( "NewProfileWindow", dataContext: vm );
 
-            //if ( window.DataContext is NewProfileViewModel vm && !string.IsNullOrEmpty( vm.FileName ) )
-            //{
-            //    RefreshProfiles();
+            if (!string.IsNullOrEmpty( vm.FileName ) )
+            {
+                RefreshProfiles();
 
-            //    SelectedProfile = vm.FileName;
+                SelectedProfile = vm.FileName;
 
-            //    ChangeProfile( vm.FileName );
-            //}
-
-            //await Task.CompletedTask;
+                ChangeProfile( vm.FileName );
+            }
         }
     }
 }

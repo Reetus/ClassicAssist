@@ -2,6 +2,7 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using ClassicAssist.Avalonia.Views;
+using ClassicAssist.Shared;
 using ClassicAssist.UI.ViewModels;
 
 namespace ClassicAssist.Avalonia
@@ -21,6 +22,9 @@ namespace ClassicAssist.Avalonia
                 {
                     DataContext = new MainWindowViewModel(),
                 };
+
+                //TODO
+                Assistant.Engine.MainWindow = (MainWindow)desktop.MainWindow;
             }
 
             base.OnFrameworkInitializationCompleted();

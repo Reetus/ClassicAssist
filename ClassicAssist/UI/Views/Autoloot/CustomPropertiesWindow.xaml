@@ -6,14 +6,13 @@
         xmlns:local="clr-namespace:ClassicAssist.UI.Views.Autoloot"
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
-        xmlns:autoloot="clr-namespace:ClassicAssist.Data.Autoloot"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:autoloot1="clr-namespace:ClassicAssist.UI.ViewModels.Autoloot"
+        xmlns:autoloot="clr-namespace:ClassicAssist.Shared.UI.ViewModels.Autoloot;assembly=ClassicAssist.Shared"
         mc:Ignorable="d"
         Title="{x:Static resources:Strings.Define_Custom_Properties}" Height="350" Width="650"
         Background="{DynamicResource ThemeWindowBackgroundBrush}" Topmost="True">
     <Window.DataContext>
-        <autoloot1:CustomPropertiesViewModel />
+        <autoloot:CustomPropertiesViewModel />
     </Window.DataContext>
     <Window.Resources>
         <ResourceDictionary>

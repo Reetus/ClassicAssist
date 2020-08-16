@@ -19,16 +19,17 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Forms;
 using System.Windows.Input;
+using ClassicAssist.Misc;
+using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
 
-namespace ClassicAssist.UI.ViewModels.Autoloot
+namespace ClassicAssist.Shared.UI.ViewModels.Autoloot
 {
     public class PropertySelectionViewModel : BaseViewModel
     {
-        private DialogResult _dialogResult = DialogResult.Cancel;
+        private MessageBoxResult _dialogResult = MessageBoxResult.Cancel;
         private ICommand _okCommand;
         private ObservableCollection<SelectProperties> _properties = new ObservableCollection<SelectProperties>();
 
@@ -47,7 +48,7 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
             }
         }
 
-        public DialogResult DialogResult
+        public MessageBoxResult DialogResult
         {
             get => _dialogResult;
             set => SetProperty( ref _dialogResult, value );
@@ -63,7 +64,7 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
 
         private void OK( object obj )
         {
-            DialogResult = DialogResult.OK;
+            DialogResult = MessageBoxResult.OK;
         }
     }
 

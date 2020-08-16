@@ -167,7 +167,7 @@ namespace ClassicAssist.Data.Targeting
 
         public Mobile GetNextMobile( IEnumerable<Notoriety> notoriety, TargetBodyType bodyType = TargetBodyType.Any,
             int distance = MAX_DISTANCE, TargetFriendType friendType = TargetFriendType.Include,
-            TargetInfliction inflictionType = TargetInfliction.Any, bool reverse = false )
+            TargetInfliction inflictionType = TargetInfliction.Any, bool reverse = false, Mobile previousMobile = null )
         {
             bool looped = false;
 
@@ -203,6 +203,11 @@ namespace ClassicAssist.Data.Targeting
                         throw new ArgumentOutOfRangeException( nameof( bodyType ), bodyType, null );
                 }
 
+                if ( previousMobile != null )
+                {
+                    _ignoreList.Clear();
+                }
+
                 if ( friendType == TargetFriendType.Only )
                 {
                     //Notoriety, bodyType ignored
@@ -220,6 +225,17 @@ namespace ClassicAssist.Data.Targeting
                         ( friendType == TargetFriendType.Include || !MobileCommands.InFriendList( m.Serial ) ) &&
                         ( !Options.CurrentOptions.GetFriendEnemyUsesIgnoreList ||
                           !ObjectCommands.IgnoreList.Contains( m.Serial ) ) && m.Serial != Engine.Player?.Serial );
+                }
+
+                if ( previousMobile != null )
+                {
+                    mobiles = mobiles.Where( m => m.Serial != previousMobile.Serial ).OrderBy( m =>
+                        Math.Max( Math.Abs( m.X - previousMobile.X ), Math.Abs( m.Y - previousMobile.Y ) ) ).ToArray();
+
+                    if ( mobiles.Length == 0 )
+                    {
+                        mobiles = new[] { previousMobile };
+                    }
                 }
 
                 if ( reverse )
@@ -293,7 +309,8 @@ namespace ClassicAssist.Data.Targeting
             TargetFriendType friendType = TargetFriendType.None,
             TargetInfliction inflictionType = TargetInfliction.Any )
         {
-            Mobile m = GetMobile( notoFlags, bodyType, targetDistance, friendType, inflictionType );
+            Mobile m = GetMobile( notoFlags, bodyType, targetDistance, friendType, inflictionType,
+                targetDistance == TargetDistance.Nearest ? AliasCommands.GetAlias( "enemy" ) : 0 );
 
             if ( m == null )
             {
@@ -308,7 +325,8 @@ namespace ClassicAssist.Data.Targeting
             TargetFriendType friendType = TargetFriendType.Include,
             TargetInfliction inflictionType = TargetInfliction.Any )
         {
-            Mobile m = GetMobile( notoFlags, bodyType, targetDistance, friendType, inflictionType );
+            Mobile m = GetMobile( notoFlags, bodyType, targetDistance, friendType, inflictionType,
+                targetDistance == TargetDistance.Nearest ? AliasCommands.GetAlias( "friend" ) : 0 );
 
             if ( m == null )
             {
@@ -320,7 +338,7 @@ namespace ClassicAssist.Data.Targeting
         }
 
         public Mobile GetMobile( TargetNotoriety notoFlags, TargetBodyType bodyType, TargetDistance targetDistance,
-            TargetFriendType friendType, TargetInfliction inflictionType )
+            TargetFriendType friendType, TargetInfliction inflictionType, int previousSerial = 0 )
         {
             Notoriety[] noto = NotoFlagsToArray( notoFlags );
 
@@ -335,7 +353,17 @@ namespace ClassicAssist.Data.Targeting
                     break;
                 case TargetDistance.Nearest:
 
-                    m = GetNextMobile( noto, bodyType, 3, friendType, inflictionType );
+                    Mobile previousMobile = Engine.Mobiles.GetMobile( previousSerial );
+
+                    if ( previousMobile == null || previousMobile.Distance > MAX_DISTANCE )
+                    {
+                        m = GetClosestMobile( noto, bodyType, friendType, inflictionType );
+                    }
+                    else
+                    {
+                        m = GetNextMobile( noto, bodyType, MAX_DISTANCE, friendType, inflictionType, false,
+                            previousMobile );
+                    }
 
                     break;
                 case TargetDistance.Closest:

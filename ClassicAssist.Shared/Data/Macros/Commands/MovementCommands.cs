@@ -1,9 +1,12 @@
 ﻿using System;
-using ClassicAssist.Shared;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared;
+using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
+using ClassicAssist.UO.Network.Packets;
+using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.Shared.UO.Commands;
 
 namespace ClassicAssist.Data.Macros.Commands
@@ -11,6 +14,7 @@ namespace ClassicAssist.Data.Macros.Commands
     public static class MovementCommands
     {
         private const int MOVEMENT_TIMEOUT = 500;
+        private const int PATHFIND_MAX_DISTANCE = 32;
         private static bool _forceWalk;
 
         [CommandsDisplay( Category = nameof( Strings.Movement ),
@@ -80,6 +84,53 @@ namespace ClassicAssist.Data.Macros.Commands
             }
 
             return false;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Movement ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.XCoordinate ), nameof( ParameterType.YCoordinate ),
+                nameof( ParameterType.ZCoordinate )
+            } )]
+        public static void Pathfind( int x, int y, int z )
+        {
+            int distance = Math.Max( Math.Abs( x - Engine.Player?.X ?? x ), Math.Abs( y - Engine.Player?.Y ?? y ) );
+
+            if ( distance > PATHFIND_MAX_DISTANCE )
+            {
+                UOC.SystemMessage( Strings.Maximum_distance_exceeded_ );
+                return;
+            }
+
+            Engine.SendPacketToClient( new Pathfind( x, y, z ) );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Movement ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.SerialOrAlias )
+            } )]
+        public static void Pathfind( object obj )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Entity_not_found___ );
+                return;
+            }
+
+            Entity entity = UOMath.IsMobile( serial )
+                ? (Entity) Engine.Mobiles.GetMobile( serial )
+                : Engine.Items.GetItem( serial );
+
+            if ( entity == null )
+            {
+                UOC.SystemMessage( Strings.Entity_not_found___ );
+                return;
+            }
+
+            Pathfind( entity.X, entity.Y, entity.Z );
         }
     }
 }

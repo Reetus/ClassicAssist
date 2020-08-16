@@ -7,7 +7,7 @@
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
-        xmlns:autoloot="clr-namespace:ClassicAssist.UI.ViewModels.Autoloot"
+        xmlns:autoloot="clr-namespace:ClassicAssist.Shared.UI.ViewModels.Autoloot;assembly=ClassicAssist.Shared"
         mc:Ignorable="d"
         Title="{x:Static resources:Strings.Choose_from_Item}" Height="250" Width="400"
         Background="{DynamicResource ThemeWindowBackgroundBrush}" Topmost="True">

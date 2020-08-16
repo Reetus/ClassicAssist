@@ -1,10 +1,11 @@
 ﻿using System.IO;
-using System.Windows;
 using System.Windows.Input;
 using ClassicAssist.Data;
 using ClassicAssist.Shared.Resources;
+using ClassicAssist.UI.ViewModels;
+using ReactiveUI;
 
-namespace ClassicAssist.UI.ViewModels
+namespace ClassicAssist.Shared.UI.ViewModels
 {
     public enum NewProfileOption
     {
@@ -14,9 +15,14 @@ namespace ClassicAssist.UI.ViewModels
 
     public class NewProfileViewModel : BaseViewModel
     {
+        private ICommand _changeOptionCommand;
         private string _name;
         private ICommand _okCommand;
         private NewProfileOption _option = NewProfileOption.Duplicate;
+
+        // Avalonia only
+        public ICommand ChangeOptionCommand =>
+            _changeOptionCommand ?? ( _changeOptionCommand = ReactiveCommand.Create<NewProfileOption>( ChangeOption ) );
 
         public string FileName { get; set; }
 
@@ -37,9 +43,9 @@ namespace ClassicAssist.UI.ViewModels
 
         private void Ok( object obj )
         {
-            string profileName = Name.Trim();
+            string profileName = Name?.Trim();
 
-            bool valid = profileName.IndexOfAny( Path.GetInvalidFileNameChars() ) == -1;
+            bool valid = profileName?.IndexOfAny( Path.GetInvalidFileNameChars() ) == -1;
 
             if ( valid )
             {
@@ -62,9 +68,13 @@ namespace ClassicAssist.UI.ViewModels
             }
             else
             {
-                MessageBox.Show( Strings.Profile_name_contains_illegal_characters_, Strings.Error, MessageBoxButton.OK,
-                    MessageBoxImage.Error );
+                Engine.MessageBoxProvider.Show( Strings.Profile_name_contains_illegal_characters_ );
             }
+        }
+
+        private void ChangeOption( NewProfileOption obj )
+        {
+            Option = obj;
         }
     }
 }

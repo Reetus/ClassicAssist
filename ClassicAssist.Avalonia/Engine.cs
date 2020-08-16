@@ -82,8 +82,6 @@ namespace Assistant
                     SEngine.UIInvoker = new AvaloniaUIInvoker( Dispatcher.UIThread );
                     AppBuilder.Configure<App>().UsePlatformDetect().LogToDebug()
                         .StartWithClassicDesktopLifetime( null );
-                    MainWindow = new MainWindow();
-                    MainWindow.Show();
                 } ) { IsBackground = true };
 
                 mainThread.Start();

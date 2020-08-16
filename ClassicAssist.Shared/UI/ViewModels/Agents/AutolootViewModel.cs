@@ -11,6 +11,7 @@ using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Data.Regions;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI.ViewModels.Autoloot;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Data;
@@ -506,7 +507,7 @@ namespace ClassicAssist.Shared.UI.ViewModels.Agents
 
         private void DefineCustomProperties( object obj )
         {
-            Engine.UIInvoker.Invoke( "CustomPropertiesWindow" );
+            Engine.UIInvoker.InvokeDialog<CustomPropertiesViewModel>( "CustomPropertiesWindow" );
             Constraints.Clear();
             LoadProperties();
             LoadCustomProperties();

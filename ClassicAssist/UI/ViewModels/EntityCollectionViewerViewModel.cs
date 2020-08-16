@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Assistant;
 using ClassicAssist.Data.Autoloot;
+using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Misc;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
@@ -33,6 +34,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _contextContextMenuRequestCommand;
         private ICommand _contextMoveToBackpackCommand;
         private ICommand _contextMoveToContainerCommand;
+        private ICommand _contextTargetCommand;
         private ICommand _contextUseItemCommand;
         private ObservableCollection<EntityCollectionData> _entities;
         private ICommand _equipItemCommand;
@@ -115,6 +117,10 @@ namespace ClassicAssist.UI.ViewModels
             _contextMoveToContainerCommand ?? ( _contextMoveToContainerCommand =
                 new RelayCommandAsync( ContextMoveToContainer, o => SelectedItems != null && !IsPerformingAction ) );
 
+        public ICommand ContextTargetCommand =>
+            _contextTargetCommand ?? ( _contextTargetCommand = new RelayCommand( ContextTarget,
+                o => Engine.TargetExists ) );
+
         public ICommand ContextUseItemCommand =>
             _contextUseItemCommand ?? ( _contextUseItemCommand =
                 new RelayCommandAsync( ContextUseItem, o => SelectedItems != null && !IsPerformingAction ) );
@@ -190,6 +196,18 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _topmost;
             set => SetProperty( ref _topmost, value );
+        }
+
+        private void ContextTarget( object obj )
+        {
+            Entity item = SelectedItems.FirstOrDefault()?.Entity;
+
+            if ( item == null )
+            {
+                return;
+            }
+
+            TargetCommands.Target( item.Serial );
         }
 
         private void HideItem( object obj )
@@ -655,8 +673,8 @@ namespace ClassicAssist.UI.ViewModels
                     case PropertyType.Properties:
                     {
                         predicates.Add( i => i.Properties != null && constraint.Clilocs.Any( cliloc =>
-                                                 i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc,
-                                                     constraint, filter.Operator, filter.Value ) ) ) );
+                            i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc,
+                                constraint, filter.Operator, filter.Value ) ) ) );
 
                         break;
                     }

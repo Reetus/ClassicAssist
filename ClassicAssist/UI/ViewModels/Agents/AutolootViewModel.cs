@@ -481,7 +481,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                     UOC.SystemMessage( string.Format( Strings.Autolooting___0__, lootItem.Name ), 61 );
                     Task t = ActionPacketQueue.EnqueueDragDrop( lootItem.Serial, lootItem.Count, containerSerial,
-                        QueuePriority.Medium, true, true, requeueOnFailure: RequeueFailedItems,
+                        QueuePriority.High, true, true, requeueOnFailure: RequeueFailedItems,
                         successPredicate: CheckItemContainer );
 
                     t.Wait( LOOT_TIMEOUT );

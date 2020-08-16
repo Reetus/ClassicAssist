@@ -20,6 +20,9 @@
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.EquipItemCommand)}" />
                 <MenuItem Header="{x:Static resources:Strings.Hide}"
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.HideItemCommand)}"/>
+                <Separator />
+                <MenuItem Header="{x:Static resources:Strings.Target}"
+                          Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextTargetCommand)}"/>
             </ContextMenu>
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>

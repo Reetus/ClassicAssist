@@ -15,6 +15,7 @@
         Title="{Binding Title}" Topmost="{Binding AlwaysOnTop}">
   <i:Interaction.Behaviors>
     <misc:WindowInitializedBehaviour/>
+    <misc:WindowResizeBehaviour/>
   </i:Interaction.Behaviors>
   <Window.DataContext>
     <viewModels:MainWindowViewModel />

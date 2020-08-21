@@ -1,0 +1,25 @@
+name: Build Mac Avalonia
+
+on:
+  push:
+    branches: [avalonia]
+  pull_request:
+    branches: [avalonia]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Nuget Restore
+        run: msbuild ClassicAssist.Avalonia /p:Configuration=Debug -t:restore
+      - name: Build with msbuild
+        run: msbuild ClassicAssist.Avalonia /p:Configuration=Debug
+      - run: |
+          find .
+        shell: bash
+      - name: Upload Plugin Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: MacOSX
+          path: ./Output

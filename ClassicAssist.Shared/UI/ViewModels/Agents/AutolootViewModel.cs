@@ -171,7 +171,8 @@ namespace ClassicAssist.Shared.UI.ViewModels.Agents
         }
 
         public ICommand SelectHueCommand =>
-            _selectHueCommand ?? ( _selectHueCommand = new RelayCommand( SelectHue, o => SelectedItem != null ) );
+            _selectHueCommand ?? ( _selectHueCommand =
+                ReactiveCommand.CreateFromTask<AutolootEntry>( SelectHue, _entrySelected ) );
 
         public ICommand SetContainerCommand =>
             _setContainerCommand ?? ( _setContainerCommand = new RelayCommandAsync( SetContainer, o => true ) );
@@ -581,14 +582,14 @@ namespace ClassicAssist.Shared.UI.ViewModels.Agents
             await Task.CompletedTask;
         }
 
-        private static void SelectHue( object obj )
+        private static async Task SelectHue( object obj )
         {
             if ( !( obj is AutolootEntry entry ) )
             {
                 return;
             }
 
-            int hue = Engine.UIInvoker.GetHueAsync().Result;
+            int hue = await Engine.UIInvoker.GetHueAsync();
 
             entry.RehueHue = hue;
         }

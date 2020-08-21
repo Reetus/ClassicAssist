@@ -105,7 +105,7 @@
           <CheckBox Content="{x:Static resources:Strings.Rehue_matching_items}"
                     IsChecked="{Binding SelectedItem.Rehue}" />
           <Button Margin="10,0,0,0" Command="{Binding SelectHueCommand}"
-                  CommandParameter="{Binding SelectedItem, ElementName=listView}">
+                  CommandParameter="{Binding SelectedItem}">
             <Image Source="{StaticResource ColorWheelIcon}" Height="12" Width="12" />
           </Button>
         </StackPanel>

@@ -24,8 +24,6 @@ namespace ClassicAssist.Avalonia.Views
         {
             InitializeComponent();
 
-            Hues.Initialize( @"C:\Users\johns\Documents\UO\Ultima Online Classic" );
-
             for ( int i = 0; i < 3000; i++ )
             {
                 Items.Add( new HuePickerEntry { Index = i + 1, Entry = Hues._lazyHueEntries.Value[i] } );

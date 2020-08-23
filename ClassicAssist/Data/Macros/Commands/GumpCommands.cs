@@ -96,28 +96,15 @@ namespace ClassicAssist.Data.Macros.Commands
             return ConfirmPromptGump.ConfirmPrompt( message, closable );
         }
 
-        //public static int SendCustomGump( Gump gump )
-        //{
-        //    PacketFilterInfo pfi = new PacketFilterInfo( 0xB1,
-        //        new[] { PacketFilterConditions.IntAtPositionCondition( (int) gump.ID, 7 ) } );
-
-        //    Engine.AddSendFilter( pfi );
-        //    gump.SendGump();
-
-        //    PacketWaitEntry we = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Outgoing, true, true );
-
-        //    we.Lock.WaitOne();
-
-        //    if ( we.Packet == null )
-        //    {
-        //        return -1;
-        //    }
-
-        //    PacketReader reader = new PacketReader( we.Packet, we.Packet.Length, false );
-        //    reader.ReadInt32();
-        //    reader.ReadInt32();
-        //    int buttonId = reader.ReadInt32();
-        //    return buttonId;
-        //}
+        [CommandsDisplay( Category = nameof( Strings.Gumps ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.String ), nameof( ParameterType.String ), nameof( ParameterType.Boolean )
+            } )]
+        public static (bool Result, string Message) MessagePrompt( string message, string initialText = "",
+            bool closable = false )
+        {
+            return MessagePromptGump.MessagePrompt( message, initialText, closable );
+        }
     }
 }

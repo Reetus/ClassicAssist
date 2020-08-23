@@ -1,14 +1,25 @@
-﻿using ClassicAssist.UO.Network.PacketFilter;
+﻿using ClassicAssist.Resources;
+using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network.PacketFilter;
 
 namespace ClassicAssist.UO.Network.Packets
 {
     public class UnicodePromptRequest : BasePacket, IMacroCommandParser
     {
-        // ReSharper disable once EmptyConstructor
         public UnicodePromptRequest()
         {
-            // TODO
-            // byte[] packet = new byte[] { 0xC2, 0x00, 0x15, 0x00, 0x00, 0x04, 0x82, 0x00, 0x00, 0x04, 0x82, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+        }
+
+        public UnicodePromptRequest( int id )
+        {
+            _writer = new PacketWriter( 0x15 );
+            _writer.Write( (byte) 0xC2 );
+            _writer.Write( (short) 0x15 );
+            _writer.Write( id );
+            _writer.Write( id );
+            _writer.Write( 1 );
+            _writer.WriteAsciiFixed( Strings.UO_LOCALE, 4 );
+            _writer.Fill();
         }
 
         public string Parse( byte[] packet, int length, PacketDirection direction )

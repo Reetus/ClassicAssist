@@ -1,4 +1,5 @@
-﻿using Assistant;
+﻿using System.Collections.Generic;
+using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.UO.Gumps;
@@ -46,7 +47,7 @@ namespace ClassicAssist.UO.Network
 
         public static int GumpSerial { get; set; } = 0x0fff0000;
 
-        public override void OnResponse( int buttonID, int[] switches )
+        public override void OnResponse( int buttonID, int[] switches, Dictionary<int, string> textEntries = null )
         {
             switch ( buttonID )
             {
@@ -58,7 +59,7 @@ namespace ClassicAssist.UO.Network
                     break;
             }
 
-            base.OnResponse( buttonID, switches );
+            base.OnResponse( buttonID, switches, textEntries );
         }
 
         private void ResendGump()

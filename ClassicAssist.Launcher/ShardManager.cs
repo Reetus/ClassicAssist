@@ -16,27 +16,44 @@ namespace ClassicAssist.Launcher
                 Port = 7775,
                 IsPreset = true,
                 HasStatusProtocol = false,
-                Encryption = true
+                Encryption = true,
+                Website = "http://www.uo.com/"
             } );
 
             Shards.Add( new ShardEntry
             {
-                Name = "UOGamers: Demise", Address = "login.uodemise.com", Port = 2593, IsPreset = true
+                Name = "UOGamers: Demise",
+                Address = "login.uodemise.com",
+                Port = 2593,
+                IsPreset = true,
+                Website = "https://uogdemise.com/"
             } );
 
             Shards.Add( new ShardEntry
             {
-                Name = "UOGamers: Hybrid", Address = "login.uohybrid.com", Port = 2593, IsPreset = true
+                Name = "UOGamers: Hybrid",
+                Address = "login.uohybrid.com",
+                Port = 2593,
+                IsPreset = true,
+                Website = "http://uohybrid.com/"
             } );
 
             Shards.Add( new ShardEntry
             {
-                Name = "Heritage UO", Address = "play.trueuo.com", Port = 2593, IsPreset = true
+                Name = "Heritage UO",
+                Address = "play.trueuo.com",
+                Port = 2593,
+                IsPreset = true,
+                Website = "https://trueuo.com/"
             } );
 
             Shards.Add( new ShardEntry
             {
-                Name = "UO Forever", Address = "login.uoforever.com", Port = 2599, IsPreset = true
+                Name = "UO Forever",
+                Address = "login.uoforever.com",
+                Port = 2599,
+                IsPreset = true,
+                Website = "https://www.uoforever.com/"
             } );
 
             Shards.Add( new ShardEntry
@@ -46,7 +63,8 @@ namespace ClassicAssist.Launcher
                 Port = 2593,
                 IsPreset = true,
                 HasStatusProtocol = false,
-                ShardType = 2
+                ShardType = 2,
+                Website = "https://uooutlands.com/"
             } );
 
             Shards.Add( new ShardEntry
@@ -55,7 +73,8 @@ namespace ClassicAssist.Launcher
                 Address = "login.uoplayers.com",
                 Port = 2593,
                 IsPreset = true,
-                HasStatusProtocol = true
+                HasStatusProtocol = true,
+                Website = "https://uoplayers.com/"
             } );
 
             Shards.Add( new ShardEntry
@@ -64,7 +83,18 @@ namespace ClassicAssist.Launcher
                 Address = "login.uorenaissance.com",
                 Port = 2593,
                 IsPreset = true,
-                HasStatusProtocol = true
+                HasStatusProtocol = true,
+                Website = "http://www.uorenaissance.com/"
+            } );
+
+            Shards.Add( new ShardEntry
+            {
+                Name = "UO Evolution",
+                Address = "play.uoevolution.com",
+                Port = 2593,
+                IsPreset = true,
+                HasStatusProtocol = true,
+                Website = "http://uoevolution.com/"
             } );
         }
 

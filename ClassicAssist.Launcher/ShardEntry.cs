@@ -16,6 +16,7 @@ namespace ClassicAssist.Launcher
         private int _shardType;
 
         private string _status;
+        private string _website;
 
         public string Address
         {
@@ -63,6 +64,12 @@ namespace ClassicAssist.Launcher
         }
 
         public string StatusRegex { get; set; } = RUNUO_REGEX;
+
+        public string Website
+        {
+            get => _website;
+            set => SetProperty( ref _website, value );
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

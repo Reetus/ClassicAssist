@@ -17,6 +17,7 @@
 
 #endregion
 
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Interop;
 using Assistant;
@@ -51,7 +52,7 @@ namespace ClassicAssist.UO.Gumps
             base.SendGump();
         }
 
-        public override void OnResponse( int buttonID, int[] switches )
+        public override void OnResponse( int buttonID, int[] switches, Dictionary<int, string> textEntries = null )
         {
             if ( buttonID == REPOSITION_BUTTON_ID )
             {
@@ -72,7 +73,7 @@ namespace ClassicAssist.UO.Gumps
                 } );
             }
 
-            base.OnResponse( buttonID, switches );
+            base.OnResponse( buttonID, switches, textEntries );
         }
 
         public virtual void SetPosition( int x, int y )

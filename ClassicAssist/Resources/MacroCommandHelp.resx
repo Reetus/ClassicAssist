@@ -1475,4 +1475,28 @@ Pathfind('enemy')</value>
     <value>if not ActiveAbility():
  SetAbility("primary", "on")</value>
   </data>
+  <data name="MESSAGEPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Displays an ingame gump prompting for a message</value>
+  </data>
+  <data name="MESSAGEPROMPT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>res, msg = MessagePrompt("Message", "Initial Text")</value>
+  </data>
+  <data name="MESSAGEPROMPT_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>res, name = MessagePrompt("Enter Name?", "Whiskers")
+
+if res:
+ Rename(0xc1b, name)</value>
+  </data>
+  <data name="GETTEXT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sends an internal prompt request and returns the text entered</value>
+  </data>
+  <data name="GETTEXT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>res, msg = GetText("Enter message...", 30000)</value>
+  </data>
+  <data name="GETTEXT_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>res, name = GetText("Name?", 10000)
+
+if res:
+ Rename(0xc1b, name)</value>
+  </data>
 </root>

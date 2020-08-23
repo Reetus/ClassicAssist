@@ -1305,6 +1305,36 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sends an internal prompt request and returns the text entered.
+        /// </summary>
+        public static string GETTEXT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("GETTEXT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to res, name = GetText(&quot;Name?&quot;, 10000)
+        ///
+        ///if res:
+        /// Rename(0xc1b, name).
+        /// </summary>
+        public static string GETTEXT_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("GETTEXT_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to res, msg = GetText(&quot;Enter message...&quot;, 30000).
+        /// </summary>
+        public static string GETTEXT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("GETTEXT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns the gold value as per status bar data..
         /// </summary>
         public static string GOLD_COMMAND_DESCRIPTION {
@@ -2013,6 +2043,36 @@ namespace ClassicAssist.Resources {
         public static string MESSAGEBOX_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("MESSAGEBOX_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Displays an ingame gump prompting for a message.
+        /// </summary>
+        public static string MESSAGEPROMPT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MESSAGEPROMPT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to res, name = MessagePrompt(&quot;Enter Name?&quot;, &quot;Whiskers&quot;)
+        ///
+        ///if res:
+        /// Rename(0xc1b, name).
+        /// </summary>
+        public static string MESSAGEPROMPT_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("MESSAGEPROMPT_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to res, msg = MessagePrompt(&quot;Message&quot;, &quot;Initial Text&quot;).
+        /// </summary>
+        public static string MESSAGEPROMPT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MESSAGEPROMPT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

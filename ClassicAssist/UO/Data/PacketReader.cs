@@ -155,6 +155,15 @@ namespace ClassicAssist.UO.Data
             return Encoding.Unicode.GetString( buffer );
         }
 
+        public string ReadUnicodeStringBE( int fixedLength )
+        {
+            byte[] buffer = new byte[fixedLength*2];
+
+            _stream.Read( buffer, 0, fixedLength * 2 );
+
+            return Encoding.BigEndianUnicode.GetString( buffer );
+        }
+
         public string ReadUnicodeStringLE()
         {
             StringBuilder sb = new StringBuilder();

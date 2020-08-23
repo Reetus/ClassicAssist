@@ -28,9 +28,9 @@ using ClassicAssist.UO.Objects.Gumps;
 
 namespace ClassicAssist.UO.Gumps
 {
-    public class ConfirmPromptGump : Gump
+    public class MessagePromptGump : Gump
     {
-        public ConfirmPromptGump( string message, bool closable = false ) : base( 500, 500 )
+        public MessagePromptGump( string message, string initialText = "", bool closable = false ) : base( 500, 500 )
         {
             const int width = 300;
             const int height = 200;
@@ -42,24 +42,29 @@ namespace ClassicAssist.UO.Gumps
             Movable = true;
             AddPage( 0 );
             AddBackground( 0, 0, width, height, 9200 );
-            AddHtml( 10, 10, width - 20, height - 50, message, true, true );
+            AddHtml( 10, 10, width - 20, height - 90, message, true, true );
+            AddBackground( 10, height - 70, width - 20, 29, 9350 );
+            AddTextEntry( 13, height - 65, width - 20, 29, 0, 1, initialText );
             AddButton( width - 140, height - 30, 247, 248, 1, GumpButtonType.Reply, 0 );
             AddButton( width - 70, height - 30, 241, 242, 2, GumpButtonType.Reply, 0 );
         }
 
         public AutoResetEvent AutoResetEvent { get; set; } = new AutoResetEvent( false );
 
+        public string Message { get; set; }
+
         public bool Result { get; set; }
 
-        public override void OnResponse( int buttonID, int[] switches, Dictionary<int, string> textEntries )
+        public override void OnResponse( int buttonID, int[] switches, Dictionary<int, string> textEntries = null )
         {
+            Message = textEntries?[1] ?? string.Empty;
             Result = buttonID == 1;
             AutoResetEvent.Set();
         }
 
-        public static bool ConfirmPrompt( string message, bool closable = false )
+        public static (bool Result, string Message) MessagePrompt( string message, string initialText = "", bool closable = false )
         {
-            ConfirmPromptGump gump = new ConfirmPromptGump( message, closable );
+            MessagePromptGump gump = new MessagePromptGump( message, initialText, closable );
 
             PacketFilterInfo pfi = new PacketFilterInfo( 0xB1,
                 new[] { PacketFilterConditions.UIntAtPositionCondition( gump.ID, 7 ) } );
@@ -72,7 +77,7 @@ namespace ClassicAssist.UO.Gumps
 
             Engine.RemoveSendPostFilter( pfi );
 
-            return gump.Result;
+            return ( gump.Result, gump.Message );
         }
 
         private static Point GetWindowSize()
@@ -120,8 +125,8 @@ namespace ClassicAssist.UO.Gumps
             {
                 Point size = GetWindowSize();
 
-                X = ( size.X - ( width  ) ) >> 1;
-                Y = ( size.Y - ( height ) ) >> 1;
+                X = ( size.X - width ) >> 1;
+                Y = ( size.Y - height ) >> 1;
 
                 return;
             }

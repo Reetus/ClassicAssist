@@ -1,4 +1,7 @@
-﻿using Assistant;
+﻿using System;
+using System.IO;
+using System.Threading;
+using Assistant;
 using ClassicAssist.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
@@ -78,6 +81,42 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             Engine.SendPacketToServer( new UnicodePromptResponse( Engine.LastPromptSerial, Engine.LastPromptID,
                 message ) );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Messages ),
+            Parameters = new[] { nameof( ParameterType.String ), nameof( ParameterType.Timeout ) } )]
+        public static (bool Result, string Message) GetText( string prompt, int timeout = 30000 )
+        {
+            int id = new Random().Next();
+
+            UOC.SystemMessage( prompt );
+            Engine.SendPacketToClient( new UnicodePromptRequest( id ) );
+
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            string message = string.Empty;
+
+            Engine.AddSendPreFilter( new PacketFilterInfo( 0xC2,
+                new[]
+                {
+                    PacketFilterConditions.IntAtPositionCondition( id, 3 ),
+                    PacketFilterConditions.IntAtPositionCondition( id, 7 )
+                }, ( bytes, info ) =>
+                {
+                    PacketReader pr = new PacketReader( bytes, bytes.Length, false );
+                    pr.Seek( 16, SeekOrigin.Current );
+                    message = pr.ReadUnicodeStringLE();
+                    are.Set();
+                } ) );
+
+            bool result = are.WaitOne( timeout );
+
+            if ( !result )
+            {
+                Engine.SendPacketToClient( new UnicodePromptCancel( id, id ) );
+            }
+
+            return ( result, message );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Messages ),

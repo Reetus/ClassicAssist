@@ -17,6 +17,7 @@
 
 #endregion
 
+using System.Collections.Generic;
 using System.Linq;
 using Assistant;
 using ClassicAssist.Data;
@@ -75,7 +76,7 @@ namespace ClassicAssist.UO.Gumps
             AddButton( 60, 60, 2151, 2151, 10, GumpButtonType.Reply, 0 );
         }
 
-        public override void OnResponse( int buttonID, int[] switches )
+        public override void OnResponse( int buttonID, int[] switches, Dictionary<int, string> textEntries )
         {
             if ( buttonID == 0 )
             {

@@ -11,9 +11,10 @@
     xmlns:controls="clr-namespace:ClassicAssist.Launcher.Controls"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     x:Class="ClassicAssist.Launcher.ShardsWindow"
-    mc:Ignorable="d"
+    mc:Ignorable="d" x:Name="Window"
     Title="{x:Static properties:Resources.Shards}" Height="400" Width="620" WindowStartupLocation="CenterScreen">
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <ValueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <ValueConverters:BooleanToOpacityValueConverter x:Key="BooleanToOpacityValueConverter" />
         <ValueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
@@ -43,16 +44,31 @@
                        Opacity="{Binding IsEnabled, Converter={StaticResource BooleanToOpacityValueConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" />
             </Button>
         </ToolBar>
-        <ListView ItemsSource="{Binding Shards}" Grid.Row="1" SelectedItem="{Binding SelectedShard}" Margin="10">
+        <ListView x:Name="listView" ItemsSource="{Binding Shards}" Grid.Row="1" SelectedItem="{Binding SelectedShard}"
+                  Margin="10">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="{x:Static properties:Resources.Shard}" Width="150" x:Name="NameColumn">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <controls:EditTextBlock
-                                    Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                    CanEdit="{Binding IsPreset, Converter={StaticResource InverseBooleanConverter}}"
-                                    Width="{Binding ActualWidth, ElementName=NameColumn, Converter={StaticResource CellWidthValueConverter}}" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <controls:EditTextBlock
+                                        Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                        CanEdit="{Binding IsPreset, Converter={StaticResource InverseBooleanConverter}}"
+                                        Width="{Binding ActualWidth, ElementName=NameColumn, Converter={StaticResource CellWidthValueConverter}}"
+                                        Grid.Column="0" />
+                                    <Button Grid.Column="1" Background="Transparent" BorderThickness="0"
+                                            Visibility="{Binding IsPreset, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                            Command="{Binding Path=DataContext.OpenWebsiteCommand, ElementName=Window}"
+                                            CommandParameter="{Binding}">
+                                        <Image Source="{DynamicResource WebIcon}" Height="16"
+                                               ToolTip="{x:Static properties:Resources.Open_Shard_Website}" />
+                                    </Button>
+                                </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

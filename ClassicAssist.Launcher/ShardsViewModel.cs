@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -19,6 +20,7 @@ namespace ClassicAssist.Launcher
         private ICommand _cancelCommand;
         private bool _isRefreshing;
         private ICommand _okCommand;
+        private ICommand _openWebsiteCommand;
         private ICommand _refreshCommand;
         private ICommand _removeCommand;
         private ShardEntry _selectedShard;
@@ -46,6 +48,9 @@ namespace ClassicAssist.Launcher
 
         public ICommand OKCommand => _okCommand ?? ( _okCommand = new RelayCommand( OK, o => true ) );
 
+        public ICommand OpenWebsiteCommand =>
+            _openWebsiteCommand ?? ( _openWebsiteCommand = new RelayCommand( OpenWebsite, o => true ) );
+
         public ICommand RefreshCommand =>
             _refreshCommand ?? ( _refreshCommand = new RelayCommand( Refresh, o => !IsRefreshing ) );
 
@@ -67,6 +72,17 @@ namespace ClassicAssist.Launcher
                 SetProperty( ref _shards, value );
                 _manager.Shards = value;
             }
+        }
+
+        private static void OpenWebsite( object obj )
+        {
+            if ( !( obj is ShardEntry shardEntry ) )
+            {
+                return;
+            }
+
+            ProcessStartInfo psi = new ProcessStartInfo { FileName = shardEntry.Website, UseShellExecute = true };
+            Process.Start( psi );
         }
 
         private void Remove( object obj )

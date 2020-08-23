@@ -205,6 +205,15 @@ namespace ClassicAssist.Launcher.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open Shard Website.
+        /// </summary>
+        public static string Open_Shard_Website {
+            get {
+                return ResourceManager.GetString("Open Shard Website", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Options.
         /// </summary>
         public static string Options {

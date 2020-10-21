@@ -1960,6 +1960,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Macro not found....
+        /// </summary>
+        public static string Macro_not_found___ {
+            get {
+                return ResourceManager.GetString("Macro not found...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Running malicious macros could compromise your account or computer!
         ///
         ///You should understand what the macro is doing before running.

@@ -1437,4 +1437,7 @@ Are you sure you wish to continue?</value>
   <data name="Reset import cache" xml:space="preserve">
     <value>Reset import cache</value>
   </data>
+  <data name="Macro not found..." xml:space="preserve">
+    <value>Macro not found...</value>
+  </data>
 </root>

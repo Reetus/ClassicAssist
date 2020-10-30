@@ -1221,4 +1221,31 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
   <data name="TARGETTILEOFFSETRESOURCE_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Targetta un Tile ad una distanza relativa a se (targetta automaticamente alberi/grotte/acqua tiles se presenti)</value>
   </data>
+  <data name="CHATMSG_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ChatMsg("Mary ha una pecorella")</value>
+  </data>
+  <data name="HIDEENTITY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Rimuove un Oggetto/Mobile dallo schermo</value>
+  </data>
+  <data name="USETARGETEDITEM_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Usa un oggetto specifico e Targetta un target, tutto insieme. Richiede che sia supportato dal server (OSI / ServUO)</value>
+  </data>
+  <data name="USELAYER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Usa un oggetto che è in un Layer specifico. Parametri opzionali per Mobili</value>
+  </data>
+  <data name="AUTOCOLORPICK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Imposta una risposta automati al gump delle tite di Colori, permettendo di definire un colore specifico. Il comando va' inserito prima dell'azione che opre il gump dei colori.</value>
+  </data>
+  <data name="DISPLAYQUESTPOINTER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Mostra il puntatore a freccia (quest) alle coordinate specificate</value>
+  </data>
+  <data name="PATHFIND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Attiva Pathfind alle cordinate specifiche</value>
+  </data>
+  <data name="SETORGANIZERCONTAINERS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Imposta la l'origine e la destinazione per un Organizer specifico</value>
+  </data>
+  <data name="ACTIVEABILITY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Risulta True se una delle Abilità (primaria o secondaria) è abilitata</value>
+  </data>
 </root>

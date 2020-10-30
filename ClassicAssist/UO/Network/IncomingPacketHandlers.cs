@@ -1088,8 +1088,7 @@ namespace ClassicAssist.UO.Network
                 Engine.WaitingForTarget = false;
             }
 
-            if ( !Options.CurrentOptions.QueueLastTarget || (TargetType) type != TargetType.Object ||
-                 Engine.LastTargetQueue.Count == 0 )
+            if ( !Options.CurrentOptions.QueueLastTarget || Engine.LastTargetQueue.Count == 0 )
             {
                 return;
             }

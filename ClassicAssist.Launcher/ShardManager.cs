@@ -79,6 +79,16 @@ namespace ClassicAssist.Launcher
 
             Shards.Add( new ShardEntry
             {
+                Name = "UO Elemental",
+                Address = "login.uoelemental.com",
+                Port = 2593,
+                IsPreset = true,
+                HasStatusProtocol = true,
+                Website = "https://uoelemental.com/"
+            } );
+
+            Shards.Add( new ShardEntry
+            {
                 Name = "UO:Renaissance",
                 Address = "login.uorenaissance.com",
                 Port = 2593,

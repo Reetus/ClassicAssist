@@ -225,7 +225,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                return Direction.Invalid.ToString();
+                return UO.Data.Direction.Invalid.ToString();
             }
 
             Entity entity = UOMath.IsMobile( serial )
@@ -234,10 +234,29 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( entity == null )
             {
-                return Direction.Invalid.ToString();
+                return UO.Data.Direction.Invalid.ToString();
             }
 
             return UOMath.MapDirection( Engine.Player.X, Engine.Player.Y, entity.X, entity.Y ).ToString();
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        public static string Direction( object obj = null )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            Entity entity = UOMath.IsMobile( serial )
+                ? Engine.Mobiles.GetMobile( serial )
+                : Engine.Items.GetItem( serial ) as Entity;
+
+            if ( serial == 0 || entity == null )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                return UO.Data.Direction.Invalid.ToString();
+            }
+
+            return entity.Direction.ToString();
         }
 
         [CommandsDisplay( Category = nameof( Strings.Entity ),

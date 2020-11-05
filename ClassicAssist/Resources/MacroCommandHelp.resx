@@ -1499,4 +1499,10 @@ if res:
 if res:
  Rename(0xc1b, name)</value>
   </data>
+  <data name="DIRECTION_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the Direction the given alias/serial is facing</value>
+  </data>
+  <data name="DIRECTION_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Direction('enemy') == 'West':</value>
+  </data>
 </root>

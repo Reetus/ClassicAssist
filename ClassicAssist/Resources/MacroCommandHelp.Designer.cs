@@ -755,6 +755,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Returns the Direction the given alias/serial is facing.
+        /// </summary>
+        public static string DIRECTION_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("DIRECTION_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Direction(&apos;enemy&apos;) == &apos;West&apos;:.
+        /// </summary>
+        public static string DIRECTION_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("DIRECTION_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns the Direction the entity is in relative to the player..
         /// </summary>
         public static string DIRECTIONTO_COMMAND_DESCRIPTION {

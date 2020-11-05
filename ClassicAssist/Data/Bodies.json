@@ -11,6 +11,16 @@
   },
   {
     "BodyType": 1,
+    "Graphic": 402,
+    "Name": "Dead Human Male"
+  },
+  {
+    "BodyType": 1,
+    "Graphic": 403,
+    "Name": "Dead Human Female"
+  },
+  {
+    "BodyType": 1,
     "Graphic": 605,
     "Name": "Elf Male"
   },
@@ -21,6 +31,16 @@
   },
   {
     "BodyType": 1,
+    "Graphic": 607,
+    "Name": "Dead Elf Male"
+  },
+  {
+    "BodyType": 1,
+    "Graphic": 608,
+    "Name": "Dead Elf Female"
+  },
+  {
+    "BodyType": 1,
     "Graphic": 666,
     "Name": "Gargoyle Male"
   },
@@ -28,6 +48,16 @@
     "BodyType": 1,
     "Graphic": 667,
     "Name": "Gargoyle Female"
+  },
+  {
+    "BodyType": 1,
+    "Graphic": 694,
+    "Name": "Dead Gargoyle Male"
+  },
+  {
+    "BodyType": 1,
+    "Graphic": 695,
+    "Name": "Dead Gargoyle Female"
   },
   {
     "BodyType": 2,

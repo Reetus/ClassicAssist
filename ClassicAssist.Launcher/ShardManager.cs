@@ -106,6 +106,16 @@ namespace ClassicAssist.Launcher
                 HasStatusProtocol = true,
                 Website = "http://uoevolution.com/"
             } );
+
+            Shards.Add( new ShardEntry
+            {
+                Name = "NoTramAos",
+                Address = "notramaos.servegame.com",
+                Port = 2593,
+                IsPreset = true,
+                HasStatusProtocol = true,
+                Website = "http://notramaos.com/"
+            } );
         }
 
         public ObservableCollection<ShardEntry> Shards { get; set; } = new ObservableCollection<ShardEntry>();

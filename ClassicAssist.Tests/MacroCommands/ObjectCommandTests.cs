@@ -263,6 +263,49 @@ namespace ClassicAssist.Tests.MacroCommands
             ObjectCommands.ClearIgnoreList();
         }
 
+        [TestMethod]
+        public void WontFindTypeOutsideSearchRange()
+        {
+            Engine.Player = new PlayerMobile( 1 );
+            Item backpack = new Item( 0x40000000 ) { Container = new ItemCollection( 0x40000000 ) };
+            Item subContainer = new Item( 0x40000001, 0x40000000 ) { Container = new ItemCollection( 0x40000001 ) };
+
+            backpack.Container.Add( subContainer );
+            AliasCommands.SetAlias( "backpack", backpack.Serial );
+
+            backpack.Container.Add( new Item( 0x40000002, 0x40000000 ) { ID = 0xabcd } );
+            subContainer.Container.Add( new Item( 0x40000003, 0x40000001 ) { ID = 0xabcd } );
+
+            Engine.Items.Add( backpack );
+
+            int count = 0;
+
+            while ( ObjectCommands.FindType( 0xabcd, 0, "backpack" ) )
+            {
+                Assert.AreNotEqual( AliasCommands.GetAlias( "found" ), 0x40000003 );
+                ObjectCommands.IgnoreObject( AliasCommands.GetAlias( "found" ) );
+                count++;
+            }
+
+            Assert.AreEqual( 1, count );
+
+            ObjectCommands.ClearIgnoreList();
+
+            count = 0;
+
+            while ( ObjectCommands.FindType( 0xabcd, 1, "backpack" ) )
+            {
+                ObjectCommands.IgnoreObject( AliasCommands.GetAlias( "found" ) );
+                count++;
+            }
+
+            Assert.AreEqual( 2, count );
+
+            ObjectCommands.ClearIgnoreList();
+            Engine.Player = null;
+            Engine.Items.Clear();
+        }
+
         [TestCleanup]
         public void Cleanup()
         {

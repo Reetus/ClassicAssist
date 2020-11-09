@@ -1464,4 +1464,7 @@ Are you sure you wish to continue?</value>
   <data name="Keyboard" xml:space="preserve">
     <value>Keyboard</value>
   </data>
+  <data name="Share Macro" xml:space="preserve">
+    <value>Share Macro</value>
+  </data>
 </root>

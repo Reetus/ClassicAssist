@@ -3163,6 +3163,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Share Macro.
+        /// </summary>
+        public static string Share_Macro {
+            get {
+                return ResourceManager.GetString("Share Macro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show.
         /// </summary>
         public static string Show {

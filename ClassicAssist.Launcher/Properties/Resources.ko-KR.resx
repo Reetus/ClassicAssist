@@ -130,7 +130,7 @@
     <value>업데이트 확인</value>
   </data>
   <data name="Shard" xml:space="preserve">
-    <value>파편</value>
+    <value>서버</value>
   </data>
   <data name="Port" xml:space="preserve">
     <value>포트</value>
@@ -151,7 +151,7 @@
     <value>오류</value>
   </data>
   <data name="Shards" xml:space="preserve">
-    <value>파편</value>
+    <value>서버</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>주소</value>

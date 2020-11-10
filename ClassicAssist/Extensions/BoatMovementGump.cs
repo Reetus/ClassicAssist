@@ -21,12 +21,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Assistant;
 using ClassicAssist.Data;
+using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects.Gumps;
 
-namespace ClassicAssist.UO.Gumps
+namespace ClassicAssist.Extensions
 {
     public class BoatGumpExtension : IExtension
     {

@@ -23,10 +23,13 @@ namespace ClassicAssist.UO.Network
         public delegate void dTargetSentEvent( TargetType targetType, int senderSerial, int flags, int serial, int x,
             int y, int z, int id );
 
+        public delegate void dShardChanged( string name );
+
         private static PacketHandler[] _handlers;
         private static PacketHandler[] _extendedHandlers;
         public static event dTargetSentEvent TargetSentEvent;
         public static event dGump GumpEvent;
+        public static event dShardChanged ShardChangedEvent;
 
         public static event dMenuClick MenuClickedEvent;
 
@@ -89,6 +92,7 @@ namespace ClassicAssist.UO.Network
             int index = reader.ReadInt16();
 
             Engine.CurrentShard = Engine.Shards.FirstOrDefault( i => i.Index == index );
+            ShardChangedEvent?.Invoke( Engine.CurrentShard?.Name );
         }
 
         private static void OnClientVersion( PacketReader reader )

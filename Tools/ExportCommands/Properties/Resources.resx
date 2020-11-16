@@ -273,4 +273,7 @@
   <data name="PARAMETER_DESCRIPTION_BOOLEAN" xml:space="preserve">
     <value>True/False value, see description for usage</value>
   </data>
+  <data name="PARAMETER_DESCRIPTION_ELEMENTVALUEFRONTBACK" xml:space="preserve">
+    <value>Element value to remove from list, or 'front' to remove the first item, or 'back' to remove last entry, default 'back'</value>
+  </data>
 </root>

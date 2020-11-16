@@ -306,6 +306,52 @@ namespace ClassicAssist.Tests.MacroCommands
             Engine.Items.Clear();
         }
 
+        [TestMethod]
+        public void WontFindTypeStackAmountLess()
+        {
+            Item stack = new Item( 0x40000001 ) { ID = 0xabcd, Count = 100 };
+
+            Engine.Items.Add( stack );
+
+            bool found = ObjectCommands.FindType( 0xabcd, -1, null, -1, 100 );
+
+            Assert.IsTrue( found );
+
+            found = ObjectCommands.FindType( 0xabcd, -1, null, -1, 200 );
+
+            Assert.IsFalse( found );
+
+            Engine.Items.Clear();
+        }
+
+        [TestMethod]
+        public void WillFindTypeStackAmount()
+        {
+            Item stack = new Item( 0x40000001 ) { ID = 0xabcd, Count = 100 };
+
+            Engine.Items.Add( stack );
+
+            bool found = ObjectCommands.FindType( 0xabcd, -1, null, -1, 50 );
+
+            Assert.IsTrue( found );
+
+            Engine.Items.Clear();
+        }
+
+        [TestMethod]
+        public void WillFindTypeStackAmountIgnoreIfMobile()
+        {
+            Mobile mobile = new Mobile( 0x01 ) { ID = 0x190 };
+
+            Engine.Mobiles.Add( mobile );
+
+            bool found = ObjectCommands.FindType( 0x190, -1, null, -1, 50 );
+
+            Assert.IsTrue( found );
+
+            Engine.Mobiles.Clear();
+        }
+
         [TestCleanup]
         public void Cleanup()
         {

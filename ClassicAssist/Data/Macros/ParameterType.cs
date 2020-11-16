@@ -60,6 +60,7 @@ namespace ClassicAssist.Data.Macros
         TimerName,
         WandName,
         Empty,
-        Boolean
+        Boolean,
+        ElementValueFrontBack
     }
 }

@@ -43,6 +43,44 @@ namespace ClassicAssist.Data.Macros.Commands
             _lists[listName].Add( value );
         }
 
+        [CommandsDisplay( Category = nameof( Strings.Lists ),
+            Parameters = new[] { nameof( ParameterType.ListName ), nameof( ParameterType.ElementValueFrontBack ) } )]
+        public static int PopList( string listName, string elementValue = "back" )
+        {
+            if ( !ListExists( listName ) )
+            {
+                CreateList( listName );
+            }
+
+            List<int> list = _lists[listName];
+
+            if ( list.Count == 0 )
+            {
+                return 0;
+            }
+
+            switch ( elementValue.ToLower() )
+            {
+                case "front":
+                {
+                    list.RemoveAt( 0 );
+                    return 1;
+                }
+                case "back":
+                {
+                    list.RemoveAt( _lists[listName].Count - 1 );
+
+                    return 1;
+                }
+                default:
+                {
+                    int val = int.Parse( elementValue );
+
+                    return list.RemoveAll( l => l == val );
+                }
+            }
+        }
+
         [CommandsDisplay( Category = nameof( Strings.Lists ), Parameters = new[] { nameof( ParameterType.ListName ) } )]
         public static int[] GetList( string listName )
         {

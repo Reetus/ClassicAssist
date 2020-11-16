@@ -1505,4 +1505,25 @@ if res:
   <data name="DIRECTION_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>if Direction('enemy') == 'West':</value>
   </data>
+  <data name="POPLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Remove elements from a list, returns the number of elements removed</value>
+  </data>
+  <data name="POPLIST_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>PopList("list")</value>
+  </data>
+  <data name="POPLIST_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>CreateList("hippies")
+PushList("hippies", 1)
+PushList("hippies", 2)
+PushList("hippies", 3)
+
+PopList("hippies", "front") # Removes 1
+PopList("hippies", "back") # Removes 3
+PopList("hippies", "2") # Removes any 2's that exist in the list
+
+
+for x in GetList("hippies"):
+ print x # Never reached because list is empty
+</value>
+  </data>
 </root>

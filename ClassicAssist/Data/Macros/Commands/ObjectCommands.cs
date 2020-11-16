@@ -183,9 +183,10 @@ namespace ClassicAssist.Data.Macros.Commands
             Parameters = new[]
             {
                 nameof( ParameterType.ItemID ), nameof( ParameterType.Range ),
-                nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Hue )
+                nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Hue ), nameof( ParameterType.Amount )
             } )]
-        public static bool FindType( int graphic, int range = -1, object findLocation = null, int hue = -1 )
+        public static bool FindType( int graphic, int range = -1, object findLocation = null, int hue = -1,
+            int minimumStackAmount = -1 )
         {
             int owner = 0;
 
@@ -199,7 +200,8 @@ namespace ClassicAssist.Data.Macros.Commands
             bool Predicate( Entity i )
             {
                 return ( graphic == -1 || i.ID == graphic ) && ( hue == -1 || i.Hue == hue ) &&
-                       !IgnoreList.Contains( i.Serial );
+                       ( minimumStackAmount == -1 || !( i is Item ) ||
+                         i is Item itm && itm.Count >= minimumStackAmount ) && !IgnoreList.Contains( i.Serial );
             }
 
             if ( owner != 0 )

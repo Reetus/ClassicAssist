@@ -2523,6 +2523,45 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove elements from a list, returns the number of elements removed.
+        /// </summary>
+        public static string POPLIST_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("POPLIST_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CreateList(&quot;hippies&quot;)
+        ///PushList(&quot;hippies&quot;, 1)
+        ///PushList(&quot;hippies&quot;, 2)
+        ///PushList(&quot;hippies&quot;, 3)
+        ///
+        ///PopList(&quot;hippies&quot;, &quot;front&quot;) # Removes 1
+        ///PopList(&quot;hippies&quot;, &quot;back&quot;) # Removes 3
+        ///PopList(&quot;hippies&quot;, &quot;2&quot;) # Removes any 2&apos;s that exist in the list
+        ///
+        ///
+        ///for x in GetList(&quot;hippies&quot;):
+        /// print x # Never reached because list is empty
+        ///.
+        /// </summary>
+        public static string POPLIST_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("POPLIST_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PopList(&quot;list&quot;).
+        /// </summary>
+        public static string POPLIST_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("POPLIST_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Prompt with an in-game target cursor to supply value for given alias name..
         /// </summary>
         public static string PROMPTALIAS_COMMAND_DESCRIPTION {

@@ -205,6 +205,15 @@ namespace ExportCommands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Element value to remove from list, or &apos;front&apos; to remove the first item, or &apos;back&apos; to remove last entry, default &apos;back&apos;.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_ELEMENTVALUEFRONTBACK {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_ELEMENTVALUEFRONTBACK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  .
         /// </summary>
         public static string PARAMETER_DESCRIPTION_EMPTY {

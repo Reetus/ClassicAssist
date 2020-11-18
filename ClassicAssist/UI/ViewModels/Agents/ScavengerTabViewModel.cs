@@ -27,7 +27,6 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private ICommand _insertCommand;
         private ObservableCollection<ScavengerEntry> _items = new ObservableCollection<ScavengerEntry>();
         private ICommand _removeCommand;
-        private bool _requeueFailedItems;
         private ScavengerEntry _selectedItem;
         private ICommand _setContainerCommand;
 

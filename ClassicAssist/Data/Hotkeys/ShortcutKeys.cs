@@ -1,6 +1,8 @@
-﻿using System.Windows.Forms;
+﻿using System.Linq;
+using System.Windows.Forms;
 using System.Windows.Input;
 using Newtonsoft.Json.Linq;
+using static ClassicAssist.Misc.SDLKeys;
 
 namespace ClassicAssist.Data.Hotkeys
 {
@@ -22,7 +24,7 @@ namespace ClassicAssist.Data.Hotkeys
         {
         }
 
-        public ShortcutKeys( Key modifier, Key key )
+        public ShortcutKeys( ModKey modifier, Key key )
         {
             Modifier = modifier;
             Key = key;
@@ -36,36 +38,66 @@ namespace ClassicAssist.Data.Hotkeys
             }
 
             Key = token["Keys"]?.ToObject<Key>() ?? Key.None;
-            Modifier = token["Modifier"]?.ToObject<Key>() ?? Key.None;
+            JToken legacyModifier = token["Modifier"];
+
+            if ( legacyModifier != null )
+            {
+                Key legacyModifierKey = legacyModifier.ToObject<Key>();
+
+                switch ( legacyModifierKey )
+                {
+                    case Key.LeftCtrl:
+                        Modifier = ModKey.LeftCtrl;
+                        break;
+                    case Key.RightCtrl:
+                        Modifier = ModKey.RightCtrl;
+                        break;
+                    case Key.LeftAlt:
+                        Modifier = ModKey.LeftAlt;
+                        break;
+                    case Key.RightAlt:
+                        Modifier = ModKey.RightAlt;
+                        break;
+                    case Key.LeftShift:
+                        Modifier = ModKey.LeftShift;
+                        break;
+                    case Key.RightShift:
+                        Modifier = ModKey.RightShift;
+                        break;
+                    default:
+                        Modifier = ModKey.None;
+                        break;
+                }
+            }
+            else
+            {
+                Modifier = token["SDLModifier"]?.ToObject<ModKey>() ?? ModKey.None;
+            }
+
             Mouse = token["Mouse"]?.ToObject<MouseOptions>() ?? MouseOptions.None;
         }
 
-        public static ShortcutKeys Default => new ShortcutKeys( Key.None, Key.None ) { Mouse = MouseOptions.None };
+        public static ShortcutKeys Default => new ShortcutKeys( ModKey.None, Key.None ) { Mouse = MouseOptions.None };
         public Key Key { get; set; } = Key.None;
-        public Key Modifier { get; set; } = Key.None;
+        public ModKey Modifier { get; set; } = ModKey.None;
         public MouseOptions Mouse { get; set; } = MouseOptions.None;
 
         public Keys[] ToArray()
         {
-            Keys modifier = (Keys) KeyInterop.VirtualKeyFromKey( Modifier );
             Keys key = (Keys) KeyInterop.VirtualKeyFromKey( Key );
-
-            if ( modifier == Keys.LControlKey || modifier == Keys.RControlKey )
-            {
-                modifier = Keys.ControlKey;
-            }
-
-            return modifier == Keys.None ? new[] { key } : new[] { modifier, key };
+            return Modifier.ToKeysList().Append( key ).ToArray();
         }
 
         public override string ToString()
         {
+            string modifier = Modifier.ToString().Replace( ", ", "+ " );
+
             if ( Mouse != MouseOptions.None )
             {
-                return Modifier != Key.None ? $"{Modifier} + {Mouse}" : Mouse.ToString();
+                return Modifier != ModKey.None ? $"{modifier} + {Mouse}" : Mouse.ToString();
             }
 
-            return Modifier != Key.None ? $"{Modifier} + {Key}" : Key.ToString();
+            return Modifier != ModKey.None ? $"{modifier} + {Key}" : Key.ToString();
         }
 
         public override bool Equals( object obj )
@@ -86,7 +118,7 @@ namespace ClassicAssist.Data.Hotkeys
         {
             JObject keys = new JObject
             {
-                { "Keys", (int) Key }, { "Modifier", (int) Modifier }, { "Mouse", (int) Mouse }
+                { "Keys", (int) Key }, { "SDLModifier", (int) Modifier }, { "Mouse", (int) Mouse }
             };
 
             return keys;

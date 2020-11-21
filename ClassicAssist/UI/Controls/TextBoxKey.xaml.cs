@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using ClassicAssist.Data.Hotkeys;
+using static ClassicAssist.Misc.SDLKeys;
 
 namespace ClassicAssist.UI.Controls
 {
@@ -27,7 +28,7 @@ namespace ClassicAssist.UI.Controls
         }
 
         public Key Key { get; private set; }
-        public Key Modifier { get; set; }
+        public ModKey Modifier { get; set; }
 
         public object Shortcut
         {
@@ -35,9 +36,9 @@ namespace ClassicAssist.UI.Controls
             set => SetValue( ShortcutProperty, value );
         }
 
-        private Key CheckModifiers()
+        private ModKey CheckModifiers()
         {
-            return _modifiers.FirstOrDefault( Keyboard.IsKeyDown );
+            return KeymodFromKeyList( _modifiers.Where( Keyboard.IsKeyDown ) );
         }
 
         private bool IsModifier( Key key )

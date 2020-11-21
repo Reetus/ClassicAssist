@@ -1526,4 +1526,10 @@ for x in GetList("hippies"):
  print x # Never reached because list is empty
 </value>
   </data>
+  <data name="INTERRUPTSPELL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Attempts to interrupt spell by lifting an item briefly.</value>
+  </data>
+  <data name="INTERRUPTSPELL_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>InterruptSpell()</value>
+  </data>
 </root>

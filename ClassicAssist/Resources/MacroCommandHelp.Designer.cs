@@ -1813,6 +1813,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Attempts to interrupt spell by lifting an item briefly..
+        /// </summary>
+        public static string INTERRUPTSPELL_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("INTERRUPTSPELL_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to InterruptSpell().
+        /// </summary>
+        public static string INTERRUPTSPELL_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("INTERRUPTSPELL_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use a virtue by name..
         /// </summary>
         public static string INVOKEVIRTUE_COMMAND_DESCRIPTION {

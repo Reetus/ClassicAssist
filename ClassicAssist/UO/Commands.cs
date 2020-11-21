@@ -669,8 +669,15 @@ namespace ClassicAssist.UO
 
         public static bool WaitForContainerContents( int serial, int timeout )
         {
+            int pos = 19;
+
+            if ( Engine.ClientVersion < new Version( 6, 0, 1, 7 ) )
+            {
+                pos = 18;
+            }
+
             PacketFilterInfo pfi = new PacketFilterInfo( 0x3C,
-                new[] { PacketFilterConditions.IntAtPositionCondition( serial, 18 ) } );
+                new[] { PacketFilterConditions.IntAtPositionCondition( serial, pos ) } );
 
             PacketWaitEntry we = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );
 
@@ -688,8 +695,15 @@ namespace ClassicAssist.UO
 
         public static bool WaitForContainerContentsUse( int serial, int timeout )
         {
+            int pos = 19;
+
+            if ( Engine.ClientVersion < new Version( 6, 0, 1, 7 ) )
+            {
+                pos = 18;
+            }
+
             PacketFilterInfo pfi = new PacketFilterInfo( 0x3C,
-                new[] { PacketFilterConditions.IntAtPositionCondition( serial, 18 ) } );
+                new[] { PacketFilterConditions.IntAtPositionCondition( serial, pos ) } );
 
             PacketWaitEntry we = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );
 

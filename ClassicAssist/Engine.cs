@@ -1,4 +1,4 @@
-// ReSharper disable once RedundantUsingDirective
+﻿// ReSharper disable once RedundantUsingDirective
 
 using System;
 using System.Collections.Concurrent;
@@ -33,7 +33,6 @@ using ClassicAssist.UO.Objects;
 using CUO_API;
 using Octokit;
 using Sentry;
-using static ClassicAssist.Misc.SDLKeys;
 
 [assembly: InternalsVisibleTo( "ClassicAssist.Tests" )]
 
@@ -226,7 +225,7 @@ namespace Assistant
 
             if ( button > 0 )
             {
-                mouse = MouseButtonToMouseOptions( button );
+                mouse = SDLKeys.MouseButtonToMouseOptions( button );
             }
 
             if ( wheel != 0 )
@@ -251,16 +250,11 @@ namespace Assistant
 
         private static bool OnHotkeyPressed( int key, int mod, bool pressed )
         {
-            Key keys = SDLKeyToKeys( key );
+            Key keys = SDLKeys.SDLKeyToKeys( key );
 
-            if ( pressed )
-            {
-                bool pass = HotkeyManager.GetInstance().OnHotkeyPressed( keys, (ModKey) mod );
+            bool pass = HotkeyManager.GetInstance().OnHotkeyPressed( keys );
 
-                return !pass;
-            }
-
-            return true;
+            return !pass;
         }
 
         private static void OnClientClosing()

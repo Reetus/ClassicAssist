@@ -46,9 +46,7 @@ namespace ClassicAssist.Tests
                             new JObject
                             {
                                 { "Name", "Hiding" },
-                                {
-                                    "Keys", new JObject { { "Keys", 94 }, { "SDLModifier", 0 }, { "Mouse", 7 } }
-                                },
+                                { "Keys", new JObject { { "Keys", 94 }, { "Modifier", 0 }, { "Mouse", 7 } } },
                                 { "PassToUO", false }
                             }
                         }

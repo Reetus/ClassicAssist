@@ -62,6 +62,7 @@ namespace Assistant
         private static OnPacketSendRecv _sendToServer;
         private static OnGetPacketLength _getPacketLength;
         private static OnUpdatePlayerPosition _onPlayerPositionChanged;
+        private static OnSetTitle _setTitle;
         private static MainWindow _window;
         private static Thread _mainThread;
         private static OnClientClose _onClientClosing;
@@ -175,6 +176,7 @@ namespace Assistant
             _sendToClient = Marshal.GetDelegateForFunctionPointer<OnPacketSendRecv>( plugin->Recv );
             _sendToServer = Marshal.GetDelegateForFunctionPointer<OnPacketSendRecv>( plugin->Send );
             _requestMove = Marshal.GetDelegateForFunctionPointer<RequestMove>( plugin->RequestMove );
+            _setTitle = Marshal.GetDelegateForFunctionPointer<OnSetTitle>( plugin->SetTitle );
 
             ClientPath = _getUOFilePath();
             ClientVersion = new Version( (byte) ( plugin->ClientVersion >> 24 ), (byte) ( plugin->ClientVersion >> 16 ),
@@ -631,6 +633,11 @@ namespace Assistant
         public static void UpdateWindowTitle()
         {
             UpdateWindowTitleEvent?.Invoke();
+        }
+
+        public static void SetTitle( string title )
+        {
+            _setTitle?.Invoke( title );
         }
 
         public static void GetMapZ( int x, int y, out sbyte groundZ, out sbyte staticZ )

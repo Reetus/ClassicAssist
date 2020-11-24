@@ -28,6 +28,7 @@ namespace ClassicAssist.Tests
         private RequestMove _requestMove;
         private OnPacketSendRecv _sendPacket;
         private string _startupPath;
+        private OnSetTitle _setTitle;
 
         [TestInitialize]
         public void Initialize()
@@ -39,6 +40,7 @@ namespace ClassicAssist.Tests
             _sendPacket = SendPacket;
             _receivePacket = ReceivePacket;
             _requestMove = ( dir, run ) => true;
+            _setTitle = SetTitle;
 
             _pluginHeader = new PluginHeader
             {
@@ -46,7 +48,8 @@ namespace ClassicAssist.Tests
                 GetUOFilePath = Marshal.GetFunctionPointerForDelegate( _getUOFilePath ),
                 Recv = Marshal.GetFunctionPointerForDelegate( _receivePacket ),
                 Send = Marshal.GetFunctionPointerForDelegate( _sendPacket ),
-                RequestMove = Marshal.GetFunctionPointerForDelegate( _requestMove )
+                RequestMove = Marshal.GetFunctionPointerForDelegate( _requestMove ),
+                SetTitle = Marshal.GetFunctionPointerForDelegate( _setTitle )
             };
 
             Engine.StartupPath = _startupPath;
@@ -477,6 +480,10 @@ namespace ClassicAssist.Tests
         private static bool SendPacket( ref byte[] data, ref int length )
         {
             return true;
+        }
+
+        private static void SetTitle( string title )
+        {
         }
 
         #endregion

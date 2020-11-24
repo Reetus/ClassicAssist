@@ -1521,6 +1521,7 @@ namespace ClassicAssist.UO.Network
             }
 
             Engine.UpdateWindowTitle();
+            Engine.SetTitle( $"{name} ({Engine.CurrentShard.Name})" );
         }
 
         private static void OnMobileIncoming( PacketReader reader )

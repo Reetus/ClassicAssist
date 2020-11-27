@@ -116,6 +116,15 @@ namespace ClassicAssist.Launcher
                 HasStatusProtocol = true,
                 Website = "http://notramaos.com/"
             } );
+
+            Shards.Add( new ShardEntry
+            {
+                Name = "EntropyUO",
+                Address = "entropyuo.ddns.net",
+                Port = 2593,
+                IsPreset = true,
+                HasStatusProtocol = true,
+            } );
         }
 
         public ObservableCollection<ShardEntry> Shards { get; set; } = new ObservableCollection<ShardEntry>();

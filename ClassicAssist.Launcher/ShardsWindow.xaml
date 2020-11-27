@@ -65,6 +65,16 @@
                                             Visibility="{Binding IsPreset, Converter={StaticResource BooleanToVisibilityConverter}}"
                                             Command="{Binding Path=DataContext.OpenWebsiteCommand, ElementName=Window}"
                                             CommandParameter="{Binding}">
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Website}" Value="{x:Null}">
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                        <Setter Property="Opacity" Value="0"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
                                         <Image Source="{DynamicResource WebIcon}" Height="16"
                                                ToolTip="{x:Static properties:Resources.Open_Shard_Website}" />
                                     </Button>

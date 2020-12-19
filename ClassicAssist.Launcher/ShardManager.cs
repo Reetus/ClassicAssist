@@ -116,6 +116,55 @@ namespace ClassicAssist.Launcher
                 HasStatusProtocol = true,
                 Website = "http://notramaos.com/"
             } );
+
+            Shards.Add( new ShardEntry
+            {
+                Name = "EntropyUO",
+                Address = "entropyuo.ddns.net",
+                Port = 2593,
+                IsPreset = true,
+                HasStatusProtocol = true,
+            } );
+
+            Shards.Add( new ShardEntry
+            {
+                Name = "UOTopia: Awakening",
+                Address = "uotopia.ddns.net",
+                Port = 2593,
+                IsPreset = true,
+                HasStatusProtocol = true,
+                Website = "http://uotopia.weebly.com/"
+            } );
+
+            Shards.Add( new ShardEntry
+            {
+                Name = "UOTopia: The New Age",
+                Address = "uotopia.ddns.net",
+                Port = 2594,
+                IsPreset = true,
+                HasStatusProtocol = true,
+                Website = "http://uotopia.weebly.com/"
+            } );
+
+            Shards.Add( new ShardEntry
+            {
+                Name = "UOTopia: Origins",
+                Address = "uotopia.ddns.net",
+                Port = 2595,
+                IsPreset = true,
+                HasStatusProtocol = true,
+                Website = "http://uotopia.weebly.com/"
+            } );
+
+            Shards.Add( new ShardEntry
+            {
+                Name = "UOTopia: Legends",
+                Address = "uotopia.ddns.net",
+                Port = 2596,
+                IsPreset = true,
+                HasStatusProtocol = true,
+                Website = "http://uotopia.weebly.com/"
+            } );
         }
 
         public ObservableCollection<ShardEntry> Shards { get; set; } = new ObservableCollection<ShardEntry>();

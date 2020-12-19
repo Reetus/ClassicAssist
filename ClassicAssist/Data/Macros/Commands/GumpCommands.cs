@@ -47,8 +47,11 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             if ( Engine.Gumps.GetGump( gumpId, out Gump gump ) )
             {
-                return gump.Pages.Any( gumpPage => gumpPage.GumpElements.Any( ge =>
-                    ge.Text != null && ge.Text.ToLower().Contains( text.ToLower() ) ) );
+                if ( gump.Pages.Any( gumpPage => gumpPage.GumpElements.Any( ge =>
+                    ge.Text != null && ge.Text.ToLower().Contains( text.ToLower() ) ) ) )
+                {
+                    return true;
+                }
             }
 
             UOC.SystemMessage( Strings.Invalid_gump___ );

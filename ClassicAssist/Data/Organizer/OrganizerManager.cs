@@ -93,7 +93,8 @@ namespace ClassicAssist.Data.Organizer
                 return;
             }
 
-            Item destinationContainerItem = Engine.Items.GetItem( destinationContainer );
+            Entity destinationContainerItem = (Entity) Engine.Items.GetItem( destinationContainer ) ??
+                                              Engine.Mobiles.GetMobile( destinationContainer );
 
             if ( destinationContainerItem == null )
             {
@@ -125,11 +126,23 @@ namespace ClassicAssist.Data.Organizer
 
                     if ( entry.Complete )
                     {
-                        int existingCount = destinationContainerItem.Container
-                                                ?.SelectEntities( i =>
-                                                    entryItem.ID == i.ID &&
-                                                    ( entryItem.Hue == -1 || i.Hue == entryItem.Hue ) )
-                                                ?.Select( i => i.Count ).Sum() ?? 0;
+                        ItemCollection container = null;
+
+                        switch ( destinationContainerItem )
+                        {
+                            case Item item:
+                                container = item.Container;
+                                break;
+                            case Mobile mobile:
+                                container = mobile.Backpack.Container;
+                                break;
+                        }
+
+                        int existingCount = container
+                            ?.SelectEntities( i =>
+                                entryItem.ID == i.ID &&
+                                ( entryItem.Hue == -1 || i.Hue == entryItem.Hue ) )
+                            ?.Select( i => i.Count ).Sum() ?? 0;
 
                         moved += existingCount;
                     }
@@ -233,6 +246,7 @@ namespace ClassicAssist.Data.Organizer
             PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
         }
 
+        // ReSharper disable once RedundantAssignment
         public void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
         {
             obj = value;

@@ -787,6 +787,12 @@ namespace ClassicAssist.Misc
             return Key.None;
         }
 
+        public static ModKey IntToModKey( int mod )
+        {
+            return (ModKey) ( mod & (int) ( ModKey.RightAlt | ModKey.RightCtrl | ModKey.RightShift | ModKey.LeftAlt |
+                                            ModKey.LeftCtrl | ModKey.LeftShift ) );
+        }
+
         public static SDL_Keycode SDL_SCANCODE_TO_KEYCODE( SDL_Scancode X )
         {
             return (SDL_Keycode) ( (int) X | SDLK_SCANCODE_MASK );

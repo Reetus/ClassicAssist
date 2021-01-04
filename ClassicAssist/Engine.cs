@@ -257,7 +257,7 @@ namespace Assistant
 
             if ( pressed )
             {
-                bool pass = HotkeyManager.GetInstance().OnHotkeyPressed( keys, (ModKey) mod );
+                bool pass = HotkeyManager.GetInstance().OnHotkeyPressed( keys, IntToModKey( mod ) );
 
                 return !pass;
             }

@@ -83,7 +83,7 @@ namespace ClassicAssist.UI.Controls
 
             Modifier = CheckModifiers();
 
-            Shortcut = new ShortcutKeys { Mouse = (MouseOptions) e.ChangedButton };
+            Shortcut = new ShortcutKeys { Modifier = Modifier, Mouse = (MouseOptions) e.ChangedButton };
         }
 
         private void UIElement_OnMouseWheel( object sender, MouseWheelEventArgs e )

@@ -1440,4 +1440,7 @@ Are you sure you wish to continue?</value>
   <data name="Macro not found..." xml:space="preserve">
     <value>Macro not found...</value>
   </data>
+  <data name="Module" xml:space="preserve">
+    <value>Module</value>
+  </data>
 </root>

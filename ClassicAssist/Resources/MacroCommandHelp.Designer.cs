@@ -3156,6 +3156,40 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Take a screenshot of the window.
+        /// </summary>
+        public static string SNAPSHOT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SNAPSHOT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to # Just the game client area, no delay, default filename
+        ///Snapshot()
+        ///
+        ///# Fullscreen snapshot, 3 second delay, default filename
+        ///Snapshot(3000, True)
+        ///
+        ///# Client area snapshot, no delay, custom filename
+        ///Snapshot(0, False, &quot;screenshot.png&quot;).
+        /// </summary>
+        public static string SNAPSHOT_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("SNAPSHOT_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Snapshot().
+        /// </summary>
+        public static string SNAPSHOT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SNAPSHOT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check for a specific special move.
         /// </summary>
         public static string SPECIALMOVEEXISTS_COMMAND_DESCRIPTION {

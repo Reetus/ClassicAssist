@@ -1440,6 +1440,9 @@ Are you sure you wish to continue?</value>
   <data name="Macro not found..." xml:space="preserve">
     <value>Macro not found...</value>
   </data>
+  <data name="Module" xml:space="preserve">
+    <value>Module</value>
+  </data>
   <data name="Snapshot Saved: {0}" xml:space="preserve">
     <value>Snapshot Saved: {0}</value>
   </data>

@@ -170,6 +170,13 @@ namespace ClassicAssist.Data.Macros
 
                 if ( sf != null )
                 {
+                    string fileName = sf.GetFileName();
+
+                    if ( fileName != "<string>" )
+                    {
+                        UO.Commands.SystemMessage( $"{Strings.Module}: {fileName}" );
+                    }
+
                     UO.Commands.SystemMessage( $"{Strings.Line_Number}: {sf.GetFileLineNumber()}" );
                 }
             }

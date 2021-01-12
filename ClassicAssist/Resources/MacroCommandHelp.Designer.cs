@@ -3156,6 +3156,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Take a screenshot of the window.
+        /// </summary>
+        public static string SNAPSHOT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SNAPSHOT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Snapshot().
+        /// </summary>
+        public static string SNAPSHOT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SNAPSHOT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check for a specific special move.
         /// </summary>
         public static string SPECIALMOVEEXISTS_COMMAND_DESCRIPTION {

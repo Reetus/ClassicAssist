@@ -3235,6 +3235,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Snapshot Saved: {0}.
+        /// </summary>
+        public static string Snapshot_Saved___0_ {
+            get {
+                return ResourceManager.GetString("Snapshot Saved: {0}", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Software.
         /// </summary>
         public static string Software {
@@ -3357,6 +3366,15 @@ namespace ClassicAssist.Resources {
         public static string Stun {
             get {
                 return ResourceManager.GetString("Stun", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take Snapshot.
+        /// </summary>
+        public static string Take_Snapshot {
+            get {
+                return ResourceManager.GetString("Take Snapshot", resourceCulture);
             }
         }
         

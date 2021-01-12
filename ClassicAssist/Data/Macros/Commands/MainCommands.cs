@@ -1,8 +1,11 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Media;
 using System.Threading;
 using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
 using Assistant;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Misc;
@@ -14,6 +17,7 @@ using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
+using static ClassicAssist.Misc.NativeMethods;
 
 namespace ClassicAssist.Data.Macros.Commands
 {
@@ -222,6 +226,89 @@ namespace ClassicAssist.Data.Macros.Commands
         public static void DisplayQuestPointer( int x, int y, bool enabled = true )
         {
             Engine.SendPacketToClient( new DisplayQuestPointer( enabled, x, y ) );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Main ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.IntegerValue ), nameof( ParameterType.Boolean ),
+                nameof( ParameterType.String )
+            } )]
+        public static bool Snapshot( int delay = 0, bool fullscreen = false, string fileName = "" )
+        {
+            try
+            {
+                if ( delay > 0 )
+                {
+                    Thread.Sleep( delay );
+                }
+
+                IntPtr screenDC;
+                int width, height;
+
+                if ( fullscreen )
+                {
+                    screenDC = GetDC( IntPtr.Zero );
+                    width = (int) SystemParameters.VirtualScreenWidth;
+                    height = (int) SystemParameters.VirtualScreenHeight;
+                }
+                else
+                {
+                    screenDC = GetDC( Engine.WindowHandle );
+                    GetClientRect( Engine.WindowHandle, out RECT rect );
+                    width = rect.Right - rect.Left;
+                    height = rect.Bottom - rect.Top;
+                }
+
+                IntPtr memDC = CreateCompatibleDC( screenDC );
+                IntPtr hBitmap = CreateCompatibleBitmap( screenDC, width, height );
+                SelectObject( memDC, hBitmap ); // Select bitmap from compatible bitmap to memDC
+
+                // TODO: BitBlt may fail horribly
+                BitBlt( memDC, 0, 0, width, height, screenDC, 0, 0, TernaryRasterOperations.SRCCOPY );
+                BitmapSource bitmapSource = Imaging.CreateBitmapSourceFromHBitmap( hBitmap, IntPtr.Zero,
+                    Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions() );
+
+                DeleteObject( hBitmap );
+                ReleaseDC( IntPtr.Zero, screenDC );
+                ReleaseDC( IntPtr.Zero, memDC );
+
+                DateTime now = DateTime.Now;
+
+                if ( string.IsNullOrEmpty( fileName ) )
+                {
+                    fileName =
+                        $"ClassicAssist-{now.Year}-{now.Month}-{now.Day}-{now.Hour}-{now.Minute}-{now.Second}.png";
+                }
+
+                string filePath = fileName;
+
+                if ( !Path.IsPathRooted( fileName ) )
+                {
+                    string path = Path.Combine( Engine.StartupPath, "Screenshots" );
+
+                    if ( !Directory.Exists( path ) )
+                    {
+                        Directory.CreateDirectory( path );
+                    }
+
+                    filePath = Path.Combine( path, fileName );
+                }
+
+                using ( FileStream fileStream = new FileStream( filePath, FileMode.Create ) )
+                {
+                    BitmapEncoder encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add( BitmapFrame.Create( bitmapSource ) );
+                    encoder.Save( fileStream );
+                }
+
+                return true;
+            }
+            catch ( Exception e )
+            {
+                UOC.SystemMessage( e.Message, 33 );
+                return false;
+            }
         }
     }
 }

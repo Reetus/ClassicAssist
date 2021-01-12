@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 using System.Windows.Input;
 using ClassicAssist.Data.Hotkeys;
 
@@ -7,6 +9,19 @@ namespace ClassicAssist.Misc
 {
     public static class SDLKeys
     {
+        /* Key modifiers (bitfield) available for hot keys */
+        [Flags]
+        public enum ModKey : ushort
+        {
+            None = SDL_Keymod.KMOD_NONE,
+            LeftShift = SDL_Keymod.KMOD_LSHIFT,
+            RightShift = SDL_Keymod.KMOD_RSHIFT,
+            LeftCtrl = SDL_Keymod.KMOD_LCTRL,
+            RightCtrl = SDL_Keymod.KMOD_RCTRL,
+            LeftAlt = SDL_Keymod.KMOD_LALT,
+            RightAlt = SDL_Keymod.KMOD_RALT
+        }
+
         public enum SDL_Keycode
         {
             SDLK_UNKNOWN = 0,
@@ -719,6 +734,49 @@ namespace ClassicAssist.Misc
             { (int) SDL_Keycode.SDLK_UNKNOWN, Key.None }
         };
 
+        public static IEnumerable<Keys> ToKeysList( this ModKey flagsEnumValue )
+        {
+            Keys ToKey( ModKey keymod )
+            {
+                return Keys.None;
+            }
+
+            return Enum.GetValues( typeof( ModKey ) ).Cast<ModKey>().Where( e => flagsEnumValue.HasFlag( e ) )
+                .Select( ToKey );
+        }
+
+        public static ModKey KeymodFromKeyList( IEnumerable<Key> keys )
+        {
+            ModKey keymod = ModKey.None;
+
+            foreach ( Key key in keys )
+            {
+                switch ( key )
+                {
+                    case Key.LeftShift:
+                        keymod |= ModKey.LeftShift;
+                        break;
+                    case Key.RightShift:
+                        keymod |= ModKey.RightShift;
+                        break;
+                    case Key.LeftCtrl:
+                        keymod |= ModKey.LeftCtrl;
+                        break;
+                    case Key.RightCtrl:
+                        keymod |= ModKey.RightCtrl;
+                        break;
+                    case Key.LeftAlt:
+                        keymod |= ModKey.LeftAlt;
+                        break;
+                    case Key.RightAlt:
+                        keymod |= ModKey.RightAlt;
+                        break;
+                }
+            }
+
+            return keymod;
+        }
+
         public static Key SDLKeyToKeys( int sdlKey )
         {
             if ( INTERNAL_keyMap.TryGetValue( sdlKey, out Key keys ) )
@@ -727,6 +785,12 @@ namespace ClassicAssist.Misc
             }
 
             return Key.None;
+        }
+
+        public static ModKey IntToModKey( int mod )
+        {
+            return (ModKey) ( mod & (int) ( ModKey.RightAlt | ModKey.RightCtrl | ModKey.RightShift | ModKey.LeftAlt |
+                                            ModKey.LeftCtrl | ModKey.LeftShift ) );
         }
 
         public static SDL_Keycode SDL_SCANCODE_TO_KEYCODE( SDL_Scancode X )

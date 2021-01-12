@@ -1532,4 +1532,10 @@ for x in GetList("hippies"):
   <data name="INTERRUPTSPELL_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>InterruptSpell()</value>
   </data>
+  <data name="SNAPSHOT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Take a screenshot of the window</value>
+  </data>
+  <data name="SNAPSHOT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Snapshot()</value>
+  </data>
 </root>

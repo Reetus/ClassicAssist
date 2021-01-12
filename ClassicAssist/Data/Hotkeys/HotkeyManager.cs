@@ -10,6 +10,7 @@ using ClassicAssist.Annotations;
 using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.UI.Misc;
+using static ClassicAssist.Misc.SDLKeys;
 
 namespace ClassicAssist.Data.Hotkeys
 {
@@ -24,7 +25,6 @@ namespace ClassicAssist.Data.Hotkeys
             Key.LeftCtrl, Key.RightCtrl, Key.LeftShift, Key.RightShift, Key.LeftAlt, Key.RightAlt
         };
 
-        private readonly List<Key> _modifiers = new List<Key>();
         private bool _enabled = true;
 
         private ObservableCollectionEx<HotkeyCommand> _items = new ObservableCollectionEx<HotkeyCommand>();
@@ -120,33 +120,11 @@ namespace ClassicAssist.Data.Hotkeys
             OnPropertyChanged( propertyName );
         }
 
-        public bool OnHotkeyPressed( Key keys )
+        public bool OnHotkeyPressed( Key keys, ModKey modifier )
         {
             lock ( _lock )
             {
                 bool filter = false;
-
-                if ( _modifierKeys.Contains( keys ) )
-                {
-                    _modifiers.Clear();
-                    _modifiers.Add( keys );
-                    return false;
-                }
-
-                Key modifier = Key.None;
-
-                if ( _modifiers.Count > 0 )
-                {
-                    modifier = _modifiers[0];
-                }
-
-                Key modifier1 = modifier;
-                bool down = modifier != Key.None && Engine.Dispatcher.Invoke( () => Keyboard.IsKeyDown( modifier1 ) );
-
-                if ( !down )
-                {
-                    modifier = Key.None;
-                }
 
                 // Sanity check
                 if ( keys == Key.None )
@@ -212,8 +190,9 @@ namespace ClassicAssist.Data.Hotkeys
 
                     try
                     {
-                        Key modifier = _modifierKeys.FirstOrDefault( key =>
-                            Engine.Dispatcher.Invoke( () => Keyboard.IsKeyDown( key ) ) );
+                        ModKey modifier =
+                            KeymodFromKeyList(
+                                Engine.Dispatcher.Invoke( () => _modifierKeys.Where( Keyboard.IsKeyDown ) ) );
 
                         IEnumerable<HotkeyEntry> hotkeyEntries = hke.Children.Where( t =>
                             t.Hotkey.Modifier == modifier && t.Hotkey.Key == Key.None && t.Hotkey.Mouse == mouse );

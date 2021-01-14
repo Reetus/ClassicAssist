@@ -262,9 +262,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
                 IntPtr memDC = CreateCompatibleDC( screenDC );
                 IntPtr hBitmap = CreateCompatibleBitmap( screenDC, width, height );
-                SelectObject( memDC, hBitmap ); // Select bitmap from compatible bitmap to memDC
-
-                // TODO: BitBlt may fail horribly
+                SelectObject( memDC, hBitmap );
                 BitBlt( memDC, 0, 0, width, height, screenDC, 0, 0, TernaryRasterOperations.SRCCOPY );
                 BitmapSource bitmapSource = Imaging.CreateBitmapSourceFromHBitmap( hBitmap, IntPtr.Zero,
                     Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions() );

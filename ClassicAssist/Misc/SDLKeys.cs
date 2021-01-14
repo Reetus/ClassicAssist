@@ -691,7 +691,7 @@ namespace ClassicAssist.Misc
             { (int) SDL_Keycode.SDLK_RSHIFT, Key.RightShift },
             { (int) SDL_Keycode.SDLK_APPLICATION, Key.Apps },
             { (int) SDL_Keycode.SDLK_SLASH, Key.OemQuestion },
-            { (int) SDL_Keycode.SDLK_BACKSLASH, Key.OemBackslash },
+            { (int) SDL_Keycode.SDLK_BACKSLASH, Key.Oem5 },
             { (int) SDL_Keycode.SDLK_LEFTBRACKET, Key.OemOpenBrackets },
             { (int) SDL_Keycode.SDLK_RIGHTBRACKET, Key.OemCloseBrackets },
             { (int) SDL_Keycode.SDLK_CAPSLOCK, Key.CapsLock },

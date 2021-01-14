@@ -42,8 +42,22 @@ namespace ClassicAssist.UO.Network.Packets
 
             uint gumpId = (uint) ( ( packet[7] << 24 ) | ( packet[8] << 16 ) | ( packet[9] << 8 ) | packet[10] );
             int buttonId = ( packet[11] << 24 ) | ( packet[12] << 16 ) | ( packet[13] << 8 ) | packet[14];
+            int switchesCount = ( packet[15] << 24 ) | ( packet[16] << 16 ) | ( packet[17] << 8 ) | packet[18];
 
-            return $"ReplyGump(0x{gumpId:x}, {buttonId})\r\n";
+            int pos = 19;
+            List<int> switches = new List<int>();
+
+            for ( int i = 0; i < switchesCount; i++ )
+            {
+                int switchId = ( packet[pos] << 24 ) | ( packet[pos + 1] << 16 ) | ( packet[pos + 2] << 8 ) |
+                               packet[pos + 3];
+                switches.Add( switchId );
+                pos += 4;
+            }
+
+            return switchesCount > 0
+                ? $"ReplyGump(0x{gumpId:x}, {buttonId}, Array[int]([{string.Join( ",", switches )}]))\r\n"
+                : $"ReplyGump(0x{gumpId:x}, {buttonId})\r\n";
         }
     }
 }

@@ -103,6 +103,8 @@ namespace ClassicAssist.Data.Macros
                 }
             }
 
+            prepend += "from System import Array";
+
             return prepend;
         }
 

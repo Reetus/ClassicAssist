@@ -4,7 +4,7 @@ branches:
   - master
 skip_tags: true
 image: Visual Studio 2019
-configuration: Debug
+configuration: Release
 clone_folder: c:\Projects\ClassicAssist\
 init:
 - ps: >-

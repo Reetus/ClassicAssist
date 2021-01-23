@@ -1440,4 +1440,10 @@ Are you sure you wish to continue?</value>
   <data name="Snapshot Saved: {0}" xml:space="preserve">
     <value>Snapshot Saved: {0}</value>
   </data>
+  <data name="Priority:" xml:space="preserve">
+    <value>Priority:</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Priority</value>
+  </data>
 </root>

@@ -19,6 +19,11 @@ namespace ClassicAssist.UO.Data
 
         private static StaticTile[] LoadStaticTiles()
         {
+            if ( string.IsNullOrEmpty( _dataPath ) || !Directory.Exists( _dataPath ) )
+            {
+                return null;
+            }
+
             string fileName = Path.Combine( _dataPath, "tiledata.mul" );
 
             if ( !File.Exists( fileName ) )
@@ -177,6 +182,10 @@ namespace ClassicAssist.UO.Data
             {
                 return _staticTiles.Value[index];
             }
+            catch ( NullReferenceException )
+            {
+                return new StaticTile { Name = "unknown" };
+            }
             catch ( IndexOutOfRangeException )
             {
                 return _staticTiles.Value[0];
@@ -185,14 +194,14 @@ namespace ClassicAssist.UO.Data
 
         public static Layer GetLayer( int id )
         {
-            StaticTile td = TileData.GetStaticTile( id );
+            StaticTile td = GetStaticTile( id );
 
-            if (!td.Flags.HasFlag( TileFlags.Wearable ))
+            if ( !td.Flags.HasFlag( TileFlags.Wearable ) )
             {
                 return Layer.Invalid;
             }
 
-            Layer layer = (Layer)td.Quality;
+            Layer layer = (Layer) td.Quality;
 
             return layer;
         }

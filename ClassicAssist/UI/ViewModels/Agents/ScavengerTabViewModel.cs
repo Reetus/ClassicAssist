@@ -94,7 +94,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     { "Graphic", entry.Graphic },
                     { "Name", entry.Name },
                     { "Hue", entry.Hue },
-                    { "Enabled", entry.Enabled }
+                    { "Enabled", entry.Enabled },
+                    { "Priority", entry.Priority.ToString() }
                 } );
             }
 
@@ -130,7 +131,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     Graphic = token["Graphic"]?.ToObject<int>() ?? 0,
                     Name = token["Name"]?.ToObject<string>() ?? "Unknown",
                     Hue = token["Hue"]?.ToObject<int>() ?? 0,
-                    Enabled = token["Enabled"]?.ToObject<bool>() ?? true
+                    Enabled = token["Enabled"]?.ToObject<bool>() ?? true,
+                    Priority = token["Priority"]?.ToObject<ScavengerPriority>() ?? ScavengerPriority.Normal
                 };
 
                 bool alreadyExists = Items.Any( s => s.Graphic == entry.Graphic && s.Hue == entry.Hue );
@@ -173,7 +175,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             lock ( _scavengeLock )
             {
-                foreach ( ScavengerEntry entry in Items )
+                foreach ( ScavengerEntry entry in Items.OrderByDescending( x => x.Priority ) )
                 {
                     if ( !entry.Enabled )
                     {
@@ -212,7 +214,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         container.Serial, QueuePriority.Low, true, true, requeueOnFailure: false,
                         successPredicate: CheckItemContainer );
 
-                    if ( t.Result && CheckItemContainer( scavengerItem.Serial, container.Serial ))
+                    if ( t.Result && CheckItemContainer( scavengerItem.Serial, container.Serial ) )
                     {
                         _ignoreList.Add( scavengerItem.Serial );
                     }

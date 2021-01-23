@@ -10,6 +10,7 @@ namespace ClassicAssist.Data.Scavenger
         private int _graphic;
         private int _hue;
         private string _name;
+        private ScavengerPriority _priority = ScavengerPriority.Normal;
 
         public bool Enabled
         {
@@ -33,6 +34,12 @@ namespace ClassicAssist.Data.Scavenger
         {
             get => _name;
             set => SetProperty( ref _name, value );
+        }
+
+        public ScavengerPriority Priority
+        {
+            get => _priority;
+            set => SetProperty( ref _priority, value );
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

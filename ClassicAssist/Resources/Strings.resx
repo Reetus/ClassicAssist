@@ -1391,7 +1391,7 @@ Are you sure you wish to continue?</value>
   </data>
   <data name="Bards Music" xml:space="preserve">
     <value>Bards Music</value>
-    </data>
+  </data>
   <data name="Check hands before potions" xml:space="preserve">
     <value>Check hands before potions</value>
   </data>
@@ -1448,5 +1448,11 @@ Are you sure you wish to continue?</value>
   </data>
   <data name="Take Snapshot" xml:space="preserve">
     <value>Take Snapshot</value>
+  </data>
+  <data name="Priority:" xml:space="preserve">
+    <value>Priority:</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Priority</value>
   </data>
 </root>

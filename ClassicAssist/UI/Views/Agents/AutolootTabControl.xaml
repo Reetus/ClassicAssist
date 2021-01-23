@@ -126,8 +126,20 @@
             </Grid.RowDefinitions>
             <ComboBox x:Name="comboBox" Grid.Row="0" ItemsSource="{Binding Constraints}" DisplayMemberPath="Name"
                       SelectedIndex="0" />
-            <CheckBox Content="{x:Static resources:Strings.Enabled}" Grid.Row="1" Margin="0,10,0,0"
-                      IsChecked="{Binding SelectedItem.Enabled}" />
+            <Grid Grid.Row="1" Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <CheckBox Content="{x:Static resources:Strings.Enabled}"
+                          IsChecked="{Binding SelectedItem.Enabled}" Grid.Column="0" />
+                <Label Grid.Column="1" Content="{x:Static resources:Strings.Priority_}" HorizontalAlignment="Right"
+                           Margin="0,0,5,0" />
+                <ComboBox Text="{Binding SelectedItem.Priority, Mode=TwoWay}"
+                          ItemsSource="{Binding Source={misc:EnumBindingSource {x:Type autoloot:AutolootPriority}}}"
+                          Grid.Column="2" />
+            </Grid>
             <ListView x:Name="listView1" Grid.Row="2" Margin="0,10,0,10"
                       ItemsSource="{Binding SelectedItem.Constraints}" SelectedItem="{Binding SelectedProperty}">
                 <i:Interaction.Behaviors>

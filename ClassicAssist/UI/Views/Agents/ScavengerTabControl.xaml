@@ -8,6 +8,8 @@
              xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
+             xmlns:scavenger="clr-namespace:ClassicAssist.Data.Scavenger"
+             xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              mc:Ignorable="d"
              d:DesignWidth="493" d:DesignHeight="400">
     <d:DesignerProperties.DesignStyle>
@@ -71,6 +73,15 @@
                                 <controls:EditTextBlock Text="{Binding Hue}" TabIndex="0"
                                                         Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=HueColumn}"
                                                         ShowIcon="True" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="{x:Static resources:Strings.Priority}" Width="100" x:Name="PriorityColumn">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox Text="{Binding Priority, Mode=TwoWay}"
+                                          ItemsSource="{Binding Source={misc:EnumBindingSource {x:Type scavenger:ScavengerPriority}}}"
+                                          Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=PriorityColumn}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

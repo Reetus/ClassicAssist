@@ -110,7 +110,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
             Engine.SendPacketToServer(
                 new BatchQueryProperties( container.GetItems().Select( i => i.Serial ).ToArray() ) );
 
-            foreach ( AutolootEntry entry in AutolootManager.GetInstance().GetEntries() )
+            foreach ( AutolootEntry entry in AutolootManager.GetInstance().GetEntries().OrderByDescending( x => x.Priority ) )
             {
                 if ( !entry.Enabled )
                 {

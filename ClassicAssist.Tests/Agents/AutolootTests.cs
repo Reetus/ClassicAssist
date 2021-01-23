@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -192,16 +193,6 @@ namespace ClassicAssist.Tests.Agents
         [TestMethod]
         public void WillLootMatchingObjectProperties()
         {
-            const string localPath = @"C:\Users\johns\Desktop\KvG Client 2.0";
-
-            if ( !Directory.Exists( localPath ) )
-            {
-                Debug.WriteLine( "Not running test, requires Cliloc.enu" );
-                return;
-            }
-
-            TileData.Initialize( localPath );
-
             Engine.Player = new PlayerMobile( 0x01 );
             Item backpack = new Item( 0x40000001, 0x01 ) { Container = new ItemCollection( 0x40000001 ) };
             Engine.Player.SetLayer( Layer.Backpack, backpack.Serial );
@@ -283,22 +274,19 @@ namespace ClassicAssist.Tests.Agents
         [TestMethod]
         public void WontLootDisabledInGuardzone()
         {
-            const string localPath = @"C:\Users\johns\Desktop\KvG Client 2.0";
-
-            if ( !Directory.Exists( localPath ) )
-            {
-                Debug.WriteLine( "Not running test, requires Cliloc.enu" );
-                return;
-            }
-
-            TileData.Initialize( localPath );
-
             Engine.Player = new PlayerMobile( 0x01 ) { X = 652, Y = 869 };
             Item backpack = new Item( 0x40000001, 0x01 ) { Container = new ItemCollection( 0x40000001 ) };
             Engine.Player.SetLayer( Layer.Backpack, backpack.Serial );
             Engine.Items.Add( backpack );
 
-            Item corpse = new Item( 0x40000000 ) { ID = 0x2006, Count = 400, Container = new ItemCollection( 0x40000000 ), X = 652, Y = 869 };
+            Item corpse = new Item( 0x40000000 )
+            {
+                ID = 0x2006,
+                Count = 400,
+                Container = new ItemCollection( 0x40000000 ),
+                X = 652,
+                Y = 869
+            };
             corpse.Container.Add( new Item( 0x4313FC5E ) { ID = 0x108a } );
 
             Engine.Items.Add( corpse );
@@ -525,28 +513,25 @@ namespace ClassicAssist.Tests.Agents
         [TestMethod]
         public void WontLootDisabledLootHumanoids()
         {
-            const string localPath = @"C:\Users\johns\Desktop\KvG Client 2.0";
-
-            if (!Directory.Exists( localPath ))
-            {
-                Debug.WriteLine( "Not running test, requires Cliloc.enu" );
-                return;
-            }
-
-            TileData.Initialize( localPath );
-
             Engine.Player = new PlayerMobile( 0x01 ) { X = 652, Y = 869 };
             Item backpack = new Item( 0x40000001, 0x01 ) { Container = new ItemCollection( 0x40000001 ) };
             Engine.Player.SetLayer( Layer.Backpack, backpack.Serial );
             Engine.Items.Add( backpack );
 
-            Item corpse = new Item( 0x40000000 ) { ID = 0x2006, Count = 400, Container = new ItemCollection( 0x40000000 ), X = 652, Y = 869 };
+            Item corpse = new Item( 0x40000000 )
+            {
+                ID = 0x2006,
+                Count = 400,
+                Container = new ItemCollection( 0x40000000 ),
+                X = 652,
+                Y = 869
+            };
             corpse.Container.Add( new Item( 0x4313FC5E ) { ID = 0x108a } );
 
             Engine.Items.Add( corpse );
 
             IncomingPacketHandlers.Initialize();
-            AutolootViewModel vm = new AutolootViewModel { Enabled = true, LootHumanoids = false};
+            AutolootViewModel vm = new AutolootViewModel { Enabled = true, LootHumanoids = false };
 
             AutolootEntry lootEntry = new AutolootEntry
             {
@@ -568,11 +553,11 @@ namespace ClassicAssist.Tests.Agents
 
             Engine.PacketWaitEntries = new PacketWaitEntries();
 
-            var are = new AutoResetEvent( false );
+            AutoResetEvent are = new AutoResetEvent( false );
 
             void OnPacketSentEvent( byte[] data, int length )
             {
-                if (data[0] == 0xD6 || data[0] == 0x06)
+                if ( data[0] == 0xD6 || data[0] == 0x06 )
                 {
                     return;
                 }
@@ -589,6 +574,110 @@ namespace ClassicAssist.Tests.Agents
                 {
                     0x3C, 0x00, 0x19, 0x00, 0x01, 0x43, 0x13, 0xFC, 0x5E, 0x10, 0x8A, 0x00, 0x00, 0x01, 0x00, 0x13,
                     0x00, 0x82, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00
+                };
+
+                PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x3C );
+
+                handler.OnReceive( new PacketReader( containerContentsPacket, containerContentsPacket.Length, false ) );
+                entry.Packet = containerContentsPacket;
+                entry.Lock.Set();
+            };
+
+            vm.OnCorpseEvent( corpse.Serial );
+
+            are.WaitOne( 2000 );
+
+            Engine.Items.Clear();
+            Engine.PacketWaitEntries = null;
+            Engine.InternalPacketSentEvent -= OnPacketSentEvent;
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillLootByPriority()
+        {
+            Engine.Player = new PlayerMobile( 0x01 ) { X = 652, Y = 869 };
+            Item backpack = new Item( 0x40000001, 0x01 ) { Container = new ItemCollection( 0x40000001 ) };
+            Engine.Player.SetLayer( Layer.Backpack, backpack.Serial );
+            Engine.Items.Add( backpack );
+            Engine.ClientVersion = Version.Parse( "7.0.45.0" );
+
+            Item corpse = new Item( 0x40000000 )
+            {
+                ID = 0x2006,
+                Count = 400,
+                Container = new ItemCollection( 0x40000000 ),
+                X = 652,
+                Y = 869
+            };
+            corpse.Container.Add( new Item( 0x4546E4AC ) { ID = 0xaa } );
+            corpse.Container.Add( new Item( 0x44215a1c ) { ID = 0xbb } );
+
+            Engine.Items.Add( corpse );
+
+            IncomingPacketHandlers.Initialize();
+            AutolootViewModel vm = new AutolootViewModel { Enabled = true, LootHumanoids = true };
+
+            AutolootEntry lootEntry = new AutolootEntry
+            {
+                Rehue = false,
+                Autoloot = true,
+                Constraints = new ObservableCollection<AutolootConstraintEntry>(),
+                ID = 0xaa,
+                Priority = AutolootPriority.Normal
+            };
+
+            AutolootEntry lootEntry2 = new AutolootEntry
+            {
+                Rehue = false,
+                Autoloot = true,
+                Constraints = new ObservableCollection<AutolootConstraintEntry>(),
+                ID = 0xbb,
+                Priority = AutolootPriority.High
+            };
+
+            vm.Items.Add( lootEntry );
+            vm.Items.Add( lootEntry2 );
+
+            /*
+             * 0x44215a1c should be dragged first because the priority is higher
+             * thats all the test checks
+             */
+
+            Engine.PacketWaitEntries = new PacketWaitEntries();
+
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            bool lootedItem = false;
+
+            void OnPacketSentEvent( byte[] data, int length )
+            {
+                if ( data[0] == 0xD6 || data[0] == 0x08 )
+                {
+                    return;
+                }
+
+                int serial = ( data[1] << 24 ) | ( data[2] << 16 ) | ( data[3] << 8 ) | data[4];
+
+                if ( !serial.Equals( 0x44215a1c ) && !lootedItem )
+                {
+                    are.Set();
+                    Assert.Fail( "Autoloot wrong item" );
+                }
+
+                lootedItem = true;
+                are.Set();
+            }
+
+            Engine.InternalPacketSentEvent += OnPacketSentEvent;
+
+            Engine.PacketWaitEntries.WaitEntryAddedEvent += entry =>
+            {
+                byte[] containerContentsPacket =
+                {
+                    0x3C, 0x00, 0x2D, 0x00, 0x02, 0x45, 0x46, 0xE4, 0xAC, 0x00, 0xAA, 0x00, 0x00, 0x01, 0x00, 0x2D,
+                    0x00, 0x50, 0x00, 0x41, 0x5D, 0x8E, 0xDB, 0x05, 0x54, 0x44, 0x21, 0x5A, 0x1C, 0x00, 0xBB, 0x00,
+                    0x00, 0x01, 0x00, 0x38, 0x00, 0x70, 0x00, 0x41, 0x5D, 0x8E, 0xDB, 0x04, 0x8D
                 };
 
                 PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x3C );

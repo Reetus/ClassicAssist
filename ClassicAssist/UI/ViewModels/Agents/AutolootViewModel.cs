@@ -208,7 +208,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     { "Autoloot", entry.Autoloot },
                     { "Rehue", entry.Rehue },
                     { "RehueHue", entry.RehueHue },
-                    { "Enabled", entry.Enabled }
+                    { "Enabled", entry.Enabled },
+                    { "Priority", entry.Priority.ToString() }
                 };
 
                 if ( entry.Constraints != null )
@@ -268,7 +269,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         Autoloot = token["Autoloot"]?.ToObject<bool>() ?? false,
                         Rehue = token["Rehue"]?.ToObject<bool>() ?? false,
                         RehueHue = token["RehueHue"]?.ToObject<int>() ?? 0,
-                        Enabled = token["Enabled"]?.ToObject<bool>() ?? true
+                        Enabled = token["Enabled"]?.ToObject<bool>() ?? true,
+                        Priority = token["Priority"]?.ToObject<AutolootPriority>() ?? AutolootPriority.Normal
                     };
 
                     if ( token["Properties"] != null )
@@ -433,7 +435,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                 // If change logic, also change in DebugAutolootViewModel
 
-                foreach ( AutolootEntry entry in Items )
+                foreach ( AutolootEntry entry in Items.OrderByDescending( x => x.Priority ) )
                 {
                     if ( !entry.Enabled )
                     {
@@ -462,7 +464,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                             continue;
                         }
 
-                        if ( entry.Autoloot )
+                        if ( entry.Autoloot && !lootItems.Contains( matchItem ) )
                         {
                             lootItems.Add( matchItem );
                         }

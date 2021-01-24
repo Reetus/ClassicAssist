@@ -63,7 +63,6 @@ namespace ClassicAssist.Data.Vendors
         {
             obj = value;
             OnPropertyChanged( propertyName );
-            CommandManager.InvalidateRequerySuggested();
         }
     }
 }

@@ -303,7 +303,6 @@ namespace ClassicAssist.UI.Views
         {
             obj = value;
             OnPropertyChanged( propertyName );
-            CommandManager.InvalidateRequerySuggested();
         }
 
         [NotifyPropertyChangedInvocator]

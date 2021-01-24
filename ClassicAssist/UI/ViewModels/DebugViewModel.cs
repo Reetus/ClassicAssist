@@ -25,11 +25,13 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _clearCommand;
         private ICommand _exportLogCommand;
         private ObservableCollection<PacketEntry> _items = new ObservableCollection<PacketEntry>();
+        private DateTime _lastUIUpdate;
 
         private ObservableCollection<PacketEnabledEntry>
             _packetEntries = new ObservableCollection<PacketEnabledEntry>();
 
         private bool _running = true;
+        private readonly List<PacketEntry> _tempItems = new List<PacketEntry>();
         private bool _topmost = true;
         private ICommand _viewPlayerEquipmentCommand;
 
@@ -152,7 +154,20 @@ namespace ClassicAssist.UI.ViewModels
 
         private void ProcessQueue( PacketEntry entry )
         {
-            _dispatcher.Invoke( () => { Items.Add( entry ); } );
+            _tempItems.Add( entry );
+
+            if ( DateTime.Now - _lastUIUpdate < TimeSpan.FromMilliseconds( 100 ) )
+            {
+                return;
+            }
+
+            _dispatcher.Invoke( () =>
+            {
+                Items.AddRange( _tempItems );
+
+                _lastUIUpdate = DateTime.Now;
+                _tempItems.Clear();
+            } );
         }
 
         private void OnInternalPacketSentEvent( byte[] data, int length )
@@ -305,7 +320,6 @@ namespace ClassicAssist.UI.ViewModels
             {
                 obj = value;
                 OnPropertyChanged( propertyName );
-                CommandManager.InvalidateRequerySuggested();
             }
         }
     }

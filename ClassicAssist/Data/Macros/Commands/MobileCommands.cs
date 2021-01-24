@@ -141,7 +141,11 @@ namespace ClassicAssist.Data.Macros.Commands
                 return mobile.Status.HasFlag( MobileStatus.Hidden );
             }
 
-            UOC.SystemMessage( Strings.Mobile_not_found___ );
+            if ( !MacroManager.QuietMode )
+            {
+                UOC.SystemMessage( Strings.Mobile_not_found___ );
+            }
+
             return false;
         }
 
@@ -159,7 +163,11 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( mobile == null )
             {
-                UOC.SystemMessage( Strings.Mobile_not_found___ );
+                if ( !MacroManager.QuietMode )
+                {
+                    UOC.SystemMessage( Strings.Mobile_not_found___ );
+                }
+
                 return default;
             }
 
@@ -240,7 +248,11 @@ namespace ClassicAssist.Data.Macros.Commands
                 return mobile.HitsMax - mobile.Hits;
             }
 
-            UOC.SystemMessage( Strings.Mobile_not_found___ );
+            if ( !MacroManager.QuietMode )
+            {
+                UOC.SystemMessage( Strings.Mobile_not_found___ );
+            }
+
             return 0;
         }
 
@@ -368,7 +380,11 @@ namespace ClassicAssist.Data.Macros.Commands
                 return mobile.IsMounted;
             }
 
-            UOC.SystemMessage( Strings.Mobile_not_found___ );
+            if ( !MacroManager.QuietMode )
+            {
+                UOC.SystemMessage( Strings.Mobile_not_found___ );
+            }
+
             return false;
         }
 

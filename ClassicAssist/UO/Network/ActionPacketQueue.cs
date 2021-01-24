@@ -120,6 +120,16 @@ namespace ClassicAssist.UO.Network
         {
             lock ( _actionPacketQueueLock )
             {
+                if ( _actionPacketQueue.Count() > Options.CurrentOptions.UseObjectQueueAmount )
+                {
+                    if ( !MacroManager.QuietMode )
+                    {
+                        Commands.SystemMessage( Strings.Object_queue_full, 61, true );
+                    }
+
+                    return Task.CompletedTask;
+                }
+
                 _actionPacketQueue.Enqueue( packetQueueItem, priority );
 
                 return packetQueueItem.WaitHandle.ToTask();
@@ -150,6 +160,16 @@ namespace ClassicAssist.UO.Network
         {
             lock ( _actionPacketQueueLock )
             {
+                if ( _actionPacketQueue.Count() > Options.CurrentOptions.UseObjectQueueAmount )
+                {
+                    if ( !MacroManager.QuietMode )
+                    {
+                        Commands.SystemMessage( Strings.Object_queue_full, 61, true );
+                    }
+
+                    return Task.CompletedTask;
+                }
+
                 List<EventWaitHandle> handles = new List<EventWaitHandle>();
 
                 foreach ( BasePacket packet in packets )

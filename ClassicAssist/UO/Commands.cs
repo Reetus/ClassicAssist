@@ -24,6 +24,8 @@ namespace ClassicAssist.UO
     public class Commands
     {
         private static readonly object _dragDropLock = new object();
+        private static string _lastSystemMessage;
+        private static DateTime _lastSystemMessageTime;
 
         public static void DragItem( int serial, int amount )
         {
@@ -130,8 +132,20 @@ namespace ClassicAssist.UO
             }, QueuePriority.Medium );
         }
 
-        public static void SystemMessage( string text, int hue = 0x03b2 )
+        public static void SystemMessage( string text, int hue = 0x03b2, bool throttleRepeating = false )
         {
+            if ( throttleRepeating )
+            {
+                if ( _lastSystemMessage == text &&
+                     DateTime.Now - _lastSystemMessageTime < TimeSpan.FromMilliseconds( 250 ) )
+                {
+                    return;
+                }
+
+                _lastSystemMessage = text;
+                _lastSystemMessageTime = DateTime.Now;
+            }
+
             //TODO
             byte[] textBytes = Encoding.BigEndianUnicode.GetBytes( text + '\0' );
 

@@ -67,7 +67,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Hue ),
                 nameof( ParameterType.SerialOrAlias )
             } )]
-        public static void UseType( object type, int hue = -1, object container = null )
+        public static void UseType( object type, int hue = -1, object container = null, bool skipQueue = false )
         {
             int serial = AliasCommands.ResolveSerial( type );
 
@@ -105,7 +105,8 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( !AbilitiesManager.GetInstance().CheckHands( useItem.Serial ) )
             {
-                Engine.SendPacketToServer( new UseObject( useItem.Serial ) );
+                ActionPacketQueue.EnqueuePacket( new UseObject( useItem.Serial ),
+                    skipQueue ? QueuePriority.Immediate : QueuePriority.Medium );
             }
         }
 
@@ -524,7 +525,11 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( mobile == null )
             {
-                UOC.SystemMessage( Strings.Mobile_not_found___ );
+                if ( !MacroManager.QuietMode )
+                {
+                    UOC.SystemMessage( Strings.Mobile_not_found___ );
+                }
+
                 return false;
             }
 

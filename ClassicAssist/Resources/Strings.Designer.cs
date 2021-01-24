@@ -2335,6 +2335,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Object queue full.
+        /// </summary>
+        public static string Object_queue_full {
+            get {
+                return ResourceManager.GetString("Object queue full", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Objects.
         /// </summary>
         public static string Objects {

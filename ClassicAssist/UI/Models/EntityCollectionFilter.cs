@@ -43,7 +43,6 @@ namespace ClassicAssist.UI.Models
         {
             obj = value;
             OnPropertyChanged( propertyName );
-            CommandManager.InvalidateRequerySuggested();
         }
     }
 }

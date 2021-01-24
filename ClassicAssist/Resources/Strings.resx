@@ -1455,4 +1455,7 @@ Are you sure you wish to continue?</value>
   <data name="Priority" xml:space="preserve">
     <value>Priority</value>
   </data>
+  <data name="Object queue full" xml:space="preserve">
+    <value>Object queue full</value>
+  </data>
 </root>

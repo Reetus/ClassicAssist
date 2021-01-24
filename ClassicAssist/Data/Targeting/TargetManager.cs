@@ -282,7 +282,11 @@ namespace ClassicAssist.Data.Targeting
                 return mobile;
             }
 
-            UOC.SystemMessage( Strings.Mobile_not_found___ );
+            if ( !MacroManager.QuietMode )
+            {
+                UOC.SystemMessage( Strings.Mobile_not_found___ );
+            }
+
             return null;
         }
 

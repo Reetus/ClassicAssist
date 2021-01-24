@@ -110,7 +110,6 @@ namespace ClassicAssist.UI.Views
         {
             obj = value;
             OnPropertyChanged( propertyName );
-            CommandManager.InvalidateRequerySuggested();
         }
 
         public class HuePickerEntry

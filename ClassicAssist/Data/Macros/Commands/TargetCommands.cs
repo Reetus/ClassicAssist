@@ -165,7 +165,11 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( entity == null )
             {
-                UOC.SystemMessage( Strings.Mobile_not_found___ );
+                if ( !MacroManager.QuietMode )
+                {
+                    UOC.SystemMessage( Strings.Mobile_not_found___ );
+                }
+
                 return;
             }
 

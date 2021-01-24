@@ -81,7 +81,17 @@
             </CheckBox>
             <CheckBox Content="{x:Static resources:Strings.Use_experimental_fizzle_detection}"
                       IsChecked="{Binding CurrentOptions.UseExperimentalFizzleDetection}" />
-            <CheckBox IsChecked="{Binding CurrentOptions.UseObjectQueue}" Content="{x:Static resources:Strings.Use_object_queue}"/>
+            <CheckBox IsChecked="{Binding CurrentOptions.UseObjectQueue}" DataContext="{Binding}">
+                <CheckBox.ContentTemplate>
+                    <ItemContainerTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{x:Static resources:Strings.Use_object_queue}" TextWrapping="Wrap" />
+                            <TextBox Width="40" Margin="5,0,0,0"
+                                     Text="{Binding Path=Data.CurrentOptions.UseObjectQueueAmount, Source={StaticResource proxy}}" />
+                        </StackPanel>
+                    </ItemContainerTemplate>
+                </CheckBox.ContentTemplate>
+            </CheckBox>
             <CheckBox IsChecked="{Binding CurrentOptions.LimitMouseWheelTrigger}" DataContext="{Binding}">
                 <CheckBox.ContentTemplate>
                     <ItemContainerTemplate>

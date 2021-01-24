@@ -14,6 +14,7 @@ using ClassicAssist.Resources;
 using ClassicAssist.UI.Controls;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO.Network.PacketFilter;
+using Microsoft.Scripting.Utils;
 using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 

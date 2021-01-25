@@ -15,6 +15,7 @@ namespace ClassicAssist.UI.ViewModels
     {
         private Options _currentOptions;
         private ICommand _setLanguageOverrideCommand;
+        private ICommand _setUseClilocLanguageCommand;
 
         public Options CurrentOptions
         {
@@ -24,6 +25,10 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand SetLanguageOverrideCommand =>
             _setLanguageOverrideCommand ?? ( _setLanguageOverrideCommand = new RelayCommand( SetLanguageOverride ) );
+
+        public ICommand SetUseClilocLanguageCommand =>
+            _setUseClilocLanguageCommand ??
+            ( _setUseClilocLanguageCommand = new RelayCommand( SetUseClilocLanguage, o => true ) );
 
         public void Serialize( JObject json )
         {
@@ -205,6 +210,19 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             AssistantOptions.LanguageOverride = language;
+
+            MessageBox.Show( Strings.Restart_game_for_changes_to_take_effect___,
+                Strings.Restart_game_for_changes_to_take_effect___ );
+        }
+
+        private static void SetUseClilocLanguage( object obj )
+        {
+            if ( !( obj is bool useClilocLanguage ) )
+            {
+                return;
+            }
+
+            AssistantOptions.UseCUOClilocLanguage = useClilocLanguage;
 
             MessageBox.Show( Strings.Restart_game_for_changes_to_take_effect___,
                 Strings.Restart_game_for_changes_to_take_effect___ );

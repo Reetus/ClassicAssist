@@ -90,8 +90,23 @@ namespace ClassicAssist.UO.Gumps
 
         public static Point GetGameWindowCenter()
         {
-            dynamic currentProfile =
-                Reflection.GetTypePropertyValue<dynamic>( "ClassicUO.Configuration.ProfileManager", "Current", null );
+            dynamic settings = Reflection.GetTypeFieldValue<dynamic>( "ClassicUO.Configuration.Settings",
+                "GlobalSettings", null );
+
+            string[] possibleProperties = { "Current", "CurrentProfile" };
+
+            dynamic currentProfile = null;
+
+            foreach ( string possibleProperty in possibleProperties )
+            {
+                currentProfile = Reflection.GetTypePropertyValue<dynamic>( "ClassicUO.Configuration.ProfileManager",
+                    possibleProperty, null );
+
+                if ( currentProfile != null )
+                {
+                    break;
+                }
+            }
 
             if ( currentProfile == null )
             {

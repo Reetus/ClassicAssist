@@ -10,6 +10,7 @@
     xmlns:data="clr-namespace:ClassicAssist.Data"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:cliloc="clr-namespace:ClassicAssist.UO.Data"
     x:Class="ClassicAssist.UI.Views.OptionsTabControl"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="500">
@@ -165,6 +166,11 @@
             <CheckBox Content="{x:Static resources:Strings.Show_resurrection_waypoints}"
                       IsChecked="{Binding CurrentOptions.ShowResurrectionWaypoints}"
                       ToolTip="{x:Static resources:Strings.Requires_Server_Support}" />
+            <CheckBox Content="{x:Static resources:Strings.Use_Cliloc_language_from_ClassicUO_settings}"
+                      IsChecked="{x:Static data:AssistantOptions.UseCUOClilocLanguage}"
+                      Command="{Binding SetUseClilocLanguageCommand}"
+                      CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                      IsEnabled="{x:Static cliloc:Cliloc.CanUseCUOClilocLanguage}" />
         </StackPanel>
     </Grid>
 </UserControl>

@@ -1458,4 +1458,7 @@ Are you sure you wish to continue?</value>
   <data name="Object queue full" xml:space="preserve">
     <value>Object queue full</value>
   </data>
+  <data name="Use Cliloc language from ClassicUO settings" xml:space="preserve">
+    <value>Use Cliloc language from ClassicUO settings</value>
+  </data>
 </root>

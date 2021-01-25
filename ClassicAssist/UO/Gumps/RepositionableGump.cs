@@ -52,7 +52,7 @@ namespace ClassicAssist.UO.Gumps
             base.SendGump();
         }
 
-        public override void OnResponse( int buttonID, int[] switches, Dictionary<int, string> textEntries = null )
+        public override void OnResponse( int buttonID, int[] switches, List<(int Key, string Value)> textEntries = null )
         {
             if ( buttonID == REPOSITION_BUTTON_ID )
             {

@@ -157,16 +157,16 @@
     <value>ID colore oggetto o -1 per tutti</value>
   </data>
   <data name="PARAMETER_DESCRIPTION_ITEMID" xml:space="preserve">
-    <value>ID oggetto o ID grafico tipo 0x3db</value>
+    <value>ID oggetto o ID grafico, per esempio 0x3db</value>
   </data>
   <data name="PARAMETER_DESCRIPTION_LAYER" xml:space="preserve">
-    <value>Stringa che rappresenta un layer, tipo "OneHanded" o "Talisman" etc</value>
+    <value>Stringa che rappresenta un layer, per esempio "OneHanded" o "Talisman" etc</value>
   </data>
   <data name="PARAMETER_DESCRIPTION_LEFTRIGHTBOTH" xml:space="preserve">
     <value>Equippa - "left", "right", o "both"</value>
   </data>
   <data name="PARAMETER_DESCRIPTION_NAME" xml:space="preserve">
-    <value>Stringa che rappresenta un nome. Tipo "Snoopy"</value>
+    <value>Stringa che rappresenta un nome. Per esempio "Snoopy"</value>
   </data>
   <data name="PARAMETER_DESCRIPTION_ONOFF" xml:space="preserve">
     <value>"on" oppure "off"</value>
@@ -190,10 +190,10 @@
     <value>Nome Alias</value>
   </data>
   <data name="PARAMETER_DESCRIPTION_BENEFICIALHARMFULNEUTRAL" xml:space="preserve">
-    <value>Tipo Target - "harmful", "beneficial", o "neutral"</value>
+    <value>Tipo di Target - "harmful", "beneficial", o "neutral"</value>
   </data>
   <data name="PARAMETER_DESCRIPTION_BUFFNAME" xml:space="preserve">
-    <value>Nome Vuff</value>
+    <value>Nome Buff</value>
   </data>
   <data name="PARAMETER_DESCRIPTION_DIRECTION" xml:space="preserve">
     <value>Direzione. Per esempio "West"</value>
@@ -238,7 +238,7 @@
     <value>Non specificato: vedere la descrizione per l'utilizzo</value>
   </data>
   <data name="PARAMETER_DESCRIPTION_UPDOWNLOCKED" xml:space="preserve">
-    <value>Lock Status - "up", "down", o "locked"</value>
+    <value>Blocca Stato - "up", "down", o "locked"</value>
   </data>
   <data name="PARAMETER_DESCRIPTION_WANDNAME" xml:space="preserve">
     <value>Nome Wand</value>
@@ -269,5 +269,8 @@
   </data>
   <data name="PARAMETER_DESCRIPTION_BOOLEAN" xml:space="preserve">
     <value>Valore True/False, vedere la descrizione per l'uso</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ELEMENTVALUEFRONTBACK" xml:space="preserve">
+    <value>Valore Elemento da rimuovere dalla lista, oppure 'front' per rimuovere il primo oggetto della lista, oppure 'back' per rimuovere l'ultimo. (default: 'back') (Opzionale)</value>
   </data>
 </root>

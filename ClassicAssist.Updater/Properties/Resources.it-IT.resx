@@ -172,6 +172,12 @@
     <value>Aggiornamento dei file in corso...</value>
   </data>
   <data name="Project Homepage" xml:space="preserve">
-    <value>Homepage</value>
+    <value>Sito web</value>
+  </data>
+  <data name="GitHub rate limit, try again after {0}" xml:space="preserve">
+    <value>GitHub è al limite, riprova dopo {0}</value>
+  </data>
+  <data name="Releases" xml:space="preserve">
+    <value>Versioni</value>
   </data>
 </root>

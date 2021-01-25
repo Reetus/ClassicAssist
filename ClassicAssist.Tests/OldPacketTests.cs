@@ -23,6 +23,7 @@ using System.Threading;
 using Assistant;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
+using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -279,6 +280,60 @@ namespace ClassicAssist.Tests
             handler?.OnReceive( new PacketReader( packet, packet.Length, false ) );
 
             Engine.ClientVersion = null;
+        }
+
+        [TestMethod]
+        public void WontThrowErrorParseDropItem()
+        {
+            AppDomain appDomain = AppDomain.CreateDomain( "WontThrowErrorParseDropItem",
+                AppDomain.CurrentDomain.Evidence, AppDomain.CurrentDomain.SetupInformation );
+
+            appDomain.DoCallBack( () =>
+            {
+                Engine.ClientVersion = new Version( 5, 0, 9, 1 );
+
+                byte[] packet = { 0x08, 0x40, 0x03, 0x69, 0xef, 0xff, 0xff, 0xff, 0xff, 0x00, 0x40, 0x02, 0x10, 0xe0 };
+
+                DropItem dropItem = new DropItem();
+
+                try
+                {
+                    dropItem.Parse( packet, packet.Length, PacketDirection.Outgoing );
+                }
+                catch ( Exception )
+                {
+                    Assert.Fail();
+                }
+            } );
+        }
+
+        [TestMethod]
+        public void WontThrowErrorParseGumpButtonClick()
+        {
+            AppDomain appDomain = AppDomain.CreateDomain( "WontThrowErrorParseGumpButtonClick",
+                AppDomain.CurrentDomain.Evidence, AppDomain.CurrentDomain.SetupInformation );
+
+            appDomain.DoCallBack( () =>
+            {
+                Engine.ClientVersion = new Version( 5, 0, 9, 1 );
+
+                byte[] packet =
+                {
+                    0xb1, 0x00, 0x0f, 0x00, 0x00, 0x03, 0x04, 0x00, 0x00, 0x01, 0xcd, 0x00, 0x00, 0x00, 0x6b
+                };
+
+                GumpButtonClick gumpButtonClick = new GumpButtonClick();
+
+                try
+                {
+                    gumpButtonClick.Parse( packet, packet.Length, PacketDirection.Outgoing );
+                }
+                catch ( Exception )
+                {
+                    Assert.Fail();
+                    throw;
+                }
+            } );
         }
     }
 }

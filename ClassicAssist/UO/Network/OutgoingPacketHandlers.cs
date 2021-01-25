@@ -20,10 +20,10 @@ namespace ClassicAssist.UO.Network
 
         public delegate void dMenuClick( int serial, int gumpId, int index, int id, int hue );
 
+        public delegate void dShardChanged( string name );
+
         public delegate void dTargetSentEvent( TargetType targetType, int senderSerial, int flags, int serial, int x,
             int y, int z, int id );
-
-        public delegate void dShardChanged( string name );
 
         private static PacketHandler[] _handlers;
         private static PacketHandler[] _extendedHandlers;
@@ -184,13 +184,14 @@ namespace ClassicAssist.UO.Network
             }
 
             int textEntryCount = reader.ReadInt32();
-            Dictionary<int, string> textEntries = new Dictionary<int, string>();
+            List<(int Key, string Value)> textEntries = new List<(int Key, string Value)>();
 
             for ( int i = 0; i < textEntryCount; i++ )
             {
                 int id = reader.ReadInt16();
                 int length = reader.ReadInt16();
-                textEntries.Add( id, reader.ReadUnicodeStringBE( length ) );
+
+                textEntries.Add( ( id, reader.ReadUnicodeStringBE( length ) ) );
             }
 
             Engine.GumpList.TryRemove( gumpId, out _ );

@@ -51,7 +51,16 @@ namespace ClassicAssist.UI.ViewModels
             _manager = MacroManager.GetInstance();
 
             _manager.IsRecording = () => _isRecording;
-            _manager.InsertDocument = str => { _dispatcher.Invoke( () => { SelectedItem.Macro += str; } ); };
+            _manager.InsertDocument = str =>
+            {
+                _dispatcher.Invoke( () =>
+                {
+                    if ( SelectedItem != null )
+                    {
+                        SelectedItem.Macro += str ?? string.Empty;
+                    }
+                } );
+            };
             _manager.NewMacro = NewMacro;
             _manager.Items = Items;
         }

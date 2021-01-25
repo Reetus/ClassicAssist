@@ -118,7 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CLEARABILITY_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Wyczyść zaznaczenie umiejętności broni</value>
+    <value>Wyczyść zaznaczenie umiejętności broni
+</value>
   </data>
   <data name="CLEARABILITY_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>ClearAbility()</value>
@@ -1284,5 +1285,48 @@ TargetTileOffset(0, 1, 0)</value>
   </data>
   <data name="USELAYER_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Używa obiektu w podanym layerze, opcjonalnie można podać parametr obiektu mobile</value>
+  </data>
+  <data name="MOVETYPE_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># żeby przenieść przedmiot do innego kontenera
+
+MoveType(0x170f, "backpack", "bank")
+
+# celem może być ziemia poprzez ustawienie kontenera docelowego na -1 oraz dodanie koordynatów
+
+MoveType(0x170f, "backpack", -1, 1928, 2526, 0)
+
+# parametry opcjonalne to kolor oraz ilość. Żeby przenieść max 10 o kolorze 50...
+
+MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
+  </data>
+  <data name="DISPLAYQUESTPOINTER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pokaż wskaźnik dla podanych koordynatów</value>
+  </data>
+  <data name="PATHFIND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Prosi klienta, żeby wyszukał drogę do podanych koordynatów / przedmiotu</value>
+  </data>
+  <data name="SETORGANIZERCONTAINERS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ustaw źródło i cel dla konkretnej nazwy organizera</value>
+  </data>
+  <data name="ACTIVEABILITY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca True jeżeli albo pierwsza albo druga umiejętność jest włączona</value>
+  </data>
+  <data name="MESSAGEPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wyświetla w grze okno z informacją</value>
+  </data>
+  <data name="GETTEXT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Prosi o wpisanie tekstu</value>
+  </data>
+  <data name="DIRECTION_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca kierunek w którym alias / serial jest skierowany</value>
+  </data>
+  <data name="POPLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Usuwa elementy z listy i zwraca ilość usuniętych</value>
+  </data>
+  <data name="INTERRUPTSPELL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Próbuje przerwać rzucanie czaru poprzez chwilowe podniesienie przedmiotu.</value>
+  </data>
+  <data name="SNAPSHOT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zrób zrzut ekranu</value>
   </data>
 </root>

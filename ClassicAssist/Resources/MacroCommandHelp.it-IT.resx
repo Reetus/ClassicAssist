@@ -148,7 +148,7 @@
     <value>Clicca una volta su di un oggetto (seriale o alias)</value>
   </data>
   <data name="CONTENTS_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se in un contenitore ci sono un Tot di oggetti (seriale o alias)</value>
+    <value>Riporta se in un contenitore ci sono un Tot di oggetti (seriale o alias)</value>
   </data>
   <data name="CONTEXTMENU_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Seleziona un opzione in un menu contestuale</value>
@@ -166,16 +166,16 @@
     <value>Nutri (seriale o alias)</value>
   </data>
   <data name="FINDLAYER_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta e aggiorna l'alias trovato se esiste un elemento nel layer specificato, opzione seriale / alias per il controllo da mobile.</value>
+    <value>Riporta e aggiorna l'alias trovato se esiste un elemento nel layer specificato, opzione seriale / alias per il controllo da mobile.</value>
   </data>
   <data name="INREGION_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se la zona del oggetto/mobile è in quella richiesta</value>
+    <value>Riporta se la zona del oggetto/mobile è in quella richiesta</value>
   </data>
   <data name="PING_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Ping approssimato con il server. -1 in caso di fallimento.</value>
   </data>
   <data name="RENAME_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Rinomina un alias rinominabile (tipo, un pet)</value>
+    <value>Rinomina un alias rinominabile (per esempio, un pet)</value>
   </data>
   <data name="SHOWNAMES_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Visualizza i nomi dei cadaveri e/o degli elementi mobili (mobiles, corpses)</value>
@@ -187,10 +187,10 @@
     <value>Utilizza un oggetto (seriale o alias)</value>
   </data>
   <data name="USEONCE_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Usa una singola volta un tipo specifico di oggetti (seriale grafico) dallo zaino</value>
+    <value>Usa una singola volta un Type specifico di oggetti (seriale grafico) dallo zaino</value>
   </data>
   <data name="USETYPE_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Usa un tipo specifico di oggetti (seriale grafico), parametri opzionali come contenitore e / o colore si possono scegliere (predefinito: zaino) (parametri possono essere seriali o alias).</value>
+    <value>Usa un Type specifico di oggetti (seriale grafico), parametri opzionali come contenitore e / o colore si possono scegliere (predefinito: zaino) (parametri possono essere seriali o alias).</value>
   </data>
   <data name="WAITFORCONTENTS_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Attendere che il contenuto del contenitore per un determinato contenitore sia caricato correttamente</value>
@@ -208,19 +208,19 @@
     <value>Aggiunge tutti gli elementi equipaggiati a un elenco temporaneo che non è persistito alla chiusura del client</value>
   </data>
   <data name="DRESSING_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se un Agente di Dress sta correntemente vestendo o svestendo qualcosa</value>
+    <value>Riporta se un Agente di Dress sta correntemente vestendo o svestendo qualcosa</value>
   </data>
   <data name="ORGANIZER_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Esegui un Agente Organizzatore</value>
   </data>
   <data name="ORGANIZING_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se un Agente Organizzatore sta correntemente spostanto oggetti</value>
+    <value>Riporta se un Agente Organizzatore sta correntemente spostanto oggetti</value>
   </data>
   <data name="UNDRESS_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Svesti tutti gli oggetti presenti in un Agente di Dress</value>
   </data>
   <data name="FINDALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se un dato alias puo' essere trovato sullo schermo</value>
+    <value>Riporta se un dato alias puo' essere trovato sullo schermo</value>
   </data>
   <data name="GETALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Aggancia l'alias desiderato</value>
@@ -241,10 +241,10 @@
     <value>Aggiunge un mobile all'elenco amici, verra richiesto un target se nessun seriale è inserito</value>
   </data>
   <data name="ALLY_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se la notorietà del mobile è Ally</value>
+    <value>Riporta se la notorietà del mobile è Ally</value>
   </data>
   <data name="BUFFEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se un buff/debuff è presente</value>
+    <value>Riporta se un buff/debuff è presente</value>
   </data>
   <data name="CLEARIGNORELIST_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Pulisci la IgnoreList</value>
@@ -256,28 +256,28 @@
     <value>Conta gli oggetti a terra o mobili in schermo</value>
   </data>
   <data name="CRIMINAL_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se la notorietà del mobile è Criminal</value>
+    <value>Riporta se la notorietà del mobile è Criminal</value>
   </data>
   <data name="DEAD_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se l'alias è morto (predefinito: self)</value>
+    <value>Riporta se l'alias è morto (predefinito: self)</value>
   </data>
   <data name="DEX_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta in base alla destrezza</value>
+    <value>Riporta in base alla destrezza</value>
   </data>
   <data name="DIFFHITS_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta la differenza tra HP massimi e HP correnti</value>
+    <value>Riporta la differenza tra HP massimi e HP correnti</value>
   </data>
   <data name="DIFFWEIGHT_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta la differenza tra peso e peso massimo</value>
+    <value>Riporta la differenza tra peso e peso massimo</value>
   </data>
   <data name="DIRECTIONTO_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Rivolge l'orientamento del giocatore verso l'alias desiderato</value>
   </data>
   <data name="DISTANCE_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta la distanza di un alias (se in schermata)</value>
+    <value>Riporta la distanza di un alias (se in schermata)</value>
   </data>
   <data name="ENEMY_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se la notorietà del mobile è Enemy</value>
+    <value>Riporta se la notorietà del mobile è Enemy</value>
   </data>
   <data name="FINDOBJECT_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Cerca per un alias o un seriale e lo imposta come found. Cerca in schermata, se nessuna origine è indicata </value>
@@ -286,70 +286,70 @@
     <value>Cerca per un seriale grafico e lo imposta come found. Cerca in schermata, se nessuna origine è indicata </value>
   </data>
   <data name="FOLLOWERS_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta il numero di Followers</value>
+    <value>Riporta il numero di Followers</value>
   </data>
   <data name="GOLD_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta il Gold presente nello zaino</value>
+    <value>Riporta il Gold presente nello zaino</value>
   </data>
   <data name="GRAPHIC_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta seriale grafico di un oggetto (alias o seriale)</value>
+    <value>Riporta seriale grafico di un oggetto (alias o seriale)</value>
   </data>
   <data name="GRAY_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se notorietà del mobile è attaccabile senza diventare criminal</value>
+    <value>Riporta se notorietà del mobile è attaccabile senza diventare criminal</value>
   </data>
   <data name="HIDDEN_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se sei hiddato (se non specificato, predefinito: self)</value>
+    <value>Riporta se sei hiddato (se non specificato, predefinito: self)</value>
   </data>
   <data name="HITS_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta gli HP di un alias (se non specificato, predefinito: self)</value>
+    <value>Riporta gli HP di un alias (se non specificato, predefinito: self)</value>
   </data>
   <data name="HUE_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta il colore di un oggetto (alias o seriale)</value>
+    <value>Riporta il colore di un oggetto (alias o seriale)</value>
   </data>
   <data name="IGNOREOBJECT_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Inserisci nella IgnoreList un oggetto. Non verra più considerato.</value>
   </data>
   <data name="INFRIENDLIST_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se il mobile è presente in FriendList</value>
+    <value>Riporta se il mobile è presente in FriendList</value>
   </data>
   <data name="INNOCENT_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se la notorietà del mobile è Innocent</value>
+    <value>Riporta se la notorietà del mobile è Innocent</value>
   </data>
   <data name="INPARTY_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se il mobile è presente in Party</value>
+    <value>Riporta se il mobile è presente in Party</value>
   </data>
   <data name="INRANGE_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Calcola la portata tra il tuo personaggio e un altro mobile od oggetto</value>
   </data>
   <data name="INT_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta in base all'intelligenza</value>
+    <value>Riporta in base all'intelligenza</value>
   </data>
   <data name="INVULNERABLE_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta  se la notorietà del mobile è Invulnerable</value>
+    <value>Riporta  se la notorietà del mobile è Invulnerable</value>
   </data>
   <data name="LUCK_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta il valore di Luck</value>
+    <value>Riporta il valore di Luck</value>
   </data>
   <data name="MANA_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta l'ammontare di mana di un mobile</value>
+    <value>Riporta l'ammontare di mana di un mobile</value>
   </data>
   <data name="MAXFOLLOWERS_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se i Follower sono al massimo</value>
+    <value>Riporta se i Follower sono al massimo</value>
   </data>
   <data name="MAXHITS_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se gli HP del mobile sono al massimo</value>
+    <value>Riporta se gli HP del mobile sono al massimo</value>
   </data>
   <data name="MAXMANA_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se il mana del mobile è al massimo</value>
+    <value>Riporta se il mana del mobile è al massimo</value>
   </data>
   <data name="MAXSTAM_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se la stamina del mobile è al massimo</value>
+    <value>Riporta se la stamina del mobile è al massimo</value>
   </data>
   <data name="MAXWEIGHT_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta il peso massimo</value>
+    <value>Riporta il peso massimo</value>
   </data>
   <data name="MOUNTED_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se il mobile è montato</value>
+    <value>Riporta se il mobile è montato</value>
   </data>
   <data name="MOVEITEM_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Muovi un oggetto in un contenitore (alias o seriale)</value>
@@ -364,49 +364,49 @@
     <value>Muovi un seriale grafico in una posizione x,y,z specifica attorno a te.  Se nessuna (o -1) quantità è specificata, verra spostata l'intero stock dell'oggetto</value>
   </data>
   <data name="MURDERER_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se la notorietà di un mobile è Murderer</value>
+    <value>Riporta se la notorietà di un mobile è Murderer</value>
   </data>
   <data name="NAME_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta il nome di un mobile</value>
+    <value>Riporta il nome di un mobile</value>
   </data>
   <data name="PARALYZED_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se un mobile è frozen</value>
+    <value>Riporta se un mobile è frozen</value>
   </data>
   <data name="POISONED_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se un mobile è poisoned</value>
+    <value>Riporta se un mobile è poisoned</value>
   </data>
   <data name="REMOVEFRIEND_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Rimuovi un mobile dalla FriendList, mosta il target se non specificato</value>
   </data>
   <data name="SPECIALMOVEEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se una Special Ability è attivata</value>
+    <value>Riporta se una Special Ability è attivata</value>
   </data>
   <data name="STAM_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta la quantità di stamina di un mobile</value>
+    <value>Riporta la quantità di stamina di un mobile</value>
   </data>
   <data name="STR_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta in base la forza</value>
+    <value>Riporta in base la forza</value>
   </data>
   <data name="TITHINGPOINTS_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta i TithingPoints correnti</value>
+    <value>Riporta i TithingPoints correnti</value>
   </data>
   <data name="WAR_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se in War</value>
+    <value>Riporta se in War</value>
   </data>
   <data name="WEIGHT_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta il peso corrente</value>
+    <value>Riporta il peso corrente</value>
   </data>
   <data name="X_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta le cordinate X di un oggetto (alias o seriale)</value>
+    <value>Riporta le cordinate X di un oggetto (alias o seriale)</value>
   </data>
   <data name="Y_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta le cordinate Y di un oggetto (alias o seriale)</value>
+    <value>Riporta le cordinate Y di un oggetto (alias o seriale)</value>
   </data>
   <data name="YELLOWHITS_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se il mobile ha YellowHits</value>
+    <value>Riporta se il mobile ha YellowHits</value>
   </data>
   <data name="Z_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta le cordinate Z di un oggetto (alias o seriale)</value>
+    <value>Riporta le cordinate Z di un oggetto (alias o seriale)</value>
   </data>
   <data name="CLOSEGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Chiudi un gump (seriale)</value>
@@ -427,7 +427,7 @@
     <value>Pulisci il Journal dal testo presente</value>
   </data>
   <data name="INJOURNAL_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Cerca del testo all'interno del Journal, il tipo di fonte del testo è opzionale (system, nome pg..)</value>
+    <value>Cerca del testo all'interno del Journal, il tipo di font del testo è opzionale (system, nome pg..)</value>
   </data>
   <data name="WAITFORJOURNAL_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Attendi per un dato ammontare di tempo che si presenti nel Journal il testo desiderato</value>
@@ -439,16 +439,16 @@
     <value>Crea una lista. Se già esiste, viene sovrascritta</value>
   </data>
   <data name="GETLIST_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta la matrice di tutte le voci di una lista, da utilizzare con For, Loop, etc.</value>
+    <value>Riporta la matrice di tutte le voci di una lista, da utilizzare con For, Loop, etc.</value>
   </data>
   <data name="INLIST_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Controlla se in una lista è presente un dato elemento</value>
   </data>
   <data name="LIST_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta il numero degli elementi presenti in una lista</value>
+    <value>Riporta il numero degli elementi presenti in una lista</value>
   </data>
   <data name="LISTEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se una lista esiste</value>
+    <value>Riporta se una lista esiste</value>
   </data>
   <data name="PUSHLIST_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Inserisce un valore alla fine di una lista, crea la lista se non esiste</value>
@@ -478,7 +478,7 @@
     <value>Pausa. In millisecondi</value>
   </data>
   <data name="PLAYING_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se un altro Script è in svolgimento. Utile per non far sovrapporre Scripts negli script in background</value>
+    <value>Riporta se un altro Script è in svolgimento. Utile per non far sovrapporre Scripts negli script in background</value>
   </data>
   <data name="PLAYSOUND_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Riproduci un suono. In base a ID o file .wav di sistema</value>
@@ -544,10 +544,10 @@
     <value>Cammina nella direzione desiderata</value>
   </data>
   <data name="PROPERTY_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se la propietà desiderata è presente in un oggetto (alias)</value>
+    <value>Riporta se la propietà desiderata è presente in un oggetto (alias)</value>
   </data>
   <data name="PROPERTYVALUE_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta il valore della proprietà desiderata. Indice argomento opzionale (int, str).</value>
+    <value>Riporta il valore della proprietà desiderata. Indice argomento opzionale (int, str).</value>
   </data>
   <data name="WAITFORPROPERTIES_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Attendi che le propietà di un oggetto siano completamente caricate</value>
@@ -556,10 +556,10 @@
     <value>Imposta lo stato di una Skill (locked, up, down)</value>
   </data>
   <data name="SKILL_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta il valore di una Skill</value>
+    <value>Riporta il valore di una Skill</value>
   </data>
   <data name="SKILLSTATE_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta lo stato di una Skill (locked, up, down)</value>
+    <value>Riporta lo stato di una Skill (locked, up, down)</value>
   </data>
   <data name="USESKILL_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Attiva una Skill</value>
@@ -586,7 +586,7 @@
     <value>Targetta un oggetto/mobile (seriale o alias)</value>
   </data>
   <data name="TARGETEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se il Target è aperto. E' possibile specificare il tipo di target, se 'Any', 'Beneficial', 'Harmful' o 'Neutral'</value>
+    <value>Riporta se il Target è aperto. E' possibile specificare il tipo di target, se 'Any', 'Beneficial', 'Harmful' o 'Neutral'</value>
   </data>
   <data name="TARGETGROUND_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Targetta un seriale grafico in schermata, parametri opzionali per colore e distanza</value>
@@ -601,7 +601,7 @@
     <value>Attendi finche un Target aperto è disponibile (se non specificato, è a 5000)</value>
   </data>
   <data name="WAITINGFORTARGET_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta se stai aspettando che un Target aperto è disponibile</value>
+    <value>Riporta se stai aspettando che un Target aperto è disponibile</value>
   </data>
   <data name="CREATETIMER_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Crea un timer</value>
@@ -613,10 +613,10 @@
     <value>Imposta il valore di un timer (millisecondi)</value>
   </data>
   <data name="TIMER_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Ritorna il valore di un timer (millisecondi)</value>
+    <value>Riporta il valore di un timer (millisecondi)</value>
   </data>
   <data name="TIMEREXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Ritorna se un timer esiste</value>
+    <value>Riporta se un timer esiste</value>
   </data>
   <data name="TIMERMSG_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Mostra il valore di un timer come messaggio di sistema</value>
@@ -1171,10 +1171,10 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
     <value>Invia un messaggio in chat.</value>
   </data>
   <data name="OPENGUILDGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Apre il Gump di gilda</value>
+    <value>Apre il gump di gilda</value>
   </data>
   <data name="OPENQUESTSGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Apre il Gump quests</value>
+    <value>Apre il gump delle quests</value>
   </data>
   <data name="TARGETXYZ_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Targetta il pavimento alle coordinate fornite</value>
@@ -1192,7 +1192,7 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
     <value>Targetta il pavimento alla distanza data, relativa a se</value>
   </data>
   <data name="BUFFTIME_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta i millisecondi rimanenti di un buff. 0 se scaduto / non abilitato.</value>
+    <value>Riporta i millisecondi rimanenti di un buff. 0 se scaduto / non abilitato.</value>
   </data>
   <data name="TARGETBYRESOURCE_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Usa un Tool e targetta uno specifico Type di risorse (Richiede supporto server OSI / ServUO)</value>
@@ -1204,19 +1204,19 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
     <value>Invia risposta tasto ad un menu del server</value>
   </data>
   <data name="INMENU_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta True se il titolo del menu o i titoli inseriti contengono il testo dato</value>
+    <value>Riporta True se il titolo del menu o i titoli inseriti contengono il testo dato</value>
   </data>
   <data name="MENUEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta True se l'ID di un menu esiste</value>
+    <value>Riporta True se l'ID di un menu esiste</value>
   </data>
   <data name="CLOSEMENU_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Chiude uno specifico menu (ID)</value>
   </data>
   <data name="SKILLCAP_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta lo SkillCap di una skill</value>
+    <value>Riporta lo SkillCap di una skill</value>
   </data>
   <data name="CONFIRMPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Visualizza in game una finestra con un messaggio. Ritorna True se si preme Ok, altrimenti False</value>
+    <value>Visualizza in game una finestra con un messaggio. Riporta True se si preme Ok, altrimenti False</value>
   </data>
   <data name="TARGETTILEOFFSETRESOURCE_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Targetta un Tile ad una distanza relativa a se (targetta automaticamente alberi/grotte/acqua tiles se presenti)</value>
@@ -1240,12 +1240,33 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
     <value>Mostra il puntatore a freccia (quest) alle coordinate specificate</value>
   </data>
   <data name="PATHFIND_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Attiva Pathfind alle cordinate specifiche</value>
+    <value>Attiva pathfind del Client alle cordinate/alias specifiche</value>
   </data>
   <data name="SETORGANIZERCONTAINERS_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Imposta la l'origine e la destinazione per un Organizer specifico</value>
   </data>
   <data name="ACTIVEABILITY_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Risulta True se una delle Abilità (primaria o secondaria) è abilitata</value>
+    <value>Riporta True se una delle Abilità (primaria o secondaria) è abilitata</value>
+  </data>
+  <data name="OPENVIRTUEGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Apre il gump delle Virtu' di uno specifico alias/seriale (default: self)</value>
+  </data>
+  <data name="MESSAGEPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Visualizza un gump in game con del testo specifico</value>
+  </data>
+  <data name="GETTEXT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Invia una richiesta interna di ricerca testo e lo riporta</value>
+  </data>
+  <data name="DIRECTION_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Riporta l'orientamento attuale di un alias/seriale (Nord, Sud..)</value>
+  </data>
+  <data name="POPLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Rimuove elementi da una lista e riporta il numero di elementi rimossi</value>
+  </data>
+  <data name="INTERRUPTSPELL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Prova ad interrompere il cast di una spell sollevando un oggetto per un attimo</value>
+  </data>
+  <data name="SNAPSHOT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Fai uno screenshot allo schermo</value>
   </data>
 </root>

@@ -36,7 +36,17 @@ namespace ClassicAssist.UO.Network.Packets
             }
 
             int serial = ( packet[1] << 24 ) | ( packet[2] << 16 ) | ( packet[3] << 8 ) | packet[4];
-            int containerSerial = ( packet[11] << 24 ) | ( packet[12] << 16 ) | ( packet[13] << 8 ) | packet[14];
+
+            int containerSerial;
+
+            if ( Engine.ClientVersion < new Version( 6, 0, 1, 7 ) )
+            {
+                containerSerial = ( packet[10] << 24 ) | ( packet[11] << 16 ) | ( packet[12] << 8 ) | packet[13];
+            }
+            else
+            {
+                containerSerial = ( packet[11] << 24 ) | ( packet[12] << 16 ) | ( packet[13] << 8 ) | packet[14];
+            }
 
             if ( serial == 0 || containerSerial == 0 )
             {

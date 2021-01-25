@@ -51,7 +51,7 @@ namespace ClassicAssist.UO.Gumps
 
         public bool Result { get; set; }
 
-        public override void OnResponse( int buttonID, int[] switches, Dictionary<int, string> textEntries )
+        public override void OnResponse( int buttonID, int[] switches, List<(int Key, string Value)> textEntries = null )
         {
             Result = buttonID == 1;
             AutoResetEvent.Set();

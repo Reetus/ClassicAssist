@@ -32,6 +32,7 @@ namespace ClassicAssist.Data
         public static bool SavePasswordsOnlyBlank { get; set; }
         public static string SessionId { get; set; }
         public static Version UpdateGumpVersion { get; set; }
+        public static bool UseCUOClilocLanguage { get; set; }
         public static string UserId { get; set; }
         public static double WindowHeight { get; set; }
 
@@ -54,6 +55,7 @@ namespace ClassicAssist.Data
                 { "SavePasswords", SavePasswords },
                 { "SavePasswordsOnlyBlank", SavePasswordsOnlyBlank },
                 { "UserId", UserId },
+                { "UseCUOClilocLanguage", UseCUOClilocLanguage },
 #if !DEVELOP
                 { "WindowWidth", WindowWidth },
                 { "WindowHeight", WindowHeight },
@@ -124,6 +126,7 @@ namespace ClassicAssist.Data
             UserId = json?["UserId"]?.ToObject<string>() ?? Guid.NewGuid().ToString();
             WindowWidth = json?["WindowWidth"]?.ToObject<int>() ?? 625;
             WindowHeight = json?["WindowHeight"]?.ToObject<int>() ?? 500;
+            UseCUOClilocLanguage = json?["UseCUOClilocLanguage"]?.ToObject<bool>() ?? false;
             Assemblies = json?["Assemblies"]?.ToObject<string[]>() ?? new string[0];
             SessionId = Guid.NewGuid().ToString();
 

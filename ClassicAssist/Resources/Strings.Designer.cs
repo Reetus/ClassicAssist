@@ -3838,6 +3838,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use Cliloc language from ClassicUO settings.
+        /// </summary>
+        public static string Use_Cliloc_language_from_ClassicUO_settings {
+            get {
+                return ResourceManager.GetString("Use Cliloc language from ClassicUO settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use death screen whilst hidden (Chuckles Mode).
         /// </summary>
         public static string Use_death_screen_whilst_hidden {

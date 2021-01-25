@@ -174,4 +174,10 @@
   <data name="Project Homepage" xml:space="preserve">
     <value>Strona projektu</value>
   </data>
+  <data name="GitHub rate limit, try again after {0}" xml:space="preserve">
+    <value>Limit GitHub, spróbuj za {0}</value>
+  </data>
+  <data name="Releases" xml:space="preserve">
+    <value>Wypuszczone wersje</value>
+  </data>
 </root>

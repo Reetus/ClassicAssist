@@ -1381,7 +1381,7 @@
     <value>추가 조합을 불러오기:</value>
   </data>
   <data name="Error loading assembly: {0}" xml:space="preserve">
-    <value>조합을 불러오기를 실패했습니다.</value>
+    <value>조합을 불러오기를 실패했습니다. {0}</value>
   </data>
   <data name="Special Moves" xml:space="preserve">
     <value>특별한 움직임</value>

@@ -1072,16 +1072,16 @@
     <value>Uruchom w tle</value>
   </data>
   <data name="Background macro '{0}' started..." xml:space="preserve">
-    <value>Makro w tle '{0]' uruchomione...</value>
+    <value>Makro w tle '{0}' uruchomione...</value>
   </data>
   <data name="Background macro '{0}' stopped..." xml:space="preserve">
-    <value>Makro w tle '{0]' zatrzymane...</value>
+    <value>Makro w tle '{0}' zatrzymane...</value>
   </data>
   <data name="Cannot PlayMacro from background macro..." xml:space="preserve">
     <value>Nie można uruchomić PlayMacro() z makra w tle...</value>
   </data>
   <data name="Autostart" xml:space="preserve">
-    <value>Autostart...</value>
+    <value>Autostart</value>
   </data>
   <data name="When checked macro will execute automatically after login." xml:space="preserve">
     <value>Wykonaj makra po starcie aplikacji.</value>
@@ -1406,5 +1406,59 @@ Czy chcesz kontynuować?</value>
   </data>
   <data name="Cast Last Spell" xml:space="preserve">
     <value>Rzuć ostatni czar</value>
+  </data>
+  <data name="Scavenging '{0}'" xml:space="preserve">
+    <value>Zbieranie '{0}'...</value>
+  </data>
+  <data name="Arm / Disarm already in progress..." xml:space="preserve">
+    <value>W trakcie zmiany broni...</value>
+  </data>
+  <data name="Dress already in progress..." xml:space="preserve">
+    <value>W trakcie ubierania...</value>
+  </data>
+  <data name="Maximum distance exceeded." xml:space="preserve">
+    <value>Przekroczono maksymalny dystans</value>
+  </data>
+  <data name="Show Child Items" xml:space="preserve">
+    <value>Pokaż przedmioty</value>
+  </data>
+  <data name="Open All Containers" xml:space="preserve">
+    <value>Otwórz wszystkie kontenery</value>
+  </data>
+  <data name="Requeue failed items" xml:space="preserve">
+    <value>Powtórz nieudane</value>
+  </data>
+  <data name="Invalid organizer agent name..." xml:space="preserve">
+    <value>Nieprawidłowa nazwa agenta organizera</value>
+  </data>
+  <data name="Loot humanoids" xml:space="preserve">
+    <value>Zbieraj z humanoidów</value>
+  </data>
+  <data name="Reset import cache" xml:space="preserve">
+    <value>Wyczyść pamięć podręczną importu</value>
+  </data>
+  <data name="Macro not found..." xml:space="preserve">
+    <value>Macro nie odnalezione...</value>
+  </data>
+  <data name="Module" xml:space="preserve">
+    <value>Moduł</value>
+  </data>
+  <data name="Snapshot Saved: {0}" xml:space="preserve">
+    <value>Zapisano zrzut: {0}</value>
+  </data>
+  <data name="Take Snapshot" xml:space="preserve">
+    <value>Zrób zrzut</value>
+  </data>
+  <data name="Priority:" xml:space="preserve">
+    <value>Priorytet:</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Priorytet</value>
+  </data>
+  <data name="Object queue full" xml:space="preserve">
+    <value>Kolejka obiektów pełna</value>
+  </data>
+  <data name="Use Cliloc language from ClassicUO settings" xml:space="preserve">
+    <value>Użyj język Cliloc z ClassicUO</value>
   </data>
 </root>

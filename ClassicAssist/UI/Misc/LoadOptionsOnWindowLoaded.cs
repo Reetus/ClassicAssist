@@ -41,7 +41,9 @@ namespace ClassicAssist.UI.Misc
             args.SetExtra( "PlayerName", Engine.Player?.Name ?? "Unknown" );
             args.SetExtra( "PlayerSerial", Engine.Player?.Serial ?? 0 );
             args.SetExtra( "Shard", Engine.CurrentShard?.Name ?? "Unknown" );
+            args.SetExtra( "ShardFeatures", Engine.Features.ToString() );
             args.SetExtra( "Connected", Engine.Connected );
+            args.SetExtra( "ClientVersion", Engine.ClientVersion == null ? "Unknown" : Engine.ClientVersion.ToString() );
 
             return args;
         }

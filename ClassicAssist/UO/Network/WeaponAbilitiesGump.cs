@@ -47,7 +47,7 @@ namespace ClassicAssist.UO.Network
 
         public static int GumpSerial { get; set; } = 0x0fff0000;
 
-        public override void OnResponse( int buttonID, int[] switches, Dictionary<int, string> textEntries = null )
+        public override void OnResponse( int buttonID, int[] switches, List<(int Key, string Value)> textEntries = null )
         {
             switch ( buttonID )
             {

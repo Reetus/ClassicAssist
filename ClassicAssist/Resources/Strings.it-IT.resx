@@ -331,7 +331,7 @@
     <value>Errore: Impossibile trovare lo zaino</value>
   </data>
   <data name="Error: Cannot find type" xml:space="preserve">
-    <value>Errore: impossibile trovare il tipo di oggetto</value>
+    <value>Errore: impossibile trovare il Type dell'oggetto</value>
   </data>
   <data name="Error: No Player" xml:space="preserve">
     <value>Errore: nessun personaggio</value>
@@ -703,10 +703,10 @@
     <value>Seleziona il contenitore per l'equipaggiamento rimosso...</value>
   </data>
   <data name="Serial" xml:space="preserve">
-    <value>Seriale</value>
+    <value>Serial</value>
   </data>
   <data name="Serial:" xml:space="preserve">
-    <value>Seriale:</value>
+    <value>Serial:</value>
   </data>
   <data name="Server" xml:space="preserve">
     <value>Server</value>
@@ -1436,5 +1436,29 @@ Sei sicuro di voler continuare?</value>
   </data>
   <data name="Reset import cache" xml:space="preserve">
     <value>Resetta cache di importazione</value>
+  </data>
+  <data name="Macro not found..." xml:space="preserve">
+    <value>Script non trovato...</value>
+  </data>
+  <data name="Module" xml:space="preserve">
+    <value>Modulo</value>
+  </data>
+  <data name="Snapshot Saved: {0}" xml:space="preserve">
+    <value>Snapshot Salvato: {0}</value>
+  </data>
+  <data name="Take Snapshot" xml:space="preserve">
+    <value>Scatta Snapshot</value>
+  </data>
+  <data name="Priority:" xml:space="preserve">
+    <value>Priorità:</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Priorità</value>
+  </data>
+  <data name="Object queue full" xml:space="preserve">
+    <value>Coda Oggetti piena</value>
+  </data>
+  <data name="Use Cliloc language from ClassicUO settings" xml:space="preserve">
+    <value>Usa linguaggio Cliloc dalle impostazione di ClassicUO</value>
   </data>
 </root>

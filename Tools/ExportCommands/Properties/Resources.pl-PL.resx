@@ -267,4 +267,13 @@
   <data name="PARAMETER_DESCRIPTION_EMPTY" xml:space="preserve">
     <value>Zobacz również: {0}</value>
   </data>
+  <data name="PARAMETER_DESCRIPTION_SERIALORALIAS" xml:space="preserve">
+    <value>identyfikator lub liczba lub hex albo alias np 'self'</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_BENEFICIALHARMFULNEUTRAL" xml:space="preserve">
+    <value>Typ celu - "harmful", "beneficial", "neutral"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ELEMENTVALUEFRONTBACK" xml:space="preserve">
+    <value>Kod elementu do usunięcia z listy lub  'front', aby usunąć pierwszy element, albo 'back' aby usunąć ostatni element. Domyślna wartość: 'back'</value>
+  </data>
 </root>

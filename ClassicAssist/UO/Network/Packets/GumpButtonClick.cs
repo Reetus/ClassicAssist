@@ -42,7 +42,13 @@ namespace ClassicAssist.UO.Network.Packets
 
             uint gumpId = (uint) ( ( packet[7] << 24 ) | ( packet[8] << 16 ) | ( packet[9] << 8 ) | packet[10] );
             int buttonId = ( packet[11] << 24 ) | ( packet[12] << 16 ) | ( packet[13] << 8 ) | packet[14];
-            int switchesCount = ( packet[15] << 24 ) | ( packet[16] << 16 ) | ( packet[17] << 8 ) | packet[18];
+
+            int switchesCount = 0;
+
+            if ( packet.Length > 15 )
+            {
+                switchesCount = ( packet[15] << 24 ) | ( packet[16] << 16 ) | ( packet[17] << 8 ) | packet[18];
+            }
 
             int pos = 19;
             List<int> switches = new List<int>();

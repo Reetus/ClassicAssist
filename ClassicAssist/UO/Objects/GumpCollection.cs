@@ -41,7 +41,7 @@ namespace ClassicAssist.UO.Objects
             }
         }
 
-        public bool Remove( uint id, int buttonId = 0, int[] switches = null, Dictionary<int, string> textEntries = null )
+        public bool Remove( uint id, int buttonId = 0, int[] switches = null, List<(int Key, string Value)> textEntries = null )
         {
             bool result = _dictionary.TryRemove( id, out Gump g );
 

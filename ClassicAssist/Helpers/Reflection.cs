@@ -53,5 +53,35 @@ namespace ClassicAssist.Helpers
 
             return t == null ? default : GetTypePropertyValue<T>( t, property, obj, bindingFlags );
         }
+
+        public static T GetTypeFieldValue<T>( Type type, string property, object obj = null,
+            BindingFlags bindingFlags = BindingFlags.Default )
+        {
+            FieldInfo fieldInfo = type.GetField( property );
+
+            T val = (T) fieldInfo?.GetValue( obj );
+
+            // ReSharper disable once ConvertIfStatementToReturnStatement
+            if ( val == null )
+            {
+                return default;
+            }
+
+            return val;
+        }
+
+        public static T GetTypeFieldValue<T>( string type, string property, object obj,
+            BindingFlags bindingFlags = BindingFlags.Default, Assembly assembly = null )
+        {
+            if ( assembly == null )
+            {
+                assembly = Engine.ClassicAssembly;
+            }
+
+            Type t = assembly?.GetType( type );
+
+            return t == null ? default : GetTypeFieldValue<T>( t, property, obj, bindingFlags );
+        }
+
     }
 }

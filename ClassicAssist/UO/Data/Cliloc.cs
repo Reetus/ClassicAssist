@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using ClassicAssist.Data;
+using ClassicAssist.Helpers;
 
 namespace ClassicAssist.UO.Data
 {
@@ -12,9 +14,30 @@ namespace ClassicAssist.UO.Data
 
         private static string _dataPath;
 
+        public static bool CanUseCUOClilocLanguage { get; set; } = true;
+
         private static Dictionary<int, string> LoadClilocs()
         {
             string filename = Path.Combine( _dataPath, "Cliloc.enu" );
+
+            if ( AssistantOptions.UseCUOClilocLanguage )
+            {
+                dynamic settings = Reflection.GetTypeFieldValue<dynamic>( "ClassicUO.Configuration.Settings",
+                    "GlobalSettings", null );
+
+                dynamic clilocFile =
+                    Reflection.GetTypePropertyValue<dynamic>( settings.GetType(), "ClilocFile", settings )
+                        ?.ToString() ?? string.Empty;
+
+                if ( string.IsNullOrEmpty( clilocFile ) && !File.Exists( Path.Combine( _dataPath, clilocFile ) ) )
+                {
+                    CanUseCUOClilocLanguage = false;
+                }
+                else
+                {
+                    filename = Path.Combine( _dataPath, clilocFile );
+                }
+            }
 
             if ( !File.Exists( filename ) )
             {

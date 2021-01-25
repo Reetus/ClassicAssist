@@ -41,6 +41,8 @@ namespace ClassicAssist.Tests
             Commands.ResendTargetToClient();
 
             are.WaitOne( 5000 );
+
+            Engine.InternalPacketReceivedEvent -= OnPacketReceivedEvent;
         }
     }
 }

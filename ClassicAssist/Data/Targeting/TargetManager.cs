@@ -275,16 +275,19 @@ namespace ClassicAssist.Data.Targeting
                 return null;
             }
 
-            Mobile mobile = Engine.Mobiles.GetMobile( serial );
+            Entity entity = UOMath.IsMobile( serial )
+                ? (Entity)Engine.Mobiles.GetMobile( serial )
+                : Engine.Items.GetItem( serial );
 
-            if ( mobile != null )
+            if ( entity != null )
             {
-                return mobile;
+                return entity;
             }
 
             if ( !MacroManager.QuietMode )
             {
-                UOC.SystemMessage( Strings.Mobile_not_found___ );
+                UOC.SystemMessage(
+                    UOMath.IsMobile( serial ) ? Strings.Mobile_not_found___ : Strings.Cannot_find_item___ );
             }
 
             return null;

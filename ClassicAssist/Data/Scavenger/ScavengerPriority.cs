@@ -24,6 +24,6 @@ namespace ClassicAssist.Data.Scavenger
         Normal,
         Medium,
         High,
-        Top,
+        Top, 
     }
 }

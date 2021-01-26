@@ -29,7 +29,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
             public override void Execute()
             {
                 TargetManager.GetInstance()
-                    .GetFriend( TargetNotoriety.Any, TargetBodyType.Any, TargetDistance.Next ); 
+                    .GetFriend( TargetNotoriety.Any, TargetBodyType.Any, TargetDistance.Next );
             }
         }
 

@@ -1461,4 +1461,7 @@ Are you sure you wish to continue?</value>
   <data name="Use Cliloc language from ClassicUO settings" xml:space="preserve">
     <value>Use Cliloc language from ClassicUO settings</value>
   </data>
+  <data name="Keyboard" xml:space="preserve">
+    <value>Keyboard</value>
+  </data>
 </root>

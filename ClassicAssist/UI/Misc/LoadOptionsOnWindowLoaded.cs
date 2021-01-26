@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interactivity;
 using Assistant;
 using ClassicAssist.Data;
@@ -44,6 +45,7 @@ namespace ClassicAssist.UI.Misc
             args.SetExtra( "ShardFeatures", Engine.Features.ToString() );
             args.SetExtra( "Connected", Engine.Connected );
             args.SetExtra( "ClientVersion", Engine.ClientVersion == null ? "Unknown" : Engine.ClientVersion.ToString() );
+            args.SetExtra( "KeyboardLayout", InputLanguageManager.Current.CurrentInputLanguage.Name );
 
             return args;
         }

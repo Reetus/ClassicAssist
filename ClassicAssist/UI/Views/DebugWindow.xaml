@@ -115,5 +115,8 @@
         <TabItem Header="{x:Static resources:Strings.Additional_Assemblies}">
             <debug:DebugAssembliesControl />
         </TabItem>
+        <TabItem Header="{x:Static resources:Strings.Keyboard}">
+            <debug:DebugKeyboardControl />
+        </TabItem>
     </TabControl>
 </Window>

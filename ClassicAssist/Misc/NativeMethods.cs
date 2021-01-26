@@ -108,5 +108,8 @@ namespace ClassicAssist.Misc
             public int Right; // x position of lower-right corner
             public int Bottom; // y position of lower-right corner
         }
+
+        [DllImport( "user32.dll", SetLastError = true )]
+        public static extern bool SetForegroundWindow( IntPtr hWnd );
     }
 }

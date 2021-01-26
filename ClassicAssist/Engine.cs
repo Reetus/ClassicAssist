@@ -52,6 +52,10 @@ namespace Assistant
 
         public delegate void dUpdateWindowTitle();
 
+        public delegate void dHotkeyPressed(int key, int mod, Key keys, ModKey modKey);
+
+        public static event dHotkeyPressed HotkeyPressedEvent;
+
         private const int MAX_DISTANCE = 32;
 
         private static OnConnected _onConnected;
@@ -257,6 +261,8 @@ namespace Assistant
 
             if ( pressed )
             {
+                HotkeyPressedEvent?.Invoke( key, mod, keys, IntToModKey( mod ) );
+
                 bool pass = HotkeyManager.GetInstance().OnHotkeyPressed( keys, IntToModKey( mod ) );
 
                 return !pass;

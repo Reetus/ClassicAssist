@@ -31,7 +31,7 @@ namespace ClassicAssist.UI.ViewModels
         private ObservableCollection<PacketEnabledEntry>
             _packetEntries = new ObservableCollection<PacketEnabledEntry>();
 
-        private bool _running = true;
+        private bool _running = false;
         private readonly List<PacketEntry> _tempItems = new List<PacketEntry>();
         private bool _topmost = true;
         private ICommand _viewPlayerEquipmentCommand;

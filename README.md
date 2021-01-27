@@ -1,5 +1,5 @@
 ﻿﻿﻿﻿﻿﻿[![Build status](https://ci.appveyor.com/api/projects/status/8ky24q5mvc1h0xll/branch/master?svg=true)](https://ci.appveyor.com/project/Reetus/classicassist/branch/master)
-
+test
 # ClassicAssist
 
 Assistant for [ClassicUO](https://github.com/andreakarasho/ClassicUO) with UOSteam-like interface and macro syntax.

@@ -63,8 +63,15 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{x:Static resources:Strings.Name}" DisplayMemberBinding="{Binding Name}"
-                                    Width="150" />
+                    <GridViewColumn Header="{x:Static resources:Strings.Name}" Width="150" x:Name="nameColumn">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <controls:EditTextBlock
+                                    Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                    Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=nameColumn, Mode=OneWay}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="{x:Static resources:Strings.Graphic}"
                                     DisplayMemberBinding="{Binding Graphic, StringFormat=0x\{0:x\}}" Width="75" />
                     <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="75" x:Name="HueColumn">

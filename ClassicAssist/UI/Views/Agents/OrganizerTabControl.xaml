@@ -99,8 +99,15 @@
                 <ListView x:Name="itemsListView" Margin="5" Grid.Row="0" ItemsSource="{Binding SelectedItem.Items}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="{x:Static resources:Strings.Item}" Width="120"
-                                            DisplayMemberBinding="{Binding Item}" />
+                            <GridViewColumn Header="{x:Static resources:Strings.Item}" Width="120" x:Name="nameColumn">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <controls:EditTextBlock
+                                            Text="{Binding Item, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                            Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=nameColumn, Mode=OneWay}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Header="{x:Static resources:Strings.Graphic}" Width="100"
                                             DisplayMemberBinding="{Binding ID, StringFormat={}0x{0:x}}" />
                             <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="80"

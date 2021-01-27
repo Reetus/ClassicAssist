@@ -19,11 +19,8 @@ namespace ClassicAssist.Data.Autoloot
 {
     public enum AutolootPriority
     {
-        Lowest,
         Low,
         Normal,
-        Medium,
-        High,
-        Top,
+        High
     }
 }

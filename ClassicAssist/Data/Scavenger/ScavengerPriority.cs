@@ -19,11 +19,8 @@ namespace ClassicAssist.Data.Scavenger
 {
     public enum ScavengerPriority
     {
-        Lowest,
         Low,
         Normal,
-        Medium,
-        High,
-        Top,
+        High
     }
 }

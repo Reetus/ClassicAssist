@@ -289,6 +289,12 @@
                     </Button>
                     <Button Content="{x:Static resources:Strings.Active_Objects}"
                             Command="{Binding ShowActiveObjectsWindowCommand}" />
+                    <Button Command="{Binding ShareMacroCommand}" CommandParameter="{Binding SelectedItem}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{DynamicResource GithubIcon}" Height="16" Margin="0, 0, 5, 0"/>
+                            <Label Content="{x:Static resources:Strings.Share_Macro}"/>
+                        </StackPanel>
+                    </Button>
                 </controls:StretchyWrapPanel>
             </Grid>
         </Grid>

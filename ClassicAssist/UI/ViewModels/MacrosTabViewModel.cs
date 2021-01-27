@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -39,6 +42,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _resetImportCacheCommand;
         private ICommand _saveMacroCommand;
         private MacroEntry _selectedItem;
+        private ICommand _shareMacroCommand;
         private ICommand _showActiveObjectsWindowCommand;
         private ICommand _showCommandsCommand;
         private ICommand _showMacrosWikiCommand;
@@ -134,6 +138,51 @@ namespace ClassicAssist.UI.ViewModels
                 if ( Document != null )
                 {
                     Document.UndoStack.SizeLimit = 0;
+                }
+            }
+        }
+
+        public ICommand ShareMacroCommand =>
+            _shareMacroCommand ??
+            ( _shareMacroCommand = new RelayCommandAsync( ShareMacro, o => SelectedItem != null ) );
+
+        private async Task ShareMacro( object arg )
+        {
+            if ( !( arg is MacroEntry macro ) )
+            {
+                return;
+            }
+
+            HttpClient httpClient = new HttpClient();
+
+            ShareMacroModel data = new ShareMacroModel() { Content = macro.Macro };
+
+            HttpResponseMessage response = await httpClient.PostAsync(
+                "https://classicassist.azurewebsites.net/api/macros/stage",
+                new StringContent( JsonConvert.SerializeObject( data ), Encoding.UTF8, "application/json" ) );
+
+            string json = await response.Content.ReadAsStringAsync();
+
+            if ( response.IsSuccessStatusCode )
+            {
+                ShareMacroModel responseData = JsonConvert.DeserializeObject<ShareMacroModel>( json );
+
+                if ( !string.IsNullOrEmpty( responseData.Uuid ) )
+                {
+                    Process.Start( $"https://classicassist.azurewebsites.net/?id={responseData.Uuid}" );
+                }
+            }
+            else
+            {
+                ShareErrorResponseModel errorObj = JsonConvert.DeserializeObject<ShareErrorResponseModel>( json );
+
+                if ( errorObj != null && !string.IsNullOrEmpty( errorObj.Message ))
+                {
+                    MessageBox.Show( $"Error sharing macro: {errorObj.Message}" );
+                }
+                else
+                {
+                    MessageBox.Show( $"Unknown error sharing macro: {response.StatusCode}" );
                 }
             }
         }
@@ -488,5 +537,18 @@ namespace ClassicAssist.UI.ViewModels
             IsRecording = true;
             NotifyPropertyChanged( nameof( RecordLabel ) );
         }
+    }
+
+    internal class ShareMacroModel
+    {
+        public string Uuid { get; set; }
+        public string Content { get; set; }
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
+    }
+
+    internal class ShareErrorResponseModel
+    {
+        public int StatusCode { get; set; }
+        public string Message { get; set; }
     }
 }

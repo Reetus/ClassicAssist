@@ -21,11 +21,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private const int SCAVENGER_DISTANCE = 2;
         private readonly List<int> _ignoreList;
         private readonly object _scavengeLock = new object();
+        private bool _checkWeight;
         private ICommand _clearAllCommand;
         private int _containerSerial;
         private bool _enabled;
         private ICommand _insertCommand;
         private ObservableCollection<ScavengerEntry> _items = new ObservableCollection<ScavengerEntry>();
+        private int _minWeightAvailable;
         private ICommand _removeCommand;
         private ScavengerEntry _selectedItem;
         private ICommand _setContainerCommand;
@@ -36,6 +38,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
             manager.Items = Items;
             manager.CheckArea = () => Task.Run( CheckArea );
             _ignoreList = new List<int>();
+        }
+
+        public bool CheckWeight
+        {
+            get => _checkWeight;
+            set => SetProperty( ref _checkWeight, value );
         }
 
         public ICommand ClearAllCommand =>
@@ -62,6 +70,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set => SetProperty( ref _items, value );
         }
 
+        public int MinWeightAvailable
+        {
+            get => _minWeightAvailable;
+            set => SetProperty( ref _minWeightAvailable, value );
+        }
+
         public ICommand RemoveCommand =>
             _removeCommand ?? ( _removeCommand = new RelayCommandAsync( Remove, o => SelectedItem != null ) );
 
@@ -83,7 +97,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            JObject scavengerObj = new JObject { { "Enabled", Enabled }, { "Container", ContainerSerial } };
+            JObject scavengerObj = new JObject
+            {
+                { "Enabled", Enabled },
+                { "Container", ContainerSerial },
+                { "CheckWeight", CheckWeight },
+                { "MinWeightAvailable", MinWeightAvailable }
+            };
 
             JArray itemsArray = new JArray();
 
@@ -118,6 +138,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             Enabled = config["Enabled"]?.ToObject<bool>() ?? true;
             ContainerSerial = config["Container"]?.ToObject<int>() ?? 0;
+            CheckWeight = config["CheckWeight"]?.ToObject<bool>() ?? true;
+            MinWeightAvailable = config["MinWeightAvailable"]?.ToObject<int>() ?? 25;
 
             if ( config["Items"] == null )
             {
@@ -168,7 +190,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             List<Item> scavengerItems = new List<Item>();
 
-            if ( Engine.Player.WeightMax - Engine.Player.Weight <= 25 )
+            if ( CheckWeight && Engine.Player.WeightMax - Engine.Player.Weight <= MinWeightAvailable )
             {
                 return;
             }

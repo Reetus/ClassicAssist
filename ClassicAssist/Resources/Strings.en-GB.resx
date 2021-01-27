@@ -1458,4 +1458,10 @@ Are you sure you wish to continue?</value>
   <data name="Share Macro" xml:space="preserve">
     <value>Share Macro</value>
   </data>
+  <data name="Check Weight" xml:space="preserve">
+    <value>Check Weight</value>
+  </data>
+  <data name="Minimum Weight Available:" xml:space="preserve">
+    <value>Minimum Weight Available:</value>
+  </data>
 </root>

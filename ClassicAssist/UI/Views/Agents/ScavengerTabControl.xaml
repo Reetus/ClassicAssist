@@ -49,51 +49,62 @@
                     CommandParameter="{Binding SelectedItem, ElementName=ListView}" />
             <Button Content="{x:Static resources:Strings.Clear_All}" Command="{Binding ClearAllCommand}" />
             <Button Content="{x:Static resources:Strings.Set_Container}" Command="{Binding SetContainerCommand}" />
+            <CheckBox IsChecked="{Binding CheckWeight}" Content="{x:Static resources:Strings.Check_Weight}" Margin="0,5"/>
         </StackPanel>
-        <ListView x:Name="ListView" Grid.Column="1" Margin="10"
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ListView x:Name="ListView" Grid.Row="0" Margin="10"
                   ItemsSource="{Binding Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Foreground="Black">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="✓">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding Enabled}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="{x:Static resources:Strings.Name}" Width="150" x:Name="nameColumn">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <controls:EditTextBlock
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="✓">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding Enabled}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="{x:Static resources:Strings.Name}" Width="150" x:Name="nameColumn">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <controls:EditTextBlock
                                     Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                     Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=nameColumn, Mode=OneWay}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="{x:Static resources:Strings.Graphic}"
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="{x:Static resources:Strings.Graphic}"
                                     DisplayMemberBinding="{Binding Graphic, StringFormat=0x\{0:x\}}" Width="75" />
-                    <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="75" x:Name="HueColumn">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <controls:EditTextBlock Text="{Binding Hue}" TabIndex="0"
+                        <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="75" x:Name="HueColumn">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <controls:EditTextBlock Text="{Binding Hue}" TabIndex="0"
                                                         Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=HueColumn}"
                                                         ShowIcon="True" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="{x:Static resources:Strings.Priority}" Width="100" x:Name="PriorityColumn">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <ComboBox Text="{Binding Priority, Mode=TwoWay}"
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="{x:Static resources:Strings.Priority}" Width="100" x:Name="PriorityColumn">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ComboBox Text="{Binding Priority, Mode=TwoWay}"
                                           ItemsSource="{Binding Source={misc:EnumBindingSource {x:Type scavenger:ScavengerPriority}}}"
                                           Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=PriorityColumn}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10,0,0,5">
+                <Label Content="{x:Static resources:Strings.Minimum_Weight_Available_}" Margin="0,0,10,0"/>
+                <TextBox MinWidth="100" Text="{Binding MinWeightAvailable}" IsEnabled="{Binding CheckWeight}"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

@@ -637,6 +637,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check Weight.
+        /// </summary>
+        public static string Check_Weight {
+            get {
+                return ResourceManager.GetString("Check Weight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose by Cliloc.
         /// </summary>
         public static string Choose_by_Cliloc {
@@ -2142,6 +2151,15 @@ namespace ClassicAssist.Resources {
         public static string Min_Price {
             get {
                 return ResourceManager.GetString("Min Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum Weight Available:.
+        /// </summary>
+        public static string Minimum_Weight_Available_ {
+            get {
+                return ResourceManager.GetString("Minimum Weight Available:", resourceCulture);
             }
         }
         

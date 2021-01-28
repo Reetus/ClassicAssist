@@ -21,6 +21,8 @@ namespace ClassicAssist.Data.Autoloot
     {
         Low,
         Normal,
-        High
+        Medium,
+        High,
+        Top,
     }
 }

@@ -21,6 +21,8 @@ namespace ClassicAssist.Data.Scavenger
     {
         Low,
         Normal,
-        High
+        Medium,
+        High,
+        Top,
     }
 }

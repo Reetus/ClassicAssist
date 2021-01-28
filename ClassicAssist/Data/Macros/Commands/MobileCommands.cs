@@ -306,7 +306,24 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = nameof( Strings.Entity ) )]
         public static int MaxWeight()
         {
-            return Engine.Player?.WeightMax ?? 0;
+            PlayerMobile player = Engine.Player;
+            int res = 0;
+
+            try
+            {
+                res = player.WeightMax;
+                if (res == 0)
+                {
+                    //Calculate maxweight of player // pre-UOR 
+                    //For Gargoyles and Elves, 125 Strength gives a carrying capacity of 477 stones. Humans have the Strong Back racial ability that allows them to carry an additional 60 stones. Thus, for Humans, 125 Strength gives a carrying capacity of 537 stones. Each point of strength adds 3.5 stones carrying capacity: 
+                    //https://www.uoguide.com/Weight
+                    //MaxWeight = (((Race == Human) ? 100 : 40) + (int)(3.5 * Strength))
+                    res = (40 + ((int)(3.5 * player.Strength)));
+                }
+            }
+            catch { }
+
+            return res;
         }
 
         [CommandsDisplay( Category = nameof( Strings.Entity ) )]

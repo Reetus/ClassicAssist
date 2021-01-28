@@ -1474,6 +1474,7 @@ namespace ClassicAssist.UO.Network
             player.Gold = reader.ReadInt32();
             player.PhysicalResistance = reader.ReadInt16();
             player.Weight = reader.ReadInt16();
+            player.WeightMax = 40 + (int)( 3.5 * player.Strength );
 
             if ( features >= 5 )
             {

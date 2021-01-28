@@ -3791,6 +3791,18 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to # select by index number
+        ///WaitForContext(&apos;self&apos;, 2, 5000)
+        ///# select by entry name
+        ///WaitForContext(&apos;self&apos;, &quot;Open Item Insurance Menu&quot;, 5000).
+        /// </summary>
+        public static string WAITFORCONTEXT_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("WAITFORCONTEXT_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to WaitForContext(0x00aabbcc, 1, 5000).
         /// </summary>
         public static string WAITFORCONTEXT_COMMAND_INSERTTEXT {

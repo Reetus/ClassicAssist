@@ -835,6 +835,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Context menu entry not found....
+        /// </summary>
+        public static string Context_menu_entry_not_found___ {
+            get {
+                return ResourceManager.GetString("Context menu entry not found...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Context menu request.
         /// </summary>
         public static string Context_menu_request {

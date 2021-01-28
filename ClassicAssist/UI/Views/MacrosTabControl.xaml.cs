@@ -74,7 +74,8 @@ namespace ClassicAssist.UI.Views
             }
 
             List<PythonCompletionData> data = _completionData.Where( m =>
-                ( (string) m.Content ).StartsWith( trimmed, StringComparison.InvariantCultureIgnoreCase ) ).ToList();
+                    ( (string) m.Content ).StartsWith( trimmed, StringComparison.InvariantCultureIgnoreCase ) )
+                .Distinct( new SameNameComparer() ).ToList();
 
             if ( data.Count <= 0 )
             {
@@ -85,6 +86,19 @@ namespace ClassicAssist.UI.Views
             _completionWindow.CompletionList.CompletionData.AddRange( data );
             _completionWindow.Show();
             _completionWindow.Closed += delegate { _completionWindow = null; };
+        }
+
+        internal class SameNameComparer : IEqualityComparer<PythonCompletionData>
+        {
+            public bool Equals( PythonCompletionData x, PythonCompletionData y )
+            {
+                return y != null && x != null && x.Content.Equals( y.Content );
+            }
+
+            public int GetHashCode( PythonCompletionData obj )
+            {
+                return obj.Content.GetHashCode();
+            }
         }
     }
 }

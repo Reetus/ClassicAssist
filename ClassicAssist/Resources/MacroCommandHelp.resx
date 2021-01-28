@@ -1548,4 +1548,10 @@ Snapshot(3000, True)
 # Client area snapshot, no delay, custom filename
 Snapshot(0, False, "screenshot.png")</value>
   </data>
+  <data name="WAITFORCONTEXT_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># select by index number
+WaitForContext('self', 2, 5000)
+# select by entry name
+WaitForContext('self', "Open Item Insurance Menu", 5000)</value>
+  </data>
 </root>

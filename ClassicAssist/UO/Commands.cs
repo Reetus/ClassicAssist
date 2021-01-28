@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data;
+using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Skills;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Misc;
@@ -132,7 +133,8 @@ namespace ClassicAssist.UO
             }, QueuePriority.Medium );
         }
 
-        public static void SystemMessage( string text, int hue = 0x03b2, bool throttleRepeating = false )
+        public static void SystemMessage( string text, int hue = 0x03b2, bool throttleRepeating = false,
+            bool suppressInQuietMode = false )
         {
             if ( throttleRepeating )
             {
@@ -144,6 +146,14 @@ namespace ClassicAssist.UO
 
                 _lastSystemMessage = text;
                 _lastSystemMessageTime = DateTime.Now;
+            }
+
+            if ( suppressInQuietMode )
+            {
+                if ( MacroManager.QuietMode )
+                {
+                    return;
+                }
             }
 
             //TODO

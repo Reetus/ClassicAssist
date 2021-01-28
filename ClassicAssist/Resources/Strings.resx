@@ -1473,4 +1473,7 @@ Are you sure you wish to continue?</value>
   <data name="Minimum Weight Available:" xml:space="preserve">
     <value>Minimum Weight Available:</value>
   </data>
+  <data name="Context menu entry not found..." xml:space="preserve">
+    <value>Context menu entry not found...</value>
+  </data>
 </root>

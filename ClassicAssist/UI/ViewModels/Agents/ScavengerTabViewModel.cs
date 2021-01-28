@@ -205,8 +205,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     }
 
                     Item[] matches = Engine.Items.SelectEntities( i =>
-                        i.Distance <= SCAVENGER_DISTANCE && i.Owner == 0 && i.ID == entry.Graphic &&
-                        ( entry.Hue == -1 || i.Hue == entry.Hue ) && !_ignoreList.Contains( i.Serial ) );
+                          i.Distance <= SCAVENGER_DISTANCE && i.Owner == 0 && ( i.Flags == entry.Flag || i.Flags == 32 ) && i.ID == entry.Graphic &&
+                          (entry.Hue == -1 || i.Hue == entry.Hue) && !_ignoreList.Contains(i.Serial));
 
                     if ( matches == null )
                     {
@@ -233,7 +233,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 {
                     UOC.SystemMessage( string.Format( Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown" ), 61 );
                     Task<bool> t = ActionPacketQueue.EnqueueDragDrop( scavengerItem.Serial, scavengerItem.Count,
-                        container.Serial, QueuePriority.Low, true, true, requeueOnFailure: false,
+                        container.Serial, QueuePriority.High, true, true, requeueOnFailure: false, attempt: 2,
                         successPredicate: CheckItemContainer );
 
                     if ( t.Result && CheckItemContainer( scavengerItem.Serial, container.Serial ) )
@@ -272,7 +272,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             string tiledataName = TileData.GetStaticTile( item.ID ).Name ?? "Unknown";
 
             ScavengerEntry entry =
-                new ScavengerEntry { Enabled = true, Graphic = item.ID, Hue = item.Hue, Name = tiledataName };
+                new ScavengerEntry { Enabled = true, Graphic = item.ID, Hue = item.Hue, Flag = item.Flags, Name = tiledataName };
 
             Items.Add( entry );
         }

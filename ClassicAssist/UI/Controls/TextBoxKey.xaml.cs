@@ -65,6 +65,20 @@ namespace ClassicAssist.UI.Controls
 
             Modifier = CheckModifiers();
 
+            // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
+            switch ( key )
+            {
+                case Key.DeadCharProcessed:
+                    key = e.DeadCharProcessedKey;
+                    break;
+                case Key.ImeProcessed:
+                    key = e.ImeProcessedKey;
+                    break;
+                case Key.System:
+                    key = e.SystemKey;
+                    break;
+            }
+
             Key = key;
 
             Shortcut = new ShortcutKeys { Modifier = Modifier, Key = Key };

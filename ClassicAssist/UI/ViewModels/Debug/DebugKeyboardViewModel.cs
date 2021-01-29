@@ -185,7 +185,22 @@ namespace ClassicAssist.UI.ViewModels.Debug
             {
                 _control.WPFKeyDownEvent -= OnWpfKeyDown;
 
-                WPFKey = args.Key;
+                Key key = args.Key;
+
+                switch ( key )
+                {
+                    case Key.DeadCharProcessed:
+                        key = args.DeadCharProcessedKey;
+                        break;
+                    case Key.ImeProcessed:
+                        key = args.ImeProcessedKey;
+                        break;
+                    case Key.System:
+                        key = args.SystemKey;
+                        break;
+                }
+
+                WPFKey = key;
                 are.Set();
             }
 

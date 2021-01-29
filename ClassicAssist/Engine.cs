@@ -104,6 +104,8 @@ namespace Assistant
         public static ItemCollection Items { get; set; } = new ItemCollection( 0 );
         public static CircularBuffer<JournalEntry> Journal { get; set; } = new CircularBuffer<JournalEntry>( 1024 );
 
+        public static int KeyboardLayoutId { get; set; }
+
         public static DateTime LastActionPacket { get; set; }
         public static int LastPromptID { get; set; }
         public static int LastPromptSerial { get; set; }

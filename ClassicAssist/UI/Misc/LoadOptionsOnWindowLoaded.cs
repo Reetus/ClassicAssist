@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
@@ -28,11 +27,13 @@ namespace ClassicAssist.UI.Misc
         private static void OnLoaded( object sender, RoutedEventArgs e )
         {
             AssistantOptions.OnWindowLoaded();
+#if !DEBUG
             SentrySdk.Init( new SentryOptions
             {
                 Dsn = new Dsn( "https://7a7c44cd07e64058a3b434e1c86e4c02@o369765.ingest.sentry.io/5325425" ),
                 BeforeSend = SentryBeforeSend
             } );
+#endif
         }
 
         private static SentryEvent SentryBeforeSend( SentryEvent args )
@@ -44,8 +45,9 @@ namespace ClassicAssist.UI.Misc
             args.SetExtra( "Shard", Engine.CurrentShard?.Name ?? "Unknown" );
             args.SetExtra( "ShardFeatures", Engine.Features.ToString() );
             args.SetExtra( "Connected", Engine.Connected );
-            args.SetExtra( "ClientVersion", Engine.ClientVersion == null ? "Unknown" : Engine.ClientVersion.ToString() );
-            args.SetExtra( "KeyboardLayout", InputLanguageManager.Current.CurrentInputLanguage.Name );
+            args.SetExtra( "ClientVersion",
+                Engine.ClientVersion == null ? "Unknown" : Engine.ClientVersion.ToString() );
+            args.SetExtra( "KeyboardLayout", InputLanguageManager.Current?.CurrentInputLanguage?.Name ?? "Unknown" );
 
             return args;
         }

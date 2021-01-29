@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Input;
+using Assistant;
 using ClassicAssist.Data.Hotkeys;
 
 namespace ClassicAssist.Misc
@@ -734,6 +735,27 @@ namespace ClassicAssist.Misc
             { (int) SDL_Keycode.SDLK_UNKNOWN, Key.None }
         };
 
+        private static readonly Dictionary<int, Dictionary<int, Key>> _localeKeyMap =
+            new Dictionary<int, Dictionary<int, Key>>
+            {
+                {
+                    3082,
+                    new Dictionary<int, Key>
+                    {
+                        { 39, Key.OemOpenBrackets },
+                        { 43, Key.DeadCharProcessed},
+                        { 45, Key.OemMinus },
+                        { 60, Key.OemBackslash },
+                        { 96, Key.Oem1},
+                        { 161, Key.Oem6 },
+                        { 180, Key.OemQuotes },
+                        { 186, Key.Oem5 },
+                        { 231, Key.OemQuestion },
+                        { 241, Key.Oem3 }
+                    }
+                }
+            };
+
         public static IEnumerable<Keys> ToKeysList( this ModKey flagsEnumValue )
         {
             Keys ToKey( ModKey keymod )
@@ -779,12 +801,13 @@ namespace ClassicAssist.Misc
 
         public static Key SDLKeyToKeys( int sdlKey )
         {
-            if ( INTERNAL_keyMap.TryGetValue( sdlKey, out Key keys ) )
+            if ( _localeKeyMap.ContainsKey( Engine.KeyboardLayoutId ) &&
+                 _localeKeyMap[Engine.KeyboardLayoutId].ContainsKey( sdlKey ) )
             {
-                return keys;
+                return _localeKeyMap[Engine.KeyboardLayoutId][sdlKey];
             }
 
-            return Key.None;
+            return INTERNAL_keyMap.TryGetValue( sdlKey, out Key keys ) ? keys : Key.None;
         }
 
         public static ModKey IntToModKey( int mod )

@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using System.Windows.Input;
+using Assistant;
 
 namespace ClassicAssist.UI.Views
 {
@@ -10,6 +12,7 @@ namespace ClassicAssist.UI.Views
         public MainWindow()
         {
             InitializeComponent();
+            Engine.KeyboardLayoutId = InputLanguageManager.Current.CurrentInputLanguage.KeyboardLayoutId;
         }
     }
 }

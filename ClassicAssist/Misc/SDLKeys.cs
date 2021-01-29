@@ -739,14 +739,29 @@ namespace ClassicAssist.Misc
             new Dictionary<int, Dictionary<int, Key>>
             {
                 {
-                    3082,
+                    2060, /* French (Belgium) */
+                    new Dictionary<int, Key>
+                    {
+                        { 36, Key.Oem1 },
+                        { 41, Key.OemOpenBrackets },
+                        { 58, Key.OemQuestion },
+                        { 59, Key.OemPeriod },
+                        { 60, Key.OemBackslash },
+                        { 94, Key.Oem6 },
+                        { 178, Key.OemQuotes },
+                        { 181, Key.Oem5 },
+                        { 249, Key.Oem3 }
+                    }
+                },
+                {
+                    3082, /* Spanish (Spain) */
                     new Dictionary<int, Key>
                     {
                         { 39, Key.OemOpenBrackets },
-                        { 43, Key.DeadCharProcessed},
+                        { 43, Key.DeadCharProcessed },
                         { 45, Key.OemMinus },
                         { 60, Key.OemBackslash },
-                        { 96, Key.Oem1},
+                        { 96, Key.Oem1 },
                         { 161, Key.Oem6 },
                         { 180, Key.OemQuotes },
                         { 186, Key.Oem5 },

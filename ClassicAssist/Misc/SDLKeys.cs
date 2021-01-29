@@ -739,6 +739,10 @@ namespace ClassicAssist.Misc
             new Dictionary<int, Dictionary<int, Key>>
             {
                 {
+                    1055, /* Turkish (Turkey) */
+                    new Dictionary<int, Key> { { 34, Key.Oem3 }, { 42, Key.Oem8 }, { 60, Key.OemBackslash } }
+                },
+                {
                     2060, /* French (Belgium) */
                     new Dictionary<int, Key>
                     {

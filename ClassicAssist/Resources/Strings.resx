@@ -1389,8 +1389,89 @@ Are you sure you wish to continue?</value>
   <data name="Loaded to all profiles" xml:space="preserve">
     <value>Loaded to all profiles</value>
   </data>
-  <data name="Bards Music" xml:space="preserve">
-    <value>Bards Music</value>
+  <data name=" -  Backpack Sounds" xml:space="preserve">
+    <value> -  Backpack Sounds</value>
+  </data>
+  <data name=" -  Bards Music" xml:space="preserve">
+    <value> -  Bards Music</value>
+  </data>
+  <data name=" -  Bird Sounds" xml:space="preserve">
+    <value> -  Bird Sounds</value>
+  </data>
+  <data name=" -  Bull Sounds" xml:space="preserve">
+    <value> -  Bull Sounds</value>
+  </data>
+  <data name=" -  Cat Sounds" xml:space="preserve">
+    <value> -  Cat Sounds</value>
+  </data>
+  <data name=" -  Chicken Sounds" xml:space="preserve">
+    <value> -  Chicken Sounds</value>
+  </data>
+  <data name=" -  Cougar Sounds" xml:space="preserve">
+    <value> -  Cougar Sounds</value>
+  </data>
+  <data name=" -  Deer Sounds" xml:space="preserve">
+    <value> -  Deer Sounds</value>
+  </data>
+  <data name=" -  Dog Sounds" xml:space="preserve">
+    <value> -  Dog Sounds</value>
+  </data>
+  <data name=" -  Dragon Sounds" xml:space="preserve">
+    <value> -  Dragon Sounds</value>
+  </data>
+  <data name=" -  FootStep Sounds" xml:space="preserve">
+    <value> -  FootStep Sounds</value>
+  </data>
+  <data name=" -  Horse Sounds" xml:space="preserve">
+    <value> -  Horse Sounds</value>
+  </data>
+  <data name=" -  Sheep Sounds" xml:space="preserve">
+    <value> -  Sheep Sounds</value>
+  </data>
+  <data name=" -  Rat Sounds" xml:space="preserve">
+    <value> -  Rat Sounds</value>
+  </data>
+  <data name=" -  Eagle Sounds" xml:space="preserve">
+    <value> -  Eagle Sounds</value>
+  </data>
+  <data name=" -  Bear Sounds" xml:space="preserve">
+    <value> -  Bear Sounds</value>
+  </data>
+  <data name=" -  Goat Sounds" xml:space="preserve">
+    <value> -  Goat Sounds</value>
+  </data>
+  <data name=" -  SpellFizzle Sounds" xml:space="preserve">
+    <value> -  SpellFizzle Sounds</value>
+  </data>
+  <data name=" -  SpiritSpeak Sounds" xml:space="preserve">
+    <value> -  SpiritSpeak Sounds</value>
+  </data>
+  <data name=" -  Titan Cyclops Sounds" xml:space="preserve">
+    <value> -  Titan Cyclops Sounds</value>
+  </data>
+  <data name=" -  Wolf Sounds" xml:space="preserve">
+    <value> -  Wolf Sounds</value>
+  </data>
+  <data name=" -  Pig Sounds" xml:space="preserve">
+    <value> -  Pig Sounds</value>
+  </data>
+  <data name=" -  Cougar Sounds" xml:space="preserve">
+    <value> -  Cougar Sounds</value>
+  </data>
+  <data name=" -  Wrestling Sounds" xml:space="preserve">
+    <value> -  Wrestling Sounds</value>
+  </data>
+  <data name=" -  Weapon Sounds" xml:space="preserve">
+    <value> -  Weapon Sounds</value>
+  </data>
+  <data name=" -  Door Sounds" xml:space="preserve">
+    <value> -  Door Sounds</value>
+  </data>
+  <data name=" -  Alchemy Sounds" xml:space="preserve">
+    <value> -  Alchemy Sounds</value>
+  </data>
+  <data name=" -  Emote Sounds" xml:space="preserve">
+    <value> -  Emote Sounds</value>
   </data>
   <data name="Check hands before potions" xml:space="preserve">
     <value>Check hands before potions</value>

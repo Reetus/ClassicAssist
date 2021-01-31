@@ -223,20 +223,20 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  -  Inscribing Sounds.
+        /// </summary>
+        public static string ____Inscribing_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Inscribing Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  -  Pig Sounds.
         /// </summary>
         public static string ____Pig_Sounds {
             get {
                 return ResourceManager.GetString(" -  Pig Sounds", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  -  Player Hit Sounds.
-        /// </summary>
-        public static string ____Player_Hit_Sounds {
-            get {
-                return ResourceManager.GetString(" -  Player Hit Sounds", resourceCulture);
             }
         }
         
@@ -300,6 +300,15 @@ namespace ClassicAssist.Resources {
         public static string ____Wolf_Sounds {
             get {
                 return ResourceManager.GetString(" -  Wolf Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Wrestling Sounds.
+        /// </summary>
+        public static string ____Wrestling_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Wrestling Sounds", resourceCulture);
             }
         }
         

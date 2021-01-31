@@ -36,8 +36,39 @@ namespace ClassicAssist.UI.ViewModels
         {
             Type[] filterTypes =
             {
-                typeof( WeatherFilter ), typeof( SeasonFilter ), typeof( LightLevelFilter ),
-                typeof( RepeatedMessagesFilter ), typeof( ClilocFilter ), typeof( BardsMusicFilter )
+                typeof( WeatherFilter ), 
+                typeof( SeasonFilter ), 
+                typeof( LightLevelFilter ),
+                typeof( RepeatedMessagesFilter ), 
+                typeof( ClilocFilter ),
+                typeof( AudioFilterSpellFizzleSounds ),
+                typeof( AudioFilterSpiritSpeakSounds ),
+                typeof( AudioFilterInscribingSounds ),
+                typeof( AudioFilterAlchemySounds ),
+                typeof( AudioFilterPlayerHitSounds ),
+                typeof( AudioFilterWeaponSounds ),
+                typeof( AudioFilterBardsMusic ),
+                typeof( AudioFilterHorseSounds ),
+                typeof( AudioFilterDogSounds ),
+                typeof( AudioFilterCatSounds ),
+                typeof( AudioFilterDeerSounds ),
+                typeof( AudioFilterPigSounds ),
+                typeof( AudioFilterSheepSounds ),
+                typeof( AudioFilterGoatSounds ),
+                typeof( AudioFilterRatSounds ),
+                typeof( AudioFilterBirdSounds ),
+                typeof( AudioFilterEagleSounds ),
+                typeof( AudioFilterChickenSounds ),
+                typeof( AudioFilterBullSounds ),
+                typeof( AudioFilterCougarSounds ),
+                typeof( AudioFilterWolfSounds ),
+                typeof( AudioFilterBearSounds ),
+                typeof( AudioFilterTitanCyclopsSounds ),
+                typeof( AudioFilterDragonSounds ),
+                typeof( AudioFilterBackpackSounds ),
+                typeof( AudioFilterFootStepSounds ),
+                typeof( AudioFilterDoorSounds ),
+                typeof( AudioFilterEmoteSounds ),
             };
 
             foreach ( Type type in filterTypes )

@@ -22,8 +22,8 @@ using ClassicAssist.UO.Network.PacketFilter;
 
 namespace ClassicAssist.Data.Filters
 {
-    [FilterOptions( Name = " -  Wrestling Sounds", DefaultEnabled = true )]
-    public class AudioFilterWrestlingSounds : DynamicFilterEntry
+    [FilterOptions( Name = " -  Player Hit Sounds", DefaultEnabled = true )]
+    public class AudioFilterPlayerHitSounds : DynamicFilterEntry
     {
         private static readonly int[] _audioPackets = { 0x154, 0x155, 0x156, 0x157, 0x158, 0x159 }; // qk
         private static bool _isEnabled;

@@ -61,6 +61,249 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  -  Alchemy Sounds.
+        /// </summary>
+        public static string ____Alchemy_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Alchemy Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Backpack Sounds.
+        /// </summary>
+        public static string ____Backpack_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Backpack Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Bards Music.
+        /// </summary>
+        public static string ____Bards_Music {
+            get {
+                return ResourceManager.GetString(" -  Bards Music", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Bear Sounds.
+        /// </summary>
+        public static string ____Bear_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Bear Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Bird Sounds.
+        /// </summary>
+        public static string ____Bird_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Bird Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Bull Sounds.
+        /// </summary>
+        public static string ____Bull_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Bull Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Cat Sounds.
+        /// </summary>
+        public static string ____Cat_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Cat Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Chicken Sounds.
+        /// </summary>
+        public static string ____Chicken_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Chicken Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Cougar Sounds.
+        /// </summary>
+        public static string ____Cougar_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Cougar Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Deer Sounds.
+        /// </summary>
+        public static string ____Deer_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Deer Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Dog Sounds.
+        /// </summary>
+        public static string ____Dog_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Dog Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Door Sounds.
+        /// </summary>
+        public static string ____Door_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Door Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Dragon Sounds.
+        /// </summary>
+        public static string ____Dragon_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Dragon Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Eagle Sounds.
+        /// </summary>
+        public static string ____Eagle_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Eagle Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Emote Sounds.
+        /// </summary>
+        public static string ____Emote_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Emote Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  FootStep Sounds.
+        /// </summary>
+        public static string ____FootStep_Sounds {
+            get {
+                return ResourceManager.GetString(" -  FootStep Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Goat Sounds.
+        /// </summary>
+        public static string ____Goat_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Goat Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Horse Sounds.
+        /// </summary>
+        public static string ____Horse_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Horse Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Pig Sounds.
+        /// </summary>
+        public static string ____Pig_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Pig Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Player Hit Sounds.
+        /// </summary>
+        public static string ____Player_Hit_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Player Hit Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Rat Sounds.
+        /// </summary>
+        public static string ____Rat_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Rat Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Sheep Sounds.
+        /// </summary>
+        public static string ____Sheep_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Sheep Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  SpellFizzle Sounds.
+        /// </summary>
+        public static string ____SpellFizzle_Sounds {
+            get {
+                return ResourceManager.GetString(" -  SpellFizzle Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  SpiritSpeak Sounds.
+        /// </summary>
+        public static string ____SpiritSpeak_Sounds {
+            get {
+                return ResourceManager.GetString(" -  SpiritSpeak Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Titan Cyclops Sounds.
+        /// </summary>
+        public static string ____Titan_Cyclops_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Titan Cyclops Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Weapon Sounds.
+        /// </summary>
+        public static string ____Weapon_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Weapon Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  -  Wolf Sounds.
+        /// </summary>
+        public static string ____Wolf_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Wolf Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} items, {1} selected, {2} total amount.
         /// </summary>
         public static string _0__items___1__selected___2__total_amount {

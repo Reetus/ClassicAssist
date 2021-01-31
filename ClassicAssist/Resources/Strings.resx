@@ -1457,8 +1457,8 @@ Are you sure you wish to continue?</value>
 	<data name=" -  Cougar Sounds" xml:space="preserve">
     <value> -  Cougar Sounds</value>
   </data>
-	<data name=" -  Wrestling Sounds" xml:space="preserve">
-    <value> -  Wrestling Sounds</value>
+	<data name=" -  Player Hit Sounds" xml:space="preserve">
+    <value> -  Player Hit Sounds</value>
   </data>
 	<data name=" -  Weapon Sounds" xml:space="preserve">
     <value> -  Weapon Sounds</value>

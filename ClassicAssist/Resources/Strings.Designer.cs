@@ -241,6 +241,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  -  Player Hit Sounds.
+        /// </summary>
+        public static string ____Player_Hit_Sounds {
+            get {
+                return ResourceManager.GetString(" -  Player Hit Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  -  Rat Sounds.
         /// </summary>
         public static string ____Rat_Sounds {
@@ -300,15 +309,6 @@ namespace ClassicAssist.Resources {
         public static string ____Wolf_Sounds {
             get {
                 return ResourceManager.GetString(" -  Wolf Sounds", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  -  Wrestling Sounds.
-        /// </summary>
-        public static string ____Wrestling_Sounds {
-            get {
-                return ResourceManager.GetString(" -  Wrestling Sounds", resourceCulture);
             }
         }
         

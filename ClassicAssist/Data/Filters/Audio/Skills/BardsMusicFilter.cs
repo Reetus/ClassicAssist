@@ -25,7 +25,7 @@ namespace ClassicAssist.Data.Filters
     [FilterOptions( Name = " -  Bards Music", DefaultEnabled = true )]
     public class AudioFilterBardsMusic : DynamicFilterEntry
     {
-        private static readonly int[] _audioPackets = { 0x38, 0x39, 0x43, 0x44, 0x45, 0x46, 0x4C, 0x4D, 0x52, 0x53 }; // missing flute
+        private static readonly int[] _audioPackets = { 0x38, 0x39, 0x43, 0x44, 0x45, 0x46, 0x4C, 0x4D, 0x52, 0x53, 0x504 }; // qk -> added flute
         private static bool _isEnabled;
 
         protected override void OnChanged( bool enabled )

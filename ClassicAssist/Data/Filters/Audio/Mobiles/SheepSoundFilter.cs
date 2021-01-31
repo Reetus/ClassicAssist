@@ -25,8 +25,7 @@ namespace ClassicAssist.Data.Filters
     [FilterOptions( Name = " -  Sheep Sounds", DefaultEnabled = true )]
     public class AudioFilterSheepSounds : DynamicFilterEntry
     {
-        //private static readonly int[] _audioPackets = { 0xD6, 0xDA }; // 0x3EC // not checked
-        private static readonly int[] _audioPackets = { 0x9A }; // qk
+        private static readonly int[] _audioPackets = { 0x9A , 0xD7, 0xD6, 0xD8, 0xD9, 0xDA }; // qk
         private static bool _isEnabled;
 
         protected override void OnChanged( bool enabled )

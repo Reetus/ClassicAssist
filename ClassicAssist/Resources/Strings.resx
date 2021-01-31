@@ -1400,6 +1400,9 @@ Are you sure you wish to continue?</value>
 	<data name=" -  Bull Sounds" xml:space="preserve">
     <value> -  Bull Sounds</value>
   </data>
+	<data name=" -  Cow Sounds" xml:space="preserve">
+    <value> -  Cow Sounds</value>
+  </data>
 	<data name=" -  Cat Sounds" xml:space="preserve">
     <value> -  Cat Sounds</value>
   </data>
@@ -1469,11 +1472,56 @@ Are you sure you wish to continue?</value>
 	<data name=" -  Alchemy Sounds" xml:space="preserve">
     <value> -  Alchemy Sounds</value>
   </data>
-	<data name=" -  Emote Sounds" xml:space="preserve">
-    <value> -  Emote Sounds</value>
+	<data name=" -  EmoteMale Sounds" xml:space="preserve">
+    <value> -  EmoteMale Sounds</value>
+  </data>
+	<data name=" -  EmoteFemale Sounds" xml:space="preserve">
+    <value> -  EmoteFemale Sounds</value>
   </data>
   <data name=" -  Inscribing Sounds" xml:space="preserve">
     <value> -  Inscribing Sounds</value>
+  </data>
+	<data name=" -  Meditation Sounds" xml:space="preserve">
+    <value> -  Meditation Sounds</value>
+  </data>
+  <data name=" -  MoonGate Sounds" xml:space="preserve">
+    <value> -  MoonGate Sounds</value>
+  </data>
+  <data name=" -  Recall Sounds" xml:space="preserve">
+    <value> -  Recall Sounds</value>
+  </data>
+	<data name=" -  TeleportTile Sounds" xml:space="preserve">
+    <value> -  TeleportTile Sounds</value>
+  </data>
+	<data name=" -  Teleport Sounds" xml:space="preserve">
+    <value> -  Teleport Sounds</value>
+  </data>
+	<data name=" -  Mongbat Sounds" xml:space="preserve">
+    <value> -  Mongbat Sounds</value>
+  </data>
+	<data name=" -  Llama Sounds" xml:space="preserve">
+    <value> -  Llama Sounds</value>
+  </data>
+	<data name=" -  Conquest Sounds" xml:space="preserve">
+    <value> -  Conquest Sounds</value>
+  </data>
+	<data name=" -  NpcVendor Sounds" xml:space="preserve">
+    <value> -  NpcVendor Sounds</value>
+  </data>
+	<data name=" -  Snake Sounds" xml:space="preserve">
+    <value> -  Snake Sounds</value>
+  </data>
+	<data name=" -  ItemPickup Sounds" xml:space="preserve">
+    <value> -  ItemPickup Sounds</value>
+  </data>
+	<data name=" -  ItemDrop Sounds" xml:space="preserve">
+    <value> -  ItemDrop Sounds</value>
+  </data>
+	<data name=" -  Blacksmith Sounds" xml:space="preserve">
+    <value> -  Blacksmith Sounds</value>
+  </data>
+	<data name=" -  Mining Sounds" xml:space="preserve">
+    <value> -  Mining Sounds</value>
   </data>
   <data name="Bards Music" xml:space="preserve">
     <value>Bards Music</value>

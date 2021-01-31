@@ -22,10 +22,15 @@ using ClassicAssist.UO.Network.PacketFilter;
 
 namespace ClassicAssist.Data.Filters
 {
-    [FilterOptions( Name = " -  Player Hit Sounds", DefaultEnabled = true )]
-    public class AudioFilterPlayerHitSounds : DynamicFilterEntry
+    [FilterOptions( Name = " -  EmoteMale Sounds", DefaultEnabled = true )]
+    public class AudioFilterEmoteMaleSounds : DynamicFilterEntry
     {
-        private static readonly int[] _audioPackets = { 0x154, 0x155, 0x156, 0x157, 0x158, 0x159 }; // qk // TODO : add female sounds
+                                                         
+        private static readonly int[] _audioPackets = { 0x419, 0x41A, 0x41B, 0x41C, 0x41D, 0x420, 0x421, 0x422, // Human Male emotes // qk 
+                                                        0x427, 0x428, 0x429, 0x42A, 0x42B, 0x42C, 0x42D, 0x42E,
+                                                        0x42F, 0x430, 0x431, 0x432, 0x433, 0x43D, 0x43E, 0x43F,
+                                                        0x13B, 0x440, 0x441, 0x442, 0x3B4, 0x443, 0x444, 0x445,
+                                                        0x318, 0x36A, 0x447, 0x41E, 0x448, 0x449, 0x44A };
         private static bool _isEnabled;
 
         protected override void OnChanged( bool enabled )

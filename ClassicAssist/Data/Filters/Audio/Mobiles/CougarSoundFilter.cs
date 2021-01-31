@@ -25,7 +25,7 @@ namespace ClassicAssist.Data.Filters
     [FilterOptions( Name = " -  Cougar Sounds", DefaultEnabled = true )]
     public class AudioFilterCougarSounds : DynamicFilterEntry
     {
-        private static readonly int[] _audioPackets = { 0x73 }; // qk
+        private static readonly int[] _audioPackets = { 0x73, 0x74 }; // qk
         private static bool _isEnabled;
 
         protected override void OnChanged( bool enabled )

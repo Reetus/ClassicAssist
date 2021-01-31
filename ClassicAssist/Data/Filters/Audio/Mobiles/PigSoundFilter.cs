@@ -25,7 +25,7 @@ namespace ClassicAssist.Data.Filters
     [FilterOptions( Name = " -  Pig Sounds", DefaultEnabled = true )]
     public class AudioFilterPigSounds : DynamicFilterEntry
     {
-        private static readonly int[] _audioPackets = { 0xC5, 0xC4, 0xC7, 0xC6 }; // qk
+        private static readonly int[] _audioPackets = { 0xC5, 0xC4, 0xC7, 0xC6, 0xC8 }; // qk
         private static bool _isEnabled;
 
         protected override void OnChanged( bool enabled )

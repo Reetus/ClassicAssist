@@ -25,7 +25,7 @@ namespace ClassicAssist.Data.Filters
     [FilterOptions( Name = " -  Chicken Sounds", DefaultEnabled = true )]
     public class AudioFilterChickenSounds : DynamicFilterEntry
     {
-        private static readonly int[] _audioPackets = { 0x6F, 0x6E }; // qk
+        private static readonly int[] _audioPackets = { 0x6F, 0x6E, 0x70, 0x71, 0x72 }; // qk
         private static bool _isEnabled;
 
         protected override void OnChanged( bool enabled )

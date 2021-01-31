@@ -22,10 +22,10 @@ using ClassicAssist.UO.Network.PacketFilter;
 
 namespace ClassicAssist.Data.Filters
 {
-    [FilterOptions( Name = " -  Player Hit Sounds", DefaultEnabled = true )]
-    public class AudioFilterPlayerHitSounds : DynamicFilterEntry
+    [FilterOptions( Name = " -  Cow Sounds", DefaultEnabled = true )]
+    public class AudioFilterCowSounds : DynamicFilterEntry
     {
-        private static readonly int[] _audioPackets = { 0x154, 0x155, 0x156, 0x157, 0x158, 0x159 }; // qk // TODO : add female sounds
+        private static readonly int[] _audioPackets = { 0x79, 0x78, 0x7A, 0x7B, 0x7C }; // qk
         private static bool _isEnabled;
 
         protected override void OnChanged( bool enabled )

@@ -25,7 +25,7 @@ namespace ClassicAssist.Data.Filters
     [FilterOptions( Name = " -  Door Sounds", DefaultEnabled = true )]
     public class AudioFilterDoorSounds : DynamicFilterEntry
     {
-        private static readonly int[] _audioPackets = { 0xEA, 0xEC, 0xF1 }; // qk
+        private static readonly int[] _audioPackets = { 0xEA, 0xEC, 0xF1, 0xEB, 0xF2, 0xF3 }; // qk
         private static bool _isEnabled;
 
         protected override void OnChanged( bool enabled )

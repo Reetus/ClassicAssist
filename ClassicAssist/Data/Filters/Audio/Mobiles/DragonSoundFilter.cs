@@ -25,8 +25,7 @@ namespace ClassicAssist.Data.Filters
     [FilterOptions( Name = " -  Dragon Sounds", DefaultEnabled = true )]
     public class AudioFilterDragonSounds : DynamicFilterEntry
     {
-        //private static readonly int[] _audioPackets = { 0x7B4 }; // 0x17
-        private static readonly int[] _audioPackets = { 0x7B4 }; // not checked
+        private static readonly int[] _audioPackets = { 0x16A, 0x16B, 0x16C, 0x16D, }; // qk
         private static bool _isEnabled;
 
         protected override void OnChanged( bool enabled )

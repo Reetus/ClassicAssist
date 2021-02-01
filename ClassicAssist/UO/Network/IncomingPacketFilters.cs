@@ -57,7 +57,7 @@ namespace ClassicAssist.UO.Network
         {
             int serial = ( packet[1] << 24 ) | ( packet[2] << 16 ) | ( packet[3] << 8 ) | packet[4];
 
-            if ( Options.CurrentOptions.RehueFriends && Options.CurrentOptions.Friends.Any( e => e.Serial == serial ) )
+            if ( Options.CurrentOptions.RehueFriends && Options.CurrentOptions.Friends.Any( e => e.Serial == serial && e.Serial != Engine.Player.Serial ) )
             {
                 packet[8] = (byte) ( Options.CurrentOptions.RehueFriendsHue >> 8 );
                 packet[9] = (byte) Options.CurrentOptions.RehueFriendsHue;
@@ -114,7 +114,7 @@ namespace ClassicAssist.UO.Network
         {
             int serial = ( packet[1] << 24 ) | ( packet[2] << 16 ) | ( packet[3] << 8 ) | packet[4];
 
-            if ( Options.CurrentOptions.RehueFriends && Options.CurrentOptions.Friends.Any( e => e.Serial == serial ) )
+            if ( Options.CurrentOptions.RehueFriends && Options.CurrentOptions.Friends.Any(e => e.Serial == serial && e.Serial != Engine.Player.Serial))
             {
                 packet[13] = (byte) ( Options.CurrentOptions.RehueFriendsHue >> 16 );
                 packet[14] = (byte) Options.CurrentOptions.RehueFriendsHue;
@@ -216,7 +216,7 @@ namespace ClassicAssist.UO.Network
             try
             {
                 if ( Options.CurrentOptions.RehueFriends &&
-                     Options.CurrentOptions.Friends.Any( e => e.Serial == serial ) )
+                     Options.CurrentOptions.Friends.Any(e => e.Serial == serial && e.Serial != Engine.Player.Serial))
                 {
                     MobileIncoming newPacket =
                         new MobileIncoming( mobile, container, Options.CurrentOptions.RehueFriendsHue );

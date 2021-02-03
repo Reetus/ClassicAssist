@@ -100,6 +100,9 @@ namespace ClassicAssist.Misc
             SDLK_x = 'x',
             SDLK_y = 'y',
             SDLK_z = 'z',
+            SDLK_æ = 'æ',
+            SDLK_ø = 'ø',
+            SDLK_å = 'å',
 
             SDLK_CAPSLOCK = SDL_Scancode.SDL_SCANCODE_CAPSLOCK | SDLK_SCANCODE_MASK,
 
@@ -625,6 +628,9 @@ namespace ClassicAssist.Misc
             { (int) SDL_Keycode.SDLK_x, Key.X },
             { (int) SDL_Keycode.SDLK_y, Key.Y },
             { (int) SDL_Keycode.SDLK_z, Key.Z },
+            //{ (int) SDL_Keycode.SDLK_æ, Key. },
+            //{ (int) SDL_Keycode.SDLK_ø, Key.Z },
+            //{ (int) SDL_Keycode.SDLK_å, Key.Z },
             { (int) SDL_Keycode.SDLK_0, Key.D0 },
             { (int) SDL_Keycode.SDLK_1, Key.D1 },
             { (int) SDL_Keycode.SDLK_2, Key.D2 },
@@ -726,6 +732,8 @@ namespace ClassicAssist.Misc
             { (int) SDL_Keycode.SDLK_AUDIOPLAY, Key.MediaPlayPause },
             { (int) SDL_Keycode.SDLK_AUDIOMUTE, Key.VolumeMute },
             { (int) SDL_Keycode.SDLK_MEDIASELECT, Key.SelectMedia },
+
+
             { '²' /* FIXME: AZERTY SDL2? -flibit */, Key.OemTilde },
             { 'é' /* FIXME: BEPO SDL2? -flibit */, Key.None },
             { '|' /* FIXME: Norwegian SDL2? -flibit */, Key.OemPipe },
@@ -739,21 +747,57 @@ namespace ClassicAssist.Misc
             new Dictionary<int, Dictionary<int, Key>>
             {
                 {
-                    3082,
+                    1055, /* Turkish (Turkey) */
+                    new Dictionary<int, Key> 
+                    { 
+                        { 34, Key.Oem3 }, 
+                        { 42, Key.Oem8 }, 
+                        { 60, Key.OemBackslash } 
+                    }
+                },
+                {
+                    2060, /* French (Belgium) */
+                    new Dictionary<int, Key>
+                    {
+                        { 36, Key.Oem1 },
+                        { 41, Key.OemOpenBrackets },
+                        { 58, Key.OemQuestion },
+                        { 59, Key.OemPeriod },
+                        { 60, Key.OemBackslash },
+                        { 94, Key.Oem6 },
+                        { 178, Key.OemQuotes },
+                        { 181, Key.Oem5 },
+                        { 249, Key.Oem3 }
+                    }
+                },
+                {
+                    3082, /* Spanish (Spain) */
                     new Dictionary<int, Key>
                     {
                         { 39, Key.OemOpenBrackets },
-                        { 43, Key.DeadCharProcessed},
+                        { 43, Key.DeadCharProcessed },
                         { 45, Key.OemMinus },
                         { 60, Key.OemBackslash },
-                        { 96, Key.Oem1},
+                        { 96, Key.Oem1 },
                         { 161, Key.Oem6 },
                         { 180, Key.OemQuotes },
                         { 186, Key.Oem5 },
                         { 231, Key.OemQuestion },
                         { 241, Key.Oem3 }
                     }
-                }
+                },
+                {
+                    1044, /* Norwegian - (Norway) "nb-NO" */
+                    new Dictionary<int, Key>
+                    {
+                        { 168, Key.Oem1 },
+                        { 248, Key.Oem3 },
+                        { 229, Key.Oem6 },
+                        { 92, Key.OemOpenBrackets },
+                        { 39, Key.OemQuestion },
+                        { 60, Key.OemBackslash },
+                    }
+                },
             };
 
         public static IEnumerable<Keys> ToKeysList( this ModKey flagsEnumValue )

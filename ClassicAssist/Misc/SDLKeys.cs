@@ -732,8 +732,6 @@ namespace ClassicAssist.Misc
             { (int) SDL_Keycode.SDLK_AUDIOPLAY, Key.MediaPlayPause },
             { (int) SDL_Keycode.SDLK_AUDIOMUTE, Key.VolumeMute },
             { (int) SDL_Keycode.SDLK_MEDIASELECT, Key.SelectMedia },
-
-
             { '²' /* FIXME: AZERTY SDL2? -flibit */, Key.OemTilde },
             { 'é' /* FIXME: BEPO SDL2? -flibit */, Key.None },
             { '|' /* FIXME: Norwegian SDL2? -flibit */, Key.OemPipe },
@@ -748,12 +746,7 @@ namespace ClassicAssist.Misc
             {
                 {
                     1055, /* Turkish (Turkey) */
-                    new Dictionary<int, Key> 
-                    { 
-                        { 34, Key.Oem3 }, 
-                        { 42, Key.Oem8 }, 
-                        { 60, Key.OemBackslash } 
-                    }
+                    new Dictionary<int, Key> { { 34, Key.Oem3 }, { 42, Key.Oem8 }, { 60, Key.OemBackslash } }
                 },
                 {
                     2060, /* French (Belgium) */
@@ -795,9 +788,24 @@ namespace ClassicAssist.Misc
                         { 229, Key.Oem6 },
                         { 92, Key.OemOpenBrackets },
                         { 39, Key.OemQuestion },
-                        { 60, Key.OemBackslash },
+                        { 60, Key.OemBackslash }
                     }
                 },
+                {
+                    1046, /* Brazilian - (BR) "ABNT2/ABNT"*/
+                    new Dictionary<int, Key>
+                    {
+                        { 39, Key.Oem3 },
+                        { 47, Key.AbntC1 },
+                        { 59, Key.OemQuestion },
+                        { 91, Key.Oem6 },
+                        { 92, Key.OemBackslash },
+                        { 93, Key.Oem5 },
+                        { 126, Key.OemQuotes },
+                        { 180, Key.OemOpenBrackets },
+                        { 231, Key.Oem1 }
+                    }
+                }
             };
 
         public static IEnumerable<Keys> ToKeysList( this ModKey flagsEnumValue )

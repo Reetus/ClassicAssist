@@ -1,6 +1,6 @@
 ﻿#region License
 
-// Copyright (C) 2020 Reetus
+// Copyright (C) 2021 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Assistant;
 using ClassicAssist.UO.Network.PacketFilter;
@@ -25,45 +26,58 @@ using ClassicAssist.UO.Objects.Gumps;
 
 namespace ClassicAssist.UO.Gumps
 {
-    public class MessagePromptGump : Gump
+    public class SelectionPromptGump : Gump
     {
-        public MessagePromptGump( string message, string initialText = "", bool closable = false ) : base( 500, 500 )
+        public SelectionPromptGump( IEnumerable<string> options, string message, bool closable = false ) : base( 500,
+            500 )
         {
-            const int width = 300;
-            const int height = 200;
+            string[] optionsArray = options.ToArray();
+
+            const int width = 400;
+            int height = 150 + optionsArray.Length * 20;
 
             SetCenterPosition( width, height );
             Closable = closable;
             Resizable = false;
             Disposable = false;
-            Movable = true;
             AddPage( 0 );
             AddBackground( 0, 0, width, height, 9200 );
-            AddHtml( 10, 10, width - 20, height - 90, message, true, true );
-            AddBackground( 10, height - 70, width - 20, 29, 9350 );
-            AddTextEntry( 13, height - 65, width - 20, 29, 0, 1, initialText );
+            AddHtml( 10, 10, width - 20, 70, message, true, true );
+
+            int y = 100;
+
+            for ( int index = 0; index < optionsArray.Length; index++ )
+            {
+                AddRadio( 10, y, 208, 209, index == 0, index );
+                AddLabel( 40, y, 0, optionsArray[index] );
+                y += 20;
+            }
+
             AddButton( width - 140, height - 30, 247, 248, 1, GumpButtonType.Reply, 0 );
-            AddButton( width - 70, height - 30, 241, 242, 2, GumpButtonType.Reply, 0 );
+            AddButton( width - 70, height - 30, 241, 242, 0, GumpButtonType.Reply, 0 );
         }
 
         public AutoResetEvent AutoResetEvent { get; set; } = new AutoResetEvent( false );
-
-        public string Message { get; set; }
-
+        public int Index { get; set; }
         public bool Result { get; set; }
 
         public override void OnResponse( int buttonID, int[] switches,
             List<(int Key, string Value)> textEntries = null )
         {
-            Message = textEntries?[0].Value ?? string.Empty;
-            Result = buttonID == 1;
+            Result = buttonID != 0;
+
+            if ( switches != null && switches.Length > 0 )
+            {
+                Index = switches[0];
+            }
+
             AutoResetEvent.Set();
         }
 
-        public static (bool Result, string Message) MessagePrompt( string message, string initialText = "",
+        public static (bool Result, int Index) SelectionPrompt( IEnumerable<string> options, string message,
             bool closable = false )
         {
-            MessagePromptGump gump = new MessagePromptGump( message, initialText, closable );
+            SelectionPromptGump gump = new SelectionPromptGump( options, message, closable );
 
             PacketFilterInfo pfi = new PacketFilterInfo( 0xB1,
                 new[] { PacketFilterConditions.UIntAtPositionCondition( gump.ID, 7 ) } );
@@ -76,7 +90,7 @@ namespace ClassicAssist.UO.Gumps
 
             Engine.RemoveSendPostFilter( pfi );
 
-            return ( gump.Result, gump.Message );
+            return ( gump.Result, gump.Index );
         }
     }
 }

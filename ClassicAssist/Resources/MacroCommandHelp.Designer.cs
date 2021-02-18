@@ -2850,6 +2850,40 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Produces an in-game gump to choose from a list of options
+        ///
+        ///Returns a tuple with a boolean signifying whether the OK button was pressed, and the index of the entry selected.
+        /// </summary>
+        public static string SELECTIONPROMPT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SELECTIONPROMPT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to res, index = SelectionPrompt([&apos;Sex&apos;, &apos;Drugs&apos;, &apos;Rock and Roll&apos;])
+        ///
+        ///if res:
+        /// print &apos;Option {} was selected&apos;.format(index)
+        ///else:
+        /// print &apos;Cancel was pressed&apos;.
+        /// </summary>
+        public static string SELECTIONPROMPT_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("SELECTIONPROMPT_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SelectionPrompt([&apos;Option 1&apos;, &apos;Option 2&apos;]).
+        /// </summary>
+        public static string SELECTIONPROMPT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SELECTIONPROMPT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set weapon ability, parameter &quot;primary&quot; / &quot;secondary&quot;..
         /// </summary>
         public static string SETABILITY_COMMAND_DESCRIPTION {

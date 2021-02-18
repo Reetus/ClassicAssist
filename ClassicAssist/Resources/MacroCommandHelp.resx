@@ -1554,4 +1554,20 @@ WaitForContext('self', 2, 5000)
 # select by entry name
 WaitForContext('self', "Open Item Insurance Menu", 5000)</value>
   </data>
+  <data name="SELECTIONPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Produces an in-game gump to choose from a list of options
+
+Returns a tuple with a boolean signifying whether the OK button was pressed, and the index of the entry selected</value>
+  </data>
+  <data name="SELECTIONPROMPT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SelectionPrompt(['Option 1', 'Option 2'])</value>
+  </data>
+  <data name="SELECTIONPROMPT_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>res, index = SelectionPrompt(['Sex', 'Drugs', 'Rock and Roll'])
+
+if res:
+ print 'Option {} was selected'.format(index)
+else:
+ print 'Cancel was pressed'</value>
+  </data>
 </root>

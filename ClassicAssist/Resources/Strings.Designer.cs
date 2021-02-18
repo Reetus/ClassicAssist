@@ -304,6 +304,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Atleast one option must be provided....
+        /// </summary>
+        public static string Atleast_one_option_must_be_provided___ {
+            get {
+                return ResourceManager.GetString("Atleast one option must be provided...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Attack Enemy.
         /// </summary>
         public static string Attack_Enemy {

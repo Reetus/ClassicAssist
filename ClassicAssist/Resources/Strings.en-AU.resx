@@ -1467,4 +1467,7 @@ Are you sure you wish to continue?</value>
   <data name="Context menu entry not found..." xml:space="preserve">
     <value>Context menu entry not found...</value>
   </data>
+  <data name="Atleast one option must be provided..." xml:space="preserve">
+    <value>Atleast one option must be provided...</value>
+  </data>
 </root>

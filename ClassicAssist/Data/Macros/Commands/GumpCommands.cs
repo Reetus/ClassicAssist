@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Assistant;
 using ClassicAssist.Resources;
 using ClassicAssist.UO.Gumps;
@@ -99,6 +100,25 @@ namespace ClassicAssist.Data.Macros.Commands
         public static bool ConfirmPrompt( string message, bool closable = false )
         {
             return ConfirmPromptGump.ConfirmPrompt( message, closable );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Gumps ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.StringArray ), nameof( ParameterType.String ), nameof( ParameterType.Boolean )
+            } )]
+        public static (bool Result, int index) SelectionPrompt( IEnumerable<string> options,
+            string message = "Please choose an option...", bool closable = false )
+        {
+            IEnumerable<string> enumerable = options as string[] ?? options.ToArray();
+
+            if ( enumerable.Any() )
+            {
+                return SelectionPromptGump.SelectionPrompt( enumerable, message, closable );
+            }
+
+            UOC.SystemMessage( Strings.Atleast_one_option_must_be_provided___, 33 );
+            return ( false, 0 );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Gumps ),

@@ -61,6 +61,7 @@ namespace ClassicAssist.Data.Macros
         WandName,
         Empty,
         Boolean,
-        ElementValueFrontBack
+        ElementValueFrontBack,
+        StringArray
     }
 }

@@ -114,7 +114,7 @@ namespace ClassicAssist.Tests.Agents
             IncomingPacketHandlers.Initialize();
 
             VendorBuyTabViewModel vm = new VendorBuyTabViewModel();
-            vm.Items.Add( new VendorBuyAgentEntry
+            vm.Items.Add( new VendorBuyAgentItem
             {
                 Graphic = 0xf8c,
                 Amount = 1,
@@ -122,7 +122,7 @@ namespace ClassicAssist.Tests.Agents
                 Hue = -1,
                 MaxPrice = -1
             } );
-            vm.Items.Add( new VendorBuyAgentEntry
+            vm.Items.Add( new VendorBuyAgentItem
             {
                 Graphic = 0xf8d,
                 Amount = 1,
@@ -130,7 +130,7 @@ namespace ClassicAssist.Tests.Agents
                 Hue = -1,
                 MaxPrice = -1
             } );
-            vm.Items.Add( new VendorBuyAgentEntry
+            vm.Items.Add( new VendorBuyAgentItem
             {
                 Graphic = 0xf85,
                 Amount = 1,
@@ -138,7 +138,7 @@ namespace ClassicAssist.Tests.Agents
                 Hue = -1,
                 MaxPrice = -1
             } );
-            vm.Items.Add( new VendorBuyAgentEntry
+            vm.Items.Add( new VendorBuyAgentItem
             {
                 Graphic = 0xf88,
                 Amount = 1,
@@ -191,7 +191,7 @@ namespace ClassicAssist.Tests.Agents
 
             containerDisplayHandler?.OnReceive( new PacketReader( containerDisplay, containerDisplay.Length, true ) );
 
-            foreach ( VendorBuyAgentEntry entry in vm.Items )
+            foreach ( VendorBuyAgentItem entry in vm.Items )
             {
                 int amount = buyList.Where( e => e.Item.ID == entry.Graphic ).Sum( e => e.Amount );
 

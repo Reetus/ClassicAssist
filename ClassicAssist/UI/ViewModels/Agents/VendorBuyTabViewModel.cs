@@ -116,7 +116,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         {
             Items.Clear();
 
-            JToken config = json["VendorBuy"];
+            JToken config = json?["VendorBuy"];
 
             if ( config == null )
             {

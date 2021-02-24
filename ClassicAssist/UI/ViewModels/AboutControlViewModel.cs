@@ -241,7 +241,7 @@ namespace ClassicAssist.UI.ViewModels
             ConnectedTime = DateTime.Now;
 
             _timer = new Timer( 1000 ) { AutoReset = true };
-            _timer.Elapsed += ( sender, args ) => { NotifyPropertyChanged( nameof( ConnectedTime ) ); };
+            _timer.Elapsed += ( sender, args ) => { OnPropertyChanged( nameof( ConnectedTime ) ); };
             _timer.Start();
 
             _pingTimer = new Timer( 3000 ) { AutoReset = true };

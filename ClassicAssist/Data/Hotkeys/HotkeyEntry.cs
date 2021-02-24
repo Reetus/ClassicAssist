@@ -1,15 +1,13 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Media;
-using ClassicAssist.Annotations;
 using ClassicAssist.Misc;
 using ClassicAssist.UI.Misc;
+using ClassicAssist.UI.ViewModels;
 using Newtonsoft.Json;
 
 namespace ClassicAssist.Data.Hotkeys
 {
-    public abstract class HotkeyEntry : INotifyPropertyChanged, IComparable<HotkeyEntry>
+    public abstract class HotkeyEntry : SetPropertyNotifyChanged, IComparable<HotkeyEntry>
     {
         public delegate void HotkeyChangedEventHandler( object sender, HotkeyChangedEventArgs e );
 
@@ -115,24 +113,5 @@ namespace ClassicAssist.Data.Hotkeys
         {
             return Name;
         }
-
-        #region INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-        }
-
-        // ReSharper disable once RedundantAssignment
-        public void SetProperty<T>( ref T field, T value, [CallerMemberName] string propertyName = null )
-        {
-            field = value;
-            OnPropertyChanged( propertyName );
-        }
-
-        #endregion
     }
 }

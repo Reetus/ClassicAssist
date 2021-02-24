@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using ClassicAssist.Annotations;
 using ClassicAssist.UI.Misc;
+using ClassicAssist.UI.ViewModels;
 
 namespace ClassicAssist.Data.Skills
 {
-    public class SkillManager : INotifyPropertyChanged
+    public class SkillManager : SetPropertyNotifyChanged
     {
         private static readonly object _lock = new object();
         private static SkillManager _instance;
@@ -20,8 +19,6 @@ namespace ClassicAssist.Data.Skills
             get => _items;
             set => SetProperty( ref _items, value );
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public static SkillManager GetInstance()
         {
@@ -41,18 +38,6 @@ namespace ClassicAssist.Data.Skills
             }
 
             return _instance;
-        }
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-        }
-
-        public void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
-        {
-            obj = value;
-            OnPropertyChanged( propertyName );
         }
     }
 }

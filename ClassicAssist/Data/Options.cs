@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Assistant;
-using ClassicAssist.Annotations;
 using ClassicAssist.Data.Friends;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
@@ -18,7 +15,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.Data
 {
-    public class Options : INotifyPropertyChanged
+    public class Options : SetPropertyNotifyChanged
     {
         public const string DEFAULT_SETTINGS_FILENAME = "settings.json";
         private static string _profilePath;
@@ -362,8 +359,6 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _useObjectQueueAmount, value );
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public static void Save( Options options )
         {
             BaseViewModel[] instances = BaseViewModel.Instances;
@@ -428,19 +423,6 @@ namespace ClassicAssist.Data
                     settingProvider.Deserialize( json, options );
                 }
             }
-        }
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-        }
-
-        // ReSharper disable once RedundantAssignment
-        public void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
-        {
-            obj = value;
-            OnPropertyChanged( propertyName );
         }
 
         public static string[] GetProfiles()

@@ -42,7 +42,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set
             {
                 SetProperty( ref _isOrganizing, value );
-                NotifyPropertyChanged( nameof( PlayStopButtonText ) );
+                OnPropertyChanged( nameof( PlayStopButtonText ) );
             }
         }
 

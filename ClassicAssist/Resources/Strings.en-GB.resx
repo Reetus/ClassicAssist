@@ -1476,4 +1476,13 @@ Are you sure you wish to continue?</value>
   <data name="Invalid state name: &quot;on&quot;, &quot;off&quot;, or &quot;toggle&quot;..." xml:space="preserve">
     <value>Invalid state name: "on", "off", or "toggle"...</value>
   </data>
+  <data name="Replay" xml:space="preserve">
+    <value>Replay</value>
+  </data>
+  <data name="Ignore packet type" xml:space="preserve">
+    <value>Ignore packet type</value>
+  </data>
+  <data name="Copy packet declaration" xml:space="preserve">
+    <value>Copy packet declaration</value>
+  </data>
 </root>

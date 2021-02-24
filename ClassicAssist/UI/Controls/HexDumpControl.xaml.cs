@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using Assistant;
 using ClassicAssist.Annotations;
+using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Network.PacketFilter;
 
 namespace ClassicAssist.UI.Controls
@@ -23,24 +26,13 @@ namespace ClassicAssist.UI.Controls
     /// </summary>
     public partial class HexDumpControl : INotifyPropertyChanged
     {
-        public static readonly DependencyProperty PacketProperty = DependencyProperty.Register( "Packet",
-            typeof( PacketEntry ), typeof( HexDumpControl ), new UIPropertyMetadata(default, PropertyChangedCallback) );
+        public static readonly DependencyProperty PacketProperty = DependencyProperty.Register( nameof( Packet ),
+            typeof( PacketEntry ), typeof( HexDumpControl ),
+            new UIPropertyMetadata( default, PropertyChangedCallback ) );
 
-        private static void PropertyChangedCallback( DependencyObject d, DependencyPropertyChangedEventArgs e )
-        {
-            if ( !( d is HexDumpControl hexDump ) )
-            {
-                return;
-            }
-
-            if ( !( e.NewValue is PacketEntry packetEntry ) )
-            {
-                return;
-            }
-
-            hexDump.BinaryData = SetBinary( packetEntry );
-            hexDump.TextData = SetText( packetEntry );
-        }
+        public static readonly DependencyProperty PacketEntriesProperty =
+            DependencyProperty.Register( nameof( PacketEntries ),
+                typeof( ObservableCollection<DebugViewModel.PacketEnabledEntry> ), typeof( HexDumpControl ) );
 
         private string _binaryData;
         private string _textData;
@@ -67,6 +59,12 @@ namespace ClassicAssist.UI.Controls
             }
         }
 
+        public ObservableCollection<DebugViewModel.PacketEnabledEntry> PacketEntries
+        {
+            get => (ObservableCollection<DebugViewModel.PacketEnabledEntry>) GetValue( PacketEntriesProperty );
+            set => SetValue( PacketEntriesProperty, value );
+        }
+
         public string Status
         {
             get
@@ -87,6 +85,22 @@ namespace ClassicAssist.UI.Controls
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private static void PropertyChangedCallback( DependencyObject d, DependencyPropertyChangedEventArgs e )
+        {
+            if ( !( d is HexDumpControl hexDump ) )
+            {
+                return;
+            }
+
+            if ( !( e.NewValue is PacketEntry packetEntry ) )
+            {
+                return;
+            }
+
+            hexDump.BinaryData = SetBinary( packetEntry );
+            hexDump.TextData = SetText( packetEntry );
+        }
 
         private static string SetText( PacketEntry packetEntry )
         {
@@ -205,6 +219,28 @@ namespace ClassicAssist.UI.Controls
         {
             obj = value;
             OnPropertyChanged( propertyName );
+        }
+
+        private void Ignore_OnClick( object sender, RoutedEventArgs e )
+        {
+            if ( PacketEntries == null )
+            {
+                return;
+            }
+
+            if ( Packet.Data == null || Packet.Data.Length == 0 )
+            {
+                return;
+            }
+
+            byte packetType = Packet.Data[0];
+
+            DebugViewModel.PacketEnabledEntry entry = PacketEntries.FirstOrDefault( i => i.PacketID == packetType );
+
+            if ( entry != null )
+            {
+                entry.Enabled = false;
+            }
         }
     }
 }

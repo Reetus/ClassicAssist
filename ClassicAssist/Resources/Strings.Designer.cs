@@ -880,6 +880,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy packet declaration.
+        /// </summary>
+        public static string Copy_packet_declaration {
+            get {
+                return ResourceManager.GetString("Copy packet declaration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy to clipboard.
         /// </summary>
         public static string Copy_to_clipboard {
@@ -1551,6 +1560,15 @@ namespace ClassicAssist.Resources {
         public static string Ignore_List {
             get {
                 return ResourceManager.GetString("Ignore List", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignore packet type.
+        /// </summary>
+        public static string Ignore_packet_type {
+            get {
+                return ResourceManager.GetString("Ignore packet type", resourceCulture);
             }
         }
         
@@ -2862,6 +2880,15 @@ namespace ClassicAssist.Resources {
         public static string Replacement {
             get {
                 return ResourceManager.GetString("Replacement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replay.
+        /// </summary>
+        public static string Replay {
+            get {
+                return ResourceManager.GetString("Replay", resourceCulture);
             }
         }
         

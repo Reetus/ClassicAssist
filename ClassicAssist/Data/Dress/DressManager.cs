@@ -173,9 +173,10 @@ namespace ClassicAssist.Data.Dress
         {
             try
             {
-                if (IsDressing)
+                if ( IsDressing )
                 {
-                    UO.Commands.SystemMessage(Strings.Dress_already_in_progress___, 35);
+                    UO.Commands.SystemMessage( Strings.Dress_already_in_progress___,
+                        (int) UO.Commands.SystemMessageHues.Red );
                     return;
                 }
 

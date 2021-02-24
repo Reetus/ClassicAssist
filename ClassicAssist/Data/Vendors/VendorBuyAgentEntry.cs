@@ -1,24 +1,35 @@
-﻿using System.ComponentModel;
+﻿#region License
+
+// Copyright (C) 2021 Reetus
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#endregion
+
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using ClassicAssist.Annotations;
 
 namespace ClassicAssist.Data.Vendors
 {
     public class VendorBuyAgentEntry : INotifyPropertyChanged
     {
-        private int _amount;
         private bool _enabled;
-        private int _graphic;
-        private int _hue;
-        private int _maxPrice;
+        private bool _includeBackpackAmount;
+        private ObservableCollection<VendorBuyAgentItem> _items = new ObservableCollection<VendorBuyAgentItem>();
         private string _name;
-
-        public int Amount
-        {
-            get => _amount;
-            set => SetProperty( ref _amount, value );
-        }
 
         public bool Enabled
         {
@@ -26,22 +37,16 @@ namespace ClassicAssist.Data.Vendors
             set => SetProperty( ref _enabled, value );
         }
 
-        public int Graphic
+        public bool IncludeBackpackAmount
         {
-            get => _graphic;
-            set => SetProperty( ref _graphic, value );
+            get => _includeBackpackAmount;
+            set => SetProperty( ref _includeBackpackAmount, value );
         }
 
-        public int Hue
+        public ObservableCollection<VendorBuyAgentItem> Items
         {
-            get => _hue;
-            set => SetProperty( ref _hue, value );
-        }
-
-        public int MaxPrice
-        {
-            get => _maxPrice;
-            set => SetProperty( ref _maxPrice, value );
+            get => _items;
+            set => SetProperty( ref _items, value );
         }
 
         public string Name
@@ -63,6 +68,11 @@ namespace ClassicAssist.Data.Vendors
         {
             obj = value;
             OnPropertyChanged( propertyName );
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

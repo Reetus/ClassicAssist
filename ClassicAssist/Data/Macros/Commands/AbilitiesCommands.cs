@@ -86,7 +86,7 @@ namespace ClassicAssist.Data.Macros.Commands
                         {
                             if ( !MacroManager.QuietMode )
                             {
-                                UOC.SystemMessage( Strings.Ability_already_set___, 0x3F );
+                                UOC.SystemMessage( Strings.Ability_already_set___, (int) UOC.SystemMessageHues.Green );
                             }
 
                             return;
@@ -100,7 +100,7 @@ namespace ClassicAssist.Data.Macros.Commands
                         {
                             if ( !MacroManager.QuietMode )
                             {
-                                UOC.SystemMessage( Strings.Ability_not_set___, 0x3F );
+                                UOC.SystemMessage( Strings.Ability_not_set___, (int) UOC.SystemMessageHues.Green );
                             }
 
                             return;
@@ -111,7 +111,8 @@ namespace ClassicAssist.Data.Macros.Commands
                 }
             }
 
-            UOC.SystemMessage( string.Format( Strings.Setting_ability___0_____, ability ), 0x3F );
+            UOC.SystemMessage( string.Format( Strings.Setting_ability___0_____, ability ),
+                (int) UOC.SystemMessageHues.Green );
             manager.SetAbility( primary ? AbilityType.Primary : AbilityType.Secondary );
         }
 

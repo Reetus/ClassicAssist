@@ -53,7 +53,7 @@ namespace ClassicAssist.UO.Network
                     if ( actionQueueItem.DelaySend )
                     {
                         while ( Engine.LastActionPacket +
-                                TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) > DateTime.Now )
+                            TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) > DateTime.Now )
                         {
                             Thread.Sleep( 1 );
                         }
@@ -80,7 +80,7 @@ namespace ClassicAssist.UO.Network
                     if ( actionItem.DelaySend )
                     {
                         while ( Engine.LastActionPacket +
-                                TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) > DateTime.Now )
+                            TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) > DateTime.Now )
                         {
                             Thread.Sleep( 1 );
                         }
@@ -124,7 +124,8 @@ namespace ClassicAssist.UO.Network
                 {
                     if ( !MacroManager.QuietMode )
                     {
-                        Commands.SystemMessage( Strings.Object_queue_full, 61, true );
+                        Commands.SystemMessage( Strings.Object_queue_full, (int) Commands.SystemMessageHues.Yellow,
+                            true );
                     }
 
                     return Task.CompletedTask;
@@ -164,7 +165,8 @@ namespace ClassicAssist.UO.Network
                 {
                     if ( !MacroManager.QuietMode )
                     {
-                        Commands.SystemMessage( Strings.Object_queue_full, 61, true );
+                        Commands.SystemMessage( Strings.Object_queue_full, (int) Commands.SystemMessageHues.Yellow,
+                            true );
                     }
 
                     return Task.CompletedTask;
@@ -260,7 +262,7 @@ namespace ClassicAssist.UO.Network
 
                     // Return false so we don't rewait the action delay
                     return false;
-                } ) { CheckRange = checkRange, DelaySend = delaySend, Serial = serial, Arguments = checkRange};
+                } ) { CheckRange = checkRange, DelaySend = delaySend, Serial = serial, Arguments = checkRange };
 
                 _actionPacketQueue.Enqueue( actionQueueItem, priority );
 
@@ -268,8 +270,9 @@ namespace ClassicAssist.UO.Network
             }
         }
 
-        public static Task<bool> EnqueueAction<T>( T arguments, Func<T, bool> action, QueuePriority priority = QueuePriority.Low,
-            bool delaySend = true, CancellationToken cancellationToken = default )
+        public static Task<bool> EnqueueAction<T>( T arguments, Func<T, bool> action,
+            QueuePriority priority = QueuePriority.Low, bool delaySend = true,
+            CancellationToken cancellationToken = default )
         {
             lock ( _actionPacketQueueLock )
             {

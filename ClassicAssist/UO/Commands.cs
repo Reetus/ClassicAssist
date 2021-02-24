@@ -24,6 +24,14 @@ namespace ClassicAssist.UO
 {
     public class Commands
     {
+        public enum SystemMessageHues
+        {
+            Normal = 0,
+            Red = 35,
+            Yellow = 61,
+            Green = 63
+        }
+
         private static readonly object _dragDropLock = new object();
         private static string _lastSystemMessage;
         private static DateTime _lastSystemMessageTime;
@@ -95,7 +103,7 @@ namespace ClassicAssist.UO
                 throw new ArgumentException( "EquipItem: Layer is invalid" );
             }
 
-            return ActionPacketQueue.EnqueueAction( item, ( i ) =>
+            return ActionPacketQueue.EnqueueAction( item, i =>
             {
                 Engine.SendPacketToServer( new DragItem( item.Serial, 1 ) );
                 Thread.Sleep( 50 );
@@ -124,7 +132,7 @@ namespace ClassicAssist.UO
                 throw new ArgumentException( "EquipItem: Layer is invalid" );
             }
 
-            return ActionPacketQueue.EnqueueAction( item, ( i ) =>
+            return ActionPacketQueue.EnqueueAction( item, i =>
             {
                 Engine.SendPacketToServer( new DragItem( item.Serial, 1 ) );
                 Thread.Sleep( 50 );

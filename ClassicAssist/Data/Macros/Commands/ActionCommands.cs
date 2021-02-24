@@ -576,7 +576,8 @@ namespace ClassicAssist.Data.Macros.Commands
 
                     if ( entry == null )
                     {
-                        UOC.SystemMessage( Strings.Context_menu_entry_not_found___, 61, true, true );
+                        UOC.SystemMessage( Strings.Context_menu_entry_not_found___, (int) UOC.SystemMessageHues.Yellow,
+                            true, true );
                         return;
                     }
 

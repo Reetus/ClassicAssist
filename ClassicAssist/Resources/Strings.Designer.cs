@@ -1717,11 +1717,29 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Invalid_state_name___on____off___or__toggle____ {
+            get {
+                return ResourceManager.GetString("Invalid state name: \"on\", \"off\", or \"toggle\"...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid type....
         /// </summary>
         public static string Invalid_type___ {
             get {
                 return ResourceManager.GetString("Invalid type...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid VendorBuy list name....
+        /// </summary>
+        public static string Invalid_VendorBuy_list_name___ {
+            get {
+                return ResourceManager.GetString("Invalid VendorBuy list name...", resourceCulture);
             }
         }
         

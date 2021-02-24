@@ -3118,6 +3118,38 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enables or disables autobuying of the specified vendor buy list name....
+        /// </summary>
+        public static string SETVENDORBUYAUTOBUY_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETVENDORBUYAUTOBUY_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to # set on
+        ///SetVendorBuyAutoBuy(&quot;regs&quot;, &quot;on&quot;)
+        ///# set off
+        ///SetVendorBuyAutoBuy(&quot;regs&quot;, &quot;off&quot;)
+        ///# default will toggle
+        ///SetVendorBuyAutoBuy(&quot;regs&quot;).
+        /// </summary>
+        public static string SETVENDORBUYAUTOBUY_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("SETVENDORBUYAUTOBUY_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetVendorBuyAutoBuy(&quot;regs&quot;, &quot;on&quot;).
+        /// </summary>
+        public static string SETVENDORBUYAUTOBUY_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETVENDORBUYAUTOBUY_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Display corpses and/or mobiles names (parameter &quot;mobiles&quot; or &quot;corpses&quot;..
         /// </summary>
         public static string SHOWNAMES_COMMAND_DESCRIPTION {

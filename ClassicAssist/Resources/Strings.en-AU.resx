@@ -1470,4 +1470,7 @@ Are you sure you wish to continue?</value>
   <data name="Atleast one option must be provided..." xml:space="preserve">
     <value>Atleast one option must be provided...</value>
   </data>
+  <data name="Invalid state name: &quot;on&quot;, &quot;off&quot;, or &quot;toggle&quot;..." xml:space="preserve">
+    <value>Invalid state name: "on", "off", or "toggle"...</value>
+  </data>
 </root>

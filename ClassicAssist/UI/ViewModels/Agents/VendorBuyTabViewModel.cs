@@ -31,6 +31,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
         public VendorBuyTabViewModel()
         {
             IncomingPacketHandlers.VendorBuyDisplayEvent += OnVendorBuyDisplayEvent;
+            VendorBuyManager manager = VendorBuyManager.GetInstance();
+            manager.Items = Items;
         }
 
         public ICommand InsertCommand => _insertCommand ?? ( _insertCommand = new RelayCommand( Insert, o => true ) );

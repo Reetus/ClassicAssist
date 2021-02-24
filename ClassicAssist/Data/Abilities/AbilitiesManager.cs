@@ -296,7 +296,7 @@ namespace ClassicAssist.Data.Abilities
 
             if ( _checkHandsInProgress )
             {
-                UOC.SystemMessage( Strings.Arm___Disarm_already_in_progress___, 35 );
+                UOC.SystemMessage( Strings.Arm___Disarm_already_in_progress___, (int) UOC.SystemMessageHues.Red );
                 return false;
             }
 

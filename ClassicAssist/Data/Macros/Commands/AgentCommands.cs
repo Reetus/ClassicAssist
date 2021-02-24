@@ -3,6 +3,7 @@ using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Data.Counters;
 using ClassicAssist.Data.Dress;
 using ClassicAssist.Data.Organizer;
+using ClassicAssist.Data.Vendors;
 using ClassicAssist.Resources;
 using UOC = ClassicAssist.UO.Commands;
 
@@ -18,7 +19,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( manager.IsDressing )
             {
-                UOC.SystemMessage( Strings.Dress_already_in_progress___, 35 );
+                UOC.SystemMessage( Strings.Dress_already_in_progress___, (int) UOC.SystemMessageHues.Red );
                 return;
             }
 
@@ -136,6 +137,38 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( !MacroManager.QuietMode )
             {
                 UOC.SystemMessage( Strings.Organizer_containers_set___ );
+            }
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Agents ),
+            Parameters = new[] { nameof( ParameterType.ListName ), nameof( ParameterType.OnOff ) } )]
+        public static void SetVendorBuyAutoBuy( string listName, string onOff = "toggle" )
+        {
+            VendorBuyManager manager = VendorBuyManager.GetInstance();
+
+            VendorBuyAgentEntry entry =
+                manager.Items.FirstOrDefault( e => e.Name.Trim().ToLower().Equals( listName.Trim().ToLower() ) );
+
+            if ( entry == null )
+            {
+                UOC.SystemMessage( Strings.Invalid_VendorBuy_list_name___, (int) UOC.SystemMessageHues.Red );
+                return;
+            }
+
+            switch ( onOff.Trim().ToLower() )
+            {
+                case "on":
+                    entry.Enabled = true;
+                    break;
+                case "off":
+                    entry.Enabled = false;
+                    break;
+                case "toggle":
+                    entry.Enabled = !entry.Enabled;
+                    break;
+                default:
+                    UOC.SystemMessage( Strings.Invalid_state_name___on____off___or__toggle____ );
+                    break;
             }
         }
     }

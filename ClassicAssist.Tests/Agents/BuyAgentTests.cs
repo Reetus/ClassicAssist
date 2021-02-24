@@ -22,12 +22,17 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Assistant;
+using ClassicAssist.Data;
+using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.UI.ViewModels.Agents;
+using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.Tests.Agents
 {
@@ -114,7 +119,10 @@ namespace ClassicAssist.Tests.Agents
             IncomingPacketHandlers.Initialize();
 
             VendorBuyTabViewModel vm = new VendorBuyTabViewModel();
-            vm.Items.Add( new VendorBuyAgentEntry
+
+            VendorBuyAgentEntry entry = new VendorBuyAgentEntry();
+
+            entry.Items.Add( new VendorBuyAgentItem
             {
                 Graphic = 0xf8c,
                 Amount = 1,
@@ -122,7 +130,7 @@ namespace ClassicAssist.Tests.Agents
                 Hue = -1,
                 MaxPrice = -1
             } );
-            vm.Items.Add( new VendorBuyAgentEntry
+            entry.Items.Add( new VendorBuyAgentItem
             {
                 Graphic = 0xf8d,
                 Amount = 1,
@@ -130,7 +138,7 @@ namespace ClassicAssist.Tests.Agents
                 Hue = -1,
                 MaxPrice = -1
             } );
-            vm.Items.Add( new VendorBuyAgentEntry
+            entry.Items.Add( new VendorBuyAgentItem
             {
                 Graphic = 0xf85,
                 Amount = 1,
@@ -138,7 +146,7 @@ namespace ClassicAssist.Tests.Agents
                 Hue = -1,
                 MaxPrice = -1
             } );
-            vm.Items.Add( new VendorBuyAgentEntry
+            entry.Items.Add( new VendorBuyAgentItem
             {
                 Graphic = 0xf88,
                 Amount = 1,
@@ -147,7 +155,8 @@ namespace ClassicAssist.Tests.Agents
                 MaxPrice = -1
             } );
 
-            vm.Enabled = true;
+            entry.Enabled = true;
+            vm.Items.Add( entry );
 
             PacketHandler containerContentsHandler = IncomingPacketHandlers.GetHandler( 0x3C );
             containerContentsHandler?.OnReceive( new PacketReader( contents, contents.Length, false ) );
@@ -191,15 +200,73 @@ namespace ClassicAssist.Tests.Agents
 
             containerDisplayHandler?.OnReceive( new PacketReader( containerDisplay, containerDisplay.Length, true ) );
 
-            foreach ( VendorBuyAgentEntry entry in vm.Items )
+            foreach ( VendorBuyAgentItem item in vm.Items.Where( e => e.Enabled ).SelectMany( e => e.Items ) )
             {
-                int amount = buyList.Where( e => e.Item.ID == entry.Graphic ).Sum( e => e.Amount );
+                int amount = buyList.Where( e => e.Item.ID == item.Graphic ).Sum( e => e.Amount );
 
-                Assert.AreEqual( entry.Amount, amount, 0, "Buy incorrect amount" );
+                Assert.AreEqual( item.Amount, amount, 0, "Buy incorrect amount" );
             }
 
             Engine.Items.Clear();
             Engine.Mobiles.Clear();
+        }
+
+        [TestMethod]
+        public void WillConvertOld()
+        {
+            VendorBuyTabViewModel vm = new VendorBuyTabViewModel();
+
+            JObject json = JObject.Parse(
+                "{\r\n    \"VendorBuy\": {\r\n        \"Enabled\": true,\r\n        \"IncludeBackpackAmount\": true,\r\n        \"IncludePurchasedAmount\": false,\r\n        \"Items\": [\r\n            {\r\n                \"Enabled\": false,\r\n                \"Name\": \"citrine%s%\",\r\n                \"Graphic\": 3861,\r\n                \"Hue\": 0,\r\n                \"Amount\": 500,\r\n                \"MaxPrice\": 50\r\n            },\r\n            {\r\n                \"Enabled\": false,\r\n                \"Name\": \"sapphire%s%\",\r\n                \"Graphic\": 3865,\r\n                \"Hue\": 0,\r\n                \"Amount\": 500,\r\n                \"MaxPrice\": 100\r\n            },\r\n            {\r\n                \"Enabled\": false,\r\n                \"Name\": \"rub%ies/y%\",\r\n                \"Graphic\": 3859,\r\n                \"Hue\": 0,\r\n                \"Amount\": 500,\r\n                \"MaxPrice\": 75\r\n            },\r\n            {\r\n                \"Enabled\": false,\r\n                \"Name\": \"Black Pearl%s%\",\r\n                \"Graphic\": 3962,\r\n                \"Hue\": 0,\r\n                \"Amount\": 1000,\r\n                \"MaxPrice\": 5\r\n            },\r\n            {\r\n                \"Enabled\": true,\r\n                \"Name\": \"recall rune\",\r\n                \"Graphic\": 7956,\r\n                \"Hue\": 0,\r\n                \"Amount\": 17,\r\n                \"MaxPrice\": -1\r\n            },\r\n            {\r\n                \"Enabled\": false,\r\n                \"Name\": \"blank scroll%s%\",\r\n                \"Graphic\": 3636,\r\n                \"Hue\": 0,\r\n                \"Amount\": 500,\r\n                \"MaxPrice\": 5\r\n            },\r\n            {\r\n                \"Enabled\": false,\r\n                \"Name\": \"Blood Moss\",\r\n                \"Graphic\": 3963,\r\n                \"Hue\": 0,\r\n                \"Amount\": -1,\r\n                \"MaxPrice\": 5\r\n            },\r\n            {\r\n                \"Enabled\": false,\r\n                \"Name\": \"Mandrake Root%s%\",\r\n                \"Graphic\": 3974,\r\n                \"Hue\": 0,\r\n                \"Amount\": -1,\r\n                \"MaxPrice\": 3\r\n            },\r\n            {\r\n                \"Enabled\": false,\r\n                \"Name\": \"Ginseng\",\r\n                \"Graphic\": 3973,\r\n                \"Hue\": 0,\r\n                \"Amount\": -1,\r\n                \"MaxPrice\": -1\r\n            },\r\n            {\r\n                \"Enabled\": false,\r\n                \"Name\": \"Sulfurous Ash\",\r\n                \"Graphic\": 3980,\r\n                \"Hue\": 0,\r\n                \"Amount\": -1,\r\n                \"MaxPrice\": -1\r\n            },\r\n            {\r\n                \"Enabled\": false,\r\n                \"Name\": \"Garlic\",\r\n                \"Graphic\": 3972,\r\n                \"Hue\": 0,\r\n                \"Amount\": -1,\r\n                \"MaxPrice\": -1\r\n            },\r\n            {\r\n                \"Enabled\": false,\r\n                \"Name\": \"Nightshade\",\r\n                \"Graphic\": 3976,\r\n                \"Hue\": 0,\r\n                \"Amount\": -1,\r\n                \"MaxPrice\": -1\r\n            },\r\n            {\r\n                \"Enabled\": false,\r\n                \"Name\": \"Spider's Silk\",\r\n                \"Graphic\": 3981,\r\n                \"Hue\": 0,\r\n                \"Amount\": -1,\r\n                \"MaxPrice\": -1\r\n            }\r\n        ]\r\n    }\r\n}" );
+
+            vm.Deserialize( json, new Options() );
+
+            Assert.AreEqual( 1, vm.Items.Count );
+
+            VendorBuyAgentEntry entry = vm.Items[0];
+
+            JToken config = json["VendorBuy"];
+
+            Assert.AreEqual( entry.Enabled, config["Enabled"].ToObject<bool>() );
+            Assert.AreEqual( entry.IncludeBackpackAmount, config["IncludeBackpackAmount"].ToObject<bool>() );
+
+            VendorBuyAgentItem[] oldItems =
+                JsonConvert.DeserializeObject<VendorBuyAgentItem[]>( config["Items"].ToString() );
+
+            for ( int index = 0; index < oldItems.Length; index++ )
+            {
+                VendorBuyAgentItem oldItem = oldItems[index];
+                VendorBuyAgentItem newItem = entry.Items[index];
+
+                Assert.AreEqual( oldItem.Enabled, newItem.Enabled );
+                Assert.AreEqual( oldItem.Name, newItem.Name );
+                Assert.AreEqual( oldItem.Graphic, newItem.Graphic );
+                Assert.AreEqual( oldItem.Amount, newItem.Amount );
+                Assert.AreEqual( oldItem.Hue, newItem.Hue );
+                Assert.AreEqual( oldItem.MaxPrice, newItem.MaxPrice );
+            }
+        }
+
+        [TestMethod]
+        public void VendorBuyCommandWillSet()
+        {
+            VendorBuyTabViewModel vm = new VendorBuyTabViewModel();
+
+            VendorBuyAgentEntry entry = new VendorBuyAgentEntry { Name = "Test", Enabled = true };
+
+            vm.Items.Add( entry );
+
+            AgentCommands.SetVendorBuyAutoBuy( "Test", "off" );
+
+            Assert.IsFalse( entry.Enabled );
+
+            AgentCommands.SetVendorBuyAutoBuy( "Test", "on" );
+
+            Assert.IsTrue( entry.Enabled );
+
+            AgentCommands.SetVendorBuyAutoBuy( "Test" );
+
+            Assert.IsFalse( entry.Enabled );
         }
     }
 }

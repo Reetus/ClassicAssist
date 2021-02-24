@@ -1570,4 +1570,18 @@ if res:
 else:
  print 'Cancel was pressed'</value>
   </data>
+  <data name="SETVENDORBUYAUTOBUY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Enables or disables autobuying of the specified vendor buy list name...</value>
+  </data>
+  <data name="SETVENDORBUYAUTOBUY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetVendorBuyAutoBuy("regs", "on")</value>
+  </data>
+  <data name="SETVENDORBUYAUTOBUY_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># set on
+SetVendorBuyAutoBuy("regs", "on")
+# set off
+SetVendorBuyAutoBuy("regs", "off")
+# default will toggle
+SetVendorBuyAutoBuy("regs")</value>
+  </data>
 </root>

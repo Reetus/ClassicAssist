@@ -117,7 +117,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return SelectionPromptGump.SelectionPrompt( enumerable, message, closable );
             }
 
-            UOC.SystemMessage( Strings.Atleast_one_option_must_be_provided___, 33 );
+            UOC.SystemMessage( Strings.Atleast_one_option_must_be_provided___, (int) UOC.SystemMessageHues.Red );
             return ( false, 0 );
         }
 

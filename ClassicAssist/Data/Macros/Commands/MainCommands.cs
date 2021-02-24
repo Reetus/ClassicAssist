@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -175,7 +175,7 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = nameof( Strings.Main ) )]
-        public static void PlaySound( object param )
+        public static void PlaySound( object param, int pause = -1 )
         {
             switch ( param )
             {
@@ -193,7 +193,14 @@ namespace ClassicAssist.Data.Macros.Commands
                     }
 
                     SoundPlayer soundPlayer = new SoundPlayer( fullPath );
-                    soundPlayer.PlaySync();
+                    if ( pause >= 0 )
+                    {
+                        soundPlayer.Play();
+                        Thread.Sleep( pause );
+                    }
+                    else
+                        soundPlayer.PlaySync();
+                    
                     break;
                 }
             }
@@ -305,7 +312,7 @@ namespace ClassicAssist.Data.Macros.Commands
             }
             catch ( Exception e )
             {
-                UOC.SystemMessage( e.Message, (int) UOC.SystemMessageHues.Red );
+                UOC.SystemMessage( e.Message, 33 );
                 return false;
             }
         }

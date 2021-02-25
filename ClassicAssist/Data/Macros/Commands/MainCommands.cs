@@ -175,7 +175,7 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = nameof( Strings.Main ) )]
-        public static void PlaySound( object param, int pause = -1 )
+        public static void PlaySound( object param, bool playSync = true )
         {
             switch ( param )
             {
@@ -193,13 +193,11 @@ namespace ClassicAssist.Data.Macros.Commands
                     }
 
                     SoundPlayer soundPlayer = new SoundPlayer( fullPath );
-                    if ( pause >= 0 )
-                    {
-                        soundPlayer.Play();
-                        Thread.Sleep( pause );
-                    }
-                    else
+                    if ( playSync ) {
                         soundPlayer.PlaySync();
+                    } else {
+                        soundPlayer.Play();
+                    }
                     
                     break;
                 }

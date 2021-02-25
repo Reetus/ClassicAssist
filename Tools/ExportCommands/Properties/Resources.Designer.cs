@@ -385,6 +385,15 @@ namespace ExportCommands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An array of strings.
+        /// </summary>
+        public static string PARAMETER_DESCRIPTION_STRINGARRAY {
+            get {
+                return ResourceManager.GetString("PARAMETER_DESCRIPTION_STRINGARRAY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Timeout specified in milliseconds.
         /// </summary>
         public static string PARAMETER_DESCRIPTION_TIMEOUT {

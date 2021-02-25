@@ -231,7 +231,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 foreach ( Item scavengerItem in scavengerItems.Where( scavengerItem =>
                     scavengerItem.Distance <= SCAVENGER_DISTANCE ).Distinct() )
                 {
-                    UOC.SystemMessage( string.Format( Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown" ), 61 );
+                    UOC.SystemMessage( string.Format( Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown" ),
+                        (int) UOC.SystemMessageHues.Yellow );
                     Task<bool> t = ActionPacketQueue.EnqueueDragDrop( scavengerItem.Serial, scavengerItem.Count,
                         container.Serial, QueuePriority.Low, true, true, requeueOnFailure: false,
                         successPredicate: CheckItemContainer );

@@ -1,0 +1,78 @@
+﻿<Window x:Class="ClassicAssist.UI.Views.Filters.SoundFilterConfigureWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:resources="clr-namespace:ClassicAssist.Resources"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+        mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
+        Title="{x:Static resources:Strings.Configure_Sound_Filters}" Height="500" Width="400"
+        DataContext="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}" Topmost="True">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+                <ResourceDictionary>
+                    <CollectionViewSource x:Key='src' Source="{Binding Items}">
+                        <CollectionViewSource.GroupDescriptions>
+                            <PropertyGroupDescription PropertyName="Category" />
+                        </CollectionViewSource.GroupDescriptions>
+                    </CollectionViewSource>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ListView ItemsSource="{Binding Source={StaticResource src}}" Grid.Row="0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="{x:Static resources:Strings.Sound_Type}" DisplayMemberBinding="{Binding LocalizedName}" Width="300"/>
+                    <GridViewColumn Header="✓">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Enabled}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Margin" Value="0,0,0,5" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                        <Expander IsExpanded="{Binding Items/IsExpanded}" BorderThickness="0,0,0,0">
+                                            <Expander.Header>
+                                                <DockPanel>
+                                                    <TextBlock FontSize="12" Text="{Binding Path=Name}" Margin="5,0,0,0" Width="100" Foreground="{DynamicResource ThemeForegroundBrush}" />
+                                                </DockPanel>
+                                            </Expander.Header>
+                                            <Expander.Content>
+                                                <ItemsPresenter />
+                                            </Expander.Content>
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </ListView.GroupStyle>
+        </ListView>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Content="{x:Static resources:Strings.Close}" Padding="25,0">
+                <i:Interaction.Behaviors>
+                    <misc:CloseOnClickBehaviour/>
+                </i:Interaction.Behaviors>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

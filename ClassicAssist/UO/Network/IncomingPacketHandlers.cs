@@ -519,7 +519,7 @@ namespace ClassicAssist.UO.Network
 
             if ( manager.Enabled != AbilityType.None )
             {
-                Commands.SystemMessage( Strings.Current_Ability_Cleared, HUE_RED );
+                Commands.SystemMessage( Strings.Current_Ability_Cleared, (int) Commands.SystemMessageHues.Red );
             }
 
             manager.Enabled = AbilityType.None;

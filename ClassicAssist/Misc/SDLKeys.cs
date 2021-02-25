@@ -100,6 +100,9 @@ namespace ClassicAssist.Misc
             SDLK_x = 'x',
             SDLK_y = 'y',
             SDLK_z = 'z',
+            SDLK_æ = 'æ',
+            SDLK_ø = 'ø',
+            SDLK_å = 'å',
 
             SDLK_CAPSLOCK = SDL_Scancode.SDL_SCANCODE_CAPSLOCK | SDLK_SCANCODE_MASK,
 
@@ -625,6 +628,9 @@ namespace ClassicAssist.Misc
             { (int) SDL_Keycode.SDLK_x, Key.X },
             { (int) SDL_Keycode.SDLK_y, Key.Y },
             { (int) SDL_Keycode.SDLK_z, Key.Z },
+            //{ (int) SDL_Keycode.SDLK_æ, Key. },
+            //{ (int) SDL_Keycode.SDLK_ø, Key.Z },
+            //{ (int) SDL_Keycode.SDLK_å, Key.Z },
             { (int) SDL_Keycode.SDLK_0, Key.D0 },
             { (int) SDL_Keycode.SDLK_1, Key.D1 },
             { (int) SDL_Keycode.SDLK_2, Key.D2 },
@@ -771,6 +777,33 @@ namespace ClassicAssist.Misc
                         { 186, Key.Oem5 },
                         { 231, Key.OemQuestion },
                         { 241, Key.Oem3 }
+                    }
+                },
+                {
+                    1044, /* Norwegian - (Norway) "nb-NO" */
+                    new Dictionary<int, Key>
+                    {
+                        { 168, Key.Oem1 },
+                        { 248, Key.Oem3 },
+                        { 229, Key.Oem6 },
+                        { 92, Key.OemOpenBrackets },
+                        { 39, Key.OemQuestion },
+                        { 60, Key.OemBackslash }
+                    }
+                },
+                {
+                    1046, /* Brazilian - (BR) "ABNT2/ABNT"*/
+                    new Dictionary<int, Key>
+                    {
+                        { 39, Key.Oem3 },
+                        { 47, Key.AbntC1 },
+                        { 59, Key.OemQuestion },
+                        { 91, Key.Oem6 },
+                        { 92, Key.OemBackslash },
+                        { 93, Key.Oem5 },
+                        { 126, Key.OemQuotes },
+                        { 180, Key.OemOpenBrackets },
+                        { 231, Key.Oem1 }
                     }
                 }
             };

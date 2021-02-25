@@ -74,7 +74,8 @@
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <ItemContainerTemplate>
-                                <controls:HexDumpControl Packet="{Binding}"/>
+                                <controls:HexDumpControl Packet="{Binding}"
+                                                         PacketEntries="{Binding DataContext.PacketEntries, ElementName=window}" />
                             </ItemContainerTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

@@ -406,8 +406,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 }
 
                 if ( !LootHumanoids && TargetManager.GetInstance().BodyData
-                         .Where( bd => bd.BodyType == TargetBodyType.Humanoid ).Select( bd => bd.Graphic )
-                         .Contains( item.Count ) )
+                    .Where( bd => bd.BodyType == TargetBodyType.Humanoid ).Select( bd => bd.Graphic )
+                    .Contains( item.Count ) )
                 {
                     return;
                 }
@@ -481,7 +481,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         containerSerial = Engine.Player.GetLayer( Layer.Backpack );
                     }
 
-                    UOC.SystemMessage( string.Format( Strings.Autolooting___0__, lootItem.Name ), 61 );
+                    UOC.SystemMessage( string.Format( Strings.Autolooting___0__, lootItem.Name ),
+                        (int) UOC.SystemMessageHues.Yellow );
                     Task t = ActionPacketQueue.EnqueueDragDrop( lootItem.Serial, lootItem.Count, containerSerial,
                         QueuePriority.High, true, true, requeueOnFailure: RequeueFailedItems,
                         successPredicate: CheckItemContainer );

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -175,7 +175,7 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = nameof( Strings.Main ) )]
-        public static void PlaySound( object param )
+        public static void PlaySound( object param, bool playSync = true )
         {
             switch ( param )
             {
@@ -193,7 +193,12 @@ namespace ClassicAssist.Data.Macros.Commands
                     }
 
                     SoundPlayer soundPlayer = new SoundPlayer( fullPath );
-                    soundPlayer.PlaySync();
+                    if ( playSync ) {
+                        soundPlayer.PlaySync();
+                    } else {
+                        soundPlayer.Play();
+                    }
+                    
                     break;
                 }
             }

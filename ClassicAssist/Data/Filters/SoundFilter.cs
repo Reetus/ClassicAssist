@@ -101,7 +101,7 @@ namespace ClassicAssist.Data.Filters
 
             JArray items = new JArray();
 
-            foreach ( SoundFilterEntry entry in Items )
+            foreach ( SoundFilterEntry entry in Items.Where( i => i.Enabled != i.DefaultEnabled ) )
             {
                 JObject obj = new JObject { ["Name"] = entry.Name, ["Enabled"] = entry.Enabled };
 

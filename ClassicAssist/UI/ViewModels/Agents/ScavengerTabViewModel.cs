@@ -14,6 +14,14 @@ using ClassicAssist.UO.Objects;
 using Newtonsoft.Json.Linq;
 using UOC = ClassicAssist.UO.Commands;
 
+/* 
+ * Changelog:
+ * Included Player is Dead. 
+ * Fix ignore item after scavenger 1x
+ * FIx double dragodrop for 1 item
+ * Removed CheckItemContainer it's not updating bcs lock section
+ */
+
 namespace ClassicAssist.UI.ViewModels.Agents
 {
     public class ScavengerTabViewModel : BaseViewModel, ISettingProvider
@@ -183,10 +191,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         internal void CheckArea()
         {
-            if ( !Enabled || Engine.Player == null )
+            //BEGIN
+            if (!Enabled || Engine.Player == null || Engine.Player.IsDead)
             {
                 return;
             }
+            //END
 
             List<Item> scavengerItems = new List<Item>();
 
@@ -216,6 +226,10 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     scavengerItems.AddRange( matches );
                 }
 
+                //BEGIN
+                _ignoreList.Clear();
+                //END
+
                 if ( scavengerItems.Count == 0 )
                 {
                     return;
@@ -228,20 +242,19 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     return;
                 }
 
-                foreach ( Item scavengerItem in scavengerItems.Where( scavengerItem =>
-                    scavengerItem.Distance <= SCAVENGER_DISTANCE ).Distinct() )
+                //BEGIN
+                foreach (Item scavengerItem in scavengerItems.Where(i =>
+                  i.Distance <= SCAVENGER_DISTANCE && !_ignoreList.Contains(i.Serial)))
                 {
-                    UOC.SystemMessage( string.Format( Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown" ),
-                        (int) UOC.SystemMessageHues.Yellow );
-                    Task<bool> t = ActionPacketQueue.EnqueueDragDrop( scavengerItem.Serial, scavengerItem.Count,
+                    UOC.SystemMessage(string.Format(Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown"), 61);
+                    Task<bool> t = ActionPacketQueue.EnqueueDragDrop(scavengerItem.Serial, scavengerItem.Count,
                         container.Serial, QueuePriority.Low, true, true, requeueOnFailure: false,
-                        successPredicate: CheckItemContainer );
+                        successPredicate: CheckItemContainer);
 
-                    if ( t.Result && CheckItemContainer( scavengerItem.Serial, container.Serial ) )
-                    {
-                        _ignoreList.Add( scavengerItem.Serial );
-                    }
+                    if (t.Result)
+                        _ignoreList.Add(scavengerItem.Serial);
                 }
+                //END
             }
         }
 

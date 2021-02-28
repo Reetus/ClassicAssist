@@ -240,7 +240,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         successPredicate: CheckItemContainer );
 
                     if ( t.Result )
+                    {
                         _ignoreList.Add( scavengerItem.Serial );
+                    }
                 }
             }
         }

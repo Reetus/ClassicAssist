@@ -17,6 +17,15 @@
     {
         "Category": "Environment",
         "DefaultEnabled": false,
+        "Name": "Teleport Tile Sounds", // qk
+        "SoundIDs": [
+            0x1F0,
+            0x1FE
+        ]
+    },
+    {
+        "Category": "Environment",
+        "DefaultEnabled": false,
         "Name": "BackPack Sounds", // qk // TODO // taken from containers.txt -> // doesnt seem to be working -> client side ?
         "SoundIDs": [
             0x02D,

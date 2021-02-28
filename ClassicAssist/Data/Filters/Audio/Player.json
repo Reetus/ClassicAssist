@@ -56,7 +56,7 @@
     {
         "Category": "Player",
         "DefaultEnabled": false,
-        "Name": "Emote Male Sounds", // qk // Human Female emotes
+        "Name": "Emote Female Sounds", // qk // Human Female emotes
         "SoundIDs": [
             0x30A,
             0x30B,

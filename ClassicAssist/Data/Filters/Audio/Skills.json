@@ -20,9 +20,11 @@
     {
         "Category": "Skills",
         "DefaultEnabled": false,
-        "Name": "Alchemy Sounds",
+        "Name": "Alchemy Sounds", // qk
         "SoundIDs": [
-            576
+            0x240,
+            0x242,
+
         ]
     },
     {
@@ -57,12 +59,21 @@
             0x0
         ]
     },
+        {
+        "Category": "Skills",
+        "DefaultEnabled": false,
+        "Name": "Forge Sounds", // qk // TODO
+        "SoundIDs": [
+            0x02B
+        ]
+    },
     {
         "Category": "Skills",
         "DefaultEnabled": false,
         "Name": "Mining Sounds", // qk // TODO
         "SoundIDs": [
-            0x0
+            0x125,
+            0x126
         ]
     }
 ]

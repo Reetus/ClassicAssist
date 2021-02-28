@@ -1,0 +1,151 @@
+[
+    {
+        "Category": "Player",
+        "DefaultEnabled": false,
+        "Name": "Spell Fizzle Sounds",
+        "SoundIDs": [
+            92
+        ]
+    },
+    {
+        "Category": "Player",
+        "DefaultEnabled": false,
+        "Name": "Emote Male Sounds", // qk // Human Male emotes
+        "SoundIDs": [
+            0x419,
+            0x41A,
+            0x41B,
+            0x41C,
+            0x41D,
+            0x420,
+            0x421,
+            0x422,
+            0x427,
+            0x428,
+            0x429,
+            0x42A,
+            0x42B,
+            0x42C,
+            0x42D,
+            0x42E,
+            0x42F,
+            0x430,
+            0x431,
+            0x432,
+            0x433,
+            0x43D,
+            0x43E,
+            0x43F,
+            0x13B,
+            0x440,
+            0x441,
+            0x442,
+            0x3B4,
+            0x443,
+            0x444,
+            0x445,
+            0x318,
+            0x36A,
+            0x447,
+            0x41E,
+            0x448,
+            0x449,
+            0x44A
+        ]
+    },
+    {
+        "Category": "Player",
+        "DefaultEnabled": false,
+        "Name": "Emote Male Sounds", // qk // Human Female emotes
+        "SoundIDs": [
+            0x30A,
+            0x30B,
+            0x30C,
+            0x30D,
+            0x312,
+            0x30E,
+            0x311,
+            0x313,
+            0x317,
+            0x319,
+            0x31A,
+            0x31B,
+            0x31C,
+            0x31D,
+            0x31E,
+            0x31F,
+            0x320,
+            0x321,
+            0x322,
+            0x323,
+            0x32B,
+            0x32C,
+            0x32D,
+            0x32E,
+            0x32F,
+            0x330,
+            0x331,
+            0x332,
+            0x333,
+            0x334,
+            0x335,
+            0x30F,
+            0x336,
+            0x337
+        ]
+    },
+    {
+        "Category": "Player",
+        "DefaultEnabled": false,
+        "Name": "Weapon Sounds",
+        "SoundIDs": [
+            571,
+            570
+        ]
+    },
+    {
+        "Category": "Player",
+        "DefaultEnabled": false,
+        "Name": "Wrestling Sounds",
+        "SoundIDs": [
+            340,
+            341,
+            342,
+            343,
+            344,
+            345
+        ]
+    },
+    {
+        "Category": "Player",
+        "DefaultEnabled": false,
+        "Name": "Hit Sounds", // qk // TODO : add female sounds
+        "SoundIDs": [
+            0x154,
+            0x155,
+            0x156,
+            0x157,
+            0x158,
+            0x159
+        ]
+    },
+    {
+        "Category": "Player",
+        "DefaultEnabled": false,
+        "Name": "Npc Vendor Sounds",
+        "SoundIDs": [
+            0x32,
+            0x37
+        ]
+    },
+    {
+        "Category": "Player",
+        "DefaultEnabled": false,
+        "Name": "Conquest Sounds", // qk
+        "SoundIDs": [
+            0x208,
+            0x227,
+            0x2E7
+        ]
+    }
+]

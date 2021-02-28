@@ -10,6 +10,13 @@
   <ItemGroup>
     <None Remove="Data\Bodies.json" />
     <None Remove="Data\BuffIcons.json" />
+    <None Remove="Data\Filters\Audio\Animals.json" />
+    <None Remove="Data\Filters\Audio\Combat.json" />
+    <None Remove="Data\Filters\Audio\Environment.json" />
+    <None Remove="Data\Filters\Audio\Monsters.json" />
+    <None Remove="Data\Filters\Audio\Player.json" />
+    <None Remove="Data\Filters\Audio\Skills.json" />
+    <None Remove="Data\Filters\Audio\Spells.json" />
     <None Remove="Data\Properties.json" />
     <None Remove="Data\Regions.json" />
     <None Remove="Data\SoundFilters.json" />
@@ -21,6 +28,24 @@
     <None Remove="zlib64.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\Filters\Audio\Player.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Filters\Audio\Monsters.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Filters\Audio\Spells.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Filters\Audio\Environment.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Filters\Audio\Skills.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Filters\Audio\Animals.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\Properties.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -31,9 +56,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Regions.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\SoundFilters.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Spells.json">

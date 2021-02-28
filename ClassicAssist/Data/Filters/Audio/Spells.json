@@ -1,0 +1,35 @@
+[
+    {
+        "Category": "Spells",
+        "DefaultEnabled": false,
+        "Name": "Spell Fizzle Sounds",
+        "SoundIDs": [
+            92
+        ]
+    },
+    {
+        "Category": "Spells",
+        "DefaultEnabled": false,
+        "Name": "MoonGate Sounds", // qk
+        "SoundIDs": [
+            0x20E,
+            0x1FE
+        ]
+    },
+    {
+        "Category": "Spells",
+        "DefaultEnabled": false,
+        "Name": "Recall Sounds", // qk
+        "SoundIDs": [
+            0x1FC
+        ]
+    },
+    {
+        "Category": "Spells",
+        "DefaultEnabled": false,
+        "Name": "Teleport Sounds", // qk
+        "SoundIDs": [
+            0x1FE
+        ]
+    }
+]

@@ -1,0 +1,33 @@
+[
+    {
+        "Category": "Monsters",
+        "DefaultEnabled": false,
+        "Name": "Dragon Sounds",
+        "SoundIDs": [
+            0x16A,
+            0x16B,
+            0x16C,
+            0x16D
+        ]
+    },
+    {
+        "Category": "Monsters",
+        "DefaultEnabled": false,
+        "Name": "Mongbat Sounds",
+        "SoundIDs": [
+            0x1AA,
+            0x1A6,
+            0x1A7,
+            0x1A8,
+            0x1A9
+        ]
+    },
+    {
+        "Category": "Monsters",
+        "DefaultEnabled": false,
+        "Name": "Titan / Cyclops Sounds",
+        "SoundIDs": [
+            1959
+        ]
+    }
+]

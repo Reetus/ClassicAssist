@@ -45,7 +45,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( entity != null )
             {
-                return entity.Distance < distance;
+                return entity.Distance <= distance;
             }
 
             return false;

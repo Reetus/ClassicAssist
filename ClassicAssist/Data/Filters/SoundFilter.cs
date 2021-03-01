@@ -17,11 +17,6 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
 using Assistant;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.Views.Filters;
@@ -29,65 +24,64 @@ using ClassicAssist.UO.Network.PacketFilter;
 using Microsoft.Scripting.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 
 namespace ClassicAssist.Data.Filters
 {
-    [FilterOptions(Name = "Sound Filter", DefaultEnabled = false)]
+    [FilterOptions( Name = "Sound Filter", DefaultEnabled = false )]
     public class SoundFilter : DynamicFilterEntry, IConfigurableFilter
     {
-        //private const string DATA_FILE = "SoundFilters.json";
-
         public SoundFilter()
         {
-            string dataPath = Path.Combine(Engine.StartupPath ?? Environment.CurrentDirectory, "Data\\Filters\\Audio\\");
-            //System.Windows.Forms.MessageBox.Show("" + dataPath);
-            ProcessDirectory(dataPath);
+            string dataPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data\\Filters\\Audio\\" );
+            ProcessDirectory( dataPath );
         }
 
         // Process all files in the directory passed in, recurse on any directories
         // that are found, and process the files they contain.
-        public void ProcessDirectory(string targetDirectory)
-        { 
+        public void ProcessDirectory( string targetDirectory )
+        {
             try
             {
-
                 // Process the list of files found in the directory.
-                string[] fileEntries = Directory.GetFiles(targetDirectory);
-                foreach (string fileName in fileEntries)
+                string[] fileEntries = Directory.GetFiles( targetDirectory );
+                foreach ( string fileName in fileEntries )
                 {
-                    ProcessFile(fileName);
+                    ProcessFile( fileName );
                 }
 
                 // Recurse into subdirectories of this directory.
-                string[] subdirectoryEntries = Directory.GetDirectories(targetDirectory);
-                foreach (string subdirectory in subdirectoryEntries)
+                string[] subdirectoryEntries = Directory.GetDirectories( targetDirectory );
+                foreach ( string subdirectory in subdirectoryEntries )
                 {
-                    ProcessDirectory(subdirectory);
+                    ProcessDirectory( subdirectory );
                 }
 
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                System.Windows.Forms.MessageBox.Show("" + ex);
+                System.Windows.Forms.MessageBox.Show( ex.ToString() );
             }
         }
 
         // Insert logic for processing found files here.
-        public void ProcessFile(string path)
+        public void ProcessFile( string path )
         {
-            if (!File.Exists(path))
+            if ( !File.Exists( path ) )
             {
                 return;
             }
 
-            Items.AddRange(
-                JsonConvert.DeserializeObject<SoundFilterEntry[]>(
-                    File.ReadAllText(path)));
+            Items.AddRange( JsonConvert.DeserializeObject<SoundFilterEntry[]>( File.ReadAllText( path ) ) );
 
-            foreach (SoundFilterEntry item in Items)
+            foreach ( SoundFilterEntry item in Items )
             {
-                item.LocalizedName = Strings.ResourceManager.GetString(item.Name) ?? item.Name;
-                item.Category = Strings.ResourceManager.GetString(item.Category) ?? item.Category;
+                item.LocalizedName = Strings.ResourceManager.GetString( item.Name ) ?? item.Name;
+                item.Category = Strings.ResourceManager.GetString( item.Category ) ?? item.Category;
             }
         }
 
@@ -98,34 +92,34 @@ namespace ClassicAssist.Data.Filters
 
         public void Configure()
         {
-            SoundFilterConfigureWindow window = new SoundFilterConfigureWindow(Items);
+            SoundFilterConfigureWindow window = new SoundFilterConfigureWindow( Items );
             window.ShowDialog();
         }
 
-        public void Deserialize(JToken token)
+        public void Deserialize( JToken token )
         {
-            if (token?["Items"] == null)
+            if ( token?[ "Items" ] == null )
             {
                 return;
             }
 
-            foreach (JToken itemsToken in token["Items"])
+            foreach ( JToken itemsToken in token[ "Items" ] )
             {
-                string name = itemsToken["Name"]?.ToObject<string>() ?? string.Empty;
+                string name = itemsToken[ "Name" ]?.ToObject<string>() ?? string.Empty;
 
-                if (string.IsNullOrEmpty(name))
+                if ( string.IsNullOrEmpty( name ) )
                 {
                     continue;
                 }
 
-                SoundFilterEntry entry = Items.FirstOrDefault(e => e.Name == name);
+                SoundFilterEntry entry = Items.FirstOrDefault( e => e.Name == name );
 
-                if (entry == null)
+                if ( entry == null )
                 {
                     continue;
                 }
 
-                entry.Enabled = itemsToken["Enabled"]?.ToObject<bool>() ?? false;
+                entry.Enabled = itemsToken[ "Enabled" ]?.ToObject<bool>() ?? false;
             }
         }
 
@@ -135,48 +129,48 @@ namespace ClassicAssist.Data.Filters
 
             JArray items = new JArray();
 
-            foreach (SoundFilterEntry entry in Items.Where(i => i.Enabled != i.DefaultEnabled))
+            foreach ( SoundFilterEntry entry in Items.Where( i => i.Enabled != i.DefaultEnabled ) )
             {
-                JObject obj = new JObject { ["Name"] = entry.Name, ["Enabled"] = entry.Enabled };
+                JObject obj = new JObject { [ "Name" ] = entry.Name, [ "Enabled" ] = entry.Enabled };
 
-                items.Add(obj);
+                items.Add( obj );
             }
 
-            config.Add("Items", items);
+            config.Add( "Items", items );
 
             return config;
         }
 
         public void ResetOptions()
         {
-            foreach (SoundFilterEntry item in Items)
+            foreach ( SoundFilterEntry item in Items )
             {
                 item.Enabled = item.DefaultEnabled;
             }
         }
 
-        protected override void OnChanged(bool enabled)
+        protected override void OnChanged( bool enabled )
         {
             IsEnabled = enabled;
         }
 
-        public override bool CheckPacket(ref byte[] packet, ref int length, PacketDirection direction)
+        public override bool CheckPacket( ref byte[] packet, ref int length, PacketDirection direction )
         {
-            if (packet == null || !IsEnabled)
+            if ( packet == null || !IsEnabled )
             {
                 return false;
             }
 
-            if (packet[0] != 0x54 || direction != PacketDirection.Incoming)
+            if ( packet[ 0 ] != 0x54 || direction != PacketDirection.Incoming )
             {
                 return false;
             }
 
-            int soundId = (packet[2] << 8) | packet[3];
+            int soundId = ( packet[ 2 ] << 8 ) | packet[ 3 ];
 
-            IEnumerable<int> allEnabledSoundIds = Items.Where(e => e.Enabled).SelectMany(e => e.SoundIDs);
+            IEnumerable<int> allEnabledSoundIds = Items.Where( e => e.Enabled ).SelectMany( e => e.SoundIDs );
 
-            return allEnabledSoundIds.Contains(soundId);
+            return allEnabledSoundIds.Contains( soundId );
         }
     }
 

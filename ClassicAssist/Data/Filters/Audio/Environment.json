@@ -26,31 +26,6 @@
     {
         "Category": "Environment",
         "DefaultEnabled": false,
-        "Name": "BackPack Sounds", // qk // TODO // taken from containers.txt -> // doesnt seem to be working -> client side ?
-        "SoundIDs": [
-            0x02D,
-            0x02C,
-            0x02E,
-            0x02F,
-            0x048,
-            0x058,
-            0x04F,
-            0x187,
-            0x1C9
-        ]
-    },
-    {
-        "Category": "Environment",
-        "DefaultEnabled": false,
-        "Name": "FootStep Sounds", // qk // TODO // grabbed from ClassicUO Mobile.cs // doesnt seem to be working -> client side ?
-        "SoundIDs": [
-            0x12B,
-            0x129
-        ]
-    },
-    {
-        "Category": "Environment",
-        "DefaultEnabled": false,
         "Name": "Item Drop Sounds", // qk
         "SoundIDs": [
             0x48,

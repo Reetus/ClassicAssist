@@ -111,7 +111,12 @@ namespace ClassicAssist.Data.Macros
             {
                 if ( CurrentMacro != null && CurrentMacro.IsRunning )
                 {
-                    if ( CurrentMacro.DoNotAutoInterrupt )
+                    if ( !CurrentMacro.Disableable )
+                    {
+                        return;
+                    }
+
+                    if ( macro == CurrentMacro && macro.DoNotAutoInterrupt )
                     {
                         return;
                     }

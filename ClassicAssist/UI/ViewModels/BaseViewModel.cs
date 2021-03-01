@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -10,7 +9,7 @@ using ClassicAssist.Data;
 
 namespace ClassicAssist.UI.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public class BaseViewModel : SetPropertyNotifyChanged
     {
         private static readonly List<BaseViewModel> _viewModels = new List<BaseViewModel>();
         protected Dispatcher _dispatcher;
@@ -25,8 +24,6 @@ namespace ClassicAssist.UI.ViewModels
         }
 
         public static BaseViewModel[] Instances => _viewModels.ToArray();
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         ~BaseViewModel()
         {
@@ -62,18 +59,6 @@ namespace ClassicAssist.UI.ViewModels
 
                 property.SetValue( this, propertyValue );
             }
-        }
-
-        // ReSharper disable once RedundantAssignment
-        public virtual void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
-        {
-            obj = value;
-            NotifyPropertyChanged( propertyName );
-        }
-
-        protected void NotifyPropertyChanged( [CallerMemberName] string propertyName = "" )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
         }
     }
 

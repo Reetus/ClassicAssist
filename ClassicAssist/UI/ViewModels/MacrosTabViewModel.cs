@@ -133,7 +133,7 @@ namespace ClassicAssist.UI.ViewModels
             set
             {
                 SetProperty( ref _selectedItem, value );
-                NotifyPropertyChanged( nameof( Hotkey ) );
+                OnPropertyChanged( nameof( Hotkey ) );
 
                 if ( Document != null )
                 {
@@ -424,13 +424,13 @@ namespace ClassicAssist.UI.ViewModels
 
                 if ( result == MessageBoxResult.No )
                 {
-                    NotifyPropertyChanged( nameof( Hotkey ) );
+                    OnPropertyChanged( nameof( Hotkey ) );
                     return;
                 }
             }
 
             SelectedItem.Hotkey = hotkey;
-            NotifyPropertyChanged( nameof( Hotkey ) );
+            OnPropertyChanged( nameof( Hotkey ) );
         }
 
         private static void SaveMacro( object obj )
@@ -530,12 +530,12 @@ namespace ClassicAssist.UI.ViewModels
             if ( IsRecording )
             {
                 IsRecording = false;
-                NotifyPropertyChanged( nameof( RecordLabel ) );
+                OnPropertyChanged( nameof( RecordLabel ) );
                 return;
             }
 
             IsRecording = true;
-            NotifyPropertyChanged( nameof( RecordLabel ) );
+            OnPropertyChanged( nameof( RecordLabel ) );
         }
     }
 

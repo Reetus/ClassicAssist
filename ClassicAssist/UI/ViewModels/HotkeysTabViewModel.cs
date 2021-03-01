@@ -55,7 +55,7 @@ namespace ClassicAssist.UI.ViewModels
             set
             {
                 SetProperty( ref _selectedItem, value );
-                NotifyPropertyChanged( nameof( Hotkey ) );
+                OnPropertyChanged( nameof( Hotkey ) );
             }
         }
 
@@ -329,13 +329,13 @@ namespace ClassicAssist.UI.ViewModels
 
                 if ( result == MessageBoxResult.No )
                 {
-                    NotifyPropertyChanged( nameof( Hotkey ) );
+                    OnPropertyChanged( nameof( Hotkey ) );
                     return;
                 }
             }
 
             SelectedItem.Hotkey = hotkey;
-            NotifyPropertyChanged( nameof( Hotkey ) );
+            OnPropertyChanged( nameof( Hotkey ) );
         }
 
         private void ClearAllHotkeys()

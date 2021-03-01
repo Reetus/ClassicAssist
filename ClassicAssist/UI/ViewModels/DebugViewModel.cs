@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Assistant;
-using ClassicAssist.Annotations;
 using ClassicAssist.Data;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
@@ -22,6 +19,7 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class DebugViewModel : BaseViewModel, ISettingProvider
     {
+        private readonly List<PacketEntry> _tempItems = new List<PacketEntry>();
         private ICommand _changePacketEnabledCommand;
         private ICommand _clearCommand;
         private ICommand _exportLogCommand;
@@ -31,8 +29,7 @@ namespace ClassicAssist.UI.ViewModels
         private ObservableCollection<PacketEnabledEntry>
             _packetEntries = new ObservableCollection<PacketEnabledEntry>();
 
-        private bool _running = false;
-        private readonly List<PacketEntry> _tempItems = new List<PacketEntry>();
+        private bool _running;
         private bool _topmost = true;
         private ICommand _viewPlayerEquipmentCommand;
 
@@ -284,7 +281,7 @@ namespace ClassicAssist.UI.ViewModels
             }
         }
 
-        public class PacketEnabledEntry : INotifyPropertyChanged
+        public class PacketEnabledEntry : SetPropertyNotifyChanged
         {
             private bool _enabled;
             private string _name;
@@ -306,21 +303,6 @@ namespace ClassicAssist.UI.ViewModels
             {
                 get => _packetId;
                 set => SetProperty( ref _packetId, value );
-            }
-
-            public event PropertyChangedEventHandler PropertyChanged;
-
-            [NotifyPropertyChangedInvocator]
-            protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-            {
-                PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-            }
-
-            // ReSharper disable once RedundantAssignment
-            public virtual void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
-            {
-                obj = value;
-                OnPropertyChanged( propertyName );
             }
         }
     }

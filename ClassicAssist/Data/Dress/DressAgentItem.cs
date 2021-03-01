@@ -1,12 +1,10 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using ClassicAssist.Annotations;
-using ClassicAssist.Resources;
+﻿using ClassicAssist.Resources;
+using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.Data.Dress
 {
-    public class DressAgentItem : INotifyPropertyChanged
+    public class DressAgentItem : SetPropertyNotifyChanged
     {
         private int _id = -1;
         private Layer _layer;
@@ -58,24 +56,9 @@ namespace ClassicAssist.Data.Dress
             set => SetProperty( ref _type, value );
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        // ReSharper disable once RedundantAssignment
-        public void SetProperty<T>( ref T field, T value, [CallerMemberName] string propertyName = null )
-        {
-            field = value;
-            OnPropertyChanged( propertyName );
-        }
-
         public override string ToString()
         {
             return Name;
-        }
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
         }
     }
 }

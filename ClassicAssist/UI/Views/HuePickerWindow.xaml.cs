@@ -108,6 +108,11 @@ namespace ClassicAssist.UI.Views
         // ReSharper disable once RedundantAssignment
         public virtual void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
         {
+            if ( obj != null && obj.Equals( value ) )
+            {
+                return;
+            }
+
             obj = value;
             OnPropertyChanged( propertyName );
         }

@@ -1,10 +1,8 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using ClassicAssist.Annotations;
+﻿using ClassicAssist.UI.ViewModels;
 
 namespace ClassicAssist.Data.Vendors
 {
-    public class VendorBuyAgentItem : INotifyPropertyChanged
+    public class VendorBuyAgentItem : SetPropertyNotifyChanged
     {
         private int _amount;
         private bool _enabled;
@@ -47,21 +45,6 @@ namespace ClassicAssist.Data.Vendors
         {
             get => _name;
             set => SetProperty( ref _name, value );
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-        }
-
-        // ReSharper disable once RedundantAssignment
-        public virtual void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
-        {
-            obj = value;
-            OnPropertyChanged( propertyName );
         }
     }
 }

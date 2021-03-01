@@ -98,14 +98,14 @@ namespace ClassicAssist.Data.Filters
 
         public void Deserialize( JToken token )
         {
-            if ( token?[ "Items" ] == null )
+            if ( token?["Items"] == null )
             {
                 return;
             }
 
-            foreach ( JToken itemsToken in token[ "Items" ] )
+            foreach ( JToken itemsToken in token["Items"] )
             {
-                string name = itemsToken[ "Name" ]?.ToObject<string>() ?? string.Empty;
+                string name = itemsToken["Name"]?.ToObject<string>() ?? string.Empty;
 
                 if ( string.IsNullOrEmpty( name ) )
                 {
@@ -119,7 +119,7 @@ namespace ClassicAssist.Data.Filters
                     continue;
                 }
 
-                entry.Enabled = itemsToken[ "Enabled" ]?.ToObject<bool>() ?? false;
+                entry.Enabled = itemsToken["Enabled"]?.ToObject<bool>() ?? false;
             }
         }
 
@@ -131,7 +131,7 @@ namespace ClassicAssist.Data.Filters
 
             foreach ( SoundFilterEntry entry in Items.Where( i => i.Enabled != i.DefaultEnabled ) )
             {
-                JObject obj = new JObject { [ "Name" ] = entry.Name, [ "Enabled" ] = entry.Enabled };
+                JObject obj = new JObject { ["Name"] = entry.Name, ["Enabled"] = entry.Enabled };
 
                 items.Add( obj );
             }
@@ -161,12 +161,12 @@ namespace ClassicAssist.Data.Filters
                 return false;
             }
 
-            if ( packet[ 0 ] != 0x54 || direction != PacketDirection.Incoming )
+            if ( packet[0] != 0x54 || direction != PacketDirection.Incoming )
             {
                 return false;
             }
 
-            int soundId = ( packet[ 2 ] << 8 ) | packet[ 3 ];
+            int soundId = ( packet[2] << 8 ) | packet[3];
 
             IEnumerable<int> allEnabledSoundIds = Items.Where( e => e.Enabled ).SelectMany( e => e.SoundIDs );
 

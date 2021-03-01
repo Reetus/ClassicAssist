@@ -14,6 +14,7 @@ using ClassicAssist.UO.Objects;
 using Newtonsoft.Json.Linq;
 using UOC = ClassicAssist.UO.Commands;
 
+
 namespace ClassicAssist.UI.ViewModels.Agents
 {
     public class ScavengerTabViewModel : BaseViewModel, ISettingProvider
@@ -183,7 +184,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         internal void CheckArea()
         {
-            if ( !Enabled || Engine.Player == null )
+            if ( !Enabled || Engine.Player == null || Engine.Player.IsDead )
             {
                 return;
             }
@@ -216,6 +217,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     scavengerItems.AddRange( matches );
                 }
 
+                _ignoreList.Clear();
+
                 if ( scavengerItems.Count == 0 )
                 {
                     return;
@@ -228,16 +231,15 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     return;
                 }
 
-                foreach ( Item scavengerItem in scavengerItems.Where( scavengerItem =>
-                    scavengerItem.Distance <= SCAVENGER_DISTANCE ).Distinct() )
+                foreach ( Item scavengerItem in scavengerItems.Where( i =>
+                  i.Distance <= SCAVENGER_DISTANCE && !_ignoreList.Contains(i.Serial) ) )
                 {
-                    UOC.SystemMessage( string.Format( Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown" ),
-                        (int) UOC.SystemMessageHues.Yellow );
+                    UOC.SystemMessage( string.Format(Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown" ), 61 );
                     Task<bool> t = ActionPacketQueue.EnqueueDragDrop( scavengerItem.Serial, scavengerItem.Count,
                         container.Serial, QueuePriority.Low, true, true, requeueOnFailure: false,
                         successPredicate: CheckItemContainer );
 
-                    if ( t.Result && CheckItemContainer( scavengerItem.Serial, container.Serial ) )
+                    if ( t.Result )
                     {
                         _ignoreList.Add( scavengerItem.Serial );
                     }

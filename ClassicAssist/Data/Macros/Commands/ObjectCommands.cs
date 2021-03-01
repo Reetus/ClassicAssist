@@ -216,7 +216,7 @@ namespace ClassicAssist.Data.Macros.Commands
                     (Entity) Engine.Mobiles
                         .SelectEntities( i => Predicate( i ) && ( range == -1 || i.Distance < range ) )
                         ?.FirstOrDefault() ?? Engine.Items.SelectEntities( i =>
-                        Predicate( i ) && ( range == -1 || i.Distance < range ) && i.Owner == 0 )?.FirstOrDefault();
+                        Predicate( i ) && ( range == -1 || i.Distance <= range ) && i.Owner == 0 )?.FirstOrDefault();
             }
 
             if ( entity == null )
@@ -279,7 +279,7 @@ namespace ClassicAssist.Data.Macros.Commands
                     (Entity) Engine.Mobiles
                         .SelectEntities( i => Predicate( i ) && ( range == -1 || i.Distance < range ) )
                         ?.FirstOrDefault() ?? Engine.Items.SelectEntities( i =>
-                        Predicate( i ) && ( range == -1 || i.Distance < range ) && i.Owner == 0 )?.FirstOrDefault();
+                        Predicate( i ) && ( range == -1 || i.Distance <= range ) && i.Owner == 0 )?.FirstOrDefault();
             }
 
             if ( entity == null )

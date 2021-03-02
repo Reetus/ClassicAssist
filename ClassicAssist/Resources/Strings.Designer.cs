@@ -484,6 +484,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Blacksmith Sounds.
+        /// </summary>
+        public static string Blacksmith_Sounds {
+            get {
+                return ResourceManager.GetString("Blacksmith Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Blank.
         /// </summary>
         public static string Blank {
@@ -907,6 +916,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Conquest Sounds.
+        /// </summary>
+        public static string Conquest_Sounds {
+            get {
+                return ResourceManager.GetString("Conquest Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Consume.
         /// </summary>
         public static string Consume {
@@ -1177,6 +1195,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Emote Female Sounds.
+        /// </summary>
+        public static string Emote_Female_Sounds {
+            get {
+                return ResourceManager.GetString("Emote Female Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Emote Male Sounds.
+        /// </summary>
+        public static string Emote_Male_Sounds {
+            get {
+                return ResourceManager.GetString("Emote Male Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Emote Sounds.
         /// </summary>
         public static string Emote_Sounds {
@@ -1438,6 +1474,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Forge Sounds.
+        /// </summary>
+        public static string Forge_Sounds {
+            get {
+                return ResourceManager.GetString("Forge Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Friend.
         /// </summary>
         public static string Friend {
@@ -1650,6 +1695,15 @@ namespace ClassicAssist.Resources {
         public static string Hide {
             get {
                 return ResourceManager.GetString("Hide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hit Sounds.
+        /// </summary>
+        public static string Hit_Sounds {
+            get {
+                return ResourceManager.GetString("Hit Sounds", resourceCulture);
             }
         }
         
@@ -1951,11 +2005,29 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item Drop Sounds.
+        /// </summary>
+        public static string Item_Drop_Sounds {
+            get {
+                return ResourceManager.GetString("Item Drop Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item out of range....
         /// </summary>
         public static string Item_out_of_range___ {
             get {
                 return ResourceManager.GetString("Item out of range...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Pickup Sounds.
+        /// </summary>
+        public static string Item_Pickup_Sounds {
+            get {
+                return ResourceManager.GetString("Item Pickup Sounds", resourceCulture);
             }
         }
         
@@ -2118,6 +2190,15 @@ namespace ClassicAssist.Resources {
         public static string Lists {
             get {
                 return ResourceManager.GetString("Lists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Llama Sounds.
+        /// </summary>
+        public static string Llama_Sounds {
+            get {
+                return ResourceManager.GetString("Llama Sounds", resourceCulture);
             }
         }
         
@@ -2335,6 +2416,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Meditation Sounds.
+        /// </summary>
+        public static string Meditation_Sounds {
+            get {
+                return ResourceManager.GetString("Meditation Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Menu.
         /// </summary>
         public static string Menu {
@@ -2389,6 +2479,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mining Sounds.
+        /// </summary>
+        public static string Mining_Sounds {
+            get {
+                return ResourceManager.GetString("Mining Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Misc.
         /// </summary>
         public static string Misc {
@@ -2439,6 +2538,24 @@ namespace ClassicAssist.Resources {
         public static string Module {
             get {
                 return ResourceManager.GetString("Module", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mongbat Sounds.
+        /// </summary>
+        public static string Mongbat_Sounds {
+            get {
+                return ResourceManager.GetString("Mongbat Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moongate Sounds.
+        /// </summary>
+        public static string Moongate_Sounds {
+            get {
+                return ResourceManager.GetString("Moongate Sounds", resourceCulture);
             }
         }
         
@@ -2565,6 +2682,15 @@ namespace ClassicAssist.Resources {
         public static string None {
             get {
                 return ResourceManager.GetString("None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Npc Vendor Sounds.
+        /// </summary>
+        public static string Npc_Vendor_Sounds {
+            get {
+                return ResourceManager.GetString("Npc Vendor Sounds", resourceCulture);
             }
         }
         
@@ -2970,6 +3096,15 @@ namespace ClassicAssist.Resources {
         public static string Really_remove_macro___0___ {
             get {
                 return ResourceManager.GetString("Really remove macro \"{0}\"?", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recall Sounds.
+        /// </summary>
+        public static string Recall_Sounds {
+            get {
+                return ResourceManager.GetString("Recall Sounds", resourceCulture);
             }
         }
         
@@ -3559,6 +3694,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Snake Sounds.
+        /// </summary>
+        public static string Snake_Sounds {
+            get {
+                return ResourceManager.GetString("Snake Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Snapshot Saved: {0}.
         /// </summary>
         public static string Snapshot_Saved___0_ {
@@ -3933,6 +4077,24 @@ namespace ClassicAssist.Resources {
         public static string Targeting {
             get {
                 return ResourceManager.GetString("Targeting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teleport Sounds.
+        /// </summary>
+        public static string Teleport_Sounds {
+            get {
+                return ResourceManager.GetString("Teleport Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teleport Tile Sounds.
+        /// </summary>
+        public static string Teleport_Tile_Sounds {
+            get {
+                return ResourceManager.GetString("Teleport Tile Sounds", resourceCulture);
             }
         }
         

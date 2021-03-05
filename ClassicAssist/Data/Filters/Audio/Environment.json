@@ -4,14 +4,14 @@
         "DefaultEnabled": false,
         "Name": "Door Sounds",
         "SoundIDs": [
-            0xEA,
-            0xEC,
-            0xF1,
-            0xEB,
-            0xF2,
-            0xF3,
-            0xED,
-            0xF4
+            234,
+            236,
+            241,
+            235,
+            242,
+            243,
+            237,
+            244
         ]
     },
     {
@@ -19,8 +19,8 @@
         "DefaultEnabled": false,
         "Name": "Teleport Tile Sounds",
         "SoundIDs": [
-            0x1F0,
-            0x1FE
+            496,
+            510
         ]
     },
     {
@@ -28,8 +28,8 @@
         "DefaultEnabled": false,
         "Name": "Item Drop Sounds",
         "SoundIDs": [
-            0x48,
-            0x42
+            72,
+            66
         ]
     },
     {
@@ -37,7 +37,7 @@
         "DefaultEnabled": false,
         "Name": "Item Pickup Sounds",
         "SoundIDs": [
-            0x57
+            87
         ]
     },
     {
@@ -45,8 +45,8 @@
         "DefaultEnabled": false,
         "Name": "Npc Vendor Sounds",
         "SoundIDs": [
-            0x32,
-            0x37
+            50,
+            55
         ]
     },
     {
@@ -54,9 +54,9 @@
         "DefaultEnabled": false,
         "Name": "Conquest Sounds",
         "SoundIDs": [
-            0x208,
-            0x227,
-            0x2E7
+            520,
+            551,
+            743
         ]
     }
 ]

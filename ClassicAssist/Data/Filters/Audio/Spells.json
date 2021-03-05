@@ -12,8 +12,8 @@
         "DefaultEnabled": false,
         "Name": "MoonGate Sounds", 
         "SoundIDs": [
-            0x20E,
-            0x1FE
+            526,
+            510
         ]
     },
     {
@@ -21,7 +21,7 @@
         "DefaultEnabled": false,
         "Name": "Recall Sounds", 
         "SoundIDs": [
-            0x1FC
+            508
         ]
     },
     {
@@ -29,7 +29,7 @@
         "DefaultEnabled": false,
         "Name": "Teleport Sounds", 
         "SoundIDs": [
-            0x1FE
+            510
         ]
     }
 ]

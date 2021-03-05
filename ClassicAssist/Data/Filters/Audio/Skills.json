@@ -2,7 +2,7 @@
     {
         "Category": "Skills",
         "DefaultEnabled": false,
-        "Name": "Bards Music", 
+        "Name": "Bards Music",
         "SoundIDs": [
             56,
             57,
@@ -20,10 +20,10 @@
     {
         "Category": "Skills",
         "DefaultEnabled": false,
-        "Name": "Alchemy Sounds", 
+        "Name": "Alchemy Sounds",
         "SoundIDs": [
             576,
-            578,
+            578
         ]
     },
     {
@@ -45,7 +45,7 @@
     {
         "Category": "Skills",
         "DefaultEnabled": false,
-        "Name": "Meditation Sounds", 
+        "Name": "Meditation Sounds",
         "SoundIDs": [
             249
         ]
@@ -58,12 +58,12 @@
             0
         ]
     },
-        {
+    {
         "Category": "Skills",
         "DefaultEnabled": false,
         "Name": "Forge Sounds",
         "SoundIDs": [
-            02B
+            43
         ]
     },
     {

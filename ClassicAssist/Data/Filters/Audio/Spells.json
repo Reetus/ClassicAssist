@@ -10,7 +10,7 @@
     {
         "Category": "Spells",
         "DefaultEnabled": false,
-        "Name": "MoonGate Sounds", 
+        "Name": "MoonGate Sounds",
         "SoundIDs": [
             526,
             510
@@ -19,7 +19,7 @@
     {
         "Category": "Spells",
         "DefaultEnabled": false,
-        "Name": "Recall Sounds", 
+        "Name": "Recall Sounds",
         "SoundIDs": [
             508
         ]
@@ -27,7 +27,7 @@
     {
         "Category": "Spells",
         "DefaultEnabled": false,
-        "Name": "Teleport Sounds", 
+        "Name": "Teleport Sounds",
         "SoundIDs": [
             510
         ]

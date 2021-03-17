@@ -82,7 +82,11 @@ namespace ClassicAssist.Data.Macros.Commands
             }
             //
 
-            TargetCommands.Target( serial );
+            Mobile mobile = Engine.Mobiles.GetMobile( serial );
+            if ( mobile != null )
+            {
+                TargetCommands.Target( serial, Options.CurrentOptions.RangeCheckLastTarget );
+            }
 
             return true;
         }

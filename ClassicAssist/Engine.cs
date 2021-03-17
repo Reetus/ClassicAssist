@@ -57,6 +57,7 @@ namespace Assistant
         public static event dHotkeyPressed HotkeyPressedEvent;
 
         private const int MAX_DISTANCE = 32;
+        public const int DELAY_BETWEEN_EXECUTE = 150;
 
         private static OnConnected _onConnected;
         private static OnDisconnected _onDisconnected;

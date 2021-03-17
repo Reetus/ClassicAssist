@@ -1472,7 +1472,8 @@ Pathfind('enemy')</value>
     <value>if ActiveAbility():</value>
   </data>
   <data name="ACTIVEABILITY_COMMAND_EXAMPLE" xml:space="preserve">
-    <value>if not ActiveAbility():
+    <value>#optional can be "primary" or "secondary"
+if not ActiveAbility(optional):
  SetAbility("primary", "on")</value>
   </data>
   <data name="MESSAGEPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">

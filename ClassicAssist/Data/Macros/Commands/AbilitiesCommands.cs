@@ -26,22 +26,42 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = nameof( Strings.Abilities ) )]
-        public static bool ActiveAbility()
+        public static bool ActiveAbility( string ability = null )
         {
             AbilitiesManager manager = AbilitiesManager.GetInstance();
 
-            bool result = false;
+            if ( !"".Equals(ability) && ability != null )
+            {
+                switch ( ability.ToLower() )
+                {
+                    case "primary":
+                        if ( manager.IsPrimaryEnabled )
+                        {
+                            return true;
+                        }
+                        break;
+                    case "secondary":
+                        if ( manager.IsSecondaryEnabled )
+                        {
+                            return true;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
 
             if ( manager.IsPrimaryEnabled )
             {
-                result = true;
+                return true;
             }
             else if ( manager.IsSecondaryEnabled )
             {
-                result = true;
+                return true;
             }
 
-            return result;
+            return false;
         }
 
         [CommandsDisplay( Category = nameof( Strings.Abilities ),

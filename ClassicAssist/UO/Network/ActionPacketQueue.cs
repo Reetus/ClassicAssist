@@ -53,7 +53,7 @@ namespace ClassicAssist.UO.Network
                     if ( actionQueueItem.DelaySend )
                     {
                         while ( Engine.LastActionPacket +
-                            TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) > DateTime.Now )
+                            TimeSpan.FromMilliseconds( Engine.DELAY_BETWEEN_EXECUTE ) > DateTime.Now )
                         {
                             Thread.Sleep( 1 );
                         }

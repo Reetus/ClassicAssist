@@ -1584,4 +1584,10 @@ Are you sure you wish to continue?</value>
   <data name="Spirit Speak Sounds" xml:space="preserve">
     <value>Spirit Speak Sounds</value>
   </data>
+  <data name="Expire Targets:" xml:space="preserve">
+    <value>Expire Targets:</value>
+  </data>
+  <data name="Time in milliseconds (-1 to not expire)" xml:space="preserve">
+    <value>Time in milliseconds (-1 to not expire)</value>
+  </data>
 </root>

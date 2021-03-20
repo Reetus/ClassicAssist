@@ -12,6 +12,7 @@ using ClassicAssist.Data.Chat;
 using ClassicAssist.Data.Counters;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Skills;
+using ClassicAssist.Data.Targeting;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Resources;
 using ClassicAssist.UO.Data;
@@ -1099,7 +1100,7 @@ namespace ClassicAssist.UO.Network
             }
             else
             {
-                object obj = Engine.LastTargetQueue.Dequeue();
+                TargetQueueObject obj = Engine.LastTargetQueue.Dequeue();
 
                 if ( obj == null )
                 {

@@ -109,7 +109,7 @@ namespace Assistant
         public static DateTime LastActionPacket { get; set; }
         public static int LastPromptID { get; set; }
         public static int LastPromptSerial { get; set; }
-        public static TargetQueue<object> LastTargetQueue { get; set; } = new TargetQueue<object>();
+        public static TargetQueue<TargetQueueObject> LastTargetQueue { get; set; } = new TargetQueue<TargetQueueObject>();
         public static MenuCollection Menus { get; set; } = new MenuCollection();
         public static MobileCollection Mobiles { get; set; } = new MobileCollection( Items );
         public static PacketWaitEntries PacketWaitEntries { get; set; }

@@ -17,11 +17,6 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
 using Assistant;
 using ClassicAssist.Resources;
 using ClassicAssist.UI.Views.Filters;
@@ -29,26 +24,59 @@ using ClassicAssist.UO.Network.PacketFilter;
 using Microsoft.Scripting.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 
 namespace ClassicAssist.Data.Filters
 {
     [FilterOptions( Name = "Sound Filter", DefaultEnabled = false )]
     public class SoundFilter : DynamicFilterEntry, IConfigurableFilter
     {
-        private const string DATA_FILE = "SoundFilters.json";
-
         public SoundFilter()
         {
-            string dataPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data" );
+            string dataPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data\\Filters\\Audio\\" );
+            ProcessDirectory( dataPath );
+        }
 
-            if ( !File.Exists( Path.Combine( dataPath, DATA_FILE ) ) )
+        // Process all files in the directory passed in, recurse on any directories
+        // that are found, and process the files they contain.
+        public void ProcessDirectory( string targetDirectory )
+        {
+            try
+            {
+                // Process the list of files found in the directory.
+                string[] fileEntries = Directory.GetFiles( targetDirectory );
+                foreach ( string fileName in fileEntries )
+                {
+                    ProcessFile( fileName );
+                }
+
+                // Recurse into subdirectories of this directory.
+                string[] subdirectoryEntries = Directory.GetDirectories( targetDirectory );
+                foreach ( string subdirectory in subdirectoryEntries )
+                {
+                    ProcessDirectory( subdirectory );
+                }
+
+            }
+            catch ( Exception ex )
+            {
+                System.Windows.Forms.MessageBox.Show( ex.ToString() );
+            }
+        }
+
+        // Insert logic for processing found files here.
+        public void ProcessFile( string path )
+        {
+            if ( !File.Exists( path ) )
             {
                 return;
             }
 
-            Items.AddRange(
-                JsonConvert.DeserializeObject<SoundFilterEntry[]>(
-                    File.ReadAllText( Path.Combine( dataPath, DATA_FILE ) ) ) );
+            Items.AddRange( JsonConvert.DeserializeObject<SoundFilterEntry[]>( File.ReadAllText( path ) ) );
 
             foreach ( SoundFilterEntry item in Items )
             {

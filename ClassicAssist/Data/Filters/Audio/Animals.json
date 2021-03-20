@@ -1,0 +1,197 @@
+[
+    {
+        "Category": "Animals",
+        "DefaultEnabled": false,
+        "Name": "Bear Sounds",
+        "SoundIDs": [
+            163,
+            165,
+            166
+        ]
+    },
+    {
+        "Category": "Animals",
+        "DefaultEnabled": false,
+        "Name": "Bird Sounds",
+        "SoundIDs": [
+            28,
+            27,
+            30,
+            29,
+            31,
+            751
+        ]
+    },
+    {
+        "Category": "Animals",
+        "DefaultEnabled": false,
+        "Name": "Bull Sounds",
+        "SoundIDs": [
+            1971
+        ]
+    },
+    {
+        "Category": "Animals",
+        "DefaultEnabled": false,
+        "Name": "Cat Sounds",
+        "SoundIDs": [
+            105,
+            109,
+            106,
+            108
+        ]
+    },
+    {
+        "Category": "Animals",
+        "DefaultEnabled": false,
+        "Name": "Chicken Sounds",
+        "SoundIDs": [
+            111,
+            110,
+            112,
+            113,
+            114
+        ]
+    },
+    {
+        "Category": "Animals",
+        "DefaultEnabled": false,
+        "Name": "Cougar Sounds",
+        "SoundIDs": [
+            115,
+            116
+        ]
+    },
+    {
+        "Category": "Animals",
+        "DefaultEnabled": false,
+        "Name": "Cow Sounds",
+        "SoundIDs": [
+            121,
+            120,
+            122,
+            123,
+            124
+        ]
+    },
+    {
+        "Category": "Animals",
+        "DefaultEnabled": false,
+        "Name": "Deer Sounds",
+        "SoundIDs": [
+            130,
+            131,
+            132
+        ]
+    },
+    {
+        "Category": "Animals",
+        "DefaultEnabled": false,
+        "Name": "Dog Sounds",
+        "SoundIDs": [
+            133,
+            134,
+            135,
+            136,
+            137
+        ]
+    },
+    {
+        "Category": "Animals",
+        "DefaultEnabled": false,
+        "Name": "Eagle Sounds",
+        "SoundIDs": [
+            752,
+            753,
+            750
+        ]
+    },
+    {
+        "Category": "Animals",
+        "DefaultEnabled": false,
+        "Name": "Goat Sounds",
+        "SoundIDs": [
+            153,
+            155,
+            156,
+            157
+        ]
+    },
+    {
+        "Category": "Animals",
+        "DefaultEnabled": false,
+        "Name": "Horse Sounds",
+        "SoundIDs": [
+            168,
+            172,
+            164,
+            170,
+            171,
+            169
+        ]
+    },
+    {
+        "Category": "Animals",
+        "DefaultEnabled": false,
+        "Name": "Llama Sounds",
+        "SoundIDs": [
+            1012
+        ]
+    },
+    {
+        "Category": "Animals",
+        "DefaultEnabled": false,
+        "Name": "Pig Sounds",
+        "SoundIDs": [
+            197,
+            196,
+            199,
+            198,
+            200
+        ]
+    },
+    {
+        "Category": "Animals",
+        "DefaultEnabled": false,
+        "Name": "Rat Sounds",
+        "SoundIDs": [
+            392,
+            393,
+            394,
+            395,
+            396,
+            205
+        ]
+    },
+    {
+        "Category": "Animals",
+        "DefaultEnabled": false,
+        "Name": "Sheep Sounds",
+        "SoundIDs": [
+            154,
+            215,
+            214,
+            216,
+            217,
+            218
+        ]
+    },
+    {
+        "Category": "Animals",
+        "DefaultEnabled": false,
+        "Name": "Snake Sounds",
+        "SoundIDs": [
+            219
+        ]
+    },
+    {
+        "Category": "Animals",
+        "DefaultEnabled": false,
+        "Name": "Wolf Sounds",
+        "SoundIDs": [
+            229,
+            230,
+            231
+        ]
+    }
+]

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -261,13 +261,8 @@ namespace ClassicAssist.Data.Macros
                     Thread.Sleep( diff );
                 }
 
-                Thread?.Interrupt();
-
-                Task.Run( () =>
-                 {
-                     Thread?.Abort();
-                     Thread?.Join( 100 );
-                 } );
+                Thread?.Abort();
+                Thread?.Join(100);
 
                 MacroManager.GetInstance().Replay = false;
                 MacroManager.GetInstance().OnMacroStopped();

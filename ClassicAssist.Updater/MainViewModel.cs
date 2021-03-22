@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Threading;
 using ClassicAssist.Updater.Annotations;
 using ClassicAssist.Updater.Properties;
@@ -158,11 +159,41 @@ namespace ClassicAssist.Updater
                             $"Update: Previous version: {App.CurrentOptions.CurrentVersion}, New version: {newVersion}"
                     } );
 
-                    if ( App.CurrentOptions.PID != 0 )
+                    Process[] clients = GetRunningClients()?.ToArray();
+
+                    if ( clients != null )
                     {
-                        Process p = Process.GetProcessById( App.CurrentOptions.PID );
-                        p.Kill();
-                        await Task.Delay( 2000 );
+                        if ( clients.Length > 0 )
+                        {
+                            DialogResult result = DialogResult.Cancel;
+
+                            _dispatcher.Invoke( () =>
+                            {
+                                ProcessesViewModel vm = new ProcessesViewModel( clients );
+                                ProcessesView window = new ProcessesView { DataContext = vm };
+
+                                window.ShowDialog();
+                                result = vm.DialogResult;
+                            } );
+
+                            if ( result != DialogResult.OK )
+                            {
+                                AddText( Resources.Update_cancelled___ );
+                                return null;
+                            }
+                        }
+
+                        foreach ( Process process in clients )
+                        {
+                            try
+                            {
+                                process.Kill();
+                            }
+                            catch
+                            {
+                                // ignored
+                            }
+                        }
                     }
 
                     if ( latestRelease.Assets.Count == 0 )
@@ -279,6 +310,33 @@ namespace ClassicAssist.Updater
         {
             obj = value;
             OnPropertyChanged( propertyName );
+        }
+
+        private static IEnumerable<Process> GetRunningClients()
+        {
+            List<Process> result = new List<Process>();
+
+            Process[] processes = Process.GetProcesses();
+
+            string dllPath = Path.Combine( App.CurrentOptions.Path, "ClassicAssist.dll" );
+
+            foreach ( Process process in processes )
+            {
+                try
+                {
+                    if ( process.Modules.Cast<ProcessModule>().Any( module =>
+                        module.FileName.Equals( dllPath, StringComparison.InvariantCultureIgnoreCase ) ) )
+                    {
+                        result.Add( process );
+                    }
+                }
+                catch ( Exception )
+                {
+                    // ignored
+                }
+            }
+
+            return result;
         }
     }
 }

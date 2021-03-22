@@ -425,7 +425,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     return;
                 }
 
-                if ( Engine.Features.HasFlag( FeatureFlags.AOS ) )
+                if ( Engine.TooltipsEnabled )
                 {
                     Engine.SendPacketToServer( new BatchQueryProperties( items.Select( i => i.Serial ).ToArray() ) );
                     Thread.Sleep( 1000 );

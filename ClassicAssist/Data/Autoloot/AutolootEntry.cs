@@ -64,5 +64,10 @@ namespace ClassicAssist.Data.Autoloot
             get => _rehueHue;
             set => SetProperty( ref _rehueHue, value );
         }
+
+        public override string ToString()
+        {
+            return $"{Name} - 0x{ID:x}";
+        }
     }
 }

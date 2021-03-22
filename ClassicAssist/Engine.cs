@@ -122,6 +122,7 @@ namespace Assistant
         public static TargetFlags TargetFlags { get; set; }
         public static int TargetSerial { get; set; }
         public static TargetType TargetType { get; set; }
+        public static bool TooltipsEnabled { get; set; }
         public static bool WaitingForTarget { get; set; }
         internal static ConcurrentDictionary<uint, int> GumpList { get; set; } = new ConcurrentDictionary<uint, int>();
 

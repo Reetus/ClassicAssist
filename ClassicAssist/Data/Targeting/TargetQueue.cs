@@ -33,6 +33,8 @@ namespace ClassicAssist.Data.Targeting
             {
                 lock ( _lock )
                 {
+                    RemoveExpired();
+
                     return _queue.Count;
                 }
             }
@@ -65,6 +67,8 @@ namespace ClassicAssist.Data.Targeting
             {
                 try
                 {
+                    RemoveExpired();
+
                     return _queue.Peek();
                 }
                 catch ( InvalidOperationException )
@@ -74,11 +78,20 @@ namespace ClassicAssist.Data.Targeting
             }
         }
 
-        public object Dequeue()
+        public T Dequeue()
         {
             lock ( _lock )
             {
-                return _queue.Dequeue();
+                try
+                {
+                    RemoveExpired();
+
+                    return _queue.Dequeue();
+                }
+                catch ( InvalidOperationException )
+                {
+                    return default;
+                }
             }
         }
 
@@ -88,6 +101,51 @@ namespace ClassicAssist.Data.Targeting
             {
                 _queue.Clear();
             }
+        }
+
+        private void RemoveExpired()
+        {
+            if ( Options.CurrentOptions.ExpireTargetsMS < 0 )
+            {
+                return;
+            }
+
+            lock ( _lock )
+            {
+                try
+                {
+                    bool expired;
+
+                    do
+                    {
+                        T obj = _queue.Peek();
+
+                        expired = Expired( obj );
+
+                        if ( expired )
+                        {
+                            _queue.Dequeue();
+                        }
+                    }
+                    while ( expired );
+                }
+                catch ( InvalidOperationException )
+                {
+                }
+            }
+        }
+
+        private static bool Expired( T obj )
+        {
+            bool expired = false;
+
+            if ( obj is TargetQueueObject targetQueueObject )
+            {
+                expired = targetQueueObject.DateTime +
+                    TimeSpan.FromMilliseconds( Options.CurrentOptions.ExpireTargetsMS ) < DateTime.Now;
+            }
+
+            return expired;
         }
     }
 }

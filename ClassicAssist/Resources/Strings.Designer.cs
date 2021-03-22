@@ -1357,6 +1357,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expire Targets:.
+        /// </summary>
+        public static string Expire_Targets_ {
+            get {
+                return ResourceManager.GetString("Expire Targets:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Explosion Potion.
         /// </summary>
         public static string Explosion_Potion {
@@ -3942,6 +3951,15 @@ namespace ClassicAssist.Resources {
         public static string The_item_needs_to_be_equipped___ {
             get {
                 return ResourceManager.GetString("The item needs to be equipped...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time in milliseconds (-1 to not expire).
+        /// </summary>
+        public static string Time_in_milliseconds___1_to_not_expire_ {
+            get {
+                return ResourceManager.GetString("Time in milliseconds (-1 to not expire)", resourceCulture);
             }
         }
         

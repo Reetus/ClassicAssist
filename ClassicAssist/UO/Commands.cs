@@ -112,7 +112,18 @@ namespace ClassicAssist.UO
             }, QueuePriority.Medium );
         }
 
-        public static Task EquipItem( Item item, Layer layer )
+        public static Task EquipItem( Item item, Layer layer, QueuePriority queuePriority = QueuePriority.Medium )
+        {
+            if ( layer == Layer.Invalid )
+            {
+                StaticTile tileData = TileData.GetStaticTile( item.ID );
+                layer = (Layer) tileData.Quality;
+            }
+
+            return EquipItem( item.Serial, layer, queuePriority );
+        }
+
+        public static Task EquipItem( int serial, Layer layer, QueuePriority queuePriority = QueuePriority.Medium )
         {
             int containerSerial = Engine.Player?.Serial ?? 0;
 
@@ -123,22 +134,17 @@ namespace ClassicAssist.UO
 
             if ( layer == Layer.Invalid )
             {
-                StaticTile tileData = TileData.GetStaticTile( item.ID );
-                layer = (Layer) tileData.Quality;
+                SystemMessage( Strings.Invalid_layer_value___, (int) SystemMessageHues.Red );
+                return Task.CompletedTask;
             }
 
-            if ( layer == Layer.Invalid )
+            return ActionPacketQueue.EnqueueAction( serial, i =>
             {
-                throw new ArgumentException( "EquipItem: Layer is invalid" );
-            }
-
-            return ActionPacketQueue.EnqueueAction( item, i =>
-            {
-                Engine.SendPacketToServer( new DragItem( item.Serial, 1 ) );
+                Engine.SendPacketToServer( new DragItem( i, 1 ) );
                 Thread.Sleep( 50 );
-                Engine.SendPacketToServer( new EquipRequest( item.Serial, layer, containerSerial ) );
+                Engine.SendPacketToServer( new EquipRequest( i, layer, containerSerial ) );
                 return true;
-            }, QueuePriority.Medium );
+            }, queuePriority );
         }
 
         public static void SystemMessage( string text, int hue = 0x03b2, bool throttleRepeating = false,

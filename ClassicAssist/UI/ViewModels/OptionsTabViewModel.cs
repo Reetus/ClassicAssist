@@ -85,6 +85,7 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "ChatWindowWidth", CurrentOptions.ChatWindowWidth );
             options.Add( "ChatWindowHeight", CurrentOptions.ChatWindowHeight );
             options.Add( "EntityCollectionViewerOptions", CurrentOptions.EntityCollectionViewerOptions.Serialize() );
+            options.Add( "ExpireTargetsMS", CurrentOptions.ExpireTargetsMS );
 
             json?.Add( "Options", options );
         }
@@ -174,6 +175,7 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             CurrentOptions.EntityCollectionViewerOptions.Deserialize( config?["EntityCollectionViewerOptions"] );
+            CurrentOptions.ExpireTargetsMS = config?["ExpireTargetsMS"]?.ToObject<int>() ?? -1;
         }
 
         // Replay CurrentOptions changes onto Options.CurrentOptions

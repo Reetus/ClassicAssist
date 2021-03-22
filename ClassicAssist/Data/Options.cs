@@ -35,6 +35,7 @@ namespace ClassicAssist.Data
         private bool _defaultMacroQuietMode;
         private string _enemyTargetMessage;
         private EntityCollectionViewerOptions _entityCollectionViewerOptions = new EntityCollectionViewerOptions();
+        private int _expireTargetsMs;
         private ObservableCollection<FriendEntry> _friends = new ObservableCollection<FriendEntry>();
         private string _friendTargetMessage;
         private bool _getFriendEnemyUsesIgnoreList;
@@ -163,6 +164,12 @@ namespace ClassicAssist.Data
         {
             get => _entityCollectionViewerOptions;
             set => SetProperty( ref _entityCollectionViewerOptions, value );
+        }
+
+        public int ExpireTargetsMS
+        {
+            get => _expireTargetsMs;
+            set => SetProperty( ref _expireTargetsMs, value );
         }
 
         public ObservableCollection<FriendEntry> Friends

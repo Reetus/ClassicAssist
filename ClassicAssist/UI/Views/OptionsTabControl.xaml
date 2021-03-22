@@ -156,11 +156,17 @@
                       IsChecked="{Binding CurrentOptions.ShowProfileNameWindowTitle}" />
             <CheckBox Content="{x:Static resources:Strings.Queue_Last_Target___Target_Self}"
                       IsChecked="{Binding CurrentOptions.QueueLastTarget}" />
-            <DockPanel IsEnabled="{Binding CurrentOptions.QueueLastTarget}">
+            <DockPanel IsEnabled="{Binding CurrentOptions.QueueLastTarget}" Margin="20,0,0,0">
                 <Label Content="{x:Static resources:Strings.Max_Target_Queue_Length_}" DockPanel.Dock="Left" />
                 <xctk:IntegerUpDown Minimum="1" Maximum="100" Value="{Binding CurrentOptions.MaxTargetQueueLength}"
                                     Width="50" UpdateValueOnEnterKey="True" DockPanel.Dock="Right" Margin="10,0,0,0" />
             </DockPanel>
+            <StackPanel Orientation="Horizontal" IsEnabled="{Binding CurrentOptions.QueueLastTarget}" Margin="20,0,0,0"
+                        ToolTip="{x:Static resources:Strings.Time_in_milliseconds___1_to_not_expire_}">
+                <Label Content="{x:Static resources:Strings.Expire_Targets_}" />
+                <TextBox Text="{Binding CurrentOptions.ExpireTargetsMS, Mode=TwoWay}" Width="75" Margin="10,0" />
+                <Label Content="ms" />
+            </StackPanel>
             <CheckBox Content="{x:Static resources:Strings.Sort_Macros_Alphabetical}"
                       IsChecked="{Binding CurrentOptions.SortMacrosAlphabetical}" />
             <CheckBox Content="{x:Static resources:Strings.Show_resurrection_waypoints}"

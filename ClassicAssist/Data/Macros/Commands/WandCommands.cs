@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 
 // Copyright (C) 2020 Reetus
 // 
@@ -150,7 +150,7 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( !Engine.Features.HasFlag( FeatureFlags.AOS ) || Engine.CurrentShard.Name.Equals( "UOHybrid" ) )
             {
                 Item[] allWands = Engine.Items.SelectEntities( i =>
-                    _wandIds.Contains( i.ID ) && ( containerSerial == -1 || i.IsDescendantOf( containerSerial ) ) );
+                    _wandIds.Contains( i.ID ) && !ObjectCommands.InIgnoreList(i.Serial) && ( containerSerial == -1 || i.IsDescendantOf( containerSerial ) ) );
 
                 if ( allWands == null )
                 {
@@ -171,7 +171,7 @@ namespace ClassicAssist.Data.Macros.Commands
             }
 
             Item[] matches = Engine.Items.SelectEntities( i =>
-                _wandIds.Contains( i.ID ) && ( containerSerial == -1 || i.IsDescendantOf( containerSerial ) ) &&
+                _wandIds.Contains( i.ID ) && !ObjectCommands.InIgnoreList(i.Serial) && ( containerSerial == -1 || i.IsDescendantOf( containerSerial ) ) &&
                 i.Properties != null && i.Properties.Any( p =>
                     _wandClilocs[wandType].Contains( p.Cliloc ) &&
                     ( minimumCharges == -1 || int.Parse( p.Arguments[0] ) >= minimumCharges ) ) );

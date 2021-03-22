@@ -178,7 +178,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
                     return;
                 }
 
-                object nextTarget = Engine.LastTargetQueue.Peek();
+                object nextTarget = Engine.LastTargetQueue.Peek()?.Object;
 
                 switch ( nextTarget )
                 {

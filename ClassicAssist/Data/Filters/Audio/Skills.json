@@ -1,0 +1,78 @@
+[
+    {
+        "Category": "Skills",
+        "DefaultEnabled": false,
+        "Name": "Bards Music",
+        "SoundIDs": [
+            56,
+            57,
+            67,
+            68,
+            69,
+            70,
+            76,
+            77,
+            82,
+            83,
+            1284
+        ]
+    },
+    {
+        "Category": "Skills",
+        "DefaultEnabled": false,
+        "Name": "Alchemy Sounds",
+        "SoundIDs": [
+            576,
+            578
+        ]
+    },
+    {
+        "Category": "Skills",
+        "DefaultEnabled": false,
+        "Name": "Inscribing Sounds",
+        "SoundIDs": [
+            585
+        ]
+    },
+    {
+        "Category": "Skills",
+        "DefaultEnabled": false,
+        "Name": "Spirit Speak Sounds",
+        "SoundIDs": [
+            586
+        ]
+    },
+    {
+        "Category": "Skills",
+        "DefaultEnabled": false,
+        "Name": "Meditation Sounds",
+        "SoundIDs": [
+            249
+        ]
+    },
+    {
+        "Category": "Skills",
+        "DefaultEnabled": false,
+        "Name": "Blacksmith Sounds",
+        "SoundIDs": [
+            0
+        ]
+    },
+    {
+        "Category": "Skills",
+        "DefaultEnabled": false,
+        "Name": "Forge Sounds",
+        "SoundIDs": [
+            43
+        ]
+    },
+    {
+        "Category": "Skills",
+        "DefaultEnabled": false,
+        "Name": "Mining Sounds",
+        "SoundIDs": [
+            293,
+            294
+        ]
+    }
+]

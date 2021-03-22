@@ -69,7 +69,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
             if ( entity.Properties == null )
             {
-                if ( Engine.Features.HasFlag( FeatureFlags.AOS ) )
+                if ( Engine.TooltipsEnabled )
                 {
                     PropertiesCommands.WaitForProperties( entity.Serial, 5000 );
                 }

@@ -146,8 +146,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
         private static async Task<Item[]> FindWands( WandTypes wandType, int containerSerial, int minimumCharges )
         {
-            // Hybrid has FeatureFlags.AOS, think of better solution
-            if ( !Engine.Features.HasFlag( FeatureFlags.AOS ) || Engine.CurrentShard.Name.Equals( "UOHybrid" ) )
+            if ( !Engine.TooltipsEnabled )
             {
                 Item[] allWands = Engine.Items.SelectEntities( i =>
                     _wandIds.Contains( i.ID ) && !ObjectCommands.InIgnoreList(i.Serial) && ( containerSerial == -1 || i.IsDescendantOf( containerSerial ) ) );

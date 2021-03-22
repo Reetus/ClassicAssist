@@ -115,6 +115,7 @@ namespace ClassicAssist.UO.Network
             Register( 0xA2, 9, OnMobileMana );
             Register( 0xA3, 9, OnMobileStamina );
             Register( 0xA8, 0, OnShardList );
+            Register( 0xA9, 0, OnCharacterList );
             Register( 0xAE, 0, OnUnicodeText );
             Register( 0xB2, 0, OnChatMessage );
             Register( 0xB9, 5, OnSupportedFeatures );
@@ -135,6 +136,41 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x10, 0, OnDisplayEquipmentInfo );
             RegisterExtended( 0x21, 0, OnClearWeaponAbility );
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
+        }
+
+        private static void OnCharacterList( PacketReader reader )
+        {
+            int characters = reader.ReadByte();
+
+            reader.Seek( characters * 60, SeekOrigin.Current );
+
+            int cities = reader.ReadByte();
+
+            bool isNew = Engine.ClientVersion >= new Version( 7, 0, 13, 0 );
+
+            for ( int i = 0; i < cities; i++ )
+            {
+                int index = reader.ReadByte();
+                string cityName = reader.ReadString( isNew ? 32 : 31 );
+                string buildingName = reader.ReadString( isNew ? 32 : 31 );
+
+                if ( !isNew )
+                {
+                    continue;
+                }
+
+                int x = reader.ReadInt32();
+                int y = reader.ReadInt32();
+                int z = reader.ReadInt32();
+                int map = reader.ReadInt32();
+                int cliloc = reader.ReadInt32();
+                reader.ReadInt32();
+            }
+
+            Engine.CharacterListFlags = (CharacterListFlags) reader.ReadInt32();
+
+            Engine.TooltipsEnabled =
+                Engine.CharacterListFlags.HasFlag( CharacterListFlags.PaladinNecromancerClassTooltips );
         }
 
         private static void OnUO3DPetWindow( PacketReader reader )

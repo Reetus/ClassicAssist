@@ -100,6 +100,7 @@ namespace Assistant
         public static ShardEntry CurrentShard { get; set; }
         public static Dispatcher Dispatcher { get; set; }
         public static FeatureFlags Features { get; set; }
+        public static CharacterListFlags CharacterListFlags { get; set; }
         public static GumpCollection Gumps { get; set; } = new GumpCollection();
         public static ItemCollection Items { get; set; } = new ItemCollection( 0 );
         public static CircularBuffer<JournalEntry> Journal { get; set; } = new CircularBuffer<JournalEntry>( 1024 );
@@ -122,6 +123,7 @@ namespace Assistant
         public static TargetFlags TargetFlags { get; set; }
         public static int TargetSerial { get; set; }
         public static TargetType TargetType { get; set; }
+        public static bool TooltipsEnabled { get; set; }
         public static bool WaitingForTarget { get; set; }
         internal static ConcurrentDictionary<uint, int> GumpList { get; set; } = new ConcurrentDictionary<uint, int>();
 

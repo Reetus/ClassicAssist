@@ -180,4 +180,25 @@
   <data name="Project Homepage" xml:space="preserve">
     <value>Project Homepage</value>
   </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Update cancelled..." xml:space="preserve">
+    <value>Update cancelled...</value>
+  </data>
+  <data name="Running Clients" xml:space="preserve">
+    <value>Running Clients</value>
+  </data>
+  <data name="The following client(s) are currently running, if you continue they will be closed" xml:space="preserve">
+    <value>The following client(s) are currently running, if you continue they will be closed</value>
+  </data>
+  <data name="Do you wish to continue?" xml:space="preserve">
+    <value>Do you wish to continue?</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
 </root>

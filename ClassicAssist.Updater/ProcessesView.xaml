@@ -1,0 +1,45 @@
+﻿<Window x:Class="ClassicAssist.Updater.ProcessesView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClassicAssist.Updater"
+        xmlns:properties="clr-namespace:ClassicAssist.Updater.Properties"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
+        Title="{x:Static properties:Resources.Running_Clients}" Height="350" Width="400">
+    <Window.DataContext>
+        <local:ProcessesViewModel />
+    </Window.DataContext>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBlock
+                Text="{x:Static properties:Resources.The_following_client_s__are_currently_running__if_you_continue_they_will_be_closed}"
+                TextWrapping="Wrap" />
+            <TextBlock Text="{x:Static properties:Resources.Do_you_wish_to_continue_}" Margin="0,10,0,0" />
+        </StackPanel>
+        <ListBox ItemsSource="{Binding Processes}" Grid.Row="1" Margin="0,10" DisplayMemberPath="MainWindowTitle" />
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Padding" Value="20,5" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="{x:Static properties:Resources.OK}" Margin="0,0,10,0" Command="{Binding OKCommand}">
+                <i:Interaction.Behaviors>
+                    <local:CloseBehaviour />
+                </i:Interaction.Behaviors>
+            </Button>
+            <Button Content="{x:Static properties:Resources.Cancel}">
+                <i:Interaction.Behaviors>
+                    <local:CloseBehaviour />
+                </i:Interaction.Behaviors>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

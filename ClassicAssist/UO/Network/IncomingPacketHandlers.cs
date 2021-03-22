@@ -167,9 +167,10 @@ namespace ClassicAssist.UO.Network
                 reader.ReadInt32();
             }
 
-            CharacterListFlags flags = (CharacterListFlags) reader.ReadInt32();
+            Engine.CharacterListFlags = (CharacterListFlags) reader.ReadInt32();
 
-            Engine.TooltipsEnabled = flags.HasFlag( CharacterListFlags.PaladinNecromancerClassTooltips );
+            Engine.TooltipsEnabled =
+                Engine.CharacterListFlags.HasFlag( CharacterListFlags.PaladinNecromancerClassTooltips );
         }
 
         private static void OnUO3DPetWindow( PacketReader reader )

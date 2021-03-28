@@ -13,16 +13,7 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = nameof( Strings.Abilities ) )]
         public static void ClearAbility()
         {
-            AbilitiesManager manager = AbilitiesManager.GetInstance();
-
-            if ( manager.IsPrimaryEnabled )
-            {
-                manager.SetAbility( AbilityType.Primary );
-            }
-            else if ( manager.IsSecondaryEnabled )
-            {
-                manager.SetAbility( AbilityType.Secondary );
-            }
+            UOC.ClearWeaponAbility();
         }
 
         [CommandsDisplay( Category = nameof( Strings.Abilities ) )]
@@ -111,9 +102,17 @@ namespace ClassicAssist.Data.Macros.Commands
                 }
             }
 
-            UOC.SystemMessage( string.Format( Strings.Setting_ability___0_____, ability ),
-                (int) UOC.SystemMessageHues.Green );
-            manager.SetAbility( primary ? AbilityType.Primary : AbilityType.Secondary );
+            if ( onOffNormalized == "off" || onOffNormalized == "toggle" &&
+                ( manager.IsPrimaryEnabled || manager.IsSecondaryEnabled ) )
+            {
+                UOC.ClearWeaponAbility();
+            }
+            else
+            {
+                UOC.SystemMessage( string.Format( Strings.Setting_ability___0_____, ability ),
+                    (int) UOC.SystemMessageHues.Green );
+                manager.SetAbility( primary ? AbilityType.Primary : AbilityType.Secondary );
+            }
         }
 
         [CommandsDisplay( Category = nameof( Strings.Abilities ) )]

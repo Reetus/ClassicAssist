@@ -1143,7 +1143,7 @@ namespace ClassicAssist.UO.Network
                     return;
                 }
 
-                TargetCommands.Target( obj, Options.CurrentOptions.RangeCheckLastTarget );
+                TargetCommands.Target( obj.Object, Options.CurrentOptions.RangeCheckLastTarget );
             }
         }
 

@@ -1584,4 +1584,10 @@ SetVendorBuyAutoBuy("regs", "off")
 # default will toggle
 SetVendorBuyAutoBuy("regs")</value>
   </data>
+  <data name="ISRUNNING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns True if the specified macro name is currently running</value>
+  </data>
+  <data name="ISRUNNING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if IsRunning('macro'):</value>
+  </data>
 </root>

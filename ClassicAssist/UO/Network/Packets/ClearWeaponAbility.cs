@@ -1,4 +1,5 @@
-﻿using ClassicAssist.UO.Data;
+﻿using Assistant;
+using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.UO.Network.Packets
 {
@@ -8,9 +9,13 @@ namespace ClassicAssist.UO.Network.Packets
         {
             _writer = new PacketWriter( 5 );
 
-            _writer.Write( (byte) 0xBF );
-            _writer.Write( (short) 5 );
-            _writer.Write( (short) 0x21 );
+            _writer.Write( (byte) 0xD7 );
+            _writer.Write( (short) 15 );
+            _writer.Write( Engine.Player.Serial );
+            _writer.Write( (short) 0x19 );
+            _writer.Write( (byte) 0x0 );
+            _writer.Write( 0x0 );
+            _writer.Write( (byte) 0x0A );
         }
     }
 }

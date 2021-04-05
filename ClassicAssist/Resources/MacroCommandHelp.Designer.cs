@@ -1867,6 +1867,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Returns True if the specified macro name is currently running.
+        /// </summary>
+        public static string ISRUNNING_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("ISRUNNING_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if IsRunning(&apos;macro&apos;):.
+        /// </summary>
+        public static string ISRUNNING_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("ISRUNNING_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (Garoyle) Stop flying if currently flying..
         /// </summary>
         public static string LAND_COMMAND_DESCRIPTION {

@@ -2,6 +2,8 @@
 using Assistant;
 using ClassicAssist.Data.Abilities;
 using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -51,6 +53,8 @@ namespace ClassicAssist.Tests.MacroCommands
             AbilitiesManager manager = AbilitiesManager.GetInstance();
 
             Engine.Player = new PlayerMobile( 0x01 );
+
+            manager.Enabled = AbilityType.None;
 
             Engine.InternalPacketSentEvent += ExpectAbilityPacket;
 
@@ -122,6 +126,8 @@ namespace ClassicAssist.Tests.MacroCommands
             AbilitiesManager manager = AbilitiesManager.GetInstance();
 
             Engine.Player = new PlayerMobile( 0x01 );
+
+            manager.Enabled = AbilityType.None;
 
             Engine.InternalPacketSentEvent += ExpectAbilityPacket;
 
@@ -220,6 +226,13 @@ namespace ClassicAssist.Tests.MacroCommands
         {
             if ( data[0] == 0xD7 && data[8] == 0x19 )
             {
+                if ( data[13] == 0x00 )
+                {
+                    byte[] packet = { 0xBF, 0x00, 0x05, 0x00, 0x21 };
+                    IncomingPacketHandlers.Initialize();
+                    PacketHandler handler = IncomingPacketHandlers.GetHandler( 0xBF );
+                    handler.OnReceive( new PacketReader( packet, packet.Length, false ) );
+                }
                 _are.Set();
             }
         }

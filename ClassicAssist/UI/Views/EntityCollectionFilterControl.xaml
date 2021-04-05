@@ -91,7 +91,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <ComboBox SelectedItem="{Binding Constraint}"
-                                          ItemsSource="{Binding Constraints, ElementName=userControl}" Width="200" />
+                                          ItemsSource="{Binding Constraints, ElementName=userControl}" Width="200" DisplayMemberPath="Name" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

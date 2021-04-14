@@ -349,7 +349,7 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            if ( config["Alias"] != null )
+            if ( config?["Alias"] != null )
             {
                 foreach ( JToken token in config["Alias"] )
                 {

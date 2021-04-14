@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
                     xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
-                    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
+                    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                    xmlns:draggableTreeView="clr-namespace:ClassicAssist.UI.Controls.DraggableTreeView">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Colours.xaml" />
@@ -198,6 +199,10 @@
         <Setter Property="ItemContainerStyle" Value="{StaticResource TreeViewItemStyle}" />
     </Style>
     <Style TargetType="{x:Type TreeView}" BasedOn="{StaticResource TreeViewStyle}">
+        <Setter Property="Background" Value="{DynamicResource ThemeInnerControlBackgroundBrush}" />
+    </Style>
+
+    <Style TargetType="{x:Type draggableTreeView:DraggableTreeView}" BasedOn="{StaticResource TreeViewStyle}">
         <Setter Property="Background" Value="{DynamicResource ThemeInnerControlBackgroundBrush}" />
     </Style>
 

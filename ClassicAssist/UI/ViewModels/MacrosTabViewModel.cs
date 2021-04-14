@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -16,6 +17,7 @@ using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
+using ClassicAssist.UI.Controls.DraggableTreeView;
 using ClassicAssist.UI.ViewModels.Macros;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UI.Views.Macros;
@@ -32,15 +34,19 @@ namespace ClassicAssist.UI.ViewModels
         private int _caretPosition;
         private ICommand _clearHotkeyCommand;
         private TextDocument _document;
+        private ObservableCollection<IDraggable> _draggables = new ObservableCollection<IDraggable>();
         private ICommand _executeCommand;
         private ICommand _inspectObjectCommand;
         private bool _isRecording;
+        private ICommand _newGroupCommand;
         private RelayCommand _newMacroCommand;
         private ICommand _recordCommand;
+        private ICommand _removeGroupCommand;
         private RelayCommand _removeMacroCommand;
         private ICommand _removeMacroConfirmCommand;
         private ICommand _resetImportCacheCommand;
         private ICommand _saveMacroCommand;
+        private MacroGroup _selectedGroup;
         private MacroEntry _selectedItem;
         private ICommand _shareMacroCommand;
         private ICommand _showActiveObjectsWindowCommand;
@@ -67,6 +73,7 @@ namespace ClassicAssist.UI.ViewModels
             };
             _manager.NewMacro = NewMacro;
             _manager.Items = Items;
+            Items.CollectionChanged += UpdateDraggables;
         }
 
         public int CaretPosition
@@ -82,6 +89,12 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _document;
             set => SetProperty( ref _document, value );
+        }
+
+        public ObservableCollection<IDraggable> Draggables
+        {
+            get => _draggables;
+            set => SetProperty( ref _draggables, value );
         }
 
         public ICommand ExecuteCommand =>
@@ -103,6 +116,9 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _isRecording, value );
         }
 
+        public ICommand NewGroupCommand =>
+            _newGroupCommand ?? ( _newGroupCommand = new RelayCommand( NewGroup, o => true ) );
+
         public RelayCommand NewMacroCommand =>
             _newMacroCommand ??
             ( _newMacroCommand = new RelayCommand( NewMacro, o => !SelectedItem?.IsRunning ?? true ) );
@@ -111,6 +127,9 @@ namespace ClassicAssist.UI.ViewModels
             _recordCommand ?? ( _recordCommand = new RelayCommand( Record, o => SelectedItem != null ) );
 
         public string RecordLabel => IsRecording ? Strings.Stop : Strings.Record;
+
+        public ICommand RemoveGroupCommand =>
+            _removeGroupCommand ?? ( _removeGroupCommand = new RelayCommand( RemoveGroup, o => o is IDraggableGroup ) );
 
         public RelayCommand RemoveMacroCommand =>
             _removeMacroCommand ?? ( _removeMacroCommand =
@@ -126,6 +145,12 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand SaveMacroCommand =>
             _saveMacroCommand ?? ( _saveMacroCommand = new RelayCommand( SaveMacro, o => true ) );
+
+        public MacroGroup SelectedGroup
+        {
+            get => _selectedGroup;
+            set => SetProperty( ref _selectedGroup, value );
+        }
 
         public MacroEntry SelectedItem
         {
@@ -146,47 +171,6 @@ namespace ClassicAssist.UI.ViewModels
             _shareMacroCommand ??
             ( _shareMacroCommand = new RelayCommandAsync( ShareMacro, o => SelectedItem != null ) );
 
-        private async Task ShareMacro( object arg )
-        {
-            if ( !( arg is MacroEntry macro ) )
-            {
-                return;
-            }
-
-            HttpClient httpClient = new HttpClient();
-
-            ShareMacroModel data = new ShareMacroModel() { Content = macro.Macro };
-
-            HttpResponseMessage response = await httpClient.PostAsync(
-                "https://classicassist.azurewebsites.net/api/macros/stage",
-                new StringContent( JsonConvert.SerializeObject( data ), Encoding.UTF8, "application/json" ) );
-
-            string json = await response.Content.ReadAsStringAsync();
-
-            if ( response.IsSuccessStatusCode )
-            {
-                ShareMacroModel responseData = JsonConvert.DeserializeObject<ShareMacroModel>( json );
-
-                if ( !string.IsNullOrEmpty( responseData.Uuid ) )
-                {
-                    Process.Start( $"https://classicassist.azurewebsites.net/?id={responseData.Uuid}" );
-                }
-            }
-            else
-            {
-                ShareErrorResponseModel errorObj = JsonConvert.DeserializeObject<ShareErrorResponseModel>( json );
-
-                if ( errorObj != null && !string.IsNullOrEmpty( errorObj.Message ))
-                {
-                    MessageBox.Show( $"Error sharing macro: {errorObj.Message}" );
-                }
-                else
-                {
-                    MessageBox.Show( $"Unknown error sharing macro: {response.StatusCode}" );
-                }
-            }
-        }
-
         public ICommand ShowActiveObjectsWindowCommand =>
             _showActiveObjectsWindowCommand ?? ( _showActiveObjectsWindowCommand =
                 new RelayCommand( ShowActiveObjectsWindow, o => true ) );
@@ -205,6 +189,7 @@ namespace ClassicAssist.UI.ViewModels
             JObject macros = new JObject();
 
             JArray macroArray = new JArray();
+            JArray groupArray = new JArray();
 
             IEnumerable<MacroEntry> globalMacros = Items.Where( e => e.Global );
 
@@ -214,6 +199,13 @@ namespace ClassicAssist.UI.ViewModels
 
                 File.WriteAllText( Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Macros.json" ),
                     globalJson );
+            }
+
+            foreach ( IDraggable draggable in Draggables.Where( i => i is IDraggableGroup ) )
+            {
+                JObject entry = new JObject { { "Name", draggable.Name } };
+
+                groupArray.Add( entry );
             }
 
             foreach ( MacroEntry macroEntry in Items.Where( e => !e.Global ) )
@@ -228,7 +220,8 @@ namespace ClassicAssist.UI.ViewModels
                     { "Keys", macroEntry.Hotkey.ToJObject() },
                     { "IsBackground", macroEntry.IsBackground },
                     { "IsAutostart", macroEntry.IsAutostart },
-                    { "Disableable", macroEntry.Disableable }
+                    { "Disableable", macroEntry.Disableable },
+                    { "Group", !string.IsNullOrEmpty( macroEntry.Group ) ? macroEntry.Group : null }
                 };
 
                 JArray aliasesArray = new JArray();
@@ -244,6 +237,7 @@ namespace ClassicAssist.UI.ViewModels
                 macroArray.Add( entry );
             }
 
+            macros.Add( "Groups", groupArray );
             macros.Add( "Macros", macroArray );
 
             JArray aliasArray = new JArray();
@@ -263,6 +257,25 @@ namespace ClassicAssist.UI.ViewModels
         {
             Items.Clear();
 
+            JToken config = json?["Macros"];
+
+            if ( config?["Groups"] != null )
+            {
+                foreach ( JToken token in config["Groups"] )
+                {
+                    MacroGroup macroGroup = new MacroGroup { Name = GetJsonValue( token, "Name", "Group" ) };
+
+                    if ( Options.CurrentOptions.SortMacrosAlphabetical )
+                    {
+                        Draggables.AddSorted( macroGroup, new GroupsBeforeMacrosComparer() );
+                    }
+                    else
+                    {
+                        Draggables.Add( macroGroup );
+                    }
+                }
+            }
+
             string globalPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Macros.json" );
 
             if ( File.Exists( globalPath ) )
@@ -279,7 +292,7 @@ namespace ClassicAssist.UI.ViewModels
 
                         if ( Options.CurrentOptions.SortMacrosAlphabetical )
                         {
-                            Items.AddSorted( entry );
+                            Items.AddSorted( entry, new GroupsBeforeMacrosComparer() );
                         }
                         else
                         {
@@ -289,14 +302,7 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            JToken config = json?["Macros"];
-
-            if ( config == null )
-            {
-                return;
-            }
-
-            if ( config["Macros"] != null )
+            if ( config?["Macros"] != null )
             {
                 foreach ( JToken token in config["Macros"] )
                 {
@@ -309,7 +315,8 @@ namespace ClassicAssist.UI.ViewModels
                         PassToUO = GetJsonValue( token, "PassToUO", true ),
                         IsBackground = GetJsonValue( token, "IsBackground", false ),
                         IsAutostart = GetJsonValue( token, "IsAutostart", false ),
-                        Disableable = GetJsonValue( token, "Disableable", true )
+                        Disableable = GetJsonValue( token, "Disableable", true ),
+                        Group = GetJsonValue( token, "Group", string.Empty )
                     };
 
                     // Global macros take precedence for hotkey
@@ -333,7 +340,7 @@ namespace ClassicAssist.UI.ViewModels
 
                     if ( Options.CurrentOptions.SortMacrosAlphabetical )
                     {
-                        Items.AddSorted( entry );
+                        Items.AddSorted( entry, new GroupsBeforeMacrosComparer() );
                     }
                     else
                     {
@@ -355,6 +362,144 @@ namespace ClassicAssist.UI.ViewModels
             if ( !Directory.Exists( modulePath ) )
             {
                 Directory.CreateDirectory( modulePath );
+            }
+        }
+
+        private void NewGroup( object obj )
+        {
+            int count = Draggables.Count( i => i is IDraggableGroup );
+
+            if ( Options.CurrentOptions.SortMacrosAlphabetical )
+            {
+                Draggables.AddSorted( new MacroGroup { Name = $"Group-{count + 1}" },
+                    new GroupsBeforeMacrosComparer() );
+            }
+            else
+            {
+                Draggables.Add( new MacroGroup { Name = $"Group-{count + 1}" } );
+            }
+        }
+
+        private void UpdateDraggables( object sender, NotifyCollectionChangedEventArgs e )
+        {
+            if ( e.NewItems != null )
+            {
+                foreach ( object newItem in e.NewItems )
+                {
+                    if ( !( newItem is MacroEntry macroEntry ) )
+                    {
+                        continue;
+                    }
+
+                    if ( !string.IsNullOrEmpty( macroEntry.Group ) )
+                    {
+                        MacroGroup macroGroup =
+                            (MacroGroup) Draggables.FirstOrDefault( i =>
+                                i is MacroGroup && i.Name == macroEntry.Group );
+
+                        if ( macroGroup == null )
+                        {
+                            if ( Options.CurrentOptions.SortMacrosAlphabetical )
+                            {
+                                Draggables.AddSorted( macroEntry, new GroupsBeforeMacrosComparer() );
+                            }
+                            else
+                            {
+                                Draggables.Add( macroEntry );
+                            }
+
+                            return;
+                        }
+
+                        if ( Options.CurrentOptions.SortMacrosAlphabetical )
+                        {
+                            macroGroup.Children.AddSorted( macroEntry );
+                        }
+                        else
+                        {
+                            macroGroup.Children.Add( macroEntry );
+                        }
+
+                        OnPropertyChanged( nameof( Draggables ) );
+                    }
+                    else
+                    {
+                        if ( Options.CurrentOptions.SortMacrosAlphabetical )
+                        {
+                            Draggables.AddSorted( macroEntry, new GroupsBeforeMacrosComparer() );
+                        }
+                        else
+                        {
+                            Draggables.Add( macroEntry );
+                        }
+                    }
+                }
+            }
+
+            if ( e.OldItems == null )
+            {
+                return;
+            }
+
+            foreach ( object newItem in e.OldItems )
+            {
+                if ( !( newItem is MacroEntry macroEntry ) )
+                {
+                    continue;
+                }
+
+                if ( string.IsNullOrEmpty( macroEntry.Group ) )
+                {
+                    Draggables.Remove( macroEntry );
+                }
+                else
+                {
+                    MacroGroup macroGroup =
+                        (MacroGroup) Draggables.FirstOrDefault( i => i is MacroGroup && i.Name == macroEntry.Group );
+
+                    macroGroup?.Children.Remove( macroEntry );
+                }
+            }
+        }
+
+        private async Task ShareMacro( object arg )
+        {
+            if ( !( arg is MacroEntry macro ) )
+            {
+                return;
+            }
+
+            HttpClient httpClient = new HttpClient();
+
+            ShareMacroModel data = new ShareMacroModel { Content = macro.Macro };
+
+            HttpResponseMessage response = await httpClient.PostAsync(
+                "https://classicassist.azurewebsites.net/api/macros/stage",
+                new StringContent( JsonConvert.SerializeObject( data ), Encoding.UTF8, "application/json" ) );
+
+            string json = await response.Content.ReadAsStringAsync();
+
+            if ( response.IsSuccessStatusCode )
+            {
+                ShareMacroModel responseData = JsonConvert.DeserializeObject<ShareMacroModel>( json );
+
+                if ( !string.IsNullOrEmpty( responseData.Uuid ) )
+                {
+                    Process.Start( $"https://classicassist.azurewebsites.net/?id={responseData.Uuid}" );
+                }
+            }
+            else
+            {
+                ShareErrorResponseModel errorObj = JsonConvert.DeserializeObject<ShareErrorResponseModel>( json );
+
+                if ( errorObj != null && !string.IsNullOrEmpty( errorObj.Message ) )
+                {
+                    MessageBox.Show( $"Error sharing macro: {errorObj.Message}" );
+                }
+                else
+                {
+                    MessageBox.Show( $"Unknown error sharing macro: {response.StatusCode}" );
+                }
             }
         }
 
@@ -537,18 +682,43 @@ namespace ClassicAssist.UI.ViewModels
             IsRecording = true;
             OnPropertyChanged( nameof( RecordLabel ) );
         }
+
+        private void RemoveGroup( object obj )
+        {
+            if ( !( obj is IDraggableGroup group ) )
+            {
+                return;
+            }
+
+            foreach ( IDraggableEntry groupChild in group.Children.Where( i => i is IDraggableEntry )
+                .Cast<IDraggableEntry>() )
+            {
+                if ( Options.CurrentOptions.SortMacrosAlphabetical )
+                {
+                    Draggables.AddSorted( groupChild, new GroupsBeforeMacrosComparer() );
+                }
+                else
+                {
+                    Draggables.Add( groupChild );
+                }
+
+                groupChild.Group = null;
+            }
+
+            Draggables.Remove( group );
+        }
     }
 
     internal class ShareMacroModel
     {
-        public string Uuid { get; set; }
         public string Content { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.Now;
+        public string Uuid { get; set; }
     }
 
     internal class ShareErrorResponseModel
     {
-        public int StatusCode { get; set; }
         public string Message { get; set; }
+        public int StatusCode { get; set; }
     }
 }

@@ -11,6 +11,8 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using ClassicAssist.Data;
+using Microsoft.Scripting.Utils;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.Misc
@@ -78,6 +80,14 @@ namespace ClassicAssist.Misc
                 BitmapSizeOptions.FromWidthAndHeight( bmp.Width, bmp.Height ) );
         }
 
+        public static void AddRangeSorted<T>( this IList<T> list, IEnumerable<T> items )
+        {
+            foreach ( T item in items )
+            {
+                list.AddSorted( item );
+            }
+        }
+
         public static void AddSorted<T>( this IList<T> list, T item, IComparer<T> comparer = null )
         {
             if ( comparer == null )
@@ -93,23 +103,6 @@ namespace ClassicAssist.Misc
             }
 
             list.Insert( i, item );
-        }
-
-        public static JArray ToJArray( this int[] arr )
-        {
-            JArray jArray = new JArray();
-
-            foreach ( int i in arr )
-            {
-                jArray.Add( i );
-            }
-
-            return jArray;
-        }
-
-        public static int[] ToIntArray( this JToken jToken )
-        {
-            return jToken.Select( token => token.ToObject<int>() ).ToArray();
         }
 
         // https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/interop-with-other-asynchronous-patterns-and-types?redirectedfrom=MSDN#WHToTap

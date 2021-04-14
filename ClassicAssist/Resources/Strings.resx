@@ -1483,7 +1483,7 @@ Are you sure you wish to continue?</value>
     <value>Invalid VendorBuy list name...</value>
   </data>
   <data name="Invalid state name: &quot;on&quot;, &quot;off&quot;, or &quot;toggle&quot;..." xml:space="preserve">
-    <value></value>
+    <value>Invalid state name: "on", "off", or "toggle"...</value>
   </data>
   <data name="Replay" xml:space="preserve">
     <value>Replay</value>
@@ -1589,5 +1589,11 @@ Are you sure you wish to continue?</value>
   </data>
   <data name="Time in milliseconds (-1 to not expire)" xml:space="preserve">
     <value>Time in milliseconds (-1 to not expire)</value>
+  </data>
+  <data name="New Group" xml:space="preserve">
+    <value>New Group</value>
+  </data>
+  <data name="Remove Group" xml:space="preserve">
+    <value>Remove Group</value>
   </data>
 </root>

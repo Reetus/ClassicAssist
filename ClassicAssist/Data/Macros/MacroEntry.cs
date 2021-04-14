@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Threading;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Resources;
+using ClassicAssist.UI.Controls.DraggableTreeView;
 using IronPython.Runtime.Operations;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Runtime;
@@ -12,12 +13,13 @@ using Newtonsoft.Json;
 
 namespace ClassicAssist.Data.Macros
 {
-    public class MacroEntry : HotkeyEntry, IComparable<MacroEntry>
+    public class MacroEntry : HotkeyEntry, IComparable<MacroEntry>, IDraggableEntry
     {
         private readonly Dispatcher _dispatcher;
         private Dictionary<string, int> _aliases = new Dictionary<string, int>();
         private bool _doNotAutoInterrupt;
         private bool _global;
+        private string _group;
         private bool _isAutostart;
         private bool _isBackground;
         private bool _isRunning;
@@ -49,6 +51,12 @@ namespace ClassicAssist.Data.Macros
         {
             get => _global;
             set => SetProperty( ref _global, value );
+        }
+
+        public string Group
+        {
+            get => _group;
+            set => SetProperty( ref _group, value );
         }
 
         public bool IsAutostart
@@ -88,13 +96,18 @@ namespace ClassicAssist.Data.Macros
             set => SetProperty( ref _macroInvoker, value );
         }
 
+        public int CompareTo( MacroEntry other )
+        {
+            return string.Compare( Name, other.Name, StringComparison.OrdinalIgnoreCase );
+        }
+
         public override string Name
         {
             get => _name;
             set => SetName( _name, value );
         }
 
-        public int CompareTo( MacroEntry other )
+        public int CompareTo( IDraggable other )
         {
             return string.Compare( Name, other.Name, StringComparison.OrdinalIgnoreCase );
         }

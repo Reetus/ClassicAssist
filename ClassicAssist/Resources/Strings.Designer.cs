@@ -1915,7 +1915,7 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Invalid state name: &quot;on&quot;, &quot;off&quot;, or &quot;toggle&quot;....
         /// </summary>
         public static string Invalid_state_name___on____off___or__toggle____ {
             get {
@@ -2515,6 +2515,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Group.
+        /// </summary>
+        public static string New_Group {
+            get {
+                return ResourceManager.GetString("New Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Item.
         /// </summary>
         public static string New_Item {
@@ -3060,6 +3069,15 @@ namespace ClassicAssist.Resources {
         public static string Remove_Friend {
             get {
                 return ResourceManager.GetString("Remove Friend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Group.
+        /// </summary>
+        public static string Remove_Group {
+            get {
+                return ResourceManager.GetString("Remove Group", resourceCulture);
             }
         }
         

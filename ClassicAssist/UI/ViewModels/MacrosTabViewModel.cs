@@ -256,6 +256,7 @@ namespace ClassicAssist.UI.ViewModels
         public void Deserialize( JObject json, Options options )
         {
             Items.Clear();
+            Draggables.Clear();
 
             JToken config = json?["Macros"];
 
@@ -264,6 +265,11 @@ namespace ClassicAssist.UI.ViewModels
                 foreach ( JToken token in config["Groups"] )
                 {
                     MacroGroup macroGroup = new MacroGroup { Name = GetJsonValue( token, "Name", "Group" ) };
+
+                    if ( Draggables.Where( i => i is IDraggableGroup ).Any( e => e.Name == macroGroup.Name ) )
+                    {
+                        continue;
+                    }
 
                     if ( Options.CurrentOptions.SortMacrosAlphabetical )
                     {

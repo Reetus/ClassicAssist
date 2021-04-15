@@ -198,7 +198,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             foreach ( VendorBuyAgentEntry entry in Items.Where( e => e.Enabled ) )
             {
-                foreach ( VendorBuyAgentItem item in entry.Items )
+                foreach ( VendorBuyAgentItem item in entry.Items.Where( e => e.Enabled ) )
                 {
                     IEnumerable<ShopListEntry> matches = entries.Where( i =>
                         i.Item.ID == item.Graphic && ( item.Hue == -1 || i.Item.Hue == item.Hue ) &&

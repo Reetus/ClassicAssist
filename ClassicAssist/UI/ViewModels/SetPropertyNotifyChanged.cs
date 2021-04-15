@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (C) 2021 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -13,8 +14,10 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 #endregion
 
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using ClassicAssist.Annotations;
@@ -31,15 +34,18 @@ namespace ClassicAssist.UI.ViewModels
             PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
         }
 
-        protected virtual void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
+        protected virtual void SetProperty<T>( ref T obj, T value, bool skipIfUnchanged = true,
+            Action<T> afterChange = null, [CallerMemberName] string propertyName = "" )
         {
-            if ( obj != null && obj.Equals( value ) )
+            if ( skipIfUnchanged && obj != null && obj.Equals( value ) )
             {
                 return;
             }
 
             obj = value;
             OnPropertyChanged( propertyName );
+
+            afterChange?.Invoke( obj );
         }
     }
 }

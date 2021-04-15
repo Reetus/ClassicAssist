@@ -12,20 +12,6 @@ namespace ClassicAssist.Data.Dress
         private int _serial;
         private DressAgentItemType _type = DressAgentItemType.Serial;
 
-        public DressAgentItem()
-        {
-            PropertyChanged += ( sender, args ) =>
-            {
-                // Set the name when the Type changes...
-                if ( args.PropertyName == nameof( Type ) )
-                {
-                    Name = Type == DressAgentItemType.ID
-                        ? $"{Layer}: {Strings.Type}: 0x{ID:x4}"
-                        : $"{Layer}: 0x{Serial:x8}";
-                }
-            };
-        }
-
         public int ID
         {
             get => _id;
@@ -53,7 +39,12 @@ namespace ClassicAssist.Data.Dress
         public DressAgentItemType Type
         {
             get => _type;
-            set => SetProperty( ref _type, value );
+            set => SetProperty( ref _type, value, false, SetName );
+        }
+
+        private void SetName( DressAgentItemType type )
+        {
+            Name = type == DressAgentItemType.ID ? $"{Layer}: {Strings.Type}: 0x{ID:x4}" : $"{Layer}: 0x{Serial:x8}";
         }
 
         public override string ToString()

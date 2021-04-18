@@ -95,18 +95,25 @@ namespace ClassicAssist.UI.Controls.DraggableTreeView
                 return;
             }
 
-            TreeViewItem nearestContainer = GetNearestContainer( e.OriginalSource as UIElement );
-
-            if ( !( nearestContainer?.Header is IDraggableGroup group ) )
+            try
             {
-                MoveItem( _draggedItem, null );
-                return;
+                TreeViewItem nearestContainer = GetNearestContainer( e.OriginalSource as UIElement );
+
+                if ( !( nearestContainer?.Header is IDraggableGroup group ) )
+                {
+                    MoveItem( _draggedItem, null );
+                    return;
+                }
+
+                e.Effects = DragDropEffects.None;
+                e.Handled = true;
+
+                MoveItem( _draggedItem, group );
             }
-
-            e.Effects = DragDropEffects.None;
-            e.Handled = true;
-
-            MoveItem( _draggedItem, group );
+            finally
+            {
+                _draggedItem = null;
+            }
         }
 
         private void MoveItem( IDraggableEntry draggedItem, IDraggableGroup newParentGroup )

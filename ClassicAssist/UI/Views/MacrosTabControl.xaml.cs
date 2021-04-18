@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml;
@@ -53,8 +54,31 @@ namespace ClassicAssist.UI.Views
                         continue;
                     }
 
-                    _completionData.Add(
-                        new PythonCompletionData( methodInfo.Name, attr.Description, attr.InsertText ) );
+                    string fullName = $"{methodInfo.Name}(";
+                    bool first = true;
+
+                    foreach ( ParameterInfo parameterInfo in methodInfo.GetParameters() )
+                    {
+                        if ( first )
+                        {
+                            first = false;
+                        }
+                        else
+                        {
+                            fullName += ", ";
+                        }
+
+                        bool optional = parameterInfo.RawDefaultValue == null ||
+                                        parameterInfo.RawDefaultValue.GetType() != typeof( DBNull );
+
+                        fullName +=
+                            $"{( optional ? "[" : "" )}{parameterInfo.ParameterType.Name} {parameterInfo.Name}{( optional ? "]" : "" )}";
+                    }
+
+                    fullName += $"):{methodInfo.ReturnType.Name}";
+
+                    _completionData.Add( new PythonCompletionData( methodInfo.Name, fullName, attr.Description,
+                        attr.InsertText ) );
                 }
             }
 
@@ -74,15 +98,22 @@ namespace ClassicAssist.UI.Views
             }
 
             List<PythonCompletionData> data = _completionData.Where( m =>
-                    ( (string) m.Content ).StartsWith( trimmed, StringComparison.InvariantCultureIgnoreCase ) )
+                    m.Name.StartsWith( trimmed, StringComparison.InvariantCultureIgnoreCase ) )
                 .Distinct( new SameNameComparer() ).ToList();
 
             if ( data.Count <= 0 )
             {
+                _completionWindow?.Close();
                 return;
             }
 
-            _completionWindow = new CompletionWindow( CodeTextEditor.TextArea ) { CloseWhenCaretAtBeginning = true };
+            _completionWindow = new CompletionWindow( CodeTextEditor.TextArea )
+            {
+                CloseWhenCaretAtBeginning = true,
+                Width = 500,
+                AllowsTransparency = true,
+                SizeToContent = SizeToContent.WidthAndHeight
+            };
             _completionWindow.CompletionList.CompletionData.AddRange( data );
             _completionWindow.Show();
             _completionWindow.Closed += delegate { _completionWindow = null; };

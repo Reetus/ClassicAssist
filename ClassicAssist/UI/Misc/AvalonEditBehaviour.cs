@@ -82,12 +82,7 @@ namespace ClassicAssist.UI.Misc
                 return;
             }
 
-            if ( dependencyPropertyChangedEventArgs.NewValue == null )
-            {
-                return;
-            }
-
-            editor.Document.Text = dependencyPropertyChangedEventArgs.NewValue.ToString();
+            editor.Document.Text = dependencyPropertyChangedEventArgs.NewValue?.ToString() ?? string.Empty;
             editor.CaretOffset = 0;
 
             if ( editor.Document.UndoStack.SizeLimit == 0 )

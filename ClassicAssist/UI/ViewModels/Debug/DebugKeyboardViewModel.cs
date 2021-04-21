@@ -261,7 +261,6 @@ namespace ClassicAssist.UI.ViewModels.Debug
         private string _keyboardName;
         private int _sdlKey;
         private int _sdlMod;
-        private string _uo;
         private Key _uoKey;
         private Key _wpfKey;
 

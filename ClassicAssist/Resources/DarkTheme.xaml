@@ -3,7 +3,7 @@
                     xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
                     xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
                     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-                    xmlns:draggableTreeView="clr-namespace:ClassicAssist.UI.Controls.DraggableTreeView">
+                    xmlns:draggableTreeView="clr-namespace:DraggableTreeView;assembly=DraggableTreeView">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Colours.xaml" />

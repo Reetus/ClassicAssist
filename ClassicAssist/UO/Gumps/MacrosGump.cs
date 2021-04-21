@@ -54,7 +54,7 @@ namespace ClassicAssist.UO.Gumps
             {
                 MacroManager _macroManager = MacroManager.GetInstance();
 
-                IEnumerable<MacroEntry> macro = _macroManager.Items.Where( e => e.IsRunning );
+                IEnumerable<MacroEntry> macro = _macroManager.Items.Where( e => e.IsRunning ).ToArray();
 
                 string html = string.Empty;
 

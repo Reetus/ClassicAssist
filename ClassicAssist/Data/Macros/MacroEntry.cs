@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Threading;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Resources;
-using ClassicAssist.UI.Controls.DraggableTreeView;
+using DraggableTreeView;
 using IronPython.Runtime.Operations;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Runtime;
@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace ClassicAssist.Data.Macros
 {
-    public class MacroEntry : HotkeyEntry, IComparable<MacroEntry>, IDraggableEntry
+    public class MacroEntry : HotkeyEntry, IComparable<MacroEntry>, IDraggableEntry, IComparable
     {
         private readonly Dispatcher _dispatcher;
         private Dictionary<string, int> _aliases = new Dictionary<string, int>();
@@ -96,20 +96,57 @@ namespace ClassicAssist.Data.Macros
             set => SetProperty( ref _macroInvoker, value );
         }
 
+        public int CompareTo( object obj )
+        {
+            if ( !( obj is IDraggable entry ) )
+            {
+                return 1;
+            }
+
+            if ( obj.GetType() != GetType() )
+            {
+                return 1;
+            }
+
+            if( ReferenceEquals( this, entry ) )
+            {
+                return 0;
+            }
+
+            if( ReferenceEquals( null, entry ) )
+            {
+                return 1;
+            }
+
+            return string.Compare( Name, entry.Name, StringComparison.Ordinal );
+        }
+
         public int CompareTo( MacroEntry other )
         {
-            return string.Compare( Name, other.Name, StringComparison.OrdinalIgnoreCase );
+            if ( ReferenceEquals( this, other ) )
+            {
+                return 0;
+            }
+
+            if ( ReferenceEquals( null, other ) )
+            {
+                return 1;
+            }
+
+            int hotkeyEntryComparison = base.CompareTo( other );
+
+            if ( hotkeyEntryComparison != 0 )
+            {
+                return hotkeyEntryComparison;
+            }
+
+            return string.Compare( _name, other._name, StringComparison.Ordinal );
         }
 
         public override string Name
         {
             get => _name;
             set => SetName( _name, value );
-        }
-
-        public int CompareTo( IDraggable other )
-        {
-            return string.Compare( Name, other.Name, StringComparison.OrdinalIgnoreCase );
         }
 
         private void OnStoppedEvent()

@@ -1,5 +1,4 @@
 ﻿#region License
-
 // Copyright (C) 2021 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -14,34 +13,24 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
 #endregion
 
-using System.Collections.ObjectModel;
-using System.Linq;
-using ClassicAssist.UI.ViewModels;
-using DraggableTreeView;
+using System;
+using System.Globalization;
+using System.Windows.Data;
 
-namespace ClassicAssist.Data.Macros
+namespace ClassicAssist.UI.Misc.ValueConverters
 {
-    public class MacroGroup : SetPropertyNotifyChanged, IDraggableGroup
+    public class NullBooleanConverter : IValueConverter
     {
-        private string _name;
-        public ObservableCollection<IDraggable> Children { get; set; } = new ObservableCollection<IDraggable>();
-
-        public string Name
+        public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
         {
-            get => _name;
-            set
-            {
-                foreach ( MacroEntry draggable in Children.Where( i => i is MacroEntry )
-                    .Cast<MacroEntry>() )
-                {
-                    draggable.Group = value;
-                }
+            return value != null;
+        }
 
-                SetProperty( ref _name, value );
-            }
+        public object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture )
+        {
+            throw new NotImplementedException();
         }
     }
 }

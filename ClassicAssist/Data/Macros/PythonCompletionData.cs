@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Media;
 using ClassicAssist.Misc;
+using ClassicAssist.Resources;
+using ClassicAssist.UI.Controls;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
@@ -9,12 +11,19 @@ namespace ClassicAssist.Data.Macros
 {
     public class PythonCompletionData : ICompletionData
     {
-        public PythonCompletionData( string text, string description, string insertText )
+        public PythonCompletionData( string name, string fullName, string description, string insertText )
         {
+            Name = fullName;
             Description = description;
             Text = insertText;
-            Content = text;
+
+            Example = MacroCommandHelp.ResourceManager.GetString( $"{name.ToUpper()}_COMMAND_EXAMPLE" );
+
+            Content = new CompletionEntry( fullName, Example );
         }
+
+        public string Example { get; set; }
+        public string Name { get; set; }
 
         public void Complete( TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs )
         {

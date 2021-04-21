@@ -1596,4 +1596,10 @@ Are you sure you wish to continue?</value>
   <data name="Remove Group" xml:space="preserve">
     <value>Remove Group</value>
   </data>
+  <data name="Auto disable when loading" xml:space="preserve">
+    <value>Auto disable when loading</value>
+  </data>
+  <data name="Disable all vendor buy entries on loading profile" xml:space="preserve">
+    <value>Disable all vendor buy entries on loading profile</value>
+  </data>
 </root>

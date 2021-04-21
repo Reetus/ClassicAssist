@@ -36,7 +36,11 @@
             <ColumnDefinition Width="150" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid Margin="5" Grid.Column="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Margin="5" Grid.Column="0" Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
@@ -77,7 +81,7 @@
                 </Grid>
             </StackPanel>
         </Grid>
-        <Grid Margin="5" Grid.Column="1">
+        <Grid Margin="5" Grid.Column="1" Grid.Row="0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -164,5 +168,10 @@
                 </StackPanel>
             </Grid>
         </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="5,0" Grid.ColumnSpan="2">
+            <CheckBox IsChecked="{Binding AutoDisableOnLogin}"
+                      Content="{x:Static resources:Strings.Auto_disable_when_loading}"
+                      ToolTip="{x:Static resources:Strings.Disable_all_vendor_buy_entries_on_loading_profile}" />
+        </StackPanel>
     </Grid>
 </UserControl>

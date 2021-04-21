@@ -20,6 +20,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 {
     public class VendorBuyTabViewModel : BaseViewModel, ISettingProvider
     {
+        private bool _autoDisableOnLogin;
         private ICommand _insertCommand;
         private ICommand _insertEntryCommand;
         private ObservableCollection<VendorBuyAgentEntry> _items = new ObservableCollection<VendorBuyAgentEntry>();
@@ -33,6 +34,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
             IncomingPacketHandlers.VendorBuyDisplayEvent += OnVendorBuyDisplayEvent;
             VendorBuyManager manager = VendorBuyManager.GetInstance();
             manager.Items = Items;
+        }
+
+        public bool AutoDisableOnLogin
+        {
+            get => _autoDisableOnLogin;
+            set => SetProperty( ref _autoDisableOnLogin, value );
         }
 
         public ICommand InsertCommand => _insertCommand ?? ( _insertCommand = new RelayCommand( Insert, o => true ) );
@@ -76,6 +83,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
             JObject vendorBuy = new JObject();
 
             JArray items = new JArray();
+
+            vendorBuy.Add( "AutoDisableOnLogin", AutoDisableOnLogin );
 
             foreach ( VendorBuyAgentEntry entry in Items )
             {
@@ -123,6 +132,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
+            AutoDisableOnLogin = config["AutoDisableOnLogin"]?.ToObject<bool>() ?? false;
+
             if ( config["Items"] != null )
             {
                 // Convert from Legacy "Items" to "Entries"
@@ -161,7 +172,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 VendorBuyAgentEntry entry = new VendorBuyAgentEntry
                 {
                     Name = token["Name"]?.ToObject<string>() ?? "Unknown",
-                    Enabled = token["Enabled"]?.ToObject<bool>() ?? false,
+                    Enabled = !AutoDisableOnLogin && ( token["Enabled"]?.ToObject<bool>() ?? false ),
                     IncludeBackpackAmount = token["IncludeBackpackAmount"]?.ToObject<bool>() ?? false
                 };
 
@@ -198,7 +209,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             foreach ( VendorBuyAgentEntry entry in Items.Where( e => e.Enabled ) )
             {
-                foreach ( VendorBuyAgentItem item in entry.Items )
+                foreach ( VendorBuyAgentItem item in entry.Items.Where( e => e.Enabled ) )
                 {
                     IEnumerable<ShopListEntry> matches = entries.Where( i =>
                         i.Item.ID == item.Graphic && ( item.Hue == -1 || i.Item.Hue == item.Hue ) &&

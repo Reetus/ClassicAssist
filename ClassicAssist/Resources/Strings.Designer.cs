@@ -385,6 +385,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto disable when loading.
+        /// </summary>
+        public static string Auto_disable_when_loading {
+            get {
+                return ResourceManager.GetString("Auto disable when loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Autoloot.
         /// </summary>
         public static string Autoloot {
@@ -1056,6 +1065,15 @@ namespace ClassicAssist.Resources {
         public static string Define_Custom_Properties {
             get {
                 return ResourceManager.GetString("Define Custom Properties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable all vendor buy entries on loading profile.
+        /// </summary>
+        public static string Disable_all_vendor_buy_entries_on_loading_profile {
+            get {
+                return ResourceManager.GetString("Disable all vendor buy entries on loading profile", resourceCulture);
             }
         }
         

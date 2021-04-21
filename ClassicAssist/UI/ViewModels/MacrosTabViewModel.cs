@@ -17,11 +17,11 @@ using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
-using ClassicAssist.UI.Controls.DraggableTreeView;
 using ClassicAssist.UI.ViewModels.Macros;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UI.Views.Macros;
 using ClassicAssist.UO;
+using DraggableTreeView;
 using ICSharpCode.AvalonEdit.Document;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -191,6 +191,22 @@ namespace ClassicAssist.UI.ViewModels
             JArray macroArray = new JArray();
             JArray groupArray = new JArray();
 
+            foreach ( MacroEntry macroEntry in Items )
+            {
+                _dispatcher.Invoke( () =>
+                {
+                    macroEntry.Group = FindGroup( macroEntry );
+                } );
+            }
+
+            foreach ( IDraggableGroup draggableGroup in Draggables.Where( i => i is IDraggableGroup )
+                .Cast<IDraggableGroup>() )
+            {
+                JObject entry = new JObject { { "Name", draggableGroup.Name } };
+
+                groupArray.Add( entry );
+            }
+
             IEnumerable<MacroEntry> globalMacros = Items.Where( e => e.Global );
 
             if ( globalMacros.Any() )
@@ -199,13 +215,6 @@ namespace ClassicAssist.UI.ViewModels
 
                 File.WriteAllText( Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Macros.json" ),
                     globalJson );
-            }
-
-            foreach ( IDraggable draggable in Draggables.Where( i => i is IDraggableGroup ) )
-            {
-                JObject entry = new JObject { { "Name", draggable.Name } };
-
-                groupArray.Add( entry );
             }
 
             foreach ( MacroEntry macroEntry in Items.Where( e => !e.Global ) )
@@ -221,7 +230,7 @@ namespace ClassicAssist.UI.ViewModels
                     { "IsBackground", macroEntry.IsBackground },
                     { "IsAutostart", macroEntry.IsAutostart },
                     { "Disableable", macroEntry.Disableable },
-                    { "Group", !string.IsNullOrEmpty( macroEntry.Group ) ? macroEntry.Group : null }
+                    { "Group", macroEntry.Group }
                 };
 
                 JArray aliasesArray = new JArray();
@@ -255,6 +264,9 @@ namespace ClassicAssist.UI.ViewModels
 
         public void Deserialize( JObject json, Options options )
         {
+            SelectedItem = null;
+            SelectedGroup = null;
+
             Items.Clear();
             Draggables.Clear();
 
@@ -369,6 +381,15 @@ namespace ClassicAssist.UI.ViewModels
             {
                 Directory.CreateDirectory( modulePath );
             }
+
+            SelectedItem = Items.LastOrDefault();
+        }
+
+        private string FindGroup( IDraggable macroEntry )
+        {
+            return ( from draggableGroup in Draggables.Where( i => i is IDraggableGroup ).Cast<IDraggableGroup>()
+                where draggableGroup.Children.Contains( macroEntry )
+                select draggableGroup.Name ).FirstOrDefault();
         }
 
         private void NewGroup( object obj )
@@ -637,6 +658,8 @@ namespace ClassicAssist.UI.ViewModels
             macro.Action = async hks => await Execute( macro );
 
             Items.Add( macro );
+
+            SelectedItem = macro;
         }
 
         private void NewMacro( string name, string macroText )
@@ -696,8 +719,7 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            foreach ( IDraggableEntry groupChild in group.Children.Where( i => i is IDraggableEntry )
-                .Cast<IDraggableEntry>() )
+            foreach ( MacroEntry groupChild in group.Children.Where( i => i is MacroEntry ).Cast<MacroEntry>() )
             {
                 if ( Options.CurrentOptions.SortMacrosAlphabetical )
                 {

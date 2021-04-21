@@ -11,9 +11,6 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using ClassicAssist.Data;
-using Microsoft.Scripting.Utils;
-using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.Misc
 {

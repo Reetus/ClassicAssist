@@ -16,6 +16,9 @@
         Background="{DynamicResource ThemeWindowBackgroundBrush}"
         AllowsTransparency="True" WindowStyle="None" WindowState="Normal"
         Title="{Binding Title}" x:Name="window" ResizeMode="CanResizeWithGrip">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="{Binding Height, ElementName=CustomWindowTitleControl}"/>
+    </WindowChrome.WindowChrome>
     <i:Interaction.Behaviors>
         <misc:LoadOptionsOnWindowLoaded />
         <misc:WindowResizeBehaviour/>
@@ -33,7 +36,7 @@
     </Window.Resources>
     <DockPanel>
         <controls:CustomWindowTitleControl DockPanel.Dock="Top" CustomTitle="{Binding Path=Title, ElementName=window}"
-                                           CanClose="False">
+                                           CanClose="False" x:Name="CustomWindowTitleControl">
             <controls:CustomWindowTitleControl.AdditionalButtons>
                 <Button Command="{Binding DebugCommand}" Padding="0" Height="20" Width="20">
                     <Image Source="{StaticResource bugIcon}" Height="16" Width="16" />

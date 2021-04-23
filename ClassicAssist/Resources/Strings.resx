@@ -1602,4 +1602,7 @@ Are you sure you wish to continue?</value>
   <data name="Disable all vendor buy entries on loading profile" xml:space="preserve">
     <value>Disable all vendor buy entries on loading profile</value>
   </data>
+  <data name="Open Modules Folder" xml:space="preserve">
+    <value>Open Modules Folder</value>
+  </data>
 </root>

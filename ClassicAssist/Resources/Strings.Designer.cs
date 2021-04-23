@@ -2677,6 +2677,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open Modules Folder.
+        /// </summary>
+        public static string Open_Modules_Folder {
+            get {
+                return ResourceManager.GetString("Open Modules Folder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operator.
         /// </summary>
         public static string Operator {

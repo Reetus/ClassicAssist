@@ -40,6 +40,7 @@ namespace ClassicAssist.UI.ViewModels
         private bool _isRecording;
         private ICommand _newGroupCommand;
         private RelayCommand _newMacroCommand;
+        private ICommand _openModulesFolderCommand;
         private ICommand _recordCommand;
         private ICommand _removeGroupCommand;
         private RelayCommand _removeMacroCommand;
@@ -123,6 +124,10 @@ namespace ClassicAssist.UI.ViewModels
             _newMacroCommand ??
             ( _newMacroCommand = new RelayCommand( NewMacro, o => !SelectedItem?.IsRunning ?? true ) );
 
+        public ICommand OpenModulesFolderCommand =>
+            _openModulesFolderCommand ??
+            ( _openModulesFolderCommand = new RelayCommand( OpenModulesFolder, o => true ) );
+
         public ICommand RecordCommand =>
             _recordCommand ?? ( _recordCommand = new RelayCommand( Record, o => SelectedItem != null ) );
 
@@ -193,10 +198,7 @@ namespace ClassicAssist.UI.ViewModels
 
             foreach ( MacroEntry macroEntry in Items )
             {
-                _dispatcher.Invoke( () =>
-                {
-                    macroEntry.Group = FindGroup( macroEntry );
-                } );
+                _dispatcher.Invoke( () => { macroEntry.Group = FindGroup( macroEntry ); } );
             }
 
             foreach ( IDraggableGroup draggableGroup in Draggables.Where( i => i is IDraggableGroup )
@@ -510,7 +512,7 @@ namespace ClassicAssist.UI.ViewModels
             {
                 ShareMacroModel responseData = JsonConvert.DeserializeObject<ShareMacroModel>( json );
 
-                if ( !string.IsNullOrEmpty( responseData.Uuid ) )
+                if ( !string.IsNullOrEmpty( responseData?.Uuid ) )
                 {
                     Process.Start( $"https://classicassist.azurewebsites.net/?id={responseData.Uuid}" );
                 }
@@ -734,6 +736,12 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             Draggables.Remove( group );
+        }
+
+        private static void OpenModulesFolder( object obj )
+        {
+            Process.Start( "explorer.exe",
+                Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Modules" ) );
         }
     }
 

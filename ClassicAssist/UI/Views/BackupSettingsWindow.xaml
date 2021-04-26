@@ -1,0 +1,96 @@
+﻿<Window x:Class="ClassicAssist.UI.Views.BackupSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
+        xmlns:resources="clr-namespace:ClassicAssist.Resources"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d" Topmost="True"
+        Title="{x:Static resources:Strings.Backup_Settings}" Height="350" Width="400"
+        Background="{DynamicResource ThemeWindowBackgroundBrush}">
+    <Window.DataContext>
+        <viewModels:BackupSettingsWindowViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/Icons.xaml" />
+                <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
+                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+                <ResourceDictionary>
+                    <Style x:Key="Login" TargetType="{x:Type ContentControl}">
+                        <Setter Property="Visibility" Value="Visible" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding BackupOptions.Provider.LoginControl}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" Padding="10"
+                Background="{DynamicResource ThemeBackgroundBrush}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                        <Setter Property="Width" Value="100" />
+                    </Style>
+                    <Style TargetType="DockPanel">
+                        <Setter Property="Margin" Value="0,0,0,10" />
+                    </Style>
+                </Grid.Resources>
+                <DockPanel Grid.Row="0">
+                    <Label Content="{x:Static resources:Strings.Enabled}" DockPanel.Dock="Left" />
+                    <CheckBox IsChecked="{Binding BackupOptions.Enabled}" />
+                </DockPanel>
+                <!--<DockPanel Grid.Row="1">
+                    <Label Content="{x:Static resources:Strings.Type}" DockPanel.Dock="Left" />
+                    <ComboBox x:Name="comboBox" ItemsSource="{Binding Providers}" DisplayMemberPath="Name"
+                              SelectedItem="{Binding BackupOptions.Provider}">
+                        <i:Interaction.Behaviors>
+                            <misc:ComboBoxBehavior CommandBinding="{Binding ProviderChangedCommand}"
+                                                   CommandParameter="{Binding SelectedItem, ElementName=comboBox}" />
+                        </i:Interaction.Behaviors>
+                    </ComboBox>
+                </DockPanel>-->
+                <ContentControl Grid.Row="2" Content="{Binding BackupOptions.Provider.LoginControl}" Margin="0,0,0,10"
+                                Style="{StaticResource Login}" />
+                <DockPanel Grid.Row="3">
+                    <Label Content="{x:Static resources:Strings.Backup_Days}" DockPanel.Dock="Left" />
+                    <xctk:IntegerUpDown Value="{Binding BackupOptions.Days}"
+                                        ToolTip="{x:Static resources:Strings.Setting_to_zero_will_cause_it_to_backup_on_every_client_close}" />
+                </DockPanel>
+                <DockPanel Grid.Row="4">
+                    <Label Content="{x:Static resources:Strings.Path}" DockPanel.Dock="Left" />
+                    <Button Content="..." DockPanel.Dock="Right" Padding="5,0" Margin="10,0,0,0"
+                            Command="{Binding BrowsePathCommand}" />
+                    <TextBox Text="{Binding BackupOptions.Provider.BackupPath}" IsReadOnly="True" />
+                </DockPanel>
+            </Grid>
+        </Border>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1" Margin="0,10,0,0">
+            <Button Content="{x:Static resources:Strings.Close}" Padding="25,0">
+                <i:Interaction.Behaviors>
+                    <misc:CloseOnClickBehaviour />
+                </i:Interaction.Behaviors>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

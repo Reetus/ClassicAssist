@@ -448,6 +448,33 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Backing up {0}....
+        /// </summary>
+        public static string Backing_up__0____ {
+            get {
+                return ResourceManager.GetString("Backing up {0}...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup Days.
+        /// </summary>
+        public static string Backup_Days {
+            get {
+                return ResourceManager.GetString("Backup Days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup Settings.
+        /// </summary>
+        public static string Backup_Settings {
+            get {
+                return ResourceManager.GetString("Backup Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bandage Self.
         /// </summary>
         public static string Bandage_Self {
@@ -723,6 +750,15 @@ namespace ClassicAssist.Resources {
         public static string Chicken_Sounds {
             get {
                 return ResourceManager.GetString("Chicken Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose backup folder.
+        /// </summary>
+        public static string Choose_backup_folder {
+            get {
+                return ResourceManager.GetString("Choose backup folder", resourceCulture);
             }
         }
         
@@ -1123,6 +1159,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Done....
+        /// </summary>
+        public static string Done___ {
+            get {
+                return ResourceManager.GetString("Done...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Door Sounds.
         /// </summary>
         public static string Door_Sounds {
@@ -1389,6 +1434,15 @@ namespace ClassicAssist.Resources {
         public static string Explosion_Potion {
             get {
                 return ResourceManager.GetString("Explosion Potion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to backup file: {0}.
+        /// </summary>
+        public static string Failed_to_backup_file___0_ {
+            get {
+                return ResourceManager.GetString("Failed to backup file: {0}", resourceCulture);
             }
         }
         
@@ -2167,11 +2221,47 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        public static string Loading___ {
+            get {
+                return ResourceManager.GetString("Loading...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Location:.
         /// </summary>
         public static string Location_ {
             get {
                 return ResourceManager.GetString("Location:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login With Windows.
+        /// </summary>
+        public static string Login_With_Windows {
+            get {
+                return ResourceManager.GetString("Login With Windows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logout.
+        /// </summary>
+        public static string Logout {
+            get {
+                return ResourceManager.GetString("Logout", resourceCulture);
             }
         }
         
@@ -2578,6 +2668,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No backup type or path set....
+        /// </summary>
+        public static string No_backup_type_or_path_set___ {
+            get {
+                return ResourceManager.GetString("No backup type or path set...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No items....
+        /// </summary>
+        public static string No_items___ {
+            get {
+                return ResourceManager.GetString("No items...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Target.
         /// </summary>
         public static string No_Target {
@@ -2785,6 +2893,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Path.
+        /// </summary>
+        public static string Path {
+            get {
+                return ResourceManager.GetString("Path", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Persist Use Once.
         /// </summary>
         public static string Persist_Use_Once {
@@ -2898,6 +3015,24 @@ namespace ClassicAssist.Resources {
         public static string ProductName {
             get {
                 return ResourceManager.GetString("ProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile Backup.
+        /// </summary>
+        public static string Profile_Backup {
+            get {
+                return ResourceManager.GetString("Profile Backup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile backup in progress....
+        /// </summary>
+        public static string Profile_backup_in_progress___ {
+            get {
+                return ResourceManager.GetString("Profile backup in progress...", resourceCulture);
             }
         }
         
@@ -3465,6 +3600,15 @@ namespace ClassicAssist.Resources {
         public static string Setting_ability___0_____ {
             get {
                 return ResourceManager.GetString("Setting ability \"{0}\"...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setting to zero will cause it to backup on every client close.
+        /// </summary>
+        public static string Setting_to_zero_will_cause_it_to_backup_on_every_client_close {
+            get {
+                return ResourceManager.GetString("Setting to zero will cause it to backup on every client close", resourceCulture);
             }
         }
         
@@ -4347,6 +4491,15 @@ namespace ClassicAssist.Resources {
         public static string UseOnce_cleared___ {
             get {
                 return ResourceManager.GetString("UseOnce cleared...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string Username {
+            get {
+                return ResourceManager.GetString("Username", resourceCulture);
             }
         }
         

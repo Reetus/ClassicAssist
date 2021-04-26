@@ -118,6 +118,8 @@ namespace Assistant
         public static QuestPointerList QuestPointers { get; set; } = new QuestPointerList();
         public static RehueList RehueList { get; set; } = new RehueList();
         public static List<ShardEntry> Shards { get; set; }
+
+        public static Dispatcher StartupDispatcher { get; set; }
         public static string StartupPath { get; set; }
         public static bool TargetExists { get; set; }
         public static TargetFlags TargetFlags { get; set; }
@@ -360,6 +362,8 @@ namespace Assistant
             OutgoingPacketFilters.Initialize();
 
             CommandsManager.Initialize();
+
+            StartupDispatcher = Dispatcher.CurrentDispatcher;
 
             AssistantOptions.Load();
         }

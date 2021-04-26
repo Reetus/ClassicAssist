@@ -21,6 +21,7 @@ namespace ClassicAssist.UI.ViewModels
     public class GeneralControlViewModel : BaseViewModel, ISettingProvider
     {
         private static ICommand _saveProfileCommand;
+        private ICommand _backupSettingsCommand;
         private ICommand _changeProfileCommand;
         private ICommand _configureFilterCommand;
         private bool _isLinkedProfile;
@@ -53,6 +54,9 @@ namespace ClassicAssist.UI.ViewModels
 
             OnSavedPasswordsChangedEvent( this, EventArgs.Empty );
         }
+
+        public ICommand BackupSettingsCommand =>
+            _backupSettingsCommand ?? ( _backupSettingsCommand = new RelayCommand( BackupSettings, o => true ) );
 
         public ICommand ChangeProfileCommand =>
             _changeProfileCommand ?? ( _changeProfileCommand = new RelayCommand( ChangeProfile, o => true ) );
@@ -229,6 +233,15 @@ namespace ClassicAssist.UI.ViewModels
                     configurableFilter.Deserialize( token["Options"] );
                 }
             }
+        }
+
+        private static void BackupSettings( object obj )
+        {
+            Engine.StartupDispatcher.Invoke( () =>
+            {
+                BackupSettingsWindow window = new BackupSettingsWindow();
+                window.ShowDialog();
+            } );
         }
 
         private void OnSavedPasswordsChangedEvent( object sender, EventArgs e )

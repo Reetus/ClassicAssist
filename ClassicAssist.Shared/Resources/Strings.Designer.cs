@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ClassicAssist.Resources {
+namespace ClassicAssist.Shared.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ClassicAssist.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ClassicAssist.Resources.Strings", typeof(Strings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ClassicAssist.Shared.Resources.Strings", typeof(Strings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -462,6 +462,15 @@ namespace ClassicAssist.Resources {
         public static string Backup_Days {
             get {
                 return ResourceManager.GetString("Backup Days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup path not set.
+        /// </summary>
+        public static string Backup_path_not_set {
+            get {
+                return ResourceManager.GetString("Backup path not set", resourceCulture);
             }
         }
         
@@ -1501,6 +1510,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Folder Browser.
+        /// </summary>
+        public static string Folder_Browser {
+            get {
+                return ResourceManager.GetString("Folder Browser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Force Walk Off.
         /// </summary>
         public static string Force_Walk_Off {
@@ -1857,6 +1875,15 @@ namespace ClassicAssist.Resources {
         public static string Include_Purchased_Amount {
             get {
                 return ResourceManager.GetString("Include Purchased Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incremental.
+        /// </summary>
+        public static string Incremental {
+            get {
+                return ResourceManager.GetString("Incremental", resourceCulture);
             }
         }
         
@@ -2623,6 +2650,15 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Folder.
+        /// </summary>
+        public static string New_Folder {
+            get {
+                return ResourceManager.GetString("New Folder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Group.
         /// </summary>
         public static string New_Group {
@@ -2763,6 +2799,15 @@ namespace ClassicAssist.Resources {
         public static string Only_overwrite_blank_password {
             get {
                 return ResourceManager.GetString("Only overwrite blank password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only write files that have been modified.
+        /// </summary>
+        public static string Only_write_files_that_have_been_modified {
+            get {
+                return ResourceManager.GetString("Only write files that have been modified", resourceCulture);
             }
         }
         

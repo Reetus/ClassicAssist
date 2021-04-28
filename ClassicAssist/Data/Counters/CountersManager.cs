@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Assistant;
-using ClassicAssist.UI.ViewModels;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;

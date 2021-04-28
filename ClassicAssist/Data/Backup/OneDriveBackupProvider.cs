@@ -20,11 +20,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClassicAssist.Controls.VirtualFolderBrowse;
 using ClassicAssist.Data.Backup.OneDrive;
-using ClassicAssist.UI.ViewModels;
 using Microsoft.Graph;
 using Newtonsoft.Json.Linq;
 using File = System.IO.File;
@@ -32,13 +33,9 @@ using UserControl = System.Windows.Controls.UserControl;
 
 namespace ClassicAssist.Data.Backup
 {
-    public class OneDriveBackupProvider : SetPropertyNotifyChanged /*, IBackupProvider */ //TODO
+    public sealed class OneDriveBackupProvider : BaseBackupProvider
     {
         private byte[] _authentication;
-        private string _backupPath;
-        private bool _isLoggedIn;
-
-        private UserControl _loginControl = new OneDriveConfigureControl();
 
         public byte[] Authentication
         {
@@ -46,28 +43,11 @@ namespace ClassicAssist.Data.Backup
             set => SetProperty( ref _authentication, value );
         }
 
-        public string BackupPath
-        {
-            get => _backupPath;
-            set => SetProperty( ref _backupPath, value );
-        }
+        public override UserControl LoginControl => new OneDriveConfigureControl();
 
-        public bool IsLoggedIn
-        {
-            get => _isLoggedIn;
-            set => SetProperty( ref _isLoggedIn, value );
-        }
+        public override string Name => "Microsoft OneDrive";
 
-        public UserControl LoginControl
-        {
-            get => _loginControl;
-            set => SetProperty( ref _loginControl, value );
-        }
-
-        public string Name { get; set; } = "Microsoft OneDrive";
-        public bool RequiresLogin { get; set; } = true;
-
-        public async Task<bool> Write( string fileName )
+        public override async Task<bool> Write( string fileName )
         {
             GraphServiceClient client = await OneDriveClient.GetGraphClient();
 
@@ -80,11 +60,11 @@ namespace ClassicAssist.Data.Backup
             }
         }
 
-        public async Task<string> GetPath( string currentPath )
+        public override async Task<string> GetPath( string currentPath )
         {
-            OneDrivePathPickerViewModel odppvm = new OneDrivePathPickerViewModel( GetChildren );
+            VirtualFolderBrowseViewModel odppvm = new VirtualFolderBrowseViewModel( GetChildren, CreateFolder );
 
-            OneDrivePathPickerWindow window = new OneDrivePathPickerWindow { DataContext = odppvm };
+            VirtualFolderBrowseWindow window = new VirtualFolderBrowseWindow { DataContext = odppvm };
 
             window.ShowDialog();
 
@@ -96,16 +76,22 @@ namespace ClassicAssist.Data.Backup
             return await Task.FromResult( currentPath );
         }
 
-        public void Serialize( JObject json )
+        public override void Serialize( JObject json )
         {
-            json?.Add( "Authentication",
-                Convert.ToBase64String( ProtectedData.Protect( Authentication, null,
-                    DataProtectionScope.CurrentUser ) ) );
-            json?.Add( "BackupPath", BackupPath );
+            base.Serialize( json );
+
+            if ( Authentication != null )
+            {
+                json?.Add( "Authentication",
+                    Convert.ToBase64String( ProtectedData.Protect( Authentication, null,
+                        DataProtectionScope.CurrentUser ) ) );
+            }
         }
 
-        public void Deserialize( JObject json, Options options )
+        public override void Deserialize( JObject json, Options options )
         {
+            base.Deserialize( json, options );
+
             if ( json == null )
             {
                 return;
@@ -113,11 +99,12 @@ namespace ClassicAssist.Data.Backup
 
             try
             {
-                Authentication =
-                    ProtectedData.Unprotect(
+                if ( json["Authentication"] != null )
+                {
+                    Authentication = ProtectedData.Unprotect(
                         Convert.FromBase64String( json["Authentication"].ToObject<string>() ?? string.Empty ), null,
                         DataProtectionScope.CurrentUser );
-                BackupPath = json["BackupPath"]?.ToObject<string>() ?? string.Empty;
+                }
             }
             catch ( Exception )
             {
@@ -125,16 +112,41 @@ namespace ClassicAssist.Data.Backup
             }
         }
 
-        private static async Task<IEnumerable<DriveItem>> GetChildren( string id )
+        private static async Task<VirtualFolder> CreateFolder( VirtualFolder parent, string folder )
+        {
+            GraphServiceClient graphClient = await OneDriveClient.GetGraphClient();
+
+            IDriveItemChildrenCollectionRequestBuilder parentDriveItem = parent == null
+                ? graphClient.Drive.Root.Children
+                : graphClient.Drive.Items[parent.Id].Children;
+
+            DriveItem result = await parentDriveItem.Request()
+                .AddAsync( new DriveItem { Name = folder, Folder = new Folder() } );
+
+            return result != null
+                ? new VirtualFolder { Id = result.Id, Name = result.Name, ContainsChildren = false }
+                : null;
+        }
+
+        private static async Task<IEnumerable<VirtualFolder>> GetChildren( string id )
         {
             GraphServiceClient client = await OneDriveClient.GetGraphClient();
 
+            IDriveItemChildrenCollectionPage files;
+
             if ( string.IsNullOrEmpty( id ) )
             {
-                return await client.Drive.Root.Children.Request().GetAsync();
+                files = await client.Drive.Root.Children.Request().GetAsync();
+            }
+            else
+            {
+                files = await client.Drive.Items[id].Children.Request().GetAsync();
             }
 
-            return await client.Drive.Items[id].Children.Request().GetAsync();
+            return files.Where( driveItem => driveItem.Folder != null ).Select( driveItem => new VirtualFolder
+            {
+                Id = driveItem.Id, Name = driveItem.Name, ContainsChildren = driveItem.Folder?.ChildCount > 0
+            } );
         }
     }
 }

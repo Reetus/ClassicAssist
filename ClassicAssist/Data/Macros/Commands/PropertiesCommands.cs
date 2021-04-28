@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Assistant;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;

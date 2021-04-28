@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using ClassicAssist.Data.Filters;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.UI.ViewModels.Filters

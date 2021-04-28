@@ -18,20 +18,27 @@
 #endregion
 
 using System.Collections.ObjectModel;
-using ClassicAssist.UI.ViewModels;
+using ClassicAssist.Shared.UI;
 
-namespace ClassicAssist.Data.Backup.OneDrive
+namespace ClassicAssist.Controls.VirtualFolderBrowse
 {
-    public class OneDriveFolder : SetPropertyNotifyChanged
+    public class VirtualFolder : SetPropertyNotifyChanged
     {
-        private ObservableCollection<OneDriveFolder> _children = new ObservableCollection<OneDriveFolder>();
+        private ObservableCollection<VirtualFolder> _children = new ObservableCollection<VirtualFolder>();
+        private bool _containsChildren;
         private string _id;
         private string _name;
 
-        public ObservableCollection<OneDriveFolder> Children
+        public ObservableCollection<VirtualFolder> Children
         {
             get => _children;
             set => SetProperty( ref _children, value );
+        }
+
+        public bool ContainsChildren
+        {
+            get => _containsChildren;
+            set => SetProperty( ref _containsChildren, value );
         }
 
         public string Id

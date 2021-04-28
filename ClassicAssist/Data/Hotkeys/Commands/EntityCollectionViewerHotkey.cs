@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Windows.Threading;
 using Assistant;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO.Objects;

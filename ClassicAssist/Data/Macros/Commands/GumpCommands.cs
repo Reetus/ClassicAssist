@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Assistant;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Gumps;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects.Gumps;

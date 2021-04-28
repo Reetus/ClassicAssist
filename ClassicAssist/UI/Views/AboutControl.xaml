@@ -3,19 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:ClassicAssist.UI.Views"
              xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
-             xmlns:r="clr-namespace:ClassicAssist.Resources"
-             xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
-             xmlns:valueConverters1="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+             xmlns:r="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              mc:Ignorable="d"
              d:DesignHeight="350" d:DesignWidth="600"
              d:DataContext="{d:DesignInstance {x:Type viewModels:AboutControlViewModel}, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/Icons.xaml" />
-                <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
+                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -29,8 +26,8 @@
     </d:DesignerProperties.DesignStyle>
     <Grid>
         <Grid.Resources>
-            <valueConverters1:IntToHexStringValueConverter x:Key="IntToHexStringValueConverter" />
-            <valueConverters1:DateTimeToTimeSpanValueConverter x:Key="DateTimeToTimeSpanValueConverter" />
+            <valueConverters:IntToHexStringValueConverter x:Key="IntToHexStringValueConverter" />
+            <valueConverters:DateTimeToTimeSpanValueConverter x:Key="DateTimeToTimeSpanValueConverter" />
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource {x:Type GroupBox}}">
                 <Setter Property="Margin" Value="5" />

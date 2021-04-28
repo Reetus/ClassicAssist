@@ -5,7 +5,7 @@ using Assistant;
 using ClassicAssist.Data.Regions;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;

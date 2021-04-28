@@ -28,6 +28,7 @@ using Assistant;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Misc;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Views.Debug;
 using ClassicAssist.UO;
 using Newtonsoft.Json;

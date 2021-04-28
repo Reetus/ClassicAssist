@@ -2,9 +2,8 @@
 using Assistant;
 using ClassicAssist.Data.BuffIcons;
 using ClassicAssist.Data.SpecialMoves;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
-using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 

@@ -22,22 +22,25 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Assistant;
-using ClassicAssist.Resources;
-using ClassicAssist.UI.ViewModels;
+using ClassicAssist.Shared.Resources;
 using Newtonsoft.Json.Linq;
-using UserControl = System.Windows.Controls.UserControl;
 
 namespace ClassicAssist.Data.Backup
 {
-    public class LocalBackupProvider : SetPropertyNotifyChanged, IBackupProvider
+    public sealed class LocalBackupProvider : BaseBackupProvider
     {
-        private string _backupPath = DefaultBackupPath;
+        public LocalBackupProvider()
+        {
+            BackupPath = DefaultBackupPath;
+        }
 
-        public static string DefaultBackupPath { get; set; } = "Backup";
-        public string Name { get; set; } = "Local Backup";
-        public bool RequiresLogin { get; set; } = false;
+        public static string DefaultBackupPath => "Backup";
 
-        public async Task<bool> Write( string fileName )
+        public override bool IsLoggedIn => true;
+
+        public override string Name => "Local Backup";
+
+        public override async Task<bool> Write( string fileName )
         {
             string fullPath = BackupPath;
 
@@ -59,7 +62,7 @@ namespace ClassicAssist.Data.Backup
             return File.Exists( fullPath );
         }
 
-        public async Task<string> GetPath( string currentPath )
+        public override async Task<string> GetPath( string currentPath )
         {
             string fullPath = currentPath;
 
@@ -78,24 +81,14 @@ namespace ClassicAssist.Data.Backup
             return await Task.FromResult( result == DialogResult.OK ? folderBrowseDialog.SelectedPath : currentPath );
         }
 
-        public bool IsLoggedIn { get; set; } = true;
-
-        public UserControl LoginControl { get; set; } = null;
-
-        public string BackupPath
+        public override void Deserialize( JObject json, Options options )
         {
-            get => _backupPath;
-            set => SetProperty( ref _backupPath, value );
-        }
+            base.Deserialize( json, options );
 
-        public void Serialize( JObject json )
-        {
-            json?.Add( "BackupPath", BackupPath );
-        }
-
-        public void Deserialize( JObject json, Options options )
-        {
-            BackupPath = json?["BackupPath"]?.ToObject<string>() ?? DefaultBackupPath;
+            if ( string.IsNullOrEmpty( BackupPath ) )
+            {
+                BackupPath = DefaultBackupPath;
+            }
         }
     }
 }

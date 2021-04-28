@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:ClassicAssist.UI.Views.Agents"
-             xmlns:resources="clr-namespace:ClassicAssist.Resources"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
@@ -24,7 +23,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
-                <ResourceDictionary Source="../../../Resources/ResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -49,17 +47,18 @@
                     CommandParameter="{Binding SelectedItem, ElementName=ListView}" />
             <Button Content="{x:Static resources:Strings.Clear_All}" Command="{Binding ClearAllCommand}" />
             <Button Content="{x:Static resources:Strings.Set_Container}" Command="{Binding SetContainerCommand}" />
-            <CheckBox IsChecked="{Binding CheckWeight}" Content="{x:Static resources:Strings.Check_Weight}" Margin="0,5"/>
+            <CheckBox IsChecked="{Binding CheckWeight}" Content="{x:Static resources:Strings.Check_Weight}"
+                      Margin="0,5" />
         </StackPanel>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <ListView x:Name="ListView" Grid.Row="0" Margin="10"
-                  ItemsSource="{Binding Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                  Foreground="Black">
+                      ItemsSource="{Binding Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      Foreground="Black">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="✓">
@@ -73,28 +72,29 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <controls:EditTextBlock
-                                    Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                    Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=nameColumn, Mode=OneWay}" />
+                                        Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                        Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=nameColumn, Mode=OneWay}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Header="{x:Static resources:Strings.Graphic}"
-                                    DisplayMemberBinding="{Binding Graphic, StringFormat=0x\{0:x\}}" Width="75" />
+                                        DisplayMemberBinding="{Binding Graphic, StringFormat=0x\{0:x\}}" Width="75" />
                         <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="75" x:Name="HueColumn">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <controls:EditTextBlock Text="{Binding Hue}" TabIndex="0"
-                                                        Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=HueColumn}"
-                                                        ShowIcon="True" />
+                                                            Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=HueColumn}"
+                                                            ShowIcon="True" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="{x:Static resources:Strings.Priority}" Width="100" x:Name="PriorityColumn">
+                        <GridViewColumn Header="{x:Static resources:Strings.Priority}" Width="100"
+                                        x:Name="PriorityColumn">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <ComboBox Text="{Binding Priority, Mode=TwoWay}"
-                                          ItemsSource="{Binding Source={misc:EnumBindingSource {x:Type scavenger:ScavengerPriority}}}"
-                                          Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=PriorityColumn}" />
+                                              ItemsSource="{Binding Source={misc:EnumBindingSource {x:Type scavenger:ScavengerPriority}}}"
+                                              Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=PriorityColumn}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -102,8 +102,8 @@
                 </ListView.View>
             </ListView>
             <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10,0,0,5">
-                <Label Content="{x:Static resources:Strings.Minimum_Weight_Available_}" Margin="0,0,10,0"/>
-                <TextBox MinWidth="100" Text="{Binding MinWeightAvailable}" IsEnabled="{Binding CheckWeight}"/>
+                <Label Content="{x:Static resources:Strings.Minimum_Weight_Available_}" Margin="0,0,10,0" />
+                <TextBox MinWidth="100" Text="{Binding MinWeightAvailable}" IsEnabled="{Binding CheckWeight}" />
             </StackPanel>
         </Grid>
     </Grid>

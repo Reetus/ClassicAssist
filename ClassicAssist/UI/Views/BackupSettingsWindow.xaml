@@ -4,10 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
-        xmlns:resources="clr-namespace:ClassicAssist.Resources"
+        xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+        xmlns:validationRules="clr-namespace:ClassicAssist.Shared.UI.ValidationRules;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" Topmost="True"
         Title="{x:Static resources:Strings.Backup_Settings}" Height="350" Width="400"
         Background="{DynamicResource ThemeWindowBackgroundBrush}">
@@ -17,8 +18,6 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/Icons.xaml" />
-                <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
                 <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary>
                     <Style x:Key="Login" TargetType="{x:Type ContentControl}">
@@ -47,6 +46,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.Resources>
                     <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
@@ -60,35 +60,61 @@
                     <Label Content="{x:Static resources:Strings.Enabled}" DockPanel.Dock="Left" />
                     <CheckBox IsChecked="{Binding BackupOptions.Enabled}" />
                 </DockPanel>
-                <!--<DockPanel Grid.Row="1">
+                <DockPanel Grid.Row="1">
+                    <Label Content="{x:Static resources:Strings.Incremental}" DockPanel.Dock="Left" />
+                    <CheckBox IsChecked="{Binding BackupOptions.Provider.Incremental}"
+                              ToolTip="{x:Static resources:Strings.Only_write_files_that_have_been_modified}" />
+                </DockPanel>
+                <DockPanel Grid.Row="2">
                     <Label Content="{x:Static resources:Strings.Type}" DockPanel.Dock="Left" />
                     <ComboBox x:Name="comboBox" ItemsSource="{Binding Providers}" DisplayMemberPath="Name"
-                              SelectedItem="{Binding BackupOptions.Provider}">
-                        <i:Interaction.Behaviors>
-                            <misc:ComboBoxBehavior CommandBinding="{Binding ProviderChangedCommand}"
-                                                   CommandParameter="{Binding SelectedItem, ElementName=comboBox}" />
-                        </i:Interaction.Behaviors>
-                    </ComboBox>
-                </DockPanel>-->
-                <ContentControl Grid.Row="2" Content="{Binding BackupOptions.Provider.LoginControl}" Margin="0,0,0,10"
+                              SelectedItem="{Binding BackupOptions.Provider}" />
+                </DockPanel>
+                <ContentControl Grid.Row="3" Content="{Binding BackupOptions.Provider.LoginControl}" Margin="0,0,0,10"
                                 Style="{StaticResource Login}" />
-                <DockPanel Grid.Row="3">
+                <DockPanel Grid.Row="4">
                     <Label Content="{x:Static resources:Strings.Backup_Days}" DockPanel.Dock="Left" />
                     <xctk:IntegerUpDown Value="{Binding BackupOptions.Days}"
                                         ToolTip="{x:Static resources:Strings.Setting_to_zero_will_cause_it_to_backup_on_every_client_close}" />
                 </DockPanel>
-                <DockPanel Grid.Row="4">
+                <DockPanel Grid.Row="5">
                     <Label Content="{x:Static resources:Strings.Path}" DockPanel.Dock="Left" />
                     <Button Content="..." DockPanel.Dock="Right" Padding="5,0" Margin="10,0,0,0"
                             Command="{Binding BrowsePathCommand}" />
-                    <TextBox Text="{Binding BackupOptions.Provider.BackupPath}" IsReadOnly="True" />
+                    <TextBox IsReadOnly="True" x:Name="TextBox">
+                        <TextBox.Text>
+                            <Binding
+                                Path="BackupOptions.Provider.BackupPath"
+                                ValidatesOnNotifyDataErrors="True"
+                                ValidatesOnDataErrors="True"
+                                NotifyOnValidationError="True">
+                                <Binding.ValidationRules>
+                                    <validationRules:NonEmptyStringValidationRule ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                 </DockPanel>
             </Grid>
         </Border>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1" Margin="0,10,0,0">
             <Button Content="{x:Static resources:Strings.Close}" Padding="25,0">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="IsEnabled" Value="True" />
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBox}"
+                                               Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="False" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
                 <i:Interaction.Behaviors>
-                    <misc:CloseOnClickBehaviour />
+                    <behaviours:CloseOnClickBehaviour />
                 </i:Interaction.Behaviors>
             </Button>
         </StackPanel>

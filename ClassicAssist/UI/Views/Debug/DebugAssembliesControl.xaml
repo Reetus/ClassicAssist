@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:debug="clr-namespace:ClassicAssist.UI.ViewModels.Debug"
-             xmlns:resources="clr-namespace:ClassicAssist.Resources"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
              d:DesignHeight="250" d:DesignWidth="300">
@@ -14,7 +14,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../Resources/Icons.xaml" />
+                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary Source="Styles.xaml" />
                 <ResourceDictionary>
                     <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />

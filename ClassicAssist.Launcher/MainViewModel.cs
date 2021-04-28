@@ -499,8 +499,8 @@ namespace ClassicAssist.Launcher
             WriteClassicOptions( config );
 
             using ( JsonTextWriter jtw =
-                new JsonTextWriter( new StreamWriter( Path.Combine( Environment.CurrentDirectory, CONFIG_FILENAME ) ) )
-            )
+                new JsonTextWriter(
+                    new StreamWriter( Path.Combine( Environment.CurrentDirectory, CONFIG_FILENAME ) ) ) )
             {
                 jtw.Formatting = Formatting.Indented;
                 config.WriteTo( jtw );

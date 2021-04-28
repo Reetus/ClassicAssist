@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:ClassicAssist.UI.Views.Agents"
-             xmlns:resources="clr-namespace:ClassicAssist.Resources"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500">
@@ -19,8 +18,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../Resources/ResourceDictionary.xaml" />
-                <ResourceDictionary Source="../../../Resources/Icons.xaml" />
+                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -56,8 +54,10 @@
                       IsChecked="{Binding Options.PreventTargetingFriendsWithHarmful}" />
             <StackPanel Orientation="Horizontal">
                 <CheckBox Content="{x:Static resources:Strings.Rehue_friends}"
-                          IsChecked="{Binding Options.CurrentOptions.RehueFriends}" Command="{Binding ChangeRehueOption}" />
-                <Button Margin="10,0,0,0" Command="{Binding SelectHueCommand}" CommandParameter="{Binding Options.CurrentOptions.RehueFriendsHue}">
+                          IsChecked="{Binding Options.CurrentOptions.RehueFriends}"
+                          Command="{Binding ChangeRehueOption}" />
+                <Button Margin="10,0,0,0" Command="{Binding SelectHueCommand}"
+                        CommandParameter="{Binding Options.CurrentOptions.RehueFriendsHue}">
                     <Image Source="{StaticResource ColorWheelIcon}" Height="12" Width="12" />
                 </Button>
             </StackPanel>

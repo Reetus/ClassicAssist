@@ -11,6 +11,7 @@ using System.Windows.Interop;
 using System.Windows.Threading;
 using AnimatedGif;
 using Assistant;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Views;
 using Point = System.Drawing.Point;
 using Size = System.Drawing.Size;

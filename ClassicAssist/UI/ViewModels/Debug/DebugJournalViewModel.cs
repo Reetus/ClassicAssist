@@ -3,6 +3,7 @@ using System.Text;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Network;
 
 namespace ClassicAssist.UI.ViewModels.Debug

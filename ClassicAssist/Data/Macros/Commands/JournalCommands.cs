@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using Assistant;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 
@@ -27,7 +27,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 match = Engine.Journal.GetBuffer().Any( je =>
                     je.Text.ToLower().Contains( text.ToLower() ) &&
                     ( string.IsNullOrEmpty( author ) || string.Equals( je.Name, author,
-                          StringComparison.CurrentCultureIgnoreCase ) ) && ( hue == -1 || je.SpeechHue == hue ) );
+                        StringComparison.CurrentCultureIgnoreCase ) ) && ( hue == -1 || je.SpeechHue == hue ) );
             }
 
             return match;
@@ -55,9 +55,10 @@ namespace ClassicAssist.Data.Macros.Commands
                 }
                 else
                 {
-                    match = je.Text.ToLower().Contains( text.ToLower() ) &&
-                            ( string.IsNullOrEmpty( author ) || string.Equals( je.Name, author,
-                                  StringComparison.CurrentCultureIgnoreCase ) );
+                    match = je.Text.ToLower().Contains( text.ToLower() ) && ( string.IsNullOrEmpty( author ) ||
+                                                                              string.Equals( je.Name, author,
+                                                                                  StringComparison
+                                                                                      .CurrentCultureIgnoreCase ) );
                 }
 
                 if ( match )

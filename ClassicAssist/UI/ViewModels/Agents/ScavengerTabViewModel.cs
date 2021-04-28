@@ -7,13 +7,13 @@ using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 using Newtonsoft.Json.Linq;
 using UOC = ClassicAssist.UO.Commands;
-
 
 namespace ClassicAssist.UI.ViewModels.Agents
 {
@@ -232,9 +232,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 }
 
                 foreach ( Item scavengerItem in scavengerItems.Where( i =>
-                  i.Distance <= SCAVENGER_DISTANCE && !_ignoreList.Contains(i.Serial) ) )
+                    i.Distance <= SCAVENGER_DISTANCE && !_ignoreList.Contains( i.Serial ) ) )
                 {
-                    UOC.SystemMessage( string.Format(Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown" ), 61 );
+                    UOC.SystemMessage( string.Format( Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown" ), 61 );
                     Task<bool> t = ActionPacketQueue.EnqueueDragDrop( scavengerItem.Serial, scavengerItem.Count,
                         container.Serial, QueuePriority.Low, true, true, requeueOnFailure: false,
                         successPredicate: CheckItemContainer );

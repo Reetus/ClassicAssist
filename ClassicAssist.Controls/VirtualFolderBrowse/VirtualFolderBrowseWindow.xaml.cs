@@ -1,11 +1,11 @@
-﻿namespace ClassicAssist.Data.Backup.OneDrive
+﻿namespace ClassicAssist.Controls.VirtualFolderBrowse
 {
     /// <summary>
     ///     Interaction logic for OneDrivePathPickerWindow.xaml
     /// </summary>
-    public partial class OneDrivePathPickerWindow
+    public partial class VirtualFolderBrowseWindow
     {
-        public OneDrivePathPickerWindow()
+        public VirtualFolderBrowseWindow()
         {
             InitializeComponent();
         }

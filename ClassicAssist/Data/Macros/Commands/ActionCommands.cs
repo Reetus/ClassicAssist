@@ -6,7 +6,7 @@ using System.Threading;
 using Assistant;
 using ClassicAssist.Data.Regions;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;

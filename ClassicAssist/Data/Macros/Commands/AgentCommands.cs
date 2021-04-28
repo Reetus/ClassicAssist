@@ -4,7 +4,7 @@ using ClassicAssist.Data.Counters;
 using ClassicAssist.Data.Dress;
 using ClassicAssist.Data.Organizer;
 using ClassicAssist.Data.Vendors;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.Data.Macros.Commands

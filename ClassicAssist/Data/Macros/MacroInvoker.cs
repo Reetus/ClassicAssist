@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data.Macros.Commands;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using IronPython.Hosting;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
@@ -24,9 +24,9 @@ namespace ClassicAssist.Data.Macros
         private static readonly ScriptEngine _engine = Python.CreateEngine();
         private static Dictionary<string, object> _importCache;
         private readonly MemoryStream _memoryStream = new MemoryStream();
+        private readonly SystemMessageTextWriter _textWriter = new SystemMessageTextWriter();
         private CancellationTokenSource _cancellationToken;
         private MacroEntry _macro;
-        private readonly SystemMessageTextWriter _textWriter = new SystemMessageTextWriter();
 
         public MacroInvoker()
         {
@@ -262,7 +262,7 @@ namespace ClassicAssist.Data.Macros
                 }
 
                 Thread?.Abort();
-                Thread?.Join(100);
+                Thread?.Join( 100 );
 
                 MacroManager.GetInstance().Replay = false;
                 MacroManager.GetInstance().OnMacroStopped();

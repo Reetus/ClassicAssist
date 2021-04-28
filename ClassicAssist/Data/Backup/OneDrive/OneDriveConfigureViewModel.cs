@@ -20,7 +20,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ClassicAssist.UI.ViewModels;
+using ClassicAssist.Shared.UI;
 using Microsoft.Identity.Client;
 
 namespace ClassicAssist.Data.Backup.OneDrive
@@ -69,7 +69,11 @@ namespace ClassicAssist.Data.Backup.OneDrive
             set
             {
                 SetProperty( ref _isLoggedIn, value );
-                AssistantOptions.BackupOptions.Provider.IsLoggedIn = value;
+
+                if ( AssistantOptions.BackupOptions?.Provider != null )
+                {
+                    AssistantOptions.BackupOptions.Provider.IsLoggedIn = value;
+                }
             }
         }
 

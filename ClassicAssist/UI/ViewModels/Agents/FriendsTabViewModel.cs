@@ -1,14 +1,11 @@
 ﻿using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
-using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Friends;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Views;
-using ClassicAssist.UO.Data;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.UI.ViewModels.Agents

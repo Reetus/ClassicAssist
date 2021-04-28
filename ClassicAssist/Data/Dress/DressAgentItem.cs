@@ -1,5 +1,5 @@
-﻿using ClassicAssist.Resources;
-using ClassicAssist.UI.ViewModels;
+﻿using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.Data.Dress

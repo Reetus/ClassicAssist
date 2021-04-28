@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Data;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

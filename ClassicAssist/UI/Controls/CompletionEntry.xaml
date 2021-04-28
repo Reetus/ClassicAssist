@@ -6,25 +6,13 @@
              xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
-             xmlns:resources="clr-namespace:ClassicAssist.Resources"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              mc:Ignorable="d" DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
-                    <DrawingImage x:Key="LeftChevron">
-                        <DrawingImage.Drawing>
-                            <DrawingGroup ClipGeometry="M0,0 V256 H256 V0 H0 Z">
-                                <DrawingGroup Opacity="1">
-                                    <DrawingGroup Opacity="1">
-                                        <GeometryDrawing Brush="#FF000000"
-                                                         Geometry="F1 M256,256z M0,0z M207.093,30.187L207.093,30.187 176.907,0 48.907,128 176.907,256 207.093,225.813 109.28,128z" />
-                                    </DrawingGroup>
-                                </DrawingGroup>
-                            </DrawingGroup>
-                        </DrawingImage.Drawing>
-                    </DrawingImage>
                     <DrawingImage x:Key="RightChevron">
                         <DrawingImage.Drawing>
                             <DrawingGroup ClipGeometry="M0,0 V256 H256 V0 H0 Z">

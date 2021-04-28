@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 
 namespace ClassicAssist.Data.Hotkeys.Commands
 {
@@ -16,11 +16,13 @@ namespace ClassicAssist.Data.Hotkeys.Commands
             if ( a != null )
             {
                 // if the attribute exists, the Name must be localizable.
-                string hotkeyName = Strings.ResourceManager.GetString(
-                    a.Name ?? throw new ArgumentNullException( $"No localizable string for {a.Name}" ) );
+                string hotkeyName = Strings.ResourceManager.GetString( a.Name ??
+                                                                       throw new ArgumentNullException(
+                                                                           $"No localizable string for {a.Name}" ) );
 
-                string tooltipName = Strings.ResourceManager.GetString(
-                    a.Tooltip ?? throw new ArgumentNullException( $"No localizable string for {a.Tooltip}" ) );
+                string tooltipName = Strings.ResourceManager.GetString( a.Tooltip ??
+                                                                        throw new ArgumentNullException(
+                                                                            $"No localizable string for {a.Tooltip}" ) );
 
                 base.Name = string.IsNullOrEmpty( hotkeyName ) ? a.Name : hotkeyName;
                 Tooltip = string.IsNullOrEmpty( tooltipName ) ? a.Tooltip : tooltipName;

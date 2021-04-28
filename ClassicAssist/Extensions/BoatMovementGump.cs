@@ -77,7 +77,8 @@ namespace ClassicAssist.Extensions
             AddButton( 60, 60, 2151, 2151, 10, GumpButtonType.Reply, 0 );
         }
 
-        public override void OnResponse( int buttonID, int[] switches, List<(int Key, string Value)> textEntries = null )
+        public override void OnResponse( int buttonID, int[] switches,
+            List<(int Key, string Value)> textEntries = null )
         {
             if ( buttonID == 0 )
             {

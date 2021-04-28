@@ -19,7 +19,7 @@
 
 using System.Collections.ObjectModel;
 using System.Linq;
-using ClassicAssist.UI.ViewModels;
+using ClassicAssist.Shared.UI;
 using DraggableTreeView;
 
 namespace ClassicAssist.Data.Macros
@@ -34,8 +34,7 @@ namespace ClassicAssist.Data.Macros
             get => _name;
             set
             {
-                foreach ( MacroEntry draggable in Children.Where( i => i is MacroEntry )
-                    .Cast<MacroEntry>() )
+                foreach ( MacroEntry draggable in Children.Where( i => i is MacroEntry ).Cast<MacroEntry>() )
                 {
                     draggable.Group = value;
                 }

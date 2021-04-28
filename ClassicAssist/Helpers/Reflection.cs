@@ -82,6 +82,5 @@ namespace ClassicAssist.Helpers
 
             return t == null ? default : GetTypeFieldValue<T>( t, property, obj, bindingFlags );
         }
-
     }
 }

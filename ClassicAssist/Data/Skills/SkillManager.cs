@@ -1,6 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Misc;
-using ClassicAssist.UI.ViewModels;
 
 namespace ClassicAssist.Data.Skills
 {

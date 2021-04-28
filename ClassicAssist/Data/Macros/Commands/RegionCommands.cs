@@ -1,7 +1,7 @@
 ﻿using Assistant;
 using ClassicAssist.Data.Regions;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 

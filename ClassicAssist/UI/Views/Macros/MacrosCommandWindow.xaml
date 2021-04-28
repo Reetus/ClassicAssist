@@ -3,11 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ClassicAssist.UI.Views.Macros"
-        xmlns:resources="clr-namespace:ClassicAssist.Resources"
+        xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
         xmlns:macros="clr-namespace:ClassicAssist.UI.ViewModels.Macros"
+        xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         mc:Ignorable="d"
         Title="{x:Static resources:Strings.Commands}" Height="350" Width="400">
     <Window.DataContext>
@@ -71,7 +70,7 @@
                 </StackPanel.Resources>
                 <Button Content="{x:Static resources:Strings.Close}">
                     <i:Interaction.Behaviors>
-                        <misc:CloseOnClickBehaviour />
+                        <behaviours:CloseOnClickBehaviour />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button Content="{x:Static resources:Strings.Insert}" Command="{Binding InsertCommand}"

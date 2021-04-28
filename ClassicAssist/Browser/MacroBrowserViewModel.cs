@@ -27,7 +27,8 @@ using System.Windows.Input;
 using ClassicAssist.Browser.Data;
 using ClassicAssist.Browser.Models;
 using ClassicAssist.Data.Macros;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.ViewModels;
 using Microsoft.Scripting.Utils;
 

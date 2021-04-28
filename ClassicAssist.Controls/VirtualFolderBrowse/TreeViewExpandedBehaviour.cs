@@ -27,7 +27,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace ClassicAssist.Data.Backup.OneDrive
+namespace ClassicAssist.Controls.VirtualFolderBrowse
 {
     public class TreeViewExpandedBehaviour : Behavior<TreeView>
     {

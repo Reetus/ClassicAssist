@@ -3,12 +3,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:ClassicAssist.UI.Views"
-    xmlns:resources="clr-namespace:ClassicAssist.Resources"
     xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
     xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+    xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+    xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
     x:Class="ClassicAssist.UI.Views.NewProfileWindow"
     mc:Ignorable="d"
     Title="{x:Static resources:Strings.New_Profile}" Height="130" Width="290" WindowStyle="ToolWindow">
@@ -44,12 +43,12 @@
             </StackPanel.Resources>
             <Button Content="{x:Static resources:Strings.OK}" Command="{Binding OkCommand}">
                 <i:Interaction.Behaviors>
-                    <misc:CloseOnClickBehaviour />
+                    <behaviours:CloseOnClickBehaviour />
                 </i:Interaction.Behaviors>
             </Button>
             <Button Content="{x:Static resources:Strings.Cancel}">
                 <i:Interaction.Behaviors>
-                    <misc:CloseOnClickBehaviour />
+                    <behaviours:CloseOnClickBehaviour />
                 </i:Interaction.Behaviors>
             </Button>
         </StackPanel>

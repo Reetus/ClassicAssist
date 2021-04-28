@@ -10,6 +10,7 @@ using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Misc;
 using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Misc;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.ViewModels;
 using Newtonsoft.Json.Linq;
 

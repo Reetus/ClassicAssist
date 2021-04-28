@@ -22,10 +22,10 @@
                                HorizontalAlignment="Center" />
                         <Border x:Name="Border" BorderThickness="1">
                             <TextBlock x:Name="TextBlock" Text="{Binding (viewModels:EntityCollectionData.Name)}"
-                                   TextAlignment="Center"
-                                   Foreground="{DynamicResource ThemeForegroundBrush}"
-                                   DockPanel.Dock="Bottom" Padding="1" TextWrapping="WrapWithOverflow"
-                                   ToolTip="{Binding (viewModels:EntityCollectionData.FullName)}" />
+                                       TextAlignment="Center"
+                                       Foreground="{DynamicResource ThemeForegroundBrush}"
+                                       DockPanel.Dock="Bottom" Padding="1" TextWrapping="WrapWithOverflow"
+                                       ToolTip="{Binding (viewModels:EntityCollectionData.FullName)}" />
                         </Border>
                     </StackPanel>
                 </DockPanel>
@@ -33,9 +33,12 @@
                     <DataTrigger
                         Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}"
                         Value="True">
-                        <Setter TargetName="TextBlock" Property="Background" Value="{DynamicResource SelectionColor1Brush}" />
-                        <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource SelectionColor2Brush}"/>
-                        <Setter TargetName="TextBlock" Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
+                        <Setter TargetName="TextBlock" Property="Background"
+                                Value="{DynamicResource SelectionColor1Brush}" />
+                        <Setter TargetName="Border" Property="BorderBrush"
+                                Value="{DynamicResource SelectionColor2Brush}" />
+                        <Setter TargetName="TextBlock" Property="Foreground"
+                                Value="{DynamicResource ThemeForegroundBrush}" />
                     </DataTrigger>
                     <DataTrigger
                         Binding="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ShowProperties)}"

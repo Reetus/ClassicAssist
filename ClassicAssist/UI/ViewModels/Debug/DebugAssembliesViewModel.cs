@@ -27,7 +27,8 @@ using System.Windows;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using Microsoft.Win32;
 
 namespace ClassicAssist.UI.ViewModels.Debug

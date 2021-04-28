@@ -4,11 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
-        xmlns:r="clr-namespace:ClassicAssist.Resources"
         xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         mc:Ignorable="d"
-        Title="{x:Static r:Strings.Object_Inspector}" Height="396.8" Width="450" Topmost="True">
+        Title="{x:Static resources:Strings.Object_Inspector}" Height="396.8" Width="450" Topmost="True">
     <Window.InputBindings>
         <KeyBinding Modifiers="Ctrl" Key="C" Command="{Binding CopyToClipboardCommand}" />
     </Window.InputBindings>
@@ -30,9 +30,9 @@
             </i:Interaction.Behaviors>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="150" Header="{x:Static r:Strings.Property}"
+                    <GridViewColumn Width="150" Header="{x:Static resources:Strings.Property}"
                                     DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Width="250" Header="{x:Static r:Strings.Value}">
+                    <GridViewColumn Width="250" Header="{x:Static resources:Strings.Value}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Value}" TextWrapping="Wrap" />

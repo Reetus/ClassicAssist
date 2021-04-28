@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;

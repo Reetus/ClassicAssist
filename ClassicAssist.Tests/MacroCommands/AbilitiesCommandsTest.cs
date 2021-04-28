@@ -233,6 +233,7 @@ namespace ClassicAssist.Tests.MacroCommands
                     PacketHandler handler = IncomingPacketHandlers.GetHandler( 0xBF );
                     handler.OnReceive( new PacketReader( packet, packet.Length, false ) );
                 }
+
                 _are.Set();
             }
         }

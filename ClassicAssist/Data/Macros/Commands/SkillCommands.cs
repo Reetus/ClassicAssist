@@ -3,7 +3,7 @@ using System.Linq;
 using Assistant;
 using ClassicAssist.Data.Skills;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;
 using UOC = ClassicAssist.UO.Commands;

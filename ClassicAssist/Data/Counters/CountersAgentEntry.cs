@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Assistant;
-using ClassicAssist.UI.ViewModels;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.Data.Counters

@@ -7,7 +7,8 @@ using System.Windows;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Models;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
@@ -54,7 +55,7 @@ namespace ClassicAssist.UI.ViewModels
             get
             {
                 return _copyToClipboardCommand ?? ( _copyToClipboardCommand =
-                           new RelayCommand( o => CopyToClipboard(), o => _selectedItem != null ) );
+                    new RelayCommand( o => CopyToClipboard(), o => _selectedItem != null ) );
             }
         }
 

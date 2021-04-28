@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 using Assistant;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
@@ -193,12 +193,16 @@ namespace ClassicAssist.Data.Macros.Commands
                     }
 
                     SoundPlayer soundPlayer = new SoundPlayer( fullPath );
-                    if ( playSync ) {
+
+                    if ( playSync )
+                    {
                         soundPlayer.PlaySync();
-                    } else {
+                    }
+                    else
+                    {
                         soundPlayer.Play();
                     }
-                    
+
                     break;
                 }
             }

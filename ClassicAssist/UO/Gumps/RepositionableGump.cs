@@ -33,8 +33,7 @@ namespace ClassicAssist.UO.Gumps
         private readonly int _height;
         private readonly int _width;
 
-        protected RepositionableGump( int width, int height, int serial, uint gumpID ) : base( 0, 0, serial,
-            gumpID )
+        protected RepositionableGump( int width, int height, int serial, uint gumpID ) : base( 0, 0, serial, gumpID )
         {
             _width = width;
             _height = height;
@@ -52,7 +51,8 @@ namespace ClassicAssist.UO.Gumps
             base.SendGump();
         }
 
-        public override void OnResponse( int buttonID, int[] switches, List<(int Key, string Value)> textEntries = null )
+        public override void OnResponse( int buttonID, int[] switches,
+            List<(int Key, string Value)> textEntries = null )
         {
             if ( buttonID == REPOSITION_BUTTON_ID )
             {

@@ -9,7 +9,7 @@
              xmlns:local="clr-namespace:ClassicAssist.Data.Macros"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
-             xmlns:resources="clr-namespace:ClassicAssist.Resources"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              xmlns:hotkeys="clr-namespace:ClassicAssist.Data.Hotkeys"
              xmlns:misc1="clr-namespace:ClassicAssist.Misc"
@@ -24,8 +24,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/Icons.xaml" />
-                <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
+                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary Source="../../Resources/LeftRightIconToggleButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />

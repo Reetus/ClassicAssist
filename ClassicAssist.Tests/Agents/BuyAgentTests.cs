@@ -26,7 +26,6 @@ using ClassicAssist.Data;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.UI.ViewModels.Agents;
-using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;

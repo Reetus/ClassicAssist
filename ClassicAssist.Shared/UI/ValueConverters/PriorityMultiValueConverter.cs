@@ -22,7 +22,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
 
-namespace ClassicAssist.UI.Misc.ValueConverters
+namespace ClassicAssist.Shared.UI.ValueConverters
 {
     public class PriorityMultiValueConverter : IMultiValueConverter
     {

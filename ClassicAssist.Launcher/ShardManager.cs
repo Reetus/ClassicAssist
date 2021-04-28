@@ -123,7 +123,7 @@ namespace ClassicAssist.Launcher
                 Address = "entropyuo.ddns.net",
                 Port = 2593,
                 IsPreset = true,
-                HasStatusProtocol = true,
+                HasStatusProtocol = true
             } );
 
             Shards.Add( new ShardEntry

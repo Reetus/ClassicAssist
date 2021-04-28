@@ -73,6 +73,10 @@
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ClassicAssist.Controls\ClassicAssist.Controls.csproj" />
+    <ProjectReference Include="..\ClassicAssist.Shared\ClassicAssist.Shared.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="cuoapi">
       <HintPath>cuoapi.dll</HintPath>
     </Reference>
@@ -91,11 +95,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MacroCommandHelp.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\Strings.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Update="UI\Controls\TextBoxKey.xaml.cs">
       <DependentUpon>TextBoxKey.xaml</DependentUpon>
@@ -121,16 +120,6 @@
     <EmbeddedResource Update="Resources\MacroCommandHelp.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MacroCommandHelp.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Strings.en-GB.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Strings.pl-PL.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Strings.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

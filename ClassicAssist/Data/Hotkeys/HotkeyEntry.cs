@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Media;
 using ClassicAssist.Misc;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Misc;
-using ClassicAssist.UI.ViewModels;
 using Newtonsoft.Json;
 
 namespace ClassicAssist.Data.Hotkeys

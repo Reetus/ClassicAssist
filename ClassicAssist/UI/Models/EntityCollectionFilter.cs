@@ -1,5 +1,5 @@
 ﻿using ClassicAssist.Data.Autoloot;
-using ClassicAssist.UI.ViewModels;
+using ClassicAssist.Shared.UI;
 
 namespace ClassicAssist.UI.Models
 {

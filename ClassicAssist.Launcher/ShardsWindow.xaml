@@ -5,7 +5,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:ClassicAssist.Launcher.Properties"
     xmlns:launcher="clr-namespace:ClassicAssist.Launcher"
-    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:behaviours="clr-namespace:ClassicAssist.Launcher.Behaviours"
     xmlns:ValueConverters="clr-namespace:ClassicAssist.Launcher.ValueConverters"
     xmlns:controls="clr-namespace:ClassicAssist.Launcher.Controls"
@@ -69,8 +68,8 @@
                                             <Style TargetType="{x:Type Button}">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding Website}" Value="{x:Null}">
-                                                        <Setter Property="IsEnabled" Value="False"/>
-                                                        <Setter Property="Opacity" Value="0"/>
+                                                        <Setter Property="IsEnabled" Value="False" />
+                                                        <Setter Property="Opacity" Value="0" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>

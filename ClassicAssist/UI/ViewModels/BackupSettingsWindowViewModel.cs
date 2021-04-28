@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Backup;
+using ClassicAssist.Shared.UI;
 
 namespace ClassicAssist.UI.ViewModels
 {
@@ -33,15 +34,14 @@ namespace ClassicAssist.UI.ViewModels
     {
         private BackupOptions _backupOptions;
         private ICommand _browsePathCommand;
-        private ICommand _providerChangedCommand;
         private ObservableCollection<IBackupProvider> _providers = new ObservableCollection<IBackupProvider>();
 
         public BackupSettingsWindowViewModel()
         {
             BackupOptions = AssistantOptions.BackupOptions;
 
-            IEnumerable<Type> types = Assembly.GetExecutingAssembly().GetTypes()
-                .Where( t => typeof( IBackupProvider ).IsAssignableFrom( t ) && t.IsClass );
+            IEnumerable<Type> types = Assembly.GetExecutingAssembly().GetTypes().Where( t =>
+                typeof( IBackupProvider ).IsAssignableFrom( t ) && t.IsClass && !t.IsAbstract );
 
             Providers.Add( BackupOptions.Provider );
 
@@ -62,22 +62,10 @@ namespace ClassicAssist.UI.ViewModels
             _browsePathCommand ?? ( _browsePathCommand =
                 new RelayCommandAsync( BrowsePath, o => BackupOptions.Provider.IsLoggedIn ) );
 
-        public ICommand ProviderChangedCommand =>
-            _providerChangedCommand ?? ( _providerChangedCommand = new RelayCommand( ProviderChanged, o => true ) );
-
         public ObservableCollection<IBackupProvider> Providers
         {
             get => _providers;
             set => SetProperty( ref _providers, value );
-        }
-
-        private static void ProviderChanged( object obj )
-        {
-            if ( !( obj is IBackupProvider provider ) )
-            {
-            }
-
-            //TODO
         }
 
         private async Task BrowsePath( object obj )

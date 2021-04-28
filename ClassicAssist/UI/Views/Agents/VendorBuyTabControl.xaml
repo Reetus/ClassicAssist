@@ -3,13 +3,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:resources="clr-namespace:ClassicAssist.Resources"
+    xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
     xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
     xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
-    xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:autoloot="clr-namespace:ClassicAssist.Data.Autoloot"
     x:Class="ClassicAssist.UI.Views.Agents.VendorBuyTabControl"
     mc:Ignorable="d"
     d:DesignWidth="493" d:DesignHeight="400">
@@ -22,7 +19,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
-                <ResourceDictionary Source="../../../Resources/ResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <ValueConverters:HexToIntValueConverter x:Key="HexToIntValueConverter" />
             <ValueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
@@ -37,8 +33,8 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Margin="5" Grid.Column="0" Grid.Row="0">
             <Grid.RowDefinitions>

@@ -10,7 +10,7 @@ using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Skills;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO.Data;

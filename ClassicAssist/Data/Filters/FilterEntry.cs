@@ -1,6 +1,6 @@
 ﻿using System;
-using ClassicAssist.Resources;
-using ClassicAssist.UI.ViewModels;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 
 namespace ClassicAssist.Data.Filters
 {

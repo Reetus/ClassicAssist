@@ -25,46 +25,50 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Threading;
-using ClassicAssist.Resources;
-using ClassicAssist.UI.ViewModels;
-using Microsoft.Graph;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 
-namespace ClassicAssist.Data.Backup.OneDrive
+namespace ClassicAssist.Controls.VirtualFolderBrowse
 {
-    public class OneDrivePathPickerViewModel : SetPropertyNotifyChanged
+    public class VirtualFolderBrowseViewModel : SetPropertyNotifyChanged
     {
         private readonly Dispatcher _dispatcher;
         private ICommand _expandCommand;
-        private ObservableCollection<OneDriveFolder> _folders = new ObservableCollection<OneDriveFolder>();
+        private ObservableCollection<VirtualFolder> _folders = new ObservableCollection<VirtualFolder>();
         private bool _isWorking;
+        private ICommand _newFolderCommand;
         private ICommand _saveCommand;
-        private OneDriveFolder _selectedItem;
+        private VirtualFolder _selectedItem;
 
-        public OneDrivePathPickerViewModel()
+        public VirtualFolderBrowseViewModel()
         {
         }
 
-        public OneDrivePathPickerViewModel( Func<string, Task<IEnumerable<DriveItem>>> getChildren )
+        public VirtualFolderBrowseViewModel( Func<string, Task<IEnumerable<VirtualFolder>>> getChildren,
+            Func<VirtualFolder, string, Task<VirtualFolder>> createFolder )
         {
             _dispatcher = Dispatcher.CurrentDispatcher;
 
             GetChildren = getChildren;
+            CreateFolder = createFolder;
 
             GetFolders( string.Empty, Folders ).ConfigureAwait( false );
         }
+
+        public Func<VirtualFolder, string, Task<VirtualFolder>> CreateFolder { get; set; }
 
         public DialogResult DialogResult { get; set; } = DialogResult.Cancel;
 
         public ICommand ExpandCommand =>
             _expandCommand ?? ( _expandCommand = new RelayCommandAsync( ExpandAsync, o => true ) );
 
-        public ObservableCollection<OneDriveFolder> Folders
+        public ObservableCollection<VirtualFolder> Folders
         {
             get => _folders;
             set => SetProperty( ref _folders, value );
         }
 
-        public Func<string, Task<IEnumerable<DriveItem>>> GetChildren { get; set; }
+        public Func<string, Task<IEnumerable<VirtualFolder>>> GetChildren { get; set; }
 
         public bool IsWorking
         {
@@ -72,23 +76,26 @@ namespace ClassicAssist.Data.Backup.OneDrive
             set => SetProperty( ref _isWorking, value );
         }
 
+        public ICommand NewFolderCommand =>
+            _newFolderCommand ?? ( _newFolderCommand = new RelayCommandAsync( NewFolder, o => CreateFolder != null ) );
+
         public ICommand SaveCommand =>
             _saveCommand ?? ( _saveCommand = new RelayCommand( Save,
                 o => SelectedItem != null && !string.IsNullOrEmpty( SelectedItem.Id ) ) );
 
-        public OneDriveFolder SelectedItem
+        public VirtualFolder SelectedItem
         {
             get => _selectedItem;
             set => SetProperty( ref _selectedItem, value );
         }
 
-        private async Task GetFolders( string id, ICollection<OneDriveFolder> collection )
+        private async Task GetFolders( string id, ICollection<VirtualFolder> collection )
         {
             try
             {
                 IsWorking = true;
 
-                IEnumerable<DriveItem> driveItems = ( await GetChildren( id ) ).Where( f => f.Folder != null ).ToList();
+                IEnumerable<VirtualFolder> driveItems = ( await GetChildren( id ) ).ToList();
 
                 _dispatcher.Invoke( collection.Clear );
 
@@ -97,16 +104,11 @@ namespace ClassicAssist.Data.Backup.OneDrive
                     return;
                 }
 
-                foreach ( DriveItem driveItem in driveItems )
+                foreach ( VirtualFolder driveItem in driveItems )
                 {
-                    OneDriveFolder item = new OneDriveFolder { Id = driveItem.Id, Name = driveItem.Name };
+                    VirtualFolder item = new VirtualFolder { Id = driveItem.Id, Name = driveItem.Name };
 
-                    if ( !( driveItem.Folder?.ChildCount > 0 ) )
-                    {
-                        continue;
-                    }
-
-                    item.Children.Add( new OneDriveFolder { Name = Strings.Loading___ } );
+                    item.Children.Add( new VirtualFolder { Name = Strings.Loading___ } );
                     await _dispatcher.InvokeAsync( () => { collection.Add( item ); } );
                 }
             }
@@ -118,12 +120,29 @@ namespace ClassicAssist.Data.Backup.OneDrive
 
         private async Task ExpandAsync( object arg )
         {
-            if ( !( arg is OneDriveFolder driveItem ) )
+            if ( !( arg is VirtualFolder driveItem ) )
             {
                 return;
             }
 
             await GetFolders( driveItem.Id, driveItem.Children );
+        }
+
+        private async Task NewFolder( object arg )
+        {
+            FolderPromptWindow window = new FolderPromptWindow();
+
+            window.ShowDialog();
+
+            if ( window.DialogResult == true )
+            {
+                VirtualFolder result = await CreateFolder( SelectedItem, window.Text );
+
+                if ( result != null )
+                {
+                    await GetFolders( SelectedItem?.Id, SelectedItem?.Children ?? Folders );
+                }
+            }
         }
 
         private void Save( object obj )

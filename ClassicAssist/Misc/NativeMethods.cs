@@ -100,6 +100,9 @@ namespace ClassicAssist.Misc
         [DllImport( "user32.dll" )]
         public static extern bool GetClientRect( IntPtr hWnd, out RECT lpRect );
 
+        [DllImport( "user32.dll", SetLastError = true )]
+        public static extern bool SetForegroundWindow( IntPtr hWnd );
+
         [StructLayout( LayoutKind.Sequential )]
         public struct RECT
         {
@@ -108,8 +111,5 @@ namespace ClassicAssist.Misc
             public int Right; // x position of lower-right corner
             public int Bottom; // y position of lower-right corner
         }
-
-        [DllImport( "user32.dll", SetLastError = true )]
-        public static extern bool SetForegroundWindow( IntPtr hWnd );
     }
 }

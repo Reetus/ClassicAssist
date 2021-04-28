@@ -6,8 +6,8 @@ using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Misc;
-using ClassicAssist.UI.ViewModels;
 using static ClassicAssist.Misc.SDLKeys;
 
 namespace ClassicAssist.Data.Hotkeys

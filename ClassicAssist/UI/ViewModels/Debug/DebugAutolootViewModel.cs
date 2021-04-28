@@ -23,7 +23,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data.Autoloot;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
@@ -110,7 +111,8 @@ namespace ClassicAssist.UI.ViewModels.Debug
             Engine.SendPacketToServer(
                 new BatchQueryProperties( container.GetItems().Select( i => i.Serial ).ToArray() ) );
 
-            foreach ( AutolootEntry entry in AutolootManager.GetInstance().GetEntries().OrderByDescending( x => x.Priority ) )
+            foreach ( AutolootEntry entry in AutolootManager.GetInstance().GetEntries()
+                .OrderByDescending( x => x.Priority ) )
             {
                 if ( !entry.Enabled )
                 {

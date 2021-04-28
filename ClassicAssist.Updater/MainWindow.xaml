@@ -32,18 +32,20 @@
                      ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock TextWrapping="Wrap" Text="{Binding}"/>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding}" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
         <DockPanel Grid.Row="2" Margin="10,0,10,10">
             <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">
-                <Hyperlink NavigateUri="https://github.com/Reetus/ClassicAssist/releases" RequestNavigate="Hyperlink_OnRequestNavigate">
+                <Hyperlink NavigateUri="https://github.com/Reetus/ClassicAssist/releases"
+                           RequestNavigate="Hyperlink_OnRequestNavigate">
                     <Run Text="{x:Static properties:Resources.Releases}" />
                 </Hyperlink>
             </TextBlock>
-            <Button Content="{x:Static properties:Resources.Close}" Width="100" DockPanel.Dock="Right" HorizontalAlignment="Right"
+            <Button Content="{x:Static properties:Resources.Close}" Width="100" DockPanel.Dock="Right"
+                    HorizontalAlignment="Right"
                     IsEnabled="{Binding IsUpdating, Converter={StaticResource InverseBooleanConverter}}">
                 <i:Interaction.Behaviors>
                     <local:CloseBehaviour />

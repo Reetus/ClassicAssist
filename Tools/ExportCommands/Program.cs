@@ -130,8 +130,8 @@ namespace ExportCommands
                                     if ( i + 1 > attrParams.Length )
                                     {
                                         parameter.Name = parameterInfo.Name.ToLower();
-                                        parameter.Optional =
-                                            defaultValue == null || defaultValue.GetType() != typeof( DBNull );
+                                        parameter.Optional = defaultValue == null ||
+                                                             defaultValue.GetType() != typeof( DBNull );
                                         parameter.Description = Resources.ResourceManager.GetString(
                                             "PARAMETER_DESCRIPTION_UNKNOWN" );
                                         param.Add( parameter );
@@ -147,8 +147,8 @@ namespace ExportCommands
                                         }
 
                                         parameter.Name = parameterInfo.Name.ToLower();
-                                        parameter.Optional =
-                                            defaultValue == null || defaultValue.GetType() != typeof( DBNull );
+                                        parameter.Optional = defaultValue == null ||
+                                                             defaultValue.GetType() != typeof( DBNull );
 
                                         string resourceName = $"PARAMETER_DESCRIPTION_{attrParam.ToUpper()}";
 
@@ -199,7 +199,8 @@ namespace ExportCommands
                 commands.Sort( new CommandComparer() );
 
                 // Localized, Language Neutral Category
-                IEnumerable<(string L, string LN)> categories = commands.Select( c => (c.Category, c.CategoryLN) ).Distinct();
+                IEnumerable<(string L, string LN)> categories =
+                    commands.Select( c => ( c.Category, c.CategoryLN ) ).Distinct();
 
                 FileVersionInfo fvi = FileVersionInfo.GetVersionInfo( assembly.Location );
 
@@ -212,7 +213,7 @@ namespace ExportCommands
                         $"# {Resources.ClassicAssist_Macro_Commands}  \n{Resources.Generated_on} {DateTime.UtcNow}  \n{Resources.Version}: {fvi.ProductVersion}  \n{Resources.TRANSLATE_CREDIT}  \n  \n";
                 }
 
-                foreach ( var category in categories )
+                foreach ( (string L, string LN) category in categories )
                 {
                     IEnumerable<Commands> categoryCommands =
                         commands.Where( c => c.Category == category.L ).OrderBy( c => c.Name );
@@ -445,12 +446,12 @@ namespace ExportCommands
     internal class Commands
     {
         public string Category { get; set; }
+        public string CategoryLN { get; set; }
         public string Description { get; set; }
         public string Example { get; set; }
         public string InsertText { get; set; }
         public string Name { get; set; }
         public List<Parameter> Parameters { get; set; }
         public string Signature { get; set; }
-        public string CategoryLN { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 using Assistant;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;
@@ -33,11 +33,11 @@ namespace ClassicAssist.Data.Targeting
                 .ToList();
         }
 
+        public List<TargetBodyData> BodyData { get; set; }
+
         public static event dTargetChanged EnemyChangedEvent;
         public static event dTargetChanged FriendChangedEvent;
         public static event dTargetChanged LastTargetChangedEvent;
-
-        public List<TargetBodyData> BodyData { get; set; }
 
         public void SetEnemy( Entity m )
         {
@@ -276,7 +276,7 @@ namespace ClassicAssist.Data.Targeting
             }
 
             Entity entity = UOMath.IsMobile( serial )
-                ? (Entity)Engine.Mobiles.GetMobile( serial )
+                ? (Entity) Engine.Mobiles.GetMobile( serial )
                 : Engine.Items.GetItem( serial );
 
             if ( entity != null )

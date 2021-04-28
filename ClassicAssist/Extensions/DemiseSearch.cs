@@ -156,7 +156,8 @@ namespace ClassicAssist.Extensions
             }
         }
 
-        public override void OnResponse( int buttonID, int[] switches, List<(int Key, string Value)> textEntries = null )
+        public override void OnResponse( int buttonID, int[] switches,
+            List<(int Key, string Value)> textEntries = null )
         {
             if ( buttonID == SEARCH_BUTTON )
             {

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using Assistant;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.Packets;

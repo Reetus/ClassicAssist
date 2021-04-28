@@ -3,7 +3,8 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using Assistant;
 using ClassicAssist.Data;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Views;
 
 namespace ClassicAssist.UI.ViewModels

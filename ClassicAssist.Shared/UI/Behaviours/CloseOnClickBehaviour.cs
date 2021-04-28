@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Interactivity;
 
-namespace ClassicAssist.UI.Misc
+namespace ClassicAssist.Shared.UI.Behaviours
 {
     public class CloseOnClickBehaviour : Behavior<Button>
     {

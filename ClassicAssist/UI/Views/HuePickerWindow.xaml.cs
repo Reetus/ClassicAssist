@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using ClassicAssist.Annotations;
-using ClassicAssist.UI.ViewModels;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.UI.Views

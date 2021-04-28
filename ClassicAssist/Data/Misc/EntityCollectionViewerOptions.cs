@@ -17,7 +17,7 @@
 
 #endregion
 
-using ClassicAssist.UI.ViewModels;
+using ClassicAssist.Shared.UI;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.Data.Misc

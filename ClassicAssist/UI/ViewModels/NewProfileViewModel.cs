@@ -2,7 +2,8 @@
 using System.Windows;
 using System.Windows.Input;
 using ClassicAssist.Data;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 
 namespace ClassicAssist.UI.ViewModels
 {

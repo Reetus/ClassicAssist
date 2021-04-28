@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
 using ClassicAssist.Data.Macros;
+using ClassicAssist.Shared.UI;
 
 namespace ClassicAssist.UI.ViewModels.Macros
 {

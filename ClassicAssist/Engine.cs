@@ -23,6 +23,7 @@ using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Gumps;
@@ -46,15 +47,13 @@ namespace Assistant
 
         public delegate void dDisconnected();
 
+        public delegate void dHotkeyPressed( int key, int mod, Key keys, ModKey modKey );
+
         public delegate void dPlayerInitialized( PlayerMobile player );
 
         public delegate void dSendRecvPacket( byte[] data, int length );
 
         public delegate void dUpdateWindowTitle();
-
-        public delegate void dHotkeyPressed(int key, int mod, Key keys, ModKey modKey);
-
-        public static event dHotkeyPressed HotkeyPressedEvent;
 
         private const int MAX_DISTANCE = 32;
 
@@ -91,6 +90,7 @@ namespace Assistant
         private static DateTime _nextPacketSendTime;
         private static unsafe PluginHeader* _plugin;
         public static int LastSpellID;
+        public static CharacterListFlags CharacterListFlags { get; set; }
 
         public static Assembly ClassicAssembly { get; set; }
 
@@ -100,7 +100,6 @@ namespace Assistant
         public static ShardEntry CurrentShard { get; set; }
         public static Dispatcher Dispatcher { get; set; }
         public static FeatureFlags Features { get; set; }
-        public static CharacterListFlags CharacterListFlags { get; set; }
         public static GumpCollection Gumps { get; set; } = new GumpCollection();
         public static ItemCollection Items { get; set; } = new ItemCollection( 0 );
         public static CircularBuffer<JournalEntry> Journal { get; set; } = new CircularBuffer<JournalEntry>( 1024 );
@@ -110,7 +109,10 @@ namespace Assistant
         public static DateTime LastActionPacket { get; set; }
         public static int LastPromptID { get; set; }
         public static int LastPromptSerial { get; set; }
-        public static TargetQueue<TargetQueueObject> LastTargetQueue { get; set; } = new TargetQueue<TargetQueueObject>();
+
+        public static TargetQueue<TargetQueueObject> LastTargetQueue { get; set; } =
+            new TargetQueue<TargetQueueObject>();
+
         public static MenuCollection Menus { get; set; } = new MenuCollection();
         public static MobileCollection Mobiles { get; set; } = new MobileCollection( Items );
         public static PacketWaitEntries PacketWaitEntries { get; set; }
@@ -128,6 +130,8 @@ namespace Assistant
         public static bool TooltipsEnabled { get; set; }
         public static bool WaitingForTarget { get; set; }
         internal static ConcurrentDictionary<uint, int> GumpList { get; set; } = new ConcurrentDictionary<uint, int>();
+
+        public static event dHotkeyPressed HotkeyPressedEvent;
 
         public static event dUpdateWindowTitle UpdateWindowTitleEvent;
 

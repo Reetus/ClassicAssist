@@ -21,11 +21,15 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using Assistant;
 using ClassicAssist.Data.Backup;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using Sentry;
 
 namespace ClassicAssist.UI.ViewModels
@@ -72,8 +76,9 @@ namespace ClassicAssist.UI.ViewModels
 
                 _dispatcher.Invoke( () => { Messages.Add( Strings.Done___ ); } );
                 _options.LastBackup = DateTime.Now;
+                _options.Provider.FirstRun = false;
 
-                await Task.Delay( 2000 );
+                await Task.Delay( 1000 );
 
                 _dispatcher.Invoke( CloseWindow );
             } ).ConfigureAwait( false );
@@ -107,23 +112,13 @@ namespace ClassicAssist.UI.ViewModels
             files.AddRange( Directory.EnumerateFiles( Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
                 "Profiles" ) ) );
 
-            foreach ( string file in files )
+            Dictionary<string, string> hashes = GetFileAndHash( files );
+
+            foreach ( string fullPath in from kvp in hashes select kvp.Key )
             {
-                string fullPath = file;
-
-                if ( !Path.IsPathRooted( file ) )
-                {
-                    fullPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, file );
-                }
-
-                if ( !File.Exists( fullPath ) )
-                {
-                    continue;
-                }
-
                 _dispatcher.Invoke( () =>
                 {
-                    Messages.Add( string.Format( Strings.Backing_up__0____, Path.GetFileName( file ) ) );
+                    Messages.Add( string.Format( Strings.Backing_up__0____, Path.GetFileName( fullPath ) ) );
                 } );
 
                 try
@@ -143,6 +138,76 @@ namespace ClassicAssist.UI.ViewModels
                     } );
 
                     throw;
+                }
+            }
+
+            foreach ( KeyValuePair<string, string> kvp in hashes )
+            {
+                if ( _options.Hashes.ContainsKey( kvp.Key ) )
+                {
+                    _options.Hashes[kvp.Key] = kvp.Value;
+                }
+                else
+                {
+                    _options.Hashes.Add( kvp.Key, kvp.Value );
+                }
+            }
+        }
+
+        private Dictionary<string, string> GetFileAndHash( IEnumerable<string> files )
+        {
+            Dictionary<string, string> result = new Dictionary<string, string>();
+
+            foreach ( string file in files )
+            {
+                string fileName = file;
+
+                if ( !Path.IsPathRooted( file ) )
+                {
+                    fileName = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, file );
+                }
+
+                if ( !File.Exists( fileName ) )
+                {
+                    continue;
+                }
+
+                string hash1 = CalculateHash( fileName );
+                string hash2 = null;
+
+                if ( _options.Hashes.ContainsKey( fileName ) )
+                {
+                    hash2 = _options.Hashes[fileName];
+                }
+
+                if ( !_options.Provider.Incremental || _options.Provider.FirstRun || string.IsNullOrEmpty( hash2 ) ||
+                     hash1 != hash2 )
+                {
+                    result.Add( fileName, hash1 );
+                }
+            }
+
+            return result;
+        }
+
+        public static string CalculateHash( string filename )
+        {
+            using ( FileStream stream = File.OpenRead( filename ) )
+            {
+                using ( BufferedStream bs = new BufferedStream( stream ) )
+                {
+                    using ( SHA1Managed sha1 = new SHA1Managed() )
+                    {
+                        byte[] hash = sha1.ComputeHash( bs );
+                        StringBuilder formatted = new StringBuilder( 2 * hash.Length );
+
+                        foreach ( byte b in hash )
+                        {
+                            formatted.AppendFormat( "{0:X2}", b );
+                        }
+
+                        return formatted.ToString();
+                    }
                 }
             }
         }

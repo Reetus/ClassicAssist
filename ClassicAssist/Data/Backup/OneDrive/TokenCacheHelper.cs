@@ -25,7 +25,7 @@ namespace ClassicAssist.Data.Backup.OneDrive
     {
         public static void BeforeAccessNotification( TokenCacheNotificationArgs args )
         {
-            if ( !( AssistantOptions.BackupOptions.Provider is OneDriveBackupProvider provider ) )
+            if ( !( AssistantOptions.BackupOptions?.Provider is OneDriveBackupProvider provider ) )
             {
                 return;
             }
@@ -35,7 +35,7 @@ namespace ClassicAssist.Data.Backup.OneDrive
 
         public static void AfterAccessNotification( TokenCacheNotificationArgs args )
         {
-            if ( !( AssistantOptions.BackupOptions.Provider is OneDriveBackupProvider provider ) )
+            if ( !( AssistantOptions.BackupOptions?.Provider is OneDriveBackupProvider provider ) )
             {
                 return;
             }

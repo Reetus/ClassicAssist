@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using ClassicAssist.UI.ViewModels;
+using ClassicAssist.Shared.UI;
 
 namespace ClassicAssist.UI.Controls
 {

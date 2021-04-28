@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
 using System.Windows.Input;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
 using ClassicAssist.Data.Hotkeys;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using DraggableTreeView;
 using IronPython.Runtime.Operations;
 using Microsoft.Scripting;
@@ -108,12 +108,12 @@ namespace ClassicAssist.Data.Macros
                 return 1;
             }
 
-            if( ReferenceEquals( this, entry ) )
+            if ( ReferenceEquals( this, entry ) )
             {
                 return 0;
             }
 
-            if( ReferenceEquals( null, entry ) )
+            if ( ReferenceEquals( null, entry ) )
             {
                 return 1;
             }

@@ -1,7 +1,7 @@
 ﻿using System;
 using Assistant;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
@@ -106,10 +106,7 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = nameof( Strings.Movement ),
-            Parameters = new[]
-            {
-                nameof( ParameterType.SerialOrAlias )
-            } )]
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static void Pathfind( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );

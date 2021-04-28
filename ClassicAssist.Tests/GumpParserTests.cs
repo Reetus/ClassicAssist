@@ -181,7 +181,8 @@ namespace ClassicAssist.Tests
 
             Cliloc.Initialize( localPath );
 
-            const string base64 = "3QD8BZkjmgAPPvAAAACWAAAAyAAAAMkAAAFCeAFtUEuOwjAM5SiW2M4idpxPd1wFSoCKtomQKyEh7j52ZxYg2Fjyy/s5D2j7cwEHzwecl6m1odfFATuMaGDpL/v5OJZhbosYcFhE6gwpQs5Kc4j/E1WGRNFIUusoQwPE0HEMBt2n00WmUerVtB0BZg8U1jRPKSYlIwf0sNv+yXh1GsZipZCjunfA5Bl/3vqij0DZOjsi0/S32lo5SrkLYNDHlFW/phF3WSOV9HHYS0FP4JFXU7LfcPClYfJBD9v8AsDyVswAAAABAAAAFAAAAAh4AWNgZjBhMGAwAAAB4QCY";
+            const string base64 =
+                "3QD8BZkjmgAPPvAAAACWAAAAyAAAAMkAAAFCeAFtUEuOwjAM5SiW2M4idpxPd1wFSoCKtomQKyEh7j52ZxYg2Fjyy/s5D2j7cwEHzwecl6m1odfFATuMaGDpL/v5OJZhbosYcFhE6gwpQs5Kc4j/E1WGRNFIUusoQwPE0HEMBt2n00WmUerVtB0BZg8U1jRPKSYlIwf0sNv+yXh1GsZipZCjunfA5Bl/3vqij0DZOjsi0/S32lo5SrkLYNDHlFW/phF3WSOV9HHYS0FP4JFXU7LfcPClYfJBD9v8AsDyVswAAAABAAAAFAAAAAh4AWNgZjBhMGAwAAAB4QCY";
 
             byte[] packet = Convert.FromBase64String( base64 );
 

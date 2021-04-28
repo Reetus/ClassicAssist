@@ -10,7 +10,8 @@ using ClassicAssist.Data;
 using ClassicAssist.Data.Filters;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
@@ -237,11 +238,19 @@ namespace ClassicAssist.UI.ViewModels
 
         private static void BackupSettings( object obj )
         {
-            Engine.StartupDispatcher.Invoke( () =>
+            if ( Engine.StartupDispatcher != null )
+            {
+                Engine.StartupDispatcher.Invoke( () =>
+                {
+                    BackupSettingsWindow window = new BackupSettingsWindow();
+                    window.ShowDialog();
+                } );
+            }
+            else
             {
                 BackupSettingsWindow window = new BackupSettingsWindow();
                 window.ShowDialog();
-            } );
+            }
         }
 
         private void OnSavedPasswordsChangedEvent( object sender, EventArgs e )

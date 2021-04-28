@@ -18,8 +18,9 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using ClassicAssist.Misc;
-using ClassicAssist.UI.ViewModels;
+using ClassicAssist.Shared.UI;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.Data.Backup
@@ -43,6 +44,8 @@ namespace ClassicAssist.Data.Backup
             set => SetProperty( ref _enabled, value );
         }
 
+        public Dictionary<string, string> Hashes { get; set; } = new Dictionary<string, string>();
+
         public DateTime LastBackup { get; set; }
 
         public IBackupProvider Provider
@@ -59,6 +62,15 @@ namespace ClassicAssist.Data.Backup
         public void Serialize( JObject json )
         {
             JObject backup = new JObject { { "Enabled", Enabled }, { "Days", Days }, { "LastBackup", LastBackup } };
+
+            JObject hashes = new JObject();
+
+            foreach ( KeyValuePair<string, string> keyValuePair in Hashes )
+            {
+                hashes.Add( keyValuePair.Key, keyValuePair.Value );
+            }
+
+            backup.Add( "Hashes", hashes );
 
             JObject provider = new JObject { { "Name", Provider.GetType().ToString() } };
 
@@ -81,6 +93,19 @@ namespace ClassicAssist.Data.Backup
             Enabled = config["Enabled"]?.ToObject<bool>() ?? true;
             Days = config["Days"]?.ToObject<int>() ?? 7;
             LastBackup = config["LastBackup"]?.ToObject<DateTime>() ?? default;
+
+            if ( config["Hashes"] != null )
+            {
+                foreach ( JToken token in config["Hashes"] )
+                {
+                    JProperty property = token.ToObject<JProperty>();
+
+                    if ( property != null )
+                    {
+                        Hashes.Add( property.Name, property.Value.ToObject<string>() );
+                    }
+                }
+            }
 
             if ( config["Provider"] != null )
             {

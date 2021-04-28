@@ -22,6 +22,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Input;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.UI.ViewModels.Autoloot

@@ -14,7 +14,7 @@ using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Skills;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Data.Vendors;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
@@ -1192,7 +1192,7 @@ namespace ClassicAssist.UO.Network
             int value = reader.ReadInt16();
             int baseValue = reader.ReadInt16();
             LockStatus lockStatus = (LockStatus) reader.ReadByte();
-            bool haveCap = (((type != 0u) && type <= 0x03) || type == 0xDF);
+            bool haveCap = type != 0u && type <= 0x03 || type == 0xDF;
             int skillCap = haveCap ? reader.ReadInt16() : 1000;
 
             if ( reader.Size <= 13 )
@@ -1292,8 +1292,7 @@ namespace ClassicAssist.UO.Network
             if ( !UOMath.IsMobile( containerSerial ) )
             {
                 Layer layer = Engine.Player?.GetAllLayers().Select( ( s, i ) => new { i, s } )
-                                  .Where( t => t.s == serial ).Select( t => (Layer) t.i ).FirstOrDefault() ??
-                              Layer.Invalid;
+                    .Where( t => t.s == serial ).Select( t => (Layer) t.i ).FirstOrDefault() ?? Layer.Invalid;
 
                 if ( layer != Layer.Invalid )
                 {
@@ -1304,7 +1303,7 @@ namespace ClassicAssist.UO.Network
                     Mobile mobile = Engine.Mobiles.SelectEntity( m => m.GetAllLayers().Contains( serial ) );
 
                     layer = mobile?.GetAllLayers().Select( ( s, i ) => new { i, s } ).Where( t => t.s == serial )
-                                .Select( t => (Layer) t.i ).FirstOrDefault() ?? Layer.Invalid;
+                        .Select( t => (Layer) t.i ).FirstOrDefault() ?? Layer.Invalid;
 
                     if ( layer != Layer.Invalid )
                     {
@@ -1511,7 +1510,7 @@ namespace ClassicAssist.UO.Network
             player.Gold = reader.ReadInt32();
             player.PhysicalResistance = reader.ReadInt16();
             player.Weight = reader.ReadInt16();
-            player.WeightMax = 40 + (int)( 3.5 * player.Strength );
+            player.WeightMax = 40 + (int) ( 3.5 * player.Strength );
 
             if ( features >= 5 )
             {

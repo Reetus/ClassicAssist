@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <UseWPF>true</UseWPF>
+    <BuildDate>$([System.DateTime]::op_Subtraction($([System.DateTime]::get_Now().get_Date()),$([System.DateTime]::new(2020,7,4))).get_TotalDays())</BuildDate>
+    <Version>0.3.$(BuildDate).0</Version>
   </PropertyGroup>
 
   <ItemGroup>

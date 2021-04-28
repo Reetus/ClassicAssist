@@ -33,6 +33,8 @@ before_build:
 
     $env:full_version = "0.3.$env:version.$env:APPVEYOR_BUILD_NUMBER"
 
+    $env:release_message = (git log -1 --pretty=%B)
+
     Update-AppveyorBuild -Version "$env:full_version"
 
     nuget restore
@@ -95,6 +97,7 @@ artifacts:
 deploy:
 - provider: GitHub
   tag: $(full_version)
+  description: $(release_message)
   auth_token:
     secure: mJWk62zhXmBw0jG3EpII0T9CIaS1qwLQGcvc6QJjagGLN+cokd1xOAHIszD1jnc9
   prerelease: false

@@ -9,8 +9,8 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         xmlns:validationRules="clr-namespace:ClassicAssist.Shared.UI.ValidationRules;assembly=ClassicAssist.Shared"
-        mc:Ignorable="d" Topmost="True"
-        Title="{x:Static resources:Strings.Backup_Settings}" Height="350" Width="400"
+        mc:Ignorable="d" Topmost="True" SizeToContent="Height"
+        Title="{x:Static resources:Strings.Backup_Settings}" MinHeight="350" Width="400"
         Background="{DynamicResource ThemeWindowBackgroundBrush}">
     <Window.DataContext>
         <viewModels:BackupSettingsWindowViewModel />

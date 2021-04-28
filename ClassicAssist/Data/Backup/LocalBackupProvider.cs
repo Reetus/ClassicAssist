@@ -59,6 +59,8 @@ namespace ClassicAssist.Data.Backup
                 }
             }
 
+            FirstRun = true;
+
             return File.Exists( fullPath );
         }
 

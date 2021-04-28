@@ -26,6 +26,7 @@ namespace ClassicAssist.Data.Backup
     public interface IBackupProvider : ISettingProvider
     {
         string BackupPath { get; set; }
+        bool FirstRun { get; set; }
         bool Incremental { get; set; }
         bool IsLoggedIn { get; set; }
         UserControl LoginControl { get; set; }
@@ -33,6 +34,5 @@ namespace ClassicAssist.Data.Backup
         bool RequiresLogin { get; }
         Task<bool> Write( string fileName );
         Task<string> GetPath( string currentPath );
-        bool FirstRun { get; set; }
     }
 }

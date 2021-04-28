@@ -1671,4 +1671,16 @@ Are you sure you wish to continue?</value>
   <data name="Backup path not set" xml:space="preserve">
     <value>Backup path not set</value>
   </data>
+  <data name="Cannot locate backup folder" xml:space="preserve">
+    <value>Cannot locate backup folder</value>
+  </data>
+  <data name="Overwrite Existing" xml:space="preserve">
+    <value>Overwrite Existing</value>
+  </data>
+  <data name="Overwrite existing files instead of creating new files with the same name" xml:space="preserve">
+    <value>Overwrite existing files instead of creating new files with the same name</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
 </root>

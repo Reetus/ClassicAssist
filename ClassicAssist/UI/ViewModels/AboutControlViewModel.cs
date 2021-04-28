@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Reflection;
 using System.Timers;
 using System.Windows.Input;
@@ -211,29 +210,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private static void CheckForUpdates( object obj )
         {
-            string updaterPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
-                "ClassicAssist.Updater.exe" );
-
-            Version version = null;
-
-            if ( System.Version.TryParse(
-                FileVersionInfo.GetVersionInfo( Assembly.GetExecutingAssembly().Location ).ProductVersion,
-                out Version v ) )
-            {
-                version = v;
-            }
-
-            if ( !File.Exists( updaterPath ) )
-            {
-                return;
-            }
-
-            ProcessStartInfo psi = new ProcessStartInfo( updaterPath,
-                $"--pid {Process.GetCurrentProcess().Id} --path {Engine.StartupPath}" + ( version != null
-                    ? $" --version {version}"
-                    : "" ) ) { UseShellExecute = false };
-
-            Process.Start( psi );
+            Engine.LaunchUpdater();
         }
 
         private void OnConnectedEvent()

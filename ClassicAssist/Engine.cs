@@ -515,16 +515,24 @@ namespace Assistant
                         IReadOnlyList<GitHubCommit> commits =
                             await client.Repository.Commit.GetAll( "Reetus", "ClassicAssist" );
 
-                        IEnumerable<GitHubCommit> latestCommits =
-                            commits.OrderByDescending( c => c.Commit.Author.Date ).Take( 15 );
+                        IEnumerable<Release> latestReleases = releases.OrderByDescending( c => c.CreatedAt ).Take( 15 );
 
                         StringBuilder commitMessage = new StringBuilder();
 
-                        foreach ( GitHubCommit gitHubCommit in latestCommits )
+                        foreach ( Release release in latestReleases )
                         {
-                            commitMessage.AppendLine( $"{gitHubCommit.Commit.Author.Date.Date.ToShortDateString()}:" );
-                            commitMessage.AppendLine();
-                            commitMessage.AppendLine( gitHubCommit.Commit.Message );
+                            string releaseMessage = release.Body;
+
+                            if ( string.IsNullOrEmpty( releaseMessage ) )
+                            {
+                                GitHubCommit commit =
+                                    commits.FirstOrDefault( c => c.Commit.Sha == release.TargetCommitish );
+
+                                releaseMessage = commit?.Commit.Message ?? "Unknown";
+                            }
+
+                            commitMessage.AppendLine( $"{release.CreatedAt.Date.Date.ToShortDateString()}:" );
+                            commitMessage.AppendLine( releaseMessage );
                             commitMessage.AppendLine();
                         }
 
@@ -695,6 +703,33 @@ namespace Assistant
 
             groundZ = (sbyte) parameters[2];
             staticZ = (sbyte) parameters[3];
+        }
+
+        public static void LaunchUpdater()
+        {
+            string updaterPath = Path.Combine( StartupPath ?? Environment.CurrentDirectory,
+                "ClassicAssist.Updater.exe" );
+
+            Version version = null;
+
+            if ( Version.TryParse(
+                FileVersionInfo.GetVersionInfo( Assembly.GetExecutingAssembly().Location ).ProductVersion,
+                out Version v ) )
+            {
+                version = v;
+            }
+
+            if ( !File.Exists( updaterPath ) )
+            {
+                return;
+            }
+
+            ProcessStartInfo psi = new ProcessStartInfo( updaterPath,
+                $"--pid {Process.GetCurrentProcess().Id} --path {StartupPath}" + ( version != null
+                    ? $" --version {version}"
+                    : "" ) ) { UseShellExecute = false };
+
+            Process.Start( psi );
         }
 
         #region ClassicUO Events

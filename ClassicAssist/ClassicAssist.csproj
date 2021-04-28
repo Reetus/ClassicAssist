@@ -63,6 +63,7 @@
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.0.2" />
     <PackageReference Include="IronPython" Version="2.7.11" />
     <PackageReference Include="LiteDB" Version="5.0.10" />
+    <PackageReference Include="MegaApiClient" Version="1.9.0" />
     <PackageReference Include="Microsoft.Graph" Version="3.30.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.30.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
@@ -86,6 +87,10 @@
     <Reference Include="System.Security" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Data\Backup\Mega\MegaConfigureControl.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -150,6 +155,12 @@
     <None Update="Sounds\Bike Horn.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Data\Backup\Mega\MegaConfigureControl.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <PropertyGroup>
     <BuildDate>$([System.DateTime]::op_Subtraction($([System.DateTime]::get_Now().get_Date()),$([System.DateTime]::new(2020,7,3))).get_TotalDays())</BuildDate>

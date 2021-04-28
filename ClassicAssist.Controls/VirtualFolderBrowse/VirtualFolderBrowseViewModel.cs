@@ -77,7 +77,7 @@ namespace ClassicAssist.Controls.VirtualFolderBrowse
         }
 
         public ICommand NewFolderCommand =>
-            _newFolderCommand ?? ( _newFolderCommand = new RelayCommandAsync( NewFolder, o => CreateFolder != null ) );
+            _newFolderCommand ?? ( _newFolderCommand = new RelayCommandAsync( NewFolder, o => CreateFolder != null && !IsWorking) );
 
         public ICommand SaveCommand =>
             _saveCommand ?? ( _saveCommand = new RelayCommand( Save,
@@ -130,18 +130,27 @@ namespace ClassicAssist.Controls.VirtualFolderBrowse
 
         private async Task NewFolder( object arg )
         {
-            FolderPromptWindow window = new FolderPromptWindow();
-
-            window.ShowDialog();
-
-            if ( window.DialogResult == true )
+            try
             {
-                VirtualFolder result = await CreateFolder( SelectedItem, window.Text );
+                IsWorking = true;
 
-                if ( result != null )
+                FolderPromptWindow window = new FolderPromptWindow();
+
+                window.ShowDialog();
+
+                if ( window.DialogResult == true )
                 {
-                    await GetFolders( SelectedItem?.Id, SelectedItem?.Children ?? Folders );
+                    VirtualFolder result = await CreateFolder( SelectedItem, window.Text );
+
+                    if ( result != null )
+                    {
+                        await GetFolders( SelectedItem?.Id, SelectedItem?.Children ?? Folders );
+                    }
                 }
+            }
+            finally
+            {
+                IsWorking = false;
             }
         }
 

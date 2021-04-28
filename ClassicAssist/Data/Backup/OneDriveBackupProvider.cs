@@ -68,12 +68,14 @@ namespace ClassicAssist.Data.Backup
 
             window.ShowDialog();
 
-            if ( odppvm.DialogResult == DialogResult.OK )
+            if ( odppvm.DialogResult != DialogResult.OK )
             {
-                return await Task.FromResult( odppvm.SelectedItem.Id );
+                return await Task.FromResult( currentPath );
             }
 
-            return await Task.FromResult( currentPath );
+            /* Set FirstRun if changing the folder */
+            FirstRun = true;
+            return await Task.FromResult( odppvm.SelectedItem.Id );
         }
 
         public override void Serialize( JObject json )

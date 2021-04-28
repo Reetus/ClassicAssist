@@ -655,6 +655,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot locate backup folder.
+        /// </summary>
+        public static string Cannot_locate_backup_folder {
+            get {
+                return ResourceManager.GetString("Cannot locate backup folder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot PlayMacro from background macro....
         /// </summary>
         public static string Cannot_PlayMacro_from_background_macro___ {
@@ -2920,6 +2929,24 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Overwrite Existing.
+        /// </summary>
+        public static string Overwrite_Existing {
+            get {
+                return ResourceManager.GetString("Overwrite Existing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overwrite existing files instead of creating new files with the same name.
+        /// </summary>
+        public static string Overwrite_existing_files_instead_of_creating_new_files_with_the_same_name {
+            get {
+                return ResourceManager.GetString("Overwrite existing files instead of creating new files with the same name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Overwrite existing hotkey &apos;{0}&apos; ?.
         /// </summary>
         public static string Overwrite_existing_hotkey___0____ {
@@ -2934,6 +2961,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Pass_to_UO {
             get {
                 return ResourceManager.GetString("Pass to UO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
             }
         }
         

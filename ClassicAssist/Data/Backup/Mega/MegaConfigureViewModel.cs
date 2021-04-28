@@ -20,41 +20,53 @@
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using CG.Web.MegaApiClient;
 using ClassicAssist.Shared.UI;
-using Microsoft.Identity.Client;
 
-namespace ClassicAssist.Data.Backup.OneDrive
+namespace ClassicAssist.Data.Backup.Mega
 {
-    public class OneDriveConfigureViewModel : SetPropertyNotifyChanged
+    public class MegaConfigureViewModel : SetPropertyNotifyChanged
     {
-        private AuthenticationResult _authenticationResult;
+        private readonly MegaApiClient _client = new MegaApiClient();
         private string _errorMessage;
         private bool _isLoggedIn;
         private bool _isWorking;
         private ICommand _loginCommand;
         private ICommand _logoutCommand;
+        private bool _overwriteExisting;
+        private string _password;
+        private string _username;
 
-        public OneDriveConfigureViewModel()
+        public MegaConfigureViewModel()
         {
             Task.Run( async () =>
             {
                 try
                 {
-                    AuthenticationResult = await OneDriveClient.GetAccessTokenAsync( false );
+                    IsWorking = true;
 
-                    IsLoggedIn = true;
+                    if ( AssistantOptions.BackupOptions.Provider is MegaBackupProvider provider &&
+                         provider.Authentication != null )
+                    {
+                        OverwriteExisting = provider.OverwriteExisting;
+
+                        _client.Login( new MegaApiClient.LogonSessionToken( provider.Authentication.SessionId,
+                            provider.Authentication.MasterKey ) );
+
+                        IAccountInformation info = await _client.GetAccountInformationAsync();
+
+                        IsLoggedIn = true;
+                    }
                 }
                 catch ( Exception )
                 {
                     IsLoggedIn = false;
                 }
+                finally
+                {
+                    IsWorking = false;
+                }
             } );
-        }
-
-        public AuthenticationResult AuthenticationResult
-        {
-            get => _authenticationResult;
-            set => SetProperty( ref _authenticationResult, value );
         }
 
         public string ErrorMessage
@@ -89,13 +101,44 @@ namespace ClassicAssist.Data.Backup.OneDrive
         public ICommand LogoutCommand =>
             _logoutCommand ?? ( _logoutCommand = new RelayCommandAsync( Logout, o => !IsWorking ) );
 
+        public bool OverwriteExisting
+        {
+            get => _overwriteExisting;
+            set
+            {
+                SetProperty( ref _overwriteExisting, value );
+
+                if ( AssistantOptions.BackupOptions?.Provider is MegaBackupProvider provider )
+                {
+                    provider.OverwriteExisting = value;
+                }
+            }
+        }
+
+        public string Password
+        {
+            get => _password;
+            set => SetProperty( ref _password, value );
+        }
+
+        public string Username
+        {
+            get => _username;
+            set => SetProperty( ref _username, value );
+        }
+
         private async Task Logout( object arg )
         {
             try
             {
                 IsWorking = true;
 
-                await OneDriveClient.LogoutAsync();
+                await _client.LogoutAsync();
+
+                if ( AssistantOptions.BackupOptions.Provider is MegaBackupProvider provider )
+                {
+                    provider.Authentication = null;
+                }
 
                 IsLoggedIn = false;
             }
@@ -111,7 +154,16 @@ namespace ClassicAssist.Data.Backup.OneDrive
             {
                 IsWorking = true;
 
-                AuthenticationResult = await OneDriveClient.GetAccessTokenAsync( true );
+                MegaApiClient client = new MegaApiClient();
+                MegaApiClient.LogonSessionToken token = await client.LoginAsync( _username, _password );
+
+                if ( token != null )
+                {
+                    if ( AssistantOptions.BackupOptions.Provider is MegaBackupProvider megaBackupProvider )
+                    {
+                        megaBackupProvider.Authentication = token;
+                    }
+                }
 
                 IsLoggedIn = true;
             }

@@ -201,4 +201,7 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Extracting modules..." xml:space="preserve">
+    <value>Extracting modules...</value>
+  </data>
 </root>

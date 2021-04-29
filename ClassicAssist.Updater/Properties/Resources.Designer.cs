@@ -178,6 +178,15 @@ namespace ClassicAssist.Updater.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Extracting modules....
+        /// </summary>
+        public static string Extracting_modules___ {
+            get {
+                return ResourceManager.GetString("Extracting modules...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Extracting package....
         /// </summary>
         public static string Extracting_package___ {

@@ -55,11 +55,62 @@ namespace ClassicAssist.Updater
 
                     CopyAll( source, destination );
 
+                    string modulesZip = Directory.EnumerateFiles( App.CurrentOptions.UpdatePath, "Modules.zip" )
+                        .FirstOrDefault();
+
+                    if ( !string.IsNullOrEmpty( modulesZip ) )
+                    {
+                        string modulesPath = Path.Combine( destination.FullName, "Modules" );
+
+                        if ( !Directory.Exists( modulesPath ) )
+                        {
+                            Directory.CreateDirectory( modulesPath );
+                        }
+
+                        AddText( Resources.Extracting_modules___ );
+
+                        try
+                        {
+                            using ( ZipArchive zipFile = ZipFile.OpenRead( modulesZip ) )
+                            {
+                                foreach ( ZipArchiveEntry entry in zipFile.Entries )
+                                {
+                                    AddText( string.Format( Resources.Copying__0____, entry.FullName ) );
+
+                                    EnsurePathsExist( modulesPath, entry.FullName );
+
+                                    entry.ExtractToFile( Path.Combine( modulesPath, entry.FullName ), true );
+                                }
+                            }
+                        }
+                        // ReSharper disable once EmptyGeneralCatchClause
+#pragma warning disable 168
+                        catch ( Exception e )
+#pragma warning restore 168
+                        {
+#if !DEBUG
+                            ExceptionlessClient.Default.SubmitException( e );
+#endif
+                        }
+                    }
+
                     AddText( Resources.Done_ );
 
                     IsUpdating = false;
                 }
             } );
+        }
+
+        private static void EnsurePathsExist( string modulesPath, string fullName )
+        {
+            //TODO may need to recurse check path
+
+            string path = Path.Combine( modulesPath, Path.GetDirectoryName( fullName ) ?? string.Empty );
+
+            if( !Directory.Exists( path ) )
+            {
+                Directory.CreateDirectory( path );
+            }
         }
 
         public long DownloadSize
@@ -134,13 +185,7 @@ namespace ClassicAssist.Updater
 
                 AddText( Resources.Checking_for_latest_release___ );
 
-                GitHubClient client = new GitHubClient( new ProductHeaderValue( "ClassicAssist" ) );
-
-                IReadOnlyList<Release> releases =
-                    await client.Repository.Release.GetAll( Settings.Default.RepositoryOwner,
-                        Settings.Default.RepositoryName );
-
-                Release latestRelease = releases?.FirstOrDefault();
+                Release latestRelease = await GetLatestRelease();
 
                 if ( latestRelease == null )
                 {
@@ -255,6 +300,39 @@ namespace ClassicAssist.Updater
             return null;
         }
 
+        private static async Task<Release> GetLatestRelease()
+        {
+            Release latestRelease;
+
+            if ( string.IsNullOrEmpty( App.CurrentOptions.URL ) )
+            {
+                GitHubClient client = new GitHubClient( new ProductHeaderValue( "ClassicAssist" ) );
+
+                IReadOnlyList<Release> releases =
+                    await client.Repository.Release.GetAll( Settings.Default.RepositoryOwner,
+                        Settings.Default.RepositoryName );
+
+                latestRelease = releases?.FirstOrDefault();
+            }
+            else
+            {
+                // for testing only
+                List<ReleaseAsset> assets = new List<ReleaseAsset>
+                {
+                    new ReleaseAsset( $"{App.CurrentOptions.URL}/ClassicAssist.zip", 0, string.Empty,
+                        "ClassicAssist.zip", string.Empty, string.Empty, string.Empty, 0, 0, DateTimeOffset.Now,
+                        DateTimeOffset.Now, $"{App.CurrentOptions.URL}/ClassicAssist.zip", null )
+                };
+
+                latestRelease = new Release( App.CurrentOptions.URL, App.CurrentOptions.URL, App.CurrentOptions.URL,
+                    App.CurrentOptions.URL, 0, App.CurrentOptions.URL, "0.0.0", string.Empty, "ClassicAssist.zip",
+                    string.Empty, false, false, DateTimeOffset.Now, DateTimeOffset.Now, null, App.CurrentOptions.URL,
+                    App.CurrentOptions.URL, assets );
+            }
+
+            return latestRelease;
+        }
+
         private static async Task<string> ExtractPackage( string fileName, Version newVersion )
         {
             string path = Path.Combine( Path.GetTempPath(), $"CAUpdate-{newVersion}" );
@@ -283,7 +361,7 @@ namespace ClassicAssist.Updater
 
                 byte[] response = await http.GetByteArrayAsync( browserDownloadUrl );
 
-                if ( response.Length != size )
+                if ( response.Length != size && !App.CurrentOptions.Force )
                 {
                     throw new InvalidOperationException( Resources.Downloaded_size_doesn_t_match_expected___ );
                 }

@@ -28,5 +28,8 @@ namespace ClassicAssist.Updater
 
         [Option( "updatepath", Required = false, Default = "" )]
         public string UpdatePath { get; set; }
+
+        [Option( "url", Required = false, Default = default )]
+        public string URL { get; set; }
     }
 }

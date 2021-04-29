@@ -24,7 +24,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data;
-using ClassicAssist.Data.Macros;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Network.Packets;
@@ -122,11 +121,8 @@ namespace ClassicAssist.UO.Network
             {
                 if ( _actionPacketQueue.Count() > Options.CurrentOptions.UseObjectQueueAmount )
                 {
-                    if ( !MacroManager.QuietMode )
-                    {
-                        Commands.SystemMessage( Strings.Object_queue_full, (int) Commands.SystemMessageHues.Yellow,
-                            true );
-                    }
+                    Commands.SystemMessage( Strings.Object_queue_full, (int) Commands.SystemMessageHues.Yellow, true,
+                        true );
 
                     return Task.CompletedTask;
                 }
@@ -163,11 +159,8 @@ namespace ClassicAssist.UO.Network
             {
                 if ( _actionPacketQueue.Count() > Options.CurrentOptions.UseObjectQueueAmount )
                 {
-                    if ( !MacroManager.QuietMode )
-                    {
-                        Commands.SystemMessage( Strings.Object_queue_full, (int) Commands.SystemMessageHues.Yellow,
-                            true );
-                    }
+                    Commands.SystemMessage( Strings.Object_queue_full, (int) Commands.SystemMessageHues.Yellow, true,
+                        true );
 
                     return Task.CompletedTask;
                 }
@@ -215,10 +208,7 @@ namespace ClassicAssist.UO.Network
 
                         if ( item == null || item.Distance >= DRAG_DROP_DISTANCE )
                         {
-                            if ( !MacroManager.QuietMode )
-                            {
-                                Commands.SystemMessage( Strings.Item_out_of_range___ );
-                            }
+                            Commands.SystemMessage( Strings.Item_out_of_range___, true );
 
                             return false;
                         }

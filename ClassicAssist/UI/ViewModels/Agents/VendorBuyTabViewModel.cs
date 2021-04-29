@@ -249,9 +249,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 UOC.VendorBuy( serial, buyList.ToArray() );
             }
 
-            if ( !MacroManager.QuietMode && buyList.Count == 0 )
+            if ( buyList.Count == 0 )
             {
-                UOC.SystemMessage( Strings.Buy_Agent__No_matches_found_ );
+                UOC.SystemMessage( Strings.Buy_Agent__No_matches_found_, true );
             }
         }
 
@@ -276,7 +276,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 

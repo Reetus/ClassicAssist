@@ -29,7 +29,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return false;
             }
 
@@ -44,7 +44,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return 0;
             }
 
@@ -108,7 +108,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -171,7 +171,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -224,7 +224,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -254,7 +254,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -346,7 +346,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -396,7 +396,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return false;
             }
 
@@ -439,12 +439,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             AliasCommands.SetMacroAlias( "found", layerSerial );
 
-            if ( MacroManager.QuietMode )
-            {
-                return true;
-            }
-
-            UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ) );
+            UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ), true );
 
             return true;
         }
@@ -490,7 +485,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -511,7 +506,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return false;
             }
 
@@ -556,7 +551,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return false;
             }
 

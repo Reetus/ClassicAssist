@@ -553,7 +553,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -576,7 +576,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 

@@ -147,8 +147,13 @@ namespace ClassicAssist.UO
             }, queuePriority );
         }
 
-        public static void SystemMessage( string text, int hue = 0x03b2, bool throttleRepeating = false,
-            bool suppressInQuietMode = false )
+        public static void SystemMessage( string text, bool suppressInQuietMode )
+        {
+            SystemMessage( text, 0x3b2, suppressInQuietMode );
+        }
+
+        public static void SystemMessage( string text, int hue = 0x03b2, bool suppressInQuietMode = false,
+            bool throttleRepeating = false )
         {
             if ( throttleRepeating )
             {

@@ -127,12 +127,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
                 AliasCommands.SetMacroAlias( "found", matches.First().Serial );
 
-                if ( MacroManager.QuietMode )
-                {
-                    return true;
-                }
-
-                UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ) );
+                UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ), true );
 
                 return true;
             }

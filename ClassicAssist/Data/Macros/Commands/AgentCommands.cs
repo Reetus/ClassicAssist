@@ -127,17 +127,14 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( entry == null )
             {
-                UOC.SystemMessage( Strings.Invalid_organizer_agent_name___ );
+                UOC.SystemMessage( Strings.Invalid_organizer_agent_name___, true );
                 return;
             }
 
             entry.SourceContainer = sourceSerial;
             entry.DestinationContainer = destinationSerial;
 
-            if ( !MacroManager.QuietMode )
-            {
-                UOC.SystemMessage( Strings.Organizer_containers_set___ );
-            }
+            UOC.SystemMessage( Strings.Organizer_containers_set___, true );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Agents ),

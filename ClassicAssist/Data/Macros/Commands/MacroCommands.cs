@@ -67,7 +67,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return macro.IsRunning;
             }
 
-            UOC.SystemMessage( Strings.Unknown_macro___, (int) UOC.SystemMessageHues.Normal, false, true );
+            UOC.SystemMessage( Strings.Unknown_macro___, (int) UOC.SystemMessageHues.Normal, true );
             return false;
         }
     }

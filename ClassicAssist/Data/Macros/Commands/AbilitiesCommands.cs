@@ -75,10 +75,8 @@ namespace ClassicAssist.Data.Macros.Commands
                     {
                         if ( primary && manager.IsPrimaryEnabled || !primary && manager.IsSecondaryEnabled )
                         {
-                            if ( !MacroManager.QuietMode )
-                            {
-                                UOC.SystemMessage( Strings.Ability_already_set___, (int) UOC.SystemMessageHues.Green );
-                            }
+                            UOC.SystemMessage( Strings.Ability_already_set___, (int) UOC.SystemMessageHues.Green,
+                                true );
 
                             return;
                         }
@@ -89,10 +87,7 @@ namespace ClassicAssist.Data.Macros.Commands
                     {
                         if ( primary && !manager.IsPrimaryEnabled || !primary && !manager.IsSecondaryEnabled )
                         {
-                            if ( !MacroManager.QuietMode )
-                            {
-                                UOC.SystemMessage( Strings.Ability_not_set___, (int) UOC.SystemMessageHues.Green );
-                            }
+                            UOC.SystemMessage( Strings.Ability_not_set___, (int) UOC.SystemMessageHues.Green, true );
 
                             return;
                         }
@@ -139,7 +134,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return false;
             }
 
@@ -148,7 +143,7 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( mobile == null )
             {
                 // TODO better message
-                UOC.SystemMessage( Strings.Cannot_find_item___ );
+                UOC.SystemMessage( Strings.Cannot_find_item___, true );
                 return false;
             }
 

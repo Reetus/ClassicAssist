@@ -73,10 +73,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                if ( !MacroManager.QuietMode )
-                {
-                    UOC.SystemMessage( Strings.Mobile_not_found___ );
-                }
+                UOC.SystemMessage( Strings.Mobile_not_found___, true );
 
                 return;
             }

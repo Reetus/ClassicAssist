@@ -35,9 +35,9 @@ namespace ClassicAssist.Data.Macros.Commands
                 case string str:
                     serial = GetAlias( str );
 
-                    if ( serial == 0 && !MacroManager.QuietMode )
+                    if ( serial == 0 )
                     {
-                        UOC.SystemMessage( string.Format( Strings.Unknown_alias___0___, str ) );
+                        UOC.SystemMessage( string.Format( Strings.Unknown_alias___0___, str ), true );
                     }
 
                     break;
@@ -55,7 +55,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
                     break;
                 default:
-                    UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                    UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                     return 0;
             }
 

@@ -153,9 +153,9 @@ namespace ClassicAssist.Data.Macros
         {
             _dispatcher.Invoke( () => IsRunning = false );
 
-            if ( IsBackground && !MacroManager.QuietMode )
+            if ( IsBackground )
             {
-                UO.Commands.SystemMessage( string.Format( Strings.Background_macro___0___stopped___, Name ) );
+                UO.Commands.SystemMessage( string.Format( Strings.Background_macro___0___stopped___, Name ), true );
             }
         }
 
@@ -189,9 +189,9 @@ namespace ClassicAssist.Data.Macros
         {
             _dispatcher.Invoke( () => IsRunning = true );
 
-            if ( IsBackground && !MacroManager.QuietMode )
+            if ( IsBackground )
             {
-                UO.Commands.SystemMessage( string.Format( Strings.Background_macro___0___started___, Name ) );
+                UO.Commands.SystemMessage( string.Format( Strings.Background_macro___0___started___, Name ), true );
             }
 
             _macroInvoker.Execute( this );

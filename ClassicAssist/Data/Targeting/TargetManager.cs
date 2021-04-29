@@ -271,7 +271,7 @@ namespace ClassicAssist.Data.Targeting
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return null;
             }
 
@@ -284,11 +284,8 @@ namespace ClassicAssist.Data.Targeting
                 return entity;
             }
 
-            if ( !MacroManager.QuietMode )
-            {
-                UOC.SystemMessage(
-                    UOMath.IsMobile( serial ) ? Strings.Mobile_not_found___ : Strings.Cannot_find_item___ );
-            }
+            UOC.SystemMessage( UOMath.IsMobile( serial ) ? Strings.Mobile_not_found___ : Strings.Cannot_find_item___,
+                true );
 
             return null;
         }

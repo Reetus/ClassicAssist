@@ -14,12 +14,6 @@ jobs:
         with:
           owner: Reetus
           repo: ClassicAssist
-      - name: Example of consumption of the output
-        env:
-          LATEST: ${{ steps.latest_version.outputs.latest_tag }}
-          LATEST_DATE: ${{ steps.latest_version.outputs.latest_tag_published_at }}
-        run: |
-          echo "Version $LATEST was released at $LATEST_DATE"
       - name: Create Sentry release
         env:
           LATEST: ${{ steps.latest_version.outputs.latest_tag }}
@@ -29,4 +23,5 @@ jobs:
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}          
         uses: getsentry/action-release@v1
         with:
+          version: ${{ steps.latest_version.outputs.latest_tag }}
           environment: production          

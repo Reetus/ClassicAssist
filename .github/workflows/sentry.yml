@@ -1,4 +1,4 @@
-name: CI
+name: Sentry
 on:
   release:
     type:
@@ -8,10 +8,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Run a one-line script
-        run: echo Hello, world!
-      - name: Run a multi-line script
+      - name: Release Info Action
+        uses: abatilo/release-info-action@v1.1.0
+        with:
+          owner: Reetus
+          repo: ClassicAssist
+      - name: Example of consumption of the output
+        env:
+          LATEST: ${{ steps.latest_version.outputs.latest_tag }}
+          LATEST_DATE: ${{ steps.latest_version.outputs.latest_tag_published_at }}
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          echo "Version $LATEST was released at $LATEST_DATE"          

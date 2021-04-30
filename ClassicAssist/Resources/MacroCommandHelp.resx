@@ -1590,4 +1590,16 @@ SetVendorBuyAutoBuy("regs")</value>
   <data name="ISRUNNING_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>if IsRunning('macro'):</value>
   </data>
+  <data name="LOGOUT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Disconnects from the server and returns to the login screen</value>
+  </data>
+  <data name="LOGOUT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Logout()</value>
+  </data>
+  <data name="QUIT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Closes the client</value>
+  </data>
+  <data name="QUIT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Quit()</value>
+  </data>
 </root>

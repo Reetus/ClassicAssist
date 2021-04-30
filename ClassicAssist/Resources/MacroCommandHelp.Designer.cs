@@ -1939,6 +1939,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disconnects from the server and returns to the login screen.
+        /// </summary>
+        public static string LOGOUT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("LOGOUT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logout().
+        /// </summary>
+        public static string LOGOUT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("LOGOUT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns the luck value as per status bar data..
         /// </summary>
         public static string LUCK_COMMAND_DESCRIPTION {
@@ -2684,6 +2702,24 @@ namespace ClassicAssist.Resources {
         public static string PUSHLIST_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PUSHLIST_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Closes the client.
+        /// </summary>
+        public static string QUIT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("QUIT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quit().
+        /// </summary>
+        public static string QUIT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("QUIT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

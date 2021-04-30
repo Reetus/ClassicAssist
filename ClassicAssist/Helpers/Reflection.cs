@@ -82,5 +82,59 @@ namespace ClassicAssist.Helpers
 
             return t == null ? default : GetTypeFieldValue<T>( t, property, obj, bindingFlags );
         }
+
+        public static MethodInfo GetTypeMethod( Type type, string methodName, object obj = null )
+        {
+            return type.GetMethod( methodName );
+        }
+
+        public static object CreateInstanceOfType( string type, Assembly assembly = null )
+        {
+            if ( assembly == null )
+            {
+                assembly = Engine.ClassicAssembly;
+            }
+
+            Type t = assembly?.GetType( type );
+
+            return Activator.CreateInstance( t );
+        }
+
+        /*
+         * https://stackoverflow.com/questions/6961781/reflecting-a-private-field-from-a-base-class
+         */
+        public static T GetTypeFieldValueRecurse<T>( Type t, string name, object obj )
+        {
+            FieldInfo fi;
+
+            while ( ( fi = t.GetField( name,
+                        BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly ) ) == null &&
+                    ( t = t.BaseType ) != null )
+            {
+            }
+
+            if ( fi != null )
+            {
+                return (T) fi.GetValue( obj );
+            }
+
+            return default;
+        }
+
+        public static void SetTypeFieldValueRecurse( Type t, string name, object obj, object val )
+        {
+            FieldInfo fi;
+
+            while ( ( fi = t.GetField( name,
+                        BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly ) ) == null &&
+                    ( t = t.BaseType ) != null )
+            {
+            }
+
+            if ( fi != null )
+            {
+                fi.SetValue( obj, val );
+            }
+        }
     }
 }

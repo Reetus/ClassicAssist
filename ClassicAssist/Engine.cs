@@ -21,6 +21,7 @@ using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Data.Targeting;
+using ClassicAssist.Helpers;
 using ClassicAssist.Misc;
 using ClassicAssist.Resources;
 using ClassicAssist.Shared.Resources;
@@ -61,6 +62,7 @@ namespace Assistant
         private static OnDisconnected _onDisconnected;
         private static OnPacketSendRecv _onReceive;
         private static OnPacketSendRecv _onSend;
+        private static OnTick _onTick;
         private static OnGetUOFilePath _getUOFilePath;
         private static OnPacketSendRecv _sendToClient;
         private static OnPacketSendRecv _sendToServer;
@@ -127,6 +129,8 @@ namespace Assistant
         public static TargetFlags TargetFlags { get; set; }
         public static int TargetSerial { get; set; }
         public static TargetType TargetType { get; set; }
+
+        public static Queue<Action> TickWorkQueue { get; set; } = new Queue<Action>();
         public static bool TooltipsEnabled { get; set; }
         public static bool WaitingForTarget { get; set; }
         internal static ConcurrentDictionary<uint, int> GumpList { get; set; } = new ConcurrentDictionary<uint, int>();
@@ -175,6 +179,7 @@ namespace Assistant
             _onClientClosing = OnClientClosing;
             _onHotkeyPressed = OnHotkeyPressed;
             _onMouse = OnMouse;
+            _onTick = OnTick;
             WindowHandle = plugin->HWND;
 
             plugin->OnConnected = Marshal.GetFunctionPointerForDelegate( _onConnected );
@@ -185,6 +190,7 @@ namespace Assistant
             plugin->OnClientClosing = Marshal.GetFunctionPointerForDelegate( _onClientClosing );
             plugin->OnHotkeyPressed = Marshal.GetFunctionPointerForDelegate( _onHotkeyPressed );
             plugin->OnMouse = Marshal.GetFunctionPointerForDelegate( _onMouse );
+            plugin->Tick = Marshal.GetFunctionPointerForDelegate( _onTick );
 
             _getPacketLength = Marshal.GetDelegateForFunctionPointer<OnGetPacketLength>( plugin->GetPacketLength );
             _getUOFilePath = Marshal.GetDelegateForFunctionPointer<OnGetUOFilePath>( plugin->GetUOFilePath );
@@ -215,6 +221,23 @@ namespace Assistant
                 .FirstOrDefault( a => a.FullName.StartsWith( "ClassicUO," ) );
 
             InitializeExtensions();
+        }
+
+        private static void OnTick()
+        {
+            try
+            {
+                while ( TickWorkQueue.Count > 0 )
+                {
+                    Action action = TickWorkQueue.Dequeue();
+
+                    action?.Invoke();
+                }
+            }
+            catch ( Exception )
+            {
+                // ignored
+            }
         }
 
         private static void InitializeExtensions()

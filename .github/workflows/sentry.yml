@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Release Info Action
-        uses: abatilo/release-info-action@v1.1.0
+        uses: abatilo/release-info-action@v1.3.0
         with:
           owner: Reetus
           repo: ClassicAssist

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Input;
 using System.Windows.Threading;
-using ClassicAssist.Updater.Annotations;
+using ClassicAssist.Shared;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.Updater.Properties;
 using Exceptionless;
 using Exceptionless.Models;
@@ -20,17 +20,22 @@ using Application = System.Windows.Application;
 
 namespace ClassicAssist.Updater
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : SetPropertyNotifyChanged
     {
         private readonly Dispatcher _dispatcher;
+        private ICommand _checkForUpdateCommand;
         private long _downloadSize;
         private bool _isIndeterminate = true;
         private bool _isUpdating;
         private ObservableCollection<string> _items = new ObservableCollection<string>();
+        private ICommand _loginGithubCommand;
+        private UpdaterSettings _updaterSettings;
 
         public MainViewModel()
         {
             _dispatcher = Dispatcher.CurrentDispatcher;
+
+            UpdaterSettings = App.UpdaterSettings;
 
             Task.Run( async () =>
             {
@@ -101,17 +106,9 @@ namespace ClassicAssist.Updater
             } );
         }
 
-        private static void EnsurePathsExist( string modulesPath, string fullName )
-        {
-            //TODO may need to recurse check path
-
-            string path = Path.Combine( modulesPath, Path.GetDirectoryName( fullName ) ?? string.Empty );
-
-            if( !Directory.Exists( path ) )
-            {
-                Directory.CreateDirectory( path );
-            }
-        }
+        public ICommand CheckForUpdateCommand =>
+            _checkForUpdateCommand ??
+            ( _checkForUpdateCommand = new RelayCommandAsync( o => CheckForUpdate(), o => !IsUpdating ) );
 
         public long DownloadSize
         {
@@ -141,7 +138,26 @@ namespace ClassicAssist.Updater
             set => SetProperty( ref _items, value );
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public ICommand ShowSettingsCommand =>
+            _loginGithubCommand ?? ( _loginGithubCommand = new RelayCommand( ShowSettings, o => true ) );
+
+        public UpdaterSettings UpdaterSettings
+        {
+            get => _updaterSettings;
+            set => SetProperty( ref _updaterSettings, value );
+        }
+
+        private static void EnsurePathsExist( string modulesPath, string fullName )
+        {
+            //TODO may need to recurse check path
+
+            string path = Path.Combine( modulesPath, Path.GetDirectoryName( fullName ) ?? string.Empty );
+
+            if ( !Directory.Exists( path ) )
+            {
+                Directory.CreateDirectory( path );
+            }
+        }
 
         //https://stackoverflow.com/questions/627504/what-is-the-best-way-to-recursively-copy-contents-in-c/627518#627518
         public void CopyAll( DirectoryInfo source, DirectoryInfo target )
@@ -179,6 +195,8 @@ namespace ClassicAssist.Updater
 
         private async Task<string> CheckForUpdate()
         {
+            ClearText();
+
             try
             {
                 IsUpdating = true;
@@ -306,13 +324,8 @@ namespace ClassicAssist.Updater
 
             if ( string.IsNullOrEmpty( App.CurrentOptions.URL ) )
             {
-                GitHubClient client = new GitHubClient( new ProductHeaderValue( "ClassicAssist" ) );
-
-                IReadOnlyList<Release> releases =
-                    await client.Repository.Release.GetAll( Settings.Default.RepositoryOwner,
-                        Settings.Default.RepositoryName );
-
-                latestRelease = releases?.FirstOrDefault();
+                latestRelease =
+                    await Github.GetLatestRelease( App.CurrentOptions.Path ?? Environment.CurrentDirectory );
             }
             else
             {
@@ -377,17 +390,9 @@ namespace ClassicAssist.Updater
             _dispatcher?.Invoke( () => Items.Add( message ) );
         }
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
+        private void ClearText()
         {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-        }
-
-        // ReSharper disable once RedundantAssignment
-        private void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = null )
-        {
-            obj = value;
-            OnPropertyChanged( propertyName );
+            _dispatcher?.Invoke( () => Items.Clear() );
         }
 
         private static IEnumerable<Process> GetRunningClients()
@@ -415,6 +420,13 @@ namespace ClassicAssist.Updater
             }
 
             return result;
+        }
+
+        public void ShowSettings( object arg )
+        {
+            SettingsWindow window = new SettingsWindow();
+            window.ShowDialog();
+            OnPropertyChanged( nameof( UpdaterSettings ) );
         }
     }
 }

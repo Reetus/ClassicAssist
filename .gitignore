@@ -18,3 +18,5 @@ ClassicAssist.Updater/ClassicAssist.Updater.csproj.user
 ClassicAssist.Avalonia/Properties/launchSettings.json
 ClassicAssist.Controls/ClassicAssist.Controls.csproj.user
 ClassicAssist.Shared/ClassicAssist.Shared.csproj.user
+ClassicAssist.Controls/bin/
+ClassicAssist.Shared/bin/

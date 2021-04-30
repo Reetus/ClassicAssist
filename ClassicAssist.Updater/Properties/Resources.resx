@@ -204,4 +204,13 @@
   <data name="Extracting modules..." xml:space="preserve">
     <value>Extracting modules...</value>
   </data>
+  <data name="Install Prereleases" xml:space="preserve">
+    <value>Install Prereleases</value>
+  </data>
+  <data name="Github Access Token" xml:space="preserve">
+    <value>Github Access Token</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
 </root>

@@ -196,11 +196,29 @@ namespace ClassicAssist.Updater.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Github Access Token.
+        /// </summary>
+        public static string Github_Access_Token {
+            get {
+                return ResourceManager.GetString("Github Access Token", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GitHub rate limit, try again after {0}.
         /// </summary>
         public static string GitHub_rate_limit__try_again_after__0_ {
             get {
                 return ResourceManager.GetString("GitHub rate limit, try again after {0}", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install Prereleases.
+        /// </summary>
+        public static string Install_Prereleases {
+            get {
+                return ResourceManager.GetString("Install Prereleases", resourceCulture);
             }
         }
         
@@ -237,6 +255,15 @@ namespace ClassicAssist.Updater.Properties {
         public static string OK {
             get {
                 return ResourceManager.GetString("OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        public static string Options {
+            get {
+                return ResourceManager.GetString("Options", resourceCulture);
             }
         }
         

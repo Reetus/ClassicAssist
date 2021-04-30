@@ -21,9 +21,8 @@ using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Data.Targeting;
-using ClassicAssist.Helpers;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO.Data;
@@ -90,7 +89,6 @@ namespace Assistant
 
         private static readonly TimeSpan PACKET_SEND_DELAY = TimeSpan.FromMilliseconds( 5 );
         private static DateTime _nextPacketSendTime;
-        private static unsafe PluginHeader* _plugin;
         public static int LastSpellID;
         public static CharacterListFlags CharacterListFlags { get; set; }
 
@@ -152,8 +150,6 @@ namespace Assistant
 
         public static unsafe void Install( PluginHeader* plugin )
         {
-            _plugin = plugin;
-
             Initialize();
 
             InitializePlugin( plugin );
@@ -162,6 +158,7 @@ namespace Assistant
             {
                 _window = new MainWindow();
                 _window.Show();
+
                 Dispatcher.Run();
             } ) { IsBackground = true };
 
@@ -512,12 +509,8 @@ namespace Assistant
             {
                 try
                 {
-                    GitHubClient client = new GitHubClient( new ProductHeaderValue( "ClassicAssist" ) );
-
-                    IReadOnlyList<Release> releases =
-                        await client.Repository.Release.GetAll( "Reetus", "ClassicAssist" );
-
-                    Release latestRelease = releases.FirstOrDefault();
+                    Release latestRelease =
+                        await Github.GetLatestRelease( StartupPath ?? Environment.CurrentDirectory );
 
                     if ( latestRelease == null )
                     {
@@ -527,44 +520,23 @@ namespace Assistant
                     Version latestVersion = Version.Parse( latestRelease.TagName );
 
                     if ( !Version.TryParse(
-                        FileVersionInfo.GetVersionInfo( Path.Combine( StartupPath, "ClassicAssist.dll" ) )
-                            .ProductVersion, out Version localVersion ) )
+                        FileVersionInfo
+                            .GetVersionInfo( Path.Combine( StartupPath ?? Environment.CurrentDirectory,
+                                "ClassicAssist.dll" ) ).ProductVersion, out Version localVersion ) )
                     {
                         return;
                     }
 
                     if ( latestVersion > localVersion && AssistantOptions.UpdateGumpVersion < latestVersion )
                     {
-                        IReadOnlyList<GitHubCommit> commits =
-                            await client.Repository.Commit.GetAll( "Reetus", "ClassicAssist" );
-
-                        IEnumerable<Release> latestReleases = releases.OrderByDescending( c => c.CreatedAt ).Take( 15 );
-
-                        StringBuilder commitMessage = new StringBuilder();
-
-                        foreach ( Release release in latestReleases )
-                        {
-                            string releaseMessage = release.Body;
-
-                            if ( string.IsNullOrEmpty( releaseMessage ) )
-                            {
-                                GitHubCommit commit =
-                                    commits.FirstOrDefault( c => c.Commit.Sha == release.TargetCommitish );
-
-                                releaseMessage = commit?.Commit.Message ?? "Unknown";
-                            }
-
-                            commitMessage.AppendLine( $"{release.CreatedAt.Date.Date.ToShortDateString()}:" );
-                            commitMessage.AppendLine( releaseMessage );
-                            commitMessage.AppendLine();
-                        }
+                        string commitMessage = await Github.GetUpdateText( StartupPath ?? Environment.CurrentDirectory );
 
                         StringBuilder message = new StringBuilder();
                         message.AppendLine( Strings.ProductName );
                         message.AppendLine(
                             $"{Strings.New_version_available_} <A HREF=\"https://github.com/Reetus/ClassicAssist/releases/tag/{latestVersion}\">{latestVersion}</A>" );
                         message.AppendLine();
-                        message.AppendLine( commitMessage.ToString() );
+                        message.AppendLine( commitMessage );
                         message.AppendLine(
                             $"<A HREF=\"https://github.com/Reetus/ClassicAssist/commits/master\">{Strings.See_More}</A>" );
 

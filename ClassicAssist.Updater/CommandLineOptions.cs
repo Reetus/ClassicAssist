@@ -9,7 +9,7 @@ namespace ClassicAssist.Updater
         Install
     }
 
-    public class Options
+    public class CommandLineOptions
     {
         [Option( "version", Required = false )]
         public Version CurrentVersion { get; set; }

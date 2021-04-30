@@ -38,6 +38,11 @@ namespace ClassicAssist.UI.Misc
 
         private static SentryEvent SentryBeforeSend( SentryEvent args )
         {
+            if ( args.Exception.TargetSite.Module.Assembly == Engine.ClassicAssembly )
+            {
+                return null;
+            }
+
             args.User = new User { Id = AssistantOptions.UserId };
             args.SetTag( "SessionId", AssistantOptions.SessionId );
             args.SetExtra( "PlayerName", Engine.Player?.Name ?? "Unknown" );

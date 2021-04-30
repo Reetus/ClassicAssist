@@ -4,12 +4,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
-    xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
+    xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
     xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
     xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:organizer="clr-namespace:ClassicAssist.Data.Organizer"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+    xmlns:controls1="clr-namespace:ClassicAssist.UI.Controls"
     x:Name="userControl" x:Class="ClassicAssist.UI.Views.Agents.OrganizerTabControl"
     mc:Ignorable="d"
     d:DesignHeight="250" d:DesignWidth="500">
@@ -51,13 +52,13 @@
             <Grid.Resources>
                 <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
             </Grid.Resources>
-            <controls:StretchyWrapPanel Grid.Row="0" Orientation="Horizontal">
+            <controls1:StretchyWrapPanel Grid.Row="0" Orientation="Horizontal">
                 <Button Content="{Binding PlayStopButtonText}"
                         Command="{Binding OrganizeCommand}" CommandParameter="{Binding SelectedItem}" />
                 <StackPanel Margin="5">
                     <CheckBox Content="{x:Static resources:Strings.Stack}" IsChecked="{Binding SelectedItem.Stack}" />
                 </StackPanel>
-            </controls:StretchyWrapPanel>
+            </controls1:StretchyWrapPanel>
             <Grid Grid.Row="1">
                 <ListBox x:Name="listBox" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
                     <ListBox.InputBindings>

@@ -169,14 +169,14 @@ namespace ClassicAssist.UO.Network.PacketFilter
             List<PacketFilterInfo> pfiList = new List<PacketFilterInfo>();
             pfis = null;
 
-            if ( _filters == null )
+            if ( _filters == null || packet == null )
             {
                 return 0;
             }
 
             for ( int i = 0; i < _filters.Count; i++ )
             {
-                if ( packet[0] != _filters[i].PacketID )
+                if ( _filters[i] == null || packet[0] != _filters[i].PacketID )
                 {
                     continue;
                 }

@@ -49,6 +49,11 @@ namespace ClassicAssist.Data.Backup
                 fullPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, BackupPath );
             }
 
+            if ( !Directory.Exists( fullPath ) )
+            {
+                Directory.CreateDirectory( fullPath );
+            }
+
             fullPath = Path.Combine( fullPath, Path.GetFileName( fileName ) );
 
             using ( FileStream originalStream = File.OpenRead( fileName ) )

@@ -145,9 +145,9 @@ namespace ClassicAssist.UI.ViewModels
 
             MacroManager manager = MacroManager.GetInstance();
 
-            foreach ( MacroEntry entry in manager.Items )
+            foreach ( MacroEntry entry in manager.Items.ToList() )
             {
-                foreach ( KeyValuePair<string, int> alias in entry.Aliases )
+                foreach ( KeyValuePair<string, int> alias in entry.Aliases.ToList() )
                 {
                     InstanceAliases.Add( new InstanceAliasEntry
                     {

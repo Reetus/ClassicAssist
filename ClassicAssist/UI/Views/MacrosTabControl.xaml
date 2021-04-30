@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:avalon="http://icsharpcode.net/sharpdevelop/avalonedit"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
+             xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              xmlns:local="clr-namespace:ClassicAssist.Data.Macros"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
@@ -14,6 +14,8 @@
              xmlns:hotkeys="clr-namespace:ClassicAssist.Data.Hotkeys"
              xmlns:misc1="clr-namespace:ClassicAssist.Misc"
              xmlns:draggableTreeView="clr-namespace:DraggableTreeView;assembly=DraggableTreeView"
+             xmlns:controls1="clr-namespace:ClassicAssist.UI.Controls"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500" Padding="5">
     <d:DesignerProperties.DesignStyle>
@@ -224,7 +226,7 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <controls:TextBoxKey Shortcut="{Binding Hotkey}" Grid.Row="0" />
+                        <controls1:TextBoxKey Shortcut="{Binding Hotkey}" Grid.Row="0" />
                         <CheckBox Content="{x:Static resources:Strings.Pass_to_UO}" Grid.Row="1" Padding="4,-1,0,0"
                                   Margin="0,5,0,0" IsChecked="{Binding SelectedItem.PassToUO}" />
                         <Button Content="{x:Static resources:Strings.Clear}" Grid.Row="2" Padding="1,0,1,1"
@@ -254,8 +256,7 @@
                                 CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}" />
                 </avalon:TextEditor.InputBindings>
                 <avalon:TextEditor.Style>
-                    <Style TargetType="{x:Type avalon:TextEditor}"
-                           BasedOn="{StaticResource {x:Type avalon:TextEditor}}">
+                    <Style TargetType="{x:Type avalon:TextEditor}" BasedOn="{StaticResource {x:Type avalon:TextEditor}}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding SelectedItem, ElementName=DraggableTreeView}"
                                          Value="{x:Null}">
@@ -309,14 +310,14 @@
                 </Grid.ColumnDefinitions>
                 <ToggleButton x:Name="ToggleButton" Height="15" Grid.Column="0" Margin="0"
                               Style="{DynamicResource LeftRightIconToggleButton}" VerticalAlignment="Bottom" />
-                <controls:StretchyWrapPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
-                    <controls:StretchyWrapPanel.Resources>
+                <controls1:StretchyWrapPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
+                    <controls1:StretchyWrapPanel.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                             <Setter Property="Margin" Value="0,10,10,0" />
                             <Setter Property="Padding" Value="10,0,10,0" />
                             <Setter Property="Height" Value="25" />
                         </Style>
-                    </controls:StretchyWrapPanel.Resources>
+                    </controls1:StretchyWrapPanel.Resources>
                     <Button Content="{x:Static resources:Strings.Object_Inspector}"
                             Command="{Binding InspectObjectCommand, Mode=OneWay}" />
                     <Button Content="{x:Static resources:Strings.Commands}" Command="{Binding ShowCommandsCommand}" />
@@ -334,7 +335,7 @@
                             ToolTip="{x:Static resources:Strings.Open_Modules_Folder}">
                         <Image Source="{StaticResource ModulesIcon}" Height="16" />
                     </Button>
-                </controls:StretchyWrapPanel>
+                </controls1:StretchyWrapPanel>
             </Grid>
         </Grid>
     </Grid>

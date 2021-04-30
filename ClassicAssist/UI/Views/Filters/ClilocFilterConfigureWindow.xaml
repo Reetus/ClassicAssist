@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:filters="clr-namespace:ClassicAssist.UI.ViewModels.Filters"
-        xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
+        xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
         xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Title="{x:Static resources:Strings.Cliloc_Filter}" Height="650" Width="750">

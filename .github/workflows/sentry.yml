@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Release Info Action
+        id: latest_version
         uses: abatilo/release-info-action@v1.3.0
         with:
           owner: Reetus

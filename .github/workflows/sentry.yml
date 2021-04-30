@@ -19,4 +19,14 @@ jobs:
           LATEST: ${{ steps.latest_version.outputs.latest_tag }}
           LATEST_DATE: ${{ steps.latest_version.outputs.latest_tag_published_at }}
         run: |
-          echo "Version $LATEST was released at $LATEST_DATE"          
+          echo "Version $LATEST was released at $LATEST_DATE"
+      - name: Create Sentry release
+        env:
+          LATEST: ${{ steps.latest_version.outputs.latest_tag }}
+          LATEST_DATE: ${{ steps.latest_version.outputs.latest_tag_published_at }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}          
+        uses: getsentry/action-release@v1
+        with:
+          environment: production          

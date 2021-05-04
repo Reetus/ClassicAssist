@@ -33,6 +33,10 @@ namespace ClassicAssist.UI.Controls
             typeof( bool ), typeof( CustomWindowTitleControl ),
             new FrameworkPropertyMetadata( true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
 
+        public static readonly DependencyProperty MinimizeCommandProperty =
+            DependencyProperty.Register( nameof( MinimizeCommand ), typeof( ICommand ),
+                typeof( CustomWindowTitleControl ), new FrameworkPropertyMetadata( default ) );
+
         private ICommand _maximizeCommand;
 
         public CustomWindowTitleControl()
@@ -78,6 +82,12 @@ namespace ClassicAssist.UI.Controls
 
         public ICommand MaximizeCommand =>
             _maximizeCommand ?? ( _maximizeCommand = new RelayCommand( Maximize, o => true ) );
+
+        public ICommand MinimizeCommand
+        {
+            get => (ICommand) GetValue( MinimizeCommandProperty );
+            set => SetValue( MinimizeCommandProperty, value );
+        }
 
         private static void Maximize( object obj )
         {

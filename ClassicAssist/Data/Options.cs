@@ -64,6 +64,7 @@ namespace ClassicAssist.Data
         private bool _showResurrectionWaypoints;
         private SmartTargetOption _smartTargetOption;
         private bool _sortMacrosAlphabetical;
+        private bool _sysTray;
         private bool _useDeathScreenWhilstHidden;
         private bool _useExperimentalFizzleDetection;
         private bool _useObjectQueue;
@@ -341,6 +342,12 @@ namespace ClassicAssist.Data
         {
             get => _sortMacrosAlphabetical;
             set => SetProperty( ref _sortMacrosAlphabetical, value );
+        }
+
+        public bool SysTray
+        {
+            get => _sysTray;
+            set => SetProperty( ref _sysTray, value );
         }
 
         public bool UseDeathScreenWhilstHidden

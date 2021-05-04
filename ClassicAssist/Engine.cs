@@ -43,6 +43,8 @@ namespace Assistant
 {
     public static partial class Engine
     {
+        public delegate void dClientClosing();
+
         public delegate void dConnected();
 
         public delegate void dDisconnected();
@@ -301,8 +303,11 @@ namespace Assistant
             return true;
         }
 
+        public static event dClientClosing ClientClosing;
+
         private static void OnClientClosing()
         {
+            ClientClosing?.Invoke();
             Options.Save( Options.CurrentOptions );
             AssistantOptions.Save();
             SentrySdk.Close();

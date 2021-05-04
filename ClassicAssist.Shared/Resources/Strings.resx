@@ -1683,4 +1683,10 @@ Are you sure you wish to continue?</value>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="Minimize to system tray" xml:space="preserve">
+    <value>Minimize to system tray</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
 </root>

@@ -26,6 +26,7 @@ namespace ClassicAssist.UI.ViewModels
         {
             Engine.Dispatcher = Dispatcher.CurrentDispatcher;
             Engine.UpdateWindowTitleEvent += OnUpdateWindowTitleEvent;
+            Engine.ClientClosing += OnClientClosing;
         }
 
         [OptionsBinding( Property = "AlwaysOnTop" )]
@@ -54,6 +55,14 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _title;
             set => SetProperty( ref _title, value );
+        }
+
+        private void OnClientClosing()
+        {
+            if( _taskbarIcon != null )
+            {
+                _dispatcher.Invoke( () => { _taskbarIcon.Visibility = Visibility.Hidden; } );
+            }
         }
 
         private void OnUpdateWindowTitleEvent()

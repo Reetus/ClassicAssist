@@ -59,7 +59,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private void OnClientClosing()
         {
-            if( _taskbarIcon != null )
+            if ( _taskbarIcon != null )
             {
                 _dispatcher.Invoke( () => { _taskbarIcon.Visibility = Visibility.Hidden; } );
             }
@@ -73,7 +73,7 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( _taskbarIcon != null )
             {
-                _taskbarIcon.ToolTipText = Title;
+                _dispatcher.Invoke( () => { _taskbarIcon.ToolTipText = Title; } );
             }
         }
 

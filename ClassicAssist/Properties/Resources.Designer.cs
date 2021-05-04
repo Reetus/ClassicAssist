@@ -177,11 +177,7 @@ namespace ClassicAssist.Properties {
         ///30	0x20DC
         ///31	0x2595
         ///33	0x20DE
-        ///34	0x25D2
-        ///35	0x20DE
-        ///36	0x20DE
-        ///37	0x25D2
-        ///38	0x2 [rest of string was truncated]&quot;;.
+        ///34	0x25D2 [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Shrink {
             get {

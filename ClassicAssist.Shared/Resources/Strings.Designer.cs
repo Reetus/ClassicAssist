@@ -2533,6 +2533,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minimize to system tray.
+        /// </summary>
+        public static string Minimize_to_system_tray {
+            get {
+                return ResourceManager.GetString("Minimize to system tray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Minimum Weight Available:.
         /// </summary>
         public static string Minimum_Weight_Available_ {
@@ -4009,15 +4018,6 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minimize to system tray.
-        /// </summary>
-        public static string SysTray {
-            get {
-                return ResourceManager.GetString("SysTray", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Take Snapshot.
         /// </summary>
         public static string Take_Snapshot {
@@ -4392,6 +4392,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Undress_All {
             get {
                 return ResourceManager.GetString("Undress All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        public static string Unknown {
+            get {
+                return ResourceManager.GetString("Unknown", resourceCulture);
             }
         }
         

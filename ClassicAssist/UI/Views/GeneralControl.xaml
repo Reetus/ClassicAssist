@@ -78,7 +78,7 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
                 <CheckBox Content="{x:Static r:Strings.Always_On_Top}" IsChecked="{Binding Options.AlwaysOnTop}" />
-                <CheckBox Content="{x:Static r:Strings.SysTray}" IsChecked="{Binding Options.SysTray}" />
+                <CheckBox Content="{x:Static r:Strings.Minimize_to_system_tray}" IsChecked="{Binding Options.SysTray}" />
                 <StackPanel Orientation="Horizontal">
                     <StackPanel.Resources>
                         <misc:BindingProxy x:Key="proxy" Data="{Binding}" />

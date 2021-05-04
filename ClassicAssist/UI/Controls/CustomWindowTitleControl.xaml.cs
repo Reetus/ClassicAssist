@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using ClassicAssist.Data;
 using ClassicAssist.Shared.UI;
 
 namespace ClassicAssist.UI.Controls
@@ -33,6 +32,10 @@ namespace ClassicAssist.UI.Controls
         public static readonly DependencyProperty CanMaxmizeProperty = DependencyProperty.Register( "CanMaximize",
             typeof( bool ), typeof( CustomWindowTitleControl ),
             new FrameworkPropertyMetadata( true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
+
+        public static readonly DependencyProperty MinimizeCommandProperty =
+            DependencyProperty.Register( nameof( MinimizeCommand ), typeof( ICommand ),
+                typeof( CustomWindowTitleControl ), new FrameworkPropertyMetadata( default ) );
 
         private ICommand _maximizeCommand;
 
@@ -80,6 +83,12 @@ namespace ClassicAssist.UI.Controls
         public ICommand MaximizeCommand =>
             _maximizeCommand ?? ( _maximizeCommand = new RelayCommand( Maximize, o => true ) );
 
+        public ICommand MinimizeCommand
+        {
+            get => (ICommand) GetValue( MinimizeCommandProperty );
+            set => SetValue( MinimizeCommandProperty, value );
+        }
+
         private static void Maximize( object obj )
         {
             if ( !( obj is UIElement element ) )
@@ -94,37 +103,8 @@ namespace ClassicAssist.UI.Controls
                 return;
             }
 
-            window.WindowState = _savedState =
+            window.WindowState =
                 window.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
-        }
-
-        private ICommand _minimizeCommand;
-        private static WindowState _savedState = WindowState.Normal;
-        public ICommand MinimizeCommand =>
-            _minimizeCommand ?? (_minimizeCommand = new RelayCommand(Minimize, o => true));
-
-        private static void Minimize(object obj)
-        {
-            if (!(obj is UIElement element))
-            {
-                return;
-            }
-
-            Window window = Window.GetWindow(element);
-
-            if (window == null)
-            {
-                return;
-            }
-
-            if (Options.CurrentOptions.SysTray)
-            {
-                window.Hide();
-            }
-            else
-            {
-                window.WindowState = window.WindowState == WindowState.Maximized || window.WindowState == WindowState.Normal ? WindowState.Minimized : _savedState;
-            }
         }
     }
 }

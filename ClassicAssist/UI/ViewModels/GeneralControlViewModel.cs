@@ -149,7 +149,8 @@ namespace ClassicAssist.UI.ViewModels
                 ["LightLevel"] = Options.CurrentOptions.LightLevel,
                 ["ActionDelay"] = Options.CurrentOptions.ActionDelay,
                 ["ActionDelayMS"] = Options.CurrentOptions.ActionDelayMS,
-                ["Debug"] = Options.CurrentOptions.Debug
+                ["Debug"] = Options.CurrentOptions.Debug,
+                ["SysTray"] = Options.CurrentOptions.SysTray
             };
 
             JArray filtersArray = new JArray();
@@ -211,6 +212,7 @@ namespace ClassicAssist.UI.ViewModels
             Options.ActionDelayMS = general["ActionDelayMS"]?.ToObject<int>() ?? 900;
             Options.AlwaysOnTop = general["AlwaysOnTop"]?.ToObject<bool>() ?? false;
             Options.Debug = general["Debug"]?.ToObject<bool>() ?? false;
+            Options.SysTray = general["SysTray"]?.ToObject<bool>() ?? false;
 
             if ( general["Filters"] == null )
             {

@@ -37,10 +37,12 @@
                Foreground="{DynamicResource ThemeForegroundBrush}" />
         <StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right" Orientation="Horizontal">
             <ContentPresenter Content="{Binding AdditionalButtons, ElementName=UserControl}" />
-            <Button Background="{DynamicResource ThemeWindowBackgroundBrush}" 
-                    Command="{Binding MinimizeCommand, ElementName=UserControl}"
-                    CommandParameter="{Binding ElementName=UserControl}"
+            <Button Background="{DynamicResource ThemeWindowBackgroundBrush}"
                     IsEnabled="{Binding CanMinimize, ElementName=UserControl}">
+                <i:Interaction.Behaviors>
+                    <misc:WindowCommandBehaviour Command="Minimize"
+                                                 MinimizeCommand="{Binding Path=MinimizeCommand, ElementName=UserControl}" />
+                </i:Interaction.Behaviors>
                 <Image Source="{StaticResource minusIcon}" />
             </Button>
             <Button Background="{DynamicResource ThemeWindowBackgroundBrush}"

@@ -347,7 +347,7 @@ namespace ClassicAssist.Data
         public bool SysTray
         {
             get => _sysTray;
-            set => SetProperty(ref _sysTray, value);
+            set => SetProperty( ref _sysTray, value );
         }
 
         public bool UseDeathScreenWhilstHidden

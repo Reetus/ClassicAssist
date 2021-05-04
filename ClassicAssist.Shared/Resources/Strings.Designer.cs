@@ -4009,6 +4009,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minimize to system tray.
+        /// </summary>
+        public static string SysTray {
+            get {
+                return ResourceManager.GetString("SysTray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Take Snapshot.
         /// </summary>
         public static string Take_Snapshot {

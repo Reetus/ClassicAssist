@@ -61,6 +61,7 @@
     <PackageReference Include="AvalonEdit" Version="6.1.1" />
     <PackageReference Include="DraggableTreeView" Version="1.1.5" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.0.2" />
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
     <PackageReference Include="IronPython" Version="2.7.11" />
     <PackageReference Include="LiteDB" Version="5.0.10" />
     <PackageReference Include="MegaApiClient" Version="1.9.0" />

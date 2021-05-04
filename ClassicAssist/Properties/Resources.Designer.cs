@@ -81,6 +81,16 @@ namespace ClassicAssist.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        public static System.Drawing.Icon cog {
+            get {
+                object obj = ResourceManager.GetObject("cog", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap green_circle {
@@ -167,7 +177,11 @@ namespace ClassicAssist.Properties {
         ///30	0x20DC
         ///31	0x2595
         ///33	0x20DE
-        ///34	0x25D2 [rest of string was truncated]&quot;;.
+        ///34	0x25D2
+        ///35	0x20DE
+        ///36	0x20DE
+        ///37	0x25D2
+        ///38	0x2 [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Shrink {
             get {

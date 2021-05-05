@@ -1269,4 +1269,21 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
   <data name="SNAPSHOT_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Fai uno screenshot allo schermo</value>
   </data>
+  <data name="SELECTIONPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Crea un gump per scegliere da una lista di opzioni
+
+Risponde un tuple con un bolean, indicando quando un tasto OK è stato premuto, e l'inidice del valore inserito selezionato</value>
+  </data>
+  <data name="SETVENDORBUYAUTOBUY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Abilita o Disabilita autobuying per la lista VendorBuy specificata...</value>
+  </data>
+  <data name="ISRUNNING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Risponde True se lo script scelto è in corso</value>
+  </data>
+  <data name="LOGOUT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sconnetti dal server e torna alla schermata di login</value>
+  </data>
+  <data name="QUIT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Chiude il client</value>
+  </data>
 </root>

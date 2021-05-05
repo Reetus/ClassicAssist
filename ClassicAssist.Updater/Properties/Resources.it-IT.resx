@@ -180,4 +180,37 @@
   <data name="Releases" xml:space="preserve">
     <value>Versioni</value>
   </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Pericolo</value>
+  </data>
+  <data name="Update cancelled..." xml:space="preserve">
+    <value>Aggiornamento cancellato...</value>
+  </data>
+  <data name="Running Clients" xml:space="preserve">
+    <value>Scripts in corso</value>
+  </data>
+  <data name="The following client(s) are currently running, if you continue they will be closed" xml:space="preserve">
+    <value>Il/I client seguenti sono attualmente aperti, se continui verranno chiusi</value>
+  </data>
+  <data name="Do you wish to continue?" xml:space="preserve">
+    <value>Vuoi continuare?</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>Si</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="Extracting modules..." xml:space="preserve">
+    <value>Estraggo i moduli...</value>
+  </data>
+  <data name="Install Prereleases" xml:space="preserve">
+    <value>Installo Prereleases</value>
+  </data>
+  <data name="Github Access Token" xml:space="preserve">
+    <value>Token Access di Github</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Opzioni</value>
+  </data>
 </root>

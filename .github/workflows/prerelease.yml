@@ -1,0 +1,45 @@
+name: Prerelease
+
+on:
+  push:
+    branches:
+      - prelease*
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Set version
+      id: version
+      run: |
+          $d = [datetime]"7/4/2020 00:00"
+          $sd = Get-Date
+          $build = [math]::floor((New-TimeSpan -Start $d -End $sd).TotalDays)
+          echo "::set-output name=version::0.5.$build-prelease"
+    - name: Show version
+      run: echo $env:VERSION
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore /p:Version=$env:VERSION
+      env:
+        VERSION: ${{steps.version.outputs.version}}
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: Zip output
+      run: Compress-Archive -Path Output/net48/* -DestinationPath ClassicAssist.zip
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: ClassicAssist.zip
+        tag: ${{ steps.version.outputs.version }}
+        name: ${{ steps.version.outputs.version }}
+        commit: ${{ github.sha }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        prerelease: true

@@ -9,9 +9,9 @@ namespace ClassicAssist.UO.Gumps
 {
     public sealed class UpdateMessageGump : Gump
     {
-        private readonly Version _version;
+        private readonly string _version;
 
-        public UpdateMessageGump( IntPtr hWnd, string message, Version version ) : base( 500, 250, -1 )
+        public UpdateMessageGump( IntPtr hWnd, string message, string version ) : base( 500, 250, -1 )
         {
             if ( NativeMethods.GetWindowRect( hWnd, out NativeMethods.RECT rect ) )
             {

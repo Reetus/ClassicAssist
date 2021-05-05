@@ -5,6 +5,7 @@ using System.Timers;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Assistant;
+using ClassicAssist.Shared;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Views;
@@ -13,6 +14,7 @@ using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
+using Semver;
 
 namespace ClassicAssist.UI.ViewModels
 {
@@ -39,9 +41,8 @@ namespace ClassicAssist.UI.ViewModels
         public AboutControlViewModel()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
-            Version version = assembly.GetName().Version;
 
-            Version = $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+            Version = VersionHelpers.GetProductVersion( assembly );
             BuildDate = $"{GetBuildDateTime( assembly ).ToLongDateString()}";
 
             Engine.ConnectedEvent += OnConnectedEvent;
@@ -135,7 +136,7 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ShowItemsCommand =>
             _showItemsCommand ?? ( _showItemsCommand = new RelayCommand( ShowItems, o => Connected ) );
 
-        public string Version { get; set; }
+        public SemVersion Version { get; set; }
 
         private static void OpenPayPal( object obj )
         {
@@ -256,13 +257,9 @@ namespace ClassicAssist.UI.ViewModels
 
         internal static DateTime GetBuildDateTime( Assembly assembly )
         {
-            System.Version.TryParse( FileVersionInfo.GetVersionInfo( assembly.Location ).ProductVersion,
-                out Version version );
+            BuildDateAttribute attribute = assembly.GetCustomAttribute<BuildDateAttribute>();
 
-            DateTime buildDateTime =
-                new DateTime( 2020, 7, 3 ).Add( new TimeSpan( TimeSpan.TicksPerDay * version.Build ) );
-
-            return buildDateTime;
+            return attribute.DateTime;
         }
     }
 }

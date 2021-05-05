@@ -510,51 +510,7 @@ namespace Assistant
                 }
             };
 
-            Task.Run( async () =>
-            {
-                try
-                {
-                    Release latestRelease =
-                        await Github.GetLatestRelease( StartupPath ?? Environment.CurrentDirectory );
-
-                    if ( latestRelease == null )
-                    {
-                        return;
-                    }
-
-                    Version latestVersion = Version.Parse( latestRelease.TagName );
-
-                    if ( !Version.TryParse(
-                        FileVersionInfo
-                            .GetVersionInfo( Path.Combine( StartupPath ?? Environment.CurrentDirectory,
-                                "ClassicAssist.dll" ) ).ProductVersion, out Version localVersion ) )
-                    {
-                        return;
-                    }
-
-                    if ( latestVersion > localVersion && AssistantOptions.UpdateGumpVersion < latestVersion )
-                    {
-                        string commitMessage = await Github.GetUpdateText( StartupPath ?? Environment.CurrentDirectory );
-
-                        StringBuilder message = new StringBuilder();
-                        message.AppendLine( Strings.ProductName );
-                        message.AppendLine(
-                            $"{Strings.New_version_available_} <A HREF=\"https://github.com/Reetus/ClassicAssist/releases/tag/{latestVersion}\">{latestVersion}</A>" );
-                        message.AppendLine();
-                        message.AppendLine( commitMessage );
-                        message.AppendLine(
-                            $"<A HREF=\"https://github.com/Reetus/ClassicAssist/commits/master\">{Strings.See_More}</A>" );
-
-                        UpdateMessageGump gump =
-                            new UpdateMessageGump( WindowHandle, message.ToString(), latestVersion );
-                        gump.SendGump();
-                    }
-                }
-                catch ( Exception )
-                {
-                    // Squash all
-                }
-            } );
+            CheckGitHubVersion().ConfigureAwait( false );
 
             AbilitiesManager.GetInstance().Enabled = AbilityType.None;
             AbilitiesManager.GetInstance().ResendGump( AbilityType.None );
@@ -564,6 +520,46 @@ namespace Assistant
                 await Task.Delay( 3000 );
                 MacroManager.GetInstance().Autostart();
             } );
+        }
+
+        private static async Task CheckGitHubVersion()
+        {
+            try
+            {
+                Release latestRelease = await Github.GetLatestRelease( StartupPath ?? Environment.CurrentDirectory );
+
+                if ( latestRelease == null )
+                {
+                    return;
+                }
+
+                string latestVersion = latestRelease.TagName;
+                string localVersion = VersionHelpers
+                    .GetProductVersion(
+                        Path.Combine( StartupPath ?? Environment.CurrentDirectory, "ClassicAssist.dll" ) ).ToString();
+
+                if ( VersionHelpers.IsVersionNewer( localVersion, latestVersion ) &&
+                     VersionHelpers.IsVersionNewer( AssistantOptions.UpdateGumpVersion, latestVersion ) )
+                {
+                    string commitMessage = await Github.GetUpdateText( StartupPath ?? Environment.CurrentDirectory );
+
+                    StringBuilder message = new StringBuilder();
+                    message.AppendLine( Strings.ProductName );
+                    message.AppendLine(
+                        $"{Strings.New_version_available_} <A HREF=\"https://github.com/Reetus/ClassicAssist/releases/tag/{latestVersion}\">{latestVersion}</A>" );
+                    message.AppendLine();
+                    message.AppendLine( commitMessage );
+                    message.AppendLine(
+                        $"<A HREF=\"https://github.com/Reetus/ClassicAssist/commits/master\">{Strings.See_More}</A>" );
+
+                    UpdateMessageGump gump = new UpdateMessageGump( WindowHandle, message.ToString(), latestVersion );
+                    gump.SendGump();
+                }
+            }
+            catch ( Exception )
+            {
+                // Squash all
+            }
         }
 
         public static void SendPacketToServer( byte[] packet, int length )

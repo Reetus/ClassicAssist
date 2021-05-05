@@ -12,7 +12,7 @@ namespace ClassicAssist.Updater
     public class CommandLineOptions
     {
         [Option( "version", Required = false )]
-        public Version CurrentVersion { get; set; }
+        public string CurrentVersion { get; set; }
 
         [Option( "force", Required = false, Default = false )]
         public bool Force { get; set; }

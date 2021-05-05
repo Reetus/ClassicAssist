@@ -6,6 +6,7 @@
     <OutputPath>..\Output\</OutputPath>
     <UseWPF>true</UseWPF>
     <Configurations>Debug;Release;Develop</Configurations>
+    <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Data\Bodies.json" />
@@ -71,6 +72,7 @@
     <PackageReference Include="Octokit" Version="0.50.0" />
     <PackageReference Include="OptimizedPriorityQueue" Version="5.1.0" />
     <PackageReference Include="Sentry" Version="2.1.8" />
+    <PackageReference Include="System.Resources.Extensions" Version="5.0.0" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
   </ItemGroup>
@@ -166,9 +168,14 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <AssemblyAttribute Include="BuildDateAttribute">
+      <_Parameter1>$([System.DateTime]::UtcNow.Ticks)</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
   <PropertyGroup>
     <BuildDate>$([System.DateTime]::op_Subtraction($([System.DateTime]::get_Now().get_Date()),$([System.DateTime]::new(2020,7,3))).get_TotalDays())</BuildDate>
-    <Version>0.3.$(BuildDate).0</Version>
+    <Version>0.5.0-develop+$(BuildDate)</Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG</DefineConstants>

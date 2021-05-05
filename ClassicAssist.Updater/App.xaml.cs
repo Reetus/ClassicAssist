@@ -42,18 +42,15 @@ namespace ClassicAssist.Updater
                 return;
             }
 
-            if ( File.Exists( IOPath.Combine( CurrentOptions.Path, "ClassicAssist.dll" ) ) )
+            string dllPath = IOPath.Combine( CurrentOptions.Path, "ClassicAssist.dll" );
+
+            try
             {
-                if ( Version.TryParse(
-                    FileVersionInfo.GetVersionInfo( IOPath.Combine( CurrentOptions.Path, "ClassicAssist.dll" ) )
-                        .ProductVersion, out Version version ) )
-                {
-                    CurrentOptions.CurrentVersion = version;
-                }
+                CurrentOptions.CurrentVersion = VersionHelpers.GetProductVersion( dllPath ).ToString();
             }
-            else
+            catch ( Exception )
             {
-                CurrentOptions.CurrentVersion = new Version( 0, 0, 0, 0 );
+                CurrentOptions.Force = true;
             }
         }
     }

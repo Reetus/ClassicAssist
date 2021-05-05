@@ -29,7 +29,7 @@ namespace ClassicAssist.Data
         public static bool SavePasswords { get; set; }
         public static bool SavePasswordsOnlyBlank { get; set; }
         public static string SessionId { get; set; }
-        public static Version UpdateGumpVersion { get; set; }
+        public static string UpdateGumpVersion { get; set; }
         public static bool UseCUOClilocLanguage { get; set; }
         public static string UserId { get; set; }
         public static double WindowHeight { get; set; }
@@ -124,7 +124,7 @@ namespace ClassicAssist.Data
 
             LanguageOverride = json["LanguageOverride"]?.ToObject<Language>() ?? Language.Default;
             LastProfile = json["LastProfile"]?.ToObject<string>() ?? Options.DEFAULT_SETTINGS_FILENAME;
-            UpdateGumpVersion = json["UpdateGumpVersion"]?.ToObject<Version>() ?? new Version();
+            UpdateGumpVersion = json["UpdateGumpVersion"]?.ToObject<string>() ?? new Version().ToString();
 
             if ( json["Backup"] == null )
             {

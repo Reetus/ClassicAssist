@@ -212,9 +212,10 @@ namespace ClassicAssist.Updater
 
                 AddText( $"{Resources.Latest_Release_} {latestRelease.TagName}" );
 
-                Version newVersion = Version.Parse( latestRelease.TagName );
+                string newVersion = latestRelease.TagName;
 
-                if ( newVersion > App.CurrentOptions.CurrentVersion || App.CurrentOptions.Force )
+                if ( App.CurrentOptions.Force ||
+                     VersionHelpers.IsVersionNewer( App.CurrentOptions.CurrentVersion, newVersion ) )
                 {
                     ExceptionlessClient.Default.SubmitEvent( new Event
                     {
@@ -346,7 +347,7 @@ namespace ClassicAssist.Updater
             return latestRelease;
         }
 
-        private static async Task<string> ExtractPackage( string fileName, Version newVersion )
+        private static async Task<string> ExtractPackage( string fileName, string newVersion )
         {
             string path = Path.Combine( Path.GetTempPath(), $"CAUpdate-{newVersion}" );
 

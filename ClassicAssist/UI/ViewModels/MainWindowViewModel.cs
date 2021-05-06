@@ -103,14 +103,15 @@ namespace ClassicAssist.UI.ViewModels
                     Icon = Properties.Resources.cog,
                     Visibility = Visibility.Visible,
                     LeftClickCommand = RestoreWindowCommand,
-                    LeftClickCommandParameter = window
+                    LeftClickCommandParameter = window,
+                    NoLeftClickDelay = true
                 };
             }
 
             _taskbarIcon.ToolTipText = Title;
             _taskbarIcon.Visibility = Visibility.Visible;
             window.ShowInTaskbar = false;
-            window.WindowState = WindowState.Minimized;
+            window.Hide();
         }
 
         private void RestoreWindow( object obj )
@@ -122,7 +123,7 @@ namespace ClassicAssist.UI.ViewModels
 
             window.ShowInTaskbar = true;
             window.WindowState = WindowState.Normal;
-            window.Activate();
+            window.Show();
             _taskbarIcon.Visibility = Visibility.Hidden;
         }
     }

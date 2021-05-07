@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -1166,22 +1166,22 @@ if FindWand("fireball", "backpack", 5):
   </data>
   <data name="FINDTYPE_COMMAND_EXAMPLE" xml:space="preserve">
     <value># Look for a food item from a list and eat 1 if found.
-if not ListExists("food"): 
- CreateList("food") 
- PushList("food", 0x9b7) #bird 
- PushList("food", 0x9d3) #ham 
- PushList("food", 0x97d) #cheese 
- PushList("food", 0x9d0) #apple 
- PushList("food", 0x9eb) #muffin 
- PushList("food", 0x97b) #fishsteak 
- PushList("food", 0x9c0) #sausage 
- PushList("food", 0x9f2) #ribs 
- PushList("food", 0x9d1) #grapes 
- PushList("food", 0x9d2) #peach 
+if not ListExists("food"):
+ CreateList("food")
+ PushList("food", 0x9b7) #bird
+ PushList("food", 0x9d3) #ham
+ PushList("food", 0x97d) #cheese
+ PushList("food", 0x9d0) #apple
+ PushList("food", 0x9eb) #muffin
+ PushList("food", 0x97b) #fishsteak
+ PushList("food", 0x9c0) #sausage
+ PushList("food", 0x9f2) #ribs
+ PushList("food", 0x9d1) #grapes
+ PushList("food", 0x9d2) #peach
 
-for i in GetList("food"): 
- if FindType(i, -1, "backpack"): 
-  UseObject("found") 
+for i in GetList("food"):
+ if FindType(i, -1, "backpack"):
+  UseObject("found")
   break</value>
   </data>
   <data name="REPLAY_COMMAND_DESCRIPTION" xml:space="preserve">
@@ -1607,5 +1607,14 @@ SetVendorBuyAutoBuy("regs")</value>
   </data>
   <data name="PROMPTMACROALIAS_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>PromptMacroAlias("mount")</value>
+  </data>
+  <data name="DIFFHITSPERCENT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the given mobiles different between max and currents hits as a percentage, if parameter is null, then returns the value from the player (parameter can be serial or alias).</value>
+  </data>
+  <data name="DIFFHITSPERCENT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if DiffHitsPercent("self") &gt; 30:</value>
+  </data>
+  <data name="DIFFHITSPERCENT_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>if DiffHitsPercent("self") &gt; 30: # 70% health</value>
   </data>
 </root>

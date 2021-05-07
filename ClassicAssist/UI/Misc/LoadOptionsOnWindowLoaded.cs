@@ -6,7 +6,6 @@ using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Shared;
 using Sentry;
-using Sentry.Protocol;
 
 namespace ClassicAssist.UI.Misc
 {
@@ -29,16 +28,13 @@ namespace ClassicAssist.UI.Misc
         {
             AssistantOptions.OnWindowLoaded();
 #if !DEBUG
-            SentrySdk.Init( new SentryOptions
-            {
-                Dsn = new Dsn( Settings.Default.SentryDsn ), BeforeSend = SentryBeforeSend
-            } );
+            SentrySdk.Init( new SentryOptions { Dsn = Settings.Default.SentryDsn, BeforeSend = SentryBeforeSend } );
 #endif
         }
 
         private static SentryEvent SentryBeforeSend( SentryEvent args )
         {
-            if ( args.Exception.TargetSite.Module.Assembly == Engine.ClassicAssembly )
+            if ( args.Exception?.TargetSite.Module.Assembly == Engine.ClassicAssembly )
             {
                 return null;
             }

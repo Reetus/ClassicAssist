@@ -232,6 +232,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Names.
+        /// </summary>
+        public static string All_Names {
+            get {
+                return ResourceManager.GetString("All Names", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Packets.
         /// </summary>
         public static string All_Packets {

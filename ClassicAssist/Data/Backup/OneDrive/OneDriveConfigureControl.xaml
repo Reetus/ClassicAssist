@@ -44,18 +44,23 @@
         <local:OneDriveConfigureViewModel />
     </UserControl.DataContext>
     <Grid>
-        <StackPanel HorizontalAlignment="Stretch" Style="{StaticResource HideOnLoggedIn}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="5" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" HorizontalAlignment="Stretch" Style="{StaticResource HideOnLoggedIn}">
             <Button Content="{x:Static resources:Strings.Login_With_Windows}" Command="{Binding LoginCommand}" />
             <TextBlock Text="{Binding ErrorMessage}" TextAlignment="Center" Style="{StaticResource HideIfEmpty}" />
-            <ProgressBar IsIndeterminate="True" Height="5"
-                         Visibility="{Binding IsWorking, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </StackPanel>
-        <StackPanel HorizontalAlignment="Stretch" Style="{StaticResource ShowOnLoggedIn}">
+        <StackPanel Grid.Row="0" HorizontalAlignment="Stretch" Style="{StaticResource ShowOnLoggedIn}">
             <Button Content="{x:Static resources:Strings.Logout}" Command="{Binding LogoutCommand}" Margin="0,0,0,10" />
             <StackPanel Orientation="Horizontal">
                 <Label Content="{x:Static resources:Strings.Username}" Width="100" />
                 <TextBlock Text="{Binding AuthenticationResult.Account.Username}" />
             </StackPanel>
         </StackPanel>
+        <ProgressBar Grid.Row="1" IsIndeterminate="True" Height="5"
+                     Visibility="{Binding IsWorking, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
     </Grid>
 </UserControl>

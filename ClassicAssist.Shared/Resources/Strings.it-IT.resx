@@ -1461,4 +1461,232 @@ Sei sicuro di voler continuare?</value>
   <data name="Use Cliloc language from ClassicUO settings" xml:space="preserve">
     <value>Usa linguaggio Cliloc dalle impostazione di ClassicUO</value>
   </data>
+  <data name="Keyboard" xml:space="preserve">
+    <value>Tastiera</value>
+  </data>
+  <data name="Share Macro" xml:space="preserve">
+    <value>Condividi Script</value>
+  </data>
+  <data name="Check Weight" xml:space="preserve">
+    <value>Controlla Peso</value>
+  </data>
+  <data name="Minimum Weight Available:" xml:space="preserve">
+    <value>Peso minimo disponibile:</value>
+  </data>
+  <data name="Context menu entry not found..." xml:space="preserve">
+    <value>Voce del menu contestuale non trovata...</value>
+  </data>
+  <data name="Atleast one option must be provided..." xml:space="preserve">
+    <value>Almeno un opzione deve essere indicata...</value>
+  </data>
+  <data name="Invalid VendorBuy list name..." xml:space="preserve">
+    <value>Nome della lista VendorBuy non valido...</value>
+  </data>
+  <data name="Invalid state name: &quot;on&quot;, &quot;off&quot;, or &quot;toggle&quot;..." xml:space="preserve">
+    <value>Nome nello stato invalido: "on", "off" o "toggle"</value>
+  </data>
+  <data name="Replay" xml:space="preserve">
+    <value>Riavvia</value>
+  </data>
+  <data name="Ignore packet type" xml:space="preserve">
+    <value>Ignora tipo di pacchetto</value>
+  </data>
+  <data name="Copy packet declaration" xml:space="preserve">
+    <value>Copia dichiarazione del pacchetto</value>
+  </data>
+  <data name="Configure Sound Filters" xml:space="preserve">
+    <value>Configura filtri suoni</value>
+  </data>
+  <data name="Sound Filter" xml:space="preserve">
+    <value>Filtro suono</value>
+  </data>
+  <data name="Sound Type" xml:space="preserve">
+    <value>Tipo suono</value>
+  </data>
+  <data name="Animals" xml:space="preserve">
+    <value>Animali</value>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>Ambiente</value>
+  </data>
+  <data name="Bear Sounds" xml:space="preserve">
+    <value>Suoni orsi</value>
+  </data>
+  <data name="Bird Sounds" xml:space="preserve">
+    <value>Suoni uccelli</value>
+  </data>
+  <data name="Bull Sounds" xml:space="preserve">
+    <value>Suoni tori</value>
+  </data>
+  <data name="Cat Sounds" xml:space="preserve">
+    <value>Suoni gatti</value>
+  </data>
+  <data name="Chicken Sounds" xml:space="preserve">
+    <value>Suoni galline</value>
+  </data>
+  <data name="Cougar Sounds" xml:space="preserve">
+    <value>Suoni giaguari</value>
+  </data>
+  <data name="Deer Sounds" xml:space="preserve">
+    <value>Suoni renne</value>
+  </data>
+  <data name="Dog Sounds" xml:space="preserve">
+    <value>Suoni cani</value>
+  </data>
+  <data name="Dragon Sounds" xml:space="preserve">
+    <value>Suoni draghi</value>
+  </data>
+  <data name="Eagle Sounds" xml:space="preserve">
+    <value>Suoni aquile</value>
+  </data>
+  <data name="Goat Sounds" xml:space="preserve">
+    <value>Suoni capre</value>
+  </data>
+  <data name="Horse Sounds" xml:space="preserve">
+    <value>Suoni cavalli</value>
+  </data>
+  <data name="Pig Sounds" xml:space="preserve">
+    <value>Suoni maiali</value>
+  </data>
+  <data name="Rat Sounds" xml:space="preserve">
+    <value>Suoni topi</value>
+  </data>
+  <data name="Sheep Sounds" xml:space="preserve">
+    <value>Suoni pecore</value>
+  </data>
+  <data name="Titan / Cyclops Sounds" xml:space="preserve">
+    <value>Suoni titani/ciclopi</value>
+  </data>
+  <data name="Wolf Sounds" xml:space="preserve">
+    <value>Suoni lupi</value>
+  </data>
+  <data name="Door Sounds" xml:space="preserve">
+    <value>Suoni porte</value>
+  </data>
+  <data name="Emote Sounds" xml:space="preserve">
+    <value>Suoni emotes</value>
+  </data>
+  <data name="Weapon Sounds" xml:space="preserve">
+    <value>Suoni armi</value>
+  </data>
+  <data name="Wrestling Sounds" xml:space="preserve">
+    <value>Suoni wrestling</value>
+  </data>
+  <data name="Spell Fizzle Sounds" xml:space="preserve">
+    <value>Suoni flizz delle spells</value>
+  </data>
+  <data name="Alchemy Sounds" xml:space="preserve">
+    <value>Suoni alchemy</value>
+  </data>
+  <data name="Inscribing Sounds" xml:space="preserve">
+    <value>Suoni inscription</value>
+  </data>
+  <data name="Spirit Speak Sounds" xml:space="preserve">
+    <value>Suoni spirit speak</value>
+  </data>
+  <data name="Expire Targets:" xml:space="preserve">
+    <value>Annulla il target dopo:</value>
+  </data>
+  <data name="Time in milliseconds (-1 to not expire)" xml:space="preserve">
+    <value>Tempo in millisecondi (-1 per non annullarlo mai)</value>
+  </data>
+  <data name="New Group" xml:space="preserve">
+    <value>Nuovo gruppo</value>
+  </data>
+  <data name="Remove Group" xml:space="preserve">
+    <value>Rimuovi gruppo</value>
+  </data>
+  <data name="Auto disable when loading" xml:space="preserve">
+    <value>Disabilita automaticamente quando carica</value>
+  </data>
+  <data name="Disable all vendor buy entries on loading profile" xml:space="preserve">
+    <value>Disabilita tutte le voci VendorBuy quando carica il profilo</value>
+  </data>
+  <data name="Open Modules Folder" xml:space="preserve">
+    <value>Apri cartella dei moduli</value>
+  </data>
+  <data name="Backup Days" xml:space="preserve">
+    <value>Backup ogni (giorni):</value>
+  </data>
+  <data name="Backup Settings" xml:space="preserve">
+    <value>Impostazioni Backup</value>
+  </data>
+  <data name="Choose backup folder" xml:space="preserve">
+    <value>Scegli cartella di Backup</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Salva in:</value>
+  </data>
+  <data name="Setting to zero will cause it to backup on every client close" xml:space="preserve">
+    <value>Imposta 0 se vuoi salvare il Backup ogni volta che chiudi il client</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Login With Windows" xml:space="preserve">
+    <value>Login con Windows</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Nome utente</value>
+  </data>
+  <data name="Loading..." xml:space="preserve">
+    <value>Carica...</value>
+  </data>
+  <data name="No items..." xml:space="preserve">
+    <value>Nessun oggetto...</value>
+  </data>
+  <data name="Backing up {0}..." xml:space="preserve">
+    <value>Backup in corso {0}...</value>
+  </data>
+  <data name="Done..." xml:space="preserve">
+    <value>Fatto...</value>
+  </data>
+  <data name="Failed to backup file: {0}" xml:space="preserve">
+    <value>Backup del file fillito: {0}</value>
+  </data>
+  <data name="No backup type or path set..." xml:space="preserve">
+    <value>Nessun tipo di backup o cartella selezionata...</value>
+  </data>
+  <data name="Profile Backup" xml:space="preserve">
+    <value>Backup Profilo</value>
+  </data>
+  <data name="Profile backup in progress..." xml:space="preserve">
+    <value>Backup Profilo in corso...</value>
+  </data>
+  <data name="Folder Browser" xml:space="preserve">
+    <value>Scegli cartella di Backup</value>
+  </data>
+  <data name="New Folder" xml:space="preserve">
+    <value>Nuova Cartella</value>
+  </data>
+  <data name="Incremental" xml:space="preserve">
+    <value>Progressivo</value>
+  </data>
+  <data name="Only write files that have been modified" xml:space="preserve">
+    <value>Sovrascrivi solo i files che sono stati modificati</value>
+  </data>
+  <data name="Backup path not set" xml:space="preserve">
+    <value>Locazione del backup non indicata</value>
+  </data>
+  <data name="Cannot locate backup folder" xml:space="preserve">
+    <value>Impossibile individuare la cartella per il backup</value>
+  </data>
+  <data name="Overwrite Existing" xml:space="preserve">
+    <value>Sovrascrivi esistente</value>
+  </data>
+  <data name="Overwrite existing files instead of creating new files with the same name" xml:space="preserve">
+    <value>Sovrascrivi i files esistenti al posto di creare nuovi files con un nome nuovo</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Minimize to system tray" xml:space="preserve">
+    <value>Riduci nell'area di notifica</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Sconosciuto</value>
+  </data>
 </root>

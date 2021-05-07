@@ -737,6 +737,33 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Returns the given mobiles different between max and currents hits as a percentage, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
+        /// </summary>
+        public static string DIFFHITSPERCENT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("DIFFHITSPERCENT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if DiffHitsPercent(&quot;self&quot;) &gt; 30: # 70% health.
+        /// </summary>
+        public static string DIFFHITSPERCENT_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("DIFFHITSPERCENT_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if DiffHitsPercent(&quot;self&quot;) &gt; 30:.
+        /// </summary>
+        public static string DIFFHITSPERCENT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("DIFFHITSPERCENT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns the difference between max weight and weight..
         /// </summary>
         public static string DIFFWEIGHT_COMMAND_DESCRIPTION {
@@ -1112,24 +1139,25 @@ namespace ClassicAssist.Resources {
                 return ResourceManager.GetString("FINDTYPE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to # Look for a food item from a list and eat 1 if found.
-        ///if not ListExists(&quot;food&quot;): 
-        /// CreateList(&quot;food&quot;) 
-        /// PushList(&quot;food&quot;, 0x9b7) #bird 
-        /// PushList(&quot;food&quot;, 0x9d3) #ham 
-        /// PushList(&quot;food&quot;, 0x97d) #cheese 
-        /// PushList(&quot;food&quot;, 0x9d0) #apple 
-        /// PushList(&quot;food&quot;, 0x9eb) #muffin 
-        /// PushList(&quot;food&quot;, 0x97b) #fishsteak 
-        /// PushList(&quot;food&quot;, 0x9c0) #sausage 
-        /// PushList(&quot;food&quot;, 0x9f2) #ribs 
-        /// PushList(&quot;food&quot;, 0x9d1) #grapes 
-        /// PushList(&quot;food&quot;, 0x9d2) #peach 
+        ///if not ListExists(&quot;food&quot;):
+        /// CreateList(&quot;food&quot;)
+        /// PushList(&quot;food&quot;, 0x9b7) #bird
+        /// PushList(&quot;food&quot;, 0x9d3) #ham
+        /// PushList(&quot;food&quot;, 0x97d) #cheese
+        /// PushList(&quot;food&quot;, 0x9d0) #apple
+        /// PushList(&quot;food&quot;, 0x9eb) #muffin
+        /// PushList(&quot;food&quot;, 0x97b) #fishsteak
+        /// PushList(&quot;food&quot;, 0x9c0) #sausage
+        /// PushList(&quot;food&quot;, 0x9f2) #ribs
+        /// PushList(&quot;food&quot;, 0x9d1) #grapes
+        /// PushList(&quot;food&quot;, 0x9d2) #peach
         ///
-        ///for i in GetList(&quot;food&quot;): 
-        /// if FindType(i, -1, &quot;backpack&quot; [rest of string was truncated]&quot;;.
+        ///for i in GetList(&quot;food&quot;):
+        /// if FindType(i, -1, &quot;backpack&quot;):
+        ///  UseObje [rest of string was truncated]&quot;;.
         /// </summary>
         public static string FINDTYPE_COMMAND_EXAMPLE {
             get {

@@ -249,6 +249,30 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = nameof( Strings.Entity ),
             Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        public static double DiffHitsPercent( object obj = null )
+        {
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial <= 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
+                return 0;
+            }
+
+            Mobile mobile = Engine.Mobiles.GetMobile( serial );
+
+            if ( mobile != null )
+            {
+                return 100 - (double) mobile.Hits / mobile.HitsMax * 100;
+            }
+
+            UOC.SystemMessage( Strings.Mobile_not_found___, true );
+
+            return 0;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static int Stam( object obj = null )
         {
             return GetMobileProperty<int>( obj, nameof( Mobile.Stamina ) );

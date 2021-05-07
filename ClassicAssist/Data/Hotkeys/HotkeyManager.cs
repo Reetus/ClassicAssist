@@ -115,13 +115,8 @@ namespace ClassicAssist.Data.Hotkeys
                     return false;
                 }
 
-                foreach ( HotkeyCommand hke in Items )
+                foreach ( HotkeyCommand hke in Items.ToList().Where( hke => hke.Children != null ) )
                 {
-                    if ( hke.Children == null )
-                    {
-                        continue;
-                    }
-
                     try
                     {
                         IEnumerable<HotkeyEntry> hotkeyEntries = hke.Children.Where( t =>
@@ -164,13 +159,8 @@ namespace ClassicAssist.Data.Hotkeys
 
             lock ( _lock )
             {
-                foreach ( HotkeyCommand hke in Items )
+                foreach ( HotkeyCommand hke in Items.ToList().Where( hke => hke.Children != null ) )
                 {
-                    if ( hke.Children == null )
-                    {
-                        continue;
-                    }
-
                     try
                     {
                         ModKey modifier =

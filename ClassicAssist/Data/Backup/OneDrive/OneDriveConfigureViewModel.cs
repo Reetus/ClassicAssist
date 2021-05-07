@@ -40,6 +40,8 @@ namespace ClassicAssist.Data.Backup.OneDrive
             {
                 try
                 {
+                    IsWorking = true;
+
                     AuthenticationResult = await OneDriveClient.GetAccessTokenAsync( false );
 
                     IsLoggedIn = true;
@@ -47,6 +49,10 @@ namespace ClassicAssist.Data.Backup.OneDrive
                 catch ( Exception )
                 {
                     IsLoggedIn = false;
+                }
+                finally
+                {
+                    IsWorking = false;
                 }
             } );
         }

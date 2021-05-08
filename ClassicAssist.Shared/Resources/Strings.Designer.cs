@@ -1087,6 +1087,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Macro Button.
+        /// </summary>
+        public static string Create_Macro_Button {
+            get {
+                return ResourceManager.GetString("Create Macro Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cure Potion.
         /// </summary>
         public static string Cure_Potion {
@@ -3267,6 +3276,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Recount {
             get {
                 return ResourceManager.GetString("Recount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reflection Error: {0}.
+        /// </summary>
+        public static string Reflection_Error___0_ {
+            get {
+                return ResourceManager.GetString("Reflection Error: {0}", resourceCulture);
             }
         }
         

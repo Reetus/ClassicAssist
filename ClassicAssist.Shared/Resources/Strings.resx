@@ -1692,4 +1692,10 @@ Are you sure you wish to continue?</value>
   <data name="All Names" xml:space="preserve">
     <value>All Names</value>
   </data>
+  <data name="Create Macro Button" xml:space="preserve">
+    <value>Create Macro Button</value>
+  </data>
+  <data name="Reflection Error: {0}" xml:space="preserve">
+    <value>Reflection Error: {0}</value>
+  </data>
 </root>

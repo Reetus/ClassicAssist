@@ -15,7 +15,6 @@
              xmlns:misc1="clr-namespace:ClassicAssist.Misc"
              xmlns:draggableTreeView="clr-namespace:DraggableTreeView;assembly=DraggableTreeView"
              xmlns:controls1="clr-namespace:ClassicAssist.UI.Controls"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500" Padding="5">
     <d:DesignerProperties.DesignStyle>
@@ -256,7 +255,8 @@
                                 CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}" />
                 </avalon:TextEditor.InputBindings>
                 <avalon:TextEditor.Style>
-                    <Style TargetType="{x:Type avalon:TextEditor}" BasedOn="{StaticResource {x:Type avalon:TextEditor}}">
+                    <Style TargetType="{x:Type avalon:TextEditor}"
+                           BasedOn="{StaticResource {x:Type avalon:TextEditor}}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding SelectedItem, ElementName=DraggableTreeView}"
                                          Value="{x:Null}">
@@ -334,6 +334,10 @@
                     <Button Command="{Binding OpenModulesFolderCommand}" Padding="5,0,5,0"
                             ToolTip="{x:Static resources:Strings.Open_Modules_Folder}">
                         <Image Source="{StaticResource ModulesIcon}" Height="16" />
+                    </Button>
+                    <Button Command="{Binding CreateMacroButtonCommand}" CommandParameter="{Binding SelectedItem}"
+                            ToolTip="{x:Static resources:Strings.Create_Macro_Button}" Padding="5,0,5,0">
+                        <Image Source="{StaticResource AddButtonIcon}" Height="16" />
                     </Button>
                 </controls1:StretchyWrapPanel>
             </Grid>

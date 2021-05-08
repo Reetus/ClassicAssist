@@ -34,6 +34,7 @@ namespace ClassicAssist.UI.ViewModels
         private readonly MacroManager _manager;
         private int _caretPosition;
         private ICommand _clearHotkeyCommand;
+        private ICommand _createMacroButtonCommand;
         private TextDocument _document;
         private ObservableCollection<IDraggable> _draggables = new ObservableCollection<IDraggable>();
         private ICommand _executeCommand;
@@ -86,6 +87,10 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand ClearHotkeyCommand =>
             _clearHotkeyCommand ?? ( _clearHotkeyCommand = new RelayCommand( ClearHotkey, o => SelectedItem != null ) );
+
+        public ICommand CreateMacroButtonCommand =>
+            _createMacroButtonCommand ?? ( _createMacroButtonCommand =
+                new RelayCommand( CreateMacroButton, o => Engine.Connected ) );
 
         public TextDocument Document
         {
@@ -574,6 +579,16 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             return true;
+        }
+
+        private static void CreateMacroButton( object obj )
+        {
+            if ( !( obj is MacroEntry macro ) )
+            {
+                return;
+            }
+
+            Data.ClassicUO.Macros.CreateMacroButton( macro );
         }
 
         private void CheckOverwriteHotkey( HotkeyEntry selectedItem, ShortcutKeys hotkey )

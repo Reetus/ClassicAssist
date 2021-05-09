@@ -168,6 +168,15 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = nameof( Strings.Aliases ),
             Parameters = new[] { nameof( ParameterType.AliasName ) } )]
+        public static int PromptMacroAlias(string aliasName)
+        {
+            int serial = UOC.GetTargetSerialAsync(string.Format(Strings.Target_object___0_____, aliasName)).Result;
+            SetMacroAlias(aliasName, serial);
+            return serial;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Aliases ),
+            Parameters = new[] { nameof( ParameterType.AliasName ) } )]
         public static bool FindAlias( string aliasName )
         {
             aliasName = aliasName.ToLower();

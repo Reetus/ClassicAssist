@@ -1602,4 +1602,10 @@ SetVendorBuyAutoBuy("regs")</value>
   <data name="QUIT_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>Quit()</value>
   </data>
+  <data name="PROMPTMACROALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Prompt with an in-game target cursor to supply value for given alias name, alias is valid only in the current macro.</value>
+  </data>
+  <data name="PROMPTMACROALIAS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>PromptMacroAlias("mount")</value>
+  </data>
 </root>

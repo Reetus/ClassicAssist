@@ -1112,7 +1112,7 @@ namespace ClassicAssist.Resources {
                 return ResourceManager.GetString("FINDTYPE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to # Look for a food item from a list and eat 1 if found.
         ///if not ListExists(&quot;food&quot;): 
@@ -2630,6 +2630,24 @@ namespace ClassicAssist.Resources {
         public static string PROMPTALIAS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PROMPTALIAS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prompt with an in-game target cursor to supply value for given alias name, alias is valid only in the current macro..
+        /// </summary>
+        public static string PROMPTMACROALIAS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("PROMPTMACROALIAS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PromptMacroAlias(&quot;mount&quot;).
+        /// </summary>
+        public static string PROMPTMACROALIAS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("PROMPTMACROALIAS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

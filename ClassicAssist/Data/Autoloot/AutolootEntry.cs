@@ -1,9 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using ClassicAssist.Shared.UI;
+using DraggableTreeView;
 
 namespace ClassicAssist.Data.Autoloot
 {
-    public class AutolootEntry : SetPropertyNotifyChanged
+    public class AutolootEntry : SetPropertyNotifyChanged, IDraggableEntry
     {
         private bool _autoloot = true;
 
@@ -11,6 +12,7 @@ namespace ClassicAssist.Data.Autoloot
             new ObservableCollection<AutolootConstraintEntry>();
 
         private bool _enabled = true;
+        private AutolootGroup _group;
         private int _id;
         private string _name;
         private AutolootPriority _priority = AutolootPriority.Normal;
@@ -35,16 +37,16 @@ namespace ClassicAssist.Data.Autoloot
             set => SetProperty( ref _enabled, value );
         }
 
+        public AutolootGroup Group
+        {
+            get => _group;
+            set => SetProperty( ref _group, value );
+        }
+
         public int ID
         {
             get => _id;
             set => SetProperty( ref _id, value );
-        }
-
-        public string Name
-        {
-            get => _name;
-            set => SetProperty( ref _name, value );
         }
 
         public AutolootPriority Priority
@@ -65,9 +67,10 @@ namespace ClassicAssist.Data.Autoloot
             set => SetProperty( ref _rehueHue, value );
         }
 
-        public override string ToString()
+        public string Name
         {
-            return $"{Name} - 0x{ID:x}";
+            get => _name;
+            set => SetProperty( ref _name, value );
         }
     }
 }

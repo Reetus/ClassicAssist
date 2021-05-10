@@ -663,9 +663,18 @@ namespace Assistant
             UpdateWindowTitleEvent?.Invoke();
         }
 
-        public static void SetTitle( string title )
+        public static void SetTitle( string title = null )
         {
-            _setTitle?.Invoke( title );
+            if ( Options.CurrentOptions.SetUOTitle )
+            {
+                _setTitle?.Invoke( string.IsNullOrEmpty( title )
+                    ? Player == null ? string.Empty : $"{Player.Name} ({CurrentShard?.Name})"
+                    : title );
+            }
+            else
+            {
+                _setTitle?.Invoke( string.Empty );
+            }
         }
 
         public static void GetMapZ( int x, int y, out sbyte groundZ, out sbyte staticZ )

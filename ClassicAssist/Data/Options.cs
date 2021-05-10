@@ -60,6 +60,7 @@ namespace ClassicAssist.Data
         private int _rangeCheckLastTargetAmount = 11;
         private bool _rehueFriends;
         private int _rehueFriendsHue;
+        private bool _setUOTitle;
         private bool _showProfileNameWindowTitle;
         private bool _showResurrectionWaypoints;
         private SmartTargetOption _smartTargetOption;
@@ -314,6 +315,16 @@ namespace ClassicAssist.Data
         {
             get => _rehueFriendsHue;
             set => SetProperty( ref _rehueFriendsHue, value );
+        }
+
+        public bool SetUOTitle
+        {
+            get => _setUOTitle;
+            set
+            {
+                SetProperty( ref _setUOTitle, value );
+                Engine.SetTitle();
+            }
         }
 
         public bool ShowProfileNameWindowTitle

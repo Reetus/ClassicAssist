@@ -41,7 +41,7 @@
         </i:Interaction.Behaviors>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="{Binding LeftColumnWidth}" />
-            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="5" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid Margin="10" Grid.Column="0">
@@ -73,7 +73,8 @@
                                                          PreviewMouseWheel="DraggableTreeView_OnPreviewMouseWheel"
                                                          BindableSelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                          BindableSelectedGroup="{Binding SelectedGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                         HorizontalContentAlignment="Stretch">
+                                                         HorizontalContentAlignment="Stretch"
+                                                         Style="{StaticResource CompressedTreeViewStyle}">
                         <draggableTreeView:DraggableTreeView.Resources>
                             <HierarchicalDataTemplate DataType="{x:Type autoloot:AutolootEntry}">
                                 <controls:EditTextBlock
@@ -109,7 +110,7 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <CheckBox IsChecked="{Binding Enabled}" Grid.Column="0" />
+                                    <CheckBox IsChecked="{Binding Enabled}" Grid.Column="0" Margin="0,0,5,0" />
                                     <controls:EditTextBlock
                                         Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                         Grid.Column="1"
@@ -188,7 +189,7 @@
                 </Grid>
             </StackPanel>
         </Grid>
-        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Margin="0,10"/>
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Margin="0,10" />
         <Grid Grid.Column="2" Margin="10"
               IsEnabled="{Binding SelectedItem, Converter={StaticResource NullToBooleanValueConverter}}">
             <Grid.RowDefinitions>

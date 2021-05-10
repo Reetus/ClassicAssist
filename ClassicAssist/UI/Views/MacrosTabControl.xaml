@@ -57,7 +57,7 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Margin="0,0,5,0">
             <i:Interaction.Behaviors>
-                <behaviours:GridSizeChangedBehaviour Width="{Binding LeftColumnWidth}"/>
+                <behaviours:GridSizeChangedBehaviour Width="{Binding LeftColumnWidth}" />
             </i:Interaction.Behaviors>
             <Grid>
                 <Grid.RowDefinitions>
@@ -83,6 +83,7 @@
                                                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                                              BorderThickness="0"
                                                              AllowDragGroups="False"
+                                                             Style="{StaticResource CompressedTreeViewStyle}"
                                                              PreviewMouseWheel="DraggableTreeView_OnPreviewMouseWheel">
                             <draggableTreeView:DraggableTreeView.InputBindings>
                                 <KeyBinding Modifiers="Control" Key="Delete"
@@ -117,7 +118,8 @@
                                     </Grid>
                                 </HierarchicalDataTemplate>
                                 <HierarchicalDataTemplate DataType="{x:Type local:MacroEntry}">
-                                    <Grid>
+                                    <Grid
+                                        Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type draggableTreeView:DraggableTreeView}}, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" x:Name="LeftColumn" />
                                             <ColumnDefinition Width="Auto" />

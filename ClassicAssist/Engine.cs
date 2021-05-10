@@ -663,11 +663,13 @@ namespace Assistant
             UpdateWindowTitleEvent?.Invoke();
         }
 
-        public static void SetTitle( string title = null)
+        public static void SetTitle( string title = null )
         {
             if ( Options.CurrentOptions.SetUOTitle )
             {
-                _setTitle?.Invoke( string.IsNullOrEmpty(title) ? $"{Engine.Player.Name} ({Engine.CurrentShard.Name})" : title );
+                _setTitle?.Invoke( string.IsNullOrEmpty( title )
+                    ? Player == null ? string.Empty : $"{Player.Name} ({CurrentShard?.Name})"
+                    : title );
             }
             else
             {

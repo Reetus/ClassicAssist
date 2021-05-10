@@ -3685,15 +3685,6 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set UO title.
-        /// </summary>
-        public static string Set_UO_Title {
-            get {
-                return ResourceManager.GetString("Set_UO_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Set Up.
         /// </summary>
         public static string Set_Up {
@@ -3798,6 +3789,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Show_Next_Target_In_Queue {
             get {
                 return ResourceManager.GetString("Show Next Target In Queue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show player / shard name in CUO title.
+        /// </summary>
+        public static string Show_player___shard_name_in_CUO_title {
+            get {
+                return ResourceManager.GetString("Show player / shard name in CUO title", resourceCulture);
             }
         }
         

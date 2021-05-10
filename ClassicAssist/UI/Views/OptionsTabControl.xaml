@@ -152,7 +152,7 @@
                       IsChecked="{Binding CurrentOptions.AbilitiesGump}" />
             <CheckBox Content="{x:Static resources:Strings.Show_running_macros_gump}"
                       IsChecked="{Binding CurrentOptions.MacrosGump}" />
-            <CheckBox Content="{x:Static resources:Strings.Set_UO_Title}"
+            <CheckBox Content="{x:Static resources:Strings.Show_player___shard_name_in_CUO_title}"
                       IsChecked="{Binding CurrentOptions.SetUOTitle}" />
             <CheckBox Content="{x:Static resources:Strings.Show_Profile_Name_In_Title}"
                       IsChecked="{Binding CurrentOptions.ShowProfileNameWindowTitle}" />

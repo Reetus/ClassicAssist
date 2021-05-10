@@ -40,6 +40,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _executeCommand;
         private ICommand _inspectObjectCommand;
         private bool _isRecording;
+        private double _leftColumnWidth = 200;
         private ICommand _newGroupCommand;
         private RelayCommand _newMacroCommand;
         private ICommand _openModulesFolderCommand;
@@ -121,6 +122,12 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _isRecording;
             set => SetProperty( ref _isRecording, value );
+        }
+
+        public double LeftColumnWidth
+        {
+            get => _leftColumnWidth;
+            set => SetProperty( ref _leftColumnWidth, value );
         }
 
         public ICommand NewGroupCommand =>
@@ -254,6 +261,7 @@ namespace ClassicAssist.UI.ViewModels
                 macroArray.Add( entry );
             }
 
+            macros.Add( "LeftColumnWidth", LeftColumnWidth );
             macros.Add( "Groups", groupArray );
             macros.Add( "Macros", macroArray );
 
@@ -279,6 +287,10 @@ namespace ClassicAssist.UI.ViewModels
             Draggables.Clear();
 
             JToken config = json?["Macros"];
+
+#if !DEVELOP
+            LeftColumnWidth = config?["LeftColumnWidth"]?.ToObject<double>() ?? 200;
+#endif
 
             if ( config?["Groups"] != null )
             {

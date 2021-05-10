@@ -27,13 +27,14 @@ namespace ClassicAssist.UI.Misc
         private static void OnLoaded( object sender, RoutedEventArgs e )
         {
             AssistantOptions.OnWindowLoaded();
-#if !DEBUG
             SentrySdk.Init( new SentryOptions { Dsn = Settings.Default.SentryDsn, BeforeSend = SentryBeforeSend } );
-#endif
         }
 
         private static SentryEvent SentryBeforeSend( SentryEvent args )
         {
+#if DEBUG
+            return null;
+#else
             if ( args.Exception?.TargetSite.Module.Assembly == Engine.ClassicAssembly )
             {
                 return null;
@@ -53,6 +54,7 @@ namespace ClassicAssist.UI.Misc
             args.SetExtra( "ClassicUO Version", Engine.ClassicAssembly?.GetName().Version.ToString() ?? "Unknown" );
 
             return args;
+#endif
         }
 
         protected override void OnDetaching()

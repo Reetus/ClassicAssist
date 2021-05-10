@@ -3811,6 +3811,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show player / shard name in CUO title.
+        /// </summary>
+        public static string Show_player___shard_name_in_CUO_title {
+            get {
+                return ResourceManager.GetString("Show player / shard name in CUO title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show Profile Name In Title.
         /// </summary>
         public static string Show_Profile_Name_In_Title {

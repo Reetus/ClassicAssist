@@ -36,7 +36,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="120" />
         </Grid.ColumnDefinitions>
-        <Grid Margin="5" Grid.Column="0">
+        <Grid Margin="10" Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -83,7 +83,7 @@
                         Command="{Binding NewDressEntryCommand, Mode=OneWay}" />
             </Grid>
         </Grid>
-        <Grid Margin="5" Grid.Column="1">
+        <Grid Margin="10" Grid.Column="1">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />

@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace ClassicAssist.Helpers
 {
@@ -31,78 +32,152 @@ namespace ClassicAssist.Helpers
      */
     public class ReflectionObject : DynamicObject
     {
-        private readonly object _currentObject;
-        private readonly Dictionary<string, object> _customProperties = new Dictionary<string, object>();
+        private const BindingFlags InstanceDefaultBindingFlags =
+            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 
-        public ReflectionObject( dynamic sealedObject )
+        protected readonly IDictionary<string, FieldInfo> _fields = new Dictionary<string, FieldInfo>();
+        protected readonly IDictionary<string, PropertyInfo> _properties = new Dictionary<string, PropertyInfo>();
+
+        public ReflectionObject( object sealedObject )
         {
-            _currentObject = sealedObject;
+            if ( sealedObject is ReflectionObject reflectionObject )
+            {
+                AssociatedObject = reflectionObject.AssociatedObject;
+            }
+            else
+            {
+                AssociatedObject = sealedObject;
+            }
+
+            if ( AssociatedObject != null )
+            {
+                CreateMemberCache();
+            }
+        }
+
+        public object AssociatedObject { get; set; }
+
+        protected void CreateMemberCache()
+        {
+            foreach ( PropertyInfo propertyInfo in AssociatedObject.GetType()
+                .GetProperties( InstanceDefaultBindingFlags ) )
+            {
+                _properties.Add( propertyInfo.Name, propertyInfo );
+            }
+
+            foreach ( FieldInfo fieldInfo in AssociatedObject.GetType().GetFields( InstanceDefaultBindingFlags ) )
+            {
+                _fields.Add( fieldInfo.Name, fieldInfo );
+            }
+        }
+
+        protected T WrapField<T>( Type type = null, [CallerMemberName] string fieldName = null )
+        {
+            if ( fieldName == null )
+            {
+                return default;
+            }
+
+            object value = _fields[fieldName].GetValue( AssociatedObject );
+
+            if ( value == null )
+            {
+                return default;
+            }
+
+            return (T) Activator.CreateInstance( typeof( T ), value );
+        }
+
+        protected T WrapProperty<T>( Type type = null, [CallerMemberName] string fieldName = null )
+        {
+            if ( fieldName == null )
+            {
+                return default;
+            }
+
+            object value = _properties[fieldName].GetValue( AssociatedObject );
+
+            if ( value == null )
+            {
+                return default;
+            }
+
+            return (T) Activator.CreateInstance( typeof( T ), value );
         }
 
         private PropertyInfo GetPropertyInfo( string propertyName )
         {
-            return _currentObject.GetType().GetProperty( propertyName );
+            return AssociatedObject.GetType().GetProperty( propertyName );
         }
 
         public override bool TryInvokeMember( InvokeMemberBinder binder, object[] args, out object result )
         {
             Type[] types = args.Select( o => o.GetType() ).ToArray();
 
-            MethodInfo method = _currentObject.GetType().GetMethod( binder.Name, types );
+            MethodInfo method = AssociatedObject.GetType().GetMethod( binder.Name, types );
 
             result = null;
 
             if ( method != null )
             {
-                result = method.Invoke( _currentObject, args );
+                result = method.Invoke( AssociatedObject, args );
             }
 
             return true;
+        }
+
+        public object GetProperty( [CallerMemberName] string name = null )
+        {
+            PropertyInfo prop = GetPropertyInfo( name );
+
+            return prop != null ? prop.GetValue( AssociatedObject ) : null;
         }
 
         public override bool TryGetMember( GetMemberBinder binder, out object result )
         {
-            object val =
-                Reflection.GetTypeFieldValueRecurse<object>( _currentObject.GetType(), binder.Name, _currentObject );
-
-            if ( val != null )
+            if ( _fields.ContainsKey( binder.Name ) )
             {
-                result = val;
+                result = _fields[binder.Name].GetValue( AssociatedObject );
                 return true;
             }
 
-            PropertyInfo prop = GetPropertyInfo( binder.Name );
-
-            if ( prop != null )
+            if ( _properties.ContainsKey( binder.Name ) )
             {
-                result = prop.GetValue( _currentObject );
+                result = _properties[binder.Name].GetValue( AssociatedObject );
                 return true;
             }
 
-            result = _customProperties[binder.Name];
-            return true;
+            result = null;
+            return false;
         }
 
         public override bool TrySetMember( SetMemberBinder binder, object value )
         {
-            PropertyInfo prop = GetPropertyInfo( binder.Name );
+            string name = binder.Name;
 
-            if ( prop != null )
+            if ( _properties.TryGetValue( name, out PropertyInfo property ) )
             {
-                prop.SetValue( _currentObject, value );
+                property.SetValue( AssociatedObject, value );
                 return true;
             }
 
-            if ( _customProperties.ContainsKey( binder.Name ) )
+            if ( _fields.TryGetValue( name, out FieldInfo field ) )
             {
-                _customProperties[binder.Name] = value;
-            }
-            else
-            {
-                _customProperties.Add( binder.Name, value );
+                field.SetValue( AssociatedObject, value );
+                return true;
             }
 
-            return true;
+            return false;
+        }
+
+        public override IEnumerable<string> GetDynamicMemberNames()
+        {
+            List<string> list = new List<string>();
+
+            list.AddRange( _properties.Keys.ToList() );
+            list.AddRange( _fields.Keys.ToList() );
+
+            return list;
         }
     }
 }

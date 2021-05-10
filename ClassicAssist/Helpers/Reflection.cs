@@ -83,6 +83,19 @@ namespace ClassicAssist.Helpers
             return t == null ? default : GetTypeFieldValue<T>( t, property, obj, bindingFlags );
         }
 
+        public static MethodInfo GetTypeMethod( string type, string methodName, object obj = null,
+            Assembly assembly = null )
+        {
+            if ( assembly == null )
+            {
+                assembly = Engine.ClassicAssembly;
+            }
+
+            Type t = assembly?.GetType( type );
+
+            return GetTypeMethod( t, methodName, obj );
+        }
+
         public static MethodInfo GetTypeMethod( Type type, string methodName, object obj = null )
         {
             return type.GetMethod( methodName );
@@ -98,6 +111,35 @@ namespace ClassicAssist.Helpers
             Type t = assembly?.GetType( type );
 
             return Activator.CreateInstance( t );
+        }
+
+        public static object CreateInstanceOfType( string type, Assembly assembly = null, params object[] args )
+        {
+            if ( assembly == null )
+            {
+                assembly = Engine.ClassicAssembly;
+            }
+
+            Type t = assembly?.GetType( type );
+
+            return t == null ? null : Activator.CreateInstance( t, args );
+        }
+
+        public static T CreateInstanceOfType<T>( string type, Assembly assembly = null, params object[] args )
+        {
+            if( assembly == null )
+            {
+                assembly = Engine.ClassicAssembly;
+            }
+
+            Type t = assembly?.GetType( type );
+
+            if ( t == null )
+            {
+                return default;
+            }
+
+            return (T) Activator.CreateInstance( typeof(T), Activator.CreateInstance( t, args ) );
         }
 
         /*

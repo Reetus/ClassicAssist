@@ -19,7 +19,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DebugToolBarStyle.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DebugToolBarStyle.xaml" />
                 <ResourceDictionary Source="EntityCollectionViewer/Icons.xaml" />
                 <ResourceDictionary Source="EntityCollectionViewer/Toolbar.xaml" />
                 <ResourceDictionary Source="EntityCollectionViewer/ListStyles.xaml" />
@@ -86,6 +87,9 @@
                               CommandParameter="{x:Static models:EntityCollectionSortStyle.Quantity}" />
                 </MenuItem>
             </Menu>
+            <Button Height="24" Style="{StaticResource ToolbarButtonStyle}" Command="{Binding TargetContainerCommand}">
+                <Image Source="{StaticResource CrosshairIcon}" />
+            </Button>
             <Button Height="24" Padding="0" Command="{Binding CancelActionCommand}"
                     ToolTip="{x:Static resources:Strings.Cancel_action}" IsEnabled="{Binding IsPerformingAction}"
                     Style="{StaticResource ToolbarButtonStyle}">

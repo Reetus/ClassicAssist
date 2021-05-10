@@ -54,6 +54,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private IComparer<Entity> _sorter = new IDThenSerialComparer();
         private string _statusLabel;
+        private ICommand _targetContainerCommand;
         private ICommand _toggleAlwaysOnTopCommand;
         private ICommand _toggleChildItemsCommand;
         private ICommand _togglePropertiesCommand;
@@ -94,6 +95,8 @@ namespace ClassicAssist.UI.ViewModels
             };
 
             UpdateStatusLabel();
+
+            _collection.CollectionChanged += OnCollectionChanged;
         }
 
         public ICommand ApplyFiltersCommand =>
@@ -175,13 +178,15 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _showProperties, value );
         }
 
-        public static Lazy<int[]> ShrinkEntries { get; set; } = new Lazy<int[]>( LoadShrinkTable );
-
         public string StatusLabel
         {
             get => _statusLabel;
             set => SetProperty( ref _statusLabel, value );
         }
+
+        public ICommand TargetContainerCommand =>
+            _targetContainerCommand ?? ( _targetContainerCommand =
+                new RelayCommand( TargetContainer, o => _collection.Serial > 0 ) );
 
         public ICommand ToggleAlwaysOnTopCommand =>
             _toggleAlwaysOnTopCommand ??
@@ -197,6 +202,40 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _topmost;
             set => SetProperty( ref _topmost, value );
+        }
+
+        private void TargetContainer( object obj )
+        {
+            TargetCommands.Target( _collection.Serial );
+        }
+
+        private void OnCollectionChanged( int totalcount, bool added, Item[] entities )
+        {
+            if ( added )
+            {
+                _dispatcher.Invoke( () =>
+                {
+                    foreach ( Item entity in entities.Where( e => !Entities.Any( f => f.Entity.Equals( e ) ) )
+                        .ToList().Where( entity => Options.ShowChildItems || entity.Owner == _collection.Serial ) )
+                    {
+                        Entities.Add( entity.ToEntityCollectionData() );
+                    }
+                } );
+            }
+            else
+            {
+                _dispatcher.Invoke( () =>
+                {
+                    foreach ( EntityCollectionData ecd in entities.ToList()
+                        .Select( item => Entities.FirstOrDefault( e => e.Entity.Equals( item ) ) )
+                        .Where( ecd => ecd != null ) )
+                    {
+                        Entities.Remove( ecd );
+                    }
+                } );
+            }
+
+            UpdateStatusLabel();
         }
 
         private void ContextTarget( object obj )
@@ -222,6 +261,7 @@ namespace ClassicAssist.UI.ViewModels
         ~EntityCollectionViewerViewModel()
         {
             Data.Options.CurrentOptions.EntityCollectionViewerOptions = Options;
+            _collection.CollectionChanged -= OnCollectionChanged;
         }
 
         private void ToggleAlwaysOnTop( object obj )
@@ -458,6 +498,8 @@ namespace ClassicAssist.UI.ViewModels
 
         private async Task ContextMoveToContainer( object arg )
         {
+            int[] items = SelectedItems.Select( i => i.Entity.Serial ).ToArray();
+
             _cancellationToken = new CancellationTokenSource();
 
             int serial = 0;
@@ -481,8 +523,6 @@ namespace ClassicAssist.UI.ViewModels
             try
             {
                 IsPerformingAction = true;
-
-                int[] items = SelectedItems.Select( i => i.Entity.Serial ).ToArray();
 
                 foreach ( int item in items )
                 {
@@ -590,11 +630,16 @@ namespace ClassicAssist.UI.ViewModels
                     return result;
                 }
 
-                int id = (int) EntityCollectionViewerViewModel.MountIDEntries.Value?[Entity.ID];
+                if ( EntityCollectionViewerViewModel.MountIDEntries.Value.ContainsKey( Entity.ID ) )
+                {
+                    int id = EntityCollectionViewerViewModel.MountIDEntries.Value[Entity.ID];
 
-                result = Art.GetStatic( id, Entity.Hue ).ToBitmapSource();
+                    result = Art.GetStatic( id, Entity.Hue ).ToBitmapSource();
 
-                return result;
+                    return result;
+                }
+
+                return null;
             }
         }
 
@@ -622,7 +667,7 @@ namespace ClassicAssist.UI.ViewModels
                 return entity.Name;
             }
 
-            int id = (int) EntityCollectionViewerViewModel.MountIDEntries.Value?[entity.ID];
+            int id = EntityCollectionViewerViewModel.MountIDEntries.Value[entity.ID];
 
             if ( id == 0 )
             {
@@ -710,15 +755,19 @@ namespace ClassicAssist.UI.ViewModels
 
             Item[] items = itemCollection.GetItems();
 
-            IEnumerable<Item> noNames = items.Where( i => string.IsNullOrEmpty( i.Name ) );
+            return items.OrderBy( i => i, comparer ).Select( item => item.ToEntityCollectionData() ).ToList();
+        }
 
-            foreach ( Item item in noNames )
+        public static EntityCollectionData ToEntityCollectionData( this Item item )
+        {
+            StaticTile tileData = TileData.GetStaticTile( item.ID );
+
+            if ( string.IsNullOrEmpty( item.Name ) )
             {
-                item.Name = $"0x{item.Serial:x8}";
+                item.Name = tileData.ID != 0 ? tileData.Name : $"0x{item.Serial:x8}";
             }
 
-            return items.OrderBy( i => i, comparer ).Select( item => new EntityCollectionData { Entity = item } )
-                .ToList();
+            return new EntityCollectionData { Entity = item };
         }
     }
 }

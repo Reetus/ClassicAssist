@@ -1119,6 +1119,7 @@ namespace ClassicAssist.UO.Network
             Engine.TargetSerial = tid;
             Engine.TargetFlags = flags;
             Engine.TargetExists = flags != TargetFlags.Cancel;
+            Engine.InternalTarget = false;
 
             if ( Engine.TargetExists )
             {

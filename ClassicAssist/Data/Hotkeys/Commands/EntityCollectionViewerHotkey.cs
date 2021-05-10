@@ -34,7 +34,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
                         UOC.WaitForContainerContentsUse( item.Serial, 1000 );
                     }
 
-                    collection = item.Container;
+                    collection = item.Container ?? new ItemCollection( item.Serial );
                     break;
                 case Mobile mobile:
                     collection = new ItemCollection( entity.Serial ) { mobile.GetEquippedItems() };

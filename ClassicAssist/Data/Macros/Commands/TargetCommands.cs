@@ -116,6 +116,28 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
+            if ( Engine.InternalTarget )
+            {
+                PacketWriter writer = new PacketWriter( 19 );
+                writer.Write( (byte) 0x6C );
+                writer.Write( (byte) 0 );
+                writer.Write( Engine.InternalTargetSerial );
+                writer.Write( (byte) 0 );
+                writer.Write( serial );
+                writer.Fill();
+
+                if ( Engine.CheckOutgoingPreFilter( writer.ToArray() ) )
+                {
+                    byte[] packet = writer.ToArray();
+                    packet[6] = 0x03;
+
+                    Engine.SendPacketToClient( packet, packet.Length, false );
+                    Engine.TargetExists = false;
+
+                    return;
+                }
+            }
+
             Engine.SendPacketToServer( new Target( TargetTypeEnum.Object, -1, TargetFlags.None, serial, -1, -1, -1, 0,
                 true ) );
             Engine.TargetExists = false;

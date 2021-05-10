@@ -57,6 +57,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private ICommand _insertMatchAnyCommand;
 
         private ObservableCollectionEx<AutolootEntry> _items = new ObservableCollectionEx<AutolootEntry>();
+        private double _leftColumnWidth = 200;
         private bool _lootHumanoids;
 
         private ICommand _removeCommand;
@@ -137,6 +138,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set => SetProperty( ref _items, value );
         }
 
+        public double LeftColumnWidth
+        {
+            get => _leftColumnWidth;
+            set => SetProperty( ref _leftColumnWidth, value );
+        }
+
         public bool LootHumanoids
         {
             get => _lootHumanoids;
@@ -195,7 +202,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 { "DisableInGuardzone", DisableInGuardzone },
                 { "Container", ContainerSerial },
                 { "RequeueFailedItems", RequeueFailedItems },
-                { "LootHumanoids", LootHumanoids }
+                { "LootHumanoids", LootHumanoids },
+                { "LeftColumnWidth", LeftColumnWidth }
             };
 
             JArray itemsArray = new JArray();
@@ -256,6 +264,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
             ContainerSerial = config["Container"]?.ToObject<int>() ?? 0;
             RequeueFailedItems = config["RequeueFailedItems"]?.ToObject<bool>() ?? false;
             LootHumanoids = config["LootHumanoids"]?.ToObject<bool>() ?? true;
+#if !DEVELOP
+            LeftColumnWidth = config["LeftColumnWidth"]?.ToObject<double>() ?? 200;
+#endif
 
             if ( config["Items"] != null )
             {

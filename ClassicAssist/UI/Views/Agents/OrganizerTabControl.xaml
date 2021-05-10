@@ -42,7 +42,7 @@
             <ColumnDefinition Width="150" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Margin="5">
+        <Grid Grid.Column="0" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -96,7 +96,7 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ListView x:Name="itemsListView" Margin="5" Grid.Row="0" ItemsSource="{Binding SelectedItem.Items}">
+                <ListView x:Name="itemsListView" Margin="10" Grid.Row="0" ItemsSource="{Binding SelectedItem.Items}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="{x:Static resources:Strings.Item}" Width="120" x:Name="nameColumn">

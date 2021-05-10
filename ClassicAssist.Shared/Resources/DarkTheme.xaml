@@ -646,7 +646,7 @@
                                  Value="false">
                             <Setter TargetName="Border"
                                     Property="Background"
-                                    Value="{StaticResource ThemeBorderBrush}" />
+                                    Value="{StaticResource ThemeInnerControlBackgroundBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -11,6 +11,9 @@
     xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:misc1="clr-namespace:ClassicAssist.Misc"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:draggableTreeView="clr-namespace:DraggableTreeView;assembly=DraggableTreeView"
+    xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
+    xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
     x:Class="ClassicAssist.UI.Views.Agents.AutolootTabControl"
     mc:Ignorable="d"
     d:DesignHeight="250" d:DesignWidth="600" x:Name="userControl">
@@ -34,10 +37,14 @@
                                      CommandParameter="{Binding SelectedProperties}" />
         </i:Interaction.Behaviors>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="{Binding LeftColumnWidth}" />
+            <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid Margin="10" Grid.Column="0">
+            <i:Interaction.Behaviors>
+                <behaviours:GridSizeChangedBehaviour Width="{Binding LeftColumnWidth}"/>
+            </i:Interaction.Behaviors>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -115,7 +122,8 @@
                 </Grid>
             </StackPanel>
         </Grid>
-        <Grid Grid.Column="1" Margin="10">
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+        <Grid Grid.Column="2" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />

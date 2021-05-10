@@ -29,7 +29,7 @@
     <UserControl.DataContext>
         <viewModels:OptionsTabViewModel />
     </UserControl.DataContext>
-    <Grid Margin="10">
+    <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />

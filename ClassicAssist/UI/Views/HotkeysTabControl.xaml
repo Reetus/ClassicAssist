@@ -31,7 +31,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="150" />
         </Grid.ColumnDefinitions>
-        <TreeView x:Name="treeView" Grid.Row="0" Margin="10" ItemsSource="{Binding Items}">
+        <TreeView x:Name="treeView" Grid.Row="0" Margin="5" ItemsSource="{Binding Items}">
             <i:Interaction.Behaviors>
                 <misc:BindableSelectedItemBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
             </i:Interaction.Behaviors>

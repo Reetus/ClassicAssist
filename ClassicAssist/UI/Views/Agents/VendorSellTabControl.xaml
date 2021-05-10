@@ -23,6 +23,12 @@
                 <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}"/>
+            </Style>
+            <Style TargetType="{x:Type controls:EditTextBlock}" BasedOn="{StaticResource {x:Type controls:EditTextBlock}}">
+                <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}"/>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -30,7 +36,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ListView x:Name="ListView" Margin="5" Grid.Row="0"
+        <ListView x:Name="ListView" Margin="10" Grid.Row="0"
                   ItemsSource="{Binding Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Foreground="Black" Grid.IsSharedSizeScope="True">

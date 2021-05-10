@@ -15,6 +15,7 @@
              xmlns:misc1="clr-namespace:ClassicAssist.Misc"
              xmlns:draggableTreeView="clr-namespace:DraggableTreeView;assembly=DraggableTreeView"
              xmlns:controls1="clr-namespace:ClassicAssist.UI.Controls"
+             xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500" Padding="5">
     <d:DesignerProperties.DesignStyle>
@@ -42,7 +43,7 @@
             <ColumnDefinition>
                 <ColumnDefinition.Style>
                     <Style TargetType="{x:Type ColumnDefinition}">
-                        <Setter Property="Width" Value="200" />
+                        <Setter Property="Width" Value="{Binding LeftColumnWidth}" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsChecked, ElementName=ToggleButton}" Value="True">
                                 <Setter Property="Width" Value="0" />
@@ -55,6 +56,9 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Margin="0,0,5,0">
+            <i:Interaction.Behaviors>
+                <behaviours:GridSizeChangedBehaviour Width="{Binding LeftColumnWidth}"/>
+            </i:Interaction.Behaviors>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />

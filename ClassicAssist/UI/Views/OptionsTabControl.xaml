@@ -152,6 +152,8 @@
                       IsChecked="{Binding CurrentOptions.AbilitiesGump}" />
             <CheckBox Content="{x:Static resources:Strings.Show_running_macros_gump}"
                       IsChecked="{Binding CurrentOptions.MacrosGump}" />
+            <CheckBox Content="{x:Static resources:Strings.Set_UO_Title}"
+                      IsChecked="{Binding CurrentOptions.SetUOTitle}" />
             <CheckBox Content="{x:Static resources:Strings.Show_Profile_Name_In_Title}"
                       IsChecked="{Binding CurrentOptions.ShowProfileNameWindowTitle}" />
             <CheckBox Content="{x:Static resources:Strings.Queue_Last_Target___Target_Self}"

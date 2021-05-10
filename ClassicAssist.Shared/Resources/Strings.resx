@@ -1692,4 +1692,7 @@ Are you sure you wish to continue?</value>
   <data name="All Names" xml:space="preserve">
     <value>All Names</value>
   </data>
+  <data name="Set_UO_Title" xml:space="preserve">
+    <value>Set UO title</value>
+  </data>
 </root>

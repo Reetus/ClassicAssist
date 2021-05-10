@@ -323,14 +323,7 @@ namespace ClassicAssist.Data
             set
             {
                 SetProperty( ref _setUOTitle, value );
-                if ( value && Engine.Player != null )
-                {
-                    Engine.SetTitle( $"{Engine.Player.Name} ({Engine.CurrentShard.Name})" );
-                }
-                else
-                {
-                    Engine.SetTitle( string.Empty );
-                }
+                Engine.SetTitle();
             }
         }
 

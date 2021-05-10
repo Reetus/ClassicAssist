@@ -3712,6 +3712,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set UO title.
+        /// </summary>
+        public static string Set_UO_Title {
+            get {
+                return ResourceManager.GetString("Set_UO_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set Up.
         /// </summary>
         public static string Set_Up {

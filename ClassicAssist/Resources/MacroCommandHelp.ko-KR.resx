@@ -702,4 +702,16 @@
   <data name="CONFIRMPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>메시지와 함께 게임 내 프롬프트를 표시하고, Okay를 누르면 True로, 그렇지 않으면 False로 동작합니다.</value>
   </data>
+  <data name="SETVENDORBUYAUTOBUY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>지정된 이름의 자동구매를 활성화 또는 비활성화합니다.</value>
+  </data>
+  <data name="ISRUNNING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>실행중_명령_설명</value>
+  </data>
+  <data name="LOGOUT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>서버와의 연결을 종료하고 로그인 화면으로 돌아갑니다.</value>
+  </data>
+  <data name="QUIT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>클라이언트를 닫습니다.</value>
+  </data>
 </root>

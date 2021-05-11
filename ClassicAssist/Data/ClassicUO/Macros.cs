@@ -20,8 +20,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using Assistant;
 using ClassicAssist.Data.ClassicUO.Objects;
 using ClassicAssist.Data.ClassicUO.Objects.Gumps;
 using ClassicAssist.Data.Macros;

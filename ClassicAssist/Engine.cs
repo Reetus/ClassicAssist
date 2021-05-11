@@ -25,6 +25,7 @@ using ClassicAssist.Misc;
 using ClassicAssist.Shared;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Views;
+using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Gumps;
 using ClassicAssist.UO.Network;
@@ -233,9 +234,10 @@ namespace Assistant
                     action?.Invoke();
                 }
             }
-            catch ( Exception )
+            catch ( Exception e )
             {
-                // ignored
+                SentrySdk.CaptureException( e );
+                Commands.SystemMessage( e.Message );
             }
         }
 

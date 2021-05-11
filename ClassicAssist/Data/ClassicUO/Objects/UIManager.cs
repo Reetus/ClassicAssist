@@ -18,9 +18,12 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Assistant;
 using ClassicAssist.Data.ClassicUO.Objects.Gumps;
+using ClassicAssist.Shared.Resources;
+using Sentry;
 
 namespace ClassicAssist.Data.ClassicUO.Objects
 {
@@ -42,7 +45,37 @@ namespace ClassicAssist.Data.ClassicUO.Objects
                 _addMethod = _uiManagerType?.GetMethod( "Add", BindingFlags.Public | BindingFlags.Static );
             }
 
-            Engine.TickWorkQueue.Enqueue( () => { _addMethod?.Invoke( null, new[] { button.AssociatedObject } ); } );
+            Engine.TickWorkQueue.Enqueue( () =>
+            {
+                List<object> param = new List<object>();
+
+                ParameterInfo[] parameters = _addMethod.GetParameters();
+
+                foreach ( ParameterInfo parameterInfo in parameters )
+                {
+                    Type type = parameterInfo.ParameterType;
+
+                    if ( button.AssociatedObject.GetType() == type ||
+                         button.AssociatedObject.GetType().IsSubclassOf( type ) )
+                    {
+                        param.Add( button.AssociatedObject );
+                    }
+                    else if ( parameterInfo.IsOptional )
+                    {
+                        param.Add( Activator.CreateInstance( type ) );
+                    }
+                }
+
+                try
+                {
+                    _addMethod?.Invoke( null, param.ToArray() );
+                }
+                catch ( Exception e )
+                {
+                    SentrySdk.CaptureException( e );
+                    UO.Commands.SystemMessage( string.Format( Strings.Reflection_Error___0_, e.Message ) );
+                }
+            } );
         }
     }
 }

@@ -152,6 +152,12 @@ namespace ClassicAssist.UO
             SystemMessage( text, 0x3b2, suppressInQuietMode );
         }
 
+        public static void SystemMessage( string text, SystemMessageHues hue, bool suppressInQuietMode = false,
+            bool throttleRepeating = false )
+        {
+            SystemMessage( text, (int) hue, suppressInQuietMode, throttleRepeating );
+        }
+
         public static void SystemMessage( string text, int hue = 0x03b2, bool suppressInQuietMode = false,
             bool throttleRepeating = false )
         {
@@ -202,70 +208,10 @@ namespace ClassicAssist.UO
 
         public static async Task<int> GetTargetSerialAsync( string message = "", int timeout = 30000 )
         {
-            if ( string.IsNullOrEmpty( message ) )
-            {
-                message = Strings.Target_object___;
-            }
+            ( TargetType _, TargetFlags _, int serial, int _, int _, int _, int _ ) =
+                await GetTargetInfoAsync( message, timeout );
 
-            SystemMessage( message );
-
-            Random random = new Random();
-
-            return await Task.Run( () =>
-            {
-                bool wasTargetting = Engine.TargetExists;
-
-                uint value = (uint) random.Next( 1, int.MaxValue );
-
-                //TODO
-                PacketWriter pw = new PacketWriter( 19 );
-                pw.Write( (byte) 0x6C );
-                pw.Write( (byte) 0 );
-                pw.Write( value );
-                pw.Write( (byte) 0 );
-                pw.Fill();
-
-                AutoResetEvent are = new AutoResetEvent( false );
-
-                int serial = -1;
-
-                PacketFilterInfo pfi = new PacketFilterInfo( 0x6C,
-                    new[] { PacketFilterConditions.UIntAtPositionCondition( value, 2 ) }, ( packet, info ) =>
-                    {
-                        serial = ( packet[7] << 24 ) | ( packet[8] << 16 ) | ( packet[9] << 8 ) | packet[10];
-
-                        are.Set();
-                    } );
-
-                try
-                {
-                    Engine.AddSendPreFilter( pfi );
-
-                    Engine.SendPacketToClient( pw );
-
-                    bool result = are.WaitOne( timeout );
-
-                    if ( result )
-                    {
-                        return serial;
-                    }
-
-                    Engine.SendPacketToClient( new CancelTargetCursor( value ) );
-
-                    SystemMessage( Strings.Timeout___ );
-
-                    return serial;
-                }
-                finally
-                {
-                    Engine.RemoveSendPreFilter( pfi );
-
-                    if ( wasTargetting )
-                    {
-                        ResendTargetToClient();
-                    }
-                }
-            } );
+            return serial;
         }
 
         public static async Task<(TargetType, TargetFlags, int, int, int, int, int)> GetTargetInfoAsync(
@@ -324,6 +270,10 @@ namespace ClassicAssist.UO
 
                     Engine.SendPacketToClient( pw );
 
+                    Engine.TargetExists = true;
+                    Engine.InternalTarget = true;
+                    Engine.InternalTargetSerial = (int) value;
+
                     bool result = are.WaitOne( timeout );
 
                     if ( result )
@@ -339,6 +289,8 @@ namespace ClassicAssist.UO
                 }
                 finally
                 {
+                    Engine.TargetExists = false;
+                    Engine.InternalTarget = false;
                     Engine.RemoveSendPreFilter( pfi );
 
                     if ( wasTargetting )
@@ -349,14 +301,14 @@ namespace ClassicAssist.UO
             } );
         }
 
-        public static bool GumpButtonClick( uint gumpID, int buttonID, int[] switches = null )
+        public static bool GumpButtonClick( uint gumpID, int buttonID, int[] switches = null, Dictionary<int, string> textEntries = null )
         {
             if ( !Engine.GumpList.TryGetValue( gumpID, out int serial ) )
             {
                 return false;
             }
 
-            Engine.SendPacketToServer( new GumpButtonClick( (int) gumpID, serial, buttonID, switches ) );
+            Engine.SendPacketToServer( new GumpButtonClick( (int) gumpID, serial, buttonID, switches, textEntries ) );
 
             Engine.GumpList.TryRemove( gumpID, out _ );
             CloseClientGump( gumpID );
@@ -893,6 +845,7 @@ namespace ClassicAssist.UO
             pw.Write( (short) 0 );
 
             Engine.TargetExists = true;
+            Engine.InternalTarget = false;
             Engine.SendPacketToClient( pw );
         }
 

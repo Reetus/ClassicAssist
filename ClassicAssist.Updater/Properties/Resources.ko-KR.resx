@@ -174,4 +174,43 @@
   <data name="Project Homepage" xml:space="preserve">
     <value>프로젝트 홈페이지</value>
   </data>
+  <data name="GitHub rate limit, try again after {0}" xml:space="preserve">
+    <value>깃허브 속도 제한, {0} 이후에 다시 시도하세요</value>
+  </data>
+  <data name="Releases" xml:space="preserve">
+    <value>해방하다</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>경고</value>
+  </data>
+  <data name="Update cancelled..." xml:space="preserve">
+    <value>업데이트가 취소되었습니다.</value>
+  </data>
+  <data name="Running Clients" xml:space="preserve">
+    <value>클라이언트 실행중</value>
+  </data>
+  <data name="The following client(s) are currently running, if you continue they will be closed" xml:space="preserve">
+    <value>현재 클라이언트가 실행중입니다. 계속하면 종료됩니다.</value>
+  </data>
+  <data name="Do you wish to continue?" xml:space="preserve">
+    <value>계속 하시겠습니까?</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>확인</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>취소</value>
+  </data>
+  <data name="Extracting modules..." xml:space="preserve">
+    <value>모듈 추출 중...</value>
+  </data>
+  <data name="Install Prereleases" xml:space="preserve">
+    <value>사전공개 설치</value>
+  </data>
+  <data name="Github Access Token" xml:space="preserve">
+    <value>깃허브 액세스 토큰</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>옵션</value>
+  </data>
 </root>

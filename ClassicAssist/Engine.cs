@@ -739,6 +739,25 @@ namespace Assistant
             Process.Start( psi );
         }
 
+        public static bool CheckOutgoingPreFilter( byte[] data )
+        {
+            if ( _outgoingPacketPreFilter.MatchFilterAll( data, out PacketFilterInfo[] pfis ) <= 0 )
+            {
+                return false;
+            }
+
+            foreach ( PacketFilterInfo pfi in pfis )
+            {
+                pfi.Action?.Invoke( data, pfi );
+            }
+
+            SentPacketFilteredEvent?.Invoke( data, data.Length );
+
+            PacketWaitEntries.CheckWait( data, PacketDirection.Outgoing, true );
+
+            return true;
+        }
+
         #region ClassicUO Events
 
         private static bool OnPacketSend( ref byte[] data, ref int length )
@@ -750,17 +769,8 @@ namespace Assistant
                 filter = CommandsManager.CheckCommand( data, length );
             }
 
-            if ( _outgoingPacketPreFilter.MatchFilterAll( data, out PacketFilterInfo[] pfis ) > 0 )
+            if ( CheckOutgoingPreFilter( data ) )
             {
-                foreach ( PacketFilterInfo pfi in pfis )
-                {
-                    pfi.Action?.Invoke( data, pfi );
-                }
-
-                SentPacketFilteredEvent?.Invoke( data, data.Length );
-
-                PacketWaitEntries.CheckWait( data, PacketDirection.Outgoing, true );
-
                 return false;
             }
 
@@ -796,6 +806,8 @@ namespace Assistant
         public static ThreadQueue<Packet> IncomingQueue { get; set; }
 
         public static ThreadQueue<Packet> OutgoingQueue { get; set; }
+        public static bool InternalTarget { get; set; }
+        public static int InternalTargetSerial { get; set; }
 
         private static bool OnPacketReceive( ref byte[] data, ref int length )
         {

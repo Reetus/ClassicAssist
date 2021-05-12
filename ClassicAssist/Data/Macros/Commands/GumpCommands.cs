@@ -31,9 +31,9 @@ namespace ClassicAssist.Data.Macros.Commands
                 nameof( ParameterType.ItemID ), nameof( ParameterType.GumpButtonIndex ),
                 nameof( ParameterType.IntegerValue )
             } )]
-        public static void ReplyGump( uint gumpId, int buttonId, int[] switches = null )
+        public static void ReplyGump( uint gumpId, int buttonId, int[] switches = null, Dictionary<int, string> textEntries = null )
         {
-            UOC.GumpButtonClick( gumpId, buttonId, switches );
+            UOC.GumpButtonClick( gumpId, buttonId, switches, textEntries );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Gumps ) )]

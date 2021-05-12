@@ -1392,4 +1392,301 @@
   <data name="Check hands before potions" xml:space="preserve">
     <value>포션을 마시기전 손이 빈것 확인</value>
   </data>
+  <data name="Bards Music" xml:space="preserve">
+    <value>바드 음악</value>
+  </data>
+  <data name="Scavenging '{0}'" xml:space="preserve">
+    <value>{0} 청소중</value>
+  </data>
+  <data name="Rehue friends" xml:space="preserve">
+    <value>친구 색상 재설정</value>
+  </data>
+  <data name="Show running macros gump" xml:space="preserve">
+    <value>실행중인 매크로 검프 표시</value>
+  </data>
+  <data name="Item out of range..." xml:space="preserve">
+    <value>아이템이 범위 안에 없습니다.</value>
+  </data>
+  <data name="Cast Last Spell" xml:space="preserve">
+    <value>마지막 주문을 다시사용합니다.</value>
+  </data>
+  <data name="Arm / Disarm already in progress..." xml:space="preserve">
+    <value>무기 착용/무기 해제가 진행중입니다</value>
+  </data>
+  <data name="Dress already in progress..." xml:space="preserve">
+    <value>장비 착용이 진행중입니다.</value>
+  </data>
+  <data name="Maximum distance exceeded." xml:space="preserve">
+    <value>최대거리를 초과하였습니다.</value>
+  </data>
+  <data name="Show Child Items" xml:space="preserve">
+    <value>하위 항목 표시</value>
+  </data>
+  <data name="Open All Containers" xml:space="preserve">
+    <value>모든 상자들을 열어봅니다.</value>
+  </data>
+  <data name="Requeue failed items" xml:space="preserve">
+    <value>실패한 항목을 대기열에 추가</value>
+  </data>
+  <data name="Invalid organizer agent name..." xml:space="preserve">
+    <value>오거나이저 이름이 잘못되었습니다...</value>
+  </data>
+  <data name="Loot humanoids" xml:space="preserve">
+    <value>인간 약탈</value>
+  </data>
+  <data name="Reset import cache" xml:space="preserve">
+    <value>가져오기 캐시 재설정</value>
+  </data>
+  <data name="Macro not found..." xml:space="preserve">
+    <value>매크로가 없습니다.</value>
+  </data>
+  <data name="Module" xml:space="preserve">
+    <value>모듈</value>
+  </data>
+  <data name="Snapshot Saved: {0}" xml:space="preserve">
+    <value>스크린샷이 저장되었습니다.</value>
+  </data>
+  <data name="Take Snapshot" xml:space="preserve">
+    <value>스크린샷 찍기</value>
+  </data>
+  <data name="Priority:" xml:space="preserve">
+    <value>우선 순위:</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>우선 순위</value>
+  </data>
+  <data name="Object queue full" xml:space="preserve">
+    <value>오브젝트 큐가 가득 찼습니다</value>
+  </data>
+  <data name="Use Cliloc language from ClassicUO settings" xml:space="preserve">
+    <value>클래식유오 설정에서 Cliloc 언어 사용</value>
+  </data>
+  <data name="Keyboard" xml:space="preserve">
+    <value>키보드</value>
+  </data>
+  <data name="Share Macro" xml:space="preserve">
+    <value>매크로 공유</value>
+  </data>
+  <data name="Check Weight" xml:space="preserve">
+    <value>무게 확인</value>
+  </data>
+  <data name="Minimum Weight Available:" xml:space="preserve">
+    <value>사용 가능한 최소 무게:</value>
+  </data>
+  <data name="Context menu entry not found..." xml:space="preserve">
+    <value>컨텍스트 메뉴 항목을 찾을 수 없습니다...</value>
+  </data>
+  <data name="Atleast one option must be provided..." xml:space="preserve">
+    <value>최소한 한 가지 옵션이 제공되어야 합니다...</value>
+  </data>
+  <data name="Invalid VendorBuy list name..." xml:space="preserve">
+    <value>잘못된 공급업체 목록...</value>
+  </data>
+  <data name="Invalid state name: &quot;on&quot;, &quot;off&quot;, or &quot;toggle&quot;..." xml:space="preserve">
+    <value>잘못된 상태 이름 : "on", "off"또는 "toggle"...</value>
+  </data>
+  <data name="Replay" xml:space="preserve">
+    <value>다시 재생</value>
+  </data>
+  <data name="Ignore packet type" xml:space="preserve">
+    <value>패킷 유형 무시</value>
+  </data>
+  <data name="Copy packet declaration" xml:space="preserve">
+    <value>복사 패킷 선언</value>
+  </data>
+  <data name="Configure Sound Filters" xml:space="preserve">
+    <value>소리 필터 구성</value>
+  </data>
+  <data name="Sound Filter" xml:space="preserve">
+    <value>소리 필터</value>
+  </data>
+  <data name="Sound Type" xml:space="preserve">
+    <value>소리 타입</value>
+  </data>
+  <data name="Animals" xml:space="preserve">
+    <value>동물</value>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>환경</value>
+  </data>
+  <data name="Bear Sounds" xml:space="preserve">
+    <value>곰 소리</value>
+  </data>
+  <data name="Bird Sounds" xml:space="preserve">
+    <value>새 소리</value>
+  </data>
+  <data name="Bull Sounds" xml:space="preserve">
+    <value>황소 소리</value>
+  </data>
+  <data name="Cat Sounds" xml:space="preserve">
+    <value>고양이 소리</value>
+  </data>
+  <data name="Chicken Sounds" xml:space="preserve">
+    <value>닭 소리</value>
+  </data>
+  <data name="Cougar Sounds" xml:space="preserve">
+    <value>쿠거 소리</value>
+  </data>
+  <data name="Deer Sounds" xml:space="preserve">
+    <value>사슴 소리</value>
+  </data>
+  <data name="Dog Sounds" xml:space="preserve">
+    <value>개 소리</value>
+  </data>
+  <data name="Dragon Sounds" xml:space="preserve">
+    <value>용 소리</value>
+  </data>
+  <data name="Eagle Sounds" xml:space="preserve">
+    <value>독수리 소리</value>
+  </data>
+  <data name="Goat Sounds" xml:space="preserve">
+    <value>염소 소리</value>
+  </data>
+  <data name="Horse Sounds" xml:space="preserve">
+    <value>말 소리</value>
+  </data>
+  <data name="Pig Sounds" xml:space="preserve">
+    <value>돼지 소리</value>
+  </data>
+  <data name="Rat Sounds" xml:space="preserve">
+    <value>쥐 소리</value>
+  </data>
+  <data name="Sheep Sounds" xml:space="preserve">
+    <value>양 소리</value>
+  </data>
+  <data name="Titan / Cyclops Sounds" xml:space="preserve">
+    <value>타이탄/사이클롭스 소리</value>
+  </data>
+  <data name="Wolf Sounds" xml:space="preserve">
+    <value>늑대 소리</value>
+  </data>
+  <data name="Door Sounds" xml:space="preserve">
+    <value>문 소리</value>
+  </data>
+  <data name="Emote Sounds" xml:space="preserve">
+    <value>마음의 소리</value>
+  </data>
+  <data name="Weapon Sounds" xml:space="preserve">
+    <value>무기 소리</value>
+  </data>
+  <data name="Wrestling Sounds" xml:space="preserve">
+    <value>레슬링 소리</value>
+  </data>
+  <data name="Spell Fizzle Sounds" xml:space="preserve">
+    <value>주문 실패 소리</value>
+  </data>
+  <data name="Alchemy Sounds" xml:space="preserve">
+    <value>연금술 소리</value>
+  </data>
+  <data name="Inscribing Sounds" xml:space="preserve">
+    <value>기록술 소리</value>
+  </data>
+  <data name="Spirit Speak Sounds" xml:space="preserve">
+    <value>영혼술 소리</value>
+  </data>
+  <data name="Expire Targets:" xml:space="preserve">
+    <value>타겟이 만료되었습니다.</value>
+  </data>
+  <data name="Time in milliseconds (-1 to not expire)" xml:space="preserve">
+    <value>시간 (밀리 초) (만료되지 않는 경우 -1)</value>
+  </data>
+  <data name="New Group" xml:space="preserve">
+    <value>새로운 그룹</value>
+  </data>
+  <data name="Remove Group" xml:space="preserve">
+    <value>그룹 삭제</value>
+  </data>
+  <data name="Auto disable when loading" xml:space="preserve">
+    <value>로딩시 자동으로  비활성화</value>
+  </data>
+  <data name="Disable all vendor buy entries on loading profile" xml:space="preserve">
+    <value>프로필 로딩시 모든 벤더 구매를 비활성화 합니다.</value>
+  </data>
+  <data name="Open Modules Folder" xml:space="preserve">
+    <value>모듈 폴더를  열어봅니다.</value>
+  </data>
+  <data name="Backup Days" xml:space="preserve">
+    <value>백업 날짜</value>
+  </data>
+  <data name="Backup Settings" xml:space="preserve">
+    <value>백업 설정</value>
+  </data>
+  <data name="Choose backup folder" xml:space="preserve">
+    <value>백업 폴더를 지정합니다.</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>경로</value>
+  </data>
+  <data name="Setting to zero will cause it to backup on every client close" xml:space="preserve">
+    <value>0으로 설정하면 모든클라이언트가 종료될때 백업됩니다.</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>로그인</value>
+  </data>
+  <data name="Login With Windows" xml:space="preserve">
+    <value>윈도우즈로 로그인</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>로그아웃</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>사용자이름</value>
+  </data>
+  <data name="Loading..." xml:space="preserve">
+    <value>불러오는중...</value>
+  </data>
+  <data name="No items..." xml:space="preserve">
+    <value>아이템이 없음...</value>
+  </data>
+  <data name="Backing up {0}..." xml:space="preserve">
+    <value>백업</value>
+  </data>
+  <data name="Done..." xml:space="preserve">
+    <value>완료</value>
+  </data>
+  <data name="Failed to backup file: {0}" xml:space="preserve">
+    <value>백업파일을 여는데 실패했습니다.</value>
+  </data>
+  <data name="No backup type or path set..." xml:space="preserve">
+    <value>백업 유형 또는 경로가 설정되지 않았습니다 ...</value>
+  </data>
+  <data name="Profile Backup" xml:space="preserve">
+    <value>프로필 백업</value>
+  </data>
+  <data name="Profile backup in progress..." xml:space="preserve">
+    <value>프로필 백업이 진행중입니다.</value>
+  </data>
+  <data name="Folder Browser" xml:space="preserve">
+    <value>폴더 찾기</value>
+  </data>
+  <data name="New Folder" xml:space="preserve">
+    <value>새 폴더</value>
+  </data>
+  <data name="Incremental" xml:space="preserve">
+    <value>증가분</value>
+  </data>
+  <data name="Only write files that have been modified" xml:space="preserve">
+    <value>수정된 파일만 작성합니다</value>
+  </data>
+  <data name="Backup path not set" xml:space="preserve">
+    <value>백업 경로가 설정되지 않았습니다.</value>
+  </data>
+  <data name="Cannot locate backup folder" xml:space="preserve">
+    <value>백업폴더가 없습니다.</value>
+  </data>
+  <data name="Overwrite Existing" xml:space="preserve">
+    <value>기존파일에 덮어씀 </value>
+  </data>
+  <data name="Overwrite existing files instead of creating new files with the same name" xml:space="preserve">
+    <value>동일명으로 새파일을 만드는대신 기존파일에 덮어 씁니다.</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>암호</value>
+  </data>
+  <data name="Minimize to system tray" xml:space="preserve">
+    <value>시스템 트레이로 최소화</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>알수 없음</value>
+  </data>
 </root>

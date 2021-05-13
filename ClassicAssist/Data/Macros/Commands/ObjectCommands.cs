@@ -480,7 +480,7 @@ namespace ClassicAssist.Data.Macros.Commands
             }
             else
             {
-                ActionPacketQueue.EnqueueDragDrop( entity.Serial, amount, destinationSerial );
+                ActionPacketQueue.EnqueueDragDrop( entity.Serial, amount, destinationSerial, x: x, y: y );
             }
         }
 

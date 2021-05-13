@@ -77,7 +77,7 @@ namespace ClassicAssist.Shared.UI.Behaviours
                 return;
             }
 
-            if ( e.WidthChanged )
+            if ( e.WidthChanged && e.NewSize.Width > 0 )
             {
                 if ( Math.Abs( Width - e.NewSize.Width ) > 0 )
                 {
@@ -85,7 +85,7 @@ namespace ClassicAssist.Shared.UI.Behaviours
                 }
             }
 
-            if ( e.HeightChanged )
+            if ( e.HeightChanged && e.NewSize.Height > 0 )
             {
                 Height = e.NewSize.Height + grid.Margin.Top + grid.Margin.Bottom;
             }

@@ -6,7 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data;
-using ClassicAssist.Data.Macros;
+using ClassicAssist.Data.Abilities;
+using ClassicAssist.Data.ClassicUO.Objects;
 using ClassicAssist.Data.Skills;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Misc;
@@ -19,6 +20,7 @@ using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using ClassicAssist.UO.Objects.Gumps;
+using MacroManager = ClassicAssist.Data.Macros.MacroManager;
 
 namespace ClassicAssist.UO
 {
@@ -301,7 +303,8 @@ namespace ClassicAssist.UO
             } );
         }
 
-        public static bool GumpButtonClick( uint gumpID, int buttonID, int[] switches = null, Dictionary<int, string> textEntries = null )
+        public static bool GumpButtonClick( uint gumpID, int buttonID, int[] switches = null,
+            Dictionary<int, string> textEntries = null )
         {
             if ( !Engine.GumpList.TryGetValue( gumpID, out int serial ) )
             {
@@ -647,9 +650,25 @@ namespace ClassicAssist.UO
             return result;
         }
 
-        public static void SetWeaponAbility( int abilityIndex )
+        public static void SetWeaponAbility( int abilityIndex, AbilityType abilityType )
         {
-            Engine.SendPacketToServer( new SetWeaponAbility( abilityIndex ) );
+            bool result = false;
+
+            // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
+            switch ( abilityType )
+            {
+                case AbilityType.Primary:
+                    result = GameActions.UsePrimaryAbility();
+                    break;
+                case AbilityType.Secondary:
+                    result = GameActions.UseSecondaryAbility();
+                    break;
+            }
+
+            if ( !result )
+            {
+                Engine.SendPacketToServer( new SetWeaponAbility( abilityIndex ) );
+            }
         }
 
         public static void ClearWeaponAbility()

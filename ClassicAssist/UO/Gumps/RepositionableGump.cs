@@ -29,24 +29,26 @@ namespace ClassicAssist.UO.Gumps
 {
     public abstract class RepositionableGump : Gump
     {
-        private const int REPOSITION_BUTTON_ID = 10;
-        private readonly int _height;
-        private readonly int _width;
+        private const int REPOSITION_BUTTON_ID = 100;
 
         protected RepositionableGump( int width, int height, int serial, uint gumpID ) : base( 0, 0, serial, gumpID )
         {
-            _width = width;
-            _height = height;
+            Width = width;
+            Height = height;
         }
 
         public int GumpX { get; set; } = 100;
         public int GumpY { get; set; } = 100;
 
+        public int Height { get; set; }
+
+        public int Width { get; set; }
+
         public override void SendGump()
         {
             X = GumpX;
             Y = GumpY;
-            AddButton( _width - 15, 5, 0x82C, 0x82C, REPOSITION_BUTTON_ID, GumpButtonType.Reply, 0 );
+            AddButton( Width - 15, 5, 0x82C, 0x82C, REPOSITION_BUTTON_ID, GumpButtonType.Reply, 0 );
 
             base.SendGump();
         }

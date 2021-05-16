@@ -24,6 +24,7 @@
                 <valueConverters:InverseBooleanConverter />
                 <BooleanToVisibilityConverter />
             </valueConverters:ValueConverterGroup>
+            <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -82,12 +83,16 @@
                             Grid.Column="0" IsEnabled="{Binding IsEnabled, ElementName=textBoxKey}" />
                 </Grid>
                 <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
                     <CheckBox Content="{x:Static resources:Strings.Pass_to_UO}" Margin="10,0,10,5"
                               IsChecked="{Binding Path=SelectedItem.(local:HotkeyEntry.PassToUO), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              Grid.Column="0" IsEnabled="{Binding IsEnabled, ElementName=textBoxKey}" />
+                              Grid.Row="0" IsEnabled="{Binding IsEnabled, ElementName=textBoxKey}" />
+                    <CheckBox Content="{x:Static resources:Strings.Undisableable}" Margin="10,0,10,5"
+                              IsChecked="{Binding Path=SelectedItem.(local:HotkeyEntry.Disableable), Converter={StaticResource InverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              Grid.Row="1" IsEnabled="{Binding IsEnabled, ElementName=textBoxKey}" />
                 </Grid>
                 <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>

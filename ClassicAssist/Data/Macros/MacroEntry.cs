@@ -96,6 +96,8 @@ namespace ClassicAssist.Data.Macros
             set => SetProperty( ref _macroInvoker, value );
         }
 
+        public DateTime StartedOn { get; set; }
+
         public int CompareTo( object obj )
         {
             if ( !( obj is IDraggable entry ) )
@@ -194,6 +196,7 @@ namespace ClassicAssist.Data.Macros
                 UO.Commands.SystemMessage( string.Format( Strings.Background_macro___0___started___, Name ), true );
             }
 
+            StartedOn = DateTime.Now;
             _macroInvoker.Execute( this );
         }
 

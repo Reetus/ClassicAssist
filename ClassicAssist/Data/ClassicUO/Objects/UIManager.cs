@@ -62,7 +62,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
                     }
                     else if ( parameterInfo.IsOptional )
                     {
-                        param.Add( Activator.CreateInstance( type ) );
+                        param.Add( parameterInfo.DefaultValue );
                     }
                 }
 

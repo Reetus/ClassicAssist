@@ -79,7 +79,8 @@ namespace ClassicAssist.UI.ViewModels
                     {
                         { "Type", categoryChild.GetType().FullName },
                         { "Keys", categoryChild.Hotkey.ToJObject() },
-                        { "PassToUO", categoryChild.PassToUO }
+                        { "PassToUO", categoryChild.PassToUO },
+                        { "Disableable", categoryChild.Disableable }
                     };
 
                     commandsArray.Add( entry );
@@ -202,6 +203,7 @@ namespace ClassicAssist.UI.ViewModels
 
                         entry.Hotkey = new ShortcutKeys( keys );
                         entry.PassToUO = token["PassToUO"]?.ToObject<bool>() ?? true;
+                        entry.Disableable = token["Disableable"]?.ToObject<bool>() ?? entry.Disableable;
                     }
                 }
             }

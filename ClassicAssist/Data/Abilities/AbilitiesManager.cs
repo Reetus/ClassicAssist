@@ -86,7 +86,7 @@ namespace ClassicAssist.Data.Abilities
 
                 if ( wd != null )
                 {
-                    UOC.SetWeaponAbility( abilityType == AbilityType.Primary ? wd.Primary : wd.Secondary );
+                    UOC.SetWeaponAbility( abilityType == AbilityType.Primary ? wd.Primary : wd.Secondary, abilityType );
                     ResendGump( wd.Primary, wd.Secondary, abilityType );
                     return;
                 }
@@ -104,7 +104,7 @@ namespace ClassicAssist.Data.Abilities
 
                 if ( wd != null )
                 {
-                    UOC.SetWeaponAbility( abilityType == AbilityType.Primary ? wd.Primary : wd.Secondary );
+                    UOC.SetWeaponAbility( abilityType == AbilityType.Primary ? wd.Primary : wd.Secondary, abilityType );
                     ResendGump( wd.Primary, wd.Secondary, abilityType );
                     return;
                 }
@@ -112,7 +112,7 @@ namespace ClassicAssist.Data.Abilities
 
             // Fists etc
             ResendGump( 5, 11, abilityType );
-            UOC.SetWeaponAbility( abilityType == AbilityType.Primary ? 5 : 11 );
+            UOC.SetWeaponAbility( abilityType == AbilityType.Primary ? 5 : 11, abilityType );
         }
 
         public void ResendGump( AbilityType abilityType )

@@ -31,11 +31,14 @@ namespace ClassicAssist.UO.Gumps
     public class MacrosGump : RepositionableGump
     {
         private static Timer _timer;
-        private static string _lastList;
         private static int _serial = 0x0fe00000;
+        private static IEnumerable<MacroEntry> _lastMacros;
+        private readonly MacroEntry[] _macros;
 
-        public MacrosGump( string html ) : base( 190, 180, _serial++, (uint) _serial++ )
+        public MacrosGump( IEnumerable<MacroEntry> macros ) : base( 190, 180, _serial++, (uint) _serial++ )
         {
+            _macros = macros.ToArray();
+
             GumpX = Options.CurrentOptions.MacrosGumpX;
             GumpY = Options.CurrentOptions.MacrosGumpY;
 
@@ -45,7 +48,28 @@ namespace ClassicAssist.UO.Gumps
             Disposable = false;
             AddPage( 0 );
             AddBackground( 0, 0, 190, 180, 3500 );
-            AddHtml( 20, 20, 150, 140, html, false, true );
+
+            int y = 20;
+            int i = 10;
+
+            foreach ( MacroEntry macro in _macros )
+            {
+                if ( i > 17 )
+                {
+                    return;
+                }
+
+                string html = $"<BASEFONT COLOR=#000000>{macro.Name}</BASEFONT>\n";
+
+                if ( macro.IsBackground )
+                {
+                    html = $"<BASEFONT COLOR=#000000><I>{macro.Name}</I></BASEFONT>\n";
+                }
+
+                AddHtml( 20, y, 150, 140, html, false, false );
+                AddButton( 160, y + 3, 3, 4, i++, GumpButtonType.Reply, 0 );
+                y += 20;
+            }
         }
 
         public static void ResendGump( bool force = false )
@@ -54,23 +78,10 @@ namespace ClassicAssist.UO.Gumps
             {
                 MacroManager _macroManager = MacroManager.GetInstance();
 
-                IEnumerable<MacroEntry> macro = _macroManager.Items.Where( e => e.IsRunning ).ToArray();
+                IEnumerable<MacroEntry> macros = _macroManager.Items.Where( e => e.IsRunning )
+                    .OrderByDescending( e => e.StartedOn ).ToArray();
 
-                string html = string.Empty;
-
-                foreach ( MacroEntry entry in macro )
-                {
-                    if ( entry.IsBackground )
-                    {
-                        html += $"<BASEFONT COLOR=#000000><I>{entry.Name}</I></BASEFONT>\n";
-                    }
-                    else
-                    {
-                        html += $"<BASEFONT COLOR=#000000>{entry.Name}</BASEFONT>\n";
-                    }
-                }
-
-                if ( html.Equals( _lastList ) && !force )
+                if ( _lastMacros != null && macros.SequenceEqual( _lastMacros ) && !force )
                 {
                     return;
                 }
@@ -83,10 +94,10 @@ namespace ClassicAssist.UO.Gumps
                     }
                 }
 
-                MacrosGump gump = new MacrosGump( html );
+                MacrosGump gump = new MacrosGump( macros );
                 gump.SendGump();
 
-                _lastList = html;
+                _lastMacros = macros.ToArray();
             }
             catch ( InvalidOperationException e )
             {
@@ -107,6 +118,20 @@ namespace ClassicAssist.UO.Gumps
             Options.CurrentOptions.MacrosGumpY = y;
 
             ResendGump( true );
+        }
+
+        public override void OnResponse( int buttonID, int[] switches,
+            List<(int Key, string Value)> textEntries = null )
+        {
+            if ( buttonID >= 10 && buttonID < 10 + _macros?.Length )
+            {
+                MacroEntry macro = _macros[buttonID - 10];
+                macro?.Stop();
+            }
+            else
+            {
+                base.OnResponse( buttonID, switches, textEntries );
+            }
         }
     }
 }

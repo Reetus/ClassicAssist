@@ -11,7 +11,7 @@
     xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:misc1="clr-namespace:ClassicAssist.Misc"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:draggableTreeView="clr-namespace:DraggableTreeView;assembly=DraggableTreeView"
+    xmlns:draggableTreeView="clr-namespace:ClassicAssist.Controls.DraggableTreeView;assembly=ClassicAssist.Controls"
     xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
     xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
     x:Class="ClassicAssist.UI.Views.Agents.AutolootTabControl"

@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using ClassicAssist.Controls.DraggableTreeView;
 using ClassicAssist.Shared.UI;
-using DraggableTreeView;
 
 namespace ClassicAssist.Data.Autoloot
 {

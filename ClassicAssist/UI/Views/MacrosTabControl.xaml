@@ -13,7 +13,7 @@
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              xmlns:hotkeys="clr-namespace:ClassicAssist.Data.Hotkeys"
              xmlns:misc1="clr-namespace:ClassicAssist.Misc"
-             xmlns:draggableTreeView="clr-namespace:DraggableTreeView;assembly=DraggableTreeView"
+             xmlns:draggableTreeView="clr-namespace:ClassicAssist.Controls.DraggableTreeView;assembly=ClassicAssist.Controls"
              xmlns:controls1="clr-namespace:ClassicAssist.UI.Controls"
              xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
              mc:Ignorable="d"
@@ -119,7 +119,7 @@
                                 </HierarchicalDataTemplate>
                                 <HierarchicalDataTemplate DataType="{x:Type local:MacroEntry}">
                                     <Grid
-                                        Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type draggableTreeView:DraggableTreeView}}, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15}">
+                                        Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" x:Name="LeftColumn" />
                                             <ColumnDefinition Width="Auto" />

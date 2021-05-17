@@ -19,8 +19,8 @@
 
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using ClassicAssist.Controls.DraggableTreeView;
 using ClassicAssist.Shared.UI;
-using DraggableTreeView;
 
 namespace ClassicAssist.Data.Autoloot
 {

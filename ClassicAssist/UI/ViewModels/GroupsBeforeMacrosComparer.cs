@@ -19,7 +19,7 @@
 
 using System;
 using System.Collections.Generic;
-using DraggableTreeView;
+using ClassicAssist.Controls.DraggableTreeView;
 
 namespace ClassicAssist.UI.ViewModels
 {

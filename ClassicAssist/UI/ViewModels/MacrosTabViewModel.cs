@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Assistant;
+using ClassicAssist.Controls.DraggableTreeView;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
@@ -22,7 +23,6 @@ using ClassicAssist.UI.ViewModels.Macros;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UI.Views.Macros;
 using ClassicAssist.UO;
-using DraggableTreeView;
 using ICSharpCode.AvalonEdit.Document;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -327,6 +327,21 @@ namespace ClassicAssist.UI.ViewModels
                     foreach ( MacroEntry entry in globalMacros )
                     {
                         entry.Action = async hks => await Execute( entry );
+
+                        if ( entry.Group != null &&
+                             !Draggables.Any( e => e is IDraggableGroup && e.Name == entry.Group ) )
+                        {
+                            MacroGroup macroGroup = new MacroGroup { Name = entry.Group };
+
+                            if ( Options.CurrentOptions.SortMacrosAlphabetical )
+                            {
+                                Draggables.AddSorted( macroGroup, new GroupsBeforeMacrosComparer() );
+                            }
+                            else
+                            {
+                                Draggables.Add( macroGroup );
+                            }
+                        }
 
                         if ( Options.CurrentOptions.SortMacrosAlphabetical )
                         {

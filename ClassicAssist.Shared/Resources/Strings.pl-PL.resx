@@ -409,7 +409,7 @@
     <value>Uwzględnij zakupioną ilość</value>
   </data>
   <data name="Insert" xml:space="preserve">
-    <value>Wstaw</value>
+    <value>Dodaj</value>
   </data>
   <data name="Interrupt Spell" xml:space="preserve">
     <value>Przerwij czar</value>
@@ -643,7 +643,7 @@
     <value>Kolejka Last Target / Target Self</value>
   </data>
   <data name="Range check last target" xml:space="preserve">
-    <value>Zasięg szukania ostatniego celu</value>
+    <value>Zasięg pól szukania ostatniego celu</value>
   </data>
   <data name="Ready..." xml:space="preserve">
     <value>Gotowy...</value>
@@ -904,10 +904,10 @@
     <value>Wartość</value>
   </data>
   <data name="Vendor Buy" xml:space="preserve">
-    <value>Kupowanie</value>
+    <value>Kupno</value>
   </data>
   <data name="Vendor Sell" xml:space="preserve">
-    <value>Sprzedawanie</value>
+    <value>Sprzedaż</value>
   </data>
   <data name="Version:" xml:space="preserve">
     <value>Wersja:</value>
@@ -1359,7 +1359,7 @@
   <data name="Macro Warning" xml:space="preserve">
     <value>Uwaga! Uruchamianie złośiwych makro może skutkować uzyskaniem hasła do konta przez osoby trzecie lub uszkodzić komputer!
 
-Przed uruchomieniem makra, pownieneś zrozumieć do ono robi.
+Przed uruchomieniem makra, pownieneś zrozumieć co ono robi.
 
 Dołożyliśmy wszelkich starań, by makra tutaj zawarte nie były złośliwe, jednakże nie da sę sprawdzić wszystkiego. Nie ponosimy odpowiedzialności za używanie makr.
 
@@ -1460,5 +1460,242 @@ Czy chcesz kontynuować?</value>
   </data>
   <data name="Use Cliloc language from ClassicUO settings" xml:space="preserve">
     <value>Użyj język Cliloc z ClassicUO</value>
+  </data>
+  <data name="Keyboard" xml:space="preserve">
+    <value>Klawiatura</value>
+  </data>
+  <data name="Share Macro" xml:space="preserve">
+    <value>Podziel się makrem</value>
+  </data>
+  <data name="Check Weight" xml:space="preserve">
+    <value>Sprawdź wagę</value>
+  </data>
+  <data name="Minimum Weight Available:" xml:space="preserve">
+    <value>Minimalna dostępna waga:</value>
+  </data>
+  <data name="Context menu entry not found..." xml:space="preserve">
+    <value>Wpis w menu kontekstowym nie znaleziony...</value>
+  </data>
+  <data name="Atleast one option must be provided..." xml:space="preserve">
+    <value>Przynajmniej jedna opcja musi zostać dostarczona...</value>
+  </data>
+  <data name="Invalid VendorBuy list name..." xml:space="preserve">
+    <value>Niepoprawna lista zakupów dla vendora...</value>
+  </data>
+  <data name="Invalid state name: &quot;on&quot;, &quot;off&quot;, or &quot;toggle&quot;..." xml:space="preserve">
+    <value>Niepoprawna enumeracja stanu: "on", "off" lub "toggle"...</value>
+  </data>
+  <data name="Replay" xml:space="preserve">
+    <value>Powtórz</value>
+  </data>
+  <data name="Ignore packet type" xml:space="preserve">
+    <value>Ignoruj pakiet typu</value>
+  </data>
+  <data name="Copy packet declaration" xml:space="preserve">
+    <value>Kopiuj deklarację pakietu</value>
+  </data>
+  <data name="Configure Sound Filters" xml:space="preserve">
+    <value>Skonfiguruj filtry dźwięku</value>
+  </data>
+  <data name="Sound Filter" xml:space="preserve">
+    <value>Filtr dźwięku</value>
+  </data>
+  <data name="Sound Type" xml:space="preserve">
+    <value>Typ dźwięku</value>
+  </data>
+  <data name="Animals" xml:space="preserve">
+    <value>Zwierzęta</value>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>Środowisko</value>
+  </data>
+  <data name="Bear Sounds" xml:space="preserve">
+    <value>Odgłosy niedźwiedzi</value>
+  </data>
+  <data name="Bird Sounds" xml:space="preserve">
+    <value>Odgłosy ptaków</value>
+  </data>
+  <data name="Bull Sounds" xml:space="preserve">
+    <value>Odgłosy byków</value>
+  </data>
+  <data name="Cat Sounds" xml:space="preserve">
+    <value>Odgłosy kotów</value>
+  </data>
+  <data name="Chicken Sounds" xml:space="preserve">
+    <value>Odgłosy kurczaków</value>
+  </data>
+  <data name="Cougar Sounds" xml:space="preserve">
+    <value>Odgłosy kuguarów</value>
+  </data>
+  <data name="Deer Sounds" xml:space="preserve">
+    <value>Odgłosy jeleni</value>
+  </data>
+  <data name="Dog Sounds" xml:space="preserve">
+    <value>Odgłosy psów</value>
+  </data>
+  <data name="Dragon Sounds" xml:space="preserve">
+    <value>Odgłosy smoków</value>
+  </data>
+  <data name="Eagle Sounds" xml:space="preserve">
+    <value>Odgłosy orłów</value>
+  </data>
+  <data name="Goat Sounds" xml:space="preserve">
+    <value>Odgłosy kóz</value>
+  </data>
+  <data name="Horse Sounds" xml:space="preserve">
+    <value>Odgłosy koni</value>
+  </data>
+  <data name="Pig Sounds" xml:space="preserve">
+    <value>Odgłosy świń</value>
+  </data>
+  <data name="Rat Sounds" xml:space="preserve">
+    <value>Odgłosy szczurów</value>
+  </data>
+  <data name="Sheep Sounds" xml:space="preserve">
+    <value>Odgłosy owiec</value>
+  </data>
+  <data name="Titan / Cyclops Sounds" xml:space="preserve">
+    <value>Odgłosy Tytanów/Cyklopów</value>
+  </data>
+  <data name="Wolf Sounds" xml:space="preserve">
+    <value>Odgłosy wilków</value>
+  </data>
+  <data name="Door Sounds" xml:space="preserve">
+    <value>Odgłosy drzwi</value>
+  </data>
+  <data name="Emote Sounds" xml:space="preserve">
+    <value>Odgłosy emotek</value>
+  </data>
+  <data name="Weapon Sounds" xml:space="preserve">
+    <value>Odgłosy broni</value>
+  </data>
+  <data name="Wrestling Sounds" xml:space="preserve">
+    <value>Odgłosy pięści</value>
+  </data>
+  <data name="Spell Fizzle Sounds" xml:space="preserve">
+    <value>Odgłosy czarów</value>
+  </data>
+  <data name="Alchemy Sounds" xml:space="preserve">
+    <value>Odgłosy alchemii</value>
+  </data>
+  <data name="Inscribing Sounds" xml:space="preserve">
+    <value>Odgłosy pisania</value>
+  </data>
+  <data name="Spirit Speak Sounds" xml:space="preserve">
+    <value>Odgłosy rozmów z duchami</value>
+  </data>
+  <data name="Expire Targets:" xml:space="preserve">
+    <value>Nieaktualne cele:</value>
+  </data>
+  <data name="Time in milliseconds (-1 to not expire)" xml:space="preserve">
+    <value>Czas w milisekundach (-1 by nie expirowały)</value>
+  </data>
+  <data name="New Group" xml:space="preserve">
+    <value>Nowa grupa</value>
+  </data>
+  <data name="Remove Group" xml:space="preserve">
+    <value>Usuń grupę</value>
+  </data>
+  <data name="Auto disable when loading" xml:space="preserve">
+    <value>Automatycznie wyłącz podczas ładowania</value>
+  </data>
+  <data name="Disable all vendor buy entries on loading profile" xml:space="preserve">
+    <value>Wyłącz wpisy u wszystkich vendorów podczas ładowania profilu</value>
+  </data>
+  <data name="Open Modules Folder" xml:space="preserve">
+    <value>Otwórz folder z modułami</value>
+  </data>
+  <data name="Backup Days" xml:space="preserve">
+    <value>Czas tworzenia kopii zapasowych w dniach</value>
+  </data>
+  <data name="Backup Settings" xml:space="preserve">
+    <value>Ustawienia kopii zapasowej</value>
+  </data>
+  <data name="Choose backup folder" xml:space="preserve">
+    <value>Wybierz folder kopii zapasowej</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Ścieżka</value>
+  </data>
+  <data name="Setting to zero will cause it to backup on every client close" xml:space="preserve">
+    <value>Ustawienie na 0 spowoduje tworzenie kopii zapasowej przy każdorazowym zamknięciu klienta</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Zaloguj</value>
+  </data>
+  <data name="Login With Windows" xml:space="preserve">
+    <value>Zaloguj z oknem</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Wyloguj</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Użytkownik</value>
+  </data>
+  <data name="Loading..." xml:space="preserve">
+    <value>Ładowanie...</value>
+  </data>
+  <data name="No items..." xml:space="preserve">
+    <value>Brak przedmiotów...</value>
+  </data>
+  <data name="Backing up {0}..." xml:space="preserve">
+    <value>Tworzenie kopii zapasowej dla {0}...</value>
+  </data>
+  <data name="Done..." xml:space="preserve">
+    <value>Koniec...</value>
+  </data>
+  <data name="Failed to backup file: {0}" xml:space="preserve">
+    <value>Nie udało się utworzyć kopii zapasowej dla pliku: {0}...</value>
+  </data>
+  <data name="No backup type or path set..." xml:space="preserve">
+    <value>Brak ustawionej ścieżki dla kopii zapasowej...</value>
+  </data>
+  <data name="Profile Backup" xml:space="preserve">
+    <value>Kopia zapasowa profilu</value>
+  </data>
+  <data name="Profile backup in progress..." xml:space="preserve">
+    <value>Tworzenie kopii zapasowej profilu w toku...</value>
+  </data>
+  <data name="Folder Browser" xml:space="preserve">
+    <value>Wybierz katalog</value>
+  </data>
+  <data name="New Folder" xml:space="preserve">
+    <value>Nowy folder</value>
+  </data>
+  <data name="Incremental" xml:space="preserve">
+    <value>Inkrementacja</value>
+  </data>
+  <data name="Only write files that have been modified" xml:space="preserve">
+    <value>Zapisz tylko pliki, które zostały zmodyfikowane</value>
+  </data>
+  <data name="Backup path not set" xml:space="preserve">
+    <value>Brak ustawionej ścieżki dla kopii zapasowej</value>
+  </data>
+  <data name="Cannot locate backup folder" xml:space="preserve">
+    <value>Nie można załadować folderu kopii zapasowej</value>
+  </data>
+  <data name="Overwrite Existing" xml:space="preserve">
+    <value>Nadpisz istniejące</value>
+  </data>
+  <data name="Overwrite existing files instead of creating new files with the same name" xml:space="preserve">
+    <value>Nadpisz istniejące pliki zamiast tworzyć nowe z tą samą nazwą</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Hasło</value>
+  </data>
+  <data name="Minimize to system tray" xml:space="preserve">
+    <value>Zminimalizuj do paska</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Nieznany</value>
+  </data>
+  <data name="All Names" xml:space="preserve">
+    <value>Wszystkie nazwy</value>
+  </data>
+  <data name="Create Macro Button" xml:space="preserve">
+    <value>Utworz przycisk Makro</value>
+  </data>
+  <data name="Show player / shard name in CUO title" xml:space="preserve">
+    <value>Pokaż gracza / nazwę shardu w pasku tytułu CUO</value>
   </data>
 </root>

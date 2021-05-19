@@ -276,4 +276,7 @@
   <data name="PARAMETER_DESCRIPTION_ELEMENTVALUEFRONTBACK" xml:space="preserve">
     <value>Kod elementu do usunięcia z listy lub  'front', aby usunąć pierwszy element, albo 'back' aby usunąć ostatni element. Domyślna wartość: 'back'</value>
   </data>
+  <data name="PARAMETER_DESCRIPTION_STRINGARRAY" xml:space="preserve">
+    <value>lista stringów</value>
+  </data>
 </root>

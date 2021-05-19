@@ -1701,4 +1701,7 @@ Are you sure you wish to continue?</value>
   <data name="Show player / shard name in CUO title" xml:space="preserve">
     <value>Show player / shard name in CUO title</value>
   </data>
+  <data name="ID from target" xml:space="preserve">
+    <value>ID from target</value>
+  </data>
 </root>

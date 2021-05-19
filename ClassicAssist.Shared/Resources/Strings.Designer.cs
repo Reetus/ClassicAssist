@@ -1843,6 +1843,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ID from target.
+        /// </summary>
+        public static string ID_from_target {
+            get {
+                return ResourceManager.GetString("ID from target", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ignore List.
         /// </summary>
         public static string Ignore_List {

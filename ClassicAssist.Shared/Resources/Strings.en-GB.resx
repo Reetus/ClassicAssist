@@ -1581,4 +1581,7 @@ Are you sure you wish to continue?</value>
   <data name="Time in milliseconds (-1 to not expire)" xml:space="preserve">
     <value>Time in milliseconds (-1 to not expire)</value>
   </data>
+  <data name="ID from target" xml:space="preserve">
+    <value>ID from target</value>
+  </data>
 </root>

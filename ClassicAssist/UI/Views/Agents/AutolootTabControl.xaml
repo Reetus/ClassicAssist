@@ -158,10 +158,29 @@
                     <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="0" Margin="0,0,5,0"
                             Command="{Binding RemoveCommand}"
                             CommandParameter="{Binding SelectedItem, ElementName=listView}" />
-                    <Button Content="{x:Static resources:Strings.Insert}" Grid.Column="1" Margin="5,0,0,0"
-                            Command="{Binding InsertCommand}">
+                    <Button Content="{x:Static resources:Strings.Insert}" Grid.Column="1" Margin="5,0,0,0">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                <Style.Triggers>
+                                    <EventTrigger RoutedEvent="Click">
+                                        <EventTrigger.Actions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <BooleanAnimationUsingKeyFrames
+                                                        Storyboard.TargetProperty="ContextMenu.IsOpen">
+                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True" />
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger.Actions>
+                                    </EventTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
                         <Button.ContextMenu>
                             <ContextMenu IsOpen="False">
+                                <MenuItem Header="{x:Static resources:Strings.ID_from_target}"
+                                          Command="{Binding Source={StaticResource Proxy}, Path=Data.(agents:AutolootViewModel.InsertCommand)}" />
                                 <MenuItem Header="{x:Static resources:Strings.Match_Any_ID}"
                                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(agents:AutolootViewModel.InsertMatchAnyCommand)}" />
                             </ContextMenu>

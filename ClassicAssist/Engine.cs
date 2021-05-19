@@ -577,24 +577,27 @@ namespace Assistant
 
                 PacketWaitEntries?.CheckWait( packet, PacketDirection.Outgoing, true );
 
-                int expectedLength = _getPacketLength( packet[0] );
-
-                if ( expectedLength == -1 )
+                if ( _getPacketLength != null )
                 {
-                    expectedLength = ( packet[1] << 8 ) | packet[2];
-                }
+                    int expectedLength = _getPacketLength( packet[0] );
 
-                if ( length != expectedLength )
-                {
-                    SentrySdk.WithScope( scope =>
+                    if ( expectedLength == -1 )
                     {
-                        scope.SetExtra( "Packet", packet );
-                        scope.SetExtra( "Length", length );
-                        scope.SetExtra( "Direction", PacketDirection.Outgoing );
-                        scope.SetExtra( "Expected Length", expectedLength );
+                        expectedLength = ( packet[1] << 8 ) | packet[2];
+                    }
 
-                        SentrySdk.CaptureMessage( $"Invalid packet length: {length} != {expectedLength}" );
-                    } );
+                    if ( length != expectedLength )
+                    {
+                        SentrySdk.WithScope( scope =>
+                        {
+                            scope.SetExtra( "Packet", packet );
+                            scope.SetExtra( "Length", length );
+                            scope.SetExtra( "Direction", PacketDirection.Outgoing );
+                            scope.SetExtra( "Expected Length", expectedLength );
+
+                            SentrySdk.CaptureMessage( $"Invalid packet length: {length} != {expectedLength}" );
+                        } );
+                    }
                 }
 
                 ( byte[] data, int dataLength ) = Utility.CopyBuffer( packet, length );
@@ -621,24 +624,28 @@ namespace Assistant
 
                     InternalPacketReceivedEvent?.Invoke( packet, length );
 
-                    int expectedLength = _getPacketLength( packet[0] );
-
-                    if ( expectedLength == -1 )
+                    if ( _getPacketLength != null )
                     {
-                        expectedLength = ( packet[1] << 8 ) | packet[2];
-                    }
 
-                    if ( length != expectedLength )
-                    {
-                        SentrySdk.WithScope( scope =>
+                        int expectedLength = _getPacketLength( packet[0] );
+
+                        if ( expectedLength == -1 )
                         {
-                            scope.SetExtra( "Packet", packet );
-                            scope.SetExtra( "Length", length );
-                            scope.SetExtra( "Direction", PacketDirection.Incoming );
-                            scope.SetExtra( "Expected Length", expectedLength );
+                            expectedLength = ( packet[1] << 8 ) | packet[2];
+                        }
 
-                            SentrySdk.CaptureMessage( $"Invalid packet length: {length} != {expectedLength}" );
-                        } );
+                        if ( length != expectedLength )
+                        {
+                            SentrySdk.WithScope( scope =>
+                            {
+                                scope.SetExtra( "Packet", packet );
+                                scope.SetExtra( "Length", length );
+                                scope.SetExtra( "Direction", PacketDirection.Incoming );
+                                scope.SetExtra( "Expected Length", expectedLength );
+
+                                SentrySdk.CaptureMessage( $"Invalid packet length: {length} != {expectedLength}" );
+                            } );
+                        }
                     }
 
                     ( byte[] data, int dataLength ) = Utility.CopyBuffer( packet, length );

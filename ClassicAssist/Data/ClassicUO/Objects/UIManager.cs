@@ -32,6 +32,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
         private const string UI_MANAGER_TYPE = "ClassicUO.Game.Managers.UIManager";
         private static Type _uiManagerType;
         private static MethodInfo _addMethod;
+        private static MethodInfo _savePositionMethod;
 
         public static void Add( MacroButtonGump button )
         {
@@ -76,6 +77,31 @@ namespace ClassicAssist.Data.ClassicUO.Objects
                     UO.Commands.SystemMessage( string.Format( Strings.Reflection_Error___0_, e.Message ) );
                 }
             } );
+        }
+
+        public static void SavePosition( uint gumpId, int x, int y )
+        {
+            if ( _uiManagerType == null )
+            {
+                _uiManagerType = Engine.ClassicAssembly?.GetType( UI_MANAGER_TYPE );
+            }
+
+            if ( _savePositionMethod == null )
+            {
+                _savePositionMethod =
+                    _uiManagerType?.GetMethod( "SavePosition", BindingFlags.Public | BindingFlags.Static );
+            }
+
+            if ( _savePositionMethod is null )
+            {
+                return;
+            }
+
+            Type type = _savePositionMethod.GetParameters()[1].ParameterType;
+
+            object point = Activator.CreateInstance( type, x, y );
+
+            Engine.TickWorkQueue.Enqueue( () => { _savePositionMethod.Invoke( gumpId, new[] { gumpId, point } ); } );
         }
     }
 }

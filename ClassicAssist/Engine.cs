@@ -626,7 +626,6 @@ namespace Assistant
 
                     if ( _getPacketLength != null )
                     {
-
                         int expectedLength = _getPacketLength( packet[0] );
 
                         if ( expectedLength == -1 )
@@ -766,14 +765,7 @@ namespace Assistant
             string updaterPath = Path.Combine( StartupPath ?? Environment.CurrentDirectory,
                 "ClassicAssist.Updater.exe" );
 
-            Version version = null;
-
-            if ( Version.TryParse(
-                FileVersionInfo.GetVersionInfo( Assembly.GetExecutingAssembly().Location ).ProductVersion,
-                out Version v ) )
-            {
-                version = v;
-            }
+            string version = FileVersionInfo.GetVersionInfo( Assembly.GetExecutingAssembly().Location ).ProductVersion;
 
             if ( !File.Exists( updaterPath ) )
             {
@@ -781,9 +773,12 @@ namespace Assistant
             }
 
             ProcessStartInfo psi = new ProcessStartInfo( updaterPath,
-                $"--pid {Process.GetCurrentProcess().Id} --path {StartupPath}" + ( version != null
+                $"--pid {Process.GetCurrentProcess().Id} --path \"{StartupPath}\"" + ( version != null
                     ? $" --version {version}"
-                    : "" ) ) { UseShellExecute = false };
+                    : "" ) )
+            {
+                UseShellExecute = false, WorkingDirectory = StartupPath ?? Environment.CurrentDirectory
+            };
 
             Process.Start( psi );
         }

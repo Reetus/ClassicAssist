@@ -1129,7 +1129,7 @@
     <value>클래식 어시스트가 초기화되기를 기다리는 중...</value>
   </data>
   <data name="Masteries" xml:space="preserve">
-    <value>마스터 (마스터)는</value>
+    <value>마스터리(Masteries)</value>
   </data>
   <data name="Stun" xml:space="preserve">
     <value>기절</value>
@@ -1408,7 +1408,7 @@
     <value>아이템이 범위 안에 없습니다.</value>
   </data>
   <data name="Cast Last Spell" xml:space="preserve">
-    <value>마지막 주문을 다시사용합니다.</value>
+    <value>마지막 주문을 사용</value>
   </data>
   <data name="Arm / Disarm already in progress..." xml:space="preserve">
     <value>무기 착용/무기 해제가 진행중입니다</value>
@@ -1688,5 +1688,17 @@
   </data>
   <data name="Unknown" xml:space="preserve">
     <value>알수 없음</value>
+  </data>
+  <data name="All Names" xml:space="preserve">
+    <value>모든 이름 표시</value>
+  </data>
+  <data name="Create Macro Button" xml:space="preserve">
+    <value>매크로 생성 버튼</value>
+  </data>
+  <data name="Reflection Error: {0}" xml:space="preserve">
+    <value>반영 오류: {0}</value>
+  </data>
+  <data name="Show player / shard name in CUO title" xml:space="preserve">
+    <value>게임윈도우 제목에 플레이어/서버 이름 표시 </value>
   </data>
 </root>

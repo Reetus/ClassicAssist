@@ -57,6 +57,14 @@ namespace ClassicAssist.Data.Autoloot
                                 GetItemObjectPropertyValue<int>( i, constraint.Property.Name ), constraint.Value ) );
 
                         break;
+                    case PropertyType.Predicate:
+
+                        predicates.Add( i =>
+                            constraint.Property.Predicate != null &&
+                            constraint.Property.Predicate.Invoke( i, constraint ) );
+
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

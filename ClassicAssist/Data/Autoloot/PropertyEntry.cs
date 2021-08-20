@@ -1,14 +1,23 @@
 ﻿using System;
 using ClassicAssist.Shared.UI;
+using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.Data.Autoloot
 {
     public class PropertyEntry : SetPropertyNotifyChanged, IComparable<PropertyEntry>
     {
+        private Type _allowedValuesEnum;
         private int _clilocIndex;
         private int[] _clilocs;
         private PropertyType _constraintType;
         private string _name;
+        private Func<Entity, AutolootConstraintEntry, bool> _predicate;
+
+        public Type AllowedValuesEnum
+        {
+            get => _allowedValuesEnum;
+            set => SetProperty( ref _allowedValuesEnum, value );
+        }
 
         public int ClilocIndex
         {
@@ -32,6 +41,12 @@ namespace ClassicAssist.Data.Autoloot
         {
             get => _name;
             set => SetProperty( ref _name, value );
+        }
+
+        public Func<Entity, AutolootConstraintEntry, bool> Predicate
+        {
+            get => _predicate;
+            set => SetProperty( ref _predicate, value );
         }
 
         public int CompareTo( PropertyEntry other )

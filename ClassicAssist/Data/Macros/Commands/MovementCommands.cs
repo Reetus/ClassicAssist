@@ -1,5 +1,6 @@
 ﻿using System;
 using Assistant;
+using ClassicAssist.Data.ClassicUO.Objects;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
@@ -84,6 +85,44 @@ namespace ClassicAssist.Data.Macros.Commands
             }
 
             return false;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Movement ) )]
+        public static bool Following()
+        {
+            dynamic gameScene = new GameScene();
+
+            return gameScene._followingMode;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Movement ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        public static void Follow( object obj = null )
+        {
+            int serial = 0;
+
+            if ( obj != null )
+            {
+                serial = AliasCommands.ResolveSerial( obj, false );
+            }
+
+            dynamic gameScene = new GameScene();
+
+            if ( obj == null )
+            {
+                if ( gameScene._followingMode )
+                {
+                    UOC.SystemMessage( Strings.Deactivated_following, UOC.SystemMessageHues.Normal, true );
+                }
+
+                gameScene._followingMode = false;
+            }
+            else
+            {
+                gameScene._followingMode = true;
+                gameScene._followingTarget = (uint) serial;
+                UOC.SystemMessage( Strings.Activated_following, UOC.SystemMessageHues.Normal, true );
+            }
         }
 
         [CommandsDisplay( Category = nameof( Strings.Movement ),

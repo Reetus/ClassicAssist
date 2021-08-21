@@ -1707,4 +1707,10 @@ Are you sure you wish to continue?</value>
   <data name="Layer" xml:space="preserve">
     <value>Layer</value>
   </data>
+  <data name="Activated following" xml:space="preserve">
+    <value>Activated following</value>
+  </data>
+  <data name="Deactivated following" xml:space="preserve">
+    <value>Deactivated following</value>
+  </data>
 </root>

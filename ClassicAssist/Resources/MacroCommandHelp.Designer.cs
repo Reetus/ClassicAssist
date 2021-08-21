@@ -1229,6 +1229,38 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Instructs ClassicUO to follow the specified alias/serial, supply no parameter to cancel.
+        /// </summary>
+        public static string FOLLOW_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("FOLLOW_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if FindObject(&apos;enemy&apos;):
+        /// Follow(&apos;enemy&apos;)
+        /// Attack(&apos;enemy&apos;)
+        ///else:
+        /// Follow() # stop following
+        ///Pause(1000).
+        /// </summary>
+        public static string FOLLOW_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("FOLLOW_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Follow(&apos;enemy&apos;).
+        /// </summary>
+        public static string FOLLOW_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("FOLLOW_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns the number of current followers as per status bar data..
         /// </summary>
         public static string FOLLOWERS_COMMAND_DESCRIPTION {
@@ -1243,6 +1275,34 @@ namespace ClassicAssist.Resources {
         public static string FOLLOWERS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("FOLLOWERS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns True if currently following a target.
+        /// </summary>
+        public static string FOLLOWING_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("FOLLOWING_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if not Following():
+        /// Follow(&apos;enemy&apos;).
+        /// </summary>
+        public static string FOLLOWING_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("FOLLOWING_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Following():.
+        /// </summary>
+        public static string FOLLOWING_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("FOLLOWING_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

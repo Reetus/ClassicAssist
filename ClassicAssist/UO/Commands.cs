@@ -28,7 +28,7 @@ namespace ClassicAssist.UO
     {
         public enum SystemMessageHues
         {
-            Normal = 0,
+            Normal = 0x3b2,
             Red = 35,
             Yellow = 61,
             Green = 63

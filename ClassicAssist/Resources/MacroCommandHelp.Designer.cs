@@ -2557,6 +2557,39 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Returns True if ClassicUO is currently pathfinding.
+        /// </summary>
+        public static string PATHFINDING_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("PATHFINDING_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pathfind(&apos;enemy&apos;)
+        ///Pause(25) # there is a delay between calling Pathfind() and Pathfinding() being True
+        ///
+        ///while Pathfinding():
+        /// Pause(50)
+        /// 
+        ///HeadMsg(&quot;die scum&quot;, &quot;self&quot;).
+        /// </summary>
+        public static string PATHFINDING_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("PATHFINDING_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Pathfinding():.
+        /// </summary>
+        public static string PATHFINDING_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("PATHFINDING_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pauses execution for the given amount in milliseconds..
         /// </summary>
         public static string PAUSE_COMMAND_DESCRIPTION {

@@ -1641,4 +1641,19 @@ else:
  Follow() # stop following
 Pause(1000)</value>
   </data>
+  <data name="PATHFINDING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns True if ClassicUO is currently pathfinding</value>
+  </data>
+  <data name="PATHFINDING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Pathfinding():</value>
+  </data>
+  <data name="PATHFINDING_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>Pathfind('enemy')
+Pause(25) # there is a delay between calling Pathfind() and Pathfinding() being True
+
+while Pathfinding():
+ Pause(50)
+ 
+HeadMsg("die scum", "self")</value>
+  </data>
 </root>

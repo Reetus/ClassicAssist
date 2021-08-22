@@ -168,5 +168,11 @@ namespace ClassicAssist.Data.Macros.Commands
 
             Pathfind( entity.X, entity.Y, entity.Z );
         }
+
+        [CommandsDisplay( Category = nameof( Strings.Movement ) )]
+        public static bool Pathfinding()
+        {
+            return Pathfinder.AutoWalking;
+        }
     }
 }

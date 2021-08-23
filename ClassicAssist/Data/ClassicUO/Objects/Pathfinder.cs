@@ -19,7 +19,9 @@
 
 using System;
 using System.Reflection;
+using System.Threading;
 using Assistant;
+using ClassicAssist.UO.Network.Packets;
 
 namespace ClassicAssist.Data.ClassicUO.Objects
 {
@@ -27,6 +29,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
     {
         private const string TYPE = "ClassicUO.Game.Pathfinder";
         private static Type _type;
+        private static MethodInfo _walkMethod;
 
         public static bool AutoWalking
         {
@@ -50,6 +53,52 @@ namespace ClassicAssist.Data.ClassicUO.Objects
                 }
 
                 return (bool) property.GetValue( null );
+            }
+        }
+
+        public static bool WalkTo( int x, int y, int z, int distance )
+        {
+            try
+            {
+                if ( _type == null )
+                {
+                    _type = Engine.ClassicAssembly?.GetType( TYPE );
+                }
+
+                if ( _type == null )
+                {
+                    throw new Exception( "Cannot find type" );
+                }
+
+                if ( _walkMethod == null )
+                {
+                    _walkMethod = _type?.GetMethod( "WalkTo", BindingFlags.Public | BindingFlags.Static );
+                }
+
+                if ( _walkMethod == null )
+                {
+                    throw new Exception( "Cannot find method" );
+                }
+
+                AutoResetEvent are = new AutoResetEvent( false );
+
+                bool retval = false;
+
+                Engine.TickWorkQueue.Enqueue( () =>
+                {
+                    retval = (bool) _walkMethod.Invoke( null, new object[] { x, y, z, distance } );
+                    are.Set();
+                } );
+
+                are.WaitOne( 5000 );
+
+                return retval;
+            }
+            catch
+            {
+                // Fallback to old method
+                Engine.SendPacketToClient( new Pathfind( x, y, z ) );
+                return true;
             }
         }
     }

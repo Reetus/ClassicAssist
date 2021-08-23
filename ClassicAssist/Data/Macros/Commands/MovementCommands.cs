@@ -6,7 +6,6 @@ using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
-using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 
@@ -131,29 +130,29 @@ namespace ClassicAssist.Data.Macros.Commands
                 nameof( ParameterType.XCoordinate ), nameof( ParameterType.YCoordinate ),
                 nameof( ParameterType.ZCoordinate )
             } )]
-        public static void Pathfind( int x, int y, int z )
+        public static bool Pathfind( int x, int y, int z )
         {
             int distance = Math.Max( Math.Abs( x - Engine.Player?.X ?? x ), Math.Abs( y - Engine.Player?.Y ?? y ) );
 
             if ( distance > PATHFIND_MAX_DISTANCE )
             {
                 UOC.SystemMessage( Strings.Maximum_distance_exceeded_ );
-                return;
+                return false;
             }
 
-            Engine.SendPacketToClient( new Pathfind( x, y, z ) );
+            return Pathfinder.WalkTo( x, y, z, 0 );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Movement ),
             Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
-        public static void Pathfind( object obj )
+        public static bool Pathfind( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );
 
             if ( serial == 0 )
             {
                 UOC.SystemMessage( Strings.Entity_not_found___ );
-                return;
+                return false;
             }
 
             Entity entity = UOMath.IsMobile( serial )
@@ -163,10 +162,10 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( entity == null )
             {
                 UOC.SystemMessage( Strings.Entity_not_found___ );
-                return;
+                return false;
             }
 
-            Pathfind( entity.X, entity.Y, entity.Z );
+            return Pathfind( entity.X, entity.Y, entity.Z );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Movement ) )]

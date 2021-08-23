@@ -72,7 +72,7 @@ namespace ClassicAssist.Tests.MacroCommands
             PushList( "poplist", 0 );
             PushList( "poplist", 1 );
 
-            PopList( "poplist", "0" );
+            PopList( "poplist", 0 );
 
             object[] arr = GetList( "poplist" );
 

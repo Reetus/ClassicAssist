@@ -45,8 +45,10 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = nameof( Strings.Lists ),
             Parameters = new[] { nameof( ParameterType.ListName ), nameof( ParameterType.ElementValueFrontBack ) } )]
-        public static int PopList( string listName, object elementValue = null )
+        public static int PopList( string listName, object elementValue = null)
         {
+            elementValue = elementValue ?? "back";
+
             if ( !ListExists( listName ) )
             {
                 CreateList( listName );

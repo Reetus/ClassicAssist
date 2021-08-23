@@ -23,7 +23,7 @@ namespace ClassicAssist.Tests.MacroCommands
         [TestMethod]
         public void GetListWillReturnArray()
         {
-            Assert.IsTrue( GetList( "shmoo" ) is int[] _ );
+            Assert.IsTrue( GetList( "shmoo" ) is object[] _ );
         }
 
         [TestMethod]
@@ -41,7 +41,7 @@ namespace ClassicAssist.Tests.MacroCommands
 
             PopList( "poplist", "front" );
 
-            int[] arr = GetList( "poplist" );
+            object[] arr = GetList( "poplist" );
 
             Assert.AreEqual( 1, arr.Length );
             Assert.AreEqual( 1, arr[0] );
@@ -56,7 +56,7 @@ namespace ClassicAssist.Tests.MacroCommands
 
             PopList( "poplist" );
 
-            int[] arr = GetList( "poplist" );
+            object[] arr = GetList( "poplist" );
 
             Assert.AreEqual( 1, arr.Length );
             Assert.AreEqual( 0, arr[0] );
@@ -72,9 +72,9 @@ namespace ClassicAssist.Tests.MacroCommands
             PushList( "poplist", 0 );
             PushList( "poplist", 1 );
 
-            PopList( "poplist", "0" );
+            PopList( "poplist", 0 );
 
-            int[] arr = GetList( "poplist" );
+            object[] arr = GetList( "poplist" );
 
             Assert.AreEqual( 1, arr.Length );
             Assert.AreEqual( 1, arr[0] );

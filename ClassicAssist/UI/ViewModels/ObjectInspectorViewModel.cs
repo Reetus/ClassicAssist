@@ -235,7 +235,12 @@ namespace ClassicAssist.UI.ViewModels
                 return 0;
             }
 
-            return properties.Where( p => p.Cliloc == cliloc ).Select( p => int.Parse( p.Arguments[argumentIndex] ) )
+            return properties.Where( p => p.Cliloc == cliloc ).Select( p => 
+                {
+                if ( int.TryParse( p.Arguments[argumentIndex], out int result ) )
+                    return result;
+                return -1;
+                } )
                 .FirstOrDefault();
         }
 

@@ -135,6 +135,16 @@ namespace ClassicAssist.Launcher
                 HasStatusProtocol = true,
                 Website = "http://uotopia.weebly.com/"
             } );
+
+            Shards.Add( new ShardEntry
+            {
+                Name = "UOAlive",
+                Address = "login.uoalive.com",
+                Port = 2593,
+                IsPreset = true,
+                HasStatusProtocol = true,
+                Website = "https://uoalive.com/"
+            } );
         }
 
         public ObservableCollection<ShardEntry> Shards { get; set; } = new ObservableCollection<ShardEntry>();

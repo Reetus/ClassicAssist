@@ -4107,6 +4107,38 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wait up the given timeout for one of any of provided array of string to appear in journal.
+        /// </summary>
+        public static string WAITFORJOURNALARRAY_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WAITFORJOURNALARRAY_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (idx, text) = WaitForJournal([&apos;sex&apos;, &apos;drugs&apos;], 5000)
+        ///
+        ///if idx != None:
+        /// print &quot;Found text &apos;{}&apos; at index {}&quot;.format(text, idx)
+        ///else:
+        /// print &apos;None of them were found :(&apos;.
+        /// </summary>
+        public static string WAITFORJOURNALARRAY_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("WAITFORJOURNALARRAY_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (idx, text) = WaitForJournal([&apos;sex&apos;, &apos;drugs&apos;], 5000).
+        /// </summary>
+        public static string WAITFORJOURNALARRAY_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WAITFORJOURNALARRAY_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pauses until incoming menu packet is received, optional paramters of gump ID and timeout.
         /// </summary>
         public static string WAITFORMENU_COMMAND_DESCRIPTION {

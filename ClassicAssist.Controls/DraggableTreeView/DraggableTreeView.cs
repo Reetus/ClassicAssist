@@ -218,7 +218,14 @@ namespace ClassicAssist.Controls.DraggableTreeView
 
                 _draggedItem = (IDraggable) SelectedItem;
 
-                DragDrop.DoDragDrop( this, SelectedValue, DragDropEffects.Move );
+                try
+                {
+                    DragDrop.DoDragDrop( this, SelectedValue, DragDropEffects.Move );
+                }
+                catch ( Exception )
+                {
+                    // ignored
+                }
             } );
         }
 

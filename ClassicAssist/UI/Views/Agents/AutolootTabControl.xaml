@@ -14,6 +14,7 @@
     xmlns:draggableTreeView="clr-namespace:ClassicAssist.Controls.DraggableTreeView;assembly=ClassicAssist.Controls"
     xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
     xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+    xmlns:data="clr-namespace:ClassicAssist.UO.Data"
     x:Class="ClassicAssist.UI.Views.Agents.AutolootTabControl"
     mc:Ignorable="d"
     d:DesignHeight="250" d:DesignWidth="600" x:Name="userControl">
@@ -25,6 +26,7 @@
             </ResourceDictionary.MergedDictionaries>
             <misc1:BindingProxy x:Key="Proxy" Data="{Binding}" />
             <ValueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+            <valueConverters:EnumToIntegerValueConverter x:Key="EnumToIntegerValueConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
@@ -250,13 +252,47 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="{x:Static resources:Strings.Value}" Width="75" x:Name="ValueColumn">
+                        <GridViewColumn Header="{x:Static resources:Strings.Value}" Width="100" x:Name="ValueColumn">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <controls:EditTextBlock
-                                        Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                        MinWidth="40" ShowIcon="True"
-                                        Width="{Binding Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, Path=Width, ElementName=ValueColumn, Mode=OneWay}" />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <ComboBox Grid.Column="0" Width="90"
+                                                  SelectedItem="{Binding Value, Converter={StaticResource EnumToIntegerValueConverter}, ConverterParameter={x:Type data:Layer}}"
+                                                  ItemsSource="{Binding Source={misc:EnumBindingSource {x:Type data:Layer}}}">
+                                            <ComboBox.Style>
+                                                <Style TargetType="{x:Type ComboBox}"
+                                                       BasedOn="{StaticResource {x:Type ComboBox}}">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Property.AllowedValuesEnum}"
+                                                                     Value="{x:Type data:Layer}">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ComboBox.Style>
+                                        </ComboBox>
+                                        <controls:EditTextBlock Grid.Column="0"
+                                                                Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                                                MinWidth="40" ShowIcon="True"
+                                                                Width="{Binding Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, Path=Width, ElementName=ValueColumn, Mode=OneWay}">
+                                            <controls:EditTextBlock.Style>
+                                                <Style TargetType="{x:Type controls:EditTextBlock}"
+                                                       BasedOn="{StaticResource {x:Type controls:EditTextBlock}}">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Property.AllowedValuesEnum}"
+                                                                     Value="{x:Null}">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </controls:EditTextBlock.Style>
+                                        </controls:EditTextBlock>
+                                    </Grid>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

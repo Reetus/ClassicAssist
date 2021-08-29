@@ -532,7 +532,8 @@ namespace ClassicAssist.UO.Network
             int gumpId = reader.ReadUInt16();
             int ctype = reader.ReadUInt16();
 
-            if ( ctype != 0 && gumpId == 0x09 )
+            // TODO write test for container => autoloot
+            if ( ( reader.Size == 7 /* old client without ctype */ || ctype != 0 ) && gumpId == 0x09 )
             {
                 Task.Run( () => CorpseContainerDisplayEvent?.Invoke( serial ) );
             }

@@ -58,27 +58,6 @@ namespace ClassicAssist.Launcher
 
             Shards.Add( new ShardEntry
             {
-                Name = "UO Outlands",
-                Address = "play.uooutlands.com",
-                Port = 2593,
-                IsPreset = true,
-                HasStatusProtocol = false,
-                ShardType = 2,
-                Website = "https://uooutlands.com/"
-            } );
-
-            Shards.Add( new ShardEntry
-            {
-                Name = "UO Players",
-                Address = "login.uoplayers.com",
-                Port = 2593,
-                IsPreset = true,
-                HasStatusProtocol = true,
-                Website = "https://uoplayers.com/"
-            } );
-
-            Shards.Add( new ShardEntry
-            {
                 Name = "UO Elemental",
                 Address = "login.uoelemental.com",
                 Port = 2593,
@@ -119,15 +98,6 @@ namespace ClassicAssist.Launcher
 
             Shards.Add( new ShardEntry
             {
-                Name = "EntropyUO",
-                Address = "entropyuo.ddns.net",
-                Port = 2593,
-                IsPreset = true,
-                HasStatusProtocol = true
-            } );
-
-            Shards.Add( new ShardEntry
-            {
                 Name = "UOTopia: Awakening",
                 Address = "uotopia.ddns.net",
                 Port = 2593,
@@ -164,6 +134,16 @@ namespace ClassicAssist.Launcher
                 IsPreset = true,
                 HasStatusProtocol = true,
                 Website = "http://uotopia.weebly.com/"
+            } );
+
+            Shards.Add( new ShardEntry
+            {
+                Name = "UOAlive",
+                Address = "login.uoalive.com",
+                Port = 2593,
+                IsPreset = true,
+                HasStatusProtocol = true,
+                Website = "https://uoalive.com/"
             } );
         }
 

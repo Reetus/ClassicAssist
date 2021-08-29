@@ -11,7 +11,7 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     x:Class="ClassicAssist.Launcher.ShardsWindow"
     mc:Ignorable="d" x:Name="Window"
-    Title="{x:Static properties:Resources.Shards}" Height="400" Width="620" WindowStartupLocation="CenterScreen">
+    Title="{x:Static properties:Resources.Shards}" Height="600" Width="620" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <ValueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
@@ -45,6 +45,9 @@
         </ToolBar>
         <ListView x:Name="listView" ItemsSource="{Binding Shards}" Grid.Row="1" SelectedItem="{Binding SelectedShard}"
                   Margin="10">
+            <i:Interaction.Behaviors>
+                <behaviours:GridViewSort ComparerType="{x:Type launcher:ShardListViewComparer}" />
+            </i:Interaction.Behaviors>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="{x:Static properties:Resources.Shard}" Width="150" x:Name="NameColumn">

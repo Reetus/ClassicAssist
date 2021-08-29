@@ -242,7 +242,7 @@ namespace ClassicAssist.UI.ViewModels
         {
             Lists.Clear();
 
-            foreach ( KeyValuePair<string, List<int>> list in ListCommands.GetAllLists() )
+            foreach ( KeyValuePair<string, List<object>> list in ListCommands.GetAllLists() )
             {
                 Lists.Add( new ListEntry { Name = list.Key, Serials = list.Value.ToArray() } );
             }
@@ -331,7 +331,7 @@ namespace ClassicAssist.UI.ViewModels
         public class ListEntry
         {
             public string Name { get; set; }
-            public int[] Serials { get; set; }
+            public object[] Serials { get; set; }
         }
     }
 }

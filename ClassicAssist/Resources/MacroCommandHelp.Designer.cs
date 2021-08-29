@@ -1229,6 +1229,38 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Instructs ClassicUO to follow the specified alias/serial, supply no parameter to cancel.
+        /// </summary>
+        public static string FOLLOW_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("FOLLOW_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if FindObject(&apos;enemy&apos;):
+        /// Follow(&apos;enemy&apos;)
+        /// Attack(&apos;enemy&apos;)
+        ///else:
+        /// Follow() # stop following
+        ///Pause(1000).
+        /// </summary>
+        public static string FOLLOW_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("FOLLOW_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Follow(&apos;enemy&apos;).
+        /// </summary>
+        public static string FOLLOW_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("FOLLOW_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns the number of current followers as per status bar data..
         /// </summary>
         public static string FOLLOWERS_COMMAND_DESCRIPTION {
@@ -1243,6 +1275,34 @@ namespace ClassicAssist.Resources {
         public static string FOLLOWERS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("FOLLOWERS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns True if currently following a target.
+        /// </summary>
+        public static string FOLLOWING_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("FOLLOWING_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if not Following():
+        /// Follow(&apos;enemy&apos;).
+        /// </summary>
+        public static string FOLLOWING_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("FOLLOWING_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Following():.
+        /// </summary>
+        public static string FOLLOWING_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("FOLLOWING_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         
@@ -2493,6 +2553,39 @@ namespace ClassicAssist.Resources {
         public static string PATHFIND_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PATHFIND_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns True if ClassicUO is currently pathfinding.
+        /// </summary>
+        public static string PATHFINDING_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("PATHFINDING_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pathfind(&apos;enemy&apos;)
+        ///Pause(25) # there is a delay between calling Pathfind() and Pathfinding() being True
+        ///
+        ///while Pathfinding():
+        /// Pause(50)
+        /// 
+        ///HeadMsg(&quot;die scum&quot;, &quot;self&quot;).
+        /// </summary>
+        public static string PATHFINDING_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("PATHFINDING_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Pathfinding():.
+        /// </summary>
+        public static string PATHFINDING_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("PATHFINDING_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         
@@ -4010,6 +4103,38 @@ namespace ClassicAssist.Resources {
         public static string WAITFORJOURNAL_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WAITFORJOURNAL_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait up the given timeout for one of any of provided array of string to appear in journal.
+        /// </summary>
+        public static string WAITFORJOURNALARRAY_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WAITFORJOURNALARRAY_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (idx, text) = WaitForJournal([&apos;sex&apos;, &apos;drugs&apos;], 5000)
+        ///
+        ///if idx != None:
+        /// print &quot;Found text &apos;{}&apos; at index {}&quot;.format(text, idx)
+        ///else:
+        /// print &apos;None of them were found :(&apos;.
+        /// </summary>
+        public static string WAITFORJOURNALARRAY_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("WAITFORJOURNALARRAY_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (idx, text) = WaitForJournal([&apos;sex&apos;, &apos;drugs&apos;], 5000).
+        /// </summary>
+        public static string WAITFORJOURNALARRAY_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WAITFORJOURNALARRAY_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

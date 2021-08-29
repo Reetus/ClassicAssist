@@ -1617,4 +1617,57 @@ SetVendorBuyAutoBuy("regs")</value>
   <data name="DIFFHITSPERCENT_COMMAND_EXAMPLE" xml:space="preserve">
     <value>if DiffHitsPercent("self") &gt; 30: # 70% health</value>
   </data>
+  <data name="FOLLOWING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns True if currently following a target</value>
+  </data>
+  <data name="FOLLOWING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Following():</value>
+  </data>
+  <data name="FOLLOW_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Instructs ClassicUO to follow the specified alias/serial, supply no parameter to cancel</value>
+  </data>
+  <data name="FOLLOW_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Follow('enemy')</value>
+  </data>
+  <data name="FOLLOWING_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>if not Following():
+ Follow('enemy')</value>
+  </data>
+  <data name="FOLLOW_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>if FindObject('enemy'):
+ Follow('enemy')
+ Attack('enemy')
+else:
+ Follow() # stop following
+Pause(1000)</value>
+  </data>
+  <data name="PATHFINDING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns True if ClassicUO is currently pathfinding</value>
+  </data>
+  <data name="PATHFINDING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Pathfinding():</value>
+  </data>
+  <data name="PATHFINDING_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>Pathfind('enemy')
+Pause(25) # there is a delay between calling Pathfind() and Pathfinding() being True
+
+while Pathfinding():
+ Pause(50)
+ 
+HeadMsg("die scum", "self")</value>
+  </data>
+  <data name="WAITFORJOURNALARRAY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wait up the given timeout for one of any of provided array of string to appear in journal</value>
+  </data>
+  <data name="WAITFORJOURNALARRAY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>(idx, text) = WaitForJournal(['sex', 'drugs'], 5000)</value>
+  </data>
+  <data name="WAITFORJOURNALARRAY_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>(idx, text) = WaitForJournal(['sex', 'drugs'], 5000)
+
+if idx != None:
+ print "Found text '{}' at index {}".format(text, idx)
+else:
+ print 'None of them were found :('</value>
+  </data>
 </root>

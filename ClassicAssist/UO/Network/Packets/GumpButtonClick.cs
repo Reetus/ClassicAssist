@@ -48,6 +48,10 @@ namespace ClassicAssist.UO.Network.Packets
                     _writer.WriteBigUniFixed( keyValuePair.Value, length );
                 }
             }
+            else
+            {
+                _writer.Write( 0 );
+            }
 
             _writer.Seek( 1, SeekOrigin.Begin );
             _writer.Write( (short) _writer.Length );

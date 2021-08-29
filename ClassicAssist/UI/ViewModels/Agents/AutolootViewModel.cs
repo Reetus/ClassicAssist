@@ -482,6 +482,19 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     }
                 }
             }
+
+            Constraints.AddSorted( new PropertyEntry
+            {
+                Name = Strings.Layer,
+                ConstraintType = PropertyType.Predicate,
+                Predicate = ( item, entry ) =>
+                {
+                    Layer layer = TileData.GetLayer( item.ID );
+
+                    return AutolootHelpers.Operation( entry.Operator, entry.Value, (int) layer );
+                },
+                AllowedValuesEnum = typeof( Layer )
+            } );
         }
 
         private void ClipboardPaste( object obj )

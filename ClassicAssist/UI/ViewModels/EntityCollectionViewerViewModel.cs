@@ -164,7 +164,7 @@ namespace ClassicAssist.UI.ViewModels
         }
 
         public ICommand RefreshCommand =>
-            _refreshCommand ?? ( _refreshCommand = new RelayCommand( Refresh, o => _collection?.Serial != 0 ) );
+            _refreshCommand ?? ( _refreshCommand = new RelayCommand( Refresh, o => !IsPerformingAction ) );
 
         public ObservableCollection<EntityCollectionData> SelectedItems
         {
@@ -443,42 +443,62 @@ namespace ClassicAssist.UI.ViewModels
 
         private void Refresh( object obj )
         {
-            ItemCollection collection = new ItemCollection( _collection.Serial );
-
-            Entity entity = Engine.Items.GetItem( _collection.Serial ) ??
-                            (Entity) Engine.Mobiles.GetMobile( _collection.Serial );
-
-            if ( entity == null )
+            try
             {
-                Commands.SystemMessage( Strings.Cannot_find_item___ );
-                return;
-            }
+                IsPerformingAction = true;
 
-            switch ( entity )
+                ItemCollection collection = new ItemCollection( _collection.Serial );
+
+                if ( collection.Serial == 0 )
+                {
+                    Item[] e = ItemCollection.GetAllItems( Engine.Items.GetItems() );
+                    _collection.Clear();
+                    _collection.Add( e );
+                    Entities = new ObservableCollection<EntityCollectionData>(
+                        _collection.ToEntityCollectionData( _sorter ) );
+                    return;
+                }
+
+                Entity entity = Engine.Items.GetItem( _collection.Serial ) ??
+                                (Entity) Engine.Mobiles.GetMobile( _collection.Serial );
+
+                if ( entity == null )
+                {
+                    Commands.SystemMessage( Strings.Cannot_find_item___ );
+                    return;
+                }
+
+                switch ( entity )
+                {
+                    case Item item:
+                        if ( item.Container == null )
+                        {
+                            Commands.WaitForContainerContentsUse( item.Serial, 1000 );
+                        }
+
+                        collection = item.Container;
+                        break;
+                    case Mobile mobile:
+                        collection = new ItemCollection( entity.Serial ) { mobile.GetEquippedItems() };
+                        break;
+                }
+
+                if ( collection == null )
+                {
+                    return;
+                }
+
+                _collection = !Options.ShowChildItems
+                    ? collection
+                    : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) };
+
+                Entities = new ObservableCollection<EntityCollectionData>(
+                    _collection.ToEntityCollectionData( _sorter ) );
+            }
+            finally
             {
-                case Item item:
-                    if ( item.Container == null )
-                    {
-                        Commands.WaitForContainerContentsUse( item.Serial, 1000 );
-                    }
-
-                    collection = item.Container;
-                    break;
-                case Mobile mobile:
-                    collection = new ItemCollection( entity.Serial ) { mobile.GetEquippedItems() };
-                    break;
+                IsPerformingAction = false;
             }
-
-            if ( collection == null )
-            {
-                return;
-            }
-
-            _collection = !Options.ShowChildItems
-                ? collection
-                : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) };
-
-            Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter ) );
         }
 
         private async Task ContextUseItem( object arg )
@@ -584,14 +604,14 @@ namespace ClassicAssist.UI.ViewModels
                     DataContext = new EntityCollectionViewerViewModel( item.Container )
                 };
 
-                window.ShowDialog();
+                window.Show();
             }
             else
             {
                 ObjectInspectorWindow window =
                     new ObjectInspectorWindow { DataContext = new ObjectInspectorViewModel( ecd.Entity ) };
 
-                window.ShowDialog();
+                window.Show();
             }
         }
 

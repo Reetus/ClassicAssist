@@ -133,6 +133,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Activated following.
+        /// </summary>
+        public static string Activated_following {
+            get {
+                return ResourceManager.GetString("Activated following", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Active Objects.
         /// </summary>
         public static string Active_Objects {
@@ -1119,6 +1128,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Current_Location_ {
             get {
                 return ResourceManager.GetString("Current Location:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deactivated following.
+        /// </summary>
+        public static string Deactivated_following {
+            get {
+                return ResourceManager.GetString("Deactivated following", resourceCulture);
             }
         }
         
@@ -2208,6 +2226,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Latency_ {
             get {
                 return ResourceManager.GetString("Latency:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Layer.
+        /// </summary>
+        public static string Layer {
+            get {
+                return ResourceManager.GetString("Layer", resourceCulture);
             }
         }
         

@@ -10,6 +10,7 @@ using Assistant;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Shared.Resources;
 using IronPython.Hosting;
+using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
 
@@ -27,6 +28,9 @@ namespace ClassicAssist.Data.Macros
         private readonly SystemMessageTextWriter _textWriter = new SystemMessageTextWriter();
         private CancellationTokenSource _cancellationToken;
         private MacroEntry _macro;
+        private ScriptScope _macroScope;
+        private CompiledCode _compiled;
+        private string _lastCompiledHash = string.Empty;
 
         public MacroInvoker()
         {
@@ -68,8 +72,6 @@ namespace ClassicAssist.Data.Macros
         public Exception Exception { get; set; }
         public bool IsFaulted { get; set; }
 
-        public bool IsRunning => Thread?.IsAlive ?? false;
-
         public Stopwatch StopWatch { get; set; } = new Stopwatch();
 
         public Thread Thread { get; set; }
@@ -103,7 +105,8 @@ namespace ClassicAssist.Data.Macros
                 }
             }
 
-            prepend += "from System import Array";
+            prepend += "from System import Array\n";
+            prepend += "import sys";
 
             return prepend;
         }
@@ -166,16 +169,24 @@ namespace ClassicAssist.Data.Macros
 
                     AliasCommands.SetDefaultAliases();
 
-                    ScriptScope macroScope = _engine.CreateScope( importCache );
+                    _macroScope = _engine.CreateScope( importCache );
+                    _macroScope.SetVariable( "Events", new Events() );
+                    _engine.SetTrace( OnTrace );
 
                     StopWatch.Reset();
                     StopWatch.Start();
+
+                    if ( _compiled == null || !_lastCompiledHash.Equals( _macro.Hash ) )
+                    {
+                        _compiled = source.Compile();
+                        _lastCompiledHash = _macro.Hash;
+                    }
 
                     do
                     {
                         _cancellationToken.Token.ThrowIfCancellationRequested();
 
-                        source.Execute( macroScope );
+                        _compiled.Execute( _macroScope );
 
                         StopWatch.Stop();
 
@@ -212,6 +223,10 @@ namespace ClassicAssist.Data.Macros
                 {
                     IsFaulted = true;
                 }
+                catch ( SystemExitException )
+                {
+                    IsFaulted = true;
+                }
                 catch ( Exception e )
                 {
                     IsFaulted = true;
@@ -241,6 +256,17 @@ namespace ClassicAssist.Data.Macros
             }
         }
 
+        private TracebackDelegate OnTrace( TraceBackFrame frame, string result, object payload )
+        {
+            if ( !_cancellationToken.IsCancellationRequested )
+            {
+                return OnTrace;
+            }
+
+            _macroScope.Engine.Execute( "sys.exit()", _macroScope );
+            return null;
+        }
+
         public void Stop()
         {
             _cancellationToken?.Cancel();
@@ -261,7 +287,21 @@ namespace ClassicAssist.Data.Macros
                     Thread.Sleep( diff );
                 }
 
-                Thread?.Abort();
+                if ( _macroScope.ContainsVariable( "Events" ) )
+                {
+                    try
+                    {
+                        Events events = _macroScope.GetVariable<Events>( "Events" );
+                        events.InvokeShutdown();
+                    }
+                    catch ( Exception e )
+                    {
+                        UO.Commands.SystemMessage( string.Format( Strings.Macro_error___0_, e.Message ) );
+                    }
+                }
+
+                //Thread?.Abort();
+                Thread?.Interrupt();
                 Thread?.Join( 100 );
 
                 MacroManager.GetInstance().Replay = false;
@@ -272,5 +312,14 @@ namespace ClassicAssist.Data.Macros
                 UO.Commands.SystemMessage( string.Format( Strings.Macro_error___0_, e.Message ) );
             }
         }
+    }
+
+    public class Events
+    {
+        public void InvokeShutdown()
+        {
+            Shutdown?.Invoke( this, EventArgs.Empty );
+        }
+        public event EventHandler Shutdown;
     }
 }

@@ -26,6 +26,14 @@
                        ToolTip="{x:Static resources:Strings.Clear_All}" />
             </Button>
         </ToolBar>
-        <ListBox ItemsSource="{Binding Items}" misc:ListBoxBehavior.ScrollOnNewItem="True" />
+        <ListBox ItemsSource="{Binding Items}" misc:ListBoxBehavior.ScrollOnNewItem="True"
+                 SelectedItem="{Binding SelectedItem}">
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="{x:Static resources:Strings.Copy}" Command="{Binding CopyCommand}"
+                              CommandParameter="{Binding SelectedItem}" />
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
     </DockPanel>
 </UserControl>

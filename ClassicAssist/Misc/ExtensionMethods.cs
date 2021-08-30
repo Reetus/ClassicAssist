@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -127,6 +129,22 @@ namespace ClassicAssist.Misc
             List<Task<bool>> tasks = waitHandles.Select( waitHandle => waitHandle.ToTask() ).ToList();
 
             return Task.WhenAll( tasks );
+        }
+
+        public static string SHA1( this string str )
+        {
+            using ( SHA1Managed sha1 = new SHA1Managed() )
+            {
+                byte[] hash = sha1.ComputeHash( Encoding.UTF8.GetBytes( str ) );
+                StringBuilder formatted = new StringBuilder( 2 * hash.Length );
+
+                foreach ( byte b in hash )
+                {
+                    formatted.AppendFormat( "{0:X2}", b );
+                }
+
+                return formatted.ToString();
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using Assistant;
@@ -191,6 +192,8 @@ namespace ClassicAssist.UI.ViewModels
         {
             _dispatcher.Invoke( () => { Items.Clear(); } );
 
+            SkillComparer comparer = new SkillComparer( ListSortDirection.Ascending, SkillsGridViewColumn.Enums.Name );
+
             foreach ( SkillInfo si in skills )
             {
                 Skill skill = new Skill
@@ -207,7 +210,10 @@ namespace ClassicAssist.UI.ViewModels
                     LockStatus = si.LockStatus
                 };
 
-                _dispatcher.Invoke( () => { Items.Add( se ); } );
+                _dispatcher.Invoke( () =>
+                {
+                    Items.AddSorted( se, comparer );
+                } );
             }
         }
 

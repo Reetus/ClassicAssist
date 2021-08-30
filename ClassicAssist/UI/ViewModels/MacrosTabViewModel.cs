@@ -222,11 +222,11 @@ namespace ClassicAssist.UI.ViewModels
                 groupArray.Add( entry );
             }
 
-            IEnumerable<MacroEntry> globalMacros = Items.Where( e => e.Global );
+            IEnumerable<MacroEntry> globalMacros = Items.Where( e => e.Global ).ToList();
 
             if ( globalMacros.Any() )
             {
-                string globalJson = JsonConvert.SerializeObject( globalMacros, Formatting.Indented );
+                string globalJson = JsonConvert.SerializeObject( globalMacros.Select( e => e.ToJObject() ), Formatting.Indented );
 
                 File.WriteAllText( Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Macros.json" ),
                     globalJson );
@@ -234,31 +234,7 @@ namespace ClassicAssist.UI.ViewModels
 
             foreach ( MacroEntry macroEntry in Items.Where( e => !e.Global ) )
             {
-                JObject entry = new JObject
-                {
-                    { "Name", macroEntry.Name },
-                    { "Loop", macroEntry.Loop },
-                    { "DoNotAutoInterrupt", macroEntry.DoNotAutoInterrupt },
-                    { "Macro", macroEntry.Macro },
-                    { "PassToUO", macroEntry.PassToUO },
-                    { "Keys", macroEntry.Hotkey.ToJObject() },
-                    { "IsBackground", macroEntry.IsBackground },
-                    { "IsAutostart", macroEntry.IsAutostart },
-                    { "Disableable", macroEntry.Disableable },
-                    { "Group", macroEntry.Group }
-                };
-
-                JArray aliasesArray = new JArray();
-
-                foreach ( JObject aliasObj in macroEntry.Aliases.Select( kvp =>
-                    new JObject { { "Key", kvp.Key }, { "Value", kvp.Value } } ) )
-                {
-                    aliasesArray.Add( aliasObj );
-                }
-
-                entry.Add( "Aliases", aliasesArray );
-
-                macroArray.Add( entry );
+                macroArray.Add( macroEntry.ToJObject() );
             }
 
             macros.Add( "LeftColumnWidth", LeftColumnWidth );
@@ -318,39 +294,36 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( File.Exists( globalPath ) )
             {
-                string globalJson = File.ReadAllText( globalPath );
+                JArray globalJson = JArray.Parse( File.ReadAllText( globalPath ) );
 
-                MacroEntry[] globalMacros = JsonConvert.DeserializeObject<MacroEntry[]>( globalJson );
-
-                if ( globalMacros != null )
+                foreach ( JToken token in globalJson )
                 {
-                    foreach ( MacroEntry entry in globalMacros )
+                    MacroEntry entry = new MacroEntry( token ) { Global = true };
+
+                    entry.Action = async hks => await Execute( entry );
+                    entry.Hotkey = new ShortcutKeys( token["Keys"] );
+
+                    if ( entry.Group != null && !Draggables.Any( e => e is IDraggableGroup && e.Name == entry.Group ) )
                     {
-                        entry.Action = async hks => await Execute( entry );
-
-                        if ( entry.Group != null &&
-                             !Draggables.Any( e => e is IDraggableGroup && e.Name == entry.Group ) )
-                        {
-                            MacroGroup macroGroup = new MacroGroup { Name = entry.Group };
-
-                            if ( Options.CurrentOptions.SortMacrosAlphabetical )
-                            {
-                                Draggables.AddSorted( macroGroup, new GroupsBeforeMacrosComparer() );
-                            }
-                            else
-                            {
-                                Draggables.Add( macroGroup );
-                            }
-                        }
+                        MacroGroup macroGroup = new MacroGroup { Name = entry.Group };
 
                         if ( Options.CurrentOptions.SortMacrosAlphabetical )
                         {
-                            Items.AddSorted( entry, new GroupsBeforeMacrosComparer() );
+                            Draggables.AddSorted( macroGroup, new GroupsBeforeMacrosComparer() );
                         }
                         else
                         {
-                            Items.Add( entry );
+                            Draggables.Add( macroGroup );
                         }
+                    }
+
+                    if ( Options.CurrentOptions.SortMacrosAlphabetical )
+                    {
+                        Items.AddSorted( entry, new GroupsBeforeMacrosComparer() );
+                    }
+                    else
+                    {
+                        Items.Add( entry );
                     }
                 }
             }
@@ -359,18 +332,7 @@ namespace ClassicAssist.UI.ViewModels
             {
                 foreach ( JToken token in config["Macros"] )
                 {
-                    MacroEntry entry = new MacroEntry
-                    {
-                        Name = GetJsonValue( token, "Name", string.Empty ),
-                        Loop = GetJsonValue( token, "Loop", false ),
-                        DoNotAutoInterrupt = GetJsonValue( token, "DoNotAutoInterrupt", false ),
-                        Macro = GetJsonValue( token, "Macro", string.Empty ),
-                        PassToUO = GetJsonValue( token, "PassToUO", true ),
-                        IsBackground = GetJsonValue( token, "IsBackground", false ),
-                        IsAutostart = GetJsonValue( token, "IsAutostart", false ),
-                        Disableable = GetJsonValue( token, "Disableable", true ),
-                        Group = GetJsonValue( token, "Group", string.Empty )
-                    };
+                    MacroEntry entry = new MacroEntry( token );
 
                     // Global macros take precedence for hotkey
                     ShortcutKeys hotkey = new ShortcutKeys( token["Keys"] );
@@ -378,15 +340,6 @@ namespace ClassicAssist.UI.ViewModels
                     if ( !Items.Any( e => e.Global && Equals( e.Hotkey, hotkey ) ) )
                     {
                         entry.Hotkey = hotkey;
-                    }
-
-                    if ( token["Aliases"] != null )
-                    {
-                        foreach ( JToken aliasToken in token["Aliases"] )
-                        {
-                            entry.Aliases.Add( aliasToken["Key"].ToObject<string>(),
-                                aliasToken["Value"].ToObject<int>() );
-                        }
                     }
 
                     entry.Action = async hks => await Execute( entry );

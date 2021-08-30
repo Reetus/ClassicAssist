@@ -40,6 +40,7 @@ namespace ClassicAssist.Data
         private ObservableCollection<FriendEntry> _friends = new ObservableCollection<FriendEntry>();
         private string _friendTargetMessage;
         private bool _getFriendEnemyUsesIgnoreList;
+        private string _hash;
         private bool _includePartyMembersInFriends;
         private string _lastTargetMessage;
         private int _lightLevel;
@@ -191,6 +192,12 @@ namespace ClassicAssist.Data
         {
             get => _getFriendEnemyUsesIgnoreList;
             set => SetProperty( ref _getFriendEnemyUsesIgnoreList, value );
+        }
+
+        public string Hash
+        {
+            get => _hash;
+            set => SetProperty( ref _hash, value );
         }
 
         public bool IncludePartyMembersInFriends
@@ -399,6 +406,8 @@ namespace ClassicAssist.Data
                 }
             }
 
+            obj["Hash"] = obj.ToString().SHA1();
+
             EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
 
             File.WriteAllText( Path.Combine( _profilePath, options.Name ?? DEFAULT_SETTINGS_FILENAME ),
@@ -441,6 +450,7 @@ namespace ClassicAssist.Data
             }
 
             options.Name = options.Name ?? json["Name"]?.ToObject<string>() ?? DEFAULT_SETTINGS_FILENAME;
+            options.Hash = json["Hash"]?.ToObject<string>() ?? string.Empty;
 
             foreach ( BaseViewModel instance in instances )
             {

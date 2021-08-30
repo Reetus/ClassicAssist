@@ -16,7 +16,7 @@ namespace ExportCommands
 {
     internal class Program
     {
-        private static readonly string[] _locales = { "en-US", "it-IT", "pl-PL", "ko-KR" };
+        private static readonly string[] _locales = { "en-US", "it-IT", "pl-PL", "ko-KR", "cs-CZ" };
 
         private static void Main( string[] args )
         {

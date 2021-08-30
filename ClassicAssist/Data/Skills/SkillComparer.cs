@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using ClassicAssist.UI.Misc;
 
 namespace ClassicAssist.Data.Skills
 {
-    public class SkillComparer : IComparer
+    public class SkillComparer : IComparer<SkillEntry>, IComparer
     {
         private readonly ListSortDirection _direction;
         private readonly SkillsGridViewColumn.Enums _sortField;
@@ -18,9 +19,16 @@ namespace ClassicAssist.Data.Skills
 
         public int Compare( object x, object y )
         {
-            SkillEntry first = (SkillEntry) x;
-            SkillEntry second = (SkillEntry) y;
+            if ( !( x is SkillEntry first ) || !( y is SkillEntry second ) )
+            {
+                return 0;
+            }
 
+            return Compare( first, second );
+        }
+
+        public int Compare( SkillEntry first, SkillEntry second )
+        {
             if ( first == null || second == null )
             {
                 return -1;
@@ -61,6 +69,11 @@ namespace ClassicAssist.Data.Skills
             if ( _direction == ListSortDirection.Descending )
             {
                 result = -result;
+            }
+
+            if ( result == 0 )
+            {
+                result = string.Compare( first.Skill.Name, second.Skill.Name, StringComparison.Ordinal );
             }
 
             return result;

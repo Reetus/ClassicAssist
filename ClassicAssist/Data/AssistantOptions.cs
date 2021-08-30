@@ -256,6 +256,9 @@ namespace ClassicAssist.Data
                 case Language.Polish:
                     locale = new CultureInfo( "pl-PL" );
                     break;
+                case Language.Czech:
+                    locale = new CultureInfo( "cs-CZ" );
+                    break;
                 case Language.Default:
                     break;
                 default:

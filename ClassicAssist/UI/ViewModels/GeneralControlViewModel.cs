@@ -208,8 +208,8 @@ namespace ClassicAssist.UI.ViewModels
             JToken general = json["General"];
 
             Options.LightLevel = general["LightLevel"]?.ToObject<int>() ?? 100;
-            Options.ActionDelay = general["ActionDelay"]?.ToObject<bool>() ?? false;
-            Options.ActionDelayMS = general["ActionDelayMS"]?.ToObject<int>() ?? 900;
+            Options.ActionDelay = general["ActionDelay"]?.ToObject<bool>() ?? true;
+            Options.ActionDelayMS = general["ActionDelayMS"]?.ToObject<int>() ?? 1000;
             Options.AlwaysOnTop = general["AlwaysOnTop"]?.ToObject<bool>() ?? false;
             Options.Debug = general["Debug"]?.ToObject<bool>() ?? false;
             Options.SysTray = general["SysTray"]?.ToObject<bool>() ?? false;

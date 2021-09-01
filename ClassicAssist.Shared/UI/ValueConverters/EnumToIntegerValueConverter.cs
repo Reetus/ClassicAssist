@@ -19,6 +19,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq.Expressions;
 using System.Windows.Data;
 
 namespace ClassicAssist.Shared.UI.ValueConverters
@@ -31,7 +32,14 @@ namespace ClassicAssist.Shared.UI.ValueConverters
 
             if ( parameter is Type type && value != null )
             {
-                enumValue = (Enum) Enum.Parse( type, value.ToString() );
+                try
+                {
+                    enumValue = (Enum) Enum.Parse( type, value.ToString() );
+                }
+                catch ( OverflowException )
+                {
+                    return enumValue;
+                }
             }
 
             return enumValue;

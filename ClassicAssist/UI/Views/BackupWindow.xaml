@@ -6,6 +6,7 @@
         xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         WindowStartupLocation="CenterScreen"
         Title="{x:Static resources:Strings.Profile_Backup}" Height="500" Width="600">
@@ -29,8 +30,11 @@
             <RowDefinition Height="5" />
         </Grid.RowDefinitions>
         <TextBlock Text="{x:Static resources:Strings.Profile_backup_in_progress___}" Margin="10" />
-        <ListBox ItemsSource="{Binding Messages}" Grid.Row="1" Margin="10,0,10,10"
-                 misc:ListBoxBehavior.ScrollOnNewItem="True" />
+        <ListBox ItemsSource="{Binding Messages}" Grid.Row="1" Margin="10,0,10,10">
+            <i:Interaction.Behaviors>
+                <misc:ItemsControlAutoScrollBehaviour/>
+            </i:Interaction.Behaviors>
+        </ListBox>
         <ProgressBar IsIndeterminate="True" Grid.Row="2"
                      Visibility="{Binding IsWorking, Converter={StaticResource BooleanToVisibilityConverter}}" />
     </Grid>

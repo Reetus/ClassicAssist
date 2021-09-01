@@ -32,7 +32,12 @@ namespace ClassicAssist.UO.Network
 
             if ( Options.CurrentOptions.CheckHandsPotions )
             {
-                return AbilitiesManager.GetInstance().CheckHands( serial );
+                bool result = AbilitiesManager.GetInstance().CheckHands( serial );
+
+                if ( result )
+                {
+                    return true;
+                }
             }
 
             if ( Options.CurrentOptions.UseObjectQueue )

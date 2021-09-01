@@ -32,8 +32,18 @@ using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UO.Network
 {
+    public enum ActionQueueEvents
+    {
+        Enqueue,
+        Enter,
+        Execute,
+        Finish
+    }
+
     public static class ActionPacketQueue
     {
+        public delegate void dActionQueueEvent( ActionQueueEvents actionEvent, BaseQueueItem queueItem );
+
         private const int DRAG_DROP_DISTANCE = 3;
         private const int DROP_DELAY = 50;
         private const int MAX_ATTEMPTS = 5;
@@ -41,12 +51,17 @@ namespace ClassicAssist.UO.Network
         private static readonly ThreadPriorityQueue<BaseQueueItem> _actionPacketQueue =
             new ThreadPriorityQueue<BaseQueueItem>( ProcessActionPacketQueue );
 
+        public static event dActionQueueEvent ActionQueueEvent;
+
         private static void ProcessActionPacketQueue( BaseQueueItem queueItem )
         {
             switch ( queueItem )
             {
                 case PacketQueueItem actionQueueItem:
                 {
+                    actionQueueItem.TimeSpan = DateTime.Now - actionQueueItem.DateTime;
+                    ActionQueueEvent?.Invoke( ActionQueueEvents.Enter, actionQueueItem );
+
                     if ( actionQueueItem.DelaySend )
                     {
                         while ( Engine.LastActionPacket +
@@ -63,20 +78,26 @@ namespace ClassicAssist.UO.Network
                         return;
                     }
 
+                    actionQueueItem.TimeSpan = DateTime.Now - actionQueueItem.DateTime;
+                    ActionQueueEvent?.Invoke( ActionQueueEvents.Execute, actionQueueItem );
+
                     byte[] data = actionQueueItem.Packet;
                     int length = actionQueueItem.Length;
-
-                    Commands.SystemMessage( $"OnAction {actionQueueItem.Caller}", Commands.SystemMessageHues.Yellow );
 
                     Engine.LastActionPacket = DateTime.Now;
                     Engine.SendPacketToServer( data, length );
 
                     actionQueueItem.Result = true;
+                    actionQueueItem.TimeSpan = DateTime.Now - actionQueueItem.DateTime;
+                    ActionQueueEvent?.Invoke( ActionQueueEvents.Finish, actionQueueItem );
                     actionQueueItem.WaitHandle.Set();
                     break;
                 }
                 case ActionQueueItem actionItem:
                 {
+                    actionItem.TimeSpan = DateTime.Now - actionItem.DateTime;
+                    ActionQueueEvent?.Invoke( ActionQueueEvents.Enter, actionItem );
+
                     if ( actionItem.DelaySend )
                     {
                         while ( Engine.LastActionPacket +
@@ -86,7 +107,8 @@ namespace ClassicAssist.UO.Network
                         }
                     }
 
-                    Commands.SystemMessage( $"OnAction {actionItem.Caller}", Commands.SystemMessageHues.Yellow );
+                    actionItem.TimeSpan = DateTime.Now - actionItem.DateTime;
+                    ActionQueueEvent?.Invoke( ActionQueueEvents.Execute, actionItem );
 
                     bool? result = actionItem.Action?.Invoke( actionItem.Arguments );
 
@@ -96,6 +118,8 @@ namespace ClassicAssist.UO.Network
                     }
 
                     actionItem.Result = result ?? true;
+                    actionItem.TimeSpan = DateTime.Now - actionItem.DateTime;
+                    ActionQueueEvent?.Invoke( ActionQueueEvents.Finish, actionItem );
                     actionItem.WaitHandle.Set();
                     break;
                 }
@@ -106,17 +130,18 @@ namespace ClassicAssist.UO.Network
         public static Task EnqueuePacket( byte[] packet, int length, QueuePriority priority, bool delaySend,
             CancellationToken cancellationToken = default, [CallerMemberName] string caller = "" )
         {
-            return EnqueuePacket( new PacketQueueItem( packet, length, delaySend, caller ) { Token = cancellationToken },
-                priority );
+            return EnqueuePacket(
+                new PacketQueueItem( packet, length, delaySend, caller ) { Token = cancellationToken }, priority );
         }
 
         public static Task EnqueuePacket( BasePacket packet, QueuePriority priority = QueuePriority.Low,
-            bool delaySend = true, CancellationToken cancellationToken = default, [CallerMemberName] string caller = "" )
+            bool delaySend = true, CancellationToken cancellationToken = default,
+            [CallerMemberName] string caller = "" )
         {
             byte[] data = packet.ToArray();
 
-            return EnqueuePacket( new PacketQueueItem( data, data.Length, delaySend, caller ) { Token = cancellationToken },
-                priority );
+            return EnqueuePacket(
+                new PacketQueueItem( data, data.Length, delaySend, caller ) { Token = cancellationToken }, priority );
         }
 
         public static Task EnqueuePacket( PacketQueueItem packetQueueItem, QueuePriority priority )
@@ -126,7 +151,7 @@ namespace ClassicAssist.UO.Network
                 return Task.CompletedTask;
             }
 
-            _actionPacketQueue.Enqueue( packetQueueItem, priority );
+            Enqueue( packetQueueItem, priority );
 
             return packetQueueItem.WaitHandle.ToTask();
         }
@@ -138,17 +163,28 @@ namespace ClassicAssist.UO.Network
             byte[] dragPacket = new DragItem( serial, amount ).ToArray();
             byte[] dropItem = new DropItem( serial, -1, x, y, z ).ToArray();
 
-            PacketQueueItem dragPacketQueueItem = new PacketQueueItem( dragPacket, dragPacket.Length, delaySend, caller );
-            _actionPacketQueue.Enqueue( dragPacketQueueItem, priority );
+            PacketQueueItem dragPacketQueueItem =
+                new PacketQueueItem( dragPacket, dragPacket.Length, delaySend, caller );
+            Enqueue( dragPacketQueueItem, priority );
 
             PacketQueueItem dropPacketQueueItem = new PacketQueueItem( dropItem, dropItem.Length, delaySend, caller );
-            _actionPacketQueue.Enqueue( dropPacketQueueItem, priority );
+            Enqueue( dropPacketQueueItem, priority );
 
             return new[] { dragPacketQueueItem.WaitHandle, dropPacketQueueItem.WaitHandle }.ToTask();
         }
 
+        private static void Enqueue( BaseQueueItem queueItem, QueuePriority priority )
+        {
+            queueItem.DateTime = DateTime.Now;
+
+            ActionQueueEvent?.Invoke( ActionQueueEvents.Enqueue, queueItem );
+
+            _actionPacketQueue.Enqueue( queueItem, priority );
+        }
+
         public static Task EnqueuePackets( IEnumerable<BasePacket> packets, QueuePriority priority = QueuePriority.Low,
-            bool delaySend = true, CancellationToken cancellationToken = default, [CallerMemberName] string caller = "" )
+            bool delaySend = true, CancellationToken cancellationToken = default,
+            [CallerMemberName] string caller = "" )
         {
             if ( !CheckUseObjectQueueLength() )
             {
@@ -165,7 +201,7 @@ namespace ClassicAssist.UO.Network
                     new PacketQueueItem( data, data.Length, delaySend, caller ) { Token = cancellationToken };
                 handles.Add( packetQueueItem.WaitHandle );
 
-                _actionPacketQueue.Enqueue( packetQueueItem, priority );
+                Enqueue( packetQueueItem, priority );
             }
 
             return handles.ToTask();
@@ -174,7 +210,8 @@ namespace ClassicAssist.UO.Network
         public static Task<bool> EnqueueDragDrop( int serial, int amount, int containerSerial,
             QueuePriority priority = QueuePriority.Low, bool checkRange = false, bool checkExisting = false,
             bool delaySend = true, int x = -1, int y = -1, CancellationToken cancellationToken = default,
-            bool requeueOnFailure = false, Func<int, int, bool> successPredicate = null, int attempt = 0, [CallerMemberName] string caller = "" )
+            bool requeueOnFailure = false, Func<int, int, bool> successPredicate = null, int attempt = 0,
+            [CallerMemberName] string caller = "" )
         {
             if ( checkExisting && _actionPacketQueue.Contains( e => e is ActionQueueItem aqi && aqi.Serial == serial ) )
             {
@@ -203,14 +240,12 @@ namespace ClassicAssist.UO.Network
                 Engine.SendPacketToServer( new DragItem( serial, amount ) );
                 Thread.Sleep( DROP_DELAY );
                 Engine.SendPacketToServer( new DropItem( serial, containerSerial, x, y, 0 ) );
+                Engine.LastActionPacket = DateTime.Now;
 
                 if ( !requeueOnFailure || successPredicate == null || attempt >= MAX_ATTEMPTS )
                 {
                     return true;
                 }
-
-                Stopwatch stopWatch = new Stopwatch();
-                stopWatch.Start();
 
                 Commands.WaitForContainerContents( containerSerial, Options.CurrentOptions.ActionDelayMS );
 
@@ -225,31 +260,28 @@ namespace ClassicAssist.UO.Network
                 Commands.SystemMessage( $"Requeue: 0x{serial:x8}" );
 #endif
                 EnqueueDragDrop( serial, amount, containerSerial, priority, checkRange, checkExisting, delaySend, x, y,
-                    cancellationToken, true, successPredicate, attempt++ );
+                    cancellationToken, true, successPredicate, ++attempt );
 
-                stopWatch.Stop();
-
-                int delayRemaining = Options.CurrentOptions.ActionDelayMS - (int) stopWatch.ElapsedMilliseconds;
-
-                if ( delayRemaining > 0 )
-                {
-                    Thread.Sleep( delayRemaining );
-                }
-
-                // Return false so we don't rewait the action delay
+                //// Return false so we don't rewait the action delay
                 return false;
-            } ) { CheckRange = checkRange, DelaySend = delaySend, Serial = serial, Arguments = checkRange };
-            
-            actionQueueItem.Caller = caller;
+            } )
+            {
+                CheckRange = checkRange,
+                DelaySend = delaySend,
+                Serial = serial,
+                Arguments = checkRange,
+                Caller = caller
+            };
 
-            _actionPacketQueue.Enqueue( actionQueueItem, priority );
+            Enqueue( actionQueueItem, priority );
 
             return actionQueueItem.WaitHandle.ToTask( () => actionQueueItem.Result );
         }
 
         public static Task<bool> EnqueueAction<T>( T arguments, Func<T, bool> action,
             QueuePriority priority = QueuePriority.Low, bool delaySend = true,
-            CancellationToken cancellationToken = default, bool checkUseObjectQueue = false, [CallerMemberName] string caller = "" )
+            CancellationToken cancellationToken = default, bool checkUseObjectQueue = false,
+            [CallerMemberName] string caller = "" )
         {
             if ( checkUseObjectQueue && !CheckUseObjectQueueLength() )
             {
@@ -262,7 +294,7 @@ namespace ClassicAssist.UO.Network
                     DelaySend = delaySend, Token = cancellationToken, Arguments = arguments, Caller = caller
                 };
 
-            _actionPacketQueue.Enqueue( actionQueueItem, priority );
+            Enqueue( actionQueueItem, priority );
 
             return actionQueueItem.WaitHandle.ToTask( () => actionQueueItem.Result );
         }
@@ -279,14 +311,14 @@ namespace ClassicAssist.UO.Network
 
         public static bool CheckUseObjectQueueLength()
         {
-            if ( _actionPacketQueue.Count() > Options.CurrentOptions.UseObjectQueueAmount )
+            if ( _actionPacketQueue.Count() < Options.CurrentOptions.UseObjectQueueAmount )
             {
-                Commands.SystemMessage( Strings.Object_queue_full, (int) Commands.SystemMessageHues.Yellow );
-
-                return false;
+                return true;
             }
 
-            return true;
+            Commands.SystemMessage( Strings.Object_queue_full, (int) Commands.SystemMessageHues.Yellow );
+
+            return false;
         }
     }
 }

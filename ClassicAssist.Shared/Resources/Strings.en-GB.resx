@@ -1593,4 +1593,13 @@ Are you sure you wish to continue?</value>
   <data name="Deactivated following" xml:space="preserve">
     <value>Deactivated following</value>
   </data>
+  <data name="Event" xml:space="preserve">
+    <value>Event</value>
+  </data>
+  <data name="Caller" xml:space="preserve">
+    <value>Caller</value>
+  </data>
+  <data name="Elapsed" xml:space="preserve">
+    <value>Elapsed</value>
+  </data>
 </root>

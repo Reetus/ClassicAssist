@@ -1,6 +1,6 @@
 ﻿#region License
 
-// Copyright (C) 2020 Reetus
+// Copyright (C) 2021 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -30,6 +30,8 @@ namespace ClassicAssist.UI.Misc
             typeof( ScrollViewer ), typeof( ItemsControlAutoScrollBehaviour ),
             new PropertyMetadata( default( ScrollViewer ) ) );
 
+        private INotifyCollectionChanged _incc;
+
         public ScrollViewer ScrollViewer
         {
             get => (ScrollViewer) GetValue( ScrollViewerProperty );
@@ -40,19 +42,28 @@ namespace ClassicAssist.UI.Misc
         {
             base.OnAttached();
 
-            ( (INotifyCollectionChanged) AssociatedObject.Items ).CollectionChanged += OnCollectionChanged;
+            if ( AssociatedObject.Items is INotifyCollectionChanged incc )
+            {
+                _incc = incc;
+                _incc.CollectionChanged += OnCollectionChanged;
+            }
         }
 
         private void OnCollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
         {
-            ScrollViewer?.ScrollToEnd();
+            ScrollViewer scrollViewer = ScrollViewer ?? AssociatedObject.GetChildOfType<ScrollViewer>();
+
+            scrollViewer?.ScrollToEnd();
         }
 
         protected override void OnDetaching()
         {
-            base.OnDetaching();
+            if ( _incc != null )
+            {
+                _incc.CollectionChanged -= OnCollectionChanged;
+            }
 
-            ( (INotifyCollectionChanged) AssociatedObject.Items ).CollectionChanged -= OnCollectionChanged;
+            base.OnDetaching();
         }
     }
 }

@@ -24,6 +24,9 @@ using ClassicAssist.UI.Views;
 using ClassicAssist.UI.Views.Macros;
 using ClassicAssist.UO;
 using ICSharpCode.AvalonEdit.Document;
+using IronPython.Hosting;
+using Microsoft.Scripting;
+using Microsoft.Scripting.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -38,7 +41,10 @@ namespace ClassicAssist.UI.ViewModels
         private TextDocument _document;
         private ObservableCollection<IDraggable> _draggables = new ObservableCollection<IDraggable>();
         private ICommand _executeCommand;
+        private ICommand _formatCodeCommand;
+        private string _formatError;
         private ICommand _inspectObjectCommand;
+        private bool _isPerformingAction;
         private bool _isRecording;
         private double _leftColumnWidth = 200;
         private ICommand _newGroupCommand;
@@ -108,6 +114,16 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ExecuteCommand =>
             _executeCommand ?? ( _executeCommand = new RelayCommandAsync( Execute, CanExecute ) );
 
+        public ICommand FormatCodeCommand =>
+            _formatCodeCommand ??
+            ( _formatCodeCommand = new RelayCommandAsync( FormatCode, o => SelectedItem != null ) );
+
+        public string FormatError
+        {
+            get => _formatError;
+            set => SetProperty( ref _formatError, value );
+        }
+
         public ShortcutKeys Hotkey
         {
             get => SelectedItem?.Hotkey;
@@ -117,6 +133,12 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand InspectObjectCommand =>
             _inspectObjectCommand ??
             ( _inspectObjectCommand = new RelayCommandAsync( InspectObject, o => Engine.Connected ) );
+
+        public bool IsPerformingAction
+        {
+            get => _isPerformingAction;
+            set => SetProperty( ref _isPerformingAction, value );
+        }
 
         public bool IsRecording
         {
@@ -486,37 +508,45 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            HttpClient httpClient = new HttpClient();
-
-            ShareMacroModel data = new ShareMacroModel { Content = macro.Macro };
-
-            HttpResponseMessage response = await httpClient.PostAsync(
-                "https://classicassist.azurewebsites.net/api/macros/stage",
-                new StringContent( JsonConvert.SerializeObject( data ), Encoding.UTF8, "application/json" ) );
-
-            string json = await response.Content.ReadAsStringAsync();
-
-            if ( response.IsSuccessStatusCode )
+            try
             {
-                ShareMacroModel responseData = JsonConvert.DeserializeObject<ShareMacroModel>( json );
+                IsPerformingAction = true;
+                HttpClient httpClient = new HttpClient();
 
-                if ( !string.IsNullOrEmpty( responseData?.Uuid ) )
-                {
-                    Process.Start( $"https://classicassist.azurewebsites.net/?id={responseData.Uuid}" );
-                }
-            }
-            else
-            {
-                ShareErrorResponseModel errorObj = JsonConvert.DeserializeObject<ShareErrorResponseModel>( json );
+                ShareMacroModel data = new ShareMacroModel { Content = macro.Macro };
 
-                if ( errorObj != null && !string.IsNullOrEmpty( errorObj.Message ) )
+                HttpResponseMessage response = await httpClient.PostAsync(
+                    "https://classicassist.azurewebsites.net/api/macros/stage",
+                    new StringContent( JsonConvert.SerializeObject( data ), Encoding.UTF8, "application/json" ) );
+
+                string json = await response.Content.ReadAsStringAsync();
+
+                if ( response.IsSuccessStatusCode )
                 {
-                    MessageBox.Show( $"Error sharing macro: {errorObj.Message}" );
+                    ShareMacroModel responseData = JsonConvert.DeserializeObject<ShareMacroModel>( json );
+
+                    if ( !string.IsNullOrEmpty( responseData?.Uuid ) )
+                    {
+                        Process.Start( $"https://classicassist.azurewebsites.net/?id={responseData.Uuid}" );
+                    }
                 }
                 else
                 {
-                    MessageBox.Show( $"Unknown error sharing macro: {response.StatusCode}" );
+                    ShareErrorResponseModel errorObj = JsonConvert.DeserializeObject<ShareErrorResponseModel>( json );
+
+                    if ( errorObj != null && !string.IsNullOrEmpty( errorObj.Message ) )
+                    {
+                        MessageBox.Show( $"Error sharing macro: {errorObj.Message}" );
+                    }
+                    else
+                    {
+                        MessageBox.Show( $"Unknown error sharing macro: {response.StatusCode}" );
+                    }
                 }
+            }
+            finally
+            {
+                IsPerformingAction = false;
             }
         }
 
@@ -740,6 +770,63 @@ namespace ClassicAssist.UI.ViewModels
         {
             Process.Start( "explorer.exe",
                 Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Modules" ) );
+        }
+
+        private async Task FormatCode( object obj )
+        {
+            if ( !( obj is MacroEntry macroEntry ) )
+            {
+                return;
+            }
+
+            string code =
+                $"from yapf.yapflib.yapf_api import FormatCode\r\nformatted_code, changed = FormatCode('{macroEntry.Macro.Replace( "\r\n", @"\n" ).Replace( "\n", @"\n" ).Replace( "'", @"\'" )}')";
+
+            try
+            {
+                IsPerformingAction = true;
+                FormatError = null;
+                ScriptEngine engine = Python.CreateEngine();
+                string modulePath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Modules" );
+                ICollection<string> searchPaths = engine.GetSearchPaths();
+
+                if ( !searchPaths.Contains( modulePath ) )
+                {
+                    searchPaths.Add( modulePath );
+                }
+
+                searchPaths.Add( Engine.StartupPath );
+
+                engine.SetSearchPaths( searchPaths );
+
+                ScriptSource importSource = engine.CreateScriptSourceFromString( code );
+                ScriptScope scope = engine.CreateScope();
+                importSource.Compile();
+
+                await Task.Run( () => importSource.Execute( scope ) );
+
+                bool changed = scope.GetVariable<bool>( "changed" );
+
+                if ( changed )
+                {
+                    macroEntry.Macro = scope.GetVariable<string>( "formatted_code" ).Replace( "\n", "\r\n" );
+                }
+            }
+            catch ( Exception e )
+            {
+                if ( e is SyntaxErrorException syntaxError )
+                {
+                    FormatError = $"{Strings.Line_Number} {syntaxError.RawSpan.Start.Line}: {e.Message}";
+                }
+                else
+                {
+                    FormatError = e.Message;
+                }
+            }
+            finally
+            {
+                IsPerformingAction = false;
+            }
         }
     }
 

@@ -6,6 +6,7 @@
              xmlns:debug="clr-namespace:ClassicAssist.UI.ViewModels.Debug"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
@@ -22,6 +23,10 @@
     <DockPanel>
         <CheckBox IsChecked="{Binding IsEnabled}" Content="{x:Static resources:Strings.Enabled}" DockPanel.Dock="Top"
                   Margin="0,0,0,10" />
-        <ListBox ItemsSource="{Binding Messages}" misc:ListBoxBehavior.ScrollOnNewItem="True" />
+        <ListBox ItemsSource="{Binding Messages}">
+            <i:Interaction.Behaviors>
+                <misc:ItemsControlAutoScrollBehaviour/>
+            </i:Interaction.Behaviors>
+        </ListBox>
     </DockPanel>
 </UserControl>

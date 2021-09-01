@@ -470,6 +470,23 @@
                     </DrawingGroup>
                 </DrawingImage.Drawing>
             </DrawingImage>
+            <DrawingImage x:Key="AlignLeftIcon">
+                <DrawingImage.Drawing>
+                    <DrawingGroup ClipGeometry="M0,0 V512 H448 V0 H0 Z">
+                        <DrawingGroup.Transform>
+                            <TranslateTransform X="3.9118854147091042E-06" Y="0" />
+                        </DrawingGroup.Transform>
+                        <GeometryDrawing Brush="{DynamicResource IconForegroundBrush}" Geometry="F1 M448,512z M0,0z M12.83,352L275.17,352A12.82,12.82,0,0,0,288,339.17L288,300.83A12.82,12.82,0,0,0,275.17,288L12.83,288A12.82,12.82,0,0,0,0,300.83L0,339.17A12.82,12.82,0,0,0,12.83,352z M12.83,96L275.17,96A12.82,12.82,0,0,0,288,83.17L288,44.83A12.82,12.82,0,0,0,275.17,32L12.83,32A12.82,12.82,0,0,0,0,44.83L0,83.17A12.82,12.82,0,0,0,12.83,96z M432,160L16,160A16,16,0,0,0,0,176L0,208A16,16,0,0,0,16,224L432,224A16,16,0,0,0,448,208L448,176A16,16,0,0,0,432,160z M432,416L16,416A16,16,0,0,0,0,432L0,464A16,16,0,0,0,16,480L432,480A16,16,0,0,0,448,464L448,432A16,16,0,0,0,432,416z" />
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
+            <DrawingImage x:Key="ExclamationIcon">
+                <DrawingImage.Drawing>
+                    <DrawingGroup ClipGeometry="M0,0 V512 H192 V0 H0 Z">
+                        <GeometryDrawing Brush="{DynamicResource IconForegroundBrush}" Geometry="F1 M192,512z M0,0z M176,432C176,476.112 140.112,512 96,512 51.888,512 16,476.112 16,432 16,387.888 51.888,352 96,352 140.112,352 176,387.888 176,432z M25.26,25.199L38.86,297.199C39.499,309.972,50.041,320,62.83,320L129.17,320C141.959,320,152.501,309.972,153.14,297.199L166.74,25.199C167.425,11.49,156.496,0,142.77,0L49.23,0C35.504,0,24.575,11.49,25.26,25.199z" />
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

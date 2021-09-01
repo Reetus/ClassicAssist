@@ -628,6 +628,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Caller.
+        /// </summary>
+        public static string Caller {
+            get {
+                return ResourceManager.GetString("Caller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -1294,6 +1303,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Elapsed.
+        /// </summary>
+        public static string Elapsed {
+            get {
+                return ResourceManager.GetString("Elapsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Emote Sounds.
         /// </summary>
         public static string Emote_Sounds {
@@ -1465,6 +1483,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Event.
+        /// </summary>
+        public static string Event {
+            get {
+                return ResourceManager.GetString("Event", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Execute.
         /// </summary>
         public static string Execute {
@@ -1578,6 +1605,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Force_Walk_On {
             get {
                 return ResourceManager.GetString("Force Walk On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format Code.
+        /// </summary>
+        public static string Format_Code {
+            get {
+                return ResourceManager.GetString("Format Code", resourceCulture);
             }
         }
         

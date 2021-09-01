@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using Assistant;
 using ClassicAssist.Data.Abilities;
 using ClassicAssist.Misc;
@@ -85,29 +87,33 @@ namespace ClassicAssist.Data.Macros.Commands
 
             int containerSerial = AliasCommands.ResolveSerial( container );
 
-            if ( !Engine.Items.GetItem( containerSerial, out Item containerItem ) )
+            ActionPacketQueue.EnqueueAction( ( serial, hue, containerSerial ), data =>
             {
-                UOC.SystemMessage( Strings.Cannot_find_container___ );
+                if ( !Engine.Items.GetItem( data.containerSerial, out Item containerItem ) )
+                {
+                    UOC.SystemMessage( Strings.Cannot_find_container___ );
 
-                return;
-            }
+                    return false;
+                }
 
-            Item useItem = hue == -1
-                ? containerItem.Container?.SelectEntity( i => i.ID == serial )
-                : containerItem.Container?.SelectEntity( i => i.ID == serial && i.Hue == hue );
+                Item useItem = data.hue == -1
+                    ? containerItem.Container?.SelectEntity( i => i.ID == data.serial )
+                    : containerItem.Container?.SelectEntity( i => i.ID == data.serial && i.Hue == data.hue );
 
-            if ( useItem == null )
-            {
-                UOC.SystemMessage( Strings.Cannot_find_item___ );
+                if ( useItem == null )
+                {
+                    UOC.SystemMessage( Strings.Cannot_find_item___ );
 
-                return;
-            }
+                    return false;
+                }
 
-            if ( !AbilitiesManager.GetInstance().CheckHands( useItem.Serial ) )
-            {
-                ActionPacketQueue.EnqueuePacket( new UseObject( useItem.Serial ),
-                    skipQueue ? QueuePriority.Immediate : QueuePriority.Medium );
-            }
+                if ( !AbilitiesManager.GetInstance().CheckHands( useItem.Serial ) )
+                {
+                    Engine.SendPacketToServer( new UseObject( useItem.Serial ) );
+                }
+
+                return true;
+            }, skipQueue ? QueuePriority.Immediate : QueuePriority.Medium, true, CancellationToken.None, true );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Actions ),

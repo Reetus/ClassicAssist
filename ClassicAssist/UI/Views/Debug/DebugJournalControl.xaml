@@ -6,6 +6,7 @@
              xmlns:debug="clr-namespace:ClassicAssist.UI.ViewModels.Debug"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
              d:DesignHeight="400" d:DesignWidth="550">
     <UserControl.DataContext>
@@ -26,8 +27,11 @@
                        ToolTip="{x:Static resources:Strings.Clear_All}" />
             </Button>
         </ToolBar>
-        <ListBox ItemsSource="{Binding Items}" misc:ListBoxBehavior.ScrollOnNewItem="True"
+        <ListBox ItemsSource="{Binding Items}"
                  SelectedItem="{Binding SelectedItem}">
+            <i:Interaction.Behaviors>
+                <misc:ItemsControlAutoScrollBehaviour/>
+            </i:Interaction.Behaviors>
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="{x:Static resources:Strings.Copy}" Command="{Binding CopyCommand}"

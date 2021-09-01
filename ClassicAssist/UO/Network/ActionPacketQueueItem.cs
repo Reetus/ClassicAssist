@@ -29,19 +29,25 @@ namespace ClassicAssist.UO.Network
             WaitHandle = new AutoResetEvent( false );
         }
 
+        public DateTime DateTime { get; set; }
+        public string Caller { get; set; }
         public bool DelaySend { get; set; }
         public bool Result { get; set; }
+
+        public string UUID { get; } = Guid.NewGuid().ToString();
         public CancellationToken Token { get; set; } = CancellationToken.None;
         public EventWaitHandle WaitHandle { get; set; }
+        public TimeSpan? TimeSpan { get; set; }
     }
 
     public class PacketQueueItem : BaseQueueItem
     {
-        public PacketQueueItem( byte[] packet, int length, bool delaySend )
+        public PacketQueueItem( byte[] packet, int length, bool delaySend, string caller )
         {
             Packet = packet;
             Length = length;
             DelaySend = delaySend;
+            Caller = caller;
         }
 
         public int Length { get; set; }

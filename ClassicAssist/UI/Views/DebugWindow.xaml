@@ -7,7 +7,9 @@
     xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
     xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
     xmlns:debug="clr-namespace:ClassicAssist.UI.Views.Debug"
-    xmlns:controls="clr-namespace:ClassicAssist.UI.Controls" x:Name="window"
+    xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    x:Name="window"
     x:Class="ClassicAssist.UI.Views.DebugWindow"
     mc:Ignorable="d"
     Title="Debug Window" Height="450" Width="600" Topmost="{Binding Topmost}"
@@ -61,8 +63,10 @@
                     </ComboBox>
                 </ToolBar>
                 <Border BorderThickness="1" BorderBrush="#FF888888" Grid.Row="1">
-                    <ListBox ItemsSource="{Binding Items}"
-                             misc:ListBoxBehavior.ScrollOnNewItem="true">
+                    <ListBox ItemsSource="{Binding Items}">
+                        <i:Interaction.Behaviors>
+                            <misc:ItemsControlAutoScrollBehaviour />
+                        </i:Interaction.Behaviors>
                         <ListBox.Template>
                             <ControlTemplate>
                                 <ScrollViewer VirtualizingStackPanel.IsVirtualizing="True"
@@ -122,6 +126,9 @@
         </TabItem>
         <TabItem Header="{x:Static resources:Strings.Keyboard}">
             <debug:DebugKeyboardControl />
+        </TabItem>
+        <TabItem Header="{x:Static resources:Strings.Actions}">
+            <debug:DebugActionQueueControl />
         </TabItem>
     </TabControl>
 </Window>

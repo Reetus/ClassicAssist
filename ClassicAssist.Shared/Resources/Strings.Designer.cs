@@ -1609,6 +1609,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Format Code.
+        /// </summary>
+        public static string Format_Code {
+            get {
+                return ResourceManager.GetString("Format Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Friend.
         /// </summary>
         public static string Friend {

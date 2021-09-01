@@ -32,6 +32,7 @@
             <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
             <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
             <valueConverters:NullBooleanConverter x:Key="NullBooleanConverter" />
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <misc1:BindingProxy x:Key="Proxy" Data="{Binding}" />
         </ResourceDictionary>
     </UserControl.Resources>
@@ -281,6 +282,22 @@
                                                  CaretBinding="{Binding CaretPosition}" />
                 </i:Interaction.Behaviors>
             </avalon:TextEditor>
+            <ProgressBar IsIndeterminate="True" Grid.Row="0" Height="5" VerticalAlignment="Bottom"
+                         Visibility="{Binding IsPerformingAction, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Bottom"
+                        Background="{DynamicResource ThemeBackgroundBrush}">
+                <StackPanel.Style>
+                    <Style TargetType="{x:Type StackPanel}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding FormatError,TargetNullValue=''}" Value="">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <Image Source="{DynamicResource ExclamationIcon}" Height="12" Margin="10,0,10,0" />
+                <TextBlock Text="{Binding FormatError}" />
+            </StackPanel>
             <WrapPanel Orientation="Horizontal" Grid.Row="1" Margin="5">
                 <WrapPanel.Resources>
                     <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
@@ -344,6 +361,10 @@
                     <Button Command="{Binding CreateMacroButtonCommand}" CommandParameter="{Binding SelectedItem}"
                             ToolTip="{x:Static resources:Strings.Create_Macro_Button}" Padding="5,0,5,0">
                         <Image Source="{StaticResource AddButtonIcon}" Height="16" />
+                    </Button>
+                    <Button Command="{Binding FormatCodeCommand}" CommandParameter="{Binding SelectedItem}"
+                            Padding="5,0,5,0" ToolTip="{x:Static resources:Strings.Format_Code}">
+                        <Image Source="{StaticResource AlignLeftIcon}" Height="16" />
                     </Button>
                 </controls1:StretchyWrapPanel>
             </Grid>

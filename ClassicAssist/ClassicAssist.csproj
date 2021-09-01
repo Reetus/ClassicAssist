@@ -160,6 +160,9 @@
     <None Update="Sounds\Bike Horn.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="yapf\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Data\Backup\Mega\MegaConfigureControl.xaml">

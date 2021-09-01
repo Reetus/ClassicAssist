@@ -1599,4 +1599,7 @@ Are you sure you wish to continue?</value>
   <data name="Elapsed" xml:space="preserve">
     <value>Elapsed</value>
   </data>
+  <data name="Format Code" xml:space="preserve">
+    <value>Format Code</value>
+  </data>
 </root>

@@ -508,37 +508,45 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            HttpClient httpClient = new HttpClient();
-
-            ShareMacroModel data = new ShareMacroModel { Content = macro.Macro };
-
-            HttpResponseMessage response = await httpClient.PostAsync(
-                "https://classicassist.azurewebsites.net/api/macros/stage",
-                new StringContent( JsonConvert.SerializeObject( data ), Encoding.UTF8, "application/json" ) );
-
-            string json = await response.Content.ReadAsStringAsync();
-
-            if ( response.IsSuccessStatusCode )
+            try
             {
-                ShareMacroModel responseData = JsonConvert.DeserializeObject<ShareMacroModel>( json );
+                IsPerformingAction = true;
+                HttpClient httpClient = new HttpClient();
 
-                if ( !string.IsNullOrEmpty( responseData?.Uuid ) )
-                {
-                    Process.Start( $"https://classicassist.azurewebsites.net/?id={responseData.Uuid}" );
-                }
-            }
-            else
-            {
-                ShareErrorResponseModel errorObj = JsonConvert.DeserializeObject<ShareErrorResponseModel>( json );
+                ShareMacroModel data = new ShareMacroModel { Content = macro.Macro };
 
-                if ( errorObj != null && !string.IsNullOrEmpty( errorObj.Message ) )
+                HttpResponseMessage response = await httpClient.PostAsync(
+                    "https://classicassist.azurewebsites.net/api/macros/stage",
+                    new StringContent( JsonConvert.SerializeObject( data ), Encoding.UTF8, "application/json" ) );
+
+                string json = await response.Content.ReadAsStringAsync();
+
+                if ( response.IsSuccessStatusCode )
                 {
-                    MessageBox.Show( $"Error sharing macro: {errorObj.Message}" );
+                    ShareMacroModel responseData = JsonConvert.DeserializeObject<ShareMacroModel>( json );
+
+                    if ( !string.IsNullOrEmpty( responseData?.Uuid ) )
+                    {
+                        Process.Start( $"https://classicassist.azurewebsites.net/?id={responseData.Uuid}" );
+                    }
                 }
                 else
                 {
-                    MessageBox.Show( $"Unknown error sharing macro: {response.StatusCode}" );
+                    ShareErrorResponseModel errorObj = JsonConvert.DeserializeObject<ShareErrorResponseModel>( json );
+
+                    if ( errorObj != null && !string.IsNullOrEmpty( errorObj.Message ) )
+                    {
+                        MessageBox.Show( $"Error sharing macro: {errorObj.Message}" );
+                    }
+                    else
+                    {
+                        MessageBox.Show( $"Unknown error sharing macro: {response.StatusCode}" );
+                    }
                 }
+            }
+            finally
+            {
+                IsPerformingAction = false;
             }
         }
 

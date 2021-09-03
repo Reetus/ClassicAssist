@@ -22,6 +22,8 @@ namespace ClassicAssist.Data.Macros
         {
             Engine.PacketReceivedEvent += PacketReceivedEvent;
             Engine.PacketSentEvent += PacketSentEvent;
+            Engine.InternalPacketReceivedEvent += PacketReceivedEvent;
+            Engine.InternalPacketSentEvent += PacketSentEvent;
 
             IEnumerable<Type> types = Assembly.GetExecutingAssembly().GetTypes()
                 .Where( t => t.IsClass && typeof( IMacroCommandParser ).IsAssignableFrom( t ) );

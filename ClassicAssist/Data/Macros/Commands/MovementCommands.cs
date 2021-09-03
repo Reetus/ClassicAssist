@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Threading;
 using Assistant;
 using ClassicAssist.Data.ClassicUO.Objects;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
-using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 
@@ -13,7 +13,6 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class MovementCommands
     {
-        private const int MOVEMENT_TIMEOUT = 500;
         private const int PATHFIND_MAX_DISTANCE = 32;
         private static bool _forceWalk;
 
@@ -52,8 +51,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            Engine.Move( directionEnum, false );
-            UOC.WaitForIncomingPacket( new PacketFilterInfo( 22 ), MOVEMENT_TIMEOUT );
+            Move( directionEnum.ToString(), false );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Movement ),
@@ -76,7 +74,11 @@ namespace ClassicAssist.Data.Macros.Commands
             try
             {
                 bool result = Engine.Move( directionEnum, run );
-                UOC.WaitForIncomingPacket( new PacketFilterInfo( 22 ), MOVEMENT_TIMEOUT );
+
+                int delay = Engine.Player.GetLayer( Layer.Mount ) != 0 ? run ? 100 : 200 : run ? 200 : 400;
+
+                Thread.Sleep( delay );
+
                 return result;
             }
             catch ( IndexOutOfRangeException )

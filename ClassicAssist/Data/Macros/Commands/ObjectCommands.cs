@@ -87,7 +87,11 @@ namespace ClassicAssist.Data.Macros.Commands
 
             int containerSerial = AliasCommands.ResolveSerial( container );
 
-            ActionPacketQueue.EnqueueAction( ( serial, hue, containerSerial ), data =>
+            bool useObjectQueue = !skipQueue && Options.CurrentOptions.UseObjectQueue;
+            bool delaySend = useObjectQueue;
+            QueuePriority priority = skipQueue ? QueuePriority.Immediate : QueuePriority.Medium;
+
+            ActionPacketQueue.EnqueueAction( (serial, hue, containerSerial), data =>
             {
                 if ( !Engine.Items.GetItem( data.containerSerial, out Item containerItem ) )
                 {
@@ -113,7 +117,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 }
 
                 return true;
-            }, skipQueue ? QueuePriority.Immediate : QueuePriority.Medium, true, CancellationToken.None, true );
+            }, priority, delaySend, CancellationToken.None, useObjectQueue );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Actions ),

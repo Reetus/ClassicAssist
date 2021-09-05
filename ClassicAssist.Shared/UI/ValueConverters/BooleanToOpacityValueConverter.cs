@@ -21,26 +21,23 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace ClassicAssist.Launcher.ValueConverters
+namespace ClassicAssist.Shared.UI.ValueConverters
 {
-    public class CellWidthValueConverter : IValueConverter
+    public class BooleanToOpacityValueConverter : IValueConverter
     {
-        private double substractValue = 15;
-
         public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
         {
-            if ( parameter != null )
+            if ( value is bool val && !val )
             {
-                substractValue = double.Parse( parameter.ToString() );
+                return 0.5;
             }
 
-            double? val = (double?) value - substractValue;
-            return val;
+            return 1.0;
         }
 
         public object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture )
         {
-            return (double?) value + substractValue;
+            throw new NotImplementedException();
         }
     }
 }

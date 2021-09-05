@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:ClassicAssist.Launcher"
         xmlns:properties="clr-namespace:ClassicAssist.Launcher.Properties"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:behaviours="clr-namespace:ClassicAssist.Launcher.Behaviours"
-        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" Background="{DynamicResource ThemeBackgroundBrush}"
         Title="{x:Static properties:Resources.Options}" Height="400" Width="400">
     <Window.DataContext>
         <local:OptionsViewModel />

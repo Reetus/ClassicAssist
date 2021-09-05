@@ -22,7 +22,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace ClassicAssist.Launcher.Behaviours
+namespace ClassicAssist.Shared.UI.Behaviours
 {
     public class WindowClosingBehaviour : Behavior<Window>
     {

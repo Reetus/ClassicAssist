@@ -1605,4 +1605,10 @@ Are you sure you wish to continue?</value>
   <data name="Format Code" xml:space="preserve">
     <value>Format Code</value>
   </data>
+  <data name="Current month donations" xml:space="preserve">
+    <value>Current donations for {0}: ${1}</value>
+  </data>
+  <data name="Donate Now" xml:space="preserve">
+    <value>Donate Now</value>
+  </data>
 </root>

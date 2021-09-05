@@ -9,6 +9,7 @@
     xmlns:debug="clr-namespace:ClassicAssist.UI.Views.Debug"
     xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
     x:Name="window"
     x:Class="ClassicAssist.UI.Views.DebugWindow"
     mc:Ignorable="d"
@@ -65,7 +66,7 @@
                 <Border BorderThickness="1" BorderBrush="#FF888888" Grid.Row="1">
                     <ListBox ItemsSource="{Binding Items}">
                         <i:Interaction.Behaviors>
-                            <misc:ItemsControlAutoScrollBehaviour />
+                            <behaviours:ItemsControlAutoScrollBehaviour />
                         </i:Interaction.Behaviors>
                         <ListBox.Template>
                             <ControlTemplate>

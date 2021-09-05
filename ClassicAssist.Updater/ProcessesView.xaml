@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ClassicAssist.Updater"
         xmlns:properties="clr-namespace:ClassicAssist.Updater.Properties"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
         Title="{x:Static properties:Resources.Running_Clients}" Height="350" Width="400">
     <Window.DataContext>
@@ -32,12 +33,12 @@
             </StackPanel.Resources>
             <Button Content="{x:Static properties:Resources.OK}" Margin="0,0,10,0" Command="{Binding OKCommand}">
                 <i:Interaction.Behaviors>
-                    <local:CloseBehaviour />
+                    <behaviours:CloseOnClickBehaviour />
                 </i:Interaction.Behaviors>
             </Button>
             <Button Content="{x:Static properties:Resources.Cancel}">
                 <i:Interaction.Behaviors>
-                    <local:CloseBehaviour />
+                    <behaviours:CloseOnClickBehaviour />
                 </i:Interaction.Behaviors>
             </Button>
         </StackPanel>

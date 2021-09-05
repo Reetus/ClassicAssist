@@ -10,17 +10,20 @@ namespace ClassicAssist.UO.Data
     public static class Cliloc
     {
         private static readonly Lazy<Dictionary<int, string>> _lazyClilocList =
-            new Lazy<Dictionary<int, string>>( LoadClilocs );
+            new Lazy<Dictionary<int, string>>( () => LoadClilocs() );
+
+        private static readonly Lazy<Dictionary<int, string>> _lazyENUClilocList =
+            new Lazy<Dictionary<int, string>>( () => LoadClilocs( true ) );
 
         private static string _dataPath;
 
         public static bool CanUseCUOClilocLanguage { get; set; } = true;
 
-        private static Dictionary<int, string> LoadClilocs()
+        private static Dictionary<int, string> LoadClilocs( bool englishOnly = false )
         {
             string filename = Path.Combine( _dataPath, "Cliloc.enu" );
 
-            if ( AssistantOptions.UseCUOClilocLanguage )
+            if ( AssistantOptions.UseCUOClilocLanguage && !englishOnly )
             {
                 dynamic settings = Reflection.GetTypeFieldValue<dynamic>( "ClassicUO.Configuration.Settings",
                     "GlobalSettings", null );
@@ -28,6 +31,15 @@ namespace ClassicAssist.UO.Data
                 dynamic clilocFile =
                     Reflection.GetTypePropertyValue<dynamic>( settings.GetType(), "ClilocFile", settings )
                         ?.ToString() ?? string.Empty;
+
+                if ( string.IsNullOrEmpty( clilocFile ) )
+                {
+                    dynamic language =
+                        Reflection.GetTypePropertyValue<dynamic>( settings.GetType(), "Language", settings )
+                            ?.ToString() ?? string.Empty;
+
+                    clilocFile = $"cliloc.{language}";
+                }
 
                 if ( string.IsNullOrEmpty( clilocFile ) && !File.Exists( Path.Combine( _dataPath, clilocFile ) ) )
                 {
@@ -175,8 +187,13 @@ namespace ClassicAssist.UO.Data
 
         public static string GetProperty( int property )
         {
-            return _lazyClilocList.Value.TryGetValue( property, out string propertyString )
-                ? propertyString
+            if ( _lazyClilocList.Value.TryGetValue( property, out string propertyString ) )
+            {
+                return propertyString;
+            }
+
+            return _lazyENUClilocList.Value.TryGetValue( property, out string enuPropertyString )
+                ? enuPropertyString
                 : $"Localized string {property} not found!";
         }
 

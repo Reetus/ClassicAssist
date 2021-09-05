@@ -134,8 +134,57 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x06, 0, OnPartyCommand );
             RegisterExtended( 0x08, 0, OnMapChange );
             RegisterExtended( 0x10, 0, OnDisplayEquipmentInfo );
+            RegisterExtended( 0x19, 0, OnMiscellaneousStatus );
             RegisterExtended( 0x21, 0, OnClearWeaponAbility );
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
+        }
+
+        private static void OnMiscellaneousStatus( PacketReader reader )
+        {
+            int command = reader.ReadByte();
+            int serial = reader.ReadInt32();
+
+            switch ( command )
+            {
+                case 0x00:
+                {
+                    // Old Bonded Status
+                    bool dead = reader.ReadBoolean();
+
+                    Mobile mobile = Engine.Mobiles.GetMobile( serial );
+
+                    if ( mobile == null )
+                    {
+                        return;
+                    }
+
+                    mobile.IsDead = dead;
+
+                    break;
+                }
+                case 0x05:
+                {
+                    // Lifted from CUO, packet is used for both bonded status and updating statues
+                    int pos = (int) reader.Index;
+                    byte zero = reader.ReadByte();
+                    byte type2 = reader.ReadByte();
+
+                    if ( type2 == 0xFF )
+                    {
+                        byte status = reader.ReadByte();
+                        ushort animation = reader.ReadUInt16();
+                        ushort frame = reader.ReadUInt16();
+
+                        if ( status == 0 && animation == 0 && frame == 0 )
+                        {
+                            reader.Seek( pos, SeekOrigin.Begin );
+                            goto case 0;
+                        }
+                    }
+
+                    break;
+                }
+            }
         }
 
         private static void OnCharacterList( PacketReader reader )

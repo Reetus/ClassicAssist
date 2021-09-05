@@ -7,6 +7,7 @@
         xmlns:properties="clr-namespace:ClassicAssist.Updater.Properties"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+        xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         Title="{x:Static resources:Strings.Options}" Height="250" Width="400">
     <Window.DataContext>
@@ -29,7 +30,7 @@
             <Button Content="{x:Static properties:Resources.Close}" Width="100"
                     HorizontalAlignment="Right">
                 <i:Interaction.Behaviors>
-                    <local:CloseBehaviour />
+                    <behaviours:CloseOnClickBehaviour />
                 </i:Interaction.Behaviors>
             </Button>
         </StackPanel>

@@ -1,6 +1,6 @@
 ﻿#region License
 
-// Copyright (C) 2020 Reetus
+// Copyright (C) 2021 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,27 +17,33 @@
 
 #endregion
 
-using System;
-using System.Globalization;
-using System.Windows.Data;
+using System.Windows;
+using System.Windows.Media;
 
-namespace ClassicAssist.Launcher.ValueConverters
+namespace ClassicAssist.Shared.UI
 {
-    public class BooleanToOpacityValueConverter : IValueConverter
+    public static class ExtensionMethods
     {
-        public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
+        public static T GetChildOfType<T>( this DependencyObject depObj ) where T : DependencyObject
         {
-            if ( value is bool val && !val )
+            if ( depObj == null )
             {
-                return 0.5;
+                return null;
             }
 
-            return 1.0;
-        }
+            for ( int i = 0; i < VisualTreeHelper.GetChildrenCount( depObj ); i++ )
+            {
+                DependencyObject child = VisualTreeHelper.GetChild( depObj, i );
 
-        public object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture )
-        {
-            throw new NotImplementedException();
+                T result = child as T ?? GetChildOfType<T>( child );
+
+                if ( result != null )
+                {
+                    return result;
+                }
+            }
+
+            return null;
         }
     }
 }

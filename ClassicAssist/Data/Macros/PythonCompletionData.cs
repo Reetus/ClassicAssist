@@ -13,6 +13,7 @@ namespace ClassicAssist.Data.Macros
     {
         public PythonCompletionData( string name, string fullName, string description, string insertText )
         {
+            MethodName = name;
             Name = fullName;
             Description = description;
             Text = insertText;
@@ -21,6 +22,8 @@ namespace ClassicAssist.Data.Macros
 
             Content = new CompletionEntry( fullName, Example );
         }
+
+        public string MethodName { get; set; }
 
         public string Example { get; set; }
         public string Name { get; set; }

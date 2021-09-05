@@ -17,33 +17,24 @@
 
 #endregion
 
-using System.Windows;
-using System.Windows.Media;
+using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Data.Skills;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ClassicAssist.UI.Misc
+namespace ClassicAssist.Tests.MacroCommands
 {
-    public static class ExtensionMethods
+    [TestClass]
+    public class SkillCommandTests
     {
-        public static T GetChildOfType<T>( this DependencyObject depObj ) where T : DependencyObject
+        [TestMethod]
+        public void SkillWillReturnCorrectValue()
         {
-            if ( depObj == null )
-            {
-                return null;
-            }
+            SkillManager manager = SkillManager.GetInstance();
 
-            for ( int i = 0; i < VisualTreeHelper.GetChildrenCount( depObj ); i++ )
-            {
-                DependencyObject child = VisualTreeHelper.GetChild( depObj, i );
+            manager.Items.Add( new SkillEntry { Base = 80, Value = 100, Skill = new Skill { Name = "Hiding" } } );
 
-                T result = child as T ?? GetChildOfType<T>( child );
-
-                if ( result != null )
-                {
-                    return result;
-                }
-            }
-
-            return null;
+            Assert.AreEqual( 80, SkillCommands.Skill( "Hiding", true ) );
+            Assert.AreEqual( 100, SkillCommands.Skill( "Hiding" ) );
         }
     }
 }

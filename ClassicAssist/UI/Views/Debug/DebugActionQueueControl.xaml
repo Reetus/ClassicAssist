@@ -7,6 +7,7 @@
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
              mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
              d:DesignHeight="400" d:DesignWidth="550">
     <UserControl.DataContext>
@@ -34,7 +35,7 @@
         </ToolBar>
         <ListView Grid.Row="1" x:Name="ListView" ItemsSource="{Binding Items}">
             <i:Interaction.Behaviors>
-                <misc:ItemsControlAutoScrollBehaviour />
+                <behaviours:ItemsControlAutoScrollBehaviour />
             </i:Interaction.Behaviors>
             <ListView.View>
                 <GridView>

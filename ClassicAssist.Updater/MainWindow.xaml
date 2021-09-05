@@ -7,12 +7,14 @@
         xmlns:properties="clr-namespace:ClassicAssist.Updater.Properties"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+        xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+        xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         Title="{x:Static properties:Resources.ClassicAssist_Updater}" Height="400" Width="400"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <valueConverters:InverseBooleanValueConverter x:Key="InverseBooleanValueConverter" />
     </Window.Resources>
     <Window.DataContext>
         <local:MainViewModel />
@@ -28,9 +30,12 @@
                      IsIndeterminate="{Binding IsIndeterminate}"
                      Maximum="{Binding DownloadSize}" Grid.Row="0" />
         <Grid Grid.Row="1" Margin="10">
-            <ListBox ItemsSource="{Binding Items}" local:ListBoxBehavior.ScrollOnNewItem="True"
+            <ListBox ItemsSource="{Binding Items}"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      ScrollViewer.VerticalScrollBarVisibility="Visible">
+                <i:Interaction.Behaviors>
+                    <behaviours:ItemsControlAutoScrollBehaviour/>
+                </i:Interaction.Behaviors>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock TextWrapping="Wrap" Text="{Binding}" />
@@ -62,9 +67,9 @@
                 </Button>
                 <Button Content="{x:Static properties:Resources.Close}" Width="100"
                         HorizontalAlignment="Right"
-                        IsEnabled="{Binding IsUpdating, Converter={StaticResource InverseBooleanConverter}}">
+                        IsEnabled="{Binding IsUpdating, Converter={StaticResource InverseBooleanValueConverter}}">
                     <i:Interaction.Behaviors>
-                        <local:CloseBehaviour />
+                        <behaviours:CloseOnClickBehaviour />
                     </i:Interaction.Behaviors>
                 </Button>
             </StackPanel>

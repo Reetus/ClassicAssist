@@ -371,6 +371,11 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
+            if ( Engine.Player.GetLayer( layerValue ) == serial )
+            {
+                return;
+            }
+
             Item item = Engine.Items.GetItem( serial );
 
             if ( item == null )

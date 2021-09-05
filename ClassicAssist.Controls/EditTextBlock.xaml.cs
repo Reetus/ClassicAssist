@@ -22,9 +22,18 @@ namespace ClassicAssist.Controls
         public static readonly DependencyProperty ShowIconProperty = DependencyProperty.Register( "ShowIcon",
             typeof( bool ), typeof( EditTextBlock ), new UIPropertyMetadata() );
 
+        public static readonly DependencyProperty CanEditProperty = DependencyProperty.Register( "CanEdit",
+            typeof( bool ), typeof( EditTextBlock ), new UIPropertyMetadata( true ) );
+
         public EditTextBlock()
         {
             InitializeComponent();
+        }
+
+        public bool CanEdit
+        {
+            get => (bool) GetValue( CanEditProperty );
+            set => SetValue( CanEditProperty, value );
         }
 
         public string Label
@@ -48,6 +57,11 @@ namespace ClassicAssist.Controls
         private void TextBlock_OnMouseDown( object sender, MouseButtonEventArgs e )
         {
             if ( e.ClickCount <= 1 )
+            {
+                return;
+            }
+
+            if ( !CanEdit )
             {
                 return;
             }

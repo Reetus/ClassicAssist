@@ -5,18 +5,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:ClassicAssist.Launcher.Properties"
     xmlns:launcher="clr-namespace:ClassicAssist.Launcher"
-    xmlns:behaviours="clr-namespace:ClassicAssist.Launcher.Behaviours"
-    xmlns:ValueConverters="clr-namespace:ClassicAssist.Launcher.ValueConverters"
-    xmlns:controls="clr-namespace:ClassicAssist.Launcher.Controls"
+    xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    x:Class="ClassicAssist.Launcher.ShardsWindow"
-    mc:Ignorable="d" x:Name="Window"
-    Title="{x:Static properties:Resources.Shards}" Height="600" Width="620" WindowStartupLocation="CenterScreen">
+    xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
+    xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+    x:Class="ClassicAssist.Launcher.ShardsWindow" Foreground="{DynamicResource ThemeForegroundBrush}"
+    mc:Ignorable="d" x:Name="Window" Background="{DynamicResource ThemeBackgroundBrush}"
+    Title="{x:Static properties:Resources.Shards}" Height="600" Width="720" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <ValueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
-        <ValueConverters:BooleanToOpacityValueConverter x:Key="BooleanToOpacityValueConverter" />
-        <ValueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+        <valueConverters:InverseBooleanValueConverter x:Key="InverseBooleanConverter" />
+        <valueConverters:BooleanToOpacityValueConverter x:Key="BooleanToOpacityValueConverter" />
+        <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
     </Window.Resources>
     <Window.DataContext>
         <launcher:ShardsViewModel />
@@ -28,12 +28,12 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ToolBar Grid.Row="0" Style="{DynamicResource ToolBarStyle1}">
+        <ToolBar Grid.Row="0" Style="{DynamicResource ToolBarStyle1}" Margin="10, 5, 0,0">
             <Button Height="24" Margin="0,0,5,0" Command="{Binding AddCommand, Mode=OneWay}">
                 <Image Source="{StaticResource AddIcon}" ToolTip="{x:Static properties:Resources.Add}"
                        Opacity="{Binding IsEnabled, Converter={StaticResource BooleanToOpacityValueConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" />
             </Button>
-            <Button Height="24" Margin="0,0,5,0" Command="{Binding RemoveCommand, Mode=OneWay}"
+            <Button Height="24" Command="{Binding RemoveCommand, Mode=OneWay}"
                     CommandParameter="{Binding SelectedShard}">
                 <Image Source="{StaticResource RemoveIcon}" ToolTip="{x:Static properties:Resources.Remove}"
                        Opacity="{Binding IsEnabled, Converter={StaticResource BooleanToOpacityValueConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" />
@@ -44,13 +44,13 @@
             </Button>
         </ToolBar>
         <ListView x:Name="listView" ItemsSource="{Binding Shards}" Grid.Row="1" SelectedItem="{Binding SelectedShard}"
-                  Margin="10">
+                  Margin="10,5,10,10">
             <i:Interaction.Behaviors>
                 <behaviours:GridViewSort ComparerType="{x:Type launcher:ShardListViewComparer}" />
             </i:Interaction.Behaviors>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="{x:Static properties:Resources.Shard}" Width="150" x:Name="NameColumn">
+                    <GridViewColumn Header="{x:Static properties:Resources.Shard}" Width="200" x:Name="NameColumn">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -84,7 +84,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{x:Static properties:Resources.Address}" Width="150" x:Name="AddressColumn">
+                    <GridViewColumn Header="{x:Static properties:Resources.Address}" Width="180" x:Name="AddressColumn">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <controls:EditTextBlock
@@ -131,7 +131,7 @@
                     <Setter Property="Padding" Value="15,0,15,0" />
                 </Style>
             </StackPanel.Resources>
-            <Button Content="{x:Static properties:Resources.OK}" Margin="0,0,10,0"
+            <Button Content="{x:Static properties:Resources.OK}" Margin="0,0,10,0" Padding="25,5"
                     Command="{Binding OKCommand, Mode=OneWay}">
                 <i:Interaction.Behaviors>
                     <behaviours:CloseOnClickBehaviour />

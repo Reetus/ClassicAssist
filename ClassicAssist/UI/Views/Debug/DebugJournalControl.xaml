@@ -7,6 +7,7 @@
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
              mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
              d:DesignHeight="400" d:DesignWidth="550">
     <UserControl.DataContext>
@@ -30,7 +31,7 @@
         <ListBox ItemsSource="{Binding Items}"
                  SelectedItem="{Binding SelectedItem}">
             <i:Interaction.Behaviors>
-                <misc:ItemsControlAutoScrollBehaviour/>
+                <behaviours:ItemsControlAutoScrollBehaviour/>
             </i:Interaction.Behaviors>
             <ListBox.ContextMenu>
                 <ContextMenu>

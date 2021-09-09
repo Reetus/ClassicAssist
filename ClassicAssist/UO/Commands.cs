@@ -364,24 +364,30 @@ namespace ClassicAssist.UO
         public static bool WaitForGump( uint gumpId, int timeout = 30000 )
         {
             PacketFilterInfo pfi = new PacketFilterInfo( 0xDD );
+            PacketFilterInfo pfi2 = new PacketFilterInfo( 0xB0 );
 
             if ( gumpId != 0 )
             {
                 pfi = new PacketFilterInfo( 0xDD,
                     new[] { PacketFilterConditions.UIntAtPositionCondition( gumpId, 7 ) } );
+
+                pfi2 = new PacketFilterInfo( 0xB0,
+                    new[] { PacketFilterConditions.UIntAtPositionCondition( gumpId, 7 ) } );
             }
 
             PacketWaitEntry packetWaitEntry = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );
+            PacketWaitEntry packetWaitEntry2 = Engine.PacketWaitEntries.Add( pfi2, PacketDirection.Incoming, true );
 
             try
             {
-                bool result = packetWaitEntry.Lock.WaitOne( timeout );
+                bool result = Task.WaitAny( new Task[] { packetWaitEntry.Lock.ToTask(), packetWaitEntry2.Lock.ToTask() }, timeout ) != -1;
 
                 return result;
             }
             finally
             {
                 Engine.PacketWaitEntries.Remove( packetWaitEntry );
+                Engine.PacketWaitEntries.Remove( packetWaitEntry2 );
             }
         }
 

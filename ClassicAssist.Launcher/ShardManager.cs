@@ -23,7 +23,7 @@ namespace ClassicAssist.Launcher
             Shards.Add( new ShardEntry
             {
                 Name = "UOGamers: Demise",
-                Address = "login.uodemise.com",
+                Address = "login.uogdemise.com",
                 Port = 2593,
                 IsPreset = true,
                 Website = "https://uogdemise.com/"

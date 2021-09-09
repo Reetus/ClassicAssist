@@ -117,6 +117,7 @@ namespace ClassicAssist.UO.Network
             Register( 0xA8, 0, OnShardList );
             Register( 0xA9, 0, OnCharacterList );
             Register( 0xAE, 0, OnUnicodeText );
+            Register( 0xB0, 0, OnGenericGump );
             Register( 0xB2, 0, OnChatMessage );
             Register( 0xB9, 5, OnSupportedFeatures );
             Register( 0xBF, 0, OnExtendedCommand );
@@ -137,6 +138,60 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x19, 0, OnMiscellaneousStatus );
             RegisterExtended( 0x21, 0, OnClearWeaponAbility );
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
+        }
+
+        private static void OnGenericGump( PacketReader reader )
+        {
+            int senderSerial = reader.ReadInt32();
+            uint gumpId = reader.ReadUInt32();
+
+            Engine.GumpList.AddOrUpdate( gumpId, senderSerial, ( k, v ) => senderSerial );
+
+            int x = reader.ReadInt32();
+            int y = reader.ReadInt32();
+
+            int layoutLength = reader.ReadUInt16();
+
+            string layout = reader.ReadString( layoutLength );
+
+            if ( string.IsNullOrEmpty( layout ) )
+            {
+                return;
+            }
+
+            int linesCount = reader.ReadUInt16();
+
+            string[] text = new string[linesCount];
+
+            for ( int i = 0; i < linesCount; i++ )
+            {
+                int length = reader.ReadUInt16();
+
+                text[i] = reader.ReadUnicodeStringBE( length );
+            }
+
+            try
+            {
+                Gump gump = GumpParser.Parse( senderSerial, gumpId, x, y, layout, text );
+                Engine.Gumps.Add( gump );
+
+                GumpEvent?.Invoke( gumpId, senderSerial, gump );
+            }
+            catch ( Exception e )
+            {
+                SentrySdk.WithScope( scope =>
+                {
+                    scope.SetExtra( "Serial", senderSerial );
+                    scope.SetExtra( "GumpID", gumpId );
+                    scope.SetExtra( "Layout", layout );
+                    scope.SetExtra( "Text", text );
+                    scope.SetExtra( "Packet", reader.GetData() );
+                    scope.SetExtra( "Player", Engine.Player.ToString() );
+                    scope.SetExtra( "WorldItemCount", Engine.Items.Count() );
+                    scope.SetExtra( "WorldMobileCount", Engine.Mobiles.Count() );
+                    SentrySdk.CaptureException( e );
+                } );
+            }
         }
 
         private static void OnMiscellaneousStatus( PacketReader reader )

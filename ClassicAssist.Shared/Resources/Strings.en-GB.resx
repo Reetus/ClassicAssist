@@ -1611,4 +1611,7 @@ Are you sure you wish to continue?</value>
   <data name="Donate Now" xml:space="preserve">
     <value>Donate Now</value>
   </data>
+  <data name="Context menu entry disabled" xml:space="preserve">
+    <value>Context menu entry disabled</value>
+  </data>
 </root>

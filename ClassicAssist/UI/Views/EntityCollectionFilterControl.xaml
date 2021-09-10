@@ -6,6 +6,8 @@
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:autoloot="clr-namespace:ClassicAssist.Data.Autoloot"
+             xmlns:data="clr-namespace:ClassicAssist.UO.Data"
+             xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
              mc:Ignorable="d"
              d:DesignHeight="200" d:DesignWidth="400"
              DataContext="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}"
@@ -41,6 +43,7 @@
                     </DrawingImage>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
+            <valueConverters:EnumToIntegerValueConverter x:Key="EnumToIntegerValueConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.ContextMenu>
@@ -75,12 +78,46 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{x:Static resources:Strings.Value}" Width="75" x:Name="GridViewColumn">
+                    <GridViewColumn Header="{x:Static resources:Strings.Value}" Width="100" x:Name="GridViewColumn">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox
-                                    Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    MinWidth="40" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <ComboBox Grid.Column="0" Width="90"
+                                              SelectedItem="{Binding Value, Converter={StaticResource EnumToIntegerValueConverter}, ConverterParameter={x:Type data:Layer}}"
+                                              ItemsSource="{Binding Source={misc:EnumBindingSource {x:Type data:Layer}}}">
+                                        <ComboBox.Style>
+                                            <Style TargetType="{x:Type ComboBox}"
+                                                   BasedOn="{StaticResource {x:Type ComboBox}}">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Constraint.AllowedValuesEnum}"
+                                                                 Value="{x:Type data:Layer}">
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ComboBox.Style>
+                                    </ComboBox>
+                                    <TextBox
+                                        Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        MinWidth="40" Grid.Column="0">
+                                        <TextBox.Style>
+                                            <Style TargetType="{x:Type TextBox}"
+                                                   BasedOn="{StaticResource {x:Type TextBox}}">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Constraint.AllowedValuesEnum}"
+                                                                 Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
+                                </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

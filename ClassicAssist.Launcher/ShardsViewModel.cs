@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -9,13 +8,11 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
-using ClassicAssist.Launcher.Properties;
 
 namespace ClassicAssist.Launcher
 {
     public class ShardsViewModel : BaseViewModel
     {
-        private readonly ShardManager _manager;
         private ICommand _addCommand;
         private ICommand _cancelCommand;
         private bool _isRefreshing;
@@ -24,13 +21,9 @@ namespace ClassicAssist.Launcher
         private ICommand _refreshCommand;
         private ICommand _removeCommand;
         private ShardEntry _selectedShard;
-        private ObservableCollection<ShardEntry> _shards;
 
         public ShardsViewModel()
         {
-            _manager = ShardManager.GetInstance();
-            Shards = _manager.Shards;
-
             Refresh( this );
         }
 
@@ -55,8 +48,7 @@ namespace ClassicAssist.Launcher
             _refreshCommand ?? ( _refreshCommand = new RelayCommand( Refresh, o => !IsRefreshing ) );
 
         public ICommand RemoveCommand =>
-            _removeCommand ?? ( _removeCommand =
-                new RelayCommand( Remove, o => SelectedShard != null && !SelectedShard.IsPreset ) );
+            _removeCommand ?? ( _removeCommand = new RelayCommand( Remove, o => SelectedShard != null ) );
 
         public ShardEntry SelectedShard
         {
@@ -64,15 +56,7 @@ namespace ClassicAssist.Launcher
             set => SetProperty( ref _selectedShard, value );
         }
 
-        public ObservableCollection<ShardEntry> Shards
-        {
-            get => _shards;
-            set
-            {
-                SetProperty( ref _shards, value );
-                _manager.Shards = value;
-            }
-        }
+        public ShardManager ShardManager => ShardManager.GetInstance();
 
         private static void OpenWebsite( object obj )
         {
@@ -94,23 +78,23 @@ namespace ClassicAssist.Launcher
 
             if ( entry.IsPreset )
             {
-                MessageBox.Show( Resources.Cannot_remove_preset_shard, Resources.Error );
+                entry.Deleted = true;
                 return;
             }
 
-            Shards.Remove( entry );
+            ShardManager.Shards.Remove( entry );
         }
 
         private void Add( object obj )
         {
-            Shards.Add( new ShardEntry { Name = "Shard Name", Address = "localhost", Port = 2593 } );
+            ShardManager.Shards.Add( new ShardEntry { Name = "Shard Name", Address = "localhost", Port = 2593 } );
         }
 
         private void Refresh( object obj )
         {
             try
             {
-                foreach ( ShardEntry shard in Shards )
+                foreach ( ShardEntry shard in ShardManager.Shards )
                 {
                     Task.Run( async () =>
                     {
@@ -135,13 +119,13 @@ namespace ClassicAssist.Launcher
                             shard.Status = t.Result;
                         }
 
-                        NotifyPropertyChanged( nameof( Shards ) );
+                        NotifyPropertyChanged( nameof( ShardManager.Shards ) );
                     } );
 
                     Task.Run( async () => await GetPing( shard ) ).ContinueWith( result =>
                     {
                         shard.Ping = result.Result;
-                        NotifyPropertyChanged( nameof( Shards ) );
+                        NotifyPropertyChanged( nameof( ShardManager.Shards ) );
                     } );
                 }
             }

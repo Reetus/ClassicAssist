@@ -560,6 +560,8 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
+            bool result = false;
+
             AutoResetEvent are = new AutoResetEvent( false );
 
             PacketFilterInfo pfi = new PacketFilterInfo( 0xBF,
@@ -578,10 +580,20 @@ namespace ClassicAssist.Data.Macros.Commands
                     {
                         UOC.SystemMessage( Strings.Context_menu_entry_not_found___, (int) UOC.SystemMessageHues.Yellow,
                             true, true );
+                        are.Set();
+                        return;
+                    }
+
+                    if ( entry.Flags.HasFlag( ContextMenuFlags.Disabled ) )
+                    {
+                        UOC.SystemMessage( Strings.Context_menu_entry_disabled, (int) UOC.SystemMessageHues.Yellow,
+                            true, true );
+                        are.Set();
                         return;
                     }
 
                     Engine.SendPacketToServer( new ContextMenuClick( serial, entry.Index ) );
+                    result = true;
                     are.Set();
                 } );
 
@@ -591,7 +603,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             try
             {
-                bool result = are.WaitOne( timeout );
+                are.WaitOne( timeout );
 
                 return result;
             }

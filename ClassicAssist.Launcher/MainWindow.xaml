@@ -59,7 +59,7 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <ComboBox DockPanel.Dock="Left" Margin="0,0,10,0" ItemsSource="{Binding ShardEntries}"
+                <ComboBox DockPanel.Dock="Left" Margin="0,0,10,0" ItemsSource="{Binding ShardManager.VisibleShards}"
                           SelectedIndex="0" SelectedItem="{Binding SelectedShard}" DisplayMemberPath="Name"
                           Grid.Column="0" />
                 <Button Content="{x:Static properties:Resources.Shards}" Width="100" Grid.Column="1"

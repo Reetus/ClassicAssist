@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using ClassicAssist.Launcher.Properties;
+using ClassicAssist.Shared.Misc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Trinet.Core.IO.Ntfs;
@@ -22,7 +25,6 @@ namespace ClassicAssist.Launcher
     public class MainViewModel : BaseViewModel
     {
         private const string CONFIG_FILENAME = "Launcher.json";
-        private readonly ShardManager _manager;
         private ICommand _checkforUpdateCommand;
         private ObservableCollection<string> _clientPaths = new ObservableCollection<string>();
         private ICommand _closingCommand;
@@ -33,19 +35,13 @@ namespace ClassicAssist.Launcher
         private string _selectedClientPath;
         private string _selectedDataPath;
         private ShardEntry _selectedShard;
-        private ObservableCollection<ShardEntry> _shardEntries = new ObservableCollection<ShardEntry>();
+
         private ICommand _showShardsWindowCommand;
         private ICommand _startCommand;
 
         public MainViewModel()
         {
             RemoveAlternateDataStreams( Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location ) );
-
-            _manager = ShardManager.GetInstance();
-
-            _manager.Shards.CollectionChanged += ( sender, args ) => { ShardEntries = _manager.Shards; };
-
-            ShardEntries = _manager.Shards;
 
             string fullPath = Path.Combine( Environment.CurrentDirectory, CONFIG_FILENAME );
 
@@ -98,6 +94,34 @@ namespace ClassicAssist.Launcher
                     SelectedDataPath = Directory.Exists( path ) ? path : DataPaths.FirstOrDefault();
                 }
 
+                ShardManager.OverridePresets = config["OverridePresets"]?.ToObject<bool>() ?? false;
+
+                if ( ShardManager.OverridePresets && config["Presets"] != null )
+                {
+                    ShardManager.Shards.Clear();
+                }
+
+                ShardsHash = config["ShardsHash"]?.ToObject<string>() ?? string.Empty;
+                ShardsDateTime = config["ShardsDateTime"]?.ToObject<DateTime?>();
+
+                if ( config["Presets"] != null )
+                {
+                    foreach ( JToken token in config["Presets"] )
+                    {
+                        ShardEntry shard = new ShardEntry
+                        {
+                            Name = token["Name"]?.ToObject<string>() ?? "Unknown",
+                            Address = token["Address"]?.ToObject<string>() ?? "localhost",
+                            Port = token["Port"]?.ToObject<int>() ?? 2593,
+                            HasStatusProtocol = token["HasStatusProtocol"]?.ToObject<bool>() ?? true,
+                            Encryption = token["Encryption"]?.ToObject<bool>() ?? false,
+                            IsPreset = true
+                        };
+
+                        ShardManager.Shards.AddSorted( shard, new ShardEntryComparer() );
+                    }
+                }
+
                 if ( config["Shards"] != null )
                 {
                     foreach ( JToken token in config["Shards"] )
@@ -111,13 +135,31 @@ namespace ClassicAssist.Launcher
                             Encryption = token["Encryption"]?.ToObject<bool>() ?? false
                         };
 
-                        ShardEntries.Add( shard );
+                        ShardManager.Shards.AddSorted( shard, new ShardEntryComparer() );
+                    }
+                }
+
+                if ( config["DeletedPresets"] != null )
+                {
+                    foreach ( JToken token in config["DeletedPresets"] )
+                    {
+                        ShardEntry shard = new ShardEntry
+                        {
+                            Name = token["Name"]?.ToObject<string>() ?? "Unknown", IsPreset = true
+                        };
+
+                        ShardEntry preset = ShardManager.Shards.FirstOrDefault( e => e.Equals( shard ) );
+
+                        if ( preset != null )
+                        {
+                            preset.Deleted = true;
+                        }
                     }
                 }
 
                 if ( config["SelectedShard"] != null )
                 {
-                    ShardEntry match = _manager.Shards.FirstOrDefault(
+                    ShardEntry match = ShardManager.Shards.FirstOrDefault(
                         s => s.Name == config["SelectedShard"].ToObject<string>() );
 
                     if ( match != null )
@@ -136,6 +178,11 @@ namespace ClassicAssist.Launcher
                 }
 
                 ReadClassicOptions( config );
+
+                if ( !ShardsDateTime.HasValue || DateTime.Now - ShardsDateTime >= TimeSpan.FromHours( 24 ) )
+                {
+                    CheckPresets().ConfigureAwait( false );
+                }
             }
         }
 
@@ -188,11 +235,11 @@ namespace ClassicAssist.Launcher
             set => SetProperty( ref _selectedShard, value );
         }
 
-        public ObservableCollection<ShardEntry> ShardEntries
-        {
-            get => _shardEntries;
-            set => SetProperty( ref _shardEntries, value );
-        }
+        public ShardManager ShardManager => ShardManager.GetInstance();
+
+        public DateTime? ShardsDateTime { get; set; }
+
+        public string ShardsHash { get; set; } = string.Empty;
 
         public ICommand ShowShardsWindowCommand =>
             _showShardsWindowCommand ?? ( _showShardsWindowCommand = new RelayCommand( ShowShardsWindow, o => true ) );
@@ -200,6 +247,81 @@ namespace ClassicAssist.Launcher
         public ICommand StartCommand =>
             _startCommand ?? ( _startCommand = new RelayCommandAsync( Start,
                 o => !string.IsNullOrEmpty( SelectedClientPath ) && !string.IsNullOrEmpty( SelectedDataPath ) ) );
+
+        private async Task CheckPresets()
+        {
+            try
+            {
+                string shardsHashUrl = ConfigurationManager.AppSettings["SHARDS_HASH_URL"];
+                string shardsUrl = ConfigurationManager.AppSettings["SHARDS_URL"];
+
+                if ( string.IsNullOrEmpty( shardsHashUrl ) || string.IsNullOrEmpty( shardsUrl ) )
+                {
+                    return;
+                }
+
+                string hash = await GetShardsHash( shardsHashUrl );
+
+                if ( !string.IsNullOrEmpty( hash ) && !ShardsHash.Equals( hash ) )
+                {
+                    List<ShardEntry> shards = await GetShards( shardsUrl );
+
+                    if ( shards != null )
+                    {
+                        foreach ( ShardEntry shardEntry in shards )
+                        {
+                            shardEntry.IsPreset = true;
+                        }
+
+                        ShardManager.ImportPresets( shards );
+                        ShardsHash = hash;
+                        ShardsDateTime = DateTime.Now;
+                    }
+                }
+            }
+            catch ( Exception )
+            {
+                // we tried
+            }
+        }
+
+        private static async Task<string> GetShardsHash( string shardsHashUrl )
+        {
+            HttpClient httpClient = new HttpClient();
+
+            HttpResponseMessage response = await httpClient.GetAsync( shardsHashUrl );
+
+            if ( !response.IsSuccessStatusCode )
+            {
+                return null;
+            }
+
+            string json = await response.Content.ReadAsStringAsync();
+
+            JToken obj = JToken.Parse( json );
+
+            string hash = obj["SHA1"]?.ToObject<string>();
+
+            return hash;
+        }
+
+        private static async Task<List<ShardEntry>> GetShards( string shardsUrl )
+        {
+            HttpClient httpClient = new HttpClient();
+
+            HttpResponseMessage response = await httpClient.GetAsync( shardsUrl );
+
+            if ( !response.IsSuccessStatusCode )
+            {
+                return null;
+            }
+
+            string json = await response.Content.ReadAsStringAsync();
+
+            List<ShardEntry> shards = JsonConvert.DeserializeObject<List<ShardEntry>>( json );
+
+            return shards;
+        }
 
         private static void RemoveAlternateDataStreams( string path )
         {
@@ -214,6 +336,11 @@ namespace ClassicAssist.Launcher
 
             IEnumerable<ManifestEntry> manifestEntries =
                 JsonConvert.DeserializeObject<IEnumerable<ManifestEntry>>( json );
+
+            if ( manifestEntries == null )
+            {
+                return;
+            }
 
             foreach ( ManifestEntry manifestEntry in manifestEntries )
             {
@@ -465,9 +592,9 @@ namespace ClassicAssist.Launcher
 
             config.Add( "DataPaths", dataPathArray );
             config.Add( "SelectedDataPath", SelectedDataPath ?? string.Empty );
-            config.Add( "SelectedShard", SelectedShard.Name );
+            config.Add( "SelectedShard", SelectedShard?.Name );
 
-            IEnumerable<ShardEntry> shards = _manager.Shards.Where( s => !s.IsPreset );
+            IEnumerable<ShardEntry> shards = ShardManager.Shards.Where( s => !s.IsPreset );
 
             JArray shardArray = new JArray();
 
@@ -487,6 +614,19 @@ namespace ClassicAssist.Launcher
 
             config.Add( "Shards", shardArray );
 
+            IEnumerable<ShardEntry> deletedPresets = ShardManager.Shards.Where( s => s.IsPreset && s.Deleted );
+
+            JArray deletedArray = new JArray();
+
+            foreach ( ShardEntry shard in deletedPresets )
+            {
+                JObject shardObj = new JObject { { "Name", shard.Name } };
+
+                deletedArray.Add( shardObj );
+            }
+
+            config.Add( "DeletedPresets", deletedArray );
+
             JArray pluginsArray = new JArray();
 
             foreach ( PluginEntry plugin in Plugins )
@@ -495,6 +635,33 @@ namespace ClassicAssist.Launcher
             }
 
             config.Add( "Plugins", pluginsArray );
+
+            config.Add( "OverridePresets", ShardManager.OverridePresets );
+            config.Add( "ShardsHash", ShardsHash );
+            config.Add( "ShardsDateTime", ShardsDateTime );
+
+            if ( ShardManager.OverridePresets )
+            {
+                IEnumerable<ShardEntry> presets = ShardManager.Shards.Where( s => s.IsPreset );
+
+                JArray presetsArray = new JArray();
+
+                foreach ( ShardEntry shard in presets )
+                {
+                    JObject shardObj = new JObject
+                    {
+                        { "Name", shard.Name },
+                        { "Address", shard.Address },
+                        { "Port", shard.Port },
+                        { "HasStatusProtocol", shard.HasStatusProtocol },
+                        { "Encryption", shard.Encryption }
+                    };
+
+                    presetsArray.Add( shardObj );
+                }
+
+                config.Add( "Presets", presetsArray );
+            }
 
             WriteClassicOptions( config );
 

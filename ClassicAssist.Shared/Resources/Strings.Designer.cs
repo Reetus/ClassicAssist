@@ -1006,6 +1006,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Context menu entry disabled.
+        /// </summary>
+        public static string Context_menu_entry_disabled {
+            get {
+                return ResourceManager.GetString("Context menu entry disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Context menu entry not found....
         /// </summary>
         public static string Context_menu_entry_not_found___ {

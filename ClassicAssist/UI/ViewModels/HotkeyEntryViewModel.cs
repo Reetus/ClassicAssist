@@ -1,6 +1,7 @@
 ﻿using System.Collections.Specialized;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Hotkeys.Commands;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Misc;
 using Newtonsoft.Json.Linq;
 

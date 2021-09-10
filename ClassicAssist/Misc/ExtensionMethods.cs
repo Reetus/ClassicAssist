@@ -79,31 +79,6 @@ namespace ClassicAssist.Misc
                 BitmapSizeOptions.FromWidthAndHeight( bmp.Width, bmp.Height ) );
         }
 
-        public static void AddRangeSorted<T>( this IList<T> list, IEnumerable<T> items )
-        {
-            foreach ( T item in items )
-            {
-                list.AddSorted( item );
-            }
-        }
-
-        public static void AddSorted<T>( this IList<T> list, T item, IComparer<T> comparer = null )
-        {
-            if ( comparer == null )
-            {
-                comparer = Comparer<T>.Default;
-            }
-
-            int i = 0;
-
-            while ( i < list.Count && comparer.Compare( list[i], item ) < 0 )
-            {
-                i++;
-            }
-
-            list.Insert( i, item );
-        }
-
         // https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/interop-with-other-asynchronous-patterns-and-types?redirectedfrom=MSDN#WHToTap
         public static Task<bool> ToTask( this EventWaitHandle waitHandle, Func<bool> resultAction = null )
         {

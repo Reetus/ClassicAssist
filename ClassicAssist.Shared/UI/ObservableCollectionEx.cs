@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace ClassicAssist.UI.Misc
+namespace ClassicAssist.Shared.UI
 {
     public sealed class ObservableCollectionEx<T> : ObservableCollection<T> where T : INotifyPropertyChanged
     {

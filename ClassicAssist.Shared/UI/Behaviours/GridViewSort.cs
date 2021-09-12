@@ -26,7 +26,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Interactivity;
 
-namespace ClassicAssist.Launcher.Behaviours
+namespace ClassicAssist.Shared.UI.Behaviours
 {
     public class GridViewSort : Behavior<ListView>
     {

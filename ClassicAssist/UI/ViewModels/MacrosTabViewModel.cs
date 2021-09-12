@@ -17,6 +17,7 @@ using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
+using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.ViewModels.Macros;
@@ -248,7 +249,8 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( globalMacros.Any() )
             {
-                string globalJson = JsonConvert.SerializeObject( globalMacros.Select( e => e.ToJObject() ), Formatting.Indented );
+                string globalJson =
+                    JsonConvert.SerializeObject( globalMacros.Select( e => e.ToJObject() ), Formatting.Indented );
 
                 File.WriteAllText( Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Macros.json" ),
                     globalJson );
@@ -705,9 +707,18 @@ namespace ClassicAssist.UI.ViewModels
 
         private void RemoveMacro( object obj )
         {
-            if ( obj is MacroEntry entry )
+            if ( !( obj is MacroEntry entry ) )
             {
-                Items.Remove( entry );
+                return;
+            }
+
+            MacroEntry next = Items.SkipWhile( item => item.Id != entry.Id ).Skip( 1 ).FirstOrDefault() ??
+                              Items.Reverse().SkipWhile( item => item.Id != entry.Id ).Skip( 1 ).FirstOrDefault();
+            Items.Remove( entry );
+
+            if ( next != null )
+            {
+                SelectedItem = next;
             }
         }
 

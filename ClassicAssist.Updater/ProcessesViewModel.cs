@@ -24,8 +24,8 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Windows.Input;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.Updater.Annotations;
-using ClassicAssist.Updater.Misc;
 
 namespace ClassicAssist.Updater
 {

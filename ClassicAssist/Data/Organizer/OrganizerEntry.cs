@@ -1,5 +1,6 @@
 ﻿using System;
 using ClassicAssist.Data.Hotkeys;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Misc;
 
 namespace ClassicAssist.Data.Organizer

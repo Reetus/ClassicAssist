@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using Assistant;
@@ -376,29 +375,47 @@ namespace ClassicAssist.Data.Macros.Commands
             {
                 nameof( ParameterType.ItemID ), nameof( ParameterType.SerialOrAlias ),
                 nameof( ParameterType.XCoordinateOffset ), nameof( ParameterType.YCoordinateOffset ),
-                nameof( ParameterType.ZCoordinateOffset ), nameof( ParameterType.Amount )
+                nameof( ParameterType.ZCoordinateOffset ), nameof( ParameterType.Amount ),
+                nameof( ParameterType.Hue ), nameof( ParameterType.Distance )
             } )]
         public static bool MoveTypeOffset( int id, object findLocation, int xOffset, int yOffset, int zOffset,
-            int amount = -1 )
+            int amount = -1, int hue = -1, int range = -1 )
         {
-            if ( findLocation == null ||
-                 ( (string) findLocation ).Equals( "ground", StringComparison.InvariantCultureIgnoreCase ) )
-            {
-                UOC.SystemMessage( Strings.Invalid_container___ );
-                return false;
-            }
+            bool fromGround = findLocation == null || findLocation is string str &&
+                str.Equals( "ground", StringComparison.InvariantCultureIgnoreCase );
 
-            int owner = AliasCommands.ResolveSerial( findLocation );
+            int owner = 0;
+
+            if ( !fromGround )
+            {
+                owner = AliasCommands.ResolveSerial( findLocation );
+
+                if ( owner == 0 )
+                {
+                    UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
+
+                    return false;
+                }
+            }
 
             bool Predicate( Item i )
             {
-                return i.ID == id && i.IsDescendantOf( owner );
+                return i.ID == id && i.IsDescendantOf( owner ) && ( hue == -1 || i.Hue == hue );
             }
 
-            Item entity = Engine.Items.SelectEntities( Predicate )?.FirstOrDefault();
+            bool PredicateGround( Item i )
+            {
+                return i.ID == id && i.Owner == 0 && ( hue == -1 || i.Hue == hue ) &&
+                       ( range == -1 || i.Distance <= range );
+            }
+
+            Item entity = fromGround
+                ? Engine.Items.SelectEntities( PredicateGround )?.FirstOrDefault()
+                : Engine.Items.SelectEntities( Predicate )?.FirstOrDefault();
 
             if ( entity == null )
             {
+                UOC.SystemMessage( Strings.Cannot_find_item___, true );
                 return false;
             }
 

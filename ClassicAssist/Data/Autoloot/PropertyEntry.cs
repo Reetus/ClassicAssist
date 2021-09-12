@@ -1,6 +1,7 @@
 ﻿using System;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Objects;
+using Newtonsoft.Json;
 
 namespace ClassicAssist.Data.Autoloot
 {
@@ -13,6 +14,7 @@ namespace ClassicAssist.Data.Autoloot
         private string _name;
         private Func<Entity, AutolootConstraintEntry, bool> _predicate;
 
+        [JsonIgnore]
         public Type AllowedValuesEnum
         {
             get => _allowedValuesEnum;
@@ -43,6 +45,7 @@ namespace ClassicAssist.Data.Autoloot
             set => SetProperty( ref _name, value );
         }
 
+        [JsonIgnore]
         public Func<Entity, AutolootConstraintEntry, bool> Predicate
         {
             get => _predicate;

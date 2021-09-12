@@ -3361,7 +3361,7 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Returns the base value of the given skill name..
+        ///   Looks up a localized string similar to Returns the value of the given skill name..
         /// </summary>
         public static string SKILL_COMMAND_DESCRIPTION {
             get {

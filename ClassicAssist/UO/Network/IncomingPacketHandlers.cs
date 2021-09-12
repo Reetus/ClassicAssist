@@ -117,6 +117,7 @@ namespace ClassicAssist.UO.Network
             Register( 0xA8, 0, OnShardList );
             Register( 0xA9, 0, OnCharacterList );
             Register( 0xAE, 0, OnUnicodeText );
+            Register( 0xB0, 0, OnGenericGump );
             Register( 0xB2, 0, OnChatMessage );
             Register( 0xB9, 5, OnSupportedFeatures );
             Register( 0xBF, 0, OnExtendedCommand );
@@ -134,8 +135,111 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x06, 0, OnPartyCommand );
             RegisterExtended( 0x08, 0, OnMapChange );
             RegisterExtended( 0x10, 0, OnDisplayEquipmentInfo );
+            RegisterExtended( 0x19, 0, OnMiscellaneousStatus );
             RegisterExtended( 0x21, 0, OnClearWeaponAbility );
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
+        }
+
+        private static void OnGenericGump( PacketReader reader )
+        {
+            int senderSerial = reader.ReadInt32();
+            uint gumpId = reader.ReadUInt32();
+
+            Engine.GumpList.AddOrUpdate( gumpId, senderSerial, ( k, v ) => senderSerial );
+
+            int x = reader.ReadInt32();
+            int y = reader.ReadInt32();
+
+            int layoutLength = reader.ReadUInt16();
+
+            string layout = reader.ReadString( layoutLength );
+
+            if ( string.IsNullOrEmpty( layout ) )
+            {
+                return;
+            }
+
+            int linesCount = reader.ReadUInt16();
+
+            string[] text = new string[linesCount];
+
+            for ( int i = 0; i < linesCount; i++ )
+            {
+                int length = reader.ReadUInt16();
+
+                text[i] = reader.ReadUnicodeStringBE( length );
+            }
+
+            try
+            {
+                Gump gump = GumpParser.Parse( senderSerial, gumpId, x, y, layout, text );
+                Engine.Gumps.Add( gump );
+
+                GumpEvent?.Invoke( gumpId, senderSerial, gump );
+            }
+            catch ( Exception e )
+            {
+                SentrySdk.WithScope( scope =>
+                {
+                    scope.SetExtra( "Serial", senderSerial );
+                    scope.SetExtra( "GumpID", gumpId );
+                    scope.SetExtra( "Layout", layout );
+                    scope.SetExtra( "Text", text );
+                    scope.SetExtra( "Packet", reader.GetData() );
+                    scope.SetExtra( "Player", Engine.Player.ToString() );
+                    scope.SetExtra( "WorldItemCount", Engine.Items.Count() );
+                    scope.SetExtra( "WorldMobileCount", Engine.Mobiles.Count() );
+                    SentrySdk.CaptureException( e );
+                } );
+            }
+        }
+
+        private static void OnMiscellaneousStatus( PacketReader reader )
+        {
+            int command = reader.ReadByte();
+            int serial = reader.ReadInt32();
+
+            switch ( command )
+            {
+                case 0x00:
+                {
+                    // Old Bonded Status
+                    bool dead = reader.ReadBoolean();
+
+                    Mobile mobile = Engine.Mobiles.GetMobile( serial );
+
+                    if ( mobile == null )
+                    {
+                        return;
+                    }
+
+                    mobile.IsDead = dead;
+
+                    break;
+                }
+                case 0x05:
+                {
+                    // Lifted from CUO, packet is used for both bonded status and updating statues
+                    int pos = (int) reader.Index;
+                    byte zero = reader.ReadByte();
+                    byte type2 = reader.ReadByte();
+
+                    if ( type2 == 0xFF )
+                    {
+                        byte status = reader.ReadByte();
+                        ushort animation = reader.ReadUInt16();
+                        ushort frame = reader.ReadUInt16();
+
+                        if ( status == 0 && animation == 0 && frame == 0 )
+                        {
+                            reader.Seek( pos, SeekOrigin.Begin );
+                            goto case 0;
+                        }
+                    }
+
+                    break;
+                }
+            }
         }
 
         private static void OnCharacterList( PacketReader reader )

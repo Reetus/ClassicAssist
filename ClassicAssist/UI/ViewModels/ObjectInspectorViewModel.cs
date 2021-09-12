@@ -50,14 +50,9 @@ namespace ClassicAssist.UI.ViewModels
             AddLandProperties( landTile );
         }
 
-        public ICommand CopyToClipboardCommand
-        {
-            get
-            {
-                return _copyToClipboardCommand ?? ( _copyToClipboardCommand =
-                    new RelayCommand( o => CopyToClipboard(), o => _selectedItem != null ) );
-            }
-        }
+        public ICommand CopyToClipboardCommand =>
+            _copyToClipboardCommand ?? ( _copyToClipboardCommand =
+                new RelayCommand( o => CopyToClipboard(), o => _selectedItem != null ) );
 
         public ObservableCollection<ObjectInspectorData> Items
         {
@@ -333,7 +328,7 @@ namespace ClassicAssist.UI.ViewModels
         {
             try
             {
-                Clipboard.SetData( DataFormats.Text, _selectedItem.Value );
+                Clipboard.SetText( _selectedItem.Value );
             }
             catch ( Exception )
             {

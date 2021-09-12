@@ -215,8 +215,8 @@ namespace ClassicAssist.UI.ViewModels
             {
                 _dispatcher.Invoke( () =>
                 {
-                    foreach ( Item entity in entities.Where( e => !Entities.Any( f => f.Entity.Equals( e ) ) )
-                        .ToList().Where( entity => Options.ShowChildItems || entity.Owner == _collection.Serial ) )
+                    foreach ( Item entity in entities.Where( e => !Entities.Any( f => f.Entity.Equals( e ) ) ).ToList()
+                        .Where( entity => Options.ShowChildItems || entity.Owner == _collection.Serial ) )
                     {
                         Entities.Add( entity.ToEntityCollectionData() );
                     }
@@ -752,6 +752,18 @@ namespace ClassicAssist.UI.ViewModels
                                 filter.Value ) );
                         break;
                     }
+                    case PropertyType.Predicate:
+                        {
+                            predicates.Add( i => constraint.Predicate != null && constraint.Predicate.Invoke( i,
+                                new AutolootConstraintEntry
+                                {
+                                    Operator = filter.Operator,
+                                    Property = constraint,
+                                    Value = filter.Value
+                                } ) );
+
+                            break;
+                        }
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

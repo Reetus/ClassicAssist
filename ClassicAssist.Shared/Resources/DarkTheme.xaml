@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit">
+                    xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+                    xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Colours.xaml" />
@@ -1249,6 +1250,7 @@
     <Style x:Key="CompressedTreeViewStyle" TargetType="{x:Type TreeView}">
         <Style.Resources>
             <Style x:Key="TreeViewItemStyle" TargetType="{x:Type TreeViewItem}">
+                <Setter Property="behaviours:TreeViewItemBehavior.IsBroughtIntoViewWhenSelected" Value="True" />
                 <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="HorizontalContentAlignment" Value="Left" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />

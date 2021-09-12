@@ -261,20 +261,6 @@
                     <KeyBinding Key="F12" Command="{Binding StopCommand, Mode=OneWay}"
                                 CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}" />
                 </avalon:TextEditor.InputBindings>
-                <avalon:TextEditor.Style>
-                    <Style TargetType="{x:Type avalon:TextEditor}"
-                           BasedOn="{StaticResource {x:Type avalon:TextEditor}}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding SelectedItem, ElementName=DraggableTreeView}"
-                                         Value="{x:Null}">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding IsRecording}" Value="True">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </avalon:TextEditor.Style>
                 <i:Interaction.Behaviors>
                     <misc:AvalonEditBehaviour
                         TextBinding="{Binding SelectedItem.Macro, ElementName=DraggableTreeView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

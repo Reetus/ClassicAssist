@@ -21,7 +21,7 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace ClassicAssist.Launcher.ValueConverters
+namespace ClassicAssist.Shared.UI.ValueConverters
 {
     public class BooleanToOpacityValueConverter : IValueConverter
     {

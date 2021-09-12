@@ -2,15 +2,15 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace ClassicAssist.Launcher.ValueConverters
+namespace ClassicAssist.Shared.UI.ValueConverters
 {
-    public class InverseBooleanConverter : IValueConverter
+    public class InverseBooleanValueConverter : IValueConverter
     {
         public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
         {
             try
             {
-                bool testValue = (bool) value;
+                bool testValue = value != null && (bool) value;
                 return !testValue; // or do whatever you need with this boolean
             }
             catch

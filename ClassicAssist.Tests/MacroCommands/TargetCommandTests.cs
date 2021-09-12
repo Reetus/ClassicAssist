@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Friends;
+using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -1112,6 +1114,55 @@ namespace ClassicAssist.Tests.MacroCommands
             Engine.Mobiles.Clear();
             Engine.Player = null;
             AliasCommands.SetAlias( "friend", -1 );
+        }
+
+        [TestMethod]
+        public void WillGetMobileDistanceLimit()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+            IncomingPacketHandlers.Initialize();
+            MacroManager.GetInstance().IsRecording = () => false;
+
+            Mobile[] mobiles =
+            {
+                new Mobile( 0x02 ) { Notoriety = Notoriety.Innocent, X = 5, Y = 5 },
+                new Mobile( 0x03 ) { Notoriety = Notoriety.Murderer, X = 5, Y = 5 }
+            };
+
+            Engine.Mobiles.Add( mobiles );
+
+            bool result = TargetCommands.GetFriend( new[] { "Innocent" }, "Any", "Next", "Any", 5);
+
+            Assert.AreEqual( 0x02, AliasCommands.GetAlias( "friend" ) );
+            Assert.IsTrue( result );
+
+            result = TargetCommands.GetFriend( new[] { "Innocent" }, "Any", "Next", "Any", 4 );
+
+            Assert.IsFalse( result );
+
+            Options.CurrentOptions.Friends.Add( new FriendEntry { Name = "Mate", Serial = 0x02 } );
+
+            result = TargetCommands.GetFriendListOnly( "Next", "Any", "Any", 5 );
+
+            Assert.AreEqual( 0x02, AliasCommands.GetAlias( "friend" ) );
+            Assert.IsTrue( result );
+
+            result = TargetCommands.GetFriendListOnly( "Next", "Any", "Any", 4 );
+
+            Assert.IsFalse( result );
+
+            result = TargetCommands.GetEnemy( new[] { "Murderer" }, "Any", "Next", "Any", 5 );
+
+            Assert.AreEqual( 0x03, AliasCommands.GetAlias( "enemy" ) );
+            Assert.IsTrue( result );
+
+            result = TargetCommands.GetEnemy( new[] { "Murderer" }, "Any", "Next", "Any", 4 );
+
+            Assert.IsFalse( result );
+
+
+            Engine.Mobiles.Remove( mobiles );
+            Engine.Player = null;
         }
     }
 }

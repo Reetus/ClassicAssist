@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -34,6 +35,7 @@ using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using CUO_API;
+using Newtonsoft.Json;
 using Octokit;
 using Sentry;
 using static ClassicAssist.Misc.SDLKeys;
@@ -546,12 +548,34 @@ namespace Assistant
                      VersionHelpers.IsVersionNewer( AssistantOptions.UpdateGumpVersion, latestVersion ) )
                 {
                     string commitMessage = await Github.GetUpdateText( StartupPath ?? Environment.CurrentDirectory );
+                    string donationAmount = await GetDonationsSummary();
+                    StringBuilder donationMessage = new StringBuilder();
+
+                    if ( !string.IsNullOrEmpty( donationAmount ) )
+                    {
+                        if ( donationAmount == "0.00" )
+                        {
+                            donationAmount = $"<BASEFONT COLOR=#FF0000>{donationAmount}</BASEFONT>";
+                        }
+
+                        donationMessage.AppendLine( string.Format( Strings.Current_month_donations,
+                            DateTime.Now.ToString( "MMMM" ), donationAmount ) );
+                        donationMessage.AppendLine();
+                        donationMessage.AppendLine(
+                            $"<A HREF=\"https://www.paypal.me/reeeetus\">{Strings.Donate_Now}</A>" );
+                    }
 
                     StringBuilder message = new StringBuilder();
                     message.AppendLine( Strings.ProductName );
                     message.AppendLine(
                         $"{Strings.New_version_available_} <A HREF=\"https://github.com/Reetus/ClassicAssist/releases/tag/{latestVersion}\">{latestVersion}</A>" );
                     message.AppendLine();
+
+                    if ( !string.IsNullOrEmpty( donationAmount ) )
+                    {
+                        message.AppendLine( donationMessage.ToString() );
+                    }
+
                     message.AppendLine( commitMessage );
                     message.AppendLine(
                         $"<A HREF=\"https://github.com/Reetus/ClassicAssist/commits/master\">{Strings.See_More}</A>" );
@@ -563,6 +587,33 @@ namespace Assistant
             catch ( Exception )
             {
                 // Squash all
+            }
+        }
+
+        private static async Task<string> GetDonationsSummary()
+        {
+            HttpClient httpClient = new HttpClient();
+
+            HttpResponseMessage response =
+                await httpClient.GetAsync( "https://classicassist.azurewebsites.net/api/donations/summary" );
+
+            if ( !response.IsSuccessStatusCode )
+            {
+                return null;
+            }
+
+            try
+            {
+                string json = await response.Content.ReadAsStringAsync();
+
+                dynamic obj = JsonConvert.DeserializeObject<dynamic>( json );
+
+                return obj?.amount;
+            }
+            catch ( Exception e )
+            {
+                SentrySdk.CaptureException( e );
+                return null;
             }
         }
 

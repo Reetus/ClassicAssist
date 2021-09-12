@@ -1,6 +1,6 @@
 ﻿#region License
 
-// Copyright (C) 2020 Reetus
+// Copyright (C) 2021 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,30 +17,22 @@
 
 #endregion
 
-using System;
-using System.Globalization;
-using System.Windows.Data;
+using ClassicAssist.UO.Network.PacketFilter;
 
-namespace ClassicAssist.Launcher.ValueConverters
+namespace ClassicAssist.UO.Network.Packets
 {
-    public class CellWidthValueConverter : IValueConverter
+    public class GenericGump : IMacroCommandParser
     {
-        private double substractValue = 15;
-
-        public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
+        public string Parse( byte[] packet, int length, PacketDirection direction )
         {
-            if ( parameter != null )
+            if ( packet[0] != 0xB0 || direction != PacketDirection.Incoming )
             {
-                substractValue = double.Parse( parameter.ToString() );
+                return null;
             }
 
-            double? val = (double?) value - substractValue;
-            return val;
-        }
+            int serial = ( packet[7] << 24 ) | ( packet[8] << 16 ) | ( packet[9] << 8 ) | packet[10];
 
-        public object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture )
-        {
-            return (double?) value + substractValue;
+            return $"WaitForGump(0x{serial:x}, 5000)\r\n";
         }
     }
 }

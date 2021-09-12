@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml;
 using ClassicAssist.Data.Macros;
+using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
@@ -22,6 +23,7 @@ namespace ClassicAssist.UI.Views
     /// </summary>
     public partial class MacrosTabControl : UserControl
     {
+        private readonly ToolTip _toolTip = new ToolTip();
         private List<PythonCompletionData> _completionData;
         private CompletionWindow _completionWindow;
 
@@ -84,6 +86,90 @@ namespace ClassicAssist.UI.Views
 
             CodeTextEditor.TextArea.TextEntered += OnTextEntered;
             SearchPanel.Install( CodeTextEditor );
+            CodeTextEditor.MouseHover += OnMouseHover;
+            CodeTextEditor.MouseHoverStopped += OnMouseHoverStopped;
+        }
+
+        private void OnMouseHoverStopped( object sender, MouseEventArgs e )
+        {
+            _toolTip.IsOpen = false;
+        }
+
+        private void OnMouseHover( object sender, MouseEventArgs e )
+        {
+            //https://stackoverflow.com/questions/51711692/how-to-fire-an-event-when-mouse-hover-over-a-specific-text-in-avalonedit
+            TextViewPosition? pos = CodeTextEditor.GetPositionFromPoint( e.GetPosition( CodeTextEditor ) );
+
+            if ( !pos.HasValue )
+            {
+                return;
+            }
+
+            DocumentLine line = CodeTextEditor.TextArea.Document.GetLineByNumber( pos.Value.Line );
+
+            if ( line == null )
+            {
+                return;
+            }
+
+            try
+            {
+                string fullLine = CodeTextEditor.Document.GetText( line.Offset, line.Length );
+
+                int startPosition = 0;
+                int endPosition = fullLine.Length;
+
+                for ( int i = pos.Value.Column; i > -1; i-- )
+                {
+                    if ( char.IsLetter( fullLine[i] ) )
+                    {
+                        continue;
+                    }
+
+                    startPosition = i + 1;
+                    break;
+                }
+
+                for ( int i = pos.Value.Column; i < fullLine.Length; i++ )
+                {
+                    if ( char.IsLetter( fullLine[i] ) )
+                    {
+                        continue;
+                    }
+
+                    endPosition = i;
+                    break;
+                }
+
+                if ( endPosition <= startPosition )
+                {
+                    return;
+                }
+
+                string word = fullLine.Substring( startPosition, endPosition - startPosition );
+
+                string tooltipText = string.Empty;
+
+                IEnumerable<PythonCompletionData> matches = _completionData.Where( i => i.MethodName.Equals( word ) );
+
+                tooltipText = matches.Aggregate( tooltipText,
+                    ( current, match ) =>
+                        current + ( string.IsNullOrEmpty( current ) ? match.Name : $"\n{match.Name}" ) );
+
+                if ( string.IsNullOrEmpty( tooltipText ) )
+                {
+                    return;
+                }
+
+                _toolTip.PlacementTarget = this;
+                _toolTip.Content = tooltipText;
+                _toolTip.IsOpen = true;
+                e.Handled = true;
+            }
+            catch ( Exception )
+            {
+                // ignored
+            }
         }
 
         private void OnTextEntered( object sender, TextCompositionEventArgs e )

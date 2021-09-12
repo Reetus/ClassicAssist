@@ -12,9 +12,11 @@ using Assistant;
 using ClassicAssist.Annotations;
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Misc;
+using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Models;
+using ClassicAssist.UO.Data;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 
@@ -78,7 +80,20 @@ namespace ClassicAssist.UI.Views
                 LoadCustomProperties();
             }
 
-            if ( File.Exists( Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
+            Constraints.AddSorted( new PropertyEntry
+            {
+                Name = Strings.Layer,
+                ConstraintType = PropertyType.Predicate,
+                Predicate = ( item, entry ) =>
+                {
+                    Layer layer = TileData.GetLayer( item.ID );
+
+                    return AutolootHelpers.Operation( entry.Operator, entry.Value, (int) layer );
+                },
+                AllowedValuesEnum = typeof( Layer )
+            } );
+
+            if( File.Exists( Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
                 "EntityViewer.json" ) ) )
             {
                 try

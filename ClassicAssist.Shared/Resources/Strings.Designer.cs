@@ -1006,6 +1006,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Context menu entry disabled.
+        /// </summary>
+        public static string Context_menu_entry_disabled {
+            get {
+                return ResourceManager.GetString("Context menu entry disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Context menu entry not found....
         /// </summary>
         public static string Context_menu_entry_not_found___ {
@@ -1141,6 +1150,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current donations for {0}: ${1}.
+        /// </summary>
+        public static string Current_month_donations {
+            get {
+                return ResourceManager.GetString("Current month donations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deactivated following.
         /// </summary>
         public static string Deactivated_following {
@@ -1209,6 +1227,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Dog_Sounds {
             get {
                 return ResourceManager.GetString("Dog Sounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donate Now.
+        /// </summary>
+        public static string Donate_Now {
+            get {
+                return ResourceManager.GetString("Donate Now", resourceCulture);
             }
         }
         

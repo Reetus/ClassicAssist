@@ -1006,7 +1006,7 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
     <value>SetSkill("hiding", "locked")</value>
   </data>
   <data name="SKILL_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Returns the base value of the given skill name.</value>
+    <value>Returns the value of the given skill name.</value>
   </data>
   <data name="SKILL_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>if Skill("hiding") &lt; 100:</value>

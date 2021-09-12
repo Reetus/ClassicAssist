@@ -62,7 +62,7 @@ namespace ClassicAssist.UO.Network
                     actionQueueItem.TimeSpan = DateTime.Now - actionQueueItem.DateTime;
                     ActionQueueEvent?.Invoke( ActionQueueEvents.Enter, actionQueueItem );
 
-                    if ( actionQueueItem.DelaySend )
+                    if ( Options.CurrentOptions.ActionDelay && actionQueueItem.DelaySend )
                     {
                         while ( Engine.LastActionPacket +
                             TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) > DateTime.Now )
@@ -98,7 +98,7 @@ namespace ClassicAssist.UO.Network
                     actionItem.TimeSpan = DateTime.Now - actionItem.DateTime;
                     ActionQueueEvent?.Invoke( ActionQueueEvents.Enter, actionItem );
 
-                    if ( actionItem.DelaySend )
+                    if ( Options.CurrentOptions.ActionDelay && actionItem.DelaySend )
                     {
                         while ( Engine.LastActionPacket +
                             TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) > DateTime.Now )

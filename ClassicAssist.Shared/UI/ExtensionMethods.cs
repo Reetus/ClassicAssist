@@ -20,7 +20,7 @@
 using System.Windows;
 using System.Windows.Media;
 
-namespace ClassicAssist.UI.Misc
+namespace ClassicAssist.Shared.UI
 {
     public static class ExtensionMethods
     {

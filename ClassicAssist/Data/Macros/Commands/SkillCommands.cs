@@ -44,13 +44,13 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = nameof( Strings.Skills ),
             Parameters = new[] { nameof( ParameterType.SkillName ) } )]
-        public static double Skill( string name )
+        public static double Skill( string name, bool baseSkill = false )
         {
             SkillManager manager = SkillManager.GetInstance();
 
             SkillEntry s = manager.Items.FirstOrDefault( se => se.Skill.Name.ToLower().Contains( name.ToLower() ) );
 
-            return s?.Value ?? 0;
+            return baseSkill ? s?.Base ?? 0 : s?.Value ?? 0;
         }
 
         [CommandsDisplay( Category = nameof( Strings.Skills ),

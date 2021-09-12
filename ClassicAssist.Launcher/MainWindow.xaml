@@ -5,21 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClassicAssist.Launcher"
         xmlns:properties="clr-namespace:ClassicAssist.Launcher.Properties"
-        xmlns:behaviours="clr-namespace:ClassicAssist.Launcher.Behaviours"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        mc:Ignorable="d"
-        Title="{x:Static properties:Resources.ClassicAssist_Launcher}" Height="280" Width="400"
-        ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+        mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
+        Title="{x:Static properties:Resources.ClassicAssist_Launcher}" Width="500"
+        ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" SizeToContent="Height">
     <i:Interaction.Behaviors>
         <behaviours:WindowClosingBehaviour Command="{Binding ClosingCommand}" />
     </i:Interaction.Behaviors>
     <Window.DataContext>
         <local:MainViewModel />
     </Window.DataContext>
-    <Grid Margin="5">
+    <Grid Margin="10">
         <Grid.Resources>
             <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource {x:Type GroupBox}}">
                 <Setter Property="Padding" Value="10" />
+                <Setter Property="Margin" Value="0,0,0,10" />
             </Style>
         </Grid.Resources>
         <Grid.RowDefinitions>
@@ -53,14 +54,19 @@
             </Grid>
         </GroupBox>
         <GroupBox Header="{x:Static properties:Resources.Shard}" Grid.Row="2">
-            <DockPanel>
-                <ComboBox DockPanel.Dock="Left" Width="225" Margin="0,0,10,0" ItemsSource="{Binding ShardEntries}"
-                          SelectedIndex="0" SelectedItem="{Binding SelectedShard}" DisplayMemberPath="Name" />
-                <Button Content="{x:Static properties:Resources.Shards}"
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ComboBox DockPanel.Dock="Left" Margin="0,0,10,0" ItemsSource="{Binding ShardManager.VisibleShards}"
+                          SelectedIndex="0" SelectedItem="{Binding SelectedShard}" DisplayMemberPath="Name"
+                          Grid.Column="0" />
+                <Button Content="{x:Static properties:Resources.Shards}" Width="100" Grid.Column="1"
                         Command="{Binding ShowShardsWindowCommand, Mode=OneWay}" />
-            </DockPanel>
+            </Grid>
         </GroupBox>
-        <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="0,10,0,10">
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="0,10,0,0">
             <StackPanel.Resources>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="Margin" Value="0,0,10,0" />
@@ -75,7 +81,7 @@
             </Button>
             <Button Command="{Binding CheckForUpdateCommand, Mode=OneWay}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="{StaticResource RefreshButton}" Height="16" Margin="0,3,10,3" />
+                    <Image Source="{StaticResource RefreshIcon}" Height="16" Margin="0,3,10,3" />
                     <TextBlock Text="{x:Static properties:Resources.Check_for_update}" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>

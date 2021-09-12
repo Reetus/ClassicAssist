@@ -207,7 +207,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                     Item[] matches = Engine.Items.SelectEntities( i =>
                         i.Distance <= SCAVENGER_DISTANCE && i.Owner == 0 && i.ID == entry.Graphic &&
-                        ( entry.Hue == -1 || i.Hue == entry.Hue ) && !_ignoreList.Contains( i.Serial ) );
+                        (entry.Hue == -1 || i.Hue == entry.Hue) && !_ignoreList.Contains( i.Serial ) && 
+                        !i.IsLockedDownAndSecure );
 
                     if ( matches == null )
                     {
@@ -233,7 +234,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                 foreach ( Item scavengerItem in scavengerItems.Where( i =>
                     i.Distance <= SCAVENGER_DISTANCE && !_ignoreList.Contains( i.Serial ) ) )
-                {
+                {                    
                     UOC.SystemMessage( string.Format( Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown" ), 61 );
                     Task<bool> t = ActionPacketQueue.EnqueueDragDrop( scavengerItem.Serial, scavengerItem.Count,
                         container.Serial, QueuePriority.Low, true, true, requeueOnFailure: false,

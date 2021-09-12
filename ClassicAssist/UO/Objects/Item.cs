@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using Assistant;
 using ClassicAssist.Misc;
@@ -43,6 +44,7 @@ namespace ClassicAssist.UO.Objects
         public int Flags { get; set; }
         public int Grid { get; set; }
         public bool IsContainer => Container != null;
+        public bool IsLockedDownAndSecure => Properties?.Any( p => p.Text.ToLower().Contains( "locked down & secure" ) ) ?? false;
         public Layer Layer { get; set; }
         public int Light { get; set; }
 

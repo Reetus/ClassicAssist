@@ -36,7 +36,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         public ScavengerTabViewModel()
         {
             ScavengerManager manager = ScavengerManager.GetInstance();
-            manager.Items = Items;
+            manager.Items = Items;                                   
             manager.CheckArea = () => Task.Run( CheckArea );
             _ignoreList = new List<int>();
         }
@@ -174,7 +174,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            bool hasNearby = items.Any( i => i.Distance <= SCAVENGER_DISTANCE );
+            bool hasNearby = items.Any( i => i.Distance <= SCAVENGER_DISTANCE && !i.IsLocked );
 
             if ( hasNearby )
             {
@@ -184,7 +184,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         internal void CheckArea()
         {
-            if ( !Enabled || Engine.Player == null || Engine.Player.IsDead )
+            if ( !Enabled || !Engine.Connected || Engine.Player == null || Engine.Player.IsDead )
             {
                 return;
             }
@@ -207,8 +207,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                     Item[] matches = Engine.Items.SelectEntities( i =>
                         i.Distance <= SCAVENGER_DISTANCE && i.Owner == 0 && i.ID == entry.Graphic &&
-                        (entry.Hue == -1 || i.Hue == entry.Hue) && !_ignoreList.Contains( i.Serial ) && 
-                        !i.IsLockedDownAndSecure );
+                        ( entry.Hue == -1 || i.Hue == entry.Hue) && !_ignoreList.Contains( i.Serial ) && 
+                        !i.IsLocked );
 
                     if ( matches == null )
                     {
@@ -233,8 +233,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 }
 
                 foreach ( Item scavengerItem in scavengerItems.Where( i =>
-                    i.Distance <= SCAVENGER_DISTANCE && !_ignoreList.Contains( i.Serial ) ) )
-                {                    
+                    i.Distance <= SCAVENGER_DISTANCE && !_ignoreList.Contains( i.Serial ) && !i.IsLocked ) )
+                {   
                     UOC.SystemMessage( string.Format( Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown" ), 61 );
                     Task<bool> t = ActionPacketQueue.EnqueueDragDrop( scavengerItem.Serial, scavengerItem.Count,
                         container.Serial, QueuePriority.Low, true, true, requeueOnFailure: false,

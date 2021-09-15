@@ -556,6 +556,30 @@
                     </DrawingGroup>
                 </DrawingImage.Drawing>
             </DrawingImage>
+            <DrawingImage x:Key="PlusIcon">
+                <DrawingImage.Drawing>
+                    <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                        <DrawingGroup Opacity="1">
+                            <DrawingGroup Opacity="1">
+                                <GeometryDrawing Brush="{DynamicResource ThemeForegroundBrush}"
+                                                 Geometry="F1 M512,512z M0,0z M492,236L276,236 276,20C276,8.954 267.046,0 256,0 244.954,0 236,8.954 236,20L236,236 20,236C8.954,236 0,244.954 0,256 0,267.046 8.954,276 20,276L236,276 236,492C236,503.046 244.954,512 256,512 267.046,512 276,503.046 276,492L276,276 492,276C503.046,276 512,267.046 512,256 512,244.954 503.046,236 492,236z" />
+                            </DrawingGroup>
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
+            <DrawingImage x:Key="MinusIcon">
+                <DrawingImage.Drawing>
+                    <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                        <DrawingGroup Opacity="1">
+                            <DrawingGroup Opacity="1">
+                                <GeometryDrawing Brush="{DynamicResource ThemeForegroundBrush}"
+                                                 Geometry="F1 M512,512z M0,0z M492,236L20,236C8.954,236 0,244.954 0,256 0,267.046 8.954,276 20,276L492,276C503.046,276 512,267.046 512,256 512,244.954 503.046,236 492,236z" />
+                            </DrawingGroup>
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

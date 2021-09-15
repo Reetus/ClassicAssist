@@ -25,10 +25,11 @@
                 <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-                <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
             </Style>
-            <Style TargetType="{x:Type controls:EditTextBlock}" BasedOn="{StaticResource {x:Type controls:EditTextBlock}}">
-                <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}"/>
+            <Style TargetType="{x:Type controls:EditTextBlock}"
+                   BasedOn="{StaticResource {x:Type controls:EditTextBlock}}">
+                <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -53,6 +54,7 @@
                     CommandParameter="{Binding SelectedItem, ElementName=ListView}" />
             <Button Content="{x:Static resources:Strings.Clear_All}" Command="{Binding ClearAllCommand}" />
             <Button Content="{x:Static resources:Strings.Set_Container}" Command="{Binding SetContainerCommand}" />
+            <Button Content="{x:Static resources:Strings.Cliloc_Filter}" Command="{Binding OpenClilocFilterCommand}" />
             <CheckBox IsChecked="{Binding CheckWeight}" Content="{x:Static resources:Strings.Check_Weight}"
                       Margin="0,5" />
         </StackPanel>

@@ -18,6 +18,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ClassicAssist.Shared.Misc
 {
@@ -46,6 +47,14 @@ namespace ClassicAssist.Shared.Misc
             }
 
             list.Insert( i, item );
+        }
+
+        public static IEnumerable<IEnumerable<T>> Split<T>( this IEnumerable<T> source, int chunkSize )
+        {
+            IEnumerable<T> enumerable = source.ToList();
+
+            return enumerable.Where( ( x, i ) => i % chunkSize == 0 )
+                .Select( ( x, i ) => enumerable.Skip( i * chunkSize ).Take( chunkSize ) );
         }
     }
 }

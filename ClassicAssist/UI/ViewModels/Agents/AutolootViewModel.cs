@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -576,8 +577,16 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                 if ( Engine.TooltipsEnabled )
                 {
-                    Engine.SendPacketToServer( new BatchQueryProperties( items.Select( i => i.Serial ).ToArray() ) );
-                    Thread.Sleep( 1000 );
+#if DEBUG
+                    Stopwatch stopWatch = new Stopwatch();
+                    stopWatch.Start();
+#endif
+                    bool result = UOC.WaitForPropertiesAsync( items.Where( e => e.Properties == null ), 1000 ).Result;
+
+#if DEBUG
+                    stopWatch.Stop();
+                    UOC.SystemMessage( $"WaitForPropertiesAsync Result = {result}, Time = {stopWatch.ElapsedMilliseconds}" );
+#endif
                 }
 
                 List<Item> lootItems = new List<Item>();

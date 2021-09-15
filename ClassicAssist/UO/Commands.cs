@@ -11,6 +11,7 @@ using ClassicAssist.Data.ClassicUO.Objects;
 using ClassicAssist.Data.Skills;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Misc;
+using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UI.Views;
@@ -380,7 +381,9 @@ namespace ClassicAssist.UO
 
             try
             {
-                bool result = Task.WaitAny( new Task[] { packetWaitEntry.Lock.ToTask(), packetWaitEntry2.Lock.ToTask() }, timeout ) != -1;
+                bool result =
+                    Task.WaitAny( new Task[] { packetWaitEntry.Lock.ToTask(), packetWaitEntry2.Lock.ToTask() },
+                        timeout ) != -1;
 
                 return result;
             }
@@ -1079,6 +1082,43 @@ namespace ClassicAssist.UO
                     t.SetApartmentState( ApartmentState.STA );
                     t.Start();
                 }
+            }
+        }
+
+        public static async Task<bool> WaitForPropertiesAsync( IEnumerable<Item> items, int timeout )
+        {
+            List<int> serials = items.Where( e => e.Properties == null ).Select( e => e.Serial ).ToList();
+
+            if ( !serials.Any() )
+            {
+                return true;
+            }
+
+            List<PacketWaitEntry> waitEntries = ( from serial in serials
+                select Engine.PacketWaitEntries.Add(
+                    new PacketFilterInfo( 0xD6, new[] { PacketFilterConditions.IntAtPositionCondition( serial, 5 ) } ),
+                    PacketDirection.Incoming, true ) ).ToList();
+
+            foreach ( IEnumerable<int> subSerials in serials.Split( 10 ) )
+            {
+                Engine.SendPacketToServer( new BatchQueryProperties( subSerials.ToArray() ) );
+            }
+
+            try
+            {
+                Task timeoutTask = Task.Run( async () => await Task.Delay( timeout ) );
+
+                List<Task> tasks = new List<Task>();
+
+                tasks.AddRange( waitEntries.Select( e => e.Lock.ToTask() ) );
+
+                Task t = await Task.WhenAny( Task.WhenAll( tasks ), timeoutTask );
+
+                return t != timeoutTask;
+            }
+            finally
+            {
+                Engine.PacketWaitEntries.RemoveRange( waitEntries );
             }
         }
     }

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
@@ -121,6 +122,27 @@ namespace ClassicAssist.Data.Macros
             CompiledCode importCompiled = importSource.Compile();
             ScriptScope importScope = engine.CreateScope( dictionary );
             importCompiled.Execute( importScope );
+
+            foreach ( KeyValuePair<string, object> kvp in dictionary.Where( e =>
+                e.Key.EndsWith( "Message" ) || e.Key.EndsWith( "Msg" ) ).ToList() )
+            {
+                string funcName = Regex.Replace( kvp.Key, "(Message|Msg)$", "" );
+
+                if ( string.IsNullOrEmpty( funcName ) )
+                {
+                    continue;
+                }
+
+                foreach ( string suffix in new[] { "Msg", "Message" } )
+                {
+                    string fullName = $"{funcName}{suffix}";
+
+                    if ( !dictionary.ContainsKey( fullName ) )
+                    {
+                        dictionary.Add( fullName, kvp.Value );
+                    }
+                }
+            }
 
             return dictionary;
         }

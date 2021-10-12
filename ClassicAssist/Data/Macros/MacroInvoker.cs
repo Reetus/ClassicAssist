@@ -38,18 +38,6 @@ namespace ClassicAssist.Data.Macros
             ScriptRuntime runtime = _engine.Runtime;
             runtime.LoadAssembly( Assembly.GetExecutingAssembly() );
 
-            foreach ( string assembly in AssistantOptions.Assemblies ?? new string[0] )
-            {
-                try
-                {
-                    runtime.LoadAssembly( Assembly.LoadFile( assembly ) );
-                }
-                catch ( Exception )
-                {
-                    // ignored
-                }
-            }
-
             if ( _importCache == null )
             {
                 _importCache = InitializeImports( _engine );
@@ -88,7 +76,7 @@ namespace ClassicAssist.Data.Macros
                     t.Namespace != null && t.IsPublic && t.IsClass && t.Namespace.EndsWith( "Macros.Commands" ) )
                 .Aggregate( string.Empty, ( current, t ) => current + $"from {t.FullName} import * \n" );
 
-            foreach ( string assemblyName in AssistantOptions.Assemblies ?? new string[0] )
+            foreach ( string assemblyName in AssistantOptions.Assemblies ?? Array.Empty<string>() )
             {
                 try
                 {
@@ -115,6 +103,18 @@ namespace ClassicAssist.Data.Macros
         public static Dictionary<string, object> InitializeImports( ScriptEngine engine )
         {
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
+
+            foreach( string assembly in AssistantOptions.Assemblies ?? new string[0] )
+            {
+                try
+                {
+                    _engine.Runtime.LoadAssembly( Assembly.LoadFile( assembly ) );
+                }
+                catch( Exception )
+                {
+                    // ignored
+                }
+            }
 
             ScriptSource importSource =
                 engine.CreateScriptSourceFromString( GetScriptingImports(), SourceCodeKind.Statements );

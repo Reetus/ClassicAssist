@@ -461,6 +461,11 @@ namespace Assistant
 
             string[] searchPaths = { StartupPath, RuntimeEnvironment.GetRuntimeDirectory() };
 
+            if ( AssistantOptions.Assemblies?.Length > 0 )
+            {
+                searchPaths = searchPaths.Concat( GetAdditionalAssemblyPaths() ).ToArray();
+            }
+
             if ( assemblyname.Contains( "Colletions" ) )
             {
                 assemblyname = "System.Collections";
@@ -492,6 +497,14 @@ namespace Assistant
             }
 
             return null;
+        }
+
+        private static string[] GetAdditionalAssemblyPaths()
+        {
+            return AssistantOptions.Assemblies == null
+                ? Array.Empty<string>()
+                : ( from assembly in AssistantOptions.Assemblies select Path.GetDirectoryName( assembly ) ).Distinct()
+                .ToArray();
         }
 
         public static void SetPlayer( PlayerMobile mobile )

@@ -131,5 +131,8 @@
         <TabItem Header="{x:Static resources:Strings.Actions}">
             <debug:DebugActionQueueControl />
         </TabItem>
+        <TabItem Header="Packet Queue">
+            <debug:DebugPacketQueueControl/>
+        </TabItem>
     </TabControl>
 </Window>

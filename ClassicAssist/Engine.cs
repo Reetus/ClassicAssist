@@ -58,6 +58,8 @@ namespace Assistant
 
         public delegate void dSendRecvPacket( byte[] data, int length );
 
+        public delegate void dSlowHandler( PacketDirection direction, string handlerName, TimeSpan elapsed );
+
         public delegate void dUpdateWindowTitle();
 
         private const int MAX_DISTANCE = 32;
@@ -95,6 +97,8 @@ namespace Assistant
         private static readonly TimeSpan PACKET_SEND_DELAY = TimeSpan.FromMilliseconds( 5 );
         private static DateTime _nextPacketSendTime;
         public static int LastSpellID;
+        private static Stopwatch _incomingStopwatch;
+        private static Stopwatch _outgoingStopwatch;
         public static CharacterListFlags CharacterListFlags { get; set; }
 
         public static Assembly ClassicAssembly { get; set; }
@@ -328,7 +332,8 @@ namespace Assistant
 
             Items.RemoveByDistance( MAX_DISTANCE, x, y );
             Mobiles.RemoveByDistance( MAX_DISTANCE, x, y );
-            ScavengerManager.GetInstance().CheckArea?.Invoke();
+
+            Task.Run( () => { ScavengerManager.GetInstance().CheckArea?.Invoke(); } ).ConfigureAwait( false );
         }
 
         public static Item GetOrCreateItem( int serial, int containerSerial = -1 )
@@ -403,6 +408,16 @@ namespace Assistant
 
         private static void ProcessIncomingQueue( Packet packet )
         {
+            if ( _incomingStopwatch == null )
+            {
+                _incomingStopwatch = new Stopwatch();
+            }
+
+            _incomingStopwatch.Reset();
+            _incomingStopwatch.Start();
+
+            string handlerName = "None";
+
             try
             {
                 PacketReceivedEvent?.Invoke( packet.GetPacket(), packet.GetLength() );
@@ -410,6 +425,11 @@ namespace Assistant
                 PacketHandler handler = IncomingPacketHandlers.GetHandler( packet.GetPacketID() );
 
                 int length = _getPacketLength( packet.GetPacketID() );
+
+                if ( handler != null )
+                {
+                    handlerName = handler.OnReceive.Method.Name;
+                }
 
                 handler?.OnReceive?.Invoke( new PacketReader( packet.GetPacket(), packet.GetLength(), length > 0 ) );
 
@@ -426,15 +446,39 @@ namespace Assistant
                     SentrySdk.CaptureException( e );
                 } );
             }
+
+            _incomingStopwatch.Stop();
+
+            if ( _incomingStopwatch.ElapsedMilliseconds >= Options.CurrentOptions.SlowHandlerThreshold )
+            {
+                SlowHandlerEvent?.Invoke( PacketDirection.Incoming, handlerName, _incomingStopwatch.Elapsed );
+            }
         }
+
+        public static event dSlowHandler SlowHandlerEvent;
 
         private static void ProcessOutgoingQueue( Packet packet )
         {
+            if ( _outgoingStopwatch == null )
+            {
+                _outgoingStopwatch = new Stopwatch();
+            }
+
+            _outgoingStopwatch.Reset();
+            _outgoingStopwatch.Start();
+
+            string handlerName = "None";
+
             try
             {
                 PacketSentEvent?.Invoke( packet.GetPacket(), packet.GetLength() );
 
                 PacketHandler handler = OutgoingPacketHandlers.GetHandler( packet.GetPacketID() );
+
+                if ( handler != null )
+                {
+                    handlerName = handler.OnReceive.Method.Name;
+                }
 
                 int length = _getPacketLength( packet.GetPacketID() );
 
@@ -452,6 +496,13 @@ namespace Assistant
                     scope.SetExtra( "WorldMobileCount", Mobiles.Count() );
                     SentrySdk.CaptureException( e );
                 } );
+            }
+
+            _outgoingStopwatch.Stop();
+
+            if ( _outgoingStopwatch.ElapsedMilliseconds >= Options.CurrentOptions.SlowHandlerThreshold )
+            {
+                SlowHandlerEvent?.Invoke( PacketDirection.Outgoing, handlerName, _outgoingStopwatch.Elapsed );
             }
         }
 

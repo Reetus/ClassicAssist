@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -43,12 +45,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private ICommand _removeCommand;
         private ScavengerEntry _selectedItem;
         private ICommand _setContainerCommand;
+        private DateTime _lastNearbyCheck;
 
         public ScavengerTabViewModel()
         {
             ScavengerManager manager = ScavengerManager.GetInstance();
             manager.Items = Items;
-            manager.CheckArea = () => Task.Run( CheckArea );
+            manager.CheckArea = CheckArea;
             _ignoreList = new List<int>();
         }
 
@@ -244,12 +247,19 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
+            if ( DateTime.Now - _lastNearbyCheck < TimeSpan.FromMilliseconds( 100 ) )
+            {
+                return;
+            }
+
             bool hasNearby = items.Any( i => i.Distance <= SCAVENGER_DISTANCE );
 
             if ( hasNearby )
             {
-                CheckArea();
+                Task.Run( CheckArea ).ConfigureAwait( false );
             }
+
+            _lastNearbyCheck = DateTime.Now;
         }
 
         internal void CheckArea()
@@ -266,8 +276,21 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            lock ( _scavengeLock )
+            bool lockTaken = false;
+
+            Monitor.Enter( _scavengeLock, ref lockTaken );
+
+            if ( !lockTaken )
             {
+#if DEBUG
+                UOC.SystemMessage( "Scav lock not taken, return" );
+#endif
+                return;
+            }
+
+            try
+            {
+
                 foreach ( ScavengerEntry entry in Items.OrderByDescending( x => x.Priority ) )
                 {
                     if ( !entry.Enabled )
@@ -341,6 +364,10 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         _ignoreList.Add( scavengerItem.Serial );
                     }
                 }
+            }
+            finally
+            {
+                Monitor.Exit( _scavengeLock );
             }
         }
 

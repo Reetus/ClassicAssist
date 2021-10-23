@@ -12,7 +12,6 @@ using ClassicAssist.Data.Macros;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
-using ClassicAssist.UI.Misc;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
 using Newtonsoft.Json.Linq;
@@ -150,7 +149,8 @@ namespace ClassicAssist.UI.ViewModels
                 ["ActionDelay"] = Options.CurrentOptions.ActionDelay,
                 ["ActionDelayMS"] = Options.CurrentOptions.ActionDelayMS,
                 ["Debug"] = Options.CurrentOptions.Debug,
-                ["SysTray"] = Options.CurrentOptions.SysTray
+                ["SysTray"] = Options.CurrentOptions.SysTray,
+                ["SlowHandlerThreshold"] = Options.CurrentOptions.SlowHandlerThreshold
             };
 
             JArray filtersArray = new JArray();
@@ -213,6 +213,7 @@ namespace ClassicAssist.UI.ViewModels
             Options.AlwaysOnTop = general["AlwaysOnTop"]?.ToObject<bool>() ?? false;
             Options.Debug = general["Debug"]?.ToObject<bool>() ?? false;
             Options.SysTray = general["SysTray"]?.ToObject<bool>() ?? false;
+            Options.SlowHandlerThreshold = general["SlowHandlerThreshold"]?.ToObject<int>() ?? 250;
 
             if ( general["Filters"] == null )
             {

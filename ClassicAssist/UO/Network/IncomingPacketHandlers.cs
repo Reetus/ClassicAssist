@@ -1731,8 +1731,11 @@ namespace ClassicAssist.UO.Network
             }
             else
             {
-                AbilitiesManager manager = AbilitiesManager.GetInstance();
-                manager.ResendGump( manager.Enabled );
+                Task.Run( () =>
+                {
+                    AbilitiesManager manager = AbilitiesManager.GetInstance();
+                    manager.ResendGump( manager.Enabled );
+                } ).ConfigureAwait( false );
             }
 
             MobileIncomingEvent?.Invoke( mobile, container );
@@ -1816,9 +1819,12 @@ namespace ClassicAssist.UO.Network
 
                 Engine.Items.Add( containerItem );
 
-                ContainerContentsEvent?.Invoke( container.Serial, container );
+                Task.Run( () =>
+                {
+                    ContainerContentsEvent?.Invoke( container.Serial, container );
 
-                Engine.RehueList.CheckContainer( container );
+                    Engine.RehueList.CheckContainer( container );
+                } ).ConfigureAwait( false );
             }
             catch ( Exception e )
             {

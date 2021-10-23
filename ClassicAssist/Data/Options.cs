@@ -64,6 +64,7 @@ namespace ClassicAssist.Data
         private bool _setUOTitle;
         private bool _showProfileNameWindowTitle;
         private bool _showResurrectionWaypoints;
+        private int _slowHandlerThreshold = 250;
         private SmartTargetOption _smartTargetOption;
         private bool _sortMacrosAlphabetical;
         private bool _sysTray;
@@ -348,6 +349,12 @@ namespace ClassicAssist.Data
         {
             get => _showResurrectionWaypoints;
             set => SetProperty( ref _showResurrectionWaypoints, value );
+        }
+
+        public int SlowHandlerThreshold
+        {
+            get => _slowHandlerThreshold;
+            set => SetProperty( ref _slowHandlerThreshold, value );
         }
 
         public SmartTargetOption SmartTargetOption

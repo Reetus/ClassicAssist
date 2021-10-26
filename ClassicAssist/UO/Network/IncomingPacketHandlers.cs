@@ -1453,7 +1453,7 @@ namespace ClassicAssist.UO.Network
         {
             int serial = reader.ReadInt32();
 
-            Mobile mobile = Engine.Mobiles.FirstOrDefault( m => m.GetEquippedItems().Any( i => i.Serial == serial ) );
+            Mobile mobile = Engine.Mobiles.FirstOrDefault( m => m.GetAllLayers().Contains( serial ) );
 
             if ( mobile != null )
             {

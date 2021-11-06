@@ -631,5 +631,11 @@ namespace ClassicAssist.Data.Macros.Commands
                 Engine.RemoveReceiveFilter( pfi );
             } ) );
         }
+
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        public static void ClearObjectQueue()
+        {
+            ActionPacketQueue.Clear();
+        }
     }
 }

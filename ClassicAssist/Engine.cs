@@ -587,7 +587,12 @@ namespace Assistant
             Task.Run( async () =>
             {
                 await Task.Delay( 3000 );
-                ObjectCommands.UseObject( Player.Backpack );
+
+                if ( Player.Backpack != null && Player.Backpack.Container == null )
+                {
+                    ObjectCommands.UseObject( Player.Backpack );
+                }
+
                 MacroManager.GetInstance().Autostart();
             } );
         }

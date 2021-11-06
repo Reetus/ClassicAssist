@@ -419,6 +419,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clears all actions in action packet queue.
+        /// </summary>
+        public static string CLEAROBJECTQUEUE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CLEAROBJECTQUEUE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ClearObjectQueue().
+        /// </summary>
+        public static string CLEAROBJECTQUEUE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CLEAROBJECTQUEUE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clears the target queue when queue last target/target self is enabled..
         /// </summary>
         public static string CLEARTARGETQUEUE_COMMAND_DESCRIPTION {

@@ -19,7 +19,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -146,7 +145,7 @@ namespace ClassicAssist.UO.Network
 
         public static Task EnqueuePacket( PacketQueueItem packetQueueItem, QueuePriority priority )
         {
-            if ( !CheckUseObjectQueueLength() )
+            if ( Options.CurrentOptions.UseObjectQueue && !CheckUseObjectQueueLength() )
             {
                 return Task.CompletedTask;
             }

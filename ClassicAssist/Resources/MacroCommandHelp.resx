@@ -1670,4 +1670,10 @@ if idx != None:
 else:
  print 'None of them were found :('</value>
   </data>
+  <data name="CLEAROBJECTQUEUE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Clears all actions in action packet queue</value>
+  </data>
+  <data name="CLEAROBJECTQUEUE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ClearObjectQueue()</value>
+  </data>
 </root>

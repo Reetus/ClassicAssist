@@ -20,6 +20,7 @@ using ClassicAssist.Data.Abilities;
 using ClassicAssist.Data.Commands;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
+using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Misc;
@@ -586,6 +587,7 @@ namespace Assistant
             Task.Run( async () =>
             {
                 await Task.Delay( 3000 );
+                ObjectCommands.UseObject( Player.Backpack );
                 MacroManager.GetInstance().Autostart();
             } );
         }

@@ -255,6 +255,21 @@ namespace ClassicAssist.UO.Objects
 
             if ( EntityList.ContainsKey( serial ) )
             {
+                if ( item != null )
+                {
+                    item.Container = null;
+                }
+
+                if ( item != null && item.Owner != 0 )
+                {
+                    Item owner = Engine.Items.GetItem( item.Owner );
+
+                    if ( owner?.Container?.GetItem( serial ) != null )
+                    {
+                        owner.Container.EntityList.TryRemove( serial, out _ );
+                    }
+                }
+
                 changed = base.Remove( serial );
             }
             else

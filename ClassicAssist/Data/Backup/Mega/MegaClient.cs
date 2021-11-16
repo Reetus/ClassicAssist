@@ -57,7 +57,7 @@ namespace ClassicAssist.Data.Backup.Mega
             return _nodes.ToList();
         }
 
-        public static async Task<INode> GetNode( MegaApiClient client, string name, INodeInfo parent )
+        public static async Task<INode> GetNode( MegaApiClient client, string name, INode parent )
         {
             IEnumerable<INode> nodes = ( await GetAllNodes( client ) ).Where( e => e.ParentId == parent.Id );
 

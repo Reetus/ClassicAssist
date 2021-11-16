@@ -11,7 +11,11 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class JournalCommands
     {
-        [CommandsDisplay( Category = nameof( Strings.Journal ) )]
+        [CommandsDisplay( Category = nameof( Strings.Journal ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.String ), nameof( ParameterType.String ), nameof( ParameterType.Hue )
+            } )]
         public static bool InJournal( string text, string author = "", int hue = -1 )
         {
             bool match;
@@ -40,7 +44,11 @@ namespace ClassicAssist.Data.Macros.Commands
             Engine.Journal.Clear();
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Journal ) )]
+        [CommandsDisplay( Category = nameof( Strings.Journal ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.String ), nameof( ParameterType.Timeout ), nameof( ParameterType.String )
+            } )]
         public static bool WaitForJournal( string text, int timeout, string author = "" )
         {
             AutoResetEvent are = new AutoResetEvent( false );
@@ -85,7 +93,11 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         // ReSharper disable once ExplicitCallerInfoArgument
-        [CommandsDisplay( "WaitForJournalArray", Category = nameof( Strings.Journal ) )]
+        [CommandsDisplay( "WaitForJournalArray", Category = nameof( Strings.Journal ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.StringArray ), nameof( ParameterType.Timeout ), nameof( ParameterType.String )
+            } )]
         public static (int?, string) WaitForJournal( IEnumerable<string> entries, int timeout, string author = "" )
         {
             int? index = null;
@@ -100,7 +112,8 @@ namespace ClassicAssist.Data.Macros.Commands
                 if ( author.ToLower().Equals( "system" ) )
                 {
                     var entry = wanted.Select( ( txt, idx ) => new { Text = txt, Index = idx } ).FirstOrDefault( e =>
-                        je.Text.ToLower().Contains( e.Text.ToLower() ) && ( je.SpeechType == JournalSpeech.System || je.Name == "System" ) );
+                        je.Text.ToLower().Contains( e.Text.ToLower() ) &&
+                        ( je.SpeechType == JournalSpeech.System || je.Name == "System" ) );
 
                     if ( entry != null )
                     {
@@ -110,8 +123,11 @@ namespace ClassicAssist.Data.Macros.Commands
                 }
                 else
                 {
-                    var entry = wanted.Select( ( txt, idx ) => new { Text = txt, Index = idx } )
-                        .FirstOrDefault( e => je.Text.ToLower().Contains( e.Text.ToLower() ) && ( string.IsNullOrEmpty( author ) || string.Equals( je.Name, author, StringComparison.CurrentCultureIgnoreCase ) ) );
+                    var entry = wanted.Select( ( txt, idx ) => new { Text = txt, Index = idx } ).FirstOrDefault( e =>
+                        je.Text.ToLower().Contains( e.Text.ToLower() ) && ( string.IsNullOrEmpty( author ) ||
+                                                                            string.Equals( je.Name, author,
+                                                                                StringComparison
+                                                                                    .CurrentCultureIgnoreCase ) ) );
 
                     if ( entry != null )
                     {

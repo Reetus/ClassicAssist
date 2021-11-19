@@ -333,52 +333,55 @@ namespace ClassicAssist.UI.ViewModels
 
         private void UpdateFilteredItems()
         {
-            if ( string.IsNullOrEmpty( FilterText ) )
+            _dispatcher.Invoke( () =>
             {
-                FilterItems = new ObservableCollectionEx<HotkeyCommand>( Items );
-                return;
-            }
-
-            if ( Searching )
-            {
-                return;
-            }
-
-            Searching = true;
-
-            bool Predicate( HotkeyEntry hke )
-            {
-                return hke.Name.ToLower().Contains( FilterText.ToLower() );
-            }
-
-            FilterItems = new ObservableCollectionEx<HotkeyCommand>( Items.Where( e => e.Children.Any( Predicate ) )
-                .Select( e =>
+                if ( string.IsNullOrEmpty( FilterText ) )
                 {
-                    HotkeyCommand hkc = new HotkeyCommand
+                    FilterItems = Items;
+                    return;
+                }
+
+                if ( Searching )
+                {
+                    return;
+                }
+
+                Searching = true;
+
+                bool Predicate( HotkeyEntry hke )
+                {
+                    return hke.Name.ToLower().Contains( FilterText.ToLower() );
+                }
+
+                FilterItems = new ObservableCollectionEx<HotkeyCommand>( Items.Where( e => e.Children.Any( Predicate ) )
+                    .Select( e =>
                     {
-                        Tooltip = e.Tooltip,
-                        Name = e.Name,
-                        Action = e.Action,
-                        Disableable = e.Disableable,
-                        Hotkey = e.Hotkey,
-                        IsCategory = e.IsCategory,
-                        PassToUO = e.PassToUO,
-                        IsExpanded = true
-                    };
+                        HotkeyCommand hkc = new HotkeyCommand
+                        {
+                            Tooltip = e.Tooltip,
+                            Name = e.Name,
+                            Action = e.Action,
+                            Disableable = e.Disableable,
+                            Hotkey = e.Hotkey,
+                            IsCategory = e.IsCategory,
+                            PassToUO = e.PassToUO,
+                            IsExpanded = true
+                        };
 
-                    IEnumerable<HotkeyEntry> children = e.Children.Where( Predicate ).ToList();
+                        IEnumerable<HotkeyEntry> children = e.Children.Where( Predicate ).ToList();
 
-                    foreach ( HotkeyEntry child in children )
-                    {
-                        child.PropertyChanged += ( s, ea ) => UpdateFilteredItems();
-                    }
+                        foreach ( HotkeyEntry child in children )
+                        {
+                            child.PropertyChanged += ( s, ea ) => UpdateFilteredItems();
+                        }
 
-                    hkc.Children = new ObservableCollectionEx<HotkeyEntry>( children );
+                        hkc.Children = new ObservableCollectionEx<HotkeyEntry>( children );
 
-                    return hkc;
-                } ) );
+                        return hkc;
+                    } ) );
 
-            Searching = false;
+                Searching = false;
+            } );
         }
 
         private void CheckOverwriteHotkey( HotkeyEntry selectedItem, ShortcutKeys hotkey )

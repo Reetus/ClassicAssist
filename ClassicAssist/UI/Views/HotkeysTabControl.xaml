@@ -32,23 +32,38 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="150" />
         </Grid.ColumnDefinitions>
-        <TreeView x:Name="treeView" Grid.Row="0" Margin="5" ItemsSource="{Binding Items}">
-            <i:Interaction.Behaviors>
-                <misc:BindableSelectedItemBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
-            </i:Interaction.Behaviors>
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                    <ContentControl>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding Image}" Stretch="Uniform" Margin="0,0,5,0"
-                                   Visibility="{Binding IsCategory, Converter={StaticResource InvertAndVisibilitate}}" />
-                            <TextBlock Text="{Binding}" Foreground="{DynamicResource ThemeForegroundBrush}"
-                                       ToolTip="{Binding Tooltip}" />
-                        </StackPanel>
-                    </ContentControl>
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <DockPanel Grid.Row="0" Margin="5,10,0,0">
+                <Image Height="14" Source="{StaticResource SearchIcon}" DockPanel.Dock="Left" />
+                <TextBox Margin="5,0,5,0" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Stretch"/>
+            </DockPanel>
+            <TreeView x:Name="treeView" Grid.Row="1" Margin="5" ItemsSource="{Binding FilterItems}">
+                <i:Interaction.Behaviors>
+                    <misc:BindableSelectedItemBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
+                </i:Interaction.Behaviors>
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource TreeViewItemStyle}">
+                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                    </Style>
+                </TreeView.ItemContainerStyle>
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                        <ContentControl>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Image}" Stretch="Uniform" Margin="0,0,5,0"
+                                       Visibility="{Binding IsCategory, Converter={StaticResource InvertAndVisibilitate}}" />
+                                <TextBlock Text="{Binding}" Foreground="{DynamicResource ThemeForegroundBrush}"
+                                           ToolTip="{Binding Tooltip}" />
+                            </StackPanel>
+                        </ContentControl>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+        </Grid>
         <GroupBox Grid.Column="1" Header="{x:Static resources:Strings.Hotkeys}" Margin="0,10">
             <Grid>
                 <Grid.RowDefinitions>

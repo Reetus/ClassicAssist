@@ -580,6 +580,14 @@
                     </DrawingGroup>
                 </DrawingImage.Drawing>
             </DrawingImage>
+            <DrawingImage x:Key="SearchIcon">
+                <DrawingImage.Drawing>
+                    <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                        <GeometryDrawing Brush="{DynamicResource ThemeForegroundBrush}"
+                                         Geometry="F1 M512,512z M0,0z M505,442.7L405.3,343C400.8,338.5,394.7,336,388.3,336L372,336C399.6,300.7 416,256.3 416,208 416,93.1 322.9,0 208,0 93.1,0 0,93.1 0,208 0,322.9 93.1,416 208,416 256.3,416 300.7,399.6 336,372L336,388.3C336,394.7,338.5,400.8,343,405.3L442.7,505C452.1,514.4,467.3,514.4,476.6,505L504.9,476.7C514.3,467.3,514.3,452.1,505,442.7z M208,336C137.3,336 80,278.8 80,208 80,137.3 137.2,80 208,80 278.7,80 336,137.2 336,208 336,278.7 278.8,336 208,336z" />
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

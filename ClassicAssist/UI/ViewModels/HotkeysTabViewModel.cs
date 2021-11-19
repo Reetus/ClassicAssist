@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -11,7 +12,6 @@ using ClassicAssist.Data.Spells;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
-using ClassicAssist.UI.Misc;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.UI.ViewModels
@@ -22,6 +22,8 @@ namespace ClassicAssist.UI.ViewModels
         private readonly List<HotkeyCommand> _serializeCategories = new List<HotkeyCommand>();
         private ICommand _clearHotkeyCommand;
         private ICommand _executeCommand;
+        private ObservableCollection<HotkeyCommand> _filterItems;
+        private string _filterText;
         private HotkeyCommand _masteriesCategory;
         private HotkeyEntry _selectedItem;
         private HotkeyCommand _spellsCategory;
@@ -30,6 +32,8 @@ namespace ClassicAssist.UI.ViewModels
         {
             _hotkeyManager = HotkeyManager.GetInstance();
             _hotkeyManager.ClearAllHotkeys = ClearAllHotkeys;
+
+            Items.CollectionChanged += ( s, ea ) => UpdateFilteredItems();
         }
 
         public ICommand ClearHotkeyCommand =>
@@ -37,6 +41,22 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand ExecuteCommand =>
             _executeCommand ?? ( _executeCommand = new RelayCommand( ExecuteHotkey, o => SelectedItem != null ) );
+
+        public ObservableCollection<HotkeyCommand> FilterItems
+        {
+            get => _filterItems;
+            set => SetProperty( ref _filterItems, value );
+        }
+
+        public string FilterText
+        {
+            get => _filterText;
+            set
+            {
+                SetProperty( ref _filterText, value );
+                UpdateFilteredItems();
+            }
+        }
 
         public ShortcutKeys Hotkey
         {
@@ -49,6 +69,8 @@ namespace ClassicAssist.UI.ViewModels
             get => _hotkeyManager.Items;
             set => _hotkeyManager.Items = value;
         }
+
+        public bool Searching { get; set; }
 
         public HotkeyEntry SelectedItem
         {
@@ -307,6 +329,59 @@ namespace ClassicAssist.UI.ViewModels
                     entry.PassToUO = token["PassToUO"]?.ToObject<bool>() ?? true;
                 }
             }
+        }
+
+        private void UpdateFilteredItems()
+        {
+            _dispatcher.Invoke( () =>
+            {
+                if ( string.IsNullOrEmpty( FilterText ) )
+                {
+                    FilterItems = Items;
+                    return;
+                }
+
+                if ( Searching )
+                {
+                    return;
+                }
+
+                Searching = true;
+
+                bool Predicate( HotkeyEntry hke )
+                {
+                    return hke.Name.ToLower().Contains( FilterText.ToLower() );
+                }
+
+                FilterItems = new ObservableCollectionEx<HotkeyCommand>( Items.Where( e => e.Children.Any( Predicate ) )
+                    .Select( e =>
+                    {
+                        HotkeyCommand hkc = new HotkeyCommand
+                        {
+                            Tooltip = e.Tooltip,
+                            Name = e.Name,
+                            Action = e.Action,
+                            Disableable = e.Disableable,
+                            Hotkey = e.Hotkey,
+                            IsCategory = e.IsCategory,
+                            PassToUO = e.PassToUO,
+                            IsExpanded = true
+                        };
+
+                        IEnumerable<HotkeyEntry> children = e.Children.Where( Predicate ).ToList();
+
+                        foreach ( HotkeyEntry child in children )
+                        {
+                            child.PropertyChanged += ( s, ea ) => UpdateFilteredItems();
+                        }
+
+                        hkc.Children = new ObservableCollectionEx<HotkeyEntry>( children );
+
+                        return hkc;
+                    } ) );
+
+                Searching = false;
+            } );
         }
 
         private void CheckOverwriteHotkey( HotkeyEntry selectedItem, ShortcutKeys hotkey )

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -8,6 +9,14 @@ namespace ClassicAssist.Shared.UI
     public sealed class ObservableCollectionEx<T> : ObservableCollection<T> where T : INotifyPropertyChanged
     {
         // this collection also reacts to changes in its components' properties
+
+        public ObservableCollectionEx( IEnumerable<T> items )
+        {
+            foreach ( T item in items )
+            {
+                Add( item );
+            }
+        }
 
         public ObservableCollectionEx()
         {

@@ -6,6 +6,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
 {
     public class HotkeyCommand : HotkeyEntry, IComparable<HotkeyCommand>
     {
+        private bool _isExpanded;
         private string _tooltip;
 
         public HotkeyCommand()
@@ -29,6 +30,12 @@ namespace ClassicAssist.Data.Hotkeys.Commands
             }
 
             Action = hs => Task.Run( Execute );
+        }
+
+        public bool IsExpanded
+        {
+            get => _isExpanded;
+            set => SetProperty( ref _isExpanded, value );
         }
 
         public string Tooltip

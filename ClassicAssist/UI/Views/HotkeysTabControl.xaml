@@ -10,6 +10,7 @@
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+             xmlns:sharedControls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500">
     <UserControl.DataContext>
@@ -37,10 +38,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <DockPanel Grid.Row="0" Margin="5,10,0,0">
-                <Image Height="14" Source="{StaticResource SearchIcon}" DockPanel.Dock="Left" />
-                <TextBox Margin="5,0,5,0" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Stretch"/>
-            </DockPanel>
+            <sharedControls:FilterControl Grid.Row="0" FilterText="{Binding FilterText}" Margin="5,10,5,0" />
             <TreeView x:Name="treeView" Grid.Row="1" Margin="5" ItemsSource="{Binding FilterItems}">
                 <i:Interaction.Behaviors>
                     <misc:BindableSelectedItemBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />

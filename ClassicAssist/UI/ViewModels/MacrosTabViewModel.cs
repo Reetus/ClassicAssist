@@ -42,9 +42,12 @@ namespace ClassicAssist.UI.ViewModels
         private TextDocument _document;
         private ObservableCollection<IDraggable> _draggables = new ObservableCollection<IDraggable>();
         private ICommand _executeCommand;
+        private ObservableCollection<IDraggable> _filterDraggables;
+        private string _filterText = string.Empty;
         private ICommand _formatCodeCommand;
         private string _formatError;
         private ICommand _inspectObjectCommand;
+        private bool _isFilterOpen;
         private bool _isPerformingAction;
         private bool _isRecording;
         private double _leftColumnWidth = 200;
@@ -64,6 +67,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _showCommandsCommand;
         private ICommand _showMacrosWikiCommand;
         private ICommand _stopCommand;
+        private ICommand _toggleSearchCommand;
 
         public MacrosTabViewModel() : base( Strings.Macros )
         {
@@ -85,6 +89,7 @@ namespace ClassicAssist.UI.ViewModels
             _manager.NewMacro = NewMacro;
             _manager.Items = Items;
             Items.CollectionChanged += UpdateDraggables;
+            Draggables.CollectionChanged += ( s, ea ) => UpdateFilteredItems();
         }
 
         public int CaretPosition
@@ -115,6 +120,22 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ExecuteCommand =>
             _executeCommand ?? ( _executeCommand = new RelayCommandAsync( Execute, CanExecute ) );
 
+        public ObservableCollection<IDraggable> FilterDraggables
+        {
+            get => _filterDraggables;
+            set => SetProperty( ref _filterDraggables, value );
+        }
+
+        public string FilterText
+        {
+            get => _filterText;
+            set
+            {
+                SetProperty( ref _filterText, value );
+                UpdateFilteredItems();
+            }
+        }
+
         public ICommand FormatCodeCommand =>
             _formatCodeCommand ??
             ( _formatCodeCommand = new RelayCommandAsync( FormatCode, o => SelectedItem != null ) );
@@ -134,6 +155,12 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand InspectObjectCommand =>
             _inspectObjectCommand ??
             ( _inspectObjectCommand = new RelayCommandAsync( InspectObject, o => Engine.Connected ) );
+
+        public bool IsFilterOpen
+        {
+            get => _isFilterOpen;
+            set => SetProperty( ref _isFilterOpen, value );
+        }
 
         public bool IsPerformingAction
         {
@@ -225,6 +252,9 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand StopCommand =>
             _stopCommand ?? ( _stopCommand = new RelayCommandAsync( Stop, o => SelectedItem?.IsRunning ?? false ) );
 
+        public ICommand ToggleSearchCommand =>
+            _toggleSearchCommand ?? ( _toggleSearchCommand = new RelayCommand( ToggleSearch ) );
+
         public void Serialize( JObject json )
         {
             JObject macros = new JObject();
@@ -238,7 +268,7 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             foreach ( IDraggableGroup draggableGroup in Draggables.Where( i => i is IDraggableGroup )
-                .Cast<IDraggableGroup>() )
+                         .Cast<IDraggableGroup>() )
             {
                 JObject entry = new JObject { { "Name", draggableGroup.Name } };
 
@@ -268,7 +298,7 @@ namespace ClassicAssist.UI.ViewModels
             JArray aliasArray = new JArray();
 
             foreach ( JObject entry in AliasCommands.GetAllAliases()
-                .Select( kvp => new JObject { { "Name", kvp.Key }, { "Value", kvp.Value } } ) )
+                         .Select( kvp => new JObject { { "Name", kvp.Key }, { "Value", kvp.Value } } ) )
             {
                 aliasArray.Add( entry );
             }
@@ -399,6 +429,67 @@ namespace ClassicAssist.UI.ViewModels
             SelectedItem = Items.LastOrDefault();
         }
 
+        private void UpdateFilteredItems()
+        {
+            _dispatcher.Invoke( () =>
+            {
+                if ( string.IsNullOrEmpty( FilterText ) )
+                {
+                    FilterDraggables = Draggables;
+                }
+
+                if ( IsSearching )
+                {
+                    return;
+                }
+
+                IsSearching = true;
+
+                bool Predicate( IDraggableEntry entry )
+                {
+                    return entry.Name.ToLower().Contains( FilterText.ToLower() );
+                }
+
+                List<IDraggable> items = Draggables.Where( e =>
+                {
+                    switch ( e )
+                    {
+                        case IDraggableEntry entry when Predicate( entry ):
+                        case IDraggableGroup group when group.Children.Where( ide => ide is IDraggableEntry )
+                            .Cast<IDraggableEntry>().Any( Predicate ):
+                            return true;
+                        default:
+                            return false;
+                    }
+                } ).Select( e =>
+                {
+                    if ( !( e is IDraggableGroup group ) )
+                    {
+                        return e;
+                    }
+
+                    IEnumerable<IDraggable> children =
+                        group.Children.Where( c => c.Name.ToLower().Contains( FilterText.ToLower() ) );
+
+                    return new MacroGroup
+                    {
+                        Name = group.Name, Children = new ObservableCollection<IDraggable>( children )
+                    };
+                } ).ToList();
+
+                FilterDraggables = new ObservableCollection<IDraggable>( items );
+
+                IsSearching = false;
+            } );
+        }
+
+        public bool IsSearching { get; set; }
+
+        private void ToggleSearch( object obj )
+        {
+            IsFilterOpen = !IsFilterOpen;
+        }
+
         private string FindGroup( IDraggable macroEntry )
         {
             return ( from draggableGroup in Draggables.Where( i => i is IDraggableGroup ).Cast<IDraggableGroup>()
@@ -435,8 +526,7 @@ namespace ClassicAssist.UI.ViewModels
                     if ( !string.IsNullOrEmpty( macroEntry.Group ) )
                     {
                         MacroGroup macroGroup =
-                            (MacroGroup) Draggables.FirstOrDefault( i =>
-                                i is MacroGroup && i.Name == macroEntry.Group );
+                            (MacroGroup)Draggables.FirstOrDefault( i => i is MacroGroup && i.Name == macroEntry.Group );
 
                         if ( macroGroup == null )
                         {
@@ -496,7 +586,7 @@ namespace ClassicAssist.UI.ViewModels
                 else
                 {
                     MacroGroup macroGroup =
-                        (MacroGroup) Draggables.FirstOrDefault( i => i is MacroGroup && i.Name == macroEntry.Group );
+                        (MacroGroup)Draggables.FirstOrDefault( i => i is MacroGroup && i.Name == macroEntry.Group );
 
                     macroGroup?.Children.Remove( macroEntry );
                 }

@@ -29,7 +29,7 @@ namespace ClassicAssist.UO.Network
 
         public delegate void dContainerContents( int serial, ItemCollection container );
 
-        public delegate void dCorpseContainerDisplay( int serial );
+        public delegate void dCorpseContainerDisplay( int serial, bool force );
 
         public delegate void dGump( uint gumpId, int serial, Gump gump );
 
@@ -639,7 +639,7 @@ namespace ClassicAssist.UO.Network
             // TODO write test for container => autoloot
             if ( ( reader.Size == 7 /* old client without ctype */ || ctype != 0 ) && gumpId == 0x09 )
             {
-                Task.Run( () => CorpseContainerDisplayEvent?.Invoke( serial ) );
+                Task.Run( () => CorpseContainerDisplayEvent?.Invoke( serial, false ) );
             }
 
             if ( ctype != 0 )

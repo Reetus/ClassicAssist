@@ -26,6 +26,7 @@ namespace ClassicAssist.Data.Autoloot
     {
         private static AutolootManager _instance;
         private static readonly object _lock = new object();
+        public Action<int, bool> CheckContainer { get; set; }
 
         public Func<List<AutolootEntry>> GetEntries { get; set; } = () => new List<AutolootEntry>();
 

@@ -5,7 +5,6 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -19,7 +18,6 @@ using ClassicAssist.Misc;
 using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
-using ClassicAssist.UI.Misc;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UI.Views.Autoloot;
 using ClassicAssist.UO.Data;
@@ -94,6 +92,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             AutolootHelpers.SetAutolootContainer = serial => ContainerSerial = serial;
             IncomingPacketHandlers.CorpseContainerDisplayEvent += OnCorpseEvent;
             AutolootManager.GetInstance().GetEntries = () => _items.ToList();
+            AutolootManager.GetInstance().CheckContainer = OnCorpseEvent;
             Items.CollectionChanged += UpdateDraggables;
         }
 
@@ -539,9 +538,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
             Clipboard.SetText( text );
         }
 
-        internal void OnCorpseEvent( int serial )
+        internal void OnCorpseEvent( int serial, bool force = false )
         {
-            if ( !Enabled )
+            if ( !Enabled && !force )
             {
                 return;
             }
@@ -550,7 +549,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             {
                 Item item = Engine.Items.GetItem( serial );
 
-                if ( item == null || item.ID != 0x2006 )
+                if ( item == null || item.ID != 0x2006 && !force )
                 {
                     return;
                 }

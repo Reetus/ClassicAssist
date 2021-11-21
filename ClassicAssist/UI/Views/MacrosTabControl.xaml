@@ -62,6 +62,7 @@
             </i:Interaction.Behaviors>
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -69,13 +70,27 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
+                <controls:FilterControl Grid.Row="0" Margin="0,0,0,5"
+                                        FilterText="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
+                                        IsFilterVisible="{Binding IsFilterOpen}">
+                    <controls:FilterControl.Style>
+                        <Style TargetType="{x:Type controls:FilterControl}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsFilterOpen}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </controls:FilterControl.Style>
+                </controls:FilterControl>
                 <Border BorderBrush="{DynamicResource ThemeBorderBrush}"
-                        BorderThickness="1" Grid.Row="0">
+                        BorderThickness="1" Grid.Row="1">
                     <ScrollViewer x:Name="ScrollViewer">
                         <i:Interaction.Behaviors>
                             <misc:ScrollOnDragDrop />
                         </i:Interaction.Behaviors>
-                        <draggableTreeView:DraggableTreeView ItemsSource="{Binding Draggables}"
+                        <draggableTreeView:DraggableTreeView ItemsSource="{Binding FilterDraggables}"
                                                              x:Name="DraggableTreeView"
                                                              BindableSelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                              BindableSelectedGroup="{Binding SelectedGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -93,6 +108,8 @@
                                 <KeyBinding Key="Delete"
                                             Command="{Binding RemoveMacroConfirmCommand}"
                                             CommandParameter="{Binding SelectedItem}" />
+                                <KeyBinding Modifiers="Control" Key="F"
+                                            Command="{Binding ToggleSearchCommand}" />
                             </draggableTreeView:DraggableTreeView.InputBindings>
                             <draggableTreeView:DraggableTreeView.ContextMenu>
                                 <ContextMenu>
@@ -168,7 +185,7 @@
                         </draggableTreeView:DraggableTreeView>
                     </ScrollViewer>
                 </Border>
-                <Grid Grid.Row="1" Margin="0,5,0,0">
+                <Grid Grid.Row="2" Margin="0,5,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
@@ -199,10 +216,10 @@
                     <Button Content="{x:Static resources:Strings.Save}" Grid.Column="2" Margin="2.5,0,0,0"
                             Command="{Binding SaveMacroCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
                 </Grid>
-                <Grid Grid.Row="2" Margin="0,5,0,5">
+                <Grid Grid.Row="3" Margin="0,5,0,5">
                     <Button Content="{Binding RecordLabel}" Command="{Binding RecordCommand}" />
                 </Grid>
-                <Grid Grid.Row="3" Margin="0,0,0,0">
+                <Grid Grid.Row="4" Margin="0,0,0,0">
                     <Grid.Resources>
                         <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
                     </Grid.Resources>
@@ -225,7 +242,7 @@
                             IsEnabled="{Binding SelectedItem.IsRunning, ElementName=DraggableTreeView}"
                             Command="{Binding StopCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
                 </Grid>
-                <GroupBox Header="{x:Static resources:Strings.Hotkeys}" Grid.Row="5" Padding="5" Margin="0,5,0,0">
+                <GroupBox Header="{x:Static resources:Strings.Hotkeys}" Grid.Row="6" Padding="5" Margin="0,5,0,0">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition />

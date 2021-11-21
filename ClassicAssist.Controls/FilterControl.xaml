@@ -1,0 +1,59 @@
+﻿<UserControl x:Name="userControl" x:Class="ClassicAssist.Controls.FilterControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+             mc:Ignorable="d"
+             d:DesignHeight="22" d:DesignWidth="200">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/Icons.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/Colours.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DarkTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid VerticalAlignment="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.Style>
+            <Style>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsFilterVisible, ElementName=userControl}" Value="True">
+                        <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=textBox}" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+        <Image Height="14" Source="{StaticResource SearchIcon}" Grid.Column="0" />
+        <TextBox Margin="5,0,0,0" x:Name="textBox"
+                 Text="{Binding FilterText, ElementName=userControl, UpdateSourceTrigger=PropertyChanged}"
+                 HorizontalContentAlignment="Stretch" Grid.Column="1">
+            <i:Interaction.Behaviors>
+                <behaviours:AutoFocusBehaviour />
+            </i:Interaction.Behaviors>
+        </TextBox>
+        <Button Background="Transparent" BorderThickness="0" Padding="0" Margin="-15, 0,0,0"
+                Command="{Binding CloseCommand, ElementName=userControl}" Grid.Column="2">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ShowCloseButton, ElementName=userControl}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Image Height="8" Source="{StaticResource closeIcon}" />
+        </Button>
+    </Grid>
+</UserControl>

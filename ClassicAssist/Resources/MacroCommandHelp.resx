@@ -1676,4 +1676,10 @@ else:
   <data name="CLEAROBJECTQUEUE_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>ClearObjectQueue()</value>
   </data>
+  <data name="AUTOLOOT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Causes autoloot to check a particular container, even when not enabled, and bypassing the corpse type check</value>
+  </data>
+  <data name="AUTOLOOT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Autoloot("found")</value>
+  </data>
 </root>

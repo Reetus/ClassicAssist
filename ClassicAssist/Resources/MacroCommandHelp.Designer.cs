@@ -19,7 +19,7 @@ namespace ClassicAssist.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class MacroCommandHelp {
@@ -188,6 +188,24 @@ namespace ClassicAssist.Resources {
         public static string AUTOCOLORPICK_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("AUTOCOLORPICK_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Causes autoloot to check a particular container, even when not enabled, and bypassing the corpse type check.
+        /// </summary>
+        public static string AUTOLOOT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("AUTOLOOT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Autoloot(&quot;found&quot;).
+        /// </summary>
+        public static string AUTOLOOT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("AUTOLOOT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

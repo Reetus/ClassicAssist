@@ -168,5 +168,19 @@ namespace ClassicAssist.Data.Macros.Commands
                     break;
             }
         }
+
+        [CommandsDisplay( Category = nameof( Strings.Agents ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        public static void Autoloot( object obj )
+        {
+            int serial = AliasCommands.ResolveSerial( obj, false );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
+            }
+
+            AutolootManager.GetInstance().CheckContainer( serial, true );
+        }
     }
 }

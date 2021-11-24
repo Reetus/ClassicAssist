@@ -37,6 +37,7 @@ namespace ClassicAssist.Data
         private string _enemyTargetMessage;
         private EntityCollectionViewerOptions _entityCollectionViewerOptions = new EntityCollectionViewerOptions();
         private int _expireTargetsMs;
+        private bool _filesystemMacros;
         private ObservableCollection<FriendEntry> _friends = new ObservableCollection<FriendEntry>();
         private string _friendTargetMessage;
         private bool _getFriendEnemyUsesIgnoreList;
@@ -175,6 +176,12 @@ namespace ClassicAssist.Data
         {
             get => _expireTargetsMs;
             set => SetProperty( ref _expireTargetsMs, value );
+        }
+
+        public bool FilesystemMacros
+        {
+            get => _filesystemMacros;
+            set => SetProperty( ref _filesystemMacros, value );
         }
 
         public ObservableCollection<FriendEntry> Friends

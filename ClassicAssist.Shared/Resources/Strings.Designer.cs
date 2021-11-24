@@ -1348,6 +1348,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable filesystem macros.
+        /// </summary>
+        public static string Enable_filesystem_macros {
+            get {
+                return ResourceManager.GetString("Enable filesystem macros", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enabled.
         /// </summary>
         public static string Enabled {

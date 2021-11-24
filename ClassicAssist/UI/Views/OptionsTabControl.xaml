@@ -70,7 +70,8 @@
             <CheckBox Content="{x:Static resources:Strings.Use_death_screen_whilst_hidden}"
                       IsChecked="{Binding CurrentOptions.UseDeathScreenWhilstHidden}" />
             <StackPanel Orientation="Horizontal">
-                <CheckBox IsChecked="{Binding CurrentOptions.RangeCheckLastTarget}" DataContext="{Binding}" VerticalAlignment="Center">
+                <CheckBox IsChecked="{Binding CurrentOptions.RangeCheckLastTarget}" DataContext="{Binding}"
+                          VerticalAlignment="Center">
                     <CheckBox.ContentTemplate>
                         <ItemContainerTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -126,6 +127,8 @@
                       IsChecked="{Binding CurrentOptions.DefaultMacroQuietMode}" />
             <CheckBox Content="{x:Static resources:Strings.Check_hands_before_potions}"
                       IsChecked="{Binding CurrentOptions.CheckHandsPotions}" />
+            <CheckBox Content="{x:Static resources:Strings.Enable_filesystem_macros}"
+                      IsChecked="{Binding CurrentOptions.FilesystemMacros}" />
         </StackPanel>
         <StackPanel x:Name="stackPanel" Grid.Column="1">
             <CheckBox IsChecked="{Binding CurrentOptions.PreventTargetingInnocentsInGuardzone}"

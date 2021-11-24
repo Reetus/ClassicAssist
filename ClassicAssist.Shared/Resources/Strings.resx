@@ -1734,4 +1734,7 @@ Are you sure you wish to continue?</value>
   <data name="Context menu entry disabled" xml:space="preserve">
     <value>Context menu entry disabled</value>
   </data>
+  <data name="Enable filesystem macros" xml:space="preserve">
+    <value>Enable filesystem macros</value>
+  </data>
 </root>

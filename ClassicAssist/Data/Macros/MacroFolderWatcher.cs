@@ -3,22 +3,25 @@ using System.Collections.Generic;
 using System.IO;
 using Assistant;
 
-namespace ClassicAssist.Misc
+namespace ClassicAssist.Data.Macros
 {
-    public delegate void dMacroUpdated( string fileName );
+    internal delegate void dMacroFolderEvent( MacroFolderEventType eventType, string fileName, string newFileName );
 
-    public delegate void dMacroRenamed( string oldFileName, string newFileName );
+    internal enum MacroFolderEventType
+    {
+        Created,
+        Deleted,
+        Changed,
+        Renamed
+    }
 
-    internal class MacrosFolderWatcher
+    internal class MacroFolderWatcher
     {
         private static FileSystemWatcher _fileSystemWatcher;
         private static readonly Dictionary<string, DateTime> _lastReadTimes = new Dictionary<string, DateTime>();
 
         public static readonly int DuplicateEventThreshold = 100;
-        public static event dMacroUpdated MacroCreatedEvent;
-        public static event dMacroUpdated MacroDeletedEvent;
-        public static event dMacroUpdated MacroUpdatedEvent;
-        public static event dMacroRenamed MacroRenamedEvent;
+        public static event dMacroFolderEvent MacroFolderEvent;
 
         public static void Enable()
         {
@@ -71,6 +74,14 @@ namespace ClassicAssist.Misc
             return true;
         }
 
+        private static void SendEvent( MacroFolderEventType eventType, string fileName, string newFileName = null )
+        {
+            Engine.Dispatcher.Invoke( () =>
+            {
+                MacroFolderEvent?.Invoke( eventType, fileName, newFileName ?? fileName );
+            } );
+        }
+
         private static void OnChanged( object sender, FileSystemEventArgs e )
         {
             if ( !DuplicateEventFilter( e.FullPath ) )
@@ -82,7 +93,7 @@ namespace ClassicAssist.Misc
             Console.WriteLine(
                 $"Changed: {e.FullPath} on {new DateTimeOffset( File.GetLastWriteTime( e.FullPath ) ).ToUnixTimeMilliseconds()} macro {macroName}" );
 
-            MacroUpdatedEvent?.Invoke( macroName );
+            SendEvent( MacroFolderEventType.Changed, e.FullPath );
         }
 
         private static void OnCreated( object sender, FileSystemEventArgs e )
@@ -94,15 +105,14 @@ namespace ClassicAssist.Misc
 
             string macroName = Path.GetFileNameWithoutExtension( e.Name );
             Console.WriteLine( $"Created: {e.FullPath}, Macro: {macroName}" );
-            Engine.Dispatcher.Invoke( () => { MacroCreatedEvent?.Invoke( e.FullPath ); } );
+            SendEvent( MacroFolderEventType.Created, e.FullPath );
         }
 
         private static void OnDeleted( object sender, FileSystemEventArgs e )
         {
             string macroName = Path.GetFileNameWithoutExtension( e.Name );
             Console.WriteLine( $"Deleted: {e.FullPath}, Macro: {macroName}" );
-
-            Engine.Dispatcher.Invoke( () => { MacroDeletedEvent?.Invoke( e.FullPath ); } );
+            SendEvent( MacroFolderEventType.Deleted, e.FullPath );
         }
 
         private static void OnRenamed( object sender, RenamedEventArgs e )
@@ -117,14 +127,12 @@ namespace ClassicAssist.Misc
             if ( IsPythonExtension( e.Name ) )
             {
                 Console.WriteLine( $"    Rename existing macro: {existingMacroName} to {newMacroName}" );
-
-                Engine.Dispatcher.Invoke( () => { MacroRenamedEvent?.Invoke( e.OldFullPath, e.FullPath ); } );
+                SendEvent( MacroFolderEventType.Renamed, e.OldFullPath, e.FullPath );
             }
             else
             {
                 Console.WriteLine( $"    Delete macro due to rename: {existingMacroName}" );
-
-                Engine.Dispatcher.Invoke( () => { MacroDeletedEvent?.Invoke( e.OldFullPath ); } );
+                SendEvent( MacroFolderEventType.Deleted, e.OldFullPath );
             }
         }
 

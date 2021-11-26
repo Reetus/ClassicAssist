@@ -25,13 +25,13 @@ namespace ClassicAssist.Data.Macros
         private string _id;
         private bool _isAutostart;
         private bool _isBackground;
-        private bool _isFilesystemMacro;
         private bool _isRunning;
         private string _lastSavedHash;
         private DateTime _lastSavedOn;
         private bool _loop;
         private string _macro = string.Empty;
         private MacroInvoker _macroInvoker = new MacroInvoker();
+        private MacroType _macroType;
         private string _name;
 
         public MacroEntry( JToken token = null )
@@ -56,7 +56,7 @@ namespace ClassicAssist.Data.Macros
             Disableable = GetJsonValue( token, "Disableable", true );
             Group = GetJsonValue( token, "Group", string.Empty );
             Global = GetJsonValue( token, "Global", false );
-            IsFilesystemMacro = GetJsonValue( token, "IsFilesystemMacro", false );
+            MacroType = GetJsonValue( token, "MacroType", MacroType.Standard );
             LastSavedOn = GetJsonValue( token, "LastSavedOn", DateTime.Now );
             LastSavedHash = GetJsonValue( token, "LastSavedHash", string.Empty );
 
@@ -134,11 +134,7 @@ namespace ClassicAssist.Data.Macros
             set => SetProperty( ref _isBackground, value );
         }
 
-        public bool IsFilesystemMacro
-        {
-            get => _isFilesystemMacro;
-            set => SetProperty( ref _isFilesystemMacro, value );
-        }
+        public bool IsFilesystemMacro => _macroType == MacroType.Filesystem;
 
         public bool IsRunning
         {
@@ -175,6 +171,12 @@ namespace ClassicAssist.Data.Macros
         {
             get => _macroInvoker;
             set => SetProperty( ref _macroInvoker, value );
+        }
+
+        public MacroType MacroType
+        {
+            get => _macroType;
+            set => SetProperty( ref _macroType, value );
         }
 
         public DateTime StartedOn { get; set; }

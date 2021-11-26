@@ -36,7 +36,7 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class MacrosTabViewModel : HotkeyEntryViewModel<MacroEntry>, ISettingProvider
     {
-        private readonly MacrosFolderWatcher _macrosFolderWatcher = new MacrosFolderWatcher();
+        private readonly MacroFolderWatcher _macrosFolderWatcher = new MacroFolderWatcher();
         private readonly MacroManager _manager;
         private int _caretPosition;
         private ICommand _clearHotkeyCommand;
@@ -93,10 +93,7 @@ namespace ClassicAssist.UI.ViewModels
             Items.CollectionChanged += UpdateDraggables;
             Draggables.CollectionChanged += ( s, ea ) => UpdateFilteredItems();
             Options.CurrentOptions.PropertyChanged += OnProfileOptionChanged;
-            MacrosFolderWatcher.MacroCreatedEvent += OnFilesystemMacroCreated;
-            MacrosFolderWatcher.MacroRenamedEvent += OnFilesystemMacroRenamed;
-            MacrosFolderWatcher.MacroUpdatedEvent += OnFilesystemMacroUpdated;
-            MacrosFolderWatcher.MacroDeletedEvent += OnFilesystemMacroDeleted;
+            MacroFolderWatcher.MacroFolderEvent += OnMacroFolderEvent;
         }
 
         public int CaretPosition
@@ -442,72 +439,99 @@ namespace ClassicAssist.UI.ViewModels
                 .FirstOrDefault( macroEntryIndexPair => macroEntryIndexPair.Item2.Id == id );
         }
 
-        private void OnFilesystemMacroCreated( string fileName )
+        private void OnMacroFolderEvent( MacroFolderEventType eventType, string fileName, string newFileName )
         {
-            MacroEntry existingMacroEntry = FindMacro( fileName )?.Item2;
+            string macroPrefix = Path.GetFileNameWithoutExtension( fileName );
+            string macroName = MacroEntry.GetUniqueName( macroPrefix );
 
-            if ( existingMacroEntry == null )
+            Tuple<int, MacroEntry> macroEntryIndexPair = FindMacro( fileName );
+
+            MacroEntry macroEntry = macroEntryIndexPair?.Item2;
+
+            switch ( eventType )
             {
-                string macroPrefix = Path.GetFileNameWithoutExtension( fileName );
-                string macroName = MacroEntry.GetUniqueName( macroPrefix );
-                Items.Add( new MacroEntry { Id = fileName, Name = macroName, Macro = null, IsFilesystemMacro = true } );
-            }
-        }
+                case MacroFolderEventType.Created:
+                {
+                    if ( macroEntry == null )
+                    {
+                        macroEntry = new MacroEntry
+                        {
+                            Id = fileName,
+                            Name = macroName,
+                            Macro = null,
+                            MacroType = MacroType.Filesystem,
+                            Action = async hks => await Execute( macroEntry )
+                        };
+                        Items.Add( macroEntry );
+                    }
 
-        private void OnFilesystemMacroRenamed( string oldFileName, string newFileName )
-        {
-            Tuple<int, MacroEntry> macroEntryIndexPair = FindMacro( oldFileName );
+                    break;
+                }
+                case MacroFolderEventType.Renamed:
+                {
+                    string newMacroPrefix = Path.GetFileNameWithoutExtension( newFileName );
+                    string newMacroName = MacroEntry.GetUniqueName( newMacroPrefix );
 
-            if ( macroEntryIndexPair != null )
-            {
-                MacroEntry macroEntry = macroEntryIndexPair.Item2;
-                string macroPrefix = Path.GetFileNameWithoutExtension( newFileName );
-                string macroName = MacroEntry.GetUniqueName( macroPrefix );
-                macroEntry.Id = newFileName;
-                macroEntry.Name = macroName;
+                    // Renaming from file that doesnt exist: create a new macro
+                    if ( macroEntry == null )
+                    {
+                        macroEntry = new MacroEntry
+                        {
+                            Id = newFileName,
+                            Name = newMacroName,
+                            Macro = null,
+                            MacroType = MacroType.Filesystem,
+                            Action = async hks => await Execute( macroEntry )
+                        };
+                        Items.Add( macroEntry );
+                    }
+                    else
+                    {
+                        int index = macroEntryIndexPair.Item1;
 
-                int index = macroEntryIndexPair.Item1;
-                Items.Move( index, index );
-            }
-        }
+                        macroEntry.Id = newFileName;
+                        macroEntry.Name = newMacroName;
 
-        private void OnFilesystemMacroUpdated( string fileName )
-        {
-            MacroEntry macroEntry = FindMacro( fileName )?.Item2;
+                        Items.Move( index, index );
+                    }
 
-            if ( macroEntry != null )
-            {
-                string macroPrefix = Path.GetFileNameWithoutExtension( fileName );
-                string macroName = MacroEntry.GetUniqueName( macroPrefix );
-                macroEntry.Macro = null;
-                macroEntry.Name = macroName;
-            }
-        }
+                    break;
+                }
+                case MacroFolderEventType.Changed:
+                {
+                    if ( macroEntry != null )
+                    {
+                        macroEntry.Macro = null;
+                    }
 
-        private void OnFilesystemMacroDeleted( string fileName )
-        {
-            MacroEntry macroEntry = FindMacro( fileName )?.Item2;
+                    break;
+                }
+                case MacroFolderEventType.Deleted:
+                {
+                    if ( macroEntry != null )
+                    {
+                        Items.Remove( macroEntry );
+                    }
 
-            if ( macroEntry != null )
-            {
-                Items.Remove( macroEntry );
+                    break;
+                }
             }
         }
 
         private void OnProfileOptionChanged( object sender, PropertyChangedEventArgs args )
         {
-            if ( args.PropertyName != "FilesystemMacros" )
+            if ( args.PropertyName != nameof( Options.FilesystemMacros ) )
             {
                 return;
             }
 
             if ( Options.CurrentOptions.FilesystemMacros )
             {
-                MacrosFolderWatcher.Enable();
+                MacroFolderWatcher.Enable();
             }
             else
             {
-                MacrosFolderWatcher.Disable();
+                MacroFolderWatcher.Disable();
             }
         }
 

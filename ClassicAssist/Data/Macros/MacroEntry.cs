@@ -25,6 +25,7 @@ namespace ClassicAssist.Data.Macros
         private string _id;
         private bool _isAutostart;
         private bool _isBackground;
+        private bool _isFilesystemMacro;
         private bool _isRunning;
         private string _lastSavedHash;
         private DateTime _lastSavedOn;
@@ -55,6 +56,7 @@ namespace ClassicAssist.Data.Macros
             Disableable = GetJsonValue( token, "Disableable", true );
             Group = GetJsonValue( token, "Group", string.Empty );
             Global = GetJsonValue( token, "Global", false );
+            IsFilesystemMacro = GetJsonValue( token, "IsFilesystemMacro", false );
             LastSavedOn = GetJsonValue( token, "LastSavedOn", DateTime.Now );
             LastSavedHash = GetJsonValue( token, "LastSavedHash", string.Empty );
 
@@ -130,6 +132,12 @@ namespace ClassicAssist.Data.Macros
         {
             get => _isBackground;
             set => SetProperty( ref _isBackground, value );
+        }
+
+        public bool IsFilesystemMacro
+        {
+            get => _isFilesystemMacro;
+            set => SetProperty( ref _isFilesystemMacro, value );
         }
 
         public bool IsRunning
@@ -247,6 +255,19 @@ namespace ClassicAssist.Data.Macros
         public override string ToString()
         {
             return Name;
+        }
+
+        internal static string GetUniqueName( string prefix = "" )
+        {
+            MacroManager manager = MacroManager.GetInstance();
+            string macroName = prefix;
+
+            while ( manager.Items.Any( m => m.Name == macroName ) )
+            {
+                macroName += "-";
+            }
+
+            return macroName;
         }
 
         private void SetName( string name, string value )

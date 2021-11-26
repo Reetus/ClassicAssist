@@ -152,6 +152,10 @@
                                                     <Setter Property="TextTrimming" Value="CharacterEllipsis" />
                                                     <Style.Triggers>
                                                         <DataTrigger
+                                                            Binding="{Binding IsFilesystemMacro}" Value="True">
+                                                            <Setter Property="IsEnabled" Value="False" />
+                                                        </DataTrigger>
+                                                        <DataTrigger
                                                             Binding="{Binding Global}" Value="True">
                                                             <Setter Property="FontWeight" Value="Bold" />
                                                         </DataTrigger>

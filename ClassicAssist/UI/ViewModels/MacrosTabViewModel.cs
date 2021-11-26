@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -35,6 +36,7 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class MacrosTabViewModel : HotkeyEntryViewModel<MacroEntry>, ISettingProvider
     {
+        private readonly MacrosFolderWatcher _macrosFolderWatcher = new MacrosFolderWatcher();
         private readonly MacroManager _manager;
         private int _caretPosition;
         private ICommand _clearHotkeyCommand;
@@ -90,6 +92,11 @@ namespace ClassicAssist.UI.ViewModels
             _manager.Items = Items;
             Items.CollectionChanged += UpdateDraggables;
             Draggables.CollectionChanged += ( s, ea ) => UpdateFilteredItems();
+            Options.CurrentOptions.PropertyChanged += OnProfileOptionChanged;
+            MacrosFolderWatcher.MacroCreatedEvent += OnFilesystemMacroCreated;
+            MacrosFolderWatcher.MacroRenamedEvent += OnFilesystemMacroRenamed;
+            MacrosFolderWatcher.MacroUpdatedEvent += OnFilesystemMacroUpdated;
+            MacrosFolderWatcher.MacroDeletedEvent += OnFilesystemMacroDeleted;
         }
 
         public int CaretPosition
@@ -173,6 +180,8 @@ namespace ClassicAssist.UI.ViewModels
             get => _isRecording;
             set => SetProperty( ref _isRecording, value );
         }
+
+        public bool IsSearching { get; set; }
 
         public double LeftColumnWidth
         {
@@ -268,7 +277,7 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             foreach ( IDraggableGroup draggableGroup in Draggables.Where( i => i is IDraggableGroup )
-                         .Cast<IDraggableGroup>() )
+                .Cast<IDraggableGroup>() )
             {
                 JObject entry = new JObject { { "Name", draggableGroup.Name } };
 
@@ -298,7 +307,7 @@ namespace ClassicAssist.UI.ViewModels
             JArray aliasArray = new JArray();
 
             foreach ( JObject entry in AliasCommands.GetAllAliases()
-                         .Select( kvp => new JObject { { "Name", kvp.Key }, { "Value", kvp.Value } } ) )
+                .Select( kvp => new JObject { { "Name", kvp.Key }, { "Value", kvp.Value } } ) )
             {
                 aliasArray.Add( entry );
             }
@@ -429,6 +438,81 @@ namespace ClassicAssist.UI.ViewModels
             SelectedItem = Items.LastOrDefault();
         }
 
+        private Tuple<int, MacroEntry> FindMacro( string id )
+        {
+            return Items.Select( ( macroEntry, index ) => new Tuple<int, MacroEntry>( index, macroEntry ) )
+                .FirstOrDefault( macroEntryIndexPair => macroEntryIndexPair.Item2.Id == id );
+        }
+
+        private void OnFilesystemMacroCreated( string fileName )
+        {
+            MacroEntry existingMacroEntry = FindMacro( fileName )?.Item2;
+
+            if ( existingMacroEntry == null )
+            {
+                string macroPrefix = Path.GetFileNameWithoutExtension( fileName );
+                string macroName = MacroEntry.GetUniqueName( macroPrefix );
+                Items.Add( new MacroEntry { Id = fileName, Name = macroName, Macro = null, IsFilesystemMacro = true } );
+            }
+        }
+
+        private void OnFilesystemMacroRenamed( string oldFileName, string newFileName )
+        {
+            Tuple<int, MacroEntry> macroEntryIndexPair = FindMacro( oldFileName );
+
+            if ( macroEntryIndexPair != null )
+            {
+                MacroEntry macroEntry = macroEntryIndexPair.Item2;
+                string macroPrefix = Path.GetFileNameWithoutExtension( newFileName );
+                string macroName = MacroEntry.GetUniqueName( macroPrefix );
+                macroEntry.Id = newFileName;
+                macroEntry.Name = macroName;
+
+                int index = macroEntryIndexPair.Item1;
+                Items.Move( index, index );
+            }
+        }
+
+        private void OnFilesystemMacroUpdated( string fileName )
+        {
+            MacroEntry macroEntry = FindMacro( fileName )?.Item2;
+
+            if ( macroEntry != null )
+            {
+                string macroPrefix = Path.GetFileNameWithoutExtension( fileName );
+                string macroName = MacroEntry.GetUniqueName( macroPrefix );
+                macroEntry.Macro = null;
+                macroEntry.Name = macroName;
+            }
+        }
+
+        private void OnFilesystemMacroDeleted( string fileName )
+        {
+            MacroEntry macroEntry = FindMacro( fileName )?.Item2;
+
+            if ( macroEntry != null )
+            {
+                Items.Remove( macroEntry );
+            }
+        }
+
+        private void OnProfileOptionChanged( object sender, PropertyChangedEventArgs args )
+        {
+            if ( args.PropertyName != "FilesystemMacros" )
+            {
+                return;
+            }
+
+            if ( Options.CurrentOptions.FilesystemMacros )
+            {
+                MacrosFolderWatcher.Enable();
+            }
+            else
+            {
+                MacrosFolderWatcher.Disable();
+            }
+        }
+
         private void UpdateFilteredItems()
         {
             _dispatcher.Invoke( () =>
@@ -483,8 +567,6 @@ namespace ClassicAssist.UI.ViewModels
             } );
         }
 
-        public bool IsSearching { get; set; }
-
         private void ToggleSearch( object obj )
         {
             IsFilterOpen = !IsFilterOpen;
@@ -526,7 +608,8 @@ namespace ClassicAssist.UI.ViewModels
                     if ( !string.IsNullOrEmpty( macroEntry.Group ) )
                     {
                         MacroGroup macroGroup =
-                            (MacroGroup)Draggables.FirstOrDefault( i => i is MacroGroup && i.Name == macroEntry.Group );
+                            (MacroGroup) Draggables.FirstOrDefault( i =>
+                                i is MacroGroup && i.Name == macroEntry.Group );
 
                         if ( macroGroup == null )
                         {
@@ -586,7 +669,7 @@ namespace ClassicAssist.UI.ViewModels
                 else
                 {
                     MacroGroup macroGroup =
-                        (MacroGroup)Draggables.FirstOrDefault( i => i is MacroGroup && i.Name == macroEntry.Group );
+                        (MacroGroup) Draggables.FirstOrDefault( i => i is MacroGroup && i.Name == macroEntry.Group );
 
                     macroGroup?.Children.Remove( macroEntry );
                 }
@@ -793,6 +876,15 @@ namespace ClassicAssist.UI.ViewModels
             Items.Add( macro );
 
             SelectedItem = macro;
+        }
+
+        private void NewMacro2( string name, string macroText )
+        {
+            MacroEntry macro = new MacroEntry { Name = name, Macro = macroText };
+
+            macro.Action = async hks => await Execute( macro );
+
+            Items.Add( macro );
         }
 
         private void RemoveMacro( object obj )

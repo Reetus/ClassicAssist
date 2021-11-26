@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using Assistant;
 using ClassicAssist.Data.BuffIcons;
 using ClassicAssist.Data.SpecialMoves;
@@ -26,6 +27,14 @@ namespace ClassicAssist.Data.Macros.Commands
             Entity entity = Engine.Items.GetItem( serial ) ?? (Entity) Engine.Mobiles.GetMobile( serial );
 
             return entity?.Distance ?? int.MaxValue;
+        }
+
+        // ReSharper disable once ExplicitCallerInfoArgument
+        [CommandsDisplay( "DistanceCoordinates", Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.XCoordinate ), nameof( ParameterType.YCoordinate ) } )]
+        public static int Distance( int x, int y )
+        {
+            return Math.Max( Math.Abs( x - Engine.Player?.X ?? x ), Math.Abs( y - Engine.Player?.Y ?? y ) );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Entity ),

@@ -1682,4 +1682,27 @@ else:
   <data name="AUTOLOOT_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>Autoloot("found")</value>
   </data>
+  <data name="DISTANCECOORDINATES_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the distance to the given coordinates.</value>
+  </data>
+  <data name="DISTANCECOORDINATES_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Distance(1000, 1000)</value>
+  </data>
+  <data name="DISTANCECOORDINATES_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>location = (1000, 1000, 0)
+
+while Distance(location[0], location[1]):
+ Pathfind(location[0], location[1], location[2])
+ Pause(1000)</value>
+  </data>
+  <data name="SKILLDELTA_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the skill value delta since last reset</value>
+  </data>
+  <data name="SKILLDELTA_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SkillDelta('skillName')</value>
+  </data>
+  <data name="SKILLDELTA_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>if SkillDelta('Hiding') &gt; 0.5:
+    Stop()</value>
+  </data>
 </root>

@@ -211,6 +211,11 @@ namespace ClassicAssist.UI.ViewModels
                     LockStatus = si.LockStatus
                 };
 
+                if ( string.IsNullOrEmpty( skill.Name ) && si.BaseValue == 0 )
+                {
+                    continue;
+                }
+
                 _dispatcher.Invoke( () =>
                 {
                     Items.AddSorted( se, comparer );

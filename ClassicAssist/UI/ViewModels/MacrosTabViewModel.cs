@@ -436,6 +436,7 @@ namespace ClassicAssist.UI.ViewModels
                 if ( string.IsNullOrEmpty( FilterText ) )
                 {
                     FilterDraggables = Draggables;
+                    return;
                 }
 
                 if ( IsSearching )

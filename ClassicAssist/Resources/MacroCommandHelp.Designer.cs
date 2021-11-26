@@ -914,7 +914,7 @@ namespace ClassicAssist.Resources {
         /// <summary>
         ///   Looks up a localized string similar to location = (1000, 1000, 0)
         ///
-        ///while Distance(location[0], location[1]):
+        ///while Distance(location[0], location[1]) &gt; 2:
         /// Pathfind(location[0], location[1], location[2])
         /// Pause(1000).
         /// </summary>

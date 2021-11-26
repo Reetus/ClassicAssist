@@ -181,8 +181,6 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _isRecording, value );
         }
 
-        public bool IsSearching { get; set; }
-
         public double LeftColumnWidth
         {
             get => _leftColumnWidth;
@@ -277,7 +275,7 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             foreach ( IDraggableGroup draggableGroup in Draggables.Where( i => i is IDraggableGroup )
-                .Cast<IDraggableGroup>() )
+                         .Cast<IDraggableGroup>() )
             {
                 JObject entry = new JObject { { "Name", draggableGroup.Name } };
 
@@ -307,7 +305,7 @@ namespace ClassicAssist.UI.ViewModels
             JArray aliasArray = new JArray();
 
             foreach ( JObject entry in AliasCommands.GetAllAliases()
-                .Select( kvp => new JObject { { "Name", kvp.Key }, { "Value", kvp.Value } } ) )
+                         .Select( kvp => new JObject { { "Name", kvp.Key }, { "Value", kvp.Value } } ) )
             {
                 aliasArray.Add( entry );
             }
@@ -567,6 +565,8 @@ namespace ClassicAssist.UI.ViewModels
             } );
         }
 
+        public bool IsSearching { get; set; }
+
         private void ToggleSearch( object obj )
         {
             IsFilterOpen = !IsFilterOpen;
@@ -608,8 +608,7 @@ namespace ClassicAssist.UI.ViewModels
                     if ( !string.IsNullOrEmpty( macroEntry.Group ) )
                     {
                         MacroGroup macroGroup =
-                            (MacroGroup) Draggables.FirstOrDefault( i =>
-                                i is MacroGroup && i.Name == macroEntry.Group );
+                            (MacroGroup)Draggables.FirstOrDefault( i => i is MacroGroup && i.Name == macroEntry.Group );
 
                         if ( macroGroup == null )
                         {
@@ -669,7 +668,7 @@ namespace ClassicAssist.UI.ViewModels
                 else
                 {
                     MacroGroup macroGroup =
-                        (MacroGroup) Draggables.FirstOrDefault( i => i is MacroGroup && i.Name == macroEntry.Group );
+                        (MacroGroup)Draggables.FirstOrDefault( i => i is MacroGroup && i.Name == macroEntry.Group );
 
                     macroGroup?.Children.Remove( macroEntry );
                 }
@@ -876,15 +875,6 @@ namespace ClassicAssist.UI.ViewModels
             Items.Add( macro );
 
             SelectedItem = macro;
-        }
-
-        private void NewMacro2( string name, string macroText )
-        {
-            MacroEntry macro = new MacroEntry { Name = name, Macro = macroText };
-
-            macro.Action = async hks => await Execute( macro );
-
-            Items.Add( macro );
         }
 
         private void RemoveMacro( object obj )

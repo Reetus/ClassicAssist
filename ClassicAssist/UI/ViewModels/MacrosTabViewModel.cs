@@ -430,7 +430,38 @@ namespace ClassicAssist.UI.ViewModels
                 Directory.CreateDirectory( modulePath );
             }
 
+            Options.CurrentOptions.FilesystemMacros = json?["Options"]?["FilesystemMacros"]?.ToObject<bool>() ?? false;
+
             SelectedItem = Items.LastOrDefault();
+        }
+
+        private void LoadFilesystemMacros()
+        {
+            string macrosPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Macros" );
+
+            foreach ( string fileName in Directory.EnumerateFiles( macrosPath, "*.py" ) )
+            {
+                Console.WriteLine( $"Loaded: {fileName}" );
+                NewFilesystemMacro( fileName );
+            }
+        }
+
+        private void UnloadFilesystemMacros()
+        {
+            string macrosPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Macros" );
+
+            foreach ( string fileName in Directory.EnumerateFiles( macrosPath, "*.py" ) )
+            {
+                Tuple<int, MacroEntry> macroEntryIndexPair = FindMacro( fileName );
+
+                MacroEntry macro = macroEntryIndexPair?.Item2;
+                Console.WriteLine( $"Unloaded: {fileName}, macro: {macro}" );
+
+                if ( macro != null )
+                {
+                    Items.Remove( macro );
+                }
+            }
         }
 
         private Tuple<int, MacroEntry> FindMacro( string id )
@@ -442,7 +473,6 @@ namespace ClassicAssist.UI.ViewModels
         private void OnMacroFolderEvent( MacroFolderEventType eventType, string fileName, string newFileName )
         {
             string macroPrefix = Path.GetFileNameWithoutExtension( fileName );
-            string macroName = MacroEntry.GetUniqueName( macroPrefix );
 
             Tuple<int, MacroEntry> macroEntryIndexPair = FindMacro( fileName );
 
@@ -454,15 +484,7 @@ namespace ClassicAssist.UI.ViewModels
                 {
                     if ( macroEntry == null )
                     {
-                        macroEntry = new MacroEntry
-                        {
-                            Id = fileName,
-                            Name = macroName,
-                            Macro = null,
-                            MacroType = MacroType.Filesystem,
-                            Action = async hks => await Execute( macroEntry )
-                        };
-                        Items.Add( macroEntry );
+                        NewFilesystemMacro( fileName );
                     }
 
                     break;
@@ -475,15 +497,7 @@ namespace ClassicAssist.UI.ViewModels
                     // Renaming from file that doesnt exist: create a new macro
                     if ( macroEntry == null )
                     {
-                        macroEntry = new MacroEntry
-                        {
-                            Id = newFileName,
-                            Name = newMacroName,
-                            Macro = null,
-                            MacroType = MacroType.Filesystem,
-                            Action = async hks => await Execute( macroEntry )
-                        };
-                        Items.Add( macroEntry );
+                        NewFilesystemMacro( newFileName );
                     }
                     else
                     {
@@ -527,10 +541,12 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( Options.CurrentOptions.FilesystemMacros )
             {
+                LoadFilesystemMacros();
                 MacroFolderWatcher.Enable();
             }
             else
             {
+                UnloadFilesystemMacros();
                 MacroFolderWatcher.Disable();
             }
         }
@@ -888,6 +904,20 @@ namespace ClassicAssist.UI.ViewModels
             Items.Add( macro );
 
             SelectedItem = macro;
+        }
+
+        private void NewFilesystemMacro( string fileName )
+        {
+            string macroName = Path.GetFileNameWithoutExtension( fileName );
+
+            MacroEntry macro = new MacroEntry
+            {
+                Id = fileName, Name = macroName, Macro = null, MacroType = MacroType.Filesystem
+            };
+
+            macro.Action = async hks => await Execute( macro );
+
+            Items.Add( macro );
         }
 
         private void NewMacro( string name, string macroText )

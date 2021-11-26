@@ -180,7 +180,6 @@ namespace ClassicAssist.UI.ViewModels
 
             CurrentOptions.EntityCollectionViewerOptions.Deserialize( config?["EntityCollectionViewerOptions"] );
             CurrentOptions.ExpireTargetsMS = config?["ExpireTargetsMS"]?.ToObject<int>() ?? -1;
-            CurrentOptions.FilesystemMacros = config?["FilesystemMacros"]?.ToObject<bool>() ?? false;
         }
 
         // Replay CurrentOptions changes onto Options.CurrentOptions

@@ -2491,6 +2491,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The macro source has changed on disk. Reload contents and lose current local modifications?.
+        /// </summary>
+        public static string Macro_Reload_Warning {
+            get {
+                return ResourceManager.GetString("Macro Reload Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Running malicious macros could compromise your account or computer!
         ///
         ///You should understand what the macro is doing before running.

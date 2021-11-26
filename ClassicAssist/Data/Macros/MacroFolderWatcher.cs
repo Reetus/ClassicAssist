@@ -25,9 +25,10 @@ namespace ClassicAssist.Data.Macros
 
         public static void Enable()
         {
+            string macrosPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Macros" );
+
             if ( _fileSystemWatcher == null )
             {
-                string macrosPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Macros" );
                 Directory.CreateDirectory( macrosPath );
 
                 _fileSystemWatcher = new FileSystemWatcher( macrosPath, "*.py" );
@@ -48,6 +49,22 @@ namespace ClassicAssist.Data.Macros
             {
                 _fileSystemWatcher.EnableRaisingEvents = false;
             }
+        }
+
+        public static string ReadAllLines( string fileName )
+        {
+            using ( Stream fileStream =
+                new FileStream( fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite ) )
+            {
+                using ( StreamReader streamReader = new StreamReader( fileStream ) )
+                {
+                    return streamReader.ReadToEnd();
+                }
+            }
+        }
+        public static void WriteAllText( string fileName, string contents )
+        {
+            File.WriteAllText( fileName, contents );
         }
 
         private static bool IsPythonExtension( string fileName )

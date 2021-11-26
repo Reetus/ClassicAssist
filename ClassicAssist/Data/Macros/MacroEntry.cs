@@ -19,6 +19,7 @@ namespace ClassicAssist.Data.Macros
     {
         private readonly Dispatcher _dispatcher;
         private Dictionary<string, int> _aliases = new Dictionary<string, int>();
+        private bool _dirty;
         private bool _doNotAutoInterrupt;
         private bool _global;
         private string _group;
@@ -49,7 +50,6 @@ namespace ClassicAssist.Data.Macros
             Name = GetJsonValue( token, "Name", string.Empty );
             Loop = GetJsonValue( token, "Loop", false );
             DoNotAutoInterrupt = GetJsonValue( token, "DoNotAutoInterrupt", false );
-            Macro = GetJsonValue( token, "Macro", string.Empty );
             PassToUO = GetJsonValue( token, "PassToUO", true );
             IsBackground = GetJsonValue( token, "IsBackground", false );
             IsAutostart = GetJsonValue( token, "IsAutostart", false );
@@ -57,8 +57,19 @@ namespace ClassicAssist.Data.Macros
             Group = GetJsonValue( token, "Group", string.Empty );
             Global = GetJsonValue( token, "Global", false );
             MacroType = GetJsonValue( token, "MacroType", MacroType.Standard );
-            LastSavedOn = GetJsonValue( token, "LastSavedOn", DateTime.Now );
-            LastSavedHash = GetJsonValue( token, "LastSavedHash", string.Empty );
+
+            if ( MacroType == MacroType.Filesystem )
+            {
+                Macro = null;
+                LastSavedOn = DateTime.MinValue;
+                LastSavedHash = "";
+            }
+            else
+            {
+                Macro = GetJsonValue( token, "Macro", string.Empty );
+                LastSavedOn = GetJsonValue( token, "LastSavedOn", DateTime.Now );
+                LastSavedHash = GetJsonValue( token, "LastSavedHash", string.Empty );
+            }
 
             /* Keys aren't done here, because of logic global vs normal */
 
@@ -114,7 +125,7 @@ namespace ClassicAssist.Data.Macros
             set => SetProperty( ref _group, value );
         }
 
-        public string Hash => _macro.SHA1();
+        public string Hash => ( _macro ?? "" ).SHA1();
 
         public string Id
         {
@@ -162,8 +173,34 @@ namespace ClassicAssist.Data.Macros
 
         public string Macro
         {
-            get => _macro;
-            set => SetProperty( ref _macro, value );
+            get => GetMacro();
+            set
+            {
+                // Apparently, putting this inside its own method does not update the
+                // inbuilt editor's text.
+                if ( _dirty && value == null )
+                {
+                    string source = MacroFolderWatcher.ReadAllLines( _id );
+
+                    if ( _macro != source )
+                    {
+                        MessageBoxResult result = MessageBox.Show( Strings.Macro_Reload_Warning, Strings.Warning,
+                            MessageBoxButton.YesNo, MessageBoxImage.Warning );
+
+                        if ( result != MessageBoxResult.Yes )
+                        {
+                            return;
+                        }
+
+                        SetProperty( ref _macro, source );
+                        return;
+                    }
+                }
+
+                _dirty = true;
+
+                SetProperty( ref _macro, value );
+            }
         }
 
         [JsonIgnore]
@@ -272,6 +309,17 @@ namespace ClassicAssist.Data.Macros
             return macroName;
         }
 
+        private string GetMacro()
+        {
+            if ( _macroType == MacroType.Filesystem && _macro == null )
+            {
+                _macro = MacroFolderWatcher.ReadAllLines( _id );
+                _dirty = false;
+            }
+
+            return _macro;
+        }
+
         private void SetName( string name, string value )
         {
             MacroManager manager = MacroManager.GetInstance();
@@ -349,7 +397,7 @@ namespace ClassicAssist.Data.Macros
                 { "Name", Name },
                 { "Loop", Loop },
                 { "DoNotAutoInterrupt", DoNotAutoInterrupt },
-                { "Macro", Macro },
+                { "Macro", null },
                 { "PassToUO", PassToUO },
                 { "Keys", Hotkey.ToJObject() },
                 { "IsBackground", IsBackground },
@@ -357,9 +405,16 @@ namespace ClassicAssist.Data.Macros
                 { "Disableable", Disableable },
                 { "Group", Group },
                 { "Global", Global },
-                { "LastSavedOn", DateTime.Now },
-                { "LastSavedHash", Hash }
+                { "LastSavedOn", DateTime.MinValue },
+                { "LastSavedHash", null }
             };
+
+            if ( _macroType != MacroType.Filesystem )
+            {
+                entry["Macro"] = Macro;
+                entry["LastSavedOn"] = DateTime.Now;
+                entry["LastSavedHash"] = Hash;
+            }
 
             if ( !Global )
             {
@@ -387,6 +442,14 @@ namespace ClassicAssist.Data.Macros
 
                 entry.Add( "Aliases", aliases );
             }
+
+            if ( _macroType == MacroType.Filesystem && _dirty )
+            {
+                string fileName = _id;
+                MacroFolderWatcher.WriteAllText( fileName, _macro );
+            }
+
+            _dirty = false;
 
             return entry;
         }

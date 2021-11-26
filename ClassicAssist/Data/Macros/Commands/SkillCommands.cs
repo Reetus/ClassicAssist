@@ -55,6 +55,17 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = nameof( Strings.Skills ),
             Parameters = new[] { nameof( ParameterType.SkillName ) } )]
+        public static double SkillDelta( string name )
+        {
+            SkillManager manager = SkillManager.GetInstance();
+
+            SkillEntry s = manager.Items.FirstOrDefault( se => se.Skill.Name.ToLower().Contains( name.ToLower() ) );
+
+            return s?.Delta ?? 0;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Skills ),
+            Parameters = new[] { nameof( ParameterType.SkillName ) } )]
         public static double SkillCap( string name )
         {
             SkillManager manager = SkillManager.GetInstance();

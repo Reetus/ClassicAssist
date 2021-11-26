@@ -903,6 +903,37 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Returns the distance to the given coordinates..
+        /// </summary>
+        public static string DISTANCECOORDINATES_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("DISTANCECOORDINATES_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to location = (1000, 1000, 0)
+        ///
+        ///while Distance(location[0], location[1]):
+        /// Pathfind(location[0], location[1], location[2])
+        /// Pause(1000).
+        /// </summary>
+        public static string DISTANCECOORDINATES_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("DISTANCECOORDINATES_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distance(1000, 1000).
+        /// </summary>
+        public static string DISTANCECOORDINATES_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("DISTANCECOORDINATES_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dress all items in the specified dress agent..
         /// </summary>
         public static string DRESS_COMMAND_DESCRIPTION {
@@ -3429,6 +3460,34 @@ namespace ClassicAssist.Resources {
         public static string SKILLCAP_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SKILLCAP_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns the skill value delta since last reset.
+        /// </summary>
+        public static string SKILLDELTA_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SKILLDELTA_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if SkillDelta(&apos;Hiding&apos;) &gt; 0.5:
+        ///    Stop().
+        /// </summary>
+        public static string SKILLDELTA_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("SKILLDELTA_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SkillDelta(&apos;skillName&apos;).
+        /// </summary>
+        public static string SKILLDELTA_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SKILLDELTA_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

@@ -412,6 +412,12 @@ namespace ClassicAssist.UO.Network
 
             int id = ( packet[7] << 8 ) | packet[8];
 
+            if ((id & 0x4000) != 0)
+            {
+                id ^= 0x4000;
+                item.ArtDataID = 2;
+            }
+
             if ( ( id & 0x8000 ) != 0 )
             {
                 id ^= 0x8000;

@@ -88,6 +88,7 @@ namespace ClassicAssist.UI.ViewModels
             };
             _manager.NewMacro = NewMacro;
             _manager.Items = Items;
+            _manager.MacroStartedEvent += OnMacroStartedEvent;
             Items.CollectionChanged += UpdateDraggables;
             Draggables.CollectionChanged += ( s, ea ) => UpdateFilteredItems();
         }
@@ -185,7 +186,7 @@ namespace ClassicAssist.UI.ViewModels
 
         public RelayCommand NewMacroCommand =>
             _newMacroCommand ??
-            ( _newMacroCommand = new RelayCommand( NewMacro, o => !SelectedItem?.IsRunning ?? true ) );
+            ( _newMacroCommand = new RelayCommand( NewMacro, o => true ) );
 
         public ICommand OpenModulesFolderCommand =>
             _openModulesFolderCommand ??
@@ -427,6 +428,17 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             SelectedItem = Items.LastOrDefault();
+        }
+
+        private void OnMacroStartedEvent( MacroEntry macroentry )
+        {
+            if ( !SelectedItem.Equals( macroentry ) || !IsRecording )
+            {
+                return;
+            }
+
+            IsRecording = false;
+            OnPropertyChanged( nameof( RecordLabel ) );
         }
 
         private void UpdateFilteredItems()

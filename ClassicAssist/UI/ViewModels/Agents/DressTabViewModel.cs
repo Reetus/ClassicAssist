@@ -130,7 +130,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
         }
 
-        public void Serialize( JObject json )
+        public void Serialize( JObject json, bool global = false )
         {
             JObject dress = new JObject
             {
@@ -177,7 +177,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             json?.Add( "Dress", dress );
         }
 
-        public void Deserialize( JObject json, Options options )
+        public void Deserialize( JObject json, Options options, bool global = false )
         {
             Items.Clear();
 

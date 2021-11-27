@@ -411,6 +411,19 @@ namespace ClassicAssist.Data
                 {
                     settingProvider.Serialize( obj );
                 }
+
+                if ( !( instance is IGlobalSettingProvider globalSettingProvider ) )
+                {
+                    continue;
+                }
+
+                JObject global = new JObject();
+
+                globalSettingProvider.Serialize( global, true );
+
+                File.WriteAllText(
+                    Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
+                        globalSettingProvider.GetGlobalFilename() ), global.ToString() );
             }
 
             obj["Hash"] = obj.ToString().SHA1();
@@ -465,6 +478,23 @@ namespace ClassicAssist.Data
                 {
                     settingProvider.Deserialize( json, options );
                 }
+
+                if ( !( instance is IGlobalSettingProvider globalSettingProvider ) )
+                {
+                    continue;
+                }
+
+                string filePath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
+                    globalSettingProvider.GetGlobalFilename() );
+
+                if ( !File.Exists( filePath ) )
+                {
+                    continue;
+                }
+
+                JObject global = JObject.Parse( File.ReadAllText( filePath ) );
+
+                globalSettingProvider.Deserialize( global, options, true );
             }
         }
 

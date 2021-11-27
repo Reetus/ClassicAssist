@@ -11,6 +11,7 @@
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              xmlns:sharedControls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+             xmlns:commands="clr-namespace:ClassicAssist.Data.Hotkeys.Commands"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500">
     <UserControl.DataContext>
@@ -99,6 +100,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <CheckBox Content="{x:Static resources:Strings.Pass_to_UO}" Margin="10,0,10,5"
                               IsChecked="{Binding Path=SelectedItem.(local:HotkeyEntry.PassToUO), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -106,6 +108,9 @@
                     <CheckBox Content="{x:Static resources:Strings.Undisableable}" Margin="10,0,10,5"
                               IsChecked="{Binding Path=SelectedItem.(local:HotkeyEntry.Disableable), Converter={StaticResource InverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               Grid.Row="1" IsEnabled="{Binding IsEnabled, ElementName=textBoxKey}" />
+                    <CheckBox Content="{x:Static resources:Strings.Global}" Margin="10,0,10,5"
+                              IsChecked="{Binding Path=SelectedItem.(local:HotkeyEntry.IsGlobal)}"
+                              Grid.Row="2" IsEnabled="{Binding IsEnabled, ElementName=textBoxKey}" />
                 </Grid>
                 <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>

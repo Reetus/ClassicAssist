@@ -59,7 +59,7 @@ namespace ClassicAssist.Data.Backup
             return MemberwiseClone();
         }
 
-        public void Serialize( JObject json )
+        public void Serialize( JObject json, bool _ = false)
         {
             JObject backup = new JObject { { "Enabled", Enabled }, { "Days", Days }, { "LastBackup", LastBackup } };
 
@@ -81,7 +81,7 @@ namespace ClassicAssist.Data.Backup
             json?.Add( "Backup", backup );
         }
 
-        public void Deserialize( JObject json, Options options )
+        public void Deserialize( JObject json, Options options, bool _ = false )
         {
             if ( json?["Backup"] == null )
             {

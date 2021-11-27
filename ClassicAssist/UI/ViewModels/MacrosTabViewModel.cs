@@ -255,7 +255,7 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ToggleSearchCommand =>
             _toggleSearchCommand ?? ( _toggleSearchCommand = new RelayCommand( ToggleSearch ) );
 
-        public void Serialize( JObject json )
+        public void Serialize( JObject json, bool global = false )
         {
             JObject macros = new JObject();
 
@@ -308,7 +308,7 @@ namespace ClassicAssist.UI.ViewModels
             json?.Add( "Macros", macros );
         }
 
-        public void Deserialize( JObject json, Options options )
+        public void Deserialize( JObject json, Options options, bool global = false )
         {
             SelectedItem = null;
             SelectedGroup = null;

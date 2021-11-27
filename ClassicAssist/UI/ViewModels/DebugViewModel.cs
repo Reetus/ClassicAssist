@@ -89,7 +89,7 @@ namespace ClassicAssist.UI.ViewModels
             _viewPlayerEquipmentCommand ??
             ( _viewPlayerEquipmentCommand = new RelayCommand( ViewPlayerEquipment, o => true ) );
 
-        public void Serialize( JObject json )
+        public void Serialize( JObject json, bool global = false )
         {
             if ( json?["Debug"] != null )
             {
@@ -101,7 +101,7 @@ namespace ClassicAssist.UI.ViewModels
             json?.Add( "Debug", options );
         }
 
-        public void Deserialize( JObject json, Options options )
+        public void Deserialize( JObject json, Options options, bool global = false )
         {
             Items.Clear();
 

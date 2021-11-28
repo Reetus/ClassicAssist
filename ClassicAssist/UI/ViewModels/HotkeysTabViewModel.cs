@@ -22,6 +22,7 @@ namespace ClassicAssist.UI.ViewModels
         private readonly HotkeyManager _hotkeyManager;
         private readonly List<HotkeyCommand> _serializeCategories = new List<HotkeyCommand>();
         private ICommand _clearHotkeyCommand;
+        private ICommand _createMacroButtonCommand;
         private ICommand _executeCommand;
         private ObservableCollection<HotkeyCommand> _filterItems;
         private string _filterText;
@@ -39,6 +40,10 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand ClearHotkeyCommand =>
             _clearHotkeyCommand ?? ( _clearHotkeyCommand = new RelayCommand( ClearHotkey, o => SelectedItem != null ) );
+
+        public ICommand CreateMacroButtonCommand =>
+            _createMacroButtonCommand ?? ( _createMacroButtonCommand =
+                new RelayCommand( CreateMacroButton, o => SelectedItem != null ) );
 
         public ICommand ExecuteCommand =>
             _executeCommand ?? ( _executeCommand = new RelayCommand( ExecuteHotkey, o => SelectedItem != null ) );
@@ -293,6 +298,16 @@ namespace ClassicAssist.UI.ViewModels
                     entry.IsGlobal = global;
                 }
             }
+        }
+
+        private void CreateMacroButton( object obj )
+        {
+            if ( !( SelectedItem is HotkeyEntry hotkeyEntry ) )
+            {
+                return;
+            }
+
+            Data.ClassicUO.Macros.CreateMacroButton( hotkeyEntry );
         }
 
         private JArray SerializeMasteries( Func<HotkeyEntry, bool> predicate )

@@ -11,7 +11,6 @@
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              xmlns:sharedControls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
-             xmlns:commands="clr-namespace:ClassicAssist.Data.Hotkeys.Commands"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500">
     <UserControl.DataContext>
@@ -70,6 +69,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <controls:TextBoxKey x:Name="textBoxKey"
                                      Shortcut="{Binding Hotkey}" Grid.Row="0"
@@ -120,6 +120,9 @@
                             Command="{Binding ExecuteCommand}" CommandParameter="{Binding SelectedItem}"
                             Grid.Column="0" IsEnabled="{Binding IsEnabled, ElementName=textBoxKey}" />
                 </Grid>
+                <Button Grid.Row="4" Margin="10,0,10,5" Content="{x:Static resources:Strings.Create_Macro_Button}"
+                        Command="{Binding CreateMacroButtonCommand}"
+                        IsEnabled="{Binding IsEnabled, ElementName=textBoxKey}" />
             </Grid>
         </GroupBox>
     </Grid>

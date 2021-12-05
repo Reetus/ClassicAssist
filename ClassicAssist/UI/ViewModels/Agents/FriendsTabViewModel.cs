@@ -45,7 +45,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             _selectHueCommand ??
             ( _selectHueCommand = new RelayCommand( SelectHue, o => Options.CurrentOptions.RehueFriends ) );
 
-        public void Serialize( JObject json )
+        public void Serialize( JObject json, bool global = false)
         {
             JObject config = new JObject
             {
@@ -66,7 +66,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             json?.Add( "Friends", config );
         }
 
-        public void Deserialize( JObject json, Options options )
+        public void Deserialize( JObject json, Options options, bool global = false )
         {
             Options = options;
             Options.Friends.Clear();

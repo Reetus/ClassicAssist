@@ -883,6 +883,24 @@ namespace ClassicAssist.UO.Network
                     break;
                 }
 
+                case 4:
+                {
+                    int serial = reader.ReadInt32();
+                    string message = reader.ReadUnicodeString();
+
+                    JournalEntry journalEntry = new JournalEntry
+                    {
+                        Serial = serial,
+                        Name = Engine.Mobiles.GetMobile( serial )?.Name ?? "Unknown",
+                        SpeechType = JournalSpeech.Whisper,
+                        Text = message
+                    };
+
+                    AddToJournal( journalEntry );
+
+                    break;
+                }
+
                 case 7:
                 {
                     int leaderSerial = reader.ReadInt32();

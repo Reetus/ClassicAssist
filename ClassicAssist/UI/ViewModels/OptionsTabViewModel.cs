@@ -31,7 +31,7 @@ namespace ClassicAssist.UI.ViewModels
             _setUseClilocLanguageCommand ??
             ( _setUseClilocLanguageCommand = new RelayCommand( SetUseClilocLanguage, o => true ) );
 
-        public void Serialize( JObject json )
+        public void Serialize( JObject json, bool global = false )
         {
             JObject options = new JObject();
 
@@ -92,7 +92,7 @@ namespace ClassicAssist.UI.ViewModels
             json?.Add( "Options", options );
         }
 
-        public void Deserialize( JObject json, Options options )
+        public void Deserialize( JObject json, Options options, bool global = false )
         {
             CurrentOptions = options;
 

@@ -140,7 +140,7 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _selectedProfile, value );
         }
 
-        public void Serialize( JObject json )
+        public void Serialize( JObject json, bool global = false )
         {
             JObject obj = new JObject
             {
@@ -176,7 +176,7 @@ namespace ClassicAssist.UI.ViewModels
             json?.Add( "General", obj );
         }
 
-        public void Deserialize( JObject json, Options options )
+        public void Deserialize( JObject json, Options options, bool global = false )
         {
             Options = options;
 

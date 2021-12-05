@@ -65,7 +65,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set => SetProperty( ref _warnAmount, value );
         }
 
-        public void Serialize( JObject json )
+        public void Serialize( JObject json, bool global = false )
         {
             JObject options = new JObject { { "Warn", Warn }, { "WarnAmount", WarnAmount } };
 
@@ -86,7 +86,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             json?.Add( "Counters", options );
         }
 
-        public void Deserialize( JObject json, Options options )
+        public void Deserialize( JObject json, Options options, bool global = false)
         {
             Items.Clear();
 

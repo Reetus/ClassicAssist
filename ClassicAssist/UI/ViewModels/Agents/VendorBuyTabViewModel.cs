@@ -74,7 +74,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set => SetProperty( ref _selectedItem, value );
         }
 
-        public void Serialize( JObject json )
+        public void Serialize( JObject json, bool global = false )
         {
             if ( json == null )
             {
@@ -122,7 +122,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             json.Add( "VendorBuy", vendorBuy );
         }
 
-        public void Deserialize( JObject json, Options options )
+        public void Deserialize( JObject json, Options options, bool global = false )
         {
             Items.Clear();
 

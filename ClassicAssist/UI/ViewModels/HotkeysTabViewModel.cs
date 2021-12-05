@@ -16,11 +16,13 @@ using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.UI.ViewModels
 {
-    public class HotkeysTabViewModel : BaseViewModel, ISettingProvider
+    public class HotkeysTabViewModel : BaseViewModel, IGlobalSettingProvider
     {
+        private const string GLOBAL_HOTKEYS_FILENAME = "Hotkeys.json";
         private readonly HotkeyManager _hotkeyManager;
         private readonly List<HotkeyCommand> _serializeCategories = new List<HotkeyCommand>();
         private ICommand _clearHotkeyCommand;
+        private ICommand _createMacroButtonCommand;
         private ICommand _executeCommand;
         private ObservableCollection<HotkeyCommand> _filterItems;
         private string _filterText;
@@ -38,6 +40,10 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand ClearHotkeyCommand =>
             _clearHotkeyCommand ?? ( _clearHotkeyCommand = new RelayCommand( ClearHotkey, o => SelectedItem != null ) );
+
+        public ICommand CreateMacroButtonCommand =>
+            _createMacroButtonCommand ?? ( _createMacroButtonCommand =
+                new RelayCommand( CreateMacroButton, o => SelectedItem != null ) );
 
         public ICommand ExecuteCommand =>
             _executeCommand ?? ( _executeCommand = new RelayCommand( ExecuteHotkey, o => SelectedItem != null ) );
@@ -82,124 +88,78 @@ namespace ClassicAssist.UI.ViewModels
             }
         }
 
-        public void Serialize( JObject json )
+        public string GetGlobalFilename()
+        {
+            return GLOBAL_HOTKEYS_FILENAME;
+        }
+
+        public void Serialize( JObject json, bool global = false )
         {
             JObject hotkeys = new JObject();
 
-            JArray commandsArray = new JArray();
-
-            foreach ( HotkeyCommand category in _serializeCategories )
-            {
-                foreach ( HotkeyEntry categoryChild in category.Children )
-                {
-                    if ( Equals( categoryChild.Hotkey, ShortcutKeys.Default ) )
-                    {
-                        continue;
-                    }
-
-                    JObject entry = new JObject
-                    {
-                        { "Type", categoryChild.GetType().FullName },
-                        { "Keys", categoryChild.Hotkey.ToJObject() },
-                        { "PassToUO", categoryChild.PassToUO },
-                        { "Disableable", categoryChild.Disableable }
-                    };
-
-                    commandsArray.Add( entry );
-                }
-            }
+            JArray commandsArray = SerializeCommands( e => e.IsGlobal == global );
 
             hotkeys.Add( "Commands", commandsArray );
 
-            JArray spellsArray = new JArray();
-
-            foreach ( HotkeyEntry spellsCategoryChild in _spellsCategory.Children )
-            {
-                if ( Equals( spellsCategoryChild.Hotkey, ShortcutKeys.Default ) )
-                {
-                    continue;
-                }
-
-                JObject entry = new JObject
-                {
-                    { "Name", spellsCategoryChild.Name },
-                    { "Keys", spellsCategoryChild.Hotkey.ToJObject() },
-                    { "PassToUO", spellsCategoryChild.PassToUO }
-                };
-
-                spellsArray.Add( entry );
-            }
+            JArray spellsArray = SerializeSpells( e => e.IsGlobal == global );
 
             hotkeys.Add( "Spells", spellsArray );
 
-            JArray masteryArray = new JArray();
-
-            foreach ( HotkeyEntry masteriesCategoryChild in _masteriesCategory.Children )
-            {
-                if ( Equals( masteriesCategoryChild.Hotkey, ShortcutKeys.Default ) )
-                {
-                    continue;
-                }
-
-                JObject entry = new JObject
-                {
-                    { "Name", masteriesCategoryChild.Name },
-                    { "Keys", masteriesCategoryChild.Hotkey.ToJObject() },
-                    { "PassToUO", masteriesCategoryChild.PassToUO }
-                };
-
-                masteryArray.Add( entry );
-            }
+            JArray masteryArray = SerializeMasteries( e => e.IsGlobal == global );
 
             hotkeys.Add( "Masteries", masteryArray );
 
             json?.Add( "Hotkeys", hotkeys );
         }
 
-        public void Deserialize( JObject json, Options options )
+        public void Deserialize( JObject json, Options options, bool global = false )
         {
-            IEnumerable<Type> hotkeyCommands = Assembly.GetExecutingAssembly().GetTypes()
-                .Where( i => i.IsSubclassOf( typeof( HotkeyCommand ) ) );
-
-            foreach ( Type hotkeyCommand in hotkeyCommands )
+            if ( !global )
             {
-                HotkeyCommand hkc = (HotkeyCommand) Activator.CreateInstance( hotkeyCommand );
+                IEnumerable<Type> hotkeyCommands = Assembly.GetExecutingAssembly().GetTypes()
+                    .Where( i => i.IsSubclassOf( typeof( HotkeyCommand ) ) );
 
-                HotkeyCommandAttribute attr = hkc.GetType().GetCustomAttribute<HotkeyCommandAttribute>();
-
-                string categoryName = Strings.Commands;
-
-                if ( attr != null && !string.IsNullOrEmpty( attr.Category ) )
+                foreach ( Type hotkeyCommand in hotkeyCommands )
                 {
-                    categoryName = Strings.ResourceManager.GetString( attr.Category );
-                }
+                    HotkeyCommand hkc = (HotkeyCommand) Activator.CreateInstance( hotkeyCommand );
 
-                HotkeyCommand category = Items.FirstOrDefault( hke => hke.Name == categoryName && hke.IsCategory );
+                    HotkeyCommandAttribute attr = hkc.GetType().GetCustomAttribute<HotkeyCommandAttribute>();
 
-                if ( category != null )
-                {
-                    if ( category.Children == null )
+                    string categoryName = Strings.Commands;
+
+                    if ( attr != null && !string.IsNullOrEmpty( attr.Category ) )
                     {
-                        category.Children = new ObservableCollectionEx<HotkeyEntry>();
+                        categoryName = Strings.ResourceManager.GetString( attr.Category );
                     }
 
-                    if ( category.Children.Contains( hkc ) )
+                    HotkeyCommand category = Items.FirstOrDefault( hke => hke.Name == categoryName && hke.IsCategory );
+
+                    if ( category != null )
                     {
-                        category.Children.Remove( hkc );
+                        if ( category.Children == null )
+                        {
+                            category.Children = new ObservableCollectionEx<HotkeyEntry>();
+                        }
+
+                        if ( category.Children.Contains( hkc ) )
+                        {
+                            category.Children.Remove( hkc );
+                        }
+
+                        category.Children.Add( hkc );
                     }
-
-                    category.Children.Add( hkc );
-                }
-                else
-                {
-                    category = new HotkeyCommand
+                    else
                     {
-                        Name = categoryName, IsCategory = true, Children = new ObservableCollectionEx<HotkeyEntry>()
-                    };
+                        category = new HotkeyCommand
+                        {
+                            Name = categoryName,
+                            IsCategory = true,
+                            Children = new ObservableCollectionEx<HotkeyEntry> { hkc }
+                        };
 
-                    category.Children.Add( hkc );
-                    _hotkeyManager.AddCategory( category );
-                    _serializeCategories.Add( category );
+                        _hotkeyManager.AddCategory( category );
+                        _serializeCategories.Add( category );
+                    }
                 }
             }
 
@@ -226,39 +186,43 @@ namespace ClassicAssist.UI.ViewModels
                         entry.Hotkey = new ShortcutKeys( keys );
                         entry.PassToUO = token["PassToUO"]?.ToObject<bool>() ?? true;
                         entry.Disableable = token["Disableable"]?.ToObject<bool>() ?? entry.Disableable;
+                        entry.IsGlobal = global;
                     }
                 }
             }
 
-            if ( _spellsCategory != null )
+            if ( _spellsCategory != null && !global )
             {
                 _hotkeyManager.Items.Remove( _spellsCategory );
             }
 
-            _spellsCategory = new HotkeyCommand { Name = Strings.Spells, IsCategory = true };
-
             SpellManager spellManager = SpellManager.GetInstance();
 
-            SpellData[] spells = spellManager.GetSpellData();
-
-            ObservableCollectionEx<HotkeyEntry> children = new ObservableCollectionEx<HotkeyEntry>();
-
-            foreach ( SpellData spell in spells )
+            if ( !global )
             {
-                HotkeyCommand hkc = new HotkeyCommand
+                _spellsCategory = new HotkeyCommand { Name = Strings.Spells, IsCategory = true };
+
+                SpellData[] spells = spellManager.GetSpellData();
+
+                ObservableCollectionEx<HotkeyEntry> children = new ObservableCollectionEx<HotkeyEntry>();
+
+                foreach ( SpellData spell in spells )
                 {
-                    Name = spell.Name,
-                    Action = hks => spellManager.CastSpell( spell.ID ),
-                    Hotkey = ShortcutKeys.Default,
-                    PassToUO = true
-                };
+                    HotkeyCommand hkc = new HotkeyCommand
+                    {
+                        Name = spell.Name,
+                        Action = hks => spellManager.CastSpell( spell.ID ),
+                        Hotkey = ShortcutKeys.Default,
+                        PassToUO = true
+                    };
 
-                children.Add( hkc );
+                    children.Add( hkc );
+                }
+
+                _spellsCategory.Children = children;
+
+                _hotkeyManager.AddCategory( _spellsCategory );
             }
-
-            _spellsCategory.Children = children;
-
-            _hotkeyManager.AddCategory( _spellsCategory );
 
             JToken spellsObj = hotkeys?["Spells"];
 
@@ -278,36 +242,40 @@ namespace ClassicAssist.UI.ViewModels
 
                     entry.Hotkey = new ShortcutKeys( token["Keys"] );
                     entry.PassToUO = token["PassToUO"]?.ToObject<bool>() ?? true;
+                    entry.IsGlobal = global;
                 }
             }
 
-            if ( _masteriesCategory != null )
+            if ( _masteriesCategory != null && !global )
             {
                 _hotkeyManager.Items.Remove( _masteriesCategory );
             }
 
-            _masteriesCategory = new HotkeyCommand { Name = Strings.Masteries, IsCategory = true };
-
-            SpellData[] masteries = spellManager.GetMasteryData();
-
-            ObservableCollectionEx<HotkeyEntry> masteryChildren = new ObservableCollectionEx<HotkeyEntry>();
-
-            foreach ( SpellData mastery in masteries )
+            if ( !global )
             {
-                HotkeyCommand hkc = new HotkeyCommand
+                _masteriesCategory = new HotkeyCommand { Name = Strings.Masteries, IsCategory = true };
+
+                SpellData[] masteries = spellManager.GetMasteryData();
+
+                ObservableCollectionEx<HotkeyEntry> masteryChildren = new ObservableCollectionEx<HotkeyEntry>();
+
+                foreach ( SpellData mastery in masteries )
                 {
-                    Name = mastery.Name,
-                    Action = hks => spellManager.CastSpell( mastery.ID ),
-                    Hotkey = ShortcutKeys.Default,
-                    PassToUO = true
-                };
+                    HotkeyCommand hkc = new HotkeyCommand
+                    {
+                        Name = mastery.Name,
+                        Action = hks => spellManager.CastSpell( mastery.ID ),
+                        Hotkey = ShortcutKeys.Default,
+                        PassToUO = true
+                    };
 
-                masteryChildren.Add( hkc );
+                    masteryChildren.Add( hkc );
+                }
+
+                _masteriesCategory.Children = masteryChildren;
+
+                _hotkeyManager.AddCategory( _masteriesCategory );
             }
-
-            _masteriesCategory.Children = masteryChildren;
-
-            _hotkeyManager.AddCategory( _masteriesCategory );
 
             JToken masteryObj = hotkeys?["Masteries"];
 
@@ -327,8 +295,88 @@ namespace ClassicAssist.UI.ViewModels
 
                     entry.Hotkey = new ShortcutKeys( token["Keys"] );
                     entry.PassToUO = token["PassToUO"]?.ToObject<bool>() ?? true;
+                    entry.IsGlobal = global;
                 }
             }
+        }
+
+        private void CreateMacroButton( object obj )
+        {
+            if ( !( SelectedItem is HotkeyEntry hotkeyEntry ) )
+            {
+                return;
+            }
+
+            Data.ClassicUO.Macros.CreateMacroButton( hotkeyEntry );
+        }
+
+        private JArray SerializeMasteries( Func<HotkeyEntry, bool> predicate )
+        {
+            JArray masteryArray = new JArray();
+
+            foreach ( HotkeyEntry masteriesCategoryChild in _masteriesCategory.Children.Where( predicate ) )
+            {
+                if ( Equals( masteriesCategoryChild.Hotkey, ShortcutKeys.Default ) )
+                {
+                    continue;
+                }
+
+                JObject entry = new JObject
+                {
+                    { "Name", masteriesCategoryChild.Name },
+                    { "Keys", masteriesCategoryChild.Hotkey.ToJObject() },
+                    { "PassToUO", masteriesCategoryChild.PassToUO }
+                };
+
+                masteryArray.Add( entry );
+            }
+
+            return masteryArray;
+        }
+
+        private JArray SerializeSpells( Func<HotkeyEntry, bool> predicate )
+        {
+            JArray spellsArray = new JArray();
+
+            foreach ( HotkeyEntry spellsCategoryChild in _spellsCategory.Children.Where( predicate ) )
+            {
+                if ( Equals( spellsCategoryChild.Hotkey, ShortcutKeys.Default ) )
+                {
+                    continue;
+                }
+
+                JObject entry = new JObject
+                {
+                    { "Name", spellsCategoryChild.Name },
+                    { "Keys", spellsCategoryChild.Hotkey.ToJObject() },
+                    { "PassToUO", spellsCategoryChild.PassToUO }
+                };
+
+                spellsArray.Add( entry );
+            }
+
+            return spellsArray;
+        }
+
+        private JArray SerializeCommands( Func<HotkeyEntry, bool> predicate )
+        {
+            JArray commandsArray = new JArray();
+
+            foreach ( JObject entry in from category in _serializeCategories
+                     from categoryChild in category.Children.Where( predicate )
+                     where !Equals( categoryChild.Hotkey, ShortcutKeys.Default )
+                     select new JObject
+                     {
+                         { "Type", categoryChild.GetType().FullName },
+                         { "Keys", categoryChild.Hotkey.ToJObject() },
+                         { "PassToUO", categoryChild.PassToUO },
+                         { "Disableable", categoryChild.Disableable }
+                     } )
+            {
+                commandsArray.Add( entry );
+            }
+
+            return commandsArray;
         }
 
         private void UpdateFilteredItems()

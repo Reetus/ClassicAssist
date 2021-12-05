@@ -2,7 +2,6 @@
 using System.Windows.Media;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.UI;
-using ClassicAssist.UI.Misc;
 using Newtonsoft.Json;
 
 namespace ClassicAssist.Data.Hotkeys
@@ -17,6 +16,8 @@ namespace ClassicAssist.Data.Hotkeys
 
         private ShortcutKeys _hotkey = new ShortcutKeys();
         private bool _isCategory;
+
+        private bool _isGlobal;
 
         private string _name;
         private bool _passToUo = true;
@@ -71,6 +72,12 @@ namespace ClassicAssist.Data.Hotkeys
         {
             get => _isCategory;
             set => SetProperty( ref _isCategory, value );
+        }
+
+        public bool IsGlobal
+        {
+            get => _isGlobal;
+            set => SetProperty( ref _isGlobal, value );
         }
 
         public virtual string Name

@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ClassicAssist.Data.ClassicUO.Objects;
 using ClassicAssist.Data.ClassicUO.Objects.Gumps;
+using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Shared.Resources;
 using Sentry;
@@ -48,6 +49,36 @@ namespace ClassicAssist.Data.ClassicUO
                 }
 
                 macroObj.Items = new MacroObjectString( macroEntry.Name );
+
+                MacroButtonGump macroButton = new MacroButtonGump( macroObj, 200, 200 );
+
+                UIManager.Add( macroButton );
+            }
+            catch ( Exception e )
+            {
+                SentrySdk.CaptureException( e );
+                UO.Commands.SystemMessage( string.Format( Strings.Reflection_Error___0_, e.Message ) );
+            }
+        }
+
+        public static void CreateMacroButton( HotkeyEntry hotkeyEntry )
+        {
+            try
+            {
+                GameScene gameScene = new GameScene();
+
+                IEnumerable<Macro> allMacros = gameScene.Macros.GetAllMacros();
+
+                Macro macroObj = allMacros.FirstOrDefault( e => e.Name == hotkeyEntry.Name );
+
+                if ( macroObj == null )
+                {
+                    macroObj = new Macro( hotkeyEntry.Name );
+
+                    gameScene.Macros.PushToBack( macroObj );
+                }
+
+                macroObj.Items = new MacroObjectString( hotkeyEntry.GetType().ToString() );
 
                 MacroButtonGump macroButton = new MacroButtonGump( macroObj, 200, 200 );
 

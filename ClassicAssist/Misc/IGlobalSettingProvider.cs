@@ -1,6 +1,6 @@
 ﻿#region License
 
-// Copyright (C) 2020 Reetus
+// Copyright (C) 2021 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,28 +17,10 @@
 
 #endregion
 
-using System;
-using Assistant;
-using ClassicAssist.UO.Data;
-
-namespace ClassicAssist.UO.Network.Packets
+namespace ClassicAssist.Misc
 {
-    public class DisplayQuestPointer : BasePacket
+    public interface IGlobalSettingProvider : ISettingProvider
     {
-        public DisplayQuestPointer( bool active, int x, int y, int serial = 0 )
-        {
-            bool isNew = Engine.ClientVersion >= new Version( 7, 0, 9, 0 );
-
-            _writer = new PacketWriter( isNew ? 10 : 6 );
-            _writer.Write( (byte) 0xBA );
-            _writer.Write( (byte) ( active ? 1 : 0 ) );
-            _writer.Write( (short) x );
-            _writer.Write( (short) y );
-
-            if ( isNew )
-            {
-                _writer.Write( serial );
-            }
-        }
+        string GetGlobalFilename();
     }
 }

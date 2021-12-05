@@ -79,7 +79,7 @@ namespace ClassicAssist.UI.ViewModels
             _useSkillCommand ?? ( _useSkillCommand =
                 new RelayCommand( UseSkill, o => SelectedItem?.Skill.Invokable ?? false ) );
 
-        public void Serialize( JObject json )
+        public void Serialize( JObject json, bool global = false )
         {
             JArray skills = new JArray();
 
@@ -104,7 +104,7 @@ namespace ClassicAssist.UI.ViewModels
             json.Add( "Skills", skills );
         }
 
-        public void Deserialize( JObject json, Options options )
+        public void Deserialize( JObject json, Options options, bool global = false )
         {
             HotkeyManager hotkey = HotkeyManager.GetInstance();
 

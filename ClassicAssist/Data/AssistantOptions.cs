@@ -88,7 +88,7 @@ namespace ClassicAssist.Data
 
             JArray assembliesArray = new JArray();
 
-            foreach ( string assembly in Assemblies ?? new string[0] )
+            foreach ( string assembly in Assemblies ?? Array.Empty<string>() )
             {
                 assembliesArray.Add( assembly );
             }

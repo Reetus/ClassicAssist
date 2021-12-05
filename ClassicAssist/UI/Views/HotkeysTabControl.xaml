@@ -69,6 +69,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <controls:TextBoxKey x:Name="textBoxKey"
                                      Shortcut="{Binding Hotkey}" Grid.Row="0"
@@ -99,6 +100,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <CheckBox Content="{x:Static resources:Strings.Pass_to_UO}" Margin="10,0,10,5"
                               IsChecked="{Binding Path=SelectedItem.(local:HotkeyEntry.PassToUO), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -106,6 +108,9 @@
                     <CheckBox Content="{x:Static resources:Strings.Undisableable}" Margin="10,0,10,5"
                               IsChecked="{Binding Path=SelectedItem.(local:HotkeyEntry.Disableable), Converter={StaticResource InverseBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               Grid.Row="1" IsEnabled="{Binding IsEnabled, ElementName=textBoxKey}" />
+                    <CheckBox Content="{x:Static resources:Strings.Global}" Margin="10,0,10,5"
+                              IsChecked="{Binding Path=SelectedItem.(local:HotkeyEntry.IsGlobal)}"
+                              Grid.Row="2" IsEnabled="{Binding IsEnabled, ElementName=textBoxKey}" />
                 </Grid>
                 <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
@@ -115,6 +120,9 @@
                             Command="{Binding ExecuteCommand}" CommandParameter="{Binding SelectedItem}"
                             Grid.Column="0" IsEnabled="{Binding IsEnabled, ElementName=textBoxKey}" />
                 </Grid>
+                <Button Grid.Row="4" Margin="10,0,10,5" Content="{x:Static resources:Strings.Create_Macro_Button}"
+                        Command="{Binding CreateMacroButtonCommand}"
+                        IsEnabled="{Binding IsEnabled, ElementName=textBoxKey}" />
             </Grid>
         </GroupBox>
     </Grid>

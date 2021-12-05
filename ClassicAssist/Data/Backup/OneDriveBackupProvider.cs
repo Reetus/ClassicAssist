@@ -78,9 +78,9 @@ namespace ClassicAssist.Data.Backup
             return await Task.FromResult( odppvm.SelectedItem.Id );
         }
 
-        public override void Serialize( JObject json )
+        public override void Serialize( JObject json, bool _ = false )
         {
-            base.Serialize( json );
+            base.Serialize( json, _ );
 
             if ( Authentication != null )
             {
@@ -90,7 +90,7 @@ namespace ClassicAssist.Data.Backup
             }
         }
 
-        public override void Deserialize( JObject json, Options options )
+        public override void Deserialize( JObject json, Options options, bool _ = false )
         {
             base.Deserialize( json, options );
 

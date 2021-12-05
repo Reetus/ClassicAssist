@@ -88,7 +88,7 @@ namespace ClassicAssist.Data.Backup
             return await Task.FromResult( result == DialogResult.OK ? folderBrowseDialog.SelectedPath : currentPath );
         }
 
-        public override void Deserialize( JObject json, Options options )
+        public override void Deserialize( JObject json, Options options, bool _ = false )
         {
             base.Deserialize( json, options );
 

@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using Assistant;
 using ClassicAssist.Data.Backup;
+using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
 using Sentry;
@@ -111,6 +112,14 @@ namespace ClassicAssist.UI.ViewModels
             List<string> files = new List<string> { "Assistant.json", "Macros.json" };
             files.AddRange( Directory.EnumerateFiles( Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
                 "Profiles" ) ) );
+
+            foreach ( BaseViewModel baseViewModel in BaseViewModel.Instances )
+            {
+                if ( baseViewModel is IGlobalSettingProvider iGlobalSettingProvider )
+                {
+                    files.Add( iGlobalSettingProvider.GetGlobalFilename() );
+                }
+            }
 
             Dictionary<string, string> hashes = GetFileAndHash( files );
 

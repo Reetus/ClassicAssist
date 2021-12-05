@@ -31,14 +31,14 @@ namespace ClassicAssist.Data.Backup
         private bool _incremental;
         private bool _isLoggedIn;
 
-        public virtual void Serialize( JObject json )
+        public virtual void Serialize( JObject json, bool _ = false )
         {
             json?.Add( "BackupPath", BackupPath );
             json?.Add( "FirstRun", FirstRun );
             json?.Add( "Incremental", Incremental );
         }
 
-        public virtual void Deserialize( JObject json, Options options )
+        public virtual void Deserialize( JObject json, Options options, bool _ = false )
         {
             BackupPath = json?["BackupPath"]?.ToObject<string>();
             FirstRun = json?["FirstRun"]?.ToObject<bool>() ?? true;

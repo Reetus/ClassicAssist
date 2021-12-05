@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Assistant;
+using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Shared.Resources;
@@ -146,6 +148,17 @@ namespace ClassicAssist.Data.Commands
             {
                 string macroName = text.Substring( 7, text.Length - 7 );
 
+                Type type = Assembly.GetExecutingAssembly().GetType( macroName );
+
+                if ( type != null && type.IsSubclassOf( typeof( HotkeyCommand ) ) )
+                {
+                    HotkeyCommand hotkeyCommand = (HotkeyCommand) Activator.CreateInstance( type );
+
+                    Task.Run( () => hotkeyCommand?.Execute() );
+
+                    return true;
+                }
+
                 MacroEntry macro = MacroManager.GetInstance().Items.FirstOrDefault( m => m.Name == macroName );
 
                 if ( macro == null )
@@ -154,7 +167,7 @@ namespace ClassicAssist.Data.Commands
                 }
                 else
                 {
-                    macro.Execute();
+                    MacroManager.GetInstance().Execute( macro );
                 }
 
                 return true;

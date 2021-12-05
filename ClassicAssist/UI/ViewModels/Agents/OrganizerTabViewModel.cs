@@ -73,7 +73,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             _setContainersCommand ?? ( _setContainersCommand =
                 new RelayCommandAsync( _manager.SetContainers, o => SelectedItem != null && !IsOrganizing ) );
 
-        public void Serialize( JObject json )
+        public void Serialize( JObject json, bool global = false)
         {
             JArray organizer = new JArray();
 
@@ -110,7 +110,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             json?.Add( "Organizer", organizer );
         }
 
-        public void Deserialize( JObject json, Options options )
+        public void Deserialize( JObject json, Options options, bool global = false )
         {
             Items.Clear();
 

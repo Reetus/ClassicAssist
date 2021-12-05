@@ -216,7 +216,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         public ICommand SetContainerCommand =>
             _setContainerCommand ?? ( _setContainerCommand = new RelayCommandAsync( SetContainer, o => true ) );
 
-        public void Serialize( JObject json )
+        public void Serialize( JObject json, bool _ )
         {
             if ( json == null )
             {
@@ -287,7 +287,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             json.Add( "Autoloot", autolootObj );
         }
 
-        public void Deserialize( JObject json, Options options )
+        public void Deserialize( JObject json, Options options, bool global = false )
         {
             Items.Clear();
             Draggables.Clear();

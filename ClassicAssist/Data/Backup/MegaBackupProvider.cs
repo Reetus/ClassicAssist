@@ -46,9 +46,9 @@ namespace ClassicAssist.Data.Backup
             set => SetProperty( ref _overwriteExisting, value );
         }
 
-        public override void Serialize( JObject json )
+        public override void Serialize( JObject json, bool _ = false )
         {
-            base.Serialize( json );
+            base.Serialize( json, _ );
 
             if ( Authentication == null )
             {
@@ -73,7 +73,7 @@ namespace ClassicAssist.Data.Backup
             json.Add( "OverwriteExisting", OverwriteExisting );
         }
 
-        public override void Deserialize( JObject json, Options options )
+        public override void Deserialize( JObject json, Options options, bool _ = false )
         {
             base.Deserialize( json, options );
 

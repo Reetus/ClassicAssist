@@ -259,14 +259,14 @@ namespace ClassicAssist.Data.Macros
                 finally
                 {
                     StoppedEvent?.Invoke();
-                    MacroManager.GetInstance().OnMacroStopped();
+                    MacroManager.GetInstance().OnMacroStopped( macro );
                 }
             } ) { IsBackground = true };
 
             try
             {
                 Thread.Start();
-                MacroManager.GetInstance().OnMacroStarted();
+                MacroManager.GetInstance().OnMacroStarted( macro );
             }
             catch ( ThreadStateException )
             {
@@ -327,7 +327,7 @@ namespace ClassicAssist.Data.Macros
                 Thread?.Join( 100 );
 
                 MacroManager.GetInstance().Replay = false;
-                MacroManager.GetInstance().OnMacroStopped();
+                MacroManager.GetInstance().OnMacroStopped( _macro );
             }
             catch ( ThreadStateException e )
             {
@@ -342,6 +342,7 @@ namespace ClassicAssist.Data.Macros
         {
             Shutdown?.Invoke( this, EventArgs.Empty );
         }
+
         public event EventHandler Shutdown;
     }
 }

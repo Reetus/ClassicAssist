@@ -196,14 +196,14 @@ namespace ClassicAssist.UI.ViewModels
                 _hotkeyManager.Items.Remove( _spellsCategory );
             }
 
-            _spellsCategory = new HotkeyCommand { Name = Strings.Spells, IsCategory = true };
-
             SpellManager spellManager = SpellManager.GetInstance();
-
-            SpellData[] spells = spellManager.GetSpellData();
 
             if ( !global )
             {
+                _spellsCategory = new HotkeyCommand { Name = Strings.Spells, IsCategory = true };
+
+                SpellData[] spells = spellManager.GetSpellData();
+
                 ObservableCollectionEx<HotkeyEntry> children = new ObservableCollectionEx<HotkeyEntry>();
 
                 foreach ( SpellData spell in spells )

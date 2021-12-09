@@ -58,6 +58,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private ICommand _insertCommand;
         private ICommand _insertConstraintCommand;
         private ICommand _insertMatchAnyCommand;
+        private bool _isRunning;
 
         private ObservableCollectionEx<AutolootEntry> _items = new ObservableCollectionEx<AutolootEntry>();
         private double _leftColumnWidth = 200;
@@ -93,6 +94,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             IncomingPacketHandlers.CorpseContainerDisplayEvent += OnCorpseEvent;
             AutolootManager.GetInstance().GetEntries = () => _items.ToList();
             AutolootManager.GetInstance().CheckContainer = OnCorpseEvent;
+            AutolootManager.GetInstance().IsRunning = () => IsRunning;
             Items.CollectionChanged += UpdateDraggables;
         }
 
@@ -145,6 +147,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public ICommand InsertMatchAnyCommand =>
             _insertMatchAnyCommand ?? ( _insertMatchAnyCommand = new RelayCommand( InsertMatchAny, o => true ) );
+
+        public bool IsRunning
+        {
+            get => _isRunning;
+            set => SetProperty( ref _isRunning, value );
+        }
 
         public ObservableCollectionEx<AutolootEntry> Items
         {
@@ -547,110 +555,122 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             lock ( _autolootLock )
             {
-                Item item = Engine.Items.GetItem( serial );
-
-                if ( item == null || item.ID != 0x2006 && !force )
+                try
                 {
-                    return;
-                }
+                    IsRunning = true;
 
-                if ( !LootHumanoids && TargetManager.GetInstance().BodyData
-                    .Where( bd => bd.BodyType == TargetBodyType.Humanoid ).Select( bd => bd.Graphic )
-                    .Contains( item.Count ) )
-                {
-                    return;
-                }
+                    Item item = Engine.Items.GetItem( serial );
 
-                PacketWaitEntry we = Engine.PacketWaitEntries.Add(
-                    new PacketFilterInfo( 0x3C, new[] { PacketFilterConditions.IntAtPositionCondition( serial, 19 ) } ),
-                    PacketDirection.Incoming );
+                    if ( item == null || item.ID != 0x2006 && !force )
+                    {
+                        return;
+                    }
 
-                we.Lock.WaitOne( 2000 );
+                    if ( !LootHumanoids && TargetManager.GetInstance().BodyData
+                            .Where( bd => bd.BodyType == TargetBodyType.Humanoid ).Select( bd => bd.Graphic )
+                            .Contains( item.Count ) )
+                    {
+                        return;
+                    }
 
-                IEnumerable<Item> items = Engine.Items.GetItem( serial )?.Container?.GetItems();
+                    PacketWaitEntry we = Engine.PacketWaitEntries.Add(
+                        new PacketFilterInfo( 0x3C,
+                            new[] { PacketFilterConditions.IntAtPositionCondition( serial, 19 ) } ),
+                        PacketDirection.Incoming );
 
-                if ( items == null )
-                {
-                    return;
-                }
+                    we.Lock.WaitOne( 2000 );
 
-                if ( Engine.TooltipsEnabled )
-                {
+                    IEnumerable<Item> items = Engine.Items.GetItem( serial )?.Container?.GetItems();
+
+                    if ( items == null )
+                    {
+                        return;
+                    }
+
+                    if ( Engine.TooltipsEnabled )
+                    {
 #if DEBUG
-                    Stopwatch stopWatch = new Stopwatch();
-                    stopWatch.Start();
+                        Stopwatch stopWatch = new Stopwatch();
+                        stopWatch.Start();
 #endif
-                    bool result = UOC.WaitForPropertiesAsync( items.Where( e => e.Properties == null ), 1000 ).Result;
+                        bool result = UOC.WaitForPropertiesAsync( items.Where( e => e.Properties == null ), 1000 )
+                            .Result;
 
 #if DEBUG
-                    stopWatch.Stop();
-                    UOC.SystemMessage( $"WaitForPropertiesAsync Result = {result}, Time = {stopWatch.ElapsedMilliseconds}" );
+                        stopWatch.Stop();
+                        UOC.SystemMessage(
+                            $"WaitForPropertiesAsync Result = {result}, Time = {stopWatch.ElapsedMilliseconds}" );
 #endif
-                }
-
-                List<Item> lootItems = new List<Item>();
-
-                // If change logic, also change in DebugAutolootViewModel
-
-                foreach ( AutolootEntry entry in Items.OrderByDescending( x => x.Priority ) )
-                {
-                    if ( !entry.Enabled )
-                    {
-                        continue;
                     }
 
-                    if ( entry.Group != null && !entry.Group.Enabled )
+                    List<Item> lootItems = new List<Item>();
+
+                    // If change logic, also change in DebugAutolootViewModel
+
+                    foreach ( AutolootEntry entry in Items.OrderByDescending( x => x.Priority ) )
                     {
-                        continue;
-                    }
-
-                    IEnumerable<Item> matchItems = AutolootHelpers.AutolootFilter( items, entry );
-
-                    if ( matchItems == null )
-                    {
-                        continue;
-                    }
-
-                    foreach ( Item matchItem in matchItems )
-                    {
-                        if ( entry.Rehue )
-                        {
-                            Engine.SendPacketToClient( new ContainerContentUpdate( matchItem.Serial, matchItem.ID,
-                                matchItem.Direction, matchItem.Count, matchItem.X, matchItem.Y, matchItem.Grid,
-                                matchItem.Owner, entry.RehueHue ) );
-                        }
-
-                        if ( DisableInGuardzone &&
-                             Engine.Player.GetRegion().Attributes.HasFlag( RegionAttributes.Guarded ) )
+                        if ( !entry.Enabled )
                         {
                             continue;
                         }
 
-                        if ( entry.Autoloot && !lootItems.Contains( matchItem ) )
+                        if ( entry.Group != null && !entry.Group.Enabled )
                         {
-                            lootItems.Add( matchItem );
+                            continue;
+                        }
+
+                        IEnumerable<Item> matchItems = AutolootHelpers.AutolootFilter( items, entry );
+
+                        if ( matchItems == null )
+                        {
+                            continue;
+                        }
+
+                        foreach ( Item matchItem in matchItems )
+                        {
+                            if ( entry.Rehue )
+                            {
+                                Engine.SendPacketToClient( new ContainerContentUpdate( matchItem.Serial, matchItem.ID,
+                                    matchItem.Direction, matchItem.Count, matchItem.X, matchItem.Y, matchItem.Grid,
+                                    matchItem.Owner, entry.RehueHue ) );
+                            }
+
+                            if ( DisableInGuardzone &&
+                                 Engine.Player.GetRegion().Attributes.HasFlag( RegionAttributes.Guarded ) )
+                            {
+                                continue;
+                            }
+
+                            if ( entry.Autoloot && !lootItems.Contains( matchItem ) )
+                            {
+                                lootItems.Add( matchItem );
+                            }
                         }
                     }
-                }
 
-                foreach ( Item lootItem in lootItems.Distinct() )
-                {
-                    int containerSerial = ContainerSerial;
-
-                    if ( containerSerial == 0 ||
-                         Engine.Player?.Backpack?.Container?.GetItem( containerSerial ) == null )
+                    foreach ( Item lootItem in lootItems.Distinct() )
                     {
-                        containerSerial = Engine.Player?.GetLayer( Layer.Backpack ) ?? 0;
+                        int containerSerial = ContainerSerial;
+
+                        if ( containerSerial == 0 ||
+                             Engine.Player?.Backpack?.Container?.GetItem( containerSerial ) == null )
+                        {
+                            containerSerial = Engine.Player?.GetLayer( Layer.Backpack ) ?? 0;
+                        }
+
+                        UOC.SystemMessage( string.Format( Strings.Autolooting___0__, lootItem.Name ),
+                            (int) UOC.SystemMessageHues.Yellow );
+
+                        Task t = ActionPacketQueue.EnqueueDragDrop( lootItem.Serial, lootItem.Count, containerSerial,
+                            QueuePriority.High, true, true, requeueOnFailure: RequeueFailedItems,
+                            successPredicate: CheckItemContainer );
+
+                        t.Wait( LOOT_TIMEOUT );
                     }
-
-                    UOC.SystemMessage( string.Format( Strings.Autolooting___0__, lootItem.Name ),
-                        (int) UOC.SystemMessageHues.Yellow );
-
-                    Task t = ActionPacketQueue.EnqueueDragDrop( lootItem.Serial, lootItem.Count, containerSerial,
-                        QueuePriority.High, true, true, requeueOnFailure: RequeueFailedItems,
-                        successPredicate: CheckItemContainer );
-
-                    t.Wait( LOOT_TIMEOUT );
+                }
+                finally
+                {
+                    IsRunning = false;
                 }
             }
         }

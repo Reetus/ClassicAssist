@@ -67,6 +67,12 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = nameof( Strings.Agents ) )]
+        public static bool Autolooting()
+        {
+            return AutolootManager.GetInstance().IsRunning();
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Agents ) )]
         public static bool Dressing()
         {
             DressManager manager = DressManager.GetInstance();

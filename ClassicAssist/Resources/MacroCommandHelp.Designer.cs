@@ -210,6 +210,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Returns True if currently checking corpse / autolooting items..
+        /// </summary>
+        public static string AUTOLOOTING_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("AUTOLOOTING_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if Autolooting():.
+        /// </summary>
+        public static string AUTOLOOTING_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("AUTOLOOTING_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Applies a bandage to the player..
         /// </summary>
         public static string BANDAGESELF_COMMAND_DESCRIPTION {

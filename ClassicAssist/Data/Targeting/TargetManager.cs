@@ -51,10 +51,9 @@ namespace ClassicAssist.Data.Targeting
                 MsgCommands.HeadMsg( Options.CurrentOptions.EnemyTargetMessage, m.Serial );
             }
 
-            MsgCommands.HeadMsg( $"Target: {m.Name?.Trim() ?? "Unknown"}" );
-
             if ( m.Serial != Engine.Player.EnemyTargetSerial )
             {
+                MsgCommands.HeadMsg($"Target: {m.Name?.Trim() ?? "Unknown"}");
                 EnemyChangedEvent?.Invoke( m.Serial, Engine.Player.EnemyTargetSerial );
                 LastTargetChangedEvent?.Invoke( m.Serial, Engine.Player.LastTargetSerial );
             }
@@ -76,10 +75,9 @@ namespace ClassicAssist.Data.Targeting
                 MsgCommands.HeadMsg( Options.CurrentOptions.FriendTargetMessage, m.Serial );
             }
 
-            MsgCommands.HeadMsg( $"Target: {m.Name?.Trim() ?? "Unknown"}" );
-
             if ( m.Serial != Engine.Player.FriendTargetSerial )
             {
+                MsgCommands.HeadMsg($"Target: {m.Name?.Trim() ?? "Unknown"}");
                 FriendChangedEvent?.Invoke( m.Serial, Engine.Player.FriendTargetSerial );
                 LastTargetChangedEvent?.Invoke( m.Serial, Engine.Player.LastTargetSerial );
             }

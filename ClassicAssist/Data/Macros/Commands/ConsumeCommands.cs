@@ -40,7 +40,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
-            ObjectCommands.UseObject( bandage.Serial );
+            ObjectCommands.UseObject( bandage.Serial, true );
 
             PacketWaitEntry we = Engine.PacketWaitEntries.Add( new PacketFilterInfo( 0x6C ), PacketDirection.Incoming );
 

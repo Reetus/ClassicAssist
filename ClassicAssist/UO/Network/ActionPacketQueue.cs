@@ -57,71 +57,71 @@ namespace ClassicAssist.UO.Network
             switch ( queueItem )
             {
                 case PacketQueueItem actionQueueItem:
-                {
-                    actionQueueItem.TimeSpan = DateTime.Now - actionQueueItem.DateTime;
-                    ActionQueueEvent?.Invoke( ActionQueueEvents.Enter, actionQueueItem );
-
-                    if ( Options.CurrentOptions.ActionDelay && actionQueueItem.DelaySend )
                     {
-                        while ( Engine.LastActionPacket +
-                            TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) > DateTime.Now )
+                        actionQueueItem.TimeSpan = DateTime.Now - actionQueueItem.DateTime;
+                        ActionQueueEvent?.Invoke( ActionQueueEvents.Enter, actionQueueItem );
+
+                        if ( Options.CurrentOptions.ActionDelay && actionQueueItem.DelaySend )
                         {
-                            Thread.Sleep( 1 );
+                            while ( Engine.LastActionPacket +
+                                TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) > DateTime.Now )
+                            {
+                                Thread.Sleep( 1 );
+                            }
                         }
-                    }
 
-                    if ( actionQueueItem.Token.IsCancellationRequested )
-                    {
-                        actionQueueItem.Result = false;
-                        actionQueueItem.WaitHandle.Set();
-                        return;
-                    }
-
-                    actionQueueItem.TimeSpan = DateTime.Now - actionQueueItem.DateTime;
-                    ActionQueueEvent?.Invoke( ActionQueueEvents.Execute, actionQueueItem );
-
-                    byte[] data = actionQueueItem.Packet;
-                    int length = actionQueueItem.Length;
-
-                    Engine.LastActionPacket = DateTime.Now;
-                    Engine.SendPacketToServer( data, length );
-
-                    actionQueueItem.Result = true;
-                    actionQueueItem.TimeSpan = DateTime.Now - actionQueueItem.DateTime;
-                    ActionQueueEvent?.Invoke( ActionQueueEvents.Finish, actionQueueItem );
-                    actionQueueItem.WaitHandle.Set();
-                    break;
-                }
-                case ActionQueueItem actionItem:
-                {
-                    actionItem.TimeSpan = DateTime.Now - actionItem.DateTime;
-                    ActionQueueEvent?.Invoke( ActionQueueEvents.Enter, actionItem );
-
-                    if ( Options.CurrentOptions.ActionDelay && actionItem.DelaySend )
-                    {
-                        while ( Engine.LastActionPacket +
-                            TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) > DateTime.Now )
+                        if ( actionQueueItem.Token.IsCancellationRequested )
                         {
-                            Thread.Sleep( 1 );
+                            actionQueueItem.Result = false;
+                            actionQueueItem.WaitHandle.Set();
+                            return;
                         }
-                    }
 
-                    actionItem.TimeSpan = DateTime.Now - actionItem.DateTime;
-                    ActionQueueEvent?.Invoke( ActionQueueEvents.Execute, actionItem );
+                        actionQueueItem.TimeSpan = DateTime.Now - actionQueueItem.DateTime;
+                        ActionQueueEvent?.Invoke( ActionQueueEvents.Execute, actionQueueItem );
 
-                    bool? result = actionItem.Action?.Invoke( actionItem.Arguments );
+                        byte[] data = actionQueueItem.Packet;
+                        int length = actionQueueItem.Length;
 
-                    if ( result.HasValue && result.Value )
-                    {
                         Engine.LastActionPacket = DateTime.Now;
-                    }
+                        Engine.SendPacketToServer( data, length );
 
-                    actionItem.Result = result ?? true;
-                    actionItem.TimeSpan = DateTime.Now - actionItem.DateTime;
-                    ActionQueueEvent?.Invoke( ActionQueueEvents.Finish, actionItem );
-                    actionItem.WaitHandle.Set();
-                    break;
-                }
+                        actionQueueItem.Result = true;
+                        actionQueueItem.TimeSpan = DateTime.Now - actionQueueItem.DateTime;
+                        ActionQueueEvent?.Invoke( ActionQueueEvents.Finish, actionQueueItem );
+                        actionQueueItem.WaitHandle.Set();
+                        break;
+                    }
+                case ActionQueueItem actionItem:
+                    {
+                        actionItem.TimeSpan = DateTime.Now - actionItem.DateTime;
+                        ActionQueueEvent?.Invoke( ActionQueueEvents.Enter, actionItem );
+
+                        if ( Options.CurrentOptions.ActionDelay && actionItem.DelaySend )
+                        {
+                            while ( Engine.LastActionPacket +
+                                TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) > DateTime.Now )
+                            {
+                                Thread.Sleep( 1 );
+                            }
+                        }
+
+                        actionItem.TimeSpan = DateTime.Now - actionItem.DateTime;
+                        ActionQueueEvent?.Invoke( ActionQueueEvents.Execute, actionItem );
+
+                        bool? result = actionItem.Action?.Invoke( actionItem.Arguments );
+
+                        if ( result.HasValue && result.Value )
+                        {
+                            Engine.LastActionPacket = DateTime.Now;
+                        }
+
+                        actionItem.Result = result ?? true;
+                        actionItem.TimeSpan = DateTime.Now - actionItem.DateTime;
+                        ActionQueueEvent?.Invoke( ActionQueueEvents.Finish, actionItem );
+                        actionItem.WaitHandle.Set();
+                        break;
+                    }
             }
         }
 
@@ -135,17 +135,17 @@ namespace ClassicAssist.UO.Network
 
         public static Task EnqueuePacket( BasePacket packet, QueuePriority priority = QueuePriority.Low,
             bool delaySend = true, CancellationToken cancellationToken = default,
-            [CallerMemberName] string caller = "" )
+            [CallerMemberName] string caller = "", bool checkUseObjectQueue = false )
         {
             byte[] data = packet.ToArray();
 
             return EnqueuePacket(
-                new PacketQueueItem( data, data.Length, delaySend, caller ) { Token = cancellationToken }, priority );
+                new PacketQueueItem( data, data.Length, delaySend, caller ) { Token = cancellationToken }, priority, checkUseObjectQueue );
         }
 
-        public static Task EnqueuePacket( PacketQueueItem packetQueueItem, QueuePriority priority )
+        public static Task EnqueuePacket( PacketQueueItem packetQueueItem, QueuePriority priority, bool checkUseObjectQueue = false )
         {
-            if ( Options.CurrentOptions.UseObjectQueue && !CheckUseObjectQueueLength() )
+            if ( checkUseObjectQueue && !CheckUseObjectQueueLength() )
             {
                 return Task.CompletedTask;
             }
@@ -182,10 +182,10 @@ namespace ClassicAssist.UO.Network
         }
 
         public static Task EnqueuePackets( IEnumerable<BasePacket> packets, QueuePriority priority = QueuePriority.Low,
-            bool delaySend = true, CancellationToken cancellationToken = default,
+            bool delaySend = true, CancellationToken cancellationToken = default, bool checkUseObjectQueue = false,
             [CallerMemberName] string caller = "" )
         {
-            if ( !CheckUseObjectQueueLength() )
+            if ( checkUseObjectQueue && !CheckUseObjectQueueLength() )
             {
                 return Task.CompletedTask;
             }
@@ -290,7 +290,10 @@ namespace ClassicAssist.UO.Network
             ActionQueueItem actionQueueItem =
                 new ActionQueueItem( e => !cancellationToken.IsCancellationRequested && action( (T) e ) )
                 {
-                    DelaySend = delaySend, Token = cancellationToken, Arguments = arguments, Caller = caller
+                    DelaySend = delaySend,
+                    Token = cancellationToken,
+                    Arguments = arguments,
+                    Caller = caller
                 };
 
             Enqueue( actionQueueItem, priority );

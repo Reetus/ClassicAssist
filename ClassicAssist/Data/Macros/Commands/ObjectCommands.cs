@@ -58,8 +58,22 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            ActionPacketQueue.EnqueuePacket( new UseObject( serial ),
-                skipQueue ? QueuePriority.Immediate : QueuePriority.Low );
+            Entity entity = Engine.Items.GetItem( serial ) ?? (Entity) Engine.Mobiles.GetMobile( serial );
+            bool useObjectQueue = !skipQueue && Options.CurrentOptions.UseObjectQueue;
+            bool delaySend = true;
+            QueuePriority priority = skipQueue ? QueuePriority.Immediate : QueuePriority.Medium; //Low
+            ActionPacketQueue.EnqueueAction( (entity), data =>
+            {
+                if ( data == null )
+                {
+                    UOC.SystemMessage( Strings.Cannot_find_item___ );
+                    return false;
+                }
+
+                Engine.SendPacketToServer( new UseObject( data.Serial ) );
+
+                return true;
+            }, priority, delaySend, CancellationToken.None, useObjectQueue );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Actions ),
@@ -70,9 +84,9 @@ namespace ClassicAssist.Data.Macros.Commands
             } )]
         public static void UseType( object type, int hue = -1, object container = null, bool skipQueue = false )
         {
-            int serial = AliasCommands.ResolveSerial( type );
+            int id = AliasCommands.ResolveSerial( type );
 
-            if ( serial == 0 )
+            if ( id == 0 )
             {
                 UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
 
@@ -85,19 +99,21 @@ namespace ClassicAssist.Data.Macros.Commands
             }
 
             int containerSerial = AliasCommands.ResolveSerial( container );
+            bool useObjectQueue = !skipQueue && Options.CurrentOptions.UseObjectQueue;
+            bool delaySend = true;
+            QueuePriority priority = skipQueue ? QueuePriority.Immediate : QueuePriority.Medium;
 
-            ActionPacketQueue.EnqueueAction( ( serial, hue, containerSerial ), data =>
+            ActionPacketQueue.EnqueueAction( (id, hue, containerSerial), data =>
             {
                 if ( !Engine.Items.GetItem( data.containerSerial, out Item containerItem ) )
                 {
                     UOC.SystemMessage( Strings.Cannot_find_container___ );
-
                     return false;
                 }
 
                 Item useItem = data.hue == -1
-                    ? containerItem.Container?.SelectEntity( i => i.ID == data.serial )
-                    : containerItem.Container?.SelectEntity( i => i.ID == data.serial && i.Hue == data.hue );
+                    ? containerItem.Container?.SelectEntity( i => i.ID == data.id )
+                    : containerItem.Container?.SelectEntity( i => i.ID == data.id && i.Hue == data.hue );
 
                 if ( useItem == null )
                 {
@@ -112,7 +128,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 }
 
                 return true;
-            }, skipQueue ? QueuePriority.Immediate : QueuePriority.Medium, true, CancellationToken.None, true );
+            }, priority, delaySend, CancellationToken.None, useObjectQueue );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Actions ),
@@ -551,7 +567,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
-            UseObject( layerSerial );
+            UseObject( layerSerial, true );
 
             return true;
         }

@@ -88,7 +88,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             UseOnceList.Add( match );
 
-            ObjectCommands.UseObject( match.Serial );
+            ObjectCommands.UseObject( match.Serial, true );
 
             return true;
         }
@@ -190,7 +190,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( player.IsMounted )
             {
-                ObjectCommands.UseObject( player.Serial );
+                ObjectCommands.UseObject( player.Serial, true );
                 return;
             }
 
@@ -209,7 +209,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             int mountSerial = AliasCommands.GetAlias( "mount" );
 
-            ObjectCommands.UseObject( mountSerial );
+            ObjectCommands.UseObject( mountSerial, true );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Actions ),

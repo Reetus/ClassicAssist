@@ -25,6 +25,7 @@ using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared;
+using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
@@ -36,7 +37,6 @@ using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using CUO_API;
 using Newtonsoft.Json;
-using Octokit;
 using Sentry;
 using static ClassicAssist.Misc.SDLKeys;
 
@@ -601,14 +601,14 @@ namespace Assistant
         {
             try
             {
-                Release latestRelease = await Github.GetLatestRelease( StartupPath ?? Environment.CurrentDirectory );
+                ReleaseVersion latestRelease = await Updater.GetReleases( StartupPath ?? Environment.CurrentDirectory );
 
                 if ( latestRelease == null )
                 {
                     return;
                 }
 
-                string latestVersion = latestRelease.TagName;
+                string latestVersion = latestRelease.Version;
                 string localVersion = VersionHelpers
                     .GetProductVersion(
                         Path.Combine( StartupPath ?? Environment.CurrentDirectory, "ClassicAssist.dll" ) ).ToString();
@@ -616,7 +616,7 @@ namespace Assistant
                 if ( VersionHelpers.IsVersionNewer( localVersion, latestVersion ) &&
                      VersionHelpers.IsVersionNewer( AssistantOptions.UpdateGumpVersion, latestVersion ) )
                 {
-                    string commitMessage = await Github.GetUpdateText( StartupPath ?? Environment.CurrentDirectory );
+                    string commitMessage = await Updater.GetUpdateText( StartupPath ?? Environment.CurrentDirectory );
                     string donationAmount = await GetDonationsSummary();
                     StringBuilder donationMessage = new StringBuilder();
 

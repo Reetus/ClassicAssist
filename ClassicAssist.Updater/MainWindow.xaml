@@ -59,12 +59,12 @@
                         <Image Source="{StaticResource RefreshIcon}" Height="16" />
                     </Button.Content>
                 </Button>
-                <Button ToolTip="{x:Static properties:Resources.Options}" Margin="0,0,10,0"
+                <!--<Button ToolTip="{x:Static properties:Resources.Options}" Margin="0,0,10,0"
                         Command="{Binding ShowSettingsCommand}">
                     <Button.Content>
                         <Image Source="{StaticResource configureIcon}" Height="16" />
                     </Button.Content>
-                </Button>
+                </Button>-->
                 <Button Content="{x:Static properties:Resources.Close}" Width="100"
                         HorizontalAlignment="Right"
                         IsEnabled="{Binding IsUpdating, Converter={StaticResource InverseBooleanValueConverter}}">

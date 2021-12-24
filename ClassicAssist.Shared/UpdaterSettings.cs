@@ -25,15 +25,8 @@ namespace ClassicAssist.Shared
 {
     public class UpdaterSettings : SetPropertyNotifyChanged
     {
-        private string _githubAccessToken;
         private bool _installPrereleases;
         private const string SETTINGS_FILE = "updater.settings.json";
-
-        public string GithubAccessToken
-        {
-            get => _githubAccessToken;
-            set => SetProperty( ref _githubAccessToken, value );
-        }
 
         public bool InstallPrereleases
         {

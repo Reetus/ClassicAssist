@@ -15,7 +15,6 @@ using ClassicAssist.Shared.UI;
 using ClassicAssist.Updater.Properties;
 using Exceptionless;
 using Exceptionless.Models;
-using Octokit;
 using Application = System.Windows.Application;
 
 namespace ClassicAssist.Updater
@@ -203,16 +202,16 @@ namespace ClassicAssist.Updater
 
                 AddText( Resources.Checking_for_latest_release___ );
 
-                Release latestRelease = await GetLatestRelease();
+                ReleaseVersion latestRelease = await GetLatestRelease();
 
                 if ( latestRelease == null )
                 {
                     throw new InvalidOperationException( Resources.Unable_to_locate_GitHub_release );
                 }
 
-                AddText( $"{Resources.Latest_Release_} {latestRelease.TagName}" );
+                AddText( $"{Resources.Latest_Release_} {latestRelease.Version}" );
 
-                string newVersion = latestRelease.TagName;
+                string newVersion = latestRelease.Version;
 
                 if ( App.CurrentOptions.Force ||
                      VersionHelpers.IsVersionNewer( App.CurrentOptions.CurrentVersion, newVersion ) )
@@ -260,23 +259,9 @@ namespace ClassicAssist.Updater
                         }
                     }
 
-                    if ( latestRelease.Assets.Count == 0 )
-                    {
-                        throw new InvalidOperationException( Resources.No_release_asset___ );
-                    }
+                    AddText( $"{Resources.Downloading} {latestRelease.DownloadURL}..." );
 
-                    ReleaseAsset assest = latestRelease.Assets.FirstOrDefault( a =>
-                        a.Name.EndsWith( ".zip", StringComparison.InvariantCultureIgnoreCase ) );
-
-                    if ( assest == null )
-                    {
-                        AddText( Resources.Cannot_locate_update_package___ );
-                        return null;
-                    }
-
-                    AddText( $"{Resources.Downloading} {assest.Name}..." );
-
-                    string fileName = await DownloadFile( assest.BrowserDownloadUrl, assest.Size );
+                    string fileName = await DownloadFile( latestRelease.DownloadURL, latestRelease.DownloadSize );
 
                     AddText( Resources.Extracting_package___ );
 
@@ -303,10 +288,6 @@ namespace ClassicAssist.Updater
                     AddText( Resources.No_new_release_available___ );
                 }
             }
-            catch ( RateLimitExceededException e )
-            {
-                AddText( string.Format( Resources.GitHub_rate_limit__try_again_after__0_, e.Reset.ToLocalTime() ) );
-            }
             catch ( Exception e )
             {
                 AddText( $"{Resources.Error_} {e.Message}" );
@@ -319,29 +300,19 @@ namespace ClassicAssist.Updater
             return null;
         }
 
-        private static async Task<Release> GetLatestRelease()
+        private static async Task<ReleaseVersion> GetLatestRelease()
         {
-            Release latestRelease;
+            ReleaseVersion latestRelease;
 
             if ( string.IsNullOrEmpty( App.CurrentOptions.URL ) )
             {
                 latestRelease =
-                    await Github.GetLatestRelease( App.CurrentOptions.Path ?? Environment.CurrentDirectory );
+                    await Shared.Updater.GetReleases( App.CurrentOptions.Path ?? Environment.CurrentDirectory );
             }
             else
             {
                 // for testing only
-                List<ReleaseAsset> assets = new List<ReleaseAsset>
-                {
-                    new ReleaseAsset( $"{App.CurrentOptions.URL}/ClassicAssist.zip", 0, string.Empty,
-                        "ClassicAssist.zip", string.Empty, string.Empty, string.Empty, 0, 0, DateTimeOffset.Now,
-                        DateTimeOffset.Now, $"{App.CurrentOptions.URL}/ClassicAssist.zip", null )
-                };
-
-                latestRelease = new Release( App.CurrentOptions.URL, App.CurrentOptions.URL, App.CurrentOptions.URL,
-                    App.CurrentOptions.URL, 0, App.CurrentOptions.URL, "0.0.0", string.Empty, "ClassicAssist.zip",
-                    string.Empty, false, false, DateTimeOffset.Now, DateTimeOffset.Now, null, App.CurrentOptions.URL,
-                    App.CurrentOptions.URL, assets );
+                latestRelease = new ReleaseVersion { DownloadURL = $"{App.CurrentOptions.URL}/ClassicAssist.zip" };
             }
 
             return latestRelease;
@@ -350,6 +321,11 @@ namespace ClassicAssist.Updater
         private static async Task<string> ExtractPackage( string fileName, string newVersion )
         {
             string path = Path.Combine( Path.GetTempPath(), $"CAUpdate-{newVersion}" );
+
+            if ( Directory.Exists( path ) )
+            {
+                Directory.Delete( path, true );
+            }
 
             try
             {

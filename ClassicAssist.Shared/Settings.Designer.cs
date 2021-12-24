@@ -12,7 +12,7 @@ namespace ClassicAssist.Shared {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.0.3.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -56,6 +56,18 @@ namespace ClassicAssist.Shared {
         public string SentryDsn {
             get {
                 return ((string)(this["SentryDsn"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://classicassist.azurewebsites.net/version.json")]
+        public string UpdateManifestURL {
+            get {
+                return ((string)(this["UpdateManifestURL"]));
+            }
+            set {
+                this["UpdateManifestURL"] = value;
             }
         }
     }

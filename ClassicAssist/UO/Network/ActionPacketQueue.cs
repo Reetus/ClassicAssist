@@ -26,6 +26,7 @@ using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
+using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 
@@ -318,7 +319,7 @@ namespace ClassicAssist.UO.Network
                 return true;
             }
 
-            Commands.SystemMessage( Strings.Object_queue_full, (int) Commands.SystemMessageHues.Yellow );
+            Commands.SystemMessage( Strings.Object_queue_full, (int) SystemMessageHues.Yellow );
 
             return false;
         }

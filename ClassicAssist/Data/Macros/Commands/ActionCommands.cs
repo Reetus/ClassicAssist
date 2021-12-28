@@ -578,7 +578,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
                     if ( entry == null )
                     {
-                        UOC.SystemMessage( Strings.Context_menu_entry_not_found___, (int) UOC.SystemMessageHues.Yellow,
+                        UOC.SystemMessage( Strings.Context_menu_entry_not_found___, (int) SystemMessageHues.Yellow,
                             true, true );
                         are.Set();
                         return;
@@ -586,7 +586,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
                     if ( entry.Flags.HasFlag( ContextMenuFlags.Disabled ) )
                     {
-                        UOC.SystemMessage( Strings.Context_menu_entry_disabled, (int) UOC.SystemMessageHues.Yellow,
+                        UOC.SystemMessage( Strings.Context_menu_entry_disabled, (int) SystemMessageHues.Yellow,
                             true, true );
                         are.Set();
                         return;

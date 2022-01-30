@@ -12,7 +12,11 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class JournalCommands
     {
-        [CommandsDisplay( Category = nameof( Strings.Journal ) )]
+        [CommandsDisplay( Category = nameof( Strings.Journal ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.String ), nameof( ParameterType.String ), nameof( ParameterType.Hue ), nameof( ParameterType.Timeout )
+            } )]
         public static bool InJournal( string text, string author = "", int hue = -1, int timeout = -1 )
         {
             bool match;
@@ -55,7 +59,11 @@ namespace ClassicAssist.Data.Macros.Commands
             Engine.Journal.Clear();
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Journal ) )]
+        [CommandsDisplay( Category = nameof( Strings.Journal ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.String ), nameof( ParameterType.Timeout ), nameof( ParameterType.String ), nameof( ParameterType.Hue )
+            } )]
         public static bool WaitForJournal( string text, int timeout, string author = "", int hue = -1 )
         {
             AutoResetEvent are = new AutoResetEvent( false );
@@ -111,7 +119,11 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         // ReSharper disable once ExplicitCallerInfoArgument
-        [CommandsDisplay( "WaitForJournalArray", Category = nameof( Strings.Journal ) )]
+        [CommandsDisplay( "WaitForJournalArray", Category = nameof( Strings.Journal ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.StringArray ), nameof( ParameterType.Timeout ), nameof( ParameterType.String )
+            } )]
         public static (int?, string) WaitForJournal( IEnumerable<string> entries, int timeout, string author = "" )
         {
             int? index = null;

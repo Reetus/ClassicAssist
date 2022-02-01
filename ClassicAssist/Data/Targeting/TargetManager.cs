@@ -231,8 +231,7 @@ namespace ClassicAssist.Data.Targeting
 
                 if ( previousMobile != null )
                 {
-                    mobiles = mobiles.Where( m => m.Serial != previousMobile.Serial ).OrderBy( m =>
-                        Math.Max( Math.Abs( m.X - previousMobile.X ), Math.Abs( m.Y - previousMobile.Y ) ) ).ToArray();
+                    mobiles = mobiles.Where( m => m.Serial != previousMobile.Serial && m.Serial != Engine.Player?.Serial ).OrderBy( m => m.Distance ).ToArray();
 
                     if ( mobiles.Length == 0 )
                     {

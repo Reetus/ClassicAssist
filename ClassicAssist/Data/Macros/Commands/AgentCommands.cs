@@ -5,6 +5,7 @@ using ClassicAssist.Data.Dress;
 using ClassicAssist.Data.Organizer;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Shared.Resources;
+using ClassicAssist.UO.Data;
 using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.Data.Macros.Commands
@@ -19,7 +20,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( manager.IsDressing )
             {
-                UOC.SystemMessage( Strings.Dress_already_in_progress___, (int) UOC.SystemMessageHues.Red );
+                UOC.SystemMessage( Strings.Dress_already_in_progress___, (int) SystemMessageHues.Red );
                 return;
             }
 
@@ -154,7 +155,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( entry == null )
             {
-                UOC.SystemMessage( Strings.Invalid_VendorBuy_list_name___, (int) UOC.SystemMessageHues.Red );
+                UOC.SystemMessage( Strings.Invalid_VendorBuy_list_name___, (int) SystemMessageHues.Red );
                 return;
             }
 

@@ -159,7 +159,7 @@ namespace ClassicAssist.Data.Dress
                 if ( IsDressing )
                 {
                     UO.Commands.SystemMessage( Strings.Dress_already_in_progress___,
-                        (int) UO.Commands.SystemMessageHues.Red );
+                        (int) SystemMessageHues.Red );
                     return;
                 }
 

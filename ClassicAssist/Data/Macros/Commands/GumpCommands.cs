@@ -2,6 +2,7 @@
 using System.Linq;
 using Assistant;
 using ClassicAssist.Shared.Resources;
+using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Gumps;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects.Gumps;
@@ -114,7 +115,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return SelectionPromptGump.SelectionPrompt( enumerable, message, closable );
             }
 
-            UOC.SystemMessage( Strings.Atleast_one_option_must_be_provided___, (int) UOC.SystemMessageHues.Red );
+            UOC.SystemMessage( Strings.Atleast_one_option_must_be_provided___, (int) SystemMessageHues.Red );
             return ( false, 0 );
         }
 

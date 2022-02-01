@@ -667,7 +667,7 @@ namespace ClassicAssist.UO.Network
 
             if ( manager.Enabled != AbilityType.None )
             {
-                Commands.SystemMessage( Strings.Current_Ability_Cleared, (int) Commands.SystemMessageHues.Red );
+                Commands.SystemMessage( Strings.Current_Ability_Cleared, (int) SystemMessageHues.Red );
             }
 
             manager.Enabled = AbilityType.None;
@@ -1944,6 +1944,22 @@ namespace ClassicAssist.UO.Network
         {
             Engine.Journal.Write( entry );
             JournalEntryAddedEvent?.Invoke( entry );
+        }
+
+        public static void CAASystemMessageToJournal( string text )
+        {
+            JournalEntry journalEntry = new JournalEntry
+            {
+                Serial = -1,
+                ID = -1,
+                SpeechType = JournalSpeech.System,
+                SpeechHue = (int)SystemMessageHues.Normal,
+                SpeechFont = 0x03,
+                Name = "System",
+                Text = text
+            };
+
+            AddToJournal( journalEntry );
         }
     }
 }

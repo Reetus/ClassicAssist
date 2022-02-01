@@ -157,4 +157,12 @@ namespace ClassicAssist.UO.Data
         NewMovementSystem = 0x4000,
         NewFeluccaAreas = 0x8000
     }
+    
+    public enum SystemMessageHues
+    {
+        Normal = 0x3b2,
+        Red = 35,
+        Yellow = 61,
+        Green = 63
+    }
 }

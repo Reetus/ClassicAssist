@@ -27,13 +27,6 @@ namespace ClassicAssist.UO
 {
     public class Commands
     {
-        public enum SystemMessageHues
-        {
-            Normal = 0x3b2,
-            Red = 35,
-            Yellow = 61,
-            Green = 63
-        }
 
         private static readonly object _dragDropLock = new object();
         private static string _lastSystemMessage;
@@ -200,6 +193,8 @@ namespace ClassicAssist.UO
             pw.WriteAsciiFixed( Strings.UO_LOCALE, 4 );
             pw.WriteAsciiFixed( "System\0", 30 );
             pw.Write( textBytes, 0, textBytes.Length );
+
+            IncomingPacketHandlers.CAASystemMessageToJournal( text );
 
             Engine.SendPacketToClient( pw );
         }

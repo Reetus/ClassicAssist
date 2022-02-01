@@ -113,7 +113,7 @@ namespace ClassicAssist.Data.Macros.Commands
             {
                 if ( gameScene._followingMode )
                 {
-                    UOC.SystemMessage( Strings.Deactivated_following, UOC.SystemMessageHues.Normal, true );
+                    UOC.SystemMessage( Strings.Deactivated_following, SystemMessageHues.Normal, true );
                 }
 
                 gameScene._followingMode = false;
@@ -122,7 +122,7 @@ namespace ClassicAssist.Data.Macros.Commands
             {
                 gameScene._followingMode = true;
                 gameScene._followingTarget = (uint) serial;
-                UOC.SystemMessage( Strings.Activated_following, UOC.SystemMessageHues.Normal, true );
+                UOC.SystemMessage( Strings.Activated_following, SystemMessageHues.Normal, true );
             }
         }
 

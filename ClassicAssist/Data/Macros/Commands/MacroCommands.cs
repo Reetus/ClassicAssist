@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using ClassicAssist.Shared.Resources;
+using ClassicAssist.UO.Data;
 using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.Data.Macros.Commands
@@ -67,7 +68,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return macro.IsRunning;
             }
 
-            UOC.SystemMessage( Strings.Unknown_macro___, (int) UOC.SystemMessageHues.Normal, true );
+            UOC.SystemMessage( Strings.Unknown_macro___, (int) SystemMessageHues.Normal, true );
             return false;
         }
     }

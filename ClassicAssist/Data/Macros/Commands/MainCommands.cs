@@ -315,7 +315,7 @@ namespace ClassicAssist.Data.Macros.Commands
             }
             catch ( Exception e )
             {
-                UOC.SystemMessage( e.Message, (int) UOC.SystemMessageHues.Red );
+                UOC.SystemMessage( e.Message, (int) SystemMessageHues.Red );
                 return false;
             }
         }

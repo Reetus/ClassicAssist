@@ -659,7 +659,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         }
 
                         UOC.SystemMessage( string.Format( Strings.Autolooting___0__, lootItem.Name ),
-                            (int) UOC.SystemMessageHues.Yellow );
+                            (int) SystemMessageHues.Yellow );
 
                         Task t = ActionPacketQueue.EnqueueDragDrop( lootItem.Serial, lootItem.Count, containerSerial,
                             QueuePriority.High, true, true, requeueOnFailure: RequeueFailedItems,

@@ -75,8 +75,7 @@ namespace ClassicAssist.Browser
                 }
                 catch ( Exception e )
                 {
-                    MessageBox.Show( $"{Strings.Failed_to_download_manifest___}\n\n{e.Message}", Strings.Error,
-                        MessageBoxButton.OK, MessageBoxImage.Error );
+                    Console.WriteLine( e.ToString() );
                 }
                 finally
                 {

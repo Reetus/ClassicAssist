@@ -96,21 +96,26 @@ namespace ClassicAssist.Browser.Data
                 {
                     return latest;
                 }
-            }
-            catch ( RateLimitExceededException )
-            {
-                // Github throttle error
-            }
 
-            latest = await FetchManifest();
-            _manifest.Upsert( latest );
+                latest = await FetchManifest();
+                _manifest.Upsert( latest );
+            }
+            catch ( Exception )
+            {
+                // ignored
+            }
 
             return latest;
         }
 
-        public async Task<string[]> GetMacros( IEnumerable<Filter> filter = null )
+        public async Task<string[]> GetMacros( List<Filter> filter = null )
         {
             Manifest manifest = await GetManifest();
+
+            if ( manifest == null )
+            {
+                return Array.Empty<string>();
+            }
 
             if ( filter == null )
             {
@@ -133,7 +138,7 @@ namespace ClassicAssist.Browser.Data
             return macros.ToArray();
         }
 
-        private Predicate<string[]> CategoryToPredicate( Filter filter )
+        private static Predicate<string[]> CategoryToPredicate( Filter filter )
         {
             if ( filter.Category == null )
             {
@@ -165,6 +170,11 @@ namespace ClassicAssist.Browser.Data
         public async Task<string[]> GetShards()
         {
             Manifest manifest = await GetManifest();
+
+            if ( manifest == null )
+            {
+                return Array.Empty<string>();
+            }
 
             return manifest.Files.Where( f => f.Shard != null ).Select( f => f.Shard ).OrderBy( f => f ).Distinct()
                 .ToArray();
@@ -209,6 +219,11 @@ namespace ClassicAssist.Browser.Data
         {
             Manifest manifest = await GetManifest();
 
+            if ( manifest == null )
+            {
+                return Array.Empty<string>();
+            }
+
             return manifest.Files.Where( f => f.Era != null ).Select( f => f.Era ).OrderBy( f => f ).Distinct()
                 .ToArray();
         }
@@ -217,6 +232,11 @@ namespace ClassicAssist.Browser.Data
         {
             Manifest manifest = await GetManifest();
 
+            if ( manifest == null )
+            {
+                return Array.Empty<string>();
+            }
+
             return manifest.Files.Where( f => f.Author != null ).Select( f => f.Author ).OrderBy( f => f ).Distinct()
                 .ToArray();
         }
@@ -224,6 +244,11 @@ namespace ClassicAssist.Browser.Data
         public async Task<Category[]> GetCategories()
         {
             Manifest manifest = await GetManifest();
+
+            if ( manifest == null )
+            {
+                return Array.Empty<Category>();
+            }
 
             List<Category> results = new List<Category>();
 
@@ -270,7 +295,7 @@ namespace ClassicAssist.Browser.Data
         {
             Manifest manifest = await GetManifest();
 
-            Metadata macro = manifest.Files.FirstOrDefault( f => f.Name == value );
+            Metadata macro = manifest?.Files.FirstOrDefault( f => f.Name == value );
 
             if ( macro == null )
             {
@@ -303,7 +328,7 @@ namespace ClassicAssist.Browser.Data
         {
             Manifest manifest = await GetManifest();
 
-            Metadata macro = manifest.Files.FirstOrDefault( f => f.Name == value );
+            Metadata macro = manifest?.Files.FirstOrDefault( f => f.Name == value );
 
             if ( macro == null )
             {

@@ -1123,6 +1123,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contains.
+        /// </summary>
+        public static string Contains {
+            get {
+                return ResourceManager.GetString("Contains", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Context menu entry disabled.
         /// </summary>
         public static string Context_menu_entry_disabled {
@@ -1510,6 +1519,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ends With.
+        /// </summary>
+        public static string Ends_With {
+            get {
+                return ResourceManager.GetString("Ends With", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enemy.
         /// </summary>
         public static string Enemy {
@@ -1569,6 +1587,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Environment {
             get {
                 return ResourceManager.GetString("Environment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Equals.
+        /// </summary>
+        public static string Equals_ {
+            get {
+                return ResourceManager.GetString("Equals.", resourceCulture);
             }
         }
         
@@ -1650,6 +1677,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Event {
             get {
                 return ResourceManager.GetString("Event", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exclude Self.
+        /// </summary>
+        public static string Exclude_Self {
+            get {
+                return ResourceManager.GetString("Exclude Self", resourceCulture);
             }
         }
         
@@ -2812,6 +2848,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Match Type.
+        /// </summary>
+        public static string Match_Type {
+            get {
+                return ResourceManager.GetString("Match Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max Price.
         /// </summary>
         public static string Max_Price {
@@ -2862,6 +2907,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Message_Limit_ {
             get {
                 return ResourceManager.GetString("Message Limit:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message Types.
+        /// </summary>
+        public static string Message_Types {
+            get {
+                return ResourceManager.GetString("Message Types", resourceCulture);
             }
         }
         
@@ -3703,6 +3757,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Regular Expression.
+        /// </summary>
+        public static string Regular_Expression {
+            get {
+                return ResourceManager.GetString("Regular Expression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rehue friends.
         /// </summary>
         public static string Rehue_friends {
@@ -4405,6 +4468,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Starts With.
+        /// </summary>
+        public static string Starts_With {
+            get {
+                return ResourceManager.GetString("Starts With", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stats.
         /// </summary>
         public static string Stats {
@@ -4693,11 +4765,29 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Text.
+        /// </summary>
+        public static string Text {
+            get {
+                return ResourceManager.GetString("Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Text Color.
         /// </summary>
         public static string Text_Color {
             get {
                 return ResourceManager.GetString("Text Color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text Filter.
+        /// </summary>
+        public static string Text_Filter {
+            get {
+                return ResourceManager.GetString("Text Filter", resourceCulture);
             }
         }
         

@@ -27,6 +27,7 @@ namespace ClassicAssist.UO.Network
             Register( 0x77, OnMobileMoving );
             Register( 0x78, OnMobileIncoming );
             Register( 0x98, OnMobileName );
+            Register( 0xAE, OnUnicodeText );
             Register( 0xC1, OnLocalizedMessage );
             Register( 0xCC, OnLocalizedMessageAffix );
             Register( 0xD6, OnProperties );
@@ -177,7 +178,7 @@ namespace ClassicAssist.UO.Network
                 IncomingPacketHandlers.AddToJournal( journalEntry );
             }
 
-            return block;
+            return block || TextFilter.CheckMessage( journalEntry );
         }
 
         private static bool OnMobileUpdate( ref byte[] packet, ref int length )
@@ -416,7 +417,7 @@ namespace ClassicAssist.UO.Network
                 }
             }
 
-            return block || ClilocFilter.CheckMessage( journalEntry );
+            return block || ClilocFilter.CheckMessage( journalEntry ) || TextFilter.CheckMessage( journalEntry );
         }
 
         private static bool OnLocalizedMessageAffix( ref byte[] packet, ref int length )
@@ -465,7 +466,27 @@ namespace ClassicAssist.UO.Network
                 IncomingPacketHandlers.AddToJournal( journalEntry );
             }
 
-            return block || ClilocFilter.CheckMessageAffix( journalEntry, affixType, affix );
+            return block || ClilocFilter.CheckMessageAffix( journalEntry, affixType, affix ) ||
+                   TextFilter.CheckMessage( journalEntry );
+        }
+
+        private static bool OnUnicodeText( ref byte[] packet, ref int length )
+        {
+            PacketReader reader = new PacketReader( packet, length, false );
+
+            JournalEntry journalEntry = new JournalEntry
+            {
+                Serial = reader.ReadInt32(),
+                ID = reader.ReadInt16(),
+                SpeechType = (JournalSpeech) reader.ReadByte(),
+                SpeechHue = reader.ReadInt16(),
+                SpeechFont = reader.ReadInt16(),
+                SpeechLanguage = reader.ReadString( 4 ),
+                Name = reader.ReadString( 30 ),
+                Text = reader.ReadUnicodeString()
+            };
+
+            return TextFilter.CheckMessage( journalEntry );
         }
 
         private static void Register( byte packetId, OnReceive action )

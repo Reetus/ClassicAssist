@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
+using ClassicAssist.Shared.Resources;
 
 namespace ClassicAssist.UI.Misc
 {
@@ -30,8 +31,9 @@ namespace ClassicAssist.UI.Misc
             {
                 DescriptionAttribute[] attributes =
                     (DescriptionAttribute[]) fi.GetCustomAttributes( typeof( DescriptionAttribute ), false );
+
                 return attributes.Length > 0 && !string.IsNullOrEmpty( attributes[0].Description )
-                    ? attributes[0].Description
+                    ? Strings.ResourceManager.GetString( attributes[0].Description ) ?? attributes[0].Description
                     : value.ToString();
             }
 

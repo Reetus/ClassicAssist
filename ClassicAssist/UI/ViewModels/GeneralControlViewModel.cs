@@ -40,7 +40,8 @@ namespace ClassicAssist.UI.ViewModels
             Type[] filterTypes =
             {
                 typeof( WeatherFilter ), typeof( SeasonFilter ), typeof( LightLevelFilter ),
-                typeof( RepeatedMessagesFilter ), typeof( ClilocFilter ), typeof( SoundFilter )
+                typeof( RepeatedMessagesFilter ), typeof( ClilocFilter ), typeof( TextFilter ),
+                typeof( SoundFilter )
             };
 
             foreach ( Type type in filterTypes )

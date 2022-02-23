@@ -1867,6 +1867,36 @@ Are you sure you wish to continue?</value>
     <value>Width</value>
   </data>
   <data name="Height" xml:space="preserve">
-    <value>Height</value>
+	<value>Height</value>
+  </data>
+  <data name="Text Filter" xml:space="preserve">
+    <value>Text Filter</value>
+  </data>
+  <data name="Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="Match Type" xml:space="preserve">
+    <value>Match Type</value>
+  </data>
+  <data name="Message Types" xml:space="preserve">
+    <value>Message Types</value>
+  </data>
+  <data name="Starts With" xml:space="preserve">
+    <value>Starts With</value>
+  </data>
+  <data name="Contains" xml:space="preserve">
+    <value>Contains</value>
+  </data>
+  <data name="Ends With" xml:space="preserve">
+    <value>Ends With</value>
+  </data>
+  <data name="Regular Expression" xml:space="preserve">
+    <value>Regular Expression</value>
+  </data>
+  <data name="Equals." xml:space="preserve">
+    <value>Equals</value>
+  </data>
+  <data name="Exclude Self" xml:space="preserve">
+    <value>Exclude Self</value>
   </data>
 </root>

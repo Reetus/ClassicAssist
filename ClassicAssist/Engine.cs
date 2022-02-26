@@ -100,6 +100,7 @@ namespace Assistant
         public static int LastSpellID;
         private static Stopwatch _incomingStopwatch;
         private static Stopwatch _outgoingStopwatch;
+        public static int LastSkillID;
         public static CharacterListFlags CharacterListFlags { get; set; }
 
         public static Assembly ClassicAssembly { get; set; }

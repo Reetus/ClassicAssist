@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using Assistant;
 using ClassicAssist.Data.Abilities;
@@ -42,6 +43,7 @@ namespace ClassicAssist.UO.Network
             Register( 0x06, 5, OnUseRequest );
             Register( 0x07, 7, OnLiftRequest );
             Register( 0x08, 15, OnDropRequest );
+            Register( 0x12, 0, OnUseSkill );
             Register( 0x13, 10, OnEquipRequest );
             Register( 0x6C, 19, OnTargetSent );
             Register( 0x7D, 13, OnMenuResponse );
@@ -52,6 +54,28 @@ namespace ClassicAssist.UO.Network
             Register( 0xD7, 0, OnEncodedCommand );
             Register( 0xEF, 31, OnNewClientVersion );
             RegisterExtended( 0x1C, 0, OnSpellCast );
+        }
+
+        private static void OnUseSkill( PacketReader reader )
+        {
+            int command = reader.ReadByte();
+
+            if ( command != 0x24 )
+            {
+                return;
+            }
+
+            Span<byte> span = new Span<byte>( reader.GetData(), (int) reader.Index,
+                (int) ( reader.Size - reader.Index ) );
+
+            string skill = Encoding.ASCII.GetString( span.ToArray() );
+
+            if ( !int.TryParse( skill.Substring( 0, skill.IndexOf( ' ' ) ), out int id ) )
+            {
+                return;
+            }
+
+            Engine.LastSkillID = id;
         }
 
         private static void OnSpellCast( PacketReader reader )

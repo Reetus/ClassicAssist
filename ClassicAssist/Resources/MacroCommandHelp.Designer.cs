@@ -4028,6 +4028,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Uses the last invoked skill.
+        /// </summary>
+        public static string USELASTSKILL_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("USELASTSKILL_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UseLastSkill().
+        /// </summary>
+        public static string USELASTSKILL_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("USELASTSKILL_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Uses object in the specified layer, optional parameter for mobile.
         /// </summary>
         public static string USELAYER_COMMAND_DESCRIPTION {

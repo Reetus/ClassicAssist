@@ -1711,4 +1711,10 @@ while Distance(location[0], location[1]) &gt; 2:
   <data name="AUTOLOOTING_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>if Autolooting():</value>
   </data>
+  <data name="USELASTSKILL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Uses the last invoked skill</value>
+  </data>
+  <data name="USELASTSKILL_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>UseLastSkill()</value>
+  </data>
 </root>

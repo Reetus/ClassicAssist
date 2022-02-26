@@ -116,5 +116,11 @@ namespace ClassicAssist.Data.Macros.Commands
 
             UOC.ChangeStatLock( st, ls );
         }
+
+        [CommandsDisplay( Category = nameof( Strings.Skills ) )]
+        public static void UseLastSkill()
+        {
+            Engine.SendPacketToServer( new UseSkill( Engine.LastSkillID ) );
+        }
     }
 }

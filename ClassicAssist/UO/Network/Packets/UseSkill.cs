@@ -18,6 +18,7 @@
 #endregion
 
 using System;
+using Assistant;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
 using static System.Text.Encoding;
@@ -40,6 +41,8 @@ namespace ClassicAssist.UO.Network.Packets
             _writer.Write( (byte) 0x24 );
             _writer.WriteAsciiFixed( args, args.Length );
             _writer.Write( (byte) 0 );
+
+            Engine.LastSkillID = index;
         }
 
         public string Parse( byte[] packet, int length, PacketDirection direction )
@@ -57,6 +60,11 @@ namespace ClassicAssist.UO.Network.Packets
             if ( !int.TryParse( skill.Substring( 0, skill.IndexOf( ' ' ) ), out int id ) )
             {
                 return null;
+            }
+
+            if ( id == 0 )
+            {
+                return "UseLastSkill()\r\n";
             }
 
             string skillName = Skills.GetSkillName( id );

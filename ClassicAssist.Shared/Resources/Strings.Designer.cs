@@ -376,6 +376,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Authentication error or timeout.
+        /// </summary>
+        public static string Authentication_error_or_timeout {
+            get {
+                return ResourceManager.GetString("Authentication error or timeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Author.
         /// </summary>
         public static string Author {
@@ -2397,6 +2406,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Login {
             get {
                 return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login With Google.
+        /// </summary>
+        public static string Login_With_Google {
+            get {
+                return ResourceManager.GetString("Login With Google", resourceCulture);
             }
         }
         
@@ -4905,6 +4923,17 @@ namespace ClassicAssist.Shared.Resources {
         public static string Y_ {
             get {
                 return ResourceManager.GetString("Y:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must tick the &quot;See, edit, create and delete only the specific Google Drive files that you use with this app.&quot; option when logging in to enable Google Drive backup.
+        /// </summary>
+        public static string You_must_tick_the___See__edit__create_and_delete_only_the_specific_Google_Drive_files_that_you_use_with_this_app____option_when_logging_in_to_enable_Google_Drive_backup {
+            get {
+                return ResourceManager.GetString("You must tick the \\\"See, edit, create and delete only the specific Google Drive f" +
+                        "iles that you use with this app.\\\" option when logging in to enable Google Drive" +
+                        " backup", resourceCulture);
             }
         }
     }

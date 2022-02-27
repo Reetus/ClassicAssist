@@ -376,6 +376,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Authentication error or timeout.
+        /// </summary>
+        public static string Authentication_error_or_timeout {
+            get {
+                return ResourceManager.GetString("Authentication error or timeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Author.
         /// </summary>
         public static string Author {
@@ -2397,6 +2406,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Login {
             get {
                 return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login With Google.
+        /// </summary>
+        public static string Login_With_Google {
+            get {
+                return ResourceManager.GetString("Login With Google", resourceCulture);
             }
         }
         

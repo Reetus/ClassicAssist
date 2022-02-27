@@ -61,6 +61,7 @@
     <PackageReference Include="AnimatedGif" Version="1.0.5" />
     <PackageReference Include="AvalonEdit" Version="6.1.2.30" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.1.0" />
+    <PackageReference Include="Google.Apis.Drive.v3" Version="1.56.0.2601" />
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
     <PackageReference Include="IronPython" Version="2.7.11" />
     <PackageReference Include="LiteDB" Version="5.0.11" />
@@ -90,6 +91,9 @@
     <Reference Include="System.Security" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Data\Backup\GoogleDrive\GoogleDriveConfigureControl.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
     <Compile Update="Data\Backup\Mega\MegaConfigureControl.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>%(Filename)</DependentUpon>
@@ -166,6 +170,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Data\Backup\GoogleDrive\GoogleDriveConfigureControl.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Data\Backup\Mega\MegaConfigureControl.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

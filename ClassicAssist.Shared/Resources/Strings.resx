@@ -1737,4 +1737,10 @@ Are you sure you wish to continue?</value>
   <data name="Use Last Skill" xml:space="preserve">
     <value>Use Last Skill</value>
   </data>
+  <data name="Login With Google" xml:space="preserve">
+    <value>Login With Google</value>
+  </data>
+  <data name="Authentication error or timeout" xml:space="preserve">
+    <value>Authentication error or timeout</value>
+  </data>
 </root>

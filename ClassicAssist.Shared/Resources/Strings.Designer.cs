@@ -2032,6 +2032,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insert Empty Entry.
+        /// </summary>
+        public static string Insert_Empty_Entry {
+            get {
+                return ResourceManager.GetString("Insert Empty Entry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Instance.
         /// </summary>
         public static string Instance {
@@ -2790,6 +2799,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Name_ {
             get {
                 return ResourceManager.GetString("Name:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name Overrides.
+        /// </summary>
+        public static string Name_Overrides {
+            get {
+                return ResourceManager.GetString("Name Overrides", resourceCulture);
             }
         }
         

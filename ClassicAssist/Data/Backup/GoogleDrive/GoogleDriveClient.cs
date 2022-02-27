@@ -37,7 +37,7 @@ namespace ClassicAssist.Data.Backup.GoogleDrive
 
             UserCredential credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
                 new ClientSecrets { ClientId = CLIENT_ID, ClientSecret = CLIENT_SECRET },
-                new[] { "email", "openid", DriveService.Scope.DriveFile }, AssistantOptions.UserId, cancellationToken,
+                new[] { DriveService.Scope.DriveFile }, AssistantOptions.UserId, cancellationToken,
                 dataStore );
 
             if ( credential == null )
@@ -56,30 +56,11 @@ namespace ClassicAssist.Data.Backup.GoogleDrive
             Credential = credential;
 
             return credential;
-            ;
         }
 
         public static async Task LogoutAsync()
         {
             await GoogleDriveDataStore.GetInstance().ClearAsync();
-        }
-
-        public static async Task<GoogleJsonWebSignature.Payload> ValidExistingTokenAsync( TokenResponse tokenResponse )
-        {
-            try
-            {
-                GoogleJsonWebSignature.Payload payload = await GoogleJsonWebSignature.ValidateAsync(
-                    tokenResponse.IdToken,
-                    new GoogleJsonWebSignature.ValidationSettings { Audience = new[] { CLIENT_ID } } );
-
-                return payload;
-            }
-            catch ( Exception )
-            {
-                // ignored
-            }
-
-            return null;
         }
 
         public static async Task<DriveService> GetServiceClient()

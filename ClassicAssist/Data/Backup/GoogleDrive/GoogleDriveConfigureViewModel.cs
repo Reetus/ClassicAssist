@@ -22,7 +22,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ClassicAssist.Shared.UI;
-using Google.Apis.Auth;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Responses;
 
@@ -36,24 +35,6 @@ namespace ClassicAssist.Data.Backup.GoogleDrive
         private bool _isWorking;
         private ICommand _loginCommand;
         private ICommand _logoutCommand;
-        private GoogleJsonWebSignature.Payload _payload;
-
-        public GoogleDriveConfigureViewModel()
-        {
-            GoogleDriveDataStore.GetInstance().GetAsync<TokenResponse>( AssistantOptions.UserId ).ContinueWith(
-                async t =>
-                {
-                    if ( t.Result != null )
-                    {
-                        Payload = await GoogleDriveClient.ValidExistingTokenAsync( t.Result );
-
-                        if ( Payload != null )
-                        {
-                            IsLoggedIn = true;
-                        }
-                    }
-                } );
-        }
 
         public UserCredential AuthenticationResult
         {
@@ -93,12 +74,6 @@ namespace ClassicAssist.Data.Backup.GoogleDrive
         public ICommand LogoutCommand =>
             _logoutCommand ?? ( _logoutCommand = new RelayCommandAsync( Logout, o => !IsWorking ) );
 
-        public GoogleJsonWebSignature.Payload Payload
-        {
-            get => _payload;
-            set => SetProperty( ref _payload, value );
-        }
-
         private async Task Logout( object arg )
         {
             try
@@ -122,11 +97,6 @@ namespace ClassicAssist.Data.Backup.GoogleDrive
                 IsWorking = true;
 
                 AuthenticationResult = await GoogleDriveClient.GetAccessTokenAsync( CancellationToken.None );
-
-                TokenResponse tokenResponse = await GoogleDriveDataStore.GetInstance()
-                    .GetAsync<TokenResponse>( AssistantOptions.UserId );
-
-                Payload = await GoogleDriveClient.ValidExistingTokenAsync( tokenResponse );
 
                 IsLoggedIn = true;
             }

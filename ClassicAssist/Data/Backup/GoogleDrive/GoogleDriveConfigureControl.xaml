@@ -54,11 +54,7 @@
                        TextWrapping="Wrap" />
         </StackPanel>
         <StackPanel Grid.Row="0" HorizontalAlignment="Stretch" Style="{StaticResource ShowOnLoggedIn}">
-            <Button Content="{x:Static resources:Strings.Logout}" Command="{Binding LogoutCommand}" Margin="0,0,0,10" />
-            <StackPanel Orientation="Horizontal">
-                <Label Content="{x:Static resources:Strings.Username}" Width="100" />
-                <TextBlock Text="{Binding Payload.Email}" />
-            </StackPanel>
+            <Button Content="{x:Static resources:Strings.Logout}" Command="{Binding LogoutCommand}" />
         </StackPanel>
         <ProgressBar Grid.Row="1" IsIndeterminate="True" Height="5"
                      Visibility="{Binding IsWorking, Converter={StaticResource BooleanToVisibilityConverter}}" />

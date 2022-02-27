@@ -99,6 +99,11 @@ namespace ClassicAssist.Data.Backup.GoogleDrive
 
         public void Serialize( JObject json )
         {
+            if ( json == null )
+            {
+                return;
+            }
+
             JArray credentials = new JArray();
 
             foreach ( KeyValuePair<string, object> keyValuePair in _credentials.Where( keyValuePair =>
@@ -116,7 +121,7 @@ namespace ClassicAssist.Data.Backup.GoogleDrive
 
         public void Deserialize( JObject json )
         {
-            if ( json["Credentials"] == null )
+            if ( json?["Credentials"] == null )
             {
                 return;
             }

@@ -16,9 +16,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using ClassicAssist.Shared.Resources;
-using Google.Apis.Auth;
 using Google.Apis.Auth.OAuth2;
-using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 
@@ -37,23 +35,9 @@ namespace ClassicAssist.Data.Backup.GoogleDrive
 
             UserCredential credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
                 new ClientSecrets { ClientId = CLIENT_ID, ClientSecret = CLIENT_SECRET },
-                new[] { DriveService.Scope.DriveFile }, AssistantOptions.UserId, cancellationToken,
-                dataStore );
+                new[] { DriveService.Scope.DriveFile }, AssistantOptions.UserId, cancellationToken, dataStore );
 
-            if ( credential == null )
-            {
-                throw new Exception( Strings.Authentication_error_or_timeout );
-            }
-
-            if ( !credential.Token.Scope.Contains( DriveService.Scope.DriveFile ) )
-            {
-                await GoogleDriveDataStore.GetInstance().ClearAsync();
-
-                throw new Exception( Strings
-                    .You_must_tick_the___See__edit__create_and_delete_only_the_specific_Google_Drive_files_that_you_use_with_this_app____option_when_logging_in_to_enable_Google_Drive_backup );
-            }
-
-            Credential = credential;
+            Credential = credential ?? throw new Exception( Strings.Authentication_error_or_timeout );
 
             return credential;
         }

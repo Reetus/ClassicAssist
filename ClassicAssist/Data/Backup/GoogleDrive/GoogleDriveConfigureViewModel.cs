@@ -21,9 +21,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
 using Google.Apis.Auth.OAuth2;
-using Google.Apis.Auth.OAuth2.Responses;
 
 namespace ClassicAssist.Data.Backup.GoogleDrive
 {
@@ -96,9 +96,17 @@ namespace ClassicAssist.Data.Backup.GoogleDrive
             {
                 IsWorking = true;
 
-                AuthenticationResult = await GoogleDriveClient.GetAccessTokenAsync( CancellationToken.None );
+                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                cancellationTokenSource.CancelAfter( TimeSpan.FromMinutes( 2 ) );
+
+                AuthenticationResult = await GoogleDriveClient.GetAccessTokenAsync( cancellationTokenSource.Token );
 
                 IsLoggedIn = true;
+            }
+            catch ( OperationCanceledException )
+            {
+                ErrorMessage = Strings.Authentication_error_or_timeout;
+                IsLoggedIn = false;
             }
             catch ( Exception e )
             {

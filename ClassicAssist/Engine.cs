@@ -896,9 +896,7 @@ namespace Assistant
             }
 
             ProcessStartInfo psi = new ProcessStartInfo( updaterPath,
-                $"--pid {Process.GetCurrentProcess().Id} --path \"{StartupPath}\"" + ( version != null
-                    ? $" --version {version}"
-                    : "" ) )
+                $"--path \"{StartupPath}\"" + ( version != null ? $" --version {version}" : "" ) )
             {
                 UseShellExecute = false, WorkingDirectory = StartupPath ?? Environment.CurrentDirectory
             };

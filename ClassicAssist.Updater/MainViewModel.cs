@@ -222,6 +222,20 @@ namespace ClassicAssist.Updater
                             $"Update: Previous version: {App.CurrentOptions.CurrentVersion}, New version: {newVersion}"
                     } );
 
+                    if ( App.CurrentOptions.PID != 0 )
+                    {
+                        try
+                        {
+                            Process process = Process.GetProcessById( App.CurrentOptions.PID );
+
+                            process.Kill();
+                        }
+                        catch ( Exception )
+                        {
+                            // ignored
+                        }
+                    }
+
                     Process[] clients = GetRunningClients()?.ToArray();
 
                     if ( clients != null )
@@ -379,13 +393,15 @@ namespace ClassicAssist.Updater
             Process[] processes = Process.GetProcesses();
 
             string dllPath = Path.Combine( App.CurrentOptions.Path, "ClassicAssist.dll" );
+            string exePath = Path.Combine( App.CurrentOptions.Path, "ClassicAssist.Launcher.exe" );
 
             foreach ( Process process in processes )
             {
                 try
                 {
                     if ( process.Modules.Cast<ProcessModule>().Any( module =>
-                        module.FileName.Equals( dllPath, StringComparison.InvariantCultureIgnoreCase ) ) )
+                            module.FileName.Equals( dllPath, StringComparison.InvariantCultureIgnoreCase ) ||
+                            module.FileName.Equals( exePath, StringComparison.InvariantCultureIgnoreCase ) ) )
                     {
                         result.Add( process );
                     }

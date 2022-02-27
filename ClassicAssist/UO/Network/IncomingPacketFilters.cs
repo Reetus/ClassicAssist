@@ -144,6 +144,32 @@ namespace ClassicAssist.UO.Network
                 Text = reader.ReadString()
             };
 
+            if ( journalEntry.SpeechType == JournalSpeech.Label && journalEntry.Text.Equals( journalEntry.Name ) )
+            {
+                NameOverrideManager manager = NameOverrideManager.GetInstance();
+
+                if ( !manager.Enabled() )
+                {
+                    return false;
+                }
+
+                int serial = ( packet[3] << 24 ) | ( packet[4] << 16 ) | ( packet[5] << 8 ) | packet[6];
+
+                if ( !manager.CheckEntity( serial, out string nameOverride ) )
+                {
+                    return false;
+                }
+
+                byte[] nameOverrideBytes = Encoding.ASCII.GetBytes( nameOverride + '\0' );
+
+                length = 44 + nameOverrideBytes.Length;
+
+                Array.Resize( ref packet, length );
+                Array.Resize( ref nameOverrideBytes, 30 );
+                Array.Copy( nameOverrideBytes, 0, packet, 14, 30 );
+                Array.Copy( nameOverrideBytes, 0, packet, 44, length - 44 );
+            }
+
             bool block = RepeatedMessagesFilter.CheckMessage( journalEntry );
 
             if ( block && RepeatedMessagesFilter.FilterOptions.SendToJournal )

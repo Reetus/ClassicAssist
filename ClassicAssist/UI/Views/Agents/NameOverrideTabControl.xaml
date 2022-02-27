@@ -1,0 +1,94 @@
+﻿<UserControl x:Class="ClassicAssist.UI.Views.Agents.NameOverrideTabControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
+             xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+             xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+             xmlns:misc="clr-namespace:ClassicAssist.Misc"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="500">
+    <d:DesignerProperties.DesignStyle>
+        <Style TargetType="UserControl">
+            <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
+        </Style>
+    </d:DesignerProperties.DesignStyle>
+    <UserControl.DataContext>
+        <agents:NameOverrideTabViewModel />
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <valueConverters:HexToIntValueConverter x:Key="HexToIntValueConverter" />
+            <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+            <misc:BindingProxy x:Key="Proxy" Data="{Binding}" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Margin="10,10,10,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <CheckBox Content="{x:Static resources:Strings.Enabled}" IsChecked="{Binding Enabled}" Margin="0,0,0,10" />
+            <ListView Grid.Row="1" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="✓" Width="50">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding Enabled}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="{x:Static resources:Strings.Serial}" Width="100" x:Name="SerialColumn">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <controls:EditTextBlock
+                                        Text="{Binding Serial, Converter={StaticResource HexToIntValueConverter}, StringFormat=0x\{0:x\}}"
+                                        TabIndex="1"
+                                        Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=SerialColumn}"
+                                        ShowIcon="True" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="{x:Static resources:Strings.Name}" Width="150" x:Name="NameColumn">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <controls:EditTextBlock Text="{Binding Name}" Label="{Binding Name}"
+                                                            ShowIcon="True"
+                                                            Width="{Binding Path=Width, ElementName=NameColumn, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Padding" Value="25,5" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="{x:Static resources:Strings.Insert}" Margin="0,5,5,5"
+                    Command="{Binding AddCommand}">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="{x:Static resources:Strings.Insert_Empty_Entry}" Command="{Binding Data.AddEmptyCommand, Mode=OneWay, Source={StaticResource Proxy}}" />
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+            <Button Content="{x:Static resources:Strings.Remove}" Margin="5,5,0,5"
+                    Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedItem}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

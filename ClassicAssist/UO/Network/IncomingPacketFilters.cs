@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Filters;
+using ClassicAssist.Data.NameOverride;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
@@ -19,13 +21,112 @@ namespace ClassicAssist.UO.Network
 
         public static void Initialize()
         {
+            Register( 0x11, OnMobileStatus );
             Register( 0x1C, OnASCIIMessage );
             Register( 0x20, OnMobileUpdate );
             Register( 0x77, OnMobileMoving );
             Register( 0x78, OnMobileIncoming );
+            Register( 0x98, OnMobileName );
             Register( 0xC1, OnLocalizedMessage );
             Register( 0xCC, OnLocalizedMessageAffix );
+            Register( 0xD6, OnProperties );
             Register( 0xF3, OnSAWorldItem );
+        }
+
+        private static bool OnProperties( ref byte[] packet, ref int length )
+        {
+            NameOverrideManager manager = NameOverrideManager.GetInstance();
+
+            if ( !manager.Enabled() )
+            {
+                return false;
+            }
+
+            int serial = ( packet[5] << 24 ) | ( packet[6] << 16 ) | ( packet[7] << 8 ) | packet[8];
+
+            if ( !manager.CheckEntity( serial, out string nameOverride ) )
+            {
+                return false;
+            }
+
+            int firstCliloc = ( packet[15] << 24 ) | ( packet[16] << 16 ) | ( packet[17] << 8 ) | packet[18];
+
+            if ( firstCliloc != 1050045 )
+            {
+                return false;
+            }
+
+            int argumentsLength = ( packet[19] << 8 ) | packet[20];
+
+            Span<byte> span = new Span<byte>( packet, 21, argumentsLength );
+
+            string[] arguments = Encoding.Unicode.GetString( span.ToArray() ).Split( '\t' );
+
+            string[] newArguments = { arguments[0], nameOverride, arguments[2] };
+
+            byte[] newArgumentsBytes = Encoding.Unicode.GetBytes( string.Join( "\t", newArguments ) );
+
+            Span<byte> remainingPacket =
+                new Span<byte>( packet, 21 + argumentsLength, packet.Length - ( 21 + argumentsLength ) );
+
+            length = packet.Length - span.Length + newArgumentsBytes.Length;
+
+            packet[19] = (byte) ( newArgumentsBytes.Length << 8 );
+            packet[20] = (byte) newArgumentsBytes.Length;
+
+            Array.Resize( ref packet, length );
+            Array.Copy( newArgumentsBytes, 0, packet, 21, newArgumentsBytes.Length );
+            Array.Copy( remainingPacket.ToArray(), 0, packet, 21 + newArgumentsBytes.Length, remainingPacket.Length );
+
+            return false;
+        }
+
+        private static bool OnMobileStatus( ref byte[] packet, ref int length )
+        {
+            NameOverrideManager manager = NameOverrideManager.GetInstance();
+
+            if ( !manager.Enabled() )
+            {
+                return false;
+            }
+
+            int serial = ( packet[3] << 24 ) | ( packet[4] << 16 ) | ( packet[5] << 8 ) | packet[6];
+
+            if ( !manager.CheckEntity( serial, out string nameOverride ) )
+            {
+                return false;
+            }
+
+            byte[] nameOverrideBytes = Encoding.ASCII.GetBytes( nameOverride );
+
+            Array.Resize( ref nameOverrideBytes, 30 );
+            Array.Copy( nameOverrideBytes, 0, packet, 7, 30 );
+
+            return false;
+        }
+
+        private static bool OnMobileName( ref byte[] packet, ref int length )
+        {
+            NameOverrideManager manager = NameOverrideManager.GetInstance();
+
+            if ( !manager.Enabled() )
+            {
+                return false;
+            }
+
+            int serial = ( packet[3] << 24 ) | ( packet[4] << 16 ) | ( packet[5] << 8 ) | packet[6];
+
+            if ( !manager.CheckEntity( serial, out string nameOverride ) )
+            {
+                return false;
+            }
+
+            byte[] nameOverrideBytes = Encoding.ASCII.GetBytes( nameOverride );
+
+            Array.Resize( ref nameOverrideBytes, 30 );
+            Array.Copy( nameOverrideBytes, 0, packet, 7, 30 );
+
+            return false;
         }
 
         private static bool OnASCIIMessage( ref byte[] packet, ref int length )
@@ -266,6 +367,27 @@ namespace ClassicAssist.UO.Network
             if ( block && RepeatedMessagesFilter.FilterOptions.SendToJournal )
             {
                 IncomingPacketHandlers.AddToJournal( journalEntry );
+            }
+
+            if ( journalEntry.SpeechType == JournalSpeech.Label && journalEntry.Cliloc == 1050045 )
+            {
+                NameOverrideManager manager = NameOverrideManager.GetInstance();
+
+                if ( manager.Enabled() && manager.CheckEntity( journalEntry.Serial, out string nameOverride ) )
+                {
+                    byte[] nameOverrideBytes = Encoding.ASCII.GetBytes( nameOverride );
+                    Array.Resize( ref nameOverrideBytes, 30 );
+
+                    byte[] unicodeBytes = Encoding.BigEndianUnicode.GetBytes( nameOverride + '\0' );
+
+                    length = 48 + unicodeBytes.Length + 2;
+
+                    Array.Resize( ref packet, length );
+                    Array.Copy( nameOverrideBytes, 0, packet, 18, 30 );
+                    Array.Copy( unicodeBytes, 0, packet, 47, unicodeBytes.Length );
+                    packet[1] = (byte) ( length << 8 );
+                    packet[2] = (byte) length;
+                }
             }
 
             return block || ClilocFilter.CheckMessage( journalEntry );

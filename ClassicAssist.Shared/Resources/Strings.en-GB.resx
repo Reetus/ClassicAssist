@@ -1623,4 +1623,10 @@ Are you sure you wish to continue?</value>
   <data name="Authentication error or timeout" xml:space="preserve">
     <value>Authentication error or timeout</value>
   </data>
+  <data name="Name Overrides" xml:space="preserve">
+    <value>Name Overrides</value>
+  </data>
+  <data name="Insert Empty Entry" xml:space="preserve">
+    <value>Insert Empty Entry</value>
+  </data>
 </root>

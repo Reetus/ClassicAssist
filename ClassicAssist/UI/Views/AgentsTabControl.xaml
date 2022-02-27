@@ -20,6 +20,9 @@
         <TabItem Header="{x:Static resources:Strings.Friends}">
             <agents:FriendsTabControl />
         </TabItem>
+        <TabItem Header="{x:Static resources:Strings.Name_Overrides}">
+            <agents:NameOverrideTabControl />
+        </TabItem>
         <TabItem Header="{x:Static resources:Strings.Vendor_Buy}">
             <agents:VendorBuyTabControl />
         </TabItem>

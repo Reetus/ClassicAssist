@@ -90,7 +90,10 @@ namespace ClassicAssist.UI.ViewModels.Agents
             {
                 entries.Add( new JObject
                 {
-                    { "Enabled", entry.Enabled }, { "Serial", entry.Serial }, { "Name", entry.Name }
+                    { "Enabled", entry.Enabled },
+                    { "Serial", entry.Serial },
+                    { "Name", entry.Name },
+                    { "Notes", entry.Notes }
                 } );
             }
 
@@ -122,8 +125,10 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 bool enabled = token["Enabled"]?.ToObject<bool>() ?? false;
                 int serial = token["Serial"]?.ToObject<int>() ?? -1;
                 string name = token["Name"]?.ToObject<string>() ?? string.Empty;
+                string notes = token["Notes"]?.ToObject<string>() ?? string.Empty;
 
-                NameOverrideEntry entry = new NameOverrideEntry { Enabled = enabled, Serial = serial, Name = name };
+                NameOverrideEntry entry =
+                    new NameOverrideEntry { Enabled = enabled, Serial = serial, Name = name, Notes = notes };
 
                 if ( serial != -1 )
                 {

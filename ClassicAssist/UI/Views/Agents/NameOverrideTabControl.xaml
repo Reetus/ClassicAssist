@@ -69,6 +69,15 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
+                        <GridViewColumn Header="{x:Static resources:Strings.Notes}" Width="250" x:Name="NotesColumn">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <controls:EditTextBlock Text="{Binding Notes}" Label="{Binding Notes}"
+                                                            ShowIcon="True"
+                                                            Width="{Binding Path=Width, ElementName=NotesColumn, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>

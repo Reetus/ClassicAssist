@@ -83,12 +83,14 @@
                     Command="{Binding AddCommand}">
                 <Button.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="{x:Static resources:Strings.Insert_Empty_Entry}" Command="{Binding Data.AddEmptyCommand, Mode=OneWay, Source={StaticResource Proxy}}" />
+                        <MenuItem Header="{x:Static resources:Strings.Insert_Empty_Entry}"
+                                  Command="{Binding Data.AddEmptyCommand, Mode=OneWay, Source={StaticResource Proxy}}" />
                     </ContextMenu>
                 </Button.ContextMenu>
             </Button>
-            <Button Content="{x:Static resources:Strings.Remove}" Margin="5,5,0,5"
+            <Button Content="{x:Static resources:Strings.Remove}" Margin="5"
                     Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedItem}" />
+            <Button Content="{x:Static resources:Strings.Import}" Margin="5" Command="{Binding ImportCommand}" />
         </StackPanel>
     </Grid>
 </UserControl>

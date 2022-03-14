@@ -38,11 +38,14 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Button Content="{x:Static resources:Strings.Insert}" Grid.Column="0" Margin="0,5,5,5"
                         Command="{Binding AddFriendCommand}" />
-                <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="1" Margin="5,5,0,5"
+                <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="1" Margin="5"
                         Command="{Binding RemoveFriendCommand}" CommandParameter="{Binding SelectedItem}" />
+                <Button Content="{x:Static resources:Strings.Import}" Grid.Column="2" Margin="5, 5, 0, 5"
+                        Command="{Binding ImportCommand}" />
             </Grid>
         </Grid>
         <StackPanel Grid.Column="1" Margin="0,10,10,10">

@@ -19,5 +19,6 @@ namespace ClassicAssist.Data.NameOverride
         public bool Enabled { get; set; } = true;
         public string Name { get; set; }
         public int Serial { get; set; }
+        public string Notes { get; set; }
     }
 }

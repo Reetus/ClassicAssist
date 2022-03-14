@@ -1626,4 +1626,7 @@ Are you sure you wish to continue?</value>
   <data name="Insert Empty Entry" xml:space="preserve">
     <value>Insert Empty Entry</value>
   </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
 </root>

@@ -12,8 +12,12 @@
 
 #endregion
 
+using System;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data;
@@ -23,7 +27,9 @@ using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Objects;
+using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
+using Sentry;
 
 namespace ClassicAssist.UI.ViewModels.Agents
 {
@@ -32,6 +38,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private ICommand _addCommand;
         private ICommand _addEmptyCommand;
         private bool _enabled;
+        private ICommand _importCommand;
         private ICommand _removeCommand;
         private NameOverrideEntry _selectedItem;
 
@@ -43,8 +50,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             manager.Items = Items;
         }
 
-        public ICommand AddCommand =>
-            _addCommand ?? ( _addCommand = new RelayCommandAsync( Add, o => true ) );
+        public ICommand AddCommand => _addCommand ?? ( _addCommand = new RelayCommandAsync( Add, o => true ) );
 
         public ICommand AddEmptyCommand =>
             _addEmptyCommand ?? ( _addEmptyCommand = new RelayCommand( AddEmpty, o => true ) );
@@ -54,6 +60,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
             get => _enabled;
             set => SetProperty( ref _enabled, value );
         }
+
+        public ICommand ImportCommand => _importCommand ?? ( _importCommand = new RelayCommand( Import ) );
 
         public ObservableCollection<NameOverrideEntry> Items { get; set; } =
             new ObservableCollection<NameOverrideEntry>();
@@ -136,7 +144,10 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private void AddEmpty( object obj )
         {
-            _dispatcher.Invoke( () => { Items.Add( new NameOverrideEntry { Enabled = false, Name = Strings.Name } ); } );
+            _dispatcher.Invoke( () =>
+            {
+                Items.Add( new NameOverrideEntry { Enabled = false, Name = Strings.Name } );
+            } );
         }
 
         private async Task Add( object arg )
@@ -161,6 +172,71 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 };
 
                 _dispatcher.Invoke( () => { Items.Add( entry ); } );
+            }
+        }
+
+        private void Import( object obj )
+        {
+            string profileDirectory = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory );
+
+            if ( Directory.Exists( Path.Combine( profileDirectory, "Profiles" ) ) )
+            {
+                profileDirectory = Path.Combine( profileDirectory, "Profiles" );
+            }
+
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                InitialDirectory = profileDirectory,
+                Filter = "Json Files|*.json",
+                CheckFileExists = true,
+                Multiselect = false
+            };
+
+            bool? result = ofd.ShowDialog();
+
+            if ( !result.HasValue || result == false )
+            {
+                return;
+            }
+
+            try
+            {
+                string json = File.ReadAllText( ofd.FileName );
+
+                JObject jObject = JObject.Parse( json );
+
+                JToken config = jObject?["NameOverride"];
+
+                if ( config?["Entries"] == null )
+                {
+                    return;
+                }
+
+                foreach ( JToken token in config["Entries"] )
+                {
+                    bool enabled = token["Enabled"]?.ToObject<bool>() ?? false;
+                    int serial = token["Serial"]?.ToObject<int>() ?? -1;
+                    string name = token["Name"]?.ToObject<string>() ?? string.Empty;
+
+                    NameOverrideEntry entry = new NameOverrideEntry { Enabled = enabled, Serial = serial, Name = name };
+
+                    NameOverrideEntry existing = Items.FirstOrDefault( e => e.Serial == serial );
+
+                    if ( existing != null )
+                    {
+                        _dispatcher.Invoke( () => { Items.Remove( existing ); } );
+                    }
+
+                    if ( serial != -1 )
+                    {
+                        _dispatcher.Invoke( () => { Items.Add( entry ); } );
+                    }
+                }
+            }
+            catch ( Exception ex )
+            {
+                MessageBox.Show( ex.Message );
+                SentrySdk.CaptureException( ex );
             }
         }
     }

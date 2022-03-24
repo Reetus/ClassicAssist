@@ -184,7 +184,7 @@ namespace ClassicAssist.Data.Macros.Commands
         public static int CountTypeGround( int graphic, int hue = -1, int range = -1 )
         {
             IEnumerable<Item> matches = Engine.Items.Where( i =>
-                i.ID == graphic && ( hue == -1 || hue == i.ID ) && ( range == -1 || i.Distance <= range ) );
+                i.ID == graphic && ( hue == -1 || hue == i.Hue ) && ( range == -1 || i.Distance <= range ) );
 
             int count = matches.Sum( match => match.Count );
 

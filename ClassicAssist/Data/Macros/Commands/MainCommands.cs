@@ -115,6 +115,57 @@ namespace ClassicAssist.Data.Macros.Commands
             t.Start();
         }
 
+        [CommandsDisplay( Category = nameof( Strings.Main ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        public static void OpenECV( object obj )
+        {
+            int serial = 0;
+
+            serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_container___, SystemMessageHues.Red );
+
+                return;
+            }
+
+            Entity entity = UOMath.IsMobile( serial )
+                ? Engine.Mobiles.GetMobile( serial )
+                : (Entity) Engine.Items.GetItem( serial );
+
+            if ( entity == null )
+            {
+                UOC.SystemMessage( Strings.Cannot_find_item___ );
+                return;
+            }
+
+            ItemCollection collection = new ItemCollection( entity.Serial );
+
+            switch ( entity )
+            {
+                case Item item:
+                    collection = item.Container ?? new ItemCollection( item.Serial );
+                    break;
+                case Mobile mobile:
+                    collection = new ItemCollection( entity.Serial ) { mobile.GetEquippedItems() };
+                    break;
+            }
+
+            Thread t = new Thread( () =>
+            {
+                EntityCollectionViewer window = new EntityCollectionViewer
+                {
+                    DataContext = new EntityCollectionViewerViewModel( collection ), Topmost = true
+                };
+
+                window.ShowDialog();
+            } ) { IsBackground = true };
+
+            t.SetApartmentState( ApartmentState.STA );
+            t.Start();
+        }
+
         [CommandsDisplay( Category = nameof( Strings.Main ), Parameters = new[] { nameof( ParameterType.OnOff ) } )]
         public static void Hotkeys( string onOff = "toggle" )
         {
@@ -326,18 +377,21 @@ namespace ClassicAssist.Data.Macros.Commands
             Engine.TickWorkQueue.Enqueue( () =>
             {
                 dynamic socket =
-                    new ReflectionObject(Reflection.GetTypePropertyValue<dynamic>( "ClassicUO.Network.NetClient", "Socket", null ));
+                    new ReflectionObject(
+                        Reflection.GetTypePropertyValue<dynamic>( "ClassicUO.Network.NetClient", "Socket", null ) );
 
                 if ( socket.IsConnected )
                 {
                     socket.Disconnect();
                 }
 
-                dynamic game = new ReflectionObject(Reflection.GetTypePropertyValue<dynamic>( "ClassicUO.Client", "Game", null ));
+                dynamic game =
+                    new ReflectionObject(
+                        Reflection.GetTypePropertyValue<dynamic>( "ClassicUO.Client", "Game", null ) );
 
                 object instance = Reflection.CreateInstanceOfType( "ClassicUO.Game.Scenes.LoginScene" );
 
-                game.SetScene(instance);
+                game.SetScene( instance );
             } );
         }
 
@@ -346,7 +400,9 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             Engine.TickWorkQueue.Enqueue( () =>
             {
-                dynamic game = new ReflectionObject(Reflection.GetTypePropertyValue<dynamic>( "ClassicUO.Client", "Game", null ));
+                dynamic game =
+                    new ReflectionObject(
+                        Reflection.GetTypePropertyValue<dynamic>( "ClassicUO.Client", "Game", null ) );
 
                 game.Exit();
             } );

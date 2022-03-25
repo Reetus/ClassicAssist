@@ -2484,6 +2484,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open entity collection viewer for specified container serial/alias.
+        /// </summary>
+        public static string OPENECV_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("OPENECV_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OpenECV(&apos;backpack&apos;).
+        /// </summary>
+        public static string OPENECV_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("OPENECV_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Opens the Guild gump.
         /// </summary>
         public static string OPENGUILDGUMP_COMMAND_DESCRIPTION {

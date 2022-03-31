@@ -56,6 +56,30 @@ namespace ClassicAssist.Data.ClassicUO.Objects
             }
         }
 
+        public static bool Cancel()
+        {
+            if ( _type == null )
+            {
+                _type = Engine.ClassicAssembly?.GetType( TYPE );
+            }
+
+            if ( _type == null )
+            {
+                return false;
+            }
+
+            PropertyInfo property = _type.GetProperty( "AutoWalking" );
+
+            if ( property == null )
+            {
+                return false;
+            }
+
+            property.SetValue( null, false );
+
+            return !AutoWalking;
+        }
+
         public static bool WalkTo( int x, int y, int z, int distance )
         {
             try

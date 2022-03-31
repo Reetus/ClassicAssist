@@ -2675,7 +2675,10 @@ namespace ClassicAssist.Resources {
         ///while Pathfinding():
         /// Pause(50)
         /// 
-        ///HeadMsg(&quot;die scum&quot;, &quot;self&quot;).
+        ///HeadMsg(&quot;die scum&quot;, &quot;self&quot;)
+        ///
+        ///# Cancel pathfind in progress
+        ///Pathfind(-1).
         /// </summary>
         public static string PATHFINDING_COMMAND_EXAMPLE {
             get {

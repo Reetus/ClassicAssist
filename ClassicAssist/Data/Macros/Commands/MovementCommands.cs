@@ -149,6 +149,12 @@ namespace ClassicAssist.Data.Macros.Commands
             Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static bool Pathfind( object obj )
         {
+            if ( obj is int i && i == -1 )
+            {
+                Pathfinder.Cancel();
+                return true;
+            }
+
             int serial = AliasCommands.ResolveSerial( obj );
 
             if ( serial == 0 )

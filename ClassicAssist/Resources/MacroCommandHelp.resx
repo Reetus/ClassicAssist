@@ -1654,7 +1654,10 @@ Pause(25) # there is a delay between calling Pathfind() and Pathfinding() being 
 while Pathfinding():
  Pause(50)
  
-HeadMsg("die scum", "self")</value>
+HeadMsg("die scum", "self")
+
+# Cancel pathfind in progress
+Pathfind(-1)</value>
   </data>
   <data name="WAITFORJOURNALARRAY_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Wait up the given timeout for one of any of provided array of string to appear in journal</value>

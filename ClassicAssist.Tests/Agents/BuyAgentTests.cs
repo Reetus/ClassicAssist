@@ -17,12 +17,15 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using Assistant;
 using ClassicAssist.Data;
+using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.UI.ViewModels.Agents;
@@ -39,9 +42,9 @@ namespace ClassicAssist.Tests.Agents
     public class BuyAgentTests
     {
         [TestMethod]
-        public void WillBuyCorrectAmount()
+        public void VendorBuyWillBuyCorrectAmount()
         {
-            int vendorSerial = 0x0b0354;
+            const int vendorSerial = 0x0b0354;
 
             byte[] shopList =
             {
@@ -168,8 +171,6 @@ namespace ClassicAssist.Tests.Agents
 
             PacketHandler containerDisplayHandler = IncomingPacketHandlers.GetHandler( 0x24 );
 
-            AutoResetEvent are = new AutoResetEvent( false );
-
             List<ShopListEntry> buyList = new List<ShopListEntry>();
 
             void OnPacketSentEvent( byte[] data, int length )
@@ -179,20 +180,7 @@ namespace ClassicAssist.Tests.Agents
                     return;
                 }
 
-                PacketReader reader = new PacketReader( data, data.Length, false );
-
-                int count = ( data.Length - 8 ) / 7;
-
-                reader.Seek( 5, SeekOrigin.Current );
-
-                for ( int i = 0; i < count; i++ )
-                {
-                    reader.ReadByte(); // layer
-                    int serial = reader.ReadInt32();
-                    int amount = reader.ReadInt16();
-
-                    buyList.Add( new ShopListEntry { Amount = amount, Item = Engine.Items.GetItem( serial ) } );
-                }
+                buyList = ParseBuyPacket( data );
             }
 
             Engine.InternalPacketSentEvent += OnPacketSentEvent;
@@ -211,7 +199,7 @@ namespace ClassicAssist.Tests.Agents
         }
 
         [TestMethod]
-        public void WillConvertOld()
+        public void VendorBuyWillConvertOld()
         {
             VendorBuyTabViewModel vm = new VendorBuyTabViewModel();
 
@@ -226,11 +214,15 @@ namespace ClassicAssist.Tests.Agents
 
             JToken config = json["VendorBuy"];
 
-            Assert.AreEqual( entry.Enabled, config["Enabled"].ToObject<bool>() );
-            Assert.AreEqual( entry.IncludeBackpackAmount, config["IncludeBackpackAmount"].ToObject<bool>() );
+            Assert.AreEqual( entry.Enabled, config?["Enabled"]?.ToObject<bool>() ?? throw new Exception() );
+            Assert.AreEqual( entry.IncludeBackpackAmount,
+                config["IncludeBackpackAmount"]?.ToObject<bool>() ?? throw new Exception() );
 
             VendorBuyAgentItem[] oldItems =
-                JsonConvert.DeserializeObject<VendorBuyAgentItem[]>( config["Items"].ToString() );
+                JsonConvert.DeserializeObject<VendorBuyAgentItem[]>( config["Items"]?.ToString() ??
+                                                                     throw new Exception() );
+
+            Debug.Assert( oldItems != null, nameof( oldItems ) + " != null" );
 
             for ( int index = 0; index < oldItems.Length; index++ )
             {
@@ -266,6 +258,146 @@ namespace ClassicAssist.Tests.Agents
             AgentCommands.SetVendorBuyAutoBuy( "Test" );
 
             Assert.IsFalse( entry.Enabled );
+        }
+
+        [TestMethod]
+        public void VendorBuyWillUseBackpackAmount()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+
+            Item backpack = new Item( 0x02, 0x01 )
+            {
+                Container = new ItemCollection( 0x02 ) { new Item( 0x03, 0x02 ) { ID = 0xFA9, Count = 10 } }
+            };
+            Engine.Items.Add( backpack );
+            AliasCommands.SetAlias( "backpack", 0x02 );
+
+            byte[] shopList =
+            {
+                0x74, 0x00, 0xBE, 0x40, 0x93, 0x91, 0x4F, 0x0E, 0x00, 0x00, 0x00, 0x08, 0x08, 0x31, 0x30, 0x32,
+                0x34, 0x30, 0x30, 0x39, 0x00, 0x00, 0x00, 0x00, 0x08, 0x08, 0x31, 0x30, 0x32, 0x34, 0x30, 0x31,
+                0x31, 0x00, 0x00, 0x00, 0x00, 0x03, 0x08, 0x31, 0x30, 0x32, 0x35, 0x39, 0x38, 0x35, 0x00, 0x00,
+                0x00, 0x00, 0x03, 0x08, 0x31, 0x30, 0x32, 0x35, 0x39, 0x38, 0x36, 0x00, 0x00, 0x00, 0x00, 0x03,
+                0x08, 0x31, 0x30, 0x32, 0x35, 0x39, 0x38, 0x37, 0x00, 0x00, 0x00, 0x00, 0x03, 0x08, 0x31, 0x30,
+                0x32, 0x35, 0x39, 0x38, 0x38, 0x00, 0x00, 0x00, 0x00, 0x64, 0x08, 0x31, 0x30, 0x32, 0x33, 0x39,
+                0x39, 0x35, 0x00, 0x00, 0x00, 0x00, 0x64, 0x08, 0x31, 0x30, 0x32, 0x33, 0x39, 0x39, 0x36, 0x00,
+                0x00, 0x00, 0x00, 0x64, 0x08, 0x31, 0x30, 0x32, 0x33, 0x39, 0x39, 0x30, 0x00, 0x00, 0x00, 0x00,
+                0x64, 0x08, 0x31, 0x30, 0x32, 0x33, 0x39, 0x39, 0x31, 0x00, 0x00, 0x00, 0x00, 0x12, 0x08, 0x31,
+                0x30, 0x32, 0x33, 0x36, 0x31, 0x33, 0x00, 0x00, 0x00, 0x00, 0x12, 0x08, 0x31, 0x30, 0x32, 0x33,
+                0x36, 0x31, 0x34, 0x00, 0x00, 0x00, 0x00, 0x12, 0x08, 0x31, 0x30, 0x32, 0x33, 0x36, 0x31, 0x35,
+                0x00, 0x00, 0x00, 0x00, 0x0B, 0x08, 0x31, 0x30, 0x32, 0x33, 0x39, 0x39, 0x39, 0x00
+            };
+
+            byte[] contents =
+            {
+                0x3C, 0x01, 0x1D, 0x00, 0x0E, 0x41, 0x27, 0x3A, 0x6C, 0x0F, 0x9F, 0x00, 0x00, 0x14, 0x00, 0x0E,
+                0x00, 0x01, 0x00, 0x40, 0x93, 0x91, 0x4F, 0x00, 0x00, 0x41, 0x27, 0x3A, 0x6B, 0x0E, 0x1F, 0x00,
+                0x00, 0x14, 0x00, 0x0D, 0x00, 0x01, 0x00, 0x40, 0x93, 0x91, 0x4F, 0x00, 0x00, 0x41, 0x27, 0x3A,
+                0x6A, 0x0E, 0x1E, 0x00, 0x00, 0x14, 0x00, 0x0C, 0x00, 0x01, 0x00, 0x40, 0x93, 0x91, 0x4F, 0x00,
+                0x00, 0x41, 0x27, 0x3A, 0x69, 0x0E, 0x1D, 0x00, 0x00, 0x14, 0x00, 0x0B, 0x00, 0x01, 0x00, 0x40,
+                0x93, 0x91, 0x4F, 0x00, 0x00, 0x41, 0x27, 0x3A, 0x68, 0x0F, 0x97, 0x00, 0x00, 0x28, 0x00, 0x0A,
+                0x00, 0x01, 0x00, 0x40, 0x93, 0x91, 0x4F, 0x00, 0x00, 0x41, 0x27, 0x3A, 0x67, 0x0F, 0x96, 0x00,
+                0x00, 0x28, 0x00, 0x09, 0x00, 0x01, 0x00, 0x40, 0x93, 0x91, 0x4F, 0x00, 0x00, 0x41, 0x27, 0x3A,
+                0x65, 0x0F, 0x9C, 0x00, 0x00, 0x28, 0x00, 0x08, 0x00, 0x01, 0x00, 0x40, 0x93, 0x91, 0x4F, 0x00,
+                0x00, 0x41, 0x27, 0x3A, 0x64, 0x0F, 0x9B, 0x00, 0x00, 0x28, 0x00, 0x07, 0x00, 0x01, 0x00, 0x40,
+                0x93, 0x91, 0x4F, 0x00, 0x00, 0x41, 0x27, 0x3A, 0x63, 0x17, 0x64, 0x00, 0x00, 0x14, 0x00, 0x06,
+                0x00, 0x01, 0x00, 0x40, 0x93, 0x91, 0x4F, 0x00, 0x00, 0x41, 0x27, 0x3A, 0x62, 0x17, 0x63, 0x00,
+                0x00, 0x14, 0x00, 0x05, 0x00, 0x01, 0x00, 0x40, 0x93, 0x91, 0x4F, 0x00, 0x00, 0x41, 0x27, 0x3A,
+                0x61, 0x17, 0x62, 0x00, 0x00, 0x14, 0x00, 0x04, 0x00, 0x01, 0x00, 0x40, 0x93, 0x91, 0x4F, 0x00,
+                0x00, 0x41, 0x27, 0x3A, 0x60, 0x17, 0x61, 0x00, 0x00, 0x14, 0x00, 0x03, 0x00, 0x01, 0x00, 0x40,
+                0x93, 0x91, 0x4F, 0x00, 0x00, 0x41, 0x27, 0x3A, 0x5F, 0x0F, 0xAB, 0x00, 0x00, 0x14, 0x00, 0x02,
+                0x00, 0x01, 0x00, 0x40, 0x93, 0x91, 0x4F, 0x00, 0x00, 0x41, 0x27, 0x3A, 0x5E, 0x0F, 0xA9, 0x00,
+                0x00, 0x14, 0x00, 0x01, 0x00, 0x01, 0x00, 0x40, 0x93, 0x91, 0x4F, 0x00, 0x00
+            };
+
+            byte[] containerDisplay = { 0x24, 0x00, 0x07, 0xCE, 0xBC, 0x00, 0x30, 0x00, 0x00 };
+
+            Mobile vendor = new Mobile( 0x0007cebc );
+            vendor.SetLayer( Layer.ShopSell, 0x4093914F );
+
+            Engine.Mobiles.Add( vendor );
+
+            IncomingPacketHandlers.Initialize();
+
+            PacketHandler containerContentsHandler = IncomingPacketHandlers.GetHandler( 0x3C );
+            containerContentsHandler?.OnReceive( new PacketReader( contents, contents.Length, false ) );
+
+            vendor.Equipment.Add( Engine.Items.GetItem( 0x4093914F ) );
+
+            PacketHandler shopListHandler = IncomingPacketHandlers.GetHandler( 0x74 );
+
+            shopListHandler?.OnReceive( new PacketReader( shopList, shopList.Length, false ) );
+
+            PacketHandler containerDisplayHandler = IncomingPacketHandlers.GetHandler( 0x24 );
+
+            VendorBuyTabViewModel vm = new VendorBuyTabViewModel();
+
+            VendorBuyAgentEntry entry = new VendorBuyAgentEntry { Enabled = true, IncludeBackpackAmount = true };
+
+            entry.Items.Add( new VendorBuyAgentItem
+            {
+                Amount = 20,
+                Enabled = true,
+                Graphic = 0xFA9,
+                Hue = -1,
+                MaxPrice = -1
+            } );
+
+            vm.Items.Add( entry );
+
+            MacroManager macroManger = MacroManager.GetInstance();
+            macroManger.IsRecording = () => false;
+
+            List<ShopListEntry> buyList = new List<ShopListEntry>();
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            void OnPacketSentEvent( byte[] data, int length )
+            {
+                if ( data[0] != 0x3B )
+                {
+                    return;
+                }
+
+                buyList = ParseBuyPacket( data );
+
+                are.Set();
+            }
+
+            Engine.InternalPacketSentEvent += OnPacketSentEvent;
+
+            containerDisplayHandler?.OnReceive( new PacketReader( containerDisplay, containerDisplay.Length, true ) );
+
+            are.WaitOne( 5000 );
+
+            ShopListEntry buyItem = buyList.First();
+
+            Assert.AreEqual( 10, buyItem.Amount );
+
+            Engine.Player = null;
+            Engine.Mobiles.Clear();
+            Engine.Items.Clear();
+        }
+
+        private static List<ShopListEntry> ParseBuyPacket( byte[] data )
+        {
+            List<ShopListEntry> buyList = new List<ShopListEntry>();
+
+            PacketReader reader = new PacketReader( data, data.Length, false );
+
+            int count = ( data.Length - 8 ) / 7;
+
+            reader.Seek( 5, SeekOrigin.Current );
+
+            for ( int i = 0; i < count; i++ )
+            {
+                reader.ReadByte(); // layer
+                int serial = reader.ReadInt32();
+                int amount = reader.ReadInt16();
+
+                buyList.Add( new ShopListEntry { Amount = amount, Item = Engine.Items.GetItem( serial ) } );
+            }
+
+            return buyList;
         }
     }
 }

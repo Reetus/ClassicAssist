@@ -31,6 +31,23 @@ namespace ClassicAssist.Data.ClassicUO
 {
     public static class Macros
     {
+        public static void PlayCUOMacro( string name )
+        {
+            GameScene gameScene = new GameScene();
+
+            IEnumerable<Macro> allMacros = gameScene.Macros.GetAllMacros();
+
+            Macro selectedMacro = allMacros.FirstOrDefault( m => m.Name == name );
+
+            if ( selectedMacro == null )
+            {
+                UO.Commands.SystemMessage( Strings.Macro_not_found___ );
+                return;
+            }
+
+            gameScene.Macros.PlayMacro( selectedMacro );
+        }
+
         public static void CreateMacroButton( MacroEntry macroEntry )
         {
             try

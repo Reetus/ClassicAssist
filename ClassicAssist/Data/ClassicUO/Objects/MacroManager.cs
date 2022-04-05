@@ -18,6 +18,10 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Assistant;
+using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.Data.ClassicUO.Objects
 {
@@ -31,6 +35,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
         public override Macro Next => null;
 
         public override Macro Previous => null;
+        public bool WaitingBandageTarget => WrapField<bool>();
 
         public IEnumerable<Macro> GetAllMacros()
         {
@@ -57,6 +62,41 @@ namespace ClassicAssist.Data.ClassicUO.Objects
         public void PushToBack( Macro macro )
         {
             ( (dynamic) this ).PushToBack( macro.AssociatedObject );
+        }
+
+        public void PlayMacro( Macro macro )
+        {
+            FieldInfo fieldInfo = macro.AssociatedObject.GetType().GetFields().FirstOrDefault( e => e.Name == "Items" );
+
+            object items = fieldInfo?.GetValue( macro.AssociatedObject );
+
+            if ( items != null )
+            {
+                PropertyInfo codeProperty = items.GetType().GetProperties().FirstOrDefault( e => e.Name == "Code" );
+                PropertyInfo subCodeProperty =
+                    items.GetType().GetProperties().FirstOrDefault( e => e.Name == "SubCode" );
+
+                if ( codeProperty != null && subCodeProperty != null )
+                {
+                    int code = (int) codeProperty.GetValue( items );
+
+                    int subCode = (int) subCodeProperty.GetValue( items );
+
+                    if ( code == 5 /*Walk*/ )
+                    {
+                        Engine.Move( (Direction) subCode, false );
+                        return;
+                    }
+                }
+            }
+
+            Engine.TickWorkQueue.Enqueue( () =>
+            {
+                ( (dynamic) this ).SetMacroToExecute( items );
+                ( (dynamic) this ).WaitingBandageTarget = false;
+                ( (dynamic) this ).WaitForTargetTimer = 0;
+                ( (dynamic) this ).Update();
+            } );
         }
     }
 }

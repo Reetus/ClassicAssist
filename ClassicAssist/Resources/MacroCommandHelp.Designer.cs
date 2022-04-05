@@ -2642,7 +2642,10 @@ namespace ClassicAssist.Resources {
         ///
         ///#Pathfind to entity
         ///SetEnemy(0x3c9)
-        ///Pathfind(&apos;enemy&apos;).
+        ///Pathfind(&apos;enemy&apos;)
+        ///
+        ///# Cancel pathfind in progress
+        ///Pathfind(-1).
         /// </summary>
         public static string PATHFIND_COMMAND_EXAMPLE {
             get {
@@ -2675,10 +2678,7 @@ namespace ClassicAssist.Resources {
         ///while Pathfinding():
         /// Pause(50)
         /// 
-        ///HeadMsg(&quot;die scum&quot;, &quot;self&quot;)
-        ///
-        ///# Cancel pathfind in progress
-        ///Pathfind(-1).
+        ///HeadMsg(&quot;die scum&quot;, &quot;self&quot;).
         /// </summary>
         public static string PATHFINDING_COMMAND_EXAMPLE {
             get {
@@ -2728,6 +2728,24 @@ namespace ClassicAssist.Resources {
         public static string PING_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PING_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plays the specified CUO macro name.
+        /// </summary>
+        public static string PLAYCUOMACRO_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("PLAYCUOMACRO_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PlayCUOMacro(&apos;Paperdoll&apos;).
+        /// </summary>
+        public static string PLAYCUOMACRO_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("PLAYCUOMACRO_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

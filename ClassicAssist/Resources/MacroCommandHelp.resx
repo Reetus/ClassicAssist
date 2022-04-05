@@ -1457,7 +1457,10 @@ Pathfind(1438, 1630, 20)
 
 #Pathfind to entity
 SetEnemy(0x3c9)
-Pathfind('enemy')</value>
+Pathfind('enemy')
+
+# Cancel pathfind in progress
+Pathfind(-1)</value>
   </data>
   <data name="SETORGANIZERCONTAINERS_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Set the source and destination for the specified Organizer name</value>
@@ -1654,10 +1657,7 @@ Pause(25) # there is a delay between calling Pathfind() and Pathfinding() being 
 while Pathfinding():
  Pause(50)
  
-HeadMsg("die scum", "self")
-
-# Cancel pathfind in progress
-Pathfind(-1)</value>
+HeadMsg("die scum", "self")</value>
   </data>
   <data name="WAITFORJOURNALARRAY_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Wait up the given timeout for one of any of provided array of string to appear in journal</value>
@@ -1725,5 +1725,11 @@ while Distance(location[0], location[1]) &gt; 2:
   </data>
   <data name="OPENECV_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>OpenECV('backpack')</value>
+  </data>
+  <data name="PLAYCUOMACRO_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Plays the specified CUO macro name</value>
+  </data>
+  <data name="PLAYCUOMACRO_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>PlayCUOMacro('Paperdoll')</value>
   </data>
 </root>

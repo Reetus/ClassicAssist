@@ -3237,6 +3237,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Configures autologin settings.
+        /// </summary>
+        public static string SETAUTOLOGIN_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETAUTOLOGIN_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetAutologin(False).
+        /// </summary>
+        public static string SETAUTOLOGIN_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETAUTOLOGIN_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sets the container for the Autoloot agent to put items into....
         /// </summary>
         public static string SETAUTOLOOTCONTAINER_COMMAND_DESCRIPTION {

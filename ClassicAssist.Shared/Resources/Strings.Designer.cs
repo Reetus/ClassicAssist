@@ -115,6 +115,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account.
+        /// </summary>
+        public static string Account {
+            get {
+                return ResourceManager.GetString("Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Action Delay:.
         /// </summary>
         public static string Action_Delay_ {
@@ -417,6 +426,24 @@ namespace ClassicAssist.Shared.Resources {
         public static string Auto_disable_when_loading {
             get {
                 return ResourceManager.GetString("Auto disable when loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Autologin.
+        /// </summary>
+        public static string Autologin {
+            get {
+                return ResourceManager.GetString("Autologin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Autologin in {0} seconds....
+        /// </summary>
+        public static string Autologin_in__0__seconds___ {
+            get {
+                return ResourceManager.GetString("Autologin in {0} seconds...", resourceCulture);
             }
         }
         
@@ -763,6 +790,33 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Character Index.
+        /// </summary>
+        public static string Character_Index {
+            get {
+                return ResourceManager.GetString("Character Index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character index not found.
+        /// </summary>
+        public static string Character_index_not_found {
+            get {
+                return ResourceManager.GetString("Character index not found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Characters:.
+        /// </summary>
+        public static string Characters_ {
+            get {
+                return ResourceManager.GetString("Characters:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chat.
         /// </summary>
         public static string Chat {
@@ -997,11 +1051,29 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connect Delay.
+        /// </summary>
+        public static string Connect_Delay {
+            get {
+                return ResourceManager.GetString("Connect Delay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connected:.
         /// </summary>
         public static string Connected_ {
             get {
                 return ResourceManager.GetString("Connected:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connecting....
+        /// </summary>
+        public static string Connecting___ {
+            get {
+                return ResourceManager.GetString("Connecting...", resourceCulture);
             }
         }
         
@@ -1578,6 +1650,33 @@ namespace ClassicAssist.Shared.Resources {
         public static string Failed_to_download_manifest___ {
             get {
                 return ResourceManager.GetString("Failed to download manifest...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to get character list.
+        /// </summary>
+        public static string Failed_to_get_character_list {
+            get {
+                return ResourceManager.GetString("Failed to get character list", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to get selected server index.
+        /// </summary>
+        public static string Failed_to_get_selected_server_index {
+            get {
+                return ResourceManager.GetString("Failed to get selected server index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to get server list.
+        /// </summary>
+        public static string Failed_to_get_server_list {
+            get {
+                return ResourceManager.GetString("Failed to get server list", resourceCulture);
             }
         }
         
@@ -3406,6 +3505,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reconnect Delay.
+        /// </summary>
+        public static string Reconnect_Delay {
+            get {
+                return ResourceManager.GetString("Reconnect Delay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Record.
         /// </summary>
         public static string Record {
@@ -3721,6 +3829,24 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selecting character {0}....
+        /// </summary>
+        public static string Selecting_character__0____ {
+            get {
+                return ResourceManager.GetString("Selecting character {0}...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selecting server {0}....
+        /// </summary>
+        public static string Selecting_server__0____ {
+            get {
+                return ResourceManager.GetString("Selecting server {0}...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Serial.
         /// </summary>
         public static string Serial {
@@ -3744,6 +3870,24 @@ namespace ClassicAssist.Shared.Resources {
         public static string Server {
             get {
                 return ResourceManager.GetString("Server", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server Index.
+        /// </summary>
+        public static string Server_Index {
+            get {
+                return ResourceManager.GetString("Server Index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Servers:.
+        /// </summary>
+        public static string Servers_ {
+            get {
+                return ResourceManager.GetString("Servers:", resourceCulture);
             }
         }
         
@@ -4441,6 +4585,24 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Timeout waiting for character selection screen.
+        /// </summary>
+        public static string Timeout_waiting_for_character_selection_screen {
+            get {
+                return ResourceManager.GetString("Timeout waiting for character selection screen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timeout waiting for shard selection screen.
+        /// </summary>
+        public static string Timeout_waiting_for_shard_selection_screen {
+            get {
+                return ResourceManager.GetString("Timeout waiting for shard selection screen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Timers.
         /// </summary>
         public static string Timers {
@@ -4581,6 +4743,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Unknown {
             get {
                 return ResourceManager.GetString("Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown account....
+        /// </summary>
+        public static string Unknown_account___ {
+            get {
+                return ResourceManager.GetString("Unknown account...", resourceCulture);
             }
         }
         

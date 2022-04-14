@@ -405,5 +405,35 @@ namespace ClassicAssist.Data.Macros.Commands
                 game.Exit();
             } );
         }
+
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
+        public static void SetAutologin( bool enabled, string account = "", int serverIndex = -1,
+            int characterIndex = -1 )
+        {
+            Options.CurrentOptions.Autologin = enabled;
+
+            if ( !string.IsNullOrEmpty( account ) )
+            {
+                bool existing = AssistantOptions.SavedPasswords.Any( e => e.Key == account );
+
+                if ( !existing )
+                {
+                    UOC.SystemMessage( Strings.Unknown_account___ );
+                    return;
+                }
+            }
+
+            if ( serverIndex != -1 )
+            {
+                Options.CurrentOptions.AutologinServerIndex = serverIndex;
+            }
+
+            if ( characterIndex != -1 )
+            {
+                Options.CurrentOptions.AutologinCharacterIndex = characterIndex;
+            }
+
+            Options.Save( Options.CurrentOptions );
+        }
     }
 }

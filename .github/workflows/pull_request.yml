@@ -1,4 +1,4 @@
-name: .NET
+name: Pull Requests
 
 on:
   pull_request:
@@ -21,3 +21,7 @@ jobs:
       run: dotnet build --no-restore /p:Version=0.5.0-$GITHUB_REF_NAME+$GITHUB_SHA
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - uses: actions/upload-artifact@v3
+      with:
+        name: build
+        path: Output\net48

@@ -33,7 +33,7 @@ jobs:
     - name: Generate Manifest
       run: |
         cd Output\net48
-        .\ExportCommands.exe c:\Projects\ClassicAssist\Output\net48\ClassicAssist.dll
+        .\ExportCommands.exe .\ClassicAssist.dll
         del ExportCommands.*
         $files = (Get-ChildItem . -Recurse  | Resolve-Path -Relative)
         $filespsobject = @()

@@ -35,15 +35,15 @@ namespace ClassicAssist.Shared
         {
             FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo( fileName );
 
-            return SemVersion.Parse( versionInfo.ProductVersion );
+            return SemVersion.Parse( versionInfo.ProductVersion, SemVersionStyles.Strict );
         }
 
         public static bool IsVersionNewer( string currentVersion, string newVersion )
         {
             try
             {
-                SemVersion currentSemver = SemVersion.Parse( currentVersion );
-                SemVersion newSemver = SemVersion.Parse( newVersion );
+                SemVersion currentSemver = SemVersion.Parse( currentVersion, SemVersionStyles.Strict );
+                SemVersion newSemver = SemVersion.Parse( newVersion, SemVersionStyles.Strict );
 
                 if ( currentSemver.Prerelease.Equals( "develop" ) )
                 {

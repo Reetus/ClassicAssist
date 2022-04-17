@@ -35,7 +35,7 @@ namespace ExportCommands
 
             string originalDirectory = Environment.CurrentDirectory;
 
-            Environment.CurrentDirectory = Path.GetDirectoryName( args[0] ) ?? throw new InvalidOperationException();
+            Environment.CurrentDirectory = Path.GetDirectoryName( args[0] ?? originalDirectory ) ?? throw new InvalidOperationException();
 
             string docPath = Path.Combine( originalDirectory, "Docs" );
 

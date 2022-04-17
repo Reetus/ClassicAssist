@@ -18,7 +18,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore /p:Version=0.5.$env:GITHUB_RUN_NUMBER-pr+$env:GITHUB_SHA
+      run: dotnet build --no-restore /p:Version=0.5.$env:GITHUB_RUN_NUMBER-pr+$(git rev-parse --short HEAD)
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - uses: actions/upload-artifact@v3

@@ -602,7 +602,9 @@ namespace Assistant
         {
             try
             {
-                ReleaseVersion latestRelease = await Updater.GetReleases( StartupPath ?? Environment.CurrentDirectory );
+                UpdaterSettings updaterSettings = UpdaterSettings.Load( StartupPath ?? Environment.CurrentDirectory );
+
+                ReleaseVersion latestRelease = await Updater.GetReleases(updaterSettings?.InstallPrereleases ?? false);
 
                 if ( latestRelease == null )
                 {
@@ -617,7 +619,7 @@ namespace Assistant
                 if ( VersionHelpers.IsVersionNewer( localVersion, latestVersion ) &&
                      VersionHelpers.IsVersionNewer( AssistantOptions.UpdateGumpVersion, latestVersion ) )
                 {
-                    string commitMessage = await Updater.GetUpdateText( StartupPath ?? Environment.CurrentDirectory );
+                    string commitMessage = await Updater.GetUpdateText( updaterSettings?.InstallPrereleases ?? false );
                     string donationAmount = await GetDonationsSummary();
                     StringBuilder donationMessage = new StringBuilder();
 

@@ -314,14 +314,14 @@ namespace ClassicAssist.Updater
             return null;
         }
 
-        private static async Task<ReleaseVersion> GetLatestRelease()
+        private async Task<ReleaseVersion> GetLatestRelease()
         {
             ReleaseVersion latestRelease;
 
             if ( string.IsNullOrEmpty( App.CurrentOptions.URL ) )
             {
                 latestRelease =
-                    await Shared.Updater.GetReleases( App.CurrentOptions.Path ?? Environment.CurrentDirectory );
+                    await Shared.Updater.GetReleases( UpdaterSettings.InstallPrereleases );
             }
             else
             {

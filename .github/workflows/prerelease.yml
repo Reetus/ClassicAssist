@@ -15,10 +15,7 @@ jobs:
     - name: Set version
       id: version
       run: |
-          $d = [datetime]"7/4/2020 00:00"
-          $sd = Get-Date
-          $build = [math]::floor((New-TimeSpan -Start $d -End $sd).TotalDays)
-          echo "::set-output name=version::0.5.$build-prelease"
+          echo "::set-output name=version::0.5.$env:GITHUB_RUN_NUMBER-prerelease+$(git rev-parse --short HEAD)"
     - name: Show version
       run: echo $env:VERSION
     - name: Setup .NET

@@ -9,7 +9,7 @@
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" Topmost="True" WindowStartupLocation="CenterScreen"
         Title="{x:Static resources:Strings.Autologin}" Width="400" Height="300"
-        Background="{DynamicResource ThemeWindowBackgroundBrush}">
+        Background="{DynamicResource ThemeWindowBackgroundBrush}" ResizeMode="NoResize">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

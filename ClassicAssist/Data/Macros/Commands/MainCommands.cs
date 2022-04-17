@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -414,13 +415,14 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( !string.IsNullOrEmpty( account ) )
             {
-                bool existing = AssistantOptions.SavedPasswords.Any( e => e.Key == account );
-
-                if ( !existing )
+                if ( !AssistantOptions.SavedPasswords.ContainsKey( account ) )
                 {
                     UOC.SystemMessage( Strings.Unknown_account___ );
                     return;
                 }
+
+                Options.CurrentOptions.AutologinUsername = account;
+                Options.CurrentOptions.AutologinPassword = AssistantOptions.SavedPasswords[account];    
             }
 
             if ( serverIndex != -1 )

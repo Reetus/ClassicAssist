@@ -30,6 +30,29 @@ jobs:
         VERSION: ${{steps.version.outputs.version}}
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Generate Manifest
+      run: |
+        cd Output\net48
+        .\ExportCommands.exe c:\Projects\ClassicAssist\Output\net48\ClassicAssist.dll
+        del ExportCommands.*
+        $files = (Get-ChildItem . -Recurse  | Resolve-Path -Relative)
+        $filespsobject = @()
+        foreach ( $file in $files )
+        {
+            $f = Get-ItemProperty $file
+            if (!($f -is [System.IO.DirectoryInfo]))
+            {
+                $item = "" | select Name, Size, ModifiedDate, SHA1
+                $item.Name = ($file) -replace "\.\\",""
+                $item.Size = $f.Length
+                $item.SHA1 =  (get-filehash -path $f.FullName -Algorithm sha1).Hash
+                $item.ModifiedDate = $f.LastWriteTime.ToString("o")
+                $filespsobject += $item
+            }
+            $json = $filespsobject | convertto-json
+        }
+        $json | Out-File MANIFEST.json
+      
     - name: Zip output
       run: Compress-Archive -Path Output/net48/* -DestinationPath ClassicAssist.zip
     - uses: ncipollo/release-action@v1

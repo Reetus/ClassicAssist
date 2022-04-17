@@ -28,11 +28,11 @@ namespace ClassicAssist.Shared
 {
     public class Updater
     {
-        public static async Task<ReleaseVersion> GetReleases( string path )
+        public static async Task<ReleaseVersion> GetReleases( bool preleases )
         {
             HttpClient httpClient = new HttpClient();
 
-            HttpResponseMessage response = await httpClient.GetAsync( Settings.Default.UpdateManifestURL );
+            HttpResponseMessage response = await httpClient.GetAsync( preleases ? Settings.Default.PrereleaseManifestURL : Settings.Default.UpdateManifestURL );
 
             if ( response.StatusCode != HttpStatusCode.OK )
             {
@@ -55,9 +55,9 @@ namespace ClassicAssist.Shared
             return releaseVersion;
         }
 
-        public static async Task<string> GetUpdateText( string path )
+        public static async Task<string> GetUpdateText( bool prereleases )
         {
-            ReleaseVersion releaseVersion = await GetReleases( path );
+            ReleaseVersion releaseVersion = await GetReleases( prereleases );
 
             if ( releaseVersion?.Entries == null )
             {

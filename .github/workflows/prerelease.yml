@@ -1,0 +1,65 @@
+name: Prerelease
+
+on:
+  push:
+    branches:
+      - prerelease*
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Set version
+      id: version
+      run: |
+          echo "::set-output name=version::0.5.$env:GITHUB_RUN_NUMBER-prerelease+$(git rev-parse --short HEAD)"
+    - name: Show version
+      run: echo $env:VERSION
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore /p:Version=$env:VERSION
+      env:
+        VERSION: ${{steps.version.outputs.version}}
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: Generate Manifest
+      run: |
+        cd Output\net48
+        .\ExportCommands.exe c:\Projects\ClassicAssist\Output\net48\ClassicAssist.dll
+        del ExportCommands.*
+        $files = (Get-ChildItem . -Recurse  | Resolve-Path -Relative)
+        $filespsobject = @()
+        foreach ( $file in $files )
+        {
+            $f = Get-ItemProperty $file
+            if (!($f -is [System.IO.DirectoryInfo]))
+            {
+                $item = "" | select Name, Size, ModifiedDate, SHA1
+                $item.Name = ($file) -replace "\.\\",""
+                $item.Size = $f.Length
+                $item.SHA1 =  (get-filehash -path $f.FullName -Algorithm sha1).Hash
+                $item.ModifiedDate = $f.LastWriteTime.ToString("o")
+                $filespsobject += $item
+            }
+            $json = $filespsobject | convertto-json
+        }
+        $json | Out-File MANIFEST.json
+      
+    - name: Zip output
+      run: Compress-Archive -Path Output/net48/* -DestinationPath ClassicAssist.zip
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: ClassicAssist.zip
+        tag: ${{ steps.version.outputs.version }}
+        name: ${{ steps.version.outputs.version }}
+        commit: ${{ github.sha }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        prerelease: true

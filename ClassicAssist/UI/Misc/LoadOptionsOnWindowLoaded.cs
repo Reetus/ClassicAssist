@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
@@ -27,7 +28,13 @@ namespace ClassicAssist.UI.Misc
         private static void OnLoaded( object sender, RoutedEventArgs e )
         {
             AssistantOptions.OnWindowLoaded();
-            SentrySdk.Init( new SentryOptions { Dsn = Settings.Default.SentryDsn, BeforeSend = SentryBeforeSend } );
+            SentrySdk.Init( new SentryOptions
+            {
+                Dsn = Settings.Default.SentryDsn,
+                BeforeSend = SentryBeforeSend,
+                AutoSessionTracking = true,
+                Release = $"classicassist@{VersionHelpers.GetProductVersion( Assembly.GetExecutingAssembly() )}"
+            } );
         }
 
         private static SentryEvent SentryBeforeSend( SentryEvent args )

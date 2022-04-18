@@ -70,10 +70,7 @@ namespace ClassicAssist.Extensions
 
         private void OnProfileChangedEvent( string profile )
         {
-            Task.Delay( 2000 ).ContinueWith( t =>
-            {
-                CheckAutologin( Options.CurrentOptions.AutologinConnectDelay );
-            } );
+            Task.Delay( 2000 ).ContinueWith( t => { CheckAutologin( Options.CurrentOptions.AutologinConnectDelay ); } );
         }
 
         private void CheckAutologin( TimeSpan connectInterval )
@@ -95,12 +92,32 @@ namespace ClassicAssist.Extensions
                 return;
             }
 
+            string step = GetCurrentStep( _scene );
+
+            if ( step != "Main" )
+            {
+                return;
+            }
+
             _username = Options.CurrentOptions.AutologinUsername;
             _password = Options.CurrentOptions.AutologinPassword;
             _serverIndex = Options.CurrentOptions.AutologinServerIndex;
             _characterIndex = Options.CurrentOptions.AutologinCharacterIndex;
 
             PerformLogin( connectInterval ).ConfigureAwait( false );
+        }
+
+        private static string GetCurrentStep( object scene )
+        {
+            PropertyInfo stepProperty = scene.GetType()
+                .GetProperty( "CurrentLoginStep", BindingFlags.Public | BindingFlags.Instance );
+
+            if ( stepProperty == null )
+            {
+                return "Unknown";
+            }
+
+            return stepProperty.GetValue( scene )?.ToString() ?? "Unknown";
         }
 
         private async Task<bool> PerformLogin( TimeSpan connectInterval )

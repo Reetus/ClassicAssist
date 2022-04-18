@@ -53,7 +53,7 @@ namespace ClassicAssist.Data.NameOverride
         public bool CheckEntity( int serial, out string nameOverride )
         {
             nameOverride = string.Empty;
-            NameOverrideEntry entry = Items.FirstOrDefault( e => e.Serial == serial && e.Enabled );
+            NameOverrideEntry entry = Items.ToList().FirstOrDefault( e => e.Serial == serial && e.Enabled );
 
             if ( entry == null )
             {

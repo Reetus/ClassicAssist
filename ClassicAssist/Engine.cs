@@ -587,7 +587,7 @@ namespace Assistant
             {
                 await Task.Delay( 3000 );
 
-                if ( Player.Backpack != null && Player.Backpack.Container == null )
+                if ( Player?.Backpack != null && Player?.Backpack?.Container == null )
                 {
                     ObjectCommands.UseObject( Player.Backpack );
                 }

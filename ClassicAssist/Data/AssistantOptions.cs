@@ -307,5 +307,11 @@ namespace ClassicAssist.Data
             Options.Load( LastProfile, Options.CurrentOptions );
             ProfileChangedEvent?.Invoke( LastProfile );
         }
+
+        public static void OnProfileChanged( string profile )
+        {
+            LastProfile = profile;
+            ProfileChangedEvent?.Invoke( profile );
+        }
     }
 }

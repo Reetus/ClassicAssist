@@ -13,6 +13,7 @@ using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Views;
+using ClassicAssist.UI.Views.General;
 using ClassicAssist.UO;
 using Newtonsoft.Json.Linq;
 
@@ -21,6 +22,7 @@ namespace ClassicAssist.UI.ViewModels
     public class GeneralControlViewModel : BaseViewModel, ISettingProvider
     {
         private static ICommand _saveProfileCommand;
+        private ICommand _autologinConfigureCommand;
         private ICommand _backupSettingsCommand;
         private ICommand _changeProfileCommand;
         private ICommand _configureFilterCommand;
@@ -54,6 +56,9 @@ namespace ClassicAssist.UI.ViewModels
 
             OnSavedPasswordsChangedEvent( this, EventArgs.Empty );
         }
+
+        public ICommand AutologinConfigureCommand =>
+            _autologinConfigureCommand ?? ( _autologinConfigureCommand = new RelayCommand( AutologinConfigure ) );
 
         public ICommand BackupSettingsCommand =>
             _backupSettingsCommand ?? ( _backupSettingsCommand = new RelayCommand( BackupSettings, o => true ) );
@@ -150,7 +155,14 @@ namespace ClassicAssist.UI.ViewModels
                 ["ActionDelayMS"] = Options.CurrentOptions.ActionDelayMS,
                 ["Debug"] = Options.CurrentOptions.Debug,
                 ["SysTray"] = Options.CurrentOptions.SysTray,
-                ["SlowHandlerThreshold"] = Options.CurrentOptions.SlowHandlerThreshold
+                ["SlowHandlerThreshold"] = Options.CurrentOptions.SlowHandlerThreshold,
+                ["Autologin"] = Options.CurrentOptions.Autologin,
+                ["AutologinUsername"] = Options.CurrentOptions.AutologinUsername,
+                ["AutologinPassword"] = Crypter.Encrypt( Options.CurrentOptions.AutologinPassword ),
+                ["AutologinServerIndex"] = Options.CurrentOptions.AutologinServerIndex,
+                ["AutologinCharacterIndex"] = Options.CurrentOptions.AutologinCharacterIndex,
+                ["AutologinConnectDelay"] = Options.CurrentOptions.AutologinConnectDelay,
+                ["AutologinReconnectDelay"] = Options.CurrentOptions.AutologinReconnectDelay
             };
 
             JArray filtersArray = new JArray();
@@ -214,6 +226,15 @@ namespace ClassicAssist.UI.ViewModels
             Options.Debug = general["Debug"]?.ToObject<bool>() ?? false;
             Options.SysTray = general["SysTray"]?.ToObject<bool>() ?? false;
             Options.SlowHandlerThreshold = general["SlowHandlerThreshold"]?.ToObject<int>() ?? 250;
+            Options.Autologin = general["Autologin"]?.ToObject<bool>() ?? false;
+            Options.AutologinUsername = general["AutologinUsername"]?.ToObject<string>();
+            Options.AutologinPassword = Crypter.Decrypt( general["AutologinPassword"]?.ToObject<string>() );
+            Options.AutologinServerIndex = general["AutologinServerIndex"]?.ToObject<int>() ?? 0;
+            Options.AutologinCharacterIndex = general["AutologinCharacterIndex"]?.ToObject<int>() ?? 0;
+            Options.AutologinConnectDelay =
+                general["AutologinConnectDelay"]?.ToObject<TimeSpan>() ?? TimeSpan.FromSeconds( 5 );
+            Options.AutologinReconnectDelay =
+                general["AutologinReconnectDelay"]?.ToObject<TimeSpan>() ?? TimeSpan.FromSeconds( 10 );
 
             if ( general["Filters"] == null )
             {
@@ -237,6 +258,13 @@ namespace ClassicAssist.UI.ViewModels
                     configurableFilter.Deserialize( token["Options"] );
                 }
             }
+        }
+
+        private static void AutologinConfigure( object obj )
+        {
+            AutologinConfigureWindow window = new AutologinConfigureWindow();
+
+            window.ShowDialog();
         }
 
         private static void BackupSettings( object obj )
@@ -365,12 +393,8 @@ namespace ClassicAssist.UI.ViewModels
             Options.ClearOptions();
             Options.CurrentOptions = new Options();
             Options.Load( profile, Options.CurrentOptions );
-            AssistantOptions.LastProfile = profile;
 
-            if ( Engine.Player != null )
-            {
-                IsLinkedProfile = AssistantOptions.GetLinkedProfile( Engine.Player.Serial ) == profile;
-            }
+            AssistantOptions.OnProfileChanged( profile );
         }
 
         private async Task NewProfile( object arg )

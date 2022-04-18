@@ -1,6 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Net.Sockets;
+using System.Reflection;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Interactivity;
 using Assistant;
 using ClassicAssist.Data;
@@ -27,19 +29,30 @@ namespace ClassicAssist.UI.Misc
         private static void OnLoaded( object sender, RoutedEventArgs e )
         {
             AssistantOptions.OnWindowLoaded();
-            SentrySdk.Init( new SentryOptions { Dsn = Settings.Default.SentryDsn, BeforeSend = SentryBeforeSend } );
+            SentrySdk.Init( new SentryOptions
+            {
+                Dsn = Settings.Default.SentryDsn,
+                BeforeSend = SentryBeforeSend,
+                AutoSessionTracking = true,
+                Release = $"classicassist@{VersionHelpers.GetProductVersion( Assembly.GetExecutingAssembly() )}"
+            } );
         }
 
         private static SentryEvent SentryBeforeSend( SentryEvent args )
         {
-#if DEBUG
-            return null;
-#else
-            if ( args.Exception?.TargetSite.Module.Assembly == Engine.ClassicAssembly )
+            if ( args.Exception is AggregateException && args.Exception.InnerException is SocketException )
             {
                 return null;
             }
 
+            if ( args.Exception?.TargetSite.Module.Assembly == Engine.ClassicAssembly ||
+                 ( args.Exception?.TargetSite.Module.Assembly.ToString().Contains( "FNA" ) ?? false ) )
+            {
+                return null;
+            }
+#if DEBUG
+            return null;
+#else
             args.User = new User { Id = AssistantOptions.UserId };
             args.SetTag( "SessionId", AssistantOptions.SessionId );
             args.SetExtra( "PlayerName", Engine.Player?.Name ?? "Unknown" );
@@ -50,7 +63,7 @@ namespace ClassicAssist.UI.Misc
             args.SetExtra( "Connected", Engine.Connected );
             args.SetExtra( "ClientVersion",
                 Engine.ClientVersion == null ? "Unknown" : Engine.ClientVersion.ToString() );
-            args.SetExtra( "KeyboardLayout", InputLanguageManager.Current?.CurrentInputLanguage?.Name ?? "Unknown" );
+            args.SetExtra( "KeyboardLayout", InputLanguageManager?.Current?.CurrentInputLanguage?.Name ?? "Unknown" );
             args.SetExtra( "ClassicUO Version", Engine.ClassicAssembly?.GetName().Version.ToString() ?? "Unknown" );
 
             return args;

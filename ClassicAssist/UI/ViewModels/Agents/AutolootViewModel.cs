@@ -593,7 +593,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         Stopwatch stopWatch = new Stopwatch();
                         stopWatch.Start();
 #endif
-                        bool result = UOC.WaitForPropertiesAsync( items.Where( e => e.Properties == null ), 1000 )
+                        bool result = UOC.WaitForPropertiesAsync( items.Where( e => e?.Properties == null ), 1000 )
                             .Result;
 
 #if DEBUG

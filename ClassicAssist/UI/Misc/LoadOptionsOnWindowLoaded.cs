@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interactivity;
 using Assistant;
 using ClassicAssist.Data;
@@ -34,7 +35,7 @@ namespace ClassicAssist.UI.Misc
                 Dsn = Settings.Default.SentryDsn,
                 BeforeSend = SentryBeforeSend,
                 AutoSessionTracking = true,
-                Release = $"classicassist@{VersionHelpers.GetProductVersion( Assembly.GetExecutingAssembly() )}"
+                Release = VersionHelpers.GetProductVersion( Assembly.GetExecutingAssembly() ).ToString()
             } );
         }
 

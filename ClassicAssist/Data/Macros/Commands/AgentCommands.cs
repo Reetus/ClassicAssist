@@ -3,6 +3,7 @@ using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Data.Counters;
 using ClassicAssist.Data.Dress;
 using ClassicAssist.Data.Organizer;
+using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
@@ -188,6 +189,30 @@ namespace ClassicAssist.Data.Macros.Commands
             }
 
             AutolootManager.GetInstance().CheckContainer( serial, true );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Agents ), Parameters = new[] { nameof( ParameterType.OnOff ) } )]
+        public static void SetScavenger( string onOff = "toggle" )
+        {
+            ScavengerManager manager = ScavengerManager.GetInstance();
+
+            switch ( onOff.Trim().ToLower() )
+            {
+                case "on":
+                    manager.SetEnabled( true );
+                    break;
+                case "off":
+                    manager.SetEnabled( true );
+                    break;
+                case "toggle":
+                    manager.SetEnabled( !manager.IsEnabled() );
+                    break;
+            }
+
+            UOC.SystemMessage(
+                string.Format( Strings._0__agent_is_now__1_, Strings.Scavenger,
+                    ( manager.IsEnabled() ? Strings.Enabled : Strings.Disabled ).ToLower() ), SystemMessageHues.Yellow,
+                true );
         }
     }
 }

@@ -3399,6 +3399,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable/Disable/Toggle the Scavenger agent.
+        /// </summary>
+        public static string SETSCAVENGER_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETSCAVENGER_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetScavenger(&quot;off&quot;).
+        /// </summary>
+        public static string SETSCAVENGER_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETSCAVENGER_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sets the lock state of the given skill, up, down or locked..
         /// </summary>
         public static string SETSKILL_COMMAND_DESCRIPTION {

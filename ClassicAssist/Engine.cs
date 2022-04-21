@@ -21,6 +21,7 @@ using ClassicAssist.Data.Commands;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Data.Misc;
 using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Misc;
@@ -439,13 +440,12 @@ namespace Assistant
             }
             catch ( Exception e )
             {
-                SentrySdk.WithScope( scope =>
+                SentrySdk.CaptureException( e, scope =>
                 {
                     scope.SetExtra( "Packet", packet.GetPacket() );
                     scope.SetExtra( "Player", Player.ToString() );
                     scope.SetExtra( "WorldItemCount", Items.Count() );
                     scope.SetExtra( "WorldMobileCount", Mobiles.Count() );
-                    SentrySdk.CaptureException( e );
                 } );
             }
 
@@ -490,13 +490,12 @@ namespace Assistant
             }
             catch ( Exception e )
             {
-                SentrySdk.WithScope( scope =>
+                SentrySdk.CaptureException( e, scope =>
                 {
                     scope.SetExtra( "Packet", packet.GetPacket() );
                     scope.SetExtra( "Player", Player.ToString() );
                     scope.SetExtra( "WorldItemCount", Items.Count() );
                     scope.SetExtra( "WorldMobileCount", Mobiles.Count() );
-                    SentrySdk.CaptureException( e );
                 } );
             }
 
@@ -589,7 +588,7 @@ namespace Assistant
             {
                 await Task.Delay( 3000 );
 
-                if ( Player.Backpack != null && Player.Backpack.Container == null )
+                if ( Connected && Player?.Backpack != null && Player?.Backpack?.Container == null )
                 {
                     ObjectCommands.UseObject( Player.Backpack );
                 }
@@ -604,7 +603,8 @@ namespace Assistant
             {
                 UpdaterSettings updaterSettings = UpdaterSettings.Load( StartupPath ?? Environment.CurrentDirectory );
 
-                ReleaseVersion latestRelease = await Updater.GetReleases(updaterSettings?.InstallPrereleases ?? false);
+                ReleaseVersion latestRelease =
+                    await Updater.GetReleases( updaterSettings?.InstallPrereleases ?? false );
 
                 if ( latestRelease == null )
                 {
@@ -713,14 +713,12 @@ namespace Assistant
 
                     if ( length != expectedLength )
                     {
-                        SentrySdk.WithScope( scope =>
+                        SentrySdk.CaptureMessage( $"Invalid packet length: {length} != {expectedLength}", scope =>
                         {
                             scope.SetExtra( "Packet", packet );
                             scope.SetExtra( "Length", length );
                             scope.SetExtra( "Direction", PacketDirection.Outgoing );
                             scope.SetExtra( "Expected Length", expectedLength );
-
-                            SentrySdk.CaptureMessage( $"Invalid packet length: {length} != {expectedLength}" );
                         } );
                     }
                 }
@@ -760,14 +758,12 @@ namespace Assistant
 
                         if ( length != expectedLength )
                         {
-                            SentrySdk.WithScope( scope =>
+                            SentrySdk.CaptureMessage( $"Invalid packet length: {length} != {expectedLength}", scope =>
                             {
                                 scope.SetExtra( "Packet", packet );
                                 scope.SetExtra( "Length", length );
                                 scope.SetExtra( "Direction", PacketDirection.Incoming );
                                 scope.SetExtra( "Expected Length", expectedLength );
-
-                                SentrySdk.CaptureMessage( $"Invalid packet length: {length} != {expectedLength}" );
                             } );
                         }
                     }
@@ -975,6 +971,7 @@ namespace Assistant
         public static ThreadQueue<Packet> OutgoingQueue { get; set; }
         public static bool InternalTarget { get; set; }
         public static int InternalTargetSerial { get; set; }
+        public static Trade Trade { get; set; } = new Trade();
 
         private static bool OnPacketReceive( ref byte[] data, ref int length )
         {

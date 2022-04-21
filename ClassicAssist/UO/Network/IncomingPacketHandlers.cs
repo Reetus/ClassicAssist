@@ -103,6 +103,7 @@ namespace ClassicAssist.UO.Network
             Register( 0x3A, 0, OnSkillsList );
             Register( 0x3C, 0, OnContainerContents );
             Register( 0x6C, 19, OnTarget );
+            Register( 0x6F, 0, OnSecureTrade );
             Register( 0x72, 5, OnWarMode );
             Register( 0x74, 0, OnShopList );
             Register( 0x77, 17, OnMobileMoving );
@@ -138,6 +139,28 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x19, 0, OnMiscellaneousStatus );
             RegisterExtended( 0x21, 0, OnClearWeaponAbility );
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
+        }
+
+        private static void OnSecureTrade( PacketReader reader )
+        {
+            byte action = reader.ReadByte();
+            int serial = reader.ReadInt32();
+            int containerSerial = reader.ReadInt32();
+            int containerSerial2 = reader.ReadInt32();
+
+            Engine.Trade.Action = (TradeAction) action;
+            Engine.Trade.Serial = serial;
+
+            if ( Engine.Trade.Action == TradeAction.Start )
+            {
+                Engine.Trade.ContainerLocal = containerSerial;
+                Engine.Trade.ContainerRemote = containerSerial2;
+            }
+            else
+            {
+                Engine.Trade.AcceptLocal = containerSerial;
+                Engine.Trade.AcceptRemote = containerSerial2;
+            }
         }
 
         private static void OnGenericGump( PacketReader reader )
@@ -179,7 +202,7 @@ namespace ClassicAssist.UO.Network
             }
             catch ( Exception e )
             {
-                SentrySdk.WithScope( scope =>
+                SentrySdk.CaptureException( e, scope =>
                 {
                     scope.SetExtra( "Serial", senderSerial );
                     scope.SetExtra( "GumpID", gumpId );
@@ -189,7 +212,6 @@ namespace ClassicAssist.UO.Network
                     scope.SetExtra( "Player", Engine.Player.ToString() );
                     scope.SetExtra( "WorldItemCount", Engine.Items.Count() );
                     scope.SetExtra( "WorldMobileCount", Engine.Mobiles.Count() );
-                    SentrySdk.CaptureException( e );
                 } );
             }
         }
@@ -412,7 +434,7 @@ namespace ClassicAssist.UO.Network
 
             int id = ( packet[7] << 8 ) | packet[8];
 
-            if ((id & 0x4000) != 0)
+            if ( ( id & 0x4000 ) != 0 )
             {
                 id ^= 0x4000;
                 item.ArtDataID = 2;
@@ -1147,7 +1169,7 @@ namespace ClassicAssist.UO.Network
             }
             catch ( Exception e )
             {
-                SentrySdk.WithScope( scope =>
+                SentrySdk.CaptureException( e, scope =>
                 {
                     scope.SetExtra( "Serial", senderSerial );
                     scope.SetExtra( "GumpID", gumpId );
@@ -1157,7 +1179,6 @@ namespace ClassicAssist.UO.Network
                     scope.SetExtra( "Player", Engine.Player.ToString() );
                     scope.SetExtra( "WorldItemCount", Engine.Items.Count() );
                     scope.SetExtra( "WorldMobileCount", Engine.Mobiles.Count() );
-                    SentrySdk.CaptureException( e );
                 } );
             }
         }
@@ -1852,14 +1873,13 @@ namespace ClassicAssist.UO.Network
             }
             catch ( Exception e )
             {
-                SentrySdk.WithScope( scope =>
+                SentrySdk.CaptureException( e, scope =>
                 {
                     scope.SetExtra( "ContainerSerial", containerItem?.Serial );
                     scope.SetExtra( "Count", count );
                     scope.SetExtra( "Packet", reader.GetData() );
                     scope.SetExtra( "WorldItemCount", Engine.Items.Count() );
                     scope.SetExtra( "WorldMobileCount", Engine.Mobiles.Count() );
-                    SentrySdk.CaptureException( e );
                 } );
             }
         }
@@ -1937,7 +1957,7 @@ namespace ClassicAssist.UO.Network
 
         private static PacketHandler GetExtendedHandler( int packetId )
         {
-            return _extendedHandlers[packetId];
+            return packetId >= _extendedHandlers.Length ? null : _extendedHandlers[packetId];
         }
 
         public static void AddToJournal( JournalEntry entry )
@@ -1953,7 +1973,7 @@ namespace ClassicAssist.UO.Network
                 Serial = -1,
                 ID = -1,
                 SpeechType = JournalSpeech.System,
-                SpeechHue = (int)SystemMessageHues.Normal,
+                SpeechHue = (int) SystemMessageHues.Normal,
                 SpeechFont = 0x03,
                 Name = "System",
                 Text = text

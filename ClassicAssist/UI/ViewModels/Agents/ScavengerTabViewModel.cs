@@ -52,6 +52,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
             ScavengerManager manager = ScavengerManager.GetInstance();
             manager.Items = Items;
             manager.CheckArea = CheckArea;
+            manager.IsEnabled = () => Enabled;
+            manager.SetEnabled = val => Enabled = val;
             _ignoreList = new List<int>();
         }
 
@@ -299,7 +301,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     }
 
                     Item[] matches = Engine.Items.SelectEntities( i =>
-                        i.Distance <= SCAVENGER_DISTANCE && i.Owner == 0 && i.ID == entry.Graphic &&
+                        i?.Distance <= SCAVENGER_DISTANCE && i.Owner == 0 && i.ID == entry.Graphic &&
                         ( entry.Hue == -1 || i.Hue == entry.Hue ) && !_ignoreList.Contains( i.Serial ) &&
                         ( !FilterEnabled ||
                           !i.Properties.Any( e => Filters.Select( f => f.Cliloc ).Contains( e.Cliloc ) ) ) );

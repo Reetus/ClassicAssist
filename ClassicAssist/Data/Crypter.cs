@@ -30,6 +30,11 @@ namespace ClassicAssist.Data
     {
         public static string Encrypt( string source )
         {
+            if ( string.IsNullOrEmpty( source ) )
+            {
+                return null;
+            }
+
             byte[] buff = Encoding.ASCII.GetBytes( source );
             int kidx = 0;
             string key = CalculateKey();
@@ -57,6 +62,11 @@ namespace ClassicAssist.Data
 
         public static string Decrypt( string source )
         {
+            if ( source == null )
+            {
+                return string.Empty;
+            }
+
             byte[] buff;
 
             if ( source.Length > 2 && source[0] == '1' && source[1] == '+' )

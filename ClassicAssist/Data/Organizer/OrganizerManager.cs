@@ -108,7 +108,7 @@ namespace ClassicAssist.Data.Organizer
 
                 foreach ( OrganizerItem entryItem in entry.Items )
                 {
-                    Item[] moveItems = sourceContainerItem.Container.SelectEntities( i =>
+                    Item[] moveItems = sourceContainerItem.Container?.SelectEntities( i =>
                         entryItem.ID == i.ID && ( entryItem.Hue == -1 || i.Hue == entryItem.Hue ) );
 
                     if ( moveItems == null )

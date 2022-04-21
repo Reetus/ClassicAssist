@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -404,6 +405,37 @@ namespace ClassicAssist.Data.Macros.Commands
 
                 game.Exit();
             } );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
+        public static void SetAutologin( bool enabled, string account = "", int serverIndex = -1,
+            int characterIndex = -1 )
+        {
+            Options.CurrentOptions.Autologin = enabled;
+
+            if ( !string.IsNullOrEmpty( account ) )
+            {
+                if ( !AssistantOptions.SavedPasswords.ContainsKey( account ) )
+                {
+                    UOC.SystemMessage( Strings.Unknown_account___ );
+                    return;
+                }
+
+                Options.CurrentOptions.AutologinUsername = account;
+                Options.CurrentOptions.AutologinPassword = AssistantOptions.SavedPasswords[account];    
+            }
+
+            if ( serverIndex != -1 )
+            {
+                Options.CurrentOptions.AutologinServerIndex = serverIndex;
+            }
+
+            if ( characterIndex != -1 )
+            {
+                Options.CurrentOptions.AutologinCharacterIndex = characterIndex;
+            }
+
+            Options.Save( Options.CurrentOptions );
         }
     }
 }

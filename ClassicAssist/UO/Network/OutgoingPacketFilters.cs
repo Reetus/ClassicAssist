@@ -123,6 +123,11 @@ namespace ClassicAssist.UO.Network
 
         private static bool OnAttackRequested( ref byte[] packet, ref int length )
         {
+            if ( length < 5 )
+            {
+                return false;
+            }
+
             int serial = ( packet[1] << 24 ) | ( packet[2] << 16 ) | ( packet[3] << 8 ) | packet[4];
 
             bool block = Options.CurrentOptions.PreventAttackingFriendsInWarMode &&

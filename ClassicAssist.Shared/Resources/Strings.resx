@@ -1752,4 +1752,70 @@ Are you sure you wish to continue?</value>
   <data name="Notes" xml:space="preserve">
     <value>Notes</value>
   </data>
+  <data name="Autologin" xml:space="preserve">
+    <value>Autologin</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Server Index" xml:space="preserve">
+    <value>Server Index</value>
+  </data>
+  <data name="Character Index" xml:space="preserve">
+    <value>Character Index</value>
+  </data>
+  <data name="Connect Delay" xml:space="preserve">
+    <value>Connect Delay</value>
+  </data>
+  <data name="Reconnect Delay" xml:space="preserve">
+    <value>Reconnect Delay</value>
+  </data>
+  <data name="Unknown account..." xml:space="preserve">
+    <value>Unknown account...</value>
+  </data>
+  <data name="Autologin in {0} seconds..." xml:space="preserve">
+    <value>Autologin in {0} seconds...</value>
+  </data>
+  <data name="Connecting..." xml:space="preserve">
+    <value>Connecting...</value>
+  </data>
+  <data name="Timeout waiting for shard selection screen" xml:space="preserve">
+    <value>Timeout waiting for shard selection screen</value>
+  </data>
+  <data name="Failed to get server list" xml:space="preserve">
+    <value>Failed to get server list</value>
+  </data>
+  <data name="Failed to get selected server index" xml:space="preserve">
+    <value>Failed to get selected server index</value>
+  </data>
+  <data name="Servers:" xml:space="preserve">
+    <value>Servers:</value>
+  </data>
+  <data name="Selecting server {0}..." xml:space="preserve">
+    <value>Selecting server {0}...</value>
+  </data>
+  <data name="Timeout waiting for character selection screen" xml:space="preserve">
+    <value>Timeout waiting for character selection screen</value>
+  </data>
+  <data name="Failed to get character list" xml:space="preserve">
+    <value>Failed to get character list</value>
+  </data>
+  <data name="Character index not found" xml:space="preserve">
+    <value>Character index not found</value>
+  </data>
+  <data name="Characters:" xml:space="preserve">
+    <value>Characters:</value>
+  </data>
+  <data name="Selecting character {0}..." xml:space="preserve">
+    <value>Selecting character {0}...</value>
+  </data>
+  <data name="{0} agent is now {1}" xml:space="preserve">
+    <value>{0} agent is now {1}</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="Trade" xml:space="preserve">
+    <value>Trade</value>
+  </data>
 </root>

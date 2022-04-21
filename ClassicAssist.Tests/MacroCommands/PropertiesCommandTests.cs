@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using Assistant;
 using ClassicAssist.Data.Macros.Commands;
@@ -46,15 +47,7 @@ namespace ClassicAssist.Tests.MacroCommands
         [TestCategory( "Data" )]
         public void WillReturnTrueOnPropertyName()
         {
-            const string localPath = @"C:\Users\johns\Desktop\KvG Client 2.0";
-
-            if ( !Directory.Exists( localPath ) )
-            {
-                Debug.WriteLine( "Not running test, requires Cliloc.enu" );
-                return;
-            }
-
-            Cliloc.Initialize( localPath );
+            Cliloc.Initialize( () => new Dictionary<int, string> { { 1072241, "Contents ~NUMBER~/~NUMBER~" } } );
 
             byte[] packet =
             {
@@ -92,16 +85,7 @@ namespace ClassicAssist.Tests.MacroCommands
         [TestCategory( "Data" )]
         public void WillGetPropertyValue()
         {
-            const string localPath = @"C:\Users\johns\Desktop\KvG Client 2.0";
-
-            if ( !Directory.Exists( localPath ) )
-            {
-                Debug.WriteLine( "Not running test, requires Cliloc.enu" );
-                return;
-            }
-
-            Cliloc.Initialize( localPath );
-
+            Cliloc.Initialize( () => new Dictionary<int, string> { { 1072241, "Contents ~NUMBER~/~NUMBER~" } } );
             byte[] packet =
             {
                 0xD6, 0x00, 0x43, 0x00, 0x01, 0x40, 0xC5, 0xF6, 0x09, 0x00, 0x00, 0x02, 0xA0, 0x3B, 0xCF, 0x00,

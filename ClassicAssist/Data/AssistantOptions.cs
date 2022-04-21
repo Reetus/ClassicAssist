@@ -209,10 +209,13 @@ namespace ClassicAssist.Data
 
         private static void BackupProfiles()
         {
-            BackupWindowViewModel vm = new BackupWindowViewModel( BackupOptions );
-            BackupWindow backupWindow = new BackupWindow { DataContext = vm };
-            vm.CloseWindow = () => backupWindow.Close();
-            backupWindow.ShowDialog();
+            Engine.Dispatcher.Invoke( () =>
+            {
+                BackupWindowViewModel vm = new BackupWindowViewModel( BackupOptions );
+                BackupWindow backupWindow = new BackupWindow { DataContext = vm };
+                vm.CloseWindow = () => backupWindow.Close();
+                backupWindow.ShowDialog();
+            } );
         }
 
         public static event dProfileChanged ProfileChangedEvent;
@@ -303,6 +306,12 @@ namespace ClassicAssist.Data
 
             Options.Load( LastProfile, Options.CurrentOptions );
             ProfileChangedEvent?.Invoke( LastProfile );
+        }
+
+        public static void OnProfileChanged( string profile )
+        {
+            LastProfile = profile;
+            ProfileChangedEvent?.Invoke( profile );
         }
     }
 }

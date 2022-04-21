@@ -28,6 +28,13 @@ namespace ClassicAssist.Data
         private bool _alwaysOnTop;
         private bool _autoAcceptPartyInvite;
         private bool _autoAcceptPartyOnlyFromFriends;
+        private bool _autologin;
+        private int _autologinCharacterIndex;
+        private TimeSpan _autologinConnectDelay;
+        private string _autologinPassword;
+        private TimeSpan _autologinReconnectDelay;
+        private int _autologinServerIndex;
+        private string _autologinUsername;
         private double _chatWindowHeight = 350;
         private double _chatWindowWidth = 650;
         private bool _checkHandsPotions;
@@ -119,6 +126,48 @@ namespace ClassicAssist.Data
         {
             get => _autoAcceptPartyOnlyFromFriends;
             set => SetProperty( ref _autoAcceptPartyOnlyFromFriends, value );
+        }
+
+        public bool Autologin
+        {
+            get => _autologin;
+            set => SetProperty( ref _autologin, value );
+        }
+
+        public int AutologinCharacterIndex
+        {
+            get => _autologinCharacterIndex;
+            set => SetProperty( ref _autologinCharacterIndex, value );
+        }
+
+        public TimeSpan AutologinConnectDelay
+        {
+            get => _autologinConnectDelay;
+            set => SetProperty( ref _autologinConnectDelay, value );
+        }
+
+        public string AutologinPassword
+        {
+            get => _autologinPassword;
+            set => SetProperty( ref _autologinPassword, value );
+        }
+
+        public TimeSpan AutologinReconnectDelay
+        {
+            get => _autologinReconnectDelay;
+            set => SetProperty( ref _autologinReconnectDelay, value );
+        }
+
+        public int AutologinServerIndex
+        {
+            get => _autologinServerIndex;
+            set => SetProperty( ref _autologinServerIndex, value );
+        }
+
+        public string AutologinUsername
+        {
+            get => _autologinUsername;
+            set => SetProperty( ref _autologinUsername, value );
         }
 
         public double ChatWindowHeight

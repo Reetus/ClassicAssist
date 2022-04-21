@@ -116,6 +116,22 @@
                         </Grid>
                         <CheckBox Content="{x:Static r:Strings.Only_overwrite_blank_password}"
                                   IsChecked="{Binding SavePasswordsOnlyBlank}" />
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Setter Property="IsEnabled" Value="True" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Options.Autologin}" Value="False">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Resources>
+                            <CheckBox Content="{x:Static r:Strings.Autologin}"
+                                      IsChecked="{Binding Options.Autologin}" />
+                            <Button Content="..." Command="{Binding AutologinConfigureCommand}" Margin="5,0,0,0"
+                                    Padding="10,0" />
+                        </StackPanel>
                     </StackPanel>
                 </GroupBox>
             </Grid>

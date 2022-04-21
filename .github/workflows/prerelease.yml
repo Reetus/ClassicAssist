@@ -15,7 +15,7 @@ jobs:
     - name: Set version
       id: version
       run: |
-          echo "::set-output name=version::0.5.$env:GITHUB_RUN_NUMBER-prerelease+$(git rev-parse --short HEAD)"
+          echo "::set-output name=version::0.5.$env:GITHUB_RUN_NUMBER-prerelease"
     - name: Show version
       run: echo $env:VERSION
     - name: Setup .NET
@@ -33,7 +33,6 @@ jobs:
     - name: Generate Manifest
       run: |
         cd Output\net48
-        .\ExportCommands.exe c:\Projects\ClassicAssist\Output\net48\ClassicAssist.dll
         del ExportCommands.*
         $files = (Get-ChildItem . -Recurse  | Resolve-Path -Relative)
         $filespsobject = @()

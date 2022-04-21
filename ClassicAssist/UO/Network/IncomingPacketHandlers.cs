@@ -179,7 +179,7 @@ namespace ClassicAssist.UO.Network
             }
             catch ( Exception e )
             {
-                SentrySdk.WithScope( scope =>
+                SentrySdk.CaptureException( e, scope =>
                 {
                     scope.SetExtra( "Serial", senderSerial );
                     scope.SetExtra( "GumpID", gumpId );
@@ -189,7 +189,6 @@ namespace ClassicAssist.UO.Network
                     scope.SetExtra( "Player", Engine.Player.ToString() );
                     scope.SetExtra( "WorldItemCount", Engine.Items.Count() );
                     scope.SetExtra( "WorldMobileCount", Engine.Mobiles.Count() );
-                    SentrySdk.CaptureException( e );
                 } );
             }
         }
@@ -412,7 +411,7 @@ namespace ClassicAssist.UO.Network
 
             int id = ( packet[7] << 8 ) | packet[8];
 
-            if ((id & 0x4000) != 0)
+            if ( ( id & 0x4000 ) != 0 )
             {
                 id ^= 0x4000;
                 item.ArtDataID = 2;
@@ -1147,7 +1146,7 @@ namespace ClassicAssist.UO.Network
             }
             catch ( Exception e )
             {
-                SentrySdk.WithScope( scope =>
+                SentrySdk.CaptureException( e, scope =>
                 {
                     scope.SetExtra( "Serial", senderSerial );
                     scope.SetExtra( "GumpID", gumpId );
@@ -1157,7 +1156,6 @@ namespace ClassicAssist.UO.Network
                     scope.SetExtra( "Player", Engine.Player.ToString() );
                     scope.SetExtra( "WorldItemCount", Engine.Items.Count() );
                     scope.SetExtra( "WorldMobileCount", Engine.Mobiles.Count() );
-                    SentrySdk.CaptureException( e );
                 } );
             }
         }
@@ -1852,14 +1850,13 @@ namespace ClassicAssist.UO.Network
             }
             catch ( Exception e )
             {
-                SentrySdk.WithScope( scope =>
+                SentrySdk.CaptureException( e, scope =>
                 {
                     scope.SetExtra( "ContainerSerial", containerItem?.Serial );
                     scope.SetExtra( "Count", count );
                     scope.SetExtra( "Packet", reader.GetData() );
                     scope.SetExtra( "WorldItemCount", Engine.Items.Count() );
                     scope.SetExtra( "WorldMobileCount", Engine.Mobiles.Count() );
-                    SentrySdk.CaptureException( e );
                 } );
             }
         }
@@ -1937,7 +1934,7 @@ namespace ClassicAssist.UO.Network
 
         private static PacketHandler GetExtendedHandler( int packetId )
         {
-            return _extendedHandlers[packetId];
+            return packetId >= _extendedHandlers.Length ? null : _extendedHandlers[packetId];
         }
 
         public static void AddToJournal( JournalEntry entry )
@@ -1953,7 +1950,7 @@ namespace ClassicAssist.UO.Network
                 Serial = -1,
                 ID = -1,
                 SpeechType = JournalSpeech.System,
-                SpeechHue = (int)SystemMessageHues.Normal,
+                SpeechHue = (int) SystemMessageHues.Normal,
                 SpeechFont = 0x03,
                 Name = "System",
                 Text = text

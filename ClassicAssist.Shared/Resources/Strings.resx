@@ -1815,4 +1815,7 @@ Are you sure you wish to continue?</value>
   <data name="Disabled" xml:space="preserve">
     <value>Disabled</value>
   </data>
+  <data name="Trade" xml:space="preserve">
+    <value>Trade</value>
+  </data>
 </root>

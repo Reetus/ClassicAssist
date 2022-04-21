@@ -103,6 +103,7 @@ namespace ClassicAssist.UO.Network
             Register( 0x3A, 0, OnSkillsList );
             Register( 0x3C, 0, OnContainerContents );
             Register( 0x6C, 19, OnTarget );
+            Register( 0x6F, 0, OnSecureTrade );
             Register( 0x72, 5, OnWarMode );
             Register( 0x74, 0, OnShopList );
             Register( 0x77, 17, OnMobileMoving );
@@ -138,6 +139,28 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x19, 0, OnMiscellaneousStatus );
             RegisterExtended( 0x21, 0, OnClearWeaponAbility );
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
+        }
+
+        private static void OnSecureTrade( PacketReader reader )
+        {
+            byte action = reader.ReadByte();
+            int serial = reader.ReadInt32();
+            int containerSerial = reader.ReadInt32();
+            int containerSerial2 = reader.ReadInt32();
+
+            Engine.Trade.Action = (TradeAction) action;
+            Engine.Trade.Serial = serial;
+
+            if ( Engine.Trade.Action == TradeAction.Start )
+            {
+                Engine.Trade.ContainerLocal = containerSerial;
+                Engine.Trade.ContainerRemote = containerSerial2;
+            }
+            else
+            {
+                Engine.Trade.AcceptLocal = containerSerial;
+                Engine.Trade.AcceptRemote = containerSerial2;
+            }
         }
 
         private static void OnGenericGump( PacketReader reader )

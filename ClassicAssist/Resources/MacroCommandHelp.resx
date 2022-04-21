@@ -1744,4 +1744,28 @@ while Distance(location[0], location[1]) &gt; 2:
   <data name="SETSCAVENGER_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>SetScavenger("off")</value>
   </data>
+  <data name="WAITFORTRADEWINDOW_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Waits the specified number of milliseconds for trade window action, -1 for infinite</value>
+  </data>
+  <data name="WAITFORTRADEWINDOW_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForTradeWindow(5000)</value>
+  </data>
+  <data name="TRADEACCEPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Accepts the current trade window</value>
+  </data>
+  <data name="TRADEACCEPT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TradeAccept()</value>
+  </data>
+  <data name="TRADEREJECT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Rejects (unticks) the current trade window</value>
+  </data>
+  <data name="TRADEREJECT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TradeReject()</value>
+  </data>
+  <data name="TRADECLOSE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Closes the current trade window</value>
+  </data>
+  <data name="TRADECLOSE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TradeClose()</value>
+  </data>
 </root>

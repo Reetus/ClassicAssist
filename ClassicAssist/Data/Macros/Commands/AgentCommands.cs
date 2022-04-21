@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Assistant;
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Data.Counters;
 using ClassicAssist.Data.Dress;
@@ -7,6 +8,7 @@ using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Network.PacketFilter;
 using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.Data.Macros.Commands
@@ -202,7 +204,7 @@ namespace ClassicAssist.Data.Macros.Commands
                     manager.SetEnabled( true );
                     break;
                 case "off":
-                    manager.SetEnabled( true );
+                    manager.SetEnabled( false );
                     break;
                 case "toggle":
                     manager.SetEnabled( !manager.IsEnabled() );
@@ -213,6 +215,51 @@ namespace ClassicAssist.Data.Macros.Commands
                 string.Format( Strings._0__agent_is_now__1_, Strings.Scavenger,
                     ( manager.IsEnabled() ? Strings.Enabled : Strings.Disabled ).ToLower() ), SystemMessageHues.Yellow,
                 true );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Trade ), Parameters = new[] { nameof( ParameterType.Timeout ) } )]
+        public static bool WaitForTradeWindow( int timeout = -1 )
+        {
+            PacketWaitEntry pwe = Engine.PacketWaitEntries.Add(
+                new PacketFilterInfo( 0x6F, new[] { PacketFilterConditions.ByteAtPositionCondition( 0, 3 ) } ),
+                PacketDirection.Incoming, true );
+
+            return pwe.Lock.WaitOne( timeout );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Trade ) )]
+        public static void TradeAccept()
+        {
+            PacketWriter writer = new PacketWriter( 12 );
+            writer.Write( (byte) 0x6F );
+            writer.Write( (short) 12 );
+            writer.Write( (byte) TradeAction.Update );
+            writer.Write( Engine.Trade.Serial );
+            writer.Write( 1 );
+            Engine.SendPacketToServer( writer );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Trade ) )]
+        public static void TradeReject()
+        {
+            PacketWriter writer = new PacketWriter( 12 );
+            writer.Write( (byte) 0x6F );
+            writer.Write( (short) 12 );
+            writer.Write( (byte) TradeAction.Update );
+            writer.Write( Engine.Trade.Serial );
+            writer.Write( 0 );
+            Engine.SendPacketToServer( writer );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Trade ) )]
+        public static void TradeClose()
+        {
+            PacketWriter writer = new PacketWriter( 12 );
+            writer.Write( (byte) 0x6F );
+            writer.Write( (short) 8 );
+            writer.Write( (byte) TradeAction.Cancel );
+            writer.Write( Engine.Trade.Serial );
+            Engine.SendPacketToServer( writer );
         }
     }
 }

@@ -21,6 +21,7 @@ using ClassicAssist.Data.Commands;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Data.Misc;
 using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Misc;
@@ -970,6 +971,7 @@ namespace Assistant
         public static ThreadQueue<Packet> OutgoingQueue { get; set; }
         public static bool InternalTarget { get; set; }
         public static int InternalTargetSerial { get; set; }
+        public static Trade Trade { get; set; } = new Trade();
 
         private static bool OnPacketReceive( ref byte[] data, ref int length )
         {

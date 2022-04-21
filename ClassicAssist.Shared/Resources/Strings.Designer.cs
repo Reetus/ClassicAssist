@@ -10,8 +10,8 @@
 
 namespace ClassicAssist.Shared.Resources {
     using System;
-
-
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -23,15 +23,15 @@ namespace ClassicAssist.Shared.Resources {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Strings {
-
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Strings() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -45,7 +45,7 @@ namespace ClassicAssist.Shared.Resources {
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -59,7 +59,7 @@ namespace ClassicAssist.Shared.Resources {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to {0} agent is now {1}.
         /// </summary>
@@ -68,7 +68,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("{0} agent is now {1}", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to {0} items, {1} selected, {2} total amount.
         /// </summary>
@@ -77,7 +77,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("{0} items, {1} selected, {2} total amount", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Abilities.
         /// </summary>
@@ -86,7 +86,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Abilities", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Abilities Gump.
         /// </summary>
@@ -95,7 +95,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Abilities Gump", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Ability already set....
         /// </summary>
@@ -104,7 +104,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Ability already set...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Ability not set....
         /// </summary>
@@ -113,7 +113,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Ability not set...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to About.
         /// </summary>
@@ -122,7 +122,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("About", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Account.
         /// </summary>
@@ -131,7 +131,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Account", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Action Delay:.
         /// </summary>
@@ -140,7 +140,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Action Delay:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Actions.
         /// </summary>
@@ -149,7 +149,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Actions", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Activated following.
         /// </summary>
@@ -158,7 +158,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Activated following", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Active Objects.
         /// </summary>
@@ -167,7 +167,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Active Objects", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
@@ -176,7 +176,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Add", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Add Friend.
         /// </summary>
@@ -185,7 +185,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Add Friend", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Additional Assemblies.
         /// </summary>
@@ -194,7 +194,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Additional Assemblies", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Additional assemblies to load:.
         /// </summary>
@@ -203,7 +203,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Additional assemblies to load:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Address:.
         /// </summary>
@@ -212,7 +212,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Address:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Agents.
         /// </summary>
@@ -221,7 +221,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Agents", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Agility Potion.
         /// </summary>
@@ -230,7 +230,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Agility Potion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Alchemy Sounds.
         /// </summary>
@@ -239,7 +239,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Alchemy Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Aliases.
         /// </summary>
@@ -248,7 +248,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Aliases", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to All Enabled.
         /// </summary>
@@ -257,7 +257,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("All Enabled", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to All Names.
         /// </summary>
@@ -266,7 +266,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("All Names", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to All Packets.
         /// </summary>
@@ -275,7 +275,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("All Packets", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to All skills:.
         /// </summary>
@@ -284,7 +284,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("All skills:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Always On Top.
         /// </summary>
@@ -293,7 +293,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Always On Top", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Amount.
         /// </summary>
@@ -302,7 +302,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Amount", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Animals.
         /// </summary>
@@ -311,7 +311,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Animals", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Any.
         /// </summary>
@@ -320,7 +320,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Any", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Applies to hotkeys / macros only..
         /// </summary>
@@ -329,7 +329,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Applies to hotkeys / macros only.", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Apply.
         /// </summary>
@@ -338,7 +338,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Apply", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Arguments.
         /// </summary>
@@ -347,7 +347,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Arguments", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Arm / Disarm already in progress....
         /// </summary>
@@ -356,7 +356,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Arm / Disarm already in progress...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Atleast one option must be provided....
         /// </summary>
@@ -365,7 +365,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Atleast one option must be provided...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Attack Enemy.
         /// </summary>
@@ -374,7 +374,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Attack Enemy", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Attack Last.
         /// </summary>
@@ -383,7 +383,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Attack Last", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Attack request blocked....
         /// </summary>
@@ -392,7 +392,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Attack request blocked...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Authentication error or timeout.
         /// </summary>
@@ -401,7 +401,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Authentication error or timeout", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Author.
         /// </summary>
@@ -410,7 +410,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Author", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Auto accept only from friends.
         /// </summary>
@@ -419,7 +419,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Auto accept only from friends", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Auto accept party invites.
         /// </summary>
@@ -428,7 +428,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Auto accept party invites", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Auto disable when loading.
         /// </summary>
@@ -437,7 +437,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Auto disable when loading", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Autologin.
         /// </summary>
@@ -446,7 +446,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Autologin", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Autologin in {0} seconds....
         /// </summary>
@@ -455,7 +455,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Autologin in {0} seconds...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Autoloot.
         /// </summary>
@@ -464,7 +464,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Autoloot", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Autoloot matching items.
         /// </summary>
@@ -473,7 +473,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Autoloot matching items", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Autolooting &apos;{0}&apos;.
         /// </summary>
@@ -482,7 +482,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Autolooting \'{0}\'", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Autostart.
         /// </summary>
@@ -491,7 +491,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Autostart", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Background macro &apos;{0}&apos; started....
         /// </summary>
@@ -500,7 +500,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Background macro \'{0}\' started...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Background macro &apos;{0}&apos; stopped....
         /// </summary>
@@ -509,7 +509,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Background macro \'{0}\' stopped...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Backing up {0}....
         /// </summary>
@@ -518,7 +518,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Backing up {0}...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Backup Days.
         /// </summary>
@@ -527,7 +527,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Backup Days", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Backup path not set.
         /// </summary>
@@ -536,7 +536,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Backup path not set", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Backup Settings.
         /// </summary>
@@ -545,7 +545,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Backup Settings", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Bandage Self.
         /// </summary>
@@ -554,7 +554,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Bandage Self", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Bards Music.
         /// </summary>
@@ -563,7 +563,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Bards Music", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Base.
         /// </summary>
@@ -572,7 +572,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Base", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Bear Sounds.
         /// </summary>
@@ -581,7 +581,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Bear Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Bird Sounds.
         /// </summary>
@@ -590,7 +590,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Bird Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Blank.
         /// </summary>
@@ -599,7 +599,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Blank", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Bola.
         /// </summary>
@@ -608,7 +608,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Bola", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Both.
         /// </summary>
@@ -617,7 +617,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Both", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Bought.
         /// </summary>
@@ -626,7 +626,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Bought", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to BuffIcon.
         /// </summary>
@@ -635,7 +635,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("BuffIcon", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Buffs / Penalties.
         /// </summary>
@@ -644,7 +644,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Buffs / Penalties", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Build Date:.
         /// </summary>
@@ -653,7 +653,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Build Date:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Bull Sounds.
         /// </summary>
@@ -662,7 +662,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Bull Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Buy Agent: No matches found..
         /// </summary>
@@ -671,7 +671,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Buy Agent: No matches found.", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Caller.
         /// </summary>
@@ -680,7 +680,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Caller", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
@@ -689,7 +689,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cancel action.
         /// </summary>
@@ -698,7 +698,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Cancel action", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cannot find container....
         /// </summary>
@@ -707,7 +707,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Cannot find container...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cannot find item....
         /// </summary>
@@ -716,7 +716,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Cannot find item...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cannot find sound file....
         /// </summary>
@@ -725,7 +725,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Cannot find sound file...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cannot locate backup folder.
         /// </summary>
@@ -734,7 +734,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Cannot locate backup folder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cannot PlayMacro from background macro....
         /// </summary>
@@ -743,7 +743,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Cannot PlayMacro from background macro...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cap.
         /// </summary>
@@ -752,7 +752,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Cap", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Capture Packets.
         /// </summary>
@@ -761,7 +761,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Capture Packets", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cast Last Spell.
         /// </summary>
@@ -770,7 +770,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Cast Last Spell", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cat Sounds.
         /// </summary>
@@ -779,7 +779,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Cat Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Category.
         /// </summary>
@@ -788,7 +788,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Category", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Character.
         /// </summary>
@@ -797,7 +797,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Character", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Character Index.
         /// </summary>
@@ -806,7 +806,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Character Index", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Character index not found.
         /// </summary>
@@ -815,7 +815,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Character index not found", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Characters:.
         /// </summary>
@@ -824,7 +824,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Characters:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Chat.
         /// </summary>
@@ -833,7 +833,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Chat", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Check For Updates.
         /// </summary>
@@ -842,7 +842,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Check For Updates", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Check hands before potions.
         /// </summary>
@@ -851,7 +851,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Check hands before potions", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Check Weight.
         /// </summary>
@@ -860,7 +860,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Check Weight", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Chicken Sounds.
         /// </summary>
@@ -869,7 +869,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Chicken Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Choose backup folder.
         /// </summary>
@@ -878,7 +878,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Choose backup folder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Choose by Cliloc.
         /// </summary>
@@ -887,7 +887,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Choose by Cliloc", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Choose from Item.
         /// </summary>
@@ -896,7 +896,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Choose from Item", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Clear.
         /// </summary>
@@ -905,7 +905,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Clear", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Clear All.
         /// </summary>
@@ -914,7 +914,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Clear All", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Clear All Objects.
         /// </summary>
@@ -923,7 +923,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Clear All Objects", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Clear Object Queue.
         /// </summary>
@@ -932,7 +932,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Clear Object Queue", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Clear Target Queue.
         /// </summary>
@@ -941,7 +941,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Clear Target Queue", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Clear Weapon Ability.
         /// </summary>
@@ -950,7 +950,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Clear Weapon Ability", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cliloc.
         /// </summary>
@@ -959,7 +959,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Cliloc", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cliloc Filter.
         /// </summary>
@@ -968,7 +968,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Cliloc Filter", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
@@ -977,7 +977,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Close", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Color.
         /// </summary>
@@ -986,7 +986,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Color", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Combat.
         /// </summary>
@@ -995,7 +995,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Combat", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Command Prefix:.
         /// </summary>
@@ -1004,7 +1004,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Command Prefix:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Commands.
         /// </summary>
@@ -1013,7 +1013,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Commands", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Commands:.
         /// </summary>
@@ -1022,7 +1022,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Commands:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Complete.
         /// </summary>
@@ -1031,7 +1031,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Complete", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Configure Sound Filters.
         /// </summary>
@@ -1040,7 +1040,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Configure Sound Filters", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Conflagration Potion.
         /// </summary>
@@ -1049,7 +1049,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Conflagration Potion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Confusion Blast Potion.
         /// </summary>
@@ -1058,7 +1058,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Confusion Blast Potion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Connect Delay.
         /// </summary>
@@ -1067,7 +1067,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Connect Delay", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Connected:.
         /// </summary>
@@ -1076,7 +1076,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Connected:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Connecting....
         /// </summary>
@@ -1085,7 +1085,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Connecting...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Consume.
         /// </summary>
@@ -1094,7 +1094,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Consume", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Context menu entry disabled.
         /// </summary>
@@ -1103,7 +1103,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Context menu entry disabled", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Context menu entry not found....
         /// </summary>
@@ -1112,7 +1112,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Context menu entry not found...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Context menu request.
         /// </summary>
@@ -1121,7 +1121,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Context menu request", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Copy.
         /// </summary>
@@ -1130,7 +1130,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Copy", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Copy All.
         /// </summary>
@@ -1139,7 +1139,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Copy All", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Copy packet declaration.
         /// </summary>
@@ -1148,7 +1148,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Copy packet declaration", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Copy to clipboard.
         /// </summary>
@@ -1157,7 +1157,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Copy to clipboard", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cougar Sounds.
         /// </summary>
@@ -1166,7 +1166,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Cougar Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Count.
         /// </summary>
@@ -1175,7 +1175,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Count", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Counter &quot;{0}&quot; amount is now {1}....
         /// </summary>
@@ -1184,7 +1184,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Counter \"{0}\" amount is now {1}...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Counters.
         /// </summary>
@@ -1193,7 +1193,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Counters", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Create Macro.
         /// </summary>
@@ -1202,7 +1202,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Create Macro", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Create Macro Button.
         /// </summary>
@@ -1211,7 +1211,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Create Macro Button", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cure Potion.
         /// </summary>
@@ -1220,7 +1220,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Cure Potion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Current Ability Cleared.
         /// </summary>
@@ -1229,7 +1229,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Current Ability Cleared", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Current Location:.
         /// </summary>
@@ -1238,7 +1238,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Current Location:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Current donations for {0}: ${1}.
         /// </summary>
@@ -1247,7 +1247,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Current month donations", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Deactivated following.
         /// </summary>
@@ -1256,7 +1256,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Deactivated following", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Deer Sounds.
         /// </summary>
@@ -1265,7 +1265,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Deer Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Define Custom Properties.
         /// </summary>
@@ -1274,7 +1274,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Define Custom Properties", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Disable all vendor buy entries on loading profile.
         /// </summary>
@@ -1283,7 +1283,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Disable all vendor buy entries on loading profile", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Disable inside guardzone.
         /// </summary>
@@ -1292,16 +1292,16 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Disable inside guardzone", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to disabled.
+        ///   Looks up a localized string similar to Disabled.
         /// </summary>
         public static string Disabled {
             get {
                 return ResourceManager.GetString("Disabled", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Disarm.
         /// </summary>
@@ -1310,7 +1310,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Disarm", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Do not auto interupt.
         /// </summary>
@@ -1319,7 +1319,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Do not auto interupt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Dog Sounds.
         /// </summary>
@@ -1328,7 +1328,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Dog Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Donate Now.
         /// </summary>
@@ -1337,7 +1337,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Donate Now", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Donating helps support continued development, your support is appreciated..
         /// </summary>
@@ -1346,7 +1346,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Donating helps support continued development, your support is appreciated.", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Done....
         /// </summary>
@@ -1355,7 +1355,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Done...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Door Sounds.
         /// </summary>
@@ -1364,7 +1364,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Door Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Dragon Sounds.
         /// </summary>
@@ -1373,7 +1373,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Dragon Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Dress.
         /// </summary>
@@ -1382,7 +1382,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Dress", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Dress already in progress....
         /// </summary>
@@ -1391,7 +1391,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Dress already in progress...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Dress Type.
         /// </summary>
@@ -1400,7 +1400,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Dress Type", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Drop Holding Object.
         /// </summary>
@@ -1409,7 +1409,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Drop Holding Object", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Duplicate.
         /// </summary>
@@ -1418,7 +1418,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Duplicate", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Eagle Sounds.
         /// </summary>
@@ -1427,7 +1427,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Eagle Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Elapsed.
         /// </summary>
@@ -1436,7 +1436,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Elapsed", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Emote Sounds.
         /// </summary>
@@ -1445,7 +1445,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Emote Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Enabled.
         /// </summary>
@@ -1454,7 +1454,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Enabled", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Enabled Packets:.
         /// </summary>
@@ -1463,7 +1463,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Enabled Packets:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Enchanted Apple.
         /// </summary>
@@ -1472,7 +1472,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Enchanted Apple", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Enemy.
         /// </summary>
@@ -1481,7 +1481,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Enemy", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Enemy target message:.
         /// </summary>
@@ -1490,7 +1490,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Enemy target message:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Entity.
         /// </summary>
@@ -1499,7 +1499,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Entity", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Entity Collection Viewer.
         /// </summary>
@@ -1508,7 +1508,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Entity Collection Viewer", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Entity not found....
         /// </summary>
@@ -1517,7 +1517,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Entity not found...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Entity Viewer.
         /// </summary>
@@ -1526,7 +1526,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Entity Viewer", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Environment.
         /// </summary>
@@ -1535,7 +1535,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Environment", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Equip Item.
         /// </summary>
@@ -1544,7 +1544,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Equip Item", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Equip Last Weapon (Quick Weapon Switch) *.
         /// </summary>
@@ -1553,7 +1553,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Equip Last Weapon (Quick Weapon Switch)", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Era.
         /// </summary>
@@ -1562,7 +1562,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Era", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
@@ -1571,7 +1571,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Error", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Error: Cannot find player backpack.
         /// </summary>
@@ -1580,7 +1580,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Error: Cannot find player backpack", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Error: Cannot find type.
         /// </summary>
@@ -1589,7 +1589,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Error: Cannot find type", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Error: No Player.
         /// </summary>
@@ -1598,7 +1598,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Error: No Player", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Error loading assembly: {0}.
         /// </summary>
@@ -1607,7 +1607,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Error loading assembly: {0}", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Event.
         /// </summary>
@@ -1616,7 +1616,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Event", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Execute.
         /// </summary>
@@ -1625,7 +1625,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Execute", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Expire Targets:.
         /// </summary>
@@ -1634,7 +1634,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Expire Targets:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Explosion Potion.
         /// </summary>
@@ -1643,7 +1643,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Explosion Potion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Failed to backup file: {0}.
         /// </summary>
@@ -1652,7 +1652,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Failed to backup file: {0}", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Failed to download macro....
         /// </summary>
@@ -1661,7 +1661,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Failed to download macro...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Failed to download manifest....
         /// </summary>
@@ -1670,7 +1670,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Failed to download manifest...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Failed to get character list.
         /// </summary>
@@ -1679,7 +1679,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Failed to get character list", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Failed to get selected server index.
         /// </summary>
@@ -1688,7 +1688,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Failed to get selected server index", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Failed to get server list.
         /// </summary>
@@ -1697,7 +1697,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Failed to get server list", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Features:.
         /// </summary>
@@ -1706,7 +1706,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Features:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Filter:.
         /// </summary>
@@ -1715,7 +1715,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Filter:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Filtered Time:.
         /// </summary>
@@ -1724,7 +1724,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Filtered Time:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Filters.
         /// </summary>
@@ -1733,7 +1733,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Filters", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Folder Browser.
         /// </summary>
@@ -1742,7 +1742,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Folder Browser", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Force Walk Off.
         /// </summary>
@@ -1751,7 +1751,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Force Walk Off", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Force Walk On.
         /// </summary>
@@ -1760,7 +1760,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Force Walk On", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Format Code.
         /// </summary>
@@ -1769,7 +1769,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Format Code", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Friend.
         /// </summary>
@@ -1778,7 +1778,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Friend", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Friend target message:.
         /// </summary>
@@ -1787,7 +1787,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Friend target message:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Friends.
         /// </summary>
@@ -1796,7 +1796,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Friends", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Fruit Bowl.
         /// </summary>
@@ -1805,7 +1805,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Fruit Bowl", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to General.
         /// </summary>
@@ -1814,7 +1814,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("General", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Get Closest Gray.
         /// </summary>
@@ -1823,7 +1823,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Get Closest Gray", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Get Next Any.
         /// </summary>
@@ -1832,7 +1832,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Get Next Any", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Get Next Criminal.
         /// </summary>
@@ -1841,7 +1841,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Get Next Criminal", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Get Next Enemy.
         /// </summary>
@@ -1850,7 +1850,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Get Next Enemy", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Get Next Friend.
         /// </summary>
@@ -1859,7 +1859,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Get Next Friend", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Get Next Gray.
         /// </summary>
@@ -1868,7 +1868,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Get Next Gray", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Get Next Gray / Criminal.
         /// </summary>
@@ -1877,7 +1877,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Get Next Gray / Criminal", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Get Next Innocent.
         /// </summary>
@@ -1886,7 +1886,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Get Next Innocent", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Get Next Murderer.
         /// </summary>
@@ -1895,7 +1895,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Get Next Murderer", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Get Next Unfriendly.
         /// </summary>
@@ -1904,7 +1904,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Get Next Unfriendly", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to GetFriend/GetEnemy uses ignore list.
         /// </summary>
@@ -1913,7 +1913,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("GetFriend/GetEnemy uses ignore list", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Global.
         /// </summary>
@@ -1922,7 +1922,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Global", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Goat Sounds.
         /// </summary>
@@ -1931,7 +1931,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Goat Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Grapes of Wrath.
         /// </summary>
@@ -1940,7 +1940,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Grapes of Wrath", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Graphic.
         /// </summary>
@@ -1949,7 +1949,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Graphic", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Grid Container Viewer.
         /// </summary>
@@ -1958,7 +1958,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Grid Container Viewer", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Gumps.
         /// </summary>
@@ -1967,7 +1967,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Gumps", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Heal Potion.
         /// </summary>
@@ -1976,7 +1976,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Heal Potion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Hide.
         /// </summary>
@@ -1985,7 +1985,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Hide", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Horse Sounds.
         /// </summary>
@@ -1994,7 +1994,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Horse Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Hotkey will still trigger with hotkeys disabled.
         /// </summary>
@@ -2003,7 +2003,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Hotkey will still trigger with hotkeys disabled", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Hotkeys.
         /// </summary>
@@ -2012,7 +2012,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Hotkeys", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Hotkeys disabled....
         /// </summary>
@@ -2021,7 +2021,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Hotkeys disabled...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Hotkeys enabled....
         /// </summary>
@@ -2030,7 +2030,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Hotkeys enabled...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Hue Picker.
         /// </summary>
@@ -2039,7 +2039,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Hue Picker", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to ID.
         /// </summary>
@@ -2048,7 +2048,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("ID", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to ID from target.
         /// </summary>
@@ -2057,7 +2057,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("ID from target", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Ignore List.
         /// </summary>
@@ -2066,7 +2066,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Ignore List", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Ignore packet type.
         /// </summary>
@@ -2075,7 +2075,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Ignore packet type", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Ignore ping packets.
         /// </summary>
@@ -2084,7 +2084,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Ignore ping packets", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Import.
         /// </summary>
@@ -2093,7 +2093,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Import", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Include Backpack Amount.
         /// </summary>
@@ -2102,7 +2102,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Include Backpack Amount", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Include party members.
         /// </summary>
@@ -2111,7 +2111,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Include party members", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Include Purchased Amount.
         /// </summary>
@@ -2120,7 +2120,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Include Purchased Amount", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Incremental.
         /// </summary>
@@ -2129,7 +2129,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Incremental", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Inscribing Sounds.
         /// </summary>
@@ -2138,7 +2138,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Inscribing Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Insert.
         /// </summary>
@@ -2147,7 +2147,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Insert", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Insert Empty Entry.
         /// </summary>
@@ -2156,7 +2156,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Insert Empty Entry", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Instance.
         /// </summary>
@@ -2165,7 +2165,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Instance", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Interrupt Spell.
         /// </summary>
@@ -2174,7 +2174,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Interrupt Spell", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid container....
         /// </summary>
@@ -2183,7 +2183,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Invalid container...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid counter agent name....
         /// </summary>
@@ -2192,7 +2192,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Invalid counter agent name...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid destination container....
         /// </summary>
@@ -2201,7 +2201,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Invalid destination container...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid gump....
         /// </summary>
@@ -2210,7 +2210,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Invalid gump...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid layer value....
         /// </summary>
@@ -2219,7 +2219,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Invalid layer value...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid mount....
         /// </summary>
@@ -2228,7 +2228,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Invalid mount...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid or unknown object id.
         /// </summary>
@@ -2237,7 +2237,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Invalid or unknown object id", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid organizer agent name....
         /// </summary>
@@ -2246,7 +2246,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Invalid organizer agent name...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid skill name &quot;{0}&quot;.
         /// </summary>
@@ -2255,7 +2255,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Invalid skill name \"{0}\"", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid source container....
         /// </summary>
@@ -2264,7 +2264,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Invalid source container...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid state name: &quot;on&quot;, &quot;off&quot;, or &quot;toggle&quot;....
         /// </summary>
@@ -2273,7 +2273,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Invalid state name: \"on\", \"off\", or \"toggle\"...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid type....
         /// </summary>
@@ -2282,7 +2282,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Invalid type...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid VendorBuy list name....
         /// </summary>
@@ -2291,7 +2291,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Invalid VendorBuy list name...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invisibility Potion.
         /// </summary>
@@ -2300,7 +2300,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Invisibility Potion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Item.
         /// </summary>
@@ -2309,7 +2309,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Item", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Item out of range....
         /// </summary>
@@ -2318,7 +2318,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Item out of range...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Item properties null or not loaded....
         /// </summary>
@@ -2327,7 +2327,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Item properties null or not loaded...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to items.
         /// </summary>
@@ -2336,7 +2336,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("items", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Items:.
         /// </summary>
@@ -2345,7 +2345,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Items:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Journal.
         /// </summary>
@@ -2354,7 +2354,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Journal", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Journal receives filtered messages.
         /// </summary>
@@ -2363,7 +2363,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Journal receives filtered messages", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Keyboard.
         /// </summary>
@@ -2372,7 +2372,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Keyboard", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
@@ -2381,7 +2381,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Language", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Last Object.
         /// </summary>
@@ -2390,7 +2390,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Last Object", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Last Target.
         /// </summary>
@@ -2399,7 +2399,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Last Target", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Last Target:.
         /// </summary>
@@ -2408,7 +2408,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Last Target:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Last target message:.
         /// </summary>
@@ -2417,7 +2417,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Last target message:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Latency:.
         /// </summary>
@@ -2426,7 +2426,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Latency:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Layer.
         /// </summary>
@@ -2435,7 +2435,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Layer", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Learn how to contribute your own macros....
         /// </summary>
@@ -2444,7 +2444,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Learn how to contribute your own macros...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Light.
         /// </summary>
@@ -2453,7 +2453,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Light", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Light Level.
         /// </summary>
@@ -2462,7 +2462,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Light Level", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Limit Mouse Wheel Retrigger.
         /// </summary>
@@ -2471,7 +2471,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Limit Mouse Wheel Retrigger", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Line Number.
         /// </summary>
@@ -2480,7 +2480,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Line Number", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Lists.
         /// </summary>
@@ -2489,7 +2489,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Lists", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Load.
         /// </summary>
@@ -2498,7 +2498,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Load", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Loaded to all profiles.
         /// </summary>
@@ -2507,7 +2507,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Loaded to all profiles", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
@@ -2516,7 +2516,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Loading...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Location:.
         /// </summary>
@@ -2525,7 +2525,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Location:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
@@ -2534,7 +2534,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Login", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Login With Google.
         /// </summary>
@@ -2543,7 +2543,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Login With Google", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Login With Windows.
         /// </summary>
@@ -2552,7 +2552,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Login With Windows", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Logout.
         /// </summary>
@@ -2561,7 +2561,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Logout", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Loop.
         /// </summary>
@@ -2570,7 +2570,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Loop", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Loop time: {0}.
         /// </summary>
@@ -2579,7 +2579,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Loop time: {0}", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Loot humanoids.
         /// </summary>
@@ -2588,7 +2588,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Loot humanoids", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Macro Commands Wiki (Launches in Browser).
         /// </summary>
@@ -2597,7 +2597,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Macro Commands Wiki (Launches in Browser)", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Macro error: {0}.
         /// </summary>
@@ -2606,7 +2606,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Macro error: {0}", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Macro name must be unique..
         /// </summary>
@@ -2615,7 +2615,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Macro name must be unique.", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Macro not found....
         /// </summary>
@@ -2624,7 +2624,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Macro not found...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Running malicious macros could compromise your account or computer!
         ///
@@ -2639,7 +2639,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Macro Warning", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to https://github.com/Reetus/ClassicAssist/wiki/Macro-Commands.
         /// </summary>
@@ -2648,7 +2648,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("MACRO_WIKI_URL", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Macros.
         /// </summary>
@@ -2657,7 +2657,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Macros", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Macros default to quiet mode.
         /// </summary>
@@ -2666,7 +2666,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Macros default to quiet mode", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &quot;Made For Malo&quot;.
         /// </summary>
@@ -2675,7 +2675,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Made_For_Malo", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Magical.
         /// </summary>
@@ -2684,7 +2684,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Magical", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Main.
         /// </summary>
@@ -2693,7 +2693,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Main", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Map:.
         /// </summary>
@@ -2702,7 +2702,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Map:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Masteries.
         /// </summary>
@@ -2711,7 +2711,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Masteries", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Match Any ID.
         /// </summary>
@@ -2720,7 +2720,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Match Any ID", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Max Price.
         /// </summary>
@@ -2729,7 +2729,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Max Price", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Max Target Queue Length:.
         /// </summary>
@@ -2738,7 +2738,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Max Target Queue Length:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Maximum distance exceeded..
         /// </summary>
@@ -2747,7 +2747,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Maximum distance exceeded.", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Menu.
         /// </summary>
@@ -2756,7 +2756,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Menu", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Menus.
         /// </summary>
@@ -2765,7 +2765,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Menus", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Message Limit:.
         /// </summary>
@@ -2774,7 +2774,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Message Limit:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Messages.
         /// </summary>
@@ -2783,7 +2783,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Messages", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Min Price.
         /// </summary>
@@ -2792,7 +2792,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Min Price", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Minimize to system tray.
         /// </summary>
@@ -2801,7 +2801,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Minimize to system tray", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Minimum Weight Available:.
         /// </summary>
@@ -2810,7 +2810,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Minimum Weight Available:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Misc.
         /// </summary>
@@ -2819,7 +2819,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Misc", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Miscellaneous.
         /// </summary>
@@ -2828,7 +2828,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Miscellaneous", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Mobile.
         /// </summary>
@@ -2837,7 +2837,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Mobile", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Mobile not found....
         /// </summary>
@@ -2846,7 +2846,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Mobile not found...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Mobiles:.
         /// </summary>
@@ -2855,7 +2855,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Mobiles:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Module.
         /// </summary>
@@ -2864,7 +2864,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Module", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Move conflicting items.
         /// </summary>
@@ -2873,7 +2873,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Move conflicting items", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Move to backpack.
         /// </summary>
@@ -2882,7 +2882,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Move to backpack", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Move to container.
         /// </summary>
@@ -2891,7 +2891,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Move to container", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Movement.
         /// </summary>
@@ -2900,7 +2900,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Movement", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
@@ -2909,7 +2909,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Name", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Name:.
         /// </summary>
@@ -2918,7 +2918,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Name:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Name Overrides.
         /// </summary>
@@ -2927,7 +2927,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Name Overrides", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to New.
         /// </summary>
@@ -2936,7 +2936,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("New", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to New Folder.
         /// </summary>
@@ -2945,7 +2945,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("New Folder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to New Group.
         /// </summary>
@@ -2954,7 +2954,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("New Group", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to New Item.
         /// </summary>
@@ -2963,7 +2963,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("New Item", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to New Profile.
         /// </summary>
@@ -2972,7 +2972,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("New Profile", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to New version available:.
         /// </summary>
@@ -2981,7 +2981,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("New version available:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Next Target: {0}.
         /// </summary>
@@ -2990,7 +2990,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Next Target: {0}", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to No backup type or path set....
         /// </summary>
@@ -2999,7 +2999,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("No backup type or path set...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to No items....
         /// </summary>
@@ -3008,7 +3008,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("No items...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to No Target.
         /// </summary>
@@ -3017,7 +3017,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("No Target", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to No temporary dress layout configured....
         /// </summary>
@@ -3026,7 +3026,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("No temporary dress layout configured...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
@@ -3035,7 +3035,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("None", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Notes.
         /// </summary>
@@ -3044,7 +3044,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Notes", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Object &quot;{0}&quot; updated....
         /// </summary>
@@ -3053,7 +3053,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Object \"{0}\" updated...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Object Inspector.
         /// </summary>
@@ -3062,7 +3062,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Object Inspector", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Object queue full.
         /// </summary>
@@ -3071,7 +3071,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Object queue full", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Objects.
         /// </summary>
@@ -3080,7 +3080,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Objects", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to OK.
         /// </summary>
@@ -3089,7 +3089,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("OK", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Only overwrite blank password.
         /// </summary>
@@ -3098,7 +3098,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Only overwrite blank password", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Only write files that have been modified.
         /// </summary>
@@ -3107,7 +3107,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Only write files that have been modified", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Open All Containers.
         /// </summary>
@@ -3116,7 +3116,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Open All Containers", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Open in Github.
         /// </summary>
@@ -3125,7 +3125,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Open in Github", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Open Modules Folder.
         /// </summary>
@@ -3134,7 +3134,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Open Modules Folder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Operator.
         /// </summary>
@@ -3143,7 +3143,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Operator", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Options.
         /// </summary>
@@ -3152,7 +3152,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Options", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Orange Petal.
         /// </summary>
@@ -3161,7 +3161,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Orange Petal", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Organizer.
         /// </summary>
@@ -3170,7 +3170,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Organizer", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Organizer &quot;{0}&quot; not found....
         /// </summary>
@@ -3179,7 +3179,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Organizer \"{0}\" not found...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Organizer &quot;{0}&quot; finished....
         /// </summary>
@@ -3188,7 +3188,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Organizer {0} finished...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Organizer &quot;{0}&quot; running....
         /// </summary>
@@ -3197,7 +3197,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Organizer {0} running...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Organizer containers set....
         /// </summary>
@@ -3206,7 +3206,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Organizer containers set...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Original.
         /// </summary>
@@ -3215,7 +3215,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Original", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Overwrite Existing.
         /// </summary>
@@ -3224,7 +3224,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Overwrite Existing", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Overwrite existing files instead of creating new files with the same name.
         /// </summary>
@@ -3233,7 +3233,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Overwrite existing files instead of creating new files with the same name", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Overwrite existing hotkey &apos;{0}&apos; ?.
         /// </summary>
@@ -3242,7 +3242,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Overwrite existing hotkey \'{0}\' ?", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Pass to UO.
         /// </summary>
@@ -3251,7 +3251,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Pass to UO", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
@@ -3260,7 +3260,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Password", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Path.
         /// </summary>
@@ -3269,7 +3269,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Path", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Persist Use Once.
         /// </summary>
@@ -3278,7 +3278,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Persist Use Once", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Pig Sounds.
         /// </summary>
@@ -3287,7 +3287,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Pig Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Play.
         /// </summary>
@@ -3296,7 +3296,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Play", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Player.
         /// </summary>
@@ -3305,7 +3305,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Player", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Port:.
         /// </summary>
@@ -3314,7 +3314,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Port:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Prevent attacking friends in war mode.
         /// </summary>
@@ -3323,7 +3323,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Prevent attacking friends in war mode", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Prevent attacking innocents in guardzone.
         /// </summary>
@@ -3332,7 +3332,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Prevent attacking innocents in guardzone", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Prevent targeting friends with Harmful spells.
         /// </summary>
@@ -3341,7 +3341,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Prevent targeting friends with Harmful spells", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Prevent targeting innocents in guardzone.
         /// </summary>
@@ -3350,7 +3350,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Prevent targeting innocents in guardzone", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Priority.
         /// </summary>
@@ -3359,7 +3359,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Priority", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Priority:.
         /// </summary>
@@ -3368,7 +3368,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Priority:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Product:.
         /// </summary>
@@ -3377,7 +3377,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Product:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to ClassicAssist.
         /// </summary>
@@ -3386,7 +3386,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("ProductName", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Profile Backup.
         /// </summary>
@@ -3395,7 +3395,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Profile Backup", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Profile backup in progress....
         /// </summary>
@@ -3404,7 +3404,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Profile backup in progress...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Profile name contains illegal characters..
         /// </summary>
@@ -3413,7 +3413,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Profile name contains illegal characters.", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Profile saved....
         /// </summary>
@@ -3422,7 +3422,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Profile saved...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Profiles.
         /// </summary>
@@ -3431,7 +3431,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Profiles", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Project Homepage.
         /// </summary>
@@ -3440,7 +3440,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Project Homepage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Properties.
         /// </summary>
@@ -3449,7 +3449,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Properties", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Property.
         /// </summary>
@@ -3458,7 +3458,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Property", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Public Macros.
         /// </summary>
@@ -3467,7 +3467,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Public Macros", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Public Properties.
         /// </summary>
@@ -3476,7 +3476,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Public Properties", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Queue Last Target / Target Self.
         /// </summary>
@@ -3485,7 +3485,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Queue Last Target / Target Self", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Range check last target.
         /// </summary>
@@ -3494,7 +3494,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Range check last target", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Rat Sounds.
         /// </summary>
@@ -3503,7 +3503,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Rat Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Ready....
         /// </summary>
@@ -3512,7 +3512,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Ready...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Really remove macro &quot;{0}&quot;?.
         /// </summary>
@@ -3521,7 +3521,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Really remove macro \"{0}\"?", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Reconnect Delay.
         /// </summary>
@@ -3530,7 +3530,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Reconnect Delay", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Record.
         /// </summary>
@@ -3539,7 +3539,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Record", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Recount.
         /// </summary>
@@ -3548,7 +3548,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Recount", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Reflection Error: {0}.
         /// </summary>
@@ -3557,7 +3557,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Reflection Error: {0}", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Refresh.
         /// </summary>
@@ -3566,7 +3566,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Refresh", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Refresh Potion.
         /// </summary>
@@ -3575,7 +3575,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Refresh Potion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Regeneration.
         /// </summary>
@@ -3584,7 +3584,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Regeneration", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Rehue friends.
         /// </summary>
@@ -3593,7 +3593,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Rehue friends", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Rehue matching items.
         /// </summary>
@@ -3602,7 +3602,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Rehue matching items", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
@@ -3611,7 +3611,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Remove", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Remove Friend.
         /// </summary>
@@ -3620,7 +3620,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Remove Friend", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Remove Group.
         /// </summary>
@@ -3629,7 +3629,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Remove Group", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Repeated Messages.
         /// </summary>
@@ -3638,7 +3638,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Repeated Messages", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Replacement.
         /// </summary>
@@ -3647,7 +3647,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Replacement", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Replay.
         /// </summary>
@@ -3656,7 +3656,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Replay", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Requeue failed items.
         /// </summary>
@@ -3665,7 +3665,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Requeue failed items", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Requires Server Support.
         /// </summary>
@@ -3674,7 +3674,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Requires Server Support", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Reset.
         /// </summary>
@@ -3683,7 +3683,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Reset", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Reset +/-.
         /// </summary>
@@ -3692,7 +3692,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Reset +/-", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Reset Container.
         /// </summary>
@@ -3701,7 +3701,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Reset Container", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Reset import cache.
         /// </summary>
@@ -3710,7 +3710,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Reset import cache", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Resistances.
         /// </summary>
@@ -3719,7 +3719,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Resistances", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Restart game for changes to take effect....
         /// </summary>
@@ -3728,7 +3728,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Restart game for changes to take effect...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Resurrection Point: {0} - Direction: {1} - Distance: {2}.
         /// </summary>
@@ -3737,7 +3737,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Resurrection Point: {0} - Direction: {1} - Distance: {2}", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Resync.
         /// </summary>
@@ -3746,7 +3746,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Resync", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Run in background.
         /// </summary>
@@ -3755,7 +3755,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Run in background", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
@@ -3764,7 +3764,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Save", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Saved Passwords:.
         /// </summary>
@@ -3773,7 +3773,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Saved Passwords:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Scavenger.
         /// </summary>
@@ -3782,7 +3782,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Scavenger", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Scavenging &apos;{0}&apos;....
         /// </summary>
@@ -3791,7 +3791,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Scavenging \'{0}\'", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Seasons.
         /// </summary>
@@ -3800,7 +3800,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Seasons", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to seconds.
         /// </summary>
@@ -3809,7 +3809,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("seconds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to See More.
         /// </summary>
@@ -3818,7 +3818,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("See More", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Select destination container....
         /// </summary>
@@ -3827,7 +3827,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Select destination container...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Select source container....
         /// </summary>
@@ -3836,7 +3836,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Select source container...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Select undress container....
         /// </summary>
@@ -3845,7 +3845,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Select undress container...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Selecting character {0}....
         /// </summary>
@@ -3854,7 +3854,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Selecting character {0}...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Selecting server {0}....
         /// </summary>
@@ -3863,7 +3863,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Selecting server {0}...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Serial.
         /// </summary>
@@ -3872,7 +3872,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Serial", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Serial:.
         /// </summary>
@@ -3881,7 +3881,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Serial:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Server.
         /// </summary>
@@ -3890,7 +3890,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Server", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Server Index.
         /// </summary>
@@ -3899,7 +3899,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Server Index", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Servers:.
         /// </summary>
@@ -3908,7 +3908,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Servers:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Set.
         /// </summary>
@@ -3917,7 +3917,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Set", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Set Container.
         /// </summary>
@@ -3926,7 +3926,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Set Container", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Set Containers.
         /// </summary>
@@ -3935,7 +3935,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Set Containers", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Set Down.
         /// </summary>
@@ -3944,7 +3944,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Set Down", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Set Enemy.
         /// </summary>
@@ -3953,7 +3953,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Set Enemy", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Set Friend.
         /// </summary>
@@ -3962,7 +3962,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Set Friend", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Set Last Target.
         /// </summary>
@@ -3971,7 +3971,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Set Last Target", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Set Locked.
         /// </summary>
@@ -3980,7 +3980,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Set Locked", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Set Primary Ability.
         /// </summary>
@@ -3989,7 +3989,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Set Primary Ability", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Set Secondary Ability.
         /// </summary>
@@ -3998,7 +3998,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Set Secondary Ability", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Set Undress Container.
         /// </summary>
@@ -4007,7 +4007,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Set Undress Container", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Set Up.
         /// </summary>
@@ -4016,7 +4016,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Set Up", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Setting ability &quot;{0}&quot;....
         /// </summary>
@@ -4025,7 +4025,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Setting ability \"{0}\"...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Setting to zero will cause it to backup on every client close.
         /// </summary>
@@ -4034,7 +4034,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Setting to zero will cause it to backup on every client close", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Shard.
         /// </summary>
@@ -4043,7 +4043,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Shard", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Shard:.
         /// </summary>
@@ -4052,7 +4052,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Shard:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Share Macro.
         /// </summary>
@@ -4061,7 +4061,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Share Macro", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Sheep Sounds.
         /// </summary>
@@ -4070,7 +4070,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Sheep Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Show.
         /// </summary>
@@ -4079,7 +4079,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Show", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Show Chat Window.
         /// </summary>
@@ -4088,7 +4088,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Show Chat Window", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Show Child Items.
         /// </summary>
@@ -4097,7 +4097,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Show Child Items", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Show GIF Capture.
         /// </summary>
@@ -4106,7 +4106,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Show GIF Capture", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Show Next Target In Queue.
         /// </summary>
@@ -4115,7 +4115,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Show Next Target In Queue", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Show player / shard name in CUO title.
         /// </summary>
@@ -4124,7 +4124,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Show player / shard name in CUO title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Show Profile Name In Title.
         /// </summary>
@@ -4133,7 +4133,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Show Profile Name In Title", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Show resurrection waypoints.
         /// </summary>
@@ -4142,7 +4142,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Show resurrection waypoints", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Show running macros gump.
         /// </summary>
@@ -4151,7 +4151,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Show running macros gump", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Show World Items.
         /// </summary>
@@ -4160,7 +4160,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Show World Items", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Skills.
         /// </summary>
@@ -4169,7 +4169,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Skills", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Smart last target:.
         /// </summary>
@@ -4178,7 +4178,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Smart last target:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Smoke Bomb.
         /// </summary>
@@ -4187,7 +4187,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Smoke Bomb", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Snapshot Saved: {0}.
         /// </summary>
@@ -4196,7 +4196,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Snapshot Saved: {0}", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Software.
         /// </summary>
@@ -4205,7 +4205,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Software", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Sort Macros Alphabetical.
         /// </summary>
@@ -4214,7 +4214,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Sort Macros Alphabetical", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Sound Filter.
         /// </summary>
@@ -4223,7 +4223,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Sound Filter", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Sound Type.
         /// </summary>
@@ -4232,7 +4232,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Sound Type", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Special Moves.
         /// </summary>
@@ -4241,7 +4241,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Special Moves", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Spell Fizzle Sounds.
         /// </summary>
@@ -4250,7 +4250,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Spell Fizzle Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Spells.
         /// </summary>
@@ -4259,7 +4259,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Spells", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Spirit Speak Sounds.
         /// </summary>
@@ -4268,7 +4268,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Spirit Speak Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Stack.
         /// </summary>
@@ -4277,7 +4277,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Stack", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Stats.
         /// </summary>
@@ -4286,7 +4286,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Stats", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
@@ -4295,7 +4295,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Status", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Status:.
         /// </summary>
@@ -4304,7 +4304,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Status:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Stop.
         /// </summary>
@@ -4313,7 +4313,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Stop", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Stop All Macros.
         /// </summary>
@@ -4322,7 +4322,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Stop All Macros", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Stop Current Macro.
         /// </summary>
@@ -4331,7 +4331,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Stop Current Macro", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Stops all running macros including background and autostart macros..
         /// </summary>
@@ -4340,7 +4340,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Stops all running macros including background and autostart macros.", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Strength Potion.
         /// </summary>
@@ -4349,7 +4349,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Strength Potion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Stun.
         /// </summary>
@@ -4358,7 +4358,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Stun", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Take Snapshot.
         /// </summary>
@@ -4367,7 +4367,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Take Snapshot", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target.
         /// </summary>
@@ -4376,7 +4376,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target Acquisition - Enemy.
         /// </summary>
@@ -4385,7 +4385,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target Acquisition - Enemy", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target Acquisition - Friend.
         /// </summary>
@@ -4394,7 +4394,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target Acquisition - Friend", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target blocked... try again....
         /// </summary>
@@ -4403,7 +4403,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target blocked... try again...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target clothing item....
         /// </summary>
@@ -4412,7 +4412,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target clothing item...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target container....
         /// </summary>
@@ -4421,7 +4421,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target container...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target Enemy.
         /// </summary>
@@ -4430,7 +4430,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target Enemy", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target Friend.
         /// </summary>
@@ -4439,7 +4439,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target Friend", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target friend to remove....
         /// </summary>
@@ -4448,7 +4448,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target friend to remove...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target Last.
         /// </summary>
@@ -4457,7 +4457,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target Last", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target new friend....
         /// </summary>
@@ -4466,7 +4466,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target new friend...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target new item....
         /// </summary>
@@ -4475,7 +4475,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target new item...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target new mount....
         /// </summary>
@@ -4484,7 +4484,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target new mount...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target object....
         /// </summary>
@@ -4493,7 +4493,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target object...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target object &apos;{0}&apos;....
         /// </summary>
@@ -4502,7 +4502,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target object \'{0}\'...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target out of range, try again....
         /// </summary>
@@ -4511,7 +4511,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target out of range, try again...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target queue cleared....
         /// </summary>
@@ -4520,7 +4520,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target queue cleared...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target queue is not enabled....
         /// </summary>
@@ -4529,7 +4529,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target queue is not enabled...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target Queued.
         /// </summary>
@@ -4538,7 +4538,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target Queued", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target Self.
         /// </summary>
@@ -4547,7 +4547,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target Self", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Target timeout....
         /// </summary>
@@ -4556,7 +4556,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Target timeout...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Targeting.
         /// </summary>
@@ -4565,7 +4565,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Targeting", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The item needs to be equipped....
         /// </summary>
@@ -4574,7 +4574,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("The item needs to be equipped...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Time in milliseconds (-1 to not expire).
         /// </summary>
@@ -4583,7 +4583,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Time in milliseconds (-1 to not expire)", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Time Limit:.
         /// </summary>
@@ -4592,7 +4592,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Time Limit:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Timeout....
         /// </summary>
@@ -4601,7 +4601,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Timeout...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Timeout waiting for character selection screen.
         /// </summary>
@@ -4610,7 +4610,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Timeout waiting for character selection screen", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Timeout waiting for shard selection screen.
         /// </summary>
@@ -4619,7 +4619,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Timeout waiting for shard selection screen", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Timers.
         /// </summary>
@@ -4628,7 +4628,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Timers", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Titan / Cyclops Sounds.
         /// </summary>
@@ -4637,7 +4637,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Titan / Cyclops Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Toggle Force Walk.
         /// </summary>
@@ -4646,7 +4646,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Toggle Force Walk", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Toggle hotkeys.
         /// </summary>
@@ -4655,7 +4655,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Toggle hotkeys", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Toggle item properties.
         /// </summary>
@@ -4664,7 +4664,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Toggle item properties", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Toggle mounted.
         /// </summary>
@@ -4673,7 +4673,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Toggle mounted", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Toggle Primary Ability.
         /// </summary>
@@ -4682,7 +4682,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Toggle Primary Ability", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Toggle Secondary Ability.
         /// </summary>
@@ -4691,7 +4691,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Toggle Secondary Ability", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Topmost.
         /// </summary>
@@ -4700,7 +4700,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Topmost", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Total base:.
         /// </summary>
@@ -4709,7 +4709,16 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Total base:", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trade.
+        /// </summary>
+        public static string Trade {
+            get {
+                return ResourceManager.GetString("Trade", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Trinsic Rose Petal.
         /// </summary>
@@ -4718,7 +4727,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Trinsic Rose Petal", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Type.
         /// </summary>
@@ -4727,7 +4736,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Type", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Undisableable.
         /// </summary>
@@ -4736,7 +4745,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Undisableable", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Undress.
         /// </summary>
@@ -4745,7 +4754,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Undress", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Undress All.
         /// </summary>
@@ -4754,7 +4763,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Undress All", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unknown.
         /// </summary>
@@ -4763,7 +4772,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Unknown", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unknown account....
         /// </summary>
@@ -4772,7 +4781,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Unknown account...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unknown alias &quot;{0}&quot;..
         /// </summary>
@@ -4781,7 +4790,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Unknown alias \"{0}\".", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unknown buff name....
         /// </summary>
@@ -4790,7 +4799,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Unknown buff name...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unknown dress agent &quot;{0}&quot;..
         /// </summary>
@@ -4799,7 +4808,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Unknown dress agent \"{0}\".", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unknown macro....
         /// </summary>
@@ -4808,7 +4817,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Unknown macro...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unknown spell....
         /// </summary>
@@ -4817,7 +4826,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Unknown spell...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unknown timer....
         /// </summary>
@@ -4826,7 +4835,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Unknown timer...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unset Primary Ability.
         /// </summary>
@@ -4835,7 +4844,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Unset Primary Ability", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unset Secondary Ability.
         /// </summary>
@@ -4844,7 +4853,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Unset Secondary Ability", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to ENU.
         /// </summary>
@@ -4853,7 +4862,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("UO_LOCALE", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Use Cliloc language from ClassicUO settings.
         /// </summary>
@@ -4862,7 +4871,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Use Cliloc language from ClassicUO settings", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Use death screen whilst hidden (Chuckles Mode).
         /// </summary>
@@ -4871,7 +4880,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Use death screen whilst hidden", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Use experimental fizzle detection.
         /// </summary>
@@ -4880,7 +4889,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Use experimental fizzle detection", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Use item.
         /// </summary>
@@ -4889,7 +4898,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Use item", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Use Last Object.
         /// </summary>
@@ -4898,7 +4907,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Use Last Object", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Use Last Skill.
         /// </summary>
@@ -4907,7 +4916,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Use Last Skill", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Use Left Hand.
         /// </summary>
@@ -4916,7 +4925,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Use Left Hand", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Use object queue.
         /// </summary>
@@ -4925,7 +4934,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Use object queue", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Use Right Hand.
         /// </summary>
@@ -4934,7 +4943,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Use Right Hand", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Use skill.
         /// </summary>
@@ -4943,7 +4952,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Use skill", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Use UO3D Packets.
         /// </summary>
@@ -4952,7 +4961,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Use UO3D Packets", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to UseOnce: Cannot find type....
         /// </summary>
@@ -4961,7 +4970,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("UseOnce: Cannot find type...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to UseOnce cleared....
         /// </summary>
@@ -4970,7 +4979,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("UseOnce cleared...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
@@ -4979,7 +4988,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Username", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Value.
         /// </summary>
@@ -4988,7 +4997,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Value", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Vendor Buy.
         /// </summary>
@@ -4997,7 +5006,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Vendor Buy", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Vendor Sell.
         /// </summary>
@@ -5006,7 +5015,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Vendor Sell", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Version:.
         /// </summary>
@@ -5015,7 +5024,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Version:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Waiting for ClassicAssist to initialize....
         /// </summary>
@@ -5024,7 +5033,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Waiting for ClassicAssist to initialize...", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to WarMode Off.
         /// </summary>
@@ -5033,7 +5042,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("WarMode Off", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to WarMode On.
         /// </summary>
@@ -5042,7 +5051,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("WarMode On", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to WarMode Toggle.
         /// </summary>
@@ -5051,7 +5060,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("WarMode Toggle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Warn when counter amount below:.
         /// </summary>
@@ -5060,7 +5069,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Warn when counter amount below:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Warning.
         /// </summary>
@@ -5069,7 +5078,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Warning", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Weapon Sounds.
         /// </summary>
@@ -5078,7 +5087,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Weapon Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Weather.
         /// </summary>
@@ -5087,7 +5096,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Weather", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to When checked macro will execute automatically after login..
         /// </summary>
@@ -5096,7 +5105,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("When checked macro will execute automatically after login.", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Wolf Sounds.
         /// </summary>
@@ -5105,7 +5114,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Wolf Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to World Status.
         /// </summary>
@@ -5114,7 +5123,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("World_Status", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Wrestling Sounds.
         /// </summary>
@@ -5123,7 +5132,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Wrestling Sounds", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to X:.
         /// </summary>
@@ -5132,7 +5141,7 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("X:", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Y:.
         /// </summary>

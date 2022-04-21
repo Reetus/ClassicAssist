@@ -3399,6 +3399,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable/Disable/Toggle the Scavenger agent.
+        /// </summary>
+        public static string SETSCAVENGER_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETSCAVENGER_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetScavenger(&quot;off&quot;).
+        /// </summary>
+        public static string SETSCAVENGER_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETSCAVENGER_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sets the lock state of the given skill, up, down or locked..
         /// </summary>
         public static string SETSKILL_COMMAND_DESCRIPTION {
@@ -4031,6 +4049,60 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accepts the current trade window.
+        /// </summary>
+        public static string TRADEACCEPT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TRADEACCEPT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TradeAccept().
+        /// </summary>
+        public static string TRADEACCEPT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TRADEACCEPT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Closes the current trade window.
+        /// </summary>
+        public static string TRADECLOSE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TRADECLOSE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TradeClose().
+        /// </summary>
+        public static string TRADECLOSE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TRADECLOSE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rejects (unticks) the current trade window.
+        /// </summary>
+        public static string TRADEREJECT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TRADEREJECT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TradeReject().
+        /// </summary>
+        public static string TRADEREJECT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TRADEREJECT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Turn in the given direction..
         /// </summary>
         public static string TURN_COMMAND_DESCRIPTION {
@@ -4425,6 +4497,24 @@ namespace ClassicAssist.Resources {
         public static string WAITFORTARGETORFIZZLE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WAITFORTARGETORFIZZLE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waits the specified number of milliseconds for trade window action, -1 for infinite.
+        /// </summary>
+        public static string WAITFORTRADEWINDOW_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WAITFORTRADEWINDOW_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WaitForTradeWindow(5000).
+        /// </summary>
+        public static string WAITFORTRADEWINDOW_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WAITFORTRADEWINDOW_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

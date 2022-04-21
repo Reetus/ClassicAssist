@@ -1686,4 +1686,13 @@ Are you sure you wish to continue?</value>
   <data name="Selecting character {0}..." xml:space="preserve">
     <value>Selecting character {0}...</value>
   </data>
+  <data name="{0} agent is now {1}" xml:space="preserve">
+    <value>{0} agent is now {1}</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="Trade" xml:space="preserve">
+    <value>Trade</value>
+  </data>
 </root>

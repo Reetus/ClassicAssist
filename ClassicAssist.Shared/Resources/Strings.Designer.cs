@@ -61,6 +61,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} agent is now {1}.
+        /// </summary>
+        public static string _0__agent_is_now__1_ {
+            get {
+                return ResourceManager.GetString("{0} agent is now {1}", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} items, {1} selected, {2} total amount.
         /// </summary>
         public static string _0__items___1__selected___2__total_amount {
@@ -1281,6 +1290,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Disable_inside_guardzone {
             get {
                 return ResourceManager.GetString("Disable inside guardzone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string Disabled {
+            get {
+                return ResourceManager.GetString("Disabled", resourceCulture);
             }
         }
         
@@ -4689,6 +4707,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Total_base_ {
             get {
                 return ResourceManager.GetString("Total base:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trade.
+        /// </summary>
+        public static string Trade {
+            get {
+                return ResourceManager.GetString("Trade", resourceCulture);
             }
         }
         

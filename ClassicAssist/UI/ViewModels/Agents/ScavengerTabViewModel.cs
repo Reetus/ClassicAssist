@@ -52,6 +52,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
             ScavengerManager manager = ScavengerManager.GetInstance();
             manager.Items = Items;
             manager.CheckArea = CheckArea;
+            manager.IsEnabled = () => Enabled;
+            manager.SetEnabled = val => Enabled = val;
             _ignoreList = new List<int>();
         }
 

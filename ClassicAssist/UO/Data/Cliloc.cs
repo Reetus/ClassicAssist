@@ -9,10 +9,10 @@ namespace ClassicAssist.UO.Data
 {
     public static class Cliloc
     {
-        private static readonly Lazy<Dictionary<int, string>> _lazyClilocList =
+        private static Lazy<Dictionary<int, string>> _lazyClilocList =
             new Lazy<Dictionary<int, string>>( () => LoadClilocs() );
 
-        private static readonly Lazy<Dictionary<int, string>> _lazyENUClilocList =
+        private static Lazy<Dictionary<int, string>> _lazyENUClilocList =
             new Lazy<Dictionary<int, string>>( () => LoadClilocs( true ) );
 
         private static string _dataPath;
@@ -183,6 +183,16 @@ namespace ClassicAssist.UO.Data
         public static void Initialize( string dataPath )
         {
             _dataPath = dataPath;
+        }
+
+        internal static void Initialize( Func<Dictionary<int, string>> customInitializer = null )
+        {
+            // For use in unit tests
+            if ( customInitializer != null )
+            {
+                _lazyClilocList = new Lazy<Dictionary<int, string>>( customInitializer );
+                _lazyENUClilocList = new Lazy<Dictionary<int, string>>( customInitializer );
+            }
         }
 
         public static string GetProperty( int property )

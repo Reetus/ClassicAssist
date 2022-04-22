@@ -2722,6 +2722,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Match text value of property (UOAlive).
+        /// </summary>
+        public static string Match_text_value_of_property__UOAlive_ {
+            get {
+                return ResourceManager.GetString("Match text value of property (UOAlive)", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max Price.
         /// </summary>
         public static string Max_Price {

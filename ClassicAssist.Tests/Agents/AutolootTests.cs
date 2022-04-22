@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using Assistant;
 using ClassicAssist.Data.Autoloot;
@@ -22,15 +21,7 @@ namespace ClassicAssist.Tests.Agents
         [TestMethod]
         public void WillRehueMatchingItemProperties()
         {
-            const string localPath = @"C:\Users\johns\Desktop\KvG Client 2.0";
-
-            if ( !Directory.Exists( localPath ) )
-            {
-                Debug.WriteLine( "Not running test, requires Cliloc.enu" );
-                return;
-            }
-
-            Cliloc.Initialize( localPath );
+            Cliloc.Initialize( () => new Dictionary<int, string> { { 1060413, "faster casting ~NUMBER~" } } );
 
             Item corpse = new Item( 0x40000000 ) { ID = 0x2006 };
 
@@ -690,6 +681,200 @@ namespace ClassicAssist.Tests.Agents
             vm.OnCorpseEvent( corpse.Serial );
 
             are.WaitOne( 2000 );
+
+            Engine.Items.Clear();
+            Engine.PacketWaitEntries = null;
+            Engine.InternalPacketSentEvent -= OnPacketSentEvent;
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillLootItemPropertiesLMI()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+            Item backpack = new Item( 0x40000001, 0x01 ) { Container = new ItemCollection( 0x40000001 ) };
+            Engine.Player.SetLayer( Layer.Backpack, backpack.Serial );
+            Engine.Items.Add( backpack );
+
+            Item corpse = new Item( 0x40000000 ) { ID = 0x2006 };
+
+            Engine.Items.Add( corpse );
+
+            IncomingPacketHandlers.Initialize();
+            AutolootViewModel vm = new AutolootViewModel { Enabled = true };
+
+            AutolootEntry lootEntry = new AutolootEntry
+            {
+                Rehue = false,
+                Autoloot = true,
+                Constraints = new ObservableCollection<AutolootConstraintEntry>(),
+                ID = -1
+            };
+
+            AutolootConstraintEntry autolootConstraint = new AutolootConstraintEntry
+            {
+                // 1151489
+                Property = vm.Constraints.FirstOrDefault( c => c.Name == "Lesser Magic Item" )
+            };
+            lootEntry.Constraints.Add( autolootConstraint );
+
+            vm.Items.Add( lootEntry );
+
+            Engine.PacketWaitEntries = new PacketWaitEntries();
+
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            void OnPacketSentEvent( byte[] data, int length )
+            {
+                if ( data[0] == 0x07 || data[0] == 0x08 )
+                {
+                    are.Set();
+                }
+                else if ( data[0] == 0xD6 || data[0] == 0x06 )
+                {
+                }
+                else
+                {
+                    Assert.Fail();
+                }
+            }
+
+            Engine.InternalPacketSentEvent += OnPacketSentEvent;
+
+            Engine.PacketWaitEntries.WaitEntryAddedEvent += entry =>
+            {
+                byte[] containerContentsPacket =
+                {
+                    0x3C, 0x00, 0x19, 0x00, 0x01, 0x43, 0x13, 0xFC, 0x5E, 0x10, 0x8A, 0x00, 0x00, 0x01, 0x00, 0x13,
+                    0x00, 0x82, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x64
+                };
+
+                PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x3C );
+
+                handler.OnReceive( new PacketReader( containerContentsPacket, containerContentsPacket.Length, false ) );
+
+                byte[] properties =
+                {
+                    0xD6, 0x00, 0x00, 0x00, 0x01, 0x43, 0x13, 0xFC, 0x5E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                    0x11, 0x92, 0x01, 0x00
+                };
+
+                PacketHandler propertiesHandler = IncomingPacketHandlers.GetHandler( 0xD6 );
+
+                propertiesHandler.OnReceive( new PacketReader( properties, properties.Length, false ) );
+
+                entry.Packet = containerContentsPacket;
+                entry.Lock.Set();
+            };
+
+            Cliloc.Initialize( () => new Dictionary<int, string> { { 1151489, "Lesser Magic Item" } } );
+
+            vm.OnCorpseEvent( corpse.Serial );
+
+            bool result = are.WaitOne( 5000 );
+
+            Assert.IsTrue( result );
+
+            Engine.Items.Clear();
+            Engine.PacketWaitEntries = null;
+            Engine.InternalPacketSentEvent -= OnPacketSentEvent;
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillLootItemPropertiesClilocAsText()
+        {
+            /*
+             * UOAlive artifact properties as strings instead of clilocs
+             */
+            Engine.Player = new PlayerMobile( 0x01 );
+            Item backpack = new Item( 0x40000001, 0x01 ) { Container = new ItemCollection( 0x40000001 ) };
+            Engine.Player.SetLayer( Layer.Backpack, backpack.Serial );
+            Engine.Items.Add( backpack );
+
+            Item corpse = new Item( 0x40000000 ) { ID = 0x2006 };
+
+            Engine.Items.Add( corpse );
+
+            IncomingPacketHandlers.Initialize();
+            AutolootViewModel vm = new AutolootViewModel { Enabled = true };
+
+            AutolootEntry lootEntry = new AutolootEntry
+            {
+                Rehue = false,
+                Autoloot = true,
+                Constraints = new ObservableCollection<AutolootConstraintEntry>(),
+                ID = -1
+            };
+
+            AutolootConstraintEntry autolootConstraint = new AutolootConstraintEntry
+            {
+                Property = vm.Constraints.FirstOrDefault( c => c.Name == "Greater Artifact" )
+            };
+            lootEntry.Constraints.Add( autolootConstraint );
+
+            vm.Items.Add( lootEntry );
+
+            Engine.PacketWaitEntries = new PacketWaitEntries();
+
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            void OnPacketSentEvent( byte[] data, int length )
+            {
+                if ( data[0] == 0x07 || data[0] == 0x08 )
+                {
+                    are.Set();
+                }
+                else if ( data[0] == 0xD6 || data[0] == 0x06 )
+                {
+                }
+                else
+                {
+                    Assert.Fail();
+                }
+            }
+
+            Engine.InternalPacketSentEvent += OnPacketSentEvent;
+
+            Engine.PacketWaitEntries.WaitEntryAddedEvent += entry =>
+            {
+                byte[] containerContentsPacket =
+                {
+                    0x3C, 0x00, 0x19, 0x00, 0x01, 0x43, 0x13, 0xFC, 0x5E, 0x10, 0x8A, 0x00, 0x00, 0x01, 0x00, 0x13,
+                    0x00, 0x82, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x64
+                };
+
+                PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x3C );
+
+                handler.OnReceive( new PacketReader( containerContentsPacket, containerContentsPacket.Length, false ) );
+
+                byte[] properties =
+                {
+                    0xD6, 0x00, 0x00, 0x00, 0x01, 0x43, 0x13, 0xFC, 0x5E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                    0x0F, 0xEA, 0x1B, 0x00
+                };
+
+                byte[] bytes = Encoding.Unicode.GetBytes( "<BASEFONT COLOR=#FAFF06>Greater Artifact" );
+
+                byte[] newProperties = properties.Append( (byte) bytes.Length ).ToArray().Concat( bytes ).ToArray();
+
+                PacketHandler propertiesHandler = IncomingPacketHandlers.GetHandler( 0xD6 );
+
+                propertiesHandler.OnReceive( new PacketReader( newProperties, newProperties.Length, false ) );
+
+                entry.Packet = containerContentsPacket;
+                entry.Lock.Set();
+            };
+
+            Cliloc.Initialize( () =>
+                new Dictionary<int, string> { { 1042971, "~NOTHING~" }, { 1151493, "Greater Artifact" } } );
+            AutolootManager.GetInstance().MatchTextValue = () => true;
+
+            vm.OnCorpseEvent( corpse.Serial );
+
+            bool result = are.WaitOne( 5000 );
+
+            Assert.IsTrue( result );
 
             Engine.Items.Clear();
             Engine.PacketWaitEntries = null;

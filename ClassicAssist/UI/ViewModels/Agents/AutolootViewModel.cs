@@ -63,6 +63,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private ObservableCollectionEx<AutolootEntry> _items = new ObservableCollectionEx<AutolootEntry>();
         private double _leftColumnWidth = 200;
         private bool _lootHumanoids;
+        private bool _matchTextValue;
         private ICommand _newGroupCommand;
 
         private ICommand _removeCommand;
@@ -95,6 +96,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             AutolootManager.GetInstance().GetEntries = () => _items.ToList();
             AutolootManager.GetInstance().CheckContainer = OnCorpseEvent;
             AutolootManager.GetInstance().IsRunning = () => IsRunning;
+            AutolootManager.GetInstance().MatchTextValue = () => MatchTextValue;
             Items.CollectionChanged += UpdateDraggables;
         }
 
@@ -172,6 +174,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set => SetProperty( ref _lootHumanoids, value );
         }
 
+        public bool MatchTextValue
+        {
+            get => _matchTextValue;
+            set => SetProperty( ref _matchTextValue, value );
+        }
+
         public ICommand NewGroupCommand =>
             _newGroupCommand ?? ( _newGroupCommand = new RelayCommand( NewGroup, o => true ) );
 
@@ -234,7 +242,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             JArray groupArray = new JArray();
 
             foreach ( AutolootGroup draggableGroup in Draggables.Where( i => i is AutolootGroup )
-                .Cast<AutolootGroup>() )
+                         .Cast<AutolootGroup>() )
             {
                 JObject entry = new JObject { { "Name", draggableGroup.Name }, { "Enabled", draggableGroup.Enabled } };
 
@@ -249,7 +257,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 { "RequeueFailedItems", RequeueFailedItems },
                 { "LootHumanoids", LootHumanoids },
                 { "LeftColumnWidth", LeftColumnWidth },
-                { "Groups", groupArray }
+                { "Groups", groupArray },
+                { "MatchTextValue", MatchTextValue }
             };
 
             JArray itemsArray = new JArray();
@@ -315,6 +324,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 #if !DEVELOP
             LeftColumnWidth = config["LeftColumnWidth"]?.ToObject<double>() ?? 200;
 #endif
+            MatchTextValue = config["MatchTextValue"]?.ToObject<bool>() ?? false;
 
             if ( config["Groups"] != null )
             {
@@ -460,7 +470,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
 
             foreach ( AutolootEntry groupChild in
-                group.Children.Where( i => i is AutolootEntry ).Cast<AutolootEntry>() )
+                     group.Children.Where( i => i is AutolootEntry ).Cast<AutolootEntry>() )
             {
                 Draggables.Add( groupChild );
 

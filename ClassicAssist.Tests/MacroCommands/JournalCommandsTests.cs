@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.IO;
+﻿using System.Collections.Generic;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Macros.Commands;
@@ -28,15 +27,7 @@ namespace ClassicAssist.Tests.MacroCommands
         [TestMethod]
         public void WillMatchSystemRegular()
         {
-            const string localPath = @"C:\Users\johns\Desktop\KvG Client 2.0";
-
-            if ( !Directory.Exists( localPath ) )
-            {
-                Debug.WriteLine( "Not running test, requires Cliloc.enu" );
-                return;
-            }
-
-            Cliloc.Initialize( localPath );
+            Cliloc.Initialize( () => new Dictionary<int, string> { { 0x0007a4e1, "fingers slip!" } } );
 
             byte[] packet =
             {

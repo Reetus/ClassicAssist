@@ -2,12 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
+using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.Data.Autoloot
 {
     public static class AutolootHelpers
     {
+        private static readonly AutolootManager _manager;
+        private static readonly Regex _regex;
+
+        static AutolootHelpers()
+        {
+            _manager = AutolootManager.GetInstance();
+            _regex = new Regex( "<BASEFONT[^>]*>(.*)(<\\/BASEFONT>)?", RegexOptions.Compiled | RegexOptions.IgnoreCase );
+        }
+
         public static Action<int> SetAutolootContainer { get; set; }
 
         public static IEnumerable<Item> AutolootFilter( IEnumerable<Item> items, AutolootEntry entry )
@@ -116,13 +127,49 @@ namespace ClassicAssist.Data.Autoloot
             }
         }
 
+        public static bool Operation( AutolootOperator @operator, string x, string y )
+        {
+            switch ( @operator )
+            {
+                case AutolootOperator.Equal:
+                    return x.Equals( y );
+                case AutolootOperator.NotEqual:
+                case AutolootOperator.GreaterThan:
+                case AutolootOperator.LessThan:
+                    return !x.Equals( y );
+                default:
+                    throw new ArgumentOutOfRangeException( nameof( @operator ), @operator, null );
+            }
+        }
+
         public static bool MatchProperty( Property property, int cliloc, PropertyEntry constraint,
             AutolootOperator @operator, int value )
         {
             try
             {
-                return property.Cliloc == cliloc && ( constraint.ClilocIndex == -1 || Operation( @operator,
+                bool result = property.Cliloc == cliloc && ( constraint.ClilocIndex == -1 || Operation( @operator,
                     int.Parse( property.Arguments[constraint.ClilocIndex] ), value ) );
+
+                if ( result )
+                {
+                    return true;
+                }
+
+                if ( !_manager.MatchTextValue() )
+                {
+                    return false;
+                }
+
+                string clilocString = Cliloc.GetProperty( cliloc );
+
+                if ( property.Text.Equals( clilocString ) )
+                {
+                    return true;
+                }
+
+                Match matches = _regex.Match( property.Text );
+
+                return matches.Success && matches.Groups[1].Value.Equals( clilocString );
             }
             catch ( IndexOutOfRangeException )
             {

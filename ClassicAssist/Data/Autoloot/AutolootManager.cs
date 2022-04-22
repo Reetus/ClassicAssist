@@ -30,6 +30,7 @@ namespace ClassicAssist.Data.Autoloot
 
         public Func<List<AutolootEntry>> GetEntries { get; set; } = () => new List<AutolootEntry>();
         public Func<bool> IsRunning { get; set; }
+        public Func<bool> MatchTextValue { get; set; }
 
         public static AutolootManager GetInstance()
         {

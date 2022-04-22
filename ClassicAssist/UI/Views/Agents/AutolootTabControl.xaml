@@ -332,6 +332,8 @@
                               IsChecked="{Binding SelectedItem.Autoloot}" />
                     <CheckBox Content="{x:Static resources:Strings.Requeue_failed_items}"
                               IsChecked="{Binding RequeueFailedItems}" />
+                    <CheckBox Content="{x:Static resources:Strings.Match_text_value_of_property__UOAlive_}"
+                              IsChecked="{Binding MatchTextValue}" />
                 </WrapPanel>
             </StackPanel>
         </Grid>

@@ -112,7 +112,7 @@ namespace ClassicAssist.UO.Objects
         {
             try
             {
-                Item match = EntityList.Values.FirstOrDefault( i => i.Serial == serial );
+                EntityList.TryGetValue( serial, out Item match );
 
                 if ( match != null )
                 {

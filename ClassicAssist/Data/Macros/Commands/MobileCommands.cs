@@ -355,6 +355,18 @@ namespace ClassicAssist.Data.Macros.Commands
             return Engine.Player?.TithingPoints ?? 0;
         }
 
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        public static double FasterCastRecovery()
+        {
+            return Engine.Player?.FasterCastRecovery ?? 0;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        public static double FasterCasting()
+        {
+            return Engine.Player?.FasterCasting ?? 0;
+        }
+
         [CommandsDisplay( Category = nameof( Strings.Entity ),
             Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static bool Poisoned( object obj )

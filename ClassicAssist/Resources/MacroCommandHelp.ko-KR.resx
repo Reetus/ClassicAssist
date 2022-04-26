@@ -767,4 +767,22 @@ OK버튼 클릭 클릭 여부를 나타내는 tuple과 선택된 entry index를 
   <data name="PROMPTMACROALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>주어진 별칭 이름에 대한 값을 제공하도록 게임 내 대상 커서로 프롬프트(Prompt)합니다. 별칭은 현재 매크로에서만 유효합니다.</value>
   </data>
+  <data name="FASTERCASTING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>현재 플레이어의 빠른주문시전 값을 반환합니다.</value>
+  </data>
+  <data name="FASTERCASTING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>fc = FasterCasting()</value>
+  </data>
+  <data name="FASTERCASTRECOVERY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>현재 플에이어의 파른주문회복 값을 반환합니다.</value>
+  </data>
+  <data name="FASTERCASTRECOVERY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>fcr = FasterCastRecovery()</value>
+  </data>
+  <data name="OPENHELPGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>헬프 검프를 엽니다.</value>
+  </data>
+  <data name="OPENHELPGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>OpenHelpGump()</value>
+  </data>
 </root>

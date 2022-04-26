@@ -2557,6 +2557,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Opens the Help gump과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string OPENHELPGUMP_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("OPENHELPGUMP_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   OpenHelpGump()과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string OPENHELPGUMP_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("OPENHELPGUMP_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Opens the Quests gump과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string OPENQUESTSGUMP_COMMAND_DESCRIPTION {

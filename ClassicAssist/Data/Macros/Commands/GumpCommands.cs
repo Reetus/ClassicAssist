@@ -95,6 +95,12 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = nameof( Strings.Gumps ) )]
+        public static void OpenHelpGump()
+        {
+            Engine.SendPacketToServer( new HelpButtonRequest() );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Gumps ) )]
         public static bool ConfirmPrompt( string message, bool closable = false )
         {
             return ConfirmPromptGump.ConfirmPrompt( message, closable );
@@ -116,7 +122,7 @@ namespace ClassicAssist.Data.Macros.Commands
             }
 
             UOC.SystemMessage( Strings.Atleast_one_option_must_be_provided___, (int) SystemMessageHues.Red );
-            return ( false, 0 );
+            return (false, 0);
         }
 
         [CommandsDisplay( Category = nameof( Strings.Gumps ),

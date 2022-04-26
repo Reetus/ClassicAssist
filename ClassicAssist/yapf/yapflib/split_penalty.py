@@ -16,12 +16,14 @@
 import re
 
 from lib2to3 import pytree
+from lib2to3.pgen2 import token as grammar_token
 
 from yapf.yapflib import format_token
 from yapf.yapflib import py3compat
 from yapf.yapflib import pytree_utils
 from yapf.yapflib import pytree_visitor
 from yapf.yapflib import style
+from yapf.yapflib import subtypes
 
 # TODO(morbo): Document the annotations in a centralized place. E.g., the
 # README file.
@@ -123,7 +125,7 @@ class _SplitPenaltyAssigner(pytree_visitor.PyTreeVisitor):
     allow_multiline_lambdas = style.Get('ALLOW_MULTILINE_LAMBDAS')
     if not allow_multiline_lambdas:
       for child in node.children:
-        if pytree_utils.NodeName(child) == 'COMMENT':
+        if child.type == grammar_token.COMMENT:
           if re.search(r'pylint:.*disable=.*\bg-long-lambda', child.value):
             allow_multiline_lambdas = True
             break
@@ -145,7 +147,7 @@ class _SplitPenaltyAssigner(pytree_visitor.PyTreeVisitor):
 
   def Visit_arglist(self, node):  # pylint: disable=invalid-name
     # arglist ::= argument (',' argument)* [',']
-    if pytree_utils.NodeName(node.children[0]) == 'STAR':
+    if node.children[0].type == grammar_token.STAR:
       # Python 3 treats a star expression as a specific expression type.
       # Process it in that method.
       self.Visit_star_expr(node)
@@ -200,7 +202,7 @@ class _SplitPenaltyAssigner(pytree_visitor.PyTreeVisitor):
     #                    (test (comp_for | (',' test)* [','])) )
     for child in node.children:
       self.Visit(child)
-      if pytree_utils.NodeName(child) == 'COLON':
+      if child.type == grammar_token.COLON:
         # This is a key to a dictionary. We don't want to split the key if at
         # all possible.
         _SetStronglyConnected(child)
@@ -229,7 +231,7 @@ class _SplitPenaltyAssigner(pytree_visitor.PyTreeVisitor):
           _SetSplitPenalty(
               pytree_utils.FirstLeafNode(node.children[1]),
               ONE_ELEMENT_ARGUMENT)
-      elif (pytree_utils.NodeName(node.children[0]) == 'LSQB' and
+      elif (node.children[0].type == grammar_token.LSQB and
             len(node.children[1].children) > 2 and
             (name.endswith('_test') or name.endswith('_expr'))):
         _SetStronglyConnected(node.children[1].children[0])
@@ -255,9 +257,9 @@ class _SplitPenaltyAssigner(pytree_visitor.PyTreeVisitor):
           'atom', 'power'
       }:
         # Don't split an argument list with one element if at all possible.
-        subtypes = pytree_utils.GetNodeAnnotation(
+        stypes = pytree_utils.GetNodeAnnotation(
             pytree_utils.FirstLeafNode(node), pytree_utils.Annotation.SUBTYPE)
-        if subtypes and format_token.Subtype.SUBSCRIPT_BRACKET in subtypes:
+        if stypes and subtypes.SUBSCRIPT_BRACKET in stypes:
           _IncreasePenalty(node, SUBSCRIPT)
 
           # Bump up the split penalty for the first part of a subscript. We
@@ -318,9 +320,9 @@ class _SplitPenaltyAssigner(pytree_visitor.PyTreeVisitor):
         break
       if trailer.children[0].value in '([':
         if len(trailer.children) > 2:
-          subtypes = pytree_utils.GetNodeAnnotation(
+          stypes = pytree_utils.GetNodeAnnotation(
               trailer.children[0], pytree_utils.Annotation.SUBTYPE)
-          if subtypes and format_token.Subtype.SUBSCRIPT_BRACKET in subtypes:
+          if stypes and subtypes.SUBSCRIPT_BRACKET in stypes:
             _SetStronglyConnected(
                 pytree_utils.FirstLeafNode(trailer.children[1]))
 
@@ -347,7 +349,7 @@ class _SplitPenaltyAssigner(pytree_visitor.PyTreeVisitor):
     _SetSplitPenalty(pytree_utils.FirstLeafNode(node), 0)
     prev_child = None
     for child in node.children:
-      if prev_child and pytree_utils.NodeName(prev_child) == 'COMMA':
+      if prev_child and prev_child.type == grammar_token.COMMA:
         _SetSplitPenalty(pytree_utils.FirstLeafNode(child), 0)
       prev_child = child
 

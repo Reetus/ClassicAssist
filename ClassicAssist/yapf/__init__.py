@@ -32,15 +32,13 @@ import logging
 import os
 import sys
 
-from lib2to3.pgen2 import tokenize
-
 from yapf.yapflib import errors
 from yapf.yapflib import file_resources
 from yapf.yapflib import py3compat
 from yapf.yapflib import style
 from yapf.yapflib import yapf_api
 
-__version__ = '0.31.0'
+__version__ = '0.32.0'
 
 
 def main(argv):
@@ -59,10 +57,6 @@ def main(argv):
   """
   parser = _BuildParser()
   args = parser.parse_args(argv[1:])
-  if args.version:
-    print('yapf {}'.format(__version__))
-    return 0
-
   style_config = args.style
 
   if args.style_help:
@@ -81,7 +75,9 @@ def main(argv):
 
     original_source = []
     while True:
-      if sys.stdin.closed:
+      # Test that sys.stdin has the "closed" attribute. When using pytest, it
+      # co-opts sys.stdin, which makes the "main_tests.py" fail. This is gross.
+      if hasattr(sys.stdin, "closed") and sys.stdin.closed:
         break
       try:
         # Use 'raw_input' instead of 'sys.stdin.read', because otherwise the
@@ -107,8 +103,10 @@ def main(argv):
           style_config=style_config,
           lines=lines,
           verify=args.verify)
-    except tokenize.TokenError as e:
-      raise errors.YapfError('%s:%s' % (e.args[1][0], e.args[0]))
+    except errors.YapfError:
+      raise
+    except Exception as e:
+      raise errors.YapfError(errors.FormatErrorMsg(e))
 
     file_resources.WriteReformattedCode('<stdout>', reformatted_source)
     return 0
@@ -121,7 +119,7 @@ def main(argv):
                                              (args.exclude or []) +
                                              exclude_patterns_from_ignore_file)
   if not files:
-    raise errors.YapfError('Input filenames did not match any python files')
+    raise errors.YapfError('input filenames did not match any python files')
 
   changed = FormatFiles(
       files,
@@ -232,11 +230,10 @@ def _FormatFile(filename,
         print_diff=print_diff,
         verify=verify,
         logger=logging.warning)
-  except tokenize.TokenError as e:
-    raise errors.YapfError('%s:%s:%s' % (filename, e.args[1][0], e.args[0]))
-  except SyntaxError as e:
-    e.filename = filename
+  except errors.YapfError:
     raise
+  except Exception as e:
+    raise errors.YapfError(errors.FormatErrorMsg(e))
 
   if not in_place and not quiet and reformatted_code:
     file_resources.WriteReformattedCode(filename, reformatted_code, encoding,
@@ -275,12 +272,13 @@ def _BuildParser():
   Returns:
     An ArgumentParser instance for the CLI.
   """
-  parser = argparse.ArgumentParser(description='Formatter for Python code.')
+  parser = argparse.ArgumentParser(
+      prog='yapf', description='Formatter for Python code.')
   parser.add_argument(
       '-v',
       '--version',
-      action='store_true',
-      help='show version number and exit')
+      action='version',
+      version='%(prog)s {}'.format(__version__))
 
   diff_inplace_quiet_group = parser.add_mutually_exclusive_group()
   diff_inplace_quiet_group.add_argument(

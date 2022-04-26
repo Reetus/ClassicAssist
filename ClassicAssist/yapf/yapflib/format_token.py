@@ -24,42 +24,9 @@ from lib2to3.pgen2 import token
 from yapf.yapflib import py3compat
 from yapf.yapflib import pytree_utils
 from yapf.yapflib import style
+from yapf.yapflib import subtypes
 
 CONTINUATION = token.N_TOKENS
-
-
-class Subtype(object):
-  """Subtype information about tokens.
-
-  Gleaned from parsing the code. Helps determine the best formatting.
-  """
-  NONE = 0
-  UNARY_OPERATOR = 1
-  BINARY_OPERATOR = 2
-  A_EXPR_OPERATOR = 3
-  M_EXPR_OPERATOR = 4
-  SUBSCRIPT_COLON = 5
-  SUBSCRIPT_BRACKET = 6
-  DEFAULT_OR_NAMED_ASSIGN = 7
-  DEFAULT_OR_NAMED_ASSIGN_ARG_LIST = 8
-  VARARGS_LIST = 9
-  VARARGS_STAR = 10
-  KWARGS_STAR_STAR = 11
-  ASSIGN_OPERATOR = 12
-  DICTIONARY_KEY = 13
-  DICTIONARY_KEY_PART = 14
-  DICTIONARY_VALUE = 15
-  DICT_SET_GENERATOR = 16
-  COMP_EXPR = 17
-  COMP_FOR = 18
-  COMP_IF = 19
-  FUNC_DEF = 20
-  DECORATOR = 21
-  TYPED_NAME = 22
-  TYPED_NAME_ARG_LIST = 23
-  SIMPLE_EXPRESSION = 24
-  PARAMETER_START = 25
-  PARAMETER_STOP = 26
 
 
 def _TabbedContinuationAlignPadding(spaces, align_style, tab_width):
@@ -88,10 +55,10 @@ class FormatToken(object):
 
   Attributes:
     node: The PyTree node this token represents.
-    next_token: The token in the unwrapped line after this token or None if this
-      is the last token in the unwrapped line.
-    previous_token: The token in the unwrapped line before this token or None if
-      this is the first token in the unwrapped line.
+    next_token: The token in the logical line after this token or None if this
+      is the last token in the logical line.
+    previous_token: The token in the logical line before this token or None if
+      this is the first token in the logical line.
     matching_bracket: If a bracket token ('[', '{', or '(') the matching
       bracket.
     parameters: If this and its following tokens make up a parameter list, then
@@ -107,12 +74,13 @@ class FormatToken(object):
       formatter won't place n spaces before all comments. Only those that are
       moved to the end of a line of code. The formatter may use different
       spacing when appropriate.
-    can_break_before: True if we're allowed to break before this token.
-    must_break_before: True if we're required to break before this token.
-    total_length: The total length of the unwrapped line up to and including
+    total_length: The total length of the logical line up to and including
       whitespace and this token. However, this doesn't include the initial
       indentation amount.
     split_penalty: The penalty for splitting the line before this token.
+    can_break_before: True if we're allowed to break before this token.
+    must_break_before: True if we're required to break before this token.
+    newlines: The number of newlines needed before this token.
   """
 
   def __init__(self, node):
@@ -129,20 +97,31 @@ class FormatToken(object):
     self.container_opening = None
     self.container_elements = []
     self.whitespace_prefix = ''
-    self.can_break_before = False
-    self.must_break_before = False
-    self.total_length = 0  # TODO(morbo): Think up a better name.
+    self.total_length = 0
     self.split_penalty = 0
+    self.can_break_before = False
+    self.must_break_before = pytree_utils.GetNodeAnnotation(
+        node, pytree_utils.Annotation.MUST_SPLIT, default=False)
+    self.newlines = pytree_utils.GetNodeAnnotation(
+        node, pytree_utils.Annotation.NEWLINES)
 
+    self.type = node.type
+    self.column = node.column
+    self.lineno = node.lineno
+    self.name = pytree_utils.NodeName(node)
+
+    self.spaces_required_before = 0
     if self.is_comment:
       self.spaces_required_before = style.Get('SPACES_BEFORE_COMMENT')
-    else:
-      self.spaces_required_before = 0
 
+    self.value = node.value
     if self.is_continuation:
-      self.value = self.node.value.rstrip()
-    else:
-      self.value = self.node.value
+      self.value = node.value.rstrip()
+
+    stypes = pytree_utils.GetNodeAnnotation(node,
+                                            pytree_utils.Annotation.SUBTYPE)
+    self.subtypes = {subtypes.NONE} if not stypes else stypes
+    self.is_pseudo = hasattr(node, 'is_pseudo') and node.is_pseudo
 
   @property
   def formatted_whitespace_prefix(self):
@@ -176,10 +155,10 @@ class FormatToken(object):
 
     if self.is_comment:
       comment_lines = [s.lstrip() for s in self.value.splitlines()]
-      self.node.value = ('\n' + indent_before).join(comment_lines)
+      self.value = ('\n' + indent_before).join(comment_lines)
 
       # Update our own value since we are changing node value
-      self.value = self.node.value
+      self.value = self.value
 
     if not self.whitespace_prefix:
       self.whitespace_prefix = ('\n' * (self.newlines or newlines_before) +
@@ -198,7 +177,7 @@ class FormatToken(object):
     if not previous:
       return
 
-    if previous.is_pseudo_paren:
+    if previous.is_pseudo:
       previous = previous.previous_token
       if not previous:
         return
@@ -209,17 +188,17 @@ class FormatToken(object):
       prev_lineno += previous.value.count('\n')
 
     if (cur_lineno != prev_lineno or
-        (previous.is_pseudo_paren and previous.value != ')' and
+        (previous.is_pseudo and previous.value != ')' and
          cur_lineno != previous.previous_token.lineno)):
       self.spaces_required_before = (
           self.column - first_column + depth * style.Get('INDENT_WIDTH'))
       return
 
-    cur_column = self.node.column
+    cur_column = self.column
     prev_column = previous.node.column
     prev_len = len(previous.value)
 
-    if previous.is_pseudo_paren and previous.value == ')':
+    if previous.is_pseudo and previous.value == ')':
       prev_column -= 1
       prev_len = 0
 
@@ -236,98 +215,65 @@ class FormatToken(object):
   def ClosesScope(self):
     return self.value in pytree_utils.CLOSING_BRACKETS
 
+  def AddSubtype(self, subtype):
+    self.subtypes.add(subtype)
+
   def __repr__(self):
-    msg = 'FormatToken(name={0}, value={1}, lineno={2}'.format(
-        self.name, self.value, self.lineno)
-    msg += ', pseudo)' if self.is_pseudo_paren else ')'
+    msg = ('FormatToken(name={0}, value={1}, column={2}, lineno={3}, '
+           'splitpenalty={4}'.format(
+               'DOCSTRING' if self.is_docstring else self.name, self.value,
+               self.column, self.lineno, self.split_penalty))
+    msg += ', pseudo)' if self.is_pseudo else ')'
     return msg
 
   @property
-  @py3compat.lru_cache()
   def node_split_penalty(self):
     """Split penalty attached to the pytree node of this token."""
     return pytree_utils.GetNodeAnnotation(
         self.node, pytree_utils.Annotation.SPLIT_PENALTY, default=0)
 
   @property
-  def newlines(self):
-    """The number of newlines needed before this token."""
-    return pytree_utils.GetNodeAnnotation(self.node,
-                                          pytree_utils.Annotation.NEWLINES)
-
-  @property
-  def must_split(self):
-    """Return true if the token requires a split before it."""
-    return pytree_utils.GetNodeAnnotation(self.node,
-                                          pytree_utils.Annotation.MUST_SPLIT)
-
-  @property
-  def column(self):
-    """The original column number of the node in the source."""
-    return self.node.column
-
-  @property
-  def lineno(self):
-    """The original line number of the node in the source."""
-    return self.node.lineno
-
-  @property
-  @py3compat.lru_cache()
-  def subtypes(self):
-    """Extra type information for directing formatting."""
-    value = pytree_utils.GetNodeAnnotation(self.node,
-                                           pytree_utils.Annotation.SUBTYPE)
-    return [Subtype.NONE] if value is None else value
-
-  @property
-  @py3compat.lru_cache()
   def is_binary_op(self):
     """Token is a binary operator."""
-    return Subtype.BINARY_OPERATOR in self.subtypes
-
-  @property
-  @py3compat.lru_cache()
-  def is_a_expr_op(self):
-    """Token is an a_expr operator."""
-    return Subtype.A_EXPR_OPERATOR in self.subtypes
-
-  @property
-  @py3compat.lru_cache()
-  def is_m_expr_op(self):
-    """Token is an m_expr operator."""
-    return Subtype.M_EXPR_OPERATOR in self.subtypes
+    return subtypes.BINARY_OPERATOR in self.subtypes
 
   @property
   @py3compat.lru_cache()
   def is_arithmetic_op(self):
     """Token is an arithmetic operator."""
-    return self.is_a_expr_op or self.is_m_expr_op
+    return self.value in frozenset({
+        '+',  # Add
+        '-',  # Subtract
+        '*',  # Multiply
+        '@',  # Matrix Multiply
+        '/',  # Divide
+        '//',  # Floor Divide
+        '%',  # Modulo
+        '<<',  # Left Shift
+        '>>',  # Right Shift
+        '|',  # Bitwise Or
+        '&',  # Bitwise Add
+        '^',  # Bitwise Xor
+        '**',  # Power
+    })
 
   @property
-  @py3compat.lru_cache()
   def is_simple_expr(self):
     """Token is an operator in a simple expression."""
-    return Subtype.SIMPLE_EXPRESSION in self.subtypes
+    return subtypes.SIMPLE_EXPRESSION in self.subtypes
 
   @property
-  @py3compat.lru_cache()
   def is_subscript_colon(self):
     """Token is a subscript colon."""
-    return Subtype.SUBSCRIPT_COLON in self.subtypes
-
-  @property
-  @py3compat.lru_cache()
-  def name(self):
-    """A string representation of the node's name."""
-    return pytree_utils.NodeName(self.node)
+    return subtypes.SUBSCRIPT_COLON in self.subtypes
 
   @property
   def is_comment(self):
-    return self.node.type == token.COMMENT
+    return self.type == token.COMMENT
 
   @property
   def is_continuation(self):
-    return self.node.type == CONTINUATION
+    return self.type == CONTINUATION
 
   @property
   @py3compat.lru_cache()
@@ -335,20 +281,18 @@ class FormatToken(object):
     return keyword.iskeyword(self.value)
 
   @property
-  @py3compat.lru_cache()
   def is_name(self):
-    return self.node.type == token.NAME and not self.is_keyword
+    return self.type == token.NAME and not self.is_keyword
 
   @property
   def is_number(self):
-    return self.node.type == token.NUMBER
+    return self.type == token.NUMBER
 
   @property
   def is_string(self):
-    return self.node.type == token.STRING
+    return self.type == token.STRING
 
   @property
-  @py3compat.lru_cache()
   def is_multiline_string(self):
     """Test if this string is a multiline string.
 
@@ -360,14 +304,8 @@ class FormatToken(object):
     return self.is_string and self.value.endswith(('"""', "'''"))
 
   @property
-  @py3compat.lru_cache()
   def is_docstring(self):
-    return self.is_multiline_string and not self.node.prev_sibling
-
-  @property
-  @py3compat.lru_cache()
-  def is_pseudo_paren(self):
-    return hasattr(self.node, 'is_pseudo') and self.node.is_pseudo
+    return self.is_string and self.previous_token is None
 
   @property
   def is_pylint_comment(self):
@@ -381,5 +319,5 @@ class FormatToken(object):
 
   @property
   def is_copybara_comment(self):
-    return self.is_comment and re.match(r'#.*\bcopybara:(strip|insert|replace)',
-                                        self.value)
+    return self.is_comment and re.match(
+        r'#.*\bcopybara:\s*(strip|insert|replace)', self.value)

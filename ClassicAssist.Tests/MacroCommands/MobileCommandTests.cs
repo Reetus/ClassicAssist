@@ -1,4 +1,5 @@
 ﻿using Assistant;
+using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.SpecialMoves;
 using ClassicAssist.UO.Data;
@@ -11,14 +12,37 @@ namespace ClassicAssist.Tests.MacroCommands
     [TestClass]
     public class MobileCommandTests
     {
-        private PlayerMobile _player;
+        private Mobile _mobile;
 
         [TestInitialize]
         public void Initialize()
         {
-            _player = new PlayerMobile( 0x01 ) { Name = "Shmoo", Notoriety = Notoriety.Murderer };
-            Engine.Player = _player;
-            AliasCommands.SetAlias( "self", 0x01 );
+            MacroManager.GetInstance().IsRecording = () => false;
+
+            _mobile = new Mobile( 0x01 ) { Name = "Shmoo", Notoriety = Notoriety.Murderer };
+            Engine.Mobiles = new MobileCollection( Engine.Items );
+            Engine.Mobiles.Add( _mobile );
+
+            Engine.Player = new PlayerMobile( 0x0004C88B ) { Name = "Shmoo", Notoriety = Notoriety.Murderer };
+
+            byte[] packet =
+            {
+                0x11, 0x00, 0x79, 0x00, 0x04, 0xC8, 0x8B, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6D, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7E, 0x00, 0x7E, 0x00, 0x06, 0x00, 0x00, 0x7D, 0x00, 0x14,
+                0x00, 0x81, 0x00, 0x1B, 0x00, 0x1B, 0x00, 0x8D, 0x00, 0x8D, 0x00, 0x00, 0x08, 0xAE, 0x00, 0x46,
+                0x01, 0x0D, 0x02, 0x19, 0x01, 0x00, 0xF5, 0x01, 0x05, 0x00, 0x46, 0x00, 0x46, 0x00, 0x46, 0x00,
+                0x46, 0x00, 0xC8, 0x00, 0x01, 0x00, 0x06, 0x00, 0x00, 0x01, 0x45, 0x00, 0x46, 0x00, 0x46, 0x00,
+                0x46, 0x00, 0x46, 0x00, 0x46, 0x00, 0x22, 0x00, 0x2D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x64, 0x00, 0x23, 0x00, 0x06, 0x00, 0x04, 0x00, 0x20
+            };
+            IncomingPacketHandlers.Initialize();
+
+            PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x11 );
+
+            handler?.OnReceive( new PacketReader( packet, packet.Length, false ) );
+
+            AliasCommands.SetAlias( "self", 0x0004C88B );
         }
 
         [TestMethod]
@@ -26,7 +50,7 @@ namespace ClassicAssist.Tests.MacroCommands
         {
             string name = EntityCommands.Name( "self" );
 
-            Assert.AreEqual( "Shmoo", name );
+            Assert.AreEqual( "System", name );
         }
 
         [TestMethod]
@@ -50,13 +74,11 @@ namespace ClassicAssist.Tests.MacroCommands
         [TestMethod]
         public void WillGetHitsNoParam()
         {
-            _player.Hits = 100;
-
             int val = MobileCommands.Hits();
 
-            Assert.AreEqual( 100, val );
+            Assert.AreEqual( 126, val );
 
-            _player.Hits = 0;
+            _mobile.Hits = 0;
         }
 
         [TestMethod]
@@ -92,10 +114,10 @@ namespace ClassicAssist.Tests.MacroCommands
         [TestMethod]
         public void WillGetHiddenNoParam()
         {
-            _player.Status |= MobileStatus.Hidden;
-            _player.Status |= MobileStatus.Female;
+            _mobile.Status |= MobileStatus.Hidden;
+            _mobile.Status |= MobileStatus.Female;
 
-            bool hidden = MobileCommands.Hidden();
+            bool hidden = MobileCommands.Hidden( _mobile.Serial );
 
             Assert.IsTrue( hidden );
         }
@@ -103,13 +125,13 @@ namespace ClassicAssist.Tests.MacroCommands
         [TestMethod]
         public void WillGetDead()
         {
-            Assert.IsFalse( MobileCommands.Dead() );
+            Assert.IsFalse( MobileCommands.Dead( _mobile.Serial ) );
 
-            _player.ID = 0x192;
+            _mobile.ID = 0x192;
 
-            Assert.IsTrue( MobileCommands.Dead() );
+            Assert.IsTrue( MobileCommands.Dead( _mobile.Serial ) );
 
-            _player.ID = 0x190;
+            _mobile.ID = 0x190;
         }
 
         [TestMethod]
@@ -140,49 +162,45 @@ namespace ClassicAssist.Tests.MacroCommands
 
             Assert.IsFalse( MobileCommands.Mounted( "self" ) );
 
-            _player.SetLayer( Layer.Mount, 2 );
+            _mobile.SetLayer( Layer.Mount, 2 );
 
             Assert.IsTrue( MobileCommands.Mounted( "self" ) );
 
             Engine.Items.Remove( mount );
-            _player.SetLayer( Layer.Mount, 0 );
+            _mobile.SetLayer( Layer.Mount, 0 );
         }
 
         [TestMethod]
         public void WillGetMaxHits()
         {
-            _player.HitsMax = 100;
+            _mobile.HitsMax = 100;
 
-            Assert.AreEqual( 100, MobileCommands.MaxHits( _player.Serial ) );
+            Assert.AreEqual( 100, MobileCommands.MaxHits( _mobile.Serial ) );
         }
 
         [TestMethod]
         public void WillGetHits()
         {
-            _player.Hits = 100;
+            _mobile.Hits = 100;
 
-            Assert.AreEqual( 100, MobileCommands.Hits( _player.Serial ) );
+            Assert.AreEqual( 100, MobileCommands.Hits( _mobile.Serial ) );
         }
 
         [TestMethod]
         public void WillGetDiffHits()
         {
-            _player.Hits = 90;
-            _player.HitsMax = 100;
+            _mobile.Hits = 90;
+            _mobile.HitsMax = 100;
 
-            Assert.AreEqual( 10, MobileCommands.DiffHits( _player.Serial ) );
+            Assert.AreEqual( 10, MobileCommands.DiffHits( _mobile.Serial ) );
         }
 
         [TestMethod]
         public void WillGetStats()
         {
-            _player.Strength = 100;
-            _player.Int = 90;
-            _player.Dex = 25;
-
-            Assert.AreEqual( 100, MobileCommands.Str() );
-            Assert.AreEqual( 90, MobileCommands.Int() );
-            Assert.AreEqual( 25, MobileCommands.Dex() );
+            Assert.AreEqual( 125, MobileCommands.Str() );
+            Assert.AreEqual( 129, MobileCommands.Int() );
+            Assert.AreEqual( 20, MobileCommands.Dex() );
         }
 
         [TestMethod]
@@ -208,6 +226,70 @@ namespace ClassicAssist.Tests.MacroCommands
             result = EntityCommands.SpecialMoveExists( "Death Strike" );
 
             Assert.IsFalse( result );
+        }
+
+        [TestMethod]
+        public void WillGetFasterCastRecovery()
+        {
+            double fasterCastRecovery = MobileCommands.FasterCastRecovery();
+
+            Assert.AreEqual( 6, fasterCastRecovery );
+        }
+
+        [TestMethod]
+        public void WillGetFasterCasting()
+        {
+            double fasterCasting = MobileCommands.FasterCasting();
+
+            Assert.AreEqual( 4, fasterCasting );
+        }
+
+        [TestMethod]
+        public void WillGetLuck()
+        {
+            int luck = MobileCommands.Luck();
+
+            Assert.AreEqual( 200, luck );
+        }
+
+        [TestMethod]
+        public void WillGetTithingPoints()
+        {
+            int tithingPoints = MobileCommands.TithingPoints();
+
+            Assert.AreEqual( 325, tithingPoints );
+        }
+
+        [TestMethod]
+        public void WillGetGold()
+        {
+            int gold = MobileCommands.Gold();
+
+            Assert.AreEqual( 2222, gold );
+        }
+
+        [TestMethod]
+        public void WillGetFollowers()
+        {
+            int followers = MobileCommands.Followers();
+
+            Assert.AreEqual( 1, followers );
+        }
+
+        [TestMethod]
+        public void WillGetMaxFollowers()
+        {
+            int maxFollowers = MobileCommands.MaxFollowers();
+
+            Assert.AreEqual( 5, maxFollowers );
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Engine.Player = null;
+            Engine.Items.Clear();
+            Engine.Mobiles.Clear();
         }
     }
 }

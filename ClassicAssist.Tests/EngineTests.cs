@@ -23,10 +23,12 @@ namespace ClassicAssist.Tests
         private OnGetPacketLength _getPacketLength;
         private OnGetUOFilePath _getUOFilePath;
         private int[] _packetLengths;
-        private PluginHeader _pluginHeader;
+        private Engine.NewPluginHeader _pluginHeader;
         private OnPacketSendRecv _receivePacket;
+        private Engine.dOnPacketSendRecv _receivePacketNew;
         private RequestMove _requestMove;
         private OnPacketSendRecv _sendPacket;
+        private Engine.dOnPacketSendRecv _sendPacketNew;
         private OnSetTitle _setTitle;
         private string _startupPath;
 
@@ -38,16 +40,20 @@ namespace ClassicAssist.Tests
             _getUOFilePath = GetUOFilePath;
             _getPacketLength = GetPacketLength;
             _sendPacket = SendPacket;
+            _sendPacketNew = SendPacketNew;
             _receivePacket = ReceivePacket;
+            _receivePacketNew = ReceivePacketNew;
             _requestMove = ( dir, run ) => true;
             _setTitle = SetTitle;
 
-            _pluginHeader = new PluginHeader
+            _pluginHeader = new Engine.NewPluginHeader
             {
                 GetPacketLength = Marshal.GetFunctionPointerForDelegate( _getPacketLength ),
                 GetUOFilePath = Marshal.GetFunctionPointerForDelegate( _getUOFilePath ),
                 Recv = Marshal.GetFunctionPointerForDelegate( _receivePacket ),
+                Recv_new = Marshal.GetFunctionPointerForDelegate( _receivePacketNew ),
                 Send = Marshal.GetFunctionPointerForDelegate( _sendPacket ),
+                Send_new = Marshal.GetFunctionPointerForDelegate( _sendPacketNew ),
                 RequestMove = Marshal.GetFunctionPointerForDelegate( _requestMove ),
                 SetTitle = Marshal.GetFunctionPointerForDelegate( _setTitle )
             };
@@ -73,6 +79,16 @@ namespace ClassicAssist.Tests
 
                 _packetLengths[key] = val;
             }
+        }
+
+        private static bool ReceivePacketNew( IntPtr data, ref int length )
+        {
+            return true;
+        }
+
+        private static bool SendPacketNew( IntPtr data, ref int length )
+        {
+            return true;
         }
 
         [TestMethod]

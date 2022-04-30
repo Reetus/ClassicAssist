@@ -56,6 +56,8 @@ namespace Assistant
 
         public delegate void dHotkeyPressed( int key, int mod, Key keys, ModKey modKey );
 
+        public delegate bool dOnPacketSendRecv( IntPtr data, ref int length );
+
         public delegate void dPlayerInitialized( PlayerMobile player );
 
         public delegate void dSendRecvPacket( byte[] data, int length );
@@ -102,6 +104,8 @@ namespace Assistant
         private static Stopwatch _incomingStopwatch;
         private static Stopwatch _outgoingStopwatch;
         public static int LastSkillID;
+        private static Delegate _sendToServerNew;
+        private static Delegate _sendToClientNew;
         public static CharacterListFlags CharacterListFlags { get; set; }
 
         public static Assembly ClassicAssembly { get; set; }
@@ -160,7 +164,7 @@ namespace Assistant
         public static event dDisconnected DisconnectedEvent;
         public static event dPlayerInitialized PlayerInitializedEvent;
 
-        public static unsafe void Install( PluginHeader* plugin )
+        public static unsafe void Install( NewPluginHeader* plugin )
         {
             Initialize();
 
@@ -178,7 +182,7 @@ namespace Assistant
             _mainThread.Start();
         }
 
-        internal static unsafe void InitializePlugin( PluginHeader* plugin )
+        internal static unsafe void InitializePlugin( NewPluginHeader* plugin )
         {
             _onConnected = OnConnected;
             _onDisconnected = OnDisconnected;
@@ -204,7 +208,9 @@ namespace Assistant
             _getPacketLength = Marshal.GetDelegateForFunctionPointer<OnGetPacketLength>( plugin->GetPacketLength );
             _getUOFilePath = Marshal.GetDelegateForFunctionPointer<OnGetUOFilePath>( plugin->GetUOFilePath );
             _sendToClient = Marshal.GetDelegateForFunctionPointer<OnPacketSendRecv>( plugin->Recv );
+            _sendToClientNew = Marshal.GetDelegateForFunctionPointer( plugin->Recv_new, typeof( dOnPacketSendRecv ) );
             _sendToServer = Marshal.GetDelegateForFunctionPointer<OnPacketSendRecv>( plugin->Send );
+            _sendToServerNew = Marshal.GetDelegateForFunctionPointer( plugin->Send_new, typeof( dOnPacketSendRecv ) );
             _requestMove = Marshal.GetDelegateForFunctionPointer<RequestMove>( plugin->RequestMove );
             _setTitle = Marshal.GetDelegateForFunctionPointer<OnSetTitle>( plugin->SetTitle );
 
@@ -689,7 +695,7 @@ namespace Assistant
             }
         }
 
-        public static void SendPacketToServer( byte[] packet, int length )
+        public static unsafe void SendPacketToServer( byte[] packet, int length )
         {
             lock ( _serverSendLock )
             {
@@ -725,13 +731,19 @@ namespace Assistant
 
                 ( byte[] data, int dataLength ) = Utility.CopyBuffer( packet, length );
 
-                _sendToServer?.Invoke( ref data, ref dataLength );
+                //_sendToServer?.Invoke( ref data, ref dataLength );
+
+                fixed ( byte* p = data )
+                {
+                    IntPtr ptr = (IntPtr) p;
+                    _sendToServerNew.Method.Invoke( null, new object[] { ptr, dataLength } );
+                }
 
                 _nextPacketSendTime = DateTime.Now + PACKET_SEND_DELAY;
             }
         }
 
-        public static void SendPacketToClient( byte[] packet, int length, bool delay = true )
+        public static unsafe void SendPacketToClient( byte[] packet, int length, bool delay = true )
         {
             try
             {
@@ -770,7 +782,13 @@ namespace Assistant
 
                     ( byte[] data, int dataLength ) = Utility.CopyBuffer( packet, length );
 
-                    _sendToClient?.Invoke( ref data, ref dataLength );
+                    //_sendToClient?.Invoke( ref data, ref dataLength );
+
+                    fixed ( byte* p = data )
+                    {
+                        IntPtr ptr = (IntPtr) p;
+                        _sendToClientNew.Method.Invoke( null, new object[] { ptr, dataLength } );
+                    }
 
                     _nextPacketRecvTime = DateTime.Now + PACKET_RECV_DELAY;
                 }
@@ -919,6 +937,42 @@ namespace Assistant
             PacketWaitEntries.CheckWait( data, PacketDirection.Outgoing, true );
 
             return true;
+        }
+
+        public struct NewPluginHeader
+        {
+            public int ClientVersion;
+            public IntPtr HWND;
+            public IntPtr OnRecv;
+            public IntPtr OnSend;
+            public IntPtr OnHotkeyPressed;
+            public IntPtr OnMouse;
+            public IntPtr OnPlayerPositionChanged;
+            public IntPtr OnClientClosing;
+            public IntPtr OnInitialize;
+            public IntPtr OnConnected;
+            public IntPtr OnDisconnected;
+            public IntPtr OnFocusGained;
+            public IntPtr OnFocusLost;
+            public IntPtr GetUOFilePath;
+            public IntPtr Recv;
+            public IntPtr Send;
+            public IntPtr GetPacketLength;
+            public IntPtr GetPlayerPosition;
+            public IntPtr CastSpell;
+            public IntPtr GetStaticImage;
+            public IntPtr Tick;
+            public IntPtr RequestMove;
+            public IntPtr SetTitle;
+
+            public IntPtr OnRecv_new, OnSend_new, Recv_new, Send_new;
+
+            public IntPtr OnDrawCmdList;
+            public IntPtr SDL_Window;
+            public IntPtr OnWndProc;
+            public IntPtr GetStaticData;
+            public IntPtr GetTileData;
+            public IntPtr GetCliloc;
         }
 
         #region ClassicUO Events

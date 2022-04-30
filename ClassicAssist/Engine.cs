@@ -736,7 +736,7 @@ namespace Assistant
                 fixed ( byte* p = data )
                 {
                     IntPtr ptr = (IntPtr) p;
-                    _sendToServerNew.Method.Invoke( null, new object[] { ptr, dataLength } );
+                    _sendToServerNew?.Method.Invoke( null, new object[] { ptr, dataLength } );
                 }
 
                 _nextPacketSendTime = DateTime.Now + PACKET_SEND_DELAY;
@@ -787,7 +787,7 @@ namespace Assistant
                     fixed ( byte* p = data )
                     {
                         IntPtr ptr = (IntPtr) p;
-                        _sendToClientNew.Method.Invoke( null, new object[] { ptr, dataLength } );
+                        _sendToClientNew?.Method.Invoke( null, new object[] { ptr, dataLength } );
                     }
 
                     _nextPacketRecvTime = DateTime.Now + PACKET_RECV_DELAY;

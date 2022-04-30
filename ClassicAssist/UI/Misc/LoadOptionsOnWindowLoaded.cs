@@ -45,8 +45,8 @@ namespace ClassicAssist.UI.Misc
                 return null;
             }
 
-            if ( args.Exception?.TargetSite.Module.Assembly == Engine.ClassicAssembly ||
-                 ( args.Exception?.TargetSite.Module.Assembly.ToString().Contains( "FNA" ) ?? false ) )
+            if ( args.Exception?.TargetSite?.Module.Assembly == Engine.ClassicAssembly ||
+                 ( args.Exception?.TargetSite?.Module.Assembly.ToString().Contains( "FNA" ) ?? false ) )
             {
                 return null;
             }

@@ -261,5 +261,18 @@ namespace ClassicAssist.Data.Macros.Commands
             writer.Write( Engine.Trade.Serial );
             Engine.SendPacketToServer( writer );
         }
+
+        [CommandsDisplay( Category = nameof( Strings.Trade ) )]
+        public static void TradeCurrency( int gold, int platinum = 0 )
+        {
+            PacketWriter writer = new PacketWriter( 12 );
+            writer.Write( (byte) 0x6F );
+            writer.Write( (short) 16 );
+            writer.Write( (byte) TradeAction.Gold );
+            writer.Write( Engine.Trade.ContainerLocal );
+            writer.Write( gold );
+            writer.Write( platinum );
+            Engine.SendPacketToServer( writer );
+        }
     }
 }

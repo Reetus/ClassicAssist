@@ -170,6 +170,7 @@ namespace ClassicAssist.UO.Data
     {
         Start,
         Cancel,
-        Update
+        Update,
+        Gold
     }
 }

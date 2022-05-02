@@ -46,6 +46,7 @@ namespace ClassicAssist.UO.Network
             Register( 0x12, 0, OnUseSkill );
             Register( 0x13, 10, OnEquipRequest );
             Register( 0x6C, 19, OnTargetSent );
+            Register( 0x6F, 0, OnSecureTrade );
             Register( 0x7D, 13, OnMenuResponse );
             Register( 0xA0, 3, OnPlayServer );
             Register( 0xB1, 0, OnGumpButtonPressed );
@@ -54,6 +55,24 @@ namespace ClassicAssist.UO.Network
             Register( 0xD7, 0, OnEncodedCommand );
             Register( 0xEF, 31, OnNewClientVersion );
             RegisterExtended( 0x1C, 0, OnSpellCast );
+        }
+
+        private static void OnSecureTrade( PacketReader reader )
+        {
+            byte action = reader.ReadByte();
+            int serial = reader.ReadInt32();
+            int value1 = reader.ReadInt32();
+            int value2 = reader.ReadInt32();
+
+            TradeAction tradeAction = (TradeAction) action;
+
+            if ( tradeAction != TradeAction.Gold )
+            {
+                return;
+            }
+
+            Engine.Trade.GoldLocal = value1;
+            Engine.Trade.PlatinumLocal = value2;
         }
 
         private static void OnUseSkill( PacketReader reader )

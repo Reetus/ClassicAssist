@@ -26,6 +26,7 @@ namespace ClassicAssist.Data.Macros
         private bool _isAutostart;
         private bool _isBackground;
         private bool _isRunning;
+        private Exception _lastException;
         private string _lastSavedHash;
         private DateTime _lastSavedOn;
         private bool _loop;
@@ -136,6 +137,12 @@ namespace ClassicAssist.Data.Macros
         {
             get => _isRunning;
             set => SetProperty( ref _isRunning, value );
+        }
+
+        public Exception LastException
+        {
+            get => _lastException;
+            set => SetProperty( ref _lastException, value );
         }
 
         public string LastSavedHash
@@ -272,7 +279,11 @@ namespace ClassicAssist.Data.Macros
 
         public void Execute()
         {
-            _dispatcher.Invoke( () => IsRunning = true );
+            _dispatcher.Invoke( () =>
+            {
+                LastException = null;
+                IsRunning = true;
+            } );
 
             if ( IsBackground )
             {
@@ -292,8 +303,10 @@ namespace ClassicAssist.Data.Macros
             }
         }
 
-        private static void OnExceptionEvent( Exception exception )
+        private void OnExceptionEvent( Exception exception )
         {
+            _dispatcher.Invoke( () => { LastException = exception; } );
+
             UO.Commands.SystemMessage( string.Format( Strings.Macro_error___0_, exception.Message ) );
 
             if ( exception is SyntaxErrorException syntaxError )
@@ -343,7 +356,7 @@ namespace ClassicAssist.Data.Macros
                 JArray aliasesArray = new JArray();
 
                 foreach ( JObject aliasObj in Aliases.Select( kvp =>
-                    new JObject { { "Key", kvp.Key }, { "Value", kvp.Value } } ) )
+                             new JObject { { "Key", kvp.Key }, { "Value", kvp.Value } } ) )
                 {
                     aliasesArray.Add( aliasObj );
                 }

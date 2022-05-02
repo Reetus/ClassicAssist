@@ -37,6 +37,7 @@ namespace ClassicAssist.UI.ViewModels
     {
         private readonly MacroManager _manager;
         private int _caretPosition;
+        private ICommand _clearExceptionCommand;
         private ICommand _clearHotkeyCommand;
         private ICommand _createMacroButtonCommand;
         private TextDocument _document;
@@ -98,6 +99,9 @@ namespace ClassicAssist.UI.ViewModels
             get => _caretPosition;
             set => SetProperty( ref _caretPosition, value );
         }
+
+        public ICommand ClearExceptionCommand =>
+            _clearExceptionCommand ?? ( _clearExceptionCommand = new RelayCommand( ClearException ) );
 
         public ICommand ClearHotkeyCommand =>
             _clearHotkeyCommand ?? ( _clearHotkeyCommand = new RelayCommand( ClearHotkey, o => SelectedItem != null ) );
@@ -175,6 +179,8 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _isRecording, value );
         }
 
+        public bool IsSearching { get; set; }
+
         public double LeftColumnWidth
         {
             get => _leftColumnWidth;
@@ -185,8 +191,7 @@ namespace ClassicAssist.UI.ViewModels
             _newGroupCommand ?? ( _newGroupCommand = new RelayCommand( NewGroup, o => true ) );
 
         public RelayCommand NewMacroCommand =>
-            _newMacroCommand ??
-            ( _newMacroCommand = new RelayCommand( NewMacro, o => true ) );
+            _newMacroCommand ?? ( _newMacroCommand = new RelayCommand( NewMacro, o => true ) );
 
         public ICommand OpenModulesFolderCommand =>
             _openModulesFolderCommand ??
@@ -430,13 +435,21 @@ namespace ClassicAssist.UI.ViewModels
             SelectedItem = Items.LastOrDefault();
         }
 
+        private static void ClearException( object obj )
+        {
+            if ( obj is MacroEntry entry )
+            {
+                entry.LastException = null;
+            }
+        }
+
         private void OnMacroStartedEvent( MacroEntry macroentry )
         {
             if ( SelectedItem == null )
             {
                 return;
             }
-            
+
             if ( !SelectedItem.Equals( macroentry ) || !IsRecording )
             {
                 return;
@@ -501,8 +514,6 @@ namespace ClassicAssist.UI.ViewModels
             } );
         }
 
-        public bool IsSearching { get; set; }
-
         private void ToggleSearch( object obj )
         {
             IsFilterOpen = !IsFilterOpen;
@@ -544,7 +555,8 @@ namespace ClassicAssist.UI.ViewModels
                     if ( !string.IsNullOrEmpty( macroEntry.Group ) )
                     {
                         MacroGroup macroGroup =
-                            (MacroGroup)Draggables.FirstOrDefault( i => i is MacroGroup && i.Name == macroEntry.Group );
+                            (MacroGroup) Draggables.FirstOrDefault( i =>
+                                i is MacroGroup && i.Name == macroEntry.Group );
 
                         if ( macroGroup == null )
                         {
@@ -604,7 +616,7 @@ namespace ClassicAssist.UI.ViewModels
                 else
                 {
                     MacroGroup macroGroup =
-                        (MacroGroup)Draggables.FirstOrDefault( i => i is MacroGroup && i.Name == macroEntry.Group );
+                        (MacroGroup) Draggables.FirstOrDefault( i => i is MacroGroup && i.Name == macroEntry.Group );
 
                     macroGroup?.Children.Remove( macroEntry );
                 }

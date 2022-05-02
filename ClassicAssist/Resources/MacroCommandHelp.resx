@@ -1786,4 +1786,10 @@ while Distance(location[0], location[1]) &gt; 2:
   <data name="OPENHELPGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>OpenHelpGump()</value>
   </data>
+  <data name="TRADECURRENCY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sets the gold and platinum in the trade window (for shards that support it)</value>
+  </data>
+  <data name="TRADECURRENCY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TradeCurrency(60000, 1)</value>
+  </data>
 </root>

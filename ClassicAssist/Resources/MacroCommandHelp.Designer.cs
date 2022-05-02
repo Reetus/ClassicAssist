@@ -10,8 +10,8 @@
 
 namespace ClassicAssist.Resources {
     using System;
-    
-    
+
+
     /// <summary>
     ///   지역화된 문자열 등을 찾기 위한 강력한 형식의 리소스 클래스입니다.
     /// </summary>
@@ -23,15 +23,15 @@ namespace ClassicAssist.Resources {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class MacroCommandHelp {
-        
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal MacroCommandHelp() {
         }
-        
+
         /// <summary>
         ///   이 클래스에서 사용하는 캐시된 ResourceManager 인스턴스를 반환합니다.
         /// </summary>
@@ -45,7 +45,7 @@ namespace ClassicAssist.Resources {
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   이 강력한 형식의 리소스 클래스를 사용하여 모든 리소스 조회에 대해 현재 스레드의 CurrentUICulture 속성을
         ///   재정의합니다.
@@ -59,7 +59,7 @@ namespace ClassicAssist.Resources {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Returns True if either the primary or secondary ability is set과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
@@ -68,7 +68,7 @@ namespace ClassicAssist.Resources {
                 return ResourceManager.GetString("ACTIVEABILITY_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   if not ActiveAbility():
         /// SetAbility(&quot;primary&quot;, &quot;on&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
@@ -78,7 +78,7 @@ namespace ClassicAssist.Resources {
                 return ResourceManager.GetString("ACTIVEABILITY_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   if ActiveAbility():과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
@@ -87,16 +87,16 @@ namespace ClassicAssist.Resources {
                 return ResourceManager.GetString("ACTIVEABILITY_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Adds a mobile to friends list, will display target cursor if no serial/alias supplied.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Adds a mobile to friends list, will display target cursor if no serial/alias supplied..
         /// </summary>
         public static string ADDFRIEND_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("ADDFRIEND_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   AddFriend()과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
@@ -105,529 +105,529 @@ namespace ClassicAssist.Resources {
                 return ResourceManager.GetString("ADDFRIEND_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if the mobile&apos;s notoriety is Ally과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if the mobile&apos;s notoriety is Ally.
         /// </summary>
         public static string ALLY_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("ALLY_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Criminal(&quot;mount&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Criminal(&quot;mount&quot;):.
         /// </summary>
         public static string ALLY_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("ALLY_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sends given message to alliance chat.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sends given message to alliance chat..
         /// </summary>
         public static string ALLYMSG_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("ALLYMSG_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   AllyMsg(&quot;alert&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to AllyMsg(&quot;alert&quot;).
         /// </summary>
         public static string ALLYMSG_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("ALLYMSG_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Attack mobile (parameter can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Attack mobile (parameter can be serial or alias)..
         /// </summary>
         public static string ATTACK_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("ATTACK_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Attack(&quot;last&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Attack(&quot;last&quot;).
         /// </summary>
         public static string ATTACK_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("ATTACK_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Setup an automated reply to the incoming dye color gump, allowing you to define dye tubs color.
-        ///That command should be added prior to the action that opens the color pick gump.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Setup an automated reply to the incoming dye color gump, allowing you to define dye tubs color.
+        ///That command should be added prior to the action that opens the color pick gump..
         /// </summary>
         public static string AUTOCOLORPICK_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("AUTOCOLORPICK_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   AutoColorPick(666)
+        ///   Looks up a localized string similar to AutoColorPick(666)
         ///UseObject(&apos;dyes&apos;)
         ///WaitForTarget(1000)
-        ///Target(&apos;tub&apos;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///Target(&apos;tub&apos;).
         /// </summary>
         public static string AUTOCOLORPICK_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("AUTOCOLORPICK_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   AutoColorPick(35)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to AutoColorPick(35).
         /// </summary>
         public static string AUTOCOLORPICK_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("AUTOCOLORPICK_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Causes autoloot to check a particular container, even when not enabled, and bypassing the corpse type check과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Causes autoloot to check a particular container, even when not enabled, and bypassing the corpse type check.
         /// </summary>
         public static string AUTOLOOT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("AUTOLOOT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Autoloot(&quot;found&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Autoloot(&quot;found&quot;).
         /// </summary>
         public static string AUTOLOOT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("AUTOLOOT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns True if currently checking corpse / autolooting items.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns True if currently checking corpse / autolooting items..
         /// </summary>
         public static string AUTOLOOTING_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("AUTOLOOTING_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Autolooting():과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Autolooting():.
         /// </summary>
         public static string AUTOLOOTING_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("AUTOLOOTING_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Applies a bandage to the player.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Applies a bandage to the player..
         /// </summary>
         public static string BANDAGESELF_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("BANDAGESELF_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   BandageSelf()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to BandageSelf().
         /// </summary>
         public static string BANDAGESELF_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("BANDAGESELF_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Check for a specific buff과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Check for a specific buff.
         /// </summary>
         public static string BUFFEXISTS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("BUFFEXISTS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if BuffExists(&quot;Blood Oath&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if BuffExists(&quot;Blood Oath&quot;):.
         /// </summary>
         public static string BUFFEXISTS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("BUFFEXISTS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns milliseconds remaining for given buff name, or 0 if expired/not enabled.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns milliseconds remaining for given buff name, or 0 if expired/not enabled..
         /// </summary>
         public static string BUFFTIME_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("BUFFTIME_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if not BuffExists(&apos;Enemy Of One&apos;) or BuffTime(&apos;Enemy Of One&apos;) &lt; 5000:
+        ///   Looks up a localized string similar to if not BuffExists(&apos;Enemy Of One&apos;) or BuffTime(&apos;Enemy Of One&apos;) &lt; 5000:
         ///    Cast(&apos;Enemy Of One&apos;)
-        ///과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///.
         /// </summary>
         public static string BUFFTIME_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("BUFFTIME_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if BuffTime(&apos;Enemy Of One&apos;) &lt; 5000:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if BuffTime(&apos;Enemy Of One&apos;) &lt; 5000:.
         /// </summary>
         public static string BUFFTIME_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("BUFFTIME_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Cancels the current prompt.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Cancels the current prompt..
         /// </summary>
         public static string CANCELPROMPT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CANCELPROMPT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   CancelPrompt()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to CancelPrompt().
         /// </summary>
         public static string CANCELPROMPT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CANCELPROMPT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Cancel an existing cursor/target.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Cancel an existing cursor/target..
         /// </summary>
         public static string CANCELTARGET_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CANCELTARGET_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   CancelTarget()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to CancelTarget().
         /// </summary>
         public static string CANCELTARGET_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CANCELTARGET_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Cast the given named spell and automatically target given object.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Cast the given named spell and automatically target given object..
         /// </summary>
         public static string CAST_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CAST_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Cast(&quot;Recall&quot;, &quot;runebook&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Cast(&quot;Recall&quot;, &quot;runebook&quot;).
         /// </summary>
         public static string CAST_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CAST_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sends a chat message.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sends a chat message..
         /// </summary>
         public static string CHATMSG_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CHATMSG_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ChatMsg(&quot;Mary had a little lamb&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to ChatMsg(&quot;Mary had a little lamb&quot;).
         /// </summary>
         public static string CHATMSG_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CHATMSG_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Clear weapon ability.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Clear weapon ability..
         /// </summary>
         public static string CLEARABILITY_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CLEARABILITY_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ClearAbility()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to ClearAbility().
         /// </summary>
         public static string CLEARABILITY_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CLEARABILITY_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Clear hands, &quot;left&quot;, &quot;right&quot;, or &quot;both&quot;과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Clear hands, &quot;left&quot;, &quot;right&quot;, or &quot;both&quot;.
         /// </summary>
         public static string CLEARHANDS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CLEARHANDS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ClearHands(&quot;both&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to ClearHands(&quot;both&quot;).
         /// </summary>
         public static string CLEARHANDS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CLEARHANDS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Clears the ignore list.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Clears the ignore list..
         /// </summary>
         public static string CLEARIGNORELIST_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CLEARIGNORELIST_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ClearIgnoreList()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to ClearIgnoreList().
         /// </summary>
         public static string CLEARIGNORELIST_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CLEARIGNORELIST_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Clear all journal texts.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Clear all journal texts..
         /// </summary>
         public static string CLEARJOURNAL_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CLEARJOURNAL_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ClearJournal()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to ClearJournal().
         /// </summary>
         public static string CLEARJOURNAL_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CLEARJOURNAL_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Clear a list by name.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Clear a list by name..
         /// </summary>
         public static string CLEARLIST_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CLEARLIST_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ClearList(&quot;list&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to ClearList(&quot;list&quot;).
         /// </summary>
         public static string CLEARLIST_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CLEARLIST_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Clears all actions in action packet queue과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Clears all actions in action packet queue.
         /// </summary>
         public static string CLEAROBJECTQUEUE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CLEAROBJECTQUEUE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ClearObjectQueue()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to ClearObjectQueue().
         /// </summary>
         public static string CLEAROBJECTQUEUE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CLEAROBJECTQUEUE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Clears the target queue when queue last target/target self is enabled.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Clears the target queue when queue last target/target self is enabled..
         /// </summary>
         public static string CLEARTARGETQUEUE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CLEARTARGETQUEUE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ClearTargetQueue()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to ClearTargetQueue().
         /// </summary>
         public static string CLEARTARGETQUEUE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CLEARTARGETQUEUE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Clear UseOnce list.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Clear UseOnce list..
         /// </summary>
         public static string CLEARUSEONCE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CLEARUSEONCE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ClearUseOnce()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to ClearUseOnce().
         /// </summary>
         public static string CLEARUSEONCE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CLEARUSEONCE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Single click object (parameter can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Single click object (parameter can be serial or alias)..
         /// </summary>
         public static string CLICKOBJECT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CLICKOBJECT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ClickObject(&quot;last&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to ClickObject(&quot;last&quot;).
         /// </summary>
         public static string CLICKOBJECT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CLICKOBJECT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Close a specified gump serial과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Close a specified gump serial.
         /// </summary>
         public static string CLOSEGUMP_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CLOSEGUMP_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   CloseGump(0x454ddef)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to CloseGump(0x454ddef).
         /// </summary>
         public static string CLOSEGUMP_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CLOSEGUMP_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Closes the specified menu id과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Closes the specified menu id.
         /// </summary>
         public static string CLOSEMENU_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CLOSEMENU_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   CloseMenu(0x1d1)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to CloseMenu(0x1d1).
         /// </summary>
         public static string CLOSEMENU_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CLOSEMENU_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Displays an ingame prompt with the specified message, returns True if Okay was pressed, False if not.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Displays an ingame prompt with the specified message, returns True if Okay was pressed, False if not..
         /// </summary>
         public static string CONFIRMPROMPT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CONFIRMPROMPT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   res = ConfirmPrompt(&quot;Play macro?&quot;)
+        ///   Looks up a localized string similar to res = ConfirmPrompt(&quot;Play macro?&quot;)
         ///
         ///if res:
-        /// PlayMacro(&quot;Macro&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// PlayMacro(&quot;Macro&quot;).
         /// </summary>
         public static string CONFIRMPROMPT_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("CONFIRMPROMPT_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ConfirmPrompt(&quot;Self Destruct?&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to ConfirmPrompt(&quot;Self Destruct?&quot;).
         /// </summary>
         public static string CONFIRMPROMPT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CONFIRMPROMPT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the item count for given container.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the item count for given container..
         /// </summary>
         public static string CONTENTS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CONTENTS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Contents(&quot;backpack&quot;) &gt; 120:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Contents(&quot;backpack&quot;) &gt; 120:.
         /// </summary>
         public static string CONTENTS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CONTENTS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Request a context menu option.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Request a context menu option..
         /// </summary>
         public static string CONTEXTMENU_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CONTEXTMENU_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ContextMenu(0x00aabbcc, 1)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to ContextMenu(0x00aabbcc, 1).
         /// </summary>
         public static string CONTEXTMENU_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CONTEXTMENU_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Returns the count of the given counter agent.과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
@@ -636,7 +636,7 @@ namespace ClassicAssist.Resources {
                 return ResourceManager.GetString("COUNTER_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Counter(&quot;bm&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
@@ -645,624 +645,624 @@ namespace ClassicAssist.Resources {
                 return ResourceManager.GetString("COUNTER_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Amount comparison of item type inside a container.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Amount comparison of item type inside a container..
         /// </summary>
         public static string COUNTTYPE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("COUNTTYPE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   CountType(0xff, &quot;backpack&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to CountType(0xff, &quot;backpack&quot;).
         /// </summary>
         public static string COUNTTYPE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("COUNTTYPE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Amount comparison of item or mobile type on the ground.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Amount comparison of item or mobile type on the ground..
         /// </summary>
         public static string COUNTTYPEGROUND_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("COUNTTYPEGROUND_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if CountGround(0xff, 0, 10) &lt; 1:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if CountGround(0xff, 0, 10) &lt; 1:.
         /// </summary>
         public static string COUNTTYPEGROUND_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("COUNTTYPEGROUND_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Create list with given name, if list already exists, it is overwritten.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Create list with given name, if list already exists, it is overwritten..
         /// </summary>
         public static string CREATELIST_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CREATELIST_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   CreateList(&quot;list&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to CreateList(&quot;list&quot;).
         /// </summary>
         public static string CREATELIST_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CREATELIST_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Create a new named timer.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Create a new named timer..
         /// </summary>
         public static string CREATETIMER_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CREATETIMER_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   CreateTimer(&quot;shmoo&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to CreateTimer(&quot;shmoo&quot;).
         /// </summary>
         public static string CREATETIMER_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CREATETIMER_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if the mobile&apos;s notoriety is Criminal과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if the mobile&apos;s notoriety is Criminal.
         /// </summary>
         public static string CRIMINAL_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("CRIMINAL_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Criminal(&quot;mount&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Criminal(&quot;mount&quot;):.
         /// </summary>
         public static string CRIMINAL_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CRIMINAL_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if given mobile is dead, false if not, if parameter is null, then returns the value from the player (parameter can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if given mobile is dead, false if not, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
         /// </summary>
         public static string DEAD_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("DEAD_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Dead(&quot;self&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Dead(&quot;self&quot;):.
         /// </summary>
         public static string DEAD_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("DEAD_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the dexterity of the player과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the dexterity of the player.
         /// </summary>
         public static string DEX_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("DEX_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Str() &lt; 100:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Str() &lt; 100:.
         /// </summary>
         public static string DEX_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("DEX_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the given mobiles difference between max and current hits, if parameter is null, then returns the value from the player (parameter can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the given mobiles difference between max and current hits, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
         /// </summary>
         public static string DIFFHITS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("DIFFHITS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if DiffHits(&quot;self&quot;) &gt; 50:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if DiffHits(&quot;self&quot;) &gt; 50:.
         /// </summary>
         public static string DIFFHITS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("DIFFHITS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the given mobiles different between max and currents hits as a percentage, if parameter is null, then returns the value from the player (parameter can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the given mobiles different between max and currents hits as a percentage, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
         /// </summary>
         public static string DIFFHITSPERCENT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("DIFFHITSPERCENT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if DiffHitsPercent(&quot;self&quot;) &gt; 30: # 70% health과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if DiffHitsPercent(&quot;self&quot;) &gt; 30: # 70% health.
         /// </summary>
         public static string DIFFHITSPERCENT_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("DIFFHITSPERCENT_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if DiffHitsPercent(&quot;self&quot;) &gt; 30:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if DiffHitsPercent(&quot;self&quot;) &gt; 30:.
         /// </summary>
         public static string DIFFHITSPERCENT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("DIFFHITSPERCENT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the difference between max weight and weight.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the difference between max weight and weight..
         /// </summary>
         public static string DIFFWEIGHT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("DIFFWEIGHT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if DiffWeight() &gt; 50:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if DiffWeight() &gt; 50:.
         /// </summary>
         public static string DIFFWEIGHT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("DIFFWEIGHT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the Direction the given alias/serial is facing과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the Direction the given alias/serial is facing.
         /// </summary>
         public static string DIRECTION_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("DIRECTION_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Direction(&apos;enemy&apos;) == &apos;West&apos;:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Direction(&apos;enemy&apos;) == &apos;West&apos;:.
         /// </summary>
         public static string DIRECTION_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("DIRECTION_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the Direction the entity is in relative to the player.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the Direction the entity is in relative to the player..
         /// </summary>
         public static string DIRECTIONTO_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("DIRECTIONTO_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Run(DirectionTo(&quot;enemy&quot;))과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Run(DirectionTo(&quot;enemy&quot;)).
         /// </summary>
         public static string DIRECTIONTO_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("DIRECTIONTO_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Display quest arrow pointer to specified coordinates과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Display quest arrow pointer to specified coordinates.
         /// </summary>
         public static string DISPLAYQUESTPOINTER_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("DISPLAYQUESTPOINTER_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   # add pointer
+        ///   Looks up a localized string similar to # add pointer
         ///DisplayQuestPointer(1000, 1000, True)
         ///Pause(2000)
         ///# remove pointer
-        ///DisplayQuestPointer(1000, 1000, False)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///DisplayQuestPointer(1000, 1000, False).
         /// </summary>
         public static string DISPLAYQUESTPOINTER_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("DISPLAYQUESTPOINTER_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   DisplayQuestPointer(1000, 1000, True)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to DisplayQuestPointer(1000, 1000, True).
         /// </summary>
         public static string DISPLAYQUESTPOINTER_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("DISPLAYQUESTPOINTER_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the distance to the given entity.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the distance to the given entity..
         /// </summary>
         public static string DISTANCE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("DISTANCE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Distance(&quot;mount&quot;) &lt; 4:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Distance(&quot;mount&quot;) &lt; 4:.
         /// </summary>
         public static string DISTANCE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("DISTANCE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the distance to the given coordinates.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the distance to the given coordinates..
         /// </summary>
         public static string DISTANCECOORDINATES_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("DISTANCECOORDINATES_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   location = (1000, 1000, 0)
+        ///   Looks up a localized string similar to location = (1000, 1000, 0)
         ///
         ///while Distance(location[0], location[1]) &gt; 2:
         /// Pathfind(location[0], location[1], location[2])
-        /// Pause(1000)과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// Pause(1000).
         /// </summary>
         public static string DISTANCECOORDINATES_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("DISTANCECOORDINATES_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Distance(1000, 1000)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Distance(1000, 1000).
         /// </summary>
         public static string DISTANCECOORDINATES_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("DISTANCECOORDINATES_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Dress all items in the specified dress agent.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Dress all items in the specified dress agent..
         /// </summary>
         public static string DRESS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("DRESS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Dress(&quot;Dress-1&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Dress(&quot;Dress-1&quot;).
         /// </summary>
         public static string DRESS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("DRESS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Adds all equipped items to a temporary list that isn&apos;t persisted on client close.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Adds all equipped items to a temporary list that isn&apos;t persisted on client close..
         /// </summary>
         public static string DRESSCONFIG_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("DRESSCONFIG_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   DressConfig()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to DressConfig().
         /// </summary>
         public static string DRESSCONFIG_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("DRESSCONFIG_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if the Dress agent is currently dressing or undressing.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if the Dress agent is currently dressing or undressing..
         /// </summary>
         public static string DRESSING_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("DRESSING_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Dressing():과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Dressing():.
         /// </summary>
         public static string DRESSING_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("DRESSING_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Emotes the given message과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Emotes the given message.
         /// </summary>
         public static string EMOTEMSG_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("EMOTEMSG_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   EmoteMsg(&quot;hi&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to EmoteMsg(&quot;hi&quot;).
         /// </summary>
         public static string EMOTEMSG_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("EMOTEMSG_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if the mobile&apos;s notoriety is Enemy과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if the mobile&apos;s notoriety is Enemy.
         /// </summary>
         public static string ENEMY_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("ENEMY_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Criminal(&quot;mount&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Criminal(&quot;mount&quot;):.
         /// </summary>
         public static string ENEMY_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("ENEMY_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Equip a specific item into a given layer. Use object inspector to determine layer value.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Equip a specific item into a given layer. Use object inspector to determine layer value..
         /// </summary>
         public static string EQUIPITEM_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("EQUIPITEM_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   EquipItem(&quot;axe&quot;, &quot;TwoHanded&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to EquipItem(&quot;axe&quot;, &quot;TwoHanded&quot;).
         /// </summary>
         public static string EQUIPITEM_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("EQUIPITEM_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Send quick switch weapon packet (probably not supported on pre-AoS servers.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Send quick switch weapon packet (probably not supported on pre-AoS servers..
         /// </summary>
         public static string EQUIPLASTWEAPON_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("EQUIPLASTWEAPON_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   EquipLastWeapon()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to EquipLastWeapon().
         /// </summary>
         public static string EQUIPLASTWEAPON_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("EQUIPLASTWEAPON_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Equip a specific type into a given layer. Use object inspector to determine layer value.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Equip a specific type into a given layer. Use object inspector to determine layer value..
         /// </summary>
         public static string EQUIPTYPE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("EQUIPTYPE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   EquipType(0xff, &quot;TwoHanded&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to EquipType(0xff, &quot;TwoHanded&quot;).
         /// </summary>
         public static string EQUIPTYPE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("EQUIPTYPE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Search for a wand inside your backpack and equip it과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Search for a wand inside your backpack and equip it.
         /// </summary>
         public static string EQUIPWAND_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("EQUIPWAND_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   #Equip a fireball wand if one can be found in our backpack..
+        ///   Looks up a localized string similar to #Equip a fireball wand if one can be found in our backpack..
         ///if FindWand(&quot;fireball&quot;, &quot;backpack&quot;, 5):
         /// #Remove current item in hand
         /// if FindLayer(&quot;OneHanded&quot;):
         ///  ClearHands(&quot;left&quot;)
         /// #Equip the wand
-        /// EquipWand(&quot;fireball&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// EquipWand(&quot;fireball&quot;).
         /// </summary>
         public static string EQUIPWAND_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("EQUIPWAND_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   EquipWand(&quot;fireball&quot;, 10)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to EquipWand(&quot;fireball&quot;, 10).
         /// </summary>
         public static string EQUIPWAND_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("EQUIPWAND_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Return faster casting value.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Return faster casting value..
         /// </summary>
         public static string FASTERCASTING_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("FASTERCASTING_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   fc = FasterCasting()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to fc = FasterCasting().
         /// </summary>
         public static string FASTERCASTING_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("FASTERCASTING_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Return faster cast recovery value.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Return faster cast recovery value..
         /// </summary>
         public static string FASTERCASTRECOVERY_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("FASTERCASTRECOVERY_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   fcr = FasterCastRecovery()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to fcr = FasterCastRecovery().
         /// </summary>
         public static string FASTERCASTRECOVERY_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("FASTERCASTRECOVERY_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Feed a given alias or serial with graphic.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Feed a given alias or serial with graphic..
         /// </summary>
         public static string FEED_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("FEED_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Feed(&quot;mount&quot;, 0xff)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Feed(&quot;mount&quot;, 0xff).
         /// </summary>
         public static string FEED_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("FEED_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if alias serial can be found on screen, false if not.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if alias serial can be found on screen, false if not..
         /// </summary>
         public static string FINDALIAS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("FINDALIAS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if FindAlias(&quot;mount&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if FindAlias(&quot;mount&quot;):.
         /// </summary>
         public static string FINDALIAS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("FINDALIAS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true and updates found alias if an item exists in the specified layer, option serial/alias for mobile to check.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true and updates found alias if an item exists in the specified layer, option serial/alias for mobile to check..
         /// </summary>
         public static string FINDLAYER_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("FINDLAYER_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if FindLayer(&quot;OneHanded&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if FindLayer(&quot;OneHanded&quot;):.
         /// </summary>
         public static string FINDLAYER_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("FINDLAYER_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Searches for entity by serial and sets found alias, defaults to ground if no source given.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Searches for entity by serial and sets found alias, defaults to ground if no source given..
         /// </summary>
         public static string FINDOBJECT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("FINDOBJECT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   # Find on ground
+        ///   Looks up a localized string similar to # Find on ground
         ///FindObject(&quot;mount&quot;)
         ///
         ///# Find on ground with range
         ///FindObject(&quot;mount&quot;, 10)
         ///
         ///# Find in container, must specify search level or -1
-        ///FindObject(&quot;weapon&quot;, -1, &quot;backpack&quot;)  과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///FindObject(&quot;weapon&quot;, -1, &quot;backpack&quot;)  .
         /// </summary>
         public static string FINDOBJECT_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("FINDOBJECT_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   FindObject(&quot;mount&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to FindObject(&quot;mount&quot;).
         /// </summary>
         public static string FINDOBJECT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("FINDOBJECT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Searches for entity by graphic ID and sets found alias, defaults to ground if no source given.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Searches for entity by graphic ID and sets found alias, defaults to ground if no source given..
         /// </summary>
         public static string FINDTYPE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("FINDTYPE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   # Look for a food item from a list and eat 1 if found.
+        ///   Looks up a localized string similar to # Look for a food item from a list and eat 1 if found.
         ///if not ListExists(&quot;food&quot;):
         /// CreateList(&quot;food&quot;)
         /// PushList(&quot;food&quot;, 0x9b7) #bird
@@ -1278,1151 +1278,1150 @@ namespace ClassicAssist.Resources {
         ///
         ///for i in GetList(&quot;food&quot;):
         /// if FindType(i, -1, &quot;backpack&quot;):
-        ///  UseObject(&quot;found&quot;)
-        ///  br[나머지 문자열은 잘림]&quot;;과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///  UseObje [rest of string was truncated]&quot;;.
         /// </summary>
         public static string FINDTYPE_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("FINDTYPE_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   FindType(0xff)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to FindType(0xff).
         /// </summary>
         public static string FINDTYPE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("FINDTYPE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Search for a wand and set alias &quot;found&quot;.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Search for a wand and set alias &quot;found&quot;..
         /// </summary>
         public static string FINDWAND_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("FINDWAND_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   FindWand(&quot;fireball&quot;, &quot;backpack&quot;, 10)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to FindWand(&quot;fireball&quot;, &quot;backpack&quot;, 10).
         /// </summary>
         public static string FINDWAND_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("FINDWAND_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   (Garoyle) Start flying if not already flying.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to (Garoyle) Start flying if not already flying..
         /// </summary>
         public static string FLY_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("FLY_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Fly()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Fly().
         /// </summary>
         public static string FLY_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("FLY_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if mobile is currently flying.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if mobile is currently flying..
         /// </summary>
         public static string FLYING_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("FLYING_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Flying(&quot;self&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Flying(&quot;self&quot;):.
         /// </summary>
         public static string FLYING_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("FLYING_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Instructs ClassicUO to follow the specified alias/serial, supply no parameter to cancel과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Instructs ClassicUO to follow the specified alias/serial, supply no parameter to cancel.
         /// </summary>
         public static string FOLLOW_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("FOLLOW_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if FindObject(&apos;enemy&apos;):
+        ///   Looks up a localized string similar to if FindObject(&apos;enemy&apos;):
         /// Follow(&apos;enemy&apos;)
         /// Attack(&apos;enemy&apos;)
         ///else:
         /// Follow() # stop following
-        ///Pause(1000)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///Pause(1000).
         /// </summary>
         public static string FOLLOW_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("FOLLOW_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Follow(&apos;enemy&apos;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Follow(&apos;enemy&apos;).
         /// </summary>
         public static string FOLLOW_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("FOLLOW_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the number of current followers as per status bar data.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the number of current followers as per status bar data..
         /// </summary>
         public static string FOLLOWERS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("FOLLOWERS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Followers() &lt; 1:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Followers() &lt; 1:.
         /// </summary>
         public static string FOLLOWERS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("FOLLOWERS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns True if currently following a target과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns True if currently following a target.
         /// </summary>
         public static string FOLLOWING_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("FOLLOWING_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if not Following():
-        /// Follow(&apos;enemy&apos;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if not Following():
+        /// Follow(&apos;enemy&apos;).
         /// </summary>
         public static string FOLLOWING_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("FOLLOWING_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Following():과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Following():.
         /// </summary>
         public static string FOLLOWING_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("FOLLOWING_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Gets the value of the given alias name.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Gets the value of the given alias name..
         /// </summary>
         public static string GETALIAS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("GETALIAS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   GetAlias(&quot;mount&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to GetAlias(&quot;mount&quot;).
         /// </summary>
         public static string GETALIAS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("GETALIAS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Get mobile and set enemy alias.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Get mobile and set enemy alias..
         /// </summary>
         public static string GETENEMY_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("GETENEMY_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   #get murderer
+        ///   Looks up a localized string similar to #get murderer
         ///GetEnemy([&apos;Murderer&apos;])
         ///#get closest murderer, any body type
         ///GetEnemy([&apos;Murderer&apos;], &apos;Any&apos;, &apos;Closest&apos;)
         ///#get next any notoriety, humanoid or transformation - unmounted
-        ///GetEnemy([&apos;Any&apos;], &apos;Both&apos;, &apos;Next&apos;, &apos;Unmounted&apos;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///GetEnemy([&apos;Any&apos;], &apos;Both&apos;, &apos;Next&apos;, &apos;Unmounted&apos;).
         /// </summary>
         public static string GETENEMY_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("GETENEMY_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   GetEnemy([&quot;Murderer&quot;])과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to GetEnemy([&quot;Murderer&quot;]).
         /// </summary>
         public static string GETENEMY_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("GETENEMY_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Get mobile and set friend alias.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Get mobile and set friend alias..
         /// </summary>
         public static string GETFRIEND_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("GETFRIEND_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   GetFriend([&quot;Murderer&quot;])과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to GetFriend([&quot;Murderer&quot;]).
         /// </summary>
         public static string GETFRIEND_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("GETFRIEND_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Get friend that only exists in the friends list, parameter distance &apos;Closest&apos;/&apos;Nearest&apos;/&apos;Next&apos;과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Get friend that only exists in the friends list, parameter distance &apos;Closest&apos;/&apos;Nearest&apos;/&apos;Next&apos;.
         /// </summary>
         public static string GETFRIENDLISTONLY_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("GETFRIENDLISTONLY_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   GetFriendListOnly(&quot;Closest&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to GetFriendListOnly(&quot;Closest&quot;).
         /// </summary>
         public static string GETFRIENDLISTONLY_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("GETFRIENDLISTONLY_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns array of all entries in the list, for use with for loop etc.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns array of all entries in the list, for use with for loop etc..
         /// </summary>
         public static string GETLIST_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("GETLIST_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   GetList(&quot;list&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to GetList(&quot;list&quot;).
         /// </summary>
         public static string GETLIST_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("GETLIST_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sends an internal prompt request and returns the text entered과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sends an internal prompt request and returns the text entered.
         /// </summary>
         public static string GETTEXT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("GETTEXT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   res, name = GetText(&quot;Name?&quot;, 10000)
+        ///   Looks up a localized string similar to res, name = GetText(&quot;Name?&quot;, 10000)
         ///
         ///if res:
-        /// Rename(0xc1b, name)과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// Rename(0xc1b, name).
         /// </summary>
         public static string GETTEXT_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("GETTEXT_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   res, msg = GetText(&quot;Enter message...&quot;, 30000)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to res, msg = GetText(&quot;Enter message...&quot;, 30000).
         /// </summary>
         public static string GETTEXT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("GETTEXT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the gold value as per status bar data.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the gold value as per status bar data..
         /// </summary>
         public static string GOLD_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("GOLD_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Gold() &lt; 2000:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Gold() &lt; 2000:.
         /// </summary>
         public static string GOLD_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("GOLD_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns Item ID of given object (parameter can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns Item ID of given object (parameter can be serial or alias)..
         /// </summary>
         public static string GRAPHIC_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("GRAPHIC_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Graphic(&quot;mount&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Graphic(&quot;mount&quot;).
         /// </summary>
         public static string GRAPHIC_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("GRAPHIC_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if the mobile&apos;s notoriety is Attackable과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if the mobile&apos;s notoriety is Attackable.
         /// </summary>
         public static string GRAY_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("GRAY_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Criminal(&quot;mount&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Criminal(&quot;mount&quot;):.
         /// </summary>
         public static string GRAY_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("GRAY_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sends given message to guild chat.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sends given message to guild chat..
         /// </summary>
         public static string GUILDMSG_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("GUILDMSG_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   GuildMsg(&quot;alert&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to GuildMsg(&quot;alert&quot;).
         /// </summary>
         public static string GUILDMSG_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("GUILDMSG_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Checks if a gump id exists or not.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Checks if a gump id exists or not..
         /// </summary>
         public static string GUMPEXISTS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("GUMPEXISTS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if GumpExists(0xff):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if GumpExists(0xff):.
         /// </summary>
         public static string GUMPEXISTS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("GUMPEXISTS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Displays overhead message above given mobile / item.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Displays overhead message above given mobile / item..
         /// </summary>
         public static string HEADMSG_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("HEADMSG_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   HeadMsg(&quot;hi&quot;, &quot;backpack&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to HeadMsg(&quot;hi&quot;, &quot;backpack&quot;).
         /// </summary>
         public static string HEADMSG_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("HEADMSG_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if given mobile is hidden, false if not, if parameter is null, then returns the value from the player (parameter can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if given mobile is hidden, false if not, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
         /// </summary>
         public static string HIDDEN_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("HIDDEN_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Hidden(&quot;self&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Hidden(&quot;self&quot;):.
         /// </summary>
         public static string HIDDEN_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("HIDDEN_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Remove an item/mobile from the screen과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Remove an item/mobile from the screen.
         /// </summary>
         public static string HIDEENTITY_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("HIDEENTITY_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ClearIgnoreList()
+        ///   Looks up a localized string similar to ClearIgnoreList()
         ///# Hide all corpses on screen
         ///while FindType(0x2006):
         /// HideEntity(&apos;found&apos;)
-        /// IgnoreObject(&apos;found&apos;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// IgnoreObject(&apos;found&apos;).
         /// </summary>
         public static string HIDEENTITY_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("HIDEENTITY_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   HideEntity(&apos;corpse&apos;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to HideEntity(&apos;corpse&apos;).
         /// </summary>
         public static string HIDEENTITY_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("HIDEENTITY_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the given mobiles hitpoints, if parameter is null, then returns the value from the player (parameter can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the given mobiles hitpoints, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
         /// </summary>
         public static string HITS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("HITS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   hits = Hits(&quot;self&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to hits = Hits(&quot;self&quot;).
         /// </summary>
         public static string HITS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("HITS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Enable and disable hotkeys.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Enable and disable hotkeys..
         /// </summary>
         public static string HOTKEYS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("HOTKEYS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Hotkeys()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Hotkeys().
         /// </summary>
         public static string HOTKEYS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("HOTKEYS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns Hue of given object (parameter can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns Hue of given object (parameter can be serial or alias)..
         /// </summary>
         public static string HUE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("HUE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Hue(&quot;mount&quot;) == 0:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Hue(&quot;mount&quot;) == 0:.
         /// </summary>
         public static string HUE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("HUE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Ignores the given object from find commands과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Ignores the given object from find commands.
         /// </summary>
         public static string IGNOREOBJECT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("IGNOREOBJECT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   IgnoreObject(&quot;self&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to IgnoreObject(&quot;self&quot;).
         /// </summary>
         public static string IGNOREOBJECT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("IGNOREOBJECT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Show object inspector for supplied serial / alias, will prompt for target if no parameter given.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Show object inspector for supplied serial / alias, will prompt for target if no parameter given..
         /// </summary>
         public static string INFO_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("INFO_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Info(&quot;self&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Info(&quot;self&quot;).
         /// </summary>
         public static string INFO_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("INFO_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if supplied mobile exists in the friends list.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if supplied mobile exists in the friends list..
         /// </summary>
         public static string INFRIENDLIST_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("INFRIENDLIST_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if InFriendList(&quot;last&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if InFriendList(&quot;last&quot;):.
         /// </summary>
         public static string INFRIENDLIST_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("INFRIENDLIST_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Check for a text in gump.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Check for a text in gump..
         /// </summary>
         public static string INGUMP_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("INGUMP_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if InGump(0xf00f, &quot;lethal darts&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if InGump(0xf00f, &quot;lethal darts&quot;):.
         /// </summary>
         public static string INGUMP_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("INGUMP_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Check whether the given serial / alias exists in the ignore list.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Check whether the given serial / alias exists in the ignore list..
         /// </summary>
         public static string INIGNORELIST_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("INIGNORELIST_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if InIgnoreList(&quot;mount&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if InIgnoreList(&quot;mount&quot;):.
         /// </summary>
         public static string INIGNORELIST_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("INIGNORELIST_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Check for a text in journal, optional source name.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Check for a text in journal, optional source name..
         /// </summary>
         public static string INJOURNAL_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("INJOURNAL_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if InJournal(&quot;town guards&quot;, &quot;system&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if InJournal(&quot;town guards&quot;, &quot;system&quot;):.
         /// </summary>
         public static string INJOURNAL_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("INJOURNAL_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Checks whether a list contains a given element.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Checks whether a list contains a given element..
         /// </summary>
         public static string INLIST_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("INLIST_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if InList(&quot;shmoo&quot;, 1):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if InList(&quot;shmoo&quot;, 1):.
         /// </summary>
         public static string INLIST_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("INLIST_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns True if the menu title or entry titles contains the given text.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns True if the menu title or entry titles contains the given text..
         /// </summary>
         public static string INMENU_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("INMENU_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   UseSkill(&apos;Tracking&apos;)
+        ///   Looks up a localized string similar to UseSkill(&apos;Tracking&apos;)
         ///WaitForMenu(0x1d0, 5000)
         ///ReplyMenu(0x1d0, 3, 0x2106, 0)
         ///WaitForMenu(0x1d1, 5000)
         ///if InMenu(0x1d1, &apos;Omar&apos;):
         /// HeadMsg(&apos;Omar is in range&apos;, &apos;self&apos;)
-        ///CloseMenu(0x1d1)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///CloseMenu(0x1d1).
         /// </summary>
         public static string INMENU_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("INMENU_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if InMenu(0x1d1, &apos;Omar&apos;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if InMenu(0x1d1, &apos;Omar&apos;):.
         /// </summary>
         public static string INMENU_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("INMENU_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if the mobile&apos;s notoriety is Innocent과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if the mobile&apos;s notoriety is Innocent.
         /// </summary>
         public static string INNOCENT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("INNOCENT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Criminal(&quot;mount&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Criminal(&quot;mount&quot;):.
         /// </summary>
         public static string INNOCENT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("INNOCENT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Return the true if the given serial/alias is in party with you.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Return the true if the given serial/alias is in party with you..
         /// </summary>
         public static string INPARTY_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("INPARTY_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if InParty(&quot;friend&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if InParty(&quot;friend&quot;):.
         /// </summary>
         public static string INPARTY_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("INPARTY_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Check for range between your character and another mobile or an item과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Check for range between your character and another mobile or an item.
         /// </summary>
         public static string INRANGE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("INRANGE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if InRange(&quot;enemy&quot;, 10):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if InRange(&quot;enemy&quot;, 10):.
         /// </summary>
         public static string INRANGE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("INRANGE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if the region of the target has the specified attribute.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if the region of the target has the specified attribute..
         /// </summary>
         public static string INREGION_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("INREGION_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if InRegion(&quot;Guarded&quot;, &quot;self&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if InRegion(&quot;Guarded&quot;, &quot;self&quot;).
         /// </summary>
         public static string INREGION_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("INREGION_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the intelligence of the player과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the intelligence of the player.
         /// </summary>
         public static string INT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("INT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Str() &lt; 100:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Str() &lt; 100:.
         /// </summary>
         public static string INT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("INT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Attempts to interrupt spell by lifting an item briefly.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Attempts to interrupt spell by lifting an item briefly..
         /// </summary>
         public static string INTERRUPTSPELL_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("INTERRUPTSPELL_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   InterruptSpell()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to InterruptSpell().
         /// </summary>
         public static string INTERRUPTSPELL_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("INTERRUPTSPELL_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Use a virtue by name.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Use a virtue by name..
         /// </summary>
         public static string INVOKEVIRTUE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("INVOKEVIRTUE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   InvokeVirtue(&quot;Honor&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to InvokeVirtue(&quot;Honor&quot;).
         /// </summary>
         public static string INVOKEVIRTUE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("INVOKEVIRTUE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if the mobile&apos;s notoriety is Invulnerable과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if the mobile&apos;s notoriety is Invulnerable.
         /// </summary>
         public static string INVULNERABLE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("INVULNERABLE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Criminal(&quot;mount&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Criminal(&quot;mount&quot;):.
         /// </summary>
         public static string INVULNERABLE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("INVULNERABLE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns True if the specified macro name is currently running과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns True if the specified macro name is currently running.
         /// </summary>
         public static string ISRUNNING_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("ISRUNNING_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if IsRunning(&apos;macro&apos;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if IsRunning(&apos;macro&apos;):.
         /// </summary>
         public static string ISRUNNING_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("ISRUNNING_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   (Garoyle) Stop flying if currently flying.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to (Garoyle) Stop flying if currently flying..
         /// </summary>
         public static string LAND_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("LAND_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Land()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Land().
         /// </summary>
         public static string LAND_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("LAND_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the number of entries in the list.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the number of entries in the list..
         /// </summary>
         public static string LIST_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("LIST_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if List(&quot;list&quot;) &lt; 5:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if List(&quot;list&quot;) &lt; 5:.
         /// </summary>
         public static string LIST_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("LIST_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if list exist, or false if not.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if list exist, or false if not..
         /// </summary>
         public static string LISTEXISTS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("LISTEXISTS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if ListExists(&quot;list&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if ListExists(&quot;list&quot;):.
         /// </summary>
         public static string LISTEXISTS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("LISTEXISTS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Disconnects from the server and returns to the login screen과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Disconnects from the server and returns to the login screen.
         /// </summary>
         public static string LOGOUT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("LOGOUT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Logout()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Logout().
         /// </summary>
         public static string LOGOUT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("LOGOUT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the luck value as per status bar data.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the luck value as per status bar data..
         /// </summary>
         public static string LUCK_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("LUCK_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Luck() &lt; 800:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Luck() &lt; 800:.
         /// </summary>
         public static string LUCK_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("LUCK_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the given mobiles mana, if parameter is null, then returns the value from the player (parameter can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the given mobiles mana, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
         /// </summary>
         public static string MANA_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("MANA_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Mana(&quot;self&quot;) &lt; 25:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Mana(&quot;self&quot;) &lt; 25:.
         /// </summary>
         public static string MANA_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("MANA_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the number of max followers as per status bar data.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the number of max followers as per status bar data..
         /// </summary>
         public static string MAXFOLLOWERS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("MAXFOLLOWERS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Followers() == MaxFollowers():과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Followers() == MaxFollowers():.
         /// </summary>
         public static string MAXFOLLOWERS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("MAXFOLLOWERS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the given mobiles max hitpoints, if parameter is null, then returns the value from the player (parameter can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the given mobiles max hitpoints, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
         /// </summary>
         public static string MAXHITS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("MAXHITS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   hits = MaxHits(&quot;self&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to hits = MaxHits(&quot;self&quot;).
         /// </summary>
         public static string MAXHITS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("MAXHITS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the given mobiles max mana, if parameter is null, then returns the value from the player (parameter can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the given mobiles max mana, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
         /// </summary>
         public static string MAXMANA_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("MAXMANA_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   mana = MaxMana(&quot;self&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to mana = MaxMana(&quot;self&quot;).
         /// </summary>
         public static string MAXMANA_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("MAXMANA_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the given mobiles max stamina, if parameter is null, then returns the value from the player (parameter can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the given mobiles max stamina, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
         /// </summary>
         public static string MAXSTAM_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("MAXSTAM_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   stam = MaxStam(&quot;self&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to stam = MaxStam(&quot;self&quot;).
         /// </summary>
         public static string MAXSTAM_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("MAXSTAM_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the max weight as per status bar data.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the max weight as per status bar data..
         /// </summary>
         public static string MAXWEIGHT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("MAXWEIGHT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if MaxWeight() &lt; 300:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if MaxWeight() &lt; 300:.
         /// </summary>
         public static string MAXWEIGHT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("MAXWEIGHT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Return true if the given menu id exists.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Return true if the given menu id exists..
         /// </summary>
         public static string MENUEXISTS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("MENUEXISTS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if MenuExists(0x1d1):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if MenuExists(0x1d1):.
         /// </summary>
         public static string MENUEXISTS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("MENUEXISTS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Show a simple message box with a custom title and body.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Show a simple message box with a custom title and body..
         /// </summary>
         public static string MESSAGEBOX_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("MESSAGEBOX_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   MessageBox(&quot;title&quot;, &quot;message&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to MessageBox(&quot;title&quot;, &quot;message&quot;).
         /// </summary>
         public static string MESSAGEBOX_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("MESSAGEBOX_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Displays an ingame gump prompting for a message과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Displays an ingame gump prompting for a message.
         /// </summary>
         public static string MESSAGEPROMPT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("MESSAGEPROMPT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   res, name = MessagePrompt(&quot;Enter Name?&quot;, &quot;Whiskers&quot;)
+        ///   Looks up a localized string similar to res, name = MessagePrompt(&quot;Enter Name?&quot;, &quot;Whiskers&quot;)
         ///
         ///if res:
-        /// Rename(0xc1b, name)과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// Rename(0xc1b, name).
         /// </summary>
         public static string MESSAGEPROMPT_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("MESSAGEPROMPT_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   res, msg = MessagePrompt(&quot;Message&quot;, &quot;Initial Text&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to res, msg = MessagePrompt(&quot;Message&quot;, &quot;Initial Text&quot;).
         /// </summary>
         public static string MESSAGEPROMPT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("MESSAGEPROMPT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if the specified mobile is mounted.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if the specified mobile is mounted..
         /// </summary>
         public static string MOUNTED_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("MOUNTED_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Mounted(&quot;self&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Mounted(&quot;self&quot;):.
         /// </summary>
         public static string MOUNTED_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("MOUNTED_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Move item to container (parameters can be serials or aliases).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Move item to container (parameters can be serials or aliases)..
         /// </summary>
         public static string MOVEITEM_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("MOVEITEM_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   MoveItem(&quot;source&quot;, &quot;destination&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to MoveItem(&quot;source&quot;, &quot;destination&quot;).
         /// </summary>
         public static string MOVEITEM_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("MOVEITEM_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Move the given serial/alias to the specified x,y,z offset of the player, no amount specified or -1 will move the full stack.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Move the given serial/alias to the specified x,y,z offset of the player, no amount specified or -1 will move the full stack..
         /// </summary>
         public static string MOVEITEMOFFSET_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("MOVEITEMOFFSET_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   MoveItemOffset(&quot;trashitem&quot;, 0, 1, 0, -1)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to MoveItemOffset(&quot;trashitem&quot;, 0, 1, 0, -1).
         /// </summary>
         public static string MOVEITEMOFFSET_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("MOVEITEMOFFSET_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Move a type from source to destintion.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Move a type from source to destintion..
         /// </summary>
         public static string MOVETYPE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("MOVETYPE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   #To move a type to another container...
+        ///   Looks up a localized string similar to #To move a type to another container...
         ///
         ///MoveType(0x170f, &quot;backpack&quot;, &quot;bank&quot;)
         ///
@@ -2431,268 +2430,268 @@ namespace ClassicAssist.Resources {
         ///MoveType(0x170f, &quot;backpack&quot;, -1, 1928, 2526, 0)
         ///
         ///#Optional parameters exist for Hue and Amount, to move 10 maximum with the a Hue of 50...
-        ///MoveType(0x170f, &quot;backpack&quot;, &quot;bank&quot;, -1, -1, 0, 50, 10)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///MoveType(0x170f, &quot;backpack&quot;, &quot;bank&quot;, -1, -1, 0, 50, 10).
         /// </summary>
         public static string MOVETYPE_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("MOVETYPE_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   MoveType(0xff, &quot;backpack&quot;, &quot;bank&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to MoveType(0xff, &quot;backpack&quot;, &quot;bank&quot;).
         /// </summary>
         public static string MOVETYPE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("MOVETYPE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Move the given type from the specified source container to the specified x,y,z offset of the player, no amount specified or -1 will move the full stack.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Move the given type from the specified source container to the specified x,y,z offset of the player, no amount specified or -1 will move the full stack..
         /// </summary>
         public static string MOVETYPEOFFSET_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("MOVETYPEOFFSET_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   MoveTypeOffset(0xf0e, &quot;backpack&quot;, 0, 1, 0, -1)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to MoveTypeOffset(0xf0e, &quot;backpack&quot;, 0, 1, 0, -1).
         /// </summary>
         public static string MOVETYPEOFFSET_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("MOVETYPEOFFSET_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Speaks the given message, Optional hue과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Speaks the given message, Optional hue.
         /// </summary>
         public static string MSG_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("MSG_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Msg(&quot;hi&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Msg(&quot;hi&quot;).
         /// </summary>
         public static string MSG_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("MSG_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if the mobile&apos;s notoriety is Murderer과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if the mobile&apos;s notoriety is Murderer.
         /// </summary>
         public static string MURDERER_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("MURDERER_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Criminal(&quot;mount&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Criminal(&quot;mount&quot;):.
         /// </summary>
         public static string MURDERER_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("MURDERER_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Return the name of the given mobile.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Return the name of the given mobile..
         /// </summary>
         public static string NAME_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("NAME_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Name(&quot;self&quot;) == &quot;Shmoo&quot;:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Name(&quot;self&quot;) == &quot;Shmoo&quot;:.
         /// </summary>
         public static string NAME_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("NAME_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Open entity collection viewer for specified container serial/alias과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Open entity collection viewer for specified container serial/alias.
         /// </summary>
         public static string OPENECV_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("OPENECV_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   OpenECV(&apos;backpack&apos;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to OpenECV(&apos;backpack&apos;).
         /// </summary>
         public static string OPENECV_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("OPENECV_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Opens the Guild gump과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Opens the Guild gump.
         /// </summary>
         public static string OPENGUILDGUMP_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("OPENGUILDGUMP_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   OpenGuildGump()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to OpenGuildGump().
         /// </summary>
         public static string OPENGUILDGUMP_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("OPENGUILDGUMP_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Opens the Help gump과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Opens the Help gump.
         /// </summary>
         public static string OPENHELPGUMP_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("OPENHELPGUMP_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   OpenHelpGump()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to OpenHelpGump().
         /// </summary>
         public static string OPENHELPGUMP_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("OPENHELPGUMP_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Opens the Quests gump과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Opens the Quests gump.
         /// </summary>
         public static string OPENQUESTSGUMP_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("OPENQUESTSGUMP_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   OpenQuestsGump()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to OpenQuestsGump().
         /// </summary>
         public static string OPENQUESTSGUMP_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("OPENQUESTSGUMP_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Opens the Virtue gump of the given serial/alias (defaults to current player)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Opens the Virtue gump of the given serial/alias (defaults to current player).
         /// </summary>
         public static string OPENVIRTUEGUMP_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("OPENVIRTUEGUMP_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   OpenVirtueGump(&quot;enemy&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to OpenVirtueGump(&quot;enemy&quot;).
         /// </summary>
         public static string OPENVIRTUEGUMP_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("OPENVIRTUEGUMP_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Executes the named Organizer agent.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Executes the named Organizer agent..
         /// </summary>
         public static string ORGANIZER_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("ORGANIZER_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Organizer(&quot;Organizer-1&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Organizer(&quot;Organizer-1&quot;).
         /// </summary>
         public static string ORGANIZER_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("ORGANIZER_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if currently running an organizer agent, or false if not.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if currently running an organizer agent, or false if not..
         /// </summary>
         public static string ORGANIZING_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("ORGANIZING_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Organizing():과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Organizing():.
         /// </summary>
         public static string ORGANIZING_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("ORGANIZING_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if the specified mobile is frozen.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if the specified mobile is frozen..
         /// </summary>
         public static string PARALYZED_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("PARALYZED_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Paralyzed(&quot;self&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Paralyzed(&quot;self&quot;):.
         /// </summary>
         public static string PARALYZED_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PARALYZED_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sends given message to party chat.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sends given message to party chat..
         /// </summary>
         public static string PARTYMSG_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("PARTYMSG_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   PartyMsg(&quot;alert&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to PartyMsg(&quot;alert&quot;).
         /// </summary>
         public static string PARTYMSG_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PARTYMSG_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Requests client to pathfind to given coordinates / entity과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Requests client to pathfind to given coordinates / entity.
         /// </summary>
         public static string PATHFIND_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("PATHFIND_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   #Pathfind to coordinates
+        ///   Looks up a localized string similar to #Pathfind to coordinates
         ///Pathfind(1438, 1630, 20)
         ///
         ///#Pathfind to entity
@@ -2700,193 +2699,193 @@ namespace ClassicAssist.Resources {
         ///Pathfind(&apos;enemy&apos;)
         ///
         ///# Cancel pathfind in progress
-        ///Pathfind(-1)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///Pathfind(-1).
         /// </summary>
         public static string PATHFIND_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("PATHFIND_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Pathfind(1000, 1000, 0)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Pathfind(1000, 1000, 0).
         /// </summary>
         public static string PATHFIND_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PATHFIND_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns True if ClassicUO is currently pathfinding과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns True if ClassicUO is currently pathfinding.
         /// </summary>
         public static string PATHFINDING_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("PATHFINDING_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Pathfind(&apos;enemy&apos;)
+        ///   Looks up a localized string similar to Pathfind(&apos;enemy&apos;)
         ///Pause(25) # there is a delay between calling Pathfind() and Pathfinding() being True
         ///
         ///while Pathfinding():
         /// Pause(50)
-        /// 
-        ///HeadMsg(&quot;die scum&quot;, &quot;self&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///
+        ///HeadMsg(&quot;die scum&quot;, &quot;self&quot;).
         /// </summary>
         public static string PATHFINDING_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("PATHFINDING_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Pathfinding():과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Pathfinding():.
         /// </summary>
         public static string PATHFINDING_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PATHFINDING_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Pauses execution for the given amount in milliseconds.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Pauses execution for the given amount in milliseconds..
         /// </summary>
         public static string PAUSE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("PAUSE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Pause(1000)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Pause(1000).
         /// </summary>
         public static string PAUSE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PAUSE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Retrieve an approximated ping with server. -1 on failure.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Retrieve an approximated ping with server. -1 on failure..
         /// </summary>
         public static string PING_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("PING_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Ping()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Ping().
         /// </summary>
         public static string PING_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PING_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Plays the specified CUO macro name과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Plays the specified CUO macro name.
         /// </summary>
         public static string PLAYCUOMACRO_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("PLAYCUOMACRO_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   PlayCUOMacro(&apos;Paperdoll&apos;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to PlayCUOMacro(&apos;Paperdoll&apos;).
         /// </summary>
         public static string PLAYCUOMACRO_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PLAYCUOMACRO_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if there is a macro, use in background macros.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if there is a macro, use in background macros..
         /// </summary>
         public static string PLAYING_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("PLAYING_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Playing():과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Playing():.
         /// </summary>
         public static string PLAYING_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PLAYING_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Plays the given macro name.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Plays the given macro name..
         /// </summary>
         public static string PLAYMACRO_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("PLAYMACRO_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   PlayMacro(&quot;beep&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to PlayMacro(&quot;beep&quot;).
         /// </summary>
         public static string PLAYMACRO_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PLAYMACRO_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Play sound by id or system .wav file.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Play sound by id or system .wav file..
         /// </summary>
         public static string PLAYSOUND_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("PLAYSOUND_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   PlaySound(&quot;Bike Horn.wav&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to PlaySound(&quot;Bike Horn.wav&quot;).
         /// </summary>
         public static string PLAYSOUND_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PLAYSOUND_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if the specified mobile is poisoned.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if the specified mobile is poisoned..
         /// </summary>
         public static string POISONED_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("POISONED_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Poisoned(&quot;self&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Poisoned(&quot;self&quot;):.
         /// </summary>
         public static string POISONED_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("POISONED_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Remove elements from a list, returns the number of elements removed과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Remove elements from a list, returns the number of elements removed.
         /// </summary>
         public static string POPLIST_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("POPLIST_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   CreateList(&quot;hippies&quot;)
+        ///   Looks up a localized string similar to CreateList(&quot;hippies&quot;)
         ///PushList(&quot;hippies&quot;, 1)
         ///PushList(&quot;hippies&quot;, 2)
         ///PushList(&quot;hippies&quot;, 3)
@@ -2898,1872 +2897,1890 @@ namespace ClassicAssist.Resources {
         ///
         ///for x in GetList(&quot;hippies&quot;):
         /// print x # Never reached because list is empty
-        ///과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///.
         /// </summary>
         public static string POPLIST_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("POPLIST_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   PopList(&quot;list&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to PopList(&quot;list&quot;).
         /// </summary>
         public static string POPLIST_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("POPLIST_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Prompt with an in-game target cursor to supply value for given alias name.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Prompt with an in-game target cursor to supply value for given alias name..
         /// </summary>
         public static string PROMPTALIAS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("PROMPTALIAS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   PromptAlias(&quot;mount&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to PromptAlias(&quot;mount&quot;).
         /// </summary>
         public static string PROMPTALIAS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PROMPTALIAS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Prompt with an in-game target cursor to supply value for given alias name, alias is valid only in the current macro.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Prompt with an in-game target cursor to supply value for given alias name, alias is valid only in the current macro..
         /// </summary>
         public static string PROMPTMACROALIAS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("PROMPTMACROALIAS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   PromptMacroAlias(&quot;mount&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to PromptMacroAlias(&quot;mount&quot;).
         /// </summary>
         public static string PROMPTMACROALIAS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PROMPTMACROALIAS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sends the specified message as a prompt response과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sends the specified message as a prompt response.
         /// </summary>
         public static string PROMPTMSG_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("PROMPTMSG_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   PromptMsg(&quot;hello&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to PromptMsg(&quot;hello&quot;).
         /// </summary>
         public static string PROMPTMSG_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PROMPTMSG_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if the given text appears in the items item properties.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if the given text appears in the items item properties..
         /// </summary>
         public static string PROPERTY_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("PROPERTY_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Property(&quot;item&quot;, &quot;Defense Chance Increase&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Property(&quot;item&quot;, &quot;Defense Chance Increase&quot;):.
         /// </summary>
         public static string PROPERTY_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PROPERTY_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the argument value of the given property name. Optional argument index.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the argument value of the given property name. Optional argument index..
         /// </summary>
         public static string PROPERTYVALUE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("PROPERTYVALUE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   val = PropertyValue[int](&quot;backpack&quot;, &quot;Contents&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to val = PropertyValue[int](&quot;backpack&quot;, &quot;Contents&quot;).
         /// </summary>
         public static string PROPERTYVALUE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PROPERTYVALUE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Pushes a value to the end of the list, will create list if it doesn&apos;t exist.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Pushes a value to the end of the list, will create list if it doesn&apos;t exist..
         /// </summary>
         public static string PUSHLIST_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("PUSHLIST_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   PushList(&quot;list&quot;, 1)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to PushList(&quot;list&quot;, 1).
         /// </summary>
         public static string PUSHLIST_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("PUSHLIST_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Closes the client과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Closes the client.
         /// </summary>
         public static string QUIT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("QUIT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Quit()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Quit().
         /// </summary>
         public static string QUIT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("QUIT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Rehue an item/mobile the specified hue value, set to 0 to remove. (Experimental)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Rehue an item/mobile the specified hue value, set to 0 to remove. (Experimental).
         /// </summary>
         public static string REHUE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("REHUE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Rehue(&quot;mount&quot;, 1176)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Rehue(&quot;mount&quot;, 1176).
         /// </summary>
         public static string REHUE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("REHUE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Removes a mobile from the friends list, will display target cursor if no serial/alias supplied.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Removes a mobile from the friends list, will display target cursor if no serial/alias supplied..
         /// </summary>
         public static string REMOVEFRIEND_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("REMOVEFRIEND_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   RemoveFriend()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to RemoveFriend().
         /// </summary>
         public static string REMOVEFRIEND_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("REMOVEFRIEND_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Removes the list with the given name.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Removes the list with the given name..
         /// </summary>
         public static string REMOVELIST_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("REMOVELIST_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   RemoveList(&quot;list&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to RemoveList(&quot;list&quot;).
         /// </summary>
         public static string REMOVELIST_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("REMOVELIST_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Removes the named timer.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Removes the named timer..
         /// </summary>
         public static string REMOVETIMER_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("REMOVETIMER_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   RemoveTimer(&quot;shmoo&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to RemoveTimer(&quot;shmoo&quot;).
         /// </summary>
         public static string REMOVETIMER_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("REMOVETIMER_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sends rename request.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sends rename request..
         /// </summary>
         public static string RENAME_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("RENAME_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Rename(&quot;mount&quot;, &quot;Snoopy&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Rename(&quot;mount&quot;, &quot;Snoopy&quot;).
         /// </summary>
         public static string RENAME_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("RENAME_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Replay the current macro과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Replay the current macro.
         /// </summary>
         public static string REPLAY_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("REPLAY_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Replay()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Replay().
         /// </summary>
         public static string REPLAY_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("REPLAY_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sends a button reply to server gump, parameters are gumpID and buttonID.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sends a button reply to server gump, parameters are gumpID and buttonID..
         /// </summary>
         public static string REPLYGUMP_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("REPLYGUMP_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ReplyGump(0xff, 0)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to ReplyGump(0xff, 0).
         /// </summary>
         public static string REPLYGUMP_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("REPLYGUMP_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sends a button reply to server menu과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sends a button reply to server menu.
         /// </summary>
         public static string REPLYMENU_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("REPLYMENU_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ReplyMenu(0x1d0, 3, 0x2106, 0)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to ReplyMenu(0x1d0, 3, 0x2106, 0).
         /// </summary>
         public static string REPLYMENU_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("REPLYMENU_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sends Resync request to server.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sends Resync request to server..
         /// </summary>
         public static string RESYNC_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("RESYNC_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Resync()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Resync().
         /// </summary>
         public static string RESYNC_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("RESYNC_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Run in the given direction.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Run in the given direction..
         /// </summary>
         public static string RUN_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("RUN_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Run(&quot;east&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Run(&quot;east&quot;).
         /// </summary>
         public static string RUN_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("RUN_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Produces an in-game gump to choose from a list of options
+        ///   Looks up a localized string similar to Produces an in-game gump to choose from a list of options
         ///
-        ///Returns a tuple with a boolean signifying whether the OK button was pressed, and the index of the entry selected과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///Returns a tuple with a boolean signifying whether the OK button was pressed, and the index of the entry selected.
         /// </summary>
         public static string SELECTIONPROMPT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SELECTIONPROMPT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   res, index = SelectionPrompt([&apos;Sex&apos;, &apos;Drugs&apos;, &apos;Rock and Roll&apos;])
+        ///   Looks up a localized string similar to res, index = SelectionPrompt([&apos;Sex&apos;, &apos;Drugs&apos;, &apos;Rock and Roll&apos;])
         ///
         ///if res:
         /// print &apos;Option {} was selected&apos;.format(index)
         ///else:
-        /// print &apos;Cancel was pressed&apos;과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// print &apos;Cancel was pressed&apos;.
         /// </summary>
         public static string SELECTIONPROMPT_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("SELECTIONPROMPT_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   SelectionPrompt([&apos;Option 1&apos;, &apos;Option 2&apos;])과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to SelectionPrompt([&apos;Option 1&apos;, &apos;Option 2&apos;]).
         /// </summary>
         public static string SELECTIONPROMPT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SELECTIONPROMPT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Set weapon ability, parameter &quot;primary&quot; / &quot;secondary&quot;.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Set weapon ability, parameter &quot;primary&quot; / &quot;secondary&quot;..
         /// </summary>
         public static string SETABILITY_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SETABILITY_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   SetAbility(&quot;primary&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to SetAbility(&quot;primary&quot;).
         /// </summary>
         public static string SETABILITY_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SETABILITY_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sets the value of the given alias name.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sets the value of the given alias name..
         /// </summary>
         public static string SETALIAS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SETALIAS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   SetAlias(&quot;mount&quot;, 0x40000001)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to SetAlias(&quot;mount&quot;, 0x40000001).
         /// </summary>
         public static string SETALIAS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SETALIAS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Configures autologin settings과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Configures autologin settings.
         /// </summary>
         public static string SETAUTOLOGIN_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SETAUTOLOGIN_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   SetAutologin(False)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to SetAutologin(False).
         /// </summary>
         public static string SETAUTOLOGIN_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SETAUTOLOGIN_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sets the container for the Autoloot agent to put items into...과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sets the container for the Autoloot agent to put items into....
         /// </summary>
         public static string SETAUTOLOOTCONTAINER_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SETAUTOLOOTCONTAINER_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   SetAutolootContainer(&quot;backpack&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to SetAutolootContainer(&quot;backpack&quot;).
         /// </summary>
         public static string SETAUTOLOOTCONTAINER_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SETAUTOLOOTCONTAINER_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sets the enemy to the given serial/alias.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sets the enemy to the given serial/alias..
         /// </summary>
         public static string SETENEMY_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SETENEMY_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   SetEnemy(&quot;mount&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to SetEnemy(&quot;mount&quot;).
         /// </summary>
         public static string SETENEMY_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SETENEMY_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Set force walk, True or False과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Set force walk, True or False.
         /// </summary>
         public static string SETFORCEWALK_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SETFORCEWALK_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   SetForceWalk(True)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to SetForceWalk(True).
         /// </summary>
         public static string SETFORCEWALK_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SETFORCEWALK_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sets the friend to the given serial/alias.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sets the friend to the given serial/alias..
         /// </summary>
         public static string SETFRIEND_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SETFRIEND_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   SetFriend(&quot;mount&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to SetFriend(&quot;mount&quot;).
         /// </summary>
         public static string SETFRIEND_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SETFRIEND_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sets the last target to the given serial/alias.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sets the last target to the given serial/alias..
         /// </summary>
         public static string SETLASTTARGET_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SETLASTTARGET_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   SetLastTarget(&quot;mount&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to SetLastTarget(&quot;mount&quot;).
         /// </summary>
         public static string SETLASTTARGET_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SETLASTTARGET_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sets the value of the given alias name, alias is valid only in the current macro.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sets the value of the given alias name, alias is valid only in the current macro..
         /// </summary>
         public static string SETMACROALIAS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SETMACROALIAS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   SetMacroAlias(&quot;mount&quot;, 0x40000001)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to SetMacroAlias(&quot;mount&quot;, 0x40000001).
         /// </summary>
         public static string SETMACROALIAS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SETMACROALIAS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Set the source and destination for the specified Organizer name과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Set the source and destination for the specified Organizer name.
         /// </summary>
         public static string SETORGANIZERCONTAINERS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SETORGANIZERCONTAINERS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   SetOrganizerContainers(&quot;Organizer-1&quot;, &quot;backpack&quot;, &quot;bank&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to SetOrganizerContainers(&quot;Organizer-1&quot;, &quot;backpack&quot;, &quot;bank&quot;).
         /// </summary>
         public static string SETORGANIZERCONTAINERS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SETORGANIZERCONTAINERS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Set quiet mode True/False, True reduces the number of messages macro commands emit.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Set quiet mode True/False, True reduces the number of messages macro commands emit..
         /// </summary>
         public static string SETQUIETMODE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SETQUIETMODE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   SetQuietMode(True)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to SetQuietMode(True).
         /// </summary>
         public static string SETQUIETMODE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SETQUIETMODE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Enable/Disable/Toggle the Scavenger agent과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Enable/Disable/Toggle the Scavenger agent.
         /// </summary>
         public static string SETSCAVENGER_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SETSCAVENGER_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   SetScavenger(&quot;off&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to SetScavenger(&quot;off&quot;).
         /// </summary>
         public static string SETSCAVENGER_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SETSCAVENGER_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sets the lock state of the given skill, up, down or locked.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sets the lock state of the given skill, up, down or locked..
         /// </summary>
         public static string SETSKILL_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SETSKILL_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   SetSkill(&quot;hiding&quot;, &quot;locked&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to SetSkill(&quot;hiding&quot;, &quot;locked&quot;).
         /// </summary>
         public static string SETSKILL_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SETSKILL_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sets the lock state of the given stat, up, down or locked.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sets the lock state of the given stat, up, down or locked..
         /// </summary>
         public static string SETSTATUS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SETSTATUS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   SetStatus(&apos;str&apos;, &apos;locked&apos;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to SetStatus(&apos;str&apos;, &apos;locked&apos;).
         /// </summary>
         public static string SETSTATUS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SETSTATUS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Set a timer value and create in case it does not exist.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Set a timer value and create in case it does not exist..
         /// </summary>
         public static string SETTIMER_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SETTIMER_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   SetTimer(&quot;shmoo&quot;, 0)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to SetTimer(&quot;shmoo&quot;, 0).
         /// </summary>
         public static string SETTIMER_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SETTIMER_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Enables or disables autobuying of the specified vendor buy list name...과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Enables or disables autobuying of the specified vendor buy list name....
         /// </summary>
         public static string SETVENDORBUYAUTOBUY_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SETVENDORBUYAUTOBUY_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   # set on
+        ///   Looks up a localized string similar to # set on
         ///SetVendorBuyAutoBuy(&quot;regs&quot;, &quot;on&quot;)
         ///# set off
         ///SetVendorBuyAutoBuy(&quot;regs&quot;, &quot;off&quot;)
         ///# default will toggle
-        ///SetVendorBuyAutoBuy(&quot;regs&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///SetVendorBuyAutoBuy(&quot;regs&quot;).
         /// </summary>
         public static string SETVENDORBUYAUTOBUY_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("SETVENDORBUYAUTOBUY_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   SetVendorBuyAutoBuy(&quot;regs&quot;, &quot;on&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to SetVendorBuyAutoBuy(&quot;regs&quot;, &quot;on&quot;).
         /// </summary>
         public static string SETVENDORBUYAUTOBUY_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SETVENDORBUYAUTOBUY_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Display corpses and/or mobiles names (parameter &quot;mobiles&quot; or &quot;corpses&quot;.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Display corpses and/or mobiles names (parameter &quot;mobiles&quot; or &quot;corpses&quot;..
         /// </summary>
         public static string SHOWNAMES_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SHOWNAMES_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ShowNames(&quot;corpses&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to ShowNames(&quot;corpses&quot;).
         /// </summary>
         public static string SHOWNAMES_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SHOWNAMES_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the value of the given skill name.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the value of the given skill name..
         /// </summary>
         public static string SKILL_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SKILL_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Skill(&quot;hiding&quot;) &lt; 100:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Skill(&quot;hiding&quot;) &lt; 100:.
         /// </summary>
         public static string SKILL_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SKILL_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the skill cap for the specified skill과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the skill cap for the specified skill.
         /// </summary>
         public static string SKILLCAP_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SKILLCAP_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if SkillCap(&quot;Blacksmithy&quot;) == 120:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if SkillCap(&quot;Blacksmithy&quot;) == 120:.
         /// </summary>
         public static string SKILLCAP_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SKILLCAP_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the skill value delta since last reset과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the skill value delta since last reset.
         /// </summary>
         public static string SKILLDELTA_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SKILLDELTA_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if SkillDelta(&apos;Hiding&apos;) &gt; 0.5:
-        ///    Stop()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if SkillDelta(&apos;Hiding&apos;) &gt; 0.5:
+        ///    Stop().
         /// </summary>
         public static string SKILLDELTA_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("SKILLDELTA_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   SkillDelta(&apos;skillName&apos;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to SkillDelta(&apos;skillName&apos;).
         /// </summary>
         public static string SKILLDELTA_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SKILLDELTA_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the lock status of the given skill, up, down, or locked.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the lock status of the given skill, up, down, or locked..
         /// </summary>
         public static string SKILLSTATE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SKILLSTATE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if SkillState(&quot;hiding&apos;) == &quot;locked&quot;:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if SkillState(&quot;hiding&apos;) == &quot;locked&quot;:.
         /// </summary>
         public static string SKILLSTATE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SKILLSTATE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Take a screenshot of the window과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Take a screenshot of the window.
         /// </summary>
         public static string SNAPSHOT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SNAPSHOT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   # Just the game client area, no delay, default filename
+        ///   Looks up a localized string similar to # Just the game client area, no delay, default filename
         ///Snapshot()
         ///
         ///# Fullscreen snapshot, 3 second delay, default filename
         ///Snapshot(3000, True)
         ///
         ///# Client area snapshot, no delay, custom filename
-        ///Snapshot(0, False, &quot;screenshot.png&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///Snapshot(0, False, &quot;screenshot.png&quot;).
         /// </summary>
         public static string SNAPSHOT_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("SNAPSHOT_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Snapshot()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Snapshot().
         /// </summary>
         public static string SNAPSHOT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SNAPSHOT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Check for a specific special move과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Check for a specific special move.
         /// </summary>
         public static string SPECIALMOVEEXISTS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SPECIALMOVEEXISTS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if SpecialMoveExists(&quot;Death Strike&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if SpecialMoveExists(&quot;Death Strike&quot;):.
         /// </summary>
         public static string SPECIALMOVEEXISTS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SPECIALMOVEEXISTS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the given mobiles stamina, if parameter is null, then returns the value from the player (parameter can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the given mobiles stamina, if parameter is null, then returns the value from the player (parameter can be serial or alias)..
         /// </summary>
         public static string STAM_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("STAM_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Stam(&quot;self&quot;) &lt; 25:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Stam(&quot;self&quot;) &lt; 25:.
         /// </summary>
         public static string STAM_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("STAM_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Stops the current macro.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Stops the current macro..
         /// </summary>
         public static string STOP_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("STOP_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   # Stop the current macro
+        ///   Looks up a localized string similar to # Stop the current macro
         ///Stop()
         ///# Stop a macro by name
-        ///Stop(&quot;Background Macro&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///Stop(&quot;Background Macro&quot;).
         /// </summary>
         public static string STOP_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("STOP_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Stop()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Stop().
         /// </summary>
         public static string STOP_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("STOP_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Stops all running macros including background macros.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Stops all running macros including background macros..
         /// </summary>
         public static string STOPALL_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("STOPALL_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   StopAll()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to StopAll().
         /// </summary>
         public static string STOPALL_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("STOPALL_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the strength of the player과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the strength of the player.
         /// </summary>
         public static string STR_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("STR_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Str() &lt; 100:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Str() &lt; 100:.
         /// </summary>
         public static string STR_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("STR_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Send a text message.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Send a text message..
         /// </summary>
         public static string SYSMESSAGE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("SYSMESSAGE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   # default hue
+        ///   Looks up a localized string similar to # default hue
         ///SysMessage(&quot;Hello&quot;)
         ///# specifying hue
-        ///SysMessage(&quot;Hello&quot;, 35)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///SysMessage(&quot;Hello&quot;, 35).
         /// </summary>
         public static string SYSMESSAGE_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("SYSMESSAGE_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   SysMessage(&quot;hello&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to SysMessage(&quot;hello&quot;).
         /// </summary>
         public static string SYSMESSAGE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SYSMESSAGE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Targets the given object (parameter can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Targets the given object (parameter can be serial or alias)..
         /// </summary>
         public static string TARGET_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("TARGET_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Target(&quot;self&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Target(&quot;self&quot;).
         /// </summary>
         public static string TARGET_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("TARGET_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Uses tool and targets specified resource type (Requires server support (OSI / ServUO))과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Uses tool and targets specified resource type (Requires server support (OSI / ServUO)).
         /// </summary>
         public static string TARGETBYRESOURCE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("TARGETBYRESOURCE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   TargetByResource(&apos;pickaxe&apos;, &apos;Ore&apos;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to TargetByResource(&apos;pickaxe&apos;, &apos;Ore&apos;).
         /// </summary>
         public static string TARGETBYRESOURCE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("TARGETBYRESOURCE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if a target cursor is displayed and the notoriety matches the supplied value, defaults to &apos;Any&apos;, options are &apos;Any&apos;, &apos;Beneficial&apos;, &apos;Harmful&apos; or &apos;Neutral&apos;과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if a target cursor is displayed and the notoriety matches the supplied value, defaults to &apos;Any&apos;, options are &apos;Any&apos;, &apos;Beneficial&apos;, &apos;Harmful&apos; or &apos;Neutral&apos;.
         /// </summary>
         public static string TARGETEXISTS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("TARGETEXISTS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if TargetExists(&quot;Harmful&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if TargetExists(&quot;Harmful&quot;):.
         /// </summary>
         public static string TARGETEXISTS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("TARGETEXISTS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Target the specified type on the ground, optional parameters for hue and distance.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Target the specified type on the ground, optional parameters for hue and distance..
         /// </summary>
         public static string TARGETGROUND_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("TARGETGROUND_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   TargetGround(0x190, -1, 10)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to TargetGround(0x190, -1, 10).
         /// </summary>
         public static string TARGETGROUND_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("TARGETGROUND_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Targets the tile at the given offsets relative to the player과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Targets the tile at the given offsets relative to the player.
         /// </summary>
         public static string TARGETTILEOFFSET_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("TARGETTILEOFFSET_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   #Targets the tile at the current Y coordinate + 1
-        ///TargetTileOffset(0, 1, 0)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to #Targets the tile at the current Y coordinate + 1
+        ///TargetTileOffset(0, 1, 0).
         /// </summary>
         public static string TARGETTILEOFFSET_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("TARGETTILEOFFSET_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   TargetTileOffset(0, 1, 0)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to TargetTileOffset(0, 1, 0).
         /// </summary>
         public static string TARGETTILEOFFSET_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("TARGETTILEOFFSET_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Targets the tile at the given offsets relative to the player (automatically targeting trees/cave tiles/water if present)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Targets the tile at the given offsets relative to the player (automatically targeting trees/cave tiles/water if present).
         /// </summary>
         public static string TARGETTILEOFFSETRESOURCE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("TARGETTILEOFFSETRESOURCE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   TargetTileOffsetResource(0, -1, 0)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to TargetTileOffsetResource(0, -1, 0).
         /// </summary>
         public static string TARGETTILEOFFSETRESOURCE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("TARGETTILEOFFSETRESOURCE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Target tile the given distance relative to the specified alias/serial, optional boolean for reverse mode.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Target tile the given distance relative to the specified alias/serial, optional boolean for reverse mode..
         /// </summary>
         public static string TARGETTILERELATIVE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("TARGETTILERELATIVE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   TargetTileRelative(&quot;self&quot;, 1, False)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to TargetTileRelative(&quot;self&quot;, 1, False).
         /// </summary>
         public static string TARGETTILERELATIVE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("TARGETTILERELATIVE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Target specified type in player backpack, optional parameters for hue and search level.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Target specified type in player backpack, optional parameters for hue and search level..
         /// </summary>
         public static string TARGETTYPE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("TARGETTYPE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   TargetType(0xff, 0, 3)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to TargetType(0xff, 0, 3).
         /// </summary>
         public static string TARGETTYPE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("TARGETTYPE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Targets the ground at the given coordinates.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Targets the ground at the given coordinates..
         /// </summary>
         public static string TARGETXYZ_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("TARGETXYZ_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   TargetXYZ(1000, 1000, 0)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to TargetXYZ(1000, 1000, 0).
         /// </summary>
         public static string TARGETXYZ_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("TARGETXYZ_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Check for a named timer value.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Check for a named timer value..
         /// </summary>
         public static string TIMER_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("TIMER_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Timer(&quot;shmoo&quot;) &gt; 10000:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Timer(&quot;shmoo&quot;) &gt; 10000:.
         /// </summary>
         public static string TIMER_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("TIMER_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if the timer exists.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if the timer exists..
         /// </summary>
         public static string TIMEREXISTS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("TIMEREXISTS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if TimerExists(&quot;shmoo&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if TimerExists(&quot;shmoo&quot;):.
         /// </summary>
         public static string TIMEREXISTS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("TIMEREXISTS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Outputs the elapsed timer value as a SystemMessage과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Outputs the elapsed timer value as a SystemMessage.
         /// </summary>
         public static string TIMERMSG_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("TIMERMSG_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   TimerMsg(&quot;shmoo&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to TimerMsg(&quot;shmoo&quot;).
         /// </summary>
         public static string TIMERMSG_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("TIMERMSG_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the current players&apos; tithing points.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the current players&apos; tithing points..
         /// </summary>
         public static string TITHINGPOINTS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("TITHINGPOINTS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if TithingPoints() &lt; 1000:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if TithingPoints() &lt; 1000:.
         /// </summary>
         public static string TITHINGPOINTS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("TITHINGPOINTS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Toggle Force Walk과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Toggle Force Walk.
         /// </summary>
         public static string TOGGLEFORCEWALK_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("TOGGLEFORCEWALK_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ToggleForceWalk()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to ToggleForceWalk().
         /// </summary>
         public static string TOGGLEFORCEWALK_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("TOGGLEFORCEWALK_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Unmounts if mounted, or mounts if unmounted, will prompt for mount if no &quot;mount&quot; alias.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Unmounts if mounted, or mounts if unmounted, will prompt for mount if no &quot;mount&quot; alias..
         /// </summary>
         public static string TOGGLEMOUNTED_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("TOGGLEMOUNTED_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ToggleMounted()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to ToggleMounted().
         /// </summary>
         public static string TOGGLEMOUNTED_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("TOGGLEMOUNTED_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Accepts the current trade window과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Accepts the current trade window.
         /// </summary>
         public static string TRADEACCEPT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("TRADEACCEPT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   TradeAccept()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to TradeAccept().
         /// </summary>
         public static string TRADEACCEPT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("TRADEACCEPT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Closes the current trade window과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Closes the current trade window.
         /// </summary>
         public static string TRADECLOSE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("TRADECLOSE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   TradeClose()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to TradeClose().
         /// </summary>
         public static string TRADECLOSE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("TRADECLOSE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Rejects (unticks) the current trade window과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sets the gold and platinum in the trade window (for shards that support it).
+        /// </summary>
+        public static string TRADECURRENCY_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("TRADECURRENCY_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to TradeCurrency(60000, 1).
+        /// </summary>
+        public static string TRADECURRENCY_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("TRADECURRENCY_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Rejects (unticks) the current trade window.
         /// </summary>
         public static string TRADEREJECT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("TRADEREJECT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   TradeReject()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to TradeReject().
         /// </summary>
         public static string TRADEREJECT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("TRADEREJECT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Turn in the given direction.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Turn in the given direction..
         /// </summary>
         public static string TURN_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("TURN_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Turn(&quot;east&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Turn(&quot;east&quot;).
         /// </summary>
         public static string TURN_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("TURN_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Undress all items in the specified dress agent.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Undress all items in the specified dress agent..
         /// </summary>
         public static string UNDRESS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("UNDRESS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Undress(&quot;Dress-1&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Undress(&quot;Dress-1&quot;).
         /// </summary>
         public static string UNDRESS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("UNDRESS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Removes the alias name given.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Removes the alias name given..
         /// </summary>
         public static string UNSETALIAS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("UNSETALIAS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   UnsetAlias(&quot;mount&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to UnsetAlias(&quot;mount&quot;).
         /// </summary>
         public static string UNSETALIAS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("UNSETALIAS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Uses the last invoked skill과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Uses the last invoked skill.
         /// </summary>
         public static string USELASTSKILL_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("USELASTSKILL_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   UseLastSkill()과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to UseLastSkill().
         /// </summary>
         public static string USELASTSKILL_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("USELASTSKILL_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Uses object in the specified layer, optional parameter for mobile과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Uses object in the specified layer, optional parameter for mobile.
         /// </summary>
         public static string USELAYER_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("USELAYER_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   UseLayer(&quot;Talisman&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to UseLayer(&quot;Talisman&quot;).
         /// </summary>
         public static string USELAYER_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("USELAYER_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sends use (doubleclick) request for given object (parameter can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sends use (doubleclick) request for given object (parameter can be serial or alias)..
         /// </summary>
         public static string USEOBJECT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("USEOBJECT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   UseObject(&quot;mount&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to UseObject(&quot;mount&quot;).
         /// </summary>
         public static string USEOBJECT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("USEOBJECT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Use a specific item type (graphic) from your backpack, only once과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Use a specific item type (graphic) from your backpack, only once.
         /// </summary>
         public static string USEONCE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("USEONCE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   UseOnce(0xff)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to UseOnce(0xff).
         /// </summary>
         public static string USEONCE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("USEONCE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Invokes the given skill name.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Invokes the given skill name..
         /// </summary>
         public static string USESKILL_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("USESKILL_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   UseSkill(&quot;Hiding&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to UseSkill(&quot;Hiding&quot;).
         /// </summary>
         public static string USESKILL_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("USESKILL_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Uses specified item and targets target in one action. Requires server support (OSI / ServUO)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Uses specified item and targets target in one action. Requires server support (OSI / ServUO).
         /// </summary>
         public static string USETARGETEDITEM_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("USETARGETEDITEM_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   UseTargetedItem(&apos;bandage&apos;, &apos;pet&apos;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to UseTargetedItem(&apos;bandage&apos;, &apos;pet&apos;).
         /// </summary>
         public static string USETARGETEDITEM_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("USETARGETEDITEM_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sends use (doubleclick) request for given type, optional parameters of hue and container object (defaults to player backpack) (parameters can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sends use (doubleclick) request for given type, optional parameters of hue and container object (defaults to player backpack) (parameters can be serial or alias)..
         /// </summary>
         public static string USETYPE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("USETYPE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   UseType(0xff)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to UseType(0xff).
         /// </summary>
         public static string USETYPE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("USETYPE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Wait for container contents for given container.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Wait for container contents for given container..
         /// </summary>
         public static string WAITFORCONTENTS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("WAITFORCONTENTS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   WaitForContents(&quot;backpack&quot;, 5000)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to WaitForContents(&quot;backpack&quot;, 5000).
         /// </summary>
         public static string WAITFORCONTENTS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WAITFORCONTENTS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Request or wait for a context menu option.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Request or wait for a context menu option..
         /// </summary>
         public static string WAITFORCONTEXT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("WAITFORCONTEXT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   # select by index number
+        ///   Looks up a localized string similar to # select by index number
         ///WaitForContext(&apos;self&apos;, 2, 5000)
         ///# select by entry name
-        ///WaitForContext(&apos;self&apos;, &quot;Open Item Insurance Menu&quot;, 5000)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///WaitForContext(&apos;self&apos;, &quot;Open Item Insurance Menu&quot;, 5000).
         /// </summary>
         public static string WAITFORCONTEXT_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("WAITFORCONTEXT_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   WaitForContext(0x00aabbcc, 1, 5000)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to WaitForContext(0x00aabbcc, 1, 5000).
         /// </summary>
         public static string WAITFORCONTEXT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WAITFORCONTEXT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Pauses until incoming gump packet is received, optional paramters of gump ID and timeout과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Pauses until incoming gump packet is received, optional paramters of gump ID and timeout.
         /// </summary>
         public static string WAITFORGUMP_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("WAITFORGUMP_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   WaitForGump(0xff, 5000)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to WaitForGump(0xff, 5000).
         /// </summary>
         public static string WAITFORGUMP_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WAITFORGUMP_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Wait the given timeout for the journal text to appear.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Wait the given timeout for the journal text to appear..
         /// </summary>
         public static string WAITFORJOURNAL_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("WAITFORJOURNAL_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if WaitForJournal(&quot;town guards&quot;, 5000, &quot;system&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if WaitForJournal(&quot;town guards&quot;, 5000, &quot;system&quot;):.
         /// </summary>
         public static string WAITFORJOURNAL_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WAITFORJOURNAL_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Wait up the given timeout for one of any of provided array of string to appear in journal과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Wait up the given timeout for one of any of provided array of string to appear in journal.
         /// </summary>
         public static string WAITFORJOURNALARRAY_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("WAITFORJOURNALARRAY_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   (idx, text) = WaitForJournal([&apos;sex&apos;, &apos;drugs&apos;], 5000)
+        ///   Looks up a localized string similar to (idx, text) = WaitForJournal([&apos;sex&apos;, &apos;drugs&apos;], 5000)
         ///
         ///if idx != None:
         /// print &quot;Found text &apos;{}&apos; at index {}&quot;.format(text, idx)
         ///else:
-        /// print &apos;None of them were found :(&apos;과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// print &apos;None of them were found :(&apos;.
         /// </summary>
         public static string WAITFORJOURNALARRAY_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("WAITFORJOURNALARRAY_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   (idx, text) = WaitForJournal([&apos;sex&apos;, &apos;drugs&apos;], 5000)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to (idx, text) = WaitForJournal([&apos;sex&apos;, &apos;drugs&apos;], 5000).
         /// </summary>
         public static string WAITFORJOURNALARRAY_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WAITFORJOURNALARRAY_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Pauses until incoming menu packet is received, optional paramters of gump ID and timeout과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Pauses until incoming menu packet is received, optional paramters of gump ID and timeout.
         /// </summary>
         public static string WAITFORMENU_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("WAITFORMENU_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   UseSkill(&apos;Tracking&apos;)
+        ///   Looks up a localized string similar to UseSkill(&apos;Tracking&apos;)
         ///WaitForMenu(0x1d0, 5000)
         ///ReplyMenu(0x1d0, 3, 0x2106, 0)
-        ///WaitForMenu(0x1d1, 5000)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///WaitForMenu(0x1d1, 5000).
         /// </summary>
         public static string WAITFORMENU_COMMAND_EXAMPLE {
             get {
                 return ResourceManager.GetString("WAITFORMENU_COMMAND_EXAMPLE", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   WaitForMenu(0x1d0, 5000)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to WaitForMenu(0x1d0, 5000).
         /// </summary>
         public static string WAITFORMENU_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WAITFORMENU_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Wait the specified timeout for a prompt packet to be received과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Wait the specified timeout for a prompt packet to be received.
         /// </summary>
         public static string WAITFORPROMPT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("WAITFORPROMPT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   WaitForPrompt(5000)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to WaitForPrompt(5000).
         /// </summary>
         public static string WAITFORPROMPT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WAITFORPROMPT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Wait for item properties to be received for specified item.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Wait for item properties to be received for specified item..
         /// </summary>
         public static string WAITFORPROPERTIES_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("WAITFORPROPERTIES_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   WaitForProperties(&quot;backpack&quot;, 5000)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to WaitForProperties(&quot;backpack&quot;, 5000).
         /// </summary>
         public static string WAITFORPROPERTIES_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WAITFORPROPERTIES_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Wait for target packet from server, optional timeout parameter (default 5000 milliseconds).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Wait for target packet from server, optional timeout parameter (default 5000 milliseconds)..
         /// </summary>
         public static string WAITFORTARGET_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("WAITFORTARGET_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   WaitForTarget(5000)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to WaitForTarget(5000).
         /// </summary>
         public static string WAITFORTARGET_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WAITFORTARGET_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Waits the specified timeout for target cursor whilst returning false if the spell is fizzled / uncastable beforehand.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Waits the specified timeout for target cursor whilst returning false if the spell is fizzled / uncastable beforehand..
         /// </summary>
         public static string WAITFORTARGETORFIZZLE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("WAITFORTARGETORFIZZLE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   WaitForTargetOrFizzle(5000)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to WaitForTargetOrFizzle(5000).
         /// </summary>
         public static string WAITFORTARGETORFIZZLE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WAITFORTARGETORFIZZLE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Waits the specified number of milliseconds for trade window action, -1 for infinite과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Waits the specified number of milliseconds for trade window action, -1 for infinite.
         /// </summary>
         public static string WAITFORTRADEWINDOW_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("WAITFORTRADEWINDOW_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   WaitForTradeWindow(5000)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to WaitForTradeWindow(5000).
         /// </summary>
         public static string WAITFORTRADEWINDOW_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WAITFORTRADEWINDOW_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true whenever the core is internally waiting for a server target과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true whenever the core is internally waiting for a server target.
         /// </summary>
         public static string WAITINGFORTARGET_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("WAITINGFORTARGET_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if WaitingForTarget():과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if WaitingForTarget():.
         /// </summary>
         public static string WAITINGFORTARGET_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WAITINGFORTARGET_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Walk in the given direction.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Walk in the given direction..
         /// </summary>
         public static string WALK_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("WALK_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Walk(&quot;east&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Walk(&quot;east&quot;).
         /// </summary>
         public static string WALK_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WALK_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Checks whether a mobile is in war mode.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Checks whether a mobile is in war mode..
         /// </summary>
         public static string WAR_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("WAR_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if War(&quot;self&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if War(&quot;self&quot;):.
         /// </summary>
         public static string WAR_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WAR_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Sets war mode status, parameter on, off, or toggle, defaults to toggle if no parameter given.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Sets war mode status, parameter on, off, or toggle, defaults to toggle if no parameter given..
         /// </summary>
         public static string WARMODE_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("WARMODE_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   WarMode(&quot;on&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to WarMode(&quot;on&quot;).
         /// </summary>
         public static string WARMODE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WARMODE_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns the current weight as as per status bar data.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns the current weight as as per status bar data..
         /// </summary>
         public static string WEIGHT_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("WEIGHT_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if Weight() &gt; 300:과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if Weight() &gt; 300:.
         /// </summary>
         public static string WEIGHT_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WEIGHT_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Whispers the given message과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Whispers the given message.
         /// </summary>
         public static string WHISPERMSG_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("WHISPERMSG_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   WhisperMsg(&quot;hi&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to WhisperMsg(&quot;hi&quot;).
         /// </summary>
         public static string WHISPERMSG_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("WHISPERMSG_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns X coordinate of given object (parameter can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns X coordinate of given object (parameter can be serial or alias)..
         /// </summary>
         public static string X_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("X_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   x = X(&quot;self&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to x = X(&quot;self&quot;).
         /// </summary>
         public static string X_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("X_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns Y coordinate of given object (parameter can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns Y coordinate of given object (parameter can be serial or alias)..
         /// </summary>
         public static string Y_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("Y_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   y = Y(&quot;self&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to y = Y(&quot;self&quot;).
         /// </summary>
         public static string Y_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("Y_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Yells the given message과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Yells the given message.
         /// </summary>
         public static string YELLMSG_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("YELLMSG_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   YellMsg(&quot;hi&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to YellMsg(&quot;hi&quot;).
         /// </summary>
         public static string YELLMSG_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("YELLMSG_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns true if the specified mobile is yellowhits.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns true if the specified mobile is yellowhits..
         /// </summary>
         public static string YELLOWHITS_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("YELLOWHITS_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   if YellowHits(&quot;self&quot;):과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to if YellowHits(&quot;self&quot;):.
         /// </summary>
         public static string YELLOWHITS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("YELLOWHITS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Returns Z coordinate of given object (parameter can be serial or alias).과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to Returns Z coordinate of given object (parameter can be serial or alias)..
         /// </summary>
         public static string Z_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("Z_COMMAND_DESCRIPTION", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   y = Y(&quot;self&quot;)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Looks up a localized string similar to y = Y(&quot;self&quot;).
         /// </summary>
         public static string Z_COMMAND_INSERTTEXT {
             get {

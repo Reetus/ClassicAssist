@@ -145,21 +145,26 @@ namespace ClassicAssist.UO.Network
         {
             byte action = reader.ReadByte();
             int serial = reader.ReadInt32();
-            int containerSerial = reader.ReadInt32();
-            int containerSerial2 = reader.ReadInt32();
+            int value1 = reader.ReadInt32();
+            int value2 = reader.ReadInt32();
 
             Engine.Trade.Action = (TradeAction) action;
             Engine.Trade.Serial = serial;
 
             if ( Engine.Trade.Action == TradeAction.Start )
             {
-                Engine.Trade.ContainerLocal = containerSerial;
-                Engine.Trade.ContainerRemote = containerSerial2;
+                Engine.Trade.ContainerLocal = value1;
+                Engine.Trade.ContainerRemote = value2;
             }
-            else
+            else if ( Engine.Trade.Action == TradeAction.Update )
             {
-                Engine.Trade.AcceptLocal = containerSerial;
-                Engine.Trade.AcceptRemote = containerSerial2;
+                Engine.Trade.AcceptLocal = value1;
+                Engine.Trade.AcceptRemote = value2;
+            }
+            else if ( Engine.Trade.Action == TradeAction.Gold )
+            {
+                Engine.Trade.GoldRemote = value1;
+                Engine.Trade.PlatinumRemote = value2;
             }
         }
 

@@ -70,6 +70,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <controls:TextBoxKey x:Name="textBoxKey"
                                      Shortcut="{Binding Hotkey}" Grid.Row="0"
@@ -123,6 +124,9 @@
                 <Button Grid.Row="4" Margin="10,0,10,5" Content="{x:Static resources:Strings.Create_Macro_Button}"
                         Command="{Binding CreateMacroButtonCommand}"
                         IsEnabled="{Binding IsEnabled, ElementName=textBoxKey}" />
+                <Button Grid.Row="5" Margin="10,0,10,5" Content="{x:Static resources:Strings.Options}"
+                        IsEnabled="{Binding SelectedItem.Configurable}" Command="{Binding ConfigureHotkeyCommand}"
+                        CommandParameter="{Binding SelectedItem}" />
             </Grid>
         </GroupBox>
     </Grid>

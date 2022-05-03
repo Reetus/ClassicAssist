@@ -92,6 +92,8 @@ namespace ClassicAssist.Data.Hotkeys
             set => SetProperty( ref _passToUo, value );
         }
 
+        public virtual bool Configurable { get; set; } = false;
+
         public int CompareTo( HotkeyEntry other )
         {
             if ( ReferenceEquals( this, other ) )

@@ -340,6 +340,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Arch Cure.
+        /// </summary>
+        public static string Arch_Cure {
+            get {
+                return ResourceManager.GetString("Arch Cure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Arguments.
         /// </summary>
         public static string Arguments {
@@ -1213,6 +1222,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cure.
+        /// </summary>
+        public static string Cure {
+            get {
+                return ResourceManager.GetString("Cure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cure Potion.
         /// </summary>
         public static string Cure_Potion {
@@ -1951,6 +1969,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Greater Heal / Cure Self.
+        /// </summary>
+        public static string Greater_Heal___Cure_Self {
+            get {
+                return ResourceManager.GetString("Greater Heal / Cure Self", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Grid Container Viewer.
         /// </summary>
         public static string Grid_Container_Viewer {
@@ -1974,6 +2001,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Heal_Potion {
             get {
                 return ResourceManager.GetString("Heal Potion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Healing.
+        /// </summary>
+        public static string Healing {
+            get {
+                return ResourceManager.GetString("Healing", resourceCulture);
             }
         }
         
@@ -2799,6 +2835,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Min_Price {
             get {
                 return ResourceManager.GetString("Min Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mini Heal / Cure Self.
+        /// </summary>
+        public static string Mini_Heal___Cure_Self {
+            get {
+                return ResourceManager.GetString("Mini Heal / Cure Self", resourceCulture);
             }
         }
         

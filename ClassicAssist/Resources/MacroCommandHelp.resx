@@ -1816,7 +1816,7 @@ results = ItemArrayGump(items, True, 200, 200)
 if results.Length == 0:
  print 'Nothing was selected'
 else:
- print '{} item(s) were selected'.format(result.Length)
+ print '{} item(s) were selected'.format(results.Length)
  
  for serial in results:
   print 'Serial {} was selected'.format(serial)

@@ -2120,7 +2120,7 @@ namespace ClassicAssist.Resources {
         ///if results.Length == 0:
         /// print &apos;Nothing was selected&apos;
         ///else:
-        /// print &apos;{} item(s) were selected&apos;.format(result.Length) [rest of string was truncated]&quot;;.
+        /// print &apos;{} item(s) were selected&apos;.format(results.Length [rest of string was truncated]&quot;;.
         /// </summary>
         public static string ITEMARRAYGUMP_COMMAND_EXAMPLE {
             get {

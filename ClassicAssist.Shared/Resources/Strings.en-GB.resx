@@ -1716,4 +1716,7 @@ Are you sure you wish to continue?</value>
   <data name="Healing" xml:space="preserve">
     <value>Healing</value>
   </data>
+  <data name="No items to display..." xml:space="preserve">
+    <value>No items to display...</value>
+  </data>
 </root>

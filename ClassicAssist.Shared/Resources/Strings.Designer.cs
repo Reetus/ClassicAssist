@@ -3064,6 +3064,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No items to display....
+        /// </summary>
+        public static string No_items_to_display___ {
+            get {
+                return ResourceManager.GetString("No items to display...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Target.
         /// </summary>
         public static string No_Target {

@@ -8,7 +8,7 @@ using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.Data.Hotkeys.Commands
 {
-    [HotkeyCommand( Name = "Bandage Self" )]
+    [HotkeyCommand( Name = "Bandage Self", Category = "Healing" )]
     public class BandageSelf : HotkeyCommand
     {
         private const int TIMEOUT = 5000;

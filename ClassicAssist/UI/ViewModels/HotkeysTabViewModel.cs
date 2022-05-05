@@ -12,7 +12,9 @@ using ClassicAssist.Data.Spells;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
+using ClassicAssist.UI.Views.Hotkeys;
 using Newtonsoft.Json.Linq;
+using Sentry;
 
 namespace ClassicAssist.UI.ViewModels
 {
@@ -22,6 +24,7 @@ namespace ClassicAssist.UI.ViewModels
         private readonly HotkeyManager _hotkeyManager;
         private readonly List<HotkeyCommand> _serializeCategories = new List<HotkeyCommand>();
         private ICommand _clearHotkeyCommand;
+        private ICommand _configureHotkeyCommand;
         private ICommand _createMacroButtonCommand;
         private ICommand _executeCommand;
         private ObservableCollection<HotkeyCommand> _filterItems;
@@ -40,6 +43,10 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand ClearHotkeyCommand =>
             _clearHotkeyCommand ?? ( _clearHotkeyCommand = new RelayCommand( ClearHotkey, o => SelectedItem != null ) );
+
+        public ICommand ConfigureHotkeyCommand =>
+            _configureHotkeyCommand ?? ( _configureHotkeyCommand = new RelayCommand( ConfigureHotkey,
+                o => SelectedItem != null && SelectedItem.Configurable ) );
 
         public ICommand CreateMacroButtonCommand =>
             _createMacroButtonCommand ?? ( _createMacroButtonCommand =
@@ -100,6 +107,10 @@ namespace ClassicAssist.UI.ViewModels
             JArray commandsArray = SerializeCommands( e => e.IsGlobal == global );
 
             hotkeys.Add( "Commands", commandsArray );
+
+            JArray optionsArray = SerializeOptions( e => e.IsGlobal == global );
+
+            hotkeys.Add( "Options", optionsArray );
 
             JArray spellsArray = SerializeSpells( e => e.IsGlobal == global );
 
@@ -187,6 +198,59 @@ namespace ClassicAssist.UI.ViewModels
                         entry.PassToUO = token["PassToUO"]?.ToObject<bool>() ?? true;
                         entry.Disableable = token["Disableable"]?.ToObject<bool>() ?? entry.Disableable;
                         entry.IsGlobal = global;
+                    }
+                }
+            }
+
+            if ( hotkeys?["Options"] != null )
+            {
+                foreach ( JToken token in hotkeys["Options"] )
+                {
+                    JToken type = token["Type"];
+                    JToken propertyName = token["Property"];
+                    JToken value = token["Value"];
+
+                    foreach ( HotkeyCommand category in _serializeCategories )
+                    {
+                        HotkeyEntry entry =
+                            category.Children.FirstOrDefault( o => o.GetType().FullName == type?.ToObject<string>() );
+
+                        if ( entry == null )
+                        {
+                            continue;
+                        }
+
+                        if ( string.IsNullOrEmpty( propertyName.ToString() ) )
+                        {
+                            continue;
+                        }
+
+                        PropertyInfo property = entry.GetType().GetProperty( propertyName.ToString(),
+                            BindingFlags.Instance | BindingFlags.Public );
+
+                        HotkeyConfigurationAttribute attribute =
+                            property.GetCustomAttribute<HotkeyConfigurationAttribute>();
+
+                        if ( attribute == null )
+                        {
+                            continue;
+                        }
+
+                        try
+                        {
+                            object val = value?.ToObject( attribute.Type );
+
+                            property.SetValue( entry, val );
+
+                            if ( global )
+                            {
+                                entry.IsGlobal = true;
+                            }
+                        }
+                        catch ( Exception ex )
+                        {
+                            SentrySdk.CaptureException( ex );
+                        }
                     }
                 }
             }
@@ -298,6 +362,29 @@ namespace ClassicAssist.UI.ViewModels
                     entry.IsGlobal = global;
                 }
             }
+        }
+
+        private JArray SerializeOptions( Func<HotkeyEntry, bool> predicate )
+        {
+            JArray optionsArray = new JArray();
+
+            foreach ( JObject jObject in from serializeCategory in _serializeCategories
+                     from hotkeyEntry in serializeCategory.Children.Where( e => e.Configurable && predicate( e ) )
+                     let properties =
+                         hotkeyEntry.GetType().GetProperties().Where( prop =>
+                             prop.IsDefined( typeof( HotkeyConfigurationAttribute ), false ) )
+                     from propertyInfo in properties
+                     select new JObject
+                     {
+                         { "Type", hotkeyEntry.GetType().FullName },
+                         { "Property", propertyInfo.Name },
+                         { "Value", propertyInfo.GetValue( hotkeyEntry ).ToString() }
+                     } )
+            {
+                optionsArray.Add( jObject );
+            }
+
+            return optionsArray;
         }
 
         private void CreateMacroButton( object obj )
@@ -491,6 +578,18 @@ namespace ClassicAssist.UI.ViewModels
             {
                 cmd.Action( cmd );
             }
+        }
+
+        private static void ConfigureHotkey( object obj )
+        {
+            if ( !( obj is HotkeyCommand hotkeyCommand ) )
+            {
+                return;
+            }
+
+            HotkeyOptionsWindow window = new HotkeyOptionsWindow( hotkeyCommand );
+
+            window.ShowDialog();
         }
     }
 }

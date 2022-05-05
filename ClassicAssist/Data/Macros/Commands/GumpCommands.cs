@@ -106,6 +106,13 @@ namespace ClassicAssist.Data.Macros.Commands
             return ConfirmPromptGump.ConfirmPrompt( message, closable );
         }
 
+        [CommandsDisplay( Category = nameof( Strings.Gumps ) )]
+        public static int[] ItemArrayGump( IList<object> items, bool multiSelect = false, int x = 100, int y = 100,
+            bool fixedSize = false )
+        {
+            return UO.Gumps.ItemArrayGump.SendGump( items.ToArray(), multiSelect, x, y, fixedSize );
+        }
+
         [CommandsDisplay( Category = nameof( Strings.Gumps ),
             Parameters = new[]
             {

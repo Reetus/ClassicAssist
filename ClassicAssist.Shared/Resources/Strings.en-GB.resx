@@ -1701,4 +1701,22 @@ Are you sure you wish to continue?</value>
   <data name="Match text value of property (UOAlive)" xml:space="preserve">
     <value>Match text value of property (UOAlive)</value>
   </data>
+  <data name="Mini Heal / Cure Self" xml:space="preserve">
+    <value>Mini Heal / Cure Self</value>
+  </data>
+  <data name="Greater Heal / Cure Self" xml:space="preserve">
+    <value>Greater Heal / Cure Self</value>
+  </data>
+  <data name="Cure" xml:space="preserve">
+    <value>Cure</value>
+  </data>
+  <data name="Arch Cure" xml:space="preserve">
+    <value>Arch Cure</value>
+  </data>
+  <data name="Healing" xml:space="preserve">
+    <value>Healing</value>
+  </data>
+  <data name="No items to display..." xml:space="preserve">
+    <value>No items to display...</value>
+  </data>
 </root>

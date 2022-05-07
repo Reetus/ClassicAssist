@@ -121,5 +121,53 @@ namespace ClassicAssist.Misc
                 return formatted.ToString();
             }
         }
+
+        private static int GetNearestTabStop( int currentPosition, int tabLength )
+        {
+            // If already at the tab stop, jump to the next tab stop.
+            if ( ( currentPosition % tabLength ) == 1 )
+                currentPosition += tabLength;
+            else
+            {
+                // If in the middle of two tab stops, move forward to the nearest.
+                for ( int i = 0; i < tabLength; i++, currentPosition++ )
+                    if ( ( currentPosition % tabLength ) == 1 )
+                        break;
+            }
+
+            return currentPosition;
+        }
+
+        public static string TabsToSpaces( this string input, int tabLength )
+        {
+            if ( string.IsNullOrEmpty( input ) )
+                return input;
+
+            StringBuilder output = new StringBuilder();
+
+            int positionInOutput = 1;
+            foreach ( var c in input )
+            {
+                switch ( c )
+                {
+                    case '\t':
+                        int spacesToAdd = GetNearestTabStop( positionInOutput, tabLength ) - positionInOutput;
+                        output.Append( new string( ' ', spacesToAdd ) );
+                        positionInOutput += spacesToAdd;
+                        break;
+
+                    case '\n':
+                        output.Append( c );
+                        positionInOutput = 1;
+                        break;
+
+                    default:
+                        output.Append( c );
+                        positionInOutput++;
+                        break;
+                }
+            }
+            return output.ToString();
+        }
     }
 }

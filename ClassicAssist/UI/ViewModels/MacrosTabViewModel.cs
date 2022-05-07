@@ -757,8 +757,10 @@ namespace ClassicAssist.UI.ViewModels
             OnPropertyChanged( nameof( Hotkey ) );
         }
 
-        private static void SaveMacro( object obj )
+        private void SaveMacro( object obj )
         {
+            SelectedItem.Macro = SelectedItem.Macro.TabsToSpaces( 4 );
+
             //Saves whole profile, think of better way
             Options.Save( Options.CurrentOptions );
         }
@@ -911,7 +913,7 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             string code =
-                $"from yapf.yapflib.yapf_api import FormatCode\r\nformatted_code, changed = FormatCode('{macroEntry.Macro.Replace( "\r\n", @"\n" ).Replace( "\n", @"\n" ).Replace( "'", @"\'" )}')";
+                $"from yapf.yapflib.yapf_api import FormatCode\r\nformatted_code, changed = FormatCode('{macroEntry.Macro.TabsToSpaces( 4 ).Replace( "\r\n", @"\n" ).Replace( "\n", @"\n" ).Replace( "'", @"\'" )}')";
 
             try
             {

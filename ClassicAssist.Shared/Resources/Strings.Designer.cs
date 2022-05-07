@@ -538,6 +538,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Backup Now.
+        /// </summary>
+        public static string Backup_Now {
+            get {
+                return ResourceManager.GetString("Backup Now", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Backup path not set.
         /// </summary>
         public static string Backup_path_not_set {
@@ -2514,6 +2523,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Line_Number {
             get {
                 return ResourceManager.GetString("Line Number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Linked.
+        /// </summary>
+        public static string Linked {
+            get {
+                return ResourceManager.GetString("Linked", resourceCulture);
             }
         }
         
@@ -4896,6 +4914,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Unknown_timer___ {
             get {
                 return ResourceManager.GetString("Unknown timer...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unlinked.
+        /// </summary>
+        public static string Unlinked {
+            get {
+                return ResourceManager.GetString("Unlinked", resourceCulture);
             }
         }
         

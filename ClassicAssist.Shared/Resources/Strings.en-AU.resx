@@ -1716,4 +1716,13 @@ Are you sure you wish to continue?</value>
   <data name="No items to display..." xml:space="preserve">
     <value>No items to display...</value>
   </data>
+  <data name="Backup Now" xml:space="preserve">
+    <value>Backup Now</value>
+  </data>
+  <data name="Linked" xml:space="preserve">
+    <value>Linked</value>
+  </data>
+  <data name="Unlinked" xml:space="preserve">
+    <value>Unlinked</value>
+  </data>
 </root>

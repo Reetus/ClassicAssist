@@ -162,9 +162,11 @@
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding IsLinkedProfile}" Value="False">
                                                     <Setter Property="Source" Value="{StaticResource unlinkedIcon}" />
+                                                    <Setter Property="ToolTip" Value="{x:Static r:Strings.Unlinked}" />
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding IsLinkedProfile}" Value="True">
                                                     <Setter Property="Source" Value="{StaticResource linkedIcon}" />
+                                                    <Setter Property="ToolTip" Value="{x:Static r:Strings.Linked}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>

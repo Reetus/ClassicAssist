@@ -27,8 +27,6 @@ namespace ClassicAssist.Data.Macros
         private bool _isBackground;
         private bool _isRunning;
         private Exception _lastException;
-        private string _lastSavedHash;
-        private DateTime _lastSavedOn;
         private bool _loop;
         private string _macro = string.Empty;
         private MacroInvoker _macroInvoker = new MacroInvoker();
@@ -56,8 +54,6 @@ namespace ClassicAssist.Data.Macros
             Disableable = GetJsonValue( token, "Disableable", true );
             Group = GetJsonValue( token, "Group", string.Empty );
             Global = GetJsonValue( token, "Global", false );
-            LastSavedOn = GetJsonValue( token, "LastSavedOn", DateTime.Now );
-            LastSavedHash = GetJsonValue( token, "LastSavedHash", string.Empty );
 
             /* Keys aren't done here, because of logic global vs normal */
 
@@ -143,18 +139,6 @@ namespace ClassicAssist.Data.Macros
         {
             get => _lastException;
             set => SetProperty( ref _lastException, value );
-        }
-
-        public string LastSavedHash
-        {
-            get => _lastSavedHash;
-            set => SetProperty( ref _lastSavedHash, value );
-        }
-
-        public DateTime LastSavedOn
-        {
-            get => _lastSavedOn;
-            set => SetProperty( ref _lastSavedOn, value );
         }
 
         public bool Loop
@@ -347,7 +331,6 @@ namespace ClassicAssist.Data.Macros
                 { "Disableable", Disableable },
                 { "Group", Group },
                 { "Global", Global },
-                { "LastSavedOn", DateTime.Now },
                 { "LastSavedHash", Hash }
             };
 

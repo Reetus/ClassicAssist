@@ -43,7 +43,7 @@ namespace ClassicAssist.Updater
             _dispatcher = Dispatcher.CurrentDispatcher;
 
             UpdaterSettings = App.UpdaterSettings;
-            Force = App.CurrentOptions.Force;
+            Force = App.CurrentOptions?.Force ?? false;
 
             if ( testing )
             {

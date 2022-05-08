@@ -6,6 +6,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -17,6 +18,8 @@ using Exceptionless;
 using Exceptionless.Models;
 using Application = System.Windows.Application;
 
+[assembly: InternalsVisibleTo( "ClassicAssist.Tests" )]
+
 namespace ClassicAssist.Updater
 {
     public class MainViewModel : SetPropertyNotifyChanged
@@ -24,17 +27,28 @@ namespace ClassicAssist.Updater
         private readonly Dispatcher _dispatcher;
         private ICommand _checkForUpdateCommand;
         private long _downloadSize;
+        private bool _force;
         private bool _isIndeterminate = true;
         private bool _isUpdating;
         private ObservableCollection<string> _items = new ObservableCollection<string>();
         private ICommand _loginGithubCommand;
         private UpdaterSettings _updaterSettings;
 
-        public MainViewModel()
+        public MainViewModel() : this( false )
+        {
+        }
+
+        public MainViewModel( bool testing )
         {
             _dispatcher = Dispatcher.CurrentDispatcher;
 
             UpdaterSettings = App.UpdaterSettings;
+            Force = App.CurrentOptions.Force;
+
+            if ( testing )
+            {
+                return;
+            }
 
             Task.Run( async () =>
             {
@@ -56,6 +70,19 @@ namespace ClassicAssist.Updater
 
                     DirectoryInfo source = new DirectoryInfo( App.CurrentOptions.UpdatePath );
                     DirectoryInfo destination = new DirectoryInfo( App.CurrentOptions.Path );
+
+                    List<string> failList = new List<string>();
+
+                    VerifyWriteAccess( source, destination, failList );
+
+                    if ( failList.Count > 0 )
+                    {
+                        AddText( string.Format(
+                            Resources
+                                .The_following_files_were_in_use_and_cannot_be_overwritten__ensure_all_instances_of_ClassicAssist_are_closed_and_then_try_again____0_,
+                            string.Join( "\n", failList ) ) );
+                        return;
+                    }
 
                     CopyAll( source, destination );
 
@@ -119,6 +146,12 @@ namespace ClassicAssist.Updater
             }
         }
 
+        public bool Force
+        {
+            get => _force;
+            set => SetProperty( ref _force, value );
+        }
+
         public bool IsIndeterminate
         {
             get => _isIndeterminate;
@@ -144,6 +177,48 @@ namespace ClassicAssist.Updater
         {
             get => _updaterSettings;
             set => SetProperty( ref _updaterSettings, value );
+        }
+
+        internal void VerifyWriteAccess( DirectoryInfo source, DirectoryInfo destination, List<string> failList,
+            string basePath = null )
+        {
+            if ( string.IsNullOrEmpty( basePath ) )
+            {
+                basePath = source.FullName;
+            }
+
+            if ( Directory.Exists( destination.FullName ) == false )
+            {
+                return;
+            }
+
+            failList.AddRange( from fi in source.GetFiles()
+                select fi.FullName.Replace( basePath + Path.DirectorySeparatorChar, string.Empty )
+                into relativePath
+                select Path.Combine( destination.FullName, relativePath )
+                into destinationPath
+                where File.Exists( destinationPath )
+                where !CheckFileAccess( destinationPath )
+                select destinationPath );
+
+            foreach ( DirectoryInfo diSourceDir in source.GetDirectories() )
+            {
+                VerifyWriteAccess( diSourceDir, destination, failList, basePath );
+            }
+        }
+
+        public static bool CheckFileAccess( string path )
+        {
+            try
+            {
+                File.OpenWrite( path ).Dispose();
+
+                return true;
+            }
+            catch ( Exception )
+            {
+                return false;
+            }
         }
 
         private static void EnsurePathsExist( string modulesPath, string fullName )
@@ -213,8 +288,7 @@ namespace ClassicAssist.Updater
 
                 string newVersion = latestRelease.Version;
 
-                if ( App.CurrentOptions.Force ||
-                     VersionHelpers.IsVersionNewer( App.CurrentOptions.CurrentVersion, newVersion ) )
+                if ( Force || VersionHelpers.IsVersionNewer( App.CurrentOptions.CurrentVersion, newVersion ) )
                 {
                     ExceptionlessClient.Default.SubmitEvent( new Event
                     {
@@ -320,8 +394,7 @@ namespace ClassicAssist.Updater
 
             if ( string.IsNullOrEmpty( App.CurrentOptions.URL ) )
             {
-                latestRelease =
-                    await Shared.Updater.GetReleases( UpdaterSettings.InstallPrereleases );
+                latestRelease = await Shared.Updater.GetReleases( UpdaterSettings.InstallPrereleases );
             }
             else
             {

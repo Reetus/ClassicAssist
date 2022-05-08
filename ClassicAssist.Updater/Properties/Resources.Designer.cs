@@ -19,7 +19,7 @@ namespace ClassicAssist.Updater.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -196,6 +196,15 @@ namespace ClassicAssist.Updater.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Force Update.
+        /// </summary>
+        public static string Force_Update {
+            get {
+                return ResourceManager.GetString("Force Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Github Access Token.
         /// </summary>
         public static string Github_Access_Token {
@@ -310,6 +319,17 @@ namespace ClassicAssist.Updater.Properties {
             get {
                 return ResourceManager.GetString("The following client(s) are currently running, if you continue they will be close" +
                         "d", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The following files were in use and cannot be overwritten, ensure all instances of ClassicAssist are closed and then try again...
+        ///{0}.
+        /// </summary>
+        public static string The_following_files_were_in_use_and_cannot_be_overwritten__ensure_all_instances_of_ClassicAssist_are_closed_and_then_try_again____0_ {
+            get {
+                return ResourceManager.GetString("The following files were in use and cannot be overwritten, ensure all instances o" +
+                        "f ClassicAssist are closed and then try again...{0}", resourceCulture);
             }
         }
         

@@ -201,4 +201,11 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Force Update" xml:space="preserve">
+    <value>Force Update</value>
+  </data>
+  <data name="The following files were in use and cannot be overwritten, ensure all instances of ClassicAssist are closed and then try again...{0}" xml:space="preserve">
+    <value>The following files were in use and cannot be overwritten, ensure all instances of ClassicAssist are closed and then try again...
+{0}</value>
+  </data>
 </root>

@@ -9,6 +9,7 @@
         xmlns:uimisc="clr-namespace:ClassicAssist.UI.Misc"
         xmlns:views="clr-namespace:ClassicAssist.UI.Views"
         xmlns:models="clr-namespace:ClassicAssist.UI.Models"
+        xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
         Width="600" Height="400" Title="{x:Static resources:Strings.Entity_Collection_Viewer}"
         Topmost="{Binding Options.AlwaysOnTop}">
@@ -26,6 +27,7 @@
                 <ResourceDictionary Source="EntityCollectionViewer/ListStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <valueConverters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -87,6 +89,15 @@
                               CommandParameter="{x:Static models:EntityCollectionSortStyle.Quantity}" />
                 </MenuItem>
             </Menu>
+            <Button Height="24" Style="{StaticResource ToolbarButtonStyle}" Command="{Binding CombineStacksCommand}"
+                    ToolTip="{x:Static resources:Strings.Combine_stacks}">
+                <Image Source="{StaticResource consolidateIcon}" />
+            </Button>
+            <Button Height="20" Padding="0" Command="{Binding ReplaceNameCommand}"
+                    ToolTip="{x:Static resources:Strings.Replace_name_with_single_click_label}"
+                    Visibility="{Binding TooltipsEnabled, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                <Image Source="{StaticResource HandPointerIcon}" />
+            </Button>
             <Button Height="24" Style="{StaticResource ToolbarButtonStyle}" Command="{Binding TargetContainerCommand}">
                 <Image Source="{StaticResource CrosshairIcon}" />
             </Button>

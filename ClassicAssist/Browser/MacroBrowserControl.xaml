@@ -94,7 +94,7 @@
                              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding}" ToolTip="{Binding}" TextTrimming="CharacterEllipsis" />
+                                <TextBlock Text="{Binding Name}" ToolTip="{Binding}" TextTrimming="CharacterEllipsis" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
@@ -116,7 +116,7 @@
                                            FontFamily="Consolas" Margin="10,0,0,0" IsReadOnly="True">
                         <i:Interaction.Behaviors>
                             <misc:AvalonEditBehaviour
-                                TextBinding="{Binding SelectedMacro}" />
+                                TextBinding="{Binding SelectedItem.Macro}" />
                         </i:Interaction.Behaviors>
                     </avalonedit:TextEditor>
                     <WrapPanel Grid.Row="1" Orientation="Horizontal" Margin="10,10,0,0">

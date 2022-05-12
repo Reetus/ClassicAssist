@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Assistant;
+using ClassicAssist.Browser.Models;
 using ClassicAssist.Controls.DraggableTreeView;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
@@ -35,6 +36,8 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class MacrosTabViewModel : HotkeyEntryViewModel<MacroEntry>, ISettingProvider
     {
+        private const string PUBLIC_ID_FIELD = "PublicId";
+        private const string PUBLIC_SHA1_FIELD = "PublicSHA1";
         private readonly MacroManager _manager;
         private int _caretPosition;
         private ICommand _clearExceptionCommand;
@@ -88,6 +91,7 @@ namespace ClassicAssist.UI.ViewModels
                 } );
             };
             _manager.NewMacro = NewMacro;
+            _manager.NewPublicMacro = NewPublicMacro;
             _manager.Items = Items;
             _manager.MacroStartedEvent += OnMacroStartedEvent;
             Items.CollectionChanged += UpdateDraggables;
@@ -433,6 +437,25 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             SelectedItem = Items.LastOrDefault();
+        }
+
+        private void NewPublicMacro( Metadata metadata )
+        {
+            MacroEntry macro = new MacroEntry
+            {
+                Name = metadata.Name,
+                Macro = metadata.Macro,
+                Metadata = new Dictionary<string, string>
+                {
+                    { PUBLIC_ID_FIELD, metadata.Id }, { PUBLIC_SHA1_FIELD, metadata.SHA1 }
+                }
+            };
+
+            macro.Action = async hks => await Execute( macro );
+
+            Items.Add( macro );
+
+            SelectedItem = macro;
         }
 
         private static void ClearException( object obj )

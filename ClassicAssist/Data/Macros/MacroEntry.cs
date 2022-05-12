@@ -30,6 +30,7 @@ namespace ClassicAssist.Data.Macros
         private bool _loop;
         private string _macro = string.Empty;
         private MacroInvoker _macroInvoker = new MacroInvoker();
+        private Dictionary<string, string> _metadata = new Dictionary<string, string>();
         private string _name;
 
         public MacroEntry( JToken token = null )
@@ -56,6 +57,20 @@ namespace ClassicAssist.Data.Macros
             Global = GetJsonValue( token, "Global", false );
 
             /* Keys aren't done here, because of logic global vs normal */
+
+            if ( token["Metadata"] != null )
+            {
+                foreach ( JToken jToken in token["Metadata"] )
+                {
+                    string key = jToken["Key"]?.ToObject<string>() ?? string.Empty;
+                    string value = jToken["Value"]?.ToObject<string>() ?? string.Empty;
+
+                    if ( !string.IsNullOrEmpty( key ) )
+                    {
+                        Metadata.Add( key, value );
+                    }
+                }
+            }
 
             if ( token["Aliases"] == null )
             {
@@ -158,6 +173,12 @@ namespace ClassicAssist.Data.Macros
         {
             get => _macroInvoker;
             set => SetProperty( ref _macroInvoker, value );
+        }
+
+        public Dictionary<string, string> Metadata
+        {
+            get => _metadata;
+            set => SetProperty( ref _metadata, value );
         }
 
         public DateTime StartedOn { get; set; }
@@ -333,6 +354,19 @@ namespace ClassicAssist.Data.Macros
                 { "Global", Global },
                 { "LastSavedHash", Hash }
             };
+
+            if ( Metadata?.Count > 0 )
+            {
+                JArray metadataArray = new JArray();
+
+                foreach ( JObject metadata in from keyValuePair in Metadata
+                         select new JObject { { "Key", keyValuePair.Key }, { "Value", keyValuePair.Value } } )
+                {
+                    metadataArray.Add( metadata );
+                }
+
+                entry.Add( "Metadata", metadataArray );
+            }
 
             if ( !Global )
             {

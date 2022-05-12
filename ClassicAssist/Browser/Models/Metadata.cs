@@ -18,13 +18,17 @@
 #endregion
 
 using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using ClassicAssist.Annotations;
 using ClassicAssist.Browser.Data;
 using Newtonsoft.Json;
 
 namespace ClassicAssist.Browser.Models
 {
-    public class Metadata
+    public class Metadata : IComparable<Metadata>, INotifyPropertyChanged
     {
+        private string _macro;
         public string Author { get; set; }
 
         [JsonConverter( typeof( CategoriesConverter ) )]
@@ -33,10 +37,46 @@ namespace ClassicAssist.Browser.Models
         public string Description { get; set; }
         public string Era { get; set; }
         public string FileName { get; set; }
+        public string Id { get; set; }
+
+        [JsonIgnore]
+        public string Macro
+        {
+            get => _macro;
+            set
+            {
+                _macro = value;
+                OnPropertyChanged();
+            }
+        }
+
         public DateTime ModifiedDate { get; set; }
         public string Name { get; set; }
         public string SHA1 { get; set; }
         public string Shard { get; set; }
         public int Size { get; set; }
+
+        public int CompareTo( Metadata other )
+        {
+            if ( ReferenceEquals( this, other ) )
+            {
+                return 0;
+            }
+
+            if ( ReferenceEquals( null, other ) )
+            {
+                return 1;
+            }
+
+            return string.Compare( Name, other.Name, StringComparison.Ordinal );
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
+        {
+            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+        }
     }
 }

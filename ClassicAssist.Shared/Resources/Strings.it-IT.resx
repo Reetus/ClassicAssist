@@ -193,7 +193,7 @@
     <value>BuffIcon</value>
   </data>
   <data name="Buffs / Penalties" xml:space="preserve">
-    <value>Buffs / Unbuffs</value>
+    <value>Buffs / Debuffs</value>
   </data>
   <data name="Build Date:" xml:space="preserve">
     <value>Data Build:</value>
@@ -1688,5 +1688,152 @@ Sei sicuro di voler continuare?</value>
   </data>
   <data name="Unknown" xml:space="preserve">
     <value>Sconosciuto</value>
+  </data>
+  <data name="All Names" xml:space="preserve">
+    <value>Tutti i Npmi</value>
+  </data>
+  <data name="Create Macro Button" xml:space="preserve">
+    <value>Crea Tasto Script</value>
+  </data>
+  <data name="Reflection Error: {0}" xml:space="preserve">
+    <value>Errore Riflesso: {0}</value>
+  </data>
+  <data name="Show player / shard name in CUO title" xml:space="preserve">
+    <value>Mostra player / shard nel titolo della finestra di ClassicUO</value>
+  </data>
+  <data name="ID from target" xml:space="preserve">
+    <value>ID da Target</value>
+  </data>
+  <data name="Layer" xml:space="preserve">
+    <value>Layer</value>
+  </data>
+  <data name="Activated following" xml:space="preserve">
+    <value>Segui Attivato</value>
+  </data>
+  <data name="Deactivated following" xml:space="preserve">
+    <value>Segui Disattivato</value>
+  </data>
+  <data name="Event" xml:space="preserve">
+    <value>Evento</value>
+  </data>
+  <data name="Caller" xml:space="preserve">
+    <value>Caller</value>
+  </data>
+  <data name="Elapsed" xml:space="preserve">
+    <value>Passati</value>
+  </data>
+  <data name="Format Code" xml:space="preserve">
+    <value>Codice Formato</value>
+  </data>
+  <data name="Current month donations" xml:space="preserve">
+    <value>Donazioni correnti {0}: ${1}</value>
+  </data>
+  <data name="Donate Now" xml:space="preserve">
+    <value>Dona Ora</value>
+  </data>
+  <data name="Context menu entry disabled" xml:space="preserve">
+    <value>Inserimento Menu contestuale Disabilitato</value>
+  </data>
+  <data name="Use Last Skill" xml:space="preserve">
+    <value>Usa ultima Skill</value>
+  </data>
+  <data name="Login With Google" xml:space="preserve">
+    <value>Login con Google</value>
+  </data>
+  <data name="Authentication error or timeout" xml:space="preserve">
+    <value>Errore di Autenticazione o timeout</value>
+  </data>
+  <data name="Name Overrides" xml:space="preserve">
+    <value>Sovrascivi Nome</value>
+  </data>
+  <data name="Insert Empty Entry" xml:space="preserve">
+    <value>Inserisci campo vuoto</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Autologin" xml:space="preserve">
+    <value>Autologin</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Server Index" xml:space="preserve">
+    <value>Indice Server</value>
+  </data>
+  <data name="Character Index" xml:space="preserve">
+    <value>Indice pg</value>
+  </data>
+  <data name="Connect Delay" xml:space="preserve">
+    <value>Delay connessione</value>
+  </data>
+  <data name="Reconnect Delay" xml:space="preserve">
+    <value>Delay riconnessione</value>
+  </data>
+  <data name="Unknown account..." xml:space="preserve">
+    <value>Account sconosciuto...</value>
+  </data>
+  <data name="Autologin in {0} seconds..." xml:space="preserve">
+    <value>Autologin in {0} secondi...</value>
+  </data>
+  <data name="Connecting..." xml:space="preserve">
+    <value>Connetto...</value>
+  </data>
+  <data name="Timeout waiting for shard selection screen" xml:space="preserve">
+    <value>Timeout mentre aspettavo la selezione dello shard</value>
+  </data>
+  <data name="Failed to get server list" xml:space="preserve">
+    <value>Lista server fallita</value>
+  </data>
+  <data name="Failed to get selected server index" xml:space="preserve">
+    <value>Indice del server scelto fallito</value>
+  </data>
+  <data name="Servers:" xml:space="preserve">
+    <value>Servers:</value>
+  </data>
+  <data name="Selecting server {0}..." xml:space="preserve">
+    <value>Seleziono server {0}...</value>
+  </data>
+  <data name="Timeout waiting for character selection screen" xml:space="preserve">
+    <value>Timeout mentre aspettavo la schermata di selezione del pg</value>
+  </data>
+  <data name="Failed to get character list" xml:space="preserve">
+    <value>Lista pg fallita</value>
+  </data>
+  <data name="Character index not found" xml:space="preserve">
+    <value>Indice pg non trovato</value>
+  </data>
+  <data name="Characters:" xml:space="preserve">
+    <value>Pg:</value>
+  </data>
+  <data name="Selecting character {0}..." xml:space="preserve">
+    <value>Seleziono pg {0}...</value>
+  </data>
+  <data name="{0} agent is now {1}" xml:space="preserve">
+    <value>{0} agent è ora {1}</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Disabilitato</value>
+  </data>
+  <data name="Trade" xml:space="preserve">
+    <value>Trade</value>
+  </data>
+  <data name="Match text value of property (UOAlive)" xml:space="preserve">
+    <value>Coincidi il valore testuale di una propietà (UOAlive)</value>
+  </data>
+  <data name="Mini Heal / Cure Self" xml:space="preserve">
+    <value>Mini Heal / Cure Self</value>
+  </data>
+  <data name="Greater Heal / Cure Self" xml:space="preserve">
+    <value>Greater Heal / Cure Self</value>
+  </data>
+  <data name="Cure" xml:space="preserve">
+    <value>Cure</value>
+  </data>
+  <data name="Arch Cure" xml:space="preserve">
+    <value>Arch Cure</value>
+  </data>
+  <data name="Healing" xml:space="preserve">
+    <value>Healing</value>
   </data>
 </root>

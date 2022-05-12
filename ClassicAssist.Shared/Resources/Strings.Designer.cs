@@ -2617,6 +2617,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Logout on disconnected prompt.
+        /// </summary>
+        public static string Logout_on_disconnected_prompt {
+            get {
+                return ResourceManager.GetString("Logout on disconnected prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loop.
         /// </summary>
         public static string Loop {

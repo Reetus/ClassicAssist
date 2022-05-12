@@ -1728,4 +1728,7 @@ Are you sure you wish to continue?</value>
   <data name="Unlinked" xml:space="preserve">
     <value>Unlinked</value>
   </data>
+  <data name="Logout on disconnected prompt" xml:space="preserve">
+    <value>Logout on disconnected prompt</value>
+  </data>
 </root>

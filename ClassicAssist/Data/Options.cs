@@ -53,7 +53,6 @@ namespace ClassicAssist.Data
         private int _lightLevel;
         private bool _limitMouseWheelTrigger;
         private int _limitMouseWheelTriggerMS;
-        private bool _logoutDisconnectedPrompt;
         private bool _macrosGump;
         private int _macrosGumpX;
         private int _macrosGumpY;
@@ -283,12 +282,6 @@ namespace ClassicAssist.Data
         {
             get => _limitMouseWheelTriggerMS;
             set => SetProperty( ref _limitMouseWheelTriggerMS, value );
-        }
-
-        public bool LogoutDisconnectedPrompt
-        {
-            get => _logoutDisconnectedPrompt;
-            set => SetProperty( ref _logoutDisconnectedPrompt, value );
         }
 
         public bool MacrosGump

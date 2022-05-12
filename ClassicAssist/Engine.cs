@@ -590,7 +590,7 @@ namespace Assistant
 
                 if ( Connected && Player?.Backpack != null && Player?.Backpack?.Container == null )
                 {
-                    ObjectCommands.UseObject( Player?.Backpack );
+                    ObjectCommands.UseObject( Player.Backpack );
                 }
 
                 MacroManager.GetInstance().Autostart();

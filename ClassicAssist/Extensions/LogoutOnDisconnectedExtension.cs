@@ -40,15 +40,15 @@ namespace ClassicAssist.Extensions
 
         private static void TimerOnTick( object sender, EventArgs e )
         {
+            if ( !Options.CurrentOptions.LogoutDisconnectedPrompt )
+            {
+                return;
+            }
+
             Engine.TickWorkQueue.Enqueue( () =>
             {
                 try
                 {
-                    if ( Options.CurrentOptions.LogoutDisconnectedPrompt )
-                    {
-                        return;
-                    }
-
                     IEnumerable<dynamic> gumps = CUO.GetGumps();
 
                     dynamic obj = gumps.FirstOrDefault( g => g.GetType().ToString().Contains( "MessageBoxGump" ) );

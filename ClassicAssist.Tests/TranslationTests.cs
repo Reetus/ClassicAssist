@@ -17,13 +17,16 @@
 
 #endregion
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Resources;
 using System.Text.RegularExpressions;
+using ClassicAssist.Data.Hotkeys.Commands;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ClassicAssist.Tests
@@ -32,7 +35,7 @@ namespace ClassicAssist.Tests
     public class TranslationTests
     {
         private static readonly string[] _fileNames = { "Strings", "MacroCommandHelp" };
-        private static readonly string[] _locales = { "en-AU", "en-GB", "it-IT", "pl-PL", "ko-KR" };
+        private static readonly string[] _locales = { "en-AU", "en-GB", "it-IT", "pl-PL", "ko-KR", "cs", "zh" };
 
         [TestMethod]
         public void EnsureAllTranslationContainInputParameters()
@@ -49,11 +52,11 @@ namespace ClassicAssist.Tests
                     Dictionary<string, string> lang = GetAllResXKeyValue( $"{fileName}.{locale}" );
 
                     foreach ( string checkKey in from checkKey in checkKeys
-                        let matches = Regex.Matches( neutral[checkKey], "{(\\d+)}" )
-                        from Match match in matches
-                        where lang.ContainsKey( checkKey )
-                        where !Regex.IsMatch( lang[checkKey], "{(" + match.Groups[1].Value + ")}" )
-                        select checkKey )
+                             let matches = Regex.Matches( neutral[checkKey], "{(\\d+)}" )
+                             from Match match in matches
+                             where lang.ContainsKey( checkKey )
+                             where !Regex.IsMatch( lang[checkKey], "{(" + match.Groups[1].Value + ")}" )
+                             select checkKey )
                     {
                         Assert.Fail( $"'{checkKey}' missing input param for language '{locale}'" );
                     }
@@ -61,18 +64,40 @@ namespace ClassicAssist.Tests
             }
         }
 
+        [TestMethod]
+        public void InstantiateAllHotkeysTranslationCheck()
+        {
+            // Constructor of HotkeyCommand will throw an exception if Name, Tooltip or Category is not translated...
+
+            Assembly assembly = Assembly.LoadFile( Path.Combine( Environment.CurrentDirectory, "ClassicAssist.dll" ) );
+
+            IEnumerable<Type> hotkeyCommands = assembly.GetTypes()
+                .Where( i => i.IsSubclassOf( typeof( HotkeyCommand ) ) );
+
+            foreach ( Type hotkeyCommand in hotkeyCommands )
+            {
+                Activator.CreateInstance( hotkeyCommand );
+            }
+        }
+
         private static Dictionary<string, string> GetAllResXKeyValue( string fileName )
         {
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
 
-            if ( !File.Exists( $@"..\..\..\..\ClassicAssist\Resources\{fileName}.resx" ) )
+            string path = $@"..\..\..\..\ClassicAssist\Resources\{fileName}.resx";
+
+            if ( !File.Exists( path ) )
+            {
+                path = $@"..\..\..\..\ClassicAssist.Shared\Resources\{fileName}.resx";
+            }
+
+            if ( !File.Exists( path ) )
             {
                 Debug.WriteLine( $"Cannot find resx file: {fileName}" );
                 return dictionary;
             }
 
-            using ( ResXResourceReader resxReader =
-                new ResXResourceReader( $@"..\..\..\..\ClassicAssist\Resources\{fileName}.resx" ) )
+            using ( ResXResourceReader resxReader = new ResXResourceReader( path ) )
             {
                 foreach ( DictionaryEntry entry in resxReader )
                 {

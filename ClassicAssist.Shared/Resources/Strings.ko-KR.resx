@@ -1444,7 +1444,7 @@
     <value>모듈</value>
   </data>
   <data name="Snapshot Saved: {0}" xml:space="preserve">
-    <value>스크린샷이 저장되었습니다.</value>
+    <value>스크린샷이 저장되었습니다. {0}</value>
   </data>
   <data name="Take Snapshot" xml:space="preserve">
     <value>스크린샷 찍기</value>
@@ -1639,13 +1639,13 @@
     <value>아이템이 없음...</value>
   </data>
   <data name="Backing up {0}..." xml:space="preserve">
-    <value>백업</value>
+    <value>백업 {0}</value>
   </data>
   <data name="Done..." xml:space="preserve">
     <value>완료</value>
   </data>
   <data name="Failed to backup file: {0}" xml:space="preserve">
-    <value>백업파일을 여는데 실패했습니다.</value>
+    <value>백업파일을 여는데 실패했습니다. {0}</value>
   </data>
   <data name="No backup type or path set..." xml:space="preserve">
     <value>백업 유형 또는 경로가 설정되지 않았습니다 ...</value>

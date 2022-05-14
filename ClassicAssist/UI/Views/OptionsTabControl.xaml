@@ -188,6 +188,8 @@
                       Command="{Binding SetUseClilocLanguageCommand}"
                       CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
                       IsEnabled="{x:Static cliloc:Cliloc.CanUseCUOClilocLanguage}" />
+            <CheckBox Content="{x:Static resources:Strings.Logout_on_disconnected_prompt}"
+                      IsChecked="{Binding CurrentOptions.LogoutDisconnectedPrompt}"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -1286,4 +1286,76 @@ Risponde un tuple con un bolean, indicando quando un tasto OK è stato premuto, 
   <data name="QUIT_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Chiude il client</value>
   </data>
+  <data name="PROMPTMACROALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Apri un target in game per fornire il nome di un Alias, l'Alias sara valido solo per la macro corrente.</value>
+  </data>
+  <data name="DIFFHITSPERCENT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Riporta la differenza di hp massimi come percentuale, se il parametro è nullo riporta automaticamente se stessi (puoi usare un Alias o un seriale come parametro).</value>
+  </data>
+  <data name="FOLLOWING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Riporta True se stai correntemente seguendo un target</value>
+  </data>
+  <data name="FOLLOW_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Comanda ClassicUO di seguire uno specifico Alias o seriale, se non specifichi il parametro smette di seguire.</value>
+  </data>
+  <data name="PATHFINDING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Riporta True se stai correntemente usando pathfinding</value>
+  </data>
+  <data name="WAITFORJOURNALARRAY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Attendi por un determinato ammontare di tempo che appaia del testo desiderato nel journal</value>
+  </data>
+  <data name="CLEAROBJECTQUEUE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pulisci la coda azioni</value>
+  </data>
+  <data name="AUTOLOOT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Comanda all'autoloot di controllare un determinato contenitore (anche quando non attivato), saltando il controllo sui tipo di corpse</value>
+  </data>
+  <data name="DISTANCECOORDINATES_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Riporta la distanza da una determinata coordinata</value>
+  </data>
+  <data name="SKILLDELTA_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Riporta il valore delta di una skill dall'ultimo grain</value>
+  </data>
+  <data name="AUTOLOOTING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Riporta True se stai correntemente controllando una corpse o autolotando oggetti.</value>
+  </data>
+  <data name="USELASTSKILL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Usa l'ultima skill utilizzata</value>
+  </data>
+  <data name="OPENECV_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Apri il ECV (entity collection viewer) per uno specifico contenitore (seriale o Alias)</value>
+  </data>
+  <data name="PLAYCUOMACRO_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Avvia una macro specifica di ClassicUO</value>
+  </data>
+  <data name="SETAUTOLOGIN_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Configura le impostazioni di autologin</value>
+  </data>
+  <data name="SETSCAVENGER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Attiva/Disattiva l'Agente Scavanger</value>
+  </data>
+  <data name="WAITFORTRADEWINDOW_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Attendi per un dato ammontare di tempo la finestra di Trade. -1 per attesa infinita</value>
+  </data>
+  <data name="TRADEACCEPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Accetta la finestra di Trade</value>
+  </data>
+  <data name="TRADEREJECT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Rifiuta (spunta) la finestra di Trade</value>
+  </data>
+  <data name="TRADECLOSE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Chiudi la finestra di Trade</value>
+  </data>
+  <data name="FASTERCASTING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Riporta il valore di Faster Casting</value>
+  </data>
+  <data name="FASTERCASTRECOVERY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Riporta il valore di Faster Casting Recovery</value>
+  </data>
+  <data name="OPENHELPGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Apri il gump di Help</value>
+  </data>
+  <data name="TRADECURRENCY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Imposta un ammontare di oro e platino nella finestra di Trade (per Shard supportati)</value>
+  </data>
 </root>

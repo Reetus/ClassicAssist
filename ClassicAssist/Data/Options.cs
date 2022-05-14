@@ -53,6 +53,7 @@ namespace ClassicAssist.Data
         private int _lightLevel;
         private bool _limitMouseWheelTrigger;
         private int _limitMouseWheelTriggerMS;
+        private bool _logoutDisconnectedPrompt;
         private bool _macrosGump;
         private int _macrosGumpX;
         private int _macrosGumpY;
@@ -284,6 +285,12 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _limitMouseWheelTriggerMS, value );
         }
 
+        public bool LogoutDisconnectedPrompt
+        {
+            get => _logoutDisconnectedPrompt;
+            set => SetProperty( ref _logoutDisconnectedPrompt, value );
+        }
+
         public bool MacrosGump
         {
             get => _macrosGump;
@@ -475,12 +482,63 @@ namespace ClassicAssist.Data
                         globalSettingProvider.GetGlobalFilename() ), global.ToString() );
             }
 
-            obj["Hash"] = obj.ToString().SHA1();
+            string hash = obj.ToString().SHA1();
+            obj["Hash"] = hash;
+
+            if ( hash.Equals( options.Hash ) )
+            {
+                // ReSharper disable once LocalizableElement
+                Console.WriteLine( "Profile hasn't changed, skipping profile save" );
+                return;
+            }
 
             EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
 
+            CheckModifiedOnDisk( options.Name, options.Hash );
+
             File.WriteAllText( Path.Combine( _profilePath, options.Name ?? DEFAULT_SETTINGS_FILENAME ),
                 obj.ToString() );
+
+            options.Hash = hash;
+        }
+
+        private static void CheckModifiedOnDisk( string profileFilename, string hash )
+        {
+            try
+            {
+                string profilePath = Path.Combine( _profilePath, profileFilename );
+
+                if ( !File.Exists( profilePath ) )
+                {
+                    return;
+                }
+
+                string json = File.ReadAllText( profilePath );
+                JObject obj = JObject.Parse( json );
+
+                string hashOnDisk = obj["Hash"]?.ToObject<string>() ?? string.Empty;
+
+                if ( hashOnDisk.Equals( hash ) )
+                {
+                    return;
+                }
+
+                // The hash of the profile isn't the same as when we loaded / saved it last, backup the existing profile to another directory
+                string conflictPath = Path.Combine( _profilePath, "Conflict" );
+
+                if ( !Directory.Exists( conflictPath ) )
+                {
+                    Directory.CreateDirectory( conflictPath );
+                }
+
+                string fileName = Path.Combine( conflictPath, $"{profileFilename}-{hashOnDisk}" );
+
+                File.Copy( profilePath, fileName, true );
+            }
+            catch ( Exception )
+            {
+                // we tried
+            }
         }
 
         private static void EnsureProfilePath( string startupPath )
@@ -518,7 +576,7 @@ namespace ClassicAssist.Data
                 json = JObject.Parse( File.ReadAllText( fullPath ) );
             }
 
-            options.Name = options.Name ?? json["Name"]?.ToObject<string>() ?? DEFAULT_SETTINGS_FILENAME;
+            options.Name = Path.GetFileName( optionsFile );
             options.Hash = json["Hash"]?.ToObject<string>() ?? string.Empty;
 
             foreach ( BaseViewModel instance in instances )

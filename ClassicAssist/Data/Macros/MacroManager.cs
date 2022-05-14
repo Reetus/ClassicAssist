@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Assistant;
+using ClassicAssist.Browser.Models;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UO.Network.PacketFilter;
@@ -44,6 +45,8 @@ namespace ClassicAssist.Data.Macros
         public Action<string, string> NewMacro { get; set; }
         public static bool QuietMode { get; set; }
         public bool Replay { get; set; }
+        public Action<Metadata> NewPublicMacro { get; set; }
+
         public event dMacroStartStop MacroStartedEvent;
         public event dMacroStartStop MacroStoppedEvent;
 

@@ -27,11 +27,13 @@ using System.Windows.Input;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Backup;
 using ClassicAssist.Shared.UI;
+using ClassicAssist.UI.Views;
 
 namespace ClassicAssist.UI.ViewModels
 {
     public class BackupSettingsWindowViewModel : SetPropertyNotifyChanged
     {
+        private ICommand _backupNowCommand;
         private BackupOptions _backupOptions;
         private ICommand _browsePathCommand;
         private ObservableCollection<IBackupProvider> _providers = new ObservableCollection<IBackupProvider>();
@@ -51,6 +53,8 @@ namespace ClassicAssist.UI.ViewModels
                 Providers.Add( provider );
             }
         }
+
+        public ICommand BackupNowCommand => _backupNowCommand ?? ( _backupNowCommand = new RelayCommand( BackupNow ) );
 
         public BackupOptions BackupOptions
         {
@@ -72,6 +76,14 @@ namespace ClassicAssist.UI.ViewModels
         {
             BackupOptions.Provider.BackupPath =
                 await BackupOptions.Provider.GetPath( BackupOptions.Provider.BackupPath );
+        }
+
+        private void BackupNow( object obj )
+        {
+            BackupWindowViewModel vm = new BackupWindowViewModel( BackupOptions );
+            BackupWindow backupWindow = new BackupWindow { DataContext = vm, Topmost = true };
+            vm.CloseWindow = () => backupWindow.Close();
+            backupWindow.ShowDialog();
         }
     }
 }

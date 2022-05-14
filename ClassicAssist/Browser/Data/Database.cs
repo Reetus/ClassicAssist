@@ -108,18 +108,18 @@ namespace ClassicAssist.Browser.Data
             return latest;
         }
 
-        public async Task<string[]> GetMacros( List<Filter> filter = null )
+        public async Task<Metadata[]> GetMacros( List<Filter> filter = null )
         {
             Manifest manifest = await GetManifest();
 
             if ( manifest == null )
             {
-                return Array.Empty<string>();
+                return Array.Empty<Metadata>();
             }
 
             if ( filter == null )
             {
-                return manifest.Files.Select( f => f.Name ).OrderBy( f => f ).ToArray();
+                return manifest.Files.OrderBy( f => f ).ToArray();
             }
 
             string shardFilter = filter.FirstOrDefault( t => t.FilterType == FilterType.Shard )?.Value;
@@ -129,11 +129,11 @@ namespace ClassicAssist.Browser.Data
             Predicate<string[]> categoryPredicate =
                 CategoryToPredicate( filter.FirstOrDefault( t => t.FilterType == FilterType.Category ) );
 
-            IEnumerable<string> macros = manifest.Files.Where( m =>
+            IEnumerable<Metadata> macros = manifest.Files.Where( m =>
                 ( string.IsNullOrEmpty( shardFilter ) || m.Shard != null && m.Shard.Equals( shardFilter ) ) &&
                 ( string.IsNullOrEmpty( eraFilter ) || m.Era == null || m.Era.Equals( eraFilter ) ) &&
                 ( string.IsNullOrEmpty( authorFilter ) || m.Author == null || m.Author.Equals( authorFilter ) ) &&
-                categoryPredicate( m.Categories ) ).Select( m => m.Name );
+                categoryPredicate( m.Categories ) );
 
             return macros.ToArray();
         }
@@ -291,18 +291,18 @@ namespace ClassicAssist.Browser.Data
             return results.ToArray();
         }
 
-        public async Task<string> GetMacroByName( string value )
+        public async Task<string> GetMacroById( string id )
         {
             Manifest manifest = await GetManifest();
 
-            Metadata macro = manifest?.Files.FirstOrDefault( f => f.Name == value );
+            Metadata macro = manifest?.Files.FirstOrDefault( f => f.Id == id );
 
             if ( macro == null )
             {
                 return string.Empty;
             }
 
-            Macro cached = _macros.Find( m => m.Name == macro.Name && m.SHA1 == macro.SHA1 ).FirstOrDefault();
+            Macro cached = _macros.Find( m => m.Name == macro.Id && m.SHA1 == macro.SHA1 ).FirstOrDefault();
 
             if ( cached != null )
             {

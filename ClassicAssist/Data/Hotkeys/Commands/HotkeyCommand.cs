@@ -30,10 +30,22 @@ namespace ClassicAssist.Data.Hotkeys.Commands
 
                     if ( string.IsNullOrEmpty( tooltipName ) )
                     {
-                        throw new ArgumentNullException( $"No localizable string for {a.Name}" );
+                        throw new ArgumentNullException( $"No localizable string for {a.Tooltip}" );
                     }
 
                     Tooltip = tooltipName;
+                }
+
+                if ( !string.IsNullOrEmpty( a.Category ) )
+                {
+                    string category = Strings.ResourceManager.GetString( a.Category );
+
+                    if ( string.IsNullOrEmpty( category ) )
+                    {
+                        throw new ArgumentNullException( $"No localizable string for {a.Category}" );
+                    }
+
+                    a.Category = category;
                 }
 
                 base.Name = hotkeyName;

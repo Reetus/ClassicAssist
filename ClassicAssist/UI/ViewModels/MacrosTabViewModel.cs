@@ -296,7 +296,7 @@ namespace ClassicAssist.UI.ViewModels
                     globalJson );
             }
 
-            foreach ( MacroEntry macroEntry in Items.Where( e => !e.Global ) )
+            foreach ( MacroEntry macroEntry in Items.Where( e => !e.Global ).ToList() )
             {
                 macroArray.Add( macroEntry.ToJObject() );
             }

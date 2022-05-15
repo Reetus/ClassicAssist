@@ -547,12 +547,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private void OnMacroStartedEvent( MacroEntry macroentry )
         {
-            if ( SelectedItem == null )
-            {
-                return;
-            }
-
-            if ( !SelectedItem.Equals( macroentry ) || !IsRecording )
+            if ( !SelectedItem?.Equals( macroentry ) ?? !IsRecording )
             {
                 return;
             }

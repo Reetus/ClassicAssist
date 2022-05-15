@@ -32,6 +32,7 @@ namespace ClassicAssist.Data.Macros
         private MacroInvoker _macroInvoker = new MacroInvoker();
         private Dictionary<string, string> _metadata = new Dictionary<string, string>();
         private string _name;
+        private bool _updateAvailable;
 
         public MacroEntry( JToken token = null )
         {
@@ -182,6 +183,12 @@ namespace ClassicAssist.Data.Macros
         }
 
         public DateTime StartedOn { get; set; }
+
+        public bool UpdateAvailable
+        {
+            get => _updateAvailable;
+            set => SetProperty( ref _updateAvailable, value );
+        }
 
         public int CompareTo( object obj )
         {

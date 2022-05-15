@@ -1851,4 +1851,13 @@ Are you sure you wish to continue?</value>
   <data name="Logout on disconnected prompt" xml:space="preserve">
     <value>Logout on disconnected prompt</value>
   </data>
+  <data name="Public macro update available" xml:space="preserve">
+    <value>Public macro update available</value>
+  </data>
+  <data name="Review the changes and press OK to overwrite the current macro with the new version, or press Cancel to retain current macro" xml:space="preserve">
+    <value>Review the changes and press OK to overwrite the current macro with the new version, or press Cancel to retain current macro</value>
+  </data>
+  <data name="Old" xml:space="preserve">
+    <value>Old</value>
+  </data>
 </root>

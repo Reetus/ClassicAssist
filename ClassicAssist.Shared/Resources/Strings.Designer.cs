@@ -3181,6 +3181,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Old.
+        /// </summary>
+        public static string Old {
+            get {
+                return ResourceManager.GetString("Old", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only overwrite blank password.
         /// </summary>
         public static string Only_overwrite_blank_password {
@@ -3550,6 +3559,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Public macro update available.
+        /// </summary>
+        public static string Public_macro_update_available {
+            get {
+                return ResourceManager.GetString("Public macro update available", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Public Macros.
         /// </summary>
         public static string Public_Macros {
@@ -3834,6 +3852,16 @@ namespace ClassicAssist.Shared.Resources {
         public static string Resync {
             get {
                 return ResourceManager.GetString("Resync", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Review the changes and press OK to overwrite the current macro with the new version, or press Cancel to retain current macro.
+        /// </summary>
+        public static string Review_the_changes_and_press_OK_to_overwrite_the_current_macro_with_the_new_version__or_press_Cancel_to_retain_current_macro {
+            get {
+                return ResourceManager.GetString("Review the changes and press OK to overwrite the current macro with the new versi" +
+                        "on, or press Cancel to retain current macro", resourceCulture);
             }
         }
         

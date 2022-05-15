@@ -1,0 +1,51 @@
+﻿<Window x:Name="window" x:Class="ClassicAssist.Browser.MacroDiffWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:DiffPlex.Wpf.Controls;assembly=DiffPlex.Wpf"
+        xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+        xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d" Topmost="True"
+        Title="{x:Static resources:Strings.Public_macro_update_available}" Height="450" Width="800"
+        Background="{DynamicResource ThemeWindowBackgroundBrush}" Foreground="{DynamicResource ThemeForegroundBrush}"
+        DataContext="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/DarkTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock TextWrapping="Wrap" Margin="0,10,0,20"
+                   Text="{x:Static resources:Strings.Review_the_changes_and_press_OK_to_overwrite_the_current_macro_with_the_new_version__or_press_Cancel_to_retain_current_macro}"
+                   Grid.Row="0" />
+        <controls:DiffViewer IsSideBySide="False" OldText="{Binding OldText, ElementName=window}" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" 
+                             NewText="{Binding NewText, ElementName=window}"
+                             OldTextHeader="{x:Static resources:Strings.Old}"
+                             NewTextHeader="{x:Static resources:Strings.New}"
+                             Foreground="{DynamicResource ThemeForegroundBrush}" Grid.Row="1" />
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Padding" Value="25,5" />
+                    <Setter Property="Margin" Value="10,0,0,0" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="{x:Static resources:Strings.OK}" Command="{Binding OKCommand}">
+            </Button>
+            <Button Content="{x:Static resources:Strings.Cancel}">
+                <i:Interaction.Behaviors>
+                    <behaviours:CloseOnClickBehaviour />
+                </i:Interaction.Behaviors>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -287,6 +287,27 @@
                                                  CaretBinding="{Binding CaretPosition}" />
                 </i:Interaction.Behaviors>
             </avalon:TextEditor>
+            <Button Padding="5" Margin="0" BorderThickness="0" Grid.Row="0"
+                    Background="{StaticResource ThemeBackgroundBrush}" VerticalAlignment="Top"
+                    HorizontalAlignment="Center" ToolTip="{x:Static resources:Strings.Public_macro_update_available}"
+                    Command="{Binding ApplyUpdateCommand}" CommandParameter="{Binding SelectedItem}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedItem.UpdateAvailable}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+
+                    </Style>
+                </Button.Style>
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="0,0,8,8" />
+                    </Style>
+                </Button.Resources>
+                <Image Source="{StaticResource RefreshIcon}" Height="12" />
+            </Button>
             <ProgressBar IsIndeterminate="True" Grid.Row="0" Height="5" VerticalAlignment="Bottom"
                          Visibility="{Binding IsPerformingAction, Converter={StaticResource BooleanToVisibilityConverter}}" />
             <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Bottom"

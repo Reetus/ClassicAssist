@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Assistant;
+using ClassicAssist.Browser;
+using ClassicAssist.Browser.Data;
 using ClassicAssist.Browser.Models;
 using ClassicAssist.Controls.DraggableTreeView;
 using ClassicAssist.Data;
@@ -31,6 +33,7 @@ using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Sentry;
 
 namespace ClassicAssist.UI.ViewModels
 {
@@ -39,6 +42,7 @@ namespace ClassicAssist.UI.ViewModels
         private const string PUBLIC_ID_FIELD = "PublicId";
         private const string PUBLIC_SHA1_FIELD = "PublicSHA1";
         private readonly MacroManager _manager;
+        private ICommand _applyUpdateCommand;
         private int _caretPosition;
         private ICommand _clearExceptionCommand;
         private ICommand _clearHotkeyCommand;
@@ -97,6 +101,9 @@ namespace ClassicAssist.UI.ViewModels
             Items.CollectionChanged += UpdateDraggables;
             Draggables.CollectionChanged += ( s, ea ) => UpdateFilteredItems();
         }
+
+        public ICommand ApplyUpdateCommand =>
+            _applyUpdateCommand ?? ( _applyUpdateCommand = new RelayCommandAsync( ApplyUpdate, o => o != null ) );
 
         public int CaretPosition
         {
@@ -436,7 +443,79 @@ namespace ClassicAssist.UI.ViewModels
                 Directory.CreateDirectory( modulePath );
             }
 
+            CheckPublicMacros();
+
             SelectedItem = Items.LastOrDefault();
+        }
+
+        private async Task ApplyUpdate( object obj )
+        {
+            if ( !( obj is MacroEntry entry ) )
+            {
+                return;
+            }
+
+            try
+            {
+                IsPerformingAction = true;
+
+                Database database = Database.GetInstance();
+
+                Metadata macro =
+                    ( await database.GetManifest() ).Files.FirstOrDefault(
+                        f => f.Id == entry.Metadata[PUBLIC_ID_FIELD] );
+                string macroText = await database.GetMacroById( entry.Metadata[PUBLIC_ID_FIELD] );
+
+                if ( macro == null || string.IsNullOrEmpty( macroText ) )
+                {
+                    return;
+                }
+
+                MacroDiffWindow window = new MacroDiffWindow { OldText = entry.Macro, NewText = macroText };
+                bool? result = window.ShowDialog();
+
+                if ( result.HasValue && result.Value )
+                {
+                    entry.Macro = macroText;
+                    entry.Metadata[PUBLIC_ID_FIELD] = macro.Id;
+                    entry.Metadata[PUBLIC_SHA1_FIELD] = macro.SHA1;
+                    entry.UpdateAvailable = false;
+                }
+
+                IsPerformingAction = false;
+            }
+            catch ( Exception ex )
+            {
+                SentrySdk.CaptureException( ex );
+            }
+        }
+
+        private void CheckPublicMacros()
+        {
+            Database db = Database.GetInstance();
+
+            List<MacroEntry> macros = Items.Where( e => e.Metadata?.ContainsKey( PUBLIC_ID_FIELD ) ?? false ).ToList();
+
+            if ( macros.Any() )
+            {
+                _dispatcher.Invoke( () =>
+                {
+                    db.GetManifest().ContinueWith( t =>
+                    {
+                        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+                        foreach ( MacroEntry macro in macros )
+                        {
+                            Metadata metadata =
+                                t.Result.Files.FirstOrDefault( e => e.Id.Equals( macro.Metadata[PUBLIC_ID_FIELD] ) );
+
+                            if ( metadata != null && !metadata.SHA1.Equals( macro.Metadata[PUBLIC_SHA1_FIELD] ) )
+                            {
+                                macro.UpdateAvailable = true;
+                            }
+                        }
+                    } );
+                } );
+            }
         }
 
         private void NewPublicMacro( Metadata metadata )

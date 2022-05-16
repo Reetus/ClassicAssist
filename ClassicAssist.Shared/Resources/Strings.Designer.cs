@@ -1015,6 +1015,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Combine stacks.
+        /// </summary>
+        public static string Combine_stacks {
+            get {
+                return ResourceManager.GetString("Combine stacks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Command Prefix:.
         /// </summary>
         public static string Command_Prefix_ {

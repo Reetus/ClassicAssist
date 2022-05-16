@@ -87,6 +87,10 @@
                               CommandParameter="{x:Static models:EntityCollectionSortStyle.Quantity}" />
                 </MenuItem>
             </Menu>
+            <Button Height="24" Style="{StaticResource ToolbarButtonStyle}" Command="{Binding CombineStacksCommand}"
+                    ToolTip="{x:Static resources:Strings.Combine_stacks}">
+                <Image Source="{StaticResource consolidateIcon}" />
+            </Button>
             <Button Height="24" Style="{StaticResource ToolbarButtonStyle}" Command="{Binding TargetContainerCommand}">
                 <Image Source="{StaticResource CrosshairIcon}" />
             </Button>

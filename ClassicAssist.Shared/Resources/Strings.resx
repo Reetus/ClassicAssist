@@ -1860,4 +1860,7 @@ Are you sure you wish to continue?</value>
   <data name="Old" xml:space="preserve">
     <value>Old</value>
   </data>
+  <data name="Combine stacks" xml:space="preserve">
+    <value>Combine stacks</value>
+  </data>
 </root>

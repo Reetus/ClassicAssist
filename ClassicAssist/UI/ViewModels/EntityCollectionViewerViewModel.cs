@@ -32,6 +32,7 @@ namespace ClassicAssist.UI.ViewModels
         private CancellationTokenSource _cancellationToken;
         private ICommand _changeSortStyleCommand;
         private ItemCollection _collection;
+        private ICommand _combineStacksCommand;
         private ICommand _contextContextMenuRequestCommand;
         private ICommand _contextMoveToBackpackCommand;
         private ICommand _contextMoveToContainerCommand;
@@ -108,6 +109,10 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand ChangeSortStyleCommand =>
             _changeSortStyleCommand ?? ( _changeSortStyleCommand = new RelayCommand( ChangeSortStyle, o => true ) );
+
+        public ICommand CombineStacksCommand =>
+            _combineStacksCommand ?? ( _combineStacksCommand =
+                new RelayCommandAsync( CombineStacks, o => !IsPerformingAction && _collection.Serial > 0 ) );
 
         public ICommand ContextContextMenuRequestCommand =>
             _contextContextMenuRequestCommand ?? ( _contextContextMenuRequestCommand =
@@ -204,6 +209,58 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _topmost, value );
         }
 
+        private async Task CombineStacks( object arg )
+        {
+            try
+            {
+                IsPerformingAction = true;
+
+                _cancellationToken = new CancellationTokenSource();
+
+                List<int> ignoreList = new List<int>();
+
+                while ( true )
+                {
+                    Item destStack = _collection.SelectEntity( i =>
+                        i.Count < 60000 && TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Stackable ) &&
+                        !ignoreList.Contains( i.Serial ) );
+
+                    if ( destStack == null )
+                    {
+                        return;
+                    }
+
+                    int needed = 60000 - destStack.Count;
+
+                    Item sourceStack = _collection.SelectEntities( i =>
+                        i.ID == destStack.ID && i.Hue == destStack.Hue && i.Serial != destStack.Serial &&
+                        i.Count != 60000 )?.OrderBy( i => i.Count ).FirstOrDefault();
+
+                    if ( sourceStack == null )
+                    {
+                        ignoreList.Add( destStack.Serial );
+                        continue;
+                    }
+
+                    await ActionPacketQueue.EnqueueDragDrop( sourceStack.Serial,
+                        needed > sourceStack.Count ? sourceStack.Count : needed, destStack.Serial, QueuePriority.Low,
+                        false, true, false );
+
+                    await Task.Delay( TimeSpan.FromMilliseconds( Data.Options.CurrentOptions.ActionDelayMS ),
+                        _cancellationToken.Token );
+
+                    _cancellationToken.Token.ThrowIfCancellationRequested();
+                }
+            }
+            catch ( TaskCanceledException )
+            {
+            }
+            finally
+            {
+                IsPerformingAction = false;
+            }
+        }
+
         private void TargetContainer( object obj )
         {
             TargetCommands.Target( _collection.Serial );
@@ -216,7 +273,7 @@ namespace ClassicAssist.UI.ViewModels
                 _dispatcher.Invoke( () =>
                 {
                     foreach ( Item entity in entities.Where( e => !Entities.Any( f => f.Entity.Equals( e ) ) ).ToList()
-                        .Where( entity => Options.ShowChildItems || entity.Owner == _collection.Serial ) )
+                                 .Where( entity => Options.ShowChildItems || entity.Owner == _collection.Serial ) )
                     {
                         Entities.Add( entity.ToEntityCollectionData() );
                     }
@@ -227,8 +284,8 @@ namespace ClassicAssist.UI.ViewModels
                 _dispatcher.Invoke( () =>
                 {
                     foreach ( EntityCollectionData ecd in entities.ToList()
-                        .Select( item => Entities.FirstOrDefault( e => e.Entity.Equals( item ) ) )
-                        .Where( ecd => ecd != null ) )
+                                 .Select( item => Entities.FirstOrDefault( e => e.Entity.Equals( item ) ) )
+                                 .Where( ecd => ecd != null ) )
                     {
                         Entities.Remove( ecd );
                     }
@@ -753,17 +810,15 @@ namespace ClassicAssist.UI.ViewModels
                         break;
                     }
                     case PropertyType.Predicate:
-                        {
-                            predicates.Add( i => constraint.Predicate != null && constraint.Predicate.Invoke( i,
-                                new AutolootConstraintEntry
-                                {
-                                    Operator = filter.Operator,
-                                    Property = constraint,
-                                    Value = filter.Value
-                                } ) );
+                    {
+                        predicates.Add( i => constraint.Predicate != null && constraint.Predicate.Invoke( i,
+                            new AutolootConstraintEntry
+                            {
+                                Operator = filter.Operator, Property = constraint, Value = filter.Value
+                            } ) );
 
-                            break;
-                        }
+                        break;
+                    }
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

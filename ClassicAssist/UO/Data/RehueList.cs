@@ -118,7 +118,7 @@ namespace ClassicAssist.UO.Data
 
             foreach ( Item item in collection.GetItems() )
             {
-                if ( item.IsDescendantOf( backpack ) )
+                if ( item?.IsDescendantOf( backpack ) ?? false )
                 {
                     CheckItem( item );
                 }

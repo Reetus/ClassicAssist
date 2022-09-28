@@ -1015,6 +1015,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Combine stacks.
+        /// </summary>
+        public static string Combine_stacks {
+            get {
+                return ResourceManager.GetString("Combine stacks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Command Prefix:.
         /// </summary>
         public static string Command_Prefix_ {
@@ -3726,6 +3735,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Repeated_Messages {
             get {
                 return ResourceManager.GetString("Repeated Messages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace name with single click label.
+        /// </summary>
+        public static string Replace_name_with_single_click_label {
+            get {
+                return ResourceManager.GetString("Replace name with single click label", resourceCulture);
             }
         }
         

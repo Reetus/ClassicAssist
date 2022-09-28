@@ -1728,4 +1728,10 @@ Are you sure you wish to continue?</value>
   <data name="Logout on disconnected prompt" xml:space="preserve">
     <value>Logout on disconnected prompt</value>
   </data>
+  <data name="Combine stacks" xml:space="preserve">
+    <value>Combine stacks</value>
+  </data>
+  <data name="Replace name with single click label" xml:space="preserve">
+    <value>Replace name with single click label</value>
+  </data>
 </root>

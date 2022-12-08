@@ -69,7 +69,7 @@
     <PackageReference Include="MegaApiClient" Version="1.10.2" />
     <PackageReference Include="Microsoft.Graph" Version="4.41.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.47.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Octokit" Version="3.0.0" />
     <PackageReference Include="OptimizedPriorityQueue" Version="5.1.0" />
     <PackageReference Include="Sentry" Version="3.21.0" />

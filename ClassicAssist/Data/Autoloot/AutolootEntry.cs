@@ -1,12 +1,10 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using ClassicAssist.Annotations;
+using ClassicAssist.Controls.DraggableTreeView;
+using ClassicAssist.Shared.UI;
 
 namespace ClassicAssist.Data.Autoloot
 {
-    public class AutolootEntry : INotifyPropertyChanged
+    public class AutolootEntry : SetPropertyNotifyChanged, IDraggableEntry
     {
         private bool _autoloot = true;
 
@@ -14,6 +12,7 @@ namespace ClassicAssist.Data.Autoloot
             new ObservableCollection<AutolootConstraintEntry>();
 
         private bool _enabled = true;
+        private AutolootGroup _group;
         private int _id;
         private string _name;
         private AutolootPriority _priority = AutolootPriority.Normal;
@@ -38,16 +37,16 @@ namespace ClassicAssist.Data.Autoloot
             set => SetProperty( ref _enabled, value );
         }
 
+        public AutolootGroup Group
+        {
+            get => _group;
+            set => SetProperty( ref _group, value );
+        }
+
         public int ID
         {
             get => _id;
             set => SetProperty( ref _id, value );
-        }
-
-        public string Name
-        {
-            get => _name;
-            set => SetProperty( ref _name, value );
         }
 
         public AutolootPriority Priority
@@ -68,24 +67,10 @@ namespace ClassicAssist.Data.Autoloot
             set => SetProperty( ref _rehueHue, value );
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public override string ToString()
+        public string Name
         {
-            return $"{Name} - 0x{ID:x}";
-        }
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-        }
-
-        // ReSharper disable once RedundantAssignment
-        public virtual void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
-        {
-            obj = value;
-            OnPropertyChanged( propertyName );
+            get => _name;
+            set => SetProperty( ref _name, value );
         }
     }
 }

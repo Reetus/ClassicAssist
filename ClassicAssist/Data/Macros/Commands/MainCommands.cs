@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -6,10 +7,12 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using Assistant;
 using ClassicAssist.Data.Hotkeys;
+using ClassicAssist.Helpers;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
@@ -114,6 +117,54 @@ namespace ClassicAssist.Data.Macros.Commands
             t.Start();
         }
 
+        [CommandsDisplay( Category = nameof( Strings.Main ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        public static void OpenECV( object obj )
+        {
+            int serial = 0;
+
+            serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_container___, SystemMessageHues.Red );
+
+                return;
+            }
+
+            Entity entity = UOMath.IsMobile( serial )
+                ? Engine.Mobiles.GetMobile( serial )
+                : (Entity) Engine.Items.GetItem( serial );
+
+            if ( entity == null )
+            {
+                UOC.SystemMessage( Strings.Cannot_find_item___ );
+                return;
+            }
+
+            ItemCollection collection = new ItemCollection( entity.Serial );
+
+            switch ( entity )
+            {
+                case Item item:
+                    collection = item.Container ?? new ItemCollection( item.Serial );
+                    break;
+                case Mobile mobile:
+                    collection = new ItemCollection( entity.Serial ) { mobile.GetEquippedItems() };
+                    break;
+            }
+
+            Engine.Dispatcher.Invoke( () =>
+            {
+                EntityCollectionViewer window = new EntityCollectionViewer
+                {
+                    DataContext = new EntityCollectionViewerViewModel( collection ), Topmost = true
+                };
+
+                window.Show();
+            } );
+        }
+
         [CommandsDisplay( Category = nameof( Strings.Main ), Parameters = new[] { nameof( ParameterType.OnOff ) } )]
         public static void Hotkeys( string onOff = "toggle" )
         {
@@ -193,12 +244,16 @@ namespace ClassicAssist.Data.Macros.Commands
                     }
 
                     SoundPlayer soundPlayer = new SoundPlayer( fullPath );
-                    if ( playSync ) {
+
+                    if ( playSync )
+                    {
                         soundPlayer.PlaySync();
-                    } else {
+                    }
+                    else
+                    {
                         soundPlayer.Play();
                     }
-                    
+
                     break;
                 }
             }
@@ -310,9 +365,77 @@ namespace ClassicAssist.Data.Macros.Commands
             }
             catch ( Exception e )
             {
-                UOC.SystemMessage( e.Message, (int) UOC.SystemMessageHues.Red );
+                UOC.SystemMessage( e.Message, (int) SystemMessageHues.Red );
                 return false;
             }
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
+        public static void Logout()
+        {
+            Engine.TickWorkQueue.Enqueue( () =>
+            {
+                dynamic socket =
+                    new ReflectionObject(
+                        Reflection.GetTypePropertyValue<dynamic>( "ClassicUO.Network.NetClient", "Socket", null ) );
+
+                if ( socket.IsConnected )
+                {
+                    socket.Disconnect();
+                }
+
+                dynamic game =
+                    new ReflectionObject(
+                        Reflection.GetTypePropertyValue<dynamic>( "ClassicUO.Client", "Game", null ) );
+
+                object instance = Reflection.CreateInstanceOfType( "ClassicUO.Game.Scenes.LoginScene" );
+
+                game.SetScene( instance );
+            } );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
+        public static void Quit()
+        {
+            Engine.TickWorkQueue.Enqueue( () =>
+            {
+                dynamic game =
+                    new ReflectionObject(
+                        Reflection.GetTypePropertyValue<dynamic>( "ClassicUO.Client", "Game", null ) );
+
+                game.Exit();
+            } );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
+        public static void SetAutologin( bool enabled, string account = "", int serverIndex = -1,
+            int characterIndex = -1 )
+        {
+            Options.CurrentOptions.Autologin = enabled;
+
+            if ( !string.IsNullOrEmpty( account ) )
+            {
+                if ( !AssistantOptions.SavedPasswords.ContainsKey( account ) )
+                {
+                    UOC.SystemMessage( Strings.Unknown_account___ );
+                    return;
+                }
+
+                Options.CurrentOptions.AutologinUsername = account;
+                Options.CurrentOptions.AutologinPassword = AssistantOptions.SavedPasswords[account];    
+            }
+
+            if ( serverIndex != -1 )
+            {
+                Options.CurrentOptions.AutologinServerIndex = serverIndex;
+            }
+
+            if ( characterIndex != -1 )
+            {
+                Options.CurrentOptions.AutologinCharacterIndex = characterIndex;
+            }
+
+            Options.Save( Options.CurrentOptions );
         }
     }
 }

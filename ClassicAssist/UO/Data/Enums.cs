@@ -136,4 +136,41 @@ namespace ClassicAssist.UO.Data
         WarMode = 0x40,
         Hidden = 0x80
     }
+
+    [Flags]
+    public enum CharacterListFlags
+    {
+        Unknown = 0x01,
+        OverwriteConfigurationButton = 0x02,
+        OneCharacterSlot = 0x04,
+        EnableContextMenus = 0x08,
+        LimitCharacterSlots = 0x10,
+        PaladinNecromancerClassTooltips = 0x20,
+        SixthCharacterSlot = 0x40,
+        SamuraiNinjaClasses = 0x80,
+        ElvenRace = 0x100,
+        Unknown2 = 0x200,
+        UO3DClientType = 0x400,
+        Unknown3 = 0x800,
+        SeventhCharacterSlot = 0x1000,
+        Unknown4 = 0x2000,
+        NewMovementSystem = 0x4000,
+        NewFeluccaAreas = 0x8000
+    }
+
+    public enum SystemMessageHues
+    {
+        Normal = 0x3b2,
+        Red = 35,
+        Yellow = 61,
+        Green = 63
+    }
+
+    public enum TradeAction
+    {
+        Start,
+        Cancel,
+        Update,
+        Gold
+    }
 }

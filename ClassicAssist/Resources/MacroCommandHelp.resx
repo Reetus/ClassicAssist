@@ -1006,7 +1006,7 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
     <value>SetSkill("hiding", "locked")</value>
   </data>
   <data name="SKILL_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Returns the base value of the given skill name.</value>
+    <value>Returns the value of the given skill name.</value>
   </data>
   <data name="SKILL_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>if Skill("hiding") &lt; 100:</value>
@@ -1166,22 +1166,22 @@ if FindWand("fireball", "backpack", 5):
   </data>
   <data name="FINDTYPE_COMMAND_EXAMPLE" xml:space="preserve">
     <value># Look for a food item from a list and eat 1 if found.
-if not ListExists("food"): 
- CreateList("food") 
- PushList("food", 0x9b7) #bird 
- PushList("food", 0x9d3) #ham 
- PushList("food", 0x97d) #cheese 
- PushList("food", 0x9d0) #apple 
- PushList("food", 0x9eb) #muffin 
- PushList("food", 0x97b) #fishsteak 
- PushList("food", 0x9c0) #sausage 
- PushList("food", 0x9f2) #ribs 
- PushList("food", 0x9d1) #grapes 
- PushList("food", 0x9d2) #peach 
+if not ListExists("food"):
+ CreateList("food")
+ PushList("food", 0x9b7) #bird
+ PushList("food", 0x9d3) #ham
+ PushList("food", 0x97d) #cheese
+ PushList("food", 0x9d0) #apple
+ PushList("food", 0x9eb) #muffin
+ PushList("food", 0x97b) #fishsteak
+ PushList("food", 0x9c0) #sausage
+ PushList("food", 0x9f2) #ribs
+ PushList("food", 0x9d1) #grapes
+ PushList("food", 0x9d2) #peach
 
-for i in GetList("food"): 
- if FindType(i, -1, "backpack"): 
-  UseObject("found") 
+for i in GetList("food"):
+ if FindType(i, -1, "backpack"):
+  UseObject("found")
   break</value>
   </data>
   <data name="REPLAY_COMMAND_DESCRIPTION" xml:space="preserve">
@@ -1457,7 +1457,10 @@ Pathfind(1438, 1630, 20)
 
 #Pathfind to entity
 SetEnemy(0x3c9)
-Pathfind('enemy')</value>
+Pathfind('enemy')
+
+# Cancel pathfind in progress
+Pathfind(-1)</value>
   </data>
   <data name="SETORGANIZERCONTAINERS_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Set the source and destination for the specified Organizer name</value>
@@ -1583,5 +1586,240 @@ SetVendorBuyAutoBuy("regs", "on")
 SetVendorBuyAutoBuy("regs", "off")
 # default will toggle
 SetVendorBuyAutoBuy("regs")</value>
+  </data>
+  <data name="ISRUNNING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns True if the specified macro name is currently running</value>
+  </data>
+  <data name="ISRUNNING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if IsRunning('macro'):</value>
+  </data>
+  <data name="LOGOUT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Disconnects from the server and returns to the login screen</value>
+  </data>
+  <data name="LOGOUT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Logout()</value>
+  </data>
+  <data name="QUIT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Closes the client</value>
+  </data>
+  <data name="QUIT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Quit()</value>
+  </data>
+  <data name="PROMPTMACROALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Prompt with an in-game target cursor to supply value for given alias name, alias is valid only in the current macro.</value>
+  </data>
+  <data name="PROMPTMACROALIAS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>PromptMacroAlias("mount")</value>
+  </data>
+  <data name="DIFFHITSPERCENT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the given mobiles different between max and currents hits as a percentage, if parameter is null, then returns the value from the player (parameter can be serial or alias).</value>
+  </data>
+  <data name="DIFFHITSPERCENT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if DiffHitsPercent("self") &gt; 30:</value>
+  </data>
+  <data name="DIFFHITSPERCENT_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>if DiffHitsPercent("self") &gt; 30: # 70% health</value>
+  </data>
+  <data name="FOLLOWING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns True if currently following a target</value>
+  </data>
+  <data name="FOLLOWING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Following():</value>
+  </data>
+  <data name="FOLLOW_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Instructs ClassicUO to follow the specified alias/serial, supply no parameter to cancel</value>
+  </data>
+  <data name="FOLLOW_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Follow('enemy')</value>
+  </data>
+  <data name="FOLLOWING_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>if not Following():
+ Follow('enemy')</value>
+  </data>
+  <data name="FOLLOW_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>if FindObject('enemy'):
+ Follow('enemy')
+ Attack('enemy')
+else:
+ Follow() # stop following
+Pause(1000)</value>
+  </data>
+  <data name="PATHFINDING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns True if ClassicUO is currently pathfinding</value>
+  </data>
+  <data name="PATHFINDING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Pathfinding():</value>
+  </data>
+  <data name="PATHFINDING_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>Pathfind('enemy')
+Pause(25) # there is a delay between calling Pathfind() and Pathfinding() being True
+
+while Pathfinding():
+ Pause(50)
+ 
+HeadMsg("die scum", "self")</value>
+  </data>
+  <data name="WAITFORJOURNALARRAY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Wait up the given timeout for one of any of provided array of string to appear in journal</value>
+  </data>
+  <data name="WAITFORJOURNALARRAY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>(idx, text) = WaitForJournal(['sex', 'drugs'], 5000)</value>
+  </data>
+  <data name="WAITFORJOURNALARRAY_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>(idx, text) = WaitForJournal(['sex', 'drugs'], 5000)
+
+if idx != None:
+ print "Found text '{}' at index {}".format(text, idx)
+else:
+ print 'None of them were found :('</value>
+  </data>
+  <data name="CLEAROBJECTQUEUE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Clears all actions in action packet queue</value>
+  </data>
+  <data name="CLEAROBJECTQUEUE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ClearObjectQueue()</value>
+  </data>
+  <data name="AUTOLOOT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Causes autoloot to check a particular container, even when not enabled, and bypassing the corpse type check</value>
+  </data>
+  <data name="AUTOLOOT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Autoloot("found")</value>
+  </data>
+  <data name="DISTANCECOORDINATES_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the distance to the given coordinates.</value>
+  </data>
+  <data name="DISTANCECOORDINATES_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Distance(1000, 1000)</value>
+  </data>
+  <data name="DISTANCECOORDINATES_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>location = (1000, 1000, 0)
+
+while Distance(location[0], location[1]) &gt; 2:
+ Pathfind(location[0], location[1], location[2])
+ Pause(1000)</value>
+  </data>
+  <data name="SKILLDELTA_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the skill value delta since last reset</value>
+  </data>
+  <data name="SKILLDELTA_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SkillDelta('skillName')</value>
+  </data>
+  <data name="SKILLDELTA_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>if SkillDelta('Hiding') &gt; 0.5:
+    Stop()</value>
+  </data>
+  <data name="AUTOLOOTING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns True if currently checking corpse / autolooting items.</value>
+  </data>
+  <data name="AUTOLOOTING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>if Autolooting():</value>
+  </data>
+  <data name="USELASTSKILL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Uses the last invoked skill</value>
+  </data>
+  <data name="USELASTSKILL_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>UseLastSkill()</value>
+  </data>
+  <data name="OPENECV_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Open entity collection viewer for specified container serial/alias</value>
+  </data>
+  <data name="OPENECV_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>OpenECV('backpack')</value>
+  </data>
+  <data name="PLAYCUOMACRO_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Plays the specified CUO macro name</value>
+  </data>
+  <data name="PLAYCUOMACRO_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>PlayCUOMacro('Paperdoll')</value>
+  </data>
+  <data name="SETAUTOLOGIN_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Configures autologin settings</value>
+  </data>
+  <data name="SETAUTOLOGIN_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetAutologin(False)</value>
+  </data>
+  <data name="SETSCAVENGER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Enable/Disable/Toggle the Scavenger agent</value>
+  </data>
+  <data name="SETSCAVENGER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetScavenger("off")</value>
+  </data>
+  <data name="WAITFORTRADEWINDOW_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Waits the specified number of milliseconds for trade window action, -1 for infinite</value>
+  </data>
+  <data name="WAITFORTRADEWINDOW_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForTradeWindow(5000)</value>
+  </data>
+  <data name="TRADEACCEPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Accepts the current trade window</value>
+  </data>
+  <data name="TRADEACCEPT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TradeAccept()</value>
+  </data>
+  <data name="TRADEREJECT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Rejects (unticks) the current trade window</value>
+  </data>
+  <data name="TRADEREJECT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TradeReject()</value>
+  </data>
+  <data name="TRADECLOSE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Closes the current trade window</value>
+  </data>
+  <data name="TRADECLOSE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TradeClose()</value>
+  </data>
+  <data name="FASTERCASTING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Return faster casting value.</value>
+  </data>
+  <data name="FASTERCASTING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>fc = FasterCasting()</value>
+  </data>
+  <data name="FASTERCASTRECOVERY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Return faster cast recovery value.</value>
+  </data>
+  <data name="FASTERCASTRECOVERY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>fcr = FasterCastRecovery()</value>
+  </data>
+  <data name="OPENHELPGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Opens the Help gump</value>
+  </data>
+  <data name="OPENHELPGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>OpenHelpGump()</value>
+  </data>
+  <data name="TRADECURRENCY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sets the gold and platinum in the trade window (for shards that support it)</value>
+  </data>
+  <data name="TRADECURRENCY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>TradeCurrency(60000, 1)</value>
+  </data>
+  <data name="ITEMARRAYGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Displays a gump with the selected serials / aliases in a grid, similar to the UOSteam loot grid, returns array of serials selected</value>
+  </data>
+  <data name="ITEMARRAYGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ItemArrayGump(['item'])</value>
+  </data>
+  <data name="ITEMARRAYGUMP_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>from Assistant import Engine
+
+#single select, specified items
+result = ItemArrayGump([0x462d3373, 0x462d6029])
+
+if result.Length == 0:
+ print 'Nothing was selected'
+else:
+ print 'Serial {} was selected'.format(result[0])
+
+#showing backpack items, multi select, at coords 200, 200
+items = Engine.Player.Backpack.Container.GetItems()
+results = ItemArrayGump(items, True, 200, 200)
+
+if results.Length == 0:
+ print 'Nothing was selected'
+else:
+ print '{} item(s) were selected'.format(results.Length)
+ 
+ for serial in results:
+  print 'Serial {} was selected'.format(serial)
+</value>
   </data>
 </root>

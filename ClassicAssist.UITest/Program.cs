@@ -13,7 +13,7 @@ namespace ClassicAssist.UITest
         [STAThread]
         private static void Main( string[] args )
         {
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo( "en-GB" );
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo( "ko-KR" );
             //new MacrosCommandWindow().ShowDialog();
             AssistantOptions.Load();
             _window = new MainWindow();

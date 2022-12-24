@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using Assistant;
+using ClassicAssist.Data;
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Misc;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Models;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
@@ -31,6 +33,7 @@ namespace ClassicAssist.UI.ViewModels
         private CancellationTokenSource _cancellationToken;
         private ICommand _changeSortStyleCommand;
         private ItemCollection _collection;
+        private ICommand _combineStacksCommand;
         private ICommand _contextContextMenuRequestCommand;
         private ICommand _contextMoveToBackpackCommand;
         private ICommand _contextMoveToContainerCommand;
@@ -45,6 +48,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _openAllContainersCommand;
         private EntityCollectionViewerOptions _options;
         private ICommand _refreshCommand;
+        private ICommand _replaceNameCommand;
 
         private ObservableCollection<EntityCollectionData> _selectedItems =
             new ObservableCollection<EntityCollectionData>();
@@ -53,9 +57,11 @@ namespace ClassicAssist.UI.ViewModels
 
         private IComparer<Entity> _sorter = new IDThenSerialComparer();
         private string _statusLabel;
+        private ICommand _targetContainerCommand;
         private ICommand _toggleAlwaysOnTopCommand;
         private ICommand _toggleChildItemsCommand;
         private ICommand _togglePropertiesCommand;
+        private bool _tooltipsEnabled;
         private bool _topmost;
 
         public EntityCollectionViewerViewModel()
@@ -69,7 +75,8 @@ namespace ClassicAssist.UI.ViewModels
 
             _collection.Add( new Item( 6 ) { ID = 106, Hue = 2413 } );
 
-            Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter ) );
+            Entities = new ObservableCollection<EntityCollectionData>(
+                _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
         }
 
         public EntityCollectionViewerViewModel( ItemCollection collection )
@@ -78,9 +85,9 @@ namespace ClassicAssist.UI.ViewModels
             Options = Data.Options.CurrentOptions.EntityCollectionViewerOptions;
 
             Entities = new ObservableCollection<EntityCollectionData>( !Options.ShowChildItems
-                ? collection.ToEntityCollectionData( _sorter )
+                ? collection.ToEntityCollectionData( _sorter, _nameOverrides )
                 : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) }
-                    .ToEntityCollectionData( _sorter ) );
+                    .ToEntityCollectionData( _sorter, _nameOverrides ) );
 
             SelectedItems.CollectionChanged += ( sender, args ) =>
             {
@@ -93,6 +100,10 @@ namespace ClassicAssist.UI.ViewModels
             };
 
             UpdateStatusLabel();
+
+            _collection.CollectionChanged += OnCollectionChanged;
+
+            TooltipsEnabled = Engine.CharacterListFlags.HasFlag( CharacterListFlags.PaladinNecromancerClassTooltips );
         }
 
         public ICommand ApplyFiltersCommand =>
@@ -104,6 +115,10 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand ChangeSortStyleCommand =>
             _changeSortStyleCommand ?? ( _changeSortStyleCommand = new RelayCommand( ChangeSortStyle, o => true ) );
+
+        public ICommand CombineStacksCommand =>
+            _combineStacksCommand ?? ( _combineStacksCommand =
+                new RelayCommandAsync( CombineStacks, o => !IsPerformingAction && _collection.Serial > 0 ) );
 
         public ICommand ContextContextMenuRequestCommand =>
             _contextContextMenuRequestCommand ?? ( _contextContextMenuRequestCommand =
@@ -160,7 +175,11 @@ namespace ClassicAssist.UI.ViewModels
         }
 
         public ICommand RefreshCommand =>
-            _refreshCommand ?? ( _refreshCommand = new RelayCommand( Refresh, o => _collection?.Serial != 0 ) );
+            _refreshCommand ?? ( _refreshCommand = new RelayCommand( Refresh, o => !IsPerformingAction ) );
+
+        public ICommand ReplaceNameCommand =>
+            _replaceNameCommand ??
+            ( _replaceNameCommand = new RelayCommandAsync( ReplaceName, o => !IsPerformingAction ) );
 
         public ObservableCollection<EntityCollectionData> SelectedItems
         {
@@ -174,13 +193,15 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _showProperties, value );
         }
 
-        public static Lazy<int[]> ShrinkEntries { get; set; } = new Lazy<int[]>( LoadShrinkTable );
-
         public string StatusLabel
         {
             get => _statusLabel;
             set => SetProperty( ref _statusLabel, value );
         }
+
+        public ICommand TargetContainerCommand =>
+            _targetContainerCommand ?? ( _targetContainerCommand =
+                new RelayCommand( TargetContainer, o => _collection.Serial > 0 ) );
 
         public ICommand ToggleAlwaysOnTopCommand =>
             _toggleAlwaysOnTopCommand ??
@@ -192,10 +213,167 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand TogglePropertiesCommand =>
             _togglePropertiesCommand ?? ( _togglePropertiesCommand = new RelayCommand( ToggleProperties, o => true ) );
 
+        public bool TooltipsEnabled
+        {
+            get => _tooltipsEnabled;
+            set => SetProperty( ref _tooltipsEnabled, value );
+        }
+
         public bool Topmost
         {
             get => _topmost;
             set => SetProperty( ref _topmost, value );
+        }
+
+        private Dictionary<int, string> _nameOverrides { get; } = new Dictionary<int, string>();
+
+        private async Task ReplaceName( object arg )
+        {
+            Dictionary<int, StringBuilder> temp = new Dictionary<int, StringBuilder>();
+            int[] serials = Entities.Select( e => e.Entity.Serial ).ToArray();
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            void IncomingPacketHandlersOnJournalEntryAddedEvent( JournalEntry je )
+            {
+                if ( !serials.Contains( je.Serial ) || je.SpeechType != JournalSpeech.Label )
+                {
+                    return;
+                }
+
+                if ( !temp.ContainsKey( je.Serial ) )
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append( je.Text );
+
+                    temp.Add( je.Serial, sb );
+                }
+                else
+                {
+                    temp[je.Serial].AppendLine();
+                    temp[je.Serial].Append( je.Text );
+                }
+
+                if ( temp.Count == serials.Length )
+                {
+                    are.Set();
+                }
+            }
+
+            IsPerformingAction = true;
+
+            IncomingPacketHandlers.JournalEntryAddedEvent += IncomingPacketHandlersOnJournalEntryAddedEvent;
+
+            foreach ( int serial in serials )
+            {
+                Engine.SendPacketToServer( new LookRequest( serial ) );
+            }
+
+            Task<bool> journalTask = are.ToTask();
+            Task delayTask = Task.Delay( 5000 );
+
+            await Task.WhenAny( journalTask, delayTask );
+
+            IncomingPacketHandlers.JournalEntryAddedEvent -= IncomingPacketHandlersOnJournalEntryAddedEvent;
+
+            foreach ( KeyValuePair<int, StringBuilder> stringBuilder in temp )
+            {
+                if ( _nameOverrides.ContainsKey( stringBuilder.Key ) )
+                {
+                    _nameOverrides.Remove( stringBuilder.Key );
+                }
+
+                _nameOverrides.Add( stringBuilder.Key, stringBuilder.Value.ToString() );
+            }
+
+            Refresh( null );
+
+            IsPerformingAction = false;
+        }
+
+        private async Task CombineStacks( object arg )
+        {
+            try
+            {
+                IsPerformingAction = true;
+
+                _cancellationToken = new CancellationTokenSource();
+
+                List<int> ignoreList = new List<int>();
+
+                while ( true )
+                {
+                    Item destStack = _collection.SelectEntity( i =>
+                        i.Count < 60000 && TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Stackable ) &&
+                        !ignoreList.Contains( i.Serial ) );
+
+                    if ( destStack == null )
+                    {
+                        return;
+                    }
+
+                    int needed = 60000 - destStack.Count;
+
+                    Item sourceStack = _collection.SelectEntities( i =>
+                        i.ID == destStack.ID && i.Hue == destStack.Hue && i.Serial != destStack.Serial &&
+                        i.Count != 60000 )?.OrderBy( i => i.Count ).FirstOrDefault();
+
+                    if ( sourceStack == null )
+                    {
+                        ignoreList.Add( destStack.Serial );
+                        continue;
+                    }
+
+                    await ActionPacketQueue.EnqueueDragDrop( sourceStack.Serial,
+                        needed > sourceStack.Count ? sourceStack.Count : needed, destStack.Serial, QueuePriority.Low,
+                        false, true, false );
+
+                    await Task.Delay( TimeSpan.FromMilliseconds( Data.Options.CurrentOptions.ActionDelayMS ),
+                        _cancellationToken.Token );
+
+                    _cancellationToken.Token.ThrowIfCancellationRequested();
+                }
+            }
+            catch ( TaskCanceledException )
+            {
+            }
+            finally
+            {
+                IsPerformingAction = false;
+            }
+        }
+
+        private void TargetContainer( object obj )
+        {
+            TargetCommands.Target( _collection.Serial );
+        }
+
+        private void OnCollectionChanged( int totalcount, bool added, Item[] entities )
+        {
+            if ( added )
+            {
+                _dispatcher.Invoke( () =>
+                {
+                    foreach ( Item entity in entities.Where( e => !Entities.Any( f => f.Entity.Equals( e ) ) ).ToList()
+                                 .Where( entity => Options.ShowChildItems || entity.Owner == _collection.Serial ) )
+                    {
+                        Entities.Add( entity.ToEntityCollectionData( _nameOverrides ) );
+                    }
+                } );
+            }
+            else
+            {
+                _dispatcher.Invoke( () =>
+                {
+                    foreach ( EntityCollectionData ecd in entities.ToList()
+                                 .Select( item => Entities.FirstOrDefault( e => e.Entity.Equals( item ) ) )
+                                 .Where( ecd => ecd != null ) )
+                    {
+                        Entities.Remove( ecd );
+                    }
+                } );
+            }
+
+            UpdateStatusLabel();
         }
 
         private void ContextTarget( object obj )
@@ -221,6 +399,7 @@ namespace ClassicAssist.UI.ViewModels
         ~EntityCollectionViewerViewModel()
         {
             Data.Options.CurrentOptions.EntityCollectionViewerOptions = Options;
+            _collection.CollectionChanged -= OnCollectionChanged;
         }
 
         private void ToggleAlwaysOnTop( object obj )
@@ -347,7 +526,7 @@ namespace ClassicAssist.UI.ViewModels
             Entities.Clear();
 
             Entities = new ObservableCollection<EntityCollectionData>( _collection.Filter( _filters )
-                .ToEntityCollectionData( _sorter ) );
+                .ToEntityCollectionData( _sorter, _nameOverrides ) );
 
             UpdateStatusLabel();
         }
@@ -390,7 +569,8 @@ namespace ClassicAssist.UI.ViewModels
                     throw new ArgumentOutOfRangeException();
             }
 
-            Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter ) );
+            Entities = new ObservableCollection<EntityCollectionData>(
+                _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
         }
 
         private void UpdateStatusLabel()
@@ -402,42 +582,62 @@ namespace ClassicAssist.UI.ViewModels
 
         private void Refresh( object obj )
         {
-            ItemCollection collection = new ItemCollection( _collection.Serial );
-
-            Entity entity = Engine.Items.GetItem( _collection.Serial ) ??
-                            (Entity) Engine.Mobiles.GetMobile( _collection.Serial );
-
-            if ( entity == null )
+            try
             {
-                Commands.SystemMessage( Strings.Cannot_find_item___ );
-                return;
-            }
+                IsPerformingAction = true;
 
-            switch ( entity )
+                ItemCollection collection = new ItemCollection( _collection.Serial );
+
+                if ( collection.Serial == 0 )
+                {
+                    Item[] e = ItemCollection.GetAllItems( Engine.Items.GetItems() );
+                    _collection.Clear();
+                    _collection.Add( e );
+                    Entities = new ObservableCollection<EntityCollectionData>(
+                        _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+                    return;
+                }
+
+                Entity entity = Engine.Items.GetItem( _collection.Serial ) ??
+                                (Entity) Engine.Mobiles.GetMobile( _collection.Serial );
+
+                if ( entity == null )
+                {
+                    Commands.SystemMessage( Strings.Cannot_find_item___ );
+                    return;
+                }
+
+                switch ( entity )
+                {
+                    case Item item:
+                        if ( item.Container == null )
+                        {
+                            Commands.WaitForContainerContentsUse( item.Serial, 1000 );
+                        }
+
+                        collection = item.Container;
+                        break;
+                    case Mobile mobile:
+                        collection = new ItemCollection( entity.Serial ) { mobile.GetEquippedItems() };
+                        break;
+                }
+
+                if ( collection == null )
+                {
+                    return;
+                }
+
+                _collection = !Options.ShowChildItems
+                    ? collection
+                    : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) };
+
+                Entities = new ObservableCollection<EntityCollectionData>(
+                    _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+            }
+            finally
             {
-                case Item item:
-                    if ( item.Container == null )
-                    {
-                        Commands.WaitForContainerContentsUse( item.Serial, 1000 );
-                    }
-
-                    collection = item.Container;
-                    break;
-                case Mobile mobile:
-                    collection = new ItemCollection( entity.Serial ) { mobile.GetEquippedItems() };
-                    break;
+                IsPerformingAction = false;
             }
-
-            if ( collection == null )
-            {
-                return;
-            }
-
-            _collection = !Options.ShowChildItems
-                ? collection
-                : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) };
-
-            Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter ) );
         }
 
         private async Task ContextUseItem( object arg )
@@ -457,6 +657,8 @@ namespace ClassicAssist.UI.ViewModels
 
         private async Task ContextMoveToContainer( object arg )
         {
+            int[] items = SelectedItems.Select( i => i.Entity.Serial ).ToArray();
+
             _cancellationToken = new CancellationTokenSource();
 
             int serial = 0;
@@ -480,8 +682,6 @@ namespace ClassicAssist.UI.ViewModels
             try
             {
                 IsPerformingAction = true;
-
-                int[] items = SelectedItems.Select( i => i.Entity.Serial ).ToArray();
 
                 foreach ( int item in items )
                 {
@@ -543,14 +743,14 @@ namespace ClassicAssist.UI.ViewModels
                     DataContext = new EntityCollectionViewerViewModel( item.Container )
                 };
 
-                window.ShowDialog();
+                window.Show();
             }
             else
             {
                 ObjectInspectorWindow window =
                     new ObjectInspectorWindow { DataContext = new ObjectInspectorViewModel( ecd.Entity ) };
 
-                window.ShowDialog();
+                window.Show();
             }
         }
 
@@ -568,69 +768,6 @@ namespace ClassicAssist.UI.ViewModels
         {
             public Layer Layer { get; set; }
             public int Serial { get; set; }
-        }
-    }
-
-    public class EntityCollectionData
-    {
-        public BitmapSource Bitmap
-        {
-            get
-            {
-                BitmapSource result = Art.GetStatic( Entity.ID, Entity.Hue ).ToBitmapSource();
-
-                if ( !( Entity is Item item ) || item.Layer != Layer.Mount )
-                {
-                    return result;
-                }
-
-                if ( !( EntityCollectionViewerViewModel.MountIDEntries.Value?.ContainsKey( Entity.ID ) ?? false ) )
-                {
-                    return result;
-                }
-
-                int id = (int) EntityCollectionViewerViewModel.MountIDEntries.Value?[Entity.ID];
-
-                result = Art.GetStatic( id, Entity.Hue ).ToBitmapSource();
-
-                return result;
-            }
-        }
-
-        public Entity Entity { get; set; }
-        public string FullName => GetProperties( Entity );
-        public string Name => GetName( Entity );
-
-        private static string GetProperties( Entity entity )
-        {
-            return entity.Properties == null
-                ? GetName( entity )
-                : entity.Properties.Aggregate( "",
-                    ( current, entityProperty ) => current + entityProperty.Text + "\r\n" ).TrimTrailingNewLine();
-        }
-
-        private static string GetName( Entity entity )
-        {
-            if ( !( entity is Item item ) || item.Layer != Layer.Mount )
-            {
-                return entity.Name;
-            }
-
-            if ( !( EntityCollectionViewerViewModel.MountIDEntries.Value?.ContainsKey( entity.ID ) ?? false ) )
-            {
-                return entity.Name;
-            }
-
-            int id = (int) EntityCollectionViewerViewModel.MountIDEntries.Value?[entity.ID];
-
-            if ( id == 0 )
-            {
-                return entity.Name;
-            }
-
-            StaticTile tileData = TileData.GetStaticTile( id );
-
-            return !string.IsNullOrEmpty( tileData.Name ) ? tileData.Name : entity.Name;
         }
     }
 
@@ -686,6 +823,16 @@ namespace ClassicAssist.UI.ViewModels
                                 filter.Value ) );
                         break;
                     }
+                    case PropertyType.Predicate:
+                    {
+                        predicates.Add( i => constraint.Predicate != null && constraint.Predicate.Invoke( i,
+                            new AutolootConstraintEntry
+                            {
+                                Operator = filter.Operator, Property = constraint, Value = filter.Value
+                            } ) );
+
+                        break;
+                    }
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -700,7 +847,7 @@ namespace ClassicAssist.UI.ViewModels
         }
 
         public static List<EntityCollectionData> ToEntityCollectionData( this ItemCollection itemCollection,
-            IComparer<Entity> comparer )
+            IComparer<Entity> comparer, Dictionary<int, string> nameOverrides )
         {
             if ( itemCollection == null )
             {
@@ -709,15 +856,27 @@ namespace ClassicAssist.UI.ViewModels
 
             Item[] items = itemCollection.GetItems();
 
-            IEnumerable<Item> noNames = items.Where( i => string.IsNullOrEmpty( i.Name ) );
+            return items.OrderBy( i => i, comparer ).Select( item => item.ToEntityCollectionData( nameOverrides ) )
+                .ToList();
+        }
 
-            foreach ( Item item in noNames )
+        public static EntityCollectionData ToEntityCollectionData( this Item item,
+            Dictionary<int, string> nameOverrides )
+        {
+            StaticTile tileData = TileData.GetStaticTile( item.ID );
+
+            if ( string.IsNullOrEmpty( item.Name ) )
             {
-                item.Name = $"0x{item.Serial:x8}";
+                item.Name = nameOverrides.ContainsKey( item.Serial ) ? nameOverrides[item.Serial] :
+                    tileData.ID != 0 ? tileData.Name : $"0x{item.Serial:x8}";
             }
 
-            return items.OrderBy( i => i, comparer ).Select( item => new EntityCollectionData { Entity = item } )
-                .ToList();
+            if ( nameOverrides.ContainsKey( item.Serial ) )
+            {
+                item.Name = nameOverrides[item.Serial];
+            }
+
+            return new EntityCollectionData { Entity = item };
         }
     }
 }

@@ -1,17 +1,25 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using ClassicAssist.Annotations;
+using ClassicAssist.Shared.UI;
+using ClassicAssist.UO.Objects;
+using Newtonsoft.Json;
 
 namespace ClassicAssist.Data.Autoloot
 {
-    public class PropertyEntry : INotifyPropertyChanged, IComparable<PropertyEntry>
+    public class PropertyEntry : SetPropertyNotifyChanged, IComparable<PropertyEntry>
     {
+        private Type _allowedValuesEnum;
         private int _clilocIndex;
         private int[] _clilocs;
         private PropertyType _constraintType;
         private string _name;
+        private Func<Entity, AutolootConstraintEntry, bool> _predicate;
+
+        [JsonIgnore]
+        public Type AllowedValuesEnum
+        {
+            get => _allowedValuesEnum;
+            set => SetProperty( ref _allowedValuesEnum, value );
+        }
 
         public int ClilocIndex
         {
@@ -37,6 +45,13 @@ namespace ClassicAssist.Data.Autoloot
             set => SetProperty( ref _name, value );
         }
 
+        [JsonIgnore]
+        public Func<Entity, AutolootConstraintEntry, bool> Predicate
+        {
+            get => _predicate;
+            set => SetProperty( ref _predicate, value );
+        }
+
         public int CompareTo( PropertyEntry other )
         {
             if ( ReferenceEquals( this, other ) )
@@ -52,26 +67,6 @@ namespace ClassicAssist.Data.Autoloot
             int nameComparison = string.Compare( _name, other._name, StringComparison.InvariantCultureIgnoreCase );
 
             return nameComparison;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public override string ToString()
-        {
-            return Name;
-        }
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-        }
-
-        // ReSharper disable once RedundantAssignment
-        public virtual void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
-        {
-            obj = value;
-            OnPropertyChanged( propertyName );
         }
     }
 }

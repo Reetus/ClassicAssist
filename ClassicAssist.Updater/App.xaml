@@ -1,13 +1,13 @@
 ﻿<Application x:Class="ClassicAssist.Updater.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:ClassicAssist.Updater"
              StartupUri="MainWindow.xaml" Startup="Application_Startup">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Colours.xaml"/>
-                <ResourceDictionary Source="DarkTheme.xaml"/>
+                <ResourceDictionary
+                    Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DarkTheme.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

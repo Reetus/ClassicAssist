@@ -27,7 +27,8 @@ using System.Windows.Input;
 using ClassicAssist.Browser.Data;
 using ClassicAssist.Browser.Models;
 using ClassicAssist.Data.Macros;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.ViewModels;
 using Microsoft.Scripting.Utils;
 
@@ -52,16 +53,14 @@ namespace ClassicAssist.Browser
         private ObservableCollection<string> _eras = new ObservableCollection<string>();
 
         private bool _loading = true;
-        private ObservableCollection<string> _macros = new ObservableCollection<string>();
+        private ObservableCollection<Metadata> _macros = new ObservableCollection<Metadata>();
         private ICommand _openGithubCommand;
-        private string _selectedItem;
-        private string _selectedMacro;
+        private Metadata _selectedItem;
         private string _shardFilter;
         private ObservableCollection<string> _shards = new ObservableCollection<string>();
 
         public MacroBrowserViewModel()
         {
-            _data.Add( nameof( Macros ), async () => await _database.GetMacros() );
             _data.Add( nameof( Shards ), async () => await _database.GetShards() );
             _data.Add( nameof( Eras ), async () => await _database.GetEras() );
             _data.Add( nameof( Authors ), async () => await _database.GetAuthors() );
@@ -74,8 +73,7 @@ namespace ClassicAssist.Browser
                 }
                 catch ( Exception e )
                 {
-                    MessageBox.Show( $"{Strings.Failed_to_download_manifest___}\n\n{e.Message}", Strings.Error,
-                        MessageBoxButton.OK, MessageBoxImage.Error );
+                    Console.WriteLine( e.ToString() );
                 }
                 finally
                 {
@@ -148,7 +146,7 @@ namespace ClassicAssist.Browser
             set => SetProperty( ref _loading, value );
         }
 
-        public ObservableCollection<string> Macros
+        public ObservableCollection<Metadata> Macros
         {
             get => _macros;
             set => SetProperty( ref _macros, value );
@@ -157,7 +155,7 @@ namespace ClassicAssist.Browser
         public ICommand OpenGithubCommand =>
             _openGithubCommand ?? ( _openGithubCommand = new RelayCommand( OpenGithub, o => SelectedItem != null ) );
 
-        public string SelectedItem
+        public Metadata SelectedItem
         {
             get => _selectedItem;
             set
@@ -165,12 +163,6 @@ namespace ClassicAssist.Browser
                 SetProperty( ref _selectedItem, value );
                 GetMacro( value ).ConfigureAwait( false );
             }
-        }
-
-        public string SelectedMacro
-        {
-            get => _selectedMacro;
-            set => SetProperty( ref _selectedMacro, value );
         }
 
         public string ShardFilter
@@ -191,7 +183,7 @@ namespace ClassicAssist.Browser
 
         private async Task CreateMacro( object obj )
         {
-            if ( !( obj is string macro ) )
+            if ( !( obj is Metadata macro ) )
             {
                 return;
             }
@@ -204,7 +196,12 @@ namespace ClassicAssist.Browser
                 return;
             }
 
-            MacroManager.GetInstance().NewMacro?.Invoke( macro, await _database.GetMacroByName( macro ) );
+            if ( string.IsNullOrEmpty( macro.Macro ) )
+            {
+                macro.Macro = await _database.GetMacroById( macro.Id );
+            }
+
+            MacroManager.GetInstance().NewPublicMacro?.Invoke( macro );
         }
 
         private static void CopyToClipboard( object obj )
@@ -271,14 +268,14 @@ namespace ClassicAssist.Browser
             } );
         }
 
-        private async Task GetMacro( string value )
+        private async Task GetMacro( Metadata value )
         {
             try
             {
                 Loading = true;
-                string macro = await _database.GetMacroByName( value );
+                string macro = await _database.GetMacroById( value.Id );
 
-                SelectedMacro = macro;
+                value.Macro = macro;
             }
             catch ( Exception e )
             {
@@ -295,6 +292,8 @@ namespace ClassicAssist.Browser
         {
             try
             {
+                Macros = new ObservableCollection<Metadata>( await _database.GetMacros() );
+
                 foreach ( KeyValuePair<string, Func<Task<string[]>>> kvp in _data )
                 {
                     PropertyInfo property =

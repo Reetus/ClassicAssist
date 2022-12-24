@@ -3,12 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ClassicAssist.UI.Views"
-        xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
         xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
-        xmlns:resources="clr-namespace:ClassicAssist.Resources"
+        xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+        xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         mc:Ignorable="d"
         Title="{x:Static resources:Strings.Hue_Picker}" Height="350" Width="450"
         DataContext="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}">
@@ -49,12 +47,12 @@
             <Button Content="{x:Static resources:Strings.OK}" Command="{Binding OKCommand}"
                     CommandParameter="{Binding SelectedItem, ElementName=listView}">
                 <i:Interaction.Behaviors>
-                    <misc:CloseOnClickBehaviour />
+                    <behaviours:CloseOnClickBehaviour />
                 </i:Interaction.Behaviors>
             </Button>
             <Button Content="{x:Static resources:Strings.Cancel}">
                 <i:Interaction.Behaviors>
-                    <misc:CloseOnClickBehaviour />
+                    <behaviours:CloseOnClickBehaviour />
                 </i:Interaction.Behaviors>
             </Button>
         </StackPanel>

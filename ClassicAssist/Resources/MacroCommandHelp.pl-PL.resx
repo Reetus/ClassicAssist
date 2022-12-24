@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CLEARABILITY_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Wyczyść zaznaczenie umiejętności broni
+    <value>Wyczyść umiejętności broni
 </value>
   </data>
   <data name="CLEARABILITY_COMMAND_INSERTTEXT" xml:space="preserve">
@@ -1328,5 +1328,97 @@ MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
   </data>
   <data name="SNAPSHOT_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Zrób zrzut ekranu</value>
+  </data>
+  <data name="FINDTYPE_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># szuka przedmiotu jedzenia z listy i jeśli znajdzie je 1 sztukę.
+if not ListExists("food"):
+ CreateList("food")
+ PushList("food", 0x9b7) #bird
+ PushList("food", 0x9d3) #ham
+ PushList("food", 0x97d) #cheese
+ PushList("food", 0x9d0) #apple
+ PushList("food", 0x9eb) #muffin
+ PushList("food", 0x97b) #fishsteak
+ PushList("food", 0x9c0) #sausage
+ PushList("food", 0x9f2) #ribs
+ PushList("food", 0x9d1) #grapes
+ PushList("food", 0x9d2) #peach
+
+for i in GetList("food"):
+ if FindType(i, -1, "backpack"):
+  UseObject("found")
+  break</value>
+  </data>
+  <data name="SYSMESSAGE_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># domyślny kolor 
+SysMessage("Hello")
+# zdefiniowany kolor
+SysMessage("Hello", 35)</value>
+  </data>
+  <data name="FINDOBJECT_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># znajdź na ziemi
+FindObject("mount")
+
+# znajdź na ziemi w zakresie kratek
+FindObject("mount", 10)
+
+# znajdź w kontenerze, trzeba podać poziom szukania albo -1
+FindObject("weapon", -1, "backpack")  </value>
+  </data>
+  <data name="GETENEMY_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>#pobierz morderdę
+GetEnemy(['Murderer'])
+#pobierz najbliższego mordercę, każdy rodzaj ciała
+GetEnemy(['Murderer'], 'Any', 'Closest')
+#pobierz jakąkolwiek postać, humanoida lub po transformacji - bez mount'a
+GetEnemy(['Any'], 'Both', 'Next', 'Unmounted')</value>
+  </data>
+  <data name="STOP_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># zatrzymanie obecnego makra
+Stop()
+# zatrzymanie obecnego makra z podaniem nazwy
+Stop("Background Macro")</value>
+  </data>
+  <data name="HIDEENTITY_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>ClearIgnoreList()
+#Ukrycie wszystkich zwłok na ekranie
+while FindType(0x2006):
+ HideEntity('found')
+ IgnoreObject('found')</value>
+  </data>
+  <data name="PATHFIND_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>#Znajdywanie drogi do koordynat
+Pathfind(1438, 1630, 20)
+
+#Znajdywanie drogi do postaci
+SetEnemy(0x3c9)
+Pathfind('enemy')</value>
+  </data>
+  <data name="SNAPSHOT_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>#Wykonanie zrzutu samego klienta, brak opóźnienia, domyślna nazwa pliku
+Snapshot()
+
+#Wykonanie zrzutu pełnego ekranu, 3 sekundy opóźnienia, domyślna nazwa pliku
+Snapshot(3000, True)
+
+#Wykonanie zrzutu samego klienta, brak opóźnienia, zdefiniowana nazwa pliku
+Snapshot(0, False, "screenshot.png")</value>
+  </data>
+  <data name="SELECTIONPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Tworzy gump w grze z wyborem opcji z listy
+
+Zwraca boolean'a oznaczającego czy przycisk OK został wciśnięty oraz index wybranej pozycji z listy</value>
+  </data>
+  <data name="SETVENDORBUYAUTOBUY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Włącza lub wyłącza autokupowanie z podanej nazwy listy zakupów dla wybranego vendora</value>
+  </data>
+  <data name="ISRUNNING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zwraca True jeśli podane makro jest obecnie uruchomione</value>
+  </data>
+  <data name="LOGOUT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odłacza od serwera (zamknięcie połączenia) oraz wraca do ekranu logowania</value>
+  </data>
+  <data name="QUIT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zamyka klienta</value>
   </data>
 </root>

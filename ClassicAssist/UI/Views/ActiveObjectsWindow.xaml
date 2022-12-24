@@ -3,12 +3,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:resources="clr-namespace:ClassicAssist.Resources"
+    xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
     xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
     xmlns:misc1="clr-namespace:ClassicAssist.Misc"
     xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+    xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
     x:Class="ClassicAssist.UI.Views.ActiveObjectsWindow"
     mc:Ignorable="d"
     Title="{x:Static resources:Strings.Active_Objects}" Height="350" Width="400">
@@ -39,7 +39,8 @@
                                         <MenuItem Header="{x:Static resources:Strings.Remove}"
                                                   Command="{Binding Data.RemoveAliasCommand, Source={StaticResource Proxy}}"
                                                   CommandParameter="{Binding SelectedAlias}" />
-                                        <MenuItem Header="{x:Static resources:Strings.Set}" Command="{Binding Data.SetAliasCommand, Source={StaticResource Proxy}}"
+                                        <MenuItem Header="{x:Static resources:Strings.Set}"
+                                                  Command="{Binding Data.SetAliasCommand, Source={StaticResource Proxy}}"
                                                   CommandParameter="{Binding SelectedAlias}" />
                                     </ContextMenu>
                                 </ListView.ContextMenu>
@@ -62,7 +63,7 @@
                                 </StackPanel.Resources>
                                 <Button Content="{x:Static resources:Strings.Close}">
                                     <i:Interaction.Behaviors>
-                                        <misc:CloseOnClickBehaviour />
+                                        <behaviours:CloseOnClickBehaviour />
                                     </i:Interaction.Behaviors>
                                 </Button>
                                 <Button Content="{x:Static resources:Strings.Refresh}"
@@ -166,7 +167,7 @@
                         </StackPanel.Resources>
                         <Button Content="{x:Static resources:Strings.Close}">
                             <i:Interaction.Behaviors>
-                                <misc:CloseOnClickBehaviour />
+                                <behaviours:CloseOnClickBehaviour />
                             </i:Interaction.Behaviors>
                         </Button>
                         <Button Content="{x:Static resources:Strings.Refresh}" Command="{Binding RefreshListsCommand}" />
@@ -201,7 +202,7 @@
                         </StackPanel.Resources>
                         <Button Content="{x:Static resources:Strings.Close}">
                             <i:Interaction.Behaviors>
-                                <misc:CloseOnClickBehaviour />
+                                <behaviours:CloseOnClickBehaviour />
                             </i:Interaction.Behaviors>
                         </Button>
                         <Button Content="{x:Static resources:Strings.Refresh}"
@@ -240,7 +241,7 @@
                         </StackPanel.Resources>
                         <Button Content="{x:Static resources:Strings.Close}">
                             <i:Interaction.Behaviors>
-                                <misc:CloseOnClickBehaviour />
+                                <behaviours:CloseOnClickBehaviour />
                             </i:Interaction.Behaviors>
                         </Button>
                         <Button Content="{x:Static resources:Strings.Refresh}"

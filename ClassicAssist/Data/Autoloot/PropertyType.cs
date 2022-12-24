@@ -3,6 +3,7 @@
     public enum PropertyType
     {
         Properties,
-        Object
+        Object,
+        Predicate
     }
 }

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Assistant;
-using ClassicAssist.Annotations;
 using ClassicAssist.Data.Friends;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
@@ -13,12 +10,13 @@ using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Misc;
 using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Misc;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.ViewModels;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.Data
 {
-    public class Options : INotifyPropertyChanged
+    public class Options : SetPropertyNotifyChanged
     {
         public const string DEFAULT_SETTINGS_FILENAME = "settings.json";
         private static string _profilePath;
@@ -30,6 +28,13 @@ namespace ClassicAssist.Data
         private bool _alwaysOnTop;
         private bool _autoAcceptPartyInvite;
         private bool _autoAcceptPartyOnlyFromFriends;
+        private bool _autologin;
+        private int _autologinCharacterIndex;
+        private TimeSpan _autologinConnectDelay;
+        private string _autologinPassword;
+        private TimeSpan _autologinReconnectDelay;
+        private int _autologinServerIndex;
+        private string _autologinUsername;
         private double _chatWindowHeight = 350;
         private double _chatWindowWidth = 650;
         private bool _checkHandsPotions;
@@ -38,14 +43,17 @@ namespace ClassicAssist.Data
         private bool _defaultMacroQuietMode;
         private string _enemyTargetMessage;
         private EntityCollectionViewerOptions _entityCollectionViewerOptions = new EntityCollectionViewerOptions();
+        private int _expireTargetsMs;
         private ObservableCollection<FriendEntry> _friends = new ObservableCollection<FriendEntry>();
         private string _friendTargetMessage;
         private bool _getFriendEnemyUsesIgnoreList;
+        private string _hash;
         private bool _includePartyMembersInFriends;
         private string _lastTargetMessage;
         private int _lightLevel;
         private bool _limitMouseWheelTrigger;
         private int _limitMouseWheelTriggerMS;
+        private bool _logoutDisconnectedPrompt;
         private bool _macrosGump;
         private int _macrosGumpX;
         private int _macrosGumpY;
@@ -61,10 +69,13 @@ namespace ClassicAssist.Data
         private int _rangeCheckLastTargetAmount = 11;
         private bool _rehueFriends;
         private int _rehueFriendsHue;
+        private bool _setUOTitle;
         private bool _showProfileNameWindowTitle;
         private bool _showResurrectionWaypoints;
+        private int _slowHandlerThreshold = 250;
         private SmartTargetOption _smartTargetOption;
         private bool _sortMacrosAlphabetical;
+        private bool _sysTray;
         private bool _useDeathScreenWhilstHidden;
         private bool _useExperimentalFizzleDetection;
         private bool _useObjectQueue;
@@ -118,6 +129,48 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _autoAcceptPartyOnlyFromFriends, value );
         }
 
+        public bool Autologin
+        {
+            get => _autologin;
+            set => SetProperty( ref _autologin, value );
+        }
+
+        public int AutologinCharacterIndex
+        {
+            get => _autologinCharacterIndex;
+            set => SetProperty( ref _autologinCharacterIndex, value );
+        }
+
+        public TimeSpan AutologinConnectDelay
+        {
+            get => _autologinConnectDelay;
+            set => SetProperty( ref _autologinConnectDelay, value );
+        }
+
+        public string AutologinPassword
+        {
+            get => _autologinPassword;
+            set => SetProperty( ref _autologinPassword, value );
+        }
+
+        public TimeSpan AutologinReconnectDelay
+        {
+            get => _autologinReconnectDelay;
+            set => SetProperty( ref _autologinReconnectDelay, value );
+        }
+
+        public int AutologinServerIndex
+        {
+            get => _autologinServerIndex;
+            set => SetProperty( ref _autologinServerIndex, value );
+        }
+
+        public string AutologinUsername
+        {
+            get => _autologinUsername;
+            set => SetProperty( ref _autologinUsername, value );
+        }
+
         public double ChatWindowHeight
         {
             get => _chatWindowHeight;
@@ -168,6 +221,12 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _entityCollectionViewerOptions, value );
         }
 
+        public int ExpireTargetsMS
+        {
+            get => _expireTargetsMs;
+            set => SetProperty( ref _expireTargetsMs, value );
+        }
+
         public ObservableCollection<FriendEntry> Friends
         {
             get => _friends;
@@ -184,6 +243,12 @@ namespace ClassicAssist.Data
         {
             get => _getFriendEnemyUsesIgnoreList;
             set => SetProperty( ref _getFriendEnemyUsesIgnoreList, value );
+        }
+
+        public string Hash
+        {
+            get => _hash;
+            set => SetProperty( ref _hash, value );
         }
 
         public bool IncludePartyMembersInFriends
@@ -218,6 +283,12 @@ namespace ClassicAssist.Data
         {
             get => _limitMouseWheelTriggerMS;
             set => SetProperty( ref _limitMouseWheelTriggerMS, value );
+        }
+
+        public bool LogoutDisconnectedPrompt
+        {
+            get => _logoutDisconnectedPrompt;
+            set => SetProperty( ref _logoutDisconnectedPrompt, value );
         }
 
         public bool MacrosGump
@@ -310,6 +381,16 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _rehueFriendsHue, value );
         }
 
+        public bool SetUOTitle
+        {
+            get => _setUOTitle;
+            set
+            {
+                SetProperty( ref _setUOTitle, value );
+                Engine.SetTitle();
+            }
+        }
+
         public bool ShowProfileNameWindowTitle
         {
             get => _showProfileNameWindowTitle;
@@ -326,6 +407,12 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _showResurrectionWaypoints, value );
         }
 
+        public int SlowHandlerThreshold
+        {
+            get => _slowHandlerThreshold;
+            set => SetProperty( ref _slowHandlerThreshold, value );
+        }
+
         public SmartTargetOption SmartTargetOption
         {
             get => _smartTargetOption;
@@ -336,6 +423,12 @@ namespace ClassicAssist.Data
         {
             get => _sortMacrosAlphabetical;
             set => SetProperty( ref _sortMacrosAlphabetical, value );
+        }
+
+        public bool SysTray
+        {
+            get => _sysTray;
+            set => SetProperty( ref _sysTray, value );
         }
 
         public bool UseDeathScreenWhilstHidden
@@ -362,8 +455,6 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _useObjectQueueAmount, value );
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public static void Save( Options options )
         {
             BaseViewModel[] instances = BaseViewModel.Instances;
@@ -376,12 +467,78 @@ namespace ClassicAssist.Data
                 {
                     settingProvider.Serialize( obj );
                 }
+
+                if ( !( instance is IGlobalSettingProvider globalSettingProvider ) )
+                {
+                    continue;
+                }
+
+                JObject global = new JObject();
+
+                globalSettingProvider.Serialize( global, true );
+
+                File.WriteAllText(
+                    Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
+                        globalSettingProvider.GetGlobalFilename() ), global.ToString() );
+            }
+
+            string hash = obj.ToString().SHA1();
+            obj["Hash"] = hash;
+
+            if ( hash.Equals( options.Hash ) )
+            {
+                // ReSharper disable once LocalizableElement
+                Console.WriteLine( "Profile hasn't changed, skipping profile save" );
+                return;
             }
 
             EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
 
+            CheckModifiedOnDisk( options.Name, options.Hash );
+
             File.WriteAllText( Path.Combine( _profilePath, options.Name ?? DEFAULT_SETTINGS_FILENAME ),
                 obj.ToString() );
+
+            options.Hash = hash;
+        }
+
+        private static void CheckModifiedOnDisk( string profileFilename, string hash )
+        {
+            try
+            {
+                string profilePath = Path.Combine( _profilePath, profileFilename );
+
+                if ( !File.Exists( profilePath ) )
+                {
+                    return;
+                }
+
+                string json = File.ReadAllText( profilePath );
+                JObject obj = JObject.Parse( json );
+
+                string hashOnDisk = obj["Hash"]?.ToObject<string>() ?? string.Empty;
+
+                if ( hashOnDisk.Equals( hash ) )
+                {
+                    return;
+                }
+
+                // The hash of the profile isn't the same as when we loaded / saved it last, backup the existing profile to another directory
+                string conflictPath = Path.Combine( _profilePath, "Conflict" );
+
+                if ( !Directory.Exists( conflictPath ) )
+                {
+                    Directory.CreateDirectory( conflictPath );
+                }
+
+                string fileName = Path.Combine( conflictPath, $"{profileFilename}-{hashOnDisk}" );
+
+                File.Copy( profilePath, fileName, true );
+            }
+            catch ( Exception )
+            {
+                // we tried
+            }
         }
 
         private static void EnsureProfilePath( string startupPath )
@@ -419,7 +576,8 @@ namespace ClassicAssist.Data
                 json = JObject.Parse( File.ReadAllText( fullPath ) );
             }
 
-            options.Name = options.Name ?? json["Name"]?.ToObject<string>() ?? DEFAULT_SETTINGS_FILENAME;
+            options.Name = Path.GetFileName( optionsFile );
+            options.Hash = json["Hash"]?.ToObject<string>() ?? string.Empty;
 
             foreach ( BaseViewModel instance in instances )
             {
@@ -427,20 +585,24 @@ namespace ClassicAssist.Data
                 {
                     settingProvider.Deserialize( json, options );
                 }
+
+                if ( !( instance is IGlobalSettingProvider globalSettingProvider ) )
+                {
+                    continue;
+                }
+
+                string filePath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
+                    globalSettingProvider.GetGlobalFilename() );
+
+                if ( !File.Exists( filePath ) )
+                {
+                    continue;
+                }
+
+                JObject global = JObject.Parse( File.ReadAllText( filePath ) );
+
+                globalSettingProvider.Deserialize( global, options, true );
             }
-        }
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-        }
-
-        // ReSharper disable once RedundantAssignment
-        public void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
-        {
-            obj = value;
-            OnPropertyChanged( propertyName );
         }
 
         public static string[] GetProfiles()

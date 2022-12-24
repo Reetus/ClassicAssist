@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:resources="clr-namespace:ClassicAssist.Resources"
+    xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
     xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
     xmlns:misc="clr-namespace:ClassicAssist.Misc"
     xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
@@ -22,14 +22,14 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
+                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
         <viewModels:OptionsTabViewModel />
     </UserControl.DataContext>
-    <Grid Margin="10">
+    <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
@@ -69,45 +69,54 @@
                       IsChecked="{Binding CurrentOptions.PersistUseOnce, Mode=TwoWay}" />
             <CheckBox Content="{x:Static resources:Strings.Use_death_screen_whilst_hidden}"
                       IsChecked="{Binding CurrentOptions.UseDeathScreenWhilstHidden}" />
-            <CheckBox IsChecked="{Binding CurrentOptions.RangeCheckLastTarget}" DataContext="{Binding}">
-                <CheckBox.ContentTemplate>
-                    <ItemContainerTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{x:Static resources:Strings.Range_check_last_target}" TextWrapping="Wrap" />
-                            <TextBox Width="40" Margin="5,0,0,0"
-                                     Text="{Binding Path=Data.CurrentOptions.RangeCheckLastTargetAmount, Source={StaticResource proxy}}" />
-                        </StackPanel>
-                    </ItemContainerTemplate>
-                </CheckBox.ContentTemplate>
-            </CheckBox>
+            <StackPanel Orientation="Horizontal">
+                <CheckBox IsChecked="{Binding CurrentOptions.RangeCheckLastTarget}" DataContext="{Binding}" VerticalAlignment="Center">
+                    <CheckBox.ContentTemplate>
+                        <ItemContainerTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{x:Static resources:Strings.Range_check_last_target}"
+                                           TextWrapping="Wrap" />
+                            </StackPanel>
+                        </ItemContainerTemplate>
+                    </CheckBox.ContentTemplate>
+                </CheckBox>
+                <TextBox Width="40" Margin="5,0,0,0"
+                         Text="{Binding Path=Data.CurrentOptions.RangeCheckLastTargetAmount, Source={StaticResource proxy}}" />
+            </StackPanel>
             <CheckBox Content="{x:Static resources:Strings.Use_experimental_fizzle_detection}"
                       IsChecked="{Binding CurrentOptions.UseExperimentalFizzleDetection}" />
-            <CheckBox IsChecked="{Binding CurrentOptions.UseObjectQueue}" DataContext="{Binding}">
-                <CheckBox.ContentTemplate>
-                    <ItemContainerTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{x:Static resources:Strings.Use_object_queue}" TextWrapping="Wrap" />
-                            <TextBox Width="40" Margin="5,0,0,0"
-                                     Text="{Binding Path=Data.CurrentOptions.UseObjectQueueAmount, Source={StaticResource proxy}}" />
-                        </StackPanel>
-                    </ItemContainerTemplate>
-                </CheckBox.ContentTemplate>
-            </CheckBox>
-            <CheckBox IsChecked="{Binding CurrentOptions.LimitMouseWheelTrigger}" DataContext="{Binding}">
-                <CheckBox.ContentTemplate>
-                    <ItemContainerTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{x:Static resources:Strings.Limit_Mouse_Wheel_Retrigger}" Margin="0"
-                                       TextWrapping="Wrap" VerticalAlignment="Center" />
-                            <TextBox Width="40" Margin="10,0,10,0"
-                                     Text="{Binding Path=Data.CurrentOptions.LimitMouseWheelTriggerMS, Source={StaticResource proxy}}"
-                                     TextWrapping="Wrap" />
-                            <TextBlock Text="ms" TextWrapping="Wrap"
-                                       Margin="5,0,0,0" VerticalAlignment="Center" />
-                        </StackPanel>
-                    </ItemContainerTemplate>
-                </CheckBox.ContentTemplate>
-            </CheckBox>
+            <StackPanel Orientation="Horizontal">
+                <CheckBox IsChecked="{Binding CurrentOptions.UseObjectQueue}" DataContext="{Binding}"
+                          VerticalAlignment="Center">
+                    <CheckBox.ContentTemplate>
+                        <ItemContainerTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{x:Static resources:Strings.Use_object_queue}" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </ItemContainerTemplate>
+                    </CheckBox.ContentTemplate>
+                </CheckBox>
+                <TextBox Width="40" Margin="5,0,0,0"
+                         Text="{Binding Path=Data.CurrentOptions.UseObjectQueueAmount, Source={StaticResource proxy}}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <CheckBox IsChecked="{Binding CurrentOptions.LimitMouseWheelTrigger}" DataContext="{Binding}"
+                          VerticalAlignment="Center">
+                    <CheckBox.ContentTemplate>
+                        <ItemContainerTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{x:Static resources:Strings.Limit_Mouse_Wheel_Retrigger}" Margin="0"
+                                           TextWrapping="Wrap" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </ItemContainerTemplate>
+                    </CheckBox.ContentTemplate>
+                </CheckBox>
+                <TextBox Width="40" Margin="10,0,10,0"
+                         Text="{Binding Path=Data.CurrentOptions.LimitMouseWheelTriggerMS, Source={StaticResource proxy}}"
+                         TextWrapping="Wrap" />
+                <TextBlock Text="ms" TextWrapping="Wrap"
+                           Margin="5,0,0,0" VerticalAlignment="Center" />
+            </StackPanel>
             <CheckBox Content="{x:Static resources:Strings.Auto_accept_party_invites}"
                       IsChecked="{Binding CurrentOptions.AutoAcceptPartyInvite}" />
             <CheckBox IsChecked="{Binding CurrentOptions.AutoAcceptPartyOnlyFromFriends}">
@@ -152,15 +161,23 @@
                       IsChecked="{Binding CurrentOptions.AbilitiesGump}" />
             <CheckBox Content="{x:Static resources:Strings.Show_running_macros_gump}"
                       IsChecked="{Binding CurrentOptions.MacrosGump}" />
+            <CheckBox Content="{x:Static resources:Strings.Show_player___shard_name_in_CUO_title}"
+                      IsChecked="{Binding CurrentOptions.SetUOTitle}" />
             <CheckBox Content="{x:Static resources:Strings.Show_Profile_Name_In_Title}"
                       IsChecked="{Binding CurrentOptions.ShowProfileNameWindowTitle}" />
             <CheckBox Content="{x:Static resources:Strings.Queue_Last_Target___Target_Self}"
                       IsChecked="{Binding CurrentOptions.QueueLastTarget}" />
-            <DockPanel IsEnabled="{Binding CurrentOptions.QueueLastTarget}">
+            <DockPanel IsEnabled="{Binding CurrentOptions.QueueLastTarget}" Margin="20,0,0,0">
                 <Label Content="{x:Static resources:Strings.Max_Target_Queue_Length_}" DockPanel.Dock="Left" />
                 <xctk:IntegerUpDown Minimum="1" Maximum="100" Value="{Binding CurrentOptions.MaxTargetQueueLength}"
                                     Width="50" UpdateValueOnEnterKey="True" DockPanel.Dock="Right" Margin="10,0,0,0" />
             </DockPanel>
+            <StackPanel Orientation="Horizontal" IsEnabled="{Binding CurrentOptions.QueueLastTarget}" Margin="20,0,0,0"
+                        ToolTip="{x:Static resources:Strings.Time_in_milliseconds___1_to_not_expire_}">
+                <Label Content="{x:Static resources:Strings.Expire_Targets_}" />
+                <TextBox Text="{Binding CurrentOptions.ExpireTargetsMS, Mode=TwoWay}" Width="75" Margin="10,0" />
+                <Label Content="ms" />
+            </StackPanel>
             <CheckBox Content="{x:Static resources:Strings.Sort_Macros_Alphabetical}"
                       IsChecked="{Binding CurrentOptions.SortMacrosAlphabetical}" />
             <CheckBox Content="{x:Static resources:Strings.Show_resurrection_waypoints}"
@@ -171,6 +188,8 @@
                       Command="{Binding SetUseClilocLanguageCommand}"
                       CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
                       IsEnabled="{x:Static cliloc:Cliloc.CanUseCUOClilocLanguage}" />
+            <CheckBox Content="{x:Static resources:Strings.Logout_on_disconnected_prompt}"
+                      IsChecked="{Binding CurrentOptions.LogoutDisconnectedPrompt}"/>
         </StackPanel>
     </Grid>
 </UserControl>

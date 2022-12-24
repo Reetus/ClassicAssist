@@ -1,6 +1,6 @@
 ﻿using Assistant;
 using ClassicAssist.Data.Abilities;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
@@ -13,16 +13,7 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = nameof( Strings.Abilities ) )]
         public static void ClearAbility()
         {
-            AbilitiesManager manager = AbilitiesManager.GetInstance();
-
-            if ( manager.IsPrimaryEnabled )
-            {
-                manager.SetAbility( AbilityType.Primary );
-            }
-            else if ( manager.IsSecondaryEnabled )
-            {
-                manager.SetAbility( AbilityType.Secondary );
-            }
+            UOC.ClearWeaponAbility();
         }
 
         [CommandsDisplay( Category = nameof( Strings.Abilities ) )]
@@ -84,10 +75,8 @@ namespace ClassicAssist.Data.Macros.Commands
                     {
                         if ( primary && manager.IsPrimaryEnabled || !primary && manager.IsSecondaryEnabled )
                         {
-                            if ( !MacroManager.QuietMode )
-                            {
-                                UOC.SystemMessage( Strings.Ability_already_set___, (int) UOC.SystemMessageHues.Green );
-                            }
+                            UOC.SystemMessage( Strings.Ability_already_set___, (int) SystemMessageHues.Green,
+                                true );
 
                             return;
                         }
@@ -98,10 +87,7 @@ namespace ClassicAssist.Data.Macros.Commands
                     {
                         if ( primary && !manager.IsPrimaryEnabled || !primary && !manager.IsSecondaryEnabled )
                         {
-                            if ( !MacroManager.QuietMode )
-                            {
-                                UOC.SystemMessage( Strings.Ability_not_set___, (int) UOC.SystemMessageHues.Green );
-                            }
+                            UOC.SystemMessage( Strings.Ability_not_set___, (int) SystemMessageHues.Green, true );
 
                             return;
                         }
@@ -111,9 +97,17 @@ namespace ClassicAssist.Data.Macros.Commands
                 }
             }
 
-            UOC.SystemMessage( string.Format( Strings.Setting_ability___0_____, ability ),
-                (int) UOC.SystemMessageHues.Green );
-            manager.SetAbility( primary ? AbilityType.Primary : AbilityType.Secondary );
+            if ( onOffNormalized == "off" || onOffNormalized == "toggle" &&
+                ( manager.IsPrimaryEnabled || manager.IsSecondaryEnabled ) )
+            {
+                UOC.ClearWeaponAbility();
+            }
+            else
+            {
+                UOC.SystemMessage( string.Format( Strings.Setting_ability___0_____, ability ),
+                    (int) SystemMessageHues.Green );
+                manager.SetAbility( primary ? AbilityType.Primary : AbilityType.Secondary );
+            }
         }
 
         [CommandsDisplay( Category = nameof( Strings.Abilities ) )]
@@ -140,7 +134,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return false;
             }
 
@@ -149,7 +143,7 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( mobile == null )
             {
                 // TODO better message
-                UOC.SystemMessage( Strings.Cannot_find_item___ );
+                UOC.SystemMessage( Strings.Cannot_find_item___, true );
                 return false;
             }
 

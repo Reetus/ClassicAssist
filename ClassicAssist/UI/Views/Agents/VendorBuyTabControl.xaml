@@ -3,13 +3,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:resources="clr-namespace:ClassicAssist.Resources"
+    xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
     xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
     xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
-    xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
-    xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:autoloot="clr-namespace:ClassicAssist.Data.Autoloot"
+    xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
     x:Class="ClassicAssist.UI.Views.Agents.VendorBuyTabControl"
     mc:Ignorable="d"
     d:DesignWidth="493" d:DesignHeight="400">
@@ -22,7 +19,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
-                <ResourceDictionary Source="../../../Resources/ResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <ValueConverters:HexToIntValueConverter x:Key="HexToIntValueConverter" />
             <ValueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
@@ -36,7 +32,11 @@
             <ColumnDefinition Width="150" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid Margin="5" Grid.Column="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Margin="5" Grid.Column="0" Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
@@ -77,7 +77,7 @@
                 </Grid>
             </StackPanel>
         </Grid>
-        <Grid Margin="5" Grid.Column="1">
+        <Grid Margin="5" Grid.Column="1" Grid.Row="0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -164,5 +164,10 @@
                 </StackPanel>
             </Grid>
         </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="5,0" Grid.ColumnSpan="2">
+            <CheckBox IsChecked="{Binding AutoDisableOnLogin}"
+                      Content="{x:Static resources:Strings.Auto_disable_when_loading}"
+                      ToolTip="{x:Static resources:Strings.Disable_all_vendor_buy_entries_on_loading_profile}" />
+        </StackPanel>
     </Grid>
 </UserControl>

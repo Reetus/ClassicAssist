@@ -1,7 +1,7 @@
 ﻿using Assistant;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Targeting;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;
@@ -178,7 +178,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
                     return;
                 }
 
-                object nextTarget = Engine.LastTargetQueue.Peek();
+                object nextTarget = Engine.LastTargetQueue.Peek()?.Object;
 
                 switch ( nextTarget )
                 {

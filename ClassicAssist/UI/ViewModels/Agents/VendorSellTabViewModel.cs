@@ -8,7 +8,8 @@ using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
@@ -47,7 +48,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set => SetProperty( ref _selectedItem, value );
         }
 
-        public void Serialize( JObject json )
+        public void Serialize( JObject json, bool global = false )
         {
             if ( json == null )
             {
@@ -76,7 +77,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             json.Add( "VendorSell", config );
         }
 
-        public void Deserialize( JObject json, Options options )
+        public void Deserialize( JObject json, Options options, bool global = false )
         {
             Items.Clear();
 
@@ -172,7 +173,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 

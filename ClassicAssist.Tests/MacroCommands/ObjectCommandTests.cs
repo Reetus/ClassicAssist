@@ -136,6 +136,21 @@ namespace ClassicAssist.Tests.MacroCommands
         }
 
         [TestMethod]
+        public void WillCountTypeGroundHue()
+        {
+            Item item1 = new Item( 0x40000001, -1 ) { ID = 0xFF, Hue = 1 };
+            Item item2 = new Item( 0x40000002, -1 ) { ID = 0xFF, Hue = 2 };
+
+            Engine.Items.Add( new[] { item1, item2 } );
+
+            Assert.AreEqual( 1, ObjectCommands.CountTypeGround( 0xFF, 1 ) );
+            Assert.AreEqual( 1, ObjectCommands.CountTypeGround( 0xFF, 2 ) );
+            Assert.AreEqual( 2, ObjectCommands.CountTypeGround( 0xFF ) );
+
+            Engine.Items.Clear();
+        }
+
+        [TestMethod]
         public void WillCountMobileGround()
         {
             Engine.Player = new PlayerMobile( 0x01 );

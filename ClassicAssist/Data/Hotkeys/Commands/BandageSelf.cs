@@ -1,14 +1,14 @@
 ﻿using System.Linq;
 using Assistant;
 using ClassicAssist.Data.Macros.Commands;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.Data.Hotkeys.Commands
 {
-    [HotkeyCommand( Name = "Bandage Self" )]
+    [HotkeyCommand( Name = "Bandage Self", Category = "Healing" )]
     public class BandageSelf : HotkeyCommand
     {
         private const int TIMEOUT = 5000;

@@ -5,7 +5,7 @@ using Assistant;
 using ClassicAssist.Data.Regions;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;
@@ -112,8 +112,30 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( useQueue && !Engine.TargetExists )
             {
                 MsgCommands.HeadMsg( Strings.Target_Queued, Engine.Player?.Serial );
-                Engine.LastTargetQueue.Enqueue( obj );
+                Engine.LastTargetQueue.Enqueue( new TargetQueueObject { Object = obj } );
                 return;
+            }
+
+            if ( Engine.InternalTarget )
+            {
+                PacketWriter writer = new PacketWriter( 19 );
+                writer.Write( (byte) 0x6C );
+                writer.Write( (byte) 0 );
+                writer.Write( Engine.InternalTargetSerial );
+                writer.Write( (byte) 0 );
+                writer.Write( serial );
+                writer.Fill();
+
+                if ( Engine.CheckOutgoingPreFilter( writer.ToArray() ) )
+                {
+                    byte[] packet = writer.ToArray();
+                    packet[6] = 0x03;
+
+                    Engine.SendPacketToClient( packet, packet.Length, false );
+                    Engine.TargetExists = false;
+
+                    return;
+                }
             }
 
             Engine.SendPacketToServer( new Target( TargetTypeEnum.Object, -1, TargetFlags.None, serial, -1, -1, -1, 0,
@@ -130,7 +152,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -157,7 +179,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -165,10 +187,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( entity == null )
             {
-                if ( !MacroManager.QuietMode )
-                {
-                    UOC.SystemMessage( Strings.Mobile_not_found___ );
-                }
+                UOC.SystemMessage( Strings.Mobile_not_found___, true );
 
                 return;
             }
@@ -291,7 +310,7 @@ namespace ClassicAssist.Data.Macros.Commands
             Parameters = new[]
             {
                 nameof( ParameterType.Empty ), nameof( ParameterType.Empty ), nameof( ParameterType.Empty ),
-                nameof( ParameterType.Empty )
+                nameof( ParameterType.Empty ), nameof( ParameterType.Distance )
             } )]
         [CommandsDisplayStringSeeAlso( new[]
         {
@@ -299,7 +318,7 @@ namespace ClassicAssist.Data.Macros.Commands
             nameof( TargetInfliction )
         } )]
         public static bool GetEnemy( IEnumerable<string> notorieties, string bodyType = "Any", string distance = "Next",
-            string infliction = "Any" )
+            string infliction = "Any", int maxDistance = -1 )
         {
             TargetNotoriety notoFlags = TargetNotoriety.None;
 
@@ -326,20 +345,21 @@ namespace ClassicAssist.Data.Macros.Commands
                 ti = TargetInfliction.Any;
             }
 
-            return TargetManager.GetInstance().GetEnemy( notoFlags, bt, td, TargetFriendType.None, ti );
+            return TargetManager.GetInstance().GetEnemy( notoFlags, bt, td, TargetFriendType.None, ti, maxDistance );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Target ),
             Parameters = new[]
             {
-                nameof( ParameterType.Empty ), nameof( ParameterType.Empty ), nameof( ParameterType.Empty )
+                nameof( ParameterType.Empty ), nameof( ParameterType.Empty ), nameof( ParameterType.Empty ),
+                nameof( ParameterType.Distance )
             } )]
         [CommandsDisplayStringSeeAlso( new[]
         {
             nameof( TargetDistance ), nameof( TargetInfliction ), nameof( TargetBodyType )
         } )]
         public static bool GetFriendListOnly( string distance = "Next", string targetInfliction = "Any",
-            string bodyType = "Any" )
+            string bodyType = "Any", int maxDistance = -1 )
         {
             if ( !Enum.TryParse( distance, true, out TargetDistance td ) )
             {
@@ -356,14 +376,15 @@ namespace ClassicAssist.Data.Macros.Commands
                 bt = TargetBodyType.Any;
             }
 
-            return TargetManager.GetInstance().GetFriend( TargetNotoriety.Any, bt, td, TargetFriendType.Only, ti );
+            return TargetManager.GetInstance()
+                .GetFriend( TargetNotoriety.Any, bt, td, TargetFriendType.Only, ti, maxDistance );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Target ),
             Parameters = new[]
             {
                 nameof( ParameterType.Empty ), nameof( ParameterType.Empty ), nameof( ParameterType.Empty ),
-                nameof( ParameterType.Empty )
+                nameof( ParameterType.Empty ), nameof( ParameterType.Distance )
             } )]
         [CommandsDisplayStringSeeAlso( new[]
         {
@@ -371,7 +392,7 @@ namespace ClassicAssist.Data.Macros.Commands
             nameof( TargetInfliction )
         } )]
         public static bool GetFriend( IEnumerable<string> notorieties, string bodyType = "Any",
-            string distance = "Next", string infliction = "Any" )
+            string distance = "Next", string infliction = "Any", int maxDistance = -1 )
         {
             TargetNotoriety notoFlags = TargetNotoriety.None;
 
@@ -398,7 +419,8 @@ namespace ClassicAssist.Data.Macros.Commands
                 ti = TargetInfliction.Any;
             }
 
-            return TargetManager.GetInstance().GetFriend( notoFlags, bt, td, TargetFriendType.Include, ti );
+            return TargetManager.GetInstance()
+                .GetFriend( notoFlags, bt, td, TargetFriendType.Include, ti, maxDistance );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Target ),
@@ -458,7 +480,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( id == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -492,7 +514,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( id == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -519,7 +541,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial <= 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
 
                 return;
             }
@@ -528,7 +550,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( entity == null )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -543,7 +565,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial <= 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
 
                 return;
             }
@@ -552,7 +574,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( entity == null )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -567,7 +589,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial <= 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
 
                 return;
             }
@@ -576,7 +598,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( entity == null )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 

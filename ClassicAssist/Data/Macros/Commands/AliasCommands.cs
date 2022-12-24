@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assistant;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
@@ -35,9 +35,9 @@ namespace ClassicAssist.Data.Macros.Commands
                 case string str:
                     serial = GetAlias( str );
 
-                    if ( serial == 0 && !MacroManager.QuietMode )
+                    if ( serial == 0 )
                     {
-                        UOC.SystemMessage( string.Format( Strings.Unknown_alias___0___, str ) );
+                        UOC.SystemMessage( string.Format( Strings.Unknown_alias___0___, str ), true );
                     }
 
                     break;
@@ -55,7 +55,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
                     break;
                 default:
-                    UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                    UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                     return 0;
             }
 
@@ -163,6 +163,15 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             int serial = UOC.GetTargetSerialAsync( string.Format( Strings.Target_object___0_____, aliasName ) ).Result;
             SetAlias( aliasName, serial );
+            return serial;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Aliases ),
+            Parameters = new[] { nameof( ParameterType.AliasName ) } )]
+        public static int PromptMacroAlias(string aliasName)
+        {
+            int serial = UOC.GetTargetSerialAsync(string.Format(Strings.Target_object___0_____, aliasName)).Result;
+            SetMacroAlias(aliasName, serial);
             return serial;
         }
 

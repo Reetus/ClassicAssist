@@ -1,12 +1,10 @@
 ﻿using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
-using ClassicAssist.Annotations;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
@@ -16,7 +14,7 @@ using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.Data.Organizer
 {
-    public class OrganizerManager : INotifyPropertyChanged
+    public class OrganizerManager : SetPropertyNotifyChanged
     {
         private static readonly object _lock = new object();
         private static OrganizerManager _instance;
@@ -36,8 +34,6 @@ namespace ClassicAssist.Data.Organizer
         }
 
         private CancellationTokenSource _cancellationTokenSource { get; set; } = new CancellationTokenSource();
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnCollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
         {
@@ -112,7 +108,7 @@ namespace ClassicAssist.Data.Organizer
 
                 foreach ( OrganizerItem entryItem in entry.Items )
                 {
-                    Item[] moveItems = sourceContainerItem.Container.SelectEntities( i =>
+                    Item[] moveItems = sourceContainerItem.Container?.SelectEntities( i =>
                         entryItem.ID == i.ID && ( entryItem.Hue == -1 || i.Hue == entryItem.Hue ) );
 
                     if ( moveItems == null )
@@ -138,11 +134,10 @@ namespace ClassicAssist.Data.Organizer
                                 break;
                         }
 
-                        int existingCount = container
-                            ?.SelectEntities( i =>
-                                entryItem.ID == i.ID &&
-                                ( entryItem.Hue == -1 || i.Hue == entryItem.Hue ) )
-                            ?.Select( i => i.Count ).Sum() ?? 0;
+                        int existingCount =
+                            container?.SelectEntities( i =>
+                                    entryItem.ID == i.ID && ( entryItem.Hue == -1 || i.Hue == entryItem.Hue ) )
+                                ?.Select( i => i.Count ).Sum() ?? 0;
 
                         moved += existingCount;
                     }
@@ -238,19 +233,6 @@ namespace ClassicAssist.Data.Organizer
             }
 
             return _instance;
-        }
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-        }
-
-        // ReSharper disable once RedundantAssignment
-        public void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
-        {
-            obj = value;
-            OnPropertyChanged( propertyName );
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using Assistant;
@@ -8,7 +9,9 @@ using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Skills;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Misc;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
@@ -76,7 +79,7 @@ namespace ClassicAssist.UI.ViewModels
             _useSkillCommand ?? ( _useSkillCommand =
                 new RelayCommand( UseSkill, o => SelectedItem?.Skill.Invokable ?? false ) );
 
-        public void Serialize( JObject json )
+        public void Serialize( JObject json, bool global = false )
         {
             JArray skills = new JArray();
 
@@ -101,7 +104,7 @@ namespace ClassicAssist.UI.ViewModels
             json.Add( "Skills", skills );
         }
 
-        public void Deserialize( JObject json, Options options )
+        public void Deserialize( JObject json, Options options, bool global = false )
         {
             HotkeyManager hotkey = HotkeyManager.GetInstance();
 
@@ -190,6 +193,8 @@ namespace ClassicAssist.UI.ViewModels
         {
             _dispatcher.Invoke( () => { Items.Clear(); } );
 
+            SkillComparer comparer = new SkillComparer( ListSortDirection.Ascending, SkillsGridViewColumn.Enums.Name );
+
             foreach ( SkillInfo si in skills )
             {
                 Skill skill = new Skill
@@ -206,7 +211,15 @@ namespace ClassicAssist.UI.ViewModels
                     LockStatus = si.LockStatus
                 };
 
-                _dispatcher.Invoke( () => { Items.Add( se ); } );
+                if ( string.IsNullOrEmpty( skill.Name ) && si.BaseValue == 0 )
+                {
+                    continue;
+                }
+
+                _dispatcher.Invoke( () =>
+                {
+                    Items.AddSorted( se, comparer );
+                } );
             }
         }
 

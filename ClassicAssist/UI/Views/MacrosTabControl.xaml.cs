@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml;
 using ClassicAssist.Data.Macros;
+using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
@@ -21,6 +23,7 @@ namespace ClassicAssist.UI.Views
     /// </summary>
     public partial class MacrosTabControl : UserControl
     {
+        private readonly ToolTip _toolTip = new ToolTip();
         private List<PythonCompletionData> _completionData;
         private CompletionWindow _completionWindow;
 
@@ -53,13 +56,120 @@ namespace ClassicAssist.UI.Views
                         continue;
                     }
 
-                    _completionData.Add(
-                        new PythonCompletionData( methodInfo.Name, attr.Description, attr.InsertText ) );
+                    string fullName = $"{methodInfo.Name}(";
+                    bool first = true;
+
+                    foreach ( ParameterInfo parameterInfo in methodInfo.GetParameters() )
+                    {
+                        if ( first )
+                        {
+                            first = false;
+                        }
+                        else
+                        {
+                            fullName += ", ";
+                        }
+
+                        bool optional = parameterInfo.RawDefaultValue == null ||
+                                        parameterInfo.RawDefaultValue.GetType() != typeof( DBNull );
+
+                        fullName +=
+                            $"{( optional ? "[" : "" )}{parameterInfo.ParameterType.Name} {parameterInfo.Name}{( optional ? "]" : "" )}";
+                    }
+
+                    fullName += $"):{methodInfo.ReturnType.Name}";
+
+                    _completionData.Add( new PythonCompletionData( methodInfo.Name, fullName, attr.Description,
+                        attr.InsertText ) );
                 }
             }
 
             CodeTextEditor.TextArea.TextEntered += OnTextEntered;
             SearchPanel.Install( CodeTextEditor );
+            CodeTextEditor.MouseHover += OnMouseHover;
+            CodeTextEditor.MouseHoverStopped += OnMouseHoverStopped;
+        }
+
+        private void OnMouseHoverStopped( object sender, MouseEventArgs e )
+        {
+            _toolTip.IsOpen = false;
+        }
+
+        private void OnMouseHover( object sender, MouseEventArgs e )
+        {
+            //https://stackoverflow.com/questions/51711692/how-to-fire-an-event-when-mouse-hover-over-a-specific-text-in-avalonedit
+            TextViewPosition? pos = CodeTextEditor.GetPositionFromPoint( e.GetPosition( CodeTextEditor ) );
+
+            if ( !pos.HasValue )
+            {
+                return;
+            }
+
+            DocumentLine line = CodeTextEditor.TextArea.Document.GetLineByNumber( pos.Value.Line );
+
+            if ( line == null )
+            {
+                return;
+            }
+
+            try
+            {
+                string fullLine = CodeTextEditor.Document.GetText( line.Offset, line.Length );
+
+                int startPosition = 0;
+                int endPosition = fullLine.Length;
+
+                for ( int i = pos.Value.Column; i > -1; i-- )
+                {
+                    if ( char.IsLetter( fullLine[i] ) )
+                    {
+                        continue;
+                    }
+
+                    startPosition = i + 1;
+                    break;
+                }
+
+                for ( int i = pos.Value.Column; i < fullLine.Length; i++ )
+                {
+                    if ( char.IsLetter( fullLine[i] ) )
+                    {
+                        continue;
+                    }
+
+                    endPosition = i;
+                    break;
+                }
+
+                if ( endPosition <= startPosition )
+                {
+                    return;
+                }
+
+                string word = fullLine.Substring( startPosition, endPosition - startPosition );
+
+                string tooltipText = string.Empty;
+
+                IEnumerable<PythonCompletionData> matches = _completionData.Where( i => i.MethodName.Equals( word ) );
+
+                tooltipText = matches.Aggregate( tooltipText,
+                    ( current, match ) =>
+                        current + ( string.IsNullOrEmpty( current ) ? match.Name : $"\n{match.Name}" ) );
+
+                if ( string.IsNullOrEmpty( tooltipText ) )
+                {
+                    return;
+                }
+
+                _toolTip.PlacementTarget = this;
+                _toolTip.Content = tooltipText;
+                _toolTip.IsOpen = true;
+                e.Handled = true;
+            }
+            catch ( Exception )
+            {
+                // ignored
+            }
         }
 
         private void OnTextEntered( object sender, TextCompositionEventArgs e )
@@ -74,18 +184,49 @@ namespace ClassicAssist.UI.Views
             }
 
             List<PythonCompletionData> data = _completionData.Where( m =>
-                    ( (string) m.Content ).StartsWith( trimmed, StringComparison.InvariantCultureIgnoreCase ) )
+                    m.Name.StartsWith( trimmed, StringComparison.InvariantCultureIgnoreCase ) )
                 .Distinct( new SameNameComparer() ).ToList();
 
             if ( data.Count <= 0 )
             {
+                _completionWindow?.Close();
                 return;
             }
 
-            _completionWindow = new CompletionWindow( CodeTextEditor.TextArea ) { CloseWhenCaretAtBeginning = true };
+            _completionWindow = new CompletionWindow( CodeTextEditor.TextArea )
+            {
+                CloseWhenCaretAtBeginning = true,
+                Width = 500,
+                AllowsTransparency = true,
+                SizeToContent = SizeToContent.WidthAndHeight
+            };
             _completionWindow.CompletionList.CompletionData.AddRange( data );
             _completionWindow.Show();
             _completionWindow.Closed += delegate { _completionWindow = null; };
+        }
+
+        private void DraggableTreeView_OnPreviewMouseWheel( object sender, MouseWheelEventArgs e )
+        {
+            /*
+             * Cheap hack for our broken template, no scrollbars, bubble event to parent scrollviewer
+             */
+            if ( !( sender is Control control ) || e.Handled )
+            {
+                return;
+            }
+
+            if ( control.Parent == null )
+            {
+                return;
+            }
+
+            e.Handled = true;
+            MouseWheelEventArgs eventArg = new MouseWheelEventArgs( e.MouseDevice, e.Timestamp, e.Delta )
+            {
+                RoutedEvent = MouseWheelEvent, Source = control
+            };
+            UIElement parent = control.Parent as UIElement;
+            parent?.RaiseEvent( eventArg );
         }
 
         internal class SameNameComparer : IEqualityComparer<PythonCompletionData>

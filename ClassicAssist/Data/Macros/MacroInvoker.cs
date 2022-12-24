@@ -1,15 +1,17 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data.Macros.Commands;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using IronPython.Hosting;
+using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
 
@@ -24,26 +26,17 @@ namespace ClassicAssist.Data.Macros
         private static readonly ScriptEngine _engine = Python.CreateEngine();
         private static Dictionary<string, object> _importCache;
         private readonly MemoryStream _memoryStream = new MemoryStream();
+        private readonly SystemMessageTextWriter _textWriter = new SystemMessageTextWriter();
         private CancellationTokenSource _cancellationToken;
         private MacroEntry _macro;
-        private readonly SystemMessageTextWriter _textWriter = new SystemMessageTextWriter();
+        private ScriptScope _macroScope;
+        private CompiledCode _compiled;
+        private string _lastCompiledHash = string.Empty;
 
         public MacroInvoker()
         {
             ScriptRuntime runtime = _engine.Runtime;
             runtime.LoadAssembly( Assembly.GetExecutingAssembly() );
-
-            foreach ( string assembly in AssistantOptions.Assemblies ?? new string[0] )
-            {
-                try
-                {
-                    runtime.LoadAssembly( Assembly.LoadFile( assembly ) );
-                }
-                catch ( Exception )
-                {
-                    // ignored
-                }
-            }
 
             if ( _importCache == null )
             {
@@ -68,8 +61,6 @@ namespace ClassicAssist.Data.Macros
         public Exception Exception { get; set; }
         public bool IsFaulted { get; set; }
 
-        public bool IsRunning => Thread?.IsAlive ?? false;
-
         public Stopwatch StopWatch { get; set; } = new Stopwatch();
 
         public Thread Thread { get; set; }
@@ -85,7 +76,7 @@ namespace ClassicAssist.Data.Macros
                     t.Namespace != null && t.IsPublic && t.IsClass && t.Namespace.EndsWith( "Macros.Commands" ) )
                 .Aggregate( string.Empty, ( current, t ) => current + $"from {t.FullName} import * \n" );
 
-            foreach ( string assemblyName in AssistantOptions.Assemblies ?? new string[0] )
+            foreach ( string assemblyName in AssistantOptions.Assemblies ?? Array.Empty<string>() )
             {
                 try
                 {
@@ -103,7 +94,8 @@ namespace ClassicAssist.Data.Macros
                 }
             }
 
-            prepend += "from System import Array";
+            prepend += "from System import Array\n";
+            prepend += "import sys";
 
             return prepend;
         }
@@ -112,12 +104,45 @@ namespace ClassicAssist.Data.Macros
         {
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
 
+            foreach( string assembly in AssistantOptions.Assemblies ?? new string[0] )
+            {
+                try
+                {
+                    _engine.Runtime.LoadAssembly( Assembly.LoadFile( assembly ) );
+                }
+                catch( Exception )
+                {
+                    // ignored
+                }
+            }
+
             ScriptSource importSource =
                 engine.CreateScriptSourceFromString( GetScriptingImports(), SourceCodeKind.Statements );
 
             CompiledCode importCompiled = importSource.Compile();
             ScriptScope importScope = engine.CreateScope( dictionary );
             importCompiled.Execute( importScope );
+
+            foreach ( KeyValuePair<string, object> kvp in dictionary.Where( e =>
+                e.Key.EndsWith( "Message" ) || e.Key.EndsWith( "Msg" ) ).ToList() )
+            {
+                string funcName = Regex.Replace( kvp.Key, "(Message|Msg)$", "" );
+
+                if ( string.IsNullOrEmpty( funcName ) )
+                {
+                    continue;
+                }
+
+                foreach ( string suffix in new[] { "Msg", "Message" } )
+                {
+                    string fullName = $"{funcName}{suffix}";
+
+                    if ( !dictionary.ContainsKey( fullName ) )
+                    {
+                        dictionary.Add( fullName, kvp.Value );
+                    }
+                }
+            }
 
             return dictionary;
         }
@@ -166,16 +191,24 @@ namespace ClassicAssist.Data.Macros
 
                     AliasCommands.SetDefaultAliases();
 
-                    ScriptScope macroScope = _engine.CreateScope( importCache );
+                    _macroScope = _engine.CreateScope( importCache );
+                    _macroScope.SetVariable( "Events", new Events() );
+                    _engine.SetTrace( OnTrace );
 
                     StopWatch.Reset();
                     StopWatch.Start();
+
+                    if ( _compiled == null || !_lastCompiledHash.Equals( _macro.Hash ) )
+                    {
+                        _compiled = source.Compile();
+                        _lastCompiledHash = _macro.Hash;
+                    }
 
                     do
                     {
                         _cancellationToken.Token.ThrowIfCancellationRequested();
 
-                        source.Execute( macroScope );
+                        _compiled.Execute( _macroScope );
 
                         StopWatch.Stop();
 
@@ -212,6 +245,10 @@ namespace ClassicAssist.Data.Macros
                 {
                     IsFaulted = true;
                 }
+                catch ( SystemExitException )
+                {
+                    IsFaulted = true;
+                }
                 catch ( Exception e )
                 {
                     IsFaulted = true;
@@ -222,14 +259,14 @@ namespace ClassicAssist.Data.Macros
                 finally
                 {
                     StoppedEvent?.Invoke();
-                    MacroManager.GetInstance().OnMacroStopped();
+                    MacroManager.GetInstance().OnMacroStopped( macro );
                 }
             } ) { IsBackground = true };
 
             try
             {
                 Thread.Start();
-                MacroManager.GetInstance().OnMacroStarted();
+                MacroManager.GetInstance().OnMacroStarted( macro );
             }
             catch ( ThreadStateException )
             {
@@ -239,6 +276,17 @@ namespace ClassicAssist.Data.Macros
             {
                 // TODO 
             }
+        }
+
+        private TracebackDelegate OnTrace( TraceBackFrame frame, string result, object payload )
+        {
+            if ( !_cancellationToken.IsCancellationRequested )
+            {
+                return OnTrace;
+            }
+
+            _macroScope.Engine.Execute( "sys.exit()", _macroScope );
+            return null;
         }
 
         public void Stop()
@@ -261,21 +309,40 @@ namespace ClassicAssist.Data.Macros
                     Thread.Sleep( diff );
                 }
 
-                Thread?.Interrupt();
+                if ( _macroScope.ContainsVariable( "Events" ) )
+                {
+                    try
+                    {
+                        Events events = _macroScope.GetVariable<Events>( "Events" );
+                        events.InvokeShutdown();
+                    }
+                    catch ( Exception e )
+                    {
+                        UO.Commands.SystemMessage( string.Format( Strings.Macro_error___0_, e.Message ) );
+                    }
+                }
 
-                Task.Run( () =>
-                 {
-                     Thread?.Abort();
-                     Thread?.Join( 100 );
-                 } );
+                //Thread?.Abort();
+                Thread?.Interrupt();
+                Thread?.Join( 100 );
 
                 MacroManager.GetInstance().Replay = false;
-                MacroManager.GetInstance().OnMacroStopped();
+                MacroManager.GetInstance().OnMacroStopped( _macro );
             }
             catch ( ThreadStateException e )
             {
                 UO.Commands.SystemMessage( string.Format( Strings.Macro_error___0_, e.Message ) );
             }
         }
+    }
+
+    public class Events
+    {
+        public void InvokeShutdown()
+        {
+            Shutdown?.Invoke( this, EventArgs.Empty );
+        }
+
+        public event EventHandler Shutdown;
     }
 }

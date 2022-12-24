@@ -1,32 +1,16 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using ClassicAssist.Annotations;
-using ClassicAssist.Resources;
+﻿using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.Data.Dress
 {
-    public class DressAgentItem : INotifyPropertyChanged
+    public class DressAgentItem : SetPropertyNotifyChanged
     {
         private int _id = -1;
         private Layer _layer;
         private string _name;
         private int _serial;
         private DressAgentItemType _type = DressAgentItemType.Serial;
-
-        public DressAgentItem()
-        {
-            PropertyChanged += ( sender, args ) =>
-            {
-                // Set the name when the Type changes...
-                if ( args.PropertyName == nameof( Type ) )
-                {
-                    Name = Type == DressAgentItemType.ID
-                        ? $"{Layer}: {Strings.Type}: 0x{ID:x4}"
-                        : $"{Layer}: 0x{Serial:x8}";
-                }
-            };
-        }
 
         public int ID
         {
@@ -55,27 +39,17 @@ namespace ClassicAssist.Data.Dress
         public DressAgentItemType Type
         {
             get => _type;
-            set => SetProperty( ref _type, value );
+            set => SetProperty( ref _type, value, false, SetName );
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        // ReSharper disable once RedundantAssignment
-        public void SetProperty<T>( ref T field, T value, [CallerMemberName] string propertyName = null )
+        private void SetName( DressAgentItemType type )
         {
-            field = value;
-            OnPropertyChanged( propertyName );
+            Name = type == DressAgentItemType.ID ? $"{Layer}: {Strings.Type}: 0x{ID:x4}" : $"{Layer}: 0x{Serial:x8}";
         }
 
         public override string ToString()
         {
             return Name;
-        }
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
         }
     }
 }

@@ -18,19 +18,17 @@
 #endregion
 
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Assistant;
-using ClassicAssist.Annotations;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Misc;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Views.Debug;
 using ClassicAssist.UO;
 using Newtonsoft.Json;
@@ -258,13 +256,12 @@ namespace ClassicAssist.UI.ViewModels.Debug
         }
     }
 
-    public class FailKey : INotifyPropertyChanged
+    public class FailKey : SetPropertyNotifyChanged
     {
         private int _keyboardLayoutId;
         private string _keyboardName;
         private int _sdlKey;
         private int _sdlMod;
-        private string _uo;
         private Key _uoKey;
         private Key _wpfKey;
 
@@ -307,20 +304,5 @@ namespace ClassicAssist.UI.ViewModels.Debug
         }
 
         public string WPFKeyString => WPFKey.ToString();
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-        }
-
-        // ReSharper disable once RedundantAssignment
-        public virtual void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
-        {
-            obj = value;
-            OnPropertyChanged( propertyName );
-        }
     }
 }

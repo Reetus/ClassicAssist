@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Assistant;
-using ClassicAssist.Annotations;
 using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Misc;
 using static ClassicAssist.Misc.SDLKeys;
 
 namespace ClassicAssist.Data.Hotkeys
 {
-    public class HotkeyManager : INotifyPropertyChanged
+    public class HotkeyManager : SetPropertyNotifyChanged
     {
         private static HotkeyManager _instance;
         private static readonly object _instanceLock = new object();
@@ -46,8 +44,6 @@ namespace ClassicAssist.Data.Hotkeys
             get => _items;
             set => SetProperty( ref _items, value );
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public void AddCategory( HotkeyCommand item, IComparer<HotkeyEntry> comparer = null )
         {
@@ -107,19 +103,6 @@ namespace ClassicAssist.Data.Hotkeys
             return _instance;
         }
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-        }
-
-        // ReSharper disable once RedundantAssignment
-        public void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
-        {
-            obj = value;
-            OnPropertyChanged( propertyName );
-        }
-
         public bool OnHotkeyPressed( Key keys, ModKey modifier )
         {
             lock ( _lock )
@@ -132,13 +115,8 @@ namespace ClassicAssist.Data.Hotkeys
                     return false;
                 }
 
-                foreach ( HotkeyCommand hke in Items )
+                foreach ( HotkeyCommand hke in Items.ToList().Where( hke => hke.Children != null ) )
                 {
-                    if ( hke.Children == null )
-                    {
-                        continue;
-                    }
-
                     try
                     {
                         IEnumerable<HotkeyEntry> hotkeyEntries = hke.Children.Where( t =>
@@ -181,13 +159,8 @@ namespace ClassicAssist.Data.Hotkeys
 
             lock ( _lock )
             {
-                foreach ( HotkeyCommand hke in Items )
+                foreach ( HotkeyCommand hke in Items.ToList().Where( hke => hke.Children != null ) )
                 {
-                    if ( hke.Children == null )
-                    {
-                        continue;
-                    }
-
                     try
                     {
                         ModKey modifier =

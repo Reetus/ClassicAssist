@@ -157,7 +157,7 @@ namespace ClassicAssist.UO.Data
 
         public string ReadUnicodeStringBE( int fixedLength )
         {
-            byte[] buffer = new byte[fixedLength*2];
+            byte[] buffer = new byte[fixedLength * 2];
 
             _stream.Read( buffer, 0, fixedLength * 2 );
 

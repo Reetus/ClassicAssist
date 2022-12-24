@@ -1,0 +1,29 @@
+name: Sentry
+on:
+  release:
+    type:
+      - created
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release Info Action
+        id: latest_version
+        uses: abatilo/release-info-action@v1.3.0
+        with:
+          owner: Reetus
+          repo: ClassicAssist
+      - uses: actions/checkout@v2
+      - name: Create Sentry release
+        env:
+          LATEST: ${{ steps.latest_version.outputs.latest_tag }}
+          LATEST_DATE: ${{ steps.latest_version.outputs.latest_tag_published_at }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          SENTRY_LOG_LEVEL: info
+        uses: getsentry/action-release@v1
+        with:
+          version: ${{ steps.latest_version.outputs.latest_tag }}
+          environment: production

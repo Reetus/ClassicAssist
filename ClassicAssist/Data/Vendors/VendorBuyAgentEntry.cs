@@ -18,13 +18,11 @@
 #endregion
 
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using ClassicAssist.Annotations;
+using ClassicAssist.Shared.UI;
 
 namespace ClassicAssist.Data.Vendors
 {
-    public class VendorBuyAgentEntry : INotifyPropertyChanged
+    public class VendorBuyAgentEntry : SetPropertyNotifyChanged
     {
         private bool _enabled;
         private bool _includeBackpackAmount;
@@ -53,21 +51,6 @@ namespace ClassicAssist.Data.Vendors
         {
             get => _name;
             set => SetProperty( ref _name, value );
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-        }
-
-        // ReSharper disable once RedundantAssignment
-        public virtual void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
-        {
-            obj = value;
-            OnPropertyChanged( propertyName );
         }
 
         public override string ToString()

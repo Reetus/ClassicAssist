@@ -180,4 +180,44 @@
   <data name="Project Homepage" xml:space="preserve">
     <value>Project Homepage</value>
   </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Update cancelled..." xml:space="preserve">
+    <value>Update cancelled...</value>
+  </data>
+  <data name="Running Clients" xml:space="preserve">
+    <value>Running Clients</value>
+  </data>
+  <data name="The following client(s) are currently running, if you continue they will be closed" xml:space="preserve">
+    <value>The following client(s) are currently running, if you continue they will be closed</value>
+  </data>
+  <data name="Do you wish to continue?" xml:space="preserve">
+    <value>Do you wish to continue?</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Extracting modules..." xml:space="preserve">
+    <value>Extracting modules...</value>
+  </data>
+  <data name="Install Prereleases" xml:space="preserve">
+    <value>Install Prereleases</value>
+  </data>
+  <data name="Github Access Token" xml:space="preserve">
+    <value>Github Access Token</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="Force Update" xml:space="preserve">
+    <value>Force Update</value>
+  </data>
+  <data name="The following files were in use and cannot be overwritten, ensure all instances of ClassicAssist are closed and then try again...{0}" xml:space="preserve">
+    <value>The following files were in use and cannot be overwritten, ensure all instances of ClassicAssist are closed and then try again...
+{0}</value>
+  </data>
 </root>

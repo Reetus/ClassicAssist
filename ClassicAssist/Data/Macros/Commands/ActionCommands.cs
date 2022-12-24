@@ -6,7 +6,7 @@ using System.Threading;
 using Assistant;
 using ClassicAssist.Data.Regions;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
@@ -29,7 +29,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return false;
             }
 
@@ -44,7 +44,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return 0;
             }
 
@@ -88,7 +88,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             UseOnceList.Add( match );
 
-            ObjectCommands.UseObject( match.Serial );
+            ObjectCommands.UseObject( match.Serial, true );
 
             return true;
         }
@@ -108,7 +108,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -171,7 +171,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -190,7 +190,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( player.IsMounted )
             {
-                ObjectCommands.UseObject( player.Serial );
+                ObjectCommands.UseObject( player.Serial, true );
                 return;
             }
 
@@ -209,7 +209,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             int mountSerial = AliasCommands.GetAlias( "mount" );
 
-            ObjectCommands.UseObject( mountSerial );
+            ObjectCommands.UseObject( mountSerial, true );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Actions ),
@@ -224,7 +224,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -254,7 +254,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -346,7 +346,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -368,6 +368,11 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( layerValue == Layer.Invalid )
             {
                 UOC.SystemMessage( Strings.Invalid_layer_value___ );
+                return;
+            }
+
+            if ( Engine.Player.GetLayer( layerValue ) == serial )
+            {
                 return;
             }
 
@@ -396,7 +401,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return false;
             }
 
@@ -439,12 +444,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             AliasCommands.SetMacroAlias( "found", layerSerial );
 
-            if ( MacroManager.QuietMode )
-            {
-                return true;
-            }
-
-            UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ) );
+            UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ), true );
 
             return true;
         }
@@ -490,7 +490,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -511,7 +511,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return false;
             }
 
@@ -556,9 +556,11 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return false;
             }
+
+            bool result = false;
 
             AutoResetEvent are = new AutoResetEvent( false );
 
@@ -576,12 +578,22 @@ namespace ClassicAssist.Data.Macros.Commands
 
                     if ( entry == null )
                     {
-                        UOC.SystemMessage( Strings.Context_menu_entry_not_found___, (int) UOC.SystemMessageHues.Yellow,
+                        UOC.SystemMessage( Strings.Context_menu_entry_not_found___, (int) SystemMessageHues.Yellow,
                             true, true );
+                        are.Set();
+                        return;
+                    }
+
+                    if ( entry.Flags.HasFlag( ContextMenuFlags.Disabled ) )
+                    {
+                        UOC.SystemMessage( Strings.Context_menu_entry_disabled, (int) SystemMessageHues.Yellow,
+                            true, true );
+                        are.Set();
                         return;
                     }
 
                     Engine.SendPacketToServer( new ContextMenuClick( serial, entry.Index ) );
+                    result = true;
                     are.Set();
                 } );
 
@@ -591,7 +603,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             try
             {
-                bool result = are.WaitOne( timeout );
+                are.WaitOne( timeout );
 
                 return result;
             }

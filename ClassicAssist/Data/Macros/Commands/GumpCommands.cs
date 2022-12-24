@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Assistant;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Gumps;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects.Gumps;
@@ -31,9 +32,9 @@ namespace ClassicAssist.Data.Macros.Commands
                 nameof( ParameterType.ItemID ), nameof( ParameterType.GumpButtonIndex ),
                 nameof( ParameterType.IntegerValue )
             } )]
-        public static void ReplyGump( uint gumpId, int buttonId, int[] switches = null )
+        public static void ReplyGump( uint gumpId, int buttonId, int[] switches = null, Dictionary<int, string> textEntries = null )
         {
-            UOC.GumpButtonClick( gumpId, buttonId, switches );
+            UOC.GumpButtonClick( gumpId, buttonId, switches, textEntries );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Gumps ) )]
@@ -73,10 +74,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                if ( !MacroManager.QuietMode )
-                {
-                    UOC.SystemMessage( Strings.Mobile_not_found___ );
-                }
+                UOC.SystemMessage( Strings.Mobile_not_found___, true );
 
                 return;
             }
@@ -97,9 +95,22 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = nameof( Strings.Gumps ) )]
+        public static void OpenHelpGump()
+        {
+            Engine.SendPacketToServer( new HelpButtonRequest() );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Gumps ) )]
         public static bool ConfirmPrompt( string message, bool closable = false )
         {
             return ConfirmPromptGump.ConfirmPrompt( message, closable );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Gumps ) )]
+        public static int[] ItemArrayGump( IList<object> items, bool multiSelect = false, int x = 100, int y = 100,
+            bool fixedSize = false )
+        {
+            return UO.Gumps.ItemArrayGump.SendGump( items.ToArray(), multiSelect, x, y, fixedSize );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Gumps ),
@@ -117,8 +128,8 @@ namespace ClassicAssist.Data.Macros.Commands
                 return SelectionPromptGump.SelectionPrompt( enumerable, message, closable );
             }
 
-            UOC.SystemMessage( Strings.Atleast_one_option_must_be_provided___, (int) UOC.SystemMessageHues.Red );
-            return ( false, 0 );
+            UOC.SystemMessage( Strings.Atleast_one_option_must_be_provided___, (int) SystemMessageHues.Red );
+            return (false, 0);
         }
 
         [CommandsDisplay( Category = nameof( Strings.Gumps ),

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Assistant;
 using ClassicAssist.Data.Hotkeys.Commands;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Misc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

@@ -5,7 +5,8 @@ using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Organizer;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
@@ -42,7 +43,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set
             {
                 SetProperty( ref _isOrganizing, value );
-                NotifyPropertyChanged( nameof( PlayStopButtonText ) );
+                OnPropertyChanged( nameof( PlayStopButtonText ) );
             }
         }
 
@@ -72,7 +73,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             _setContainersCommand ?? ( _setContainersCommand =
                 new RelayCommandAsync( _manager.SetContainers, o => SelectedItem != null && !IsOrganizing ) );
 
-        public void Serialize( JObject json )
+        public void Serialize( JObject json, bool global = false)
         {
             JArray organizer = new JArray();
 
@@ -109,7 +110,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             json?.Add( "Organizer", organizer );
         }
 
-        public void Deserialize( JObject json, Options options )
+        public void Deserialize( JObject json, Options options, bool global = false )
         {
             Items.Clear();
 

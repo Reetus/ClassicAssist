@@ -17,14 +17,12 @@
 
 #endregion
 
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using ClassicAssist.Annotations;
+using ClassicAssist.Shared.UI;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.Data.Misc
 {
-    public class EntityCollectionViewerOptions : INotifyPropertyChanged
+    public class EntityCollectionViewerOptions : SetPropertyNotifyChanged
     {
         private bool _alwaysOnTop;
         private bool _showChildItems;
@@ -39,21 +37,6 @@ namespace ClassicAssist.Data.Misc
         {
             get => _showChildItems;
             set => SetProperty( ref _showChildItems, value );
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-        }
-
-        // ReSharper disable once RedundantAssignment
-        public virtual void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
-        {
-            obj = value;
-            OnPropertyChanged( propertyName );
         }
 
         public void Deserialize( JToken config )

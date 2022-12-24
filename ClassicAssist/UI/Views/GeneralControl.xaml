@@ -3,12 +3,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:r="clr-namespace:ClassicAssist.Resources"
+    xmlns:r="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
     xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
     xmlns:misc="clr-namespace:ClassicAssist.Misc"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
-    xmlns:data="clr-namespace:ClassicAssist.Data"
     x:Name="userControl"
     x:Class="ClassicAssist.UI.Views.GeneralControl"
     mc:Ignorable="d"
@@ -21,8 +20,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/Icons.xaml" />
-                <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
+                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
@@ -80,6 +78,7 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
                 <CheckBox Content="{x:Static r:Strings.Always_On_Top}" IsChecked="{Binding Options.AlwaysOnTop}" />
+                <CheckBox Content="{x:Static r:Strings.Minimize_to_system_tray}" IsChecked="{Binding Options.SysTray}" />
                 <StackPanel Orientation="Horizontal">
                     <StackPanel.Resources>
                         <misc:BindingProxy x:Key="proxy" Data="{Binding}" />
@@ -117,6 +116,22 @@
                         </Grid>
                         <CheckBox Content="{x:Static r:Strings.Only_overwrite_blank_password}"
                                   IsChecked="{Binding SavePasswordsOnlyBlank}" />
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Setter Property="IsEnabled" Value="True" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Options.Autologin}" Value="False">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Resources>
+                            <CheckBox Content="{x:Static r:Strings.Autologin}"
+                                      IsChecked="{Binding Options.Autologin}" />
+                            <Button Content="..." Command="{Binding AutologinConfigureCommand}" Margin="5,0,0,0"
+                                    Padding="10,0" />
+                        </StackPanel>
                     </StackPanel>
                 </GroupBox>
             </Grid>
@@ -147,14 +162,20 @@
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding IsLinkedProfile}" Value="False">
                                                     <Setter Property="Source" Value="{StaticResource unlinkedIcon}" />
+                                                    <Setter Property="ToolTip" Value="{x:Static r:Strings.Unlinked}" />
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding IsLinkedProfile}" Value="True">
                                                     <Setter Property="Source" Value="{StaticResource linkedIcon}" />
+                                                    <Setter Property="ToolTip" Value="{x:Static r:Strings.Linked}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </Image.Style>
                                 </Image>
+                            </Button>
+                            <Button Command="{Binding BackupSettingsCommand}" Margin="10,0,0,0">
+                                <Image Width="16" Source="{DynamicResource BackupIcon}"
+                                       ToolTip="{x:Static r:Strings.Backup_Settings}" />
                             </Button>
                         </DockPanel>
                     </Grid>

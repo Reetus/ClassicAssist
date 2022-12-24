@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClassicAssist.UI.Views"
         xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
-        xmlns:r="clr-namespace:ClassicAssist.Resources"
+        xmlns:r="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
@@ -16,9 +16,12 @@
         Background="{DynamicResource ThemeWindowBackgroundBrush}"
         AllowsTransparency="True" WindowStyle="None" WindowState="Normal"
         Title="{Binding Title}" x:Name="window" ResizeMode="CanResizeWithGrip">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="{Binding Height, ElementName=CustomWindowTitleControl}" />
+    </WindowChrome.WindowChrome>
     <i:Interaction.Behaviors>
         <misc:LoadOptionsOnWindowLoaded />
-        <misc:WindowResizeBehaviour/>
+        <misc:WindowResizeBehaviour />
     </i:Interaction.Behaviors>
     <Window.DataContext>
         <viewModels:MainWindowViewModel />
@@ -26,14 +29,14 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/Icons.xaml" />
-                <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
+                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel>
         <controls:CustomWindowTitleControl DockPanel.Dock="Top" CustomTitle="{Binding Path=Title, ElementName=window}"
-                                           CanClose="False">
+                                           CanClose="False" x:Name="CustomWindowTitleControl"
+                                           MinimizeCommand="{Binding MinimizeCommand}">
             <controls:CustomWindowTitleControl.AdditionalButtons>
                 <Button Command="{Binding DebugCommand}" Padding="0" Height="20" Width="20">
                     <Image Source="{StaticResource bugIcon}" Height="16" Width="16" />
@@ -61,7 +64,7 @@
                     <local:AgentsTabControl />
                 </TabItem>
                 <TabItem Header="{x:Static r:Strings.Public_Macros}">
-                    <browser:MacroBrowserControl/>
+                    <browser:MacroBrowserControl />
                 </TabItem>
                 <TabItem Header="{x:Static r:Strings.About}">
                     <local:AboutControl />

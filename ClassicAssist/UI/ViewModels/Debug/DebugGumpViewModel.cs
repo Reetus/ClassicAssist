@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using Assistant;
 using ClassicAssist.UO.Network;
@@ -24,14 +25,12 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
             IncomingPacketHandlers.GumpEvent += ( id, serial, gump ) => _dispatcher.Invoke( () =>
             {
-                if ( Items.Contains( gump ) )
+                foreach ( Gump existingGump in Items.Where( e => e.ID == gump.ID ).ToList() )
                 {
-                    UpdateText( gump );
+                    Items.Remove( existingGump );
                 }
-                else
-                {
-                    Items.Add( gump );
-                }
+
+                Items.Add( gump );
             } );
 
             OutgoingPacketHandlers.GumpEvent +=

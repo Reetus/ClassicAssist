@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 
 // Copyright (C) 2020 Reetus
 // 
@@ -23,7 +23,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
@@ -127,12 +127,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
                 AliasCommands.SetMacroAlias( "found", matches.First().Serial );
 
-                if ( MacroManager.QuietMode )
-                {
-                    return true;
-                }
-
-                UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ) );
+                UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ), true );
 
                 return true;
             }
@@ -146,11 +141,11 @@ namespace ClassicAssist.Data.Macros.Commands
 
         private static async Task<Item[]> FindWands( WandTypes wandType, int containerSerial, int minimumCharges )
         {
-            // Hybrid has FeatureFlags.AOS, think of better solution
-            if ( !Engine.Features.HasFlag( FeatureFlags.AOS ) || Engine.CurrentShard.Name.Equals( "UOHybrid" ) )
+            if ( !Engine.TooltipsEnabled )
             {
                 Item[] allWands = Engine.Items.SelectEntities( i =>
-                    _wandIds.Contains( i.ID ) && ( containerSerial == -1 || i.IsDescendantOf( containerSerial ) ) );
+                    _wandIds.Contains( i.ID ) && !ObjectCommands.InIgnoreList( i.Serial ) &&
+                    ( containerSerial == -1 || i.IsDescendantOf( containerSerial ) ) );
 
                 if ( allWands == null )
                 {
@@ -171,8 +166,9 @@ namespace ClassicAssist.Data.Macros.Commands
             }
 
             Item[] matches = Engine.Items.SelectEntities( i =>
-                _wandIds.Contains( i.ID ) && ( containerSerial == -1 || i.IsDescendantOf( containerSerial ) ) &&
-                i.Properties != null && i.Properties.Any( p =>
+                _wandIds.Contains( i.ID ) && !ObjectCommands.InIgnoreList( i.Serial ) &&
+                ( containerSerial == -1 || i.IsDescendantOf( containerSerial ) ) && i.Properties != null &&
+                i.Properties.Any( p =>
                     _wandClilocs[wandType].Contains( p.Cliloc ) &&
                     ( minimumCharges == -1 || int.Parse( p.Arguments[0] ) >= minimumCharges ) ) );
 

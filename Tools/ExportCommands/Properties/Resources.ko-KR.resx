@@ -270,4 +270,10 @@
   <data name="PARAMETER_DESCRIPTION_BOOLEAN" xml:space="preserve">
     <value>Ture/False 값, 사용 방법에 대한 설명을 보세요</value>
   </data>
+  <data name="PARAMETER_DESCRIPTION_ELEMENTVALUEFRONTBACK" xml:space="preserve">
+    <value>매개변수_설명_요소값 전면과 후면</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_STRINGARRAY" xml:space="preserve">
+    <value>매개변수_설명_문자열 배열</value>
+  </data>
 </root>

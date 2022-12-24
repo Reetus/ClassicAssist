@@ -7,7 +7,8 @@ using System.Windows;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Models;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
@@ -49,14 +50,9 @@ namespace ClassicAssist.UI.ViewModels
             AddLandProperties( landTile );
         }
 
-        public ICommand CopyToClipboardCommand
-        {
-            get
-            {
-                return _copyToClipboardCommand ?? ( _copyToClipboardCommand =
-                           new RelayCommand( o => CopyToClipboard(), o => _selectedItem != null ) );
-            }
-        }
+        public ICommand CopyToClipboardCommand =>
+            _copyToClipboardCommand ?? ( _copyToClipboardCommand =
+                new RelayCommand( o => CopyToClipboard(), o => _selectedItem != null ) );
 
         public ObservableCollection<ObjectInspectorData> Items
         {
@@ -234,7 +230,12 @@ namespace ClassicAssist.UI.ViewModels
                 return 0;
             }
 
-            return properties.Where( p => p.Cliloc == cliloc ).Select( p => int.Parse( p.Arguments[argumentIndex] ) )
+            return properties.Where( p => p.Cliloc == cliloc ).Select( p => 
+                {
+                if ( int.TryParse( p.Arguments[argumentIndex], out int result ) )
+                    return result;
+                return -1;
+                } )
                 .FirstOrDefault();
         }
 
@@ -327,7 +328,7 @@ namespace ClassicAssist.UI.ViewModels
         {
             try
             {
-                Clipboard.SetData( DataFormats.Text, _selectedItem.Value );
+                Clipboard.SetText( _selectedItem.Value );
             }
             catch ( Exception )
             {

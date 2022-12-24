@@ -13,14 +13,16 @@ namespace ClassicAssist.UO.Network.Packets
 
         public DropItem( int serial, int containerSerial, int x, int y, int z )
         {
-            _writer = new PacketWriter( 15 );
+            bool isNew = Engine.ClientVersion >= new Version( 6, 0, 1, 7 );
+
+            _writer = new PacketWriter( isNew ? 15 : 14 );
             _writer.Write( (byte) 0x08 );
             _writer.Write( serial );
             _writer.Write( (short) x );
             _writer.Write( (short) y );
             _writer.Write( (sbyte) z );
 
-            if ( Engine.ClientVersion == null || Engine.ClientVersion >= new Version( 6, 0, 1, 7 ) )
+            if ( isNew )
             {
                 _writer.Write( (byte) 0 );
             }

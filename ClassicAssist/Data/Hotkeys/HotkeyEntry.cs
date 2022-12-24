@@ -1,15 +1,12 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Media;
-using ClassicAssist.Annotations;
 using ClassicAssist.Misc;
-using ClassicAssist.UI.Misc;
+using ClassicAssist.Shared.UI;
 using Newtonsoft.Json;
 
 namespace ClassicAssist.Data.Hotkeys
 {
-    public abstract class HotkeyEntry : INotifyPropertyChanged, IComparable<HotkeyEntry>
+    public abstract class HotkeyEntry : SetPropertyNotifyChanged, IComparable<HotkeyEntry>
     {
         public delegate void HotkeyChangedEventHandler( object sender, HotkeyChangedEventArgs e );
 
@@ -19,6 +16,8 @@ namespace ClassicAssist.Data.Hotkeys
 
         private ShortcutKeys _hotkey = new ShortcutKeys();
         private bool _isCategory;
+
+        private bool _isGlobal;
 
         private string _name;
         private bool _passToUo = true;
@@ -75,6 +74,12 @@ namespace ClassicAssist.Data.Hotkeys
             set => SetProperty( ref _isCategory, value );
         }
 
+        public bool IsGlobal
+        {
+            get => _isGlobal;
+            set => SetProperty( ref _isGlobal, value );
+        }
+
         public virtual string Name
         {
             get => _name;
@@ -86,6 +91,8 @@ namespace ClassicAssist.Data.Hotkeys
             get => _passToUo;
             set => SetProperty( ref _passToUo, value );
         }
+
+        public virtual bool Configurable { get; set; } = false;
 
         public int CompareTo( HotkeyEntry other )
         {
@@ -115,24 +122,5 @@ namespace ClassicAssist.Data.Hotkeys
         {
             return Name;
         }
-
-        #region INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-        }
-
-        // ReSharper disable once RedundantAssignment
-        public void SetProperty<T>( ref T field, T value, [CallerMemberName] string propertyName = null )
-        {
-            field = value;
-            OnPropertyChanged( propertyName );
-        }
-
-        #endregion
     }
 }

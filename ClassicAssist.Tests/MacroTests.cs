@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Assistant;
 using ClassicAssist.Data.Macros;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

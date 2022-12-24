@@ -6,7 +6,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Assistant;
+using ClassicAssist.Data.Backup;
 using ClassicAssist.UI.Misc;
+using ClassicAssist.UI.ViewModels;
+using ClassicAssist.UI.Views;
 using ClassicAssist.UO.Objects;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -17,21 +20,16 @@ namespace ClassicAssist.Data
     {
         public delegate void dProfileChanged( string profile );
 
-        private const string DEFAULT_BACKUP_PATH = "Backup";
-
         private static readonly Dictionary<int, string> _linkedProfiles = new Dictionary<int, string>();
         public static string[] Assemblies { get; set; }
-        public static bool AutoBackupProfiles { get; set; }
-        public static int AutoBackupProfilesDays { get; set; }
-        public static string AutoBackupProfilesDirectory { get; set; }
-        public static DateTime AutoBackupProfilesLast { get; set; }
+        public static BackupOptions BackupOptions { get; set; }
         public static Language LanguageOverride { get; set; }
         public static string LastProfile { get; set; }
         public static Dictionary<string, string> SavedPasswords { get; set; } = new Dictionary<string, string>();
         public static bool SavePasswords { get; set; }
         public static bool SavePasswordsOnlyBlank { get; set; }
         public static string SessionId { get; set; }
-        public static Version UpdateGumpVersion { get; set; }
+        public static string UpdateGumpVersion { get; set; }
         public static bool UseCUOClilocLanguage { get; set; }
         public static string UserId { get; set; }
         public static double WindowHeight { get; set; }
@@ -43,15 +41,17 @@ namespace ClassicAssist.Data
 
         public static void Save()
         {
+            if ( BackupOptions != null && BackupOptions.Enabled &&
+                 DateTime.Now - BackupOptions.LastBackup >= TimeSpan.FromDays( BackupOptions.Days ) )
+            {
+                BackupProfiles();
+            }
+
             JObject json = new JObject
             {
                 { "LanguageOverride", LanguageOverride.ToString() },
                 { "LastProfile", LastProfile },
                 { "UpdateGumpVersion", UpdateGumpVersion?.ToString() ?? "0.0.0.0" },
-                { "AutoBackupProfiles", AutoBackupProfiles },
-                { "AutoBackupProfilesDays", AutoBackupProfilesDays },
-                { "AutoBackupProfilesDirectory", AutoBackupProfilesDirectory },
-                { "AutoBackupProfilesLast", AutoBackupProfilesLast },
                 { "SavePasswords", SavePasswords },
                 { "SavePasswordsOnlyBlank", SavePasswordsOnlyBlank },
                 { "UserId", UserId },
@@ -61,6 +61,8 @@ namespace ClassicAssist.Data
                 { "WindowHeight", WindowHeight },
 #endif
             };
+
+            BackupOptions?.Serialize( json );
 
             JArray linkedProfilesArray = new JArray();
 
@@ -86,7 +88,7 @@ namespace ClassicAssist.Data
 
             JArray assembliesArray = new JArray();
 
-            foreach ( string assembly in Assemblies ?? new string[0] )
+            foreach ( string assembly in Assemblies ?? Array.Empty<string>() )
             {
                 assembliesArray.Add( assembly );
             }
@@ -95,6 +97,12 @@ namespace ClassicAssist.Data
 
             File.WriteAllText( Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Assistant.json" ),
                 json.ToString( Formatting.Indented ) );
+        }
+
+        private static bool IsTesting()
+        {
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .Any( assem => assem.FullName.ToLowerInvariant().Contains( "testplatform" ) );
         }
 
         public static void Load()
@@ -108,53 +116,65 @@ namespace ClassicAssist.Data
                 LastProfile = Options.DEFAULT_SETTINGS_FILENAME;
                 UserId = Guid.NewGuid().ToString();
                 SessionId = Guid.NewGuid().ToString();
+                BackupOptions = new BackupOptions();
                 return;
             }
 
             JObject json = JObject.Parse( File.ReadAllText( configPath ) );
 
-            LanguageOverride = json?["LanguageOverride"]?.ToObject<Language>() ?? Language.Default;
-            LastProfile = json?["LastProfile"]?.ToObject<string>() ?? Options.DEFAULT_SETTINGS_FILENAME;
-            UpdateGumpVersion = json?["UpdateGumpVersion"]?.ToObject<Version>() ?? new Version();
-            AutoBackupProfiles = json?["AutoBackupProfiles"]?.ToObject<bool>() ?? true;
-            AutoBackupProfilesDays = json?["AutoBackupProfilesDays"]?.ToObject<int>() ?? 7;
-            AutoBackupProfilesDirectory =
-                json?["AutoBackupProfilesDirectory"]?.ToObject<string>() ?? DEFAULT_BACKUP_PATH;
-            AutoBackupProfilesLast = json?["AutoBackupProfilesLast"]?.ToObject<DateTime>() ?? default;
-            SavePasswords = json?["SavePasswords"]?.ToObject<bool>() ?? false;
-            SavePasswordsOnlyBlank = json?["SavePasswordsOnlyBlank"]?.ToObject<bool>() ?? false;
-            UserId = json?["UserId"]?.ToObject<string>() ?? Guid.NewGuid().ToString();
-            WindowWidth = json?["WindowWidth"]?.ToObject<int>() ?? 625;
-            WindowHeight = json?["WindowHeight"]?.ToObject<int>() ?? 500;
-            UseCUOClilocLanguage = json?["UseCUOClilocLanguage"]?.ToObject<bool>() ?? false;
-            Assemblies = json?["Assemblies"]?.ToObject<string[]>() ?? new string[0];
+            LanguageOverride = json["LanguageOverride"]?.ToObject<Language>() ?? Language.Default;
+            LastProfile = json["LastProfile"]?.ToObject<string>() ?? Options.DEFAULT_SETTINGS_FILENAME;
+            UpdateGumpVersion = json["UpdateGumpVersion"]?.ToObject<string>() ?? new Version().ToString();
+
+            if ( json["Backup"] == null )
+            {
+                BackupOptions = new BackupOptions
+                {
+                    Enabled = !IsTesting() /*json["AutoBackupProfiles"]?.ToObject<bool>() ?? true*/,
+                    Days = json["AutoBackupProfilesDays"]?.ToObject<int>() ?? 7,
+                    LastBackup = json["AutoBackupProfilesLast"]?.ToObject<DateTime>() ?? default,
+                    Provider = new LocalBackupProvider
+                    {
+                        BackupPath = json["AutoBackupProfilesDirectory"]?.ToObject<string>() ??
+                                     BackupOptions.DefaultBackupPath
+                    }
+                };
+            }
+            else
+            {
+                BackupOptions = new BackupOptions();
+                BackupOptions.Deserialize( json, Options.CurrentOptions );
+            }
+
+            SavePasswords = json["SavePasswords"]?.ToObject<bool>() ?? false;
+            SavePasswordsOnlyBlank = json["SavePasswordsOnlyBlank"]?.ToObject<bool>() ?? false;
+            UserId = json["UserId"]?.ToObject<string>() ?? Guid.NewGuid().ToString();
+            WindowWidth = json["WindowWidth"]?.ToObject<int>() ?? 625;
+            WindowHeight = json["WindowHeight"]?.ToObject<int>() ?? 500;
+            UseCUOClilocLanguage = json["UseCUOClilocLanguage"]?.ToObject<bool>() ?? false;
+            Assemblies = json["Assemblies"]?.ToObject<string[]>() ?? new string[0];
             SessionId = Guid.NewGuid().ToString();
 
-            if ( json?["Profiles"] != null )
+            if ( json["Profiles"] != null )
             {
                 foreach ( JToken token in json["Profiles"] )
                 {
-                    _linkedProfiles.Add( token["Serial"].ToObject<int>(), token["Profile"].ToObject<string>() );
+                    _linkedProfiles.Add( token["Serial"]?.ToObject<int>() ?? 0, token["Profile"]?.ToObject<string>() );
                 }
             }
 
-            if ( json?["SavedPasswords"] != null )
+            if ( json["SavedPasswords"] != null )
             {
                 foreach ( JToken token in json["SavedPasswords"] )
                 {
-                    SavedPasswords.Add( token["Username"].ToObject<string>(),
-                        Crypter.Decrypt( token["Password"].ToObject<string>() ) );
+                    SavedPasswords.Add( token["Username"]?.ToObject<string>() ?? string.Empty,
+                        Crypter.Decrypt( token["Password"]?.ToObject<string>() ) );
                 }
 
                 OnPasswordsChanged();
             }
 
             SetLanguage( LanguageOverride );
-
-            if ( DateTime.Now - AutoBackupProfilesLast >= TimeSpan.FromDays( AutoBackupProfilesDays ) )
-            {
-                BackupProfiles();
-            }
 
             foreach ( string assembly in Assemblies )
             {
@@ -164,9 +184,9 @@ namespace ClassicAssist.Data
 
                     IEnumerable<MethodInfo> initializeMethods = asm.GetTypes()
                         .Where( e => e.IsClass && e.IsPublic && e.GetMethod( "Initialize",
-                                         BindingFlags.Public | BindingFlags.Static, null, Type.EmptyTypes, null ) !=
-                                     null ).Select( e => e.GetMethod( "Initialize",
-                            BindingFlags.Public | BindingFlags.Static, null, Type.EmptyTypes, null ) );
+                            BindingFlags.Public | BindingFlags.Static, null, Type.EmptyTypes, null ) != null )
+                        .Select( e => e.GetMethod( "Initialize", BindingFlags.Public | BindingFlags.Static, null,
+                            Type.EmptyTypes, null ) );
 
                     foreach ( MethodInfo initializeMethod in initializeMethods )
                     {
@@ -189,67 +209,13 @@ namespace ClassicAssist.Data
 
         private static void BackupProfiles()
         {
-            string[] additionalFiles = { "Assistant.json", "Macros.json" };
-            string profileDirectory = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Profiles" );
-
-            if ( !Directory.Exists( profileDirectory ) )
+            Engine.Dispatcher.Invoke( () =>
             {
-                return;
-            }
-
-            IEnumerable<string> files = Directory.EnumerateFiles( profileDirectory ).ToList();
-
-            if ( !files.Any() )
-            {
-                return;
-            }
-
-            string outputPath = AutoBackupProfilesDirectory;
-
-            if ( string.IsNullOrEmpty( outputPath ) )
-            {
-                outputPath = DEFAULT_BACKUP_PATH;
-            }
-
-            bool rooted = Path.IsPathRooted( AutoBackupProfilesDirectory );
-
-            if ( !rooted )
-            {
-                outputPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
-                    AutoBackupProfilesDirectory );
-            }
-
-            if ( !Directory.Exists( outputPath ) )
-            {
-                Directory.CreateDirectory( outputPath );
-            }
-
-            try
-            {
-                foreach ( string file in files )
-                {
-                    string outputFile = Path.Combine( outputPath,
-                        Path.GetFileName( file ) ?? throw new InvalidOperationException() );
-                    File.Copy( file, outputFile, true );
-                }
-
-                foreach ( string additionalFile in additionalFiles )
-                {
-                    string fullPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
-                        additionalFile );
-
-                    if ( File.Exists( fullPath ) )
-                    {
-                        File.Copy( fullPath, Path.Combine( outputPath, additionalFile ) );
-                    }
-                }
-            }
-            catch ( Exception )
-            {
-                // We tried
-            }
-
-            AutoBackupProfilesLast = DateTime.Now;
+                BackupWindowViewModel vm = new BackupWindowViewModel( BackupOptions );
+                BackupWindow backupWindow = new BackupWindow { DataContext = vm };
+                vm.CloseWindow = () => backupWindow.Close();
+                backupWindow.ShowDialog();
+            } );
         }
 
         public static event dProfileChanged ProfileChangedEvent;
@@ -292,6 +258,9 @@ namespace ClassicAssist.Data
                     break;
                 case Language.Polish:
                     locale = new CultureInfo( "pl-PL" );
+                    break;
+                case Language.Czech:
+                    locale = new CultureInfo( "cs-CZ" );
                     break;
                 case Language.Default:
                     break;
@@ -337,6 +306,12 @@ namespace ClassicAssist.Data
 
             Options.Load( LastProfile, Options.CurrentOptions );
             ProfileChangedEvent?.Invoke( LastProfile );
+        }
+
+        public static void OnProfileChanged( string profile )
+        {
+            LastProfile = profile;
+            ProfileChangedEvent?.Invoke( profile );
         }
     }
 }

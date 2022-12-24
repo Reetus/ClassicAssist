@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Assistant;
-using ClassicAssist.Annotations;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.Data.Counters
 {
-    public class CountersManager : INotifyPropertyChanged
+    public class CountersManager : SetPropertyNotifyChanged
     {
         private static CountersManager _instance;
         private static readonly object _instanceLock = new object();
@@ -43,8 +41,6 @@ namespace ClassicAssist.Data.Counters
         }
 
         public Action RecountAll { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnNewWorldItemEvent( Item item )
         {
@@ -111,19 +107,6 @@ namespace ClassicAssist.Data.Counters
             }
 
             return _instance;
-        }
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-        }
-
-        // ReSharper disable once RedundantAssignment
-        public void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
-        {
-            obj = value;
-            OnPropertyChanged( propertyName );
         }
     }
 }

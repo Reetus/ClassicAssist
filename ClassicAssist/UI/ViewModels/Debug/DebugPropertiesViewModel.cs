@@ -27,7 +27,8 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data.Macros.Commands;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
@@ -69,7 +70,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
             if ( entity.Properties == null )
             {
-                if ( Engine.Features.HasFlag( FeatureFlags.AOS ) )
+                if ( Engine.TooltipsEnabled )
                 {
                     PropertiesCommands.WaitForProperties( entity.Serial, 5000 );
                 }

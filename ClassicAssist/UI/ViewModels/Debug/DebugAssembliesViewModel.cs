@@ -27,7 +27,9 @@ using System.Windows;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data;
-using ClassicAssist.Resources;
+using ClassicAssist.Data.Macros;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using Microsoft.Win32;
 
 namespace ClassicAssist.UI.ViewModels.Debug
@@ -122,6 +124,8 @@ namespace ClassicAssist.UI.ViewModels.Debug
         private async Task Save( object arg )
         {
             AssistantOptions.Assemblies = Items.Select( a => a.Location ).ToArray();
+
+            MacroInvoker.ResetImportCache();
 
             await Task.CompletedTask;
         }

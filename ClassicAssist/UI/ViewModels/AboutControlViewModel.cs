@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Reflection;
 using System.Timers;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Assistant;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
+using Semver;
 
 namespace ClassicAssist.UI.ViewModels
 {
@@ -39,9 +41,8 @@ namespace ClassicAssist.UI.ViewModels
         public AboutControlViewModel()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
-            Version version = assembly.GetName().Version;
 
-            Version = $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+            Version = VersionHelpers.GetProductVersion( assembly );
             BuildDate = $"{GetBuildDateTime( assembly ).ToLongDateString()}";
 
             Engine.ConnectedEvent += OnConnectedEvent;
@@ -135,7 +136,7 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ShowItemsCommand =>
             _showItemsCommand ?? ( _showItemsCommand = new RelayCommand( ShowItems, o => Connected ) );
 
-        public string Version { get; set; }
+        public SemVersion Version { get; set; }
 
         private static void OpenPayPal( object obj )
         {
@@ -205,34 +206,12 @@ namespace ClassicAssist.UI.ViewModels
         {
             Connected = false;
 
-            _timer.Stop();
+            _timer?.Stop();
         }
 
         private static void CheckForUpdates( object obj )
         {
-            string updaterPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
-                "ClassicAssist.Updater.exe" );
-
-            Version version = null;
-
-            if ( System.Version.TryParse(
-                FileVersionInfo.GetVersionInfo( Assembly.GetExecutingAssembly().Location ).ProductVersion,
-                out Version v ) )
-            {
-                version = v;
-            }
-
-            if ( !File.Exists( updaterPath ) )
-            {
-                return;
-            }
-
-            ProcessStartInfo psi = new ProcessStartInfo( updaterPath,
-                $"--pid {Process.GetCurrentProcess().Id} --path {Engine.StartupPath}" + ( version != null
-                    ? $" --version {version}"
-                    : "" ) ) { UseShellExecute = false };
-
-            Process.Start( psi );
+            Engine.LaunchUpdater();
         }
 
         private void OnConnectedEvent()
@@ -241,7 +220,7 @@ namespace ClassicAssist.UI.ViewModels
             ConnectedTime = DateTime.Now;
 
             _timer = new Timer( 1000 ) { AutoReset = true };
-            _timer.Elapsed += ( sender, args ) => { NotifyPropertyChanged( nameof( ConnectedTime ) ); };
+            _timer.Elapsed += ( sender, args ) => { OnPropertyChanged( nameof( ConnectedTime ) ); };
             _timer.Start();
 
             _pingTimer = new Timer( 3000 ) { AutoReset = true };
@@ -278,13 +257,9 @@ namespace ClassicAssist.UI.ViewModels
 
         internal static DateTime GetBuildDateTime( Assembly assembly )
         {
-            System.Version.TryParse( FileVersionInfo.GetVersionInfo( assembly.Location ).ProductVersion,
-                out Version version );
+            BuildDateAttribute attribute = assembly.GetCustomAttribute<BuildDateAttribute>();
 
-            DateTime buildDateTime =
-                new DateTime( 2020, 7, 3 ).Add( new TimeSpan( TimeSpan.TicksPerDay * version.Build ) );
-
-            return buildDateTime;
+            return attribute.DateTime;
         }
     }
 }

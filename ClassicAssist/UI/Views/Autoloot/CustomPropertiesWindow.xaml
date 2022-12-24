@@ -3,12 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ClassicAssist.UI.Views.Autoloot"
-        xmlns:resources="clr-namespace:ClassicAssist.Resources"
-        xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
-        xmlns:autoloot="clr-namespace:ClassicAssist.Data.Autoloot"
+        xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:autoloot1="clr-namespace:ClassicAssist.UI.ViewModels.Autoloot"
+        xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         mc:Ignorable="d"
         Title="{x:Static resources:Strings.Define_Custom_Properties}" Height="350" Width="650"
         Background="{DynamicResource ThemeWindowBackgroundBrush}" Topmost="True">
@@ -18,8 +16,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../Resources/Icons.xaml" />
-                <ResourceDictionary Source="../../../Resources/ResourceDictionary.xaml" />
+                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -66,12 +63,12 @@
             <StackPanel Grid.Row="1" Margin="0,0,0,10">
                 <Button Content="{x:Static resources:Strings.Save}" Command="{Binding SaveCommand}">
                     <i:Interaction.Behaviors>
-                        <misc:CloseOnClickBehaviour />
+                        <behaviours:CloseOnClickBehaviour />
                     </i:Interaction.Behaviors>
                 </Button>
                 <Button Content="{x:Static resources:Strings.Cancel}">
                     <i:Interaction.Behaviors>
-                        <misc:CloseOnClickBehaviour />
+                        <behaviours:CloseOnClickBehaviour />
                     </i:Interaction.Behaviors>
                 </Button>
             </StackPanel>

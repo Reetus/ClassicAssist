@@ -4,8 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Assistant;
+using ClassicAssist.Browser.Models;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Misc;
-using ClassicAssist.UO.Gumps;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 
@@ -13,17 +14,18 @@ namespace ClassicAssist.Data.Macros
 {
     public class MacroManager
     {
-        public delegate void dMacroStartStop();
+        public delegate void dMacroStartStop( MacroEntry macroEntry );
+
         private static readonly object _lock = new object();
         private static MacroManager _instance;
         private readonly List<IMacroCommandParser> _parsers = new List<IMacroCommandParser>();
-        public event dMacroStartStop MacroStartedEvent;
-        public event dMacroStartStop MacroStoppedEvent;
 
         private MacroManager()
         {
             Engine.PacketReceivedEvent += PacketReceivedEvent;
             Engine.PacketSentEvent += PacketSentEvent;
+            Engine.InternalPacketReceivedEvent += PacketReceivedEvent;
+            Engine.InternalPacketSentEvent += PacketSentEvent;
 
             IEnumerable<Type> types = Assembly.GetExecutingAssembly().GetTypes()
                 .Where( t => t.IsClass && typeof( IMacroCommandParser ).IsAssignableFrom( t ) );
@@ -43,6 +45,10 @@ namespace ClassicAssist.Data.Macros
         public Action<string, string> NewMacro { get; set; }
         public static bool QuietMode { get; set; }
         public bool Replay { get; set; }
+        public Action<Metadata> NewPublicMacro { get; set; }
+
+        public event dMacroStartStop MacroStartedEvent;
+        public event dMacroStartStop MacroStoppedEvent;
 
         private void PacketSentEvent( byte[] data, int length )
         {
@@ -166,14 +172,14 @@ namespace ClassicAssist.Data.Macros
             return Items?.FirstOrDefault( m => m.MacroInvoker.Thread?.Equals( currentThread ) ?? false );
         }
 
-        public void OnMacroStarted()
+        public void OnMacroStarted( MacroEntry macroEntry )
         {
-            MacroStartedEvent?.Invoke();
+            MacroStartedEvent?.Invoke( macroEntry );
         }
 
-        public void OnMacroStopped()
+        public void OnMacroStopped( MacroEntry macroEntry )
         {
-            MacroStoppedEvent?.Invoke();
+            MacroStoppedEvent?.Invoke( macroEntry );
         }
     }
 }

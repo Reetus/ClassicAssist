@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp3.0;net45</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+    <Authors>Reetus</Authors>
+    <PackageProjectUrl>https://github.com/Reetus/DraggableTreeView</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Reetus/DraggableTreeView</RepositoryUrl>
+  </PropertyGroup>
+
+</Project>

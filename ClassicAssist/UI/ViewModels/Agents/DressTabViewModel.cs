@@ -7,7 +7,8 @@ using ClassicAssist.Data;
 using ClassicAssist.Data.Dress;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
@@ -129,7 +130,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
         }
 
-        public void Serialize( JObject json )
+        public void Serialize( JObject json, bool global = false )
         {
             JObject dress = new JObject
             {
@@ -176,7 +177,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             json?.Add( "Dress", dress );
         }
 
-        public void Deserialize( JObject json, Options options )
+        public void Deserialize( JObject json, Options options, bool global = false )
         {
             Items.Clear();
 

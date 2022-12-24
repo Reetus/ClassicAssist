@@ -5,13 +5,14 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.Misc
 {
@@ -78,40 +79,6 @@ namespace ClassicAssist.Misc
                 BitmapSizeOptions.FromWidthAndHeight( bmp.Width, bmp.Height ) );
         }
 
-        public static void AddSorted<T>( this IList<T> list, T item, IComparer<T> comparer = null )
-        {
-            if ( comparer == null )
-            {
-                comparer = Comparer<T>.Default;
-            }
-
-            int i = 0;
-
-            while ( i < list.Count && comparer.Compare( list[i], item ) < 0 )
-            {
-                i++;
-            }
-
-            list.Insert( i, item );
-        }
-
-        public static JArray ToJArray( this int[] arr )
-        {
-            JArray jArray = new JArray();
-
-            foreach ( int i in arr )
-            {
-                jArray.Add( i );
-            }
-
-            return jArray;
-        }
-
-        public static int[] ToIntArray( this JToken jToken )
-        {
-            return jToken.Select( token => token.ToObject<int>() ).ToArray();
-        }
-
         // https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/interop-with-other-asynchronous-patterns-and-types?redirectedfrom=MSDN#WHToTap
         public static Task<bool> ToTask( this EventWaitHandle waitHandle, Func<bool> resultAction = null )
         {
@@ -137,6 +104,70 @@ namespace ClassicAssist.Misc
             List<Task<bool>> tasks = waitHandles.Select( waitHandle => waitHandle.ToTask() ).ToList();
 
             return Task.WhenAll( tasks );
+        }
+
+        public static string SHA1( this string str )
+        {
+            using ( SHA1Managed sha1 = new SHA1Managed() )
+            {
+                byte[] hash = sha1.ComputeHash( Encoding.UTF8.GetBytes( str ) );
+                StringBuilder formatted = new StringBuilder( 2 * hash.Length );
+
+                foreach ( byte b in hash )
+                {
+                    formatted.AppendFormat( "{0:X2}", b );
+                }
+
+                return formatted.ToString();
+            }
+        }
+
+        private static int GetNearestTabStop( int currentPosition, int tabLength )
+        {
+            // If already at the tab stop, jump to the next tab stop.
+            if ( ( currentPosition % tabLength ) == 1 )
+                currentPosition += tabLength;
+            else
+            {
+                // If in the middle of two tab stops, move forward to the nearest.
+                for ( int i = 0; i < tabLength; i++, currentPosition++ )
+                    if ( ( currentPosition % tabLength ) == 1 )
+                        break;
+            }
+
+            return currentPosition;
+        }
+
+        public static string TabsToSpaces( this string input, int tabLength )
+        {
+            if ( string.IsNullOrEmpty( input ) )
+                return input;
+
+            StringBuilder output = new StringBuilder();
+
+            int positionInOutput = 1;
+            foreach ( var c in input )
+            {
+                switch ( c )
+                {
+                    case '\t':
+                        int spacesToAdd = GetNearestTabStop( positionInOutput, tabLength ) - positionInOutput;
+                        output.Append( new string( ' ', spacesToAdd ) );
+                        positionInOutput += spacesToAdd;
+                        break;
+
+                    case '\n':
+                        output.Append( c );
+                        positionInOutput = 1;
+                        break;
+
+                    default:
+                        output.Append( c );
+                        positionInOutput++;
+                        break;
+                }
+            }
+            return output.ToString();
         }
     }
 }

@@ -6,12 +6,15 @@
         xmlns:local="clr-namespace:ClassicAssist.Updater"
         xmlns:properties="clr-namespace:ClassicAssist.Updater.Properties"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+        xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+        xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         Title="{x:Static properties:Resources.ClassicAssist_Updater}" Height="400" Width="400"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <valueConverters:InverseBooleanValueConverter x:Key="InverseBooleanValueConverter" />
     </Window.Resources>
     <Window.DataContext>
         <local:MainViewModel />
@@ -27,28 +30,53 @@
                      IsIndeterminate="{Binding IsIndeterminate}"
                      Maximum="{Binding DownloadSize}" Grid.Row="0" />
         <Grid Grid.Row="1" Margin="10">
-            <ListBox ItemsSource="{Binding Items}" local:ListBoxBehavior.ScrollOnNewItem="True"
+            <ListBox ItemsSource="{Binding Items}"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      ScrollViewer.VerticalScrollBarVisibility="Visible">
+                <i:Interaction.Behaviors>
+                    <behaviours:ItemsControlAutoScrollBehaviour/>
+                </i:Interaction.Behaviors>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock TextWrapping="Wrap" Text="{Binding}"/>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding}" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
         <DockPanel Grid.Row="2" Margin="10,0,10,10">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                <CheckBox Content="{x:Static properties:Resources.Install_Prereleases}"
+                          IsChecked="{Binding UpdaterSettings.InstallPrereleases}" />
+                <CheckBox Content="{x:Static properties:Resources.Force_Update}" Margin="10,0,0,0"
+                          IsChecked="{Binding Force}" />
+            </StackPanel>
             <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">
-                <Hyperlink NavigateUri="https://github.com/Reetus/ClassicAssist/releases" RequestNavigate="Hyperlink_OnRequestNavigate">
+                <Hyperlink NavigateUri="https://github.com/Reetus/ClassicAssist/releases"
+                           RequestNavigate="Hyperlink_OnRequestNavigate">
                     <Run Text="{x:Static properties:Resources.Releases}" />
                 </Hyperlink>
             </TextBlock>
-            <Button Content="{x:Static properties:Resources.Close}" Width="100" DockPanel.Dock="Right" HorizontalAlignment="Right"
-                    IsEnabled="{Binding IsUpdating, Converter={StaticResource InverseBooleanConverter}}">
-                <i:Interaction.Behaviors>
-                    <local:CloseBehaviour />
-                </i:Interaction.Behaviors>
-            </Button>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right">
+                <Button ToolTip="{x:Static resources:Strings.Check_For_Updates}" Margin="0,0,10,0"
+                        Command="{Binding CheckForUpdateCommand}">
+                    <Button.Content>
+                        <Image Source="{StaticResource RefreshIcon}" Height="16" />
+                    </Button.Content>
+                </Button>
+                <!--<Button ToolTip="{x:Static properties:Resources.Options}" Margin="0,0,10,0"
+                        Command="{Binding ShowSettingsCommand}">
+                    <Button.Content>
+                        <Image Source="{StaticResource configureIcon}" Height="16" />
+                    </Button.Content>
+                </Button>-->
+                <Button Content="{x:Static properties:Resources.Close}" Width="100"
+                        HorizontalAlignment="Right"
+                        IsEnabled="{Binding IsUpdating, Converter={StaticResource InverseBooleanValueConverter}}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:CloseOnClickBehaviour />
+                    </i:Interaction.Behaviors>
+                </Button>
+            </StackPanel>
         </DockPanel>
     </Grid>
 </Window>

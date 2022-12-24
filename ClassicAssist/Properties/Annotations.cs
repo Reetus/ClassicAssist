@@ -177,8 +177,8 @@ namespace ClassicAssist.Annotations
     /// }
     /// </code>
     /// </example>
-    [AttributeUsage( AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field, AllowMultiple =
-        true )]
+    [AttributeUsage( AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field,
+        AllowMultiple = true )]
     public sealed class ValueProviderAttribute : Attribute
     {
         public ValueProviderAttribute( [NotNull] string name )
@@ -750,8 +750,8 @@ namespace ClassicAssist.Annotations
         public string Target { get; set; }
     }
 
-    [AttributeUsage( AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
-        true )]
+    [AttributeUsage( AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property,
+        AllowMultiple = true )]
     public sealed class AspMvcAreaMasterLocationFormatAttribute : Attribute
     {
         public AspMvcAreaMasterLocationFormatAttribute( [NotNull] string format )
@@ -763,8 +763,8 @@ namespace ClassicAssist.Annotations
         public string Format { get; }
     }
 
-    [AttributeUsage( AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
-        true )]
+    [AttributeUsage( AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property,
+        AllowMultiple = true )]
     public sealed class AspMvcAreaPartialViewLocationFormatAttribute : Attribute
     {
         public AspMvcAreaPartialViewLocationFormatAttribute( [NotNull] string format )
@@ -776,8 +776,8 @@ namespace ClassicAssist.Annotations
         public string Format { get; }
     }
 
-    [AttributeUsage( AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
-        true )]
+    [AttributeUsage( AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property,
+        AllowMultiple = true )]
     public sealed class AspMvcAreaViewLocationFormatAttribute : Attribute
     {
         public AspMvcAreaViewLocationFormatAttribute( [NotNull] string format )
@@ -789,8 +789,8 @@ namespace ClassicAssist.Annotations
         public string Format { get; }
     }
 
-    [AttributeUsage( AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
-        true )]
+    [AttributeUsage( AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property,
+        AllowMultiple = true )]
     public sealed class AspMvcMasterLocationFormatAttribute : Attribute
     {
         public AspMvcMasterLocationFormatAttribute( [NotNull] string format )
@@ -802,8 +802,8 @@ namespace ClassicAssist.Annotations
         public string Format { get; }
     }
 
-    [AttributeUsage( AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
-        true )]
+    [AttributeUsage( AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property,
+        AllowMultiple = true )]
     public sealed class AspMvcPartialViewLocationFormatAttribute : Attribute
     {
         public AspMvcPartialViewLocationFormatAttribute( [NotNull] string format )
@@ -815,8 +815,8 @@ namespace ClassicAssist.Annotations
         public string Format { get; }
     }
 
-    [AttributeUsage( AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
-        true )]
+    [AttributeUsage( AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property,
+        AllowMultiple = true )]
     public sealed class AspMvcViewLocationFormatAttribute : Attribute
     {
         public AspMvcViewLocationFormatAttribute( [NotNull] string format )

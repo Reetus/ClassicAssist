@@ -7,6 +7,7 @@
         Korean,
         Chinese,
         Italian,
-        Polish
+        Polish,
+        Czech
     }
 }

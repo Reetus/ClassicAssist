@@ -4,11 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
-        xmlns:resources="clr-namespace:ClassicAssist.Resources"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
         xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
         xmlns:misc1="clr-namespace:ClassicAssist.Misc"
+        xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         mc:Ignorable="d"
         Title="{Binding Title}" Height="350" Width="650" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         Topmost="{Binding Topmost}" WindowStyle="None" ResizeMode="CanResizeWithGrip" AllowsTransparency="True">
@@ -18,8 +18,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/Icons.xaml" />
-                <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
+                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary>
                     <DrawingImage x:Key="PersonIcon">
                         <DrawingImage.Drawing>
@@ -40,12 +39,11 @@
                     </DrawingImage>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
-            <misc1:BindingProxy x:Key="Proxy" Data="{Binding}" />
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel>
         <controls:CustomWindowTitleControl DockPanel.Dock="Top" CustomTitle="{Binding Title, ElementName=window}"
-                                           CanClose="True"/>
+                                           CanClose="True" />
 
         <Grid Margin="10" Background="{DynamicResource ThemeBackgroundBrush}">
             <Grid.ColumnDefinitions>
@@ -68,7 +66,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <i:Interaction.Behaviors>
-                            <misc:ItemsControlAutoScrollBehaviour ScrollViewer="{Binding ElementName=ScrollViewer}" />
+                            <behaviours:ItemsControlAutoScrollBehaviour ScrollViewer="{Binding ElementName=ScrollViewer}" />
                         </i:Interaction.Behaviors>
                     </ItemsControl>
                 </ScrollViewer>

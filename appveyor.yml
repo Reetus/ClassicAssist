@@ -25,13 +25,9 @@ environment:
     secure: xIXqJg4atQ4QWCrvSU0ar/eFXWujui0MG8+gijwdx8+IF+5Lg/QkftiLawcT5pzg
 before_build:
 - ps: >-
-    $d = [datetime]"7/4/2020 00:00"
+    $env:full_version = "0.4.$env:APPVEYOR_BUILD_NUMBER"
 
-    $sd = Get-Date
-
-    $env:version = [math]::floor((New-TimeSpan -Start $d -End $sd).TotalDays)
-
-    $env:full_version = "0.3.$env:version.$env:APPVEYOR_BUILD_NUMBER"
+    $env:release_message = (git log -1 --pretty=%B)
 
     Update-AppveyorBuild -Version "$env:full_version"
 
@@ -95,6 +91,7 @@ artifacts:
 deploy:
 - provider: GitHub
   tag: $(full_version)
+  description: $(release_message)
   auth_token:
     secure: mJWk62zhXmBw0jG3EpII0T9CIaS1qwLQGcvc6QJjagGLN+cokd1xOAHIszD1jnc9
   prerelease: false

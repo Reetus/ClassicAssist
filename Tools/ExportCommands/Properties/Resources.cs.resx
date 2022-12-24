@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Description" xml:space="preserve">
+    <value>Popis</value>
+  </data>
+  <data name="Example" xml:space="preserve">
+    <value>Příklad</value>
+  </data>
+  <data name="Method Signature" xml:space="preserve">
+    <value>Podpis metody</value>
+  </data>
+  <data name="TRANSLATE_CREDIT" xml:space="preserve">
+    <value>PoodyCZ(Dorchaide)</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Verze</value>
+  </data>
+  <data name="Generated on" xml:space="preserve">
+    <value>Generováno na</value>
+  </data>
+  <data name="ClassicAssist Macro Commands" xml:space="preserve">
+    <value>Seznam příkazů ClassicAssist</value>
+  </data>
+  <data name="Optional" xml:space="preserve">
+    <value>Volitelný</value>
+  </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>Parametry</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ABILITY" xml:space="preserve">
+    <value>Název schopnosti, "primary", "secondary", "stun" nebo "disarm"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_AMOUNT" xml:space="preserve">
+    <value>Číslo reprezentující množství, např. 10</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_CONTEXTMENUINDEX" xml:space="preserve">
+    <value>Pozice řádku v kontextovém menu</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_HUE" xml:space="preserve">
+    <value>Barva předmětu nebo -1 pro libovolnou</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ITEMID" xml:space="preserve">
+    <value>ItemID/Graphic např. 0x3db</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_LAYER" xml:space="preserve">
+    <value>Řetězec reprezentující vrstvu, např. "OneHanded" nebo "Talisman" apod.</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_LEFTRIGHTBOTH" xml:space="preserve">
+    <value>Ruka - "left", "right" nebo "both"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_NAME" xml:space="preserve">
+    <value>Řetězec reprezentující název, např. "Snoopy"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ONOFF" xml:space="preserve">
+    <value>"on" nebo "off"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_SERIALORALIAS" xml:space="preserve">
+    <value>Serial entinty jako číslo nebo hex, nebo alias jako např. "self"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_SHOWTYPE" xml:space="preserve">
+    <value>Ukázat typy - "mobiles" nebo "corpses"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_TIMEOUT" xml:space="preserve">
+    <value>Časový limit v milisekundách</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Neznámé</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_AGENTENTRYNAME" xml:space="preserve">
+    <value>Název agenta</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ALIASNAME" xml:space="preserve">
+    <value>Název aliasu</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_BENEFICIALHARMFULNEUTRAL" xml:space="preserve">
+    <value>Typ cíle - "harmful", "beneficial", nebo "neutral"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_BUFFNAME" xml:space="preserve">
+    <value>Název buffu</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_DIRECTION" xml:space="preserve">
+    <value>Směr, např. "West"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_DISTANCE" xml:space="preserve">
+    <value>Vzdálenost</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_GUMPBUTTONINDEX" xml:space="preserve">
+    <value>ID tlačítka gumpu</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_INTEGERVALUE" xml:space="preserve">
+    <value>Číslo - viz popisek</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_LISTNAME" xml:space="preserve">
+    <value>Název seznamu</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_MACRONAME" xml:space="preserve">
+    <value>Název makra</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_RANGE" xml:space="preserve">
+    <value>Rozsah, např. 10</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_SERIAL" xml:space="preserve">
+    <value>Serial entity, např. 0xf00ff00f</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_SKILLNAME" xml:space="preserve">
+    <value>Název dovednosti</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_SPECIALMOVENAME" xml:space="preserve">
+    <value>Název speciálního pohybu</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_SPELLNAME" xml:space="preserve">
+    <value>Název kouzla</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_STRING" xml:space="preserve">
+    <value>Řetězec - viz popisek</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_TIMERNAME" xml:space="preserve">
+    <value>Název časovače</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_UNKNOWN" xml:space="preserve">
+    <value>Nespecifikováno - viz popisek</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_UPDOWNLOCKED" xml:space="preserve">
+    <value>Stav zámku - "up", "down" nebo "locked"</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_WANDNAME" xml:space="preserve">
+    <value>Název hůlky</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_XCOORDINATE" xml:space="preserve">
+    <value>Souřadnice X</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_XCOORDINATEOFFSET" xml:space="preserve">
+    <value>Ofset souřadnice X</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_YCOORDINATE" xml:space="preserve">
+    <value>Souřadnice Y</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_YCOORDINATEOFFSET" xml:space="preserve">
+    <value>Ofset souřadnice Y</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ZCOORDINATE" xml:space="preserve">
+    <value>Souřadnice Z</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ZCOORDINATEOFFSET" xml:space="preserve">
+    <value>Ofset souřadnice Z</value>
+  </data>
+  <data name="See Also: {0}" xml:space="preserve">
+    <value>Viz také: {0}</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_EMPTY" xml:space="preserve">
+    <value> </value>
+  </data>
+  <data name="Types" xml:space="preserve">
+    <value>Typy</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_BOOLEAN" xml:space="preserve">
+    <value>True/False hodnota, viz popis</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_ELEMENTVALUEFRONTBACK" xml:space="preserve">
+    <value>Hodnota pro odstranění ze seznamu, nebo 'front' pro odstranění první položky, nebo 'back' pro odstranění poslední položky, výchozí hodnota je 'back'</value>
+  </data>
+  <data name="PARAMETER_DESCRIPTION_STRINGARRAY" xml:space="preserve">
+    <value>Seznam řetězců</value>
+  </data>
+</root>

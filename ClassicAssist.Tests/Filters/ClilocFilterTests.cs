@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using Assistant;
@@ -16,15 +15,8 @@ namespace ClassicAssist.Tests.Filters
         [TestMethod]
         public void WillFilterLocalizedText()
         {
-            const string localPath = @"C:\Users\johns\Desktop\KvG Client 2.0";
-
-            if ( !Directory.Exists( localPath ) )
-            {
-                Debug.WriteLine( "Not running test, requires Cliloc.enu" );
-                return;
-            }
-
-            Cliloc.Initialize( localPath );
+            Cliloc.Initialize( () =>
+                new Dictionary<int, string> { { 500118, "You must wait a few moments to use another skill." } } );
 
             byte[] packet =
             {
@@ -76,15 +68,7 @@ namespace ClassicAssist.Tests.Filters
         [TestMethod]
         public void WillFilterLocalizedTextAffix()
         {
-            const string localPath = @"C:\Users\johns\Desktop\KvG Client 2.0";
-
-            if ( !Directory.Exists( localPath ) )
-            {
-                Debug.WriteLine( "Not running test, requires Cliloc.enu" );
-                return;
-            }
-
-            Cliloc.Initialize( localPath );
+            Cliloc.Initialize( () => new Dictionary<int, string> { { 1008158, "some damage has been healed : " } } );
 
             byte[] packet =
             {

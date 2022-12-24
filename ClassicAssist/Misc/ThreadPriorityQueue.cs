@@ -20,6 +20,7 @@
 using System;
 using System.Linq;
 using System.Threading;
+using ClassicAssist.UO;
 using Priority_Queue;
 
 namespace ClassicAssist.Misc
@@ -34,6 +35,7 @@ namespace ClassicAssist.Misc
 
     public class ThreadPriorityQueue<T> : IDisposable
     {
+        private readonly object _lock = new object();
         private readonly Action<T> _onAction;
         private readonly SimplePriorityQueue<T> _queue = new SimplePriorityQueue<T>();
         private readonly EventWaitHandle _wh = new AutoResetEvent( false );
@@ -53,24 +55,41 @@ namespace ClassicAssist.Misc
 
         public int Count()
         {
-            return _queue.Count;
+            lock ( _lock )
+            {
+                return _queue.Count;
+            }
         }
 
         public int Count( Predicate<T> predicate )
         {
-            return _queue.Count( predicate.Invoke );
+            lock ( _lock )
+            {
+                return _queue.Count( predicate.Invoke );
+            }
         }
 
         public void Clear()
         {
-            _queue.Clear();
+            lock ( _lock )
+            {
+                _queue.Clear();
+            }
         }
 
         private void ProcessQueue()
         {
             while ( _workerThread.IsAlive )
             {
-                if ( _queue.TryDequeue( out T queueItem ) )
+                bool result;
+                T queueItem;
+
+                lock ( _lock )
+                {
+                    result = _queue.TryDequeue( out queueItem );
+                }
+
+                if ( result )
                 {
                     if ( queueItem == null )
                     {
@@ -88,7 +107,10 @@ namespace ClassicAssist.Misc
 
         public void Enqueue( T queueItem, QueuePriority priority )
         {
-            _queue.Enqueue( queueItem, (float) priority );
+            lock ( _lock )
+            {
+                _queue.Enqueue( queueItem, (float) priority );
+            }
 
             try
             {
@@ -101,12 +123,18 @@ namespace ClassicAssist.Misc
 
         public bool Contains( Predicate<T> predicate )
         {
-            return _queue.Any( predicate.Invoke );
+            lock ( _lock )
+            {
+                return _queue.Any( predicate.Invoke );
+            }
         }
 
         private void StopThread()
         {
-            _queue.Enqueue( default, (float) QueuePriority.Immediate );
+            lock ( _lock )
+            {
+                _queue.Enqueue( default, (float) QueuePriority.Immediate );
+            }
 
             try
             {

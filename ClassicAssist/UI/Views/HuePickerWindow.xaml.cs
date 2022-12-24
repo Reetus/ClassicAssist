@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using ClassicAssist.Annotations;
-using ClassicAssist.UI.ViewModels;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.UI.Views
@@ -108,6 +108,11 @@ namespace ClassicAssist.UI.Views
         // ReSharper disable once RedundantAssignment
         public virtual void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
         {
+            if ( obj != null && obj.Equals( value ) )
+            {
+                return;
+            }
+
             obj = value;
             OnPropertyChanged( propertyName );
         }

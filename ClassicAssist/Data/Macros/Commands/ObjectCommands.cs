@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Assistant;
 using ClassicAssist.Data.Abilities;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
@@ -27,7 +28,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
 
                 return;
             }
@@ -52,13 +53,27 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
 
                 return;
             }
 
-            ActionPacketQueue.EnqueuePacket( new UseObject( serial ),
-                skipQueue ? QueuePriority.Immediate : QueuePriority.Low );
+            Entity entity = Engine.Items.GetItem( serial ) ?? (Entity) Engine.Mobiles.GetMobile( serial );
+            bool useObjectQueue = !skipQueue && Options.CurrentOptions.UseObjectQueue;
+            bool delaySend = true;
+            QueuePriority priority = skipQueue ? QueuePriority.Immediate : QueuePriority.Medium; //Low
+            ActionPacketQueue.EnqueueAction( (entity), data =>
+            {
+                if ( data == null )
+                {
+                    UOC.SystemMessage( Strings.Cannot_find_item___ );
+                    return false;
+                }
+
+                Engine.SendPacketToServer( new UseObject( data.Serial ) );
+
+                return true;
+            }, priority, delaySend, CancellationToken.None, useObjectQueue );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Actions ),
@@ -69,11 +84,11 @@ namespace ClassicAssist.Data.Macros.Commands
             } )]
         public static void UseType( object type, int hue = -1, object container = null, bool skipQueue = false )
         {
-            int serial = AliasCommands.ResolveSerial( type );
+            int id = AliasCommands.ResolveSerial( type );
 
-            if ( serial == 0 )
+            if ( id == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
 
                 return;
             }
@@ -84,30 +99,36 @@ namespace ClassicAssist.Data.Macros.Commands
             }
 
             int containerSerial = AliasCommands.ResolveSerial( container );
+            bool useObjectQueue = !skipQueue && Options.CurrentOptions.UseObjectQueue;
+            bool delaySend = true;
+            QueuePriority priority = skipQueue ? QueuePriority.Immediate : QueuePriority.Medium;
 
-            if ( !Engine.Items.GetItem( containerSerial, out Item containerItem ) )
+            ActionPacketQueue.EnqueueAction( (id, hue, containerSerial), data =>
             {
-                UOC.SystemMessage( Strings.Cannot_find_container___ );
+                if ( !Engine.Items.GetItem( data.containerSerial, out Item containerItem ) )
+                {
+                    UOC.SystemMessage( Strings.Cannot_find_container___ );
+                    return false;
+                }
 
-                return;
-            }
+                Item useItem = data.hue == -1
+                    ? containerItem.Container?.SelectEntity( i => i.ID == data.id )
+                    : containerItem.Container?.SelectEntity( i => i.ID == data.id && i.Hue == data.hue );
 
-            Item useItem = hue == -1
-                ? containerItem.Container?.SelectEntity( i => i.ID == serial )
-                : containerItem.Container?.SelectEntity( i => i.ID == serial && i.Hue == hue );
+                if ( useItem == null )
+                {
+                    UOC.SystemMessage( Strings.Cannot_find_item___ );
 
-            if ( useItem == null )
-            {
-                UOC.SystemMessage( Strings.Cannot_find_item___ );
+                    return false;
+                }
 
-                return;
-            }
+                if ( !AbilitiesManager.GetInstance().CheckHands( useItem.Serial ) )
+                {
+                    Engine.SendPacketToServer( new UseObject( useItem.Serial ) );
+                }
 
-            if ( !AbilitiesManager.GetInstance().CheckHands( useItem.Serial ) )
-            {
-                ActionPacketQueue.EnqueuePacket( new UseObject( useItem.Serial ),
-                    skipQueue ? QueuePriority.Immediate : QueuePriority.Medium );
-            }
+                return true;
+            }, priority, delaySend, CancellationToken.None, useObjectQueue );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Actions ),
@@ -163,7 +184,7 @@ namespace ClassicAssist.Data.Macros.Commands
         public static int CountTypeGround( int graphic, int hue = -1, int range = -1 )
         {
             IEnumerable<Item> matches = Engine.Items.Where( i =>
-                i.ID == graphic && ( hue == -1 || hue == i.ID ) && ( range == -1 || i.Distance <= range ) );
+                i.ID == graphic && ( hue == -1 || hue == i.Hue ) && ( range == -1 || i.Distance <= range ) );
 
             int count = matches.Sum( match => match.Count );
 
@@ -216,7 +237,7 @@ namespace ClassicAssist.Data.Macros.Commands
                     (Entity) Engine.Mobiles
                         .SelectEntities( i => Predicate( i ) && ( range == -1 || i.Distance < range ) )
                         ?.FirstOrDefault() ?? Engine.Items.SelectEntities( i =>
-                        Predicate( i ) && ( range == -1 || i.Distance < range ) && i.Owner == 0 )?.FirstOrDefault();
+                        Predicate( i ) && ( range == -1 || i.Distance <= range ) && i.Owner == 0 )?.FirstOrDefault();
             }
 
             if ( entity == null )
@@ -227,12 +248,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             AliasCommands.SetMacroAlias( "found", entity.Serial );
 
-            if ( MacroManager.QuietMode )
-            {
-                return true;
-            }
-
-            UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ) );
+            UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ), true );
 
             return true;
         }
@@ -251,7 +267,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
 
                 return false;
             }
@@ -279,7 +295,7 @@ namespace ClassicAssist.Data.Macros.Commands
                     (Entity) Engine.Mobiles
                         .SelectEntities( i => Predicate( i ) && ( range == -1 || i.Distance < range ) )
                         ?.FirstOrDefault() ?? Engine.Items.SelectEntities( i =>
-                        Predicate( i ) && ( range == -1 || i.Distance < range ) && i.Owner == 0 )?.FirstOrDefault();
+                        Predicate( i ) && ( range == -1 || i.Distance <= range ) && i.Owner == 0 )?.FirstOrDefault();
             }
 
             if ( entity == null )
@@ -290,12 +306,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             AliasCommands.SetMacroAlias( "found", entity.Serial );
 
-            if ( MacroManager.QuietMode )
-            {
-                return true;
-            }
-
-            UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ) );
+            UOC.SystemMessage( string.Format( Strings.Object___0___updated___, "found" ), true );
 
             return true;
         }
@@ -313,7 +324,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( itemSerial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -321,7 +332,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( itemObj == null )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -335,7 +346,7 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( containerSerial == 0 )
             {
                 //TODO
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -356,7 +367,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
 
                 return;
             }
@@ -380,29 +391,47 @@ namespace ClassicAssist.Data.Macros.Commands
             {
                 nameof( ParameterType.ItemID ), nameof( ParameterType.SerialOrAlias ),
                 nameof( ParameterType.XCoordinateOffset ), nameof( ParameterType.YCoordinateOffset ),
-                nameof( ParameterType.ZCoordinateOffset ), nameof( ParameterType.Amount )
+                nameof( ParameterType.ZCoordinateOffset ), nameof( ParameterType.Amount ),
+                nameof( ParameterType.Hue ), nameof( ParameterType.Distance )
             } )]
         public static bool MoveTypeOffset( int id, object findLocation, int xOffset, int yOffset, int zOffset,
-            int amount = -1 )
+            int amount = -1, int hue = -1, int range = -1 )
         {
-            if ( findLocation == null ||
-                 ( (string) findLocation ).Equals( "ground", StringComparison.InvariantCultureIgnoreCase ) )
-            {
-                UOC.SystemMessage( Strings.Invalid_container___ );
-                return false;
-            }
+            bool fromGround = findLocation == null || findLocation is string str &&
+                str.Equals( "ground", StringComparison.InvariantCultureIgnoreCase );
 
-            int owner = AliasCommands.ResolveSerial( findLocation );
+            int owner = 0;
+
+            if ( !fromGround )
+            {
+                owner = AliasCommands.ResolveSerial( findLocation );
+
+                if ( owner == 0 )
+                {
+                    UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
+
+                    return false;
+                }
+            }
 
             bool Predicate( Item i )
             {
-                return i.ID == id && i.IsDescendantOf( owner );
+                return i.ID == id && i.IsDescendantOf( owner ) && ( hue == -1 || i.Hue == hue );
             }
 
-            Item entity = Engine.Items.SelectEntities( Predicate )?.FirstOrDefault();
+            bool PredicateGround( Item i )
+            {
+                return i.ID == id && i.Owner == 0 && ( hue == -1 || i.Hue == hue ) &&
+                       ( range == -1 || i.Distance <= range );
+            }
+
+            Item entity = fromGround
+                ? Engine.Items.SelectEntities( PredicateGround )?.FirstOrDefault()
+                : Engine.Items.SelectEntities( Predicate )?.FirstOrDefault();
 
             if ( entity == null )
             {
+                UOC.SystemMessage( Strings.Cannot_find_item___, true );
                 return false;
             }
 
@@ -490,7 +519,7 @@ namespace ClassicAssist.Data.Macros.Commands
             }
             else
             {
-                ActionPacketQueue.EnqueueDragDrop( entity.Serial, amount, destinationSerial );
+                ActionPacketQueue.EnqueueDragDrop( entity.Serial, amount, destinationSerial, x: x, y: y );
             }
         }
 
@@ -525,10 +554,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( mobile == null )
             {
-                if ( !MacroManager.QuietMode )
-                {
-                    UOC.SystemMessage( Strings.Mobile_not_found___ );
-                }
+                UOC.SystemMessage( Strings.Mobile_not_found___, true );
 
                 return false;
             }
@@ -541,7 +567,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
-            UseObject( layerSerial );
+            UseObject( layerSerial, true );
 
             return true;
         }
@@ -557,7 +583,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return IgnoreList.Contains( serial );
             }
 
-            UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+            UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
 
             return false;
         }
@@ -605,7 +631,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+            UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Entity ), Parameters = new[] { nameof( ParameterType.Hue ) } )]
@@ -620,6 +646,12 @@ namespace ClassicAssist.Data.Macros.Commands
                 Engine.SendPacketToServer( new HuePickerResponse( serial, itemid, hue ) );
                 Engine.RemoveReceiveFilter( pfi );
             } ) );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        public static void ClearObjectQueue()
+        {
+            ActionPacketQueue.Clear();
         }
     }
 }

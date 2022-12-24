@@ -7,7 +7,9 @@ using System.Windows.Input;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Misc;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO;
 
 namespace ClassicAssist.UI.ViewModels
@@ -144,9 +146,9 @@ namespace ClassicAssist.UI.ViewModels
 
             MacroManager manager = MacroManager.GetInstance();
 
-            foreach ( MacroEntry entry in manager.Items )
+            foreach ( MacroEntry entry in manager.Items.ToList() )
             {
-                foreach ( KeyValuePair<string, int> alias in entry.Aliases )
+                foreach ( KeyValuePair<string, int> alias in entry.Aliases.ToList() )
                 {
                     InstanceAliases.Add( new InstanceAliasEntry
                     {
@@ -241,7 +243,7 @@ namespace ClassicAssist.UI.ViewModels
         {
             Lists.Clear();
 
-            foreach ( KeyValuePair<string, List<int>> list in ListCommands.GetAllLists() )
+            foreach ( KeyValuePair<string, List<object>> list in ListCommands.GetAllLists() )
             {
                 Lists.Add( new ListEntry { Name = list.Key, Serials = list.Value.ToArray() } );
             }
@@ -330,7 +332,7 @@ namespace ClassicAssist.UI.ViewModels
         public class ListEntry
         {
             public string Name { get; set; }
-            public int[] Serials { get; set; }
+            public object[] Serials { get; set; }
         }
     }
 }

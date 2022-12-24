@@ -27,13 +27,15 @@ namespace ClassicAssist.UO.Network.Packets
     {
         public DisplayQuestPointer( bool active, int x, int y, int serial = 0 )
         {
-            _writer = new PacketWriter( 10 );
+            bool isNew = Engine.ClientVersion >= new Version( 7, 0, 9, 0 );
+
+            _writer = new PacketWriter( isNew ? 10 : 6 );
             _writer.Write( (byte) 0xBA );
             _writer.Write( (byte) ( active ? 1 : 0 ) );
             _writer.Write( (short) x );
             _writer.Write( (short) y );
 
-            if ( Engine.ClientVersion >= new Version( 7, 0, 9, 0 ) )
+            if ( isNew )
             {
                 _writer.Write( serial );
             }

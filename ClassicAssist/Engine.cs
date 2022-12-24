@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -19,11 +20,16 @@ using ClassicAssist.Data.Abilities;
 using ClassicAssist.Data.Commands;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
+using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Data.Misc;
 using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared;
+using ClassicAssist.Shared.Misc;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Views;
+using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Gumps;
 using ClassicAssist.UO.Network;
@@ -31,7 +37,7 @@ using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using CUO_API;
-using Octokit;
+using Newtonsoft.Json;
 using Sentry;
 using static ClassicAssist.Misc.SDLKeys;
 
@@ -42,19 +48,21 @@ namespace Assistant
 {
     public static partial class Engine
     {
+        public delegate void dClientClosing();
+
         public delegate void dConnected();
 
         public delegate void dDisconnected();
+
+        public delegate void dHotkeyPressed( int key, int mod, Key keys, ModKey modKey );
 
         public delegate void dPlayerInitialized( PlayerMobile player );
 
         public delegate void dSendRecvPacket( byte[] data, int length );
 
+        public delegate void dSlowHandler( PacketDirection direction, string handlerName, TimeSpan elapsed );
+
         public delegate void dUpdateWindowTitle();
-
-        public delegate void dHotkeyPressed(int key, int mod, Key keys, ModKey modKey);
-
-        public static event dHotkeyPressed HotkeyPressedEvent;
 
         private const int MAX_DISTANCE = 32;
 
@@ -62,6 +70,7 @@ namespace Assistant
         private static OnDisconnected _onDisconnected;
         private static OnPacketSendRecv _onReceive;
         private static OnPacketSendRecv _onSend;
+        private static OnTick _onTick;
         private static OnGetUOFilePath _getUOFilePath;
         private static OnPacketSendRecv _sendToClient;
         private static OnPacketSendRecv _sendToServer;
@@ -89,8 +98,11 @@ namespace Assistant
 
         private static readonly TimeSpan PACKET_SEND_DELAY = TimeSpan.FromMilliseconds( 5 );
         private static DateTime _nextPacketSendTime;
-        private static unsafe PluginHeader* _plugin;
         public static int LastSpellID;
+        private static Stopwatch _incomingStopwatch;
+        private static Stopwatch _outgoingStopwatch;
+        public static int LastSkillID;
+        public static CharacterListFlags CharacterListFlags { get; set; }
 
         public static Assembly ClassicAssembly { get; set; }
 
@@ -109,7 +121,10 @@ namespace Assistant
         public static DateTime LastActionPacket { get; set; }
         public static int LastPromptID { get; set; }
         public static int LastPromptSerial { get; set; }
-        public static TargetQueue<object> LastTargetQueue { get; set; } = new TargetQueue<object>();
+
+        public static TargetQueue<TargetQueueObject> LastTargetQueue { get; set; } =
+            new TargetQueue<TargetQueueObject>();
+
         public static MenuCollection Menus { get; set; } = new MenuCollection();
         public static MobileCollection Mobiles { get; set; } = new MobileCollection( Items );
         public static PacketWaitEntries PacketWaitEntries { get; set; }
@@ -117,13 +132,20 @@ namespace Assistant
         public static QuestPointerList QuestPointers { get; set; } = new QuestPointerList();
         public static RehueList RehueList { get; set; } = new RehueList();
         public static List<ShardEntry> Shards { get; set; }
+
+        public static Dispatcher StartupDispatcher { get; set; }
         public static string StartupPath { get; set; }
         public static bool TargetExists { get; set; }
         public static TargetFlags TargetFlags { get; set; }
         public static int TargetSerial { get; set; }
         public static TargetType TargetType { get; set; }
+
+        public static Queue<Action> TickWorkQueue { get; set; } = new Queue<Action>();
+        public static bool TooltipsEnabled { get; set; }
         public static bool WaitingForTarget { get; set; }
         internal static ConcurrentDictionary<uint, int> GumpList { get; set; } = new ConcurrentDictionary<uint, int>();
+
+        public static event dHotkeyPressed HotkeyPressedEvent;
 
         public static event dUpdateWindowTitle UpdateWindowTitleEvent;
 
@@ -140,8 +162,6 @@ namespace Assistant
 
         public static unsafe void Install( PluginHeader* plugin )
         {
-            _plugin = plugin;
-
             Initialize();
 
             InitializePlugin( plugin );
@@ -150,6 +170,7 @@ namespace Assistant
             {
                 _window = new MainWindow();
                 _window.Show();
+
                 Dispatcher.Run();
             } ) { IsBackground = true };
 
@@ -167,6 +188,7 @@ namespace Assistant
             _onClientClosing = OnClientClosing;
             _onHotkeyPressed = OnHotkeyPressed;
             _onMouse = OnMouse;
+            _onTick = OnTick;
             WindowHandle = plugin->HWND;
 
             plugin->OnConnected = Marshal.GetFunctionPointerForDelegate( _onConnected );
@@ -177,6 +199,7 @@ namespace Assistant
             plugin->OnClientClosing = Marshal.GetFunctionPointerForDelegate( _onClientClosing );
             plugin->OnHotkeyPressed = Marshal.GetFunctionPointerForDelegate( _onHotkeyPressed );
             plugin->OnMouse = Marshal.GetFunctionPointerForDelegate( _onMouse );
+            plugin->Tick = Marshal.GetFunctionPointerForDelegate( _onTick );
 
             _getPacketLength = Marshal.GetDelegateForFunctionPointer<OnGetPacketLength>( plugin->GetPacketLength );
             _getUOFilePath = Marshal.GetDelegateForFunctionPointer<OnGetUOFilePath>( plugin->GetUOFilePath );
@@ -207,6 +230,24 @@ namespace Assistant
                 .FirstOrDefault( a => a.FullName.StartsWith( "ClassicUO," ) );
 
             InitializeExtensions();
+        }
+
+        private static void OnTick()
+        {
+            try
+            {
+                while ( TickWorkQueue.Count > 0 )
+                {
+                    Action action = TickWorkQueue.Dequeue();
+
+                    action?.Invoke();
+                }
+            }
+            catch ( Exception e )
+            {
+                SentrySdk.CaptureException( e );
+                Commands.SystemMessage( e.Message );
+            }
         }
 
         private static void InitializeExtensions()
@@ -273,8 +314,11 @@ namespace Assistant
             return true;
         }
 
+        public static event dClientClosing ClientClosing;
+
         private static void OnClientClosing()
         {
+            ClientClosing?.Invoke();
             Options.Save( Options.CurrentOptions );
             AssistantOptions.Save();
             SentrySdk.Close();
@@ -291,7 +335,8 @@ namespace Assistant
 
             Items.RemoveByDistance( MAX_DISTANCE, x, y );
             Mobiles.RemoveByDistance( MAX_DISTANCE, x, y );
-            ScavengerManager.GetInstance().CheckArea?.Invoke();
+
+            Task.Run( () => { ScavengerManager.GetInstance().CheckArea?.Invoke(); } ).ConfigureAwait( false );
         }
 
         public static Item GetOrCreateItem( int serial, int containerSerial = -1 )
@@ -359,11 +404,23 @@ namespace Assistant
 
             CommandsManager.Initialize();
 
+            StartupDispatcher = Dispatcher.CurrentDispatcher;
+
             AssistantOptions.Load();
         }
 
         private static void ProcessIncomingQueue( Packet packet )
         {
+            if ( _incomingStopwatch == null )
+            {
+                _incomingStopwatch = new Stopwatch();
+            }
+
+            _incomingStopwatch.Reset();
+            _incomingStopwatch.Start();
+
+            string handlerName = "None";
+
             try
             {
                 PacketReceivedEvent?.Invoke( packet.GetPacket(), packet.GetLength() );
@@ -372,30 +429,58 @@ namespace Assistant
 
                 int length = _getPacketLength( packet.GetPacketID() );
 
+                if ( handler != null )
+                {
+                    handlerName = handler.OnReceive.Method.Name;
+                }
+
                 handler?.OnReceive?.Invoke( new PacketReader( packet.GetPacket(), packet.GetLength(), length > 0 ) );
 
                 PacketWaitEntries?.CheckWait( packet.GetPacket(), PacketDirection.Incoming );
             }
             catch ( Exception e )
             {
-                SentrySdk.WithScope( scope =>
+                SentrySdk.CaptureException( e, scope =>
                 {
                     scope.SetExtra( "Packet", packet.GetPacket() );
                     scope.SetExtra( "Player", Player.ToString() );
                     scope.SetExtra( "WorldItemCount", Items.Count() );
                     scope.SetExtra( "WorldMobileCount", Mobiles.Count() );
-                    SentrySdk.CaptureException( e );
                 } );
+            }
+
+            _incomingStopwatch.Stop();
+
+            if ( _incomingStopwatch.ElapsedMilliseconds >= Options.CurrentOptions.SlowHandlerThreshold )
+            {
+                SlowHandlerEvent?.Invoke( PacketDirection.Incoming, handlerName, _incomingStopwatch.Elapsed );
             }
         }
 
+        public static event dSlowHandler SlowHandlerEvent;
+
         private static void ProcessOutgoingQueue( Packet packet )
         {
+            if ( _outgoingStopwatch == null )
+            {
+                _outgoingStopwatch = new Stopwatch();
+            }
+
+            _outgoingStopwatch.Reset();
+            _outgoingStopwatch.Start();
+
+            string handlerName = "None";
+
             try
             {
                 PacketSentEvent?.Invoke( packet.GetPacket(), packet.GetLength() );
 
                 PacketHandler handler = OutgoingPacketHandlers.GetHandler( packet.GetPacketID() );
+
+                if ( handler != null )
+                {
+                    handlerName = handler.OnReceive.Method.Name;
+                }
 
                 int length = _getPacketLength( packet.GetPacketID() );
 
@@ -405,14 +490,20 @@ namespace Assistant
             }
             catch ( Exception e )
             {
-                SentrySdk.WithScope( scope =>
+                SentrySdk.CaptureException( e, scope =>
                 {
                     scope.SetExtra( "Packet", packet.GetPacket() );
                     scope.SetExtra( "Player", Player.ToString() );
                     scope.SetExtra( "WorldItemCount", Items.Count() );
                     scope.SetExtra( "WorldMobileCount", Mobiles.Count() );
-                    SentrySdk.CaptureException( e );
                 } );
+            }
+
+            _outgoingStopwatch.Stop();
+
+            if ( _outgoingStopwatch.ElapsedMilliseconds >= Options.CurrentOptions.SlowHandlerThreshold )
+            {
+                SlowHandlerEvent?.Invoke( PacketDirection.Outgoing, handlerName, _outgoingStopwatch.Elapsed );
             }
         }
 
@@ -421,6 +512,11 @@ namespace Assistant
             string assemblyname = new AssemblyName( args.Name ).Name;
 
             string[] searchPaths = { StartupPath, RuntimeEnvironment.GetRuntimeDirectory() };
+
+            if ( AssistantOptions.Assemblies?.Length > 0 )
+            {
+                searchPaths = searchPaths.Concat( GetAdditionalAssemblyPaths() ).ToArray();
+            }
 
             if ( assemblyname.Contains( "Colletions" ) )
             {
@@ -455,6 +551,14 @@ namespace Assistant
             return null;
         }
 
+        private static string[] GetAdditionalAssemblyPaths()
+        {
+            return AssistantOptions.Assemblies == null
+                ? Array.Empty<string>()
+                : ( from assembly in AssistantOptions.Assemblies select Path.GetDirectoryName( assembly ) ).Distinct()
+                .ToArray();
+        }
+
         public static void SetPlayer( PlayerMobile mobile )
         {
             Player = mobile;
@@ -475,68 +579,7 @@ namespace Assistant
                 }
             };
 
-            Task.Run( async () =>
-            {
-                try
-                {
-                    GitHubClient client = new GitHubClient( new ProductHeaderValue( "ClassicAssist" ) );
-
-                    IReadOnlyList<Release> releases =
-                        await client.Repository.Release.GetAll( "Reetus", "ClassicAssist" );
-
-                    Release latestRelease = releases.FirstOrDefault();
-
-                    if ( latestRelease == null )
-                    {
-                        return;
-                    }
-
-                    Version latestVersion = Version.Parse( latestRelease.TagName );
-
-                    if ( !Version.TryParse(
-                        FileVersionInfo.GetVersionInfo( Path.Combine( StartupPath, "ClassicAssist.dll" ) )
-                            .ProductVersion, out Version localVersion ) )
-                    {
-                        return;
-                    }
-
-                    if ( latestVersion > localVersion && AssistantOptions.UpdateGumpVersion < latestVersion )
-                    {
-                        IReadOnlyList<GitHubCommit> commits =
-                            await client.Repository.Commit.GetAll( "Reetus", "ClassicAssist" );
-
-                        IEnumerable<GitHubCommit> latestCommits =
-                            commits.OrderByDescending( c => c.Commit.Author.Date ).Take( 15 );
-
-                        StringBuilder commitMessage = new StringBuilder();
-
-                        foreach ( GitHubCommit gitHubCommit in latestCommits )
-                        {
-                            commitMessage.AppendLine( $"{gitHubCommit.Commit.Author.Date.Date.ToShortDateString()}:" );
-                            commitMessage.AppendLine();
-                            commitMessage.AppendLine( gitHubCommit.Commit.Message );
-                            commitMessage.AppendLine();
-                        }
-
-                        StringBuilder message = new StringBuilder();
-                        message.AppendLine( Strings.ProductName );
-                        message.AppendLine(
-                            $"{Strings.New_version_available_} <A HREF=\"https://github.com/Reetus/ClassicAssist/releases/tag/{latestVersion}\">{latestVersion}</A>" );
-                        message.AppendLine();
-                        message.AppendLine( commitMessage.ToString() );
-                        message.AppendLine(
-                            $"<A HREF=\"https://github.com/Reetus/ClassicAssist/commits/master\">{Strings.See_More}</A>" );
-
-                        UpdateMessageGump gump =
-                            new UpdateMessageGump( WindowHandle, message.ToString(), latestVersion );
-                        gump.SendGump();
-                    }
-                }
-                catch ( Exception )
-                {
-                    // Squash all
-                }
-            } );
+            CheckGitHubVersion().ConfigureAwait( false );
 
             AbilitiesManager.GetInstance().Enabled = AbilityType.None;
             AbilitiesManager.GetInstance().ResendGump( AbilityType.None );
@@ -544,8 +587,106 @@ namespace Assistant
             Task.Run( async () =>
             {
                 await Task.Delay( 3000 );
+
+                if ( Connected && Player?.Backpack != null && Player?.Backpack?.Container == null )
+                {
+                    ObjectCommands.UseObject( Player?.Backpack );
+                }
+
                 MacroManager.GetInstance().Autostart();
             } );
+        }
+
+        private static async Task CheckGitHubVersion()
+        {
+            try
+            {
+                UpdaterSettings updaterSettings = UpdaterSettings.Load( StartupPath ?? Environment.CurrentDirectory );
+
+                ReleaseVersion latestRelease =
+                    await Updater.GetReleases( updaterSettings?.InstallPrereleases ?? false );
+
+                if ( latestRelease == null )
+                {
+                    return;
+                }
+
+                string latestVersion = latestRelease.Version;
+                string localVersion = VersionHelpers
+                    .GetProductVersion(
+                        Path.Combine( StartupPath ?? Environment.CurrentDirectory, "ClassicAssist.dll" ) ).ToString();
+
+                if ( VersionHelpers.IsVersionNewer( localVersion, latestVersion ) &&
+                     VersionHelpers.IsVersionNewer( AssistantOptions.UpdateGumpVersion, latestVersion ) )
+                {
+                    string commitMessage = await Updater.GetUpdateText( updaterSettings?.InstallPrereleases ?? false );
+                    string donationAmount = await GetDonationsSummary();
+                    StringBuilder donationMessage = new StringBuilder();
+
+                    if ( !string.IsNullOrEmpty( donationAmount ) )
+                    {
+                        if ( donationAmount == "0.00" )
+                        {
+                            donationAmount = $"<BASEFONT COLOR=#FF0000>{donationAmount}</BASEFONT>";
+                        }
+
+                        donationMessage.AppendLine( string.Format( Strings.Current_month_donations,
+                            DateTime.Now.ToString( "MMMM" ), donationAmount ) );
+                        donationMessage.AppendLine();
+                        donationMessage.AppendLine(
+                            $"<A HREF=\"https://www.paypal.me/reeeetus\">{Strings.Donate_Now}</A>" );
+                    }
+
+                    StringBuilder message = new StringBuilder();
+                    message.AppendLine( Strings.ProductName );
+                    message.AppendLine(
+                        $"{Strings.New_version_available_} <A HREF=\"https://github.com/Reetus/ClassicAssist/releases/tag/{latestVersion}\">{latestVersion}</A>" );
+                    message.AppendLine();
+
+                    if ( !string.IsNullOrEmpty( donationAmount ) )
+                    {
+                        message.AppendLine( donationMessage.ToString() );
+                    }
+
+                    message.AppendLine( commitMessage );
+                    message.AppendLine(
+                        $"<A HREF=\"https://github.com/Reetus/ClassicAssist/commits/master\">{Strings.See_More}</A>" );
+
+                    UpdateMessageGump gump = new UpdateMessageGump( WindowHandle, message.ToString(), latestVersion );
+                    gump.SendGump();
+                }
+            }
+            catch ( Exception )
+            {
+                // Squash all
+            }
+        }
+
+        private static async Task<string> GetDonationsSummary()
+        {
+            HttpClient httpClient = new HttpClient();
+
+            HttpResponseMessage response =
+                await httpClient.GetAsync( "https://classicassist.azurewebsites.net/api/donations/summary" );
+
+            if ( !response.IsSuccessStatusCode )
+            {
+                return null;
+            }
+
+            try
+            {
+                string json = await response.Content.ReadAsStringAsync();
+
+                dynamic obj = JsonConvert.DeserializeObject<dynamic>( json );
+
+                return obj?.amount;
+            }
+            catch ( Exception e )
+            {
+                SentrySdk.CaptureException( e );
+                return null;
+            }
         }
 
         public static void SendPacketToServer( byte[] packet, int length )
@@ -560,6 +701,27 @@ namespace Assistant
                 InternalPacketSentEvent?.Invoke( packet, length );
 
                 PacketWaitEntries?.CheckWait( packet, PacketDirection.Outgoing, true );
+
+                if ( _getPacketLength != null )
+                {
+                    int expectedLength = _getPacketLength( packet[0] );
+
+                    if ( expectedLength == -1 )
+                    {
+                        expectedLength = ( packet[1] << 8 ) | packet[2];
+                    }
+
+                    if ( length != expectedLength )
+                    {
+                        SentrySdk.CaptureMessage( $"Invalid packet length: {length} != {expectedLength}", scope =>
+                        {
+                            scope.SetExtra( "Packet", packet );
+                            scope.SetExtra( "Length", length );
+                            scope.SetExtra( "Direction", PacketDirection.Outgoing );
+                            scope.SetExtra( "Expected Length", expectedLength );
+                        } );
+                    }
+                }
 
                 ( byte[] data, int dataLength ) = Utility.CopyBuffer( packet, length );
 
@@ -585,7 +747,30 @@ namespace Assistant
 
                     InternalPacketReceivedEvent?.Invoke( packet, length );
 
-                    _sendToClient?.Invoke( ref packet, ref length );
+                    if ( _getPacketLength != null )
+                    {
+                        int expectedLength = _getPacketLength( packet[0] );
+
+                        if ( expectedLength == -1 )
+                        {
+                            expectedLength = ( packet[1] << 8 ) | packet[2];
+                        }
+
+                        if ( length != expectedLength )
+                        {
+                            SentrySdk.CaptureMessage( $"Invalid packet length: {length} != {expectedLength}", scope =>
+                            {
+                                scope.SetExtra( "Packet", packet );
+                                scope.SetExtra( "Length", length );
+                                scope.SetExtra( "Direction", PacketDirection.Incoming );
+                                scope.SetExtra( "Expected Length", expectedLength );
+                            } );
+                        }
+                    }
+
+                    ( byte[] data, int dataLength ) = Utility.CopyBuffer( packet, length );
+
+                    _sendToClient?.Invoke( ref data, ref dataLength );
 
                     _nextPacketRecvTime = DateTime.Now + PACKET_RECV_DELAY;
                 }
@@ -649,9 +834,18 @@ namespace Assistant
             UpdateWindowTitleEvent?.Invoke();
         }
 
-        public static void SetTitle( string title )
+        public static void SetTitle( string title = null )
         {
-            _setTitle?.Invoke( title );
+            if ( Options.CurrentOptions.SetUOTitle )
+            {
+                _setTitle?.Invoke( string.IsNullOrEmpty( title )
+                    ? Player == null ? string.Empty : $"{Player.Name} ({CurrentShard?.Name})"
+                    : title );
+            }
+            else
+            {
+                _setTitle?.Invoke( string.Empty );
+            }
         }
 
         public static void GetMapZ( int x, int y, out sbyte groundZ, out sbyte staticZ )
@@ -687,6 +881,46 @@ namespace Assistant
             staticZ = (sbyte) parameters[3];
         }
 
+        public static void LaunchUpdater()
+        {
+            string updaterPath = Path.Combine( StartupPath ?? Environment.CurrentDirectory,
+                "ClassicAssist.Updater.exe" );
+
+            string version = FileVersionInfo.GetVersionInfo( Assembly.GetExecutingAssembly().Location ).ProductVersion;
+
+            if ( !File.Exists( updaterPath ) )
+            {
+                return;
+            }
+
+            ProcessStartInfo psi = new ProcessStartInfo( updaterPath,
+                $"--path \"{StartupPath}\"" + ( version != null ? $" --version {version}" : "" ) )
+            {
+                UseShellExecute = false, WorkingDirectory = StartupPath ?? Environment.CurrentDirectory
+            };
+
+            Process.Start( psi );
+        }
+
+        public static bool CheckOutgoingPreFilter( byte[] data )
+        {
+            if ( _outgoingPacketPreFilter.MatchFilterAll( data, out PacketFilterInfo[] pfis ) <= 0 )
+            {
+                return false;
+            }
+
+            foreach ( PacketFilterInfo pfi in pfis )
+            {
+                pfi.Action?.Invoke( data, pfi );
+            }
+
+            SentPacketFilteredEvent?.Invoke( data, data.Length );
+
+            PacketWaitEntries.CheckWait( data, PacketDirection.Outgoing, true );
+
+            return true;
+        }
+
         #region ClassicUO Events
 
         private static bool OnPacketSend( ref byte[] data, ref int length )
@@ -698,17 +932,8 @@ namespace Assistant
                 filter = CommandsManager.CheckCommand( data, length );
             }
 
-            if ( _outgoingPacketPreFilter.MatchFilterAll( data, out PacketFilterInfo[] pfis ) > 0 )
+            if ( CheckOutgoingPreFilter( data ) )
             {
-                foreach ( PacketFilterInfo pfi in pfis )
-                {
-                    pfi.Action?.Invoke( data, pfi );
-                }
-
-                SentPacketFilteredEvent?.Invoke( data, data.Length );
-
-                PacketWaitEntries.CheckWait( data, PacketDirection.Outgoing, true );
-
                 return false;
             }
 
@@ -744,6 +969,9 @@ namespace Assistant
         public static ThreadQueue<Packet> IncomingQueue { get; set; }
 
         public static ThreadQueue<Packet> OutgoingQueue { get; set; }
+        public static bool InternalTarget { get; set; }
+        public static int InternalTargetSerial { get; set; }
+        public static Trade Trade { get; set; } = new Trade();
 
         private static bool OnPacketReceive( ref byte[] data, ref int length )
         {

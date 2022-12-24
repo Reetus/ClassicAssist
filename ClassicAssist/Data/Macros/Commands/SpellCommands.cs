@@ -2,10 +2,8 @@
 using Assistant;
 using ClassicAssist.Data.Spells;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
-using ClassicAssist.UO.Network;
-using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 
@@ -30,7 +28,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return false;
             }
 
@@ -125,11 +123,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            ActionPacketQueue.EnqueuePackets(
-                new BasePacket[]
-                {
-                    new DragItem( serial, 1 ), new EquipRequest( serial, selectedLayer, player.Serial )
-                }, QueuePriority.High );
+            UOC.EquipItem( serial, selectedLayer, QueuePriority.High );
         }
     }
 }

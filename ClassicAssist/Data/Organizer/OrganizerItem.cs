@@ -1,10 +1,8 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using ClassicAssist.Annotations;
+﻿using ClassicAssist.Shared.UI;
 
 namespace ClassicAssist.Data.Organizer
 {
-    public class OrganizerItem : INotifyPropertyChanged
+    public class OrganizerItem : SetPropertyNotifyChanged
     {
         private int _amount;
         private int _hue;
@@ -33,21 +31,6 @@ namespace ClassicAssist.Data.Organizer
         {
             get => _item;
             set => SetProperty( ref _item, value );
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        // ReSharper disable once RedundantAssignment
-        public void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
-        {
-            obj = value;
-            OnPropertyChanged( propertyName );
-        }
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
 
@@ -10,12 +11,12 @@ namespace ClassicAssist.UO.Network.Packets
         {
         }
 
-        public GumpButtonClick( int gumpID, int serial, int buttonID, IReadOnlyCollection<int> switches = null )
+        public GumpButtonClick( int gumpID, int serial, int buttonID, IReadOnlyCollection<int> switches = null,
+            Dictionary<int, string> textEntries = null )
         {
-            //TODO switches etc
-            _writer = new PacketWriter( 23 + ( switches?.Count * 4 ?? 0 ) );
+            _writer = new PacketWriter();
             _writer.Write( (byte) 0xB1 );
-            _writer.Write( (short) ( 23 + ( switches?.Count * 4 ?? 0 ) ) );
+            _writer.Write( (short) 0 );
             _writer.Write( serial );
             _writer.Write( gumpID );
             _writer.Write( buttonID );
@@ -29,8 +30,32 @@ namespace ClassicAssist.UO.Network.Packets
                     _writer.Write( @switch );
                 }
             }
+            else
+            {
+                _writer.Write( 0 );
+            }
 
-            _writer.Fill();
+            if ( textEntries != null )
+            {
+                _writer.Write( textEntries.Count );
+
+                foreach ( KeyValuePair<int, string> keyValuePair in textEntries )
+                {
+                    int length = keyValuePair.Value.Length * 2;
+
+                    _writer.Write( (short) keyValuePair.Key );
+                    _writer.Write( (short) length );
+                    _writer.WriteBigUniFixed( keyValuePair.Value, length );
+                }
+            }
+            else
+            {
+                _writer.Write( 0 );
+            }
+
+            _writer.Seek( 1, SeekOrigin.Begin );
+            _writer.Write( (short) _writer.Length );
+            _writer.Seek( 0, SeekOrigin.End );
         }
 
         public string Parse( byte[] packet, int length, PacketDirection direction )

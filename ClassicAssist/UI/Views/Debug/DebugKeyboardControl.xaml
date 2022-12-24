@@ -3,10 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:ClassicAssist.UI.Views.Debug"
-             xmlns:debug="clr-namespace:ClassicAssist.UI.ViewModels.Debug"
-             xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
-             xmlns:resources="clr-namespace:ClassicAssist.Resources"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:misc="clr-namespace:ClassicAssist.Misc"
              Background="{DynamicResource ThemeBackgroundBrush}"
              mc:Ignorable="d"
@@ -14,29 +11,9 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../Resources/Icons.xaml" />
+                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary Source="Styles.xaml" />
                 <ResourceDictionary>
-                    <DrawingImage x:Key="GreenTickIcon">
-                        <DrawingImage.Drawing>
-                            <DrawingGroup ClipGeometry="M0,0 V511.999 H511.999 V0 H0 Z">
-                                <GeometryDrawing Brush="#FFB7E183"
-                                                 Geometry="F1 M511.999,511.999z M0,0z M502.87,75.474C490.669,63.27,470.918,63.269,458.716,75.473L163.89,370.299 53.284,259.693C41.083,247.489 21.332,247.488 9.13,259.692 -3.043,271.866 -3.043,291.673 9.13,303.845L141.814,436.53C154.013,448.728,173.767,448.73,185.967,436.53L502.87,119.626C515.042,107.453,515.042,87.645,502.87,75.474z" />
-                                <GeometryDrawing Brush="#FF71DE56"
-                                                 Geometry="F1 M511.999,511.999z M0,0z M502.87,75.474C490.669,63.27,470.918,63.269,458.716,75.473L243.511,290.678 243.511,378.984 502.87,119.626C515.042,107.453,515.042,87.645,502.87,75.474z" />
-                            </DrawingGroup>
-                        </DrawingImage.Drawing>
-                    </DrawingImage>
-                    <DrawingImage x:Key="RedCrossIcon">
-                        <DrawingImage.Drawing>
-                            <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
-                                <GeometryDrawing Brush="#FFE0230D"
-                                                 Geometry="F1 M512,512z M0,0z M512,90.326L512,90.326 346.326,256 512,421.674 490.15,443.534 209.899,256 490.15,68.476z" />
-                                <GeometryDrawing Brush="#FFFF5440"
-                                                 Geometry="F1 M512,512z M0,0z M490.15,68.476L490.15,68.476 302.616,256 490.15,443.534 421.674,512 256,346.326 90.326,512 0,421.674 165.674,256 0,90.326 90.326,0 256,165.674 421.674,0z" />
-                            </DrawingGroup>
-                        </DrawingImage.Drawing>
-                    </DrawingImage>
                     <misc:BindingProxy x:Key="Proxy" Data="{Binding}" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>

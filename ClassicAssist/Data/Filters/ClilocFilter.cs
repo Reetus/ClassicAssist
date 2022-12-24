@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Assistant;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Views.Filters;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Interactivity;
 
 namespace ClassicAssist.UI.Misc
@@ -18,10 +19,21 @@ namespace ClassicAssist.UI.Misc
             typeof( WindowCommand ), typeof( WindowCommandBehaviour ),
             new FrameworkPropertyMetadata( WindowCommand.Close ) );
 
+        public static readonly DependencyProperty MinimizeCommandProperty =
+            DependencyProperty.Register( nameof( MinimizeCommand ), typeof( ICommand ),
+                typeof( WindowCommandBehaviour ),
+                new FrameworkPropertyMetadata( default ) );
+
         public WindowCommand Command
         {
             get => (WindowCommand) GetValue( CommandProperty );
             set => SetValue( CommandProperty, value );
+        }
+
+        public ICommand MinimizeCommand
+        {
+            get => (ICommand) GetValue( MinimizeCommandProperty );
+            set => SetValue( MinimizeCommandProperty, value );
         }
 
         protected override void OnAttached()
@@ -49,6 +61,12 @@ namespace ClassicAssist.UI.Misc
             {
                 case WindowCommand.Minimize:
                 {
+                    if ( MinimizeCommand != null )
+                    {
+                        MinimizeCommand.Execute( window );
+                        break;
+                    }
+
                     window.WindowState = WindowState.Minimized;
                     break;
                 }

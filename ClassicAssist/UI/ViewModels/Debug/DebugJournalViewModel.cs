@@ -1,8 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Network;
 
 namespace ClassicAssist.UI.ViewModels.Debug
@@ -10,6 +13,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
     public class DebugJournalViewModel : BaseViewModel
     {
         private ICommand _clearCommand;
+        private ICommand _copyCommand;
         private ObservableCollection<string> _items = new ObservableCollection<string>();
         private string _selectedItem;
 
@@ -27,6 +31,8 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
         public ICommand ClearCommand => _clearCommand ?? ( _clearCommand = new RelayCommand( Clear, o => true ) );
 
+        public ICommand CopyCommand => _copyCommand ?? ( _copyCommand = new RelayCommand( Copy, o => o != null ) );
+
         public ObservableCollection<string> Items
         {
             get => _items;
@@ -37,6 +43,23 @@ namespace ClassicAssist.UI.ViewModels.Debug
         {
             get => _selectedItem;
             set => SetProperty( ref _selectedItem, value );
+        }
+
+        private static void Copy( object obj )
+        {
+            if ( !( obj is string text ) )
+            {
+                return;
+            }
+
+            try
+            {
+                Clipboard.SetText( text );
+            }
+            catch ( Exception )
+            {
+                // ignored
+            }
         }
 
         private void Clear( object obj )

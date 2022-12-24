@@ -12,9 +12,11 @@ namespace ClassicAssist.UO.Network.Packets
                 return null;
             }
 
-            Direction d = (Direction) packet[1];
+            Direction d = (Direction) ( packet[1] & 0x07 );
 
-            return $"Walk(\"{d.ToString()}\")\r\n";
+            bool running = ( packet[1] & 0x80 ) != 0;
+
+            return running ? $"Run(\"{d}\")\r\n" : $"Walk(\"{d}\")\r\n";
         }
     }
 }

@@ -27,8 +27,8 @@ namespace ClassicAssist.Tests
         private OnPacketSendRecv _receivePacket;
         private RequestMove _requestMove;
         private OnPacketSendRecv _sendPacket;
-        private string _startupPath;
         private OnSetTitle _setTitle;
+        private string _startupPath;
 
         [TestInitialize]
         public void Initialize()

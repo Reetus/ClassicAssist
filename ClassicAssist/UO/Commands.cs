@@ -6,11 +6,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data;
-using ClassicAssist.Data.Macros;
+using ClassicAssist.Data.Abilities;
+using ClassicAssist.Data.ClassicUO.Objects;
 using ClassicAssist.Data.Skills;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Misc;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO.Data;
@@ -19,18 +21,12 @@ using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using ClassicAssist.UO.Objects.Gumps;
+using MacroManager = ClassicAssist.Data.Macros.MacroManager;
 
 namespace ClassicAssist.UO
 {
     public class Commands
     {
-        public enum SystemMessageHues
-        {
-            Normal = 0,
-            Red = 35,
-            Yellow = 61,
-            Green = 63
-        }
 
         private static readonly object _dragDropLock = new object();
         private static string _lastSystemMessage;
@@ -112,7 +108,18 @@ namespace ClassicAssist.UO
             }, QueuePriority.Medium );
         }
 
-        public static Task EquipItem( Item item, Layer layer )
+        public static Task EquipItem( Item item, Layer layer, QueuePriority queuePriority = QueuePriority.Medium )
+        {
+            if ( layer == Layer.Invalid )
+            {
+                StaticTile tileData = TileData.GetStaticTile( item.ID );
+                layer = (Layer) tileData.Quality;
+            }
+
+            return EquipItem( item.Serial, layer, queuePriority );
+        }
+
+        public static Task EquipItem( int serial, Layer layer, QueuePriority queuePriority = QueuePriority.Medium )
         {
             int containerSerial = Engine.Player?.Serial ?? 0;
 
@@ -123,26 +130,32 @@ namespace ClassicAssist.UO
 
             if ( layer == Layer.Invalid )
             {
-                StaticTile tileData = TileData.GetStaticTile( item.ID );
-                layer = (Layer) tileData.Quality;
+                SystemMessage( Strings.Invalid_layer_value___, (int) SystemMessageHues.Red );
+                return Task.CompletedTask;
             }
 
-            if ( layer == Layer.Invalid )
+            return ActionPacketQueue.EnqueueAction( serial, i =>
             {
-                throw new ArgumentException( "EquipItem: Layer is invalid" );
-            }
-
-            return ActionPacketQueue.EnqueueAction( item, i =>
-            {
-                Engine.SendPacketToServer( new DragItem( item.Serial, 1 ) );
+                Engine.SendPacketToServer( new DragItem( i, 1 ) );
                 Thread.Sleep( 50 );
-                Engine.SendPacketToServer( new EquipRequest( item.Serial, layer, containerSerial ) );
+                Engine.SendPacketToServer( new EquipRequest( i, layer, containerSerial ) );
                 return true;
-            }, QueuePriority.Medium );
+            }, queuePriority );
         }
 
-        public static void SystemMessage( string text, int hue = 0x03b2, bool throttleRepeating = false,
-            bool suppressInQuietMode = false )
+        public static void SystemMessage( string text, bool suppressInQuietMode )
+        {
+            SystemMessage( text, 0x3b2, suppressInQuietMode );
+        }
+
+        public static void SystemMessage( string text, SystemMessageHues hue, bool suppressInQuietMode = false,
+            bool throttleRepeating = false )
+        {
+            SystemMessage( text, (int) hue, suppressInQuietMode, throttleRepeating );
+        }
+
+        public static void SystemMessage( string text, int hue = 0x03b2, bool suppressInQuietMode = false,
+            bool throttleRepeating = false )
         {
             if ( throttleRepeating )
             {
@@ -181,6 +194,8 @@ namespace ClassicAssist.UO
             pw.WriteAsciiFixed( "System\0", 30 );
             pw.Write( textBytes, 0, textBytes.Length );
 
+            IncomingPacketHandlers.CAASystemMessageToJournal( text );
+
             Engine.SendPacketToClient( pw );
         }
 
@@ -191,70 +206,10 @@ namespace ClassicAssist.UO
 
         public static async Task<int> GetTargetSerialAsync( string message = "", int timeout = 30000 )
         {
-            if ( string.IsNullOrEmpty( message ) )
-            {
-                message = Strings.Target_object___;
-            }
+            ( TargetType _, TargetFlags _, int serial, int _, int _, int _, int _ ) =
+                await GetTargetInfoAsync( message, timeout );
 
-            SystemMessage( message );
-
-            Random random = new Random();
-
-            return await Task.Run( () =>
-            {
-                bool wasTargetting = Engine.TargetExists;
-
-                uint value = (uint) random.Next( 1, int.MaxValue );
-
-                //TODO
-                PacketWriter pw = new PacketWriter( 19 );
-                pw.Write( (byte) 0x6C );
-                pw.Write( (byte) 0 );
-                pw.Write( value );
-                pw.Write( (byte) 0 );
-                pw.Fill();
-
-                AutoResetEvent are = new AutoResetEvent( false );
-
-                int serial = -1;
-
-                PacketFilterInfo pfi = new PacketFilterInfo( 0x6C,
-                    new[] { PacketFilterConditions.UIntAtPositionCondition( value, 2 ) }, ( packet, info ) =>
-                    {
-                        serial = ( packet[7] << 24 ) | ( packet[8] << 16 ) | ( packet[9] << 8 ) | packet[10];
-
-                        are.Set();
-                    } );
-
-                try
-                {
-                    Engine.AddSendPreFilter( pfi );
-
-                    Engine.SendPacketToClient( pw );
-
-                    bool result = are.WaitOne( timeout );
-
-                    if ( result )
-                    {
-                        return serial;
-                    }
-
-                    Engine.SendPacketToClient( new CancelTargetCursor( value ) );
-
-                    SystemMessage( Strings.Timeout___ );
-
-                    return serial;
-                }
-                finally
-                {
-                    Engine.RemoveSendPreFilter( pfi );
-
-                    if ( wasTargetting )
-                    {
-                        ResendTargetToClient();
-                    }
-                }
-            } );
+            return serial;
         }
 
         public static async Task<(TargetType, TargetFlags, int, int, int, int, int)> GetTargetInfoAsync(
@@ -313,6 +268,10 @@ namespace ClassicAssist.UO
 
                     Engine.SendPacketToClient( pw );
 
+                    Engine.TargetExists = true;
+                    Engine.InternalTarget = true;
+                    Engine.InternalTargetSerial = (int) value;
+
                     bool result = are.WaitOne( timeout );
 
                     if ( result )
@@ -328,6 +287,8 @@ namespace ClassicAssist.UO
                 }
                 finally
                 {
+                    Engine.TargetExists = false;
+                    Engine.InternalTarget = false;
                     Engine.RemoveSendPreFilter( pfi );
 
                     if ( wasTargetting )
@@ -338,14 +299,15 @@ namespace ClassicAssist.UO
             } );
         }
 
-        public static bool GumpButtonClick( uint gumpID, int buttonID, int[] switches = null )
+        public static bool GumpButtonClick( uint gumpID, int buttonID, int[] switches = null,
+            Dictionary<int, string> textEntries = null )
         {
             if ( !Engine.GumpList.TryGetValue( gumpID, out int serial ) )
             {
                 return false;
             }
 
-            Engine.SendPacketToServer( new GumpButtonClick( (int) gumpID, serial, buttonID, switches ) );
+            Engine.SendPacketToServer( new GumpButtonClick( (int) gumpID, serial, buttonID, switches, textEntries ) );
 
             Engine.GumpList.TryRemove( gumpID, out _ );
             CloseClientGump( gumpID );
@@ -398,24 +360,32 @@ namespace ClassicAssist.UO
         public static bool WaitForGump( uint gumpId, int timeout = 30000 )
         {
             PacketFilterInfo pfi = new PacketFilterInfo( 0xDD );
+            PacketFilterInfo pfi2 = new PacketFilterInfo( 0xB0 );
 
             if ( gumpId != 0 )
             {
                 pfi = new PacketFilterInfo( 0xDD,
                     new[] { PacketFilterConditions.UIntAtPositionCondition( gumpId, 7 ) } );
+
+                pfi2 = new PacketFilterInfo( 0xB0,
+                    new[] { PacketFilterConditions.UIntAtPositionCondition( gumpId, 7 ) } );
             }
 
             PacketWaitEntry packetWaitEntry = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );
+            PacketWaitEntry packetWaitEntry2 = Engine.PacketWaitEntries.Add( pfi2, PacketDirection.Incoming, true );
 
             try
             {
-                bool result = packetWaitEntry.Lock.WaitOne( timeout );
+                bool result =
+                    Task.WaitAny( new Task[] { packetWaitEntry.Lock.ToTask(), packetWaitEntry2.Lock.ToTask() },
+                        timeout ) != -1;
 
                 return result;
             }
             finally
             {
                 Engine.PacketWaitEntries.Remove( packetWaitEntry );
+                Engine.PacketWaitEntries.Remove( packetWaitEntry2 );
             }
         }
 
@@ -684,9 +654,25 @@ namespace ClassicAssist.UO
             return result;
         }
 
-        public static void SetWeaponAbility( int abilityIndex )
+        public static void SetWeaponAbility( int abilityIndex, AbilityType abilityType )
         {
-            Engine.SendPacketToServer( new SetWeaponAbility( abilityIndex ) );
+            bool result = false;
+
+            // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
+            switch ( abilityType )
+            {
+                case AbilityType.Primary:
+                    result = GameActions.UsePrimaryAbility();
+                    break;
+                case AbilityType.Secondary:
+                    result = GameActions.UseSecondaryAbility();
+                    break;
+            }
+
+            if ( !result )
+            {
+                Engine.SendPacketToServer( new SetWeaponAbility( abilityIndex ) );
+            }
         }
 
         public static void ClearWeaponAbility()
@@ -882,6 +868,7 @@ namespace ClassicAssist.UO
             pw.Write( (short) 0 );
 
             Engine.TargetExists = true;
+            Engine.InternalTarget = false;
             Engine.SendPacketToClient( pw );
         }
 
@@ -1090,6 +1077,43 @@ namespace ClassicAssist.UO
                     t.SetApartmentState( ApartmentState.STA );
                     t.Start();
                 }
+            }
+        }
+
+        public static async Task<bool> WaitForPropertiesAsync( IEnumerable<Item> items, int timeout )
+        {
+            List<int> serials = items.Where( e => e.Properties == null ).Select( e => e.Serial ).ToList();
+
+            if ( !serials.Any() )
+            {
+                return true;
+            }
+
+            List<PacketWaitEntry> waitEntries = ( from serial in serials
+                select Engine.PacketWaitEntries.Add(
+                    new PacketFilterInfo( 0xD6, new[] { PacketFilterConditions.IntAtPositionCondition( serial, 5 ) } ),
+                    PacketDirection.Incoming, true ) ).ToList();
+
+            foreach ( IEnumerable<int> subSerials in serials.Split( 10 ) )
+            {
+                Engine.SendPacketToServer( new BatchQueryProperties( subSerials.ToArray() ) );
+            }
+
+            try
+            {
+                Task timeoutTask = Task.Run( async () => await Task.Delay( timeout ) );
+
+                List<Task> tasks = new List<Task>();
+
+                tasks.AddRange( waitEntries.Select( e => e.Lock.ToTask() ) );
+
+                Task t = await Task.WhenAny( Task.WhenAll( tasks ), timeoutTask );
+
+                return t != timeoutTask;
+            }
+            finally
+            {
+                Engine.PacketWaitEntries.RemoveRange( waitEntries );
             }
         }
     }

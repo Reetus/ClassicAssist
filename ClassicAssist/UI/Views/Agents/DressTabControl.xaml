@@ -3,15 +3,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:controls1="clr-namespace:ClassicAssist.UI.Controls"
-    xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
-    xmlns:resources="clr-namespace:ClassicAssist.Resources"
+    xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
     xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
     xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:misc="clr-namespace:ClassicAssist.Misc"
     xmlns:dress="clr-namespace:ClassicAssist.Data.Dress"
     xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
     x:Class="ClassicAssist.UI.Views.Agents.DressTabControl"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="500" Margin="0">
@@ -23,7 +22,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../Resources/ResourceDictionary.xaml" />
+                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <misc:BindingProxy Data="{Binding}" x:Key="Proxy" />
         </ResourceDictionary>
@@ -37,7 +36,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="120" />
         </Grid.ColumnDefinitions>
-        <Grid Margin="5" Grid.Column="0">
+        <Grid Margin="10" Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -66,7 +65,7 @@
                 </i:Interaction.Behaviors>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <controls1:EditTextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                        <controls:EditTextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                                  Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=listBox1, Mode=OneWay}" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -84,7 +83,7 @@
                         Command="{Binding NewDressEntryCommand, Mode=OneWay}" />
             </Grid>
         </Grid>
-        <Grid Margin="5" Grid.Column="1">
+        <Grid Margin="10" Grid.Column="1">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />

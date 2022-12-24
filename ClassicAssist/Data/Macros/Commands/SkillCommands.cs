@@ -3,7 +3,7 @@ using System.Linq;
 using Assistant;
 using ClassicAssist.Data.Skills;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;
 using UOC = ClassicAssist.UO.Commands;
@@ -44,13 +44,24 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = nameof( Strings.Skills ),
             Parameters = new[] { nameof( ParameterType.SkillName ) } )]
-        public static double Skill( string name )
+        public static double Skill( string name, bool baseSkill = false )
         {
             SkillManager manager = SkillManager.GetInstance();
 
             SkillEntry s = manager.Items.FirstOrDefault( se => se.Skill.Name.ToLower().Contains( name.ToLower() ) );
 
-            return s?.Value ?? 0;
+            return baseSkill ? s?.Base ?? 0 : s?.Value ?? 0;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Skills ),
+            Parameters = new[] { nameof( ParameterType.SkillName ) } )]
+        public static double SkillDelta( string name )
+        {
+            SkillManager manager = SkillManager.GetInstance();
+
+            SkillEntry s = manager.Items.FirstOrDefault( se => se.Skill.Name.ToLower().Contains( name.ToLower() ) );
+
+            return s?.Delta ?? 0;
         }
 
         [CommandsDisplay( Category = nameof( Strings.Skills ),
@@ -104,6 +115,12 @@ namespace ClassicAssist.Data.Macros.Commands
             LockStatus ls = Utility.GetEnumValueByName<LockStatus>( lockStatus );
 
             UOC.ChangeStatLock( st, ls );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Skills ) )]
+        public static void UseLastSkill()
+        {
+            Engine.SendPacketToServer( new UseSkill( Engine.LastSkillID ) );
         }
     }
 }

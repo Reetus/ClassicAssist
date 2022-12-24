@@ -19,7 +19,7 @@ namespace ClassicAssist.Updater.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -70,6 +70,15 @@ namespace ClassicAssist.Updater.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot locate update package....
         /// </summary>
         public static string Cannot_locate_update_package___ {
@@ -111,6 +120,15 @@ namespace ClassicAssist.Updater.Properties {
         public static string Copying__0____ {
             get {
                 return ResourceManager.GetString("Copying {0}...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you wish to continue?.
+        /// </summary>
+        public static string Do_you_wish_to_continue_ {
+            get {
+                return ResourceManager.GetString("Do you wish to continue?", resourceCulture);
             }
         }
         
@@ -160,6 +178,15 @@ namespace ClassicAssist.Updater.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Extracting modules....
+        /// </summary>
+        public static string Extracting_modules___ {
+            get {
+                return ResourceManager.GetString("Extracting modules...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Extracting package....
         /// </summary>
         public static string Extracting_package___ {
@@ -169,11 +196,38 @@ namespace ClassicAssist.Updater.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Force Update.
+        /// </summary>
+        public static string Force_Update {
+            get {
+                return ResourceManager.GetString("Force Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Github Access Token.
+        /// </summary>
+        public static string Github_Access_Token {
+            get {
+                return ResourceManager.GetString("Github Access Token", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GitHub rate limit, try again after {0}.
         /// </summary>
         public static string GitHub_rate_limit__try_again_after__0_ {
             get {
                 return ResourceManager.GetString("GitHub rate limit, try again after {0}", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install Prereleases.
+        /// </summary>
+        public static string Install_Prereleases {
+            get {
+                return ResourceManager.GetString("Install Prereleases", resourceCulture);
             }
         }
         
@@ -205,6 +259,24 @@ namespace ClassicAssist.Updater.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string OK {
+            get {
+                return ResourceManager.GetString("OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        public static string Options {
+            get {
+                return ResourceManager.GetString("Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Project Homepage.
         /// </summary>
         public static string Project_Homepage {
@@ -232,6 +304,36 @@ namespace ClassicAssist.Updater.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Running Clients.
+        /// </summary>
+        public static string Running_Clients {
+            get {
+                return ResourceManager.GetString("Running Clients", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The following client(s) are currently running, if you continue they will be closed.
+        /// </summary>
+        public static string The_following_client_s__are_currently_running__if_you_continue_they_will_be_closed {
+            get {
+                return ResourceManager.GetString("The following client(s) are currently running, if you continue they will be close" +
+                        "d", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The following files were in use and cannot be overwritten, ensure all instances of ClassicAssist are closed and then try again...
+        ///{0}.
+        /// </summary>
+        public static string The_following_files_were_in_use_and_cannot_be_overwritten__ensure_all_instances_of_ClassicAssist_are_closed_and_then_try_again____0_ {
+            get {
+                return ResourceManager.GetString("The following files were in use and cannot be overwritten, ensure all instances o" +
+                        "f ClassicAssist are closed and then try again...{0}", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to locate GitHub release.
         /// </summary>
         public static string Unable_to_locate_GitHub_release {
@@ -241,11 +343,29 @@ namespace ClassicAssist.Updater.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update cancelled....
+        /// </summary>
+        public static string Update_cancelled___ {
+            get {
+                return ResourceManager.GetString("Update cancelled...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Updating files....
         /// </summary>
         public static string Updating_files___ {
             get {
                 return ResourceManager.GetString("Updating files...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
             }
         }
     }

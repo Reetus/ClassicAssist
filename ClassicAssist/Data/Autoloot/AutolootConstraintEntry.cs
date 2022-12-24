@@ -1,11 +1,8 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using ClassicAssist.Annotations;
+﻿using ClassicAssist.Shared.UI;
 
 namespace ClassicAssist.Data.Autoloot
 {
-    public class AutolootConstraintEntry : INotifyPropertyChanged
+    public class AutolootConstraintEntry : SetPropertyNotifyChanged
     {
         private AutolootOperator _operator = AutolootOperator.Equal;
         private PropertyEntry _property;
@@ -27,21 +24,6 @@ namespace ClassicAssist.Data.Autoloot
         {
             get => _value;
             set => SetProperty( ref _value, value );
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-        }
-
-        // ReSharper disable once RedundantAssignment
-        public virtual void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
-        {
-            obj = value;
-            OnPropertyChanged( propertyName );
         }
     }
 }

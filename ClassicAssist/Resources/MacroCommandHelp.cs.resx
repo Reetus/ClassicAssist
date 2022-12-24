@@ -1,0 +1,981 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MOVETYPE_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>#Přesunout typ do jiného kontejneru...
+
+MoveType(0x170f, "backpack", "bank")
+
+#Cíl může být země když předáš -1 jako cílový kontejner a upřesníš souřadnice..
+
+MoveType(0x170f, "backpack", -1, 1928, 2526, 0)
+
+#Volitelné parametry jsou Barva a Množství, např. přesun 10 předmětů s barvou 50..
+MoveType(0x170f, "backpack", "bank", -1, -1, 0, 50, 10)</value>
+  </data>
+  <data name="CLEARABILITY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zrušit schopnost zbraně.</value>
+  </data>
+  <data name="FLY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>(Gargoyle) Začít létat pokud už nelétáš.</value>
+  </data>
+  <data name="FLYING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud postava létá.</value>
+  </data>
+  <data name="LAND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>(Gargoyle) Přestane létat pokud létáš.</value>
+  </data>
+  <data name="SETABILITY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Nastav schopnost zbraně, parametr "primary" / "secondary".</value>
+  </data>
+  <data name="ATTACK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zaútoč na postavu (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="BANDAGESELF_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Použije bandáž na postavu hráče.</value>
+  </data>
+  <data name="CLEARHANDS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vyprázdní ruce, "left", "right", nebo "both"</value>
+  </data>
+  <data name="CLEARUSEONCE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vyprázdní seznam UseOnce.</value>
+  </data>
+  <data name="CLICKOBJECT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Klikne jednou na objekt (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="CONTENTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí počet předmětů v daném kontejneru.</value>
+  </data>
+  <data name="CONTEXTMENU_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vyžádá kontextové menu.</value>
+  </data>
+  <data name="EQUIPITEM_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Nasadí daný předmět do dané vrstvy. Použij inspektor objektů pro zjištění vrstvy.</value>
+  </data>
+  <data name="EQUIPLASTWEAPON_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pošle packet pro rychlé přehození zbraní (nejspíše nefunguje na pre-AoS serverech).</value>
+  </data>
+  <data name="EQUIPTYPE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Nasadí daný typ předmětu do dané vrstvy. Použij inspektor objektů pro zjištění vrstvy.</value>
+  </data>
+  <data name="FEED_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Nakrmí daný alias nebo serial uvedeným typem.</value>
+  </data>
+  <data name="FINDLAYER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True a aktualizuje alias "found" pokud předmět existuje v dané vrstvě, možnost předat serial/alias postavy pro ověření.</value>
+  </data>
+  <data name="INREGION_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud region cíle má daný atribut.</value>
+  </data>
+  <data name="PING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí průměrný ping na server. -1 při chybě.</value>
+  </data>
+  <data name="RENAME_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pošle žádost o přejmenování.</value>
+  </data>
+  <data name="SHOWNAMES_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zobrazovat názvy mrtvol a/nebo postav (parametr "mobiles" nebo "corpses").</value>
+  </data>
+  <data name="TOGGLEMOUNTED_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Sesedne pokud na něčem sedíš, nebo nasedne pokud ne. Vyzve k výběru cíle, je-li alias "mount" prázdný.</value>
+  </data>
+  <data name="USEOBJECT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pošle požadavek na dvojklik na daný objekt (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="USEONCE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Použít daný typ předmětu (grafika) z batohu, pouze jednou</value>
+  </data>
+  <data name="USETYPE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pošle požadavek na dvojklik na daný typ objektu, volitelné parametry jsou barva a kontejner (výchozí je hráčův batoh) (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="WAITFORCONTENTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Počká na obsah daného kontejneru.</value>
+  </data>
+  <data name="WAITFORCONTEXT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Požádá nebo počká na volbu kontextové menu.</value>
+  </data>
+  <data name="COUNTER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí počet daného počítadla.</value>
+  </data>
+  <data name="DRESS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Oblékne všechny předměty definované v agentu oblékání.</value>
+  </data>
+  <data name="DRESSCONFIG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Přidá všechny oblečené předměty do dočasného seznamu, který je po vypnutí klienta smazán.</value>
+  </data>
+  <data name="DRESSING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud agent oblékání právě obléká nebo svléká.</value>
+  </data>
+  <data name="ORGANIZER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Spustí agenta organizování.</value>
+  </data>
+  <data name="ORGANIZING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud právě běží agent organizování.</value>
+  </data>
+  <data name="UNDRESS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Svlékne všechny předměty definované v agentu oblékání.</value>
+  </data>
+  <data name="FINDALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud se alias nebo serial nachází na herní obrazovce.</value>
+  </data>
+  <data name="GETALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Získá hodnotu daného aliasu.</value>
+  </data>
+  <data name="PROMPTALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vyzve ve hře kurzorem výběr hodnoty pro daný alias.</value>
+  </data>
+  <data name="SETALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Nastaví hodnotu pro daný alias.</value>
+  </data>
+  <data name="SETMACROALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Nastaví hodnotu pro daný alias, ta je platná pouze pro toto makro.</value>
+  </data>
+  <data name="UNSETALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odstraní hodnotu daného aliasu.</value>
+  </data>
+  <data name="ADDFRIEND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Přidá postavu na seznam přátel, vyzve k výběru ve hře pokud není předán serial/alias.</value>
+  </data>
+  <data name="ALLY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud je známost postavy Ally</value>
+  </data>
+  <data name="BUFFEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Dotaz na konkrétní buff</value>
+  </data>
+  <data name="CLEARIGNORELIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vymaže seznam ignorovaných postav.</value>
+  </data>
+  <data name="COUNTTYPE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Spočítá daný typ předmětu v kontejneru.</value>
+  </data>
+  <data name="COUNTTYPEGROUND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Spočítá daný předmět nebo postavu  v rozsahu.</value>
+  </data>
+  <data name="CRIMINAL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud je známost postavy Criminal</value>
+  </data>
+  <data name="DEAD_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud je daná postava mrtvá, je-li parametr prázdný, vrátí tuto hodnotu pro hráče (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="DEX_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí obratnost hráčské postavy</value>
+  </data>
+  <data name="DIFFHITS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí rozdíl mezi hodnotou maximálních a současných životů postavy, je-li parametr prázdný, vrátí tuto hodnotu pro hráče (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="DIFFWEIGHT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí rozdíl mezi hodnotou maximální a současné váhy.</value>
+  </data>
+  <data name="DIRECTIONTO_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí směr ve kterém se postava nachází relativně k postavě hráče.</value>
+  </data>
+  <data name="DISTANCE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí vzdálenost k danému objektu.</value>
+  </data>
+  <data name="ENEMY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True je-li známost postavy Enemy</value>
+  </data>
+  <data name="FINDOBJECT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vyhledá objekt podle serialu a nastaví alias "found", hledá na zemi pokud není zadaný cíl.</value>
+  </data>
+  <data name="FINDTYPE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vyhledá objekt podle ID itemu a nastaví alias "found", hledá na zemi pokud není zadaný cíl.</value>
+  </data>
+  <data name="FOLLOWERS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí počet aktuálních následovnícků podle dat ze statusu.</value>
+  </data>
+  <data name="GOLD_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí počet zlaťáků podle dat ze statusu.</value>
+  </data>
+  <data name="GRAPHIC_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí ID itemu daného objektu (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="GRAY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud je známost postavy Attackable</value>
+  </data>
+  <data name="HIDDEN_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud je daná postava skrytá, je-li parametr prázdný, vrátí tuto hodnotu pro hráče (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="HITS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí životy dané postavy, je-li parametr prázdný, vrátí tuto hodnotu pro hráče (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="HUE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí barvu daného objektu (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="IGNOREOBJECT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ignoruje daný objekt z hledacích příkazů</value>
+  </data>
+  <data name="INFRIENDLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud je daná postava v seznamu přátel.</value>
+  </data>
+  <data name="INNOCENT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud je známost postavy Innocent</value>
+  </data>
+  <data name="INPARTY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud je s tebou daná postava v družině (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="INRANGE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zkontroluje že daný objekt je v dosahu hráčské postavy</value>
+  </data>
+  <data name="INT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí inteligenci hráčské postavy</value>
+  </data>
+  <data name="INVULNERABLE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud je známost postavy Invulnerable</value>
+  </data>
+  <data name="LUCK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí hodnotu štěstí podle dat ze statusu.</value>
+  </data>
+  <data name="MANA_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí manu dané postavy, je-li parametr prázdný, vrátí tuto hodnotu pro hráče (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="MAXFOLLOWERS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí hodnotu maxima následovníků podle dat ze statusu.</value>
+  </data>
+  <data name="MAXHITS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí max životy dané postavy, je-li parametr prázdný, vrátí tuto hodnotu pro hráče (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="MAXMANA_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí max manu dané postavy, je-li parametr prázdný, vrátí tuto hodnotu pro hráče (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="MAXSTAM_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí max staminu dané postavy, je-li parametr prázdný, vrátí tuto hodnotu pro hráče (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="MAXWEIGHT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí hodnotu maxima váhy podle dat ze statusu.</value>
+  </data>
+  <data name="MOUNTED_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud je daná postava v sedle.</value>
+  </data>
+  <data name="MOVEITEM_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Přesune předmět do kontejneru (parametry mohou být serialy nebo aliasy).</value>
+  </data>
+  <data name="MOVEITEMOFFSET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Přesune daný serial/alias na určené ofsety souřadnic x,y,z hráče, prázdná hodnota množství nebo -1 přesune celou hromadu.</value>
+  </data>
+  <data name="MOVETYPE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Přesune typ ze zdroje do cíle.</value>
+  </data>
+  <data name="MOVETYPEOFFSET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Přesune daný typ ze zdrojového kontejneru na určené ofsety souřadnic x,y,z hráče, prázdná hodnota množství nebo -1 přesune celou hromadu.</value>
+  </data>
+  <data name="MURDERER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud je známost postavy Murderer</value>
+  </data>
+  <data name="NAME_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí jméno dané postavy.</value>
+  </data>
+  <data name="PARALYZED_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud je daná postava paralyzována.</value>
+  </data>
+  <data name="POISONED_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud je daná postava otrávená.</value>
+  </data>
+  <data name="REMOVEFRIEND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odstraní postavu ze seznamu přítel, vyzve k výběru ve hře pokud není předán serial/alias.</value>
+  </data>
+  <data name="SPECIALMOVEEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ověří že daný speciální útok existuje</value>
+  </data>
+  <data name="STAM_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí staminu dané postavy, je-li parametr prázdný, vrátí tuto hodnotu pro hráče (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="STR_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí sílu hráčské postavy</value>
+  </data>
+  <data name="TITHINGPOINTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí tithing points hráčské postavy.</value>
+  </data>
+  <data name="WAR_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ověří zda je daná postava v módu boje.</value>
+  </data>
+  <data name="WEIGHT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí hodnotu váhy podle dat ze statusu.</value>
+  </data>
+  <data name="X_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí souřadnici X daného objektu (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="Y_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí souřadnici Y daného objektu (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="YELLOWHITS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud je daná postava 'yellowhits'.</value>
+  </data>
+  <data name="Z_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí souřadnici Z daného objektu (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="CLOSEGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zavře daný gump serial</value>
+  </data>
+  <data name="GUMPEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Ověří zda existuje gump s daným ID.</value>
+  </data>
+  <data name="INGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zkontroluje řetězec v gumpu.</value>
+  </data>
+  <data name="REPLYGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odešle kliknutí na tlačítko server gumpu, parametry jsou ID gumpu a tlačítka.</value>
+  </data>
+  <data name="WAITFORGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pozastaví skript dokud nepřijde daný gump, volitelné parametry ID gumpu a timeout.</value>
+  </data>
+  <data name="CLEARJOURNAL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vymaže všechen text deníku z paměti.</value>
+  </data>
+  <data name="INJOURNAL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zkontroluje řetězec v deníku, volitelně i název zdroje.</value>
+  </data>
+  <data name="WAITFORJOURNAL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pozastaví skript na danou dobu nebo dokud se neobjeví daný řetězec.</value>
+  </data>
+  <data name="CLEARLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vyprázdní daný seznam.</value>
+  </data>
+  <data name="CREATELIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vytvoří seznam s daným názvem, existující seznam bude přepsán.</value>
+  </data>
+  <data name="GETLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí všechny elementy seznamu, pro účely cyklů atd.</value>
+  </data>
+  <data name="INLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zkontroluje element v seznamu.</value>
+  </data>
+  <data name="LIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí počet elementů v seznamu.</value>
+  </data>
+  <data name="LISTEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud seznam existuje.</value>
+  </data>
+  <data name="PUSHLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Přidá hodnotu na konec seznamu, vytvoří nový pokud seznam neexistuje.</value>
+  </data>
+  <data name="REMOVELIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Smaže seznam s daným názvem.</value>
+  </data>
+  <data name="PLAYMACRO_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Přehraje makro s daným názvem.</value>
+  </data>
+  <data name="STOP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zastaví aktuální makro.</value>
+  </data>
+  <data name="HOTKEYS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zapne nebo vypne klávesové zkratky.</value>
+  </data>
+  <data name="INFO_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zobrazí inspektora objektů pro daný serial / alias, vyzve k výběru ve hře pokud není žádný předán.</value>
+  </data>
+  <data name="INVOKEVIRTUE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Použije danou virtue.</value>
+  </data>
+  <data name="MESSAGEBOX_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zobrazí jednoduché okno se nadpisem a zprávou.</value>
+  </data>
+  <data name="PAUSE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pozastaví provádění makra po dobu danou v milisekundách.</value>
+  </data>
+  <data name="PLAYING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud makro běží, zejména pro makra na pozadí.</value>
+  </data>
+  <data name="PLAYSOUND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Přehraje zvuk podle ID nebo názvu .wav souboru.</value>
+  </data>
+  <data name="RESYNC_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odešle serveru žádost o resynchronizaci.</value>
+  </data>
+  <data name="SETQUIETMODE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Nastaví tichý mód na True/False, True sníží množství systémových zpráv makra na minimum.</value>
+  </data>
+  <data name="SYSMESSAGE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odešle systémovou zprávu.</value>
+  </data>
+  <data name="WARMODE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Nastaví bojový mód, parametry "on", "off" a "toggle", výchozí "toggle" pokud není žádný předán.</value>
+  </data>
+  <data name="ALLYMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odešle zprávu do chatu aliance.</value>
+  </data>
+  <data name="CANCELPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zruší aktuální dotaz kurzorem.</value>
+  </data>
+  <data name="EMOTEMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odešle zprávu jako emote.</value>
+  </data>
+  <data name="GUILDMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odešle zprávu do chatu cechu.</value>
+  </data>
+  <data name="HEADMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zobrazí zprávu nad danou postavou nebo předmětem.</value>
+  </data>
+  <data name="MSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odešle zprávu jako řeč.</value>
+  </data>
+  <data name="PARTYMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odešle zprávu do chatu družiny.</value>
+  </data>
+  <data name="PROMPTMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odešle zprávu jako odpověď na dotaz.</value>
+  </data>
+  <data name="WAITFORPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vyčká danou dobu na dotaz.</value>
+  </data>
+  <data name="WHISPERMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odešle zprávu jako šepot.</value>
+  </data>
+  <data name="YELLMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odešle zprávu jako křik.</value>
+  </data>
+  <data name="RUN_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Postava vyběhne daným směrem.</value>
+  </data>
+  <data name="SETFORCEWALK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Nastaví vynucení běhu, True nebo False</value>
+  </data>
+  <data name="TOGGLEFORCEWALK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Přepne vynucení běhu</value>
+  </data>
+  <data name="TURN_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Otočí postavu daným směrem.</value>
+  </data>
+  <data name="WALK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Postava vyjde daným směrem.</value>
+  </data>
+  <data name="PROPERTY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud se daný řetězec vyskytuje ve vlastnostech předmětu.</value>
+  </data>
+  <data name="PROPERTYVALUE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí hodnotu argumentu dané vlastnosti. Volitelný je index argumentu.</value>
+  </data>
+  <data name="WAITFORPROPERTIES_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vyčká na přijetí vlastností daného předmětu.</value>
+  </data>
+  <data name="SETSKILL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Nastaví zámek dané dovednosti, "up", "down", nebo "locked".</value>
+  </data>
+  <data name="SKILL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí základní hodnotu dané dovednosti.</value>
+  </data>
+  <data name="SKILLSTATE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí stav zámku dané dovednosti, "up", "down", nebo "locked".</value>
+  </data>
+  <data name="USESKILL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vyvolá danou dovednost.</value>
+  </data>
+  <data name="CAST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zakouzlí podle názvu kouzla a automaticky zacílí daný objekt.</value>
+  </data>
+  <data name="CANCELTARGET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zruší existující targetovací kurzor.</value>
+  </data>
+  <data name="CLEARTARGETQUEUE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vymaže frontu cílů pokud je povoleno dávání posledních cílů do fronty.</value>
+  </data>
+  <data name="GETENEMY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Získá postavu a nastaví alias "murderer".</value>
+  </data>
+  <data name="GETFRIEND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Získá postavu a nastaví alias "friend".</value>
+  </data>
+  <data name="GETFRIENDLISTONLY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Získá přítele ze seznamu přátel, parametr pro vzdálenost "Closest", "Nearest" nebo "Next"</value>
+  </data>
+  <data name="TARGET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zacílí daný objekt (parametr může být serial nebo alias).</value>
+  </data>
+  <data name="TARGETEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True je-li použit targetovací kurzor a známost odpovídá dané hodnotě, výchozí je "Any" a možné jsou "Any", "Beneficial", "Harmful" nebo "Neutral"</value>
+  </data>
+  <data name="TARGETGROUND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zacílí daný typ na zemi, volitelné parametry jsou barva a vzdálenost.</value>
+  </data>
+  <data name="TARGETTILERELATIVE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zacílí dlaždici v dané vzdálenosti od předaného aliasu/serialu, volitelný parametr bool pro opačný mód.</value>
+  </data>
+  <data name="TARGETTYPE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zacílí daný typ v hráčově batohu, volitelné parametry jsou barva a hloubka hledání.</value>
+  </data>
+  <data name="WAITFORTARGET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vyčká na paket pro zacílení, volitelný parametr je timeout (výchozí hodnota 5000ms).</value>
+  </data>
+  <data name="WAITINGFORTARGET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud jádro čeká na cíl od serveru.</value>
+  </data>
+  <data name="CREATETIMER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vytvoří nový pojmenovaný časovač.</value>
+  </data>
+  <data name="REMOVETIMER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Smaže časovač.</value>
+  </data>
+  <data name="SETTIMER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Nastaví časovač na hodnotu, pokud neexistuje, založí nový.</value>
+  </data>
+  <data name="TIMER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zjistí hodnotu časovače.</value>
+  </data>
+  <data name="TIMEREXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud časovač existuje.</value>
+  </data>
+  <data name="TIMERMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vypíše uběhnutou dobu časovače jako systémovou zprávu</value>
+  </data>
+  <data name="FINDWAND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Hledá hůlku a nastaví alias "found".</value>
+  </data>
+  <data name="EQUIPWAND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Hledá hůlku a vybaví ji do ruky</value>
+  </data>
+  <data name="EQUIPWAND_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>#Vybaví hůlku s kouzlem "fireball" pokud nějaká v batohu existuje
+if FindWand("fireball", "backpack", 5):
+ #Odzbrojí levou ruku
+ if FindLayer("OneHanded"):
+  ClearHands("left")
+ #Vybaví hůlku
+ EquipWand("fireball")</value>
+  </data>
+  <data name="SETAUTOLOOTCONTAINER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Nastaví kontejner pro autoloot agenta.</value>
+  </data>
+  <data name="FINDTYPE_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># Hledá jídlo ze seznamu a jedno nalezené sní.
+if not ListExists("food"):
+ CreateList("food")
+ PushList("food", 0x9b7) #bird
+ PushList("food", 0x9d3) #ham
+ PushList("food", 0x97d) #cheese
+ PushList("food", 0x9d0) #apple
+ PushList("food", 0x9eb) #muffin
+ PushList("food", 0x97b) #fishsteak
+ PushList("food", 0x9c0) #sausage
+ PushList("food", 0x9f2) #ribs
+ PushList("food", 0x9d1) #grapes
+ PushList("food", 0x9d2) #peach
+
+for i in GetList("food"):
+ if FindType(i, -1, "backpack"):
+  UseObject("found")
+  break</value>
+  </data>
+  <data name="REPLAY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zopakuje aktuální makro.</value>
+  </data>
+  <data name="INIGNORELIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zjistí zda je daný serial/alias na seznamu ignorovaných.</value>
+  </data>
+  <data name="SETFRIEND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Nastaví daný alias jako přítele.</value>
+  </data>
+  <data name="SETENEMY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Nastaví daný alias jako nepřítele.</value>
+  </data>
+  <data name="SETLASTTARGET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Nastaví daný alias jako poslední cíl.</value>
+  </data>
+  <data name="WAITFORTARGETORFIZZLE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vyčká po danou dobu na targetovací kurzor a zároveň vrací False pokud kouzlo fizzlo / nelze seslat.</value>
+  </data>
+  <data name="SYSMESSAGE_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># výchozí barva
+SysMessage("Hello")
+# upřesnění barvy
+SysMessage("Hello", 35)</value>
+  </data>
+  <data name="FINDOBJECT_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># Hledat na zemi
+FindObject("mount")
+
+# Hledat na zemi v dosahu
+FindObject("mount", 10)
+
+# Hledat v kontejneru, je třeba předat hloubku nebo -1
+FindObject("weapon", -1, "backpack")  </value>
+  </data>
+  <data name="CHATMSG_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odešle zprávu do chatu.</value>
+  </data>
+  <data name="OPENVIRTUEGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Otevře Virtue gump daného serialu/aliasu (výchozí hodnota je hráč)</value>
+  </data>
+  <data name="OPENGUILDGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Otevře gump cechu</value>
+  </data>
+  <data name="OPENQUESTSGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Otevře gump s úkoly</value>
+  </data>
+  <data name="GETENEMY_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>#Najdi vraha - Murderer
+GetEnemy(['Murderer'])
+#Najdi nejbližšího vraha, jakéhokoli typu
+GetEnemy(['Murderer'], 'Any', 'Closest')
+#Najdi další cíl, jakákoli známost, humanoid nebo transformace - bez mounta
+GetEnemy(['Any'], 'Both', 'Next', 'Unmounted')</value>
+  </data>
+  <data name="TARGETXYZ_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zacílí zemi na daných souřadnicích.</value>
+  </data>
+  <data name="REHUE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Přebarví předmět/postavu na danou barvu, 0 je odbarvení. (Experimentální)</value>
+  </data>
+  <data name="STOPALL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zastaví všechna běžící makra, včetně těch na pozadí.</value>
+  </data>
+  <data name="SETSTATUS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Nastaví zámek statu, "up", "down" nebo "locked".</value>
+  </data>
+  <data name="TARGETTILEOFFSET_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zacílí políčko na daných ofsetech souřadnic x,y,z hráče</value>
+  </data>
+  <data name="TARGETTILEOFFSET_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>#Zacílí políčko na místě postavy se souřadnicí Y + 1
+TargetTileOffset(0, 1, 0)</value>
+  </data>
+  <data name="BUFFTIME_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí zbývající čas v milisekundách pro daný buff, nebo 0 pokud vyprchal.</value>
+  </data>
+  <data name="TARGETBYRESOURCE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Použije nástroj a zacílí určený zdroj surovin (Vyžaduje podporu serveru)</value>
+  </data>
+  <data name="WAITFORMENU_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pozastaví skript dokud nepřijde menu, volitelné parametry ID gumpu a timeout.</value>
+  </data>
+  <data name="REPLYMENU_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odešle kliknutí na tlačítko menu ze serveru.</value>
+  </data>
+  <data name="INMENU_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud nadpis menu nebo položky v něm obsahují daný text.</value>
+  </data>
+  <data name="MENUEXISTS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud existuje menu s daným ID.</value>
+  </data>
+  <data name="INMENU_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>UseSkill('Tracking')
+WaitForMenu(0x1d0, 5000)
+ReplyMenu(0x1d0, 3, 0x2106, 0)
+WaitForMenu(0x1d1, 5000)
+if InMenu(0x1d1, 'Dorchaide'):
+ HeadMsg('Dorchaide je v dosahu', 'self')
+CloseMenu(0x1d1)</value>
+  </data>
+  <data name="CLOSEMENU_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zavře menu s daným ID</value>
+  </data>
+  <data name="SKILLCAP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí skillcap dané dovednosti</value>
+  </data>
+  <data name="CONFIRMPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zobrazí dotaz ve hře s danou zprávnou, vrátí True pokud byla odpověď kladná.</value>
+  </data>
+  <data name="CONFIRMPROMPT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ConfirmPrompt("Spustit sebedestrukci?")</value>
+  </data>
+  <data name="CONFIRMPROMPT_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>res = ConfirmPrompt("Spustit makro?")
+
+if res:
+ PlayMacro("Macro")</value>
+  </data>
+  <data name="STOP_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># Zastaví běžící makro
+Stop()
+# Zastaví makro podle jména
+Stop("Background Macro")</value>
+  </data>
+  <data name="TARGETTILEOFFSETRESOURCE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zacílí políčko na daných ofsetech souřadnic x,y,z hráče (automaticky cílí stromy/důlní políčka/vodu)</value>
+  </data>
+  <data name="HIDEENTITY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odstraní předmět / postavu z obrazovky</value>
+  </data>
+  <data name="HIDEENTITY_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>ClearIgnoreList()
+# Skryje všechny mrtvoly na obrazovce
+while FindType(0x2006):
+ HideEntity('found')
+ IgnoreObject('found')</value>
+  </data>
+  <data name="USETARGETEDITEM_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Použije daný předmět a vybere cíl v jedné akci. Vyžaduje podporu serveru</value>
+  </data>
+  <data name="USELAYER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Použije předmět v dané vrstvě, volitelný parametr pro postavu</value>
+  </data>
+  <data name="AUTOCOLORPICK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Nastaví automatickou odpověď na příchozí gump s výběrem barvy a umožní tak nastavit barvu kádí.
+Tento příkaz by měl být použit před akcí která tento gump vyvolá.</value>
+  </data>
+  <data name="DISPLAYQUESTPOINTER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zobrazí směrovou šipku k daným souřadnicím</value>
+  </data>
+  <data name="DISPLAYQUESTPOINTER_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># Přidá šipku
+DisplayQuestPointer(1000, 1000, True)
+Pause(2000)
+# Odebere šipku
+DisplayQuestPointer(1000, 1000, False)</value>
+  </data>
+  <data name="PATHFIND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vyžádá klienta, aby našel cestu na dané souřadnice / k objektu.</value>
+  </data>
+  <data name="PATHFIND_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>#Hledání cesty na souřadnice
+Pathfind(1438, 1630, 20)
+
+#Hledání cesty k postavě
+SetEnemy(0x3c9)
+Pathfind('enemy')</value>
+  </data>
+  <data name="SETORGANIZERCONTAINERS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Nastaví zdroj a cíl pro daný organizér</value>
+  </data>
+  <data name="ACTIVEABILITY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud je primární a sekundární schopnost nastavena</value>
+  </data>
+  <data name="MESSAGEPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zobrazí ve hře gump s dotazem na zprávu</value>
+  </data>
+  <data name="MESSAGEPROMPT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>res, msg = MessagePrompt("Zpráva", "Výchozí text")</value>
+  </data>
+  <data name="MESSAGEPROMPT_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>res, name = MessagePrompt("Zadat jméno?", "Mourek")
+
+if res:
+ Rename(0xc1b, name)</value>
+  </data>
+  <data name="GETTEXT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odešle dotaz na zadání textu ve hře a vrátí zadaný text</value>
+  </data>
+  <data name="GETTEXT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>res, msg = GetText("Vložit text...", 30000)</value>
+  </data>
+  <data name="GETTEXT_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>res, name = GetText("Jméno?", 10000)
+
+if res:
+ Rename(0xc1b, name)</value>
+  </data>
+  <data name="DIRECTION_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí směr kterému daný alias / serial čelí.</value>
+  </data>
+  <data name="POPLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odebere elementy ze seznamu a vrátí počet smazaných</value>
+  </data>
+  <data name="POPLIST_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>CreateList("hippies")
+PushList("hippies", 1)
+PushList("hippies", 2)
+PushList("hippies", 3)
+
+PopList("hippies", "front") # Smaže 1
+PopList("hippies", "back") # Smaže 3
+PopList("hippies", "2") # Smaže všechny 2 které v seznamu jsou
+
+
+for x in GetList("hippies"):
+ print x # Nikdy neproběhne protože seznam je prázdný
+</value>
+  </data>
+  <data name="INTERRUPTSPELL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Pokusí se přerušit kouzlení rychlým zvednutím předmětu.</value>
+  </data>
+  <data name="SNAPSHOT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Udělá screenshot okna</value>
+  </data>
+  <data name="SNAPSHOT_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># Jen herní okno, žádná prodleva, výchozí název souboru
+Snapshot()
+
+# Celé okno klienta, 3 sekundy prodleva, výchozí název souboru
+Snapshot(3000, True)
+
+# Jen herní okno, žádná prodleva, vlastní název souboru
+Snapshot(0, False, "screenshot.png")</value>
+  </data>
+  <data name="WAITFORCONTEXT_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># vybrat podle indexu
+WaitForContext('self', 2, 5000)
+# vybrat podle jména
+WaitForContext('self', "Open Item Insurance Menu", 5000)</value>
+  </data>
+  <data name="SELECTIONPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vytvoří gump ve hře s výběrem ze seznamu možností
+
+Vrátí dvojici s booleanem který značí zda bylo stisknuto tlačítko OK a index vybraného záznamu ze seznamu</value>
+  </data>
+  <data name="SELECTIONPROMPT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SelectionPrompt(['Možnost 1', 'Možnost 2'])</value>
+  </data>
+  <data name="SELECTIONPROMPT_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>res, index = SelectionPrompt(['Sex', 'Drogy', 'Rock and Roll'])
+
+if res:
+ print 'Byla vybrána {}. možnost'.format(index)
+else:
+ print 'Výběr zrušen'</value>
+  </data>
+  <data name="SETVENDORBUYAUTOBUY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zapne nebo vypne automatické nakupování od daného vendora...</value>
+  </data>
+  <data name="SETVENDORBUYAUTOBUY_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># zapnout
+SetVendorBuyAutoBuy("regs", "on")
+# vypnout
+SetVendorBuyAutoBuy("regs", "off")
+# přepne on/off
+SetVendorBuyAutoBuy("regs")</value>
+  </data>
+  <data name="ISRUNNING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud dané makro běží</value>
+  </data>
+  <data name="LOGOUT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Odpojí tě od serveru a vrátí na přihlašovací obrazovku</value>
+  </data>
+  <data name="QUIT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Zavře klienta</value>
+  </data>
+  <data name="PROMPTMACROALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vyzve ve hře kurzorem výběr hodnoty pro daný alias, který bude platný pouze v tomto makru.</value>
+  </data>
+  <data name="DIFFHITSPERCENT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí rozdíl mezi maximálními a souřasnými životy v procentech u dané postavy, pokud je parametr prázdný, vrátí hodnotu pro postavu hráče. (parameter can be serial or alias).</value>
+  </data>
+  <data name="DIFFHITSPERCENT_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>if DiffHitsPercent("self") &gt; 30: # 70% životů</value>
+  </data>
+  <data name="FOLLOWING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud následuješ cíl</value>
+  </data>
+  <data name="FOLLOW_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>CUO začne následovat daný alias/serial, volání bez parametru sledování ukončí</value>
+  </data>
+  <data name="PATHFINDING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vrátí True pokud CUO právě hledá cestu (Pathfinding)</value>
+  </data>
+  <data name="PATHFINDING_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>Pathfind('enemy')
+Pause(25) # Je tu odezva mezi začátkem pathfindingu a tím že Pathfinding() vrátí True
+
+while Pathfinding():
+ Pause(50)
+ 
+HeadMsg("Zemři bídný červe", "self")</value>
+  </data>
+  <data name="WAITFORJOURNALARRAY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Vyčkat až se jeden nebo více z daných řetězců objeví v deníku nebo max timeout</value>
+  </data>
+</root>

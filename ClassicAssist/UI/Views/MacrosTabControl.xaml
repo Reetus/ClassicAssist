@@ -5,16 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:avalon="http://icsharpcode.net/sharpdevelop/avalonedit"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
+             xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              xmlns:local="clr-namespace:ClassicAssist.Data.Macros"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
-             xmlns:resources="clr-namespace:ClassicAssist.Resources"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              xmlns:hotkeys="clr-namespace:ClassicAssist.Data.Hotkeys"
              xmlns:misc1="clr-namespace:ClassicAssist.Misc"
+             xmlns:draggableTreeView="clr-namespace:ClassicAssist.Controls.DraggableTreeView;assembly=ClassicAssist.Controls"
+             xmlns:controls1="clr-namespace:ClassicAssist.UI.Controls"
+             xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="500" Padding="5">
+             d:DesignHeight="500" d:DesignWidth="700" Padding="5">
     <d:DesignerProperties.DesignStyle>
         <Style TargetType="UserControl">
             <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
@@ -23,12 +26,14 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/Icons.xaml" />
-                <ResourceDictionary Source="../../Resources/ResourceDictionary.xaml" />
+                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary Source="../../Resources/LeftRightIconToggleButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
             <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+            <valueConverters:NullBooleanConverter x:Key="NullBooleanConverter" />
+            <valueConverters:MacroExceptionValueConverter x:Key="MacroExceptionValueConverter" />
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <misc1:BindingProxy x:Key="Proxy" Data="{Binding}" />
         </ResourceDictionary>
     </UserControl.Resources>
@@ -40,7 +45,7 @@
             <ColumnDefinition>
                 <ColumnDefinition.Style>
                     <Style TargetType="{x:Type ColumnDefinition}">
-                        <Setter Property="Width" Value="155" />
+                        <Setter Property="Width" Value="{Binding LeftColumnWidth}" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsChecked, ElementName=ToggleButton}" Value="True">
                                 <Setter Property="Width" Value="0" />
@@ -53,8 +58,12 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Margin="0,0,5,0">
+            <i:Interaction.Behaviors>
+                <behaviours:GridSizeChangedBehaviour Width="{Binding LeftColumnWidth}" />
+            </i:Interaction.Behaviors>
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -62,70 +71,122 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ListBox Grid.Row="0" ItemsSource="{Binding Items}" x:Name="ListBox"
-                         SelectedItem="{Binding SelectedItem}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                         MinHeight="40" HorizontalContentAlignment="Stretch"
-                         IsEnabled="{Binding IsRecording, Converter={StaticResource InverseBooleanConverter}}"
-                         misc:ListBoxBehavior.ScrollOnNewItem="True">
-                    <ListBox.InputBindings>
-                        <KeyBinding Modifiers="Control" Key="Delete"
-                                    Command="{Binding RemoveMacroCommand}"
-                                    CommandParameter="{Binding SelectedItem}" />
-                        <KeyBinding Key="Delete"
-                                    Command="{Binding RemoveMacroConfirmCommand}"
-                                    CommandParameter="{Binding SelectedItem}" />
-                    </ListBox.InputBindings>
-                    <i:Interaction.Behaviors>
-                        <misc:ItemsControlSelectNewEntryBehaviour SelectedItem="{Binding SelectedItem}"
-                                                                  Type="{x:Type local:MacroEntry}" />
-                    </i:Interaction.Behaviors>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" x:Name="LeftColumn" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <controls:EditTextBlock
-                                    Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Column="0"
-                                    Width="{Binding ActualWidth, ConverterParameter=20, Converter={StaticResource CellWidthValueConverter}, ElementName=LeftColumn, Mode=OneWay}">
-                                    <controls:EditTextBlock.Resources>
-                                        <Style TargetType="{x:Type TextBlock}"
-                                               BasedOn="{StaticResource {x:Type TextBlock}}">
-                                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
-                                            <Style.Triggers>
-                                                <DataTrigger
-                                                    Binding="{Binding Global}" Value="True">
-                                                    <Setter Property="FontWeight" Value="Bold" />
-                                                </DataTrigger>
-                                                <DataTrigger
-                                                    Binding="{Binding IsRunning}" Value="True">
-                                                    <Setter Property="FontStyle" Value="Italic" />
-                                                    <Setter Property="FontWeight" Value="Bold" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </controls:EditTextBlock.Resources>
-                                </controls:EditTextBlock>
-                                <TextBlock x:Name="Hotkey" Text="{Binding Hotkey}" Margin="2,0,0,0"
-                                           Grid.Column="1" FontSize="7" Foreground="SpringGreen" TextAlignment="Right"
-                                           VerticalAlignment="Center" HorizontalAlignment="Right">
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Hotkey}"
-                                                             Value="{x:Static hotkeys:ShortcutKeys.Default}">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                <Grid Grid.Row="1" Margin="0,5,0,0">
+                <controls:FilterControl Grid.Row="0" Margin="0,0,0,5"
+                                        FilterText="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
+                                        IsFilterVisible="{Binding IsFilterOpen}">
+                    <controls:FilterControl.Style>
+                        <Style TargetType="{x:Type controls:FilterControl}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsFilterOpen}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </controls:FilterControl.Style>
+                </controls:FilterControl>
+                <Border BorderBrush="{DynamicResource ThemeBorderBrush}"
+                        BorderThickness="1" Grid.Row="1">
+                    <ScrollViewer x:Name="ScrollViewer">
+                        <i:Interaction.Behaviors>
+                            <misc:ScrollOnDragDrop />
+                        </i:Interaction.Behaviors>
+                        <draggableTreeView:DraggableTreeView ItemsSource="{Binding FilterDraggables}"
+                                                             x:Name="DraggableTreeView"
+                                                             BindableSelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                             BindableSelectedGroup="{Binding SelectedGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                             HorizontalContentAlignment="Stretch"
+                                                             IsEnabled="{Binding IsRecording, Converter={StaticResource InverseBooleanConverter}}"
+                                                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                             BorderThickness="0"
+                                                             AllowDragGroups="False"
+                                                             Style="{StaticResource CompressedTreeViewStyle}"
+                                                             PreviewMouseWheel="DraggableTreeView_OnPreviewMouseWheel">
+                            <draggableTreeView:DraggableTreeView.InputBindings>
+                                <KeyBinding Modifiers="Control" Key="Delete"
+                                            Command="{Binding RemoveMacroCommand}"
+                                            CommandParameter="{Binding SelectedItem}" />
+                                <KeyBinding Key="Delete"
+                                            Command="{Binding RemoveMacroConfirmCommand}"
+                                            CommandParameter="{Binding SelectedItem}" />
+                                <KeyBinding Modifiers="Control" Key="F"
+                                            Command="{Binding ToggleSearchCommand}" />
+                            </draggableTreeView:DraggableTreeView.InputBindings>
+                            <draggableTreeView:DraggableTreeView.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="{x:Static resources:Strings.New_Group}"
+                                              Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:MacrosTabViewModel.NewGroupCommand)}" />
+                                    <MenuItem Header="{x:Static resources:Strings.Remove_Group}"
+                                              Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:MacrosTabViewModel.RemoveGroupCommand)}"
+                                              CommandParameter="{Binding SelectedGroup}" />
+                                </ContextMenu>
+                            </draggableTreeView:DraggableTreeView.ContextMenu>
+                            <draggableTreeView:DraggableTreeView.Resources>
+                                <HierarchicalDataTemplate DataType="{x:Type local:MacroGroup}"
+                                                          ItemsSource="{Binding Children}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Image Source="{DynamicResource GroupIcon}" Grid.Column="0" Height="16"
+                                               Margin="0,0,5,0" />
+                                        <controls:EditTextBlock
+                                            Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                            HorizontalContentAlignment="Stretch" Grid.Column="1" />
+                                    </Grid>
+                                </HierarchicalDataTemplate>
+                                <HierarchicalDataTemplate DataType="{x:Type local:MacroEntry}">
+                                    <Grid
+                                        Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" x:Name="LeftColumn" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <controls:EditTextBlock
+                                            Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                            Grid.Column="0"
+                                            Width="{Binding ActualWidth, ConverterParameter=20, Converter={StaticResource CellWidthValueConverter}, ElementName=LeftColumn, Mode=OneWay}">
+                                            <controls:EditTextBlock.Resources>
+                                                <Style TargetType="{x:Type TextBlock}"
+                                                       BasedOn="{StaticResource {x:Type TextBlock}}">
+                                                    <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger
+                                                            Binding="{Binding Global}" Value="True">
+                                                            <Setter Property="FontWeight" Value="Bold" />
+                                                        </DataTrigger>
+                                                        <DataTrigger
+                                                            Binding="{Binding IsRunning}" Value="True">
+                                                            <Setter Property="FontStyle" Value="Italic" />
+                                                            <Setter Property="FontWeight" Value="Bold" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </controls:EditTextBlock.Resources>
+                                        </controls:EditTextBlock>
+                                        <TextBlock x:Name="Hotkey" Text="{Binding Hotkey}" Margin="2,0,0,0"
+                                                   Grid.Column="1" FontSize="7" Foreground="SpringGreen"
+                                                   TextAlignment="Right"
+                                                   VerticalAlignment="Center" HorizontalAlignment="Right">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Hotkey}"
+                                                                     Value="{x:Static hotkeys:ShortcutKeys.Default}">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                </HierarchicalDataTemplate>
+                            </draggableTreeView:DraggableTreeView.Resources>
+                        </draggableTreeView:DraggableTreeView>
+                    </ScrollViewer>
+                </Border>
+                <Grid Grid.Row="2" Margin="0,5,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
@@ -139,11 +200,11 @@
                     </Grid.Resources>
                     <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="0" Margin="0,0,2.5,0"
                             Command="{Binding RemoveMacroConfirmCommand, Mode=OneWay}"
-                            CommandParameter="{Binding SelectedItem, ElementName=ListBox}">
+                            CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=ListBox}"
+                                    <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=DraggableTreeView}"
                                                  Value="{x:Null}">
                                         <Setter Property="IsEnabled" Value="False" />
                                     </DataTrigger>
@@ -156,10 +217,10 @@
                     <Button Content="{x:Static resources:Strings.Save}" Grid.Column="2" Margin="2.5,0,0,0"
                             Command="{Binding SaveMacroCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
                 </Grid>
-                <Grid Grid.Row="2" Margin="0,5,0,5">
+                <Grid Grid.Row="3" Margin="0,5,0,5">
                     <Button Content="{Binding RecordLabel}" Command="{Binding RecordCommand}" />
                 </Grid>
-                <Grid Grid.Row="3" Margin="0,0,0,0">
+                <Grid Grid.Row="4" Margin="0,0,0,0">
                     <Grid.Resources>
                         <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
                     </Grid.Resources>
@@ -169,8 +230,8 @@
                     </Grid.ColumnDefinitions>
                     <Button Content="{x:Static resources:Strings.Play}" Grid.Column="0" Margin="0,0,2.5,0"
                             Command="{Binding ExecuteCommand, Mode=OneWay}"
-                            CommandParameter="{Binding SelectedItem, ElementName=ListBox}"
-                            IsEnabled="{Binding SelectedItem.IsRunning, Converter={StaticResource InverseBooleanConverter}, ElementName=ListBox}">
+                            CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}"
+                            IsEnabled="{Binding SelectedItem.IsRunning, Converter={StaticResource InverseBooleanConverter}, ElementName=DraggableTreeView}">
                         <Button.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="{x:Static resources:Strings.Reset_import_cache}"
@@ -179,22 +240,22 @@
                         </Button.ContextMenu>
                     </Button>
                     <Button Content="{x:Static resources:Strings.Stop}" Grid.Column="1" Margin="2.5,0,0,0"
-                            IsEnabled="{Binding SelectedItem.IsRunning, ElementName=ListBox}"
+                            IsEnabled="{Binding SelectedItem.IsRunning, ElementName=DraggableTreeView}"
                             Command="{Binding StopCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
                 </Grid>
-                <GroupBox Header="{x:Static resources:Strings.Hotkeys}" Grid.Row="5" Padding="5" Margin="0,5,0,0">
+                <GroupBox Header="{x:Static resources:Strings.Hotkeys}" Grid.Row="6" Padding="5" Margin="0,5,0,0">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <controls:TextBoxKey Shortcut="{Binding Hotkey}" Grid.Row="0" />
+                        <controls1:TextBoxKey Shortcut="{Binding Hotkey}" Grid.Row="0" />
                         <CheckBox Content="{x:Static resources:Strings.Pass_to_UO}" Grid.Row="1" Padding="4,-1,0,0"
                                   Margin="0,5,0,0" IsChecked="{Binding SelectedItem.PassToUO}" />
                         <Button Content="{x:Static resources:Strings.Clear}" Grid.Row="2" Padding="1,0,1,1"
                                 Margin="0,5,0,0" Command="{Binding ClearHotkeyCommand, Mode=OneWay}"
-                                CommandParameter="{Binding SelectedItem, ElementName=ListBox}" />
+                                CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}" />
                     </Grid>
                 </GroupBox>
             </Grid>
@@ -206,43 +267,72 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <avalon:TextEditor ShowLineNumbers="True" x:Name="CodeTextEditor" Grid.Row="0"
                                HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
-                               FontFamily="Consolas">
+                               FontFamily="Consolas"
+                               IsEnabled="{Binding SelectedItem, Converter={StaticResource NullBooleanConverter}}">
                 <avalon:TextEditor.InputBindings>
                     <KeyBinding Modifiers="Control" Key="S" Command="{Binding SaveMacroCommand}" />
                     <KeyBinding Key="F5" Command="{Binding ExecuteCommand, Mode=OneWay}"
-                                CommandParameter="{Binding SelectedItem, ElementName=ListBox}" />
+                                CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}" />
                     <KeyBinding Key="F12" Command="{Binding StopCommand, Mode=OneWay}"
-                                CommandParameter="{Binding SelectedItem, ElementName=ListBox}" />
+                                CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}" />
                 </avalon:TextEditor.InputBindings>
-                <avalon:TextEditor.Style>
-                    <Style TargetType="{x:Type avalon:TextEditor}"
-                           BasedOn="{StaticResource {x:Type avalon:TextEditor}}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding SelectedItem, ElementName=ListBox}" Value="{x:Null}">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding IsRecording}" Value="True">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </avalon:TextEditor.Style>
                 <i:Interaction.Behaviors>
                     <misc:AvalonEditBehaviour
-                        TextBinding="{Binding SelectedItem.Macro, ElementName=ListBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        TextBinding="{Binding SelectedItem.Macro, ElementName=DraggableTreeView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <misc:AvalonBindingBehaviour DocumentBinding="{Binding Document}"
                                                  CaretBinding="{Binding CaretPosition}" />
                 </i:Interaction.Behaviors>
             </avalon:TextEditor>
-            <WrapPanel Orientation="Horizontal" Grid.Row="1" Margin="5">
+            <ProgressBar IsIndeterminate="True" Grid.Row="0" Height="5" VerticalAlignment="Bottom"
+                         Visibility="{Binding IsPerformingAction, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Bottom"
+                        Background="{DynamicResource ThemeBackgroundBrush}">
+                <StackPanel.Style>
+                    <Style TargetType="{x:Type StackPanel}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding FormatError,TargetNullValue=''}" Value="">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <Image Source="{DynamicResource ExclamationIcon}" Height="12" Margin="10,0,10,0" />
+                <TextBlock Text="{Binding FormatError}" />
+            </StackPanel>
+            <Grid Grid.Row="1" Margin="5">
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Visibility" Value="Visible" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedItem.LastException}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Text="{Binding SelectedItem.LastException, Converter={StaticResource MacroExceptionValueConverter}}"
+                    Grid.Column="0" />
+                <Button Background="Transparent" Padding="0" Margin="0" BorderThickness="0" BorderBrush="Transparent"
+                        HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding ClearExceptionCommand}"
+                        CommandParameter="{Binding SelectedItem}" Height="12" Grid.Column="1">
+                    <Image Source="{StaticResource closeIcon}" Margin="0,0,0,0" />
+                </Button>
+            </Grid>
+            <WrapPanel Orientation="Horizontal" Grid.Row="2" Margin="5">
                 <WrapPanel.Resources>
                     <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
                         <Setter Property="Margin" Value="0,0,10,0" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=ListBox}"
+                            <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=DraggableTreeView}"
                                          Value="{x:Null}">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
@@ -250,13 +340,13 @@
                     </Style>
                 </WrapPanel.Resources>
                 <CheckBox Content="{x:Static resources:Strings.Loop}"
-                          IsChecked="{Binding SelectedItem.Loop, ElementName=ListBox}" />
+                          IsChecked="{Binding SelectedItem.Loop, ElementName=DraggableTreeView}" />
                 <CheckBox Content="{x:Static resources:Strings.Do_not_auto_interupt}"
-                          IsChecked="{Binding SelectedItem.DoNotAutoInterrupt, ElementName=ListBox}" />
+                          IsChecked="{Binding SelectedItem.DoNotAutoInterrupt, ElementName=DraggableTreeView}" />
                 <CheckBox Content="{x:Static resources:Strings.Run_in_background}"
-                          IsChecked="{Binding SelectedItem.IsBackground, ElementName=ListBox}" />
+                          IsChecked="{Binding SelectedItem.IsBackground, ElementName=DraggableTreeView}" />
                 <CheckBox Content="{x:Static resources:Strings.Autostart}"
-                          IsChecked="{Binding SelectedItem.IsAutostart, ElementName=ListBox}"
+                          IsChecked="{Binding SelectedItem.IsAutostart, ElementName=DraggableTreeView}"
                           ToolTip="{x:Static resources:Strings.When_checked_macro_will_execute_automatically_after_login_}" />
                 <CheckBox Content="{x:Static resources:Strings.Undisableable}"
                           ToolTip="{x:Static resources:Strings.Hotkey_will_still_trigger_with_hotkeys_disabled}"
@@ -265,21 +355,21 @@
                           ToolTip="{x:Static resources:Strings.Loaded_to_all_profiles}"
                           IsChecked="{Binding SelectedItem.Global}" />
             </WrapPanel>
-            <Grid Grid.Row="3">
+            <Grid Grid.Row="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <ToggleButton x:Name="ToggleButton" Height="15" Grid.Column="0" Margin="0"
                               Style="{DynamicResource LeftRightIconToggleButton}" VerticalAlignment="Bottom" />
-                <controls:StretchyWrapPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
-                    <controls:StretchyWrapPanel.Resources>
+                <controls1:StretchyWrapPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
+                    <controls1:StretchyWrapPanel.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                             <Setter Property="Margin" Value="0,10,10,0" />
                             <Setter Property="Padding" Value="10,0,10,0" />
                             <Setter Property="Height" Value="25" />
                         </Style>
-                    </controls:StretchyWrapPanel.Resources>
+                    </controls1:StretchyWrapPanel.Resources>
                     <Button Content="{x:Static resources:Strings.Object_Inspector}"
                             Command="{Binding InspectObjectCommand, Mode=OneWay}" />
                     <Button Content="{x:Static resources:Strings.Commands}" Command="{Binding ShowCommandsCommand}" />
@@ -289,13 +379,23 @@
                     </Button>
                     <Button Content="{x:Static resources:Strings.Active_Objects}"
                             Command="{Binding ShowActiveObjectsWindowCommand}" />
-                    <Button Command="{Binding ShareMacroCommand}" CommandParameter="{Binding SelectedItem}">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="{DynamicResource GithubIcon}" Height="16" Margin="0, 0, 5, 0"/>
-                            <Label Content="{x:Static resources:Strings.Share_Macro}"/>
-                        </StackPanel>
+                    <Button Command="{Binding ShareMacroCommand}" CommandParameter="{Binding SelectedItem}"
+                            ToolTip="{x:Static resources:Strings.Share_Macro}" Padding="5,0,5,0">
+                        <Image Source="{DynamicResource GithubIcon}" Height="16" />
                     </Button>
-                </controls:StretchyWrapPanel>
+                    <Button Command="{Binding OpenModulesFolderCommand}" Padding="5,0,5,0"
+                            ToolTip="{x:Static resources:Strings.Open_Modules_Folder}">
+                        <Image Source="{StaticResource ModulesIcon}" Height="16" />
+                    </Button>
+                    <Button Command="{Binding CreateMacroButtonCommand}" CommandParameter="{Binding SelectedItem}"
+                            ToolTip="{x:Static resources:Strings.Create_Macro_Button}" Padding="5,0,5,0">
+                        <Image Source="{StaticResource AddButtonIcon}" Height="16" />
+                    </Button>
+                    <Button Command="{Binding FormatCodeCommand}" CommandParameter="{Binding SelectedItem}"
+                            Padding="5,0,5,0" ToolTip="{x:Static resources:Strings.Format_Code}">
+                        <Image Source="{StaticResource AlignLeftIcon}" Height="16" />
+                    </Button>
+                </controls1:StretchyWrapPanel>
             </Grid>
         </Grid>
     </Grid>

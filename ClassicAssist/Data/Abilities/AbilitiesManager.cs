@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using Assistant;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.Packets;
@@ -86,7 +86,7 @@ namespace ClassicAssist.Data.Abilities
 
                 if ( wd != null )
                 {
-                    UOC.SetWeaponAbility( abilityType == AbilityType.Primary ? wd.Primary : wd.Secondary );
+                    UOC.SetWeaponAbility( abilityType == AbilityType.Primary ? wd.Primary : wd.Secondary, abilityType );
                     ResendGump( wd.Primary, wd.Secondary, abilityType );
                     return;
                 }
@@ -104,7 +104,7 @@ namespace ClassicAssist.Data.Abilities
 
                 if ( wd != null )
                 {
-                    UOC.SetWeaponAbility( abilityType == AbilityType.Primary ? wd.Primary : wd.Secondary );
+                    UOC.SetWeaponAbility( abilityType == AbilityType.Primary ? wd.Primary : wd.Secondary, abilityType );
                     ResendGump( wd.Primary, wd.Secondary, abilityType );
                     return;
                 }
@@ -112,7 +112,7 @@ namespace ClassicAssist.Data.Abilities
 
             // Fists etc
             ResendGump( 5, 11, abilityType );
-            UOC.SetWeaponAbility( abilityType == AbilityType.Primary ? 5 : 11 );
+            UOC.SetWeaponAbility( abilityType == AbilityType.Primary ? 5 : 11, abilityType );
         }
 
         public void ResendGump( AbilityType abilityType )
@@ -296,7 +296,7 @@ namespace ClassicAssist.Data.Abilities
 
             if ( _checkHandsInProgress )
             {
-                UOC.SystemMessage( Strings.Arm___Disarm_already_in_progress___, (int) UOC.SystemMessageHues.Red );
+                UOC.SystemMessage( Strings.Arm___Disarm_already_in_progress___, (int) SystemMessageHues.Red );
                 return false;
             }
 

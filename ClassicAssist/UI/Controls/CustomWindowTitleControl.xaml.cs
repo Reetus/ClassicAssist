@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using System.Windows.Input;
+using ClassicAssist.Shared.UI;
 
 namespace ClassicAssist.UI.Controls
 {
@@ -31,21 +33,27 @@ namespace ClassicAssist.UI.Controls
             typeof( bool ), typeof( CustomWindowTitleControl ),
             new FrameworkPropertyMetadata( true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
 
+        public static readonly DependencyProperty MinimizeCommandProperty =
+            DependencyProperty.Register( nameof( MinimizeCommand ), typeof( ICommand ),
+                typeof( CustomWindowTitleControl ), new FrameworkPropertyMetadata( default ) );
+
+        private ICommand _maximizeCommand;
+
         public CustomWindowTitleControl()
         {
             InitializeComponent();
-        }
-
-        public object AdditionalContent
-        {
-            get => GetValue( AdditionalContentProperty );
-            set => SetValue( AdditionalContentProperty, value );
         }
 
         public object AdditionalButtons
         {
             get => GetValue( AdditionalButtonsProperty );
             set => SetValue( AdditionalButtonsProperty, value );
+        }
+
+        public object AdditionalContent
+        {
+            get => GetValue( AdditionalContentProperty );
+            set => SetValue( AdditionalContentProperty, value );
         }
 
         public bool CanClose
@@ -70,6 +78,33 @@ namespace ClassicAssist.UI.Controls
         {
             get => (string) GetValue( CustomTitleProperty );
             set => SetValue( CustomTitleProperty, value );
+        }
+
+        public ICommand MaximizeCommand =>
+            _maximizeCommand ?? ( _maximizeCommand = new RelayCommand( Maximize, o => true ) );
+
+        public ICommand MinimizeCommand
+        {
+            get => (ICommand) GetValue( MinimizeCommandProperty );
+            set => SetValue( MinimizeCommandProperty, value );
+        }
+
+        private static void Maximize( object obj )
+        {
+            if ( !( obj is UIElement element ) )
+            {
+                return;
+            }
+
+            Window window = Window.GetWindow( element );
+
+            if ( window == null )
+            {
+                return;
+            }
+
+            window.WindowState =
+                window.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
         }
     }
 }

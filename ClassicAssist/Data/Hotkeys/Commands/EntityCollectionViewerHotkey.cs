@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Windows.Threading;
 using Assistant;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO.Objects;
@@ -34,7 +34,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
                         UOC.WaitForContainerContentsUse( item.Serial, 1000 );
                     }
 
-                    collection = item.Container;
+                    collection = item.Container ?? new ItemCollection( item.Serial );
                     break;
                 case Mobile mobile:
                     collection = new ItemCollection( entity.Serial ) { mobile.GetEquippedItems() };

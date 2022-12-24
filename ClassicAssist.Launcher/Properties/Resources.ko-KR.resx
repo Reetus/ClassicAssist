@@ -216,4 +216,7 @@
   <data name="Open a GitHub issue to have your shard added to the list." xml:space="preserve">
     <value>GitHub 문제를 열어 샤드를 목록에 추가합니다.</value>
   </data>
+  <data name="Open Shard Website" xml:space="preserve">
+    <value>웹사이트에 접속합니다.</value>
+  </data>
 </root>

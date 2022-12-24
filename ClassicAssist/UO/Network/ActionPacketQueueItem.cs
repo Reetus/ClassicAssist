@@ -29,21 +29,26 @@ namespace ClassicAssist.UO.Network
             WaitHandle = new AutoResetEvent( false );
         }
 
+        public DateTime DateTime { get; set; }
+        public string Caller { get; set; }
         public bool DelaySend { get; set; }
-        public EventWaitHandle WaitHandle { get; set; }
         public bool Result { get; set; }
+
+        public string UUID { get; } = Guid.NewGuid().ToString();
         public CancellationToken Token { get; set; } = CancellationToken.None;
+        public EventWaitHandle WaitHandle { get; set; }
+        public TimeSpan? TimeSpan { get; set; }
     }
 
     public class PacketQueueItem : BaseQueueItem
     {
-        public PacketQueueItem( byte[] packet, int length, bool delaySend )
+        public PacketQueueItem( byte[] packet, int length, bool delaySend, string caller )
         {
             Packet = packet;
             Length = length;
             DelaySend = delaySend;
+            Caller = caller;
         }
-
 
         public int Length { get; set; }
         public byte[] Packet { get; set; }
@@ -57,8 +62,8 @@ namespace ClassicAssist.UO.Network
         }
 
         public Func<object, bool> Action { get; set; }
-        public int Serial { get; set; }
-        public bool CheckRange { get; set; }
         public object Arguments { get; set; }
+        public bool CheckRange { get; set; }
+        public int Serial { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.UO.Data;
 using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.Data.Macros.Commands
@@ -24,7 +25,8 @@ namespace ClassicAssist.Data.Macros.Commands
             Task.Run( () => macro.Action( macro ) );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Macros ), Parameters = new[] { nameof( ParameterType.String ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Macros ),
+            Parameters = new[] { nameof( ParameterType.MacroName ) } )]
         public static void Stop( string name = null )
         {
             MacroManager.GetInstance().Stop( name );
@@ -51,6 +53,30 @@ namespace ClassicAssist.Data.Macros.Commands
             manager.Replay = true;
 
             Task.Run( () => current.Action( current ) );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Macros ),
+            Parameters = new[] { nameof( ParameterType.MacroName ) } )]
+        public static bool IsRunning( string name )
+        {
+            MacroManager manager = MacroManager.GetInstance();
+
+            MacroEntry macro = manager.Items.FirstOrDefault( m => m.Name == name );
+
+            if ( macro != null )
+            {
+                return macro.IsRunning;
+            }
+
+            UOC.SystemMessage( Strings.Unknown_macro___, (int) SystemMessageHues.Normal, true );
+            return false;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Macros ),
+            Parameters = new[] { nameof( ParameterType.MacroName ) } )]
+        public static void PlayCUOMacro( string name )
+        {
+            ClassicUO.Macros.PlayCUOMacro( name );
         }
     }
 }

@@ -702,4 +702,87 @@
   <data name="CONFIRMPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>메시지와 함께 게임 내 프롬프트를 표시하고, Okay를 누르면 True로, 그렇지 않으면 False로 동작합니다.</value>
   </data>
+  <data name="SETVENDORBUYAUTOBUY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>지정된 이름의 자동구매를 활성화 또는 비활성화합니다.</value>
+  </data>
+  <data name="ISRUNNING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>실행중_명령_설명</value>
+  </data>
+  <data name="LOGOUT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>서버와의 연결을 종료하고 로그인 화면으로 돌아갑니다.</value>
+  </data>
+  <data name="QUIT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>클라이언트를 닫습니다.</value>
+  </data>
+  <data name="TARGETTILEOFFSETRESOURCE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>플레이어를 기준으로 지정된 오프셋의 타일을 대상으로 합니다. (제공된 경우 나무/나무 타일/물 자동 대상 지정)</value>
+  </data>
+  <data name="HIDEENTITY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>화면에서 아이템/모빌 제거</value>
+  </data>
+  <data name="USETARGETEDITEM_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>지정된 아이템 사용 후 한번의 행동으로 타겟을 타겟팅 합니다. 서버 지원 필요(OSI/ServUO)</value>
+  </data>
+  <data name="USELAYER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>지정된 레이어의 개체를 사용하고 모빌의 경우 선택적인 매개변수를 사용합니다. </value>
+  </data>
+  <data name="AUTOCOLORPICK_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>염색 튜브 색상을 정의할 수 있도록 들어오는 염색 색상 개체에 대한 자동 응답을 설정합니다.</value>
+  </data>
+  <data name="DISPLAYQUESTPOINTER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>지정된 좌표에 대한 퀘스트 화살표 포인터 표시</value>
+  </data>
+  <data name="PATHFIND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>클라이언트에게 주어진 좌표(coordinates)/Entity에 대한 경로 찾기를 요청합니다.</value>
+  </data>
+  <data name="SETORGANIZERCONTAINERS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>지정된 오거나이저 이름의 소스 및 대상 설정</value>
+  </data>
+  <data name="ACTIVEABILITY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>기본 또는 보조 기능이 설정되어 있는 경우 참(Ture)으로 반환</value>
+  </data>
+  <data name="MESSAGEPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>메시지에 대한 인게임 검프 프롬프트 표시</value>
+  </data>
+  <data name="GETTEXT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>내부 프롬프트 요청을 보내고 입력한 텍스트를 반환합니다.</value>
+  </data>
+  <data name="DIRECTION_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>지정된 별칭/시리얼이 향하는 방향을 반환합니다</value>
+  </data>
+  <data name="POPLIST_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>목록에서 요소(elements)를 제거하고 제거된 요소(elements) 수를 반환합니다</value>
+  </data>
+  <data name="INTERRUPTSPELL_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>아이템을 잠시 들어 올려 주문을 중단하려고합니다.</value>
+  </data>
+  <data name="SNAPSHOT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>윈도우 스크린샷 촬영</value>
+  </data>
+  <data name="SELECTIONPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>옵션 목록에서 선택할 수 있는 게임 내 메뉴(gump)를 생성합니다
+
+OK버튼 클릭 클릭 여부를 나타내는 tuple과 선택된 entry index를 반환합니다.</value>
+  </data>
+  <data name="PROMPTMACROALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>주어진 별칭 이름에 대한 값을 제공하도록 게임 내 대상 커서로 프롬프트(Prompt)합니다. 별칭은 현재 매크로에서만 유효합니다.</value>
+  </data>
+  <data name="FASTERCASTING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>현재 플레이어의 빠른주문시전 값을 반환합니다.</value>
+  </data>
+  <data name="FASTERCASTING_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>fc = FasterCasting()</value>
+  </data>
+  <data name="FASTERCASTRECOVERY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>현재 플에이어의 파른주문회복 값을 반환합니다.</value>
+  </data>
+  <data name="FASTERCASTRECOVERY_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>fcr = FasterCastRecovery()</value>
+  </data>
+  <data name="OPENHELPGUMP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>헬프 검프를 엽니다.</value>
+  </data>
+  <data name="OPENHELPGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>OpenHelpGump()</value>
+  </data>
 </root>

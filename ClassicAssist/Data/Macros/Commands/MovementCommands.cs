@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Threading;
 using Assistant;
+using ClassicAssist.Data.ClassicUO.Objects;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
-using ClassicAssist.UO.Network.PacketFilter;
-using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 
@@ -13,7 +13,6 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class MovementCommands
     {
-        private const int MOVEMENT_TIMEOUT = 500;
         private const int PATHFIND_MAX_DISTANCE = 32;
         private static bool _forceWalk;
 
@@ -52,8 +51,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            Engine.Move( directionEnum, false );
-            UOC.WaitForIncomingPacket( new PacketFilterInfo( 22 ), MOVEMENT_TIMEOUT );
+            Move( directionEnum.ToString(), false );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Movement ),
@@ -76,7 +74,11 @@ namespace ClassicAssist.Data.Macros.Commands
             try
             {
                 bool result = Engine.Move( directionEnum, run );
-                UOC.WaitForIncomingPacket( new PacketFilterInfo( 22 ), MOVEMENT_TIMEOUT );
+
+                int delay = Engine.Player.GetLayer( Layer.Mount ) != 0 ? run ? 100 : 200 : run ? 200 : 400;
+
+                Thread.Sleep( delay );
+
                 return result;
             }
             catch ( IndexOutOfRangeException )
@@ -86,38 +88,79 @@ namespace ClassicAssist.Data.Macros.Commands
             return false;
         }
 
+        [CommandsDisplay( Category = nameof( Strings.Movement ) )]
+        public static bool Following()
+        {
+            dynamic gameScene = new GameScene();
+
+            return gameScene._followingMode;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Movement ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        public static void Follow( object obj = null )
+        {
+            int serial = 0;
+
+            if ( obj != null )
+            {
+                serial = AliasCommands.ResolveSerial( obj, false );
+            }
+
+            dynamic gameScene = new GameScene();
+
+            if ( obj == null )
+            {
+                if ( gameScene._followingMode )
+                {
+                    UOC.SystemMessage( Strings.Deactivated_following, SystemMessageHues.Normal, true );
+                }
+
+                gameScene._followingMode = false;
+            }
+            else
+            {
+                gameScene._followingMode = true;
+                gameScene._followingTarget = (uint) serial;
+                UOC.SystemMessage( Strings.Activated_following, SystemMessageHues.Normal, true );
+            }
+        }
+
         [CommandsDisplay( Category = nameof( Strings.Movement ),
             Parameters = new[]
             {
                 nameof( ParameterType.XCoordinate ), nameof( ParameterType.YCoordinate ),
                 nameof( ParameterType.ZCoordinate )
             } )]
-        public static void Pathfind( int x, int y, int z )
+        public static bool Pathfind( int x, int y, int z )
         {
             int distance = Math.Max( Math.Abs( x - Engine.Player?.X ?? x ), Math.Abs( y - Engine.Player?.Y ?? y ) );
 
             if ( distance > PATHFIND_MAX_DISTANCE )
             {
                 UOC.SystemMessage( Strings.Maximum_distance_exceeded_ );
-                return;
+                return false;
             }
 
-            Engine.SendPacketToClient( new Pathfind( x, y, z ) );
+            return Pathfinder.WalkTo( x, y, z, 0 );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Movement ),
-            Parameters = new[]
-            {
-                nameof( ParameterType.SerialOrAlias )
-            } )]
-        public static void Pathfind( object obj )
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        public static bool Pathfind( object obj )
         {
+            if ( obj is int i && i == -1 )
+            {
+                Pathfinder.Cancel();
+                return true;
+            }
+
             int serial = AliasCommands.ResolveSerial( obj );
 
             if ( serial == 0 )
             {
                 UOC.SystemMessage( Strings.Entity_not_found___ );
-                return;
+                return false;
             }
 
             Entity entity = UOMath.IsMobile( serial )
@@ -127,10 +170,16 @@ namespace ClassicAssist.Data.Macros.Commands
             if ( entity == null )
             {
                 UOC.SystemMessage( Strings.Entity_not_found___ );
-                return;
+                return false;
             }
 
-            Pathfind( entity.X, entity.Y, entity.Z );
+            return Pathfind( entity.X, entity.Y, entity.Z );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Movement ) )]
+        public static bool Pathfinding()
+        {
+            return Pathfinder.AutoWalking;
         }
     }
 }

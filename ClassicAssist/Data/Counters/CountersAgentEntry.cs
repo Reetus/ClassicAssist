@@ -1,13 +1,11 @@
-﻿using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using System.Linq;
 using Assistant;
-using ClassicAssist.Annotations;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.Data.Counters
 {
-    public class CountersAgentEntry : INotifyPropertyChanged
+    public class CountersAgentEntry : SetPropertyNotifyChanged
     {
         private int _color;
         private int _count;
@@ -31,8 +29,6 @@ namespace ClassicAssist.Data.Counters
         public int Graphic { get; set; }
         public string Name { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public void Recount()
         {
             if ( Engine.Player == null )
@@ -51,18 +47,6 @@ namespace ClassicAssist.Data.Counters
                     i.ID == Graphic && ( Color == -1 || Color == i.Hue ) );
 
             Count = matches?.Sum( i => i.Count ) ?? 0;
-        }
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-        }
-
-        public void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
-        {
-            obj = value;
-            OnPropertyChanged( propertyName );
         }
     }
 }

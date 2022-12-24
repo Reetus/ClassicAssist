@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 
 namespace ClassicAssist.Data.Hotkeys.Commands
 {
     public class HotkeyCommand : HotkeyEntry, IComparable<HotkeyCommand>
     {
+        private bool _isExpanded;
         private string _tooltip;
 
         public HotkeyCommand()
@@ -16,17 +17,47 @@ namespace ClassicAssist.Data.Hotkeys.Commands
             if ( a != null )
             {
                 // if the attribute exists, the Name must be localizable.
-                string hotkeyName = Strings.ResourceManager.GetString(
-                    a.Name ?? throw new ArgumentNullException( $"No localizable string for {a.Name}" ) );
+                string hotkeyName = Strings.ResourceManager.GetString( a.Name );
 
-                string tooltipName = Strings.ResourceManager.GetString(
-                    a.Tooltip ?? throw new ArgumentNullException( $"No localizable string for {a.Tooltip}" ) );
+                if ( string.IsNullOrEmpty( hotkeyName ) )
+                {
+                    throw new ArgumentNullException( $"No localizable string for {a.Name}" );
+                }
 
-                base.Name = string.IsNullOrEmpty( hotkeyName ) ? a.Name : hotkeyName;
-                Tooltip = string.IsNullOrEmpty( tooltipName ) ? a.Tooltip : tooltipName;
+                if ( !string.IsNullOrEmpty( a.Tooltip ) )
+                {
+                    string tooltipName = Strings.ResourceManager.GetString( a.Tooltip );
+
+                    if ( string.IsNullOrEmpty( tooltipName ) )
+                    {
+                        throw new ArgumentNullException( $"No localizable string for {a.Tooltip}" );
+                    }
+
+                    Tooltip = tooltipName;
+                }
+
+                if ( !string.IsNullOrEmpty( a.Category ) )
+                {
+                    string category = Strings.ResourceManager.GetString( a.Category );
+
+                    if ( string.IsNullOrEmpty( category ) )
+                    {
+                        throw new ArgumentNullException( $"No localizable string for {a.Category}" );
+                    }
+
+                    a.Category = category;
+                }
+
+                base.Name = hotkeyName;
             }
 
             Action = hs => Task.Run( Execute );
+        }
+
+        public bool IsExpanded
+        {
+            get => _isExpanded;
+            set => SetProperty( ref _isExpanded, value );
         }
 
         public string Tooltip

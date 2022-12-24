@@ -28,8 +28,8 @@ namespace ClassicAssist.Data.Hotkeys.Commands
         {
             public override void Execute()
             {
-                TargetManager.GetInstance()
-                    .GetFriend( TargetNotoriety.Any, TargetBodyType.Any, TargetDistance.Next , TargetFriendType.Only);
+                TargetManager.GetInstance().GetFriend( TargetNotoriety.Any, TargetBodyType.Any, TargetDistance.Next,
+                    TargetFriendType.Only );
             }
         }
 

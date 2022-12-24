@@ -805,6 +805,19 @@ namespace ClassicAssist.Misc
                         { 180, Key.OemOpenBrackets },
                         { 231, Key.Oem1 }
                     }
+                },
+                {
+                    1031, /* de-DE */
+                    new Dictionary<int, Key>
+                    {
+                        { 35, Key.OemQuestion },
+                        { 60, Key.OemBackslash },
+                        { 180, Key.Oem6 },
+                        { 223, Key.OemOpenBrackets },
+                        { 228, Key.OemQuotes },
+                        { 246, Key.Oem3 },
+                        { 252, Key.Oem1 }
+                    }
                 }
             };
 

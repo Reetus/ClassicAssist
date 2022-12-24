@@ -12,8 +12,9 @@ using ClassicAssist.Data.Chat;
 using ClassicAssist.Data.Counters;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Skills;
+using ClassicAssist.Data.Targeting;
 using ClassicAssist.Data.Vendors;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
@@ -28,7 +29,7 @@ namespace ClassicAssist.UO.Network
 
         public delegate void dContainerContents( int serial, ItemCollection container );
 
-        public delegate void dCorpseContainerDisplay( int serial );
+        public delegate void dCorpseContainerDisplay( int serial, bool force );
 
         public delegate void dGump( uint gumpId, int serial, Gump gump );
 
@@ -102,6 +103,7 @@ namespace ClassicAssist.UO.Network
             Register( 0x3A, 0, OnSkillsList );
             Register( 0x3C, 0, OnContainerContents );
             Register( 0x6C, 19, OnTarget );
+            Register( 0x6F, 0, OnSecureTrade );
             Register( 0x72, 5, OnWarMode );
             Register( 0x74, 0, OnShopList );
             Register( 0x77, 17, OnMobileMoving );
@@ -114,7 +116,9 @@ namespace ClassicAssist.UO.Network
             Register( 0xA2, 9, OnMobileMana );
             Register( 0xA3, 9, OnMobileStamina );
             Register( 0xA8, 0, OnShardList );
+            Register( 0xA9, 0, OnCharacterList );
             Register( 0xAE, 0, OnUnicodeText );
+            Register( 0xB0, 0, OnGenericGump );
             Register( 0xB2, 0, OnChatMessage );
             Register( 0xB9, 5, OnSupportedFeatures );
             Register( 0xBF, 0, OnExtendedCommand );
@@ -132,8 +136,172 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x06, 0, OnPartyCommand );
             RegisterExtended( 0x08, 0, OnMapChange );
             RegisterExtended( 0x10, 0, OnDisplayEquipmentInfo );
+            RegisterExtended( 0x19, 0, OnMiscellaneousStatus );
             RegisterExtended( 0x21, 0, OnClearWeaponAbility );
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
+        }
+
+        private static void OnSecureTrade( PacketReader reader )
+        {
+            byte action = reader.ReadByte();
+            int serial = reader.ReadInt32();
+            int value1 = reader.ReadInt32();
+            int value2 = reader.ReadInt32();
+
+            Engine.Trade.Action = (TradeAction) action;
+            Engine.Trade.Serial = serial;
+
+            if ( Engine.Trade.Action == TradeAction.Start )
+            {
+                Engine.Trade.ContainerLocal = value1;
+                Engine.Trade.ContainerRemote = value2;
+            }
+            else if ( Engine.Trade.Action == TradeAction.Update )
+            {
+                Engine.Trade.AcceptLocal = value1;
+                Engine.Trade.AcceptRemote = value2;
+            }
+            else if ( Engine.Trade.Action == TradeAction.Gold )
+            {
+                Engine.Trade.GoldRemote = value1;
+                Engine.Trade.PlatinumRemote = value2;
+            }
+        }
+
+        private static void OnGenericGump( PacketReader reader )
+        {
+            int senderSerial = reader.ReadInt32();
+            uint gumpId = reader.ReadUInt32();
+
+            Engine.GumpList.AddOrUpdate( gumpId, senderSerial, ( k, v ) => senderSerial );
+
+            int x = reader.ReadInt32();
+            int y = reader.ReadInt32();
+
+            int layoutLength = reader.ReadUInt16();
+
+            string layout = reader.ReadString( layoutLength );
+
+            if ( string.IsNullOrEmpty( layout ) )
+            {
+                return;
+            }
+
+            int linesCount = reader.ReadUInt16();
+
+            string[] text = new string[linesCount];
+
+            for ( int i = 0; i < linesCount; i++ )
+            {
+                int length = reader.ReadUInt16();
+
+                text[i] = reader.ReadUnicodeStringBE( length );
+            }
+
+            try
+            {
+                Gump gump = GumpParser.Parse( senderSerial, gumpId, x, y, layout, text );
+                Engine.Gumps.Add( gump );
+
+                GumpEvent?.Invoke( gumpId, senderSerial, gump );
+            }
+            catch ( Exception e )
+            {
+                SentrySdk.CaptureException( e, scope =>
+                {
+                    scope.SetExtra( "Serial", senderSerial );
+                    scope.SetExtra( "GumpID", gumpId );
+                    scope.SetExtra( "Layout", layout );
+                    scope.SetExtra( "Text", text );
+                    scope.SetExtra( "Packet", reader.GetData() );
+                    scope.SetExtra( "Player", Engine.Player.ToString() );
+                    scope.SetExtra( "WorldItemCount", Engine.Items.Count() );
+                    scope.SetExtra( "WorldMobileCount", Engine.Mobiles.Count() );
+                } );
+            }
+        }
+
+        private static void OnMiscellaneousStatus( PacketReader reader )
+        {
+            int command = reader.ReadByte();
+            int serial = reader.ReadInt32();
+
+            switch ( command )
+            {
+                case 0x00:
+                {
+                    // Old Bonded Status
+                    bool dead = reader.ReadBoolean();
+
+                    Mobile mobile = Engine.Mobiles.GetMobile( serial );
+
+                    if ( mobile == null )
+                    {
+                        return;
+                    }
+
+                    mobile.IsDead = dead;
+
+                    break;
+                }
+                case 0x05:
+                {
+                    // Lifted from CUO, packet is used for both bonded status and updating statues
+                    int pos = (int) reader.Index;
+                    byte zero = reader.ReadByte();
+                    byte type2 = reader.ReadByte();
+
+                    if ( type2 == 0xFF )
+                    {
+                        byte status = reader.ReadByte();
+                        ushort animation = reader.ReadUInt16();
+                        ushort frame = reader.ReadUInt16();
+
+                        if ( status == 0 && animation == 0 && frame == 0 )
+                        {
+                            reader.Seek( pos, SeekOrigin.Begin );
+                            goto case 0;
+                        }
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        private static void OnCharacterList( PacketReader reader )
+        {
+            int characters = reader.ReadByte();
+
+            reader.Seek( characters * 60, SeekOrigin.Current );
+
+            int cities = reader.ReadByte();
+
+            bool isNew = Engine.ClientVersion >= new Version( 7, 0, 13, 0 );
+
+            for ( int i = 0; i < cities; i++ )
+            {
+                int index = reader.ReadByte();
+                string cityName = reader.ReadString( isNew ? 32 : 31 );
+                string buildingName = reader.ReadString( isNew ? 32 : 31 );
+
+                if ( !isNew )
+                {
+                    continue;
+                }
+
+                int x = reader.ReadInt32();
+                int y = reader.ReadInt32();
+                int z = reader.ReadInt32();
+                int map = reader.ReadInt32();
+                int cliloc = reader.ReadInt32();
+                reader.ReadInt32();
+            }
+
+            Engine.CharacterListFlags = (CharacterListFlags) reader.ReadInt32();
+
+            Engine.TooltipsEnabled =
+                Engine.CharacterListFlags.HasFlag( CharacterListFlags.PaladinNecromancerClassTooltips );
         }
 
         private static void OnUO3DPetWindow( PacketReader reader )
@@ -270,6 +438,12 @@ namespace ClassicAssist.UO.Network
             }
 
             int id = ( packet[7] << 8 ) | packet[8];
+
+            if ( ( id & 0x4000 ) != 0 )
+            {
+                id ^= 0x4000;
+                item.ArtDataID = 2;
+            }
 
             if ( ( id & 0x8000 ) != 0 )
             {
@@ -495,9 +669,10 @@ namespace ClassicAssist.UO.Network
             int gumpId = reader.ReadUInt16();
             int ctype = reader.ReadUInt16();
 
-            if ( ctype != 0 && gumpId == 0x09 )
+            // TODO write test for container => autoloot
+            if ( ( reader.Size == 7 /* old client without ctype */ || ctype != 0 ) && gumpId == 0x09 )
             {
-                Task.Run( () => CorpseContainerDisplayEvent?.Invoke( serial ) );
+                Task.Run( () => CorpseContainerDisplayEvent?.Invoke( serial, false ) );
             }
 
             if ( ctype != 0 )
@@ -519,7 +694,7 @@ namespace ClassicAssist.UO.Network
 
             if ( manager.Enabled != AbilityType.None )
             {
-                Commands.SystemMessage( Strings.Current_Ability_Cleared, (int) Commands.SystemMessageHues.Red );
+                Commands.SystemMessage( Strings.Current_Ability_Cleared, (int) SystemMessageHues.Red );
             }
 
             manager.Enabled = AbilityType.None;
@@ -731,6 +906,24 @@ namespace ClassicAssist.UO.Network
                     }
 
                     Engine.Player.Party = partyMembers.ToArray();
+
+                    break;
+                }
+
+                case 4:
+                {
+                    int serial = reader.ReadInt32();
+                    string message = reader.ReadUnicodeString();
+
+                    JournalEntry journalEntry = new JournalEntry
+                    {
+                        Serial = serial,
+                        Name = Engine.Mobiles.GetMobile( serial )?.Name ?? "Unknown",
+                        SpeechType = JournalSpeech.Whisper,
+                        Text = message
+                    };
+
+                    AddToJournal( journalEntry );
 
                     break;
                 }
@@ -981,7 +1174,7 @@ namespace ClassicAssist.UO.Network
             }
             catch ( Exception e )
             {
-                SentrySdk.WithScope( scope =>
+                SentrySdk.CaptureException( e, scope =>
                 {
                     scope.SetExtra( "Serial", senderSerial );
                     scope.SetExtra( "GumpID", gumpId );
@@ -991,7 +1184,6 @@ namespace ClassicAssist.UO.Network
                     scope.SetExtra( "Player", Engine.Player.ToString() );
                     scope.SetExtra( "WorldItemCount", Engine.Items.Count() );
                     scope.SetExtra( "WorldMobileCount", Engine.Mobiles.Count() );
-                    SentrySdk.CaptureException( e );
                 } );
             }
         }
@@ -1082,6 +1274,7 @@ namespace ClassicAssist.UO.Network
             Engine.TargetSerial = tid;
             Engine.TargetFlags = flags;
             Engine.TargetExists = flags != TargetFlags.Cancel;
+            Engine.InternalTarget = false;
 
             if ( Engine.TargetExists )
             {
@@ -1099,14 +1292,14 @@ namespace ClassicAssist.UO.Network
             }
             else
             {
-                object obj = Engine.LastTargetQueue.Dequeue();
+                TargetQueueObject obj = Engine.LastTargetQueue.Dequeue();
 
                 if ( obj == null )
                 {
                     return;
                 }
 
-                TargetCommands.Target( obj, Options.CurrentOptions.RangeCheckLastTarget );
+                TargetCommands.Target( obj.Object, Options.CurrentOptions.RangeCheckLastTarget );
             }
         }
 
@@ -1155,7 +1348,7 @@ namespace ClassicAssist.UO.Network
             int value = reader.ReadInt16();
             int baseValue = reader.ReadInt16();
             LockStatus lockStatus = (LockStatus) reader.ReadByte();
-            bool haveCap = (((type != 0u) && type <= 0x03) || type == 0xDF);
+            bool haveCap = type != 0u && type <= 0x03 || type == 0xDF;
             int skillCap = haveCap ? reader.ReadInt16() : 1000;
 
             if ( reader.Size <= 13 )
@@ -1255,8 +1448,7 @@ namespace ClassicAssist.UO.Network
             if ( !UOMath.IsMobile( containerSerial ) )
             {
                 Layer layer = Engine.Player?.GetAllLayers().Select( ( s, i ) => new { i, s } )
-                                  .Where( t => t.s == serial ).Select( t => (Layer) t.i ).FirstOrDefault() ??
-                              Layer.Invalid;
+                    .Where( t => t.s == serial ).Select( t => (Layer) t.i ).FirstOrDefault() ?? Layer.Invalid;
 
                 if ( layer != Layer.Invalid )
                 {
@@ -1267,7 +1459,7 @@ namespace ClassicAssist.UO.Network
                     Mobile mobile = Engine.Mobiles.SelectEntity( m => m.GetAllLayers().Contains( serial ) );
 
                     layer = mobile?.GetAllLayers().Select( ( s, i ) => new { i, s } ).Where( t => t.s == serial )
-                                .Select( t => (Layer) t.i ).FirstOrDefault() ?? Layer.Invalid;
+                        .Select( t => (Layer) t.i ).FirstOrDefault() ?? Layer.Invalid;
 
                     if ( layer != Layer.Invalid )
                     {
@@ -1311,7 +1503,7 @@ namespace ClassicAssist.UO.Network
         {
             int serial = reader.ReadInt32();
 
-            Mobile mobile = Engine.Mobiles.FirstOrDefault( m => m.GetEquippedItems().Any( i => i.Serial == serial ) );
+            Mobile mobile = Engine.Mobiles.FirstOrDefault( m => m.GetAllLayers().Contains( serial ) );
 
             if ( mobile != null )
             {
@@ -1474,7 +1666,7 @@ namespace ClassicAssist.UO.Network
             player.Gold = reader.ReadInt32();
             player.PhysicalResistance = reader.ReadInt16();
             player.Weight = reader.ReadInt16();
-            player.WeightMax = 40 + (int)( 3.5 * player.Strength );
+            player.WeightMax = 40 + (int) ( 3.5 * player.Strength );
 
             if ( features >= 5 )
             {
@@ -1522,7 +1714,7 @@ namespace ClassicAssist.UO.Network
             }
 
             Engine.UpdateWindowTitle();
-            Engine.SetTitle( $"{name} ({Engine.CurrentShard.Name})" );
+            Engine.SetTitle();
         }
 
         private static void OnMobileIncoming( PacketReader reader )
@@ -1589,8 +1781,11 @@ namespace ClassicAssist.UO.Network
             }
             else
             {
-                AbilitiesManager manager = AbilitiesManager.GetInstance();
-                manager.ResendGump( manager.Enabled );
+                Task.Run( () =>
+                {
+                    AbilitiesManager manager = AbilitiesManager.GetInstance();
+                    manager.ResendGump( manager.Enabled );
+                } ).ConfigureAwait( false );
             }
 
             MobileIncomingEvent?.Invoke( mobile, container );
@@ -1674,20 +1869,22 @@ namespace ClassicAssist.UO.Network
 
                 Engine.Items.Add( containerItem );
 
-                ContainerContentsEvent?.Invoke( container.Serial, container );
+                Task.Run( () =>
+                {
+                    ContainerContentsEvent?.Invoke( container.Serial, container );
 
-                Engine.RehueList.CheckContainer( container );
+                    Engine.RehueList.CheckContainer( container );
+                } ).ConfigureAwait( false );
             }
             catch ( Exception e )
             {
-                SentrySdk.WithScope( scope =>
+                SentrySdk.CaptureException( e, scope =>
                 {
                     scope.SetExtra( "ContainerSerial", containerItem?.Serial );
                     scope.SetExtra( "Count", count );
                     scope.SetExtra( "Packet", reader.GetData() );
                     scope.SetExtra( "WorldItemCount", Engine.Items.Count() );
                     scope.SetExtra( "WorldMobileCount", Engine.Mobiles.Count() );
-                    SentrySdk.CaptureException( e );
                 } );
             }
         }
@@ -1765,13 +1962,29 @@ namespace ClassicAssist.UO.Network
 
         private static PacketHandler GetExtendedHandler( int packetId )
         {
-            return _extendedHandlers[packetId];
+            return packetId >= _extendedHandlers.Length ? null : _extendedHandlers[packetId];
         }
 
         public static void AddToJournal( JournalEntry entry )
         {
             Engine.Journal.Write( entry );
             JournalEntryAddedEvent?.Invoke( entry );
+        }
+
+        public static void CAASystemMessageToJournal( string text )
+        {
+            JournalEntry journalEntry = new JournalEntry
+            {
+                Serial = -1,
+                ID = -1,
+                SpeechType = JournalSpeech.System,
+                SpeechHue = (int) SystemMessageHues.Normal,
+                SpeechFont = 0x03,
+                Name = "System",
+                Text = text
+            };
+
+            AddToJournal( journalEntry );
         }
     }
 }

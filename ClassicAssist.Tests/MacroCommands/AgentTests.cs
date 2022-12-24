@@ -52,6 +52,7 @@ namespace ClassicAssist.Tests.MacroCommands
 
             appDomain.DoCallBack( () =>
             {
+                Engine.ClientVersion = new Version( 7, 0, 0, 0 );
                 Dictionary<int, int> serialAmount = new Dictionary<int, int>();
 
                 void OnInternalPacketSentEvent( byte[] data, int length )
@@ -130,6 +131,7 @@ namespace ClassicAssist.Tests.MacroCommands
 
             appDomain.DoCallBack( () =>
             {
+                Engine.ClientVersion = new Version( 7, 0, 0, 0 );
                 Dictionary<int, int> serialAmount = new Dictionary<int, int>();
 
                 void OnInternalPacketSentEvent( byte[] data, int length )
@@ -207,6 +209,7 @@ namespace ClassicAssist.Tests.MacroCommands
 
             appDomain.DoCallBack( () =>
             {
+                Engine.ClientVersion = new Version( 7, 0, 0, 0 );
                 Dictionary<int, int> serialAmount = new Dictionary<int, int>();
 
                 void OnInternalPacketSentEvent( byte[] data, int length )

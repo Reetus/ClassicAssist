@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using ClassicAssist.Data.Abilities;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.UO.Data;

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assistant;
-using ClassicAssist.Data;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 
@@ -137,7 +136,6 @@ namespace ClassicAssist.UO.Data
 
             Engine.SendPacketToClient( new MobileMoving( mobile, entry.Hue ) );
             return true;
-
         }
     }
 }

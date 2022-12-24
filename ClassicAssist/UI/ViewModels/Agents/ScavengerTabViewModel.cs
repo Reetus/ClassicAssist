@@ -1,16 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
+using ClassicAssist.UI.ViewModels.Agents.Scavenger;
+using ClassicAssist.UI.Views.Agents.Scavenger;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
+using Microsoft.Scripting.Utils;
 using Newtonsoft.Json.Linq;
 using UOC = ClassicAssist.UO.Commands;
 
@@ -25,18 +33,27 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private ICommand _clearAllCommand;
         private int _containerSerial;
         private bool _enabled;
+        private bool _filterEnabled;
+
+        private ObservableCollection<ScavengerClilocFilterEntry> _filters =
+            new ObservableCollection<ScavengerClilocFilterEntry>();
+
         private ICommand _insertCommand;
         private ObservableCollection<ScavengerEntry> _items = new ObservableCollection<ScavengerEntry>();
         private int _minWeightAvailable;
+        private ICommand _openClilocFilterCommand;
         private ICommand _removeCommand;
         private ScavengerEntry _selectedItem;
         private ICommand _setContainerCommand;
+        private DateTime _lastNearbyCheck;
 
         public ScavengerTabViewModel()
         {
             ScavengerManager manager = ScavengerManager.GetInstance();
             manager.Items = Items;
-            manager.CheckArea = () => Task.Run( CheckArea );
+            manager.CheckArea = CheckArea;
+            manager.IsEnabled = () => Enabled;
+            manager.SetEnabled = val => Enabled = val;
             _ignoreList = new List<int>();
         }
 
@@ -61,6 +78,18 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set => SetProperty( ref _enabled, value );
         }
 
+        public bool FilterEnabled
+        {
+            get => _filterEnabled;
+            set => SetProperty( ref _filterEnabled, value );
+        }
+
+        public ObservableCollection<ScavengerClilocFilterEntry> Filters
+        {
+            get => _filters;
+            set => SetProperty( ref _filters, value );
+        }
+
         public ICommand InsertCommand =>
             _insertCommand ?? ( _insertCommand = new RelayCommandAsync( Insert, o => true ) );
 
@@ -76,6 +105,10 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set => SetProperty( ref _minWeightAvailable, value );
         }
 
+        public ICommand OpenClilocFilterCommand =>
+            _openClilocFilterCommand ??
+            ( _openClilocFilterCommand = new RelayCommand( OpenClilocFilter, o => Enabled ) );
+
         public ICommand RemoveCommand =>
             _removeCommand ?? ( _removeCommand = new RelayCommandAsync( Remove, o => SelectedItem != null ) );
 
@@ -88,7 +121,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         public ICommand SetContainerCommand =>
             _setContainerCommand ?? ( _setContainerCommand = new RelayCommandAsync( SetContainer, o => true ) );
 
-        public void Serialize( JObject json )
+        public void Serialize( JObject json, bool global = false )
         {
             Engine.Items.CollectionChanged -= ItemsOnCollectionChanged;
 
@@ -102,7 +135,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 { "Enabled", Enabled },
                 { "Container", ContainerSerial },
                 { "CheckWeight", CheckWeight },
-                { "MinWeightAvailable", MinWeightAvailable }
+                { "MinWeightAvailable", MinWeightAvailable },
+                { "FilterEnabled", FilterEnabled }
             };
 
             JArray itemsArray = new JArray();
@@ -121,10 +155,19 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             scavengerObj.Add( "Items", itemsArray );
 
+            JArray filtersArray = new JArray();
+
+            foreach ( ScavengerClilocFilterEntry entry in Filters )
+            {
+                filtersArray.Add( new JObject { { "Enabled", entry.Enabled }, { "Cliloc", entry.Cliloc } } );
+            }
+
+            scavengerObj.Add( "Filters", filtersArray );
+
             json.Add( "Scavenger", scavengerObj );
         }
 
-        public void Deserialize( JObject json, Options options )
+        public void Deserialize( JObject json, Options options, bool global = false )
         {
             Engine.Items.CollectionChanged += ItemsOnCollectionChanged;
             Items.Clear();
@@ -140,30 +183,63 @@ namespace ClassicAssist.UI.ViewModels.Agents
             ContainerSerial = config["Container"]?.ToObject<int>() ?? 0;
             CheckWeight = config["CheckWeight"]?.ToObject<bool>() ?? true;
             MinWeightAvailable = config["MinWeightAvailable"]?.ToObject<int>() ?? 25;
+            FilterEnabled = config["FilterEnabled"]?.ToObject<bool>() ?? false;
 
-            if ( config["Items"] == null )
+            if ( config["Items"] != null )
+            {
+                foreach ( JToken token in config["Items"] )
+                {
+                    ScavengerEntry entry = new ScavengerEntry
+                    {
+                        Graphic = token["Graphic"]?.ToObject<int>() ?? 0,
+                        Name = token["Name"]?.ToObject<string>() ?? "Unknown",
+                        Hue = token["Hue"]?.ToObject<int>() ?? 0,
+                        Enabled = token["Enabled"]?.ToObject<bool>() ?? true,
+                        Priority = token["Priority"]?.ToObject<ScavengerPriority>() ?? ScavengerPriority.Normal
+                    };
+
+                    bool alreadyExists = Items.Any( s => s.Graphic == entry.Graphic && s.Hue == entry.Hue );
+
+                    if ( !alreadyExists )
+                    {
+                        Items.Add( entry );
+                    }
+                }
+            }
+
+            Filters.Clear();
+
+            if ( config["Filters"] == null )
             {
                 return;
             }
 
-            foreach ( JToken token in config["Items"] )
+            foreach ( JToken token in config["Filters"] )
             {
-                ScavengerEntry entry = new ScavengerEntry
+                Filters.Add( new ScavengerClilocFilterEntry
                 {
-                    Graphic = token["Graphic"]?.ToObject<int>() ?? 0,
-                    Name = token["Name"]?.ToObject<string>() ?? "Unknown",
-                    Hue = token["Hue"]?.ToObject<int>() ?? 0,
-                    Enabled = token["Enabled"]?.ToObject<bool>() ?? true,
-                    Priority = token["Priority"]?.ToObject<ScavengerPriority>() ?? ScavengerPriority.Normal
-                };
-
-                bool alreadyExists = Items.Any( s => s.Graphic == entry.Graphic && s.Hue == entry.Hue );
-
-                if ( !alreadyExists )
-                {
-                    Items.Add( entry );
-                }
+                    Enabled = token["Enabled"]?.ToObject<bool>() ?? false,
+                    Cliloc = token["Cliloc"]?.ToObject<int>() ?? 0
+                } );
             }
+        }
+
+        private void OpenClilocFilter( object obj )
+        {
+            ScavengerClilocFilterViewModel vm = new ScavengerClilocFilterViewModel( FilterEnabled, Filters );
+
+            ScavengerClilocFilterWindow window = new ScavengerClilocFilterWindow { DataContext = vm };
+
+            window.ShowDialog();
+
+            if ( vm.DialogResult != DialogResult.OK )
+            {
+                return;
+            }
+
+            FilterEnabled = vm.Enabled;
+            Filters.Clear();
+            Filters.AddRange( vm.Items );
         }
 
         private void ItemsOnCollectionChanged( int totalcount, bool added, Item[] items )
@@ -173,17 +249,24 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
+            if ( DateTime.Now - _lastNearbyCheck < TimeSpan.FromMilliseconds( 100 ) )
+            {
+                return;
+            }
+
             bool hasNearby = items.Any( i => i.Distance <= SCAVENGER_DISTANCE );
 
             if ( hasNearby )
             {
-                CheckArea();
+                Task.Run( CheckArea ).ConfigureAwait( false );
             }
+
+            _lastNearbyCheck = DateTime.Now;
         }
 
         internal void CheckArea()
         {
-            if ( !Enabled || Engine.Player == null )
+            if ( !Enabled || Engine.Player == null || Engine.Player.IsDead )
             {
                 return;
             }
@@ -195,8 +278,21 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            lock ( _scavengeLock )
+            bool lockTaken = false;
+
+            Monitor.Enter( _scavengeLock, ref lockTaken );
+
+            if ( !lockTaken )
             {
+#if DEBUG
+                UOC.SystemMessage( "Scav lock not taken, return" );
+#endif
+                return;
+            }
+
+            try
+            {
+
                 foreach ( ScavengerEntry entry in Items.OrderByDescending( x => x.Priority ) )
                 {
                     if ( !entry.Enabled )
@@ -205,8 +301,10 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     }
 
                     Item[] matches = Engine.Items.SelectEntities( i =>
-                        i.Distance <= SCAVENGER_DISTANCE && i.Owner == 0 && i.ID == entry.Graphic &&
-                        ( entry.Hue == -1 || i.Hue == entry.Hue ) && !_ignoreList.Contains( i.Serial ) );
+                        i?.Distance <= SCAVENGER_DISTANCE && i.Owner == 0 && i.ID == entry.Graphic &&
+                        ( entry.Hue == -1 || i.Hue == entry.Hue ) && !_ignoreList.Contains( i.Serial ) &&
+                        ( !FilterEnabled ||
+                          !i.Properties.Any( e => Filters.Select( f => f.Cliloc ).Contains( e.Cliloc ) ) ) );
 
                     if ( matches == null )
                     {
@@ -215,6 +313,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                     scavengerItems.AddRange( matches );
                 }
+
+                _ignoreList.Clear();
 
                 if ( scavengerItems.Count == 0 )
                 {
@@ -228,20 +328,48 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     return;
                 }
 
-                foreach ( Item scavengerItem in scavengerItems.Where( scavengerItem =>
-                    scavengerItem.Distance <= SCAVENGER_DISTANCE ).Distinct() )
+                if ( FilterEnabled && Filters.Any() && Engine.TooltipsEnabled )
                 {
-                    UOC.SystemMessage( string.Format( Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown" ),
-                        (int) UOC.SystemMessageHues.Yellow );
+#if DEBUG
+                    Stopwatch stopWatch = new Stopwatch();
+                    stopWatch.Start();
+#endif
+                    bool result = UOC.WaitForPropertiesAsync( scavengerItems.Where( e => e.Properties == null ), 1000 )
+                        .Result;
+
+#if DEBUG
+                    stopWatch.Stop();
+                    UOC.SystemMessage(
+                        $"WaitForPropertiesAsync Result = {result}, Time = {stopWatch.ElapsedMilliseconds}" );
+#endif
+                }
+
+                foreach ( Item scavengerItem in scavengerItems.Where( i =>
+                    i.Distance <= SCAVENGER_DISTANCE && !_ignoreList.Contains( i.Serial ) ) )
+                {
+                    Item refetchedItem = Engine.Items.GetItem( scavengerItem.Serial );
+
+                    if ( refetchedItem == null || refetchedItem.IsDescendantOf( ContainerSerial == 0
+                        ? Engine.Player.Backpack.Serial
+                        : ContainerSerial ) )
+                    {
+                        continue;
+                    }
+
+                    UOC.SystemMessage( string.Format( Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown" ), 61 );
                     Task<bool> t = ActionPacketQueue.EnqueueDragDrop( scavengerItem.Serial, scavengerItem.Count,
                         container.Serial, QueuePriority.Low, true, true, requeueOnFailure: false,
                         successPredicate: CheckItemContainer );
 
-                    if ( t.Result && CheckItemContainer( scavengerItem.Serial, container.Serial ) )
+                    if ( t.Result )
                     {
                         _ignoreList.Add( scavengerItem.Serial );
                     }
                 }
+            }
+            finally
+            {
+                Monitor.Exit( _scavengeLock );
             }
         }
 
@@ -258,7 +386,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 

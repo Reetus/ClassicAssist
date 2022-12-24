@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Assistant;
-using ClassicAssist.Annotations;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
@@ -15,7 +13,7 @@ using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.Data.Dress
 {
-    public class DressManager : INotifyPropertyChanged
+    public class DressManager : SetPropertyNotifyChanged
     {
         private static DressManager _instance;
         private static readonly object _instanceLock = new object();
@@ -56,8 +54,6 @@ namespace ClassicAssist.Data.Dress
             set => SetProperty( ref _useUo3DPackets, value );
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private void OnCollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
         {
             OnPropertyChanged( nameof( Items ) );
@@ -78,19 +74,6 @@ namespace ClassicAssist.Data.Dress
             }
 
             return _instance;
-        }
-
-        // ReSharper disable once RedundantAssignment
-        public void SetProperty<T>( ref T obj, T value, [CallerMemberName] string propertyName = "" )
-        {
-            obj = value;
-            OnPropertyChanged( propertyName );
-        }
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
         }
 
         public async Task UndressAll()
@@ -176,7 +159,7 @@ namespace ClassicAssist.Data.Dress
                 if ( IsDressing )
                 {
                     UO.Commands.SystemMessage( Strings.Dress_already_in_progress___,
-                        (int) UO.Commands.SystemMessageHues.Red );
+                        (int) SystemMessageHues.Red );
                     return;
                 }
 

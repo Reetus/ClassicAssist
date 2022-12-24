@@ -1,11 +1,10 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.Shared.UI;
 
 namespace ClassicAssist.Data.Filters
 {
-    public abstract class FilterEntry : INotifyPropertyChanged
+    public abstract class FilterEntry : SetPropertyNotifyChanged
     {
         private bool _enabled;
         private bool _isConfigurable;
@@ -59,23 +58,9 @@ namespace ClassicAssist.Data.Filters
             set => SetProperty( ref _name, value );
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         protected virtual void OnChanged( bool enabled )
         {
             throw new NotImplementedException();
-        }
-
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-        }
-
-        // ReSharper disable once RedundantAssignment
-        public void SetProperty<T>( ref T field, T value, [CallerMemberName] string propertyName = null )
-        {
-            field = value;
-            OnPropertyChanged( propertyName );
         }
     }
 }

@@ -5,10 +5,9 @@ using System.Text;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Abilities;
 using ClassicAssist.Misc;
-using ClassicAssist.Resources;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;
-using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.UO.Network
@@ -29,11 +28,16 @@ namespace ClassicAssist.UO.Network
 
         private static bool OnUseRequest( ref byte[] packet, ref int length )
         {
-            int serial = (packet[1] << 24) | (packet[2] << 16) | (packet[3] << 8) | packet[4];
+            int serial = ( packet[1] << 24 ) | ( packet[2] << 16 ) | ( packet[3] << 8 ) | packet[4];
 
             if ( Options.CurrentOptions.CheckHandsPotions )
             {
-                return AbilitiesManager.GetInstance().CheckHands( serial );
+                bool result = AbilitiesManager.GetInstance().CheckHands( serial );
+
+                if ( result )
+                {
+                    return true;
+                }
             }
 
             if ( Options.CurrentOptions.UseObjectQueue )
@@ -119,6 +123,11 @@ namespace ClassicAssist.UO.Network
 
         private static bool OnAttackRequested( ref byte[] packet, ref int length )
         {
+            if ( length < 5 )
+            {
+                return false;
+            }
+
             int serial = ( packet[1] << 24 ) | ( packet[2] << 16 ) | ( packet[3] << 8 ) | packet[4];
 
             bool block = Options.CurrentOptions.PreventAttackingFriendsInWarMode &&

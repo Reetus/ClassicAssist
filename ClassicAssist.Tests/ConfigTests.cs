@@ -37,6 +37,8 @@ namespace ClassicAssist.Tests
 
         public void TestConfig( JObject json )
         {
+            bool setNull = json == null;
+
             string path = Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location );
 
             _profilePath = Path.Combine( path, "Profiles" );
@@ -47,7 +49,7 @@ namespace ClassicAssist.Tests
             }
 
             IEnumerable<Type> allSettingProvider = Assembly.GetAssembly( typeof( Engine ) ).GetTypes()
-                .Where( t => typeof( ISettingProvider ).IsAssignableFrom( t ) && t.IsClass );
+                .Where( t => typeof( ISettingProvider ).IsAssignableFrom( t ) && t.IsClass && !t.IsAbstract );
 
             Options options = new Options();
 
@@ -61,6 +63,8 @@ namespace ClassicAssist.Tests
                 ISettingProvider p = (ISettingProvider) Activator.CreateInstance( type );
 
                 p.Deserialize( json, options );
+
+                json = setNull ? null : new JObject();
 
                 p.Serialize( json );
             }

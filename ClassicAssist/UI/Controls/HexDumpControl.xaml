@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ClassicAssist.UI.Controls"
-             xmlns:resources="clr-namespace:ClassicAssist.Resources"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="600">
     <UserControl.Resources>
@@ -20,7 +20,7 @@
                 <ContextMenu>
                     <MenuItem Header="{x:Static resources:Strings.Copy_packet_declaration}" Click="Copy_OnClick" />
                     <MenuItem Header="{x:Static resources:Strings.Replay}" Click="Replay_OnClick" />
-                    <MenuItem Header="{x:Static resources:Strings.Ignore_packet_type}" Click="Ignore_OnClick"/>
+                    <MenuItem Header="{x:Static resources:Strings.Ignore_packet_type}" Click="Ignore_OnClick" />
                 </ContextMenu>
             </Grid.ContextMenu>
             <Grid.ColumnDefinitions>

@@ -4,6 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Media;
 using System.Threading;
+using System.Runtime.InteropServices; // needed for DLL import
+using System.Diagnostics; // needed for process
+using System.Windows.Forms; // needed for messagebox
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
@@ -24,8 +27,84 @@ using static ClassicAssist.Misc.NativeMethods;
 
 namespace ClassicAssist.Data.Macros.Commands
 {
+
+
     public static class MainCommands
     {
+        static readonly IntPtr HWND_TOPMOST = new IntPtr( -1 );
+        static readonly IntPtr HWND_NOTOPMOST = new IntPtr( -2 );
+        static readonly IntPtr HWND_TOP = new IntPtr( 0 );
+        static readonly IntPtr HWND_BOTTOM = new IntPtr( 1 );
+
+        const UInt32 SWP_NOZORDER = 0X4;
+        const UInt32 SWP_NOSIZE = 0x0001;
+        const UInt32 SWP_NOMOVE = 0x0002;
+        const UInt32 SWP_SHOWWINDOW = 0x0040;
+        const UInt32 SWP_HIDEWINDOW = 0x0080;
+
+        const int SWP_NOREDRAW = 0x0008;
+        const int SWP_NOREPOSITION = 0x0200;
+        const int SWP_NOSENDCHANGING = 0x0400;
+
+        const int SWP_SHOWNORMAL = 1;
+        const int SWP_SHOWMINIMIZED = 2;
+        const int SWP_SHOWMAXIMIZED = 3;
+
+        //[DllImport("User32.dll")]
+        //public static extern Int32 SetForegroundWindow(int hWnd);   
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
+        public static void BringClientWindowToFront()
+        {
+            IntPtr _handle = Engine.WindowHandle;
+
+            //IntPtr wowHandle = handle;
+            //int style = NativeMethods.GetWindowLong( _handle, GWL_STYLE );
+
+            //NativeMethods.SetWindowLong( _handle, GWL_STYLE, ( style & ~WS_CAPTION ) );
+            //SetWindowLong(wowHandle, GWL_STYLE, (style & WS_CAPTION));
+
+            // hide border & title
+            ////IntPtr wowHandle = handle;
+            //style = NativeMethods.GetWindowLong( _handle, GWL_STYLE );
+            //SetWindowLong(wowHandle, GWL_STYLE, (style & ~WS_CAPTION));
+            //NativeMethods.SetWindowLong( _handle, GWL_STYLE, ( style & WS_CAPTION ) );
+
+            // SWP_SHOWMAXIMIZED to maximize the window
+            // SWP_SHOWMINIMIZED to minimize the window
+            // SWP_SHOWNORMAL to make the window be normal size
+            //NativeMethods.ShowWindow( _handle, SWP_SHOWNORMAL ); // maximize the window incase its minimized before merging
+
+            //NativeMethods.SetWindowPos( _handle, HWND_TOP, x, y, w, h, SWP_NOZORDER | SWP_SHOWWINDOW );
+
+
+
+            //NativeMethods.SwitchToThisWindow( _handle, true );
+
+            //NativeMethods.SetWindowPos( _handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW );
+
+            //NativeMethods.SetWindowPos( _handle, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW );
+
+            //NativeMethods.SetWindowPos( _handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW );
+
+            //NativeMethods.SetWindowPos( _handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW );
+
+            //NativeMethods.SwitchToThisWindow( _handle, true );
+
+            //NativeMethods.SetWindowPos( _handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW );
+
+            //NativeMethods.ShowWindow( _handle, SWP_SHOWNORMAL );
+            //NativeMethods.SetForegroundWindow( _handle );
+
+
+            //force client window to minimize disregarding row position, restore will not properly work unless window is minimized. 
+            NativeMethods.ShowWindowAsync( _handle, ShowWindowEnum.Minimize );
+            //restore window to front
+            NativeMethods.ShowWindowAsync( _handle, ShowWindowEnum.Restore );
+            //set user's focus to the window
+            NativeMethods.SetForegroundWindow( _handle );
+        }
+
+
         [CommandsDisplay( Category = nameof( Strings.Main ), Parameters = new[] { nameof( ParameterType.OnOff ) } )]
         public static void SetQuietMode( bool onOff )
         {

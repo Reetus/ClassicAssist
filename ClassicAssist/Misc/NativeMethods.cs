@@ -109,13 +109,6 @@ namespace ClassicAssist.Misc
             public int Bottom; // y position of lower-right corner
         }
 
-
-
-
-
-
-
-
         [DllImport( "user32.dll" )]
         public static extern IntPtr FindWindow( string className, string windowTitle );
 
@@ -149,6 +142,7 @@ namespace ClassicAssist.Misc
             public System.Drawing.Rectangle rcNormalPosition;
         }
 
+        #region ShowWindowEnum
         public enum ShowWindowEnum
         {
             /// <summary>
@@ -216,5 +210,7 @@ namespace ClassicAssist.Misc
             /// </summary>
             ForceMinimize = 11
         }
+
+        #endregion
     }
 }

@@ -1421,10 +1421,4 @@ Zwraca boolean'a oznaczającego czy przycisk OK został wciśnięty oraz index w
   <data name="QUIT_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Zamyka klienta</value>
   </data>
-  <data name="BRINGCLIENTWINDOWTOFRONT_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>Bring client window to front</value>
-  </data>
-  <data name="BRINGCLIENTWINDOWTOFRONT_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value>BringClientWindowToFront()</value>
-  </data>
 </root>

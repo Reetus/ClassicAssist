@@ -1358,4 +1358,10 @@ Risponde un tuple con un bolean, indicando quando un tasto OK è stato premuto, 
   <data name="TRADECURRENCY_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Imposta un ammontare di oro e platino nella finestra di Trade (per Shard supportati)</value>
   </data>
+  <data name="BRINGCLIENTWINDOWTOFRONT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Bring client window to front</value>
+  </data>
+  <data name="BRINGCLIENTWINDOWTOFRONT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>BringClientWindowToFront()</value>
+  </data>
 </root>

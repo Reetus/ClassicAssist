@@ -4,6 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Media;
 using System.Threading;
+using System.Runtime.InteropServices; // needed for DLL import
+using System.Diagnostics; // needed for process
+using System.Windows.Forms; // needed for messagebox
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
@@ -26,6 +29,18 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class MainCommands
     {
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
+        public static void BringClientWindowToFront()
+        {
+            IntPtr _handle = Engine.WindowHandle;
+            //force client window to minimize disregarding row position, restore will not properly work unless window is already minimized. 
+            NativeMethods.ShowWindowAsync( _handle, ShowWindowEnum.Minimize );
+            //restore window to front
+            NativeMethods.ShowWindowAsync( _handle, ShowWindowEnum.Restore );
+            //set user's focus to the window
+            NativeMethods.SetForegroundWindow( _handle );
+        }
+
         [CommandsDisplay( Category = nameof( Strings.Main ), Parameters = new[] { nameof( ParameterType.OnOff ) } )]
         public static void SetQuietMode( bool onOff )
         {

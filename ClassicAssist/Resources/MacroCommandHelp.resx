@@ -1822,4 +1822,10 @@ else:
   print 'Serial {} was selected'.format(serial)
 </value>
   </data>
+  <data name="BRINGCLIENTWINDOWTOFRONT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Bring client window to front</value>
+  </data>
+  <data name="BRINGCLIENTWINDOWTOFRONT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>BringClientWindowToFront()</value>
+  </data>
 </root>

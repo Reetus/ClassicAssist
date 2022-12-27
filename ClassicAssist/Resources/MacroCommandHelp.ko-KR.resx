@@ -785,4 +785,10 @@ OK버튼 클릭 클릭 여부를 나타내는 tuple과 선택된 entry index를 
   <data name="OPENHELPGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>OpenHelpGump()</value>
   </data>
+  <data name="BRINGCLIENTWINDOWTOFRONT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Bring client window to front</value>
+  </data>
+  <data name="BRINGCLIENTWINDOWTOFRONT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>BringClientWindowToFront()</value>
+  </data>
 </root>

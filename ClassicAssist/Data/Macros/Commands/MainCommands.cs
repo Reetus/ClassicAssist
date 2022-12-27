@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -7,7 +6,6 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 using Assistant;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Helpers;
@@ -26,6 +24,18 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class MainCommands
     {
+        [CommandsDisplay( Category = nameof( Strings.Main ) )]
+        public static void BringClientWindowToFront()
+        {
+            IntPtr _handle = Engine.WindowHandle;
+            //force client window to minimize disregarding row position, restore will not properly work unless window is already minimized. 
+            ShowWindowAsync( _handle, ShowWindowEnum.Minimize );
+            //restore window to front
+            ShowWindowAsync( _handle, ShowWindowEnum.Restore );
+            //set user's focus to the window
+            SetForegroundWindow( _handle );
+        }
+
         [CommandsDisplay( Category = nameof( Strings.Main ), Parameters = new[] { nameof( ParameterType.OnOff ) } )]
         public static void SetQuietMode( bool onOff )
         {

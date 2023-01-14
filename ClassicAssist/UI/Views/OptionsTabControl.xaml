@@ -13,7 +13,7 @@
     xmlns:cliloc="clr-namespace:ClassicAssist.UO.Data"
     x:Class="ClassicAssist.UI.Views.OptionsTabControl"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="500">
+    d:DesignHeight="347.333" d:DesignWidth="653.333">
     <d:DesignerProperties.DesignStyle>
         <Style TargetType="UserControl">
             <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
@@ -161,6 +161,12 @@
                       IsChecked="{Binding CurrentOptions.AbilitiesGump}" />
             <CheckBox Content="{x:Static resources:Strings.Show_running_macros_gump}"
                       IsChecked="{Binding CurrentOptions.MacrosGump}" />
+            <StackPanel Orientation="Horizontal" IsEnabled="{Binding CurrentOptions.MacrosGump}" Margin="20,0,0,0">
+                <Label Content="Height" Width="50" Height="25" />
+                <TextBox x:Name="TextBox_MacrosGumpHeight" Text="{Binding CurrentOptions.MacrosGumpHeight, Mode=TwoWay}" Width="40" Margin="10,0" TextChanged="TextBox_MacrosGumpHeight_TextChanged" />
+                <Label Content="Width" Width="50" Height="25" />
+                <TextBox x:Name="TextBox_MacrosGumpWidth" Text="{Binding CurrentOptions.MacrosGumpWidth, Mode=TwoWay}" Width="40" Margin="10,0" TextChanged="TextBox_MacrosGumpWidth_TextChanged"  />
+            </StackPanel>
             <CheckBox Content="{x:Static resources:Strings.Show_player___shard_name_in_CUO_title}"
                       IsChecked="{Binding CurrentOptions.SetUOTitle}" />
             <CheckBox Content="{x:Static resources:Strings.Show_Profile_Name_In_Title}"

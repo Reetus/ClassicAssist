@@ -20,7 +20,7 @@ namespace ClassicAssist.Data
     {
         public const string DEFAULT_SETTINGS_FILENAME = "settings.json";
         private static string _profilePath;
-        private bool _abilitiesGump = true;
+        private bool _abilitiesGump = false;
         private int _abilitiesGumpX = 100;
         private int _abilitiesGumpY = 100;
         private bool _actionDelay;
@@ -57,6 +57,8 @@ namespace ClassicAssist.Data
         private bool _macrosGump;
         private int _macrosGumpX;
         private int _macrosGumpY;
+        private int _macrosGumpHeight = 500;
+        private int _macrosGumpWidth = 220;
         private int _maxTargetQueueLength = 1;
         private string _name;
         private bool _persistUseOnce;
@@ -307,6 +309,18 @@ namespace ClassicAssist.Data
         {
             get => _macrosGumpY;
             set => SetProperty( ref _macrosGumpY, value );
+        }
+
+        public int MacrosGumpHeight
+        {
+            get => _macrosGumpHeight;
+            set => SetProperty( ref _macrosGumpHeight, value );
+        }
+
+        public int MacrosGumpWidth
+        {
+            get => _macrosGumpWidth;
+            set => SetProperty( ref _macrosGumpWidth, value );
         }
 
         public int MaxTargetQueueLength

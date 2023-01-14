@@ -35,19 +35,27 @@ namespace ClassicAssist.UO.Gumps
         private static IEnumerable<MacroEntry> _lastMacros;
         private readonly MacroEntry[] _macros;
 
-        public MacrosGump( IEnumerable<MacroEntry> macros ) : base( 190, 180, _serial++, (uint) _serial++ )
+        // TODO : read value from options tab
+        //private static int _sizeX = Options.CurrentOptions.MacrosGumpHeight;
+        //private static int _sizeY = Options.CurrentOptions.MacrosGumpWidth;
+
+        public MacrosGump( IEnumerable<MacroEntry> macros ) : base( Options.CurrentOptions.MacrosGumpHeight, Options.CurrentOptions.MacrosGumpWidth, _serial++, (uint) _serial++ )
         {
             _macros = macros.ToArray();
 
             GumpX = Options.CurrentOptions.MacrosGumpX;
             GumpY = Options.CurrentOptions.MacrosGumpY;
 
-            Movable = false;
-            Closable = false;
+            int _sizeX = Options.CurrentOptions.MacrosGumpHeight;
+            int _sizeY = Options.CurrentOptions.MacrosGumpWidth;
+
+            Movable = true;
+            Closable = true;
             Resizable = false;
             Disposable = false;
             AddPage( 0 );
-            AddBackground( 0, 0, 190, 180, 3500 );
+
+            AddAlphaRegion( 0, 0, _sizeX, _sizeY );
 
             int y = 20;
             int i = 10;
@@ -59,15 +67,18 @@ namespace ClassicAssist.UO.Gumps
                     return;
                 }
 
-                string html = $"<BASEFONT COLOR=#000000>{macro.Name}</BASEFONT>\n";
+                string html = $"<BASEFONT face=Arial color=red>{macro.Name}</BASEFONT>\n";
 
                 if ( macro.IsBackground )
                 {
-                    html = $"<BASEFONT COLOR=#000000><I>{macro.Name}</I></BASEFONT>\n";
+                    html = $"<BASEFONT face=Arial color=red><I>{macro.Name}</I></BASEFONT>\n";
                 }
 
-                AddHtml( 20, y, 150, 140, html, false, false );
-                AddButton( 160, y + 3, 3, 4, i++, GumpButtonType.Reply, 0 );
+                AddHtml( 20, y, _sizeX - 40, _sizeY - 40, html, false, false );
+   
+                //AddButton( _sizeX - 30, y + 3, 2104, 2103, i++, GumpButtonType.Reply, 0, ElementType.button, 2, 2 );
+                AddButton( _sizeX - 30, y + 3, 2104, 2103, i++, GumpButtonType.Reply, 0 );
+
                 y += 20;
             }
         }
@@ -92,6 +103,11 @@ namespace ClassicAssist.UO.Gumps
                     {
                         Commands.CloseClientGump( macrosGump.ID );
                     }
+                }
+
+                if ( !Options.CurrentOptions.MacrosGump )
+                {
+                    return;
                 }
 
                 MacrosGump gump = new MacrosGump( macros );

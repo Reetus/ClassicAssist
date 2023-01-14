@@ -39,15 +39,15 @@ namespace ClassicAssist.UO.Gumps
         //private static int _sizeX = Options.CurrentOptions.MacrosGumpHeight;
         //private static int _sizeY = Options.CurrentOptions.MacrosGumpWidth;
 
-        public MacrosGump( IEnumerable<MacroEntry> macros ) : base( Options.CurrentOptions.MacrosGumpHeight, Options.CurrentOptions.MacrosGumpWidth, _serial++, (uint) _serial++ )
+        public MacrosGump( IEnumerable<MacroEntry> macros ) : base( Options.CurrentOptions.MacrosGumpWidth, Options.CurrentOptions.MacrosGumpHeight, _serial++, (uint) _serial++ )
         {
             _macros = macros.ToArray();
 
             GumpX = Options.CurrentOptions.MacrosGumpX;
             GumpY = Options.CurrentOptions.MacrosGumpY;
 
-            int _sizeX = Options.CurrentOptions.MacrosGumpHeight;
-            int _sizeY = Options.CurrentOptions.MacrosGumpWidth;
+            int _height = Options.CurrentOptions.MacrosGumpHeight;
+            int _width = Options.CurrentOptions.MacrosGumpWidth;
 
             Movable = true;
             Closable = true;
@@ -55,7 +55,7 @@ namespace ClassicAssist.UO.Gumps
             Disposable = false;
             AddPage( 0 );
 
-            AddAlphaRegion( 0, 0, _sizeX, _sizeY );
+            AddAlphaRegion( 0, 0, _width, _height);
 
             int y = 20;
             int i = 10;
@@ -74,10 +74,10 @@ namespace ClassicAssist.UO.Gumps
                     html = $"<BASEFONT face=Arial color=red><I>{macro.Name}</I></BASEFONT>\n";
                 }
 
-                AddHtml( 20, y, _sizeX - 40, _sizeY - 40, html, false, false );
+                AddHtml( 20, y, _width - 40, _height - 40, html, false, false );
    
                 //AddButton( _sizeX - 30, y + 3, 2104, 2103, i++, GumpButtonType.Reply, 0, ElementType.button, 2, 2 );
-                AddButton( _sizeX - 30, y + 3, 2104, 2103, i++, GumpButtonType.Reply, 0 );
+                AddButton( _width - 30, y + 3, 2104, 2103, i++, GumpButtonType.Reply, 0 );
 
                 y += 20;
             }

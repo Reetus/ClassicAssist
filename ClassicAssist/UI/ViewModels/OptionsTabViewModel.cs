@@ -84,8 +84,10 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "MacrosGump", CurrentOptions.MacrosGump );
             options.Add( "MacrosGumpX", CurrentOptions.MacrosGumpX );
             options.Add( "MacrosGumpY", CurrentOptions.MacrosGumpY );
-            options.Add( "ChatWindowWidth", CurrentOptions.ChatWindowWidth );
+            options.Add( "MacrosGumpHeight", CurrentOptions.MacrosGumpHeight );
+            options.Add( "MacrosGumpWidth", CurrentOptions.MacrosGumpWidth );
             options.Add( "ChatWindowHeight", CurrentOptions.ChatWindowHeight );
+            options.Add( "ChatWindowWidth", CurrentOptions.ChatWindowWidth );
             options.Add( "EntityCollectionViewerOptions", CurrentOptions.EntityCollectionViewerOptions.Serialize() );
             options.Add( "ExpireTargetsMS", CurrentOptions.ExpireTargetsMS );
             options.Add( "LogoutDisconnectedPrompt", CurrentOptions.LogoutDisconnectedPrompt );
@@ -160,8 +162,11 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.MacrosGump = config?["MacrosGump"]?.ToObject<bool>() ?? true;
             CurrentOptions.MacrosGumpX = config?["MacrosGumpX"]?.ToObject<int>() ?? 100;
             CurrentOptions.MacrosGumpY = config?["MacrosGumpY"]?.ToObject<int>() ?? 100;
-            CurrentOptions.ChatWindowWidth = config?["ChatWindowWidth"]?.ToObject<double>() ?? 650;
+            CurrentOptions.MacrosGumpHeight = config?["MacrosGumpHeight"]?.ToObject<int>() ?? 500;
+            CurrentOptions.MacrosGumpWidth = config?["MacrosGumpWidth"]?.ToObject<int>() ?? 220;
             CurrentOptions.ChatWindowHeight = config?["ChatWindowHeight"]?.ToObject<double>() ?? 350;
+            CurrentOptions.ChatWindowWidth = config?["ChatWindowWidth"]?.ToObject<double>() ?? 650;
+
 
             if ( CurrentOptions.AbilitiesGumpX < 0 )
             {

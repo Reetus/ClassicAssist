@@ -763,7 +763,7 @@ namespace ClassicAssist.UO.Objects.Gumps
             return Encoding.ASCII.GetBytes( str );
         }
 
-        private byte[] Compile()
+        protected byte[] Compile()
         {
             IGumpWriter disp = new GumpWriter( this );
 
@@ -813,6 +813,10 @@ namespace ClassicAssist.UO.Objects.Gumps
             disp.Flush();
 
             return disp.ToArray();
+        }
+
+        public virtual void OnClosing()
+        {
         }
 
         internal interface IGumpWriter

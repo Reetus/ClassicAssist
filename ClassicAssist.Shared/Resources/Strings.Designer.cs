@@ -2992,6 +2992,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Moving item {0} / {1}.
+        /// </summary>
+        public static string Moving_item__0_____1_ {
+            get {
+                return ResourceManager.GetString("Moving item {0} / {1}", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Name {

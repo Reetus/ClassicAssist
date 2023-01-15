@@ -219,4 +219,7 @@
   <data name="Open Shard Website" xml:space="preserve">
     <value>Open Shard Website</value>
   </data>
+  <data name="Moving item {0} / {1}" xml:space="preserve">
+    <value>Moving item {0} / {1}</value>
+  </data>
 </root>

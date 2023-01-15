@@ -39,23 +39,17 @@
                 <misc:BindingProxy x:Key="proxy" Data="{Binding}" />
             </StackPanel.Resources>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <Label Content="{x:Static resources:Strings.Language}" Width="70" />
+                <Label Content="{x:Static resources:Strings.Language}" />
                 <ComboBox Margin="10,0,10,0"
                           ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type misc1:Language}}}"
                           x:Name="langCombo" SelectedItem="{x:Static data:AssistantOptions.LanguageOverride}"
-                          MinWidth="100" Width="87">
+                          MinWidth="100">
                     <i:Interaction.Behaviors>
                         <misc1:ComboBoxBehavior CommandBinding="{Binding SetLanguageOverrideCommand}"
                                                 CommandParameter="{Binding SelectedItem, ElementName=langCombo}"
                                                 OnlyUserTriggered="True" />
                     </i:Interaction.Behaviors>
                 </ComboBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <Label Content="Default Tab" Width="70" />
-                <ComboBox Text="{Binding CurrentOptions.DefaultTabOption, Mode=TwoWay}" Margin="10,0,10,0"
-                    ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type data:DefaultTabOption}}}"
-                    MinWidth="100" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Content="{x:Static resources:Strings.Command_Prefix_}" />
@@ -144,7 +138,7 @@
                 <TextBlock Text="{x:Static resources:Strings.Prevent_attacking_innocents_in_guardzone}"
                            TextWrapping="Wrap" />
             </CheckBox>
-            <Grid Margin="0,0,132,0">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -155,11 +149,11 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Label Content="{x:Static resources:Strings.Last_target_message_}" Grid.Row="0" Grid.Column="0" />
-                <TextBox Text="{Binding CurrentOptions.LastTargetMessage}" Grid.Row="0" Grid.Column="1" Margin="0,2" />
+                <TextBox Text="{Binding CurrentOptions.LastTargetMessage}" Grid.Row="0" Grid.Column="1" />
                 <Label Content="{x:Static resources:Strings.Friend_target_message_}" Grid.Row="1" Grid.Column="0" />
-                <TextBox Text="{Binding CurrentOptions.FriendTargetMessage}" Grid.Row="1" Grid.Column="1" Margin="0,2" />
+                <TextBox Text="{Binding CurrentOptions.FriendTargetMessage}" Grid.Row="1" Grid.Column="1" />
                 <Label Content="{x:Static resources:Strings.Enemy_target_message_}" Grid.Row="2" Grid.Column="0" />
-                <TextBox Text="{Binding CurrentOptions.EnemyTargetMessage}" Grid.Row="2" Grid.Column="1" Margin="0,2" />
+                <TextBox Text="{Binding CurrentOptions.EnemyTargetMessage}" Grid.Row="2" Grid.Column="1" />
             </Grid>
             <CheckBox Content="{x:Static resources:Strings.GetFriend_GetEnemy_uses_ignore_list}"
                       IsChecked="{Binding CurrentOptions.GetFriendEnemyUsesIgnoreList}" />

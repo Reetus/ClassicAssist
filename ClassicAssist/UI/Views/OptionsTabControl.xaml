@@ -13,7 +13,7 @@
     xmlns:cliloc="clr-namespace:ClassicAssist.UO.Data"
     x:Class="ClassicAssist.UI.Views.OptionsTabControl"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="500">
+    d:DesignHeight="633.233" d:DesignWidth="798.666">
     <d:DesignerProperties.DesignStyle>
         <Style TargetType="UserControl">
             <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
@@ -39,17 +39,23 @@
                 <misc:BindingProxy x:Key="proxy" Data="{Binding}" />
             </StackPanel.Resources>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <Label Content="{x:Static resources:Strings.Language}" />
+                <Label Content="{x:Static resources:Strings.Language}" Width="70" />
                 <ComboBox Margin="10,0,10,0"
                           ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type misc1:Language}}}"
                           x:Name="langCombo" SelectedItem="{x:Static data:AssistantOptions.LanguageOverride}"
-                          MinWidth="100">
+                          MinWidth="100" Width="87">
                     <i:Interaction.Behaviors>
                         <misc1:ComboBoxBehavior CommandBinding="{Binding SetLanguageOverrideCommand}"
                                                 CommandParameter="{Binding SelectedItem, ElementName=langCombo}"
                                                 OnlyUserTriggered="True" />
                     </i:Interaction.Behaviors>
                 </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Content="Default Tab" Width="70" />
+                <ComboBox Text="{Binding CurrentOptions.DefaultTabOption, Mode=TwoWay}" Margin="10,0,10,0"
+                    ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type data:DefaultTabOption}}}"
+                    MinWidth="100" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Content="{x:Static resources:Strings.Command_Prefix_}" />
@@ -138,7 +144,7 @@
                 <TextBlock Text="{x:Static resources:Strings.Prevent_attacking_innocents_in_guardzone}"
                            TextWrapping="Wrap" />
             </CheckBox>
-            <Grid>
+            <Grid Margin="0,0,132,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -149,11 +155,11 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Label Content="{x:Static resources:Strings.Last_target_message_}" Grid.Row="0" Grid.Column="0" />
-                <TextBox Text="{Binding CurrentOptions.LastTargetMessage}" Grid.Row="0" Grid.Column="1" />
+                <TextBox Text="{Binding CurrentOptions.LastTargetMessage}" Grid.Row="0" Grid.Column="1" Margin="0,2" />
                 <Label Content="{x:Static resources:Strings.Friend_target_message_}" Grid.Row="1" Grid.Column="0" />
-                <TextBox Text="{Binding CurrentOptions.FriendTargetMessage}" Grid.Row="1" Grid.Column="1" />
+                <TextBox Text="{Binding CurrentOptions.FriendTargetMessage}" Grid.Row="1" Grid.Column="1" Margin="0,2" />
                 <Label Content="{x:Static resources:Strings.Enemy_target_message_}" Grid.Row="2" Grid.Column="0" />
-                <TextBox Text="{Binding CurrentOptions.EnemyTargetMessage}" Grid.Row="2" Grid.Column="1" />
+                <TextBox Text="{Binding CurrentOptions.EnemyTargetMessage}" Grid.Row="2" Grid.Column="1" Margin="0,2" />
             </Grid>
             <CheckBox Content="{x:Static resources:Strings.GetFriend_GetEnemy_uses_ignore_list}"
                       IsChecked="{Binding CurrentOptions.GetFriendEnemyUsesIgnoreList}" />
@@ -161,6 +167,16 @@
                       IsChecked="{Binding CurrentOptions.AbilitiesGump}" />
             <CheckBox Content="{x:Static resources:Strings.Show_running_macros_gump}"
                       IsChecked="{Binding CurrentOptions.MacrosGump}" />
+            <StackPanel Orientation="Horizontal" IsEnabled="{Binding CurrentOptions.MacrosGump}" Margin="20,0,0,0">
+                <Label Content="Height" Width="50" Height="25" />
+                <TextBox x:Name="TextBox_MacrosGumpHeight" Text="{Binding CurrentOptions.MacrosGumpHeight, Mode=TwoWay}" Width="40" Margin="5,0"/>
+                <Label Content="Width" Width="50" Height="25" />
+                <TextBox x:Name="TextBox_MacrosGumpWidth" Text="{Binding CurrentOptions.MacrosGumpWidth, Mode=TwoWay}" Width="40" Margin="5,0"/>
+                <Label Content="TextColor" Width="60" />
+                <TextBox x:Name="TextBox_MacrosGumpTextColor" Text="{Binding CurrentOptions.MacrosGumpTextColor, Mode=TwoWay}" Width="80" Margin="5,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" IsEnabled="{Binding CurrentOptions.QueueLastTarget}" Margin="20,0,0,0"
+                ToolTip="{x:Static resources:Strings.Time_in_milliseconds___1_to_not_expire_}"/>
             <CheckBox Content="{x:Static resources:Strings.Show_player___shard_name_in_CUO_title}"
                       IsChecked="{Binding CurrentOptions.SetUOTitle}" />
             <CheckBox Content="{x:Static resources:Strings.Show_Profile_Name_In_Title}"

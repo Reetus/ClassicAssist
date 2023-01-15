@@ -40,6 +40,7 @@ namespace ClassicAssist.Data
         private bool _checkHandsPotions;
         private char _commandPrefix = '+';
         private bool _debug;
+        private DefaultTabOption _defaultTabOption = DefaultTabOption.General;
         private bool _defaultMacroQuietMode;
         private string _enemyTargetMessage;
         private EntityCollectionViewerOptions _entityCollectionViewerOptions = new EntityCollectionViewerOptions();
@@ -57,6 +58,9 @@ namespace ClassicAssist.Data
         private bool _macrosGump;
         private int _macrosGumpX;
         private int _macrosGumpY;
+        private int _macrosGumpHeight = 220;
+        private int _macrosGumpWidth = 500;
+        private string _macrosGumpTextColor = "#EE2A00";
         private int _maxTargetQueueLength = 1;
         private string _name;
         private bool _persistUseOnce;
@@ -80,7 +84,6 @@ namespace ClassicAssist.Data
         private bool _useExperimentalFizzleDetection;
         private bool _useObjectQueue;
         private int _useObjectQueueAmount = 5;
-
         public bool AbilitiesGump
         {
             get => _abilitiesGump;
@@ -203,6 +206,12 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _debug, value );
         }
 
+        public DefaultTabOption DefaultTabOption
+        {
+            get => _defaultTabOption;
+            set => SetProperty( ref _defaultTabOption, value );
+        }
+
         public bool DefaultMacroQuietMode
         {
             get => _defaultMacroQuietMode;
@@ -307,6 +316,24 @@ namespace ClassicAssist.Data
         {
             get => _macrosGumpY;
             set => SetProperty( ref _macrosGumpY, value );
+        }
+
+        public int MacrosGumpHeight
+        {
+            get => _macrosGumpHeight;
+            set => SetProperty( ref _macrosGumpHeight, value );
+        }
+
+        public int MacrosGumpWidth
+        {
+            get => _macrosGumpWidth;
+            set => SetProperty( ref _macrosGumpWidth, value );
+        }
+
+        public string MacrosGumpTextColor
+        {
+            get => _macrosGumpTextColor;
+            set => SetProperty( ref _macrosGumpTextColor, value );
         }
 
         public int MaxTargetQueueLength
@@ -619,5 +646,18 @@ namespace ClassicAssist.Data
         Friend = 0b01,
         Enemy = 0b10,
         Both = 0b11
+    }
+
+    [Flags]
+    public enum DefaultTabOption
+    {
+        General,
+        Options,
+        Hotkeys,
+        Macros,
+        Skills,
+        Agents,
+        PublicMacros,
+        About
     }
 }

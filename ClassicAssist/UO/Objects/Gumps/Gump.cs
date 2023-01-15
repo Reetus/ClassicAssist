@@ -125,6 +125,10 @@ namespace ClassicAssist.UO.Objects.Gumps
 
         public bool Movable { get; set; }
 
+        //public int _sizeX { get; set; }
+
+        //public int _sizeY { get; set; }
+
         public bool Resizable { get; set; }
 
         public string[] Strings

@@ -84,6 +84,7 @@ namespace ClassicAssist.Data
         private bool _useExperimentalFizzleDetection;
         private bool _useObjectQueue;
         private int _useObjectQueueAmount = 5;
+
         public bool AbilitiesGump
         {
             get => _abilitiesGump;

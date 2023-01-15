@@ -89,6 +89,7 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "EntityCollectionViewerOptions", CurrentOptions.EntityCollectionViewerOptions.Serialize() );
             options.Add( "ExpireTargetsMS", CurrentOptions.ExpireTargetsMS );
             options.Add( "LogoutDisconnectedPrompt", CurrentOptions.LogoutDisconnectedPrompt );
+            options.Add( "DefaultTabOption", CurrentOptions.DefaultTabOption.ToString() );
 
             json?.Add( "Options", options );
         }
@@ -162,6 +163,8 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.MacrosGumpY = config?["MacrosGumpY"]?.ToObject<int>() ?? 100;
             CurrentOptions.ChatWindowWidth = config?["ChatWindowWidth"]?.ToObject<double>() ?? 650;
             CurrentOptions.ChatWindowHeight = config?["ChatWindowHeight"]?.ToObject<double>() ?? 350;
+            CurrentOptions.DefaultTabOption =
+                config?["DefaultTabOption"]?.ToObject<DefaultTabOption>() ?? DefaultTabOption.General;
 
             if ( CurrentOptions.AbilitiesGumpX < 0 )
             {

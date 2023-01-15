@@ -44,29 +44,29 @@
             </controls:CustomWindowTitleControl.AdditionalButtons>
         </controls:CustomWindowTitleControl>
         <Grid Margin="10,0,10,10">
-            <TabControl>
-                <TabItem Header="{x:Static r:Strings.General}">
+            <TabControl x:Name="MainTabs" SelectedIndex="{Binding SelectedTab}">
+                <TabItem x:Name="General" Header="{x:Static r:Strings.General}">
                     <local:GeneralControl />
                 </TabItem>
-                <TabItem Header="{x:Static r:Strings.Options}">
+                <TabItem x:Name="Options" Header="{x:Static r:Strings.Options}">
                     <local:OptionsTabControl />
                 </TabItem>
-                <TabItem Header="{x:Static r:Strings.Hotkeys}">
+                <TabItem x:Name="Hotkeys" Header="{x:Static r:Strings.Hotkeys}">
                     <local:HotkeysTabControl />
                 </TabItem>
-                <TabItem Header="{x:Static r:Strings.Macros}">
+                <TabItem x:Name="Macros" Header="{x:Static r:Strings.Macros}">
                     <local:MacrosTabControl />
                 </TabItem>
-                <TabItem Header="{x:Static r:Strings.Skills}">
+                <TabItem x:Name="Skills" Header="{x:Static r:Strings.Skills}">
                     <local:SkillsTabControl />
                 </TabItem>
-                <TabItem Header="{x:Static r:Strings.Agents}">
+                <TabItem x:Name="Agents" Header="{x:Static r:Strings.Agents}">
                     <local:AgentsTabControl />
                 </TabItem>
-                <TabItem Header="{x:Static r:Strings.Public_Macros}">
+                <TabItem x:Name="PublicMacros" Header="{x:Static r:Strings.Public_Macros}">
                     <browser:MacroBrowserControl />
                 </TabItem>
-                <TabItem Header="{x:Static r:Strings.About}">
+                <TabItem x:Name="About" Header="{x:Static r:Strings.About}">
                     <local:AboutControl />
                 </TabItem>
             </TabControl>

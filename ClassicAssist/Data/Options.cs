@@ -41,6 +41,8 @@ namespace ClassicAssist.Data
         private char _commandPrefix = '+';
         private bool _debug;
         private bool _defaultMacroQuietMode;
+
+        private DefaultTabOption _defaultTabOption = DefaultTabOption.General;
         private string _enemyTargetMessage;
         private EntityCollectionViewerOptions _entityCollectionViewerOptions = new EntityCollectionViewerOptions();
         private int _expireTargetsMs;
@@ -207,6 +209,12 @@ namespace ClassicAssist.Data
         {
             get => _defaultMacroQuietMode;
             set => SetProperty( ref _defaultMacroQuietMode, value );
+        }
+
+        public DefaultTabOption DefaultTabOption
+        {
+            get => _defaultTabOption;
+            set => SetProperty( ref _defaultTabOption, value );
         }
 
         public string EnemyTargetMessage
@@ -610,6 +618,19 @@ namespace ClassicAssist.Data
             EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
             return Directory.EnumerateFiles( _profilePath, "*.json" ).ToArray();
         }
+    }
+
+    [Flags]
+    public enum DefaultTabOption
+    {
+        General,
+        Options,
+        Hotkeys,
+        Macros,
+        Skills,
+        Agents,
+        PublicMacros,
+        About
     }
 
     [Flags]

@@ -60,6 +60,12 @@
                 </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Content="Default Tab" Width="70" />
+                <ComboBox Text="{Binding CurrentOptions.DefaultTabOption, Mode=TwoWay}" Margin="10,0,10,0"
+                          ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type data:DefaultTabOption}}}"
+                          MinWidth="100" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Content="{x:Static resources:Strings.Smart_last_target_}" />
                 <ComboBox Text="{Binding CurrentOptions.SmartTargetOption, Mode=TwoWay}" Margin="10,0,10,0"
                           ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type data:SmartTargetOption}}}"
@@ -70,7 +76,8 @@
             <CheckBox Content="{x:Static resources:Strings.Use_death_screen_whilst_hidden}"
                       IsChecked="{Binding CurrentOptions.UseDeathScreenWhilstHidden}" />
             <StackPanel Orientation="Horizontal">
-                <CheckBox IsChecked="{Binding CurrentOptions.RangeCheckLastTarget}" DataContext="{Binding}" VerticalAlignment="Center">
+                <CheckBox IsChecked="{Binding CurrentOptions.RangeCheckLastTarget}" DataContext="{Binding}"
+                          VerticalAlignment="Center">
                     <CheckBox.ContentTemplate>
                         <ItemContainerTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -189,7 +196,7 @@
                       CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
                       IsEnabled="{x:Static cliloc:Cliloc.CanUseCUOClilocLanguage}" />
             <CheckBox Content="{x:Static resources:Strings.Logout_on_disconnected_prompt}"
-                      IsChecked="{Binding CurrentOptions.LogoutDisconnectedPrompt}"/>
+                      IsChecked="{Binding CurrentOptions.LogoutDisconnectedPrompt}" />
         </StackPanel>
     </Grid>
 </UserControl>

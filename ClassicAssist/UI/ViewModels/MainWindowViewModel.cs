@@ -21,12 +21,14 @@ namespace ClassicAssist.UI.ViewModels
         private string _status = Strings.Ready___;
         private TaskbarIcon _taskbarIcon;
         private string _title = Strings.ProductName;
+        private int _selectedTab;
 
         public MainWindowViewModel()
         {
             Engine.Dispatcher = Dispatcher.CurrentDispatcher;
             Engine.UpdateWindowTitleEvent += OnUpdateWindowTitleEvent;
             Engine.ClientClosing += OnClientClosing;
+            Engine.UpdateDefaultTabEvent += OnUpdateDefaultTabEvent;
         }
 
         [OptionsBinding( Property = "AlwaysOnTop" )]
@@ -67,6 +69,11 @@ namespace ClassicAssist.UI.ViewModels
 
         private void OnUpdateWindowTitleEvent()
         {
+            // TODO : figure out where to properly put this so that it loads after settings.json deserializer // this seems to be called 4-5 times on start
+            SelectedTab = (int) ClassicAssist.Data.Options.CurrentOptions.DefaultTabOption;
+            _dispatcher.Invoke( () => { _selectedTab = SelectedTab; } );
+
+
             Title = string.IsNullOrEmpty( Engine.Player?.Name )
                 ? Strings.ProductName
                 : $"{Engine.Player?.Name} - {( Options.CurrentOptions.ShowProfileNameWindowTitle ? $"({Options.CurrentOptions.Name}) - " : "" )}{Strings.ProductName}";
@@ -75,6 +82,13 @@ namespace ClassicAssist.UI.ViewModels
             {
                 _dispatcher.Invoke( () => { _taskbarIcon.ToolTipText = Title; } );
             }
+        }
+
+        private void OnUpdateDefaultTabEvent()
+        {
+            // TODO : for some reason this does not load
+            SelectedTab = (int)ClassicAssist.Data.Options.CurrentOptions.DefaultTabOption;
+            _dispatcher.Invoke( () => { _selectedTab = SelectedTab; } );
         }
 
         private void ShowDebugWindow( object obj )
@@ -126,10 +140,22 @@ namespace ClassicAssist.UI.ViewModels
             window.Show();
             _taskbarIcon.Visibility = Visibility.Hidden;
         }
+
+        public int SelectedTab
+        {
+            get => _selectedTab;
+            set
+            {
+                if ( value == _selectedTab ) return;
+                _selectedTab = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     public class OptionsBindingAttribute : Attribute
     {
         public string Property { get; set; }
     }
+
 }

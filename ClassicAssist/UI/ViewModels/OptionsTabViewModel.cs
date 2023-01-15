@@ -69,6 +69,8 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "LastTargetMessage", CurrentOptions.LastTargetMessage );
             options.Add( "FriendTargetMessage", CurrentOptions.FriendTargetMessage );
             options.Add( "EnemyTargetMessage", CurrentOptions.EnemyTargetMessage );
+            //options.Add( "DefaultTabOption", CurrentOptions.DefaultTabOption );
+            options.Add( "DefaultTabOption", CurrentOptions.DefaultTabOption.ToString() );
             options.Add( "DefaultMacroQuietMode", CurrentOptions.DefaultMacroQuietMode );
             options.Add( "GetFriendEnemyUsesIgnoreList", CurrentOptions.GetFriendEnemyUsesIgnoreList );
             options.Add( "AbilitiesGump", CurrentOptions.AbilitiesGump );
@@ -86,6 +88,7 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "MacrosGumpY", CurrentOptions.MacrosGumpY );
             options.Add( "MacrosGumpHeight", CurrentOptions.MacrosGumpHeight );
             options.Add( "MacrosGumpWidth", CurrentOptions.MacrosGumpWidth );
+            options.Add( "MacrosGumpTextColor", CurrentOptions.MacrosGumpTextColor );
             options.Add( "ChatWindowHeight", CurrentOptions.ChatWindowHeight );
             options.Add( "ChatWindowWidth", CurrentOptions.ChatWindowWidth );
             options.Add( "EntityCollectionViewerOptions", CurrentOptions.EntityCollectionViewerOptions.Serialize() );
@@ -145,6 +148,8 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.LastTargetMessage = config?["LastTargetMessage"]?.ToObject<string>() ?? "[Last Target]";
             CurrentOptions.FriendTargetMessage = config?["FriendTargetMessage"]?.ToObject<string>() ?? "[Friend]";
             CurrentOptions.EnemyTargetMessage = config?["EnemyTargetMessage"]?.ToObject<string>() ?? "[Enemy]";
+            CurrentOptions.DefaultTabOption =
+                config?["DefaultTabOption"]?.ToObject<DefaultTabOption>() ?? DefaultTabOption.General;
             CurrentOptions.DefaultMacroQuietMode = config?["DefaultMacroQuietMode"]?.ToObject<bool>() ?? false;
             CurrentOptions.GetFriendEnemyUsesIgnoreList =
                 config?["GetFriendEnemyUsesIgnoreList"]?.ToObject<bool>() ?? false;
@@ -164,9 +169,9 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.MacrosGumpY = config?["MacrosGumpY"]?.ToObject<int>() ?? 100;
             CurrentOptions.MacrosGumpHeight = config?["MacrosGumpHeight"]?.ToObject<int>() ?? 500;
             CurrentOptions.MacrosGumpWidth = config?["MacrosGumpWidth"]?.ToObject<int>() ?? 220;
+            CurrentOptions.MacrosGumpTextColor = config?["MacrosGumpTextColor"]?.ToObject<string>() ?? "#EE2A00";
             CurrentOptions.ChatWindowHeight = config?["ChatWindowHeight"]?.ToObject<double>() ?? 350;
             CurrentOptions.ChatWindowWidth = config?["ChatWindowWidth"]?.ToObject<double>() ?? 650;
-
 
             if ( CurrentOptions.AbilitiesGumpX < 0 )
             {
@@ -239,5 +244,7 @@ namespace ClassicAssist.UI.ViewModels
             MessageBox.Show( Strings.Restart_game_for_changes_to_take_effect___,
                 Strings.Restart_game_for_changes_to_take_effect___ );
         }
+
+
     }
 }

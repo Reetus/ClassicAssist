@@ -35,10 +35,6 @@ namespace ClassicAssist.UO.Gumps
         private static IEnumerable<MacroEntry> _lastMacros;
         private readonly MacroEntry[] _macros;
 
-        // TODO : read value from options tab
-        //private static int _sizeX = Options.CurrentOptions.MacrosGumpHeight;
-        //private static int _sizeY = Options.CurrentOptions.MacrosGumpWidth;
-
         public MacrosGump( IEnumerable<MacroEntry> macros ) : base( Options.CurrentOptions.MacrosGumpWidth, Options.CurrentOptions.MacrosGumpHeight, _serial++, (uint) _serial++ )
         {
             _macros = macros.ToArray();
@@ -49,8 +45,8 @@ namespace ClassicAssist.UO.Gumps
             int _height = Options.CurrentOptions.MacrosGumpHeight;
             int _width = Options.CurrentOptions.MacrosGumpWidth;
 
-            Movable = true;
-            Closable = true;
+            Movable = false;
+            Closable = false;
             Resizable = false;
             Disposable = false;
             AddPage( 0 );
@@ -67,16 +63,16 @@ namespace ClassicAssist.UO.Gumps
                     return;
                 }
 
-                string html = $"<BASEFONT face=Arial color=red>{macro.Name}</BASEFONT>\n";
+                string _txtColor = Options.CurrentOptions.MacrosGumpTextColor;
+
+                string html = $"<BASEFONT face=Arial color={_txtColor}>{macro.Name}</BASEFONT>\n";
 
                 if ( macro.IsBackground )
                 {
-                    html = $"<BASEFONT face=Arial color=red><I>{macro.Name}</I></BASEFONT>\n";
+                    html = $"<BASEFONT face=Arial color={_txtColor}><I>{macro.Name}</I></BASEFONT>\n";
                 }
 
                 AddHtml( 20, y, _width - 40, _height - 40, html, false, false );
-   
-                //AddButton( _sizeX - 30, y + 3, 2104, 2103, i++, GumpButtonType.Reply, 0, ElementType.button, 2, 2 );
                 AddButton( _width - 30, y + 3, 2104, 2103, i++, GumpButtonType.Reply, 0 );
 
                 y += 20;

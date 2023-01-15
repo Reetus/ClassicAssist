@@ -487,7 +487,6 @@ namespace ClassicAssist.UO.Objects.Gumps
                 ButtonType = (int) type,
                 ElementID = buttonID,
                 Param = param
-
             };
             Add( ge );
         }

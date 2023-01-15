@@ -44,7 +44,7 @@
             </controls:CustomWindowTitleControl.AdditionalButtons>
         </controls:CustomWindowTitleControl>
         <Grid Margin="10,0,10,10">
-            <TabControl>
+            <TabControl x:Name="MainTabs">
                 <TabItem Header="{x:Static r:Strings.General}">
                     <local:GeneralControl />
                 </TabItem>
@@ -54,7 +54,7 @@
                 <TabItem Header="{x:Static r:Strings.Hotkeys}">
                     <local:HotkeysTabControl />
                 </TabItem>
-                <TabItem Header="{x:Static r:Strings.Macros}">
+                <TabItem Header="{x:Static r:Strings.Macros}" IsSelected="True">
                     <local:MacrosTabControl />
                 </TabItem>
                 <TabItem Header="{x:Static r:Strings.Skills}">

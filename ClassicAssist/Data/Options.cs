@@ -41,6 +41,7 @@ namespace ClassicAssist.Data
         private bool _checkHandsPotions;
         private char _commandPrefix = '+';
         private bool _debug;
+        private DefaultTabOption _defaultTabOption = DefaultTabOption.General;
         private bool _defaultMacroQuietMode;
         private string _enemyTargetMessage;
         private EntityCollectionViewerOptions _entityCollectionViewerOptions = new EntityCollectionViewerOptions();
@@ -56,9 +57,9 @@ namespace ClassicAssist.Data
         private int _limitMouseWheelTriggerMS;
         private bool _logoutDisconnectedPrompt;
         private bool _macrosGump;
-        private int _macrosGumpHeight = 180;
-        private Color _macrosGumpTextColor = Colors.White;
-        private int _macrosGumpWidth = 190;
+        private Color _macrosGumpTextColor = Colors.Red;
+        private int _macrosGumpHeight = 220;
+        private int _macrosGumpWidth = 500;
         private int _macrosGumpX;
         private int _macrosGumpY;
         private int _maxTargetQueueLength = 1;
@@ -205,6 +206,11 @@ namespace ClassicAssist.Data
         {
             get => _debug;
             set => SetProperty( ref _debug, value );
+        }
+        public DefaultTabOption DefaultTabOption
+        {
+            get => _defaultTabOption;
+            set => SetProperty( ref _defaultTabOption, value );
         }
 
         public bool DefaultMacroQuietMode
@@ -641,5 +647,18 @@ namespace ClassicAssist.Data
         Friend = 0b01,
         Enemy = 0b10,
         Both = 0b11
+    }
+
+    [Flags]
+    public enum DefaultTabOption
+    {
+        General = 0,
+        Options = 1,
+        Hotkeys = 2,
+        Macros = 3,
+        Skills = 4,
+        Agents = 5,
+        PublicMacros = 6,
+        About = 7
     }
 }

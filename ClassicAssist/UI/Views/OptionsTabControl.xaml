@@ -39,7 +39,7 @@
                 <misc:BindingProxy x:Key="proxy" Data="{Binding}" />
             </StackPanel.Resources>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <Label Content="{x:Static resources:Strings.Language}" />
+                <Label Content="{x:Static resources:Strings.Language}" Width="70" />
                 <ComboBox Margin="10,0,10,0"
                           ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type misc1:Language}}}"
                           x:Name="langCombo" SelectedItem="{x:Static data:AssistantOptions.LanguageOverride}"
@@ -50,6 +50,12 @@
                                                 OnlyUserTriggered="True" />
                     </i:Interaction.Behaviors>
                 </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Content="Default Tab" Width="70" />
+                <ComboBox Text="{Binding CurrentOptions.DefaultTabOption, Mode=TwoWay}" Margin="10,0,10,0"
+                    ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type data:DefaultTabOption}}}"
+                    MinWidth="100" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Content="{x:Static resources:Strings.Command_Prefix_}" />

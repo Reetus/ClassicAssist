@@ -75,6 +75,7 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "LastTargetMessage", CurrentOptions.LastTargetMessage );
             options.Add( "FriendTargetMessage", CurrentOptions.FriendTargetMessage );
             options.Add( "EnemyTargetMessage", CurrentOptions.EnemyTargetMessage );
+            options.Add( "DefaultTabOption", CurrentOptions.DefaultTabOption.ToString() );
             options.Add( "DefaultMacroQuietMode", CurrentOptions.DefaultMacroQuietMode );
             options.Add( "GetFriendEnemyUsesIgnoreList", CurrentOptions.GetFriendEnemyUsesIgnoreList );
             options.Add( "AbilitiesGump", CurrentOptions.AbilitiesGump );
@@ -152,6 +153,8 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.LastTargetMessage = config?["LastTargetMessage"]?.ToObject<string>() ?? "[Last Target]";
             CurrentOptions.FriendTargetMessage = config?["FriendTargetMessage"]?.ToObject<string>() ?? "[Friend]";
             CurrentOptions.EnemyTargetMessage = config?["EnemyTargetMessage"]?.ToObject<string>() ?? "[Enemy]";
+            CurrentOptions.DefaultTabOption =
+                config?["DefaultTabOption"]?.ToObject<DefaultTabOption>() ?? DefaultTabOption.General;
             CurrentOptions.DefaultMacroQuietMode = config?["DefaultMacroQuietMode"]?.ToObject<bool>() ?? false;
             CurrentOptions.GetFriendEnemyUsesIgnoreList =
                 config?["GetFriendEnemyUsesIgnoreList"]?.ToObject<bool>() ?? false;

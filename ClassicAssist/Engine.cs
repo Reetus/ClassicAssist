@@ -64,6 +64,9 @@ namespace Assistant
 
         public delegate void dUpdateWindowTitle();
 
+        public delegate void dUpdateWindowDefaultTab();
+
+
         private const int MAX_DISTANCE = 32;
 
         private static OnConnected _onConnected;
@@ -148,6 +151,7 @@ namespace Assistant
         public static event dHotkeyPressed HotkeyPressedEvent;
 
         public static event dUpdateWindowTitle UpdateWindowTitleEvent;
+        public static event dUpdateWindowDefaultTab UpdateDefaultTabEvent;
 
         internal static event dSendRecvPacket InternalPacketSentEvent;
         internal static event dSendRecvPacket InternalPacketReceivedEvent;
@@ -832,6 +836,11 @@ namespace Assistant
         public static void UpdateWindowTitle()
         {
             UpdateWindowTitleEvent?.Invoke();
+        }
+
+        public static void UpdateWindowDefaultTab()
+        {
+            UpdateDefaultTabEvent?.Invoke();
         }
 
         public static void SetTitle( string title = null )

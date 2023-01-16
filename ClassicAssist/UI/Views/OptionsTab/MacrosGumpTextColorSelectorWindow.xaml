@@ -9,7 +9,7 @@
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         xmlns:optionsTab="clr-namespace:ClassicAssist.UI.Views.OptionsTab"
         mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
-        Title="{x:Static resources:Strings.Text_Color}" SizeToContent="WidthAndHeight">
+        Title="{x:Static resources:Strings.Text_Color}" SizeToContent="WidthAndHeight" Topmost="True">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -30,7 +30,7 @@
                 <Style TargetType="{x:Type xctk:ColorCanvas}" BasedOn="{StaticResource {x:Type xctk:ColorCanvas}}">
                     <Setter Property="Background" Value="{DynamicResource ThemeInnerControlBackgroundBrush}" />
                     <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
-                    <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}"/>
+                    <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
                 </Style>
             </xctk:ColorCanvas.Style>
         </xctk:ColorCanvas>

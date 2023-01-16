@@ -21,14 +21,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.UO.Objects.Gumps;
 
 namespace ClassicAssist.UO.Gumps
 {
-    public class MacrosGump : RepositionableGump
+    public class MacrosGump : ReflectionRepositionableGump
     {
         private static Timer _timer;
         private static int _serial = 0x0fe00000;
@@ -91,13 +90,7 @@ namespace ClassicAssist.UO.Gumps
                     return;
                 }
 
-                if ( Engine.Gumps.GetGumps( out Gump[] gumps ) )
-                {
-                    foreach ( Gump macrosGump in gumps.Where( g => g is MacrosGump ) )
-                    {
-                        Commands.CloseClientGump( macrosGump.ID );
-                    }
-                }
+                Commands.CloseClientGump( typeof( MacrosGump ) );
 
                 if ( !Options.CurrentOptions.MacrosGump )
                 {
@@ -117,6 +110,9 @@ namespace ClassicAssist.UO.Gumps
 
         public static void Initialize()
         {
+            Commands.CloseClientGump( typeof( MacrosGump ) );
+
+            _timer?.Dispose();
             _timer = new Timer( o => ResendGump(), null, 1000, 250 );
         }
 
@@ -142,6 +138,21 @@ namespace ClassicAssist.UO.Gumps
             {
                 base.OnResponse( buttonID, switches, textEntries );
             }
+        }
+
+        public override void OnClosing()
+        {
+            base.OnClosing();
+
+            ( int x, int y ) = GetPosition();
+
+            if ( x == default || y == default )
+            {
+                return;
+            }
+
+            Options.CurrentOptions.MacrosGumpX = x;
+            Options.CurrentOptions.MacrosGumpY = y;
         }
     }
 }

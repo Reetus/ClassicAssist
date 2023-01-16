@@ -1857,6 +1857,9 @@ Are you sure you wish to continue?</value>
   <data name="Replace name with single click label" xml:space="preserve">
     <value>Replace name with single click label</value>
   </data>
+  <data name="Moving item {0} / {1}" xml:space="preserve">
+    <value>Moving item {0} / {1}</value>
+  </data>
   <data name="Text Color" xml:space="preserve">
     <value>Text Color</value>
   </data>

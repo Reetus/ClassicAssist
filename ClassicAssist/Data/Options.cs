@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Windows.Media;
 using Assistant;
 using ClassicAssist.Data.Friends;
 using ClassicAssist.Data.Hotkeys;
@@ -55,11 +56,11 @@ namespace ClassicAssist.Data
         private int _limitMouseWheelTriggerMS;
         private bool _logoutDisconnectedPrompt;
         private bool _macrosGump;
+        private int _macrosGumpHeight = 180;
+        private Color _macrosGumpTextColor = Colors.White;
+        private int _macrosGumpWidth = 190;
         private int _macrosGumpX;
         private int _macrosGumpY;
-        private int _macrosGumpHeight = 220;
-        private int _macrosGumpWidth = 500;
-        private string _macrosGumpTextColor = "#EE2A00";
         private int _maxTargetQueueLength = 1;
         private string _name;
         private bool _persistUseOnce;
@@ -300,6 +301,24 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _macrosGump, value );
         }
 
+        public int MacrosGumpHeight
+        {
+            get => _macrosGumpHeight;
+            set => SetProperty( ref _macrosGumpHeight, value );
+        }
+
+        public Color MacrosGumpTextColor
+        {
+            get => _macrosGumpTextColor;
+            set => SetProperty( ref _macrosGumpTextColor, value );
+        }
+
+        public int MacrosGumpWidth
+        {
+            get => _macrosGumpWidth;
+            set => SetProperty( ref _macrosGumpWidth, value );
+        }
+
         public int MacrosGumpX
         {
             get => _macrosGumpX;
@@ -310,24 +329,6 @@ namespace ClassicAssist.Data
         {
             get => _macrosGumpY;
             set => SetProperty( ref _macrosGumpY, value );
-        }
-
-        public int MacrosGumpHeight
-        {
-            get => _macrosGumpHeight;
-            set => SetProperty( ref _macrosGumpHeight, value );
-        }
-
-        public int MacrosGumpWidth
-        {
-            get => _macrosGumpWidth;
-            set => SetProperty( ref _macrosGumpWidth, value );
-        }
-
-        public string MacrosGumpTextColor
-        {
-            get => _macrosGumpTextColor;
-            set => SetProperty( ref _macrosGumpTextColor, value );
         }
 
         public int MaxTargetQueueLength

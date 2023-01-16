@@ -70,7 +70,8 @@
             <CheckBox Content="{x:Static resources:Strings.Use_death_screen_whilst_hidden}"
                       IsChecked="{Binding CurrentOptions.UseDeathScreenWhilstHidden}" />
             <StackPanel Orientation="Horizontal">
-                <CheckBox IsChecked="{Binding CurrentOptions.RangeCheckLastTarget}" DataContext="{Binding}" VerticalAlignment="Center">
+                <CheckBox IsChecked="{Binding CurrentOptions.RangeCheckLastTarget}" DataContext="{Binding}"
+                          VerticalAlignment="Center">
                     <CheckBox.ContentTemplate>
                         <ItemContainerTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -162,15 +163,16 @@
             <CheckBox Content="{x:Static resources:Strings.Show_running_macros_gump}"
                       IsChecked="{Binding CurrentOptions.MacrosGump}" />
             <StackPanel Orientation="Horizontal" IsEnabled="{Binding CurrentOptions.MacrosGump}" Margin="20,0,0,0">
-                <Label Content="Height" Width="50" Height="25" />
-                <TextBox x:Name="TextBox_MacrosGumpHeight" Text="{Binding CurrentOptions.MacrosGumpHeight, Mode=TwoWay}" Width="40" Margin="5,0"/>
-                <Label Content="Width" Width="50" Height="25" />
-                <TextBox x:Name="TextBox_MacrosGumpWidth" Text="{Binding CurrentOptions.MacrosGumpWidth, Mode=TwoWay}" Width="40" Margin="5,0"/>
-                <Label Content="TextColor" Width="60" />
-                <TextBox x:Name="TextBox_MacrosGumpTextColor" Text="{Binding CurrentOptions.MacrosGumpTextColor, Mode=TwoWay}" Width="80" Margin="5,0"/>
+                <Label Content="{x:Static resources:Strings.Width}" />
+                <TextBox Text="{Binding CurrentOptions.MacrosGumpWidth, Mode=TwoWay}" Width="50" Margin="5,0" />
+                <Label Content="{x:Static resources:Strings.Height}" />
+                <TextBox Text="{Binding CurrentOptions.MacrosGumpHeight, Mode=TwoWay}" Width="50" Margin="5,0" />
+                <Button Command="{Binding SelectMacroTextColorCommand}"
+                        ToolTip="{x:Static resources:Strings.Text_Color}"
+                        CommandParameter="{Binding CurrentOptions.MacrosGumpTextColor}">
+                    <Image Source="{StaticResource ColorWheelIcon}" Height="12" Width="12" />
+                </Button>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" IsEnabled="{Binding CurrentOptions.QueueLastTarget}" Margin="20,0,0,0"
-                ToolTip="{x:Static resources:Strings.Time_in_milliseconds___1_to_not_expire_}"/>
             <CheckBox Content="{x:Static resources:Strings.Show_player___shard_name_in_CUO_title}"
                       IsChecked="{Binding CurrentOptions.SetUOTitle}" />
             <CheckBox Content="{x:Static resources:Strings.Show_Profile_Name_In_Title}"

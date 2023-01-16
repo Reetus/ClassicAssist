@@ -1734,4 +1734,13 @@ Are you sure you wish to continue?</value>
   <data name="Replace name with single click label" xml:space="preserve">
     <value>Replace name with single click label</value>
   </data>
+  <data name="Text Color" xml:space="preserve">
+    <value>Text Color</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Height</value>
+  </data>
 </root>

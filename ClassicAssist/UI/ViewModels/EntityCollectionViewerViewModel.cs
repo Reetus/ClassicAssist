@@ -57,6 +57,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private IComparer<Entity> _sorter = new IDThenSerialComparer();
         private string _statusLabel;
+        private string _statusMessage;
         private ICommand _targetContainerCommand;
         private ICommand _toggleAlwaysOnTopCommand;
         private ICommand _toggleChildItemsCommand;
@@ -197,6 +198,12 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _statusLabel;
             set => SetProperty( ref _statusLabel, value );
+        }
+
+        public string StatusMessage
+        {
+            get => _statusMessage;
+            set => SetProperty( ref _statusMessage, value );
         }
 
         public ICommand TargetContainerCommand =>
@@ -683,14 +690,17 @@ namespace ClassicAssist.UI.ViewModels
             {
                 IsPerformingAction = true;
 
-                foreach ( int item in items )
+                foreach ( var item in items.Select( ( value, i ) => new { i, value } ) )
                 {
-                    await ActionPacketQueue.EnqueueDragDrop( item, -1, serial,
+                    StatusMessage = string.Format( Strings.Moving_item__0_____1_, item.i, items.Length );
+
+                    await ActionPacketQueue.EnqueueDragDrop( item.value, -1, serial,
                         cancellationToken: _cancellationToken.Token );
                 }
             }
             finally
             {
+                StatusMessage = null;
                 IsPerformingAction = false;
             }
         }

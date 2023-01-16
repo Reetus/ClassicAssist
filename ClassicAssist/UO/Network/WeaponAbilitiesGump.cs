@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.UO.Gumps;
@@ -7,7 +6,7 @@ using ClassicAssist.UO.Objects.Gumps;
 
 namespace ClassicAssist.UO.Network
 {
-    public class WeaponAbilitiesGump : RepositionableGump
+    public class WeaponAbilitiesGump : ReflectionRepositionableGump
     {
         private readonly bool _primaryEnable;
         private readonly int _primaryId;
@@ -17,16 +16,7 @@ namespace ClassicAssist.UO.Network
         public WeaponAbilitiesGump( int primaryId, bool primaryEnable, int secondaryId, bool secondaryEnable ) : base(
             90, 40, GumpSerial++, (uint) GumpSerial++ )
         {
-            if ( Engine.Gumps.GetGumps( out Gump[] gumps ) )
-            {
-                foreach ( Gump gump in gumps )
-                {
-                    if ( gump is WeaponAbilitiesGump )
-                    {
-                        Commands.CloseClientGump( gump.ID );
-                    }
-                }
-            }
+            Commands.CloseClientGump( typeof( WeaponAbilitiesGump ) );
 
             GumpX = Options.CurrentOptions.AbilitiesGumpX;
             GumpY = Options.CurrentOptions.AbilitiesGumpY;
@@ -63,8 +53,25 @@ namespace ClassicAssist.UO.Network
             base.OnResponse( buttonID, switches, textEntries );
         }
 
+        public override void OnClosing()
+        {
+            base.OnClosing();
+
+            ( int x, int y ) = GetPosition();
+
+            if ( x == default || y == default )
+            {
+                return;
+            }
+
+            Options.CurrentOptions.AbilitiesGumpX = x;
+            Options.CurrentOptions.AbilitiesGumpY = y;
+        }
+
         private void ResendGump()
         {
+            Commands.CloseClientGump( typeof( WeaponAbilitiesGump ) );
+
             WeaponAbilitiesGump gump =
                 new WeaponAbilitiesGump( _primaryId, _primaryEnable, _secondaryId, _secondaryEnable );
             gump.SendGump();

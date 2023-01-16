@@ -21,36 +21,39 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.UO.Objects.Gumps;
 
 namespace ClassicAssist.UO.Gumps
 {
-    public class MacrosGump : RepositionableGump
+    public class MacrosGump : ReflectionRepositionableGump
     {
         private static Timer _timer;
         private static int _serial = 0x0fe00000;
         private static IEnumerable<MacroEntry> _lastMacros;
         private readonly MacroEntry[] _macros;
 
-        public MacrosGump( IEnumerable<MacroEntry> macros ) : base( 190, 180, _serial++, (uint) _serial++ )
+        public MacrosGump( IEnumerable<MacroEntry> macros ) : base( Options.CurrentOptions.MacrosGumpWidth,
+            Options.CurrentOptions.MacrosGumpHeight, _serial++, (uint) _serial++ )
         {
             _macros = macros.ToArray();
 
             GumpX = Options.CurrentOptions.MacrosGumpX;
             GumpY = Options.CurrentOptions.MacrosGumpY;
 
-            Movable = false;
             Closable = false;
             Resizable = false;
             Disposable = false;
             AddPage( 0 );
-            AddBackground( 0, 0, 190, 180, 3500 );
+
+            AddBackground( 0, 0, Width, Height, 9270 );
+            AddAlphaRegion( 0, 0, Width, Height );
 
             int y = 20;
             int i = 10;
+
+            string textColor = Options.CurrentOptions.MacrosGumpTextColor.ToString();
 
             foreach ( MacroEntry macro in _macros )
             {
@@ -59,15 +62,16 @@ namespace ClassicAssist.UO.Gumps
                     return;
                 }
 
-                string html = $"<BASEFONT COLOR=#000000>{macro.Name}</BASEFONT>\n";
+                string html = $"<BASEFONT face=Arial color={textColor}>{macro.Name}</BASEFONT>\n";
 
                 if ( macro.IsBackground )
                 {
-                    html = $"<BASEFONT COLOR=#000000><I>{macro.Name}</I></BASEFONT>\n";
+                    html = $"<BASEFONT face=Arial color={textColor}><I>{macro.Name}</I></BASEFONT>\n";
                 }
 
-                AddHtml( 20, y, 150, 140, html, false, false );
-                AddButton( 160, y + 3, 3, 4, i++, GumpButtonType.Reply, 0 );
+                AddHtml( 20, y, Width - 40, Height - 40, html, false, false );
+                AddButton( Width - 30, y + 3, 2104, 2103, i++, GumpButtonType.Reply, 0 );
+
                 y += 20;
             }
         }
@@ -86,12 +90,11 @@ namespace ClassicAssist.UO.Gumps
                     return;
                 }
 
-                if ( Engine.Gumps.GetGumps( out Gump[] gumps ) )
+                Commands.CloseClientGump( typeof( MacrosGump ) );
+
+                if ( !Options.CurrentOptions.MacrosGump )
                 {
-                    foreach ( Gump macrosGump in gumps.Where( g => g is MacrosGump ) )
-                    {
-                        Commands.CloseClientGump( macrosGump.ID );
-                    }
+                    return;
                 }
 
                 MacrosGump gump = new MacrosGump( macros );
@@ -107,6 +110,9 @@ namespace ClassicAssist.UO.Gumps
 
         public static void Initialize()
         {
+            Commands.CloseClientGump( typeof( MacrosGump ) );
+
+            _timer?.Dispose();
             _timer = new Timer( o => ResendGump(), null, 1000, 250 );
         }
 
@@ -132,6 +138,21 @@ namespace ClassicAssist.UO.Gumps
             {
                 base.OnResponse( buttonID, switches, textEntries );
             }
+        }
+
+        public override void OnClosing()
+        {
+            base.OnClosing();
+
+            ( int x, int y ) = GetPosition();
+
+            if ( x == default || y == default )
+            {
+                return;
+            }
+
+            Options.CurrentOptions.MacrosGumpX = x;
+            Options.CurrentOptions.MacrosGumpY = y;
         }
     }
 }

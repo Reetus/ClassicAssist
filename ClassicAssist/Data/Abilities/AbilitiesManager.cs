@@ -166,6 +166,8 @@ namespace ClassicAssist.Data.Abilities
                 return;
             }
 
+            UOC.CloseClientGump( typeof( WeaponAbilitiesGump ) );
+
             WeaponAbilitiesGump gump = new WeaponAbilitiesGump( primaryId, abilityType == AbilityType.Primary,
                 secondaryId, abilityType == AbilityType.Secondary );
 

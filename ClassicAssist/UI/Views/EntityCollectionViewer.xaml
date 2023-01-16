@@ -36,6 +36,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <ToolBar Style="{DynamicResource ToolBarStyle1}" Grid.Row="0"
                  Background="{DynamicResource ThemeBackgroundBrush}">
@@ -125,6 +126,21 @@
             </i:Interaction.Behaviors>
         </ListView>
         <StatusBar Grid.Row="3" Background="{DynamicResource ThemeBackgroundBrush}"
+                   Foreground="{DynamicResource ThemeForegroundBrush}"
+                   BorderBrush="{DynamicResource ThemeWindowBackgroundBrush}">
+            <StatusBar.Style>
+                <Style TargetType="{x:Type StatusBar}" BasedOn="{StaticResource {x:Type StatusBar}}">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StatusMessage}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StatusBar.Style>
+            <TextBlock Text="{Binding StatusMessage}" />
+        </StatusBar>
+        <StatusBar Grid.Row="4" Background="{DynamicResource ThemeBackgroundBrush}"
                    Foreground="{DynamicResource ThemeForegroundBrush}"
                    BorderBrush="{DynamicResource ThemeWindowBackgroundBrush}">
             <TextBlock Text="{Binding StatusLabel}" />

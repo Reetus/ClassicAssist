@@ -2032,6 +2032,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Height.
+        /// </summary>
+        public static string Height {
+            get {
+                return ResourceManager.GetString("Height", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hide.
         /// </summary>
         public static string Hide {
@@ -2988,6 +2997,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Movement {
             get {
                 return ResourceManager.GetString("Movement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moving item {0} / {1}.
+        /// </summary>
+        public static string Moving_item__0_____1_ {
+            get {
+                return ResourceManager.GetString("Moving item {0} / {1}", resourceCulture);
             }
         }
         
@@ -4675,6 +4693,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Text Color.
+        /// </summary>
+        public static string Text_Color {
+            get {
+                return ResourceManager.GetString("Text Color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The item needs to be equipped....
         /// </summary>
         public static string The_item_needs_to_be_equipped___ {
@@ -5220,6 +5247,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string When_checked_macro_will_execute_automatically_after_login_ {
             get {
                 return ResourceManager.GetString("When checked macro will execute automatically after login.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Width.
+        /// </summary>
+        public static string Width {
+            get {
+                return ResourceManager.GetString("Width", resourceCulture);
             }
         }
         

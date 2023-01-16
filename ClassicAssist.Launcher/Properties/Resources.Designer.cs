@@ -187,6 +187,15 @@ namespace ClassicAssist.Launcher.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Moving item {0} / {1}.
+        /// </summary>
+        public static string Moving_item__0_____1_ {
+            get {
+                return ResourceManager.GetString("Moving item {0} / {1}", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OK.
         /// </summary>
         public static string OK {

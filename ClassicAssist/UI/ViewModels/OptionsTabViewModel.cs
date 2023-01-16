@@ -1,12 +1,14 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Misc;
+using ClassicAssist.UI.Views.OptionsTab;
 using ClassicAssist.UO.Gumps;
 using Newtonsoft.Json.Linq;
 
@@ -15,6 +17,7 @@ namespace ClassicAssist.UI.ViewModels
     public class OptionsTabViewModel : BaseViewModel, ISettingProvider
     {
         private Options _currentOptions;
+        private ICommand _selectMacroTextColorCommand;
         private ICommand _setLanguageOverrideCommand;
         private ICommand _setUseClilocLanguageCommand;
 
@@ -23,6 +26,9 @@ namespace ClassicAssist.UI.ViewModels
             get => _currentOptions;
             set => SetProperty( ref _currentOptions, value );
         }
+
+        public ICommand SelectMacroTextColorCommand =>
+            _selectMacroTextColorCommand ?? ( _selectMacroTextColorCommand = new RelayCommand( SelectMacroTextColor ) );
 
         public ICommand SetLanguageOverrideCommand =>
             _setLanguageOverrideCommand ?? ( _setLanguageOverrideCommand = new RelayCommand( SetLanguageOverride ) );
@@ -84,8 +90,11 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "MacrosGump", CurrentOptions.MacrosGump );
             options.Add( "MacrosGumpX", CurrentOptions.MacrosGumpX );
             options.Add( "MacrosGumpY", CurrentOptions.MacrosGumpY );
-            options.Add( "ChatWindowWidth", CurrentOptions.ChatWindowWidth );
+            options.Add( "MacrosGumpHeight", CurrentOptions.MacrosGumpHeight );
+            options.Add( "MacrosGumpWidth", CurrentOptions.MacrosGumpWidth );
+            options.Add( "MacrosGumpTextColor", CurrentOptions.MacrosGumpTextColor.ToString() );
             options.Add( "ChatWindowHeight", CurrentOptions.ChatWindowHeight );
+            options.Add( "ChatWindowWidth", CurrentOptions.ChatWindowWidth );
             options.Add( "EntityCollectionViewerOptions", CurrentOptions.EntityCollectionViewerOptions.Serialize() );
             options.Add( "ExpireTargetsMS", CurrentOptions.ExpireTargetsMS );
             options.Add( "LogoutDisconnectedPrompt", CurrentOptions.LogoutDisconnectedPrompt );
@@ -162,6 +171,9 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.MacrosGumpX = config?["MacrosGumpX"]?.ToObject<int>() ?? 100;
             CurrentOptions.MacrosGumpY = config?["MacrosGumpY"]?.ToObject<int>() ?? 100;
             CurrentOptions.ChatWindowWidth = config?["ChatWindowWidth"]?.ToObject<double>() ?? 650;
+            CurrentOptions.MacrosGumpHeight = config?["MacrosGumpHeight"]?.ToObject<int>() ?? 190;
+            CurrentOptions.MacrosGumpWidth = config?["MacrosGumpWidth"]?.ToObject<int>() ?? 180;
+            CurrentOptions.MacrosGumpTextColor = config?["MacrosGumpTextColor"]?.ToObject<Color>() ?? Colors.White;
             CurrentOptions.ChatWindowHeight = config?["ChatWindowHeight"]?.ToObject<double>() ?? 350;
             CurrentOptions.DefaultTabOption =
                 config?["DefaultTabOption"]?.ToObject<DefaultTabOption>() ?? DefaultTabOption.General;
@@ -184,6 +196,29 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.EntityCollectionViewerOptions.Deserialize( config?["EntityCollectionViewerOptions"] );
             CurrentOptions.ExpireTargetsMS = config?["ExpireTargetsMS"]?.ToObject<int>() ?? -1;
             CurrentOptions.LogoutDisconnectedPrompt = config?["LogoutDisconnectedPrompt"]?.ToObject<bool>() ?? false;
+        }
+
+        private void SelectMacroTextColor( object obj )
+        {
+            if ( !( obj is Color selectedColor ) )
+            {
+                return;
+            }
+
+            MacrosGumpTextColorSelectorViewModel vm =
+                new MacrosGumpTextColorSelectorViewModel { SelectedColor = selectedColor };
+
+            MacrosGumpTextColorSelectorWindow window = new MacrosGumpTextColorSelectorWindow { DataContext = vm };
+
+            window.ShowDialog();
+
+            if ( !vm.Result )
+            {
+                return;
+            }
+
+            CurrentOptions.MacrosGumpTextColor = vm.SelectedColor;
+            MacrosGump.ResendGump( true );
         }
 
         // Replay CurrentOptions changes onto Options.CurrentOptions

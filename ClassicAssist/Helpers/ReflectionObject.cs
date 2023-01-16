@@ -102,7 +102,17 @@ namespace ClassicAssist.Helpers
                 return default;
             }
 
-            return (T) Activator.CreateInstance( typeof( T ), value );
+            try
+            {
+                return (T) Activator.CreateInstance( typeof( T ), value );
+            }
+            catch ( MissingMethodException )
+            {
+                T obj = (T) Activator.CreateInstance( typeof( T ) );
+                obj = (T) value;
+
+                return obj;
+            }
         }
 
         private PropertyInfo GetPropertyInfo( string propertyName )

@@ -317,9 +317,17 @@ namespace ClassicAssist.UO
 
         public static void CloseClientGump( Type gumpType )
         {
-            Engine.Gumps.GetGumps( out Gump[] gumps );
+            if ( !Engine.Gumps.GetGumps( out Gump[] gumps ) )
+            {
+                return;
+            }
 
-            IEnumerable<Gump> closeGumps = gumps.Where( t => t.GetType() == gumpType );
+            IEnumerable<Gump> closeGumps = gumps?.Where( t => t.GetType() == gumpType );
+
+            if ( closeGumps == null )
+            {
+                return;
+            }
 
             foreach ( Gump closeGump in closeGumps )
             {
@@ -329,6 +337,11 @@ namespace ClassicAssist.UO
 
         public static void CloseClientGump( uint gumpID )
         {
+            if ( Engine.Gumps.GetGump( gumpID, out Gump gump ) )
+            {
+                gump.OnClosing();
+            }
+
             Engine.Gumps.Remove( gumpID );
             Engine.SendPacketToClient( new CloseClientGump( gumpID ) );
         }

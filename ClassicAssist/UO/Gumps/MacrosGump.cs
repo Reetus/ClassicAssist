@@ -42,16 +42,18 @@ namespace ClassicAssist.UO.Gumps
             GumpX = Options.CurrentOptions.MacrosGumpX;
             GumpY = Options.CurrentOptions.MacrosGumpY;
 
-            Movable = false;
             Closable = false;
             Resizable = false;
             Disposable = false;
             AddPage( 0 );
 
+            AddBackground( 0, 0, Width, Height, 9270 );
             AddAlphaRegion( 0, 0, Width, Height );
 
             int y = 20;
             int i = 10;
+
+            string textColor = Options.CurrentOptions.MacrosGumpTextColor.ToString();
 
             foreach ( MacroEntry macro in _macros )
             {
@@ -59,8 +61,6 @@ namespace ClassicAssist.UO.Gumps
                 {
                     return;
                 }
-
-                string textColor = Options.CurrentOptions.MacrosGumpTextColor.ToString();
 
                 string html = $"<BASEFONT face=Arial color={textColor}>{macro.Name}</BASEFONT>\n";
 

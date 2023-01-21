@@ -79,7 +79,7 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = nameof( Strings.Entity ),
-            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+    Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static void RemoveFriend( object obj = null )
         {
             int serial = obj != null
@@ -114,6 +114,83 @@ namespace ClassicAssist.Data.Macros.Commands
                 return result;
             } );
         }
+
+        public static int AddEnemy( object obj = null )
+        {
+            int serial = obj != null
+                ? AliasCommands.ResolveSerial( obj )
+                : UOC.GetTargetSerialAsync( Strings.Target_new_friend___ ).Result;
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
+                return 0;
+            }
+
+            Mobile m = Engine.Mobiles.GetMobile( serial );
+
+            if ( m == null )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
+                return 0;
+            }
+
+            FriendEntry fe = new FriendEntry { Name = m.Name?.Trim(), Serial = m.Serial };
+
+            if ( !Options.CurrentOptions.Friends.Contains( fe ) )
+            {
+                Engine.Dispatcher?.Invoke( () =>
+                {
+                    Options.CurrentOptions.Friends.Add( fe );
+
+                    if ( Options.CurrentOptions.RehueFriends )
+                    {
+                        MainCommands.Resync();
+                    }
+                } );
+            }
+
+            return m.Serial;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+    Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        public static void RemoveEnemy( object obj = null )
+        {
+            int serial = obj != null
+                ? AliasCommands.ResolveSerial( obj )
+                : UOC.GetTargetSerialAsync( Strings.Target_friend_to_remove___ ).Result;
+
+            if ( serial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
+                return;
+            }
+
+            FriendEntry entry = Options.CurrentOptions.Friends.FirstOrDefault( i => i.Serial == serial );
+
+            if ( entry == null )
+            {
+                return;
+            }
+
+            Engine.Dispatcher?.Invoke( () =>
+            {
+                bool result = Options.CurrentOptions.Friends.Remove( entry );
+
+                if ( !Options.CurrentOptions.RehueFriends )
+                {
+                    return result;
+                }
+
+                Engine.RehueList.Remove( serial );
+                MainCommands.Resync();
+
+                return result;
+            } );
+        }
+
+
 
         [CommandsDisplay( Category = nameof( Strings.Entity ),
             Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]

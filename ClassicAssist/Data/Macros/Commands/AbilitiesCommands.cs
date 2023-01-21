@@ -25,6 +25,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( manager.IsPrimaryEnabled )
             {
+  
                 result = true;
             }
             else if ( manager.IsSecondaryEnabled )

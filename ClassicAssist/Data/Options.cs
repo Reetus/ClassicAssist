@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Media;
 using Assistant;
 using ClassicAssist.Data.Friends;
+using ClassicAssist.Data.Enemies;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
@@ -47,6 +48,7 @@ namespace ClassicAssist.Data
         private EntityCollectionViewerOptions _entityCollectionViewerOptions = new EntityCollectionViewerOptions();
         private int _expireTargetsMs;
         private ObservableCollection<FriendEntry> _friends = new ObservableCollection<FriendEntry>();
+        private ObservableCollection<EnemyEntry> _enemies = new ObservableCollection<EnemyEntry>();
         private string _friendTargetMessage;
         private bool _getFriendEnemyUsesIgnoreList;
         private string _hash;
@@ -241,6 +243,12 @@ namespace ClassicAssist.Data
         {
             get => _friends;
             set => SetProperty( ref _friends, value );
+        }
+
+        public ObservableCollection<EnemyEntry> Enemies
+        {
+            get => _enemies;
+            set => SetProperty( ref _enemies, value );
         }
 
         public string FriendTargetMessage

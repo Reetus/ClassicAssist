@@ -1,13 +1,14 @@
-﻿<UserControl x:Class="ClassicAssist.UI.Views.AgentsTabControl"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:agents="clr-namespace:ClassicAssist.UI.Views.Agents"
+             xmlns:Agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents" x:Class="ClassicAssist.UI.Views.AgentsTabControl"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <TabControl Margin="5">
+    <TabControl Margin="5,5,-96,5">
         <TabItem Header="{x:Static resources:Strings.Organizer}">
             <agents:OrganizerTabControl />
         </TabItem>
@@ -19,6 +20,9 @@
         </TabItem>
         <TabItem Header="{x:Static resources:Strings.Friends}">
             <agents:FriendsTabControl />
+        </TabItem>
+        <TabItem Header="{x:Static resources:Strings.Enemies}" Margin="-2,-2,-2,0">
+            <agents:EnemiesTabControl />
         </TabItem>
         <TabItem Header="{x:Static resources:Strings.Name_Overrides}">
             <agents:NameOverrideTabControl />
@@ -35,5 +39,6 @@
         <TabItem Header="{x:Static resources:Strings.Autoloot}">
             <agents:AutolootTabControl />
         </TabItem>
+
     </TabControl>
 </UserControl>

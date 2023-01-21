@@ -19,7 +19,7 @@ namespace ClassicAssist.Shared.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Strings {
@@ -1506,6 +1506,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Enchanted_Apple {
             get {
                 return ResourceManager.GetString("Enchanted Apple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enemies.
+        /// </summary>
+        public static string Enemies {
+            get {
+                return ResourceManager.GetString("Enemies", resourceCulture);
             }
         }
         

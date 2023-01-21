@@ -75,8 +75,8 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "LastTargetMessage", CurrentOptions.LastTargetMessage );
             options.Add( "FriendTargetMessage", CurrentOptions.FriendTargetMessage );
             options.Add( "EnemyTargetMessage", CurrentOptions.EnemyTargetMessage );
-            options.Add( "DefaultTabOption", CurrentOptions.DefaultTabOption.ToString() );
             options.Add( "DefaultMacroQuietMode", CurrentOptions.DefaultMacroQuietMode );
+            options.Add( "DefaultTabOption", CurrentOptions.DefaultTabOption.ToString() );
             options.Add( "GetFriendEnemyUsesIgnoreList", CurrentOptions.GetFriendEnemyUsesIgnoreList );
             options.Add( "AbilitiesGump", CurrentOptions.AbilitiesGump );
             options.Add( "AbilitiesGumpX", CurrentOptions.AbilitiesGumpX );
@@ -158,7 +158,7 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.DefaultMacroQuietMode = config?["DefaultMacroQuietMode"]?.ToObject<bool>() ?? false;
             CurrentOptions.GetFriendEnemyUsesIgnoreList =
                 config?["GetFriendEnemyUsesIgnoreList"]?.ToObject<bool>() ?? false;
-            CurrentOptions.AbilitiesGump = config?["AbilitiesGump"]?.ToObject<bool>() ?? true;
+            CurrentOptions.AbilitiesGump = config?["AbilitiesGump"]?.ToObject<bool>() ?? false; // need to be default false due to delay from parsing settings.json
             CurrentOptions.AbilitiesGumpX = config?["AbilitiesGumpX"]?.ToObject<int>() ?? 100;
             CurrentOptions.AbilitiesGumpY = config?["AbilitiesGumpY"]?.ToObject<int>() ?? 100;
             CurrentOptions.ShowProfileNameWindowTitle =

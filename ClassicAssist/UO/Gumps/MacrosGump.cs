@@ -47,7 +47,7 @@ namespace ClassicAssist.UO.Gumps
             Disposable = false;
             AddPage( 0 );
 
-            AddBackground( 0, 0, Width, Height, 9270 );
+            //AddBackground( 0, 0, Width, Height, 9270 ); // adds unwanted border
             AddAlphaRegion( 0, 0, Width, Height );
 
             int y = 20;

@@ -170,9 +170,9 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.MacrosGumpX = config?["MacrosGumpX"]?.ToObject<int>() ?? 100;
             CurrentOptions.MacrosGumpY = config?["MacrosGumpY"]?.ToObject<int>() ?? 100;
             CurrentOptions.ChatWindowWidth = config?["ChatWindowWidth"]?.ToObject<double>() ?? 650;
-            CurrentOptions.MacrosGumpHeight = config?["MacrosGumpHeight"]?.ToObject<int>() ?? 190;
-            CurrentOptions.MacrosGumpWidth = config?["MacrosGumpWidth"]?.ToObject<int>() ?? 180;
-            CurrentOptions.MacrosGumpTextColor = config?["MacrosGumpTextColor"]?.ToObject<Color>() ?? Colors.White;
+            CurrentOptions.MacrosGumpHeight = config?["MacrosGumpHeight"]?.ToObject<int>() ?? 200;
+            CurrentOptions.MacrosGumpWidth = config?["MacrosGumpWidth"]?.ToObject<int>() ?? 500;
+            CurrentOptions.MacrosGumpTextColor = config?["MacrosGumpTextColor"]?.ToObject<Color>() ?? Colors.Red;
             CurrentOptions.ChatWindowHeight = config?["ChatWindowHeight"]?.ToObject<double>() ?? 350;
 
             if ( CurrentOptions.AbilitiesGumpX < 0 )

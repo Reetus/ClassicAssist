@@ -67,7 +67,7 @@ namespace ClassicAssist.Data
             JArray linkedProfilesArray = new JArray();
 
             foreach ( JObject linkedObj in _linkedProfiles.Select( profile =>
-                new JObject { { "Serial", profile.Key }, { "Profile", profile.Value } } ) )
+                         new JObject { { "Serial", profile.Key }, { "Profile", profile.Value } } ) )
             {
                 linkedProfilesArray.Add( linkedObj );
             }
@@ -218,6 +218,7 @@ namespace ClassicAssist.Data
             } );
         }
 
+        public static event dProfileChanged ProfileChangingEvent;
         public static event dProfileChanged ProfileChangedEvent;
 
         private static void PlayerInitialized( PlayerMobile player )
@@ -234,7 +235,6 @@ namespace ClassicAssist.Data
                 Options.Save( Options.CurrentOptions );
                 Options.CurrentOptions = new Options { Name = profile };
                 Options.Load( profile, Options.CurrentOptions );
-                ProfileChangedEvent?.Invoke( profile );
             } );
         }
 
@@ -305,7 +305,11 @@ namespace ClassicAssist.Data
             }
 
             Options.Load( LastProfile, Options.CurrentOptions );
-            ProfileChangedEvent?.Invoke( LastProfile );
+        }
+
+        public static void OnProfileChanging( string profile )
+        {
+            ProfileChangingEvent?.Invoke( profile );
         }
 
         public static void OnProfileChanged( string profile )

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Assistant;
@@ -13,7 +12,6 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
     {
-        private bool _alwaysOnTop;
         private ICommand _debugCommand;
         private DebugWindow _debugWindow;
         private ICommand _minimizeCommand;
@@ -27,13 +25,6 @@ namespace ClassicAssist.UI.ViewModels
             Engine.Dispatcher = Dispatcher.CurrentDispatcher;
             Engine.UpdateWindowTitleEvent += OnUpdateWindowTitleEvent;
             Engine.ClientClosing += OnClientClosing;
-        }
-
-        [OptionsBinding( Property = "AlwaysOnTop" )]
-        public bool AlwaysOnTop
-        {
-            get => _alwaysOnTop;
-            set => SetProperty( ref _alwaysOnTop, value );
         }
 
         public ICommand DebugCommand =>
@@ -126,10 +117,5 @@ namespace ClassicAssist.UI.ViewModels
             window.Show();
             _taskbarIcon.Visibility = Visibility.Hidden;
         }
-    }
-
-    public class OptionsBindingAttribute : Attribute
-    {
-        public string Property { get; set; }
     }
 }

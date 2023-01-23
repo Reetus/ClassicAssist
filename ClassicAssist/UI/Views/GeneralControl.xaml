@@ -77,7 +77,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
-                <CheckBox Content="{x:Static r:Strings.Always_On_Top}" IsChecked="{Binding Options.AlwaysOnTop}" />
+                <CheckBox Content="{x:Static r:Strings.Always_On_Top}" IsChecked="{Binding CurrentOptions.AlwaysOnTop}" />
                 <CheckBox Content="{x:Static r:Strings.Minimize_to_system_tray}" IsChecked="{Binding Options.SysTray}" />
                 <StackPanel Orientation="Horizontal">
                     <StackPanel.Resources>

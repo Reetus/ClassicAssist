@@ -16,16 +16,9 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class OptionsTabViewModel : BaseViewModel, ISettingProvider
     {
-        private Options _currentOptions;
         private ICommand _selectMacroTextColorCommand;
         private ICommand _setLanguageOverrideCommand;
         private ICommand _setUseClilocLanguageCommand;
-
-        public Options CurrentOptions
-        {
-            get => _currentOptions;
-            set => SetProperty( ref _currentOptions, value );
-        }
 
         public ICommand SelectMacroTextColorCommand =>
             _selectMacroTextColorCommand ?? ( _selectMacroTextColorCommand = new RelayCommand( SelectMacroTextColor ) );

@@ -4855,6 +4855,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Transparent background.
+        /// </summary>
+        public static string Transparent_background {
+            get {
+                return ResourceManager.GetString("Transparent background", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trinsic Rose Petal.
         /// </summary>
         public static string Trinsic_Rose_Petal {

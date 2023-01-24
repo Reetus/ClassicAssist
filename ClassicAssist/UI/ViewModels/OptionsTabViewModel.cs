@@ -16,9 +16,13 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class OptionsTabViewModel : BaseViewModel, ISettingProvider
     {
+        private static ICommand _macrosGumpChangedCommand;
         private ICommand _selectMacroTextColorCommand;
         private ICommand _setLanguageOverrideCommand;
         private ICommand _setUseClilocLanguageCommand;
+
+        public ICommand MacrosGumpChangedCommand =>
+            _macrosGumpChangedCommand ?? ( _macrosGumpChangedCommand = new RelayCommand( MacrosGumpChanged ) );
 
         public ICommand SelectMacroTextColorCommand =>
             _selectMacroTextColorCommand ?? ( _selectMacroTextColorCommand = new RelayCommand( SelectMacroTextColor ) );
@@ -86,6 +90,7 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "MacrosGumpHeight", CurrentOptions.MacrosGumpHeight );
             options.Add( "MacrosGumpWidth", CurrentOptions.MacrosGumpWidth );
             options.Add( "MacrosGumpTextColor", CurrentOptions.MacrosGumpTextColor.ToString() );
+            options.Add( "MacrosGumpTransparent", CurrentOptions.MacrosGumpTransparent );
             options.Add( "ChatWindowHeight", CurrentOptions.ChatWindowHeight );
             options.Add( "ChatWindowWidth", CurrentOptions.ChatWindowWidth );
             options.Add( "EntityCollectionViewerOptions", CurrentOptions.EntityCollectionViewerOptions.Serialize() );
@@ -166,6 +171,7 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.MacrosGumpHeight = config?["MacrosGumpHeight"]?.ToObject<int>() ?? 190;
             CurrentOptions.MacrosGumpWidth = config?["MacrosGumpWidth"]?.ToObject<int>() ?? 180;
             CurrentOptions.MacrosGumpTextColor = config?["MacrosGumpTextColor"]?.ToObject<Color>() ?? Colors.White;
+            CurrentOptions.MacrosGumpTransparent = config?["MacrosGumpTransparent"]?.ToObject<bool>() ?? true;
             CurrentOptions.ChatWindowHeight = config?["ChatWindowHeight"]?.ToObject<double>() ?? 350;
 
             if ( CurrentOptions.AbilitiesGumpX < 0 )
@@ -186,6 +192,11 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.EntityCollectionViewerOptions.Deserialize( config?["EntityCollectionViewerOptions"] );
             CurrentOptions.ExpireTargetsMS = config?["ExpireTargetsMS"]?.ToObject<int>() ?? -1;
             CurrentOptions.LogoutDisconnectedPrompt = config?["LogoutDisconnectedPrompt"]?.ToObject<bool>() ?? false;
+        }
+
+        private static void MacrosGumpChanged( object obj )
+        {
+            MacrosGump.ResendGump( true );
         }
 
         private void SelectMacroTextColor( object obj )

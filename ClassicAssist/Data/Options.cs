@@ -60,6 +60,7 @@ namespace ClassicAssist.Data
         private bool _macrosGump;
         private int _macrosGumpHeight = 180;
         private Color _macrosGumpTextColor = Colors.White;
+        private bool _macrosGumpTransparent;
         private int _macrosGumpWidth = 190;
         private int _macrosGumpX;
         private int _macrosGumpY;
@@ -311,7 +312,11 @@ namespace ClassicAssist.Data
         public int MacrosGumpHeight
         {
             get => _macrosGumpHeight;
-            set => SetProperty( ref _macrosGumpHeight, value );
+            set
+            {
+                SetProperty( ref _macrosGumpHeight, value );
+                UO.Gumps.MacrosGump.ResendGump( true );
+            }
         }
 
         public Color MacrosGumpTextColor
@@ -320,10 +325,20 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _macrosGumpTextColor, value );
         }
 
+        public bool MacrosGumpTransparent
+        {
+            get => _macrosGumpTransparent;
+            set => SetProperty( ref _macrosGumpTransparent, value );
+        }
+
         public int MacrosGumpWidth
         {
             get => _macrosGumpWidth;
-            set => SetProperty( ref _macrosGumpWidth, value );
+            set
+            {
+                SetProperty( ref _macrosGumpWidth, value );
+                UO.Gumps.MacrosGump.ResendGump( true );
+            }
         }
 
         public int MacrosGumpX

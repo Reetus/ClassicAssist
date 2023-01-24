@@ -1869,4 +1869,7 @@ Are you sure you wish to continue?</value>
   <data name="Height" xml:space="preserve">
     <value>Height</value>
   </data>
+  <data name="Transparent background" xml:space="preserve">
+    <value>Transparent background</value>
+  </data>
 </root>

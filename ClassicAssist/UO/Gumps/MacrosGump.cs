@@ -47,8 +47,15 @@ namespace ClassicAssist.UO.Gumps
             Disposable = false;
             AddPage( 0 );
 
-            //AddBackground( 0, 0, Width, Height, 9270 ); // adds unwanted border
-            AddAlphaRegion( 0, 0, Width, Height );
+            if ( Options.CurrentOptions.MacrosGumpTransparent )
+            {
+                AddHtml( 0, 0, Width, Height, string.Empty, false, false );
+                AddAlphaRegion( 0, 0, Width, Height );
+            }
+            else
+            {
+                AddBackground( 0, 0, Width, Height, 3500 );
+            }
 
             int y = 20;
             int i = 10;
@@ -80,27 +87,32 @@ namespace ClassicAssist.UO.Gumps
         {
             try
             {
+                if ( !Options.CurrentOptions.MacrosGump )
+                {
+                    Commands.CloseClientGump( typeof( MacrosGump ) );
+
+                    return;
+                }
+
                 MacroManager _macroManager = MacroManager.GetInstance();
 
-                IEnumerable<MacroEntry> macros = _macroManager.Items.Where( e => e.IsRunning )
+                IEnumerable<MacroEntry> macros = _macroManager?.Items.Where( e => e.IsRunning )
                     .OrderByDescending( e => e.StartedOn ).ToArray();
 
-                if ( _lastMacros != null && macros.SequenceEqual( _lastMacros ) && !force )
+                if ( _lastMacros != null && macros != null && macros.SequenceEqual( _lastMacros ) && !force )
                 {
                     return;
                 }
 
                 Commands.CloseClientGump( typeof( MacrosGump ) );
 
-                if ( !Options.CurrentOptions.MacrosGump )
-                {
-                    return;
-                }
-
                 MacrosGump gump = new MacrosGump( macros );
                 gump.SendGump();
 
-                _lastMacros = macros.ToArray();
+                if ( macros != null )
+                {
+                    _lastMacros = macros.ToArray();
+                }
             }
             catch ( InvalidOperationException e )
             {

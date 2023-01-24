@@ -77,25 +77,6 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _isLinkedProfile, value );
         }
 
-        [OptionsBinding( Property = "LightLevel" )]
-        public int LightLevelListen
-        {
-            get => throw new NotImplementedException();
-            set
-            {
-                FilterEntry filter = Filters.FirstOrDefault( f => f is LightLevelFilter );
-
-                if ( filter == null || !filter.Enabled )
-                {
-                    return;
-                }
-
-                byte[] packet = { 0x4F, (byte) value };
-
-                Engine.SendPacketToClient( packet, packet.Length );
-            }
-        }
-
         public ICommand LinkUnlinkProfileCommand =>
             _linkUnlinkProfileCommand ?? ( _linkUnlinkProfileCommand = new RelayCommand( LinkUnlinkProfile ) );
 
@@ -393,8 +374,6 @@ namespace ClassicAssist.UI.ViewModels
             Options.ClearOptions();
             Options.CurrentOptions = new Options();
             Options.Load( profile, Options.CurrentOptions );
-
-            AssistantOptions.OnProfileChanged( profile );
         }
 
         private async Task NewProfile( object arg )

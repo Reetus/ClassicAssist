@@ -19,6 +19,8 @@ namespace ClassicAssist.Data
 {
     public class Options : SetPropertyNotifyChanged
     {
+        public delegate void dLightLevelChanged( int level );
+
         public const string DEFAULT_SETTINGS_FILENAME = "settings.json";
         private static string _profilePath;
         private bool _abilitiesGump = true;
@@ -74,6 +76,7 @@ namespace ClassicAssist.Data
         private int _rangeCheckLastTargetAmount = 11;
         private bool _rehueFriends;
         private int _rehueFriendsHue;
+        private int _selectedTabIndex;
         private bool _setUOTitle;
         private bool _showProfileNameWindowTitle;
         private bool _showResurrectionWaypoints;
@@ -273,8 +276,12 @@ namespace ClassicAssist.Data
             get => _lightLevel;
             set
             {
+                if ( _lightLevel != value )
+                {
+                    LightLevelChanged?.Invoke( value );
+                }
+
                 SetProperty( ref _lightLevel, value );
-                Engine.SendPacketToClient( new byte[] { 0x4F, (byte) CurrentOptions.LightLevel }, 2 );
             }
         }
 
@@ -418,6 +425,12 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _rehueFriendsHue, value );
         }
 
+        public int SelectedTabIndex
+        {
+            get => _selectedTabIndex;
+            set => SetProperty( ref _selectedTabIndex, value );
+        }
+
         public bool SetUOTitle
         {
             get => _setUOTitle;
@@ -492,11 +505,13 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _useObjectQueueAmount, value );
         }
 
+        public static event dLightLevelChanged LightLevelChanged;
+
         public static void Save( Options options )
         {
             BaseViewModel[] instances = BaseViewModel.Instances;
 
-            JObject obj = new JObject { { "Name", options.Name } };
+            JObject obj = new JObject { { "Name", options.Name }, { "SelectedTabIndex", options.SelectedTabIndex } };
 
             foreach ( BaseViewModel instance in instances )
             {
@@ -598,6 +613,7 @@ namespace ClassicAssist.Data
 
         public static void Load( string optionsFile, Options options )
         {
+            AssistantOptions.OnProfileChanging( optionsFile );
             AssistantOptions.LastProfile = optionsFile;
 
             BaseViewModel[] instances = BaseViewModel.Instances;
@@ -614,6 +630,7 @@ namespace ClassicAssist.Data
             }
 
             options.Name = Path.GetFileName( optionsFile );
+            options.SelectedTabIndex = json["SelectedTabIndex"]?.ToObject<int>() ?? 0;
             options.Hash = json["Hash"]?.ToObject<string>() ?? string.Empty;
 
             foreach ( BaseViewModel instance in instances )
@@ -640,6 +657,8 @@ namespace ClassicAssist.Data
 
                 globalSettingProvider.Deserialize( global, options, true );
             }
+
+            AssistantOptions.OnProfileChanged( optionsFile );
         }
 
         public static string[] GetProfiles()

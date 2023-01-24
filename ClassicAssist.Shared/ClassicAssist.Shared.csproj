@@ -9,9 +9,9 @@
 
   <ItemGroup>
     <Compile Update="Resources\Strings.Designer.cs">
-      <DependentUpon>Strings.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Update="Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AvalonEdit" Version="6.1.3.50" />
+    <PackageReference Include="AvalonEdit" Version="6.2.0.78" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="semver" Version="2.2.0" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />

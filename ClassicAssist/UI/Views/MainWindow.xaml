@@ -44,7 +44,7 @@
             </controls:CustomWindowTitleControl.AdditionalButtons>
         </controls:CustomWindowTitleControl>
         <Grid Margin="10,0,10,10">
-            <TabControl>
+            <TabControl SelectedIndex="{Binding CurrentOptions.SelectedTabIndex}">
                 <TabItem Header="{x:Static r:Strings.General}">
                     <local:GeneralControl />
                 </TabItem>

@@ -270,6 +270,11 @@ namespace ClassicAssist.Browser
 
         private async Task GetMacro( Metadata value )
         {
+            if ( value == null )
+            {
+                return;
+            }
+
             try
             {
                 Loading = true;

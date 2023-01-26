@@ -127,7 +127,7 @@ namespace ClassicAssist.UI.ViewModels
         }
 
         public ICommand ExecuteCommand =>
-            _executeCommand ?? ( _executeCommand = new RelayCommandAsync( Execute, CanExecute ) );
+            _executeCommand ?? ( _executeCommand = new RelayCommandAsync( obj => Execute( obj, null ), CanExecute ) );
 
         public ObservableCollection<IDraggable> FilterDraggables
         {
@@ -364,7 +364,7 @@ namespace ClassicAssist.UI.ViewModels
                 {
                     MacroEntry entry = new MacroEntry( token ) { Global = true };
 
-                    entry.Action = async hks => await Execute( entry );
+                    entry.Action = async ( hks, parameters ) => await Execute( entry, parameters );
                     entry.Hotkey = new ShortcutKeys( token["Keys"] );
                     entry.Global = true;
 
@@ -407,7 +407,7 @@ namespace ClassicAssist.UI.ViewModels
                         entry.Hotkey = hotkey;
                     }
 
-                    entry.Action = async hks => await Execute( entry );
+                    entry.Action = async ( hks, parameters ) => await Execute( entry, parameters );
                     entry.Global = false;
 
                     if ( Options.CurrentOptions.SortMacrosAlphabetical )
@@ -451,7 +451,7 @@ namespace ClassicAssist.UI.ViewModels
                 }
             };
 
-            macro.Action = async hks => await Execute( macro );
+            macro.Action = async ( hks, parameters ) => await Execute( macro, parameters );
 
             Items.Add( macro );
 
@@ -783,14 +783,14 @@ namespace ClassicAssist.UI.ViewModels
             Options.Save( Options.CurrentOptions );
         }
 
-        private async Task Execute( object obj )
+        private async Task Execute( object obj, object[] parameters )
         {
             if ( !( obj is MacroEntry entry ) )
             {
                 return;
             }
 
-            _manager.Execute( entry );
+            _manager.Execute( entry, parameters );
 
             await Task.CompletedTask;
         }
@@ -827,7 +827,7 @@ namespace ClassicAssist.UI.ViewModels
 
             MacroEntry macro = new MacroEntry { Name = $"Macro-{count + 1}", Macro = string.Empty };
 
-            macro.Action = async hks => await Execute( macro );
+            macro.Action = async ( hks, parameters ) => await Execute( macro, parameters );
 
             Items.Add( macro );
 
@@ -838,7 +838,7 @@ namespace ClassicAssist.UI.ViewModels
         {
             MacroEntry macro = new MacroEntry { Name = name, Macro = macroText };
 
-            macro.Action = async hks => await Execute( macro );
+            macro.Action = async ( hks, parameters ) => await Execute( macro, parameters );
 
             Items.Add( macro );
 

@@ -10,7 +10,7 @@ namespace ClassicAssist.Data.Macros.Commands
     {
         [CommandsDisplay( Category = nameof( Strings.Macros ),
             Parameters = new[] { nameof( ParameterType.MacroName ) } )]
-        public static void PlayMacro( string name )
+        public static void PlayMacro( string name, params object[] args )
         {
             MacroManager manager = MacroManager.GetInstance();
 
@@ -22,7 +22,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            Task.Run( () => macro.Action( macro ) );
+            Task.Run( () => { macro.Action.Invoke( macro, args ); } );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Macros ),
@@ -39,7 +39,7 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = nameof( Strings.Macros ) )]
-        public static void Replay()
+        public static void Replay( params object[] args )
         {
             MacroManager manager = MacroManager.GetInstance();
 
@@ -52,7 +52,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
             manager.Replay = true;
 
-            Task.Run( () => current.Action( current ) );
+            Task.Run( () => { current.Action( current, args ); } );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Macros ),

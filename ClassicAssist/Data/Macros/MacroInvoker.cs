@@ -157,7 +157,7 @@ namespace ClassicAssist.Data.Macros
             }
         }
 
-        public void Execute( MacroEntry macro )
+        public void Execute( MacroEntry macro, object[] parameters = null )
         {
             _macro = macro;
 
@@ -194,6 +194,8 @@ namespace ClassicAssist.Data.Macros
                     _macroScope = _engine.CreateScope( importCache );
                     _macroScope.SetVariable( "Events", new Events() );
                     _engine.SetTrace( OnTrace );
+
+                    _macroScope.SetVariable( "args", parameters ?? Array.Empty<object>());
 
                     StopWatch.Reset();
                     StopWatch.Start();

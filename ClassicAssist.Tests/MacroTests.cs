@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using Assistant;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Shared.Resources;
@@ -22,6 +23,27 @@ namespace ClassicAssist.Tests
             MacroManager mi = MacroManager.GetInstance();
 
             mi.Execute( me );
+        }
+
+        [TestMethod]
+        public void WillIncludeParameters()
+        {
+            MacroInvoker macroInvoker = new MacroInvoker();
+
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            MacroEntry macro = new MacroEntry { Macro = "args[0].Set()" };
+
+            macroInvoker.ExceptionEvent += exception => { Assert.Fail( exception.Message ); };
+
+            macroInvoker.Execute( macro, new object[] { are } );
+
+            bool set = are.WaitOne( 5000 );
+
+            if ( !set )
+            {
+                Assert.Fail();
+            }
         }
 
         [TestMethod]

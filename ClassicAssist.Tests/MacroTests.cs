@@ -68,106 +68,98 @@ namespace ClassicAssist.Tests
             }
         }
 
-        //[TestMethod]
-        //public void WillAbortRunning()
-        //{
-        //    MacroEntry me = new MacroEntry { Macro = "while true:\r\n\t" };
+        [TestMethod]
+        public void WillAbortRunning()
+        {
+            MacroEntry me = new MacroEntry { Macro = "while true:\r\n\t" };
 
-        //    MacroManager mi = MacroManager.GetInstance();
+            MacroManager mi = MacroManager.GetInstance();
 
-        //    mi.Execute( me );
+            MacroInvoker macroInvoker = new MacroInvoker();
 
-        //    mi.Stop();
+            macroInvoker.Execute( me );
 
-        //    bool result = mi.CurrentMacro.MacroInvoker.Thread.Join( 5000 );
+            macroInvoker.Stop();
 
-        //    Assert.IsTrue( result );
-        //}
+            bool result = macroInvoker.Thread.Join( 5000 );
 
-        //[TestMethod]
-        //public void WillRaiseStartedEvent()
-        //{
-        //    MacroEntry me = new MacroEntry();
+            Assert.IsTrue( result );
+        }
 
-        //    MacroManager mi = MacroManager.GetInstance();
+        [TestMethod]
+        public void WillRaiseStartedEvent()
+        {
+            MacroEntry me = new MacroEntry();
 
-        //    AutoResetEvent are = new AutoResetEvent( false );
+            MacroManager mi = MacroManager.GetInstance();
 
-        //    void OnStartedEvent()
-        //    {
-        //        are.Set();
-        //    }
+            AutoResetEvent are = new AutoResetEvent( false );
 
-        //    mi.CurrentMacro.MacroInvoker.StartedEvent += OnStartedEvent;
+            void OnStartedEvent()
+            {
+                are.Set();
+            }
 
-        //    mi.Execute( me );
+            MacroInvoker macroInvoker = new MacroInvoker();
 
-        //    bool result = are.WaitOne( 5000 );
+            macroInvoker.StartedEvent += OnStartedEvent;
 
-        //    Assert.IsTrue( result );
-        //}
+            macroInvoker.Execute( me );
 
-        //[TestMethod]
-        //public void WillRaiseStoppedEvent()
-        //{
-        //    MacroEntry me = new MacroEntry();
+            bool result = are.WaitOne( 5000 );
 
-        //    MacroManager mi = MacroManager.GetInstance();
+            Assert.IsTrue( result );
+        }
 
-        //    AutoResetEvent are = new AutoResetEvent( false );
+        [TestMethod]
+        public void WillRaiseStoppedEvent()
+        {
+            MacroEntry me = new MacroEntry();
 
-        //    void OnStoppedEvent()
-        //    {
-        //        are.Set();
-        //    }
+            MacroManager mi = MacroManager.GetInstance();
 
-        //    mi.CurrentMacro.MacroInvoker.StoppedEvent += OnStoppedEvent;
+            AutoResetEvent are = new AutoResetEvent( false );
 
-        //    mi.Execute( me );
+            void OnStoppedEvent()
+            {
+                are.Set();
+            }
 
-        //    bool result = are.WaitOne( 5000 );
+            MacroInvoker macroInvoker = new MacroInvoker();
 
-        //    Assert.IsTrue( result );
-        //}
+            macroInvoker.StoppedEvent += OnStoppedEvent;
 
-        //[TestMethod]
-        //public void WillExecuteRunDummy()
-        //{
-        //    MacroEntry me = new MacroEntry { Macro = "Dummy(5,7)" };
+            macroInvoker.Execute( me );
 
-        //    MacroManager mi = MacroManager.GetInstance();
+            bool result = are.WaitOne( 5000 );
 
-        //    mi.Execute( me );
+            Assert.IsTrue( result );
+        }
 
-        //    mi.CurrentMacro.MacroInvoker.Thread.Join();
+        [TestMethod]
+        public void WillExceptionEvent()
+        {
+            MacroEntry me = new MacroEntry { Macro = "kjdkdsdksdfsdk" };
 
-        //    Assert.IsFalse( mi.CurrentMacro.MacroInvoker.IsFaulted );
-        //}
+            AutoResetEvent are = new AutoResetEvent( false );
 
-        //[TestMethod]
-        //public void WillExceptionEvent()
-        //{
-        //    MacroEntry me = new MacroEntry { Macro = "kjdkdsdksdfsdk" };
+            MacroInvoker macroInvoker = new MacroInvoker();
 
-        //    MacroManager mi = MacroManager.GetInstance();
+            void OnExceptionEvent( Exception e )
+            {
+                Assert.IsTrue( macroInvoker.IsFaulted );
+                Assert.IsNotNull( macroInvoker.Exception );
+                are.Set();
+            }
 
-        //    AutoResetEvent are = new AutoResetEvent( false );
+            macroInvoker.ExceptionEvent += OnExceptionEvent;
 
-        //    void OnExceptionEvent( Exception e )
-        //    {
-        //        Assert.IsTrue( mi.CurrentMacro.MacroInvoker.IsFaulted );
-        //        Assert.IsNotNull( mi.CurrentMacro.MacroInvoker.Exception );
-        //        are.Set();
-        //    }
+            macroInvoker.Execute( me );
 
-        //    mi.CurrentMacro.MacroInvoker.ExceptionEvent += OnExceptionEvent;
+            bool result = are.WaitOne( 5000 );
 
-        //    mi.Execute( me );
-
-        //    bool result = are.WaitOne( 5000 );
-
-        //    Assert.IsTrue( result );
-        //}
+            Assert.IsTrue( result );
+        }
 
         [TestMethod]
         public void EnsureAllCommandsHaveAttribute()

@@ -278,14 +278,14 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             foreach ( IDraggableGroup draggableGroup in Draggables.Where( i => i is IDraggableGroup )
-                         .Cast<IDraggableGroup>() )
+                         .OrderBy( GetDraggableIndex ).Cast<IDraggableGroup>() )
             {
                 JObject entry = new JObject { { "Name", draggableGroup.Name } };
 
                 groupArray.Add( entry );
             }
 
-            IEnumerable<MacroEntry> globalMacros = Items.Where( e => e.Global ).ToList();
+            IEnumerable<MacroEntry> globalMacros = Items.Where( e => e.Global ).OrderBy( GetDraggableIndex ).ToList();
 
             if ( globalMacros.Any() )
             {
@@ -296,7 +296,7 @@ namespace ClassicAssist.UI.ViewModels
                     globalJson );
             }
 
-            foreach ( MacroEntry macroEntry in Items.Where( e => !e.Global ).ToList() )
+            foreach ( MacroEntry macroEntry in Items.Where( e => !e.Global ).OrderBy( GetDraggableIndex ).ToList() )
             {
                 macroArray.Add( macroEntry.ToJObject() );
             }
@@ -437,6 +437,32 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             SelectedItem = Items.LastOrDefault();
+        }
+
+        private int GetDraggableIndex( IDraggable draggable )
+        {
+            ObservableCollection<IDraggable> parent = GetParent( draggable, Draggables );
+
+            return parent?.IndexOf( draggable ) ?? Draggables.IndexOf( draggable );
+        }
+
+        private static IEnumerable<IDraggableGroup> GetGroups( IEnumerable<IDraggable> collection )
+        {
+            return collection.Where( i => i is IDraggableGroup ).Cast<IDraggableGroup>();
+        }
+
+        private static ObservableCollection<IDraggable> GetParent( IDraggable draggable,
+            ObservableCollection<IDraggable> parent )
+        {
+            if ( parent.Contains( draggable ) )
+            {
+                return parent;
+            }
+
+            IEnumerable<IDraggableGroup> groups = GetGroups( parent );
+
+            return groups.Select( draggableGroup => GetParent( draggable, draggableGroup.Children ) )
+                .FirstOrDefault( childParent => childParent != null );
         }
 
         private void NewPublicMacro( Metadata metadata )

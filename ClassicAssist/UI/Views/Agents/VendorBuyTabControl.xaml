@@ -7,6 +7,7 @@
     xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
     xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+    xmlns:draggableListBox="clr-namespace:ClassicAssist.Controls.DraggableListBox;assembly=ClassicAssist.Controls"
     x:Class="ClassicAssist.UI.Views.Agents.VendorBuyTabControl"
     mc:Ignorable="d"
     d:DesignWidth="493" d:DesignHeight="400">
@@ -41,9 +42,9 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <ListBox x:Name="listView" Grid.Row="0" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}"
+            <draggableListBox:DraggableListBox x:Name="listView" Grid.Row="0" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}"
                      HorizontalContentAlignment="Stretch">
-                <ListBox.Resources>
+                <draggableListBox:DraggableListBox.Resources>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Enabled}" Value="False">
@@ -51,18 +52,18 @@
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </ListBox.Resources>
-                <ListBox.InputBindings>
+                </draggableListBox:DraggableListBox.Resources>
+                <draggableListBox:DraggableListBox.InputBindings>
                     <KeyBinding Key="Delete"
                                 Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedItem}" />
-                </ListBox.InputBindings>
-                <ListBox.ItemTemplate>
+                </draggableListBox:DraggableListBox.InputBindings>
+                <draggableListBox:DraggableListBox.ItemTemplate>
                     <DataTemplate>
                         <controls:EditTextBlock Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                                 Label="{Binding Name}" ShowIcon="True" />
                     </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                </draggableListBox:DraggableListBox.ItemTemplate>
+            </draggableListBox:DraggableListBox>
             <StackPanel Grid.Row="1" Margin="0,10,0,0">
                 <Grid>
                     <Grid.ColumnDefinitions>

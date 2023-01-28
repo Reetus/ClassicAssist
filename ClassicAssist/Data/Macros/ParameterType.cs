@@ -62,6 +62,7 @@ namespace ClassicAssist.Data.Macros
         Empty,
         Boolean,
         ElementValueFrontBack,
-        StringArray
+        StringArray,
+        Parameters
     }
 }

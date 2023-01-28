@@ -9,7 +9,7 @@ namespace ClassicAssist.Data.Macros.Commands
     public static class MacroCommands
     {
         [CommandsDisplay( Category = nameof( Strings.Macros ),
-            Parameters = new[] { nameof( ParameterType.MacroName ) } )]
+            Parameters = new[] { nameof( ParameterType.MacroName ), nameof( ParameterType.Parameters ) } )]
         public static void PlayMacro( string name, params object[] args )
         {
             MacroManager manager = MacroManager.GetInstance();
@@ -38,7 +38,8 @@ namespace ClassicAssist.Data.Macros.Commands
             MacroManager.GetInstance().StopAll();
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Macros ) )]
+        [CommandsDisplay( Category = nameof( Strings.Macros ),
+            Parameters = new[] { nameof( ParameterType.Parameters ) } )]
         public static void Replay( params object[] args )
         {
             MacroManager manager = MacroManager.GetInstance();

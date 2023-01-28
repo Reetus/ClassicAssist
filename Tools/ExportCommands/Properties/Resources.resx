@@ -279,4 +279,7 @@
   <data name="PARAMETER_DESCRIPTION_STRINGARRAY" xml:space="preserve">
     <value>An array of strings</value>
   </data>
+  <data name="PARAMETER_DESCRIPTION_PARAMETERS" xml:space="preserve">
+    <value>Comma seperated list of parameters</value>
+  </data>
 </root>

@@ -1828,4 +1828,15 @@ else:
   <data name="BRINGCLIENTWINDOWTOFRONT_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>BringClientWindowToFront()</value>
   </data>
+  <data name="PLAYMACRO_COMMAND_EXAMPLE" xml:space="preserve">
+    <value># Play another macro
+
+PlayMacro("beep")
+
+# Play another macro passing parameters to it
+
+PlayMacro("beep", 1, "moo")
+
+# In the played macro, args[0] will be 1 and args[1] will be "moo"</value>
+  </data>
 </root>

@@ -51,7 +51,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
                 base.Name = hotkeyName;
             }
 
-            Action = hs => Task.Run( Execute );
+            Action = ( hs, _ ) => Task.Run( Execute );
         }
 
         public bool IsExpanded

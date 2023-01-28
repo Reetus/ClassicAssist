@@ -50,7 +50,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            dressAgentEntry.Action( dressAgentEntry );
+            dressAgentEntry.Action( dressAgentEntry, null );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Agents ),
@@ -89,7 +89,8 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             DressManager manager = DressManager.GetInstance();
             manager.TemporaryDress = new DressAgentEntry();
-            manager.TemporaryDress.Action = async hks => await manager.DressAllItems( manager.TemporaryDress, false );
+            manager.TemporaryDress.Action =
+                async ( hks, _ ) => await manager.DressAllItems( manager.TemporaryDress, false );
             manager.ImportItems( manager.TemporaryDress );
         }
 

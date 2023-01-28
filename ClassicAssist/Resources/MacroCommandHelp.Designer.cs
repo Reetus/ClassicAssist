@@ -246,6 +246,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bring client window to front.
+        /// </summary>
+        public static string BRINGCLIENTWINDOWTOFRONT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("BRINGCLIENTWINDOWTOFRONT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BringClientWindowToFront().
+        /// </summary>
+        public static string BRINGCLIENTWINDOWTOFRONT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("BRINGCLIENTWINDOWTOFRONT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check for a specific buff.
         /// </summary>
         public static string BUFFEXISTS_COMMAND_DESCRIPTION {
@@ -2871,6 +2889,23 @@ namespace ClassicAssist.Resources {
         public static string PLAYMACRO_COMMAND_DESCRIPTION {
             get {
                 return ResourceManager.GetString("PLAYMACRO_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to # Play another macro
+        ///
+        ///PlayMacro(&quot;beep&quot;)
+        ///
+        ///# Play another macro passing parameters to it
+        ///
+        ///PlayMacro(&quot;beep&quot;, 1, &quot;moo&quot;)
+        ///
+        ///# In the played macro, args[0] will be 1 and args[1] will be &quot;moo&quot;.
+        /// </summary>
+        public static string PLAYMACRO_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("PLAYMACRO_COMMAND_EXAMPLE", resourceCulture);
             }
         }
         

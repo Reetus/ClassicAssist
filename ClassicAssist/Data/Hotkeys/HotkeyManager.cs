@@ -7,7 +7,6 @@ using Assistant;
 using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Shared.UI;
-using ClassicAssist.UI.Misc;
 using static ClassicAssist.Misc.SDLKeys;
 
 namespace ClassicAssist.Data.Hotkeys
@@ -134,7 +133,7 @@ namespace ClassicAssist.Data.Hotkeys
 
                             AliasCommands.SetDefaultAliases();
 
-                            Task.Run( () => hks.Action.Invoke( hks ) );
+                            Task.Run( () => { hks.Action.Invoke( hks, null ); } );
 
                             break;
                         }
@@ -179,7 +178,7 @@ namespace ClassicAssist.Data.Hotkeys
 
                             AliasCommands.SetDefaultAliases();
 
-                            Task.Run( () => hks.Action.Invoke( hks ) );
+                            Task.Run( () => { hks.Action.Invoke( hks, null ); } );
 
                             break;
                         }

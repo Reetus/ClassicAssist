@@ -282,7 +282,7 @@ namespace ClassicAssist.Data.Macros
             SetProperty( ref _name, value );
         }
 
-        public void Execute()
+        public void Execute( object[] parameters = null )
         {
             _dispatcher.Invoke( () =>
             {
@@ -296,7 +296,7 @@ namespace ClassicAssist.Data.Macros
             }
 
             StartedOn = DateTime.Now;
-            _macroInvoker.Execute( this );
+            _macroInvoker.Execute( this, parameters );
         }
 
         public void Stop()

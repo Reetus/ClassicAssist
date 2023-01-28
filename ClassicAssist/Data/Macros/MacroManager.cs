@@ -6,7 +6,6 @@ using System.Threading;
 using Assistant;
 using ClassicAssist.Browser.Models;
 using ClassicAssist.Shared.UI;
-using ClassicAssist.UI.Misc;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 
@@ -100,7 +99,7 @@ namespace ClassicAssist.Data.Macros
             return _instance;
         }
 
-        public void Execute( MacroEntry macro )
+        public void Execute( MacroEntry macro, object[] parameters = null )
         {
             if ( macro.IsBackground )
             {
@@ -110,7 +109,7 @@ namespace ClassicAssist.Data.Macros
                 }
                 else
                 {
-                    macro.Execute();
+                    macro.Execute( parameters );
                 }
             }
             else
@@ -126,7 +125,7 @@ namespace ClassicAssist.Data.Macros
                 }
 
                 CurrentMacro = macro;
-                CurrentMacro.Execute();
+                CurrentMacro.Execute( parameters );
             }
         }
 

@@ -73,7 +73,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             _setContainersCommand ?? ( _setContainersCommand =
                 new RelayCommandAsync( _manager.SetContainers, o => SelectedItem != null && !IsOrganizing ) );
 
-        public void Serialize( JObject json, bool global = false)
+        public void Serialize( JObject json, bool global = false )
         {
             JArray organizer = new JArray();
 
@@ -131,7 +131,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     Complete = GetJsonValue( token, "Complete", false )
                 };
 
-                entry.Action = hks => Task.Run( async () => await _manager.Organize( entry ) );
+                entry.Action = ( hks, _ ) => Task.Run( async () => await _manager.Organize( entry ) );
                 entry.IsRunning = () => IsOrganizing;
 
                 foreach ( JToken itemToken in token["Items"] )
@@ -172,7 +172,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             OrganizerEntry entry = new OrganizerEntry
             {
                 Name = $"Organizer-{count}",
-                Action = hks => Task.Run( async () => await _manager.Organize( SelectedItem ) ),
+                Action = ( hks, _ ) => Task.Run( async () => await _manager.Organize( SelectedItem ) ),
                 IsRunning = () => IsOrganizing
             };
 

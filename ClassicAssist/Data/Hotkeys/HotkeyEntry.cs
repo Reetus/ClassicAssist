@@ -23,7 +23,7 @@ namespace ClassicAssist.Data.Hotkeys
         private bool _passToUo = true;
 
         [JsonIgnore]
-        public Action<HotkeyEntry> Action { get; set; }
+        public Action<HotkeyEntry, object[]> Action { get; set; }
 
         [JsonIgnore]
         public ObservableCollectionEx<HotkeyEntry> Children

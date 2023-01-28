@@ -201,7 +201,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     Hotkey = new ShortcutKeys( entry["Keys"] )
                 };
 
-                dae.Action = async hks => await DressAllItems( dae );
+                dae.Action = async ( hks, _ ) => await DressAllItems( dae );
 
                 List<DressAgentItem> items = new List<DressAgentItem>();
 
@@ -324,7 +324,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             DressAgentEntry dae =
                 new DressAgentEntry { Name = $"Dress-{count + 1}", Items = new List<DressAgentItem>() };
 
-            dae.Action = async hks => await DressAllItems( dae );
+            dae.Action = async ( hks, _ ) => await DressAllItems( dae );
 
             Items.Add( dae );
         }

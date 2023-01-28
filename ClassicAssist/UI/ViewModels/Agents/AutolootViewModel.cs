@@ -242,7 +242,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             JArray groupArray = new JArray();
 
             foreach ( AutolootGroup draggableGroup in Draggables.Where( i => i is AutolootGroup )
-                         .Cast<AutolootGroup>() )
+                         .OrderBy( e => DraggableTreeViewHelpers.GetIndex( e, Draggables ) ).Cast<AutolootGroup>() )
             {
                 JObject entry = new JObject { { "Name", draggableGroup.Name }, { "Enabled", draggableGroup.Enabled } };
 
@@ -263,7 +263,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             JArray itemsArray = new JArray();
 
-            foreach ( AutolootEntry entry in Items )
+            foreach ( AutolootEntry entry in Items.OrderBy( e => DraggableTreeViewHelpers.GetIndex( e, Draggables ) ) )
             {
                 JObject entryObj = new JObject
                 {

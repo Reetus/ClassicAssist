@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
+             xmlns:draggableListBox="clr-namespace:ClassicAssist.Controls.DraggableListBox;assembly=ClassicAssist.Controls"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500">
     <d:DesignerProperties.DesignStyle>
@@ -33,7 +34,8 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <ListBox Grid.Row="0" ItemsSource="{Binding Options.Friends}" SelectedItem="{Binding SelectedItem}" />
+            <draggableListBox:DraggableListBox Grid.Row="0" ItemsSource="{Binding Options.Friends}"
+                                               SelectedItem="{Binding SelectedItem}" />
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />

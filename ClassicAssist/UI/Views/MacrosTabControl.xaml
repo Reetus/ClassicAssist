@@ -101,7 +101,8 @@
                                                              BorderThickness="0"
                                                              AllowDragGroups="False"
                                                              Style="{StaticResource CompressedTreeViewStyle}"
-                                                             PreviewMouseWheel="DraggableTreeView_OnPreviewMouseWheel">
+                                                             PreviewMouseWheel="DraggableTreeView_OnPreviewMouseWheel"
+                                                             AllowDragItemsOntoItems="{Binding CurrentOptions.SortMacrosAlphabetical, Converter={StaticResource InverseBooleanConverter}}">
                             <draggableTreeView:DraggableTreeView.InputBindings>
                                 <KeyBinding Modifiers="Control" Key="Delete"
                                             Command="{Binding RemoveMacroCommand}"

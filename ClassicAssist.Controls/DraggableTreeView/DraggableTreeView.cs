@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Input;
-using System.Windows.Media;
+using GongSolutions.Wpf.DragDrop;
+using DragDrop = GongSolutions.Wpf.DragDrop.DragDrop;
 
 namespace ClassicAssist.Controls.DraggableTreeView
 {
     /*
      * Credit: https://www.codeproject.com/Articles/55168/Drag-and-Drop-Feature-in-WPF-TreeView-Control
      */
-    public class DraggableTreeView : TreeView
+    public class DraggableTreeView : TreeView, IDropTarget
     {
         public static readonly DependencyProperty BindableSelectedItemProperty = DependencyProperty.RegisterAttached(
             nameof( BindableSelectedItem ), typeof( object ), typeof( DraggableTreeView ),
@@ -29,23 +27,28 @@ namespace ClassicAssist.Controls.DraggableTreeView
             DependencyProperty.RegisterAttached( nameof( AllowDragGroups ), typeof( bool ), typeof( DraggableTreeView ),
                 new PropertyMetadata( true ) );
 
-        private IDraggable _draggedItem;
-        private Point _lastMouseDown;
+        public static readonly DependencyProperty AllowDragItemsOntoItemsProperty =
+            DependencyProperty.RegisterAttached( nameof( AllowDragItemsOntoItems ), typeof( bool ),
+                typeof( DraggableTreeView ), new PropertyMetadata( true ) );
 
         public DraggableTreeView()
         {
-            AllowDrop = true;
-            MouseMove += OnMouseMove;
-            MouseDown += OnMouseDown;
-            Drop += OnDrop;
+            DragDrop.SetIsDragSource( this, true );
+            DragDrop.SetIsDropTarget( this, true );
+            DragDrop.SetDropHandler( this, this );
             SelectedItemChanged += OnSelectedItemChanged;
-            ItemContainerGenerator.StatusChanged += ItemContainerGeneratorOnStatusChanged;
         }
 
         public bool AllowDragGroups
         {
             get => (bool) GetValue( AllowDragGroupsProperty );
             set => SetValue( AllowDragGroupsProperty, value );
+        }
+
+        public bool AllowDragItemsOntoItems
+        {
+            get => (bool) GetValue( AllowDragItemsOntoItemsProperty );
+            set => SetValue( AllowDragItemsOntoItemsProperty, value );
         }
 
         public IDraggableGroup BindableSelectedGroup
@@ -60,19 +63,129 @@ namespace ClassicAssist.Controls.DraggableTreeView
             set => SetValue( BindableSelectedItemProperty, value );
         }
 
-        private void ItemContainerGeneratorOnStatusChanged( object sender, EventArgs e )
+        public new void DragEnter( IDropInfo dropInfo )
         {
-            if ( ItemContainerGenerator.Status != GeneratorStatus.ContainersGenerated )
+        }
+
+        public new void DragOver( IDropInfo dropInfo )
+        {
+            if ( !( dropInfo.DragInfo.SourceItem is IDraggable sourceItem ) )
             {
                 return;
             }
 
-            var selectedItem = (IDraggable) BindableSelectedItem ?? BindableSelectedGroup;
-
-            if ( ItemContainerGenerator.ContainerFromItem( selectedItem ) is TreeViewItem item )
+            if ( !( ItemsSource is ObservableCollection<IDraggable> items ) )
             {
-                item.IsSelected = true;
+                return;
             }
+
+            ObservableCollection<IDraggable> sourceParent = GetParent( sourceItem, items );
+
+            if ( !AllowDragItemsOntoItems && sourceItem is IDraggableEntry && sourceParent == items &&
+                 !( dropInfo?.TargetItem is IDraggableGroup ) )
+            {
+                dropInfo.Effects = DragDropEffects.None;
+
+                return;
+            }
+
+            dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
+            dropInfo.Effects = DragDropEffects.Move;
+        }
+
+        public new void DragLeave( IDropInfo dropInfo )
+        {
+        }
+
+        public new void Drop( IDropInfo dropInfo )
+        {
+            switch ( dropInfo.TargetItem )
+            {
+                case IDraggableGroup destinationGroup:
+                {
+                    IDraggable sourceItem = dropInfo.DragInfo.SourceItem as IDraggable;
+
+                    ObservableCollection<IDraggable> parent = GetParent( sourceItem,
+                        ItemsSource as ObservableCollection<IDraggable> );
+
+                    switch ( sourceItem )
+                    {
+                        case IDraggableGroup _ when !AllowDragGroups:
+                        // No parents into children
+                        case IDraggableGroup draggableGroup when IsParentOf( destinationGroup, draggableGroup ):
+                            return;
+                    }
+
+                    parent?.Remove( sourceItem );
+
+                    destinationGroup.Children.Add( sourceItem );
+                    break;
+                }
+                case IDraggableEntry destinationItem:
+                {
+                    IDraggable sourceItem = dropInfo.DragInfo.SourceItem as IDraggable;
+
+                    if ( !( ItemsSource is ObservableCollection<IDraggable> items ) )
+                    {
+                        return;
+                    }
+
+                    ObservableCollection<IDraggable> sourceParent = GetParent( sourceItem, items );
+
+                    if ( !AllowDragItemsOntoItems && sourceItem is IDraggableEntry && sourceParent == items )
+                    {
+                        return;
+                    }
+
+                    if ( sourceItem is IDraggableGroup )
+                    {
+                        // No groups onto items
+                        return;
+                    }
+
+                    ObservableCollection<IDraggable> destinationParent = GetParent( destinationItem,
+                        ItemsSource as ObservableCollection<IDraggable> );
+
+                    if ( sourceParent != destinationParent )
+                    {
+                        sourceParent.Remove( sourceItem );
+                        destinationParent.Add( sourceItem );
+                    }
+
+                    int sourceIndex = destinationParent.IndexOf( sourceItem );
+                    int targetIndex = destinationParent.IndexOf( destinationItem );
+
+                    destinationParent.Move( sourceIndex, targetIndex );
+                    break;
+                }
+                case null:
+                {
+                    IDraggable sourceItem = dropInfo.DragInfo.SourceItem as IDraggable;
+
+                    if ( !( ItemsSource is ObservableCollection<IDraggable> items ) )
+                    {
+                        return;
+                    }
+
+                    ObservableCollection<IDraggable> sourceParent = GetParent( sourceItem, items );
+
+                    sourceParent?.Remove( sourceItem );
+
+                    items.Add( sourceItem );
+                    break;
+                }
+            }
+        }
+
+        private static bool IsParentOf( IDraggable sourceItem, IDraggableGroup destinationGroup )
+        {
+            return destinationGroup.Children.Any( e => e == sourceItem ) || GetGroups( destinationGroup.Children )
+                .Any( draggableGroup => IsParentOf( sourceItem, draggableGroup ) );
+        }
+
+        private static IEnumerable<IDraggableGroup> GetGroups( IEnumerable<IDraggable> collection )
+        {
+            return collection.Where( i => i is IDraggableGroup ).Cast<IDraggableGroup>();
         }
 
         private static void OnSelectedPropertyChanged( DependencyObject d, DependencyPropertyChangedEventArgs e )
@@ -103,63 +216,6 @@ namespace ClassicAssist.Controls.DraggableTreeView
             }
         }
 
-        private void OnDrop( object sender, DragEventArgs e )
-        {
-            IDraggableGroup group = null;
-
-            if ( _draggedItem == null )
-            {
-                return;
-            }
-
-            TreeViewItem treeViewItem = GetNearestContainer( e.OriginalSource as UIElement );
-
-            if ( !( treeViewItem?.Header is IDraggableEntry ) )
-            {
-                group = treeViewItem?.Header as IDraggableGroup;
-            }
-
-            if ( ReferenceEquals( treeViewItem?.Header, _draggedItem ) )
-            {
-                // Don't drag onto itself
-                return;
-            }
-
-            e.Effects = DragDropEffects.None;
-            e.Handled = true;
-
-            MoveItem( _draggedItem, group );
-        }
-
-        private void MoveItem( IDraggable sourceItem, IDraggableGroup destinationGroup )
-        {
-            ObservableCollection<IDraggable> parent = GetParent( sourceItem,
-                ItemsSource as ObservableCollection<IDraggable> );
-
-            if ( sourceItem is IDraggableGroup draggableGroup && IsParentOf( destinationGroup, draggableGroup ) )
-            {
-                // No parents into children
-                return;
-            }
-
-            parent?.Remove( sourceItem );
-
-            if ( destinationGroup != null )
-            {
-                destinationGroup.Children.Add( sourceItem );
-            }
-            else
-            {
-                ( ItemsSource as ObservableCollection<IDraggable> )?.Add( sourceItem );
-            }
-        }
-
-        private static bool IsParentOf( IDraggable sourceItem, IDraggableGroup destinationGroup )
-        {
-            return destinationGroup.Children.Any( e => e == sourceItem ) || GetGroups( destinationGroup.Children )
-                .Any( draggableGroup => IsParentOf( sourceItem, draggableGroup ) );
-        }
-
         private static ObservableCollection<IDraggable> GetParent( IDraggable draggable,
             ObservableCollection<IDraggable> parent )
         {
@@ -172,74 +228,6 @@ namespace ClassicAssist.Controls.DraggableTreeView
 
             return groups.Select( draggableGroup => GetParent( draggable, draggableGroup.Children ) )
                 .FirstOrDefault( childParent => childParent != null );
-        }
-
-        private static IEnumerable<IDraggableGroup> GetGroups( IEnumerable<IDraggable> collection )
-        {
-            return collection.Where( i => i is IDraggableGroup ).Cast<IDraggableGroup>();
-        }
-
-        private void OnMouseDown( object sender, MouseButtonEventArgs e )
-        {
-            if ( e.ChangedButton == MouseButton.Left )
-            {
-                _lastMouseDown = e.GetPosition( this );
-            }
-        }
-
-        private void OnMouseMove( object sender, MouseEventArgs e )
-        {
-            Dispatcher.Invoke( () =>
-            {
-                if ( e.LeftButton != MouseButtonState.Pressed )
-                {
-                    return;
-                }
-
-                var currentPosition = e.GetPosition( this );
-
-                if ( !( Math.Abs( currentPosition.X - _lastMouseDown.X ) >
-                        SystemParameters.MinimumHorizontalDragDistance ) &&
-                     !( Math.Abs( currentPosition.Y - _lastMouseDown.Y ) >
-                        SystemParameters.MinimumVerticalDragDistance ) )
-                {
-                    return;
-                }
-
-                if ( !( SelectedItem is IDraggable ) )
-                {
-                    return;
-                }
-
-                if ( !AllowDragGroups && SelectedItem is IDraggableGroup )
-                {
-                    return;
-                }
-
-                _draggedItem = (IDraggable) SelectedItem;
-
-                try
-                {
-                    DragDrop.DoDragDrop( this, SelectedValue, DragDropEffects.Move );
-                }
-                catch ( Exception )
-                {
-                    // ignored
-                }
-            } );
-        }
-
-        private static TreeViewItem GetNearestContainer( UIElement element )
-        {
-            var container = element as TreeViewItem;
-
-            while ( container == null && element != null )
-            {
-                element = VisualTreeHelper.GetParent( element ) as UIElement;
-                container = element as TreeViewItem;
-            }
-
-            return container;
         }
     }
 }

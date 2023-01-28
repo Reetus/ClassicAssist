@@ -11,6 +11,7 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
     xmlns:controls1="clr-namespace:ClassicAssist.UI.Controls"
+    xmlns:draggableListBox="clr-namespace:ClassicAssist.Controls.DraggableListBox;assembly=ClassicAssist.Controls"
     x:Name="userControl" x:Class="ClassicAssist.UI.Views.Agents.OrganizerTabControl"
     mc:Ignorable="d"
     d:DesignHeight="250" d:DesignWidth="500">
@@ -60,7 +61,8 @@
                 </StackPanel>
             </controls1:StretchyWrapPanel>
             <Grid Grid.Row="1">
-                <ListBox x:Name="listBox" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
+                <draggableListBox:DraggableListBox x:Name="listBox" ItemsSource="{Binding Items}"
+                                                   SelectedItem="{Binding SelectedItem}">
                     <ListBox.InputBindings>
                         <KeyBinding Key="Delete"
                                     Command="{Binding RemoveItemCommand}" CommandParameter="{Binding SelectedItem}" />
@@ -78,7 +80,7 @@
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                </ListBox>
+                </draggableListBox:DraggableListBox>
             </Grid>
             <StackPanel Grid.Row="2" Margin="0,10,0,0">
                 <CheckBox Content="{x:Static resources:Strings.Complete}" IsChecked="{Binding SelectedItem.Complete}" />

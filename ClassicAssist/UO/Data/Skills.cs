@@ -31,7 +31,7 @@ namespace ClassicAssist.UO.Data
         private static Lazy<Dictionary<int, SkillData>> _lazySkillData;
         private static string _dataPath;
 
-        internal static void Initialize( string dataPath )
+        public static void Initialize( string dataPath )
         {
             _dataPath = dataPath;
             _lazySkillData = new Lazy<Dictionary<int, SkillData>>( LoadSkills );

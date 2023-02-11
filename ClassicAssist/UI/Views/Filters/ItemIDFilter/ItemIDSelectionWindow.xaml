@@ -1,0 +1,104 @@
+﻿<Window x:Class="ClassicAssist.UI.Views.Filters.ItemIDFilter.ItemIDSelectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+        xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+        mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
+        Title="{x:Static resources:Strings.ItemID_Filter}" Height="450" Width="300"
+        DataContext="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../../Resources/DarkTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <DrawingImage x:Key="LoadIcon">
+                <DrawingImage.Drawing>
+                    <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                        <GeometryDrawing Brush="{DynamicResource ThemeForegroundBrush}"
+                                         Geometry="F1 M512,512z M0,0z M304,48C304,21.5 282.5,0 256,0 229.5,0 208,21.5 208,48 208,74.5 229.5,96 256,96 282.5,96 304,74.5 304,48z M304,464C304,437.5 282.5,416 256,416 229.5,416 208,437.5 208,464 208,490.5 229.5,512 256,512 282.5,512 304,490.5 304,464z M48,304C74.5,304 96,282.5 96,256 96,229.5 74.5,208 48,208 21.5,208 0,229.5 0,256 0,282.5 21.5,304 48,304z M512,256C512,229.5 490.5,208 464,208 437.5,208 416,229.5 416,256 416,282.5 437.5,304 464,304 490.5,304 512,282.5 512,256z M142.9,437C161.6,418.3 161.6,387.9 142.9,369.1 124.2,350.3 93.8,350.4 75,369.1 56.2,387.8 56.3,418.2 75,437 93.7,455.8 124.1,455.7 142.9,437z M142.9,142.8C161.6,124.1 161.6,93.7 142.9,74.9 124.2,56.1 93.7,56.2 75,75 56.3,93.8 56.3,124.1 75,142.9 93.7,161.7 124.1,161.6 142.9,142.9z M369.1,437C387.8,455.7 418.2,455.7 437,437 455.8,418.3 455.7,387.9 437,369.1 418.3,350.3 387.9,350.4 369.1,369.1 350.3,387.8 350.4,418.2 369.1,437z" />
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{x:Static resources:Strings.Filter_}" Grid.Column="0" VerticalAlignment="Center" />
+            <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="5,0,0,0" />
+        </Grid>
+        <ListBox x:Name="listBox" Grid.Row="1" ItemsSource="{Binding FilterImages}" Margin="0,10,0,0"
+                 SelectedItem="{Binding SelectedItem}">
+            <ListBox.Resources>
+                <valueConverters:IntToHexStringValueConverter x:Key="IntToHexStringValueConverter" />
+            </ListBox.Resources>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding ImageSource}" />
+                        <StackPanel VerticalAlignment="Center" Margin="10,0,0,0">
+                            <TextBlock Text="{Binding ID, Converter={StaticResource IntToHexStringValueConverter}}" />
+                            <TextBlock Text="{Binding Name}" />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Image Grid.Row="1" Source="{StaticResource LoadIcon}" Height="40" RenderTransformOrigin=".5, .5">
+            <Image.Style>
+                <Style TargetType="{x:Type Image}">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ImagesLoaded}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+            <Image.RenderTransform>
+                <RotateTransform x:Name="RotateTransform" />
+            </Image.RenderTransform>
+            <Image.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="-360"
+                                Duration="0:0:2" RepeatBehavior="Forever" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Image.Triggers>
+        </Image>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Padding" Value="25,3" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="{x:Static resources:Strings.OK}" Command="{Binding OKCommand}"
+                    CommandParameter="{Binding SelectedItem, ElementName=listBox}">
+                <i:Interaction.Behaviors>
+                    <behaviours:CloseOnClickBehaviour />
+                </i:Interaction.Behaviors>
+            </Button>
+            <Button Content="{x:Static resources:Strings.Cancel}" Margin="10,0,0,0">
+                <i:Interaction.Behaviors>
+                    <behaviours:CloseOnClickBehaviour />
+                </i:Interaction.Behaviors>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

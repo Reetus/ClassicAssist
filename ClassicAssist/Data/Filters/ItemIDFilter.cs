@@ -12,6 +12,7 @@
 
 #endregion
 
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using ClassicAssist.Shared.UI;
@@ -181,6 +182,92 @@ namespace ClassicAssist.Data.Filters
 
                     packet[oldStyle ? 18 : 19] = (byte) ( entry.Hue >> 8 );
                     packet[oldStyle ? 19 : 20] = (byte) entry.Hue;
+                    break;
+                }
+                case 0x1A:
+                {
+                    int serial = ( packet[3] << 24 ) | ( packet[4] << 16 ) | ( packet[5] << 8 ) | packet[6];
+                    int itemId = ( packet[7] << 8 ) | packet[8];
+
+                    ItemIDFilterEntry entry = Items.FirstOrDefault( e => e.SourceID == itemId && e.Enabled );
+
+                    if ( entry == null )
+                    {
+                        return false;
+                    }
+
+                    packet[7] = (byte) ( entry.DestinationID >> 8 );
+                    packet[8] = (byte) entry.DestinationID;
+
+                    if ( entry.Hue == -1 )
+                    {
+                        return false;
+                    }
+
+                    bool hasAmount = ( serial & 0x80000000 ) != 0;
+
+                    int x = hasAmount ? ( packet[11] << 8 ) | packet[12] : ( packet[9] << 8 ) | packet[10];
+                    int y = hasAmount ? ( packet[13] << 8 ) | packet[14] : ( packet[11] << 8 ) | packet[12];
+
+                    bool hasLightSource = ( x & 0x8000 ) != 0;
+                    bool hasHue = ( y & 0x8000 ) != 0;
+                    bool hasFlags = ( y & 0x4000 ) != 0;
+
+                    byte flags = 0;
+
+                    if ( hasFlags )
+                    {
+                        int flagsOffset = 14;
+
+                        if ( hasAmount )
+                        {
+                            flagsOffset += 2;
+                        }
+
+                        if ( hasLightSource )
+                        {
+                            flagsOffset += 1;
+                        }
+
+                        if ( hasHue )
+                        {
+                            flagsOffset += 2;
+                        }
+
+                        flags = packet[flagsOffset];
+                    }
+
+                    if ( !hasHue )
+                    {
+                        y |= 0x8000;
+
+                        packet[hasAmount ? 13 : 11] = (byte) ( y >> 8 );
+                        packet[hasAmount ? 14 : 12] = (byte) y;
+
+                        Array.Resize( ref packet, length + 2 );
+                        length = packet.Length;
+                    }
+
+                    int hueOffset = 14;
+
+                    if ( hasAmount )
+                    {
+                        hueOffset += 2;
+                    }
+
+                    if ( hasLightSource )
+                    {
+                        hueOffset += 1;
+                    }
+
+                    packet[hueOffset] = (byte) ( entry.Hue >> 8 );
+                    packet[hueOffset + 1] = (byte) entry.Hue;
+
+                    if ( hasFlags )
+                    {
+                        packet[hueOffset + 2] = flags;
+                    }
+
                     break;
                 }
             }

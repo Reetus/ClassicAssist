@@ -154,6 +154,11 @@ namespace ClassicAssist.UO.Data
                 entry = _lazyIndex.Value[0x4000];
             }
 
+            if ( entry.Lookup == -1 )
+            {
+                entry = _lazyIndex.Value[0x4000];
+            }
+
             artFile.Seek( entry.Lookup, SeekOrigin.Begin );
 
             using ( BinaryReader reader = new BinaryReader( artFile ) )

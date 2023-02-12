@@ -11,7 +11,7 @@
         xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
         xmlns:misc="clr-namespace:ClassicAssist.Misc"
         mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
-        Title="{x:Static resources:Strings.ItemID_Filter}" Height="250" Width="420">
+        Title="{x:Static resources:Strings.ItemID_Filter}" Height="350" Width="420">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

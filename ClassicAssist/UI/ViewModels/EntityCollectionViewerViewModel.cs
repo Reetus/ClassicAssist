@@ -418,6 +418,7 @@ namespace ClassicAssist.UI.ViewModels
         {
             Data.Options.CurrentOptions.EntityCollectionViewerOptions = Options;
             _collection.CollectionChanged -= OnCollectionChanged;
+            ThreadQueue?.Dispose();
         }
 
         private void OpenAllContainers( object obj )

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -29,8 +30,6 @@ namespace ClassicAssist.UI.ViewModels
     public class EntityCollectionViewerViewModel : BaseViewModel
     {
         private ICommand _applyFiltersCommand;
-        private ICommand _cancelActionCommand;
-        private CancellationTokenSource _cancellationToken;
         private ICommand _changeSortStyleCommand;
         private ItemCollection _collection;
         private ICommand _combineStacksCommand;
@@ -43,7 +42,6 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _equipItemCommand;
         private IEnumerable<EntityCollectionFilter> _filters;
         private ICommand _hideItemCommand;
-        private bool _isPerformingAction;
         private ICommand _itemDoubleClickCommand;
         private ICommand _openAllContainersCommand;
         private EntityCollectionViewerOptions _options;
@@ -57,7 +55,6 @@ namespace ClassicAssist.UI.ViewModels
 
         private IComparer<Entity> _sorter = new IDThenSerialComparer();
         private string _statusLabel;
-        private string _statusMessage;
         private ICommand _targetContainerCommand;
         private ICommand _toggleAlwaysOnTopCommand;
         private ICommand _toggleChildItemsCommand;
@@ -105,21 +102,20 @@ namespace ClassicAssist.UI.ViewModels
             _collection.CollectionChanged += OnCollectionChanged;
 
             TooltipsEnabled = Engine.CharacterListFlags.HasFlag( CharacterListFlags.PaladinNecromancerClassTooltips );
+
+            ThreadQueue = new ThreadPriorityQueue<QueueAction>( ProcessQueue );
+            QueueActions.CollectionChanged += QueueActions_CollectionChanged;
         }
 
         public ICommand ApplyFiltersCommand =>
             _applyFiltersCommand ?? ( _applyFiltersCommand = new RelayCommand( ApplyFilters, o => true ) );
-
-        public ICommand CancelActionCommand =>
-            _cancelActionCommand ?? ( _cancelActionCommand = new RelayCommandAsync( CancelAction,
-                o => _cancellationToken != null ) );
 
         public ICommand ChangeSortStyleCommand =>
             _changeSortStyleCommand ?? ( _changeSortStyleCommand = new RelayCommand( ChangeSortStyle, o => true ) );
 
         public ICommand CombineStacksCommand =>
             _combineStacksCommand ?? ( _combineStacksCommand =
-                new RelayCommandAsync( CombineStacks, o => !IsPerformingAction && _collection.Serial > 0 ) );
+                new RelayCommandAsync( CombineStacks, o => _collection.Serial > 0 ) );
 
         public ICommand ContextContextMenuRequestCommand =>
             _contextContextMenuRequestCommand ?? ( _contextContextMenuRequestCommand =
@@ -127,11 +123,11 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand ContextMoveToBackpackCommand =>
             _contextMoveToBackpackCommand ?? ( _contextMoveToBackpackCommand =
-                new RelayCommandAsync( ContextMoveToBackpack, o => SelectedItems != null && !IsPerformingAction ) );
+                new RelayCommandAsync( ContextMoveToBackpack, o => SelectedItems != null ) );
 
         public ICommand ContextMoveToContainerCommand =>
             _contextMoveToContainerCommand ?? ( _contextMoveToContainerCommand =
-                new RelayCommandAsync( ContextMoveToContainer, o => SelectedItems != null && !IsPerformingAction ) );
+                new RelayCommandAsync( ContextMoveToContainer, o => SelectedItems != null ) );
 
         public ICommand ContextTargetCommand =>
             _contextTargetCommand ?? ( _contextTargetCommand = new RelayCommand( ContextTarget,
@@ -139,7 +135,7 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand ContextUseItemCommand =>
             _contextUseItemCommand ?? ( _contextUseItemCommand =
-                new RelayCommandAsync( ContextUseItem, o => SelectedItems != null && !IsPerformingAction ) );
+                new RelayCommandAsync( ContextUseItem, o => SelectedItems != null ) );
 
         public ObservableCollection<EntityCollectionData> Entities
         {
@@ -152,12 +148,6 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand HideItemCommand =>
             _hideItemCommand ?? ( _hideItemCommand = new RelayCommand( HideItem, o => SelectedItems != null ) );
-
-        public bool IsPerformingAction
-        {
-            get => _isPerformingAction;
-            set => SetProperty( ref _isPerformingAction, value );
-        }
 
         public ICommand ItemDoubleClickCommand =>
             _itemDoubleClickCommand ?? ( _itemDoubleClickCommand = new RelayCommand( ItemDoubleClick, o => true ) );
@@ -175,12 +165,14 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _options, value );
         }
 
+        public ObservableCollectionEx<QueueAction> QueueActions { get; set; } =
+            new ObservableCollectionEx<QueueAction>();
+
         public ICommand RefreshCommand =>
-            _refreshCommand ?? ( _refreshCommand = new RelayCommand( Refresh, o => !IsPerformingAction ) );
+            _refreshCommand ?? ( _refreshCommand = new RelayCommand( Refresh, o => true ) );
 
         public ICommand ReplaceNameCommand =>
-            _replaceNameCommand ??
-            ( _replaceNameCommand = new RelayCommandAsync( ReplaceName, o => !IsPerformingAction ) );
+            _replaceNameCommand ?? ( _replaceNameCommand = new RelayCommandAsync( ReplaceName, o => true ) );
 
         public ObservableCollection<EntityCollectionData> SelectedItems
         {
@@ -200,15 +192,11 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _statusLabel, value );
         }
 
-        public string StatusMessage
-        {
-            get => _statusMessage;
-            set => SetProperty( ref _statusMessage, value );
-        }
-
         public ICommand TargetContainerCommand =>
             _targetContainerCommand ?? ( _targetContainerCommand =
                 new RelayCommand( TargetContainer, o => _collection.Serial > 0 ) );
+
+        public ThreadPriorityQueue<QueueAction> ThreadQueue { get; set; }
 
         public ICommand ToggleAlwaysOnTopCommand =>
             _toggleAlwaysOnTopCommand ??
@@ -233,6 +221,34 @@ namespace ClassicAssist.UI.ViewModels
         }
 
         private Dictionary<int, string> _nameOverrides { get; } = new Dictionary<int, string>();
+
+        private void QueueActions_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
+        {
+            if ( e?.NewItems == null )
+            {
+                return;
+            }
+
+            foreach ( object eNewItem in e.NewItems )
+            {
+                if ( !( eNewItem is QueueAction queueAction ) )
+                {
+                    continue;
+                }
+
+                ThreadQueue?.Enqueue( queueAction, QueuePriority.Low );
+            }
+        }
+
+        private void ProcessQueue( QueueAction obj )
+        {
+            if ( !obj?.CancellationTokenSource.IsCancellationRequested ?? false )
+            {
+                obj.Action.Invoke( obj ).Wait();
+            }
+
+            _dispatcher.Invoke( () => { QueueActions.Remove( obj ); } );
+        }
 
         private async Task ReplaceName( object arg )
         {
@@ -266,8 +282,6 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            IsPerformingAction = true;
-
             IncomingPacketHandlers.JournalEntryAddedEvent += IncomingPacketHandlersOnJournalEntryAddedEvent;
 
             foreach ( int serial in serials )
@@ -293,60 +307,57 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             Refresh( null );
-
-            IsPerformingAction = false;
         }
 
-        private async Task CombineStacks( object arg )
+        private Task CombineStacks( object arg )
         {
-            try
+            EnqueueAction( async action =>
             {
-                IsPerformingAction = true;
-
-                _cancellationToken = new CancellationTokenSource();
-
-                List<int> ignoreList = new List<int>();
-
-                while ( true )
+                try
                 {
-                    Item destStack = _collection.SelectEntity( i =>
-                        i.Count < 60000 && TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Stackable ) &&
-                        !ignoreList.Contains( i.Serial ) );
+                    List<int> ignoreList = new List<int>();
 
-                    if ( destStack == null )
+                    while ( true )
                     {
-                        return;
+                        Item destStack = _collection.SelectEntity( i =>
+                            i.Count < 60000 && TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Stackable ) &&
+                            !ignoreList.Contains( i.Serial ) );
+
+                        if ( destStack == null )
+                        {
+                            return false;
+                        }
+
+                        int needed = 60000 - destStack.Count;
+
+                        Item sourceStack = _collection.SelectEntities( i =>
+                            i.ID == destStack.ID && i.Hue == destStack.Hue && i.Serial != destStack.Serial &&
+                            i.Count != 60000 )?.OrderBy( i => i.Count ).FirstOrDefault();
+
+                        if ( sourceStack == null )
+                        {
+                            ignoreList.Add( destStack.Serial );
+                            continue;
+                        }
+
+                        await ActionPacketQueue.EnqueueDragDrop( sourceStack.Serial,
+                            needed > sourceStack.Count ? sourceStack.Count : needed, destStack.Serial,
+                            QueuePriority.Low, false, true, false );
+
+                        await Task.Delay( TimeSpan.FromMilliseconds( Data.Options.CurrentOptions.ActionDelayMS ),
+                            action.CancellationTokenSource.Token );
+
+                        action.CancellationTokenSource.Token.ThrowIfCancellationRequested();
                     }
-
-                    int needed = 60000 - destStack.Count;
-
-                    Item sourceStack = _collection.SelectEntities( i =>
-                        i.ID == destStack.ID && i.Hue == destStack.Hue && i.Serial != destStack.Serial &&
-                        i.Count != 60000 )?.OrderBy( i => i.Count ).FirstOrDefault();
-
-                    if ( sourceStack == null )
-                    {
-                        ignoreList.Add( destStack.Serial );
-                        continue;
-                    }
-
-                    await ActionPacketQueue.EnqueueDragDrop( sourceStack.Serial,
-                        needed > sourceStack.Count ? sourceStack.Count : needed, destStack.Serial, QueuePriority.Low,
-                        false, true, false );
-
-                    await Task.Delay( TimeSpan.FromMilliseconds( Data.Options.CurrentOptions.ActionDelayMS ),
-                        _cancellationToken.Token );
-
-                    _cancellationToken.Token.ThrowIfCancellationRequested();
                 }
-            }
-            catch ( TaskCanceledException )
-            {
-            }
-            finally
-            {
-                IsPerformingAction = false;
-            }
+                catch ( TaskCanceledException )
+                {
+                }
+
+                return !action.CancellationTokenSource.IsCancellationRequested;
+            }, Strings.Combine_stacks );
+
+            return Task.CompletedTask;
         }
 
         private void TargetContainer( object obj )
@@ -409,6 +420,25 @@ namespace ClassicAssist.UI.ViewModels
             _collection.CollectionChanged -= OnCollectionChanged;
         }
 
+        private void OpenAllContainers( object obj )
+        {
+            EnqueueAction( async action =>
+            {
+                List<Task> tasks = _collection
+                    .Where( i => TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) ).Select( item =>
+                        ActionPacketQueue.EnqueuePacket( new UseObject( item.Serial ),
+                            cancellationToken: action.CancellationTokenSource.Token ) ).ToList();
+
+                await Task.WhenAll( tasks ).ContinueWith( t =>
+                {
+                    Thread.Sleep( 1000 );
+                    RefreshCommand.Execute( null );
+                } );
+
+                return true;
+            }, Strings.Open_All_Containers );
+        }
+
         private void ToggleAlwaysOnTop( object obj )
         {
             if ( !( obj is bool alwaysOnTop ) )
@@ -417,27 +447,6 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             Options.AlwaysOnTop = alwaysOnTop;
-        }
-
-        private void OpenAllContainers( object obj )
-        {
-            Task.Run( () =>
-            {
-                IsPerformingAction = true;
-                _cancellationToken = new CancellationTokenSource();
-
-                List<Task> tasks = _collection
-                    .Where( i => TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) ).Select( item =>
-                        ActionPacketQueue.EnqueuePacket( new UseObject( item.Serial ),
-                            cancellationToken: _cancellationToken.Token ) ).ToList();
-
-                Task.WhenAll( tasks ).ContinueWith( t =>
-                {
-                    Thread.Sleep( 1000 );
-                    RefreshCommand.Execute( null );
-                    IsPerformingAction = false;
-                } );
-            } );
         }
 
         private static Dictionary<int, int> LoadMountIDEntries()
@@ -463,62 +472,28 @@ namespace ClassicAssist.UI.ViewModels
             return entries;
         }
 
-        private static int[] LoadShrinkTable()
+        private Task EquipItem( object obj )
         {
-            int[] table = new int[ushort.MaxValue];
-
-            using ( StringReader reader = new StringReader( Properties.Resources.Shrink ) )
+            EnqueueAction( async action =>
             {
-                string line;
+                IEnumerable<EquipItemData> data = SelectedItems.Select( e =>
+                        new EquipItemData { Serial = e.Entity.Serial, Layer = TileData.GetLayer( e.Entity.ID ) } )
+                    .Where( e => e.Layer != Layer.Invalid );
 
-                while ( ( line = reader.ReadLine() ) != null )
+                IEnumerable<Task<bool>> tasks = data.Select( e => ActionPacketQueue.EnqueueAction( e, arg =>
                 {
-                    if ( line.Length == 0 || line.StartsWith( "#" ) )
-                    {
-                        continue;
-                    }
+                    Engine.SendPacketToServer( new DragItem( e.Serial, 1 ) );
+                    Thread.Sleep( 50 );
+                    Engine.SendPacketToServer( new EquipRequest( e.Serial, e.Layer, Engine.Player?.Serial ?? 0 ) );
 
-                    string[] split = line.Split( '\t' );
+                    return true;
+                }, cancellationToken: action.CancellationTokenSource.Token ) );
 
-                    if ( split.Length < 2 )
-                    {
-                        continue;
-                    }
-
-                    int body = Convert.ToInt32( split[0] );
-                    int item = Convert.ToInt32( split[1], 16 );
-
-                    if ( body >= 0 && body < table.Length )
-                    {
-                        table[body] = item;
-                    }
-                }
-            }
-
-            return table;
-        }
-
-        private async Task EquipItem( object obj )
-        {
-            IsPerformingAction = true;
-            _cancellationToken = new CancellationTokenSource();
-
-            IEnumerable<EquipItemData> data = SelectedItems.Select( e =>
-                    new EquipItemData { Serial = e.Entity.Serial, Layer = TileData.GetLayer( e.Entity.ID ) } )
-                .Where( e => e.Layer != Layer.Invalid );
-
-            IEnumerable<Task<bool>> tasks = data.Select( e => ActionPacketQueue.EnqueueAction( e, arg =>
-            {
-                Engine.SendPacketToServer( new DragItem( e.Serial, 1 ) );
-                Thread.Sleep( 50 );
-                Engine.SendPacketToServer( new EquipRequest( e.Serial, e.Layer, Engine.Player?.Serial ?? 0 ) );
-
+                await Task.WhenAll( tasks );
                 return true;
-            }, cancellationToken: _cancellationToken.Token ) );
+            }, Strings.Equip_Item );
 
-            await Task.WhenAll( tasks );
-
-            IsPerformingAction = false;
+            return Task.CompletedTask;
         }
 
         private void ApplyFilters( object obj )
@@ -589,84 +564,73 @@ namespace ClassicAssist.UI.ViewModels
 
         private void Refresh( object obj )
         {
-            try
+            ItemCollection collection = new ItemCollection( _collection.Serial );
+
+            if ( collection.Serial == 0 )
             {
-                IsPerformingAction = true;
-
-                ItemCollection collection = new ItemCollection( _collection.Serial );
-
-                if ( collection.Serial == 0 )
-                {
-                    Item[] e = ItemCollection.GetAllItems( Engine.Items.GetItems() );
-                    _collection.Clear();
-                    _collection.Add( e );
-                    Entities = new ObservableCollection<EntityCollectionData>(
-                        _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
-                    return;
-                }
-
-                Entity entity = Engine.Items.GetItem( _collection.Serial ) ??
-                                (Entity) Engine.Mobiles.GetMobile( _collection.Serial );
-
-                if ( entity == null )
-                {
-                    Commands.SystemMessage( Strings.Cannot_find_item___ );
-                    return;
-                }
-
-                switch ( entity )
-                {
-                    case Item item:
-                        if ( item.Container == null )
-                        {
-                            Commands.WaitForContainerContentsUse( item.Serial, 1000 );
-                        }
-
-                        collection = item.Container;
-                        break;
-                    case Mobile mobile:
-                        collection = new ItemCollection( entity.Serial ) { mobile.GetEquippedItems() };
-                        break;
-                }
-
-                if ( collection == null )
-                {
-                    return;
-                }
-
-                _collection = !Options.ShowChildItems
-                    ? collection
-                    : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) };
-
+                Item[] e = ItemCollection.GetAllItems( Engine.Items.GetItems() );
+                _collection.Clear();
+                _collection.Add( e );
                 Entities = new ObservableCollection<EntityCollectionData>(
                     _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+                return;
             }
-            finally
+
+            Entity entity = Engine.Items.GetItem( _collection.Serial ) ??
+                            (Entity) Engine.Mobiles.GetMobile( _collection.Serial );
+
+            if ( entity == null )
             {
-                IsPerformingAction = false;
+                Commands.SystemMessage( Strings.Cannot_find_item___ );
+                return;
             }
+
+            switch ( entity )
+            {
+                case Item item:
+                    if ( item.Container == null )
+                    {
+                        Commands.WaitForContainerContentsUse( item.Serial, 1000 );
+                    }
+
+                    collection = item.Container;
+                    break;
+                case Mobile mobile:
+                    collection = new ItemCollection( entity.Serial ) { mobile.GetEquippedItems() };
+                    break;
+            }
+
+            if ( collection == null )
+            {
+                return;
+            }
+
+            _collection = !Options.ShowChildItems
+                ? collection
+                : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) };
+
+            Entities = new ObservableCollection<EntityCollectionData>(
+                _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
         }
 
-        private async Task ContextUseItem( object arg )
+        private Task ContextUseItem( object arg )
         {
-            _cancellationToken = new CancellationTokenSource();
+            int[] items = SelectedItems.Select( i => i.Entity.Serial ).ToArray();
 
-            await Task.Run( () =>
+            EnqueueAction( async obj =>
             {
-                IsPerformingAction = true;
+                await ActionPacketQueue.EnqueuePackets( items.Select( item => new UseObject( item ) ),
+                    cancellationToken: obj.CancellationTokenSource.Token );
 
-                int[] items = SelectedItems.Select( i => i.Entity.Serial ).ToArray();
+                return obj.CancellationTokenSource.IsCancellationRequested;
+            }, Strings.Use_item );
 
-                ActionPacketQueue.EnqueuePackets( items.Select( item => new UseObject( item ) ),
-                    cancellationToken: _cancellationToken.Token ).ContinueWith( t => { IsPerformingAction = false; } );
-            } );
+            return Task.CompletedTask;
         }
 
         private async Task ContextMoveToContainer( object arg )
         {
             int[] items = SelectedItems.Select( i => i.Entity.Serial ).ToArray();
-
-            _cancellationToken = new CancellationTokenSource();
 
             int serial = 0;
 
@@ -686,35 +650,32 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            try
+            EnqueueAction( async obj =>
             {
-                IsPerformingAction = true;
-
                 foreach ( var item in items.Select( ( value, i ) => new { i, value } ) )
                 {
-                    StatusMessage = string.Format( Strings.Moving_item__0_____1_, item.i, items.Length );
+                    if ( obj.CancellationTokenSource.IsCancellationRequested )
+                    {
+                        _dispatcher.Invoke( () => { obj.Status = Strings.Cancel; } );
+                        return false;
+                    }
+
+                    _dispatcher.Invoke( () =>
+                    {
+                        obj.Status = string.Format( Strings.Moving_item__0_____1_, item.i, items.Length );
+                    } );
 
                     await ActionPacketQueue.EnqueueDragDrop( item.value, -1, serial,
-                        cancellationToken: _cancellationToken.Token );
+                        cancellationToken: obj.CancellationTokenSource.Token );
                 }
-            }
-            finally
-            {
-                StatusMessage = null;
-                IsPerformingAction = false;
-            }
+
+                return true;
+            }, string.Format( Strings.Moving_item__0_____1_, 0, items.Length ) );
         }
 
         private async Task ContextMoveToBackpack( object arg )
         {
             await ContextMoveToContainer( Engine.Player.Backpack.Serial );
-        }
-
-        private async Task CancelAction( object arg )
-        {
-            _cancellationToken?.Cancel();
-
-            await Task.CompletedTask;
         }
 
         private void ToggleChildItems( object obj )
@@ -768,10 +729,28 @@ namespace ClassicAssist.UI.ViewModels
         {
             int[] items = SelectedItems.Select( i => i.Entity.Serial ).ToArray();
 
-            foreach ( int serial in items )
+            EnqueueAction( action =>
             {
-                Engine.SendPacketToServer( new ContextMenuRequest( serial ) );
-            }
+                if ( action.CancellationTokenSource.IsCancellationRequested )
+                {
+                    return Task.FromResult( false );
+                }
+
+                foreach ( int serial in items )
+                {
+                    Engine.SendPacketToServer( new ContextMenuRequest( serial ) );
+                }
+
+                return Task.FromResult( true );
+            }, Strings.Context_menu_request );
+        }
+
+        private void EnqueueAction( Func<QueueAction, Task<bool>> action, string message )
+        {
+            QueueActions.Add( new QueueAction
+            {
+                Action = action, CancellationTokenSource = new CancellationTokenSource(), Status = message
+            } );
         }
 
         private class EquipItemData
@@ -887,6 +866,29 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             return new EntityCollectionData { Entity = item };
+        }
+    }
+
+    public class QueueAction : SetPropertyNotifyChanged
+    {
+        private ICommand _cancelCommand;
+        private string _status;
+        public Func<QueueAction, Task<bool>> Action { get; set; }
+
+        public ICommand CancelCommand => _cancelCommand ?? ( _cancelCommand = new RelayCommand( Cancel, o => true ) );
+
+        public CancellationTokenSource CancellationTokenSource { get; set; }
+
+        public string Status
+        {
+            get => _status;
+            set => SetProperty( ref _status, value );
+        }
+
+        private void Cancel( object obj )
+        {
+            CancellationTokenSource.Cancel();
+            Status = Strings.Cancel;
         }
     }
 }

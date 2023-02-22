@@ -230,13 +230,15 @@ namespace ClassicAssist.UI.ViewModels
                 return 0;
             }
 
-            return properties.Where( p => p.Cliloc == cliloc ).Select( p => 
-                {
+            return properties.Where( p => p.Cliloc == cliloc ).Select( p =>
+            {
                 if ( int.TryParse( p.Arguments[argumentIndex], out int result ) )
+                {
                     return result;
+                }
+
                 return -1;
-                } )
-                .FirstOrDefault();
+            } ).FirstOrDefault();
         }
 
         private static int CountPropertyList( IEnumerable<Item> items, int cliloc, int argumentIndex )
@@ -251,31 +253,37 @@ namespace ClassicAssist.UI.ViewModels
 
             foreach ( Item t in items )
             {
-                int count = CountProperty( t.Serial, cliloc, argumentIndex );
+                Property property = t.Properties?.FirstOrDefault( e => e.Cliloc == cliloc );
 
-                Property[] properties = t.Properties;
-
-                if ( properties == null )
+                if ( property == null )
                 {
                     continue;
                 }
 
-                foreach ( Property p in properties )
+                if ( argumentIndex == property.Arguments.Length )
                 {
-                    if ( p.Cliloc != cliloc )
+                    // ServUO currently doesn't contain the symbol as an argument...
+                    // just the symbolIndex contains the number with negative symbol if negative
+
+                    if ( int.TryParse( property.Arguments[symbolIndex], out int value ) )
+                    {
+                        total += value;
+                    }
+                }
+                else
+                {
+                    if ( !int.TryParse( property.Arguments[argumentIndex], out int value ) )
                     {
                         continue;
                     }
 
-                    string symbol = p.Arguments[symbolIndex];
-
-                    if ( symbol == "-" )
+                    if ( property.Arguments[symbolIndex].Equals( "+" ) )
                     {
-                        total -= count;
+                        total += value;
                     }
                     else
                     {
-                        total += count;
+                        total -= value;
                     }
                 }
             }

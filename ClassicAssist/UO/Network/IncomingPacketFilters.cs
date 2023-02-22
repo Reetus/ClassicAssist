@@ -478,9 +478,11 @@ namespace ClassicAssist.UO.Network
 
         public static bool CheckPacket( ref byte[] data, ref int length )
         {
+            bool filtered = false;
+
             if ( _filters.ContainsKey( data[0] ) && _filters.TryGetValue( data[0], out OnReceive onReceive ) )
             {
-                return onReceive.Invoke( ref data, ref length );
+                filtered = onReceive.Invoke( ref data, ref length );
             }
 
             foreach ( DynamicFilterEntry dynamicFilterEntry in DynamicFilterEntry.Filters.Where( e => e.Enabled ) )
@@ -493,7 +495,7 @@ namespace ClassicAssist.UO.Network
                 }
             }
 
-            return false;
+            return filtered;
         }
     }
 }

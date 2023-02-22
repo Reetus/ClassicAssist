@@ -1,0 +1,178 @@
+﻿<Window x:Class="ClassicAssist.UI.Views.Filters.ItemIDFilterConfigureWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+        xmlns:filters="clr-namespace:ClassicAssist.UI.ViewModels.Filters"
+        xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+        xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+        xmlns:misc="clr-namespace:ClassicAssist.Misc"
+        mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
+        Title="{x:Static resources:Strings.ItemID_Filter}" Height="350" Width="420">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DebugToolBarStyle.xaml" />
+                <ResourceDictionary>
+                    <DrawingImage x:Key="PopupIcon">
+                        <DrawingImage.Drawing>
+                            <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                                <GeometryDrawing Brush="{DynamicResource ThemeForegroundBrush}"
+                                                 Geometry="F1 M512,512z M0,0z M352,0C339.1,0 327.4,7.8 322.4,19.8 317.4,31.8 320.2,45.5 329.3,54.7L370.7,96 201.4,265.4C188.9,277.9 188.9,298.2 201.4,310.7 213.9,323.2 234.2,323.2 246.7,310.7L416,141.3 457.4,182.7C466.6,191.9 480.3,194.6 492.3,189.6 504.3,184.6 512.1,173 512.1,160L512.1,32C512.1,14.3,497.8,0,480.1,0L352,0z M80,32C35.8,32,0,67.8,0,112L0,432C0,476.2,35.8,512,80,512L400,512C444.2,512,480,476.2,480,432L480,320C480,302.3 465.7,288 448,288 430.3,288 416,302.3 416,320L416,432C416,440.8,408.8,448,400,448L80,448C71.2,448,64,440.8,64,432L64,112C64,103.2,71.2,96,80,96L192,96C209.7,96 224,81.7 224,64 224,46.3 209.7,32 192,32L80,32z" />
+                            </DrawingGroup>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+                    <DrawingImage x:Key="PlusIcon">
+                        <DrawingImage.Drawing>
+                            <DrawingGroup ClipGeometry="M0,0 V512 H448 V0 H0 Z">
+                                <GeometryDrawing Brush="{DynamicResource ThemeForegroundBrush}"
+                                                 Geometry="F1 M448,512z M0,0z M240,80C240,62.3 225.7,48 208,48 190.3,48 176,62.3 176,80L176,224 32,224C14.3,224 0,238.3 0,256 0,273.7 14.3,288 32,288L176,288 176,432C176,449.7 190.3,464 208,464 225.7,464 240,449.7 240,432L240,288 384,288C401.7,288 416,273.7 416,256 416,238.3 401.7,224 384,224L240,224 240,80z" />
+                            </DrawingGroup>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+                    <DrawingImage x:Key="RemoveIcon">
+                        <DrawingImage.Drawing>
+                            <DrawingGroup ClipGeometry="M0,0 V512 H320 V0 H0 Z">
+                                <DrawingGroup.Transform>
+                                    <TranslateTransform X="0.074999988079071045" Y="0" />
+                                </DrawingGroup.Transform>
+                                <GeometryDrawing Brush="{DynamicResource ThemeForegroundBrush}"
+                                                 Geometry="F1 M320,512z M0,0z M310.6,150.6C323.1,138.1 323.1,117.8 310.6,105.3 298.1,92.8 277.8,92.8 265.3,105.3L160,210.7 54.6,105.4C42.1,92.9 21.8,92.9 9.3,105.4 -3.2,117.9 -3.2,138.2 9.3,150.7L114.7,256 9.4,361.4C-3.1,373.9 -3.1,394.2 9.4,406.7 21.9,419.2 42.2,419.2 54.7,406.7L160,301.3 265.4,406.6C277.9,419.1 298.2,419.1 310.7,406.6 323.2,394.1 323.2,373.8 310.7,361.3L205.3,256 310.6,150.6z" />
+                            </DrawingGroup>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+                    <misc:BindingProxy x:Key="Proxy" Data="{Binding}" />
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.DataContext>
+        <filters:ItemIDFilterConfigureWindowViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ToolBar Grid.Row="0" Style="{StaticResource ToolBarStyle1}">
+            <Button ToolTip="{x:Static resources:Strings.Add}" Command="{Binding AddCommand}">
+                <Image Source="{StaticResource PlusIcon}" Height="20" />
+            </Button>
+            <Button ToolTip="{x:Static resources:Strings.Remove}" Command="{Binding RemoveCommand}"
+                    CommandParameter="{Binding SelectedItem, ElementName=listView}">
+                <Image Source="{StaticResource RemoveIcon}" Height="20" />
+            </Button>
+        </ToolBar>
+        <Grid Margin="10" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ListView x:Name="listView" Grid.Row="0" ItemsSource="{Binding Items}">
+                <ListView.Resources>
+                    <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+                    <valueConverters:IntToHexStringValueConverter x:Key="IntToHexStringValueConverter" />
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Setter Property="Padding" Value="0" />
+                    </Style>
+                    <Style TargetType="{x:Type controls:EditTextBlock}"
+                           BasedOn="{StaticResource {x:Type controls:EditTextBlock}}">
+                        <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
+                    </Style>
+                </ListView.Resources>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="✓" Width="25">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding Enabled}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="{x:Static resources:Strings.Source_ID}" Width="130"
+                                        x:Name="SourceIDColumn">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                                        <controls:EditTextBlock
+                                            Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=50, ElementName=SourceIDColumn, Mode=OneWay}"
+                                            Text="{Binding SourceID, Converter={StaticResource IntToHexStringValueConverter}}"
+                                            ShowIcon="True" />
+
+                                        <Button Padding="3,0,0,0"
+                                                Command="{Binding Data.SelectSourceIDCommand, Source={StaticResource Proxy}}"
+                                                CommandParameter="{Binding}">
+                                            <Image Source="{DynamicResource PopupIcon}" Height="12" />
+                                        </Button>
+                                        <Button Padding="3,0,0,0"
+                                                Command="{Binding Data.TargetSourceIDCommand, Source={StaticResource Proxy}}"
+                                                CommandParameter="{Binding}">
+                                            <Image Source="{DynamicResource CrosshairIcon}" Height="12" />
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="{x:Static resources:Strings.Destination_ID}" Width="130"
+                                        x:Name="DestinationIDColumn">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                                        <controls:EditTextBlock
+                                            Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=50, ElementName=DestinationIDColumn, Mode=OneWay}"
+                                            Text="{Binding DestinationID, Converter={StaticResource IntToHexStringValueConverter}}"
+                                            ShowIcon="True" />
+
+                                        <Button Padding="3,0,0,0"
+                                                Command="{Binding Data.SelectDestinationIDCommand, Source={StaticResource Proxy}}"
+                                                CommandParameter="{Binding}">
+                                            <Image Source="{DynamicResource PopupIcon}" Height="12" />
+                                        </Button>
+                                        <Button Padding="3,0,0,0"
+                                                Command="{Binding Data.TargetDestinationIDCommand, Source={StaticResource Proxy}}"
+                                                CommandParameter="{Binding}">
+                                            <Image Source="{DynamicResource CrosshairIcon}" Height="12" />
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="78" x:Name="HueColumn">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <controls:EditTextBlock
+                                            Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=30, ElementName=HueColumn, Mode=OneWay}"
+                                            Text="{Binding Hue}"
+                                            ShowIcon="True" />
+                                        <Button Padding="3,0,0,0"
+                                                Command="{Binding Data.SelectHueCommand, Source={StaticResource Proxy}}"
+                                                CommandParameter="{Binding}">
+                                            <Image Source="{DynamicResource ColorWheelIcon}" Height="12" />
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                <Button Content="{x:Static resources:Strings.Close}" Padding="25,0">
+                    <i:Interaction.Behaviors>
+                        <behaviours:CloseOnClickBehaviour />
+                    </i:Interaction.Behaviors>
+                </Button>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</Window>

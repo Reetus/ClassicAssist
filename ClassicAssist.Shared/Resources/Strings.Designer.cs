@@ -1312,6 +1312,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Destination ID.
+        /// </summary>
+        public static string Destination_ID {
+            get {
+                return ResourceManager.GetString("Destination ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disable all vendor buy entries on loading profile.
         /// </summary>
         public static string Disable_all_vendor_buy_entries_on_loading_profile {
@@ -2388,6 +2397,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Item_properties_null_or_not_loaded___ {
             get {
                 return ResourceManager.GetString("Item properties null or not loaded...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ItemID Filter.
+        /// </summary>
+        public static string ItemID_Filter {
+            get {
+                return ResourceManager.GetString("ItemID Filter", resourceCulture);
             }
         }
         
@@ -4356,6 +4374,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Sound_Type {
             get {
                 return ResourceManager.GetString("Sound Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source ID.
+        /// </summary>
+        public static string Source_ID {
+            get {
+                return ResourceManager.GetString("Source ID", resourceCulture);
             }
         }
         

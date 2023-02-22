@@ -35,7 +35,7 @@ namespace ClassicAssist.UO.Data
             { 7168, 4096 }, { 7168, 4096 }, { 2304, 1600 }, { 2560, 2048 }, { 1448, 1448 }, { 1280, 4096 }
         };
 
-        internal static void Initialize( string dataPath )
+        public static void Initialize( string dataPath )
         {
             _dataPath = dataPath;
 

@@ -1746,4 +1746,13 @@ Are you sure you wish to continue?</value>
   <data name="Transparent background" xml:space="preserve">
     <value>Transparent background</value>
   </data>
+  <data name="ItemID Filter" xml:space="preserve">
+    <value>ItemID Filter</value>
+  </data>
+  <data name="Source ID" xml:space="preserve">
+    <value>Source ID</value>
+  </data>
+  <data name="Destination ID" xml:space="preserve">
+    <value>Destination ID</value>
+  </data>
 </root>

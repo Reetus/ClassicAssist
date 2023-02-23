@@ -467,6 +467,22 @@
   {
     "ClilocIndex": -1,
     "Clilocs": [
+      1151492
+    ],
+    "ConstraintType": 0,
+    "Name": "Lesser Artifact"
+  },
+  {
+    "ClilocIndex": -1,
+    "Clilocs": [
+      1060437
+    ],
+    "ConstraintType": 0,
+    "Name": "Mage Armor"
+  },
+  {
+    "ClilocIndex": -1,
+    "Clilocs": [
       1151489
     ],
     "ConstraintType": 0,

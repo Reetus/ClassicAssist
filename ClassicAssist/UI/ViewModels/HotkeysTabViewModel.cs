@@ -37,6 +37,7 @@ namespace ClassicAssist.UI.ViewModels
         {
             _hotkeyManager = HotkeyManager.GetInstance();
             _hotkeyManager.ClearAllHotkeys = ClearAllHotkeys;
+            _hotkeyManager.InvokeByName = InvokeByName;
 
             Items.CollectionChanged += ( s, ea ) => UpdateFilteredItems();
         }
@@ -275,7 +276,7 @@ namespace ClassicAssist.UI.ViewModels
                     HotkeyCommand hkc = new HotkeyCommand
                     {
                         Name = spell.Name,
-                        Action = (hks, _) => spellManager.CastSpell(spell.ID),
+                        Action = ( hks, _ ) => spellManager.CastSpell( spell.ID ),
                         Hotkey = ShortcutKeys.Default,
                         PassToUO = true
                     };
@@ -328,7 +329,7 @@ namespace ClassicAssist.UI.ViewModels
                     HotkeyCommand hkc = new HotkeyCommand
                     {
                         Name = mastery.Name,
-                        Action = (hks, _) => spellManager.CastSpell( mastery.ID ),
+                        Action = ( hks, _ ) => spellManager.CastSpell( mastery.ID ),
                         Hotkey = ShortcutKeys.Default,
                         PassToUO = true
                     };
@@ -361,6 +362,22 @@ namespace ClassicAssist.UI.ViewModels
                     entry.PassToUO = token["PassToUO"]?.ToObject<bool>() ?? true;
                     entry.IsGlobal = global;
                 }
+            }
+        }
+
+        private void InvokeByName( string name, Type type )
+        {
+            foreach ( HotkeyCommand item in Items )
+            {
+                HotkeyEntry hotkey = item.Children.FirstOrDefault( e => e.GetType() == type && e.Name == name );
+
+                if ( hotkey == null )
+                {
+                    continue;
+                }
+
+                hotkey.Action( hotkey, null );
+                break;
             }
         }
 

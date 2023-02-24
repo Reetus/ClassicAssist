@@ -49,6 +49,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             _manager = DressManager.GetInstance();
 
             _manager.Items = Items;
+            _manager.InvokeByName = InvokeByName;
         }
 
         public ICommand AddDressItemCommand =>
@@ -219,6 +220,20 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 dae.Items = new List<DressAgentItem>( items );
 
                 Items.Add( dae );
+            }
+        }
+
+        private void InvokeByName( string name )
+        {
+            DressAgentEntry entry = Items.FirstOrDefault( e => e.Name == name );
+
+            if ( entry != null )
+            {
+                Task.Run( () => entry.Action( entry, null ) );
+            }
+            else
+            {
+                Commands.SystemMessage( string.Format( Strings.Unknown_dress_agent___0___, name ) );
             }
         }
 

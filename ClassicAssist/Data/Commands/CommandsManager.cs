@@ -4,9 +4,12 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Assistant;
+using ClassicAssist.Data.Dress;
+using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Data.Organizer;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
@@ -146,9 +149,31 @@ namespace ClassicAssist.Data.Commands
 
             if ( text != null && text.Length >= 7 && text.Substring( 0, 7 ).Equals( ">macro " ) )
             {
-                string macroName = text.Substring( 7, text.Length - 7 );
+                string[] parameters = text.Substring( 7, text.Length - 7 ).Split( '|' );
+                string macroName = parameters[0];
 
                 Type type = Assembly.GetExecutingAssembly().GetType( macroName );
+
+                if ( type == typeof( HotkeyCommand ) )
+                {
+                    HotkeyManager.GetInstance().InvokeByName( parameters[1], type );
+
+                    return true;
+                }
+
+                if ( type == typeof( OrganizerEntry ) )
+                {
+                    OrganizerManager.GetInstance().InvokeByName( parameters[1] );
+
+                    return true;
+                }
+
+                if ( type == typeof( DressAgentEntry ) )
+                {
+                    DressManager.GetInstance().InvokeByName( parameters[1] );
+
+                    return true;
+                }
 
                 if ( type != null && type.IsSubclassOf( typeof( HotkeyCommand ) ) )
                 {

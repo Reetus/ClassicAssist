@@ -49,7 +49,7 @@ namespace ClassicAssist.Data.Macros
 
         private void SetCategory( string value )
         {
-            string resourceName = Strings.ResourceManager.GetString( value );
+            string resourceName = Strings.ResourceManager.GetString( value.Replace( '_', ' ' ) );
 
             if ( string.IsNullOrEmpty( resourceName ) )
             {

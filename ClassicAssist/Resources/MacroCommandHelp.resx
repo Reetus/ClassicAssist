@@ -1839,4 +1839,22 @@ PlayMacro("beep", 1, "moo")
 
 # In the played macro, args[0] will be 1 and args[1] will be "moo"</value>
   </data>
+  <data name="ADDMAPMARKER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Adds a marker on the world map</value>
+  </data>
+  <data name="REMOVEMAPMARKER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Removes all map markers with the specified name from the world map</value>
+  </data>
+  <data name="ADDMAPMARKER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>AddMapMarker("Treasure", 1000, 1000, 0)</value>
+  </data>
+  <data name="REMOVEMAPMARKER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>RemoveMapMarker("Treasure")</value>
+  </data>
+  <data name="CLEARMAPMARKERS_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Clears all map markers</value>
+  </data>
+  <data name="CLEARMAPMARKERS_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ClearMapMarkers()</value>
+  </data>
 </root>

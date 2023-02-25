@@ -1755,4 +1755,7 @@ Are you sure you wish to continue?</value>
   <data name="Destination ID" xml:space="preserve">
     <value>Destination ID</value>
   </data>
+  <data name="World Map" xml:space="preserve">
+    <value>World Map</value>
+  </data>
 </root>

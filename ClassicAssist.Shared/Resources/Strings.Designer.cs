@@ -5305,6 +5305,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to World Map.
+        /// </summary>
+        public static string World_Map {
+            get {
+                return ResourceManager.GetString("World Map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to World Status.
         /// </summary>
         public static string World_Status {

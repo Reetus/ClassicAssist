@@ -916,7 +916,7 @@ namespace ClassicAssist.UO
             pw.Write( (byte) 0xBF );
             pw.Write( (short) 0x06 );
             pw.Write( (short) 0x26 );
-            pw.Write( (byte) ( force ? 2 : 0 ) );
+            pw.Write( (byte) ( force ? 2 : Engine.Player?.MovementSpeed ?? 0 ) );
 
             Engine.SendPacketToClient( pw );
         }

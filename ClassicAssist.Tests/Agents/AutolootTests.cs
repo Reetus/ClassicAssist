@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -12,6 +13,7 @@ using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 
 namespace ClassicAssist.Tests.Agents
 {
@@ -871,6 +873,136 @@ namespace ClassicAssist.Tests.Agents
             AutolootManager.GetInstance().MatchTextValue = () => true;
 
             vm.OnCorpseEvent( corpse.Serial );
+
+            bool result = are.WaitOne( 5000 );
+
+            Assert.IsTrue( result );
+
+            Engine.Items.Clear();
+            Engine.PacketWaitEntries = null;
+            Engine.InternalPacketSentEvent -= OnPacketSentEvent;
+            Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillAutolootCustomProperties()
+        {
+            string dataPath = Path.Combine( Environment.CurrentDirectory, "Data" );
+
+            if ( !Directory.Exists( dataPath ) )
+            {
+                Directory.CreateDirectory( dataPath );
+            }
+
+            string propertiesFile = Path.Combine( dataPath, "Properties.Custom.json" );
+
+            if ( File.Exists( propertiesFile ) )
+            {
+                File.Delete( propertiesFile );
+            }
+
+            PropertyEntry propertyEntry = new PropertyEntry
+            {
+                ClilocIndex = -1,
+                Clilocs = new[] { 1010141 },
+                ConstraintType = PropertyType.Properties,
+                Name = "Test"
+            };
+
+            Cliloc.Initialize( () => new Dictionary<int, string> { { propertyEntry.Clilocs[0], propertyEntry.Name } } );
+
+            using ( FileStream file = File.OpenWrite( propertiesFile ) )
+            {
+                using ( StreamWriter sw = new StreamWriter( file ) )
+                {
+                    string json = JsonConvert.SerializeObject( new[] { propertyEntry } );
+
+                    sw.WriteLine( json );
+                }
+            }
+
+            AutolootViewModel vm = new AutolootViewModel { Enabled = true };
+
+            propertyEntry = vm.Constraints.FirstOrDefault( e => e.Name == "Test" );
+
+            if ( propertyEntry == null )
+            {
+                Assert.Fail( "Constraint not present" );
+            }
+
+            AutolootEntry autolootEntry = new AutolootEntry
+            {
+                Autoloot = true,
+                Constraints = new ObservableCollection<AutolootConstraintEntry>( new[]
+                {
+                    new AutolootConstraintEntry { Property = propertyEntry }
+                } ),
+                ID = -1
+            };
+
+            vm.Items.Add( autolootEntry );
+
+            Engine.Player = new PlayerMobile( 0x01 );
+            Item backpack = new Item( 0x40000001, 0x01 ) { Container = new ItemCollection( 0x40000001 ) };
+            Engine.Player.SetLayer( Layer.Backpack, backpack.Serial );
+            Engine.Items.Add( backpack );
+
+            Item corpse = new Item( 0x40000000 ) { ID = 0x2006 };
+
+            Engine.Items.Add( corpse );
+
+            IncomingPacketHandlers.Initialize();
+
+            Engine.PacketWaitEntries = new PacketWaitEntries();
+
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            void OnPacketSentEvent( byte[] data, int length )
+            {
+                switch ( data[0] )
+                {
+                    case 0x07:
+                    case 0x08:
+                        are.Set();
+                        break;
+                    case 0xD6:
+                    case 0x06:
+                        break;
+                    default:
+                        Assert.Fail();
+                        break;
+                }
+            }
+
+            Engine.PacketWaitEntries.WaitEntryAddedEvent += entry =>
+            {
+                byte[] containerContentsPacket =
+                {
+                    0x3C, 0x00, 0x19, 0x00, 0x01, 0x43, 0x13, 0xFC, 0x5E, 0x10, 0x8A, 0x00, 0x00, 0x01, 0x00, 0x13,
+                    0x00, 0x82, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x64
+                };
+
+                PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x3C );
+
+                handler.OnReceive( new PacketReader( containerContentsPacket, containerContentsPacket.Length, false ) );
+
+                byte[] properties =
+                {
+                    0xD6, 0x00, 0x00, 0x00, 0x01, 0x43, 0x13, 0xFC, 0x5E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                    0x0F, 0x69, 0xDD, 0x00
+                };
+
+                PacketHandler propertiesHandler = IncomingPacketHandlers.GetHandler( 0xD6 );
+
+                propertiesHandler.OnReceive( new PacketReader( properties, properties.Length, false ) );
+
+                entry.Packet = containerContentsPacket;
+                entry.Lock.Set();
+            };
+
+            Engine.InternalPacketSentEvent += OnPacketSentEvent;
+
+            vm.OnCorpseEvent( 0x40000000 );
 
             bool result = are.WaitOne( 5000 );
 

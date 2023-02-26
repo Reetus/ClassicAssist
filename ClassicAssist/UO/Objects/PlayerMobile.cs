@@ -91,6 +91,7 @@ namespace ClassicAssist.UO.Objects
         public int LowerReagentCost { get; set; }
         public int Luck { get; set; }
         public Map Map { get; set; }
+        public byte MovementSpeed { get; set; }
         public int[] Party { get; set; }
         public int PhysicalResistance { get; set; }
         public int PhysicalResistanceMax { get; set; }

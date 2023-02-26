@@ -139,6 +139,17 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x19, 0, OnMiscellaneousStatus );
             RegisterExtended( 0x21, 0, OnClearWeaponAbility );
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
+            RegisterExtended( 0x26, 0, OnMovementSpeed );
+        }
+
+        private static void OnMovementSpeed( PacketReader reader )
+        {
+            byte mode = reader.ReadByte();
+
+            if ( Engine.Player != null )
+            {
+                Engine.Player.MovementSpeed = mode;
+            }
         }
 
         private static void OnSecureTrade( PacketReader reader )

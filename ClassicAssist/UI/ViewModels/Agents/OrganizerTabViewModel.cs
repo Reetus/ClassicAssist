@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data;
@@ -31,6 +32,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             _manager = OrganizerManager.GetInstance();
 
             _manager.Items = Items;
+            _manager.InvokeByName = InvokeByName;
         }
 
         public ICommand InsertItemCommand =>
@@ -148,6 +150,20 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 }
 
                 Items.Add( entry );
+            }
+        }
+
+        private void InvokeByName( string name )
+        {
+            OrganizerEntry organizer = Items.FirstOrDefault( e => e.Name == name );
+
+            if ( organizer != null )
+            {
+                Task.Run( () => organizer.Action( organizer, null ) );
+            }
+            else
+            {
+                Commands.SystemMessage( Strings.Invalid_organizer_agent_name___ );
             }
         }
 

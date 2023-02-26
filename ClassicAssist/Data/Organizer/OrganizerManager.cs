@@ -1,11 +1,11 @@
-﻿using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
-using ClassicAssist.UI.Misc;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
@@ -24,6 +24,8 @@ namespace ClassicAssist.Data.Organizer
         {
             Items.CollectionChanged += OnCollectionChanged;
         }
+
+        public Action<string> InvokeByName { get; set; }
 
         public bool IsOrganizing { get; set; }
 
@@ -77,7 +79,7 @@ namespace ClassicAssist.Data.Organizer
                 new[] { PacketFilterConditions.IntAtPositionCondition( sourceContainerItem.Serial, 19 ) } );
 
             if ( UOC.WaitForIncomingPacket( pfi, 1000,
-                () => Engine.SendPacketToServer( new UseObject( sourceContainerItem.Serial ) ) ) )
+                    () => Engine.SendPacketToServer( new UseObject( sourceContainerItem.Serial ) ) ) )
             {
                 await Task.Delay( Options.CurrentOptions.ActionDelayMS );
             }

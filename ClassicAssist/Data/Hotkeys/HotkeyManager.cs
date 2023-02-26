@@ -38,6 +38,8 @@ namespace ClassicAssist.Data.Hotkeys
             set => SetProperty( ref _enabled, value );
         }
 
+        public Action<string, Type> InvokeByName { get; set; }
+
         public ObservableCollectionEx<HotkeyCommand> Items
         {
             get => _items;

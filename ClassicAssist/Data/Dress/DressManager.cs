@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,7 +7,6 @@ using Assistant;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
-using ClassicAssist.UI.Misc;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
@@ -33,6 +33,8 @@ namespace ClassicAssist.Data.Dress
         {
             Items.CollectionChanged += OnCollectionChanged;
         }
+
+        public Action<string> InvokeByName { get; set; }
 
         public bool IsDressing { get; set; }
 
@@ -158,8 +160,7 @@ namespace ClassicAssist.Data.Dress
             {
                 if ( IsDressing )
                 {
-                    UO.Commands.SystemMessage( Strings.Dress_already_in_progress___,
-                        (int) SystemMessageHues.Red );
+                    UO.Commands.SystemMessage( Strings.Dress_already_in_progress___, (int) SystemMessageHues.Red );
                     return;
                 }
 

@@ -22,8 +22,11 @@ using System.Collections.Generic;
 using System.Linq;
 using ClassicAssist.Data.ClassicUO.Objects;
 using ClassicAssist.Data.ClassicUO.Objects.Gumps;
+using ClassicAssist.Data.Dress;
 using ClassicAssist.Data.Hotkeys;
+using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Data.Macros;
+using ClassicAssist.Data.Organizer;
 using ClassicAssist.Shared.Resources;
 using Sentry;
 
@@ -95,7 +98,21 @@ namespace ClassicAssist.Data.ClassicUO
                     gameScene.Macros.PushToBack( macroObj );
                 }
 
-                macroObj.Items = new MacroObjectString( hotkeyEntry.GetType().ToString() );
+                string macroText = hotkeyEntry.GetType().ToString();
+
+                switch ( hotkeyEntry )
+                {
+                    case MacroEntry entry:
+                        macroText = entry.Name;
+                        break;
+                    case HotkeyCommand _:
+                    case OrganizerEntry _:
+                    case DressAgentEntry _:
+                        macroText = $"{hotkeyEntry.GetType()}|{hotkeyEntry.Name}";
+                        break;
+                }
+
+                macroObj.Items = new MacroObjectString( macroText );
 
                 MacroButtonGump macroButton = new MacroButtonGump( macroObj, 200, 200 );
 

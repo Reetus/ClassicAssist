@@ -107,6 +107,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adds a marker on the world map.
+        /// </summary>
+        public static string ADDMAPMARKER_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("ADDMAPMARKER_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AddMapMarker(&quot;Treasure&quot;, 1000, 1000, 0).
+        /// </summary>
+        public static string ADDMAPMARKER_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("ADDMAPMARKER_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns true if the mobile&apos;s notoriety is Ally.
         /// </summary>
         public static string ALLY_COMMAND_DESCRIPTION {
@@ -469,6 +487,24 @@ namespace ClassicAssist.Resources {
         public static string CLEARLIST_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("CLEARLIST_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clears all map markers.
+        /// </summary>
+        public static string CLEARMAPMARKERS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CLEARMAPMARKERS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ClearMapMarkers().
+        /// </summary>
+        public static string CLEARMAPMARKERS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CLEARMAPMARKERS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         
@@ -2264,6 +2300,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Returns the current map of the Player.
+        /// </summary>
+        public static string MAP_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MAP_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map().
+        /// </summary>
+        public static string MAP_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MAP_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns the number of max followers as per status bar data..
         /// </summary>
         public static string MAXFOLLOWERS_COMMAND_DESCRIPTION {
@@ -3170,6 +3224,24 @@ namespace ClassicAssist.Resources {
         public static string REMOVELIST_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("REMOVELIST_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removes all map markers with the specified name from the world map.
+        /// </summary>
+        public static string REMOVEMAPMARKER_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("REMOVEMAPMARKER_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RemoveMapMarker(&quot;Treasure&quot;).
+        /// </summary>
+        public static string REMOVEMAPMARKER_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("REMOVEMAPMARKER_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

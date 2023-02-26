@@ -17,9 +17,9 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Abilities;
+using ClassicAssist.Data.ClassicUO.Objects;
 using ClassicAssist.Data.Commands;
 using ClassicAssist.Data.Hotkeys;
-using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Misc;
 using ClassicAssist.Data.Scavenger;
@@ -40,6 +40,7 @@ using CUO_API;
 using Newtonsoft.Json;
 using Sentry;
 using static ClassicAssist.Misc.SDLKeys;
+using MacroManager = ClassicAssist.Data.Macros.MacroManager;
 
 [assembly: InternalsVisibleTo( "ClassicAssist.Tests" )]
 
@@ -109,6 +110,8 @@ namespace Assistant
         public static string ClientPath { get; set; }
         public static Version ClientVersion { get; set; }
         public static bool Connected { get; set; }
+
+        public static string CUOPath { get; set; }
         public static ShardEntry CurrentShard { get; set; }
         public static Dispatcher Dispatcher { get; set; }
         public static FeatureFlags Features { get; set; }
@@ -228,6 +231,11 @@ namespace Assistant
 
             ClassicAssembly = AppDomain.CurrentDomain.GetAssemblies()
                 .FirstOrDefault( a => a.FullName.StartsWith( "ClassicUO," ) );
+
+            if ( ClassicAssembly != null )
+            {
+                CUOPath = Path.GetDirectoryName( ClassicAssembly.Location );
+            }
 
             InitializeExtensions();
         }

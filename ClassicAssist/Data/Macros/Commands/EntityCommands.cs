@@ -163,6 +163,12 @@ namespace ClassicAssist.Data.Macros.Commands
             return 0;
         }
 
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        public static int Map()
+        {
+            return (int) Engine.Player.Map;
+        }
+
         [CommandsDisplay( Category = nameof( Strings.Entity ),
             Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static int Z( object obj = null )

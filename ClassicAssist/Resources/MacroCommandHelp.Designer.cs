@@ -2300,6 +2300,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Returns the current map of the Player.
+        /// </summary>
+        public static string MAP_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MAP_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map().
+        /// </summary>
+        public static string MAP_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MAP_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns the number of max followers as per status bar data..
         /// </summary>
         public static string MAXFOLLOWERS_COMMAND_DESCRIPTION {

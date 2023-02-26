@@ -1857,4 +1857,10 @@ PlayMacro("beep", 1, "moo")
   <data name="CLEARMAPMARKERS_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>ClearMapMarkers()</value>
   </data>
+  <data name="MAP_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns the current map of the Player</value>
+  </data>
+  <data name="MAP_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>Map()</value>
+  </data>
 </root>

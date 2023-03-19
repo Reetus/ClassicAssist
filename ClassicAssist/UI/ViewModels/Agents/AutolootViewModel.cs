@@ -529,25 +529,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     IEnumerable<Property> properties =
                         item.Properties.Where( e => e != null && clilocs.Contains( e.Cliloc ) );
 
-                    bool match = false;
-
-                    foreach ( Property property in properties )
-                    {
-                        if ( property.Arguments == null || property.Arguments.Length < 1 ||
-                             !property.Arguments[0].Equals( entry.Additional ) )
-                        {
-                            continue;
-                        }
-
-                        if ( AutolootHelpers.Operation( entry.Operator, Convert.ToInt32( property.Arguments[1] ),
-                                entry.Value ) )
-                        {
-                            match = true;
-                            break;
-                        }
-                    }
-
-                    return match;
+                    return properties
+                        .Where( property =>
+                            property.Arguments != null && property.Arguments.Length >= 1 && property.Arguments[0]
+                                .Equals( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) )
+                        .Any( property => AutolootHelpers.Operation( entry.Operator,
+                            Convert.ToInt32( property.Arguments[1] ), entry.Value ) );
                 },
                 AllowedValuesEnum = typeof( SkillBonusSkills )
             } );

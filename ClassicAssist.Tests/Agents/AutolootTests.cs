@@ -1336,5 +1336,111 @@ namespace ClassicAssist.Tests.Agents
             Engine.InternalPacketSentEvent -= OnPacketSentEvent;
             Engine.Player = null;
         }
+
+        [TestMethod]
+        public void WillLootSkillBonusOSILowercase()
+        {
+            Cliloc.Initialize( () =>
+                new Dictionary<int, string> { { 1060451, "~1_skillname~ +~2_val~" }, { 1043181, "animal lore" } } );
+
+            Engine.Player = new PlayerMobile( 0x01 );
+            Item backpack = new Item( 0x40000001, 0x01 ) { Container = new ItemCollection( 0x40000001 ) };
+            Engine.Player.SetLayer( Layer.Backpack, backpack.Serial );
+            Engine.Items.Add( backpack );
+
+            Item corpse = new Item( 0x40000000 ) { ID = 0x2006 };
+
+            Engine.Items.Add( corpse );
+
+            IncomingPacketHandlers.Initialize();
+            AutolootViewModel vm = new AutolootViewModel { Enabled = true };
+
+            AutolootEntry lootEntry = new AutolootEntry
+            {
+                Rehue = false,
+                Autoloot = true,
+                Constraints = new ObservableCollection<AutolootConstraintEntry>(),
+                ID = -1
+            };
+
+            AutolootConstraintEntry autolootConstraint = new AutolootConstraintEntry
+            {
+                Property = vm.Constraints.FirstOrDefault( c => c.Name == "Skill Bonus" ),
+                Value = 5,
+                Additional = "Animal Lore",
+                Operator = AutolootOperator.GreaterThan
+            };
+            lootEntry.Constraints.Add( autolootConstraint );
+
+            vm.Items.Add( lootEntry );
+
+            Engine.PacketWaitEntries = new PacketWaitEntries();
+
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            void OnPacketSentEvent( byte[] data, int length )
+            {
+                if ( data[0] == 0x07 || data[0] == 0x08 )
+                {
+                    are.Set();
+                }
+                else if ( data[0] == 0xD6 || data[0] == 0x06 )
+                {
+                }
+                else
+                {
+                    Assert.Fail();
+                }
+            }
+
+            Engine.InternalPacketSentEvent += OnPacketSentEvent;
+
+            Engine.PacketWaitEntries.WaitEntryAddedEvent += entry =>
+            {
+                byte[] containerContentsPacket =
+                {
+                    0x3C, 0x00, 0x19, 0x00, 0x01, 0x46, 0x6B, 0xB4, 0x9E, 0x10, 0x8A, 0x00, 0x00, 0x01, 0x00, 0x13,
+                    0x00, 0x82, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x64
+                };
+
+                PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x3C );
+
+                handler.OnReceive( new PacketReader( containerContentsPacket, containerContentsPacket.Length, false ) );
+
+                byte[] properties =
+                {
+                    0xD6, 0x00, 0xC5, 0x00, 0x01, 0x46, 0x6B, 0xB4, 0x9E, 0x00, 0x00, 0xF8, 0xBD, 0x34, 0x5A, 0x00,
+                    0x11, 0x93, 0x0D, 0x00, 0x22, 0x23, 0x00, 0x31, 0x00, 0x31, 0x00, 0x35, 0x00, 0x31, 0x00, 0x36,
+                    0x00, 0x38, 0x00, 0x38, 0x00, 0x09, 0x00, 0x23, 0x00, 0x31, 0x00, 0x30, 0x00, 0x32, 0x00, 0x34,
+                    0x00, 0x32, 0x00, 0x33, 0x00, 0x34, 0x00, 0x00, 0x10, 0x04, 0x2B, 0x00, 0x00, 0x00, 0x10, 0x5E,
+                    0x94, 0x00, 0x02, 0x31, 0x00, 0x00, 0x10, 0x2E, 0x65, 0x00, 0x14, 0x23, 0x00, 0x31, 0x00, 0x30,
+                    0x00, 0x34, 0x00, 0x33, 0x00, 0x31, 0x00, 0x38, 0x00, 0x31, 0x00, 0x09, 0x00, 0x35, 0x00, 0x00,
+                    0x10, 0x2E, 0x63, 0x00, 0x16, 0x23, 0x00, 0x31, 0x00, 0x30, 0x00, 0x34, 0x00, 0x32, 0x00, 0x33,
+                    0x00, 0x37, 0x00, 0x36, 0x00, 0x09, 0x00, 0x31, 0x00, 0x30, 0x00, 0x00, 0x10, 0x2E, 0x50, 0x00,
+                    0x04, 0x31, 0x00, 0x30, 0x00, 0x00, 0x10, 0x2E, 0x50, 0x00, 0x04, 0x31, 0x00, 0x30, 0x00, 0x00,
+                    0x10, 0x2E, 0x57, 0x00, 0x02, 0x34, 0x00, 0x00, 0x10, 0x2E, 0x58, 0x00, 0x02, 0x34, 0x00, 0x00,
+                    0x10, 0x2E, 0x3C, 0x00, 0x02, 0x34, 0x00, 0x00, 0x10, 0x2F, 0x1F, 0x00, 0x0E, 0x32, 0x00, 0x35,
+                    0x00, 0x35, 0x00, 0x09, 0x00, 0x32, 0x00, 0x35, 0x00, 0x35, 0x00, 0x00, 0x11, 0x92, 0x05, 0x00,
+                    0x00, 0x00, 0x00, 0x00, 0x00
+                };
+                PacketHandler propertiesHandler = IncomingPacketHandlers.GetHandler( 0xD6 );
+
+                propertiesHandler.OnReceive( new PacketReader( properties, properties.Length, false ) );
+
+                entry.Packet = containerContentsPacket;
+                entry.Lock.Set();
+            };
+
+            vm.OnCorpseEvent( corpse.Serial );
+
+            bool result = are.WaitOne( 5000 );
+
+            Assert.IsTrue( result );
+
+            Engine.Items.Clear();
+            Engine.PacketWaitEntries = null;
+            Engine.InternalPacketSentEvent -= OnPacketSentEvent;
+            Engine.Player = null;
+        }
     }
 }

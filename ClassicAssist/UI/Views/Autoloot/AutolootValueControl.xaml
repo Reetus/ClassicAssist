@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="ClassicAssist.UI.Views.Autoloot.AutolootValueControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:data="clr-namespace:ClassicAssist.UO.Data"
+             xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+             xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
+             xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+             xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800" DataContextChanged="OnDataContextChanged">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <valueConverters:EnumToIntegerValueConverter x:Key="EnumToIntegerValueConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel x:Name="Grid" Orientation="Horizontal">
+    </StackPanel>
+</UserControl>

@@ -4306,6 +4306,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Skill Bonus.
+        /// </summary>
+        public static string Skill_Bonus {
+            get {
+                return ResourceManager.GetString("Skill Bonus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Skills.
         /// </summary>
         public static string Skills {

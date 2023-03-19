@@ -4,6 +4,7 @@
     {
         Properties,
         Object,
-        Predicate
+        Predicate,
+        PredicateWithValue
     }
 }

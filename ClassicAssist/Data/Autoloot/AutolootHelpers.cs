@@ -69,6 +69,7 @@ namespace ClassicAssist.Data.Autoloot
 
                         break;
                     case PropertyType.Predicate:
+                    case PropertyType.PredicateWithValue:
 
                         predicates.Add( i =>
                             constraint.Property.Predicate != null &&

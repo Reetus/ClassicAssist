@@ -531,10 +531,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                     return properties
                         .Where( property =>
-                            property.Arguments != null && property.Arguments.Length >= 1 && property.Arguments[0]
-                                .Equals( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) )
-                        .Any( property => AutolootHelpers.Operation( entry.Operator,
-                            Convert.ToInt32( property.Arguments[1] ), entry.Value ) );
+                            property.Arguments != null && property.Arguments.Length >= 1 && ( property.Arguments[0]
+                                    .Equals( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) ||
+                                string.IsNullOrEmpty( entry.Additional ) ) ).Any( property =>
+                            AutolootHelpers.Operation( entry.Operator, Convert.ToInt32( property.Arguments[1] ),
+                                entry.Value ) );
                 },
                 AllowedValuesEnum = typeof( SkillBonusSkills )
             } );

@@ -7,6 +7,7 @@ namespace ClassicAssist.Data.Autoloot
         private AutolootOperator _operator = AutolootOperator.Equal;
         private PropertyEntry _property;
         private int _value;
+        private string _additional;
 
         public AutolootOperator Operator
         {
@@ -24,6 +25,12 @@ namespace ClassicAssist.Data.Autoloot
         {
             get => _value;
             set => SetProperty( ref _value, value );
+        }
+
+        public string Additional
+        {
+            get => _additional;
+            set => SetProperty( ref _additional, value );
         }
     }
 }

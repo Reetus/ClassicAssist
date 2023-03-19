@@ -287,7 +287,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         {
                             { "Name", constraint.Property.Name },
                             { "Operator", constraint.Operator.ToString() },
-                            { "Value", constraint.Value }
+                            { "Value", constraint.Value },
+                            { nameof( constraint.Additional ), constraint.Additional }
                         };
 
                         constraintsArray.Add( constraintObj );
@@ -396,7 +397,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
                                 Property = propertyEntry,
                                 Operator = constraintToken["Operator"]?.ToObject<AutolootOperator>() ??
                                            AutolootOperator.Equal,
-                                Value = constraintToken["Value"]?.ToObject<int>() ?? 0
+                                Value = constraintToken["Value"]?.ToObject<int>() ?? 0,
+                                Additional = constraintToken[nameof( AutolootConstraintEntry.Additional )]
+                                    ?.ToString()
                             };
 
                             constraintsList.Add( constraintObj );
@@ -513,6 +516,40 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     return AutolootHelpers.Operation( entry.Operator, entry.Value, (int) layer );
                 },
                 AllowedValuesEnum = typeof( Layer )
+            } );
+
+            Constraints.AddSorted( new PropertyEntry
+            {
+                Name = Strings.Skill_Bonus,
+                ConstraintType = PropertyType.PredicateWithValue,
+                Predicate = ( item, entry ) =>
+                {
+                    int[] clilocs = { 1060451, 1060452, 1060453, 1060454, 1060455, 1072394, 1072395 };
+
+                    IEnumerable<Property> properties =
+                        item.Properties.Where( e => e != null && clilocs.Contains( e.Cliloc ) );
+
+                    bool match = false;
+
+                    foreach ( Property property in properties )
+                    {
+                        if ( property.Arguments == null || property.Arguments.Length < 1 ||
+                             !property.Arguments[0].Equals( entry.Additional ) )
+                        {
+                            continue;
+                        }
+
+                        if ( AutolootHelpers.Operation( entry.Operator, Convert.ToInt32( property.Arguments[1] ),
+                                entry.Value ) )
+                        {
+                            match = true;
+                            break;
+                        }
+                    }
+
+                    return match;
+                },
+                AllowedValuesEnum = typeof( SkillBonusSkills )
             } );
         }
 

@@ -7,6 +7,8 @@
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+             xmlns:misc="clr-namespace:ClassicAssist.Misc"
+             xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
              mc:Ignorable="d"
              d:DesignWidth="493" d:DesignHeight="400">
     <d:DesignerProperties.DesignStyle>
@@ -24,16 +26,19 @@
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-                <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
             </Style>
-            <Style TargetType="{x:Type controls:EditTextBlock}" BasedOn="{StaticResource {x:Type controls:EditTextBlock}}">
-                <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}"/>
+            <Style TargetType="{x:Type controls:EditTextBlock}"
+                   BasedOn="{StaticResource {x:Type controls:EditTextBlock}}">
+                <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
             </Style>
+            <misc:BindingProxy x:Key="Proxy" Data="{Binding}" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <ListView x:Name="ListView" Margin="10" Grid.Row="0"
@@ -83,7 +88,24 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <StackPanel Orientation="Horizontal" Grid.Row="1">
+        <Grid Grid.Row="1" Margin="10,0,10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Button Content="{x:Static resources:Strings.Set_Container}"
+                    Command="{Binding SetContainerCommand}" Grid.Column="0" />
+            <Image Source="{StaticResource configureIcon}" Height="16" Grid.Column="1" Margin="10,0,0,0"
+                   misc1:ClickOpensContextMenuBehaviour.Enabled="True">
+                <Image.ContextMenu>
+                    <ContextMenu IsOpen="False">
+                        <MenuItem Header="{x:Static resources:Strings.Reset_Container}"
+                                  Command="{Binding Source={StaticResource Proxy}, Path=Data.(agents:VendorSellTabViewModel.ResetContainerCommand)}" />
+                    </ContextMenu>
+                </Image.ContextMenu>
+            </Image>
+        </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
             <StackPanel.Resources>
                 <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="Margin" Value="5,5,5,5" />
@@ -91,8 +113,34 @@
                     <Setter Property="MinWidth" Value="80" />
                 </Style>
             </StackPanel.Resources>
-            <Button Content="{x:Static resources:Strings.Insert}" Command="{Binding InsertCommand}"
-                    CommandParameter="{Binding SelectedItem, ElementName=ListView}" />
+            <Button Content="{x:Static resources:Strings.Insert}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Triggers>
+                            <EventTrigger RoutedEvent="Click">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <BooleanAnimationUsingKeyFrames
+                                                Storyboard.TargetProperty="ContextMenu.IsOpen">
+                                                <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True" />
+                                            </BooleanAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.ContextMenu>
+                    <ContextMenu IsOpen="False">
+                        <MenuItem Header="{x:Static resources:Strings.ID_from_target}"
+                                  Command="{Binding Source={StaticResource Proxy}, Path=Data.(agents:VendorSellTabViewModel.InsertCommand)}" />
+                        <MenuItem Header="{x:Static resources:Strings.Match_Any_ID}"
+                                  Command="{Binding Source={StaticResource Proxy}, Path=Data.(agents:VendorSellTabViewModel.InsertMatchAnyCommand)}" />
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
             <Button Content="{x:Static resources:Strings.Remove}" Command="{Binding RemoveCommand}"
                     CommandParameter="{Binding SelectedItem, ElementName=ListView}" />
         </StackPanel>

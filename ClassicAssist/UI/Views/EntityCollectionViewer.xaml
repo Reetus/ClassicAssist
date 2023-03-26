@@ -22,9 +22,9 @@
                 <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary
                     Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DebugToolBarStyle.xaml" />
-                <ResourceDictionary Source="EntityCollectionViewer/Icons.xaml" />
-                <ResourceDictionary Source="EntityCollectionViewer/Toolbar.xaml" />
-                <ResourceDictionary Source="EntityCollectionViewer/ListStyles.xaml" />
+                <ResourceDictionary Source="ECV/Icons.xaml" />
+                <ResourceDictionary Source="ECV/Toolbar.xaml" />
+                <ResourceDictionary Source="ECV/ListStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <valueConverters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />

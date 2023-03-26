@@ -799,9 +799,18 @@ namespace ClassicAssist.UI.ViewModels
                 {
                     case PropertyType.Properties:
                     {
-                        predicates.Add( i => i.Properties != null && constraint.Clilocs.Any( cliloc =>
-                            i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc,
-                                constraint, filter.Operator, filter.Value ) ) ) );
+                        if ( filter.Operator != AutolootOperator.NotPresent )
+                        {
+                            predicates.Add( i => i.Properties != null && constraint.Clilocs.Any( cliloc =>
+                                i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc,
+                                    constraint, filter.Operator, filter.Value ) ) ) );
+                        }
+                        else
+                        {
+                            predicates.Add( i =>
+                                i.Properties != null && !constraint.Clilocs.Any( cliloc =>
+                                    i.Properties.Any( p => p.Cliloc == cliloc ) ) );
+                        }
 
                         break;
                     }
@@ -819,6 +828,19 @@ namespace ClassicAssist.UI.ViewModels
                             new AutolootConstraintEntry
                             {
                                 Operator = filter.Operator, Property = constraint, Value = filter.Value
+                            } ) );
+
+                        break;
+                    }
+                    case PropertyType.PredicateWithValue:
+                    {
+                        predicates.Add( i => constraint.Predicate != null && constraint.Predicate.Invoke( i,
+                            new AutolootConstraintEntry
+                            {
+                                Operator = filter.Operator,
+                                Property = constraint,
+                                Value = filter.Value,
+                                Additional = filter.Additional
                             } ) );
 
                         break;

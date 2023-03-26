@@ -513,7 +513,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 {
                     Layer layer = TileData.GetLayer( item.ID );
 
-                    return AutolootHelpers.Operation( entry.Operator, entry.Value, (int) layer );
+                    return entry.Operator == AutolootOperator.NotPresent ||
+                           AutolootHelpers.Operation( entry.Operator, entry.Value, (int) layer );
                 },
                 AllowedValuesEnum = typeof( Layer )
             } );
@@ -526,16 +527,31 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 {
                     int[] clilocs = { 1060451, 1060452, 1060453, 1060454, 1060455, 1072394, 1072395 };
 
-                    IEnumerable<Property> properties =
-                        item.Properties.Where( e => e != null && clilocs.Contains( e.Cliloc ) );
+                    if ( item.Properties == null )
+                    {
+                        return false;
+                    }
 
-                    return properties
-                        .Where( property =>
-                            property.Arguments != null && property.Arguments.Length >= 1 && ( property.Arguments[0]
-                                    .Equals( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) ||
-                                string.IsNullOrEmpty( entry.Additional ) ) ).Any( property =>
-                            AutolootHelpers.Operation( entry.Operator, Convert.ToInt32( property.Arguments[1] ),
-                                entry.Value ) );
+                    IEnumerable<Property> properties =
+                        item.Properties.Where( e => e != null && clilocs.Contains( e.Cliloc ) ).ToList();
+
+                    if ( entry.Operator != AutolootOperator.NotPresent )
+                    {
+                        return properties
+                            .Where( property => property.Arguments != null && property.Arguments.Length >= 1 &&
+                                                ( property.Arguments[0].Equals( entry.Additional,
+                                                      StringComparison.CurrentCultureIgnoreCase ) ||
+                                                  string.IsNullOrEmpty( entry.Additional ) ) ).Any( property =>
+                                AutolootHelpers.Operation( entry.Operator, Convert.ToInt32( property.Arguments[1] ),
+                                    entry.Value ) );
+                    }
+
+                    Property match = properties.FirstOrDefault( property =>
+                        property.Arguments != null && property.Arguments.Length >= 1 && ( property.Arguments[0]
+                                .Equals( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) ||
+                            string.IsNullOrEmpty( entry.Additional ) ) );
+
+                    return match == null;
                 },
                 AllowedValuesEnum = typeof( SkillBonusSkills )
             } );

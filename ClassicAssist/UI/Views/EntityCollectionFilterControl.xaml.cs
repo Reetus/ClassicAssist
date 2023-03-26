@@ -11,12 +11,13 @@ using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Annotations;
 using ClassicAssist.Data.Autoloot;
-using ClassicAssist.Misc;
 using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Models;
+using ClassicAssist.UI.ViewModels.Agents;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Objects;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 
@@ -75,6 +76,8 @@ namespace ClassicAssist.UI.Views
                 }
             }
 
+            // TODO: Use autoloot methods to not duplicate code
+
             if ( File.Exists( _propertiesFileCustom ) )
             {
                 LoadCustomProperties();
@@ -88,20 +91,59 @@ namespace ClassicAssist.UI.Views
                 {
                     Layer layer = TileData.GetLayer( item.ID );
 
-                    return AutolootHelpers.Operation( entry.Operator, entry.Value, (int) layer );
+                    return entry.Operator == AutolootOperator.NotPresent ||
+                           AutolootHelpers.Operation( entry.Operator, entry.Value, (int) layer );
                 },
                 AllowedValuesEnum = typeof( Layer )
             } );
 
-            if( File.Exists( Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
-                "EntityViewer.json" ) ) )
+            Constraints.AddSorted( new PropertyEntry
+            {
+                Name = Strings.Skill_Bonus,
+                ConstraintType = PropertyType.PredicateWithValue,
+                Predicate = ( item, entry ) =>
+                {
+                    int[] clilocs = { 1060451, 1060452, 1060453, 1060454, 1060455, 1072394, 1072395 };
+
+                    if ( item.Properties == null )
+                    {
+                        return false;
+                    }
+
+                    IEnumerable<Property> properties =
+                        item.Properties.Where( e => e != null && clilocs.Contains( e.Cliloc ) ).ToList();
+
+                    if ( entry.Operator != AutolootOperator.NotPresent )
+                    {
+                        return properties
+                            .Where( property => property.Arguments != null && property.Arguments.Length >= 1 &&
+                                                ( property.Arguments[0].Equals( entry.Additional,
+                                                      StringComparison.CurrentCultureIgnoreCase ) ||
+                                                  string.IsNullOrEmpty( entry.Additional ) ) ).Any( property =>
+                                AutolootHelpers.Operation( entry.Operator, Convert.ToInt32( property.Arguments[1] ),
+                                    entry.Value ) );
+                    }
+
+                    Property match = properties.FirstOrDefault( property =>
+                        property.Arguments != null && property.Arguments.Length >= 1 && ( property.Arguments[0]
+                                .Equals( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) ||
+                            string.IsNullOrEmpty( entry.Additional ) ) );
+
+                    return match == null;
+                },
+                AllowedValuesEnum = typeof( SkillBonusSkills )
+            } );
+
+            if ( File.Exists( Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
+                    "EntityViewer.json" ) ) )
             {
                 try
                 {
                     serializer = new JsonSerializer();
 
                     using ( JsonTextReader jtr = new JsonTextReader( new StreamReader(
-                        Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "EntityViewer.json" ) ) ) )
+                               Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
+                                   "EntityViewer.json" ) ) ) )
                     {
                         EntityCollectionFilter[] entries = serializer.Deserialize<EntityCollectionFilter[]>( jtr );
 
@@ -119,7 +161,10 @@ namespace ClassicAssist.UI.Views
                                 {
                                     Items.Add( new EntityCollectionFilter
                                     {
-                                        Constraint = constraint, Operator = entry.Operator, Value = entry.Value
+                                        Constraint = constraint,
+                                        Operator = entry.Operator,
+                                        Value = entry.Value,
+                                        Additional = entry.Additional
                                     } );
                                 }
                             }

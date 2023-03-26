@@ -5,9 +5,16 @@ namespace ClassicAssist.UI.Models
 {
     public class EntityCollectionFilter : SetPropertyNotifyChanged
     {
+        private string _additional;
         private PropertyEntry _constraint;
         private AutolootOperator _operator = AutolootOperator.Equal;
         private int _value;
+
+        public string Additional
+        {
+            get => _additional;
+            set => SetProperty( ref _additional, value );
+        }
 
         public PropertyEntry Constraint
         {

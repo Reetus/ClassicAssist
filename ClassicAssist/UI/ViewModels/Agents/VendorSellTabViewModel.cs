@@ -14,24 +14,38 @@ using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
 using Newtonsoft.Json.Linq;
+using static ClassicAssist.UO.Commands;
 using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.UI.ViewModels.Agents
 {
     public class VendorSellTabViewModel : BaseViewModel, ISettingProvider
     {
+        private int _containerSerial;
         private ICommand _insertCommand;
+        private ICommand _insertMatchAnyCommand;
         private ObservableCollection<VendorSellAgentEntry> _items = new ObservableCollection<VendorSellAgentEntry>();
         private ICommand _removeCommand;
+        private ICommand _resetContainerCommand;
         private VendorSellAgentEntry _selectedItem;
+        private ICommand _setContainerCommand;
 
         public VendorSellTabViewModel()
         {
             IncomingPacketHandlers.VendorSellDisplayEvent += OnVendorSellDisplayEvent;
         }
 
+        public int ContainerSerial
+        {
+            get => _containerSerial;
+            set => SetProperty( ref _containerSerial, value );
+        }
+
         public ICommand InsertCommand =>
             _insertCommand ?? ( _insertCommand = new RelayCommandAsync( Insert, o => Engine.Connected ) );
+
+        public ICommand InsertMatchAnyCommand =>
+            _insertMatchAnyCommand ?? ( _insertMatchAnyCommand = new RelayCommand( InsertMatchAny, o => true ) );
 
         public ObservableCollection<VendorSellAgentEntry> Items
         {
@@ -42,11 +56,19 @@ namespace ClassicAssist.UI.ViewModels.Agents
         public ICommand RemoveCommand =>
             _removeCommand ?? ( _removeCommand = new RelayCommandAsync( Remove, o => SelectedItem != null ) );
 
+        public ICommand ResetContainerCommand =>
+            _resetContainerCommand ??
+            ( _resetContainerCommand = new RelayCommand( ResetContainer, o => ContainerSerial != 0 ) );
+
         public VendorSellAgentEntry SelectedItem
         {
             get => _selectedItem;
             set => SetProperty( ref _selectedItem, value );
         }
+
+        public ICommand SetContainerCommand =>
+            _setContainerCommand ?? ( _setContainerCommand =
+                new RelayCommandAsync( SetContainer, o => Engine.Connected ) );
 
         public void Serialize( JObject json, bool global = false )
         {
@@ -72,7 +94,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 itemsObj.Add( itemObj );
             }
 
-            JObject config = new JObject { { "Items", itemsObj } };
+            JObject config = new JObject { { "Items", itemsObj }, { "ContainerSerial", ContainerSerial } };
 
             json.Add( "VendorSell", config );
         }
@@ -81,14 +103,14 @@ namespace ClassicAssist.UI.ViewModels.Agents
         {
             Items.Clear();
 
-            if ( json?["VendorSell"] == null )
+            JToken config = json?["VendorSell"];
+
+            if ( config?["Items"] == null )
             {
                 return;
             }
 
-            JToken config = json["VendorSell"];
-
-            foreach ( JToken items in config?["Items"] )
+            foreach ( JToken items in config["Items"] )
             {
                 VendorSellAgentEntry vsae = new VendorSellAgentEntry
                 {
@@ -102,6 +124,26 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                 Items.Add( vsae );
             }
+
+            ContainerSerial = config["ContainerSerial"]?.ToObject<int>() ?? 0;
+        }
+
+        private void InsertMatchAny( object arg )
+        {
+            Items.Add( new VendorSellAgentEntry
+            {
+                Enabled = true,
+                Name = Strings.Any,
+                Graphic = -1,
+                Hue = -1,
+                Amount = -1,
+                MinPrice = 0
+            } );
+        }
+
+        private void ResetContainer( object obj )
+        {
+            ContainerSerial = 0;
         }
 
         private async Task Remove( object arg )
@@ -123,8 +165,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
             foreach ( SellListEntry entry in entries )
             {
                 VendorSellAgentEntry match = Items.FirstOrDefault( i =>
-                    i.Graphic == entry.ID && ( i.Hue == -1 || i.Hue == entry.Hue ) && entry.Price >= i.MinPrice &&
-                    i.Enabled );
+                    ( i.Graphic == -1 || i.Graphic == entry.ID ) && ( i.Hue == -1 || i.Hue == entry.Hue ) &&
+                    entry.Price >= i.MinPrice && i.Enabled );
 
                 if ( match != null && match.Amount != -1 )
                 {
@@ -137,10 +179,49 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 }
             }
 
+            if ( ContainerSerial != 0 )
+            {
+                if ( !Engine.Player.Backpack.Container.GetItem( ContainerSerial, out Item container ) )
+                {
+                    SystemMessage( Strings.Invalid_container___ );
+
+                    return;
+                }
+
+                int[] containerIds =
+                    container.Container?.GetItems().Select( i => i.ID ).ToArray() ?? Array.Empty<int>();
+
+                WaitForContainerContentsUse( ContainerSerial, 1000 );
+
+                List<SellListEntry> filteredList = sellList.Where( e => containerIds.Contains( e.ID ) ).ToList();
+
+                foreach ( SellListEntry entry in filteredList )
+                {
+                    int totalAmount = container.Container?.Where( e => e.ID == entry.ID ).Sum( e => e.Count ) ?? 0;
+
+                    entry.Amount = Math.Min( entry.Amount, totalAmount );
+                }
+
+                sellList = filteredList;
+            }
+
             if ( sellList.Count > 0 )
             {
                 Sell( serial, sellList.ToArray() );
             }
+        }
+
+        private async Task SetContainer( object arg )
+        {
+            int serial = await GetTargetSerialAsync( Strings.Target_container___ );
+
+            if ( serial == 0 )
+            {
+                SystemMessage( Strings.Invalid_or_unknown_object_id, true );
+                return;
+            }
+
+            ContainerSerial = serial;
         }
 
         public static void Sell( int vendorSerial, SellListEntry[] entries )
@@ -169,11 +250,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private async Task Insert( object arg )
         {
-            int serial = await UOC.GetTargetSerialAsync( Strings.Target_object___ );
+            int serial = await GetTargetSerialAsync( Strings.Target_object___ );
 
             if ( serial == 0 )
             {
-                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
+                SystemMessage( Strings.Invalid_or_unknown_object_id, true );
                 return;
             }
 
@@ -181,7 +262,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             if ( item == null )
             {
-                UOC.SystemMessage( Strings.Cannot_find_item___ );
+                SystemMessage( Strings.Cannot_find_item___ );
                 return;
             }
 

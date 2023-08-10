@@ -122,8 +122,7 @@ namespace ClassicAssist.Data.Dress
                         }
 
                         ( int otherHand, Layer _ ) = GetConflictingHand( dai.Layer );
-
-                        if ( otherHand != 0 && moveConflicting )
+                        if ( otherHand != 0 && moveConflicting && !item.Name.Contains( "Shield" ))
                         {
                             await ActionPacketQueue.EnqueueDragDrop( otherHand, 1, container, QueuePriority.Medium );
                         }
@@ -152,9 +151,11 @@ namespace ClassicAssist.Data.Dress
                         {
                             case DressAgentItemType.Serial:
                                 await UOC.EquipItem( item, dai.Layer );
+                                Thread.Sleep( 700 );
                                 break;
                             case DressAgentItemType.ID:
                                 await UOC.EquipType( dai.ID, dai.Layer );
+                                Thread.Sleep( 700 );
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();

@@ -45,7 +45,7 @@ namespace ClassicAssist.UO.Network
         public delegate void dActionQueueEvent( ActionQueueEvents actionEvent, BaseQueueItem queueItem );
 
         private const int DRAG_DROP_DISTANCE = 3;
-        private const int DROP_DELAY = 50;
+        private const int DROP_DELAY = 700;
         private const int MAX_ATTEMPTS = 5;
 
         private static readonly ThreadPriorityQueue<BaseQueueItem> _actionPacketQueue =

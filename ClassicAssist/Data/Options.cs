@@ -26,8 +26,8 @@ namespace ClassicAssist.Data
         private bool _abilitiesGump = true;
         private int _abilitiesGumpX = 100;
         private int _abilitiesGumpY = 100;
-        private bool _actionDelay;
-        private int _actionDelayMs;
+        private bool _actionDelay =  true;
+        private int _actionDelayMs = 500;
         private bool _alwaysOnTop;
         private bool _autoAcceptPartyInvite;
         private bool _autoAcceptPartyOnlyFromFriends;

@@ -34,5 +34,7 @@ namespace ClassicAssist.Data.Backup
         bool RequiresLogin { get; }
         Task<bool> Write( string fileName );
         Task<string> GetPath( string currentPath );
+        void OnBackupStart();
+        void OnBackupFinish();
     }
 }

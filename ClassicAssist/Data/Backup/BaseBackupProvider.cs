@@ -71,6 +71,14 @@ namespace ClassicAssist.Data.Backup
 
         public abstract Task<string> GetPath( string currentPath );
 
+        public virtual void OnBackupStart()
+        {
+        }
+
+        public virtual void OnBackupFinish()
+        {
+        }
+
         public bool FirstRun
         {
             get => _firstRun;

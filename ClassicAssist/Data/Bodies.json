@@ -123,5 +123,10 @@
     "BodyType": 2,
     "Graphic": 184,
     "Name": "Tribal Female"
+  },
+  {
+    "BodyType": 2,
+    "Graphic": 723,
+    "Name": "Goblin"
   }
 ]

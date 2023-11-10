@@ -4,9 +4,7 @@
 
 Assistant for [ClassicUO](https://github.com/andreakarasho/ClassicUO) with UOSteam-like interface and macro syntax.
 
-![assist1](https://user-images.githubusercontent.com/6239195/73602827-d51b7e00-45b4-11ea-96c4-64bef454e36f.png)
-
-ClassicAssist is under development but is in a useable state, features are being added constantly.
+![assist1](https://github.com/Reetus/ClassicAssist/assets/6239195/3e6b1a23-a548-4c46-b1b5-747db0f6ab24)
 
 ## Installation
 
@@ -15,12 +13,6 @@ Add the full path to ClassicAssist.dll to the plugin section of the ClassicUO se
 Alternatively, use ClassicAssist.Launcher.exe and it will launch ClassicUO with the required path to the plugin.
 
 [Installation Video](https://www.youtube.com/watch?v=SQ5QhR1TS1U&feature=youtu.be)
-
-## Zone.Identifier
-
-If ClassicAssist fails to run or you receive an error message about loading from the network, follow the instructions here to unblock the files:
-
-[https://winaero.com/blog/how-to-unblock-files-downloaded-from-internet-in-windows-10/](https://winaero.com/blog/how-to-unblock-files-downloaded-from-internet-in-windows-10/)
 
 ## Macros
 
@@ -32,6 +24,14 @@ Macros have similar function names as UOSteam but uses Python as the language, t
 ## Compatibility
 
 ClassicAssist uses [WPF](https://en.wikipedia.org/wiki/Windows_Presentation_Foundation) as the UI framework which is only compatible with Windows.
+
+## Linux / MacOS
+
+There has been some effort to port ClassicAssist to Avalonia, but this requires more development effort, if you are a developer and want to contribute, please see [ClassicAssist.Avalonia](https://github.com/Reetus/ClassicAssist.Avalonia)
+
+## Community
+
+Join our discord channel on the official ClassicUO discord server [here](https://discord.gg/DKgfjMqH)
 
 ## Issues / Feature Requests
 

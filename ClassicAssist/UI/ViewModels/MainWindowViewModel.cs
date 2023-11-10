@@ -91,7 +91,7 @@ namespace ClassicAssist.UI.ViewModels
             {
                 _taskbarIcon = new TaskbarIcon
                 {
-                    Icon = Properties.Resources.cog,
+                    Icon = Properties.Resources.logo,
                     Visibility = Visibility.Visible,
                     LeftClickCommand = RestoreWindowCommand,
                     LeftClickCommandParameter = window,

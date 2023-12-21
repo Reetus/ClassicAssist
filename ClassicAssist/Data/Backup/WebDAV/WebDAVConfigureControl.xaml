@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="ClassicAssist.Data.Backup.WebDAV.WebDAVConfigureControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ClassicAssist.Data.Backup.WebDAV"
+             xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             mc:Ignorable="d" x:Name="Control">
+    <UserControl.DataContext>
+        <local:WebDAVConfigureViewModel />
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <controls:HeaderTextBox Grid.Row="0" Header="{x:Static resources:Strings.Address_}"
+                                Value="{Binding DataContext.Address, ElementName=Control}" />
+        <controls:HeaderTextBox Grid.Row="1" Header="{x:Static resources:Strings.Username}"
+                                Value="{Binding DataContext.Username, ElementName=Control}" />
+        <controls:HeaderTextBox Grid.Row="2" Header="{x:Static resources:Strings.Password}"
+                                Value="{Binding DataContext.Password, ElementName=Control}" />
+
+    </Grid>
+</UserControl>

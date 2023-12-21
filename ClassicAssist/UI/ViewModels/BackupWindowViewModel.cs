@@ -123,6 +123,8 @@ namespace ClassicAssist.UI.ViewModels
 
             Dictionary<string, string> hashes = GetFileAndHash( files );
 
+            _options.Provider.OnBackupStart();
+
             foreach ( string fullPath in from kvp in hashes select kvp.Key )
             {
                 _dispatcher.Invoke( () =>
@@ -149,6 +151,8 @@ namespace ClassicAssist.UI.ViewModels
                     throw;
                 }
             }
+
+            _options.Provider.OnBackupFinish();
 
             foreach ( KeyValuePair<string, string> kvp in hashes )
             {

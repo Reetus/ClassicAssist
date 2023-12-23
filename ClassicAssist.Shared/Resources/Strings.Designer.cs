@@ -4495,6 +4495,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stop Organizer.
+        /// </summary>
+        public static string Stop_Organizer {
+            get {
+                return ResourceManager.GetString("Stop Organizer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stops all running macros including background and autostart macros..
         /// </summary>
         public static string Stops_all_running_macros_including_background_and_autostart_macros_ {

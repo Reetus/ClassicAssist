@@ -3926,6 +3926,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stops the organizer agent if currently running.
+        /// </summary>
+        public static string STOPORGANIZER_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("STOPORGANIZER_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to StopOrganizer().
+        /// </summary>
+        public static string STOPORGANIZER_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("STOPORGANIZER_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns the strength of the player.
         /// </summary>
         public static string STR_COMMAND_DESCRIPTION {

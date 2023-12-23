@@ -47,5 +47,13 @@ namespace ClassicAssist.Data.Macros.Commands
                 manager.Organize( entry ).Wait();
             }
         }
+
+        [CommandsDisplay( Category = nameof( Strings.Agents ) )]
+        public static void StopOrganizer()
+        {
+            OrganizerManager manager = OrganizerManager.GetInstance();
+
+            manager.Stop();
+        }
     }
 }

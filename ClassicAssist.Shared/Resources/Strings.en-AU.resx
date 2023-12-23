@@ -1764,4 +1764,7 @@ Are you sure you wish to continue?</value>
   <data name="Stop Organizer" xml:space="preserve">
     <value>Stop Organizer</value>
   </data>
+  <data name="Stop Dress" xml:space="preserve">
+    <value>Stop Dress</value>
+  </data>
 </root>

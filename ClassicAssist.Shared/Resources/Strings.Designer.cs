@@ -4495,6 +4495,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stop Dress.
+        /// </summary>
+        public static string Stop_Dress {
+            get {
+                return ResourceManager.GetString("Stop Dress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stop Organizer.
         /// </summary>
         public static string Stop_Organizer {

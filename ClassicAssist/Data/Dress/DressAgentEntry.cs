@@ -58,7 +58,7 @@ namespace ClassicAssist.Data.Dress
             Items = list;
         }
 
-        public async Task Dress( bool moveConflicting = true )
+        public async Task Dress( CancellationToken cancellationToken, bool moveConflicting = true )
         {
             PlayerMobile player = Engine.Player;
 
@@ -110,64 +110,78 @@ namespace ClassicAssist.Data.Dress
             }
             else
             {
-                await Task.Run( async () =>
+                try
                 {
-                    foreach ( DressAgentItem dai in Items )
+                    await Task.Run( async () =>
                     {
-                        Item item = Engine.Items.GetItem( dai.Serial );
-
-                        if ( item == null && dai.Type == DressAgentItemType.Serial )
+                        foreach ( DressAgentItem dai in Items )
                         {
-                            continue;
+                            if ( cancellationToken.IsCancellationRequested )
+                            {
+                                return;
+                            }
+
+                            Item item = Engine.Items.GetItem( dai.Serial );
+
+                            if ( item == null && dai.Type == DressAgentItemType.Serial )
+                            {
+                                continue;
+                            }
+
+                            ( int otherHand, Layer _ ) = GetConflictingHand( dai.Layer );
+
+                            if ( otherHand != 0 && moveConflicting )
+                            {
+                                await ActionPacketQueue.EnqueueDragDrop( otherHand, 1, container, QueuePriority.Medium,
+                                    cancellationToken: cancellationToken );
+                            }
+
+                            int currentInLayer = Engine.Player?.GetLayer( dai.Layer ) ?? 0;
+
+                            if ( currentInLayer == item?.Serial )
+                            {
+                                continue;
+                            }
+
+                            if ( currentInLayer != 0 && moveConflicting && container != -1 )
+                            {
+                                await ActionPacketQueue.EnqueueDragDrop( currentInLayer, 1, container,
+                                    QueuePriority.Medium, cancellationToken: cancellationToken );
+
+                                currentInLayer = 0;
+                            }
+
+                            if ( currentInLayer != 0 )
+                            {
+                                continue;
+                            }
+
+                            switch ( dai.Type )
+                            {
+                                case DressAgentItemType.Serial:
+                                    await UOC.EquipItem( item, dai.Layer );
+                                    break;
+                                case DressAgentItemType.ID:
+                                    await UOC.EquipType( dai.ID, dai.Layer );
+                                    break;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
                         }
-
-                        ( int otherHand, Layer _ ) = GetConflictingHand( dai.Layer );
-
-                        if ( otherHand != 0 && moveConflicting )
-                        {
-                            await ActionPacketQueue.EnqueueDragDrop( otherHand, 1, container, QueuePriority.Medium );
-                        }
-
-                        int currentInLayer = Engine.Player?.GetLayer( dai.Layer ) ?? 0;
-
-                        if ( currentInLayer == item?.Serial )
-                        {
-                            continue;
-                        }
-
-                        if ( currentInLayer != 0 && moveConflicting && container != -1 )
-                        {
-                            await ActionPacketQueue.EnqueueDragDrop( currentInLayer, 1, container,
-                                QueuePriority.Medium );
-
-                            currentInLayer = 0;
-                        }
-
-                        if ( currentInLayer != 0 )
-                        {
-                            continue;
-                        }
-
-                        switch ( dai.Type )
-                        {
-                            case DressAgentItemType.Serial:
-                                await UOC.EquipItem( item, dai.Layer );
-                                break;
-                            case DressAgentItemType.ID:
-                                await UOC.EquipType( dai.ID, dai.Layer );
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-                    }
-                } );
+                    }, cancellationToken );
+                }
+                catch ( TaskCanceledException )
+                {
+                    // ignored
+                }
             }
         }
 
-        private (int, Layer) GetConflictingHand( Layer layer )
+        private static (int, Layer) GetConflictingHand( Layer layer )
         {
-            int otherHand = 0;
+            int otherHand;
 
+            // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
             switch ( layer )
             {
                 case Layer.OneHanded:
@@ -191,7 +205,7 @@ namespace ClassicAssist.Data.Dress
             return ( 0, Layer.Invalid );
         }
 
-        public async Task Undress()
+        public async Task Undress( CancellationToken cancellationToken )
         {
             if ( Engine.Player == null )
             {
@@ -221,7 +235,8 @@ namespace ClassicAssist.Data.Dress
 
                 foreach ( Item item in itemsToUnequip )
                 {
-                    await ActionPacketQueue.EnqueueDragDrop( item.Serial, 1, container, QueuePriority.Medium );
+                    await ActionPacketQueue.EnqueueDragDrop( item.Serial, 1, container, QueuePriority.Medium,
+                        cancellationToken: cancellationToken );
                 }
             }
         }

@@ -137,12 +137,51 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Button Content="{x:Static resources:Strings.Dress}" Grid.Row="0"
-                    Command="{Binding DressAllItemsCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
-            <Button Content="{x:Static resources:Strings.Undress}" Grid.Row="1"
-                    Command="{Binding UndressItemsCommand}" CommandParameter="{Binding SelectedItem}" />
-            <Button Content="{x:Static resources:Strings.Undress_All}" Grid.Row="2"
-                    Command="{Binding UndressAllItemsCommand}" />
+            <Button Grid.Row="0"
+                    Command="{Binding DressAllItemsCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsDressing}" Value="True">
+                                <Setter Property="Content" Value="{x:Static resources:Strings.Stop}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsDressing}" Value="False">
+                                <Setter Property="Content" Value="{x:Static resources:Strings.Dress}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Grid.Row="1"
+                    Command="{Binding UndressItemsCommand}" CommandParameter="{Binding SelectedItem}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsUndressing}" Value="True">
+                                <Setter Property="Content" Value="{x:Static resources:Strings.Stop}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsUndressing}" Value="False">
+                                <Setter Property="Content" Value="{x:Static resources:Strings.Undress}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Grid.Row="2"
+                    Command="{Binding UndressAllItemsCommand}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsUndressingAll}" Value="True">
+                                <Setter Property="Content" Value="{x:Static resources:Strings.Stop}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsUndressingAll}" Value="False">
+                                <Setter Property="Content" Value="{x:Static resources:Strings.Undress_All}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
             <Button Content="{x:Static resources:Strings.Import}" Grid.Row="3"
                     Command="{Binding ImportItemsCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
             <Button Content="{x:Static resources:Strings.New_Item}" Grid.Row="4"

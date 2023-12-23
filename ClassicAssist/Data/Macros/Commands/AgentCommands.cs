@@ -67,7 +67,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            dressAgentEntry.Undress().Wait();
+            manager.Undress( dressAgentEntry ).Wait();
         }
 
         [CommandsDisplay( Category = nameof( Strings.Agents ) )]
@@ -90,6 +90,7 @@ namespace ClassicAssist.Data.Macros.Commands
             DressManager manager = DressManager.GetInstance();
             manager.TemporaryDress = new DressAgentEntry();
             manager.TemporaryDress.Action =
+                // ReSharper disable once AsyncVoidLambda
                 async ( hks, _ ) => await manager.DressAllItems( manager.TemporaryDress, false );
             manager.ImportItems( manager.TemporaryDress );
         }
@@ -178,6 +179,14 @@ namespace ClassicAssist.Data.Macros.Commands
                     UOC.SystemMessage( Strings.Invalid_state_name___on____off___or__toggle____ );
                     break;
             }
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Agents ) )]
+        public static void StopDress()
+        {
+            DressManager manager = DressManager.GetInstance();
+
+            manager.Stop();
         }
 
         [CommandsDisplay( Category = nameof( Strings.Agents ),

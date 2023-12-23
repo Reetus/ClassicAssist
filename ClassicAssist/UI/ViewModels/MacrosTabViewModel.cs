@@ -779,7 +779,10 @@ namespace ClassicAssist.UI.ViewModels
 
         private void SaveMacro( object obj )
         {
-            SelectedItem.Macro = SelectedItem.Macro.TabsToSpaces( 4 );
+            if ( SelectedItem != null )
+            {
+                SelectedItem.Macro = SelectedItem.Macro.TabsToSpaces( 4 );
+            }
 
             //Saves whole profile, think of better way
             Options.Save( Options.CurrentOptions );

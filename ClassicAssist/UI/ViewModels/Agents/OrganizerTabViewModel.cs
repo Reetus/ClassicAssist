@@ -4,6 +4,7 @@ using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
+using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Data.Organizer;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
@@ -33,6 +34,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             _manager.Items = Items;
             _manager.InvokeByName = InvokeByName;
+
+            HotkeyCommand stopHotkey = new HotkeyCommand
+            {
+                Name = Strings.Stop_Organizer, Action = ( entry, objects ) => _manager.Stop()
+            };
+
+            _staticOptions.Add( stopHotkey );
         }
 
         public ICommand InsertItemCommand =>
@@ -77,7 +85,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public void Serialize( JObject json, bool global = false )
         {
-            JArray organizer = new JArray();
+            JObject organizer = new JObject();
+
+            SerializeStatic( organizer );
+
+            JArray entries = new JArray();
 
             foreach ( OrganizerEntry organizerEntry in Items )
             {
@@ -106,9 +118,10 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                 entryObj.Add( "Items", itemsArray );
 
-                organizer.Add( entryObj );
+                entries.Add( entryObj );
             }
 
+            organizer.Add( "Entries", entries );
             json?.Add( "Organizer", organizer );
         }
 
@@ -121,7 +134,19 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            foreach ( JToken token in json["Organizer"] )
+            JToken entriesArray = json["Organizer"];
+
+            if ( entriesArray is JObject obj && obj["Entries"] != null )
+            {
+                entriesArray = obj["Entries"];
+
+                if ( obj["Static"] != null )
+                {
+                    DeserializeStatic( obj );
+                }
+            }
+
+            foreach ( JToken token in entriesArray )
             {
                 OrganizerEntry entry = new OrganizerEntry
                 {
@@ -136,17 +161,20 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 entry.Action = ( hks, _ ) => Task.Run( async () => await _manager.Organize( entry ) );
                 entry.IsRunning = () => IsOrganizing;
 
-                foreach ( JToken itemToken in token["Items"] )
+                if ( token["Items"] is JArray )
                 {
-                    OrganizerItem item = new OrganizerItem
+                    foreach ( JToken itemToken in token["Items"] )
                     {
-                        Item = GetJsonValue( itemToken, "Item", string.Empty ),
-                        ID = GetJsonValue( itemToken, "ID", 0 ),
-                        Hue = GetJsonValue( itemToken, "Hue", -1 ),
-                        Amount = GetJsonValue( itemToken, "Amount", -1 )
-                    };
+                        OrganizerItem item = new OrganizerItem
+                        {
+                            Item = GetJsonValue( itemToken, "Item", string.Empty ),
+                            ID = GetJsonValue( itemToken, "ID", 0 ),
+                            Hue = GetJsonValue( itemToken, "Hue", -1 ),
+                            Amount = GetJsonValue( itemToken, "Amount", -1 )
+                        };
 
-                    entry.Items.Add( item );
+                        entry.Items.Add( item );
+                    }
                 }
 
                 Items.Add( entry );
@@ -171,6 +199,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
         {
             if ( !( arg is OrganizerEntry entry ) )
             {
+                return;
+            }
+
+            if ( IsOrganizing )
+            {
+                _manager.Stop();
+
                 return;
             }
 

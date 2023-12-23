@@ -1761,4 +1761,7 @@ Are you sure you wish to continue?</value>
   <data name="Skill Bonus" xml:space="preserve">
     <value>Skill Bonus</value>
   </data>
+  <data name="Stop Organizer" xml:space="preserve">
+    <value>Stop Organizer</value>
+  </data>
 </root>

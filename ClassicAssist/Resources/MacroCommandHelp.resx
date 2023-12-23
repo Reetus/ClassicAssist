@@ -1863,4 +1863,10 @@ PlayMacro("beep", 1, "moo")
   <data name="MAP_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>Map()</value>
   </data>
+  <data name="STOPORGANIZER_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Stops the organizer agent if currently running</value>
+  </data>
+  <data name="STOPORGANIZER_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>StopOrganizer()</value>
+  </data>
 </root>

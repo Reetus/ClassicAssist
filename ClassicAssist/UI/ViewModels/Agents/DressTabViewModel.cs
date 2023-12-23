@@ -6,6 +6,7 @@ using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Dress;
 using ClassicAssist.Data.Hotkeys;
+using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
@@ -32,7 +33,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private ICommand _clearDressItemsCommand;
         private ICommand _dressAllItemsCommand;
         private ICommand _importItemsCommand;
-        private bool _isDressingOrUndressing;
+        private bool _isDressing;
+        private bool _isUndressing;
+        private bool _isUndressingAll;
         private bool _moveConflictingItems;
         private ICommand _newDressEntryCommand;
         private RelayCommand _removeDressEntryCommand;
@@ -50,10 +53,18 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             _manager.Items = Items;
             _manager.InvokeByName = InvokeByName;
+
+            HotkeyCommand stopHotkey = new HotkeyCommand
+            {
+                Name = Strings.Stop_Dress, Action = ( entry, objects ) => _manager.Stop()
+            };
+
+            _staticOptions.Add( stopHotkey );
         }
 
         public ICommand AddDressItemCommand =>
-            _addDressItemCommand ?? ( _addDressItemCommand = new RelayCommandAsync( AddDressItem, o => true ) );
+            _addDressItemCommand ?? ( _addDressItemCommand =
+                new RelayCommandAsync( AddDressItem, o => !IsDressingOrUndressing ) );
 
         public ICommand ChangeDressTypeCommand =>
             _changeDressType ??
@@ -61,19 +72,46 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public ICommand ClearDressItemsCommand =>
             _clearDressItemsCommand ?? ( _clearDressItemsCommand = new RelayCommand( ClearDressItems,
-                o => SelectedItem != null && SelectedItem.Items.Any() ) );
+                o => SelectedItem != null && SelectedItem.Items.Any() && !IsDressingOrUndressing ) );
 
         public ICommand DressAllItemsCommand =>
             _dressAllItemsCommand ?? ( _dressAllItemsCommand = new RelayCommandAsync( DressAllItems,
-                o => SelectedItem != null && Engine.Connected && !IsDressingOrUndressing ) );
+                o => SelectedItem != null && Engine.Connected && !IsUndressing && !IsUndressingAll ) );
 
         public ICommand ImportItemsCommand =>
-            _importItemsCommand ?? ( _importItemsCommand = new RelayCommand( ImportItems, o => SelectedItem != null ) );
+            _importItemsCommand ?? ( _importItemsCommand =
+                new RelayCommand( ImportItems, o => SelectedItem != null && !IsDressingOrUndressing ) );
 
-        public bool IsDressingOrUndressing
+        public bool IsDressing
         {
-            get => _isDressingOrUndressing;
-            set => SetProperty( ref _isDressingOrUndressing, value );
+            get => _isDressing;
+            set
+            {
+                SetProperty( ref _isDressing, value );
+                OnPropertyChanged( nameof( IsDressingOrUndressing ) );
+            }
+        }
+
+        public bool IsDressingOrUndressing => IsDressing || IsUndressing || IsUndressingAll;
+
+        public bool IsUndressing
+        {
+            get => _isUndressing;
+            set
+            {
+                SetProperty( ref _isUndressing, value );
+                OnPropertyChanged( nameof( IsDressingOrUndressing ) );
+            }
+        }
+
+        public bool IsUndressingAll
+        {
+            get => _isUndressingAll;
+            set
+            {
+                SetProperty( ref _isUndressingAll, value );
+                OnPropertyChanged( nameof( IsDressingOrUndressing ) );
+            }
         }
 
         public bool MoveConflictingItems
@@ -106,16 +144,16 @@ namespace ClassicAssist.UI.ViewModels.Agents
         }
 
         public ICommand SetUndressContainerCommand =>
-            _setUndressContainerCommand ?? ( _setUndressContainerCommand =
-                new RelayCommandAsync( SetUndressContainer, o => _selectedItem != null ) );
+            _setUndressContainerCommand ?? ( _setUndressContainerCommand = new RelayCommandAsync( SetUndressContainer,
+                o => _selectedItem != null && !IsDressingOrUndressing ) );
 
         public ICommand UndressAllItemsCommand =>
-            _undressAllItemsCommand ?? ( _undressAllItemsCommand =
-                new RelayCommandAsync( UndressAllItems, o => Engine.Connected && !IsDressingOrUndressing ) );
+            _undressAllItemsCommand ?? ( _undressAllItemsCommand = new RelayCommandAsync( UndressAllItems,
+                o => Engine.Connected && !IsDressing && !IsUndressing ) );
 
         public ICommand UndressItemsCommand =>
             _undressItemsCommand ?? ( _undressItemsCommand = new RelayCommandAsync( UndressItems,
-                o => SelectedItem != null && Engine.Connected && !IsDressingOrUndressing ) );
+                o => SelectedItem != null && Engine.Connected && !IsDressing && !IsUndressingAll ) );
 
         public bool UseUO3DPackets
         {
@@ -140,6 +178,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     new JObject { ["MoveConflictingItems"] = MoveConflictingItems, ["UseUO3DPackets"] = UseUO3DPackets }
                 }
             };
+
+            SerializeStatic( dress );
 
             JArray dressEntries = new JArray();
 
@@ -189,8 +229,15 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             JToken dress = json["Dress"];
 
+            DeserializeStatic( dress as JObject );
+
             MoveConflictingItems = GetJsonValue( dress["Options"], "MoveConflictingItems", false );
             UseUO3DPackets = _manager.UseUO3DPackets = GetJsonValue( dress["Options"], "UseUO3DPackets", false );
+
+            if ( !( dress["Entries"] is JArray ) )
+            {
+                return;
+            }
 
             foreach ( JToken entry in dress["Entries"] )
             {
@@ -202,6 +249,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     Hotkey = new ShortcutKeys( entry["Keys"] )
                 };
 
+                // ReSharper disable once AsyncVoidLambda
                 dae.Action = async ( hks, _ ) => await DressAllItems( dae );
 
                 List<DressAgentItem> items = new List<DressAgentItem>();
@@ -244,15 +292,21 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
+            if ( IsUndressing )
+            {
+                _manager.Stop();
+                return;
+            }
+
             try
             {
-                IsDressingOrUndressing = true;
+                IsUndressing = true;
 
-                await dae.Undress();
+                await _manager.Undress( dae );
             }
             finally
             {
-                IsDressingOrUndressing = false;
+                IsUndressing = false;
             }
         }
 
@@ -329,7 +383,22 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private async Task UndressAllItems( object obj )
         {
-            await _manager.UndressAll();
+            if ( IsUndressingAll )
+            {
+                _manager.Stop();
+                return;
+            }
+
+            try
+            {
+                IsUndressingAll = true;
+
+                await _manager.UndressAll();
+            }
+            finally
+            {
+                IsUndressingAll = false;
+            }
         }
 
         private void NewDressEntry( object obj )
@@ -339,6 +408,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             DressAgentEntry dae =
                 new DressAgentEntry { Name = $"Dress-{count + 1}", Items = new List<DressAgentItem>() };
 
+            // ReSharper disable once AsyncVoidLambda
             dae.Action = async ( hks, _ ) => await DressAllItems( dae );
 
             Items.Add( dae );
@@ -362,9 +432,16 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            IsDressingOrUndressing = true;
+            if ( IsDressing )
+            {
+                _manager.Stop();
+
+                return;
+            }
+
+            IsDressing = true;
             await _manager.DressAllItems( dae, MoveConflictingItems );
-            IsDressingOrUndressing = false;
+            IsDressing = false;
         }
 
         private void ImportItems( object obj )

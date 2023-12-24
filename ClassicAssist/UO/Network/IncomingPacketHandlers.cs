@@ -385,7 +385,7 @@ namespace ClassicAssist.UO.Network
                         int distance = Math.Max( Math.Abs( x - Engine.Player.X ), Math.Abs( y - Engine.Player.Y ) );
                         Direction direction = UOMath.MapDirection( Engine.Player.X, Engine.Player.Y, x, y );
 
-                        if ( distance < 250 )
+                        if ( distance < 100 )
                         {
                             Commands.SystemMessage( string.Format(
                                 Strings.Resurrection_Point___0____Direction___1____Distance___2_, cliloc,

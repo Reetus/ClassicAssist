@@ -1,0 +1,108 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+    xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:screenshot="clr-namespace:ClassicAssist.UI.ViewModels.Agents.Screenshot"
+    xmlns:screenshotData="clr-namespace:ClassicAssist.Data.Screenshot"
+    xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+    xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
+    xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+    x:Class="ClassicAssist.UI.Views.Agents.Screenshot.ScreenshotMobileFilterWindow"
+    mc:Ignorable="d"
+    Title="{x:Static resources:Strings.Screenshot}" Height="450" Width="400"
+    Background="{DynamicResource ThemeWindowBackgroundBrush}" Topmost="True">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../../Resources/DarkTheme.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DebugToolBarStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <ValueConverters:IntToHexStringValueConverter x:Key="IntToHexStringValueConverter" />
+            <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.DataContext>
+        <screenshot:ScreenshotMobileFilterViewModel />
+    </Window.DataContext>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ToolBar Grid.Row="0" Margin="0,0,0,10">
+            <ToolBar.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Margin" Value="0,0,10,0" />
+                    <Setter Property="Padding" Value="5,0" />
+                </Style>
+            </ToolBar.Resources>
+            <ToolBar.Style>
+                <StaticResource ResourceKey="ToolBarStyle1" />
+            </ToolBar.Style>
+            <Button ToolTip="{x:Static resources:Strings.Add}" Command="{Binding AddCommand}">
+                <Image Source="{StaticResource PlusIcon}" Height="16" />
+            </Button>
+            <Button ToolTip="{x:Static resources:Strings.Remove}" Command="{Binding RemoveCommand}">
+                <Image Source="{StaticResource RemoveIcon}" Height="14" />
+            </Button>
+            <Button ToolTip="{x:Static resources:Strings.Target}" Command="{Binding TargetCommand}">
+                <Image Source="{StaticResource CrosshairIcon}" Height="16" />
+            </Button>
+        </ToolBar>
+        <ListView Grid.Row="1" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="✓" Width="25">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type screenshotData:ScreenshotMobileFilterEntry}">
+                                <CheckBox IsChecked="{Binding Enabled}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="{x:Static resources:Strings.ID}" Width="100" x:Name="idColumn">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type screenshotData:ScreenshotMobileFilterEntry}">
+                                <controls:EditTextBlock ShowIcon="True"
+                                                        Foreground="{StaticResource ThemeForegroundBrush}"
+                                                        Text="{Binding ID, Converter={StaticResource IntToHexStringValueConverter}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                                        Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=idColumn, Mode=OneWay}" />
+
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="{x:Static resources:Strings.Notes}" Width="200" x:Name="nameColumn">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type screenshotData:ScreenshotMobileFilterEntry}">
+                                <controls:EditTextBlock ShowIcon="True"
+                                                        Text="{Binding Note, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                                        Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=nameColumn, Mode=OneWay}" />
+
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Margin="0,10,0,0">
+            <Button Content="{x:Static resources:Strings.OK}" Command="{Binding OkCommand}" Padding="25,5"
+                    Margin="0,0,5,0">
+                <i:Interaction.Behaviors>
+                    <behaviours:CloseOnClickBehaviour />
+                </i:Interaction.Behaviors>
+            </Button>
+            <Button Content="{x:Static resources:Strings.Cancel}" Padding="25,5">
+                <i:Interaction.Behaviors>
+                    <behaviours:CloseOnClickBehaviour />
+                </i:Interaction.Behaviors>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

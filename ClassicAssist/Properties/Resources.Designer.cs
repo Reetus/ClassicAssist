@@ -140,6 +140,16 @@ namespace ClassicAssist.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap screenshot_logo {
+            get {
+                object obj = ResourceManager.GetObject("screenshot_logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to # All lines are trimmed. Empty lines and lines starting with &apos;#&apos; are ignored
         ///# Table for converting body values to item numbers
         ///# Format:

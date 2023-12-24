@@ -1,0 +1,244 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
+    xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+    xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+    xmlns:ValueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
+    x:Class="ClassicAssist.UI.Views.Agents.ScreenshotTabControl"
+    mc:Ignorable="d"
+    d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <ValueConverters:InverseBooleanValueConverter x:Key="InverseBooleanValueConverter" />
+            <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+            <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#FF8A8A8A" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <agents:ScreenshotTabViewModel />
+    </UserControl.DataContext>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ListBox x:Name="listBox" Grid.Row="0" ItemsSource="{Binding Screenshots}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.InputBindings>
+                                <MouseBinding MouseAction="LeftDoubleClick"
+                                              Command="{Binding DataContext.OpenScreenshotCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                                              CommandParameter="{Binding}" />
+                            </Grid.InputBindings>
+                            <Image Source="{Binding BitmapSource.Value}"
+                                   Width="{Binding ActualWidth, ConverterParameter=32, Converter={StaticResource CellWidthValueConverter}, ElementName=listBox, Mode=OneWay}"
+                                   Stretch="UniformToFill" />
+                            <Border Background="Black" CornerRadius="5" Padding="2" HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom" Margin="5" Opacity="0.8">
+                                <TextBlock Text="{Binding Extension}" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Grid.Row="1" Content="{x:Static resources:Strings.Open_Folder}" Margin="0,5,0,0"
+                    Command="{Binding OpenFolderCommand}" />
+        </Grid>
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+            <Grid Margin="10,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <GroupBox Grid.Row="0" Header="{x:Static resources:Strings.Options}">
+                    <StackPanel Margin="5">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type RadioButton}"
+                                       BasedOn="{StaticResource {x:Type RadioButton}}">
+                                    <Setter Property="Margin" Value="0,0,10,0" />
+                                </Style>
+                            </StackPanel.Resources>
+                            <RadioButton Content="{x:Static resources:Strings.UO_Only}"
+                                         IsChecked="{Binding Fullscreen, Converter={StaticResource InverseBooleanValueConverter}}" />
+                            <RadioButton Content="{x:Static resources:Strings.Fullscreen}"
+                                         IsChecked="{Binding Fullscreen}" />
+                        </StackPanel>
+                        <DockPanel Margin="0,5,0,0">
+                            <TextBlock Text="{x:Static resources:Strings.Filename_Format_}" DockPanel.Dock="Left"
+                                       Margin="0,0,5,0" VerticalAlignment="Center" />
+                            <TextBox Text="{Binding FilenameFormat}" DockPanel.Dock="Right" />
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Grid.Row="1" Margin="0,5,0,0">
+                    <GroupBox.Header>
+                        <CheckBox Content="{x:Static resources:Strings.Information_Bar}"
+                                  IsChecked="{Binding IncludeInfoBar}" />
+                    </GroupBox.Header>
+                    <StackPanel Margin="5">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IncludeInfoBar}" Value="False">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IncludeInfoBar}" Value="False">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                        <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Resources>
+                        <DockPanel>
+                            <TextBlock Text="{x:Static resources:Strings.Format_}" Margin="0,0,5,0"
+                                       DockPanel.Dock="Left" />
+                            <TextBox Text="{Binding Format}" IsEnabled="{Binding IncludeInfoBar}"
+                                     DockPanel.Dock="Right" />
+                        </DockPanel>
+                        <DockPanel Margin="0,5,0,0">
+                            <TextBlock Text="{x:Static resources:Strings.Font_Size_}" Margin="0,0,5,0"
+                                       DockPanel.Dock="Left" />
+                            <TextBox Text="{Binding FontSize}" IsEnabled="{Binding IncludeInfoBar}"
+                                     DockPanel.Dock="Right" />
+                        </DockPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <TextBlock Text="{x:Static resources:Strings.Font_Color_}" Margin="0,0,5,0" />
+                            <Button Command="{Binding SetFontColourCommand}"
+                                    CommandParameter="{Binding FontColor}">
+                                <Image Source="{StaticResource ColorWheelIcon}" Height="12" Width="12" />
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <TextBlock Text="{x:Static resources:Strings.Background_Color_}" Margin="0,0,5,0" />
+                            <Button Command="{Binding SetBackgroundColourCommand}"
+                                    CommandParameter="{Binding BackgroundColor}">
+                                <Image Source="{StaticResource ColorWheelIcon}" Height="12" Width="12" />
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Grid.Row="2" Margin="0,5,0,0">
+                    <GroupBox.Header>
+                        <CheckBox Content="{x:Static resources:Strings.Auto_Screenshot}"
+                                  IsChecked="{Binding AutoScreenshot}" />
+                    </GroupBox.Header>
+                    <StackPanel Margin="5">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding AutoScreenshot}" Value="False">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding MobileDeath}" Value="False">
+                                        <Setter Property="Foreground"
+                                                Value="{StaticResource DisabledForegroundBrush}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding AutoScreenshot}" Value="False">
+                                        <Setter Property="Foreground"
+                                                Value="{StaticResource DisabledForegroundBrush}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Resources>
+                        <CheckBox Content="{x:Static resources:Strings.Player_Death}" IsChecked="{Binding PlayerDeath}" />
+                        <DockPanel Margin="0,5,0,0">
+                            <TextBlock DockPanel.Dock="Left" Margin="0,0,5,0">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Source="{x:Static resources:Strings.Player_Death_Delay_}" />
+                                        <Binding Source="{x:Static resources:Strings._milliseconds_}" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}"
+                                           BasedOn="{StaticResource {x:Type TextBlock}}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding PlayerDeath}" Value="False">
+                                                <Setter Property="Foreground"
+                                                        Value="{StaticResource DisabledForegroundBrush}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding AutoScreenshot}" Value="False">
+                                                <Setter Property="Foreground"
+                                                        Value="{StaticResource DisabledForegroundBrush}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBox Text="{Binding PlayerDeathDelay}" DockPanel.Dock="Right">
+                                <TextBox.Style>
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding PlayerDeath}" Value="False">
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </DockPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <CheckBox Content="{x:Static resources:Strings.Mobile_Death}"
+                                      IsChecked="{Binding MobileDeath}"
+                                      Margin="0,0,5,0" />
+                            <Button Content="…" Padding="2,0" Command="{Binding ConfigureFilterCommand}" />
+                        </StackPanel>
+                        <DockPanel Margin="0,5,0,0">
+                            <TextBlock DockPanel.Dock="Left" Margin="0,0,5,0">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Source="{x:Static resources:Strings.Mobile_Death_Delay_}" />
+                                        <Binding Source="{x:Static resources:Strings._milliseconds_}" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <TextBox Text="{Binding MobileDeathDelay}" DockPanel.Dock="Right">
+                                <TextBox.Style>
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding MobileDeath}" Value="False">
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </DockPanel>
+                        <DockPanel Margin="0,5,0,0">
+                            <TextBlock Text="{x:Static resources:Strings.Max_Distance_}" DockPanel.Dock="Left"
+                                       Margin="0,0,5,0" />
+                            <TextBox Text="{Binding Distance}" DockPanel.Dock="Right" />
+                        </DockPanel>
+                        <CheckBox Content="{x:Static resources:Strings.Only_if_enemy}" Margin="0,5,0,0"
+                                  IsChecked="{Binding OnlyIfEnemy}" />
+                    </StackPanel>
+                </GroupBox>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

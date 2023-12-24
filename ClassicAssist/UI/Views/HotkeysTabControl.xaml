@@ -111,7 +111,18 @@
                               Grid.Row="1" IsEnabled="{Binding IsEnabled, ElementName=textBoxKey}" />
                     <CheckBox Content="{x:Static resources:Strings.Global}" Margin="10,0,10,5"
                               IsChecked="{Binding Path=SelectedItem.(local:HotkeyEntry.IsGlobal)}"
-                              Grid.Row="2" IsEnabled="{Binding IsEnabled, ElementName=textBoxKey}" />
+                              Grid.Row="2">
+                        <CheckBox.Style>
+                            <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
+                                <Setter Property="IsEnabled" Value="{Binding IsEnabled, ElementName=textBoxKey}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedItem.CanGlobal}" Value="False">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </CheckBox.Style>
+                    </CheckBox>
                 </Grid>
                 <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>

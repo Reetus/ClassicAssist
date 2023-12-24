@@ -56,7 +56,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             HotkeyCommand stopHotkey = new HotkeyCommand
             {
-                Name = Strings.Stop_Dress, Action = ( entry, objects ) => _manager.Stop()
+                Name = Strings.Stop_Dress, Action = ( entry, objects ) => _manager.Stop(), CanGlobal = false
             };
 
             _staticOptions.Add( stopHotkey );

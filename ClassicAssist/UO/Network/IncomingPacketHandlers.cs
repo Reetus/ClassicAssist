@@ -11,6 +11,7 @@ using ClassicAssist.Data.Abilities;
 using ClassicAssist.Data.Chat;
 using ClassicAssist.Data.Counters;
 using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Data.Screenshot;
 using ClassicAssist.Data.Skills;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Data.Vendors;
@@ -56,8 +57,6 @@ namespace ClassicAssist.UO.Network
 
         public delegate void dVendorSellDisplay( int serial, SellListEntry[] entries );
 
-        private const int HUE_RED = 36;
-
         private static PacketHandler[] _handlers;
         private static PacketHandler[] _extendedHandlers;
 
@@ -98,6 +97,7 @@ namespace ClassicAssist.UO.Network
             Register( 0x27, 2, OnResetHolding );
             Register( 0x28, 5, OnResetHolding );
             Register( 0x29, 1, OnResetHolding );
+            Register( 0x2C, 2, OnDeathStatus );
             Register( 0x2E, 15, OnItemEquipped );
             Register( 0x31, 0, OnUO3DPetWindow );
             Register( 0x3A, 0, OnSkillsList );
@@ -118,6 +118,7 @@ namespace ClassicAssist.UO.Network
             Register( 0xA8, 0, OnShardList );
             Register( 0xA9, 0, OnCharacterList );
             Register( 0xAE, 0, OnUnicodeText );
+            Register( 0xAF, 13, OnDeathAnimation );
             Register( 0xB0, 0, OnGenericGump );
             Register( 0xB2, 0, OnChatMessage );
             Register( 0xB9, 5, OnSupportedFeatures );
@@ -140,6 +141,34 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x21, 0, OnClearWeaponAbility );
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
             RegisterExtended( 0x26, 0, OnMovementSpeed );
+        }
+
+        private static void OnDeathAnimation( PacketReader reader )
+        {
+            int serial = reader.ReadInt32();
+
+            Mobile mobile = Engine.Mobiles.GetMobile( serial );
+
+            if ( mobile == null )
+            {
+                return;
+            }
+
+            ScreenshotManager manager = ScreenshotManager.GetInstance();
+            manager.OnMobileDeath( mobile );
+        }
+
+        private static void OnDeathStatus( PacketReader reader )
+        {
+            byte status = reader.ReadByte();
+
+            if ( status != 0 )
+            {
+                return;
+            }
+
+            ScreenshotManager manager = ScreenshotManager.GetInstance();
+            manager.OnPlayerDeath( Engine.Player?.Name );
         }
 
         private static void OnMovementSpeed( PacketReader reader )

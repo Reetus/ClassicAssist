@@ -113,6 +113,9 @@
     <Compile Update="UI\Controls\TextBoxKey.xaml.cs">
       <DependentUpon>TextBoxKey.xaml</DependentUpon>
     </Compile>
+    <Compile Update="UI\Views\Agents\Screenshot\ScreenshotMobileFilterWindow.xaml.cs">
+      <DependentUpon>ScreenshotMobileFilterWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\Views\Autoloot\ClilocSelectionWindow.xaml.cs">
       <DependentUpon>ClilocSelectionWindow.xaml</DependentUpon>
     </Compile>

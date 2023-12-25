@@ -221,7 +221,7 @@ namespace ClassicAssist.Data.Regions
 
         public static Region GetRegion( PlayerMobile player )
         {
-            return GetRegion( player.X, player.Y, (int) player.Map );
+            return player == null ? null : GetRegion( player.X, player.Y, (int) player.Map );
         }
 
         public static Region GetRegion( int x, int y, int map )

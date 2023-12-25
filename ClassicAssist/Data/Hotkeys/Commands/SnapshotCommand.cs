@@ -29,10 +29,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            DateTime now = DateTime.Now;
-            string fileName =
-                $"ClassicAssist-{now.Year}-{now.Month}-{now.Day}-{now.Hour}-{now.Minute}-{now.Second}.png";
-            bool result = MainCommands.Snapshot( 0, false, fileName );
+            (bool result, string fileName) = MainCommands.Snapshot( 0, false );
 
             if ( result )
             {

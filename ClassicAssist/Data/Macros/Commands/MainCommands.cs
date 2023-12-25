@@ -4,10 +4,9 @@ using System.Linq;
 using System.Media;
 using System.Threading;
 using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
 using Assistant;
 using ClassicAssist.Data.Hotkeys;
+using ClassicAssist.Data.Screenshot;
 using ClassicAssist.Helpers;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
@@ -304,7 +303,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 nameof( ParameterType.IntegerValue ), nameof( ParameterType.Boolean ),
                 nameof( ParameterType.String )
             } )]
-        public static bool Snapshot( int delay = 0, bool fullscreen = false, string fileName = "" )
+        public static (bool, string) Snapshot( int delay = 0, bool? fullscreen = null, string fileName = "" )
         {
             try
             {
@@ -313,70 +312,15 @@ namespace ClassicAssist.Data.Macros.Commands
                     Thread.Sleep( delay );
                 }
 
-                IntPtr screenDC;
-                int width, height;
+                ScreenshotManager manager = ScreenshotManager.GetInstance();
+                fileName = manager.TakeScreenshot( fullscreen, string.Empty, fileName );
 
-                if ( fullscreen )
-                {
-                    screenDC = GetDC( IntPtr.Zero );
-                    width = (int) SystemParameters.VirtualScreenWidth;
-                    height = (int) SystemParameters.VirtualScreenHeight;
-                }
-                else
-                {
-                    screenDC = GetDC( Engine.WindowHandle );
-                    GetClientRect( Engine.WindowHandle, out RECT rect );
-                    width = rect.Right - rect.Left;
-                    height = rect.Bottom - rect.Top;
-                }
-
-                IntPtr memDC = CreateCompatibleDC( screenDC );
-                IntPtr hBitmap = CreateCompatibleBitmap( screenDC, width, height );
-                SelectObject( memDC, hBitmap );
-
-                BitBlt( memDC, 0, 0, width, height, screenDC, 0, 0, TernaryRasterOperations.SRCCOPY );
-                BitmapSource bitmapSource = Imaging.CreateBitmapSourceFromHBitmap( hBitmap, IntPtr.Zero,
-                    Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions() );
-
-                DeleteObject( hBitmap );
-                ReleaseDC( IntPtr.Zero, screenDC );
-                ReleaseDC( IntPtr.Zero, memDC );
-
-                DateTime now = DateTime.Now;
-
-                if ( string.IsNullOrEmpty( fileName ) )
-                {
-                    fileName =
-                        $"ClassicAssist-{now.Year}-{now.Month}-{now.Day}-{now.Hour}-{now.Minute}-{now.Second}.png";
-                }
-
-                string filePath = fileName;
-
-                if ( !Path.IsPathRooted( fileName ) )
-                {
-                    string path = Path.Combine( Engine.StartupPath, "Screenshots" );
-
-                    if ( !Directory.Exists( path ) )
-                    {
-                        Directory.CreateDirectory( path );
-                    }
-
-                    filePath = Path.Combine( path, fileName );
-                }
-
-                using ( FileStream fileStream = new FileStream( filePath, FileMode.Create ) )
-                {
-                    BitmapEncoder encoder = new PngBitmapEncoder();
-                    encoder.Frames.Add( BitmapFrame.Create( bitmapSource ) );
-                    encoder.Save( fileStream );
-                }
-
-                return true;
+                return ( true, fileName );
             }
             catch ( Exception e )
             {
                 UOC.SystemMessage( e.Message, (int) SystemMessageHues.Red );
-                return false;
+                return ( false, null );
             }
         }
 
@@ -432,7 +376,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 }
 
                 Options.CurrentOptions.AutologinUsername = account;
-                Options.CurrentOptions.AutologinPassword = AssistantOptions.SavedPasswords[account];    
+                Options.CurrentOptions.AutologinPassword = AssistantOptions.SavedPasswords[account];
             }
 
             if ( serverIndex != -1 )

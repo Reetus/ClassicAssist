@@ -39,17 +39,17 @@ namespace ClassicAssist.Tests
         {
             bool setNull = json == null;
 
-            string path = Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location );
+            Engine.StartupPath = Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location );
 
-            _profilePath = Path.Combine( path, "Profiles" );
+            _profilePath = Path.Combine( Engine.StartupPath, "Profiles" );
 
             if ( File.Exists( Path.Combine( _profilePath, "settings.json" ) ) )
             {
                 File.Delete( Path.Combine( _profilePath, "settings.json" ) );
             }
 
-            IEnumerable<Type> allSettingProvider = Assembly.GetAssembly( typeof( Engine ) ).GetTypes()
-                .Where( t => typeof( ISettingProvider ).IsAssignableFrom( t ) && t.IsClass && !t.IsAbstract );
+            IEnumerable<Type> allSettingProvider = Assembly.GetAssembly( typeof( Engine ) ).GetTypes().Where( t =>
+                typeof( ISettingProvider ).IsAssignableFrom( t ) && t.IsClass && !t.IsAbstract );
 
             Options options = new Options();
 

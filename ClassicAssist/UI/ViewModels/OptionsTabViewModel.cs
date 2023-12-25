@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using ClassicAssist.Data;
+using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
@@ -96,6 +97,7 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "EntityCollectionViewerOptions", CurrentOptions.EntityCollectionViewerOptions.Serialize() );
             options.Add( "ExpireTargetsMS", CurrentOptions.ExpireTargetsMS );
             options.Add( "LogoutDisconnectedPrompt", CurrentOptions.LogoutDisconnectedPrompt );
+            options.Add( "DisableHotkeysLoad", CurrentOptions.DisableHotkeysLoad );
 
             json?.Add( "Options", options );
         }
@@ -192,6 +194,15 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.EntityCollectionViewerOptions.Deserialize( config?["EntityCollectionViewerOptions"] );
             CurrentOptions.ExpireTargetsMS = config?["ExpireTargetsMS"]?.ToObject<int>() ?? -1;
             CurrentOptions.LogoutDisconnectedPrompt = config?["LogoutDisconnectedPrompt"]?.ToObject<bool>() ?? false;
+            CurrentOptions.DisableHotkeysLoad = config?["DisableHotkeysLoad"]?.ToObject<bool>() ?? false;
+
+            if ( !CurrentOptions.DisableHotkeysLoad )
+            {
+                return;
+            }
+
+            HotkeyManager manager = HotkeyManager.GetInstance();
+            manager.Enabled = false;
         }
 
         private static void MacrosGumpChanged( object obj )

@@ -1830,4 +1830,7 @@ Are you sure you wish to continue?</value>
   <data name="Only if enemy" xml:space="preserve">
     <value>Only if enemy</value>
   </data>
+  <data name="Disable hotkeys on profile load" xml:space="preserve">
+    <value>Disable hotkeys on profile load</value>
+  </data>
 </root>

@@ -1357,6 +1357,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disable hotkeys on profile load.
+        /// </summary>
+        public static string Disable_hotkeys_on_profile_load {
+            get {
+                return ResourceManager.GetString("Disable hotkeys on profile load", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disable inside guardzone.
         /// </summary>
         public static string Disable_inside_guardzone {

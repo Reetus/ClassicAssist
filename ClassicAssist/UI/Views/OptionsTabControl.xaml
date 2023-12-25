@@ -127,6 +127,8 @@
                       IsChecked="{Binding CurrentOptions.DefaultMacroQuietMode}" />
             <CheckBox Content="{x:Static resources:Strings.Check_hands_before_potions}"
                       IsChecked="{Binding CurrentOptions.CheckHandsPotions}" />
+            <CheckBox Content="{x:Static resources:Strings.Disable_hotkeys_on_profile_load}"
+                      IsChecked="{Binding CurrentOptions.DisableHotkeysLoad}" />
         </StackPanel>
         <StackPanel x:Name="stackPanel" Grid.Column="1">
             <CheckBox IsChecked="{Binding CurrentOptions.PreventTargetingInnocentsInGuardzone}"
@@ -161,11 +163,11 @@
             <CheckBox Content="{x:Static resources:Strings.Abilities_Gump}"
                       IsChecked="{Binding CurrentOptions.AbilitiesGump}" />
             <CheckBox Content="{x:Static resources:Strings.Show_running_macros_gump}"
-                      IsChecked="{Binding CurrentOptions.MacrosGump}" Command="{Binding MacrosGumpChangedCommand}"/>
+                      IsChecked="{Binding CurrentOptions.MacrosGump}" Command="{Binding MacrosGumpChangedCommand}" />
             <StackPanel Margin="0,5,0,0">
                 <CheckBox Content="{x:Static resources:Strings.Transparent_background}"
                           IsChecked="{Binding CurrentOptions.MacrosGumpTransparent}" Margin="20,0,0,0"
-                          IsEnabled="{Binding CurrentOptions.MacrosGump}"  Command="{Binding MacrosGumpChangedCommand}"/>
+                          IsEnabled="{Binding CurrentOptions.MacrosGump}" Command="{Binding MacrosGumpChangedCommand}" />
                 <StackPanel Orientation="Horizontal" IsEnabled="{Binding CurrentOptions.MacrosGump}" Margin="20,0,0,0">
                     <Label Content="{x:Static resources:Strings.Width}" />
                     <TextBox Text="{Binding CurrentOptions.MacrosGumpWidth, Mode=TwoWay}" Width="50" Margin="5,0" />
@@ -206,7 +208,7 @@
                       CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
                       IsEnabled="{x:Static cliloc:Cliloc.CanUseCUOClilocLanguage}" />
             <CheckBox Content="{x:Static resources:Strings.Logout_on_disconnected_prompt}"
-                      IsChecked="{Binding CurrentOptions.LogoutDisconnectedPrompt}"/>
+                      IsChecked="{Binding CurrentOptions.LogoutDisconnectedPrompt}" />
         </StackPanel>
     </Grid>
 </UserControl>

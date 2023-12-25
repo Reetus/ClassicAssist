@@ -44,6 +44,7 @@ namespace ClassicAssist.Data
         private char _commandPrefix = '+';
         private bool _debug;
         private bool _defaultMacroQuietMode;
+        private bool _disableHotkeysLoad;
         private string _enemyTargetMessage;
         private EntityCollectionViewerOptions _entityCollectionViewerOptions = new EntityCollectionViewerOptions();
         private int _expireTargetsMs;
@@ -215,6 +216,12 @@ namespace ClassicAssist.Data
         {
             get => _defaultMacroQuietMode;
             set => SetProperty( ref _defaultMacroQuietMode, value );
+        }
+
+        public bool DisableHotkeysLoad
+        {
+            get => _disableHotkeysLoad;
+            set => SetProperty( ref _disableHotkeysLoad, value );
         }
 
         public string EnemyTargetMessage

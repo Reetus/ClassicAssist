@@ -2662,6 +2662,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Limit Hotkey Retrigger.
+        /// </summary>
+        public static string Limit_Hotkey_Retrigger {
+            get {
+                return ResourceManager.GetString("Limit Hotkey Retrigger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Limit Mouse Wheel Retrigger.
         /// </summary>
         public static string Limit_Mouse_Wheel_Retrigger {

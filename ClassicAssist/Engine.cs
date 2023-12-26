@@ -91,6 +91,7 @@ namespace Assistant
         private static OnMouse _onMouse;
 
         private static readonly DateTime[] _lastMouseAction = new DateTime[(int) MouseOptions.None];
+        private static readonly Dictionary<Key, DateTime> _lastKeyAction = new Dictionary<Key, DateTime>();
         private static readonly object _clientSendLock = new object();
         private static DateTime _nextPacketRecvTime;
 
@@ -310,16 +311,40 @@ namespace Assistant
         {
             Key keys = SDLKeyToKeys( key );
 
-            if ( pressed )
+            if ( !pressed )
             {
-                HotkeyPressedEvent?.Invoke( key, mod, keys, IntToModKey( mod ) );
-
-                bool pass = HotkeyManager.GetInstance().OnHotkeyPressed( keys, IntToModKey( mod ) );
-
-                return !pass;
+                return true;
             }
 
-            return true;
+            bool noexecute = false;
+
+            if ( Options.CurrentOptions.LimitHotkeyTrigger )
+            {
+                if ( _lastKeyAction.TryGetValue( keys, out DateTime lastAction ) )
+                {
+                    TimeSpan diff = DateTime.Now - lastAction;
+
+                    if ( diff < TimeSpan.FromMilliseconds( Options.CurrentOptions.LimitHotkeyTriggerMS ) )
+                    {
+                        noexecute = true;
+                    }
+                }
+            }
+
+            if ( !noexecute )
+            {
+                HotkeyPressedEvent?.Invoke( key, mod, keys, IntToModKey( mod ) );
+            }
+
+            ( bool found, bool pass ) =
+                HotkeyManager.GetInstance().OnHotkeyPressed( keys, IntToModKey( mod ), noexecute );
+
+            if ( found && !noexecute )
+            {
+                _lastKeyAction[keys] = DateTime.Now;
+            }
+
+            return !pass;
         }
 
         public static event dClientClosing ClientClosing;

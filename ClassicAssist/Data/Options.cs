@@ -89,6 +89,8 @@ namespace ClassicAssist.Data
         private bool _useExperimentalFizzleDetection;
         private bool _useObjectQueue;
         private int _useObjectQueueAmount = 5;
+        private bool _limitHotkeyTrigger;
+        private int _limitHotkeyTriggerMs;
 
         public bool AbilitiesGump
         {
@@ -302,6 +304,18 @@ namespace ClassicAssist.Data
         {
             get => _limitMouseWheelTriggerMS;
             set => SetProperty( ref _limitMouseWheelTriggerMS, value );
+        }
+
+        public bool LimitHotkeyTrigger
+        {
+            get => _limitHotkeyTrigger;
+            set => SetProperty(ref _limitHotkeyTrigger, value);
+        }
+
+        public int LimitHotkeyTriggerMS
+        {
+            get => _limitHotkeyTriggerMs;
+            set => SetProperty(ref _limitHotkeyTriggerMs, value);
         }
 
         public bool LogoutDisconnectedPrompt

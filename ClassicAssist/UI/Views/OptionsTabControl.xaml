@@ -125,6 +125,25 @@
                     <TextBlock Text="ms" TextWrapping="Wrap"
                                Margin="5,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding CurrentOptions.LimitHotkeyTrigger}" DataContext="{Binding}"
+                              VerticalAlignment="Center">
+                        <CheckBox.ContentTemplate>
+                            <ItemContainerTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{x:Static resources:Strings.Limit_Hotkey_Retrigger}"
+                                               Margin="0"
+                                               TextWrapping="Wrap" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </ItemContainerTemplate>
+                        </CheckBox.ContentTemplate>
+                    </CheckBox>
+                    <TextBox Width="40" Margin="10,0,10,0"
+                             Text="{Binding Path=Data.CurrentOptions.LimitHotkeyTriggerMS, Source={StaticResource proxy}}"
+                             TextWrapping="Wrap" />
+                    <TextBlock Text="ms" TextWrapping="Wrap"
+                               Margin="5,0,0,0" VerticalAlignment="Center" />
+                </StackPanel>
                 <CheckBox Content="{x:Static resources:Strings.Auto_accept_party_invites}"
                           IsChecked="{Binding CurrentOptions.AutoAcceptPartyInvite}" />
                 <CheckBox IsChecked="{Binding CurrentOptions.AutoAcceptPartyOnlyFromFriends}">

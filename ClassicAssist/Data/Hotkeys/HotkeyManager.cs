@@ -104,16 +104,17 @@ namespace ClassicAssist.Data.Hotkeys
             return _instance;
         }
 
-        public bool OnHotkeyPressed( Key keys, ModKey modifier )
+        public (bool, bool) OnHotkeyPressed( Key keys, ModKey modifier, bool noexecute )
         {
             lock ( _lock )
             {
                 bool filter = false;
+                bool found = false;
 
                 // Sanity check
                 if ( keys == Key.None )
                 {
-                    return false;
+                    return ( false, false );
                 }
 
                 foreach ( HotkeyCommand hke in Items.ToList().Where( hke => hke.Children != null ) )
@@ -132,10 +133,14 @@ namespace ClassicAssist.Data.Hotkeys
                             }
 
                             filter = !hks.PassToUO;
+                            found = true;
 
-                            AliasCommands.SetDefaultAliases();
+                            if ( !noexecute )
+                            {
+                                AliasCommands.SetDefaultAliases();
 
-                            Task.Run( () => { hks.Action.Invoke( hks, null ); } );
+                                Task.Run( () => { hks.Action.Invoke( hks, null ); } );
+                            }
 
                             break;
                         }
@@ -146,7 +151,7 @@ namespace ClassicAssist.Data.Hotkeys
                     }
                 }
 
-                return filter;
+                return ( found, filter );
             }
         }
 

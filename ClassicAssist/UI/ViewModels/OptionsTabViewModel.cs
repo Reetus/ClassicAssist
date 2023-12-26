@@ -66,6 +66,8 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "SmartTargetOption", CurrentOptions.SmartTargetOption.ToString() );
             options.Add( "LimitMouseWheelTrigger", CurrentOptions.LimitMouseWheelTrigger );
             options.Add( "LimitMouseWheelTriggerMS", CurrentOptions.LimitMouseWheelTriggerMS );
+            options.Add( "LimitHotkeyTrigger", CurrentOptions.LimitHotkeyTrigger );
+            options.Add( "LimitHotkeyTriggerMS", CurrentOptions.LimitHotkeyTriggerMS );
             options.Add( "AutoAcceptPartyInvite", CurrentOptions.AutoAcceptPartyInvite );
             options.Add( "AutoAcceptPartyOnlyFromFriends", CurrentOptions.AutoAcceptPartyOnlyFromFriends );
             options.Add( "PreventTargetingInnocentsInGuardzone", CurrentOptions.PreventTargetingInnocentsInGuardzone );
@@ -142,6 +144,8 @@ namespace ClassicAssist.UI.ViewModels
                 config?["SmartTargetOption"]?.ToObject<SmartTargetOption>() ?? SmartTargetOption.None;
             CurrentOptions.LimitMouseWheelTrigger = config?["LimitMouseWheelTrigger"]?.ToObject<bool>() ?? true;
             CurrentOptions.LimitMouseWheelTriggerMS = config?["LimitMouseWheelTriggerMS"]?.ToObject<int>() ?? 200;
+            CurrentOptions.LimitHotkeyTrigger = config?["LimitHotkeyTrigger"]?.ToObject<bool>() ?? false;
+            CurrentOptions.LimitHotkeyTriggerMS = config?["LimitHotkeyTriggerMS"]?.ToObject<int>() ?? 0;
             CurrentOptions.AutoAcceptPartyInvite = config?["AutoAcceptPartyInvite"]?.ToObject<bool>() ?? false;
             CurrentOptions.AutoAcceptPartyOnlyFromFriends =
                 config?["AutoAcceptPartyOnlyFromFriends"]?.ToObject<bool>() ?? false;

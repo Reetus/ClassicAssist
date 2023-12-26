@@ -1959,4 +1959,7 @@ Are you sure you wish to continue?</value>
   <data name="Disable hotkeys on profile load" xml:space="preserve">
     <value>Disable hotkeys on profile load</value>
   </data>
+  <data name="Limit Hotkey Retrigger" xml:space="preserve">
+    <value>Limit Hotkey Retrigger</value>
+  </data>
 </root>

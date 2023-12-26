@@ -85,11 +85,16 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public void Serialize( JObject json, bool global = false )
         {
-            JObject organizer = new JObject();
+            if ( json == null )
+            {
+                return;
+            }
 
-            SerializeStatic( organizer );
+            JArray organizer = new JArray();
 
-            JArray entries = new JArray();
+            JObject obj = new JObject();
+            SerializeStatic( obj );
+            json.Add( "OrganizerOptions", obj );
 
             foreach ( OrganizerEntry organizerEntry in Items )
             {
@@ -118,11 +123,10 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                 entryObj.Add( "Items", itemsArray );
 
-                entries.Add( entryObj );
+                organizer.Add( entryObj );
             }
 
-            organizer.Add( "Entries", entries );
-            json?.Add( "Organizer", organizer );
+            json.Add( "Organizer", organizer );
         }
 
         public void Deserialize( JObject json, Options options, bool global = false )
@@ -136,14 +140,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             JToken entriesArray = json["Organizer"];
 
-            if ( entriesArray is JObject obj && obj["Entries"] != null )
+            if ( json["OrganizerOptions"] is JObject obj )
             {
-                entriesArray = obj["Entries"];
-
-                if ( obj["Static"] != null )
-                {
-                    DeserializeStatic( obj );
-                }
+                DeserializeStatic( obj );
             }
 
             foreach ( JToken token in entriesArray )

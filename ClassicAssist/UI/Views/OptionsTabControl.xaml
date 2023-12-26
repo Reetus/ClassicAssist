@@ -5,12 +5,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
     xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
-    xmlns:misc="clr-namespace:ClassicAssist.Misc"
     xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
     xmlns:data="clr-namespace:ClassicAssist.Data"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:cliloc="clr-namespace:ClassicAssist.UO.Data"
+    xmlns:headered="clr-namespace:ClassicAssist.Controls.Headered;assembly=ClassicAssist.Controls"
+    xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+    xmlns:optionsTab="clr-namespace:ClassicAssist.UI.Views.OptionsTab"
     x:Class="ClassicAssist.UI.Views.OptionsTabControl"
     mc:Ignorable="d"
     d:DesignHeight="633.233" d:DesignWidth="798.666">
@@ -30,183 +31,161 @@
         <viewModels:OptionsTabViewModel />
     </UserControl.DataContext>
     <Grid Margin="5">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0">
-            <StackPanel.Resources>
-                <misc:BindingProxy x:Key="proxy" Data="{Binding}" />
-            </StackPanel.Resources>
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <Label Content="{x:Static resources:Strings.Language}" />
-                <ComboBox Margin="10,0,10,0"
-                          ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type misc1:Language}}}"
-                          x:Name="langCombo" SelectedItem="{x:Static data:AssistantOptions.LanguageOverride}"
-                          MinWidth="100">
-                    <i:Interaction.Behaviors>
-                        <misc1:ComboBoxBehavior CommandBinding="{Binding SetLanguageOverrideCommand}"
-                                                CommandParameter="{Binding SelectedItem, ElementName=langCombo}"
-                                                OnlyUserTriggered="True" />
-                    </i:Interaction.Behaviors>
-                </ComboBox>
+        <Grid.Resources>
+            <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource {x:Type ScrollViewer}}">
+                <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+            </Style>
+            <Style TargetType="{x:Type headered:HorizontalHeaderedTextBox}">
+                <Setter Property="Margin" Value="0,0,0,5" />
+            </Style>
+            <Style TargetType="{x:Type headered:HorizontalHeaderedContentControl}">
+                <Setter Property="Margin" Value="0,0,0,5" />
+            </Style>
+            <Style TargetType="{x:Type headered:HorizontalHeaderedComboBox}">
+                <Setter Property="Margin" Value="0,0,0,5" />
+            </Style>
+            <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource WrapTextStyle}">
+                <Setter Property="Margin" Value="0,0,0,5" />
+            </Style>
+            <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource {x:Type GroupBox}}">
+                <Setter Property="Margin" Value="0,0,0,5" />
+            </Style>
+        </Grid.Resources>
+        <controls:TwoColumnGrid>
+            <StackPanel x:Name="children">
+                <GroupBox Header="{x:Static resources:Strings.General}">
+                    <StackPanel Margin="5">
+                        <headered:HorizontalHeaderedContentControl Header="{x:Static resources:Strings.Language}">
+                            <ComboBox ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type misc1:Language}}}"
+                                      SelectedItem="{x:Static data:AssistantOptions.LanguageOverride}"
+                                      MinWidth="100">
+                                <i:Interaction.Behaviors>
+                                    <misc1:ComboBoxBehavior CommandBinding="{Binding SetLanguageOverrideCommand}"
+                                                            CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}}"
+                                                            OnlyUserTriggered="True" />
+                                </i:Interaction.Behaviors>
+                            </ComboBox>
+                        </headered:HorizontalHeaderedContentControl>
+                        <headered:HorizontalHeaderedContentControl
+                            Header="{x:Static resources:Strings.Command_Prefix_}">
+                            <ComboBox Text="{Binding CurrentOptions.CommandPrefix}">
+                                <ComboBoxItem Content="+" />
+                                <ComboBoxItem Content="=" />
+                            </ComboBox>
+                        </headered:HorizontalHeaderedContentControl>
+                        <CheckBox Content="{x:Static resources:Strings.Show_player___shard_name_in_CUO_title}"
+                                  IsChecked="{Binding CurrentOptions.SetUOTitle}" />
+                        <CheckBox Content="{x:Static resources:Strings.Show_Profile_Name_In_Title}"
+                                  IsChecked="{Binding CurrentOptions.ShowProfileNameWindowTitle}" />
+                        <CheckBox Content="{x:Static resources:Strings.Disable_hotkeys_on_profile_load}"
+                                  IsChecked="{Binding CurrentOptions.DisableHotkeysLoad}" />
+                        <CheckBox Content="{x:Static resources:Strings.Use_Cliloc_language_from_ClassicUO_settings}"
+                                  IsChecked="{x:Static data:AssistantOptions.UseCUOClilocLanguage}"
+                                  Command="{Binding SetUseClilocLanguageCommand}"
+                                  CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                                  IsEnabled="{x:Static cliloc:Cliloc.CanUseCUOClilocLanguage}" />
+                        <CheckBox Content="{x:Static resources:Strings.Logout_on_disconnected_prompt}"
+                                  IsChecked="{Binding CurrentOptions.LogoutDisconnectedPrompt}" />
+                        <controls:OptionedCheckBoxControl IsChecked="{Binding CurrentOptions.LimitMouseWheelTrigger}"
+                                                          Content="{x:Static resources:Strings.Limit_Mouse_Wheel_Retrigger}">
+                            <controls:OptionedCheckBoxControl.ChildContent>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox Width="40" Margin="10,0,10,0"
+                                             Text="{Binding CurrentOptions.LimitMouseWheelTriggerMS}"
+                                             TextWrapping="Wrap" />
+                                    <TextBlock Text="ms" TextWrapping="Wrap"
+                                               Margin="5,0,0,0" VerticalAlignment="Center" />
+
+                                </StackPanel>
+                            </controls:OptionedCheckBoxControl.ChildContent>
+                        </controls:OptionedCheckBoxControl>
+                        <controls:OptionedCheckBoxControl IsChecked="{Binding CurrentOptions.LimitHotkeyTrigger}"
+                                                          Content="{x:Static resources:Strings.Limit_Hotkey_Retrigger}">
+                            <controls:OptionedCheckBoxControl.ChildContent>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox Width="40" Margin="10,0,10,0"
+                                             Text="{Binding CurrentOptions.LimitHotkeyTriggerMS}"
+                                             TextWrapping="Wrap" />
+                                    <TextBlock Text="ms" TextWrapping="Wrap"
+                                               Margin="5,0,0,0" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </controls:OptionedCheckBoxControl.ChildContent>
+                        </controls:OptionedCheckBoxControl>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="{x:Static resources:Strings.Target}">
+                    <StackPanel Margin="5">
+                        <headered:HorizontalHeaderedComboBox Header="{x:Static resources:Strings.Smart_last_target_}"
+                                                             ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type data:SmartTargetOption}}}"
+                                                             SelectedItem="{Binding CurrentOptions.SmartTargetOption, Mode=TwoWay}" />
+                        <headered:HorizontalHeaderedTextBox
+                            Header="{x:Static resources:Strings.Last_target_message_  }"
+                            Text="{Binding CurrentOptions.LastTargetMessage}" />
+                        <headered:HorizontalHeaderedTextBox
+                            Header="{x:Static resources:Strings.Friend_target_message_}"
+                            Text="{Binding CurrentOptions.FriendTargetMessage}" />
+                        <headered:HorizontalHeaderedTextBox Header="{x:Static resources:Strings.Enemy_target_message_}"
+                                                            Text="{Binding CurrentOptions.EnemyTargetMessage}" />
+                        <controls:OptionedCheckBoxControl IsChecked="{Binding CurrentOptions.RangeCheckLastTarget}"
+                                                          Content="{x:Static resources:Strings.Range_check_last_target}">
+                            <controls:OptionedCheckBoxControl.ChildContent>
+                                <TextBox Margin="5,0,0,0" Width="40"
+                                         Text="{Binding CurrentOptions.RangeCheckLastTargetAmount}" />
+                            </controls:OptionedCheckBoxControl.ChildContent>
+                        </controls:OptionedCheckBoxControl>
+                        <CheckBox IsChecked="{Binding CurrentOptions.PreventTargetingInnocentsInGuardzone}"
+                                  ToolTip="{x:Static resources:Strings.Applies_to_hotkeys___macros_only_}"
+                                  Content="{x:Static resources:Strings.Prevent_targeting_innocents_in_guardzone}" />
+                        <CheckBox IsChecked="{Binding CurrentOptions.PreventAttackingInnocentsInGuardzone}"
+                                  ToolTip="{x:Static resources:Strings.Applies_to_hotkeys___macros_only_}"
+                                  Content="{x:Static resources:Strings.Prevent_attacking_innocents_in_guardzone}" />
+                        <optionsTab:QueueLastTargetControl DataContext="{Binding}" />
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="{x:Static resources:Strings.Macros}">
+                    <StackPanel Margin="5">
+                        <CheckBox Content="{x:Static resources:Strings.Sort_Macros_Alphabetical}"
+                                  IsChecked="{Binding CurrentOptions.SortMacrosAlphabetical}" />
+                        <CheckBox Content="{x:Static resources:Strings.Use_experimental_fizzle_detection}"
+                                  IsChecked="{Binding CurrentOptions.UseExperimentalFizzleDetection}" />
+                        <CheckBox Content="{x:Static resources:Strings.GetFriend_GetEnemy_uses_ignore_list}"
+                                  IsChecked="{Binding CurrentOptions.GetFriendEnemyUsesIgnoreList}" />
+                        <CheckBox Content="{x:Static resources:Strings.Macros_default_to_quiet_mode}"
+                                  IsChecked="{Binding CurrentOptions.DefaultMacroQuietMode}" />
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="{x:Static resources:Strings.Gumps}">
+                    <StackPanel Margin="5">
+                        <CheckBox Content="{x:Static resources:Strings.Abilities_Gump}"
+                                  IsChecked="{Binding CurrentOptions.AbilitiesGump}" />
+                        <optionsTab:MacrosGumpControl DataContext="{Binding}" />
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="{x:Static resources:Strings.Other}">
+                    <StackPanel Margin="5">
+                        <CheckBox Content="{x:Static resources:Strings.Use_death_screen_whilst_hidden}"
+                                  IsChecked="{Binding CurrentOptions.UseDeathScreenWhilstHidden}" />
+                        <CheckBox Content="{x:Static resources:Strings.Auto_accept_party_invites}"
+                                  IsChecked="{Binding CurrentOptions.AutoAcceptPartyInvite}" />
+                        <CheckBox IsChecked="{Binding CurrentOptions.AutoAcceptPartyOnlyFromFriends}"
+                                  Content="{x:Static resources:Strings.Auto_accept_only_from_friends}" />
+                        <CheckBox Content="{x:Static resources:Strings.Check_hands_before_potions}"
+                                  IsChecked="{Binding CurrentOptions.CheckHandsPotions}" />
+                        <CheckBox Content="{x:Static resources:Strings.Show_resurrection_waypoints}"
+                                  IsChecked="{Binding CurrentOptions.ShowResurrectionWaypoints}"
+                                  ToolTip="{x:Static resources:Strings.Requires_Server_Support}" />
+                        <CheckBox Content="{x:Static resources:Strings.Persist_Use_Once}"
+                                  IsChecked="{Binding CurrentOptions.PersistUseOnce, Mode=TwoWay}" />
+                        <controls:OptionedCheckBoxControl IsChecked="{Binding CurrentOptions.UseObjectQueue}"
+                                                          Content="{x:Static resources:Strings.Use_object_queue}">
+                            <controls:OptionedCheckBoxControl.ChildContent>
+                                <TextBox Width="40" Margin="5,0,0,0"
+                                         Text="{Binding CurrentOptions.UseObjectQueueAmount}" />
+                            </controls:OptionedCheckBoxControl.ChildContent>
+                        </controls:OptionedCheckBoxControl>
+                    </StackPanel>
+                </GroupBox>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <Label Content="{x:Static resources:Strings.Command_Prefix_}" />
-                <ComboBox Text="{Binding CurrentOptions.CommandPrefix}" Margin="10,0,10,0" Padding="10,2,10,2"
-                          MinWidth="50">
-                    <ComboBoxItem Content="+" />
-                    <ComboBoxItem Content="=" />
-                </ComboBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <Label Content="{x:Static resources:Strings.Smart_last_target_}" />
-                <ComboBox Text="{Binding CurrentOptions.SmartTargetOption, Mode=TwoWay}" Margin="10,0,10,0"
-                          ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type data:SmartTargetOption}}}"
-                          MinWidth="100" />
-            </StackPanel>
-            <CheckBox Content="{x:Static resources:Strings.Persist_Use_Once}"
-                      IsChecked="{Binding CurrentOptions.PersistUseOnce, Mode=TwoWay}" />
-            <CheckBox Content="{x:Static resources:Strings.Use_death_screen_whilst_hidden}"
-                      IsChecked="{Binding CurrentOptions.UseDeathScreenWhilstHidden}" />
-            <StackPanel Orientation="Horizontal">
-                <CheckBox IsChecked="{Binding CurrentOptions.RangeCheckLastTarget}" DataContext="{Binding}"
-                          VerticalAlignment="Center">
-                    <CheckBox.ContentTemplate>
-                        <ItemContainerTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{x:Static resources:Strings.Range_check_last_target}"
-                                           TextWrapping="Wrap" />
-                            </StackPanel>
-                        </ItemContainerTemplate>
-                    </CheckBox.ContentTemplate>
-                </CheckBox>
-                <TextBox Width="40" Margin="5,0,0,0"
-                         Text="{Binding Path=Data.CurrentOptions.RangeCheckLastTargetAmount, Source={StaticResource proxy}}" />
-            </StackPanel>
-            <CheckBox Content="{x:Static resources:Strings.Use_experimental_fizzle_detection}"
-                      IsChecked="{Binding CurrentOptions.UseExperimentalFizzleDetection}" />
-            <StackPanel Orientation="Horizontal">
-                <CheckBox IsChecked="{Binding CurrentOptions.UseObjectQueue}" DataContext="{Binding}"
-                          VerticalAlignment="Center">
-                    <CheckBox.ContentTemplate>
-                        <ItemContainerTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{x:Static resources:Strings.Use_object_queue}" TextWrapping="Wrap" />
-                            </StackPanel>
-                        </ItemContainerTemplate>
-                    </CheckBox.ContentTemplate>
-                </CheckBox>
-                <TextBox Width="40" Margin="5,0,0,0"
-                         Text="{Binding Path=Data.CurrentOptions.UseObjectQueueAmount, Source={StaticResource proxy}}" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <CheckBox IsChecked="{Binding CurrentOptions.LimitMouseWheelTrigger}" DataContext="{Binding}"
-                          VerticalAlignment="Center">
-                    <CheckBox.ContentTemplate>
-                        <ItemContainerTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{x:Static resources:Strings.Limit_Mouse_Wheel_Retrigger}" Margin="0"
-                                           TextWrapping="Wrap" VerticalAlignment="Center" />
-                            </StackPanel>
-                        </ItemContainerTemplate>
-                    </CheckBox.ContentTemplate>
-                </CheckBox>
-                <TextBox Width="40" Margin="10,0,10,0"
-                         Text="{Binding Path=Data.CurrentOptions.LimitMouseWheelTriggerMS, Source={StaticResource proxy}}"
-                         TextWrapping="Wrap" />
-                <TextBlock Text="ms" TextWrapping="Wrap"
-                           Margin="5,0,0,0" VerticalAlignment="Center" />
-            </StackPanel>
-            <CheckBox Content="{x:Static resources:Strings.Auto_accept_party_invites}"
-                      IsChecked="{Binding CurrentOptions.AutoAcceptPartyInvite}" />
-            <CheckBox IsChecked="{Binding CurrentOptions.AutoAcceptPartyOnlyFromFriends}">
-                <TextBlock Text="{x:Static resources:Strings.Auto_accept_only_from_friends}" TextWrapping="Wrap" />
-            </CheckBox>
-            <CheckBox Content="{x:Static resources:Strings.Macros_default_to_quiet_mode}"
-                      IsChecked="{Binding CurrentOptions.DefaultMacroQuietMode}" />
-            <CheckBox Content="{x:Static resources:Strings.Check_hands_before_potions}"
-                      IsChecked="{Binding CurrentOptions.CheckHandsPotions}" />
-        </StackPanel>
-        <StackPanel x:Name="stackPanel" Grid.Column="1">
-            <CheckBox IsChecked="{Binding CurrentOptions.PreventTargetingInnocentsInGuardzone}"
-                      ToolTip="{x:Static resources:Strings.Applies_to_hotkeys___macros_only_}">
-                <TextBlock Text="{x:Static resources:Strings.Prevent_targeting_innocents_in_guardzone}"
-                           TextWrapping="Wrap" />
-            </CheckBox>
-            <CheckBox IsChecked="{Binding CurrentOptions.PreventAttackingInnocentsInGuardzone}"
-                      ToolTip="{x:Static resources:Strings.Applies_to_hotkeys___macros_only_}">
-                <TextBlock Text="{x:Static resources:Strings.Prevent_attacking_innocents_in_guardzone}"
-                           TextWrapping="Wrap" />
-            </CheckBox>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Label Content="{x:Static resources:Strings.Last_target_message_}" Grid.Row="0" Grid.Column="0" />
-                <TextBox Text="{Binding CurrentOptions.LastTargetMessage}" Grid.Row="0" Grid.Column="1" />
-                <Label Content="{x:Static resources:Strings.Friend_target_message_}" Grid.Row="1" Grid.Column="0" />
-                <TextBox Text="{Binding CurrentOptions.FriendTargetMessage}" Grid.Row="1" Grid.Column="1" />
-                <Label Content="{x:Static resources:Strings.Enemy_target_message_}" Grid.Row="2" Grid.Column="0" />
-                <TextBox Text="{Binding CurrentOptions.EnemyTargetMessage}" Grid.Row="2" Grid.Column="1" />
-            </Grid>
-            <CheckBox Content="{x:Static resources:Strings.GetFriend_GetEnemy_uses_ignore_list}"
-                      IsChecked="{Binding CurrentOptions.GetFriendEnemyUsesIgnoreList}" />
-            <CheckBox Content="{x:Static resources:Strings.Abilities_Gump}"
-                      IsChecked="{Binding CurrentOptions.AbilitiesGump}" />
-            <CheckBox Content="{x:Static resources:Strings.Show_running_macros_gump}"
-                      IsChecked="{Binding CurrentOptions.MacrosGump}" Command="{Binding MacrosGumpChangedCommand}"/>
-            <StackPanel Margin="0,5,0,0">
-                <CheckBox Content="{x:Static resources:Strings.Transparent_background}"
-                          IsChecked="{Binding CurrentOptions.MacrosGumpTransparent}" Margin="20,0,0,0"
-                          IsEnabled="{Binding CurrentOptions.MacrosGump}"  Command="{Binding MacrosGumpChangedCommand}"/>
-                <StackPanel Orientation="Horizontal" IsEnabled="{Binding CurrentOptions.MacrosGump}" Margin="20,0,0,0">
-                    <Label Content="{x:Static resources:Strings.Width}" />
-                    <TextBox Text="{Binding CurrentOptions.MacrosGumpWidth, Mode=TwoWay}" Width="50" Margin="5,0" />
-                    <Label Content="{x:Static resources:Strings.Height}" />
-                    <TextBox Text="{Binding CurrentOptions.MacrosGumpHeight, Mode=TwoWay}" Width="50" Margin="5,0" />
-                    <Button Command="{Binding SelectMacroTextColorCommand}"
-                            ToolTip="{x:Static resources:Strings.Text_Color}"
-                            CommandParameter="{Binding CurrentOptions.MacrosGumpTextColor}">
-                        <Image Source="{StaticResource ColorWheelIcon}" Height="12" Width="12" />
-                    </Button>
-                </StackPanel>
-            </StackPanel>
-            <CheckBox Content="{x:Static resources:Strings.Show_player___shard_name_in_CUO_title}"
-                      IsChecked="{Binding CurrentOptions.SetUOTitle}" />
-            <CheckBox Content="{x:Static resources:Strings.Show_Profile_Name_In_Title}"
-                      IsChecked="{Binding CurrentOptions.ShowProfileNameWindowTitle}" />
-            <CheckBox Content="{x:Static resources:Strings.Queue_Last_Target___Target_Self}"
-                      IsChecked="{Binding CurrentOptions.QueueLastTarget}" />
-            <DockPanel IsEnabled="{Binding CurrentOptions.QueueLastTarget}" Margin="20,0,0,0">
-                <Label Content="{x:Static resources:Strings.Max_Target_Queue_Length_}" DockPanel.Dock="Left" />
-                <xctk:IntegerUpDown Minimum="1" Maximum="100" Value="{Binding CurrentOptions.MaxTargetQueueLength}"
-                                    Width="50" UpdateValueOnEnterKey="True" DockPanel.Dock="Right" Margin="10,0,0,0" />
-            </DockPanel>
-            <StackPanel Orientation="Horizontal" IsEnabled="{Binding CurrentOptions.QueueLastTarget}" Margin="20,0,0,0"
-                        ToolTip="{x:Static resources:Strings.Time_in_milliseconds___1_to_not_expire_}">
-                <Label Content="{x:Static resources:Strings.Expire_Targets_}" />
-                <TextBox Text="{Binding CurrentOptions.ExpireTargetsMS, Mode=TwoWay}" Width="75" Margin="10,0" />
-                <Label Content="ms" />
-            </StackPanel>
-            <CheckBox Content="{x:Static resources:Strings.Sort_Macros_Alphabetical}"
-                      IsChecked="{Binding CurrentOptions.SortMacrosAlphabetical}" />
-            <CheckBox Content="{x:Static resources:Strings.Show_resurrection_waypoints}"
-                      IsChecked="{Binding CurrentOptions.ShowResurrectionWaypoints}"
-                      ToolTip="{x:Static resources:Strings.Requires_Server_Support}" />
-            <CheckBox Content="{x:Static resources:Strings.Use_Cliloc_language_from_ClassicUO_settings}"
-                      IsChecked="{x:Static data:AssistantOptions.UseCUOClilocLanguage}"
-                      Command="{Binding SetUseClilocLanguageCommand}"
-                      CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
-                      IsEnabled="{x:Static cliloc:Cliloc.CanUseCUOClilocLanguage}" />
-            <CheckBox Content="{x:Static resources:Strings.Logout_on_disconnected_prompt}"
-                      IsChecked="{Binding CurrentOptions.LogoutDisconnectedPrompt}"/>
-        </StackPanel>
+        </controls:TwoColumnGrid>
     </Grid>
 </UserControl>

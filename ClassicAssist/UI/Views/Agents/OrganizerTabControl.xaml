@@ -55,7 +55,17 @@
             </Grid.Resources>
             <controls1:StretchyWrapPanel Grid.Row="0" Orientation="Horizontal">
                 <Button Content="{Binding PlayStopButtonText}"
-                        Command="{Binding OrganizeCommand}" CommandParameter="{Binding SelectedItem}" />
+                        Command="{Binding OrganizeCommand}" CommandParameter="{Binding SelectedItem}">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsOrganizing}" Value="True">
+                                    <Setter Property="Content" Value="{x:Static resources:Strings.Stop}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
                 <StackPanel Margin="5">
                     <CheckBox Content="{x:Static resources:Strings.Stack}" IsChecked="{Binding SelectedItem.Stack}" />
                 </StackPanel>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Misc;
@@ -24,6 +25,8 @@ namespace ClassicAssist.Data.Dress
             Layer.InnerTorso, Layer.MiddleTorso, Layer.Neck, Layer.OneHanded, Layer.OuterLegs, Layer.OuterTorso,
             Layer.Pants, Layer.Ring, Layer.Shirt, Layer.Shoes, Layer.Talisman, Layer.TwoHanded, Layer.Waist
         };
+
+        private CancellationTokenSource _cancellationTokenSource;
 
         private ObservableCollectionEx<DressAgentEntry> _items = new ObservableCollectionEx<DressAgentEntry>();
         private DressAgentEntry _temporaryDress;
@@ -84,6 +87,8 @@ namespace ClassicAssist.Data.Dress
             {
                 IsDressing = true;
 
+                _cancellationTokenSource = new CancellationTokenSource();
+
                 PlayerMobile player = Engine.Player;
 
                 if ( player == null )
@@ -112,7 +117,7 @@ namespace ClassicAssist.Data.Dress
 
                     foreach ( int item in items )
                     {
-                        await ActionPacketQueue.EnqueueDragDrop( item, 1, backpack, QueuePriority.Medium );
+                        await ActionPacketQueue.EnqueueDragDrop( item, 1, backpack, QueuePriority.Medium, cancellationToken: _cancellationTokenSource.Token );
                     }
                 }
             }
@@ -165,12 +170,42 @@ namespace ClassicAssist.Data.Dress
                 }
 
                 IsDressing = true;
+                _cancellationTokenSource = new CancellationTokenSource();
 
-                await dae.Dress( moveConflictingItems );
+                await dae.Dress( _cancellationTokenSource.Token, moveConflictingItems );
             }
             finally
             {
                 IsDressing = false;
+            }
+        }
+
+        public async Task Undress( DressAgentEntry dae )
+        {
+            try
+            {
+                if ( IsDressing )
+                {
+                    UO.Commands.SystemMessage( Strings.Dress_already_in_progress___, (int) SystemMessageHues.Red );
+                    return;
+                }
+
+                IsDressing = true;
+                _cancellationTokenSource = new CancellationTokenSource();
+
+                await dae.Undress( _cancellationTokenSource.Token );
+            }
+            finally
+            {
+                IsDressing = false;
+            }
+        }
+
+        public void Stop()
+        {
+            if ( IsDressing && !( _cancellationTokenSource?.IsCancellationRequested ?? false ) )
+            {
+                _cancellationTokenSource?.Cancel();
             }
         }
     }

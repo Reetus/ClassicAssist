@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using ClassicAssist.Data;
+using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
@@ -65,6 +66,8 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "SmartTargetOption", CurrentOptions.SmartTargetOption.ToString() );
             options.Add( "LimitMouseWheelTrigger", CurrentOptions.LimitMouseWheelTrigger );
             options.Add( "LimitMouseWheelTriggerMS", CurrentOptions.LimitMouseWheelTriggerMS );
+            options.Add( "LimitHotkeyTrigger", CurrentOptions.LimitHotkeyTrigger );
+            options.Add( "LimitHotkeyTriggerMS", CurrentOptions.LimitHotkeyTriggerMS );
             options.Add( "AutoAcceptPartyInvite", CurrentOptions.AutoAcceptPartyInvite );
             options.Add( "AutoAcceptPartyOnlyFromFriends", CurrentOptions.AutoAcceptPartyOnlyFromFriends );
             options.Add( "PreventTargetingInnocentsInGuardzone", CurrentOptions.PreventTargetingInnocentsInGuardzone );
@@ -96,6 +99,7 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "EntityCollectionViewerOptions", CurrentOptions.EntityCollectionViewerOptions.Serialize() );
             options.Add( "ExpireTargetsMS", CurrentOptions.ExpireTargetsMS );
             options.Add( "LogoutDisconnectedPrompt", CurrentOptions.LogoutDisconnectedPrompt );
+            options.Add( "DisableHotkeysLoad", CurrentOptions.DisableHotkeysLoad );
 
             json?.Add( "Options", options );
         }
@@ -140,6 +144,8 @@ namespace ClassicAssist.UI.ViewModels
                 config?["SmartTargetOption"]?.ToObject<SmartTargetOption>() ?? SmartTargetOption.None;
             CurrentOptions.LimitMouseWheelTrigger = config?["LimitMouseWheelTrigger"]?.ToObject<bool>() ?? true;
             CurrentOptions.LimitMouseWheelTriggerMS = config?["LimitMouseWheelTriggerMS"]?.ToObject<int>() ?? 200;
+            CurrentOptions.LimitHotkeyTrigger = config?["LimitHotkeyTrigger"]?.ToObject<bool>() ?? false;
+            CurrentOptions.LimitHotkeyTriggerMS = config?["LimitHotkeyTriggerMS"]?.ToObject<int>() ?? 0;
             CurrentOptions.AutoAcceptPartyInvite = config?["AutoAcceptPartyInvite"]?.ToObject<bool>() ?? false;
             CurrentOptions.AutoAcceptPartyOnlyFromFriends =
                 config?["AutoAcceptPartyOnlyFromFriends"]?.ToObject<bool>() ?? false;
@@ -192,6 +198,15 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.EntityCollectionViewerOptions.Deserialize( config?["EntityCollectionViewerOptions"] );
             CurrentOptions.ExpireTargetsMS = config?["ExpireTargetsMS"]?.ToObject<int>() ?? -1;
             CurrentOptions.LogoutDisconnectedPrompt = config?["LogoutDisconnectedPrompt"]?.ToObject<bool>() ?? false;
+            CurrentOptions.DisableHotkeysLoad = config?["DisableHotkeysLoad"]?.ToObject<bool>() ?? false;
+
+            if ( !CurrentOptions.DisableHotkeysLoad )
+            {
+                return;
+            }
+
+            HotkeyManager manager = HotkeyManager.GetInstance();
+            manager.Enabled = false;
         }
 
         private static void MacrosGumpChanged( object obj )

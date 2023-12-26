@@ -70,34 +70,40 @@
                 </Grid>
             </Grid>
         </GroupBox>
-        <Grid Grid.Column="1" Margin="5,15,0,0">
+        <Grid Grid.Column="1">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0">
-                <CheckBox Content="{x:Static r:Strings.Always_On_Top}" IsChecked="{Binding CurrentOptions.AlwaysOnTop}" />
-                <CheckBox Content="{x:Static r:Strings.Minimize_to_system_tray}" IsChecked="{Binding Options.SysTray}" />
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel.Resources>
-                        <misc:BindingProxy x:Key="proxy" Data="{Binding}" />
-                    </StackPanel.Resources>
-                    <CheckBox IsChecked="{Binding Options.ActionDelay}" DataContext="{Binding}">
-                        <CheckBox.ContentTemplate>
-                            <ItemContainerTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="{x:Static r:Strings.Action_Delay_}" Margin="0" />
-                                    <TextBox Width="40" Margin="10,0,10,0"
-                                             Text="{Binding Path=Data.Options.ActionDelayMS, Source={StaticResource proxy}}" />
-                                    <Label Content="ms" Margin="0" Padding="0" />
-                                </StackPanel>
-                            </ItemContainerTemplate>
-                        </CheckBox.ContentTemplate>
-                    </CheckBox>
+            <GroupBox Header="{x:Static r:Strings.Options}" Grid.Row="0" Margin="5">
+                <StackPanel Margin="5">
+                    <CheckBox Content="{x:Static r:Strings.Always_On_Top}"
+                              IsChecked="{Binding CurrentOptions.AlwaysOnTop}" />
+                    <CheckBox Content="{x:Static r:Strings.Minimize_to_system_tray}"
+                              IsChecked="{Binding Options.SysTray}" />
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel.Resources>
+                            <misc:BindingProxy x:Key="proxy" Data="{Binding}" />
+                        </StackPanel.Resources>
+                        <CheckBox IsChecked="{Binding Options.ActionDelay}" DataContext="{Binding}">
+                            <CheckBox.ContentTemplate>
+                                <ItemContainerTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="{x:Static r:Strings.Action_Delay_}" Margin="0" />
+                                        <TextBox Width="40" Margin="10,0,10,0"
+                                                 Text="{Binding Path=Data.Options.ActionDelayMS, Source={StaticResource proxy}}" />
+                                        <Label Content="ms" Margin="0" Padding="0" />
+                                    </StackPanel>
+                                </ItemContainerTemplate>
+                            </CheckBox.ContentTemplate>
+                        </CheckBox>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
-            <Grid Grid.Row="1">
+            </GroupBox>
+            <Control Grid.Row="1" />
+            <Grid Grid.Row="2">
                 <GroupBox Header="{x:Static r:Strings.Saved_Passwords_}" Margin="5" Padding="5">
                     <StackPanel>
                         <Grid>
@@ -135,7 +141,7 @@
                     </StackPanel>
                 </GroupBox>
             </Grid>
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="3">
                 <GroupBox Header="{x:Static r:Strings.Profiles}" Margin="5">
                     <Grid>
                         <Grid.ColumnDefinitions>

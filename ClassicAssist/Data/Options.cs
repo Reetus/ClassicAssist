@@ -44,6 +44,7 @@ namespace ClassicAssist.Data
         private char _commandPrefix = '+';
         private bool _debug;
         private bool _defaultMacroQuietMode;
+        private bool _disableHotkeysLoad;
         private string _enemyTargetMessage;
         private EntityCollectionViewerOptions _entityCollectionViewerOptions = new EntityCollectionViewerOptions();
         private int _expireTargetsMs;
@@ -88,6 +89,8 @@ namespace ClassicAssist.Data
         private bool _useExperimentalFizzleDetection;
         private bool _useObjectQueue;
         private int _useObjectQueueAmount = 5;
+        private bool _limitHotkeyTrigger;
+        private int _limitHotkeyTriggerMs;
 
         public bool AbilitiesGump
         {
@@ -217,6 +220,12 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _defaultMacroQuietMode, value );
         }
 
+        public bool DisableHotkeysLoad
+        {
+            get => _disableHotkeysLoad;
+            set => SetProperty( ref _disableHotkeysLoad, value );
+        }
+
         public string EnemyTargetMessage
         {
             get => _enemyTargetMessage;
@@ -295,6 +304,18 @@ namespace ClassicAssist.Data
         {
             get => _limitMouseWheelTriggerMS;
             set => SetProperty( ref _limitMouseWheelTriggerMS, value );
+        }
+
+        public bool LimitHotkeyTrigger
+        {
+            get => _limitHotkeyTrigger;
+            set => SetProperty(ref _limitHotkeyTrigger, value);
+        }
+
+        public int LimitHotkeyTriggerMS
+        {
+            get => _limitHotkeyTriggerMs;
+            set => SetProperty(ref _limitHotkeyTriggerMs, value);
         }
 
         public bool LogoutDisconnectedPrompt

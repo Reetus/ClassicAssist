@@ -35,5 +35,8 @@
         <TabItem Header="{x:Static resources:Strings.Autoloot}">
             <agents:AutolootTabControl />
         </TabItem>
+        <TabItem Header="{x:Static resources:Strings.Screenshot}">
+            <agents:ScreenshotTabControl />
+        </TabItem>
     </TabControl>
 </UserControl>

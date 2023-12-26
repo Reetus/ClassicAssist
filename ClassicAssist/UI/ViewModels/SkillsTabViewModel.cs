@@ -97,7 +97,10 @@ namespace ClassicAssist.UI.ViewModels
 
                 skills.Add( new JObject
                 {
-                    { "Name", hks.Name }, { "Keys", hks.Hotkey.ToJObject() }, { "PassToUO", hks.PassToUO }
+                    { "Name", hks.Name },
+                    { "Keys", hks.Hotkey.ToJObject() },
+                    { "PassToUO", hks.PassToUO },
+                    { "Disableable", hks.Disableable }
                 } );
             }
 
@@ -138,7 +141,8 @@ namespace ClassicAssist.UI.ViewModels
                     }
 
                     hke.Hotkey = new ShortcutKeys( token["Keys"] );
-                    hke.PassToUO = token["PassToUO"].ToObject<bool>();
+                    hke.PassToUO = token["PassToUO"]?.ToObject<bool>() ?? true;
+                    hke.Disableable = token["Disableable"]?.ToObject<bool>() ?? true;
                 }
             }
 

@@ -167,7 +167,7 @@
                                             </controls:EditTextBlock.Resources>
                                         </controls:EditTextBlock>
                                         <TextBlock x:Name="Hotkey" Text="{Binding Hotkey}" Margin="2,0,0,0"
-                                                   Grid.Column="1" FontSize="7" Foreground="SpringGreen"
+                                                   Grid.Column="1" FontSize="9" Foreground="SpringGreen"
                                                    TextAlignment="Right"
                                                    VerticalAlignment="Center" HorizontalAlignment="Right">
                                             <TextBlock.Style>

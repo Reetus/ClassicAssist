@@ -1,8 +1,9 @@
-﻿using System.Collections.Specialized;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Shared.UI;
-using ClassicAssist.UI.Misc;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.UI.ViewModels
@@ -11,6 +12,7 @@ namespace ClassicAssist.UI.ViewModels
     {
         private readonly HotkeyCommand _category;
         private ObservableCollectionEx<T> _items = new ObservableCollectionEx<T>();
+        protected List<HotkeyCommand> _staticOptions = new List<HotkeyCommand>();
 
         protected HotkeyEntryViewModel( string name )
         {
@@ -40,6 +42,14 @@ namespace ClassicAssist.UI.ViewModels
         {
             _category.Children = new ObservableCollectionEx<HotkeyEntry>();
 
+            if ( _staticOptions.Any() )
+            {
+                foreach ( HotkeyCommand hotkey in _staticOptions )
+                {
+                    _category.Children.Add( hotkey );
+                }
+            }
+
             foreach ( T item in Items )
             {
                 _category.Children.Add( item );
@@ -59,6 +69,45 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             return json[name] == null ? defaultValue : json[name].ToObject<T2>();
+        }
+
+        protected void SerializeStatic( JObject organizer )
+        {
+            JObject staticHotkeys = new JObject();
+
+            foreach ( HotkeyCommand option in _staticOptions )
+            {
+                JObject obj = new JObject
+                {
+                    { "Keys", option.Hotkey.ToJObject() },
+                    { "PassToUO", option.PassToUO },
+                    { "Disableable", option.Disableable }
+                };
+
+                staticHotkeys.Add( option.Name, obj );
+            }
+
+            organizer.Add( "Static", staticHotkeys );
+        }
+
+        protected void DeserializeStatic( JObject obj )
+        {
+            if ( !( obj?["Static"] is JObject ) )
+            {
+                return;
+            }
+
+            foreach ( HotkeyCommand option in _staticOptions )
+            {
+                if ( !( obj["Static"][option.Name] is JObject json ) )
+                {
+                    continue;
+                }
+
+                option.Hotkey = new ShortcutKeys( json["Keys"] );
+                option.PassToUO = GetJsonValue( json, "PassToUO", option.PassToUO );
+                option.Disableable = GetJsonValue( json, "Disableable", option.Disableable );
+            }
         }
     }
 }

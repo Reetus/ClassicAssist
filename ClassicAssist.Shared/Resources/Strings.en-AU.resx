@@ -1761,4 +1761,82 @@ Are you sure you wish to continue?</value>
   <data name="Skill Bonus" xml:space="preserve">
     <value>Skill Bonus</value>
   </data>
+  <data name="Stop Organizer" xml:space="preserve">
+    <value>Stop Organizer</value>
+  </data>
+  <data name="Stop Dress" xml:space="preserve">
+    <value>Stop Dress</value>
+  </data>
+  <data name="Screenshot" xml:space="preserve">
+    <value>Screenshot</value>
+  </data>
+  <data name="Open Folder" xml:space="preserve">
+    <value>Open Folder</value>
+  </data>
+  <data name="Include Player Name" xml:space="preserve">
+    <value>Include Player Name</value>
+  </data>
+  <data name="Include Shard Name" xml:space="preserve">
+    <value>Include Shard Name</value>
+  </data>
+  <data name="Include Timestamp" xml:space="preserve">
+    <value>Include Timestamp</value>
+  </data>
+  <data name="Information Bar" xml:space="preserve">
+    <value>Information Bar</value>
+  </data>
+  <data name="Format:" xml:space="preserve">
+    <value>Format:</value>
+  </data>
+  <data name="Font Color:" xml:space="preserve">
+    <value>Font Colour:</value>
+  </data>
+  <data name="Background Color:" xml:space="preserve">
+    <value>Background Colour:</value>
+  </data>
+  <data name="Font Size:" xml:space="preserve">
+    <value>Font Size:</value>
+  </data>
+  <data name="Auto Screenshot" xml:space="preserve">
+    <value>Auto Screenshot</value>
+  </data>
+  <data name="Player Death" xml:space="preserve">
+    <value>Player Death</value>
+  </data>
+  <data name="Filename Format:" xml:space="preserve">
+    <value>Filename Format:</value>
+  </data>
+  <data name="Mobile Death" xml:space="preserve">
+    <value>Mobile Death</value>
+  </data>
+  <data name="Player Death Delay:" xml:space="preserve">
+    <value>Player Death Delay:</value>
+  </data>
+  <data name="Mobile Death Delay:" xml:space="preserve">
+    <value>Mobile Death Delay:</value>
+  </data>
+  <data name="(milliseconds)" xml:space="preserve">
+    <value>(milliseconds)</value>
+  </data>
+  <data name="UO Only" xml:space="preserve">
+    <value>UO Only</value>
+  </data>
+  <data name="Fullscreen" xml:space="preserve">
+    <value>Fullscreen</value>
+  </data>
+  <data name="Max Distance:" xml:space="preserve">
+    <value>Max Distance:</value>
+  </data>
+  <data name="Only if enemy" xml:space="preserve">
+    <value>Only if enemy</value>
+  </data>
+  <data name="Disable hotkeys on profile load" xml:space="preserve">
+    <value>Disable hotkeys on profile load</value>
+  </data>
+  <data name="Limit Hotkey Retrigger" xml:space="preserve">
+    <value>Limit Hotkey Retrigger</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
 </root>

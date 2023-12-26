@@ -42,6 +42,14 @@ namespace ClassicAssist.Data.Organizer
             OnPropertyChanged( nameof( Items ) );
         }
 
+        public void Stop()
+        {
+            if ( IsOrganizing && !( _cancellationTokenSource?.IsCancellationRequested ?? false ) )
+            {
+                _cancellationTokenSource?.Cancel();
+            }
+        }
+
         internal async Task Organize( OrganizerEntry entry, int sourceContainer = 0, int destinationContainer = 0 )
         {
             if ( IsOrganizing )

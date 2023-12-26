@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="ClassicAssist.UI.Views.OptionsTab.QueueLastTargetControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:OptionsTabViewModel}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel>
+        <CheckBox Content="{x:Static resources:Strings.Queue_Last_Target___Target_Self}"
+                  IsChecked="{Binding CurrentOptions.QueueLastTarget}" />
+        <DockPanel IsEnabled="{Binding CurrentOptions.QueueLastTarget}" Margin="20,0,0,0">
+            <Label Content="{x:Static resources:Strings.Max_Target_Queue_Length_}" DockPanel.Dock="Left" />
+            <xctk:IntegerUpDown Minimum="1" Maximum="100" Value="{Binding CurrentOptions.MaxTargetQueueLength}"
+                                Width="50" UpdateValueOnEnterKey="True" DockPanel.Dock="Right"
+                                Margin="10,0,0,0" />
+        </DockPanel>
+        <StackPanel Orientation="Horizontal" IsEnabled="{Binding CurrentOptions.QueueLastTarget}"
+                    Margin="20,0,0,0"
+                    ToolTip="{x:Static resources:Strings.Time_in_milliseconds___1_to_not_expire_}">
+            <Label Content="{x:Static resources:Strings.Expire_Targets_}" />
+            <TextBox Text="{Binding CurrentOptions.ExpireTargetsMS, Mode=TwoWay}" Width="75" Margin="10,0" />
+            <Label Content="ms" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

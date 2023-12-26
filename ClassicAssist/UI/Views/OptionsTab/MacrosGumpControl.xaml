@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="ClassicAssist.UI.Views.OptionsTab.MacrosGumpControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:OptionsTabViewModel}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel>
+        <CheckBox Content="{x:Static resources:Strings.Show_running_macros_gump}"
+                  IsChecked="{Binding CurrentOptions.MacrosGump}" Command="{Binding MacrosGumpChangedCommand}" />
+        <StackPanel Margin="0,5,0,0">
+            <CheckBox Content="{x:Static resources:Strings.Transparent_background}"
+                      IsChecked="{Binding CurrentOptions.MacrosGumpTransparent}" Margin="20,0,0,0"
+                      IsEnabled="{Binding CurrentOptions.MacrosGump}"
+                      Command="{Binding MacrosGumpChangedCommand}" />
+            <StackPanel Orientation="Horizontal" IsEnabled="{Binding CurrentOptions.MacrosGump}"
+                        Margin="20,5,0,0">
+                <Label Content="{x:Static resources:Strings.Width}" />
+                <TextBox Text="{Binding CurrentOptions.MacrosGumpWidth, Mode=TwoWay}" Width="50" Margin="5,0" />
+                <Label Content="{x:Static resources:Strings.Height}" />
+                <TextBox Text="{Binding CurrentOptions.MacrosGumpHeight, Mode=TwoWay}" Width="50" Margin="5,0" />
+                <Button Command="{Binding SelectMacroTextColorCommand}"
+                        ToolTip="{x:Static resources:Strings.Text_Color}"
+                        CommandParameter="{Binding CurrentOptions.MacrosGumpTextColor}">
+                    <Image Source="{StaticResource ColorWheelIcon}" Height="12" Width="12" />
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

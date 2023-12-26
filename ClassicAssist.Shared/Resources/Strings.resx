@@ -1962,4 +1962,7 @@ Are you sure you wish to continue?</value>
   <data name="Limit Hotkey Retrigger" xml:space="preserve">
     <value>Limit Hotkey Retrigger</value>
   </data>
+  <data name="Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
 </root>

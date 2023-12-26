@@ -31,7 +31,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ClearableComboBox}">
-                    <Grid>
+                    <Grid x:Name="ToggleGrid">
                         <TextBox x:Name="PART_EditableTextBox"
                                  IsReadOnly="{TemplateBinding IsReadOnly}"
                                  Focusable="True"
@@ -126,6 +126,15 @@
                         </Popup>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseLeftButtonDown" SourceName="ToggleGrid">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="IsDropDownOpen">
+                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True" />
+                                    </BooleanAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="NonEditableBorder" Property="Background"
                                     Value="{DynamicResource ComboBoxNonEditableHoverBackgroundBrush}" />

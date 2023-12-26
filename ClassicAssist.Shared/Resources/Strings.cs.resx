@@ -1617,4 +1617,7 @@ Určitě chceš pokračovat?</value>
   <data name="Deactivated following" xml:space="preserve">
     <value>Deaktivováno sledování</value>
   </data>
+  <data name="Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
 </root>

@@ -149,10 +149,10 @@ namespace ClassicAssist.Data
             SavePasswords = json["SavePasswords"]?.ToObject<bool>() ?? false;
             SavePasswordsOnlyBlank = json["SavePasswordsOnlyBlank"]?.ToObject<bool>() ?? false;
             UserId = json["UserId"]?.ToObject<string>() ?? Guid.NewGuid().ToString();
-            WindowWidth = json["WindowWidth"]?.ToObject<int>() ?? 625;
-            WindowHeight = json["WindowHeight"]?.ToObject<int>() ?? 500;
+            WindowWidth = json["WindowWidth"]?.ToObject<int>() ?? 700;
+            WindowHeight = json["WindowHeight"]?.ToObject<int>() ?? 570;
             UseCUOClilocLanguage = json["UseCUOClilocLanguage"]?.ToObject<bool>() ?? false;
-            Assemblies = json["Assemblies"]?.ToObject<string[]>() ?? new string[0];
+            Assemblies = json["Assemblies"]?.ToObject<string[]>() ?? Array.Empty<string>();
             SessionId = Guid.NewGuid().ToString();
 
             if ( json["Profiles"] != null )

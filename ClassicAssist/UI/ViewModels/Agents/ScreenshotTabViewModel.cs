@@ -261,9 +261,17 @@ namespace ClassicAssist.UI.ViewModels.Agents
             _watcher.Created += OnScreenshotCreated;
             _watcher.Deleted += OnScreenshotDeleted;
 
-            if ( json?["Screenshot"] == null )
+            if ( json == null )
             {
                 return;
+            }
+
+            // Workaround for profiles having no settings, if FontSize = 0 set obj to empty object
+            // So the defaults get set, can remove in the future
+            if ( json["Screenshot"] is null || json["Screenshot"] is JObject &&
+                json["Screenshot"]["FontSize"] is JValue val && val.Value<int>() == 0 )
+            {
+                json["Screenshot"] = new JObject();
             }
 
             Fullscreen = json["Screenshot"]["Fullscreen"]?.ToObject<bool>() ?? false;

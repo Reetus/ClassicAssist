@@ -27,7 +27,6 @@ namespace ClassicAssist.UO
 {
     public class Commands
     {
-
         private static readonly object _dragDropLock = new object();
         private static string _lastSystemMessage;
         private static DateTime _lastSystemMessageTime;
@@ -575,23 +574,32 @@ namespace ClassicAssist.UO
         public static bool WaitForTarget( int timeout )
         {
             PacketFilterInfo pfi = new PacketFilterInfo( 0x6C );
+            PacketFilterInfo pfi2 = new PacketFilterInfo( 0x99 );
 
             Engine.WaitingForTarget = true;
 
-            PacketWaitEntry we = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming );
+            PacketWaitEntry[] entries =
+            {
+                Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming ),
+                Engine.PacketWaitEntries.Add( pfi2, PacketDirection.Incoming )
+            };
+
+            Task[] tasks = entries.Select( t => t.Lock.ToTask() ).Cast<Task>().ToArray();
 
             try
             {
                 do
                 {
-                    bool result = we.Lock.WaitOne( timeout );
+                    int completedTask = Task.WaitAny( tasks, timeout );
 
-                    if ( !result )
+                    if ( completedTask == -1 )
                     {
                         return false;
                     }
 
-                    if ( we.Packet[6] == 0x03 )
+                    byte[] packet = entries[completedTask].Packet;
+
+                    if ( packet[6] == 0x03 )
                     {
                         continue;
                     }
@@ -602,7 +610,7 @@ namespace ClassicAssist.UO
             }
             finally
             {
-                Engine.PacketWaitEntries.Remove( we );
+                Engine.PacketWaitEntries.RemoveRange( entries );
 
                 Engine.WaitingForTarget = false;
             }

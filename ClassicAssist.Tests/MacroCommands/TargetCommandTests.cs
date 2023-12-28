@@ -7,6 +7,7 @@ using ClassicAssist.Data;
 using ClassicAssist.Data.Friends;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
@@ -1131,7 +1132,7 @@ namespace ClassicAssist.Tests.MacroCommands
 
             Engine.Mobiles.Add( mobiles );
 
-            bool result = TargetCommands.GetFriend( new[] { "Innocent" }, "Any", "Next", "Any", 5);
+            bool result = TargetCommands.GetFriend( new[] { "Innocent" }, "Any", "Next", "Any", 5 );
 
             Assert.AreEqual( 0x02, AliasCommands.GetAlias( "friend" ) );
             Assert.IsTrue( result );
@@ -1160,9 +1161,36 @@ namespace ClassicAssist.Tests.MacroCommands
 
             Assert.IsFalse( result );
 
-
             Engine.Mobiles.Remove( mobiles );
             Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillWaitForTargetMultiTarget()
+        {
+            try
+            {
+                Engine.PacketWaitEntries = new PacketWaitEntries();
+
+                Task.Run( async () =>
+                {
+                    await Task.Delay( 100 );
+
+                    PacketWriter pw = new PacketWriter( 30 );
+                    pw.Write( (byte) 0x99 );
+                    pw.Fill();
+
+                    Engine.PacketWaitEntries.CheckWait( pw.ToArray(), PacketDirection.Incoming );
+                } );
+
+                bool result = Commands.WaitForTarget( 1000 );
+
+                Assert.IsTrue( result );
+            }
+            finally
+            {
+                Engine.PacketWaitEntries = null;
+            }
         }
     }
 }

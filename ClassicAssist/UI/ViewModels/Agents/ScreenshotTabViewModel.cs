@@ -52,6 +52,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private const string SCREENSHOT_DIRECTORY_NAME = "Screenshots";
 
         private const string DEFAULT_FILENAME_FORMAT = "ClassicAssist-{date}-{longTime}";
+
+        private static ICommand _takeSnapshotCommand;
         private readonly ScreenshotComparer _comparer = new ScreenshotComparer();
         private readonly string[] _extensions = { ".png", ".gif" };
         private bool _autoScreenshot;
@@ -197,6 +199,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public ICommand SetFontColourCommand =>
             _setFontColourCommand ?? ( _setFontColourCommand = new RelayCommand( SetFontColour, o => IncludeInfoBar ) );
+
+        public ICommand TakeSnapshotCommand =>
+            _takeSnapshotCommand ?? ( _takeSnapshotCommand = new RelayCommand( TakeSnapshot ) );
 
         public void Serialize( JObject json, bool global = false )
         {
@@ -395,6 +400,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
         }
 
+        private static void TakeSnapshot( object obj )
+        {
+            MainCommands.Snapshot();
+        }
+
         private void SetBackgroundColour( object obj )
         {
             if ( !( obj is Color colour ) )
@@ -403,7 +413,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
 
             MacrosGumpTextColorSelectorViewModel vm =
-                new MacrosGumpTextColorSelectorViewModel { SelectedColor = colour };
+                new MacrosGumpTextColorSelectorViewModel { SelectedColor = colour, AllowAlpha = true };
 
             MacrosGumpTextColorSelectorWindow window = new MacrosGumpTextColorSelectorWindow { DataContext = vm };
 
@@ -425,7 +435,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
 
             MacrosGumpTextColorSelectorViewModel vm =
-                new MacrosGumpTextColorSelectorViewModel { SelectedColor = colour };
+                new MacrosGumpTextColorSelectorViewModel { SelectedColor = colour, AllowAlpha = true };
 
             MacrosGumpTextColorSelectorWindow window = new MacrosGumpTextColorSelectorWindow { DataContext = vm };
 

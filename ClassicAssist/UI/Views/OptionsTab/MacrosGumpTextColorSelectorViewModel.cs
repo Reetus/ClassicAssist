@@ -20,8 +20,15 @@ namespace ClassicAssist.UI.Views.OptionsTab
 {
     public class MacrosGumpTextColorSelectorViewModel : SetPropertyNotifyChanged
     {
+        private bool _allowAlpha;
         private ICommand _okCommand;
         private Color _selectedColor = Colors.White;
+
+        public bool AllowAlpha
+        {
+            get => _allowAlpha;
+            set => SetProperty( ref _allowAlpha, value );
+        }
 
         public ICommand OKCommand => _okCommand ?? ( _okCommand = new RelayCommand( OK ) );
         public bool Result { get; set; }

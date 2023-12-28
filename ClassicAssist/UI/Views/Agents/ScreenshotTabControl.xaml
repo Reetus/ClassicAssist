@@ -31,10 +31,13 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <ListBox x:Name="listBox" Grid.Row="0" ItemsSource="{Binding Screenshots}">
+            <Button Content="{x:Static resources:Strings.Take_Snapshot}" Margin="0,0,0,5"
+                    Command="{Binding TakeSnapshotCommand}" />
+            <ListBox x:Name="listBox" Grid.Row="1" ItemsSource="{Binding Screenshots}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -48,13 +51,13 @@
                                    Stretch="UniformToFill" />
                             <Border Background="Black" CornerRadius="5" Padding="2" HorizontalAlignment="Right"
                                     VerticalAlignment="Bottom" Margin="5" Opacity="0.8">
-                                <TextBlock Text="{Binding Extension}" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Extension}" VerticalAlignment="Center" />
                             </Border>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Grid.Row="1" Content="{x:Static resources:Strings.Open_Folder}" Margin="0,5,0,0"
+            <Button Grid.Row="2" Content="{x:Static resources:Strings.Open_Folder}" Margin="0,5,0,0"
                     Command="{Binding OpenFolderCommand}" />
         </Grid>
         <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">

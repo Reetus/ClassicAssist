@@ -25,7 +25,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <xctk:ColorCanvas Grid.Row="0" UsingAlphaChannel="False" SelectedColor="{Binding SelectedColor}">
+        <xctk:ColorCanvas Grid.Row="0" UsingAlphaChannel="{Binding AllowAlpha}" SelectedColor="{Binding SelectedColor}">
             <xctk:ColorCanvas.Style>
                 <Style TargetType="{x:Type xctk:ColorCanvas}" BasedOn="{StaticResource {x:Type xctk:ColorCanvas}}">
                     <Setter Property="Background" Value="{DynamicResource ThemeInnerControlBackgroundBrush}" />

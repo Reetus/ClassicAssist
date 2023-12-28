@@ -47,6 +47,10 @@ If your native language isn't English and you'd like to contribute a translation
 
 ![assist3](https://user-images.githubusercontent.com/6239195/73602831-da78c880-45b4-11ea-82e4-fe71c3ca41c8.png)
 
+Existing supported languages can be edited on POEditor 
+* [UI](https://poeditor.com/join/project/64bC3Q4fdt)
+* [Macros](https://poeditor.com/projects/view?id=671853)
+
 ## License
 
     This program is free software: you can redistribute it and/or modify

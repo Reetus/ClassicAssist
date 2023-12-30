@@ -66,7 +66,7 @@
         <DockPanel Grid.Row="1" Margin="10,0,10,10">
             <CheckBox IsChecked="{Binding Warn}">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{x:Static resources:Strings.Warn_when_counter_amount_below_}" />
+                    <TextBlock Text="{x:Static resources:Strings.Warn_when_counter_amount_below_}" VerticalAlignment="Center"/>
                     <xctk:IntegerUpDown Minimum="0" Value="{Binding WarnAmount}" UpdateValueOnEnterKey="True" />
                 </StackPanel>
             </CheckBox>

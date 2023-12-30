@@ -160,7 +160,7 @@ namespace ClassicAssist.Tests.Agents
         }
 
         [TestMethod]
-        public async Task WontOrganizeDestinationContainerDescendants()
+        public void WontOrganizeDestinationContainerDescendants()
         {
             // Destination container is descendant of source container
             // Don't organize destination container items
@@ -195,7 +195,7 @@ namespace ClassicAssist.Tests.Agents
 
             Engine.InternalPacketSentEvent += OnInternalPacketSentEvent;
 
-            await manager.Organize( entry, sourceContainer.Serial, destinationContainer.Serial );
+            Task.Run( () => manager.Organize( entry, sourceContainer.Serial, destinationContainer.Serial ) ).Wait();
 
             bool result = are.WaitOne( 4000 );
 
@@ -227,7 +227,7 @@ namespace ClassicAssist.Tests.Agents
         }
 
         [TestMethod]
-        public async Task WillOrganizeSourceInDestination()
+        public void WillOrganizeSourceInDestination()
         {
             // Source container is descendant of destination container
             // Organize source container items
@@ -261,7 +261,7 @@ namespace ClassicAssist.Tests.Agents
 
             Engine.InternalPacketSentEvent += OnInternalPacketSentEvent;
 
-            await manager.Organize( entry, sourceContainer.Serial, destinationContainer.Serial );
+            Task.Run( () => manager.Organize( entry, sourceContainer.Serial, destinationContainer.Serial ) ).Wait();
 
             bool result = are.WaitOne( 4000 );
 

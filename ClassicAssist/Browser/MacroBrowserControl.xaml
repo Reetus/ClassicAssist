@@ -7,10 +7,10 @@
              xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
-             xmlns:controls="clr-namespace:ClassicAssist.Browser.Controls"
              xmlns:data="clr-namespace:ClassicAssist.Browser.Data"
              xmlns:browser="clr-namespace:ClassicAssist.Browser"
-             xmlns:controls1="clr-namespace:ClassicAssist.UI.Controls"
+             xmlns:controls2="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+             xmlns:headered="clr-namespace:ClassicAssist.Controls.Headered;assembly=ClassicAssist.Controls"
              mc:Ignorable="d"
              d:DesignHeight="550" d:DesignWidth="900">
     <UserControl.DataContext>
@@ -22,7 +22,6 @@
                 <ResourceDictionary Source="../Resources/DarkTheme.xaml" />
                 <ResourceDictionary
                     Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DebugToolBarStyle.xaml" />
-                <ResourceDictionary Source="Controls/ClearableComboBox.xaml" />
                 <ResourceDictionary Source="../Resources/LeftRightIconToggleButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -38,35 +37,41 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <controls1:StretchyWrapPanel Orientation="Horizontal" Grid.Row="0" Margin="10,5,10,5">
-                <controls1:StretchyWrapPanel.Resources>
-                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-                        <Setter Property="Margin" Value="10,0,10,0" />
-                        <Setter Property="VerticalAlignment" Value="Center" />
-                        <Setter Property="HorizontalAlignment" Value="Right" />
+            <Grid Grid.Row="0" Margin="10,5,10,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="{x:Type headered:HorizontalHeaderedContentControl}"
+                           BasedOn="{StaticResource {x:Type headered:HorizontalHeaderedContentControl}}">
+                        <Setter Property="Margin" Value="0,0,10,0" />
                     </Style>
-                    <Style TargetType="{x:Type controls:ClearableComboBox}"
-                           BasedOn="{StaticResource {x:Type controls:ClearableComboBox}}">
-                        <Setter Property="MinWidth" Value="80" />
-                    </Style>
-                </controls1:StretchyWrapPanel.Resources>
-                <TextBlock Text="{x:Static resources:Strings.Shard_}" Margin="0,0,10,0" />
-                <controls:ClearableComboBox ItemsSource="{Binding Shards}" ClearCommand="{Binding ClearCommand}"
-                                            ClearCommandParameter="{x:Static data:FilterType.Shard}"
-                                            SelectedItem="{Binding ShardFilter}" />
-                <TextBlock Text="{x:Static resources:Strings.Era}" />
-                <controls:ClearableComboBox ItemsSource="{Binding Eras}" ClearCommand="{Binding ClearCommand}"
-                                            ClearCommandParameter="{x:Static data:FilterType.Era}"
-                                            SelectedItem="{Binding EraFilter}" />
-                <TextBlock Text="{x:Static resources:Strings.Author}" />
-                <controls:ClearableComboBox ItemsSource="{Binding Authors}" ClearCommand="{Binding ClearCommand}"
-                                            ClearCommandParameter="{x:Static data:FilterType.Author}"
-                                            SelectedItem="{Binding AuthorFilter}" />
-                <TextBlock Text="{x:Static resources:Strings.Category}" />
-                <controls:ClearableComboBox ItemsSource="{Binding Categories}" ClearCommand="{Binding ClearCommand}"
-                                            ClearCommandParameter="{x:Static data:FilterType.Category}"
-                                            SelectedItem="{Binding CategoryFilter}" />
-            </controls1:StretchyWrapPanel>
+                </Grid.Resources>
+                <headered:HorizontalHeaderedContentControl Header="{x:Static resources:Strings.Shard}" Grid.Column="0">
+                    <controls2:ClearableComboBox ItemsSource="{Binding Shards}" ClearCommand="{Binding ClearCommand}"
+                                                 ClearCommandParameter="{x:Static data:FilterType.Shard}"
+                                                 SelectedItem="{Binding ShardFilter}" />
+                </headered:HorizontalHeaderedContentControl>
+                <headered:HorizontalHeaderedContentControl Header="{x:Static resources:Strings.Era}" Grid.Column="1">
+                    <controls2:ClearableComboBox ItemsSource="{Binding Eras}" ClearCommand="{Binding ClearCommand}"
+                                                 ClearCommandParameter="{x:Static data:FilterType.Era}"
+                                                 SelectedItem="{Binding EraFilter}" />
+                </headered:HorizontalHeaderedContentControl>
+                <headered:HorizontalHeaderedContentControl Header="{x:Static resources:Strings.Author}" Grid.Column="2">
+                    <controls2:ClearableComboBox ItemsSource="{Binding Authors}" ClearCommand="{Binding ClearCommand}"
+                                                 ClearCommandParameter="{x:Static data:FilterType.Author}"
+                                                 SelectedItem="{Binding AuthorFilter}" />
+                </headered:HorizontalHeaderedContentControl>
+                <headered:HorizontalHeaderedContentControl Header="{x:Static resources:Strings.Category}" Margin="0" Grid.Column="3">
+                    <controls2:ClearableComboBox ItemsSource="{Binding Categories}"
+                                                 ClearCommand="{Binding ClearCommand}"
+                                                 ClearCommandParameter="{x:Static data:FilterType.Category}"
+                                                 SelectedItem="{Binding CategoryFilter}" />
+                </headered:HorizontalHeaderedContentControl>
+            </Grid>
             <Grid Row="1" Margin="10,0,10,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition>

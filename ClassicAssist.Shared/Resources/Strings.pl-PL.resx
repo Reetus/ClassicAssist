@@ -1233,8 +1233,8 @@
   <data name="Journal receives filtered messages" xml:space="preserve">
     <value>Dziennik odbiera odfiltrowane wiadomości  (usuwanie duplikatów).</value>
   </data>
-  <data name="Enabled Packets:" xml:space="preserve">
-    <value>Włącz pakiety:</value>
+  <data name="Enabled Packets" xml:space="preserve">
+    <value>Włącz pakiety</value>
   </data>
   <data name="All Enabled" xml:space="preserve">
     <value>Wszystko włączone</value>

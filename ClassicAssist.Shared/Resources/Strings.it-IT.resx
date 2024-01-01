@@ -1281,8 +1281,8 @@
   <data name="Journal receives filtered messages" xml:space="preserve">
     <value>Il Journal riceve i messaggi filtrati</value>
   </data>
-  <data name="Enabled Packets:" xml:space="preserve">
-    <value>Pacchetti abilitati:</value>
+  <data name="Enabled Packets" xml:space="preserve">
+    <value>Pacchetti abilitati</value>
   </data>
   <data name="All Enabled" xml:space="preserve">
     <value>Tutti abilitati</value>

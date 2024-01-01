@@ -1191,8 +1191,8 @@
   <data name="Journal receives filtered messages" xml:space="preserve">
     <value>Deník dostává filtrované zprávy</value>
   </data>
-  <data name="Enabled Packets:" xml:space="preserve">
-    <value>Povolit pakety:</value>
+  <data name="Enabled Packets" xml:space="preserve">
+    <value>Povolit pakety</value>
   </data>
   <data name="All Enabled" xml:space="preserve">
     <value>Všechny povoleny</value>

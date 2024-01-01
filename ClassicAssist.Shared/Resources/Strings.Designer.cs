@@ -1537,11 +1537,11 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enabled Packets:.
+        ///   Looks up a localized string similar to Enabled Packets.
         /// </summary>
-        public static string Enabled_Packets_ {
+        public static string Enabled_Packets {
             get {
-                return ResourceManager.GetString("Enabled Packets:", resourceCulture);
+                return ResourceManager.GetString("Enabled Packets", resourceCulture);
             }
         }
         

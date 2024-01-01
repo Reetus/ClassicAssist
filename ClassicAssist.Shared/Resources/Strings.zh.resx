@@ -1281,8 +1281,8 @@
   <data name="Journal receives filtered messages" xml:space="preserve">
     <value>日志接收筛选的消息</value>
   </data>
-  <data name="Enabled Packets:" xml:space="preserve">
-    <value>已启用数据包：</value>
+  <data name="Enabled Packets" xml:space="preserve">
+    <value>已启用数据包</value>
   </data>
   <data name="All Enabled" xml:space="preserve">
     <value>全部已启用</value>

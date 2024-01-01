@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿[![Build status](https://ci.appveyor.com/api/projects/status/8ky24q5mvc1h0xll/branch/master?svg=true)](https://ci.appveyor.com/project/Reetus/classicassist/branch/master)
+﻿﻿![Build status](https://github.com/Reetus/ClassicAssist/actions/workflows/release.yml/badge.svg)
 
 # ClassicAssist
 
@@ -47,7 +47,7 @@ If your native language isn't English and you'd like to contribute a translation
 
 ![assist3](https://user-images.githubusercontent.com/6239195/73602831-da78c880-45b4-11ea-82e4-fe71c3ca41c8.png)
 
-Existing supported languages can be edited on POEditor 
+Existing supported languages can be edited on POEditor
 * [UI](https://poeditor.com/join/project/64bC3Q4fdt)
 * [Macros](https://poeditor.com/projects/view?id=671853)
 

@@ -21,15 +21,15 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace ClassicAssist.Browser.Controls
+namespace ClassicAssist.Controls
 {
     public class ClearableComboBox : ComboBox
     {
         public static readonly DependencyProperty ClearCommandProperty =
-            DependencyProperty.Register( "ClearCommand", typeof( ICommand ), typeof( ClearableComboBox ) );
+            DependencyProperty.Register( nameof( ClearCommand ), typeof( ICommand ), typeof( ClearableComboBox ) );
 
         public static readonly DependencyProperty ClearCommandParameterProperty =
-            DependencyProperty.Register( "ClearCommandParameter", typeof( object ), typeof( ClearableComboBox ),
+            DependencyProperty.Register( nameof( ClearCommandParameter ), typeof( object ), typeof( ClearableComboBox ),
                 new UIPropertyMetadata( null ) );
 
         public ICommand ClearCommand

@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using ClassicAssist.Shared;
 using ClassicAssist.Updater;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -66,6 +67,24 @@ namespace ClassicAssist.Tests
 
             Directory.Delete( path1, true );
             Directory.Delete( path2, true );
+        }
+
+        [TestMethod]
+        public void PrereleaseNotNewerNumberSame()
+        {
+            Assert.IsFalse( VersionHelpers.IsVersionNewer( "0.4.424", "0.4.424-prerelease" ) );
+        }
+
+        [TestMethod]
+        public void PrereleaseNewerBuildNotSame()
+        {
+            Assert.IsFalse( VersionHelpers.IsVersionNewer( "0.4.424-prerelease", "0.4.424-prerelease+1" ) );
+        }
+
+        [TestMethod]
+        public void PrereleaseNewerNumberNotSame()
+        {
+            Assert.IsTrue( VersionHelpers.IsVersionNewer( "0.4.423", "0.4.424-prerelease" ) );
         }
     }
 }

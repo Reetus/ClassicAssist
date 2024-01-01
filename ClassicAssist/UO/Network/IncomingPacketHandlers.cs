@@ -1477,7 +1477,7 @@ namespace ClassicAssist.UO.Network
 
             Item item = Engine.GetOrCreateItem( serial, containerSerial );
             item.ID = id;
-            item.Count = count;
+            item.Count = Math.Max( count, 1 );
             item.X = x;
             item.Y = y;
             item.Grid = grid;
@@ -1880,7 +1880,7 @@ namespace ClassicAssist.UO.Network
                     Item item = Engine.GetOrCreateItem( serial, containerSerial );
 
                     item.ID = id;
-                    item.Count = amount;
+                    item.Count = Math.Max( amount, 1 );
                     item.Owner = containerSerial;
                     item.Hue = hue;
                     item.Grid = grid;

@@ -77,7 +77,7 @@ namespace ClassicAssist.UO.Objects
             }
         }
 
-        public bool IsDescendantOf( int serial, int searchLevel = -1 )
+        public bool IsDescendantOf( int serial, int searchLevel = -1, int stopSerial = -1 )
         {
             int owner = Owner;
             int level = 0;
@@ -92,6 +92,11 @@ namespace ClassicAssist.UO.Objects
                 level++;
 
                 if ( searchLevel != -1 && level > searchLevel )
+                {
+                    break;
+                }
+
+                if ( stopSerial != -1 && owner == stopSerial )
                 {
                     break;
                 }

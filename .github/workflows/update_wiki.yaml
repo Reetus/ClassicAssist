@@ -2,7 +2,7 @@ name: Update Wiki
 on:
   release:
     type:
-      - published
+      - released
   workflow_dispatch:
 jobs:
   build:

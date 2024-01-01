@@ -1,11 +1,11 @@
-name: Prerelease
+name: Release
 on:
   workflow_dispatch:
     inputs:
       version:
         description: 'Version'
         required: true
-        type: string
+        type: string  
 jobs:
   build:
     runs-on: windows-latest
@@ -16,7 +16,7 @@ jobs:
     - name: Set version
       id: version
       run: |
-          echo "VERSION=${{ inputs.version }}-prerelease" >> $env:GITHUB_ENV
+          echo "VERSION=${{ inputs.version }}" >> $env:GITHUB_ENV
     - name: Update settings
       run: |
           $file = 'ClassicAssist.Shared\Settings.settings'
@@ -52,28 +52,28 @@ jobs:
           $settingsCode = Get-Content -Path $designerFile -Raw
           $pattern = "\[global::System\.Configuration\.DefaultSettingValueAttribute\((`".*`")\)\]\s+public string SentryDsn {"
           $match = [regex]::Match($settingsCode, $pattern)
-
+          
           if ($match.Success -eq $false) {
               Write-Error "Setting not found"
               exit 1
           }
-
+          
           $newSentryDsn = [regex]::Replace($match.Groups[0].Value, [regex]::Escape($match.Groups[1].Value), '"' + $env:SENTRY_DSN + '"')
           $settingsCode = [regex]::Replace($settingsCode, [regex]::Escape($match.Groups[0].Value), $newSentryDsn)
-
+          
           $pattern = "\[global::System\.Configuration\.DefaultSettingValueAttribute\((`".*`")\)\]\s+public string ExceptionlessKey {"
           $match = [regex]::Match($settingsCode, $pattern)
-
+          
           if ($match.Success -eq $false) {
               Write-Error "Setting not found"
               exit 1
           }
-
+          
           $newExceptionlessKey = [regex]::Replace($match.Groups[0].Value, [regex]::Escape($match.Groups[1].Value), '"' + $env:EXCEPTIONLESS_KEY + '"')
           $settingsCode = [regex]::Replace($settingsCode, [regex]::Escape($match.Groups[0].Value), $newExceptionlessKey)
-
+          
           $settingsCode | Set-Content -Path $designerFile -Force
-
+          
           Get-Content $designerFile
       env:
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
@@ -109,17 +109,17 @@ jobs:
             $json = $filespsobject | convertto-json
         }
         $json | Out-File MANIFEST.json
-
+      
     - name: Zip output
       run: Compress-Archive -Path Output/net48/* -DestinationPath ClassicAssist.zip
     - name: Draft Release
       uses: ncipollo/release-action@v1
       with:
         artifacts: ClassicAssist.zip
-        tag: ${{ env.VERSION }}
-        name: ${{ env.VERSION }}
+        tag: ${{ inputs.version }}
+        name: ${{ inputs.version }}
         commit: ${{ github.sha }}
         token: ${{ secrets.GITHUB_TOKEN }}
-        prerelease: true
+        prerelease: false
         generateReleaseNotes: true
         draft: true

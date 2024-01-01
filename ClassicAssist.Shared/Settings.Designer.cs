@@ -12,7 +12,7 @@ namespace ClassicAssist.Shared {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.1.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.8.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -43,7 +43,7 @@ namespace ClassicAssist.Shared {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("T8v0i7nL90cVRc4sr2pgo5hviThMPRF3OtQ0bK60")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string ExceptionlessKey {
             get {
                 return ((string)(this["ExceptionlessKey"]));
@@ -52,34 +52,28 @@ namespace ClassicAssist.Shared {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://7a7c44cd07e64058a3b434e1c86e4c02@o369765.ingest.sentry.io/5325425")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string SentryDsn {
             get {
                 return ((string)(this["SentryDsn"]));
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("https://classicassist.azurewebsites.net/version.json")]
         public string UpdateManifestURL {
             get {
                 return ((string)(this["UpdateManifestURL"]));
             }
-            set {
-                this["UpdateManifestURL"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("https://classicassist.azurewebsites.net/prerelease.json")]
         public string PrereleaseManifestURL {
             get {
                 return ((string)(this["PrereleaseManifestURL"]));
-            }
-            set {
-                this["PrereleaseManifestURL"] = value;
             }
         }
     }

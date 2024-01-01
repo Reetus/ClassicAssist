@@ -29,13 +29,17 @@ namespace ClassicAssist.UI.Misc
         private static void OnLoaded( object sender, RoutedEventArgs e )
         {
             AssistantOptions.OnWindowLoaded();
-            SentrySdk.Init( new SentryOptions
+
+            if ( !string.IsNullOrEmpty( Settings.Default.SentryDsn ) )
             {
-                Dsn = Settings.Default.SentryDsn,
-                BeforeSend = SentryBeforeSend,
-                AutoSessionTracking = true,
-                Release = VersionHelpers.GetProductVersion( Assembly.GetExecutingAssembly() ).ToString()
-            } );
+                SentrySdk.Init( new SentryOptions
+                {
+                    Dsn = Settings.Default.SentryDsn,
+                    BeforeSend = SentryBeforeSend,
+                    AutoSessionTracking = true,
+                    Release = VersionHelpers.GetProductVersion( Assembly.GetExecutingAssembly() ).ToString()
+                } );
+            }
         }
 
         private static SentryEvent SentryBeforeSend( SentryEvent args )

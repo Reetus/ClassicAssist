@@ -2,11 +2,12 @@ name: Sentry
 on:
   release:
     type:
-      - created
+      - released
   workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.event.action != 'deleted'
     steps:
       - name: Release Info Action
         id: latest_version
@@ -15,9 +16,15 @@ jobs:
           owner: Reetus
           repo: ClassicAssist
       - uses: actions/checkout@v2
+      - name: Set version
+        id: version
+        run: |
+          echo LATEST="${{ steps.latest_version.outputs.latest_tag }}+${{ steps.latest_version.outputs.target_commitish }}" >> $GITHUB_ENV
+      - name: Show Version
+        run: echo $LATEST
       - name: Create Sentry release
         env:
-          LATEST: ${{ steps.latest_version.outputs.latest_tag }}
+          LATEST: ${{ env.LATEST }}
           LATEST_DATE: ${{ steps.latest_version.outputs.latest_tag_published_at }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
@@ -25,5 +32,5 @@ jobs:
           SENTRY_LOG_LEVEL: info
         uses: getsentry/action-release@v1
         with:
-          version: ${{ steps.latest_version.outputs.latest_tag }}
+          version: ${{ env.LATEST }}
           environment: production

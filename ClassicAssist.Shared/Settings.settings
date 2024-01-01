@@ -9,15 +9,15 @@
       <Value Profile="(Default)">Reetus</Value>
     </Setting>
     <Setting Name="ExceptionlessKey" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">T8v0i7nL90cVRc4sr2pgo5hviThMPRF3OtQ0bK60</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="SentryDsn" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">https://7a7c44cd07e64058a3b434e1c86e4c02@o369765.ingest.sentry.io/5325425</Value>
+      <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="UpdateManifestURL" Type="System.String" Scope="User">
+    <Setting Name="UpdateManifestURL" Type="System.String" Scope="Application">
       <Value Profile="(Default)">https://classicassist.azurewebsites.net/version.json</Value>
     </Setting>
-    <Setting Name="PrereleaseManifestURL" Type="System.String" Scope="User">
+    <Setting Name="PrereleaseManifestURL" Type="System.String" Scope="Application">
       <Value Profile="(Default)">https://classicassist.azurewebsites.net/prerelease.json</Value>
     </Setting>
   </Settings>

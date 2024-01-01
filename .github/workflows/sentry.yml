@@ -2,11 +2,12 @@ name: Sentry
 on:
   release:
     type:
-      - published
+      - released
   workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.event.action != 'deleted'
     steps:
       - name: Release Info Action
         id: latest_version

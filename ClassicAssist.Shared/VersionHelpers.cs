@@ -51,13 +51,7 @@ namespace ClassicAssist.Shared
                     return false;
                 }
 
-                if ( !string.IsNullOrEmpty( currentSemver.Prerelease ) && string.IsNullOrEmpty( newSemver.Prerelease ) )
-                {
-                    /* non-prerelease takes precedence */
-                    return true;
-                }
-
-                return newSemver > currentSemver;
+                return SemVersion.ComparePrecedence( currentSemver, newSemver ) == -1;
             }
             catch ( Exception )
             {

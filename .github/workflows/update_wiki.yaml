@@ -2,11 +2,15 @@ name: Update Wiki
 on:
   release:
     type:
-      - published
+      - released
   workflow_dispatch:
 jobs:
   build:
     runs-on: windows-latest
+    if: |
+      github.event_name == 'release' &&
+      github.event.release.prerelease == false &&
+      github.event.action != 'deleted'
     steps:
     - uses: actions/checkout@v2
       with:

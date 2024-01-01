@@ -1,0 +1,44 @@
+name: Update Wiki
+on:
+  release:
+    type:
+      - published
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Set version
+      id: version
+      run: |
+          echo "VERSION=$(git describe --tags --abbrev=0 --match="[0-9]*.[0-9]*.[0-9]*")" >> $env:GITHUB_ENV
+    - name: Checkout Tag
+      run: git checkout $env:VERSION
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 8.0.x
+    - name: Build ClassicAssist.dll
+      run: dotnet build .\ClassicAssist\ClassicAssist.csproj /p:Version=$env:VERSION
+    - name: Build ExportCommands
+      run: dotnet build .\Tools\ExportCommands\ExportCommands.csproj
+    - name: Generate Docs
+      run: |
+          cd Output\net48
+          $fullPath = (Get-Location).Path
+          .\ExportCommands.exe $fullPath\ClassicAssist.dll
+    - name: Checkout Wiki
+      run: git clone https://github.com/Reetus/ClassicAssist.wiki.git
+    - name: Update Wiki
+      run: |
+          git config --global user.email "reeeetus@gmail.com"
+          git config --global user.name "Reetus"
+          cd ClassicAssist.wiki
+          copy ..\Output\net48\Docs\*.md .
+          git add *
+          git commit -m "Update Wiki"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Reetus/ClassicAssist.wiki.git
+          git push

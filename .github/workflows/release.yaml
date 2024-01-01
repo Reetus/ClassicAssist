@@ -1,0 +1,125 @@
+name: Release
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version'
+        required: true
+        type: string  
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Set version
+      id: version
+      run: |
+          echo "VERSION=${{ inputs.version }}" >> $env:GITHUB_ENV
+    - name: Update settings
+      run: |
+          $file = 'ClassicAssist.Shared\Settings.settings'
+          $designerFile = 'ClassicAssist.Shared\Settings.Designer.cs'
+
+          [xml]$settingsXml = Get-Content $file
+
+          $nsManager = New-Object System.Xml.XmlNamespaceManager($settingsXml.NameTable)
+          $nsManager.AddNamespace("ns", "http://schemas.microsoft.com/VisualStudio/2004/01/settings")
+
+          $sentryElement = $settingsXml.SelectNodes("//ns:Setting[@Name='SentryDsn']", $nsManager)
+
+          if ($null -eq $sentryElement) {
+            Write-Error "Setting not found"
+            exit 1
+          }
+
+          $sentryElement.Value.InnerText = $env:SENTRY_DSN
+
+          $exceptionlessElement = $settingsXml.SelectNodes("//ns:Setting[@Name='ExceptionlessKey']", $nsManager)
+
+          if ($null -eq $exceptionlessElement) {
+            Write-Error "Setting not found"
+            exit 1
+          }
+
+          $exceptionlessElement.Value.InnerText = $env:EXCEPTIONLESS_KEY
+
+          $settingsXml.Save((Get-Item $file).FullName)
+
+          Get-Content $file
+
+          $settingsCode = Get-Content -Path $designerFile -Raw
+          $pattern = "\[global::System\.Configuration\.DefaultSettingValueAttribute\((`".*`")\)\]\s+public string SentryDsn {"
+          $match = [regex]::Match($settingsCode, $pattern)
+          
+          if ($match.Success -eq $false) {
+              Write-Error "Setting not found"
+              exit 1
+          }
+          
+          $newSentryDsn = [regex]::Replace($match.Groups[0].Value, [regex]::Escape($match.Groups[1].Value), '"' + $env:SENTRY_DSN + '"')
+          $settingsCode = [regex]::Replace($settingsCode, [regex]::Escape($match.Groups[0].Value), $newSentryDsn)
+          
+          $pattern = "\[global::System\.Configuration\.DefaultSettingValueAttribute\((`".*`")\)\]\s+public string ExceptionlessKey {"
+          $match = [regex]::Match($settingsCode, $pattern)
+          
+          if ($match.Success -eq $false) {
+              Write-Error "Setting not found"
+              exit 1
+          }
+          
+          $newExceptionlessKey = [regex]::Replace($match.Groups[0].Value, [regex]::Escape($match.Groups[1].Value), '"' + $env:EXCEPTIONLESS_KEY + '"')
+          $settingsCode = [regex]::Replace($settingsCode, [regex]::Escape($match.Groups[0].Value), $newExceptionlessKey)
+          
+          $settingsCode | Set-Content -Path $designerFile -Force
+          
+          Get-Content $designerFile
+      env:
+        SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+        EXCEPTIONLESS_KEY: ${{ secrets.EXCEPTIONLESS_KEY }}
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore /p:Version=$env:VERSION
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: Generate Manifest
+      run: |
+        cd Output\net48
+        del ExportCommands.*
+        $files = (Get-ChildItem . -Recurse  | Resolve-Path -Relative)
+        $filespsobject = @()
+        foreach ( $file in $files )
+        {
+            $f = Get-ItemProperty $file
+            if (!($f -is [System.IO.DirectoryInfo]))
+            {
+                $item = "" | select Name, Size, ModifiedDate, SHA1
+                $item.Name = ($file) -replace "\.\\",""
+                $item.Size = $f.Length
+                $item.SHA1 =  (get-filehash -path $f.FullName -Algorithm sha1).Hash
+                $item.ModifiedDate = $f.LastWriteTime.ToString("o")
+                $filespsobject += $item
+            }
+            $json = $filespsobject | convertto-json
+        }
+        $json | Out-File MANIFEST.json
+      
+    - name: Zip output
+      run: Compress-Archive -Path Output/net48/* -DestinationPath ClassicAssist.zip
+    - name: Draft Release
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: ClassicAssist.zip
+        tag: ${{ inputs.version }}
+        name: ${{ inputs.version }}
+        commit: ${{ github.sha }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        prerelease: false
+        generateReleaseNotes: true
+        draft: true

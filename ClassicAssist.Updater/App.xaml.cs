@@ -22,9 +22,12 @@ namespace ClassicAssist.Updater
 
         private void Application_Startup( object sender, StartupEventArgs e )
         {
-            ExceptionlessClient.Default.Configuration.DefaultData.Add( "Locale",
-                Thread.CurrentThread.CurrentUICulture.Name );
-            ExceptionlessClient.Default.Startup( Settings.Default.ExceptionlessKey );
+            if ( !string.IsNullOrEmpty( Settings.Default.ExceptionlessKey ) )
+            {
+                ExceptionlessClient.Default.Configuration.DefaultData.Add( "Locale",
+                    Thread.CurrentThread.CurrentUICulture.Name );
+                ExceptionlessClient.Default.Startup( Settings.Default.ExceptionlessKey );
+            }
 
             Parser.Default.ParseArguments<CommandLineOptions>( e.Args ).WithParsed( o => CurrentOptions = o );
 

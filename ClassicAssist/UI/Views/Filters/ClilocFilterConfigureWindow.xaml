@@ -7,8 +7,11 @@
         xmlns:filters="clr-namespace:ClassicAssist.UI.ViewModels.Filters"
         xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
         xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+        xmlns:misc="clr-namespace:ClassicAssist.Misc"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" Background="{DynamicResource ThemeWindowBackgroundBrush}"
-        Title="{x:Static resources:Strings.Cliloc_Filter}" Height="450" Width="750">
+        Title="{x:Static resources:Strings.Cliloc_Filter}" Height="450" Width="550">
     <Window.DataContext>
         <filters:ClilocFilterConfigureViewModel />
     </Window.DataContext>
@@ -18,160 +21,106 @@
                 <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary Source="../Debug/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <DrawingImage x:Key="SaveIcon">
-                <DrawingImage.Drawing>
-                    <DrawingGroup ClipGeometry="M0,0 V47 H47 V0 H0 Z">
-                        <GeometryDrawing Brush="#FF424A60"
-                                         Geometry="F1 M47,47z M0,0z M46.5,8L46.5,8 46.5,47 0.5,47 0.5,0 38.5,0z" />
-                        <GeometryDrawing Brush="#FFE7ECED">
-                            <GeometryDrawing.Geometry>
-                                <RectangleGeometry RadiusX="0" RadiusY="0" Rect="7.5,26,31,21" />
-                            </GeometryDrawing.Geometry>
-                        </GeometryDrawing>
-                        <GeometryDrawing Brush="#FFEBBA16">
-                            <GeometryDrawing.Geometry>
-                                <RectangleGeometry RadiusX="0" RadiusY="0" Rect="7.5,26,31,12.037" />
-                            </GeometryDrawing.Geometry>
-                        </GeometryDrawing>
-                        <GeometryDrawing Brush="#FFC7CAC7">
-                            <GeometryDrawing.Geometry>
-                                <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9.5,0,26,16" />
-                            </GeometryDrawing.Geometry>
-                        </GeometryDrawing>
-                        <DrawingGroup Opacity="1">
-                            <GeometryDrawing Brush="#FFFFFFFF"
-                                             Geometry="F1 M47,47z M0,0z M12.5,31L19.5,31C20.053,31 20.5,30.553 20.5,30 20.5,29.447 20.053,29 19.5,29L12.5,29C11.947,29 11.5,29.447 11.5,30 11.5,30.553 11.947,31 12.5,31z" />
-                            <GeometryDrawing Brush="#FFFFFFFF"
-                                             Geometry="F1 M47,47z M0,0z M22.5,33L12.5,33C11.947,33 11.5,33.447 11.5,34 11.5,34.553 11.947,35 12.5,35L22.5,35C23.053,35 23.5,34.553 23.5,34 23.5,33.447 23.053,33 22.5,33z" />
-                            <GeometryDrawing Brush="#FFFFFFFF"
-                                             Geometry="F1 M47,47z M0,0z M26.21,33.29C25.84,32.92 25.17,32.92 24.8,33.29 24.61,33.479 24.5,33.729 24.5,34 24.5,34.27 24.609,34.52 24.79,34.71 24.979,34.89 25.229,35 25.5,35 25.77,35 26.02,34.89 26.21,34.71 26.39,34.52 26.5,34.26 26.5,34 26.5,33.74 26.39,33.479 26.21,33.29z" />
-                        </DrawingGroup>
-                        <GeometryDrawing>
-                            <GeometryDrawing.Pen>
-                                <Pen Brush="#FF424A60" Thickness="2" StartLineCap="Round" EndLineCap="Round"
-                                     LineJoin="Miter" />
-                            </GeometryDrawing.Pen>
-                            <GeometryDrawing.Geometry>
-                                <RectangleGeometry RadiusX="0" RadiusY="0" Rect="27.5,4,4,8" />
-                            </GeometryDrawing.Geometry>
-                        </GeometryDrawing>
-                        <GeometryDrawing Brush="#FFE7ECED"
-                                         Geometry="F1 M47,47z M0,0z M24.5,16L24.5,16 9.5,16 9.5,0 16.5,0z" />
-                    </DrawingGroup>
-                </DrawingImage.Drawing>
-            </DrawingImage>
-            <DrawingImage x:Key="DeleteIcon">
-                <DrawingImage.Drawing>
-                    <DrawingGroup ClipGeometry="M-43,0 V512 H469 V-43 H0 Z">
-                        <DrawingGroup.Transform>
-                            <TranslateTransform X="43" Y="0" />
-                        </DrawingGroup.Transform>
-                        <GeometryDrawing Brush="#FFBEC3D2"
-                                         Geometry="F1 M512,512z M0,0z M269.644531,88.976562L156.582031,88.976562C148.296875,88.976562,141.582031,82.261719,141.582031,73.976562L141.582031,28.042969C141.582031,12.582031,154.152344,0,169.605469,0L256.617188,0C272.070312,0,284.644531,12.582031,284.644531,28.042969L284.644531,73.976562C284.644531,82.261719,277.925781,88.976562,269.644531,88.976562z M171.582031,58.976562L254.644531,58.976562 254.644531,30 171.582031,30z M256.617188,30L256.625,30z M256.617188,30" />
-                        <GeometryDrawing Brush="#FFBEC3D2"
-                                         Geometry="F1 M512,512z M0,0z M381.691406,122.664062C378.851562,119.585938,374.855469,117.835938,370.667969,117.835938L55.558594,117.835938C51.371094,117.835938 47.371094,119.585938 44.53125,122.664062 41.691406,125.742188 40.269531,129.867188 40.605469,134.042969L67.730469,469.4375C69.660156,493.304688,89.914062,512,113.835938,512L312.386719,512C336.3125,512,356.5625,493.304688,358.492188,469.4375L385.617188,134.042969C385.957031,129.867188,384.53125,125.742188,381.691406,122.664062z M381.691406,122.664062" />
-                        <GeometryDrawing Brush="#FFDCE1EB"
-                                         Geometry="F1 M512,512z M0,0z M55.558594,117.835938C51.371094,117.835938 47.371094,119.585938 44.53125,122.664062 41.691406,125.742188 40.269531,129.867188 40.605469,134.042969L67.730469,469.4375C69.660156,493.304688,89.914062,512,113.835938,512L213.113281,512 213.113281,117.835938z M55.558594,117.835938" />
-                        <GeometryDrawing Brush="#FFDCE1EB"
-                                         Geometry="F1 M512,512z M0,0z M425.453125,128.085938L405.816406,69.230469C403.773438,63.105469,398.042969,58.976562,391.589844,58.976562L34.632812,58.976562C28.179688,58.976562,22.445312,63.105469,20.40625,69.230469L0.769531000000001,128.085938C-0.753905999999999,132.660156 0.0117188000000006,137.691406 2.832031,141.601562 5.648438,145.515625 10.179688,147.832031 15,147.832031L411.222656,147.832031C416.046875,147.832031 420.574219,145.515625 423.394531,141.601562 426.210938,137.691406 426.976562,132.660156 425.453125,128.085938z M425.453125,128.085938" />
-                        <GeometryDrawing Brush="#FF9196AA"
-                                         Geometry="F1 M512,512z M0,0z M287.332031,465.976562C287.070312,465.976562 286.808594,465.972656 286.539062,465.957031 278.269531,465.527344 271.910156,458.46875 272.339844,450.195312L286.425781,179.796875C286.855469,171.523438 293.898438,165.15625 302.183594,165.597656 310.457031,166.027344 316.8125,173.085938 316.382812,181.359375L302.300781,451.757812C301.882812,459.765625,295.257812,465.976562,287.332031,465.976562z M287.332031,465.976562" />
-                        <GeometryDrawing Brush="#FFBEC3D2"
-                                         Geometry="F1 M512,512z M0,0z M139.554688,465.976562C131.644531,465.976562,125.027344,459.789062,124.59375,451.792969L109.839844,181.394531C109.390625,173.121094 115.730469,166.050781 124,165.601562 132.265625,165.148438 139.347656,171.488281 139.796875,179.761719L154.546875,450.160156C155,458.433594 148.660156,465.503906 140.386719,465.953125 140.109375,465.96875 139.832031,465.976562 139.554688,465.976562z M139.554688,465.976562" />
-                        <GeometryDrawing Brush="#FF9196AA"
-                                         Geometry="F1 M512,512z M0,0z M213.277344,465.976562C204.996094,465.976562,198.277344,459.261719,198.277344,450.976562L198.277344,180.578125C198.277344,172.292969 204.996094,165.578125 213.277344,165.578125 221.5625,165.578125 228.277344,172.292969 228.277344,180.578125L228.277344,450.976562C228.277344,459.261719,221.5625,465.976562,213.277344,465.976562z M213.277344,465.976562" />
-                        <GeometryDrawing Brush="#FFBEC3D2"
-                                         Geometry="F1 M512,512z M0,0z M198.277344,180.578125L198.277344,450.976562C198.277344,459.203125,204.90625,465.878906,213.113281,465.96875L213.113281,165.585938C204.90625,165.675781,198.277344,172.347656,198.277344,180.578125z M198.277344,180.578125" />
-                        <GeometryDrawing Brush="#FFDCE1EB"
-                                         Geometry="F1 M512,512z M0,0z M171.582031,58.976562L171.582031,30 213.113281,30 213.113281,0 169.605469,0C154.152344,0,141.582031,12.582031,141.582031,28.042969L141.582031,73.976562C141.582031,82.261719,148.296875,88.976562,156.582031,88.976562L213.113281,88.976562 213.113281,58.976562z M171.582031,58.976562" />
-                        <GeometryDrawing Brush="#FFF2F6FC"
-                                         Geometry="F1 M512,512z M0,0z M36.289062,58.976562C29.835938,58.976562,24.101562,63.105469,22.058594,69.230469L2.425781,128.085938C0.902344000000001,132.660156 1.667969,137.691406 4.488281,141.601562 7.304688,145.515625 11.835938,147.832031 16.65625,147.832031L214.765625,147.832031 214.765625,58.976562z M36.289062,58.976562" />
-                    </DrawingGroup>
-                </DrawingImage.Drawing>
-            </DrawingImage>
             <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+            <misc:BindingProxy x:Key="Proxy" Data="{Binding}" />
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <ToolBar Style="{StaticResource ToolBarStyle1}" Grid.Row="0">
-            <controls:ImageButton ToolTip="{x:Static resources:Strings.Save}" Command="{Binding SaveItemsCommand}"
-                                  ImageSource="{StaticResource SaveIcon}" />
+            <controls:ImageButton ToolTip="{x:Static resources:Strings.Add}" Command="{Binding AddItemCommand}"
+                                  ImageSource="{StaticResource AddIcon}" />
             <controls:ImageButton ToolTip="{x:Static resources:Strings.Remove}" Command="{Binding RemoveItemCommand}"
                                   CommandParameter="{Binding SelectedItem, ElementName=listView}"
-                                  ImageSource="{StaticResource DeleteIcon}" />
+                                  ImageSource="{StaticResource RemoveIcon}" />
         </ToolBar>
-        <Grid Margin="10" Grid.Row="1">
-            <ScrollViewer MaxHeight="400" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
-                <ListView x:Name="listView" ItemsSource="{Binding Items}" Foreground="Black"
-                          SelectedItem="{Binding SelectedItem}">
-                    <ListView.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="{x:Static resources:Strings.Remove}"
-                                      Command="{Binding RemoveItemCommand}"
-                                      CommandParameter="{Binding SelectedItem}" />
-                        </ContextMenu>
-                    </ListView.ContextMenu>
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="{x:Static resources:Strings.ID}" Width="100"
-                                            DisplayMemberBinding="{Binding Cliloc}" />
-                            <GridViewColumn Header="{x:Static resources:Strings.Original}" Width="300"
-                                            DisplayMemberBinding="{Binding Original}" />
-                            <GridViewColumn Header="{x:Static resources:Strings.Replacement}" Width="300"
-                                            x:Name="ReplacementColumnHeader">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate DataType="filters:FilterClilocEntry">
-                                        <controls:EditTextBlock Foreground="{StaticResource ThemeForegroundBrush}"
-                                                                Text="{Binding Replacement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                                MinWidth="100" ShowIcon="True"
-                                                                Width="{Binding Path=Width, ElementName=ReplacementColumnHeader, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15}" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </ScrollViewer>
-        </Grid>
-        <GridSplitter Height="10" Grid.Row="2" />
-        <Grid Margin="10,0,10,10" Grid.Row="3">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0">
-                <Label Content="{x:Static resources:Strings.Filter_}" />
-                <TextBox Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" />
-            </StackPanel>
-            <ListView ItemsSource="{Binding FilteredClilocs}" Grid.Row="1" Margin="0,10,0,0"
-                      SelectedItem="{Binding SelectedClilocEntry}">
+        <Grid Margin="0,10" Grid.Row="1">
+            <ListView x:Name="listView" ItemsSource="{Binding Items}" Foreground="Black"
+                      SelectedItem="{Binding SelectedItem}">
                 <ListView.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="{x:Static resources:Strings.Add}" Command="{Binding AddItemCommand}"
-                                  CommandParameter="{Binding SelectedClilocEntry}" />
+                        <MenuItem Header="{x:Static resources:Strings.Remove}"
+                                  Command="{Binding RemoveItemCommand}"
+                                  CommandParameter="{Binding SelectedItem}" />
                     </ContextMenu>
                 </ListView.ContextMenu>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="{x:Static resources:Strings.ID}" Width="100"
-                                        DisplayMemberBinding="{Binding Key}" />
-                        <GridViewColumn Header="{x:Static resources:Strings.Value}" Width="550">
+                        <GridViewColumn Header="{x:Static resources:Strings.ID}" Width="100">
                             <GridViewColumn.CellTemplate>
-                                <DataTemplate DataType="filters:ClilocEntry">
-                                    <TextBlock Text="{Binding Value}" ToolTip="{Binding Value}"
-                                               Foreground="{StaticResource ThemeForegroundBrush}"/>
+                                <DataTemplate DataType="{x:Type filters:FilterClilocEntry}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Cliloc}" Grid.Column="0" VerticalAlignment="Center"
+                                                   Foreground="{StaticResource ThemeForegroundBrush}" />
+                                        <controls:ImageButton ImageSource="{StaticResource ExportIcon}"
+                                                              ToolTip="{x:Static resources:Strings.Choose_by_Cliloc}"
+                                                              HorizontalAlignment="Right" Grid.Column="1"
+                                                              CommandParameter="{Binding}"
+                                                              Command="{Binding Path=Data.(filters:ClilocFilterConfigureViewModel.ChooseClilocCommand), Source={StaticResource Proxy}}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="{x:Static resources:Strings.Original}" Width="150"
+                                        DisplayMemberBinding="{Binding Original}" />
+                        <GridViewColumn Header="{x:Static resources:Strings.Replacement}" Width="150"
+                                        x:Name="ReplacementColumnHeader">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="filters:FilterClilocEntry">
+                                    <controls:EditTextBlock Foreground="{StaticResource ThemeForegroundBrush}"
+                                                            Text="{Binding Replacement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                            MinWidth="100" ShowIcon="True"
+                                                            Width="{Binding Path=Width, ElementName=ReplacementColumnHeader, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="{x:Static resources:Strings.Hue_Override}" Width="80"
+                                        x:Name="HueColumnHeader">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type filters:FilterClilocEntry}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Hue}" Grid.Column="0" VerticalAlignment="Center"
+                                                   Foreground="{StaticResource ThemeForegroundBrush}" />
+                                        <controls:ImageButton ImageSource="{StaticResource ColorWheelIcon}"
+                                                              HorizontalAlignment="Right" Grid.Column="1"
+                                                              CommandParameter="{Binding}"
+                                                              Command="{Binding Path=Data.(filters:ClilocFilterConfigureViewModel.SelectHueCommand), Source={StaticResource Proxy}}" />
+                                    </Grid>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                     </GridView>
                 </ListView.View>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
             </ListView>
         </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right">
+            <Button Content="{x:Static resources:Strings.OK}" Command="{Binding OKCommand}" Margin="5">
+                <i:Interaction.Behaviors>
+                    <behaviours:CloseOnClickBehaviour />
+                </i:Interaction.Behaviors>
+            </Button>
+            <Button Content="{x:Static resources:Strings.Cancel}" Margin="5">
+                <i:Interaction.Behaviors>
+                    <behaviours:CloseOnClickBehaviour />
+                </i:Interaction.Behaviors>
+            </Button>
+        </StackPanel>
     </Grid>
 </Window>

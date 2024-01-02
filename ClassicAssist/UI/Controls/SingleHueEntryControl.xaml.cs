@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using ClassicAssist.UO.Data;
@@ -9,14 +8,14 @@ namespace ClassicAssist.UI.Controls
     /// <summary>
     ///     Interaction logic for HueEntryControl.xaml
     /// </summary>
-    public partial class HueEntryControl : UserControl
+    public partial class SingleHueEntryControl
     {
         public static readonly DependencyProperty HueEntryProperty = DependencyProperty.Register( nameof( HueEntry ),
-            typeof( HueEntry ), typeof( HueEntryControl ),
+            typeof( HueEntry ), typeof( SingleHueEntryControl ),
             new FrameworkPropertyMetadata( default( HueEntry ), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 PropertyChangedCallback ) );
 
-        public HueEntryControl()
+        public SingleHueEntryControl()
         {
             InitializeComponent();
         }
@@ -29,7 +28,7 @@ namespace ClassicAssist.UI.Controls
 
         private static void PropertyChangedCallback( DependencyObject d, DependencyPropertyChangedEventArgs e )
         {
-            if ( d is HueEntryControl control )
+            if ( d is SingleHueEntryControl control )
             {
                 control.SetHues( (HueEntry) e.NewValue );
             }
@@ -37,12 +36,10 @@ namespace ClassicAssist.UI.Controls
 
         private void SetHues( HueEntry entry )
         {
-            for ( int i = 0; i < 32; i++ )
-            {
-                SolidColorBrush brush = new SolidColorBrush( Convert555ToARGB( entry.Colors[i] ) );
+            // TODO: Rush job, verify logic for single hue later
+            SolidColorBrush brush = new SolidColorBrush( Convert555ToARGB( entry.Colors[30] ) );
 
-                StackPanel.Children.Add( new Rectangle { Fill = brush, Width = 10 } );
-            }
+            StackPanel.Children.Add( new Rectangle { Fill = brush, Width = 320 } );
         }
 
         protected static Color Convert555ToARGB( short Col )

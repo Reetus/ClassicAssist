@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using Assistant;
 using ClassicAssist.Shared.Resources;
+using ClassicAssist.UI.ViewModels.Filters;
 using ClassicAssist.UI.Views.Filters;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.Packets;
@@ -12,7 +13,8 @@ namespace ClassicAssist.Data.Filters
     [FilterOptions( Name = "Cliloc Filter", DefaultEnabled = false )]
     public class ClilocFilter : FilterEntry, IConfigurableFilter
     {
-        public static Dictionary<int, string> Filters { get; set; } = new Dictionary<int, string>();
+        public static ObservableCollection<FilterClilocEntry> Filters { get; set; } =
+            new ObservableCollection<FilterClilocEntry>();
 
         public static bool IsEnabled { get; set; }
 
@@ -33,12 +35,16 @@ namespace ClassicAssist.Data.Filters
 
             foreach ( JToken filterToken in token["Filters"] )
             {
-                int key = filterToken["Key"].ToObject<int>();
-                string val = filterToken["Value"]?.ToObject<string>();
-
-                if ( !Filters.ContainsKey( key ) )
+                FilterClilocEntry entry = new FilterClilocEntry
                 {
-                    Filters.Add( key, val );
+                    Cliloc = filterToken["Key"]?.ToObject<int>() ?? -1,
+                    Replacement = filterToken["Value"]?.ToObject<string>(),
+                    Hue = filterToken["Hue"]?.ToObject<int>() ?? -1
+                };
+
+                if ( Filters.All( e => e.Cliloc != entry.Cliloc ) )
+                {
+                    Filters.Add( entry );
                 }
             }
         }
@@ -47,9 +53,12 @@ namespace ClassicAssist.Data.Filters
         {
             JArray itemsArray = new JArray();
 
-            foreach ( KeyValuePair<int, string> kvp in Filters )
+            foreach ( FilterClilocEntry filter in Filters )
             {
-                itemsArray.Add( new JObject { { "Key", kvp.Key }, { "Value", kvp.Value } } );
+                itemsArray.Add( new JObject
+                {
+                    { "Key", filter.Cliloc }, { "Value", filter.Replacement }, { "Hue", filter.Hue }
+                } );
             }
 
             return new JObject { { "Filters", itemsArray } };
@@ -72,17 +81,23 @@ namespace ClassicAssist.Data.Filters
                 return false;
             }
 
-            if ( Filters.All( f => f.Key != journalEntry.Cliloc ) )
+            if ( Filters.All( f => f.Cliloc != journalEntry.Cliloc ) )
             {
                 return false;
             }
 
-            KeyValuePair<int, string> match = Filters.FirstOrDefault( f => f.Key == journalEntry.Cliloc );
+            FilterClilocEntry match = Filters.FirstOrDefault( f => f.Cliloc == journalEntry.Cliloc );
 
-            Engine.SendPacketToClient( new UnicodeText( journalEntry.Serial, journalEntry.ID, journalEntry.SpeechType,
-                journalEntry.SpeechHue, journalEntry.SpeechFont, Strings.UO_LOCALE, journalEntry.Name, match.Value ) );
+            if ( match != null )
+            {
+                Engine.SendPacketToClient( new UnicodeText( journalEntry.Serial, journalEntry.ID,
+                    journalEntry.SpeechType, match.Hue == -1 ? journalEntry.SpeechHue : match.Hue,
+                    journalEntry.SpeechFont, Strings.UO_LOCALE, journalEntry.Name, match.Replacement ) );
 
-            return true;
+                return true;
+            }
+
+            return false;
         }
 
         public static bool CheckMessageAffix( JournalEntry journalEntry, MessageAffixType affixType, string affix )
@@ -92,19 +107,25 @@ namespace ClassicAssist.Data.Filters
                 return false;
             }
 
-            if ( Filters.All( f => f.Key != journalEntry.Cliloc ) )
+            if ( Filters.All( f => f.Cliloc != journalEntry.Cliloc ) )
             {
                 return false;
             }
 
-            KeyValuePair<int, string> match = Filters.FirstOrDefault( f => f.Key == journalEntry.Cliloc );
+            FilterClilocEntry match = Filters.FirstOrDefault( f => f.Cliloc == journalEntry.Cliloc );
+
+            if ( match == null )
+            {
+                return false;
+            }
 
             string text = affixType.HasFlag( MessageAffixType.Prepend )
-                ? $"{affix}{match.Value}"
-                : $"{match.Value}{affix}";
+                ? $"{affix}{match.Replacement}"
+                : $"{match.Replacement}{affix}";
 
             Engine.SendPacketToClient( new UnicodeText( journalEntry.Serial, journalEntry.ID, JournalSpeech.Say,
-                journalEntry.SpeechHue, journalEntry.SpeechFont, Strings.UO_LOCALE, journalEntry.Name, text ) );
+                match.Hue == -1 ? journalEntry.SpeechHue : match.Hue, journalEntry.SpeechFont, Strings.UO_LOCALE,
+                journalEntry.Name, text ) );
 
             return true;
         }

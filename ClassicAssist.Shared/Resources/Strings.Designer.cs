@@ -2185,6 +2185,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hue Override.
+        /// </summary>
+        public static string Hue_Override {
+            get {
+                return ResourceManager.GetString("Hue Override", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hue Picker.
         /// </summary>
         public static string Hue_Picker {

@@ -1842,4 +1842,7 @@ Are you sure you wish to continue?</value>
   <data name="Packets" xml:space="preserve">
     <value>Packets</value>
   </data>
+  <data name="Hue Override" xml:space="preserve">
+    <value>Hue Override</value>
+  </data>
 </root>

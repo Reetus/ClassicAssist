@@ -3,6 +3,7 @@ using System.Text;
 using System.Threading;
 using Assistant;
 using ClassicAssist.Data.Filters;
+using ClassicAssist.UI.ViewModels.Filters;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -53,7 +54,7 @@ namespace ClassicAssist.Tests.Filters
             Engine.InternalPacketReceivedEvent += OnReceivedEvent;
 
             ClilocFilter.IsEnabled = true;
-            ClilocFilter.Filters.Add( cliloc, replaceText );
+            ClilocFilter.Filters.Add( new FilterClilocEntry { Cliloc = cliloc, Replacement = replaceText, Hue = -1 } );
 
             IncomingPacketFilters.Initialize();
             IncomingPacketFilters.CheckPacket( ref packet, ref length );
@@ -105,7 +106,7 @@ namespace ClassicAssist.Tests.Filters
             Engine.InternalPacketReceivedEvent += OnReceivedEvent;
 
             ClilocFilter.IsEnabled = true;
-            ClilocFilter.Filters.Add( cliloc, replaceText );
+            ClilocFilter.Filters.Add( new FilterClilocEntry { Cliloc = cliloc, Replacement = replaceText, Hue = -1 } );
 
             IncomingPacketFilters.Initialize();
             IncomingPacketFilters.CheckPacket( ref packet, ref length );

@@ -10,6 +10,7 @@
              xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              xmlns:sharedResources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:skills="clr-namespace:ClassicAssist.Data.Skills"
              mc:Ignorable="d">
     <d:DesignerProperties.DesignStyle>
         <Style TargetType="UserControl">
@@ -39,6 +40,7 @@
                 <Setter Property="Margin" Value="0,7,0,0" />
             </Style>
             <ContextMenu x:Key="ItemContextMenu">
+                <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
                 <MenuItem Header="{x:Static sharedResources:Strings.Set_Up}"
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.SetSkillLocksCommand}"
                           CommandParameter="{x:Static data:LockStatus.Up}" />
@@ -51,6 +53,7 @@
                 <Separator />
                 <MenuItem Header="{x:Static sharedResources:Strings.Use_skill}"
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.UseSkillCommand}" />
+                <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
             </ContextMenu>
         </Grid.Resources>
         <ListView Grid.Column="0" ItemsSource="{Binding Items}" Margin="5"
@@ -75,7 +78,7 @@
                     <misc1:SkillsGridViewColumn Header="{x:Static sharedResources:Strings.Status}" Width="40"
                                                 SortField="LockStatus">
                         <misc1:SkillsGridViewColumn.CellTemplate>
-                            <DataTemplate>
+                            <DataTemplate DataType="skills:SkillEntry">
                                 <Image
                                     Source="{Binding LockStatus, Converter={StaticResource LockStatusValueConverter}}"
                                     HorizontalAlignment="Center" Width="40" Stretch="Uniform" Height="10"

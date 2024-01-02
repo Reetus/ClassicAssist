@@ -1620,4 +1620,7 @@ Určitě chceš pokračovat?</value>
   <data name="Other" xml:space="preserve">
     <value>Other</value>
   </data>
+  <data name="Packets" xml:space="preserve">
+    <value>Pakety</value>
+  </data>
 </root>

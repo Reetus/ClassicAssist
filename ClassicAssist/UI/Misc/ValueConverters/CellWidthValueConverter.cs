@@ -12,7 +12,14 @@ namespace ClassicAssist.UI.Misc.ValueConverters
         {
             if ( parameter != null )
             {
-                substractValue = double.Parse( parameter.ToString() );
+                if ( double.Parse( parameter.ToString() ) < 0 )
+                {
+                    substractValue = 0;
+                }
+                else
+                {
+                    substractValue = double.Parse( parameter.ToString() );
+                }
             }
 
             double? val = (double?) value - substractValue;

@@ -75,6 +75,9 @@
                 <DockPanel Grid.Row="4">
                     <Label Content="{x:Static resources:Strings.Backup_Days}" DockPanel.Dock="Left" />
                     <xctk:IntegerUpDown Value="{Binding BackupOptions.Days}"
+                                        Background="{StaticResource ThemeBackgroundBrush}"
+                                        Foreground="{StaticResource ThemeForegroundBrush}"
+                                        BorderBrush="{StaticResource ThemeBorderBrush}"
                                         ToolTip="{x:Static resources:Strings.Setting_to_zero_will_cause_it_to_backup_on_every_client_close}" />
                 </DockPanel>
                 <DockPanel Grid.Row="5">

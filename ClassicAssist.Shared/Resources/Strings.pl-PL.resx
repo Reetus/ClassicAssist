@@ -1698,4 +1698,7 @@ Czy chcesz kontynuować?</value>
   <data name="Show player / shard name in CUO title" xml:space="preserve">
     <value>Pokaż gracza / nazwę shardu w pasku tytułu CUO</value>
   </data>
+  <data name="Packets" xml:space="preserve">
+    <value>Pakiety</value>
+  </data>
 </root>

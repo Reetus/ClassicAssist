@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows;
 using Assistant;
 using ClassicAssist.Annotations;
-using ClassicAssist.UI.ViewModels;
+using ClassicAssist.UI.ViewModels.Debug;
 using ClassicAssist.UO.Network.PacketFilter;
 
 namespace ClassicAssist.UI.Controls
@@ -32,7 +32,7 @@ namespace ClassicAssist.UI.Controls
 
         public static readonly DependencyProperty PacketEntriesProperty =
             DependencyProperty.Register( nameof( PacketEntries ),
-                typeof( ObservableCollection<DebugViewModel.PacketEnabledEntry> ), typeof( HexDumpControl ) );
+                typeof( ObservableCollection<DebugPacketsViewModel.PacketEnabledEntry> ), typeof( HexDumpControl ) );
 
         private string _binaryData;
         private string _textData;
@@ -59,9 +59,9 @@ namespace ClassicAssist.UI.Controls
             }
         }
 
-        public ObservableCollection<DebugViewModel.PacketEnabledEntry> PacketEntries
+        public ObservableCollection<DebugPacketsViewModel.PacketEnabledEntry> PacketEntries
         {
-            get => (ObservableCollection<DebugViewModel.PacketEnabledEntry>) GetValue( PacketEntriesProperty );
+            get => (ObservableCollection<DebugPacketsViewModel.PacketEnabledEntry>) GetValue( PacketEntriesProperty );
             set => SetValue( PacketEntriesProperty, value );
         }
 
@@ -240,7 +240,8 @@ namespace ClassicAssist.UI.Controls
 
             byte packetType = Packet.Data[0];
 
-            DebugViewModel.PacketEnabledEntry entry = PacketEntries.FirstOrDefault( i => i.PacketID == packetType );
+            DebugPacketsViewModel.PacketEnabledEntry entry =
+                PacketEntries.FirstOrDefault( i => i.PacketID == packetType );
 
             if ( entry != null )
             {

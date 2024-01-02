@@ -21,6 +21,14 @@ namespace ClassicAssist.Controls.Headered
             nameof( ChildMargin ), typeof( Thickness ), typeof( HorizontalHeaderedContentControl ),
             new PropertyMetadata( new Thickness( 0, 0, 5, 0 ) ) );
 
+        public static readonly DependencyProperty HeaderWidthProperty = DependencyProperty.Register(
+            nameof( HeaderWidth ), typeof( double ), typeof( HorizontalHeaderedContentControl ),
+            new PropertyMetadata( double.NaN ) );
+
+        public static readonly DependencyProperty HeaderMinWidthProperty = DependencyProperty.Register(
+            nameof( HeaderMinWidth ), typeof( double ), typeof( HorizontalHeaderedContentControl ),
+            new PropertyMetadata( double.NaN ) );
+
         public HorizontalHeaderedContentControl()
         {
             InitializeComponent();
@@ -30,6 +38,18 @@ namespace ClassicAssist.Controls.Headered
         {
             get => (Thickness) GetValue( ChildMarginProperty );
             set => SetValue( ChildMarginProperty, value );
+        }
+
+        public double HeaderMinWidth
+        {
+            get => (double) GetValue( HeaderMinWidthProperty );
+            set => SetValue( HeaderMinWidthProperty, value );
+        }
+
+        public double HeaderWidth
+        {
+            get => (double) GetValue( HeaderWidthProperty );
+            set => SetValue( HeaderWidthProperty, value );
         }
     }
 }

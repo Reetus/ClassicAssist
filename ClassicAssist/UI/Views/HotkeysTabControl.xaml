@@ -64,6 +64,11 @@
         </Grid>
         <GroupBox Grid.Column="1" Header="{x:Static resources:Strings.Hotkeys}" Margin="0, 10, 5, 5">
             <Grid>
+                <Grid.Resources>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Padding" Value="4"/>
+                    </Style>
+                </Grid.Resources>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />

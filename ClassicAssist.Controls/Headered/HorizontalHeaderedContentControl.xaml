@@ -10,7 +10,9 @@
             <DockPanel LastChildFill="True">
                 <TextBlock DockPanel.Dock="Left" Text="{TemplateBinding Header}"
                            Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"
-                           Margin="{Binding RelativeSource={RelativeSource AncestorType=local:HorizontalHeaderedContentControl}, Path=ChildMargin}" />
+                           Margin="{Binding RelativeSource={RelativeSource AncestorType=local:HorizontalHeaderedContentControl}, Path=ChildMargin, Mode=OneWay}"
+                           Width="{Binding RelativeSource={RelativeSource AncestorType=local:HorizontalHeaderedContentControl}, Path=HeaderWidth, Mode=OneWay}"
+                           MinWidth="{Binding RelativeSource={RelativeSource AncestorType=local:HorizontalHeaderedContentControl}, Path=HeaderMinWidth, Mode=OneWay}" />
                 <ContentPresenter x:Name="PART_ContentHost" ContentSource="Content" />
             </DockPanel>
         </ControlTemplate>

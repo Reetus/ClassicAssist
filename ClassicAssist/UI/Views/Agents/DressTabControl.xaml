@@ -32,6 +32,11 @@
         <agents:DressTabViewModel />
     </UserControl.DataContext>
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Padding" Value="4"/>
+            </Style>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150" />
             <ColumnDefinition Width="*" />
@@ -109,6 +114,7 @@
                                     </Style.Triggers>
                                 </Style>
                             </ContextMenu.Resources>
+                            <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                             <MenuItem Header="{x:Static resources:Strings.Dress_Type}" IsCheckable="True"
                                       Command="{Binding Data.ChangeDressTypeCommand, Source={StaticResource Proxy}}"
                                       CommandParameter="{Binding SelectedDressItem}" />

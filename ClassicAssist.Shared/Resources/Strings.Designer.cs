@@ -3559,6 +3559,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Packets.
+        /// </summary>
+        public static string Packets {
+            get {
+                return ResourceManager.GetString("Packets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pass to UO.
         /// </summary>
         public static string Pass_to_UO {

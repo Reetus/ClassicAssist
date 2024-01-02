@@ -11,7 +11,7 @@
         xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
         xmlns:browser="clr-namespace:ClassicAssist.Browser"
         mc:Ignorable="d"
-        Height="500" Width="625" Topmost="{Binding AlwaysOnTop}"
+        Height="500" Width="625" Topmost="{Binding CurrentOptions.AlwaysOnTop}"
         MinHeight="400" MinWidth="400"
         Background="{DynamicResource ThemeWindowBackgroundBrush}"
         AllowsTransparency="True" WindowStyle="None" WindowState="Normal"

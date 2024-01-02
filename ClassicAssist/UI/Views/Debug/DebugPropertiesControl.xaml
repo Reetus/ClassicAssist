@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:debug="clr-namespace:ClassicAssist.UI.ViewModels.Debug"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -24,10 +25,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <ToolBar Grid.Row="0" Style="{DynamicResource ToolBarStyle1}">
-            <Button ToolTip="{x:Static resources:Strings.Target_object___}" Command="{Binding TargetCommand}">
-                <Image Source="{StaticResource CrosshairIcon}" Height="16" />
-            </Button>
+        <ToolBar Grid.Row="0">
+            <controls:ImageButton ToolTip="{x:Static resources:Strings.Target_object___}"
+                                  Command="{Binding TargetCommand}" ImageSource="{StaticResource CrosshairIcon}" />
         </ToolBar>
         <ListView Grid.Row="1" ItemsSource="{Binding Items}">
             <ListView.View>

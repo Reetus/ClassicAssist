@@ -21,11 +21,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <CollectionViewSource x:Key='src' Source="{Binding Items}">
-                <CollectionViewSource.GroupDescriptions>
-                    <PropertyGroupDescription PropertyName="Category" />
-                </CollectionViewSource.GroupDescriptions>
-            </CollectionViewSource>
             <DrawingImage x:Key="PointerIcon">
                 <DrawingImage.Drawing>
                     <DrawingGroup ClipGeometry="M0,0 V512 H320 V0 H0 Z">
@@ -34,9 +29,22 @@
                     </DrawingGroup>
                 </DrawingImage.Drawing>
             </DrawingImage>
+            <viewModels:ObjectInspectorViewModel x:Key="DummyData">
+                <viewModels:ObjectInspectorViewModel.Items>
+                    <models:ObjectInspectorData Category="Category" Name="Name" Value="Value" IsExpanded="False"/>
+                    <models:ObjectInspectorData Category="Category 2" Name="Name" Value="Value"/>
+                </viewModels:ObjectInspectorViewModel.Items>
+            </viewModels:ObjectInspectorViewModel>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
+    <Grid d:DataContext="{StaticResource DummyData}">
+        <Grid.Resources>
+            <CollectionViewSource x:Key='src' Source="{Binding Items}">
+                <CollectionViewSource.GroupDescriptions>
+                    <PropertyGroupDescription PropertyName="Category" />
+                </CollectionViewSource.GroupDescriptions>
+            </CollectionViewSource>
+        </Grid.Resources>
         <ListView ItemsSource="{Binding Source={StaticResource src}}"
                   SelectedValue="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Behaviors>
@@ -95,7 +103,7 @@
                                         <Expander IsExpanded="{Binding Items/IsExpanded}" BorderThickness="0,0,0,0">
                                             <Expander.Header>
                                                 <DockPanel>
-                                                    <TextBlock FontSize="12" Text="{Binding Path=Items/Name}"
+                                                    <TextBlock FontSize="12" Text="{Binding Path=Items/Category}"
                                                                Margin="5,0,0,0" Width="100"
                                                                Foreground="{StaticResource ThemeForegroundBrush}" />
                                                 </DockPanel>

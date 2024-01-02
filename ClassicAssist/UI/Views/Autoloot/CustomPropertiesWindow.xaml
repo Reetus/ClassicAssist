@@ -35,7 +35,7 @@
                                     DisplayMemberBinding="{Binding Cliloc}" />
                     <GridViewColumn Header="{x:Static resources:Strings.Arguments}" Width="75" x:Name="ValueColumn">
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate>
+                            <DataTemplate DataType="autoloot1:CustomProperty">
                                 <CheckBox IsChecked="{Binding Arguments}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

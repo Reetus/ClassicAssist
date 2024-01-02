@@ -11,18 +11,18 @@ namespace ClassicAssist.Controls
     /// </summary>
     public partial class EditTextBlock
     {
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register( "Text", typeof( string ),
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register( nameof( Text ), typeof( string ),
             typeof( EditTextBlock ),
             new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
 
-        public static readonly DependencyProperty LabelProperty = DependencyProperty.Register( "Label",
+        public static readonly DependencyProperty LabelProperty = DependencyProperty.Register( nameof( Label ),
             typeof( string ), typeof( EditTextBlock ),
             new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.None ) );
 
-        public static readonly DependencyProperty ShowIconProperty = DependencyProperty.Register( "ShowIcon",
+        public static readonly DependencyProperty ShowIconProperty = DependencyProperty.Register( nameof( ShowIcon ),
             typeof( bool ), typeof( EditTextBlock ), new UIPropertyMetadata() );
 
-        public static readonly DependencyProperty CanEditProperty = DependencyProperty.Register( "CanEdit",
+        public static readonly DependencyProperty CanEditProperty = DependencyProperty.Register( nameof( CanEdit ),
             typeof( bool ), typeof( EditTextBlock ), new UIPropertyMetadata( true ) );
 
         public EditTextBlock()

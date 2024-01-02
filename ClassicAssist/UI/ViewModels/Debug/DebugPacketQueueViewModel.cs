@@ -95,8 +95,8 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
         private void OnTick( object sender, EventArgs e )
         {
-            IncomingQueueLength = Engine.IncomingQueue.Count;
-            OutgoingQueueLength = Engine.OutgoingQueue.Count;
+            IncomingQueueLength = Engine.IncomingQueue?.Count ?? 0;
+            OutgoingQueueLength = Engine.OutgoingQueue?.Count ?? 0;
         }
     }
 }

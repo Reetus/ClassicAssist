@@ -29,7 +29,7 @@
                 <TextBox Text="{Binding CurrentOptions.MacrosGumpHeight, Mode=TwoWay}" Width="50" Margin="5,0" />
                 <Button Command="{Binding SelectMacroTextColorCommand}"
                         ToolTip="{x:Static resources:Strings.Text_Color}"
-                        CommandParameter="{Binding CurrentOptions.MacrosGumpTextColor}">
+                        CommandParameter="{Binding CurrentOptions.MacrosGumpTextColor}" Padding="5,0">
                     <Image Source="{StaticResource ColorWheelIcon}" Height="12" Width="12" />
                 </Button>
             </StackPanel>

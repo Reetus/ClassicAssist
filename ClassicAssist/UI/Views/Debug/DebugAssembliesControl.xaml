@@ -6,6 +6,7 @@
              xmlns:debug="clr-namespace:ClassicAssist.UI.ViewModels.Debug"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+             xmlns:reflection="clr-namespace:System.Reflection;assembly=mscorlib"
              mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
              d:DesignHeight="250" d:DesignWidth="300">
     <UserControl.DataContext>
@@ -36,7 +37,7 @@
                         <GridViewColumn Header="{x:Static resources:Strings.Name}"
                                         Width="{Binding ActualWidth, ElementName=listView, Mode=OneWay, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=20}">
                             <GridViewColumn.CellTemplate>
-                                <DataTemplate>
+                                <DataTemplate DataType="reflection:Assembly">
                                     <TextBlock Text="{Binding}" ToolTip="{Binding Location, Mode=OneWay}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
@@ -48,7 +49,6 @@
         <StackPanel Orientation="Horizontal" Grid.Row="1">
             <StackPanel.Resources>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                    <Setter Property="Padding" Value="20,2,20,2" />
                     <Setter Property="Margin" Value="0,0,10,0" />
                 </Style>
             </StackPanel.Resources>
@@ -57,7 +57,5 @@
                     CommandParameter="{Binding SelectedItem, ElementName=listView}" />
             <Button Content="{x:Static resources:Strings.Save}" Command="{Binding SaveCommand}" />
         </StackPanel>
-
     </Grid>
-
 </UserControl>

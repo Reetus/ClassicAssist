@@ -9,8 +9,8 @@
              xmlns:data="clr-namespace:ClassicAssist.UO.Data"
              xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
              xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
-             xmlns:views="clr-namespace:ClassicAssist.UI.Views"
              xmlns:ecv="clr-namespace:ClassicAssist.UI.Views.ECV"
+             xmlns:models="clr-namespace:ClassicAssist.UI.Models"
              mc:Ignorable="d"
              d:DesignHeight="200" d:DesignWidth="400"
              DataContext="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}"
@@ -66,7 +66,7 @@
                 <GridView>
                     <GridViewColumn Header="{x:Static resources:Strings.Property}" Width="220" x:Name="NameColumn">
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate>
+                            <DataTemplate DataType="{x:Type models:EntityCollectionFilter}">
                                 <StackPanel>
                                     <ComboBox SelectedItem="{Binding Constraint}"
                                               ItemsSource="{Binding Constraints, ElementName=userControl}" Width="200"
@@ -91,7 +91,7 @@
                     </GridViewColumn>
                     <GridViewColumn Header="{x:Static resources:Strings.Operator}" Width="75">
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate>
+                            <DataTemplate DataType="models:EntityCollectionFilter">
                                 <ComboBox Width="50" SelectedItem="{Binding Operator}"
                                           ItemsSource="{Binding Source={misc:EnumBindingSource {x:Type autoloot:AutolootOperator}}}" />
                             </DataTemplate>
@@ -99,7 +99,7 @@
                     </GridViewColumn>
                     <GridViewColumn Header="{x:Static resources:Strings.Value}" Width="100" x:Name="GridViewColumn">
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate>
+                            <DataTemplate DataType="{x:Type models:EntityCollectionFilter}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />

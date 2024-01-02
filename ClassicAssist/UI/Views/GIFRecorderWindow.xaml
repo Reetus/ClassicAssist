@@ -137,6 +137,7 @@
         <controls:CustomWindowTitleControl DockPanel.Dock="Top">
             <controls:CustomWindowTitleControl.AdditionalContent>
                 <StackPanel Orientation="Horizontal">
+                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                     <Button Width="16" Background="Transparent" BorderThickness="0" Padding="0"
                             Command="{Binding Data.RecordCommand, Source={StaticResource Proxy}}">
                         <Image RenderTransformOrigin="0.5,0.5">

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using ClassicAssist.Data.Filters;
 using ClassicAssist.Shared.UI;
@@ -22,9 +24,21 @@ namespace ClassicAssist.UI.ViewModels.Filters
 
         public ClilocFilterConfigureViewModel()
         {
-            foreach ( KeyValuePair<int, string> kvp in Cliloc.GetItems() )
+            if ( DesignerProperties.GetIsInDesignMode( new DependencyObject() ) )
             {
-                AllClilocs.Add( new ClilocEntry { Key = kvp.Key, Value = kvp.Value } );
+                for ( int i = 0; i < 10; i++ )
+                {
+                    AllClilocs.Add( new ClilocEntry { Key = i, Value = $"Cliloc {i}" } );
+                }
+
+                Items.Add( new FilterClilocEntry { Cliloc = 100, Replacement = "Replacement" } );
+            }
+            else
+            {
+                foreach ( KeyValuePair<int, string> kvp in Cliloc.GetItems() )
+                {
+                    AllClilocs.Add( new ClilocEntry { Key = kvp.Key, Value = kvp.Value } );
+                }
             }
 
             foreach ( KeyValuePair<int, string> filterFilter in ClilocFilter.Filters )
@@ -32,7 +46,7 @@ namespace ClassicAssist.UI.ViewModels.Filters
                 Items.Add( new FilterClilocEntry { Cliloc = filterFilter.Key, Replacement = filterFilter.Value } );
             }
 
-            UpdateEntries( _filterText );
+            UpdateEntries( string.Empty );
         }
 
         public ICommand AddItemCommand => _addItemCommand ?? ( _addItemCommand = new RelayCommand( AddItem ) );
@@ -132,18 +146,23 @@ namespace ClassicAssist.UI.ViewModels.Filters
 
             Items.Add( new FilterClilocEntry { Cliloc = clilocEntry.Key, Replacement = clilocEntry.Value } );
         }
+    }
 
-        public class ClilocEntry
-        {
-            public int Key { get; set; }
-            public string Value { get; set; }
-        }
+    public class ClilocEntry
+    {
+        public int Key { get; set; }
+        public string Value { get; set; }
+    }
 
-        public class FilterClilocEntry
-        {
-            public int Cliloc { get; set; }
-            public string Original => UO.Data.Cliloc.GetProperty( Cliloc );
-            public string Replacement { get; set; }
-        }
+    public class FilterClilocEntry
+    {
+        public int Cliloc { get; set; }
+
+        public string Original =>
+            DesignerProperties.GetIsInDesignMode( new DependencyObject() )
+                ? Replacement
+                : UO.Data.Cliloc.GetProperty( Cliloc );
+
+        public string Replacement { get; set; }
     }
 }

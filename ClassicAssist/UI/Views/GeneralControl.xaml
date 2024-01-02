@@ -39,13 +39,18 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ListBox x:Name="listBox" ItemsSource="{Binding Filters}" Grid.Row="0">
-                    <ListBox.ItemTemplate>
+                <ItemsControl x:Name="listBox" ItemsSource="{Binding Filters}" Grid.Row="0" Background="{StaticResource ThemeInnerControlBackgroundBrush}">
+                    <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <CheckBox IsChecked="{Binding Enabled}" />
-                                <TextBlock Text="{Binding Name}" Margin="5,0,5,0" />
-                                <Button Background="Transparent" BorderThickness="0"
+                            <Grid Margin="5,2.5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <CheckBox IsChecked="{Binding Enabled}" Grid.Column="0" />
+                                <TextBlock Text="{Binding Name}" Margin="5,0,5,0" Grid.Column="1" />
+                                <Button Background="Transparent" BorderThickness="0" Grid.Column="2"
                                         ToolTip="{x:Static r:Strings.Options}"
                                         Visibility="{Binding IsConfigurable, Converter={StaticResource BooleanToVisibilityConverter}}"
                                         Command="{Binding DataContext.ConfigureFilterCommand, ElementName=userControl}"
@@ -54,16 +59,16 @@
                                         <Image Source="{StaticResource configureIcon}" Height="16" Margin="0" />
                                     </Button.Content>
                                 </Button>
-                            </StackPanel>
+                            </Grid>
                         </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                <Grid Grid.Row="1">
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Grid Grid.Row="1" Margin="5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Label Content="{x:Static r:Strings.Light}" Grid.Column="0" />
+                    <Label Content="{x:Static r:Strings.Light}" Grid.Column="0" VerticalAlignment="Center" />
                     <Slider Grid.Column="1" Maximum="31"
                             Value="{Binding Options.LightLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             IsDirectionReversed="True" Minimum="0" Height="20" VerticalAlignment="Center" />
@@ -92,6 +97,7 @@
                                 <ItemContainerTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <Label Content="{x:Static r:Strings.Action_Delay_}" Margin="0" />
+                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                                         <TextBox Width="40" Margin="10,0,10,0"
                                                  Text="{Binding Path=Data.Options.ActionDelayMS, Source={StaticResource proxy}}" />
                                         <Label Content="ms" Margin="0" Padding="0" />

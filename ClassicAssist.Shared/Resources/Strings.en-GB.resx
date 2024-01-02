@@ -1839,4 +1839,7 @@ Are you sure you wish to continue?</value>
   <data name="Limit Hotkey Retrigger" xml:space="preserve">
     <value>Limit Hotkey Retrigger</value>
   </data>
+  <data name="Packets" xml:space="preserve">
+    <value>Packets</value>
+  </data>
 </root>

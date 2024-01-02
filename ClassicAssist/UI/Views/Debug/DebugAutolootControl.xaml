@@ -7,6 +7,7 @@
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+             xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
              d:DesignHeight="400" d:DesignWidth="550">
     <UserControl.Resources>
@@ -154,19 +155,11 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <ToolBar Style="{DynamicResource ToolBarStyle1}" Grid.Row="0">
-            <Button ToolTip="Test Item" Command="{Binding TestItemCommand}">
-                <Image Source="{StaticResource CrosshairIcon}" Height="16" />
-            </Button>
-            <Button ToolTip="Test Container" Command="{Binding TestContainerCommand}">
-                <Image Source="{StaticResource ContainerIcon}" Height="16" />
-            </Button>
-            <Button ToolTip="Retest Container" Command="{Binding RetestContainerCommand}">
-                <Image Source="{StaticResource RefreshIcon}" Height="16" />
-            </Button>
-            <Button ToolTip="{x:Static resources:Strings.Clear}" Command="{Binding ClearResultsCommand}">
-                <Image Source="{StaticResource RemoveIcon}" Height="11" />
-            </Button>
+        <ToolBar Grid.Row="0">
+            <controls:ImageButton ToolTip="Test Item" Command="{Binding TestItemCommand}" ImageSource="{StaticResource CrosshairIcon}"/>
+            <controls:ImageButton ToolTip="Test Container" Command="{Binding TestContainerCommand}" ImageSource="{StaticResource ContainerIcon}"/>
+            <controls:ImageButton ToolTip="Retest Container" Command="{Binding RetestContainerCommand}" ImageSource="{StaticResource RefreshIcon}"/>
+            <controls:ImageButton ToolTip="{x:Static resources:Strings.Clear}" Command="{Binding ClearResultsCommand}" ImageSource="{StaticResource RemoveIcon}"/>
         </ToolBar>
         <TextBox Grid.Row="1" VerticalScrollBarVisibility="Visible" Text="{Binding TestResults}"
                  Style="{DynamicResource TextBoxStyle}">

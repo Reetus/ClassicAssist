@@ -10,6 +10,7 @@
         xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
         xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
         xmlns:misc="clr-namespace:ClassicAssist.Misc"
+        xmlns:filters1="clr-namespace:ClassicAssist.Data.Filters"
         mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         Title="{x:Static resources:Strings.ItemID_Filter}" Height="350" Width="420">
     <Window.Resources>
@@ -92,7 +93,7 @@
                     <GridView>
                         <GridViewColumn Header="✓" Width="25">
                             <GridViewColumn.CellTemplate>
-                                <DataTemplate>
+                                <DataTemplate DataType="filters1:ItemIDFilterEntry">
                                     <CheckBox IsChecked="{Binding Enabled}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
@@ -100,18 +101,20 @@
                         <GridViewColumn Header="{x:Static resources:Strings.Source_ID}" Width="130"
                                         x:Name="SourceIDColumn">
                             <GridViewColumn.CellTemplate>
-                                <DataTemplate>
+                                <DataTemplate DataType="filters1:ItemIDFilterEntry">
                                     <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
                                         <controls:EditTextBlock
                                             Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=50, ElementName=SourceIDColumn, Mode=OneWay}"
                                             Text="{Binding SourceID, Converter={StaticResource IntToHexStringValueConverter}}"
                                             ShowIcon="True" />
 
+                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                                         <Button Padding="3,0,0,0"
                                                 Command="{Binding Data.SelectSourceIDCommand, Source={StaticResource Proxy}}"
                                                 CommandParameter="{Binding}">
                                             <Image Source="{DynamicResource PopupIcon}" Height="12" />
                                         </Button>
+                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                                         <Button Padding="3,0,0,0"
                                                 Command="{Binding Data.TargetSourceIDCommand, Source={StaticResource Proxy}}"
                                                 CommandParameter="{Binding}">
@@ -124,18 +127,20 @@
                         <GridViewColumn Header="{x:Static resources:Strings.Destination_ID}" Width="130"
                                         x:Name="DestinationIDColumn">
                             <GridViewColumn.CellTemplate>
-                                <DataTemplate>
+                                <DataTemplate DataType="filters1:ItemIDFilterEntry">
                                     <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
                                         <controls:EditTextBlock
                                             Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=50, ElementName=DestinationIDColumn, Mode=OneWay}"
                                             Text="{Binding DestinationID, Converter={StaticResource IntToHexStringValueConverter}}"
                                             ShowIcon="True" />
 
+                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                                         <Button Padding="3,0,0,0"
                                                 Command="{Binding Data.SelectDestinationIDCommand, Source={StaticResource Proxy}}"
                                                 CommandParameter="{Binding}">
                                             <Image Source="{DynamicResource PopupIcon}" Height="12" />
                                         </Button>
+                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                                         <Button Padding="3,0,0,0"
                                                 Command="{Binding Data.TargetDestinationIDCommand, Source={StaticResource Proxy}}"
                                                 CommandParameter="{Binding}">
@@ -147,12 +152,13 @@
                         </GridViewColumn>
                         <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="78" x:Name="HueColumn">
                             <GridViewColumn.CellTemplate>
-                                <DataTemplate>
+                                <DataTemplate DataType="filters1:ItemIDFilterEntry">
                                     <StackPanel Orientation="Horizontal">
                                         <controls:EditTextBlock
                                             Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=30, ElementName=HueColumn, Mode=OneWay}"
                                             Text="{Binding Hue}"
                                             ShowIcon="True" />
+                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                                         <Button Padding="3,0,0,0"
                                                 Command="{Binding Data.SelectHueCommand, Source={StaticResource Proxy}}"
                                                 CommandParameter="{Binding}">
@@ -166,7 +172,7 @@
                 </ListView.View>
             </ListView>
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
-                <Button Content="{x:Static resources:Strings.Close}" Padding="25,0">
+                <Button Content="{x:Static resources:Strings.Close}">
                     <i:Interaction.Behaviors>
                         <behaviours:CloseOnClickBehaviour />
                     </i:Interaction.Behaviors>

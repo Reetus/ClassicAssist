@@ -1965,4 +1965,7 @@ Are you sure you wish to continue?</value>
   <data name="Other" xml:space="preserve">
     <value>Other</value>
   </data>
+  <data name="Packets" xml:space="preserve">
+    <value>Packets</value>
+  </data>
 </root>

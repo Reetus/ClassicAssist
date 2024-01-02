@@ -8,6 +8,7 @@
     xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:counters="clr-namespace:ClassicAssist.Data.Counters"
     x:Class="ClassicAssist.UI.Views.Agents.CountersTabControl"
     mc:Ignorable="d"
     d:DesignHeight="250" d:DesignWidth="500">
@@ -40,7 +41,7 @@
                 <GridView>
                     <GridViewColumn Header="{x:Static resources:Strings.Name}" Width="150" x:Name="NameColumn">
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate>
+                            <DataTemplate DataType="counters:CountersAgentEntry">
                                 <controls:EditTextBlock
                                     Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=NameColumn, Mode=OneWay}"
                                     Text="{Binding Name}" ShowIcon="True" />
@@ -51,7 +52,7 @@
                                     DisplayMemberBinding="{Binding Graphic, StringFormat={}0x{0:x}}" />
                     <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="75" x:Name="ColorColumn">
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate>
+                            <DataTemplate DataType="{x:Type counters:CountersAgentEntry}">
                                 <controls:EditTextBlock
                                     Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=ColorColumn, Mode=OneWay}"
                                     Text="{Binding Color, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" ShowIcon="True" />
@@ -66,18 +67,13 @@
         <DockPanel Grid.Row="1" Margin="10,0,10,10">
             <CheckBox IsChecked="{Binding Warn}">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{x:Static resources:Strings.Warn_when_counter_amount_below_}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{x:Static resources:Strings.Warn_when_counter_amount_below_}"
+                               VerticalAlignment="Center" Margin="0,0,5,0" />
                     <xctk:IntegerUpDown Minimum="0" Value="{Binding WarnAmount}" UpdateValueOnEnterKey="True" />
                 </StackPanel>
             </CheckBox>
         </DockPanel>
         <DockPanel Grid.Row="2" Margin="10,0,10,10">
-            <DockPanel.Resources>
-                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                    <Setter Property="Width" Value="70" />
-                    <Setter Property="Height" Value="25" />
-                </Style>
-            </DockPanel.Resources>
             <Button Content="{x:Static resources:Strings.Remove}" HorizontalAlignment="Left" Margin="0,0,10,0"
                     Command="{Binding RemoveEntryCommand}" CommandParameter="{Binding SelectedItem}" />
             <Button Content="{x:Static resources:Strings.Insert}" HorizontalAlignment="Left"

@@ -27,11 +27,11 @@
         </Grid.RowDefinitions>
         <ListBox Grid.Row="0" ItemsSource="{Binding Messages}">
             <i:Interaction.Behaviors>
-                <behaviours:ItemsControlAutoScrollBehaviour/>
+                <behaviours:ItemsControlAutoScrollBehaviour />
             </i:Interaction.Behaviors>
         </ListBox>
         <Button Content="{x:Static resources:Strings.Cancel}" HorizontalAlignment="Right" Grid.Row="1" Margin="0,5,0,0"
-                Padding="25,5" Command="{Binding CancelCommand}">
+                Command="{Binding CancelCommand}">
             <i:Interaction.Behaviors>
                 <behaviours:CloseOnClickBehaviour />
             </i:Interaction.Behaviors>

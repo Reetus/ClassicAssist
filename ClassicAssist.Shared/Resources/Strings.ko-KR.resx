@@ -1701,4 +1701,7 @@
   <data name="Show player / shard name in CUO title" xml:space="preserve">
     <value>게임윈도우 제목에 플레이어/서버 이름 표시 </value>
   </data>
+  <data name="Packets" xml:space="preserve">
+    <value>패킷</value>
+  </data>
 </root>

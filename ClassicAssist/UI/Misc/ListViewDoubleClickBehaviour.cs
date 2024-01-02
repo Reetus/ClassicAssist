@@ -14,7 +14,7 @@ namespace ClassicAssist.UI.Misc
             AssociatedObject.MouseDoubleClick += OnMouseDoubleClick;
         }
 
-        private void OnMouseDoubleClick( object sender, MouseButtonEventArgs e )
+        private static void OnMouseDoubleClick( object sender, MouseButtonEventArgs e )
         {
             ObjectInspectorViewModel i = (ObjectInspectorViewModel) ( (ListView) sender ).DataContext;
 

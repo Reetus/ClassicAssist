@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:debug="clr-namespace:ClassicAssist.UI.ViewModels.Debug"
+             xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
              d:DesignHeight="400" d:DesignWidth="550">
     <UserControl.DataContext>
@@ -17,15 +18,13 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <ListBox Grid.Column="0" MinWidth="120" Margin="0,0,5,0" ItemsSource="{Binding Items}"
-                 SelectedItem="{Binding SelectedItem}" />
-        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-        <ListBox Grid.Column="2" ItemsSource="{Binding Messages}" />
-    </Grid>
+    <controls:TwoColumnSplitterControl>
+        <controls:TwoColumnSplitterControl.LeftContent>
+            <ListBox MinWidth="120" ItemsSource="{Binding Items}"
+                     SelectedItem="{Binding SelectedItem}" />
+        </controls:TwoColumnSplitterControl.LeftContent>
+        <controls:TwoColumnSplitterControl.RightContent>
+            <ListBox ItemsSource="{Binding Messages}" />
+        </controls:TwoColumnSplitterControl.RightContent>
+    </controls:TwoColumnSplitterControl>
 </UserControl>

@@ -16,9 +16,9 @@ using Microsoft.Scripting.Utils;
 using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 
-namespace ClassicAssist.UI.ViewModels
+namespace ClassicAssist.UI.ViewModels.Debug
 {
-    public class DebugViewModel : BaseViewModel, ISettingProvider
+    public class DebugPacketsViewModel : BaseViewModel, ISettingProvider
     {
         private readonly List<PacketEntry> _tempItems = new List<PacketEntry>();
         private ICommand _changePacketEnabledCommand;
@@ -30,11 +30,11 @@ namespace ClassicAssist.UI.ViewModels
         private ObservableCollection<PacketEnabledEntry>
             _packetEntries = new ObservableCollection<PacketEnabledEntry>();
 
-        private bool _running;
+        private bool _enabled;
         private bool _topmost = true;
         private ICommand _viewPlayerEquipmentCommand;
 
-        public DebugViewModel()
+        public DebugPacketsViewModel()
         {
             PacketEntries.Add( new PacketEnabledEntry { Name = Strings.All_Packets, PacketID = -1, Enabled = true } );
 
@@ -73,10 +73,10 @@ namespace ClassicAssist.UI.ViewModels
 
         public ThreadQueue<PacketEntry> Queue { get; set; }
 
-        public bool Running
+        public bool Enabled
         {
-            get => _running;
-            set => SetProperty( ref _running, value );
+            get => _enabled;
+            set => SetProperty( ref _enabled, value );
         }
 
         public bool Topmost
@@ -176,7 +176,7 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            if ( !Running )
+            if ( !Enabled )
             {
                 return;
             }
@@ -196,7 +196,7 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            if ( !Running )
+            if ( !Enabled )
             {
                 return;
             }
@@ -216,7 +216,7 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            if ( !Running )
+            if ( !Enabled )
             {
                 return;
             }
@@ -236,7 +236,7 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            if ( !Running )
+            if ( !Enabled )
             {
                 return;
             }

@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="ClassicAssist.Controls.TwoColumnSplitterControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ClassicAssist.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <ContentPresenter x:Name="LeftContentPresenter"
+                          Width="{Binding RelativeSource={RelativeSource AncestorType=local:TwoColumnSplitterControl}, Path=LeftContentWidth, Mode=OneWay}"
+                          Content="{Binding RelativeSource={RelativeSource AncestorType=local:TwoColumnSplitterControl}, Path=LeftContent, Mode=OneWay}" />
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+        <ContentPresenter x:Name="RightContentPresenter" Grid.Column="2"
+                          Content="{Binding RelativeSource={RelativeSource AncestorType=local:TwoColumnSplitterControl}, Path=RightContent, Mode=OneWay}" />
+    </Grid>
+</UserControl>

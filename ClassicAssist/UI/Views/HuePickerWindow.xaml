@@ -7,9 +7,17 @@
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         Title="{x:Static resources:Strings.Hue_Picker}" Height="350" Width="450"
         DataContext="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -24,23 +32,22 @@
                 <TextBlock Text="{x:Static resources:Strings.Filter_}" DockPanel.Dock="Left" Margin="0,0,10,0" />
                 <TextBox Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
-            <ListView x:Name="listView" ItemsSource="{Binding FilteredItems}" SelectedItem="{Binding SelectedItem}"
-                      Grid.Row="1" Margin="0,10,0,0">
-                <ListView.ItemTemplate>
+            <ListBox x:Name="listView" ItemsSource="{Binding FilteredItems}" SelectedItem="{Binding SelectedItem}"
+                     Grid.Row="1" Margin="0,10,0,0">
+                <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" ToolTip="{Binding EntryName}">
-                            <TextBlock Text="{Binding Index}" Padding="0,0,20,0" Width="50" />
+                        <DockPanel ToolTip="{Binding EntryName}" LastChildFill="True">
+                            <TextBlock Text="{Binding Index}" DockPanel.Dock="Left" Width="50"/>
                             <controls:HueEntryControl
                                 HueEntry="{Binding Entry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        </StackPanel>
+                        </DockPanel>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10,0,10,10" HorizontalAlignment="Right">
             <StackPanel.Resources>
-                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                    <Setter Property="Padding" Value="20,0,20,0" />
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="Margin" Value="10,0,0,0" />
                 </Style>
             </StackPanel.Resources>

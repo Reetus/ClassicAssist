@@ -197,6 +197,7 @@
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                             <Setter Property="Margin" Value="0" />
                             <Setter Property="FontSize" Value="10" />
+                            <Setter Property="Padding" Value="4"/>
                         </Style>
                     </Grid.Resources>
                     <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="0" Margin="0,0,2.5,0"
@@ -229,6 +230,7 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
+                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                     <Button Content="{x:Static resources:Strings.Play}" Grid.Column="0" Margin="0,0,2.5,0"
                             Command="{Binding ExecuteCommand, Mode=OneWay}"
                             CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}"
@@ -240,6 +242,7 @@
                             </ContextMenu>
                         </Button.ContextMenu>
                     </Button>
+                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                     <Button Content="{x:Static resources:Strings.Stop}" Grid.Column="1" Margin="2.5,0,0,0"
                             IsEnabled="{Binding SelectedItem.IsRunning, ElementName=DraggableTreeView}"
                             Command="{Binding StopCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
@@ -282,6 +285,7 @@
                                 CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}" />
                 </avalon:TextEditor.InputBindings>
                 <i:Interaction.Behaviors>
+                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                     <misc:AvalonEditBehaviour
                         TextBinding="{Binding SelectedItem.Macro, ElementName=DraggableTreeView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <misc:AvalonBindingBehaviour DocumentBinding="{Binding Document}"
@@ -340,6 +344,7 @@
                         </Style.Triggers>
                     </Style>
                 </WrapPanel.Resources>
+                <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
                 <CheckBox Content="{x:Static resources:Strings.Loop}"
                           IsChecked="{Binding SelectedItem.Loop, ElementName=DraggableTreeView}" />
                 <CheckBox Content="{x:Static resources:Strings.Do_not_auto_interupt}"
@@ -355,6 +360,7 @@
                 <CheckBox Content="{x:Static resources:Strings.Global}"
                           ToolTip="{x:Static resources:Strings.Loaded_to_all_profiles}"
                           IsChecked="{Binding SelectedItem.Global}" />
+                <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
             </WrapPanel>
             <Grid Grid.Row="4">
                 <Grid.ColumnDefinitions>

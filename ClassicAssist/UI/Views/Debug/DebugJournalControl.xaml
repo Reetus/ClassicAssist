@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:debug="clr-namespace:ClassicAssist.UI.ViewModels.Debug"
-             xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+             xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
              d:DesignHeight="400" d:DesignWidth="550">
     <UserControl.DataContext>
@@ -22,16 +22,14 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
-        <ToolBar Style="{DynamicResource ToolBarStyle1}" DockPanel.Dock="Top">
-            <Button Command="{Binding ClearCommand}" Margin="0,0,5,0">
-                <Image Source="{StaticResource RemoveIcon}" Height="16"
-                       ToolTip="{x:Static resources:Strings.Clear_All}" />
-            </Button>
+        <ToolBar DockPanel.Dock="Top">
+            <controls:ImageButton Command="{Binding ClearCommand}" ImageSource="{StaticResource RemoveIcon}"
+                                  ToolTip="{x:Static resources:Strings.Clear_All}" />
         </ToolBar>
         <ListBox ItemsSource="{Binding Items}"
                  SelectedItem="{Binding SelectedItem}">
             <i:Interaction.Behaviors>
-                <behaviours:ItemsControlAutoScrollBehaviour/>
+                <behaviours:ItemsControlAutoScrollBehaviour />
             </i:Interaction.Behaviors>
             <ListBox.ContextMenu>
                 <ContextMenu>

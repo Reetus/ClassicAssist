@@ -7,17 +7,22 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:macros="clr-namespace:ClassicAssist.UI.ViewModels.Macros"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         Title="{x:Static resources:Strings.Commands}" Height="350" Width="400">
     <Window.DataContext>
         <macros:MacrosCommandViewModel />
     </Window.DataContext>
     <Window.Resources>
-        <CollectionViewSource x:Key='src' Source="{Binding Items}">
-            <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="Category" />
-            </CollectionViewSource.GroupDescriptions>
-        </CollectionViewSource>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <CollectionViewSource x:Key='src' Source="{Binding Items}">
+                <CollectionViewSource.GroupDescriptions>
+                    <PropertyGroupDescription PropertyName="Category" />
+                </CollectionViewSource.GroupDescriptions>
+            </CollectionViewSource>
+        </ResourceDictionary>
     </Window.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -26,11 +31,6 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <ListView ItemsSource="{Binding Source={StaticResource src}}" SelectedItem="{Binding SelectedItem}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}" ToolTip="{Binding Tooltip}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
                 <ListView.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.ContainerStyle>
@@ -43,11 +43,21 @@
                                                 <Expander.Header>
                                                     <DockPanel>
                                                         <TextBlock FontSize="12" Text="{Binding Path=Name}"
-                                                                   Margin="5,0,0,0" Width="100" />
+                                                                   Style="{StaticResource {x:Type TextBlock}}"
+                                                                   Margin="5,0,0,0" Width="100"
+                                                                   d:DataContext="{d:DesignInstance macros:CommandsData }" />
                                                     </DockPanel>
                                                 </Expander.Header>
                                                 <Expander.Content>
-                                                    <ItemsPresenter />
+                                                    <ListBox ItemsSource="{Binding Items}" BorderThickness="0">
+                                                        <ListBox.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock Text="{Binding Name}"
+                                                                           ToolTip="{Binding Tooltip}"
+                                                                           Margin="25,0,0,0" />
+                                                            </DataTemplate>
+                                                        </ListBox.ItemTemplate>
+                                                    </ListBox>
                                                 </Expander.Content>
                                             </Expander>
                                         </ControlTemplate>
@@ -64,8 +74,6 @@
                 <StackPanel.Resources>
                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                         <Setter Property="Margin" Value="0,0,10,0" />
-                        <Setter Property="Height" Value="25" />
-                        <Setter Property="Padding" Value="10,0,10,0" />
                     </Style>
                 </StackPanel.Resources>
                 <Button Content="{x:Static resources:Strings.Close}">

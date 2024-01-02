@@ -78,7 +78,7 @@
                         </GridViewColumn>
                         <GridViewColumn Header="{x:Static resources:Strings.Name}" Width="150" x:Name="nameColumn">
                             <GridViewColumn.CellTemplate>
-                                <DataTemplate>
+                                <DataTemplate DataType="scavenger:ScavengerEntry">
                                     <controls:EditTextBlock
                                         Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                         Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=nameColumn, Mode=OneWay}" />
@@ -89,7 +89,7 @@
                                         DisplayMemberBinding="{Binding Graphic, StringFormat=0x\{0:x\}}" Width="75" />
                         <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="75" x:Name="HueColumn">
                             <GridViewColumn.CellTemplate>
-                                <DataTemplate>
+                                <DataTemplate DataType="scavenger:ScavengerEntry">
                                     <controls:EditTextBlock Text="{Binding Hue}" TabIndex="0"
                                                             Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=HueColumn}"
                                                             ShowIcon="True" />
@@ -99,7 +99,7 @@
                         <GridViewColumn Header="{x:Static resources:Strings.Priority}" Width="100"
                                         x:Name="PriorityColumn">
                             <GridViewColumn.CellTemplate>
-                                <DataTemplate>
+                                <DataTemplate DataType="scavenger:ScavengerEntry">
                                     <ComboBox Text="{Binding Priority, Mode=TwoWay}"
                                               ItemsSource="{Binding Source={misc:EnumBindingSource {x:Type scavenger:ScavengerPriority}}}"
                                               Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=PriorityColumn}" />

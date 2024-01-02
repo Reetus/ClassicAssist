@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
@@ -44,6 +46,11 @@ namespace ClassicAssist.UI.ViewModels
 
         public ActiveObjectsViewModel()
         {
+            if ( DesignerProperties.GetIsInDesignMode( new DependencyObject() ) )
+            {
+                return;
+            }
+
             RefreshAliases();
             RefreshInstanceAliases();
             RefreshLists();
@@ -301,38 +308,38 @@ namespace ClassicAssist.UI.ViewModels
             AliasCommands.SetAlias( entry.Name, serial );
         }
 
-        public class InstanceAliasEntry
-        {
-            public MacroEntry Macro { get; set; }
-            public string Name { get; set; }
-            public int Serial { get; set; }
-        }
-
-        public class AliasEntry : IComparable<AliasEntry>
-        {
-            public string Name { get; set; }
-            public int Serial { get; set; }
-
-            public int CompareTo( AliasEntry other )
-            {
-                if ( ReferenceEquals( this, other ) )
-                {
-                    return 0;
-                }
-
-                if ( ReferenceEquals( null, other ) )
-                {
-                    return 1;
-                }
-
-                return string.Compare( Name, other.Name, StringComparison.InvariantCultureIgnoreCase );
-            }
-        }
-
         public class ListEntry
         {
             public string Name { get; set; }
             public object[] Serials { get; set; }
         }
+    }
+
+    public class AliasEntry : IComparable<AliasEntry>
+    {
+        public string Name { get; set; }
+        public int Serial { get; set; }
+
+        public int CompareTo( AliasEntry other )
+        {
+            if ( ReferenceEquals( this, other ) )
+            {
+                return 0;
+            }
+
+            if ( ReferenceEquals( null, other ) )
+            {
+                return 1;
+            }
+
+            return string.Compare( Name, other.Name, StringComparison.InvariantCultureIgnoreCase );
+        }
+    }
+
+    public class InstanceAliasEntry
+    {
+        public MacroEntry Macro { get; set; }
+        public string Name { get; set; }
+        public int Serial { get; set; }
     }
 }

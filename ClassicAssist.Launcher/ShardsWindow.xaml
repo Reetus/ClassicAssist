@@ -137,7 +137,7 @@
                         <Setter Property="Padding" Value="15,0,15,0" />
                     </Style>
                 </StackPanel.Resources>
-                <Button Content="{x:Static properties:Resources.OK}" Margin="0,0,10,0" Padding="25,5"
+                <Button Content="{x:Static properties:Resources.OK}" Margin="0,0,10,0"
                         Command="{Binding OKCommand, Mode=OneWay}">
                     <i:Interaction.Behaviors>
                         <behaviours:CloseOnClickBehaviour />

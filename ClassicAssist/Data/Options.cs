@@ -708,6 +708,12 @@ namespace ClassicAssist.Data
             EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
             return Directory.EnumerateFiles( _profilePath, "*.json" ).ToArray();
         }
+
+        public static string GetProfilePath()
+        {
+            EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
+            return _profilePath;
+        }
     }
 
     [Flags]

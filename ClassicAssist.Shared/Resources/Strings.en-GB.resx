@@ -1848,4 +1848,7 @@ Are you sure you wish to continue?</value>
   <data name="Hotkeys Status Gump" xml:space="preserve">
     <value>Hotkeys Status Gump</value>
   </data>
+  <data name="A profile already exists by this name, choose a new name..." xml:space="preserve">
+    <value>A profile already exists by this name, choose a new name...</value>
+  </data>
 </root>

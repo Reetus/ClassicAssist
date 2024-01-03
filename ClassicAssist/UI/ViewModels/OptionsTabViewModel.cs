@@ -100,6 +100,9 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "ExpireTargetsMS", CurrentOptions.ExpireTargetsMS );
             options.Add( "LogoutDisconnectedPrompt", CurrentOptions.LogoutDisconnectedPrompt );
             options.Add( "DisableHotkeysLoad", CurrentOptions.DisableHotkeysLoad );
+            options.Add( "HotkeysStatusGump", CurrentOptions.HotkeysStatusGump );
+            options.Add( "HotkeysStatusGumpX", CurrentOptions.HotkeysStatusGumpX );
+            options.Add( "HotkeysStatusGumpY", CurrentOptions.HotkeysStatusGumpY );
 
             json?.Add( "Options", options );
         }
@@ -199,14 +202,12 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.ExpireTargetsMS = config?["ExpireTargetsMS"]?.ToObject<int>() ?? -1;
             CurrentOptions.LogoutDisconnectedPrompt = config?["LogoutDisconnectedPrompt"]?.ToObject<bool>() ?? false;
             CurrentOptions.DisableHotkeysLoad = config?["DisableHotkeysLoad"]?.ToObject<bool>() ?? false;
-
-            if ( !CurrentOptions.DisableHotkeysLoad )
-            {
-                return;
-            }
+            CurrentOptions.HotkeysStatusGump = config?["HotkeysStatusGump"]?.ToObject<bool>() ?? false;
+            CurrentOptions.HotkeysStatusGumpX = config?["HotkeysStatusGumpX"]?.ToObject<int>() ?? 10;
+            CurrentOptions.HotkeysStatusGumpY = config?["HotkeysStatusGumpY"]?.ToObject<int>() ?? 30;
 
             HotkeyManager manager = HotkeyManager.GetInstance();
-            manager.Enabled = false;
+            manager.Enabled = !CurrentOptions.DisableHotkeysLoad;
         }
 
         private static void MacrosGumpChanged( object obj )

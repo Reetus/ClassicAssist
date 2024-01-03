@@ -13,6 +13,8 @@ namespace ClassicAssist.Data.Hotkeys
 {
     public class HotkeyManager : SetPropertyNotifyChanged
     {
+        public delegate void dHotkeysStatus( bool enabled );
+
         private static HotkeyManager _instance;
         private static readonly object _instanceLock = new object();
         private readonly object _lock = new object();
@@ -35,7 +37,15 @@ namespace ClassicAssist.Data.Hotkeys
         public bool Enabled
         {
             get => _enabled;
-            set => SetProperty( ref _enabled, value );
+            set
+            {
+                if ( _enabled != value )
+                {
+                    HotkeysStatusChanged?.Invoke( value );
+                }
+
+                SetProperty( ref _enabled, value );
+            }
         }
 
         public Action<string, Type> InvokeByName { get; set; }
@@ -45,6 +55,8 @@ namespace ClassicAssist.Data.Hotkeys
             get => _items;
             set => SetProperty( ref _items, value );
         }
+
+        public static event dHotkeysStatus HotkeysStatusChanged;
 
         public void AddCategory( HotkeyCommand item, IComparer<HotkeyEntry> comparer = null )
         {

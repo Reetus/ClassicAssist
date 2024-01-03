@@ -2185,6 +2185,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hotkeys Status Gump.
+        /// </summary>
+        public static string Hotkeys_Status_Gump {
+            get {
+                return ResourceManager.GetString("Hotkeys Status Gump", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hue Override.
         /// </summary>
         public static string Hue_Override {

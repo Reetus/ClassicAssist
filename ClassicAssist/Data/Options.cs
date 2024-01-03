@@ -52,9 +52,14 @@ namespace ClassicAssist.Data
         private string _friendTargetMessage;
         private bool _getFriendEnemyUsesIgnoreList;
         private string _hash;
+        private bool _hotkeysStatusGump;
+        private int _hotkeysStatusGumpX;
+        private int _hotkeysStatusGumpY;
         private bool _includePartyMembersInFriends;
         private string _lastTargetMessage;
         private int _lightLevel;
+        private bool _limitHotkeyTrigger;
+        private int _limitHotkeyTriggerMs;
         private bool _limitMouseWheelTrigger;
         private int _limitMouseWheelTriggerMS;
         private bool _logoutDisconnectedPrompt;
@@ -89,8 +94,6 @@ namespace ClassicAssist.Data
         private bool _useExperimentalFizzleDetection;
         private bool _useObjectQueue;
         private int _useObjectQueueAmount = 5;
-        private bool _limitHotkeyTrigger;
-        private int _limitHotkeyTriggerMs;
 
         public bool AbilitiesGump
         {
@@ -268,6 +271,24 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _hash, value );
         }
 
+        public bool HotkeysStatusGump
+        {
+            get => _hotkeysStatusGump;
+            set => SetProperty( ref _hotkeysStatusGump, value );
+        }
+
+        public int HotkeysStatusGumpX
+        {
+            get => _hotkeysStatusGumpX;
+            set => SetProperty( ref _hotkeysStatusGumpX, value );
+        }
+
+        public int HotkeysStatusGumpY
+        {
+            get => _hotkeysStatusGumpY;
+            set => SetProperty( ref _hotkeysStatusGumpY, value );
+        }
+
         public bool IncludePartyMembersInFriends
         {
             get => _includePartyMembersInFriends;
@@ -294,6 +315,18 @@ namespace ClassicAssist.Data
             }
         }
 
+        public bool LimitHotkeyTrigger
+        {
+            get => _limitHotkeyTrigger;
+            set => SetProperty( ref _limitHotkeyTrigger, value );
+        }
+
+        public int LimitHotkeyTriggerMS
+        {
+            get => _limitHotkeyTriggerMs;
+            set => SetProperty( ref _limitHotkeyTriggerMs, value );
+        }
+
         public bool LimitMouseWheelTrigger
         {
             get => _limitMouseWheelTrigger;
@@ -304,18 +337,6 @@ namespace ClassicAssist.Data
         {
             get => _limitMouseWheelTriggerMS;
             set => SetProperty( ref _limitMouseWheelTriggerMS, value );
-        }
-
-        public bool LimitHotkeyTrigger
-        {
-            get => _limitHotkeyTrigger;
-            set => SetProperty(ref _limitHotkeyTrigger, value);
-        }
-
-        public int LimitHotkeyTriggerMS
-        {
-            get => _limitHotkeyTriggerMs;
-            set => SetProperty(ref _limitHotkeyTriggerMs, value);
         }
 
         public bool LogoutDisconnectedPrompt

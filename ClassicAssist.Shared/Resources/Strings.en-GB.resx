@@ -1845,4 +1845,7 @@ Are you sure you wish to continue?</value>
   <data name="Hue Override" xml:space="preserve">
     <value>Hue Override</value>
   </data>
+  <data name="Hotkeys Status Gump" xml:space="preserve">
+    <value>Hotkeys Status Gump</value>
+  </data>
 </root>

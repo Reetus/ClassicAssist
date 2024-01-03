@@ -158,6 +158,8 @@
                     <StackPanel Margin="5">
                         <CheckBox Content="{x:Static resources:Strings.Abilities_Gump}"
                                   IsChecked="{Binding CurrentOptions.AbilitiesGump}" />
+                        <CheckBox Content="{x:Static resources:Strings.Hotkeys_Status_Gump}"
+                                  IsChecked="{Binding CurrentOptions.HotkeysStatusGump}" />
                         <optionsTab:MacrosGumpControl DataContext="{Binding}" />
                     </StackPanel>
                 </GroupBox>

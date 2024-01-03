@@ -31,6 +31,10 @@ namespace ClassicAssist.UO.Gumps
     {
         private const int REPOSITION_BUTTON_ID = 100;
 
+        public RepositionableGump()
+        {
+            
+        }
         protected RepositionableGump( int width, int height, int serial, uint gumpID ) : base( 0, 0, serial, gumpID )
         {
             Width = width;

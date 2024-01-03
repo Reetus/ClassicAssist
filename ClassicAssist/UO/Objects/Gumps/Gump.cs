@@ -55,6 +55,10 @@ namespace ClassicAssist.UO.Objects.Gumps
         public int X;
         public int Y;
 
+        public Gump()
+        {
+        }
+
         public Gump( int x, int y, uint id, int serial, string layout, string[] strings, GumpElement[] elements,
             GumpPage[] pages )
         {

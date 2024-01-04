@@ -18,7 +18,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <TabControl Margin="10" Padding="10">
+    <TabControl Margin="10" Padding="10" x:Name="TabControl">
         <TabItem Header="{x:Static resources:Strings.Packets}">
             <debug:DebugPacketsControl />
         </TabItem>

@@ -9,9 +9,8 @@ on:
       - 'develop'
 jobs:
   build:
-
     runs-on: windows-latest
-
+    timeout-minutes: 15
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET

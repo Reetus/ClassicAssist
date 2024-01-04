@@ -170,8 +170,13 @@ namespace Assistant
 
             _mainThread = new Thread( () =>
             {
+                SplashWindow splashWindow = new SplashWindow();
+                splashWindow.Show();
+
                 _window = new MainWindow();
                 _window.Show();
+
+                splashWindow.Close();
 
                 Dispatcher.Run();
             } ) { IsBackground = true };

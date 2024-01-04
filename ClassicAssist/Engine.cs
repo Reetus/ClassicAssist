@@ -17,7 +17,6 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Abilities;
-using ClassicAssist.Data.ClassicUO.Objects;
 using ClassicAssist.Data.Commands;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros.Commands;
@@ -26,7 +25,6 @@ using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared;
-using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
@@ -172,8 +170,13 @@ namespace Assistant
 
             _mainThread = new Thread( () =>
             {
+                SplashWindow splashWindow = new SplashWindow();
+                splashWindow.Show();
+
                 _window = new MainWindow();
                 _window.Show();
+
+                splashWindow.Close();
 
                 Dispatcher.Run();
             } ) { IsBackground = true };

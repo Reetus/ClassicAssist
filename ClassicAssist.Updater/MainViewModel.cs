@@ -288,7 +288,7 @@ namespace ClassicAssist.Updater
 
                 AddText( Resources.Checking_for_latest_release___ );
 
-                ReleaseVersion latestRelease = await GetLatestRelease();
+                ChangelogEntry latestRelease = await Shared.Updater.GetLatestRelease( UpdaterSettings.InstallPrereleases );
 
                 if ( latestRelease == null )
                 {
@@ -397,23 +397,6 @@ namespace ClassicAssist.Updater
             }
 
             return null;
-        }
-
-        private async Task<ReleaseVersion> GetLatestRelease()
-        {
-            ReleaseVersion latestRelease;
-
-            if ( string.IsNullOrEmpty( App.CurrentOptions.URL ) )
-            {
-                latestRelease = await Shared.Updater.GetReleases( UpdaterSettings.InstallPrereleases );
-            }
-            else
-            {
-                // for testing only
-                latestRelease = new ReleaseVersion { DownloadURL = $"{App.CurrentOptions.URL}/ClassicAssist.zip" };
-            }
-
-            return latestRelease;
         }
 
         private static async Task<string> ExtractPackage( string fileName, string newVersion )

@@ -15,10 +15,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="UpdateManifestURL" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">https://classicassist.azurewebsites.net/version.json</Value>
-    </Setting>
-    <Setting Name="PrereleaseManifestURL" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">https://classicassist.azurewebsites.net/prerelease.json</Value>
+      <Value Profile="(Default)">https://classicassist.azurewebsites.net/releases.json</Value>
     </Setting>
   </Settings>
 </SettingsFile>

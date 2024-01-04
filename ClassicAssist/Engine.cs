@@ -17,7 +17,6 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Abilities;
-using ClassicAssist.Data.ClassicUO.Objects;
 using ClassicAssist.Data.Commands;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros.Commands;
@@ -26,7 +25,6 @@ using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared;
-using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
@@ -636,13 +634,7 @@ namespace Assistant
             {
                 UpdaterSettings updaterSettings = UpdaterSettings.Load( StartupPath ?? Environment.CurrentDirectory );
 
-                ReleaseVersion latestRelease =
-                    await Updater.GetReleases( updaterSettings?.InstallPrereleases ?? false );
-
-                if ( latestRelease == null )
-                {
-                    return;
-                }
+                ChangelogEntry latestRelease = await Updater.GetLatestRelease( updaterSettings.InstallPrereleases );
 
                 string latestVersion = latestRelease.Version;
                 string localVersion = VersionHelpers
@@ -652,17 +644,12 @@ namespace Assistant
                 if ( VersionHelpers.IsVersionNewer( localVersion, latestVersion ) &&
                      VersionHelpers.IsVersionNewer( AssistantOptions.UpdateGumpVersion, latestVersion ) )
                 {
-                    string commitMessage = await Updater.GetUpdateText( updaterSettings?.InstallPrereleases ?? false );
+                    string commitMessage = await Updater.GetUpdateText( updaterSettings.InstallPrereleases );
                     string donationAmount = await GetDonationsSummary();
                     StringBuilder donationMessage = new StringBuilder();
 
                     if ( !string.IsNullOrEmpty( donationAmount ) )
                     {
-                        if ( donationAmount == "0.00" )
-                        {
-                            donationAmount = $"<BASEFONT COLOR=#FF0000>{donationAmount}</BASEFONT>";
-                        }
-
                         donationMessage.AppendLine( string.Format( Strings.Current_month_donations,
                             DateTime.Now.ToString( "MMMM" ), donationAmount ) );
                         donationMessage.AppendLine();
@@ -683,7 +670,7 @@ namespace Assistant
 
                     message.AppendLine( commitMessage );
                     message.AppendLine(
-                        $"<A HREF=\"https://github.com/Reetus/ClassicAssist/commits/master\">{Strings.See_More}</A>" );
+                        $"<A HREF=\"https://github.com/Reetus/ClassicAssist/releases\">{Strings.See_More}</A>" );
 
                     UpdateMessageGump gump = new UpdateMessageGump( WindowHandle, message.ToString(), latestVersion );
                     gump.SendGump();

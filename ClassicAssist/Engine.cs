@@ -780,6 +780,8 @@ namespace Assistant
 
                     InternalPacketReceivedEvent?.Invoke( packet, length );
 
+                    PacketWaitEntries?.CheckWait( packet, PacketDirection.Incoming, true );
+
                     if ( _getPacketLength != null )
                     {
                         int expectedLength = _getPacketLength( packet[0] );

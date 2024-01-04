@@ -1977,4 +1977,10 @@ Are you sure you wish to continue?</value>
   <data name="A profile already exists by this name, choose a new name..." xml:space="preserve">
     <value>A profile already exists by this name, choose a new name...</value>
   </data>
+  <data name="Targeting item {0} / {1}" xml:space="preserve">
+    <value>Targeting item {0} / {1}</value>
+  </data>
+  <data name="Move to bank" xml:space="preserve">
+    <value>Move to bank</value>
+  </data>
 </root>

@@ -21,6 +21,7 @@ using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
+using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using Newtonsoft.Json;
@@ -35,6 +36,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _combineStacksCommand;
         private ICommand _contextContextMenuRequestCommand;
         private ICommand _contextMoveToBackpackCommand;
+        private ICommand _contextMoveToBankCommand;
         private ICommand _contextMoveToContainerCommand;
         private ICommand _contextTargetCommand;
         private ICommand _contextUseItemCommand;
@@ -125,13 +127,16 @@ namespace ClassicAssist.UI.ViewModels
             _contextMoveToBackpackCommand ?? ( _contextMoveToBackpackCommand =
                 new RelayCommandAsync( ContextMoveToBackpack, o => SelectedItems != null ) );
 
+        public ICommand ContextMoveToBankCommand =>
+            _contextMoveToBankCommand ?? ( _contextMoveToBankCommand =
+                new RelayCommandAsync( ContextMoveToBank, o => SelectedItems != null ) );
+
         public ICommand ContextMoveToContainerCommand =>
             _contextMoveToContainerCommand ?? ( _contextMoveToContainerCommand =
                 new RelayCommandAsync( ContextMoveToContainer, o => SelectedItems != null ) );
 
         public ICommand ContextTargetCommand =>
-            _contextTargetCommand ?? ( _contextTargetCommand = new RelayCommand( ContextTarget,
-                o => Engine.TargetExists ) );
+            _contextTargetCommand ?? ( _contextTargetCommand = new RelayCommand( ContextTarget ) );
 
         public ICommand ContextUseItemCommand =>
             _contextUseItemCommand ?? ( _contextUseItemCommand =
@@ -221,6 +226,16 @@ namespace ClassicAssist.UI.ViewModels
         }
 
         private Dictionary<int, string> _nameOverrides { get; } = new Dictionary<int, string>();
+
+        private async Task ContextMoveToBank( object arg )
+        {
+            Item item = Engine.Player.GetEquippedItems().FirstOrDefault( i => i.Layer == Layer.Bank );
+
+            if ( item != null )
+            {
+                await ContextMoveToContainer( item.Serial );
+            }
+        }
 
         private void QueueActions_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
         {
@@ -396,14 +411,82 @@ namespace ClassicAssist.UI.ViewModels
 
         private void ContextTarget( object obj )
         {
-            Entity item = SelectedItems.FirstOrDefault()?.Entity;
+            List<EntityCollectionData> items = SelectedItems.ToList();
 
-            if ( item == null )
+            if ( !items.Any() )
             {
                 return;
             }
 
-            TargetCommands.Target( item.Serial );
+            EnqueueAction( async queueAction =>
+            {
+                foreach ( var item in items.Select( ( value, i ) => new { i, value } ) )
+                {
+                    if ( queueAction.CancellationTokenSource.IsCancellationRequested )
+                    {
+                        _dispatcher.Invoke( () => { queueAction.Status = Strings.Cancel; } );
+                        return false;
+                    }
+
+                    _dispatcher.Invoke( () =>
+                    {
+                        queueAction.Status = string.Format( Strings.Targeting_item__0_____1_, item.i, items.Count );
+                    } );
+
+                    if ( await WaitForTarget( -1, queueAction.CancellationTokenSource.Token ) )
+                    {
+                        TargetCommands.Target( item.value.Entity.Serial );
+                    }
+                }
+
+                return true;
+            }, string.Format( Strings.Targeting_item__0_____1_, 0, items.Count ) );
+            return;
+
+            async Task<bool> WaitForTarget( int timeout, CancellationToken cancellationToken )
+            {
+                if ( Engine.TargetExists )
+                {
+                    return true;
+                }
+
+                PacketFilterInfo pfi = new PacketFilterInfo( 0x6C );
+
+                Engine.WaitingForTarget = true;
+
+                PacketWaitEntry we =
+                    Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, includeInternal: true );
+
+                try
+                {
+                    do
+                    {
+                        Task<bool> task = we.Lock.ToTask();
+                        Task completedTask = await Task.WhenAny( task, Task.Delay( timeout, cancellationToken ) );
+
+                        if ( completedTask != task )
+                        {
+                            return false;
+                        }
+
+                        byte[] packet = we.Packet;
+
+                        if ( packet[6] == 0x03 )
+                        {
+                            continue;
+                        }
+
+                        return true;
+                    }
+                    while ( true );
+                }
+                finally
+                {
+                    Engine.PacketWaitEntries.Remove( we );
+
+                    Engine.WaitingForTarget = false;
+                }
+            }
         }
 
         private void HideItem( object obj )
@@ -879,13 +962,13 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( string.IsNullOrEmpty( item.Name ) )
             {
-                item.Name = nameOverrides.ContainsKey( item.Serial ) ? nameOverrides[item.Serial] :
+                item.Name = nameOverrides.TryGetValue( item.Serial, out string @override ) ? @override :
                     tileData.ID != 0 ? tileData.Name : $"0x{item.Serial:x8}";
             }
 
-            if ( nameOverrides.ContainsKey( item.Serial ) )
+            if ( nameOverrides.TryGetValue( item.Serial, out string nameOverride ) )
             {
-                item.Name = nameOverrides[item.Serial];
+                item.Name = nameOverride;
             }
 
             return new EntityCollectionData { Entity = item };

@@ -3181,6 +3181,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move to bank.
+        /// </summary>
+        public static string Move_to_bank {
+            get {
+                return ResourceManager.GetString("Move to bank", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Move to container.
         /// </summary>
         public static string Move_to_container {
@@ -4986,6 +4995,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Targeting {
             get {
                 return ResourceManager.GetString("Targeting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Targeting item {0} / {1}.
+        /// </summary>
+        public static string Targeting_item__0_____1_ {
+            get {
+                return ResourceManager.GetString("Targeting item {0} / {1}", resourceCulture);
             }
         }
         

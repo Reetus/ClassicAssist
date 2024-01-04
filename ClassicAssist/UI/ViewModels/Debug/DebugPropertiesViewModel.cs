@@ -36,10 +36,29 @@ using Microsoft.Scripting.Utils;
 
 namespace ClassicAssist.UI.ViewModels.Debug
 {
-    public class DebugPropertiesViewModel : BaseViewModel
+    public class DebugPropertiesViewModel : DebugBaseViewModel
     {
         private ObservableCollection<Property> _items = new ObservableCollection<Property>();
         private ICommand _targetCommand;
+
+        public DebugPropertiesViewModel()
+        {
+            PropertyChanged += ( sender, args ) =>
+            {
+                if ( args.PropertyName != nameof( Object ) || !( Object is IEnumerable<Property> properties ) )
+                {
+                    return;
+                }
+
+                Items.Clear();
+                Items.AddRange( properties.Select( entityProperty => new Property
+                {
+                    Cliloc = entityProperty.Cliloc,
+                    Text = Cliloc.GetProperty( entityProperty.Cliloc ),
+                    Arguments = entityProperty.Arguments
+                } ).ToList() );
+            };
+        }
 
         public ObservableCollection<Property> Items
         {

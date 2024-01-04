@@ -19,8 +19,8 @@
     <Grid Margin="10">
         <Grid.Resources>
             <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource {x:Type GroupBox}}">
-                <Setter Property="Padding" Value="10" />
-                <Setter Property="Margin" Value="0,0,0,10" />
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="Margin" Value="0,0,0,5" />
             </Style>
         </Grid.Resources>
         <Grid.RowDefinitions>
@@ -35,9 +35,9 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <ComboBox Grid.Column="0" Margin="0,0,10,0" ItemsSource="{Binding ClientPaths}"
+                <ComboBox Grid.Column="0" Margin="0,0,5,0" ItemsSource="{Binding ClientPaths}"
                           Text="{Binding SelectedClientPath}" />
-                <Button Content="..." Grid.Column="1" Padding="10,0,10,0"
+                <Button Content="…" Grid.Column="1" Padding="10,0,10,0"
                         Command="{Binding SelectClientPathCommand, Mode=OneWay}" />
             </Grid>
         </GroupBox>
@@ -47,9 +47,9 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <ComboBox Grid.Column="0" Margin="0,0,10,0" ItemsSource="{Binding DataPaths}"
+                <ComboBox Grid.Column="0" Margin="0,0,5,0" ItemsSource="{Binding DataPaths}"
                           Text="{Binding SelectedDataPath}" />
-                <Button Content="..." Grid.Column="1" Padding="10,0,10,0"
+                <Button Content="…" Grid.Column="1" Padding="10,0,10,0"
                         Command="{Binding SelectDataPathCommand, Mode=OneWay}" />
             </Grid>
         </GroupBox>
@@ -59,35 +59,38 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <ComboBox DockPanel.Dock="Left" Margin="0,0,10,0" ItemsSource="{Binding ShardManager.VisibleShards}"
+                <ComboBox DockPanel.Dock="Left" Margin="0,0,5,0" ItemsSource="{Binding ShardManager.VisibleShards}"
                           SelectedIndex="0" SelectedItem="{Binding SelectedShard}" DisplayMemberPath="Name"
                           Grid.Column="0" />
-                <Button Content="{x:Static properties:Resources.Shards}" Width="100" Grid.Column="1"
+                <Button Content="{x:Static properties:Resources.Shards}" Grid.Column="1"
                         Command="{Binding ShowShardsWindowCommand, Mode=OneWay}" />
             </Grid>
         </GroupBox>
-        <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="0,10,0,0">
+        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Stretch">
             <StackPanel.Resources>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                    <Setter Property="Margin" Value="0,0,10,0" />
-                    <Setter Property="Padding" Value="10,0,10,0" />
+                    <Setter Property="Margin" Value="0,0,5,0" />
+                </Style>
+                <Style TargetType="{x:Type Image}">
+                    <Setter Property="Margin" Value="0,3,10,3" />
+                    <Setter Property="Height" Value="16" />
                 </Style>
             </StackPanel.Resources>
             <Button Command="{Binding StartCommand, Mode=OneWay}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="{StaticResource PlayIcon}" Height="16" Margin="0,3,10,3" />
+                    <Image Source="{StaticResource PlayIcon}" />
                     <TextBlock Text="{x:Static properties:Resources.Start}" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
             <Button Command="{Binding CheckForUpdateCommand, Mode=OneWay}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="{StaticResource RefreshIcon}" Height="16" Margin="0,3,10,3" />
+                    <Image Source="{StaticResource RefreshIcon}" />
                     <TextBlock Text="{x:Static properties:Resources.Check_for_update}" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
             <Button Command="{Binding OptionsCommand, Mode=OneWay}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="{StaticResource OptionsIcon}" Height="16" Margin="0,3,10,3" />
+                    <Image Source="{StaticResource OptionsIcon}" />
                     <TextBlock Text="{x:Static properties:Resources.Options}" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>

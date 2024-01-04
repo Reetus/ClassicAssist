@@ -124,6 +124,11 @@ namespace ClassicAssist.Launcher
 
                     Task.Run( async () => await GetPing( shard ) ).ContinueWith( result =>
                     {
+                        if ( result.Status != TaskStatus.RanToCompletion || result.Result == null )
+                        {
+                            return;
+                        }
+
                         shard.Ping = result.Result;
                         NotifyPropertyChanged( nameof( ShardManager.Shards ) );
                     } );
@@ -165,11 +170,11 @@ namespace ClassicAssist.Launcher
             byte[] buffer = new byte[256];
 
             stream.ReadTimeout = 60000;
-            await stream.ReadAsync( buffer, 0, buffer.Length );
+            int read = await stream.ReadAsync( buffer, 0, buffer.Length );
 
             client.Close();
 
-            string status = Encoding.ASCII.GetString( buffer ).TrimEnd( '\0' );
+            string status = Encoding.ASCII.GetString( buffer, 0, read ).TrimEnd( '\0' );
 
             return status;
         }

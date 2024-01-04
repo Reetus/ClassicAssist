@@ -103,6 +103,7 @@ jobs:
                 $item.Name = ($file) -replace "\.\\",""
                 $item.Size = $f.Length
                 $item.SHA1 =  (get-filehash -path $f.FullName -Algorithm sha1).Hash
+                $item.SHA256 =  (get-filehash -path $f.FullName -Algorithm sha256).Hash
                 $item.ModifiedDate = $f.LastWriteTime.ToString("o")
                 $filespsobject += $item
             }

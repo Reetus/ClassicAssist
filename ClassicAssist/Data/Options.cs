@@ -94,6 +94,7 @@ namespace ClassicAssist.Data
         private bool _useExperimentalFizzleDetection;
         private bool _useObjectQueue;
         private int _useObjectQueueAmount = 5;
+        private static readonly object _serializeLock = new object();
 
         public bool AbilitiesGump
         {
@@ -555,25 +556,28 @@ namespace ClassicAssist.Data
 
             JObject obj = new JObject { { "Name", options.Name }, { "SelectedTabIndex", options.SelectedTabIndex } };
 
-            foreach ( BaseViewModel instance in instances )
+            lock ( _serializeLock )
             {
-                if ( instance is ISettingProvider settingProvider )
+                foreach ( BaseViewModel instance in instances )
                 {
-                    settingProvider.Serialize( obj );
+                    if ( instance is ISettingProvider settingProvider )
+                    {
+                        settingProvider.Serialize( obj );
+                    }
+
+                    if ( !( instance is IGlobalSettingProvider globalSettingProvider ) )
+                    {
+                        continue;
+                    }
+
+                    JObject global = new JObject();
+
+                    globalSettingProvider.Serialize( global, true );
+
+                    File.WriteAllText(
+                        Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
+                            globalSettingProvider.GetGlobalFilename() ), global.ToString() );
                 }
-
-                if ( !( instance is IGlobalSettingProvider globalSettingProvider ) )
-                {
-                    continue;
-                }
-
-                JObject global = new JObject();
-
-                globalSettingProvider.Serialize( global, true );
-
-                File.WriteAllText(
-                    Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
-                        globalSettingProvider.GetGlobalFilename() ), global.ToString() );
             }
 
             string hash = obj.ToString().SHA1();
@@ -675,29 +679,32 @@ namespace ClassicAssist.Data
             options.SelectedTabIndex = json["SelectedTabIndex"]?.ToObject<int>() ?? 0;
             options.Hash = json["Hash"]?.ToObject<string>() ?? string.Empty;
 
-            foreach ( BaseViewModel instance in instances )
+            lock ( _serializeLock )
             {
-                if ( instance is ISettingProvider settingProvider )
+                foreach ( BaseViewModel instance in instances )
                 {
-                    settingProvider.Deserialize( json, options );
+                    if ( instance is ISettingProvider settingProvider )
+                    {
+                        settingProvider.Deserialize( json, options );
+                    }
+
+                    if ( !( instance is IGlobalSettingProvider globalSettingProvider ) )
+                    {
+                        continue;
+                    }
+
+                    string filePath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
+                        globalSettingProvider.GetGlobalFilename() );
+
+                    if ( !File.Exists( filePath ) )
+                    {
+                        continue;
+                    }
+
+                    JObject global = JObject.Parse( File.ReadAllText( filePath ) );
+
+                    globalSettingProvider.Deserialize( global, options, true );
                 }
-
-                if ( !( instance is IGlobalSettingProvider globalSettingProvider ) )
-                {
-                    continue;
-                }
-
-                string filePath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
-                    globalSettingProvider.GetGlobalFilename() );
-
-                if ( !File.Exists( filePath ) )
-                {
-                    continue;
-                }
-
-                JObject global = JObject.Parse( File.ReadAllText( filePath ) );
-
-                globalSettingProvider.Deserialize( global, options, true );
             }
 
             AssistantOptions.OnProfileChanged( optionsFile );

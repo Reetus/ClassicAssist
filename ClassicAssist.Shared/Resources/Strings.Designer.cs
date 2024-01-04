@@ -88,6 +88,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A profile already exists by this name, choose a new name....
+        /// </summary>
+        public static string A_profile_already_exists_by_this_name__choose_a_new_name___ {
+            get {
+                return ResourceManager.GetString("A profile already exists by this name, choose a new name...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Abilities.
         /// </summary>
         public static string Abilities {

@@ -30,7 +30,7 @@
     <UserControl.DataContext>
         <agents:OrganizerTabViewModel />
     </UserControl.DataContext>
-    <Grid>
+    <Grid Margin="10">
         <Grid.Resources>
             <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
         </Grid.Resources>
@@ -38,7 +38,7 @@
             <ColumnDefinition Width="150" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Margin="10">
+        <Grid Grid.Column="0" Margin="0,0,5,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -95,13 +95,13 @@
                         Command="{Binding RemoveOrganizerAgentEntryCommand}" CommandParameter="{Binding SelectedItem}" />
             </StackPanel>
         </Grid>
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Margin="5,0,0,0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ListView x:Name="itemsListView" Margin="10" Grid.Row="0" ItemsSource="{Binding SelectedItem.Items}">
+                <ListView x:Name="itemsListView" Grid.Row="0" ItemsSource="{Binding SelectedItem.Items}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="{x:Static resources:Strings.Item}" Width="120" x:Name="nameColumn">

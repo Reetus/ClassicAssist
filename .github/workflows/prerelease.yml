@@ -99,7 +99,7 @@ jobs:
             $f = Get-ItemProperty $file
             if (!($f -is [System.IO.DirectoryInfo]))
             {
-                $item = "" | select Name, Size, ModifiedDate, SHA1
+                $item = "" | select Name, Size, ModifiedDate, SHA1, SHA256
                 $item.Name = ($file) -replace "\.\\",""
                 $item.Size = $f.Length
                 $item.SHA1 =  (get-filehash -path $f.FullName -Algorithm sha1).Hash

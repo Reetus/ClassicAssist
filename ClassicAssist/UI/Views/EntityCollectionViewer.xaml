@@ -11,8 +11,8 @@
         xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
         xmlns:filter="clr-namespace:ClassicAssist.UI.Views.ECV.Filter"
         mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
-        Width="600" SizeToContent="Height" Title="{x:Static resources:Strings.Entity_Collection_Viewer}"
-        MinHeight="400" MaxHeight="600"
+        Width="600" Title="{x:Static resources:Strings.Entity_Collection_Viewer}"
+        MinHeight="400" Height="600"
         Topmost="{Binding Options.AlwaysOnTop}">
     <Window.DataContext>
         <viewModels:EntityCollectionViewerViewModel />

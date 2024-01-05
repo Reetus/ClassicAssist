@@ -8,7 +8,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:models="clr-namespace:ClassicAssist.UI.Models"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Topmost="True"
         Title="{x:Static resources:Strings.Object_Inspector}" Height="396.8" Width="450">
     <Window.InputBindings>
         <KeyBinding Modifiers="Ctrl" Key="C" Command="{Binding CopyToClipboardCommand}" />

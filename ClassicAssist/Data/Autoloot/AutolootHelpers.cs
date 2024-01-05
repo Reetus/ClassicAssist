@@ -156,7 +156,9 @@ namespace ClassicAssist.Data.Autoloot
                     return true;
                 }
 
-                if ( !_manager.MatchTextValue() )
+                bool matchTextValue = _manager.MatchTextValue?.Invoke() ?? false;
+
+                if ( !matchTextValue )
                 {
                     return false;
                 }

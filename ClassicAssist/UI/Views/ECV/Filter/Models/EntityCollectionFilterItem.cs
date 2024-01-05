@@ -1,9 +1,9 @@
 ﻿using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Shared.UI;
 
-namespace ClassicAssist.UI.Models
+namespace ClassicAssist.UI.Views.ECV.Filter.Models
 {
-    public class EntityCollectionFilter : SetPropertyNotifyChanged
+    public class EntityCollectionFilterItem : SetPropertyNotifyChanged
     {
         private string _additional;
         private PropertyEntry _constraint;

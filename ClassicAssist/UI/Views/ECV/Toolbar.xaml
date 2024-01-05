@@ -2,7 +2,17 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary>
-            <Style TargetType="Button" x:Key="ToolbarButtonStyle">
+            <Style TargetType="{x:Type Button}" x:Key="ToolbarButtonStyle">
+                <Setter Property="Margin" Value="0,0,5,0" />
+                <Setter Property="Opacity" Value="1" />
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Image.Opacity" Value="0.5" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="{x:Type ToggleButton}" x:Key="ToolbarToggleButtonStyle">
+                <Setter Property="Margin" Value="0,0,5,0" />
                 <Setter Property="Opacity" Value="1" />
                 <Style.Triggers>
                     <Trigger Property="IsEnabled" Value="False">

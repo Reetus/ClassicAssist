@@ -41,6 +41,7 @@ using static ClassicAssist.Misc.SDLKeys;
 using MacroManager = ClassicAssist.Data.Macros.MacroManager;
 
 [assembly: InternalsVisibleTo( "ClassicAssist.Tests" )]
+[assembly: InternalsVisibleTo( "ClassicAssist.UITest" )]
 
 // ReSharper disable once CheckNamespace
 namespace Assistant

@@ -15,8 +15,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using ClassicAssist.UI.Models;
 using ClassicAssist.UI.ViewModels.Agents;
+using ClassicAssist.UI.Views.ECV.Filter.Models;
 
 namespace ClassicAssist.UI.Views.ECV
 {
@@ -33,7 +33,7 @@ namespace ClassicAssist.UI.Views.ECV
         private void OnDataContextChanged( object sender, DependencyPropertyChangedEventArgs e )
         {
             // TODO: Convert to XAML
-            if ( !( e.NewValue is EntityCollectionFilter entityCollectionFilter ) )
+            if ( !( e.NewValue is EntityCollectionFilterItem entityCollectionFilter ) )
             {
                 return;
             }

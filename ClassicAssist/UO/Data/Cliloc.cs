@@ -28,26 +28,30 @@ namespace ClassicAssist.UO.Data
                 dynamic settings = Reflection.GetTypeFieldValue<dynamic>( "ClassicUO.Configuration.Settings",
                     "GlobalSettings", null );
 
-                dynamic clilocFile =
-                    Reflection.GetTypePropertyValue<dynamic>( settings.GetType(), "ClilocFile", settings )
-                        ?.ToString() ?? string.Empty;
-
-                if ( string.IsNullOrEmpty( clilocFile ) )
+                if ( settings != null )
                 {
-                    dynamic language =
-                        Reflection.GetTypePropertyValue<dynamic>( settings.GetType(), "Language", settings )
+                    dynamic clilocFile =
+                        Reflection.GetTypePropertyValue<dynamic>( settings.GetType(), "ClilocFile", settings )
                             ?.ToString() ?? string.Empty;
 
-                    clilocFile = $"cliloc.{language}";
-                }
+                    if ( string.IsNullOrEmpty( clilocFile ) )
+                    {
+                        dynamic language =
+                            Reflection.GetTypePropertyValue<dynamic>( settings.GetType(), "Language", settings )
+                                ?.ToString() ?? string.Empty;
 
-                if ( string.IsNullOrEmpty( clilocFile ) && !File.Exists( Path.Combine( _dataPath, clilocFile ) ) )
-                {
-                    CanUseCUOClilocLanguage = false;
-                }
-                else
-                {
-                    filename = Path.Combine( _dataPath, clilocFile );
+                        clilocFile = $"cliloc.{language}";
+                    }
+
+
+                    if ( string.IsNullOrEmpty( clilocFile ) && !File.Exists( Path.Combine( _dataPath, clilocFile ) ) )
+                    {
+                        CanUseCUOClilocLanguage = false;
+                    }
+                    else
+                    {
+                        filename = Path.Combine( _dataPath, clilocFile );
+                    }
                 }
             }
 

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data;
@@ -18,6 +20,7 @@ using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Models;
 using ClassicAssist.UI.Views;
+using ClassicAssist.UI.Views.ECV.Filter.Models;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
@@ -42,7 +45,6 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _contextUseItemCommand;
         private ObservableCollection<EntityCollectionData> _entities;
         private ICommand _equipItemCommand;
-        private IEnumerable<EntityCollectionFilter> _filters;
         private ICommand _hideItemCommand;
         private ICommand _itemDoubleClickCommand;
         private ICommand _openAllContainersCommand;
@@ -52,6 +54,8 @@ namespace ClassicAssist.UI.ViewModels
 
         private ObservableCollection<EntityCollectionData> _selectedItems =
             new ObservableCollection<EntityCollectionData>();
+
+        private bool _showFilter;
 
         private bool _showProperties;
 
@@ -66,14 +70,20 @@ namespace ClassicAssist.UI.ViewModels
 
         public EntityCollectionViewerViewModel()
         {
-            _collection = new ItemCollection( 0 );
-
-            for ( int i = 0; i < 5; i++ )
+#if DEBUG
+            if ( DesignerProperties.GetIsInDesignMode( new DependencyObject() ) )
             {
-                _collection.Add( new Item( i + 1 ) { ID = 100 + i } );
-            }
+                Environment.CurrentDirectory = @"C:\Users\johns\Documents\UO\ClassicAssist\Output\net48";
+                const string uoFolder = @"C:\Users\johns\Documents\UO\Ultima Online Classic";
 
-            _collection.Add( new Item( 6 ) { ID = 106, Hue = 2413 } );
+                Art.Initialize( uoFolder );
+                TileData.Initialize( uoFolder );
+                Statics.Initialize( uoFolder );
+                Cliloc.Initialize( uoFolder );
+            }
+#endif
+
+            _collection = new ItemCollection( 0 );
 
             Entities = new ObservableCollection<EntityCollectionData>(
                 _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
@@ -183,6 +193,12 @@ namespace ClassicAssist.UI.ViewModels
         {
             get => _selectedItems;
             set => SetProperty( ref _selectedItems, value );
+        }
+
+        public bool ShowFilter
+        {
+            get => _showFilter;
+            set => SetProperty( ref _showFilter, value );
         }
 
         public bool ShowProperties
@@ -582,17 +598,48 @@ namespace ClassicAssist.UI.ViewModels
 
         private void ApplyFilters( object obj )
         {
-            if ( !( obj is IEnumerable<EntityCollectionFilter> list ) )
+            if ( !( obj is List<EntityCollectionFilterGroup> list ) )
             {
+                Entities = new ObservableCollection<EntityCollectionData>(
+                    _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+
+                UpdateStatusLabel();
+
                 return;
             }
 
-            _filters = list;
-
             Entities.Clear();
 
-            Entities = new ObservableCollection<EntityCollectionData>( _collection.Filter( _filters )
-                .ToEntityCollectionData( _sorter, _nameOverrides ) );
+            ItemCollection collection = new ItemCollection( _collection.Serial ) { _collection.GetItems() };
+
+            ItemCollection items = collection.Filter( list[0].Items );
+
+            for ( int i = 1; i < list.Count; i++ )
+            {
+                EntityCollectionFilterGroup groups = list[i];
+
+                ItemCollection groupItems = groups.Operation == BooleanOperation.Or
+                    ? collection.Filter( groups.Items )
+                    : items.Filter( groups.Items );
+
+                switch ( groups.Operation )
+                {
+                    case BooleanOperation.And:
+                        items = groupItems;
+                        break;
+                    case BooleanOperation.Or:
+                        items.Add( groupItems.GetItems() );
+                        break;
+                    case BooleanOperation.Not:
+                        items.Remove( groupItems.GetItems() );
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            Entities = new ObservableCollection<EntityCollectionData>(
+                items.ToEntityCollectionData( _sorter, _nameOverrides ) );
 
             UpdateStatusLabel();
         }
@@ -847,7 +894,7 @@ namespace ClassicAssist.UI.ViewModels
     public static class ExtensionMethods
     {
         public static ItemCollection Filter( this ItemCollection collection,
-            IEnumerable<EntityCollectionFilter> filterList )
+            IEnumerable<EntityCollectionFilterItem> filterList )
         {
             ItemCollection newCollection = new ItemCollection( collection.Serial );
 
@@ -869,12 +916,11 @@ namespace ClassicAssist.UI.ViewModels
             return newCollection;
         }
 
-        private static IEnumerable<Predicate<Item>> FiltersToPredicates(
-            IEnumerable<EntityCollectionFilter> filterList )
+        public static IEnumerable<Predicate<Item>> FiltersToPredicates( IEnumerable<EntityCollectionFilterItem> filterList )
         {
             List<Predicate<Item>> predicates = new List<Predicate<Item>>();
 
-            foreach ( EntityCollectionFilter filter in filterList )
+            foreach ( EntityCollectionFilterItem filter in filterList )
             {
                 PropertyEntry constraint = filter.Constraint;
 

@@ -7,11 +7,12 @@
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:uimisc="clr-namespace:ClassicAssist.UI.Misc"
-        xmlns:views="clr-namespace:ClassicAssist.UI.Views"
         xmlns:models="clr-namespace:ClassicAssist.UI.Models"
         xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
+        xmlns:filter="clr-namespace:ClassicAssist.UI.Views.ECV.Filter"
         mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
-        Width="600" Height="400" Title="{x:Static resources:Strings.Entity_Collection_Viewer}"
+        Width="600" SizeToContent="Height" Title="{x:Static resources:Strings.Entity_Collection_Viewer}"
+        MinHeight="400" MaxHeight="600"
         Topmost="{Binding Options.AlwaysOnTop}">
     <Window.DataContext>
         <viewModels:EntityCollectionViewerViewModel />
@@ -38,8 +39,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ToolBar Style="{DynamicResource ToolBarStyle1}" Grid.Row="0"
-                 Background="{DynamicResource ThemeBackgroundBrush}">
+        <ToolBar Grid.Row="0"
+                 Background="{DynamicResource ThemeBackgroundBrush}" Style="{StaticResource ToolBarStyle1}">
             <Button Height="24" Padding="0" Command="{Binding RefreshCommand}"
                     ToolTip="{x:Static resources:Strings.Refresh}"
                     Style="{StaticResource ToolbarButtonStyle}">
@@ -47,18 +48,22 @@
             </Button>
             <ToggleButton Height="24" ToolTip="{x:Static resources:Strings.Toggle_item_properties}"
                           Command="{Binding TogglePropertiesCommand}"
-                          CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}">
+                          CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                          Style="{StaticResource ToolbarToggleButtonStyle}">
                 <Image Source="{StaticResource ListIcon}" />
             </ToggleButton>
-            <ToggleButton x:Name="toggleButton" Height="24">
+            <ToggleButton x:Name="toggleButton" Height="24" IsChecked="{Binding ShowFilter}"
+                          Style="{StaticResource ToolbarToggleButtonStyle}">
                 <Image Source="{StaticResource FilterIcon}" />
             </ToggleButton>
             <ToggleButton Height="24" ToolTip="{x:Static resources:Strings.Show_Child_Items}"
+                          Style="{StaticResource ToolbarToggleButtonStyle}"
                           Command="{Binding ToggleChildItemsCommand}" IsChecked="{Binding Options.ShowChildItems}"
                           CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}">
                 <Image Source="{StaticResource BabyIcon}" />
             </ToggleButton>
             <ToggleButton Height="24" ToolTip="{x:Static resources:Strings.Always_On_Top}"
+                          Style="{StaticResource ToolbarToggleButtonStyle}"
                           Command="{Binding ToggleAlwaysOnTopCommand}"
                           CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
                           IsChecked="{Binding Options.AlwaysOnTop}">
@@ -96,6 +101,7 @@
             </Button>
             <Button Height="20" Padding="0" Command="{Binding ReplaceNameCommand}"
                     ToolTip="{x:Static resources:Strings.Replace_name_with_single_click_label}"
+                    Style="{StaticResource ToolbarButtonStyle}"
                     Visibility="{Binding TooltipsEnabled, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
                 <Image Source="{StaticResource HandPointerIcon}" />
             </Button>
@@ -103,15 +109,15 @@
                 <Image Source="{StaticResource CrosshairIcon}" />
             </Button>
         </ToolBar>
-        <ScrollViewer Grid.Row="1" MaxHeight="200"
-                      Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=toggleButton}"
+        <ScrollViewer Grid.Row="1"
+                      Visibility="{Binding ShowFilter, Converter={StaticResource BooleanToVisibilityConverter}}"
                       VerticalScrollBarVisibility="Auto">
-            <views:EntityCollectionFilterControl
-                Command="{Binding DataContext.ApplyFiltersCommand, ElementName=window}"
-                PresentationTraceSources.TraceLevel="High" />
+            <filter:EntityCollectionFilterControl MaxHeight="400"
+                                                  Command="{Binding DataContext.ApplyFiltersCommand, ElementName=window}"
+                                                  PresentationTraceSources.TraceLevel="High" />
         </ScrollViewer>
         <ListView x:Name="listView" ItemsSource="{Binding Entities}"
-                  BorderThickness="0"
+                  BorderThickness="0" MinHeight="200"
                   Background="{DynamicResource ThemeInnerControlBackgroundBrush}"
                   ItemContainerStyle="{StaticResource FileItemStyle}"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="2"
@@ -142,7 +148,7 @@
                                    Padding="3,0,0,0"
                                    Grid.Column="0" VerticalAlignment="Center" />
                         <Button Command="{Binding CancelCommand}" BorderThickness="0" BorderBrush="Transparent"
-                                Background="Transparent" Grid.Column="1"
+                                Background="Transparent" Grid.Column="1" Padding="0"
                                 ToolTip="{x:Static resources:Strings.Cancel}">
                             <Image Source="{StaticResource CancelIcon}" Height="16" />
                         </Button>

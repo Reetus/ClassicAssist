@@ -64,7 +64,7 @@ namespace ClassicAssist.UI.ViewModels
                     ( current, entityProperty ) => current + entityProperty.Text + "\r\n" ).TrimTrailingNewLine();
         }
 
-        private string GetName( Entity entity )
+        private static string GetName( Entity entity )
         {
             if ( !( entity is Item item ) || item.Layer != Layer.Mount )
             {

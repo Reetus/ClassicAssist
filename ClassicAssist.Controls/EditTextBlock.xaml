@@ -28,7 +28,7 @@
     <Grid>
         <TextBlock x:Name="textBlock" VerticalAlignment="Center"
                    MouseDown="TextBlock_OnMouseDown" Background="Transparent"
-                   Foreground="{Binding Foreground, ElementName=root}">
+                   Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
             <TextBlock.Text>
                 <MultiBinding Converter="{StaticResource PriorityMultiValueConverter}">
                     <Binding Path="Label" ElementName="root" />

@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
     xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:screenshot="clr-namespace:ClassicAssist.UI.ViewModels.Agents.Screenshot"
     xmlns:screenshotData="clr-namespace:ClassicAssist.Data.Screenshot"
     xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"

@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Interactivity;
+using Microsoft.Xaml.Behaviors;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Shared;

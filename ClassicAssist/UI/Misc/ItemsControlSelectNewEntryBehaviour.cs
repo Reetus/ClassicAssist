@@ -21,7 +21,7 @@ using System;
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Interactivity;
+using Microsoft.Xaml.Behaviors;
 
 namespace ClassicAssist.UI.Misc
 {

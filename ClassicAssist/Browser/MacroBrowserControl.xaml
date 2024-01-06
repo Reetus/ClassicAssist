@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:data="clr-namespace:ClassicAssist.Browser.Data"
              xmlns:browser="clr-namespace:ClassicAssist.Browser"

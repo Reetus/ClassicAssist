@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interactivity;
+using Microsoft.Xaml.Behaviors;
 using ClassicAssist.UI.ViewModels;
 
 namespace ClassicAssist.UI.Misc

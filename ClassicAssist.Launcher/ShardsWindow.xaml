@@ -6,7 +6,7 @@
     xmlns:properties="clr-namespace:ClassicAssist.Launcher.Properties"
     xmlns:launcher="clr-namespace:ClassicAssist.Launcher"
     xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
     xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
     x:Class="ClassicAssist.Launcher.ShardsWindow" Foreground="{DynamicResource ThemeForegroundBrush}"

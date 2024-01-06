@@ -139,7 +139,7 @@ namespace ClassicAssist.Extensions
                     AddButton( 620, startY + 20, 4005, 4006, item.Serial, GumpButtonType.Reply, 0 );
                     AddLabel( 540, startY + 20, 2100, $"{(Map) item.Map}" );
                     AddHtml( 140, 520, 460, 20,
-                        $"<A HREF=\"https://demisesearch.azurewebsites.net/search/{Uri.EscapeUriString( searchTerm )}\">Open results on website</A>",
+                        $"<A HREF=\"https://demisesearch.azurewebsites.net/search/{Uri.EscapeDataString( searchTerm )}\">Open results on website</A>",
                         false, false );
                     startY += 70;
                 }
@@ -165,7 +165,7 @@ namespace ClassicAssist.Extensions
 
                 HttpClient httpClient = new HttpClient();
 
-                httpClient.GetAsync( $"{API_URL}/searchFull/{Uri.EscapeUriString( searchText )}" ).ContinueWith(
+                httpClient.GetAsync( $"{API_URL}/searchFull/{Uri.EscapeDataString( searchText )}" ).ContinueWith(
                     async t =>
                     {
                         try

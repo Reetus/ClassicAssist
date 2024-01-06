@@ -35,6 +35,10 @@ namespace ClassicAssist.Data.ClassicUO.Objects
         {
             get
             {
+#if NET
+                throw new PlatformNotSupportedException();
+#endif
+
                 if ( _type == null )
                 {
                     _type = Engine.ClassicAssembly?.GetType( TYPE );
@@ -58,6 +62,10 @@ namespace ClassicAssist.Data.ClassicUO.Objects
 
         public static bool Cancel()
         {
+#if NET
+            throw new PlatformNotSupportedException();
+#endif
+
             if ( _type == null )
             {
                 _type = Engine.ClassicAssembly?.GetType( TYPE );
@@ -84,6 +92,10 @@ namespace ClassicAssist.Data.ClassicUO.Objects
         {
             try
             {
+#if NET
+                throw new PlatformNotSupportedException();
+#endif
+
                 if ( _type == null )
                 {
                     _type = Engine.ClassicAssembly?.GetType( TYPE );

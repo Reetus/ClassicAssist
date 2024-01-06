@@ -209,7 +209,7 @@ namespace ClassicAssist.UI.ViewModels
             {
                 using ( BufferedStream bs = new BufferedStream( stream ) )
                 {
-                    using ( SHA1Managed sha1 = new SHA1Managed() )
+                    using ( SHA1 sha1 = SHA1.Create() )
                     {
                         byte[] hash = sha1.ComputeHash( bs );
                         StringBuilder formatted = new StringBuilder( 2 * hash.Length );

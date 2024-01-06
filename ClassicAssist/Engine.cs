@@ -35,6 +35,11 @@ using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using CUO_API;
+#if NET
+using PluginHeader = Assistant.Engine.PluginHeader;
+#else
+using PluginHeader = CUO_API.PluginHeader;
+#endif
 using Newtonsoft.Json;
 using Sentry;
 using static ClassicAssist.Misc.SDLKeys;
@@ -70,12 +75,19 @@ namespace Assistant
 
         private static OnConnected _onConnected;
         private static OnDisconnected _onDisconnected;
-        private static OnPacketSendRecv _onReceive;
-        private static OnPacketSendRecv _onSend;
         private static OnTick _onTick;
         private static OnGetUOFilePath _getUOFilePath;
+#if NET
+        private static OnPacketSendRecv_new_intptr _sendToClient;
+        private static OnPacketSendRecv_new_intptr _sendToServer;
+        private static OnPacketSendRecv_new_intptr _onReceive;
+        private static OnPacketSendRecv_new_intptr _onSend;
+#else
         private static OnPacketSendRecv _sendToClient;
         private static OnPacketSendRecv _sendToServer;
+        private static OnPacketSendRecv _onReceive;
+        private static OnPacketSendRecv _onSend;
+#endif
         private static OnGetPacketLength _getPacketLength;
         private static OnUpdatePlayerPosition _onPlayerPositionChanged;
         private static OnSetTitle _setTitle;
@@ -190,6 +202,14 @@ namespace Assistant
             _mainThread.SetApartmentState( ApartmentState.STA );
             _mainThread.Start();
         }
+#if NET
+        [UnmanagedCallersOnly( EntryPoint = "Install" )]
+        public static unsafe void NativeInstall(IntPtr ptr)
+        {
+            PluginHeader* plugin = (PluginHeader*) ptr;
+            Install( plugin );
+        }
+#endif
 
         internal static unsafe void InitializePlugin( PluginHeader* plugin )
         {
@@ -208,8 +228,6 @@ namespace Assistant
 
             plugin->OnConnected = Marshal.GetFunctionPointerForDelegate( _onConnected );
             plugin->OnDisconnected = Marshal.GetFunctionPointerForDelegate( _onDisconnected );
-            plugin->OnRecv = Marshal.GetFunctionPointerForDelegate( _onReceive );
-            plugin->OnSend = Marshal.GetFunctionPointerForDelegate( _onSend );
             plugin->OnPlayerPositionChanged = Marshal.GetFunctionPointerForDelegate( _onPlayerPositionChanged );
             plugin->OnClientClosing = Marshal.GetFunctionPointerForDelegate( _onClientClosing );
             plugin->OnHotkeyPressed = Marshal.GetFunctionPointerForDelegate( _onHotkeyPressed );
@@ -220,8 +238,17 @@ namespace Assistant
 
             _getPacketLength = Marshal.GetDelegateForFunctionPointer<OnGetPacketLength>( plugin->GetPacketLength );
             _getUOFilePath = Marshal.GetDelegateForFunctionPointer<OnGetUOFilePath>( plugin->GetUOFilePath );
+#if NET
+            _sendToClient = Marshal.GetDelegateForFunctionPointer<OnPacketSendRecv_new_intptr>( plugin->Recv_new );
+            _sendToServer = Marshal.GetDelegateForFunctionPointer<OnPacketSendRecv_new_intptr>( plugin->Send_new );
+            plugin->OnRecv_new = Marshal.GetFunctionPointerForDelegate( _onReceive );
+            plugin->OnSend_new = Marshal.GetFunctionPointerForDelegate( _onSend );
+#else
             _sendToClient = Marshal.GetDelegateForFunctionPointer<OnPacketSendRecv>( plugin->Recv );
             _sendToServer = Marshal.GetDelegateForFunctionPointer<OnPacketSendRecv>( plugin->Send );
+            plugin->OnRecv = Marshal.GetFunctionPointerForDelegate( _onReceive );
+            plugin->OnSend = Marshal.GetFunctionPointerForDelegate( _onSend );
+#endif
             _requestMove = Marshal.GetDelegateForFunctionPointer<RequestMove>( plugin->RequestMove );
             _setTitle = Marshal.GetDelegateForFunctionPointer<OnSetTitle>( plugin->SetTitle );
 
@@ -767,7 +794,14 @@ namespace Assistant
 
                 ( byte[] data, int dataLength ) = Utility.CopyBuffer( packet, length );
 
+#if NET
+                IntPtr unmanagedPointer = Marshal.AllocHGlobal( dataLength );
+                Marshal.Copy( data, 0, unmanagedPointer, dataLength );
+
+                _sendToServer?.Invoke( unmanagedPointer, ref dataLength );
+#else
                 _sendToServer?.Invoke( ref data, ref dataLength );
+#endif
 
                 _nextPacketSendTime = DateTime.Now + PACKET_SEND_DELAY;
             }
@@ -816,7 +850,14 @@ namespace Assistant
 
                     ( byte[] data, int dataLength ) = Utility.CopyBuffer( packet, length );
 
+#if NET
+                    IntPtr unmanagedPointer = Marshal.AllocHGlobal( length );
+                    Marshal.Copy( packet, 0, unmanagedPointer, length );
+
+                    _sendToClient?.Invoke( unmanagedPointer, ref length );
+#else
                     _sendToClient?.Invoke( ref data, ref dataLength );
+#endif
 
                     _nextPacketRecvTime = DateTime.Now + PACKET_RECV_DELAY;
                 }
@@ -894,6 +935,10 @@ namespace Assistant
 
         public static void GetMapZ( int x, int y, out sbyte groundZ, out sbyte staticZ )
         {
+#if NET
+            throw new PlatformNotSupportedException();
+#endif
+
             groundZ = staticZ = (sbyte) ( Player?.Z ?? 0 );
 
             if ( ClassicAssembly == null )
@@ -966,6 +1011,12 @@ namespace Assistant
 
         #region ClassicUO Events
 
+#if NET
+        private static bool OnPacketSend( IntPtr ptr, ref int length )
+        {
+            byte[] data = new byte[length];
+            Marshal.Copy( ptr, data, 0, length );
+#else
         private static bool OnPacketSend( ref byte[] data, ref int length )
         {
             if ( data.Length == 0 )
@@ -988,6 +1039,7 @@ namespace Assistant
                 }
             }
 
+#endif
             bool filter = false;
 
             if ( CommandsManager.IsSpeechPacket( data[0] ) )
@@ -1036,6 +1088,12 @@ namespace Assistant
         public static int InternalTargetSerial { get; set; }
         public static Trade Trade { get; set; } = new Trade();
 
+#if NET
+        private static bool OnPacketReceive( IntPtr ptr, ref int length )
+        {
+            byte[] data = new byte[length];
+            Marshal.Copy( ptr, data, 0, length );
+#else
         private static bool OnPacketReceive( ref byte[] data, ref int length )
         {
             if ( data.Length == 0 )
@@ -1058,7 +1116,7 @@ namespace Assistant
                 }
             }
 
-
+#endif
             if ( _incomingPacketFilter.MatchFilterAll( data, out PacketFilterInfo[] pfis ) > 0 )
             {
                 foreach ( PacketFilterInfo pfi in pfis )
@@ -1113,6 +1171,6 @@ namespace Assistant
             DisconnectedEvent?.Invoke();
         }
 
-        #endregion
+#endregion
     }
 }

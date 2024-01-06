@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY
 
 #endregion
-
+#if !NET
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -386,3 +386,4 @@ namespace ClassicAssist.Extensions
         public string Name { get; set; }
     }
 }
+#endif

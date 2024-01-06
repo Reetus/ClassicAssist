@@ -102,7 +102,7 @@ namespace ClassicAssist.Misc
 
         public static string SHA1( this string str )
         {
-            using ( SHA1Managed sha1 = new SHA1Managed() )
+            using ( SHA1 sha1 = System.Security.Cryptography.SHA1.Create() )
             {
                 byte[] hash = sha1.ComputeHash( Encoding.UTF8.GetBytes( str ) );
                 StringBuilder formatted = new StringBuilder( 2 * hash.Length );

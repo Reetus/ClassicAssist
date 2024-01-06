@@ -327,6 +327,10 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = nameof( Strings.Main ) )]
         public static void Logout()
         {
+#if NET
+            throw new PlatformNotSupportedException();
+#endif
+
             Engine.TickWorkQueue.Enqueue( () =>
             {
                 dynamic socket =

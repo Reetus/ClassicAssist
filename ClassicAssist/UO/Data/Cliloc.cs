@@ -23,6 +23,7 @@ namespace ClassicAssist.UO.Data
         {
             string filename = Path.Combine( _dataPath, "Cliloc.enu" );
 
+#if !NET
             if ( AssistantOptions.UseCUOClilocLanguage && !englishOnly )
             {
                 dynamic settings = Reflection.GetTypeFieldValue<dynamic>( "ClassicUO.Configuration.Settings",
@@ -54,7 +55,7 @@ namespace ClassicAssist.UO.Data
                     }
                 }
             }
-
+#endif
             if ( !File.Exists( filename ) )
             {
                 throw new FileNotFoundException( "File not found.", filename );

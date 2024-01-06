@@ -1,12 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFrameworks>net48;net80-windows</TargetFrameworks>
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <OutputPath>..\Output\</OutputPath>
     <UseWPF>true</UseWPF>
     <Configurations>Debug;Release;Develop</Configurations>
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net80-windows'">
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Data\Bodies.json" />
@@ -61,6 +65,7 @@
     <PackageReference Include="AnimatedGif" Version="1.0.5" />
     <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
     <PackageReference Include="Crc32.NET" Version="1.2.0" />
+    <PackageReference Include="DNNE" Version="2.0.6" Condition="'$(TargetFramework)' == 'net80-windows'" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.1" />
     <PackageReference Include="Google.Apis.Drive.v3" Version="1.64.0.3256" />
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
@@ -89,7 +94,7 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>..\Output\net48\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
-    <Reference Include="System.Security" />
+    <Reference Include="System.Security" Condition="'$(TargetFramework)' != 'net80-windows'" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Data\Backup\GoogleDrive\GoogleDriveConfigureControl.xaml.cs">

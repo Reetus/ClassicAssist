@@ -55,6 +55,10 @@ namespace ClassicAssist.Data.ClassicUO
         {
             try
             {
+#if NET
+                throw new PlatformNotSupportedException();
+#endif
+
                 GameScene gameScene = new GameScene();
 
                 IEnumerable<Macro> allMacros = gameScene.Macros.GetAllMacros();

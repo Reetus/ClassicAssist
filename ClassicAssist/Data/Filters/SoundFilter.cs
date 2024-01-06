@@ -20,9 +20,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
+using System.Windows;
 using Assistant;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Views.Filters;
@@ -38,15 +39,18 @@ namespace ClassicAssist.Data.Filters
     {
         public SoundFilter()
         {
-            string dataPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
-                "Data\\Filters\\Audio\\" );
+            if ( DesignerProperties.GetIsInDesignMode( new DependencyObject() ) )
+            {
+                return;
+            }
+
+            string dataPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, @"Data\\Filters\\Audio\\" );
             ProcessDirectory( dataPath );
         }
 
         public static bool IsEnabled { get; set; }
 
-        public ObservableCollection<SoundFilterEntry> Items { get; set; } =
-            new ObservableCollection<SoundFilterEntry>();
+        public ObservableCollection<SoundFilterEntry> Items { get; set; } = new ObservableCollection<SoundFilterEntry>();
 
         public void Configure()
         {
@@ -131,7 +135,7 @@ namespace ClassicAssist.Data.Filters
             }
             catch ( Exception ex )
             {
-                MessageBox.Show( ex.ToString() );
+                MessageBox.Show( ex.ToString(), Strings.Error );
             }
         }
 

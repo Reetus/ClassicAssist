@@ -39,7 +39,8 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ItemsControl x:Name="listBox" ItemsSource="{Binding Filters}" Grid.Row="0" Background="{StaticResource ThemeInnerControlBackgroundBrush}">
+                <ItemsControl x:Name="listBox" ItemsSource="{Binding Filters}" Grid.Row="0"
+                              Background="{StaticResource ThemeInnerControlBackgroundBrush}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="5,2.5">
@@ -120,7 +121,7 @@
                             </Grid.ColumnDefinitions>
                             <CheckBox Content="{x:Static r:Strings.Enabled}" Grid.Column="0"
                                       IsChecked="{Binding SavePasswords}" />
-                            <ComboBox x:Name="comboBox" Grid.Column="1" Margin="10,0,10,0" SelectedIndex="0"
+                            <ComboBox x:Name="comboBox" Grid.Column="1" Margin="5,0,5,0" SelectedIndex="0"
                                       ItemsSource="{Binding SavedPasswords}" DisplayMemberPath="Key" />
                             <Button Content="{x:Static r:Strings.Remove}" Grid.Column="2"
                                     Command="{Binding RemoveSavedPasswordCommand}"
@@ -162,12 +163,12 @@
                                 </i:Interaction.Behaviors>
                             </ComboBox>
                         </Grid>
-                        <DockPanel Grid.Column="1" Margin="5">
-                            <Button Content="{x:Static r:Strings.New}" Margin="0,0,10,0" Padding="10,0,10,0"
+                        <DockPanel Grid.Column="1" Margin="0,5,5,5">
+                            <Button Content="{x:Static r:Strings.New}" Margin="0,0,5,0" Padding="10,0,10,0"
                                     Command="{Binding NewProfileCommand}" />
-                            <Button Content="{x:Static r:Strings.Save}" Margin="0,0,10,0" Padding="10,0,10,0"
+                            <Button Content="{x:Static r:Strings.Save}" Margin="0,0,5,0" Padding="10,0,10,0"
                                     Command="{Binding SaveProfileCommand}" />
-                            <Button Command="{Binding LinkUnlinkProfileCommand}">
+                            <Button Command="{Binding LinkUnlinkProfileCommand}" Padding="4">
                                 <Image Width="16" Margin="3,0,3,0">
                                     <Image.Style>
                                         <Style TargetType="{x:Type Image}">
@@ -185,7 +186,7 @@
                                     </Image.Style>
                                 </Image>
                             </Button>
-                            <Button Command="{Binding BackupSettingsCommand}" Margin="10,0,0,0">
+                            <Button Command="{Binding BackupSettingsCommand}" Margin="5,0,0,0" Padding="4">
                                 <Image Width="16" Source="{DynamicResource BackupIcon}"
                                        ToolTip="{x:Static r:Strings.Backup_Settings}" />
                             </Button>

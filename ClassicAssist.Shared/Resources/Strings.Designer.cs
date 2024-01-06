@@ -1897,6 +1897,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Framework:.
+        /// </summary>
+        public static string Framework_ {
+            get {
+                return ResourceManager.GetString("Framework:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Friend.
         /// </summary>
         public static string Friend {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Timers;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -137,6 +138,7 @@ namespace ClassicAssist.UI.ViewModels
             _showItemsCommand ?? ( _showItemsCommand = new RelayCommand( ShowItems, o => Connected ) );
 
         public SemVersion Version { get; set; }
+        public string Framework { get; } = RuntimeInformation.FrameworkDescription;
 
         private static void OpenPayPal( object obj )
         {

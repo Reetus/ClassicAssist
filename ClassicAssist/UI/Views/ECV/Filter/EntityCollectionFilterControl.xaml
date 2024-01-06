@@ -13,7 +13,7 @@
     xmlns:autoloot="clr-namespace:ClassicAssist.Data.Autoloot"
     xmlns:data="clr-namespace:ClassicAssist.UO.Data"
     xmlns:models="clr-namespace:ClassicAssist.UI.Views.ECV.Filter.Models"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     x:Name="userControl" x:Class="ClassicAssist.UI.Views.ECV.Filter.EntityCollectionFilterControl"
     mc:Ignorable="d"
     Background="{DynamicResource ThemeBackgroundBrush}">

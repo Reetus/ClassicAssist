@@ -8,7 +8,7 @@
         xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
         xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
         xmlns:misc="clr-namespace:ClassicAssist.Misc"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         Title="{x:Static resources:Strings.Cliloc_Filter}" Height="450" Width="550">

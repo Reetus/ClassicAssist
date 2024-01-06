@@ -1,12 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFrameworks>net48;net80-windows</TargetFrameworks>
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <OutputPath>..\Output\</OutputPath>
     <UseWPF>true</UseWPF>
     <Configurations>Debug;Release;Develop</Configurations>
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Data\Bodies.json" />
@@ -62,6 +63,7 @@
     <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
     <PackageReference Include="Crc32.NET" Version="1.2.0" />
     <PackageReference Include="CsvHelper" Version="33.0.1" />
+    <PackageReference Include="DNNE" Version="2.0.6" Condition="'$(TargetFramework)' == 'net80-windows'" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.6.1" />
     <PackageReference Include="Google.Apis.Drive.v3" Version="1.68.0.3428" />
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
@@ -92,7 +94,7 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>..\Output\net48\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
-    <Reference Include="System.Security" />
+    <Reference Include="System.Security" Condition="'$(TargetFramework)' != 'net80-windows'" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Data\Backup\GoogleDrive\GoogleDriveConfigureControl.xaml.cs">

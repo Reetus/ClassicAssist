@@ -2070,4 +2070,7 @@ Are you sure you wish to continue?</value>
   <data name="Default" xml:space="preserve">
     <value>Default</value>
   </data>
+  <data name="Framework:" xml:space="preserve">
+    <value>Framework:</value>
+  </data>
 </root>

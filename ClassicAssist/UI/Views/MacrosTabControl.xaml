@@ -197,7 +197,7 @@
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                             <Setter Property="Margin" Value="0" />
                             <Setter Property="FontSize" Value="10" />
-                            <Setter Property="Padding" Value="4"/>
+                            <Setter Property="Padding" Value="4" />
                         </Style>
                     </Grid.Resources>
                     <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="0" Margin="0,0,2.5,0"
@@ -372,30 +372,28 @@
                 <controls1:StretchyWrapPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
                     <controls1:StretchyWrapPanel.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                            <Setter Property="Margin" Value="0,10,10,0" />
-                            <Setter Property="Padding" Value="10,0,10,0" />
-                            <Setter Property="Height" Value="25" />
+                            <Setter Property="Margin" Value="0,5,5,0" />
                         </Style>
                     </controls1:StretchyWrapPanel.Resources>
                     <Button Content="{x:Static resources:Strings.Object_Inspector}"
                             Command="{Binding InspectObjectCommand, Mode=OneWay}" />
                     <Button Content="{x:Static resources:Strings.Commands}" Command="{Binding ShowCommandsCommand}" />
-                    <Button Command="{Binding ShowMacrosWikiCommand}" Padding="5,0,5,0"
+                    <Button Command="{Binding ShowMacrosWikiCommand}" Padding="5"
                             ToolTip="{x:Static resources:Strings.Macro_Commands_Wiki__Launches_in_Browser_}">
                         <Image Source="{StaticResource WebIcon}" Height="16" />
                     </Button>
                     <Button Content="{x:Static resources:Strings.Active_Objects}"
                             Command="{Binding ShowActiveObjectsWindowCommand}" />
                     <Button Command="{Binding ShareMacroCommand}" CommandParameter="{Binding SelectedItem}"
-                            ToolTip="{x:Static resources:Strings.Share_Macro}" Padding="5,0,5,0">
+                            ToolTip="{x:Static resources:Strings.Share_Macro}" Padding="5">
                         <Image Source="{DynamicResource GithubIcon}" Height="16" />
                     </Button>
-                    <Button Command="{Binding OpenModulesFolderCommand}" Padding="5,0,5,0"
+                    <Button Command="{Binding OpenModulesFolderCommand}" Padding="5"
                             ToolTip="{x:Static resources:Strings.Open_Modules_Folder}">
                         <Image Source="{StaticResource ModulesIcon}" Height="16" />
                     </Button>
                     <Button Command="{Binding CreateMacroButtonCommand}" CommandParameter="{Binding SelectedItem}"
-                            ToolTip="{x:Static resources:Strings.Create_Macro_Button}" Padding="5,0,5,0">
+                            ToolTip="{x:Static resources:Strings.Create_Macro_Button}" Padding="5">
                         <Image Source="{StaticResource AddButtonIcon}" Height="16" />
                     </Button>
                     <Button Command="{Binding FormatCodeCommand}" CommandParameter="{Binding SelectedItem}"

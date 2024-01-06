@@ -52,8 +52,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _refreshCommand;
         private ICommand _replaceNameCommand;
 
-        private ObservableCollection<EntityCollectionData> _selectedItems =
-            new ObservableCollection<EntityCollectionData>();
+        private ObservableCollection<EntityCollectionData> _selectedItems = new ObservableCollection<EntityCollectionData>();
 
         private bool _showFilter;
 
@@ -85,8 +84,7 @@ namespace ClassicAssist.UI.ViewModels
 
             _collection = new ItemCollection( 0 );
 
-            Entities = new ObservableCollection<EntityCollectionData>(
-                _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+            Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
         }
 
         public EntityCollectionViewerViewModel( ItemCollection collection )
@@ -96,8 +94,7 @@ namespace ClassicAssist.UI.ViewModels
 
             Entities = new ObservableCollection<EntityCollectionData>( !Options.ShowChildItems
                 ? collection.ToEntityCollectionData( _sorter, _nameOverrides )
-                : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) }
-                    .ToEntityCollectionData( _sorter, _nameOverrides ) );
+                : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) }.ToEntityCollectionData( _sorter, _nameOverrides ) );
 
             SelectedItems.CollectionChanged += ( sender, args ) =>
             {
@@ -119,38 +116,27 @@ namespace ClassicAssist.UI.ViewModels
             QueueActions.CollectionChanged += QueueActions_CollectionChanged;
         }
 
-        public ICommand ApplyFiltersCommand =>
-            _applyFiltersCommand ?? ( _applyFiltersCommand = new RelayCommand( ApplyFilters, o => true ) );
+        public ICommand ApplyFiltersCommand => _applyFiltersCommand ?? ( _applyFiltersCommand = new RelayCommand( ApplyFilters, o => true ) );
 
-        public ICommand ChangeSortStyleCommand =>
-            _changeSortStyleCommand ?? ( _changeSortStyleCommand = new RelayCommand( ChangeSortStyle, o => true ) );
+        public ICommand ChangeSortStyleCommand => _changeSortStyleCommand ?? ( _changeSortStyleCommand = new RelayCommand( ChangeSortStyle, o => true ) );
 
-        public ICommand CombineStacksCommand =>
-            _combineStacksCommand ?? ( _combineStacksCommand =
-                new RelayCommandAsync( CombineStacks, o => _collection.Serial > 0 ) );
+        public ICommand CombineStacksCommand => _combineStacksCommand ?? ( _combineStacksCommand = new RelayCommandAsync( CombineStacks, o => _collection.Serial > 0 ) );
 
         public ICommand ContextContextMenuRequestCommand =>
-            _contextContextMenuRequestCommand ?? ( _contextContextMenuRequestCommand =
-                new RelayCommand( ContextMenuRequest, o => SelectedItems.Count > 0 ) );
+            _contextContextMenuRequestCommand ?? ( _contextContextMenuRequestCommand = new RelayCommand( ContextMenuRequest, o => SelectedItems.Count > 0 ) );
 
         public ICommand ContextMoveToBackpackCommand =>
-            _contextMoveToBackpackCommand ?? ( _contextMoveToBackpackCommand =
-                new RelayCommandAsync( ContextMoveToBackpack, o => SelectedItems != null ) );
+            _contextMoveToBackpackCommand ?? ( _contextMoveToBackpackCommand = new RelayCommandAsync( ContextMoveToBackpack, o => SelectedItems != null ) );
 
         public ICommand ContextMoveToBankCommand =>
-            _contextMoveToBankCommand ?? ( _contextMoveToBankCommand =
-                new RelayCommandAsync( ContextMoveToBank, o => SelectedItems != null ) );
+            _contextMoveToBankCommand ?? ( _contextMoveToBankCommand = new RelayCommandAsync( ContextMoveToBank, o => SelectedItems != null ) );
 
         public ICommand ContextMoveToContainerCommand =>
-            _contextMoveToContainerCommand ?? ( _contextMoveToContainerCommand =
-                new RelayCommandAsync( ContextMoveToContainer, o => SelectedItems != null ) );
+            _contextMoveToContainerCommand ?? ( _contextMoveToContainerCommand = new RelayCommandAsync( ContextMoveToContainer, o => SelectedItems != null ) );
 
-        public ICommand ContextTargetCommand =>
-            _contextTargetCommand ?? ( _contextTargetCommand = new RelayCommand( ContextTarget ) );
+        public ICommand ContextTargetCommand => _contextTargetCommand ?? ( _contextTargetCommand = new RelayCommand( ContextTarget ) );
 
-        public ICommand ContextUseItemCommand =>
-            _contextUseItemCommand ?? ( _contextUseItemCommand =
-                new RelayCommandAsync( ContextUseItem, o => SelectedItems != null ) );
+        public ICommand ContextUseItemCommand => _contextUseItemCommand ?? ( _contextUseItemCommand = new RelayCommandAsync( ContextUseItem, o => SelectedItems != null ) );
 
         public ObservableCollection<EntityCollectionData> Entities
         {
@@ -158,21 +144,15 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _entities, value );
         }
 
-        public ICommand EquipItemCommand =>
-            _equipItemCommand ?? ( _equipItemCommand = new RelayCommandAsync( EquipItem, o => SelectedItems != null ) );
+        public ICommand EquipItemCommand => _equipItemCommand ?? ( _equipItemCommand = new RelayCommandAsync( EquipItem, o => SelectedItems != null ) );
 
-        public ICommand HideItemCommand =>
-            _hideItemCommand ?? ( _hideItemCommand = new RelayCommand( HideItem, o => SelectedItems != null ) );
+        public ICommand HideItemCommand => _hideItemCommand ?? ( _hideItemCommand = new RelayCommand( HideItem, o => SelectedItems != null ) );
 
-        public ICommand ItemDoubleClickCommand =>
-            _itemDoubleClickCommand ?? ( _itemDoubleClickCommand = new RelayCommand( ItemDoubleClick, o => true ) );
+        public ICommand ItemDoubleClickCommand => _itemDoubleClickCommand ?? ( _itemDoubleClickCommand = new RelayCommand( ItemDoubleClick, o => true ) );
 
-        public static Lazy<Dictionary<int, int>> MountIDEntries { get; set; } =
-            new Lazy<Dictionary<int, int>>( LoadMountIDEntries );
+        public static Lazy<Dictionary<int, int>> MountIDEntries { get; set; } = new Lazy<Dictionary<int, int>>( LoadMountIDEntries );
 
-        public ICommand OpenAllContainersCommand =>
-            _openAllContainersCommand ??
-            ( _openAllContainersCommand = new RelayCommand( OpenAllContainers, o => true ) );
+        public ICommand OpenAllContainersCommand => _openAllContainersCommand ?? ( _openAllContainersCommand = new RelayCommand( OpenAllContainers, o => true ) );
 
         public EntityCollectionViewerOptions Options
         {
@@ -180,14 +160,11 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _options, value );
         }
 
-        public ObservableCollectionEx<QueueAction> QueueActions { get; set; } =
-            new ObservableCollectionEx<QueueAction>();
+        public ObservableCollectionEx<QueueAction> QueueActions { get; set; } = new ObservableCollectionEx<QueueAction>();
 
-        public ICommand RefreshCommand =>
-            _refreshCommand ?? ( _refreshCommand = new RelayCommand( Refresh, o => true ) );
+        public ICommand RefreshCommand => _refreshCommand ?? ( _refreshCommand = new RelayCommand( Refresh, o => true ) );
 
-        public ICommand ReplaceNameCommand =>
-            _replaceNameCommand ?? ( _replaceNameCommand = new RelayCommandAsync( ReplaceName, o => true ) );
+        public ICommand ReplaceNameCommand => _replaceNameCommand ?? ( _replaceNameCommand = new RelayCommandAsync( ReplaceName, o => true ) );
 
         public ObservableCollection<EntityCollectionData> SelectedItems
         {
@@ -213,21 +190,15 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _statusLabel, value );
         }
 
-        public ICommand TargetContainerCommand =>
-            _targetContainerCommand ?? ( _targetContainerCommand =
-                new RelayCommand( TargetContainer, o => _collection.Serial > 0 ) );
+        public ICommand TargetContainerCommand => _targetContainerCommand ?? ( _targetContainerCommand = new RelayCommand( TargetContainer, o => _collection.Serial > 0 ) );
 
         public ThreadPriorityQueue<QueueAction> ThreadQueue { get; set; }
 
-        public ICommand ToggleAlwaysOnTopCommand =>
-            _toggleAlwaysOnTopCommand ??
-            ( _toggleAlwaysOnTopCommand = new RelayCommand( ToggleAlwaysOnTop, o => true ) );
+        public ICommand ToggleAlwaysOnTopCommand => _toggleAlwaysOnTopCommand ?? ( _toggleAlwaysOnTopCommand = new RelayCommand( ToggleAlwaysOnTop, o => true ) );
 
-        public ICommand ToggleChildItemsCommand =>
-            _toggleChildItemsCommand ?? ( _toggleChildItemsCommand = new RelayCommand( ToggleChildItems, o => true ) );
+        public ICommand ToggleChildItemsCommand => _toggleChildItemsCommand ?? ( _toggleChildItemsCommand = new RelayCommand( ToggleChildItems, o => true ) );
 
-        public ICommand TogglePropertiesCommand =>
-            _togglePropertiesCommand ?? ( _togglePropertiesCommand = new RelayCommand( ToggleProperties, o => true ) );
+        public ICommand TogglePropertiesCommand => _togglePropertiesCommand ?? ( _togglePropertiesCommand = new RelayCommand( ToggleProperties, o => true ) );
 
         public bool TooltipsEnabled
         {
@@ -351,8 +322,7 @@ namespace ClassicAssist.UI.ViewModels
                     while ( true )
                     {
                         Item destStack = _collection.SelectEntity( i =>
-                            i.Count < 60000 && TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Stackable ) &&
-                            !ignoreList.Contains( i.Serial ) );
+                            i.Count < 60000 && TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Stackable ) && !ignoreList.Contains( i.Serial ) );
 
                         if ( destStack == null )
                         {
@@ -361,9 +331,8 @@ namespace ClassicAssist.UI.ViewModels
 
                         int needed = 60000 - destStack.Count;
 
-                        Item sourceStack = _collection.SelectEntities( i =>
-                            i.ID == destStack.ID && i.Hue == destStack.Hue && i.Serial != destStack.Serial &&
-                            i.Count != 60000 )?.OrderBy( i => i.Count ).FirstOrDefault();
+                        Item sourceStack = _collection.SelectEntities( i => i.ID == destStack.ID && i.Hue == destStack.Hue && i.Serial != destStack.Serial && i.Count != 60000 )
+                            ?.OrderBy( i => i.Count ).FirstOrDefault();
 
                         if ( sourceStack == null )
                         {
@@ -371,12 +340,14 @@ namespace ClassicAssist.UI.ViewModels
                             continue;
                         }
 
-                        await ActionPacketQueue.EnqueueDragDrop( sourceStack.Serial,
-                            needed > sourceStack.Count ? sourceStack.Count : needed, destStack.Serial,
-                            QueuePriority.Low, false, true, false );
+                        Commands.SystemMessage( $"{sourceStack.Name} => {destStack.Name}", SystemMessageHues.Green );
 
-                        await Task.Delay( TimeSpan.FromMilliseconds( Data.Options.CurrentOptions.ActionDelayMS ),
-                            action.CancellationTokenSource.Token );
+                        await ActionPacketQueue.EnqueueDragDrop( sourceStack.Serial, needed > sourceStack.Count ? sourceStack.Count : needed, destStack.Serial, QueuePriority.Low,
+                            false, true, false );
+
+                        await Task.Delay( TimeSpan.FromMilliseconds( Data.Options.CurrentOptions.ActionDelayMS ), action.CancellationTokenSource.Token );
+
+                        RefreshCommand?.Execute( null );
 
                         action.CancellationTokenSource.Token.ThrowIfCancellationRequested();
                     }
@@ -413,9 +384,7 @@ namespace ClassicAssist.UI.ViewModels
             {
                 _dispatcher.Invoke( () =>
                 {
-                    foreach ( EntityCollectionData ecd in entities.ToList()
-                                 .Select( item => Entities.FirstOrDefault( e => e.Entity.Equals( item ) ) )
-                                 .Where( ecd => ecd != null ) )
+                    foreach ( EntityCollectionData ecd in entities.ToList().Select( item => Entities.FirstOrDefault( e => e.Entity.Equals( item ) ) ).Where( ecd => ecd != null ) )
                     {
                         Entities.Remove( ecd );
                     }
@@ -444,10 +413,7 @@ namespace ClassicAssist.UI.ViewModels
                         return false;
                     }
 
-                    _dispatcher.Invoke( () =>
-                    {
-                        queueAction.Status = string.Format( Strings.Targeting_item__0_____1_, item.i, items.Count );
-                    } );
+                    _dispatcher.Invoke( () => { queueAction.Status = string.Format( Strings.Targeting_item__0_____1_, item.i, items.Count ); } );
 
                     if ( await WaitForTarget( -1, queueAction.CancellationTokenSource.Token ) )
                     {
@@ -470,8 +436,7 @@ namespace ClassicAssist.UI.ViewModels
 
                 Engine.WaitingForTarget = true;
 
-                PacketWaitEntry we =
-                    Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, includeInternal: true );
+                PacketWaitEntry we = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, includeInternal: true );
 
                 try
                 {
@@ -524,22 +489,73 @@ namespace ClassicAssist.UI.ViewModels
         {
             EnqueueAction( async action =>
             {
-                List<Task> tasks = _collection
-                    .Where( i => TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) ).Select( item =>
-                        ActionPacketQueue.EnqueuePacket( new UseObject( item.Serial ),
-                            cancellationToken: action.CancellationTokenSource.Token ) ).ToList();
+                List<Item> containers = _collection.Where( i => TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) ).ToList();
 
-                await Task.WhenAll( tasks ).ContinueWith( t =>
+                do
                 {
-                    Thread.Sleep( 1000 );
-                    RefreshCommand.Execute( null );
-                } );
+                    containers = await OpenContainers( containers, action.CancellationTokenSource.Token );
+
+                    if ( action.CancellationTokenSource.IsCancellationRequested )
+                    {
+                        break;
+                    }
+                }
+                while ( containers.Count > 0 );
+
+                Thread.Sleep( 1000 );
+                RefreshCommand.Execute( null );
 
                 return true;
             }, Strings.Open_All_Containers );
+
+            return;
+
+            async Task<List<Item>> OpenContainers( IEnumerable<Item> items, CancellationToken cancellationToken )
+            {
+                List<Item> containerItem = new List<Item>();
+
+                IEnumerable<Task<bool>> tasks = items.Select( item => ActionPacketQueue.EnqueueAction( item, arg =>
+                {
+                    int pos = 19;
+
+                    if ( Engine.ClientVersion < new Version( 6, 0, 1, 7 ) )
+                    {
+                        pos = 18;
+                    }
+
+                    PacketFilterInfo pfi = new PacketFilterInfo( 0x3C, new[] { PacketFilterConditions.IntAtPositionCondition( item.Serial, pos ) } );
+
+                    PacketWaitEntry we = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );
+
+                    Engine.SendPacketToServer( new UseObject( item.Serial ) );
+
+                    try
+                    {
+                        bool result = we.Lock.WaitOne( 1000 );
+
+                        IEnumerable<Item> newItem =
+                            Engine.Items.GetItem( item.Serial ).Container?.Where( i => TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) ) ??
+                            Enumerable.Empty<Item>();
+
+                        containerItem.AddRange( newItem );
+
+                        return result;
+                    }
+                    finally
+                    {
+                        Engine.PacketWaitEntries.Remove( we );
+                    }
+
+                    return true;
+                }, cancellationToken: cancellationToken ) );
+
+                await Task.WhenAll( tasks );
+
+                return containerItem;
+            }
         }
 
-        private void ToggleAlwaysOnTop( object obj )
+            private void ToggleAlwaysOnTop( object obj )
         {
             if ( !( obj is bool alwaysOnTop ) )
             {
@@ -576,8 +592,7 @@ namespace ClassicAssist.UI.ViewModels
         {
             EnqueueAction( async action =>
             {
-                IEnumerable<EquipItemData> data = SelectedItems.Select( e =>
-                        new EquipItemData { Serial = e.Entity.Serial, Layer = TileData.GetLayer( e.Entity.ID ) } )
+                IEnumerable<EquipItemData> data = SelectedItems.Select( e => new EquipItemData { Serial = e.Entity.Serial, Layer = TileData.GetLayer( e.Entity.ID ) } )
                     .Where( e => e.Layer != Layer.Invalid );
 
                 IEnumerable<Task<bool>> tasks = data.Select( e => ActionPacketQueue.EnqueueAction( e, arg =>
@@ -600,8 +615,7 @@ namespace ClassicAssist.UI.ViewModels
         {
             if ( !( obj is List<EntityCollectionFilterGroup> list ) )
             {
-                Entities = new ObservableCollection<EntityCollectionData>(
-                    _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+                Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
 
                 UpdateStatusLabel();
 
@@ -618,9 +632,7 @@ namespace ClassicAssist.UI.ViewModels
             {
                 EntityCollectionFilterGroup groups = list[i];
 
-                ItemCollection groupItems = groups.Operation == BooleanOperation.Or
-                    ? collection.Filter( groups.Items )
-                    : items.Filter( groups.Items );
+                ItemCollection groupItems = groups.Operation == BooleanOperation.Or ? collection.Filter( groups.Items ) : items.Filter( groups.Items );
 
                 switch ( groups.Operation )
                 {
@@ -638,8 +650,7 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            Entities = new ObservableCollection<EntityCollectionData>(
-                items.ToEntityCollectionData( _sorter, _nameOverrides ) );
+            Entities = new ObservableCollection<EntityCollectionData>( items.ToEntityCollectionData( _sorter, _nameOverrides ) );
 
             UpdateStatusLabel();
         }
@@ -682,14 +693,12 @@ namespace ClassicAssist.UI.ViewModels
                     throw new ArgumentOutOfRangeException();
             }
 
-            Entities = new ObservableCollection<EntityCollectionData>(
-                _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+            Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
         }
 
         private void UpdateStatusLabel()
         {
-            StatusLabel = string.Format( Strings._0__items___1__selected___2__total_amount, Entities.Count,
-                SelectedItems?.Count ?? 0,
+            StatusLabel = string.Format( Strings._0__items___1__selected___2__total_amount, Entities.Count, SelectedItems?.Count ?? 0,
                 SelectedItems?.Select( i => i.Entity ).Where( i => i is Item ).Cast<Item>().Sum( i => i.Count ) );
         }
 
@@ -702,13 +711,11 @@ namespace ClassicAssist.UI.ViewModels
                 Item[] e = ItemCollection.GetAllItems( Engine.Items.GetItems() );
                 _collection.Clear();
                 _collection.Add( e );
-                Entities = new ObservableCollection<EntityCollectionData>(
-                    _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+                Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
                 return;
             }
 
-            Entity entity = Engine.Items.GetItem( _collection.Serial ) ??
-                            (Entity) Engine.Mobiles.GetMobile( _collection.Serial );
+            Entity entity = Engine.Items.GetItem( _collection.Serial ) ?? (Entity) Engine.Mobiles.GetMobile( _collection.Serial );
 
             if ( entity == null )
             {
@@ -736,12 +743,9 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            _collection = !Options.ShowChildItems
-                ? collection
-                : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) };
+            _collection = !Options.ShowChildItems ? collection : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) };
 
-            Entities = new ObservableCollection<EntityCollectionData>(
-                _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+            Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
         }
 
         private Task ContextUseItem( object arg )
@@ -750,8 +754,7 @@ namespace ClassicAssist.UI.ViewModels
 
             EnqueueAction( async obj =>
             {
-                await ActionPacketQueue.EnqueuePackets( items.Select( item => new UseObject( item ) ),
-                    cancellationToken: obj.CancellationTokenSource.Token );
+                await ActionPacketQueue.EnqueuePackets( items.Select( item => new UseObject( item ) ), cancellationToken: obj.CancellationTokenSource.Token );
 
                 return obj.CancellationTokenSource.IsCancellationRequested;
             }, Strings.Use_item );
@@ -791,13 +794,9 @@ namespace ClassicAssist.UI.ViewModels
                         return false;
                     }
 
-                    _dispatcher.Invoke( () =>
-                    {
-                        obj.Status = string.Format( Strings.Moving_item__0_____1_, item.i, items.Length );
-                    } );
+                    _dispatcher.Invoke( () => { obj.Status = string.Format( Strings.Moving_item__0_____1_, item.i, items.Length ); } );
 
-                    await ActionPacketQueue.EnqueueDragDrop( item.value, -1, serial,
-                        cancellationToken: obj.CancellationTokenSource.Token );
+                    await ActionPacketQueue.EnqueueDragDrop( item.value, -1, serial, cancellationToken: obj.CancellationTokenSource.Token );
                 }
 
                 return true;
@@ -840,17 +839,13 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( ecd.Entity is Item item && item.Container != null )
             {
-                EntityCollectionViewer window = new EntityCollectionViewer
-                {
-                    DataContext = new EntityCollectionViewerViewModel( item.Container )
-                };
+                EntityCollectionViewer window = new EntityCollectionViewer { DataContext = new EntityCollectionViewerViewModel( item.Container ) };
 
                 window.Show();
             }
             else
             {
-                ObjectInspectorWindow window =
-                    new ObjectInspectorWindow { DataContext = new ObjectInspectorViewModel( ecd.Entity ) };
+                ObjectInspectorWindow window = new ObjectInspectorWindow { DataContext = new ObjectInspectorViewModel( ecd.Entity ) };
 
                 window.Show();
             }
@@ -878,10 +873,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private void EnqueueAction( Func<QueueAction, Task<bool>> action, string message )
         {
-            QueueActions.Add( new QueueAction
-            {
-                Action = action, CancellationTokenSource = new CancellationTokenSource(), Status = message
-            } );
+            QueueActions.Add( new QueueAction { Action = action, CancellationTokenSource = new CancellationTokenSource(), Status = message } );
         }
 
         private class EquipItemData
@@ -893,8 +885,7 @@ namespace ClassicAssist.UI.ViewModels
 
     public static class ExtensionMethods
     {
-        public static ItemCollection Filter( this ItemCollection collection,
-            IEnumerable<EntityCollectionFilterItem> filterList )
+        public static ItemCollection Filter( this ItemCollection collection, IEnumerable<EntityCollectionFilterItem> filterList )
         {
             ItemCollection newCollection = new ItemCollection( collection.Serial );
 
@@ -931,14 +922,11 @@ namespace ClassicAssist.UI.ViewModels
                         if ( filter.Operator != AutolootOperator.NotPresent )
                         {
                             predicates.Add( i => i.Properties != null && constraint.Clilocs.Any( cliloc =>
-                                i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc,
-                                    constraint, filter.Operator, filter.Value ) ) ) );
+                                i.Properties.Any( p => AutolootHelpers.MatchProperty( p, cliloc, constraint, filter.Operator, filter.Value ) ) ) );
                         }
                         else
                         {
-                            predicates.Add( i =>
-                                i.Properties != null && !constraint.Clilocs.Any( cliloc =>
-                                    i.Properties.Any( p => p.Cliloc == cliloc ) ) );
+                            predicates.Add( i => i.Properties != null && !constraint.Clilocs.Any( cliloc => i.Properties.Any( p => p.Cliloc == cliloc ) ) );
                         }
 
                         break;
@@ -946,31 +934,21 @@ namespace ClassicAssist.UI.ViewModels
                     case PropertyType.Object:
                     {
                         predicates.Add( i =>
-                            AutolootHelpers.ItemHasObjectProperty( i, constraint.Name ) && AutolootHelpers.Operation(
-                                filter.Operator, AutolootHelpers.GetItemObjectPropertyValue<int>( i, constraint.Name ),
-                                filter.Value ) );
+                            AutolootHelpers.ItemHasObjectProperty( i, constraint.Name ) && AutolootHelpers.Operation( filter.Operator,
+                                AutolootHelpers.GetItemObjectPropertyValue<int>( i, constraint.Name ), filter.Value ) );
                         break;
                     }
                     case PropertyType.Predicate:
                     {
                         predicates.Add( i => constraint.Predicate != null && constraint.Predicate.Invoke( i,
-                            new AutolootConstraintEntry
-                            {
-                                Operator = filter.Operator, Property = constraint, Value = filter.Value
-                            } ) );
+                            new AutolootConstraintEntry { Operator = filter.Operator, Property = constraint, Value = filter.Value } ) );
 
                         break;
                     }
                     case PropertyType.PredicateWithValue:
                     {
                         predicates.Add( i => constraint.Predicate != null && constraint.Predicate.Invoke( i,
-                            new AutolootConstraintEntry
-                            {
-                                Operator = filter.Operator,
-                                Property = constraint,
-                                Value = filter.Value,
-                                Additional = filter.Additional
-                            } ) );
+                            new AutolootConstraintEntry { Operator = filter.Operator, Property = constraint, Value = filter.Value, Additional = filter.Additional } ) );
 
                         break;
                     }
@@ -987,8 +965,7 @@ namespace ClassicAssist.UI.ViewModels
             return s.TrimEnd( '\r', '\n' );
         }
 
-        public static List<EntityCollectionData> ToEntityCollectionData( this ItemCollection itemCollection,
-            IComparer<Entity> comparer, Dictionary<int, string> nameOverrides )
+        public static List<EntityCollectionData> ToEntityCollectionData( this ItemCollection itemCollection, IComparer<Entity> comparer, Dictionary<int, string> nameOverrides )
         {
             if ( itemCollection == null )
             {
@@ -997,19 +974,16 @@ namespace ClassicAssist.UI.ViewModels
 
             Item[] items = itemCollection.GetItems();
 
-            return items.OrderBy( i => i, comparer ).Select( item => item.ToEntityCollectionData( nameOverrides ) )
-                .ToList();
+            return items.OrderBy( i => i, comparer ).Select( item => item.ToEntityCollectionData( nameOverrides ) ).ToList();
         }
 
-        public static EntityCollectionData ToEntityCollectionData( this Item item,
-            Dictionary<int, string> nameOverrides )
+        public static EntityCollectionData ToEntityCollectionData( this Item item, Dictionary<int, string> nameOverrides )
         {
             StaticTile tileData = TileData.GetStaticTile( item.ID );
 
             if ( string.IsNullOrEmpty( item.Name ) )
             {
-                item.Name = nameOverrides.TryGetValue( item.Serial, out string @override ) ? @override :
-                    tileData.ID != 0 ? tileData.Name : $"0x{item.Serial:x8}";
+                item.Name = nameOverrides.TryGetValue( item.Serial, out string @override ) ? @override : tileData.ID != 0 ? tileData.Name : $"0x{item.Serial:x8}";
             }
 
             if ( nameOverrides.TryGetValue( item.Serial, out string nameOverride ) )

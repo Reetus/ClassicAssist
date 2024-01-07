@@ -9,6 +9,11 @@
                     <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1">
                         <ContentPresenter x:Name="Content" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

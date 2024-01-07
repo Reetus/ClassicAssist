@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="ClassicAssist.UI.Views.ECV.EntityCollectionViewerOrganizerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ClassicAssist.UI.Views.ECV"
+             xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+             mc:Ignorable="d">
+    <UserControl.DataContext>
+        <local:EntityCollectionViewerOrganizerViewModel />
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Content="{x:Static resources:Strings.Organizer}" Margin="0,0,5,0"
+                   ContentStringFormat="{}{0}:" />
+            <ComboBox ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedEntry}" MinWidth="100"
+                      Grid.Column="1" />
+        </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="0,0,5,0">
+            <Label Content="{x:Static resources:Strings.Destination_ID}" Margin="5,0,5,0" ContentStringFormat="{}{0}:" />
+            <ComboBox ItemsSource="{Binding Destinations}" Margin="0,0,5,0"
+                      SelectedItem="{Binding SelectedDestination}" MinWidth="100" SelectedIndex="0" />
+            <controls:ImageButton ImageSource="{StaticResource CrosshairIcon}" Command="{Binding TargetCommand}" />
+        </StackPanel>
+        <Button Content="{x:Static resources:Strings.Play}" Grid.Column="2" Command="{Binding PlayCommand}" />
+    </Grid>
+</UserControl>

@@ -12,6 +12,7 @@
 
 #endregion
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media.Imaging;
 using ClassicAssist.Misc;
@@ -22,32 +23,45 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class EntityCollectionData
     {
+        private readonly Dictionary<long, BitmapSource> _cache = new Dictionary<long, BitmapSource>();
+
         public BitmapSource Bitmap
         {
             get
             {
+                int key = ( Entity.ID << 16 ) | Entity.Hue;
+
+                if ( _cache.TryGetValue( key, out BitmapSource bitmap ) )
+                {
+                    return bitmap;
+                }
+
                 BitmapSource result = Art.GetStatic( Entity.ID, Entity.Hue ).ToBitmapSource();
 
                 if ( !( Entity is Item item ) || item.Layer != Layer.Mount )
                 {
+                    _cache.Add( key, result );
+
                     return result;
                 }
 
                 if ( !( EntityCollectionViewerViewModel.MountIDEntries.Value?.ContainsKey( Entity.ID ) ?? false ) )
                 {
+                    _cache.Add( key, result );
+
                     return result;
                 }
 
-                if ( EntityCollectionViewerViewModel.MountIDEntries.Value.ContainsKey( Entity.ID ) )
+                if ( !EntityCollectionViewerViewModel.MountIDEntries.Value.TryGetValue( Entity.ID, out int id ) )
                 {
-                    int id = EntityCollectionViewerViewModel.MountIDEntries.Value[Entity.ID];
-
-                    result = Art.GetStatic( id, Entity.Hue ).ToBitmapSource();
-
-                    return result;
+                    return null;
                 }
 
-                return null;
+                result = Art.GetStatic( id, Entity.Hue ).ToBitmapSource();
+
+                _cache.Add( key, result );
+
+                return result;
             }
         }
 
@@ -60,8 +74,7 @@ namespace ClassicAssist.UI.ViewModels
         {
             return entity.Properties == null
                 ? GetName( entity )
-                : entity.Properties.Aggregate( "",
-                    ( current, entityProperty ) => current + entityProperty.Text + "\r\n" ).TrimTrailingNewLine();
+                : entity.Properties.Aggregate( "", ( current, entityProperty ) => current + entityProperty.Text + "\r\n" ).TrimTrailingNewLine();
         }
 
         private static string GetName( Entity entity )

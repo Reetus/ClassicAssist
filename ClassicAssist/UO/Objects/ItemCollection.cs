@@ -13,7 +13,7 @@ namespace ClassicAssist.UO.Objects
         private const int DefaultCapacity = 125;
         public readonly int Serial;
 
-        internal ItemCollection( int serial ) : base( DefaultCapacity )
+        public ItemCollection( int serial ) : base( DefaultCapacity )
         {
             Serial = serial;
         }

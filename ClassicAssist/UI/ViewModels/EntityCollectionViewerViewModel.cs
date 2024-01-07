@@ -33,9 +33,11 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class EntityCollectionViewerViewModel : BaseViewModel
     {
+        private readonly Func<ItemCollection> _customRefreshCommand;
         private ICommand _applyFiltersCommand;
         private ICommand _changeSortStyleCommand;
-        private ItemCollection _collection;
+        private ItemCollection _collection = new ItemCollection( 0 );
+
         private ICommand _combineStacksCommand;
         private ICommand _contextContextMenuRequestCommand;
         private ICommand _contextMoveToBackpackCommand;
@@ -45,6 +47,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _contextUseItemCommand;
         private ObservableCollection<EntityCollectionData> _entities;
         private ICommand _equipItemCommand;
+        private List<EntityCollectionFilterGroup> _filters;
         private ICommand _hideItemCommand;
         private ICommand _itemDoubleClickCommand;
         private ICommand _openAllContainersCommand;
@@ -55,6 +58,7 @@ namespace ClassicAssist.UI.ViewModels
         private ObservableCollection<EntityCollectionData> _selectedItems = new ObservableCollection<EntityCollectionData>();
 
         private bool _showFilter;
+        private bool _showOrganizer;
 
         private bool _showProperties;
 
@@ -82,14 +86,19 @@ namespace ClassicAssist.UI.ViewModels
             }
 #endif
 
-            _collection = new ItemCollection( 0 );
+            Collection = new ItemCollection( 0 );
 
-            Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+            Entities = new ObservableCollection<EntityCollectionData>( Collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+        }
+
+        public EntityCollectionViewerViewModel( ItemCollection collection, Func<ItemCollection> refreshCommand ) : this( collection )
+        {
+            _customRefreshCommand = refreshCommand;
         }
 
         public EntityCollectionViewerViewModel( ItemCollection collection )
         {
-            _collection = collection;
+            Collection = collection;
             Options = Data.Options.CurrentOptions.EntityCollectionViewerOptions;
 
             Entities = new ObservableCollection<EntityCollectionData>( !Options.ShowChildItems
@@ -108,7 +117,7 @@ namespace ClassicAssist.UI.ViewModels
 
             UpdateStatusLabel();
 
-            _collection.CollectionChanged += OnCollectionChanged;
+            Collection.CollectionChanged += OnCollectionChanged;
 
             TooltipsEnabled = Engine.CharacterListFlags.HasFlag( CharacterListFlags.PaladinNecromancerClassTooltips );
 
@@ -120,7 +129,13 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand ChangeSortStyleCommand => _changeSortStyleCommand ?? ( _changeSortStyleCommand = new RelayCommand( ChangeSortStyle, o => true ) );
 
-        public ICommand CombineStacksCommand => _combineStacksCommand ?? ( _combineStacksCommand = new RelayCommandAsync( CombineStacks, o => _collection.Serial > 0 ) );
+        public ItemCollection Collection
+        {
+            get => _collection;
+            set => SetProperty( ref _collection, value );
+        }
+
+        public ICommand CombineStacksCommand => _combineStacksCommand ?? ( _combineStacksCommand = new RelayCommandAsync( CombineStacks, o => Collection.Serial > 0 ) );
 
         public ICommand ContextContextMenuRequestCommand =>
             _contextContextMenuRequestCommand ?? ( _contextContextMenuRequestCommand = new RelayCommand( ContextMenuRequest, o => SelectedItems.Count > 0 ) );
@@ -178,6 +193,12 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _showFilter, value );
         }
 
+        public bool ShowOrganizer
+        {
+            get => _showOrganizer;
+            set => SetProperty( ref _showOrganizer, value );
+        }
+
         public bool ShowProperties
         {
             get => _showProperties;
@@ -190,7 +211,7 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _statusLabel, value );
         }
 
-        public ICommand TargetContainerCommand => _targetContainerCommand ?? ( _targetContainerCommand = new RelayCommand( TargetContainer, o => _collection.Serial > 0 ) );
+        public ICommand TargetContainerCommand => _targetContainerCommand ?? ( _targetContainerCommand = new RelayCommand( TargetContainer, o => Collection.Serial > 0 ) );
 
         public ThreadPriorityQueue<QueueAction> ThreadQueue { get; set; }
 
@@ -321,7 +342,7 @@ namespace ClassicAssist.UI.ViewModels
 
                     while ( true )
                     {
-                        Item destStack = _collection.SelectEntity( i =>
+                        Item destStack = Collection.SelectEntity( i =>
                             i.Count < 60000 && TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Stackable ) && !ignoreList.Contains( i.Serial ) );
 
                         if ( destStack == null )
@@ -331,7 +352,7 @@ namespace ClassicAssist.UI.ViewModels
 
                         int needed = 60000 - destStack.Count;
 
-                        Item sourceStack = _collection.SelectEntities( i => i.ID == destStack.ID && i.Hue == destStack.Hue && i.Serial != destStack.Serial && i.Count != 60000 )
+                        Item sourceStack = Collection.SelectEntities( i => i.ID == destStack.ID && i.Hue == destStack.Hue && i.Serial != destStack.Serial && i.Count != 60000 )
                             ?.OrderBy( i => i.Count ).FirstOrDefault();
 
                         if ( sourceStack == null )
@@ -364,7 +385,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private void TargetContainer( object obj )
         {
-            TargetCommands.Target( _collection.Serial );
+            TargetCommands.Target( Collection.Serial );
         }
 
         private void OnCollectionChanged( int totalcount, bool added, Item[] entities )
@@ -373,10 +394,17 @@ namespace ClassicAssist.UI.ViewModels
             {
                 _dispatcher.Invoke( () =>
                 {
-                    foreach ( Item entity in entities.Where( e => !Entities.Any( f => f.Entity.Equals( e ) ) ).ToList()
-                                 .Where( entity => Options.ShowChildItems || entity.Owner == _collection.Serial ) )
+                    List<Item> newEntities = entities.Where( e => !Entities.Any( f => f.Entity.Equals( e ) ) )
+                        .Where( entity => Options.ShowChildItems || entity.Owner == Collection.Serial ).ToList();
+
+                    foreach ( Item entity in newEntities )
                     {
                         Entities.Add( entity.ToEntityCollectionData( _nameOverrides ) );
+                    }
+
+                    if ( _filters != null )
+                    {
+                        ApplyFilters( _filters );
                     }
                 } );
             }
@@ -481,7 +509,7 @@ namespace ClassicAssist.UI.ViewModels
         ~EntityCollectionViewerViewModel()
         {
             Data.Options.CurrentOptions.EntityCollectionViewerOptions = Options;
-            _collection.CollectionChanged -= OnCollectionChanged;
+            Collection.CollectionChanged -= OnCollectionChanged;
             ThreadQueue?.Dispose();
         }
 
@@ -489,7 +517,7 @@ namespace ClassicAssist.UI.ViewModels
         {
             EnqueueAction( async action =>
             {
-                List<Item> containers = _collection.Where( i => TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) ).ToList();
+                List<Item> containers = Collection.Where( i => TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) ).ToList();
 
                 do
                 {
@@ -545,8 +573,6 @@ namespace ClassicAssist.UI.ViewModels
                     {
                         Engine.PacketWaitEntries.Remove( we );
                     }
-
-                    return true;
                 }, cancellationToken: cancellationToken ) );
 
                 await Task.WhenAll( tasks );
@@ -555,7 +581,7 @@ namespace ClassicAssist.UI.ViewModels
             }
         }
 
-            private void ToggleAlwaysOnTop( object obj )
+        private void ToggleAlwaysOnTop( object obj )
         {
             if ( !( obj is bool alwaysOnTop ) )
             {
@@ -615,7 +641,9 @@ namespace ClassicAssist.UI.ViewModels
         {
             if ( !( obj is List<EntityCollectionFilterGroup> list ) )
             {
-                Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+                _filters = null;
+
+                Entities = new ObservableCollection<EntityCollectionData>( Collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
 
                 UpdateStatusLabel();
 
@@ -624,7 +652,7 @@ namespace ClassicAssist.UI.ViewModels
 
             Entities.Clear();
 
-            ItemCollection collection = new ItemCollection( _collection.Serial ) { _collection.GetItems() };
+            ItemCollection collection = new ItemCollection( Collection.Serial ) { Collection.GetItems() };
 
             ItemCollection items = collection.Filter( list[0].Items );
 
@@ -653,6 +681,8 @@ namespace ClassicAssist.UI.ViewModels
             Entities = new ObservableCollection<EntityCollectionData>( items.ToEntityCollectionData( _sorter, _nameOverrides ) );
 
             UpdateStatusLabel();
+
+            _filters = list;
         }
 
         private void ChangeSortStyle( object obj )
@@ -693,7 +723,7 @@ namespace ClassicAssist.UI.ViewModels
                     throw new ArgumentOutOfRangeException();
             }
 
-            Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+            Entities = new ObservableCollection<EntityCollectionData>( Collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
         }
 
         private void UpdateStatusLabel()
@@ -704,18 +734,37 @@ namespace ClassicAssist.UI.ViewModels
 
         private void Refresh( object obj )
         {
-            ItemCollection collection = new ItemCollection( _collection.Serial );
+            if ( _customRefreshCommand != null )
+            {
+                Collection = _customRefreshCommand.Invoke();
+                Entities = new ObservableCollection<EntityCollectionData>( Collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+
+                if ( _filters != null )
+                {
+                    ApplyFilters( _filters );
+                }
+
+                return;
+            }
+
+            ItemCollection collection = new ItemCollection( Collection.Serial );
 
             if ( collection.Serial == 0 )
             {
                 Item[] e = ItemCollection.GetAllItems( Engine.Items.GetItems() );
-                _collection.Clear();
-                _collection.Add( e );
-                Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+                Collection.Clear();
+                Collection.Add( e );
+                Entities = new ObservableCollection<EntityCollectionData>( Collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+
+                if ( _filters != null )
+                {
+                    ApplyFilters( _filters );
+                }
+
                 return;
             }
 
-            Entity entity = Engine.Items.GetItem( _collection.Serial ) ?? (Entity) Engine.Mobiles.GetMobile( _collection.Serial );
+            Entity entity = Engine.Items.GetItem( Collection.Serial ) ?? (Entity) Engine.Mobiles.GetMobile( Collection.Serial );
 
             if ( entity == null )
             {
@@ -743,9 +792,14 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            _collection = !Options.ShowChildItems ? collection : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) };
+            Collection = !Options.ShowChildItems ? collection : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) };
 
-            Entities = new ObservableCollection<EntityCollectionData>( _collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+            Entities = new ObservableCollection<EntityCollectionData>( Collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+
+            if ( _filters != null )
+            {
+                ApplyFilters( _filters );
+            }
         }
 
         private Task ContextUseItem( object arg )

@@ -973,6 +973,21 @@ namespace Assistant
                 return false;
             }
 
+            if ( _getPacketLength != null )
+            {
+                int expectedLength = _getPacketLength( data[0] );
+
+                if ( expectedLength == -1 )
+                {
+                    expectedLength = ( data[1] << 8 ) | data[2];
+                }
+
+                if ( length != expectedLength )
+                {
+                    return false;
+                }
+            }
+
             bool filter = false;
 
             if ( CommandsManager.IsSpeechPacket( data[0] ) )
@@ -1027,6 +1042,22 @@ namespace Assistant
             {
                 return false;
             }
+
+            if ( _getPacketLength != null )
+            {
+                int expectedLength = _getPacketLength( data[0] );
+
+                if ( expectedLength == -1 )
+                {
+                    expectedLength = ( data[1] << 8 ) | data[2];
+                }
+
+                if ( length != expectedLength )
+                {
+                    return false;
+                }
+            }
+
 
             if ( _incomingPacketFilter.MatchFilterAll( data, out PacketFilterInfo[] pfis ) > 0 )
             {

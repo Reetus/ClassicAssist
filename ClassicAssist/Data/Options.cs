@@ -552,12 +552,12 @@ namespace ClassicAssist.Data
 
         public static void Save( Options options )
         {
-            BaseViewModel[] instances = BaseViewModel.Instances;
-
-            JObject obj = new JObject { { "Name", options.Name }, { "SelectedTabIndex", options.SelectedTabIndex } };
-
             lock ( _serializeLock )
             {
+                BaseViewModel[] instances = BaseViewModel.Instances;
+
+                JObject obj = new JObject { { "Name", options.Name }, { "SelectedTabIndex", options.SelectedTabIndex } };
+
                 foreach ( BaseViewModel instance in instances )
                 {
                     if ( instance is ISettingProvider settingProvider )
@@ -576,26 +576,25 @@ namespace ClassicAssist.Data
 
                     File.WriteAllText( Path.Combine( AssistantOptions.GetGlobalPath(), globalSettingProvider.GetGlobalFilename() ), global.ToString() );
                 }
+
+                string hash = obj.ToString().SHA1();
+                obj["Hash"] = hash;
+
+                if ( hash.Equals( options.Hash ) )
+                {
+                    // ReSharper disable once LocalizableElement
+                    Console.WriteLine( "Profile hasn't changed, skipping profile save" );
+                    return;
+                }
+
+                EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
+
+                CheckModifiedOnDisk( options.Name, options.Hash );
+
+                File.WriteAllText( Path.Combine( _profilePath, options.Name ?? DEFAULT_SETTINGS_FILENAME ), obj.ToString() );
+
+                options.Hash = hash;
             }
-
-            string hash = obj.ToString().SHA1();
-            obj["Hash"] = hash;
-
-            if ( hash.Equals( options.Hash ) )
-            {
-                // ReSharper disable once LocalizableElement
-                Console.WriteLine( "Profile hasn't changed, skipping profile save" );
-                return;
-            }
-
-            EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
-
-            CheckModifiedOnDisk( options.Name, options.Hash );
-
-            File.WriteAllText( Path.Combine( _profilePath, options.Name ?? DEFAULT_SETTINGS_FILENAME ),
-                obj.ToString() );
-
-            options.Hash = hash;
         }
 
         private static void CheckModifiedOnDisk( string profileFilename, string hash )
@@ -659,28 +658,28 @@ namespace ClassicAssist.Data
 
         public static void Load( string optionsFile, Options options )
         {
-            AssistantOptions.OnProfileChanging( optionsFile );
-            AssistantOptions.LastProfile = optionsFile;
-
-            BaseViewModel[] instances = BaseViewModel.Instances;
-
-            EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
-
-            JObject json = new JObject();
-
-            string fullPath = Path.Combine( _profilePath, optionsFile );
-
-            if ( File.Exists( fullPath ) )
-            {
-                json = JObject.Parse( File.ReadAllText( fullPath ) );
-            }
-
-            options.Name = Path.GetFileName( optionsFile );
-            options.SelectedTabIndex = json["SelectedTabIndex"]?.ToObject<int>() ?? 0;
-            options.Hash = json["Hash"]?.ToObject<string>() ?? string.Empty;
-
             lock ( _serializeLock )
             {
+                AssistantOptions.OnProfileChanging( optionsFile );
+                AssistantOptions.LastProfile = optionsFile;
+
+                BaseViewModel[] instances = BaseViewModel.Instances;
+
+                EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
+
+                JObject json = new JObject();
+
+                string fullPath = Path.Combine( _profilePath, optionsFile );
+
+                if ( File.Exists( fullPath ) )
+                {
+                    json = JObject.Parse( File.ReadAllText( fullPath ) );
+                }
+
+                options.Name = Path.GetFileName( optionsFile );
+                options.SelectedTabIndex = json["SelectedTabIndex"]?.ToObject<int>() ?? 0;
+                options.Hash = json["Hash"]?.ToObject<string>() ?? string.Empty;
+
                 foreach ( BaseViewModel instance in instances )
                 {
                     if ( instance is ISettingProvider settingProvider )
@@ -704,9 +703,9 @@ namespace ClassicAssist.Data
 
                     globalSettingProvider.Deserialize( global, options, true );
                 }
-            }
 
-            AssistantOptions.OnProfileChanged( optionsFile );
+                AssistantOptions.OnProfileChanged( optionsFile );
+            }
         }
 
         public static string[] GetProfiles()

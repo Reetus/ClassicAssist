@@ -14,7 +14,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Media.Imaging;
+using System.Windows.Media;
 using ClassicAssist.Misc;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
@@ -23,20 +23,20 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class EntityCollectionData
     {
-        private readonly Dictionary<long, BitmapSource> _cache = new Dictionary<long, BitmapSource>();
+        private readonly Dictionary<int, ImageSource> _cache = new Dictionary<int, ImageSource>();
 
-        public BitmapSource Bitmap
+        public ImageSource Bitmap
         {
             get
             {
                 int key = ( Entity.ID << 16 ) | Entity.Hue;
 
-                if ( _cache.TryGetValue( key, out BitmapSource bitmap ) )
+                if ( _cache.TryGetValue( key, out ImageSource bitmap ) )
                 {
                     return bitmap;
                 }
 
-                BitmapSource result = Art.GetStatic( Entity.ID, Entity.Hue ).ToBitmapSource();
+                ImageSource result = Art.GetStatic( Entity.ID, Entity.Hue ).ToImageSource();
 
                 if ( !( Entity is Item item ) || item.Layer != Layer.Mount )
                 {
@@ -57,7 +57,7 @@ namespace ClassicAssist.UI.ViewModels
                     return null;
                 }
 
-                result = Art.GetStatic( id, Entity.Hue ).ToBitmapSource();
+                result = Art.GetStatic( id, Entity.Hue ).ToImageSource();
 
                 _cache.Add( key, result );
 
@@ -70,7 +70,7 @@ namespace ClassicAssist.UI.ViewModels
 
         public string Name => GetName( Entity );
 
-        private string GetProperties( Entity entity )
+        private static string GetProperties( Entity entity )
         {
             return entity.Properties == null
                 ? GetName( entity )

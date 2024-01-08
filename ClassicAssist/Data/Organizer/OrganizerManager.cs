@@ -50,7 +50,8 @@ namespace ClassicAssist.Data.Organizer
             }
         }
 
-        internal async Task Organize( OrganizerEntry entry, ItemCollection sourceContainer, int sourceContainerSerial = 0, int destinationContainer = 0 )
+        internal async Task Organize( OrganizerEntry entry, ItemCollection sourceContainer, int sourceContainerSerial = 0, int destinationContainer = 0,
+            CancellationToken token = default )
         {
             if ( IsOrganizing )
             {
@@ -71,6 +72,8 @@ namespace ClassicAssist.Data.Organizer
             {
                 _cancellationTokenSource = new CancellationTokenSource();
                 IsOrganizing = true;
+
+                _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource( token, _cancellationTokenSource.Token );
 
                 UOC.SystemMessage( string.Format( Strings.Organizer__0__running___, entry.Name ) );
 

@@ -73,12 +73,6 @@ namespace ClassicAssist.Misc
             }
         }
 
-        public static BitmapSource ToBitmapSource( this Bitmap bmp )
-        {
-            return Imaging.CreateBitmapSourceFromHBitmap( bmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight( bmp.Width, bmp.Height ) );
-        }
-
         // https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/interop-with-other-asynchronous-patterns-and-types?redirectedfrom=MSDN#WHToTap
         public static Task<bool> ToTask( this EventWaitHandle waitHandle, Func<bool> resultAction = null )
         {

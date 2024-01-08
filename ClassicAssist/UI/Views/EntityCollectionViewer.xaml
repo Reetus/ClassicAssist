@@ -15,7 +15,8 @@
     x:Class="ClassicAssist.UI.Views.EntityCollectionViewer"
     mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
     Width="600" Title="{x:Static resources:Strings.Entity_Collection_Viewer}"
-    MinHeight="400" Height="600" d:DataContext="{d:DesignInstance Type=viewModels:EntityCollectionViewerViewModel, IsDesignTimeCreatable=True}"
+    MinHeight="400" Height="600"
+    d:DataContext="{d:DesignInstance Type=viewModels:EntityCollectionViewerViewModel, IsDesignTimeCreatable=True}"
     Topmost="{Binding Options.AlwaysOnTop}">
     <Window.Resources>
         <ResourceDictionary>
@@ -124,7 +125,8 @@
         <Grid Grid.Row="2"
               Visibility="{Binding ShowOrganizer, Converter={StaticResource BooleanToVisibilityConverter}}">
             <ecv:EntityCollectionViewerOrganizerControl
-                Collection="{Binding DataContext.Collection, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:EntityCollectionViewer}}}" />
+                Collection="{Binding DataContext.Collection, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:EntityCollectionViewer}}}"
+                QueueActions="{Binding DataContext.QueueActions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:EntityCollectionViewer}}}" />
         </Grid>
         <ListView x:Name="listView" ItemsSource="{Binding Entities}"
                   BorderThickness="0" MinHeight="200"

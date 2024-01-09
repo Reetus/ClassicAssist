@@ -23,8 +23,10 @@ namespace ClassicAssist.Data
         private static readonly Dictionary<int, string> _linkedProfiles = new Dictionary<int, string>();
         public static string[] Assemblies { get; set; }
         public static BackupOptions BackupOptions { get; set; }
+        public static string GlobalDirectory { get; set; } = ".";
         public static Language LanguageOverride { get; set; }
         public static string LastProfile { get; set; }
+        public static string ProfileDirectory { get; set; } = "Profiles";
         public static Dictionary<string, string> SavedPasswords { get; set; } = new Dictionary<string, string>();
         public static bool SavePasswords { get; set; }
         public static bool SavePasswordsOnlyBlank { get; set; }
@@ -39,6 +41,30 @@ namespace ClassicAssist.Data
         public static event EventHandler SavedPasswordsChanged;
         public static event EventHandler OptionsLoaded;
 
+        public static string GetProfilePath()
+        {
+            string path = Path.IsPathRooted( ProfileDirectory ) ? ProfileDirectory : Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, ProfileDirectory );
+
+            if ( !Directory.Exists( path ) )
+            {
+                Directory.CreateDirectory( path );
+            }
+
+            return path;
+        }
+
+        public static string GetGlobalPath()
+        {
+            string path = Path.IsPathRooted( GlobalDirectory ) ? GlobalDirectory : Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, GlobalDirectory );
+
+            if ( !Directory.Exists( path ) )
+            {
+                Directory.CreateDirectory( path );
+            }
+
+            return path;
+        }
+
         public static void Save()
         {
             if ( BackupOptions != null && BackupOptions.Enabled &&
@@ -51,11 +77,13 @@ namespace ClassicAssist.Data
             {
                 { "LanguageOverride", LanguageOverride.ToString() },
                 { "LastProfile", LastProfile },
-                { "UpdateGumpVersion", UpdateGumpVersion?.ToString() ?? "0.0.0.0" },
+                { "UpdateGumpVersion", UpdateGumpVersion ?? "0.0.0.0" },
                 { "SavePasswords", SavePasswords },
                 { "SavePasswordsOnlyBlank", SavePasswordsOnlyBlank },
                 { "UserId", UserId },
                 { "UseCUOClilocLanguage", UseCUOClilocLanguage },
+                { "ProfileDirectory", ProfileDirectory },
+                { "GlobalDirectory", GlobalDirectory },
 #if !DEVELOP
                 { "WindowWidth", WindowWidth },
                 { "WindowHeight", WindowHeight },
@@ -153,6 +181,8 @@ namespace ClassicAssist.Data
             WindowHeight = json["WindowHeight"]?.ToObject<int>() ?? 570;
             UseCUOClilocLanguage = json["UseCUOClilocLanguage"]?.ToObject<bool>() ?? false;
             Assemblies = json["Assemblies"]?.ToObject<string[]>() ?? Array.Empty<string>();
+            ProfileDirectory = json["ProfileDirectory"]?.ToObject<string>() ?? "Profiles";
+            GlobalDirectory = json["GlobalDirectory"]?.ToObject<string>() ?? ".";
             SessionId = Guid.NewGuid().ToString();
 
             if ( json["Profiles"] != null )

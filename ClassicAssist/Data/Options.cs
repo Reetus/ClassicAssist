@@ -23,6 +23,7 @@ namespace ClassicAssist.Data
 
         public const string DEFAULT_SETTINGS_FILENAME = "settings.json";
         private static string _profilePath;
+        private static readonly object _serializeLock = new object();
         private bool _abilitiesGump = true;
         private int _abilitiesGumpX = 100;
         private int _abilitiesGumpY = 100;
@@ -94,7 +95,6 @@ namespace ClassicAssist.Data
         private bool _useExperimentalFizzleDetection;
         private bool _useObjectQueue;
         private int _useObjectQueueAmount = 5;
-        private static readonly object _serializeLock = new object();
 
         public bool AbilitiesGump
         {
@@ -574,9 +574,7 @@ namespace ClassicAssist.Data
 
                     globalSettingProvider.Serialize( global, true );
 
-                    File.WriteAllText(
-                        Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
-                            globalSettingProvider.GetGlobalFilename() ), global.ToString() );
+                    File.WriteAllText( Path.Combine( AssistantOptions.GetGlobalPath(), globalSettingProvider.GetGlobalFilename() ), global.ToString() );
                 }
             }
 
@@ -641,7 +639,9 @@ namespace ClassicAssist.Data
 
         private static void EnsureProfilePath( string startupPath )
         {
-            _profilePath = Path.Combine( startupPath, "Profiles" );
+            _profilePath = Path.IsPathRooted( AssistantOptions.ProfileDirectory )
+                ? AssistantOptions.ProfileDirectory
+                : Path.Combine( startupPath, AssistantOptions.ProfileDirectory );
 
             if ( !Directory.Exists( _profilePath ) )
             {
@@ -693,8 +693,7 @@ namespace ClassicAssist.Data
                         continue;
                     }
 
-                    string filePath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
-                        globalSettingProvider.GetGlobalFilename() );
+                    string filePath = Path.Combine( AssistantOptions.GetGlobalPath(), globalSettingProvider.GetGlobalFilename() );
 
                     if ( !File.Exists( filePath ) )
                     {

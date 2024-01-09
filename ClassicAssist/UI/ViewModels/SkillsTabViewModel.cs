@@ -21,7 +21,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.UI.ViewModels
 {
-    public class SkillsTabViewModel : BaseViewModel, ISettingProvider
+    public class SkillsTabViewModel : BaseViewModel, IGlobalSettingProvider
     {
         private HotkeyCommand _hotkeyCategory;
         private ObservableCollectionEx<SkillEntry> _items = new ObservableCollectionEx<SkillEntry>();
@@ -123,6 +123,11 @@ namespace ClassicAssist.UI.ViewModels
 
             foreach ( SkillData skill in skills )
             {
+                if ( hotkeyEntries.Any( hke => hke.Name == skill.Name ) )
+                {
+                    continue;
+                }
+
                 hotkeyEntries.Add( new HotkeyCommand
                 {
                     Action = ( hks, _ ) => SkillCommands.UseSkill( skill.Name ), Name = skill.Name
@@ -143,6 +148,7 @@ namespace ClassicAssist.UI.ViewModels
                     hke.Hotkey = new ShortcutKeys( token["Keys"] );
                     hke.PassToUO = token["PassToUO"]?.ToObject<bool>() ?? true;
                     hke.Disableable = token["Disableable"]?.ToObject<bool>() ?? true;
+                    hke.IsGlobal = global;
                 }
             }
 
@@ -152,6 +158,11 @@ namespace ClassicAssist.UI.ViewModels
             _hotkeyCategory.Children = hotkeyEntries;
 
             hotkey.AddCategory( _hotkeyCategory );
+        }
+
+        public string GetGlobalFilename()
+        {
+            return "Skills.json";
         }
 
         private void ResetDeltas( object obj )

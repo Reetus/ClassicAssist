@@ -4,7 +4,8 @@
                     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                     xmlns:draggableTreeView="clr-namespace:ClassicAssist.Controls.DraggableTreeView;assembly=ClassicAssist.Controls"
                     xmlns:draggableListBox="clr-namespace:ClassicAssist.Controls.DraggableListBox;assembly=ClassicAssist.Controls"
-                    xmlns:headered="clr-namespace:ClassicAssist.Controls.Headered;assembly=ClassicAssist.Controls">
+                    xmlns:headered="clr-namespace:ClassicAssist.Controls.Headered;assembly=ClassicAssist.Controls"
+                    xmlns:codeCompletion="clr-namespace:ICSharpCode.AvalonEdit.CodeCompletion;assembly=ICSharpCode.AvalonEdit">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/Icons.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/Colours.xaml" />
@@ -38,6 +39,95 @@
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
+            </Style>
+            <Style x:Key="CompletionWindowStyle" TargetType="{x:Type codeCompletion:CompletionWindow}">
+                <Setter Property="SizeToContent" Value="WidthAndHeight"/>
+                <Setter Property="AllowsTransparency" Value="True"/>
+                <Setter Property="Width" Value="500"/>
+                <Style.Resources>
+                    <Style TargetType="{x:Type ToolTip}">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <SolidColorBrush Color="#272727" />
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Foreground">
+                            <Setter.Value>
+                                <SolidColorBrush Color="#CCCCCC" />
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    <Style TargetType="{x:Type codeCompletion:CompletionList}">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <SolidColorBrush Color="#272727" />
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type codeCompletion:CompletionList}">
+                                    <codeCompletion:CompletionListBox x:Name="PART_ListBox"
+                                                                      Background="{TemplateBinding Background}"
+                                                                      TextBlock.Foreground="{TemplateBinding Foreground}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="codeCompletion:ICompletionData">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <ContentPresenter Content="{Binding Content}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemContainerStyle>
+                                            <Style TargetType="{x:Type ListBoxItem}"
+                                                   BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                            <Border Name="Bd"
+                                                                    Background="{TemplateBinding Background}"
+                                                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                                                    Padding="{TemplateBinding Padding}"
+                                                                    SnapsToDevicePixels="true">
+                                                                <ContentPresenter
+                                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                            </Border>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsSelected" Value="true">
+                                                                    <Setter Property="Background">
+                                                                        <Setter.Value>
+                                                                            <SolidColorBrush Color="#17252D" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter Property="BorderBrush">
+                                                                        <Setter.Value>
+                                                                            <SolidColorBrush Color="#207097" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ItemsControl.ItemContainerStyle>
+                                    </codeCompletion:CompletionListBox>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Resources>
+                            <Style TargetType="{x:Type codeCompletion:CompletionListBox}">
+                                <Setter Property="BorderBrush">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#474747" />
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Style.Resources>
+                    </Style>
+                </Style.Resources>
             </Style>
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>

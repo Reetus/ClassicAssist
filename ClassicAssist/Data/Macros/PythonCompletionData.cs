@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Windows.Media;
-using ClassicAssist.Misc;
 using ClassicAssist.Resources;
-using ClassicAssist.UI.Controls;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
@@ -19,13 +17,11 @@ namespace ClassicAssist.Data.Macros
             Text = insertText;
 
             Example = MacroCommandHelp.ResourceManager.GetString( $"{name.ToUpper()}_COMMAND_EXAMPLE" );
-
-            Content = new CompletionEntry( fullName, Example );
         }
 
-        public string MethodName { get; set; }
-
         public string Example { get; set; }
+
+        public string MethodName { get; set; }
         public string Name { get; set; }
 
         public void Complete( TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs )
@@ -55,10 +51,11 @@ namespace ClassicAssist.Data.Macros
             textArea.Document.Replace( segment, Text );
         }
 
-        public ImageSource Image => Properties.Resources.python.ToImageSource();
+        public ImageSource Image => null;
+
         public string Text { get; }
 
-        public object Content { get; }
+        public object Content { get; set; }
         public object Description { get; }
         public double Priority { get; }
     }

@@ -14,12 +14,16 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Assistant;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Organizer;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
+using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
@@ -28,16 +32,19 @@ namespace ClassicAssist.UI.Views.ECV
 {
     public class EntityCollectionViewerOrganizerViewModel : SetPropertyNotifyChanged
     {
+        private readonly Dispatcher _dispatcher;
         private readonly OrganizerManager _manager;
         private ItemCollection _collection;
         private ObservableCollectionEx<OrganizerEntry> _items;
         private ICommand _playCommand;
+        private ObservableCollectionEx<QueueAction> _queueActions;
         private string _selectedDestination;
         private OrganizerEntry _selectedEntry;
         private ICommand _targetCommand;
 
         public EntityCollectionViewerOrganizerViewModel()
         {
+            _dispatcher = Dispatcher.CurrentDispatcher;
             _manager = OrganizerManager.GetInstance();
             Items = _manager.Items;
         }
@@ -53,10 +60,16 @@ namespace ClassicAssist.UI.Views.ECV
         public ObservableCollectionEx<OrganizerEntry> Items
         {
             get => _items;
-            set => SetProperty( ref _items, value );
+            set { _dispatcher.Invoke( () => { SetProperty( ref _items, value ); } ); }
         }
 
-        public ICommand PlayCommand => _playCommand ?? ( _playCommand = new RelayCommandAsync( Play, o => Engine.Connected ) );
+        public ICommand PlayCommand => _playCommand ?? ( _playCommand = new RelayCommand( Play, o => Engine.Connected ) );
+
+        public ObservableCollectionEx<QueueAction> QueueActions
+        {
+            get => _queueActions;
+            set => SetProperty( ref _queueActions, value );
+        }
 
         public string SelectedDestination
         {
@@ -72,7 +85,7 @@ namespace ClassicAssist.UI.Views.ECV
 
         public ICommand TargetCommand => _targetCommand ?? ( _targetCommand = new RelayCommandAsync( Target, o => Engine.Connected && !_manager.IsOrganizing ) );
 
-        private async Task Play( object arg )
+        private void Play( object arg )
         {
             if ( SelectedEntry == null )
             {
@@ -86,7 +99,16 @@ namespace ClassicAssist.UI.Views.ECV
                 serial = Convert.ToInt32( SelectedDestination );
             }
 
-            await _manager.Organize( SelectedEntry, Collection, destinationContainer: serial );
+            QueueActions.Add( new QueueAction
+            {
+                Action = async action =>
+                {
+                    await _manager.Organize( SelectedEntry, Collection, destinationContainer: serial, token: action.CancellationTokenSource.Token );
+                    return true;
+                },
+                CancellationTokenSource = new CancellationTokenSource(),
+                Status = Strings.Organizer
+            } );
         }
 
         private async Task Target( object obj )

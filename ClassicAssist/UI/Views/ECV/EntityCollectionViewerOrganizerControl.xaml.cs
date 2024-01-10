@@ -9,18 +9,24 @@
 // but WITHOUT ANY WARRANTY
 
 using System.Windows;
-using System.Windows.Controls;
-using ItemCollection = ClassicAssist.UO.Objects.ItemCollection;
+using ClassicAssist.Shared.UI;
+using ClassicAssist.UI.ViewModels;
+using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UI.Views.ECV
 {
     /// <summary>
     ///     Interaction logic for EntityCollectionViewerOrganizerControl.xaml
     /// </summary>
-    public partial class EntityCollectionViewerOrganizerControl : UserControl
+    public partial class EntityCollectionViewerOrganizerControl
     {
         public static readonly DependencyProperty CollectionProperty = DependencyProperty.Register( nameof( Collection ), typeof( ItemCollection ),
-            typeof( EntityCollectionViewerOrganizerControl ), new FrameworkPropertyMetadata(default, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, PropertyChangedCallback) );
+            typeof( EntityCollectionViewerOrganizerControl ),
+            new FrameworkPropertyMetadata( default, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, PropertyChangedCallback ) );
+
+        public static readonly DependencyProperty QueueActionsProperty = DependencyProperty.Register( nameof( QueueActions ), typeof( ObservableCollectionEx<QueueAction> ),
+            typeof( EntityCollectionViewerOrganizerControl ),
+            new FrameworkPropertyMetadata( default, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, PropertyChangedCallback ) );
 
         public EntityCollectionViewerOrganizerControl()
         {
@@ -33,6 +39,12 @@ namespace ClassicAssist.UI.Views.ECV
             set => SetValue( CollectionProperty, value );
         }
 
+        public ObservableCollectionEx<QueueAction> QueueActions
+        {
+            get => (ObservableCollectionEx<QueueAction>) GetValue( QueueActionsProperty );
+            set => SetValue( QueueActionsProperty, value );
+        }
+
         private static void PropertyChangedCallback( DependencyObject d, DependencyPropertyChangedEventArgs e )
         {
             if ( !( d is EntityCollectionViewerOrganizerControl control ) )
@@ -40,9 +52,18 @@ namespace ClassicAssist.UI.Views.ECV
                 return;
             }
 
-            if ( control.DataContext is EntityCollectionViewerOrganizerViewModel viewModel )
+            if ( !( control.DataContext is EntityCollectionViewerOrganizerViewModel viewModel ) )
+            {
+                return;
+            }
+
+            if ( e.Property == CollectionProperty )
             {
                 viewModel.Collection = (ItemCollection) e.NewValue;
+            }
+            else if ( e.Property == QueueActionsProperty )
+            {
+                viewModel.QueueActions = (ObservableCollectionEx<QueueAction>) e.NewValue;
             }
         }
     }

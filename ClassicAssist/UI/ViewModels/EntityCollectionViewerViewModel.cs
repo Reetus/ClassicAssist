@@ -736,13 +736,18 @@ namespace ClassicAssist.UI.ViewModels
         {
             if ( _customRefreshCommand != null )
             {
-                Collection = _customRefreshCommand.Invoke();
-                Entities = new ObservableCollection<EntityCollectionData>( Collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
-
-                if ( _filters != null )
+                Task.Run( () => _customRefreshCommand.Invoke() ).ContinueWith( t =>
                 {
-                    ApplyFilters( _filters );
-                }
+                    Collection = t.Result;
+                    Entities = new ObservableCollection<EntityCollectionData>( Collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+
+                    if ( _filters != null )
+                    {
+                        ApplyFilters( _filters );
+                    }
+
+                    UpdateStatusLabel();
+                } );
 
                 return;
             }

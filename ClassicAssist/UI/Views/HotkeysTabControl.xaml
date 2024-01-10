@@ -44,7 +44,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <sharedControls:FilterControl Grid.Row="0" FilterText="{Binding FilterText}" Margin="5,10,5,0" />
-            <ListView Grid.Row="1" ItemsSource="{Binding Source={StaticResource src}}" Margin="5">
+            <ListView Grid.Row="1" ItemsSource="{Binding Source={StaticResource src}}" Margin="5" PreviewMouseWheel="UIElement_OnPreviewMouseWheel">
                 <ListView.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.ContainerStyle>

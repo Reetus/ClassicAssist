@@ -180,6 +180,7 @@
     <!-- Custom -->
     <SolidColorBrush x:Key="ThemeBackgroundBrush" Color="#272727" />
     <SolidColorBrush x:Key="ThemeForegroundBrush" Color="#CCCCCC" />
+    <SolidColorBrush x:Key="ThemeDisabledForegroundBrush" Color="{DynamicResource ForegroundColor3}" />
     <SolidColorBrush x:Key="ThemeWindowBackgroundBrush" Color="Black" />
     <SolidColorBrush x:Key="ThemeBorderBrush" Color="#474747" />
     <SolidColorBrush x:Key="ThemeInnerControlBackgroundBrush" Color="#151515" />

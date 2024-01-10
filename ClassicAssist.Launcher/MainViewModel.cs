@@ -131,6 +131,7 @@ namespace ClassicAssist.Launcher
                             Name = token["Name"]?.ToObject<string>() ?? "Unknown",
                             Address = token["Address"]?.ToObject<string>() ?? "localhost",
                             Port = token["Port"]?.ToObject<int>() ?? 2593,
+                            Website = token["Website"]?.ToObject<string>(),
                             HasStatusProtocol = token["HasStatusProtocol"]?.ToObject<bool>() ?? true,
                             Encryption = token["Encryption"]?.ToObject<bool>() ?? false
                         };
@@ -160,7 +161,7 @@ namespace ClassicAssist.Launcher
                 if ( config["SelectedShard"] != null )
                 {
                     ShardEntry match = ShardManager.Shards.FirstOrDefault(
-                        s => s.Name == config["SelectedShard"].ToObject<string>() );
+                        s => s.Name == config["SelectedShard"]?.ToObject<string>() );
 
                     if ( match != null )
                     {
@@ -654,6 +655,7 @@ namespace ClassicAssist.Launcher
                         { "Address", shard.Address },
                         { "Port", shard.Port },
                         { "HasStatusProtocol", shard.HasStatusProtocol },
+                        { "Website", shard.Website },
                         { "Encryption", shard.Encryption }
                     };
 
@@ -666,8 +668,8 @@ namespace ClassicAssist.Launcher
             WriteClassicOptions( config );
 
             using ( JsonTextWriter jtw =
-                new JsonTextWriter(
-                    new StreamWriter( Path.Combine( Environment.CurrentDirectory, CONFIG_FILENAME ) ) ) )
+                   new JsonTextWriter(
+                       new StreamWriter( Path.Combine( Environment.CurrentDirectory, CONFIG_FILENAME ) ) ) )
             {
                 jtw.Formatting = Formatting.Indented;
                 config.WriteTo( jtw );

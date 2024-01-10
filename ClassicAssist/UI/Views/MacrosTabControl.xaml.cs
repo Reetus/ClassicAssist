@@ -7,7 +7,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml;
+using Assistant;
 using ClassicAssist.Data.Macros;
+using ClassicAssist.UI.Controls;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
@@ -21,7 +23,7 @@ namespace ClassicAssist.UI.Views
     /// <summary>
     ///     Interaction logic for MacrosTabControl.xaml
     /// </summary>
-    public partial class MacrosTabControl : UserControl
+    public partial class MacrosTabControl
     {
         private readonly ToolTip _toolTip = new ToolTip();
         private List<PythonCompletionData> _completionData;
@@ -35,8 +37,7 @@ namespace ClassicAssist.UI.Views
         private void Grid_Initialized( object sender, EventArgs e )
         {
             CodeTextEditor.SyntaxHighlighting = HighlightingLoader.Load(
-                new XmlTextReader( Path.Combine( Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location ),
-                    "Python.Dark.xshd" ) ), HighlightingManager.Instance );
+                new XmlTextReader( Path.Combine( Engine.StartupPath, "Python.Dark.xshd" ) ), HighlightingManager.Instance );
 
             IEnumerable<Type> namespaces = Assembly.GetExecutingAssembly().GetTypes().Where( t =>
                 t.Namespace != null && t.IsPublic && t.IsClass && t.Namespace.EndsWith( "Macros.Commands" ) );
@@ -70,17 +71,14 @@ namespace ClassicAssist.UI.Views
                             fullName += ", ";
                         }
 
-                        bool optional = parameterInfo.RawDefaultValue == null ||
-                                        parameterInfo.RawDefaultValue.GetType() != typeof( DBNull );
+                        bool optional = parameterInfo.RawDefaultValue == null || parameterInfo.RawDefaultValue.GetType() != typeof( DBNull );
 
-                        fullName +=
-                            $"{( optional ? "[" : "" )}{parameterInfo.ParameterType.Name} {parameterInfo.Name}{( optional ? "]" : "" )}";
+                        fullName += $"{( optional ? "[" : "" )}{parameterInfo.ParameterType.Name} {parameterInfo.Name}{( optional ? "]" : "" )}";
                     }
 
                     fullName += $"):{methodInfo.ReturnType.Name}";
 
-                    _completionData.Add( new PythonCompletionData( methodInfo.Name, fullName, attr.Description,
-                        attr.InsertText ) );
+                    _completionData.Add( new PythonCompletionData( methodInfo.Name, fullName, attr.Description, attr.InsertText ) );
                 }
             }
 
@@ -152,9 +150,7 @@ namespace ClassicAssist.UI.Views
 
                 IEnumerable<PythonCompletionData> matches = _completionData.Where( i => i.MethodName.Equals( word ) );
 
-                tooltipText = matches.Aggregate( tooltipText,
-                    ( current, match ) =>
-                        current + ( string.IsNullOrEmpty( current ) ? match.Name : $"\n{match.Name}" ) );
+                tooltipText = matches.Aggregate( tooltipText, ( current, match ) => current + ( string.IsNullOrEmpty( current ) ? match.Name : $"\n{match.Name}" ) );
 
                 if ( string.IsNullOrEmpty( tooltipText ) )
                 {
@@ -183,8 +179,7 @@ namespace ClassicAssist.UI.Views
                 return;
             }
 
-            List<PythonCompletionData> data = _completionData.Where( m =>
-                    m.Name.StartsWith( trimmed, StringComparison.InvariantCultureIgnoreCase ) )
+            List<PythonCompletionData> data = _completionData.Where( m => m.Name.StartsWith( trimmed, StringComparison.InvariantCultureIgnoreCase ) )
                 .Distinct( new SameNameComparer() ).ToList();
 
             if ( data.Count <= 0 )
@@ -193,12 +188,20 @@ namespace ClassicAssist.UI.Views
                 return;
             }
 
+            foreach ( PythonCompletionData item in data.Where( item => item.Content == null ) )
+            {
+                item.Content = new CompletionEntry( item.Name, item.Example, CodeTextEditor.SyntaxHighlighting );
+            }
+
+            Style windowStyle = (Style) FindResource( "CompletionWindowStyle" );
+
             _completionWindow = new CompletionWindow( CodeTextEditor.TextArea )
             {
                 CloseWhenCaretAtBeginning = true,
+                CloseAutomatically = false,
                 Width = 500,
-                AllowsTransparency = true,
-                SizeToContent = SizeToContent.WidthAndHeight
+                SizeToContent = SizeToContent.WidthAndHeight,
+                Style = windowStyle
             };
             _completionWindow.CompletionList.CompletionData.AddRange( data );
             _completionWindow.Show();
@@ -221,10 +224,7 @@ namespace ClassicAssist.UI.Views
             }
 
             e.Handled = true;
-            MouseWheelEventArgs eventArg = new MouseWheelEventArgs( e.MouseDevice, e.Timestamp, e.Delta )
-            {
-                RoutedEvent = MouseWheelEvent, Source = control
-            };
+            MouseWheelEventArgs eventArg = new MouseWheelEventArgs( e.MouseDevice, e.Timestamp, e.Delta ) { RoutedEvent = MouseWheelEvent, Source = control };
             UIElement parent = control.Parent as UIElement;
             parent?.RaiseEvent( eventArg );
         }
@@ -233,12 +233,12 @@ namespace ClassicAssist.UI.Views
         {
             public bool Equals( PythonCompletionData x, PythonCompletionData y )
             {
-                return y != null && x != null && x.Content.Equals( y.Content );
+                return y != null && x != null && x.Name.Equals( y.Name );
             }
 
             public int GetHashCode( PythonCompletionData obj )
             {
-                return obj.Content.GetHashCode();
+                return obj.Name.GetHashCode();
             }
         }
     }

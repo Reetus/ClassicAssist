@@ -29,6 +29,11 @@
         <agents:VendorBuyTabViewModel />
     </UserControl.DataContext>
     <Grid Margin="5">
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Padding" Value="4"/>
+            </Style>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150" />
             <ColumnDefinition Width="*" />
@@ -47,6 +52,7 @@
                 <draggableListBox:DraggableListBox.Resources>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                         <Style.Triggers>
+                            <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                             <DataTrigger Binding="{Binding Enabled}" Value="False">
                                 <Setter Property="TextDecorations" Value="Strikethrough" />
                             </DataTrigger>
@@ -165,7 +171,7 @@
                 </StackPanel>
             </Grid>
         </Grid>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="5,0" Grid.ColumnSpan="2">
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="5,0" Grid.ColumnSpan="2" Grid.Column="0">
             <CheckBox IsChecked="{Binding AutoDisableOnLogin}"
                       Content="{x:Static resources:Strings.Auto_disable_when_loading}"
                       ToolTip="{x:Static resources:Strings.Disable_all_vendor_buy_entries_on_loading_profile}" />

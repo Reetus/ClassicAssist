@@ -143,12 +143,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private void Import( object obj )
         {
-            string profileDirectory = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory );
-
-            if ( Directory.Exists( Path.Combine( profileDirectory, "Profiles" ) ) )
-            {
-                profileDirectory = Path.Combine( profileDirectory, "Profiles" );
-            }
+            string profileDirectory = AssistantOptions.GetProfilePath();
 
             OpenFileDialog ofd = new OpenFileDialog
             {

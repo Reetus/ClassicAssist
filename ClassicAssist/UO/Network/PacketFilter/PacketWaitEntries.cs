@@ -16,7 +16,7 @@ namespace ClassicAssist.UO.Network.PacketFilter
         public event dWaitEntryAddedRemoved WaitEntryRemovedEvent;
 
         public PacketWaitEntry Add( PacketFilterInfo pfi, PacketDirection direction, bool autoRemove = false,
-            bool filteredOnly = false )
+            bool filteredOnly = false, bool includeInternal = false )
         {
             PacketWaitEntry we = new PacketWaitEntry
             {
@@ -24,7 +24,7 @@ namespace ClassicAssist.UO.Network.PacketFilter
                 Lock = new AutoResetEvent( false ),
                 PacketDirection = direction,
                 AutoRemove = autoRemove,
-                MatchFilteredOnly = filteredOnly
+                MatchInternal = includeInternal
             };
 
             lock ( _waitEntryLock )
@@ -51,8 +51,7 @@ namespace ClassicAssist.UO.Network.PacketFilter
             lock ( _waitEntryLock )
             {
                 foreach ( PacketWaitEntry t in _waitEntries.Where( t => packet[0] == t.PFI.PacketID ).Where( t =>
-                    direction == t.PacketDirection &&
-                    ( filteredPacket ? t.MatchFilteredOnly : !t.MatchFilteredOnly ) ) )
+                             direction == t.PacketDirection && ( t.MatchInternal || !filteredPacket)))
                 {
                     if ( t.PFI.GetConditions() == null )
                     {

@@ -17,7 +17,6 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Abilities;
-using ClassicAssist.Data.ClassicUO.Objects;
 using ClassicAssist.Data.Commands;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros.Commands;
@@ -26,7 +25,6 @@ using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared;
-using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
@@ -43,6 +41,7 @@ using static ClassicAssist.Misc.SDLKeys;
 using MacroManager = ClassicAssist.Data.Macros.MacroManager;
 
 [assembly: InternalsVisibleTo( "ClassicAssist.Tests" )]
+[assembly: InternalsVisibleTo( "ClassicAssist.UITest" )]
 
 // ReSharper disable once CheckNamespace
 namespace Assistant
@@ -54,6 +53,8 @@ namespace Assistant
         public delegate void dConnected();
 
         public delegate void dDisconnected();
+
+        public delegate void dFocusChanged( bool focus );
 
         public delegate void dHotkeyPressed( int key, int mod, Key keys, ModKey modKey );
 
@@ -104,6 +105,9 @@ namespace Assistant
         private static Stopwatch _incomingStopwatch;
         private static Stopwatch _outgoingStopwatch;
         public static int LastSkillID;
+        private static OnFocusGained _onFocusGained;
+        private static OnFocusLost _onFocusLost;
+        private static bool _clientHasFocus;
         public static CharacterListFlags CharacterListFlags { get; set; }
 
         public static Assembly ClassicAssembly { get; set; }
@@ -126,8 +130,7 @@ namespace Assistant
         public static int LastPromptID { get; set; }
         public static int LastPromptSerial { get; set; }
 
-        public static TargetQueue<TargetQueueObject> LastTargetQueue { get; set; } =
-            new TargetQueue<TargetQueueObject>();
+        public static TargetQueue<TargetQueueObject> LastTargetQueue { get; set; } = new TargetQueue<TargetQueueObject>();
 
         public static MenuCollection Menus { get; set; } = new MenuCollection();
         public static MobileCollection Mobiles { get; set; } = new MobileCollection( Items );
@@ -172,8 +175,13 @@ namespace Assistant
 
             _mainThread = new Thread( () =>
             {
+                SplashWindow splashWindow = new SplashWindow();
+                splashWindow.Show();
+
                 _window = new MainWindow();
                 _window.Show();
+
+                splashWindow.Close();
 
                 Dispatcher.Run();
             } ) { IsBackground = true };
@@ -193,6 +201,8 @@ namespace Assistant
             _onHotkeyPressed = OnHotkeyPressed;
             _onMouse = OnMouse;
             _onTick = OnTick;
+            _onFocusGained = () => OnFocusChanged( true );
+            _onFocusLost = () => OnFocusChanged( false );
             WindowHandle = plugin->HWND;
 
             plugin->OnConnected = Marshal.GetFunctionPointerForDelegate( _onConnected );
@@ -204,6 +214,8 @@ namespace Assistant
             plugin->OnHotkeyPressed = Marshal.GetFunctionPointerForDelegate( _onHotkeyPressed );
             plugin->OnMouse = Marshal.GetFunctionPointerForDelegate( _onMouse );
             plugin->Tick = Marshal.GetFunctionPointerForDelegate( _onTick );
+            plugin->OnFocusGained = Marshal.GetFunctionPointerForDelegate( _onFocusGained );
+            plugin->OnFocusLost = Marshal.GetFunctionPointerForDelegate( _onFocusLost );
 
             _getPacketLength = Marshal.GetDelegateForFunctionPointer<OnGetPacketLength>( plugin->GetPacketLength );
             _getUOFilePath = Marshal.GetDelegateForFunctionPointer<OnGetUOFilePath>( plugin->GetUOFilePath );
@@ -213,8 +225,8 @@ namespace Assistant
             _setTitle = Marshal.GetDelegateForFunctionPointer<OnSetTitle>( plugin->SetTitle );
 
             ClientPath = _getUOFilePath();
-            ClientVersion = new Version( (byte) ( plugin->ClientVersion >> 24 ), (byte) ( plugin->ClientVersion >> 16 ),
-                (byte) ( plugin->ClientVersion >> 8 ), (byte) plugin->ClientVersion );
+            ClientVersion = new Version( (byte) ( plugin->ClientVersion >> 24 ), (byte) ( plugin->ClientVersion >> 16 ), (byte) ( plugin->ClientVersion >> 8 ),
+                (byte) plugin->ClientVersion );
 
             if ( !Path.IsPathRooted( ClientPath ) )
             {
@@ -230,8 +242,7 @@ namespace Assistant
             Statics.Initialize( ClientPath );
             MapInfo.Initialize( ClientPath );
 
-            ClassicAssembly = AppDomain.CurrentDomain.GetAssemblies()
-                .FirstOrDefault( a => a.FullName.StartsWith( "ClassicUO," ) );
+            ClassicAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault( a => a.FullName.StartsWith( "ClassicUO," ) );
 
             if ( ClassicAssembly != null )
             {
@@ -240,6 +251,20 @@ namespace Assistant
 
             InitializeExtensions();
         }
+
+        private static void OnFocusChanged( bool focus )
+        {
+            if ( focus == _clientHasFocus )
+            {
+                return;
+            }
+
+            _clientHasFocus = focus;
+
+            FocusChangedEvent?.Invoke( focus );
+        }
+
+        public static event dFocusChanged FocusChangedEvent;
 
         private static void OnTick()
         {
@@ -261,8 +286,7 @@ namespace Assistant
 
         private static void InitializeExtensions()
         {
-            IEnumerable<Type> types = Assembly.GetExecutingAssembly().GetTypes()
-                .Where( t => typeof( IExtension ).IsAssignableFrom( t ) && t.IsClass );
+            IEnumerable<Type> types = Assembly.GetExecutingAssembly().GetTypes().Where( t => typeof( IExtension ).IsAssignableFrom( t ) && t.IsClass );
 
             foreach ( Type type in types )
             {
@@ -336,8 +360,7 @@ namespace Assistant
                 HotkeyPressedEvent?.Invoke( key, mod, keys, IntToModKey( mod ) );
             }
 
-            ( bool found, bool pass ) =
-                HotkeyManager.GetInstance().OnHotkeyPressed( keys, IntToModKey( mod ), noexecute );
+            ( bool found, bool pass ) = HotkeyManager.GetInstance().OnHotkeyPressed( keys, IntToModKey( mod ), noexecute );
 
             if ( found && !noexecute )
             {
@@ -588,8 +611,7 @@ namespace Assistant
         {
             return AssistantOptions.Assemblies == null
                 ? Array.Empty<string>()
-                : ( from assembly in AssistantOptions.Assemblies select Path.GetDirectoryName( assembly ) ).Distinct()
-                .ToArray();
+                : ( from assembly in AssistantOptions.Assemblies select Path.GetDirectoryName( assembly ) ).Distinct().ToArray();
         }
 
         public static void SetPlayer( PlayerMobile mobile )
@@ -607,8 +629,8 @@ namespace Assistant
 
                 if ( newStatus.HasFlag( MobileStatus.Hidden ) )
                 {
-                    SendPacketToClient( new MobileUpdate( mobile.Serial, mobile.ID == 0x191 ? 0x193 : 0x192, mobile.Hue,
-                        newStatus, mobile.X, mobile.Y, mobile.Z, mobile.Direction ) );
+                    SendPacketToClient(
+                        new MobileUpdate( mobile.Serial, mobile.ID == 0x191 ? 0x193 : 0x192, mobile.Hue, newStatus, mobile.X, mobile.Y, mobile.Z, mobile.Direction ) );
                 }
             };
 
@@ -636,44 +658,27 @@ namespace Assistant
             {
                 UpdaterSettings updaterSettings = UpdaterSettings.Load( StartupPath ?? Environment.CurrentDirectory );
 
-                ReleaseVersion latestRelease =
-                    await Updater.GetReleases( updaterSettings?.InstallPrereleases ?? false );
-
-                if ( latestRelease == null )
-                {
-                    return;
-                }
+                ChangelogEntry latestRelease = await Updater.GetLatestRelease( updaterSettings.InstallPrereleases );
 
                 string latestVersion = latestRelease.Version;
-                string localVersion = VersionHelpers
-                    .GetProductVersion(
-                        Path.Combine( StartupPath ?? Environment.CurrentDirectory, "ClassicAssist.dll" ) ).ToString();
+                string localVersion = VersionHelpers.GetProductVersion( Path.Combine( StartupPath ?? Environment.CurrentDirectory, "ClassicAssist.dll" ) ).ToString();
 
-                if ( VersionHelpers.IsVersionNewer( localVersion, latestVersion ) &&
-                     VersionHelpers.IsVersionNewer( AssistantOptions.UpdateGumpVersion, latestVersion ) )
+                if ( VersionHelpers.IsVersionNewer( localVersion, latestVersion ) && VersionHelpers.IsVersionNewer( AssistantOptions.UpdateGumpVersion, latestVersion ) )
                 {
-                    string commitMessage = await Updater.GetUpdateText( updaterSettings?.InstallPrereleases ?? false );
+                    string commitMessage = await Updater.GetUpdateText( updaterSettings.InstallPrereleases );
                     string donationAmount = await GetDonationsSummary();
                     StringBuilder donationMessage = new StringBuilder();
 
                     if ( !string.IsNullOrEmpty( donationAmount ) )
                     {
-                        if ( donationAmount == "0.00" )
-                        {
-                            donationAmount = $"<BASEFONT COLOR=#FF0000>{donationAmount}</BASEFONT>";
-                        }
-
-                        donationMessage.AppendLine( string.Format( Strings.Current_month_donations,
-                            DateTime.Now.ToString( "MMMM" ), donationAmount ) );
+                        donationMessage.AppendLine( string.Format( Strings.Current_month_donations, DateTime.Now.ToString( "MMMM" ), donationAmount ) );
                         donationMessage.AppendLine();
-                        donationMessage.AppendLine(
-                            $"<A HREF=\"https://www.paypal.me/reeeetus\">{Strings.Donate_Now}</A>" );
+                        donationMessage.AppendLine( $"<A HREF=\"https://www.paypal.me/reeeetus\">{Strings.Donate_Now}</A>" );
                     }
 
                     StringBuilder message = new StringBuilder();
                     message.AppendLine( Strings.ProductName );
-                    message.AppendLine(
-                        $"{Strings.New_version_available_} <A HREF=\"https://github.com/Reetus/ClassicAssist/releases/tag/{latestVersion}\">{latestVersion}</A>" );
+                    message.AppendLine( $"{Strings.New_version_available_} <A HREF=\"https://github.com/Reetus/ClassicAssist/releases/tag/{latestVersion}\">{latestVersion}</A>" );
                     message.AppendLine();
 
                     if ( !string.IsNullOrEmpty( donationAmount ) )
@@ -682,8 +687,7 @@ namespace Assistant
                     }
 
                     message.AppendLine( commitMessage );
-                    message.AppendLine(
-                        $"<A HREF=\"https://github.com/Reetus/ClassicAssist/commits/master\">{Strings.See_More}</A>" );
+                    message.AppendLine( $"<A HREF=\"https://github.com/Reetus/ClassicAssist/releases\">{Strings.See_More}</A>" );
 
                     UpdateMessageGump gump = new UpdateMessageGump( WindowHandle, message.ToString(), latestVersion );
                     gump.SendGump();
@@ -699,8 +703,7 @@ namespace Assistant
         {
             HttpClient httpClient = new HttpClient();
 
-            HttpResponseMessage response =
-                await httpClient.GetAsync( "https://classicassist.azurewebsites.net/api/donations/summary" );
+            HttpResponseMessage response = await httpClient.GetAsync( "https://classicassist.azurewebsites.net/api/donations/summary" );
 
             if ( !response.IsSuccessStatusCode )
             {
@@ -753,6 +756,8 @@ namespace Assistant
                             scope.SetExtra( "Direction", PacketDirection.Outgoing );
                             scope.SetExtra( "Expected Length", expectedLength );
                         } );
+
+                        return;
                     }
                 }
 
@@ -780,6 +785,8 @@ namespace Assistant
 
                     InternalPacketReceivedEvent?.Invoke( packet, length );
 
+                    PacketWaitEntries?.CheckWait( packet, PacketDirection.Incoming, true );
+
                     if ( _getPacketLength != null )
                     {
                         int expectedLength = _getPacketLength( packet[0] );
@@ -798,6 +805,8 @@ namespace Assistant
                                 scope.SetExtra( "Direction", PacketDirection.Incoming );
                                 scope.SetExtra( "Expected Length", expectedLength );
                             } );
+
+                            return;
                         }
                     }
 
@@ -871,9 +880,7 @@ namespace Assistant
         {
             if ( Options.CurrentOptions.SetUOTitle )
             {
-                _setTitle?.Invoke( string.IsNullOrEmpty( title )
-                    ? Player == null ? string.Empty : $"{Player.Name} ({CurrentShard?.Name})"
-                    : title );
+                _setTitle?.Invoke( string.IsNullOrEmpty( title ) ? Player == null ? string.Empty : $"{Player.Name} ({CurrentShard?.Name})" : title );
             }
             else
             {
@@ -916,8 +923,7 @@ namespace Assistant
 
         public static void LaunchUpdater()
         {
-            string updaterPath = Path.Combine( StartupPath ?? Environment.CurrentDirectory,
-                "ClassicAssist.Updater.exe" );
+            string updaterPath = Path.Combine( StartupPath ?? Environment.CurrentDirectory, "ClassicAssist.Updater.exe" );
 
             string version = FileVersionInfo.GetVersionInfo( Assembly.GetExecutingAssembly().Location ).ProductVersion;
 
@@ -926,11 +932,11 @@ namespace Assistant
                 return;
             }
 
-            ProcessStartInfo psi = new ProcessStartInfo( updaterPath,
-                $"--path \"{StartupPath}\"" + ( version != null ? $" --version {version}" : "" ) )
-            {
-                UseShellExecute = false, WorkingDirectory = StartupPath ?? Environment.CurrentDirectory
-            };
+            ProcessStartInfo psi =
+                new ProcessStartInfo( updaterPath, $"--path \"{StartupPath}\"" + ( version != null ? $" --version {version}" : "" ) )
+                {
+                    UseShellExecute = false, WorkingDirectory = StartupPath ?? Environment.CurrentDirectory
+                };
 
             Process.Start( psi );
         }
@@ -958,6 +964,11 @@ namespace Assistant
 
         private static bool OnPacketSend( ref byte[] data, ref int length )
         {
+            if ( data.Length == 0 )
+            {
+                return false;
+            }
+
             bool filter = false;
 
             if ( CommandsManager.IsSpeechPacket( data[0] ) )
@@ -1008,6 +1019,11 @@ namespace Assistant
 
         private static bool OnPacketReceive( ref byte[] data, ref int length )
         {
+            if ( data.Length == 0 )
+            {
+                return false;
+            }
+
             if ( _incomingPacketFilter.MatchFilterAll( data, out PacketFilterInfo[] pfis ) > 0 )
             {
                 foreach ( PacketFilterInfo pfi in pfis )

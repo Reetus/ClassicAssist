@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
-        xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         WindowStartupLocation="CenterScreen"
@@ -33,7 +32,7 @@
         <TextBlock Text="{x:Static resources:Strings.Profile_backup_in_progress___}" Margin="10" />
         <ListBox ItemsSource="{Binding Messages}" Grid.Row="1" Margin="10,0,10,10">
             <i:Interaction.Behaviors>
-                <behaviours:ItemsControlAutoScrollBehaviour/>
+                <behaviours:ItemsControlAutoScrollBehaviour />
             </i:Interaction.Behaviors>
         </ListBox>
         <ProgressBar IsIndeterminate="True" Grid.Row="2"

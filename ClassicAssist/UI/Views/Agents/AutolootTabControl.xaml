@@ -10,7 +10,7 @@
     xmlns:autoloot="clr-namespace:ClassicAssist.Data.Autoloot"
     xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:misc1="clr-namespace:ClassicAssist.Misc"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:draggableTreeView="clr-namespace:ClassicAssist.Controls.DraggableTreeView;assembly=ClassicAssist.Controls"
     xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
     xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
@@ -156,6 +156,11 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Padding" Value="4"/>
+                        </Style>
+                    </Grid.Resources>
                     <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="0" Margin="0,0,5,0"
                             Command="{Binding RemoveCommand}"
                             CommandParameter="{Binding SelectedItem, ElementName=listView}" />
@@ -250,7 +255,7 @@
                         </GridViewColumn>
                         <GridViewColumn Header="{x:Static resources:Strings.Operator}" Width="75">
                             <GridViewColumn.CellTemplate>
-                                <DataTemplate>
+                                <DataTemplate DataType="autoloot:AutolootConstraintEntry">
                                     <ComboBox Width="50" SelectedItem="{Binding Operator}"
                                               ItemsSource="{Binding Source={misc:EnumBindingSource {x:Type autoloot:AutolootOperator}}}" />
                                 </DataTemplate>

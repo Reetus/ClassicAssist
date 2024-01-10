@@ -4,10 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
         xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
-        xmlns:misc1="clr-namespace:ClassicAssist.Misc"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         mc:Ignorable="d"
         Title="{Binding Title}" Height="350" Width="650" Background="{DynamicResource ThemeWindowBackgroundBrush}"
@@ -66,7 +65,8 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <i:Interaction.Behaviors>
-                            <behaviours:ItemsControlAutoScrollBehaviour ScrollViewer="{Binding ElementName=ScrollViewer}" />
+                            <behaviours:ItemsControlAutoScrollBehaviour
+                                ScrollViewer="{Binding ElementName=ScrollViewer}" />
                         </i:Interaction.Behaviors>
                     </ItemsControl>
                 </ScrollViewer>

@@ -11,7 +11,7 @@ namespace ClassicAssist.UI.Controls
     /// </summary>
     public partial class HueEntryControl : UserControl
     {
-        public static readonly DependencyProperty HueEntryProperty = DependencyProperty.Register( "HueEntry",
+        public static readonly DependencyProperty HueEntryProperty = DependencyProperty.Register( nameof( HueEntry ),
             typeof( HueEntry ), typeof( HueEntryControl ),
             new FrameworkPropertyMetadata( default( HueEntry ), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 PropertyChangedCallback ) );

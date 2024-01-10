@@ -23,6 +23,7 @@ namespace ClassicAssist.Data
 
         public const string DEFAULT_SETTINGS_FILENAME = "settings.json";
         private static string _profilePath;
+        private static readonly object _serializeLock = new object();
         private bool _abilitiesGump = true;
         private int _abilitiesGumpX = 100;
         private int _abilitiesGumpY = 100;
@@ -52,9 +53,14 @@ namespace ClassicAssist.Data
         private string _friendTargetMessage;
         private bool _getFriendEnemyUsesIgnoreList;
         private string _hash;
+        private bool _hotkeysStatusGump;
+        private int _hotkeysStatusGumpX;
+        private int _hotkeysStatusGumpY;
         private bool _includePartyMembersInFriends;
         private string _lastTargetMessage;
         private int _lightLevel;
+        private bool _limitHotkeyTrigger;
+        private int _limitHotkeyTriggerMs;
         private bool _limitMouseWheelTrigger;
         private int _limitMouseWheelTriggerMS;
         private bool _logoutDisconnectedPrompt;
@@ -89,8 +95,6 @@ namespace ClassicAssist.Data
         private bool _useExperimentalFizzleDetection;
         private bool _useObjectQueue;
         private int _useObjectQueueAmount = 5;
-        private bool _limitHotkeyTrigger;
-        private int _limitHotkeyTriggerMs;
 
         public bool AbilitiesGump
         {
@@ -268,6 +272,24 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _hash, value );
         }
 
+        public bool HotkeysStatusGump
+        {
+            get => _hotkeysStatusGump;
+            set => SetProperty( ref _hotkeysStatusGump, value );
+        }
+
+        public int HotkeysStatusGumpX
+        {
+            get => _hotkeysStatusGumpX;
+            set => SetProperty( ref _hotkeysStatusGumpX, value );
+        }
+
+        public int HotkeysStatusGumpY
+        {
+            get => _hotkeysStatusGumpY;
+            set => SetProperty( ref _hotkeysStatusGumpY, value );
+        }
+
         public bool IncludePartyMembersInFriends
         {
             get => _includePartyMembersInFriends;
@@ -294,6 +316,18 @@ namespace ClassicAssist.Data
             }
         }
 
+        public bool LimitHotkeyTrigger
+        {
+            get => _limitHotkeyTrigger;
+            set => SetProperty( ref _limitHotkeyTrigger, value );
+        }
+
+        public int LimitHotkeyTriggerMS
+        {
+            get => _limitHotkeyTriggerMs;
+            set => SetProperty( ref _limitHotkeyTriggerMs, value );
+        }
+
         public bool LimitMouseWheelTrigger
         {
             get => _limitMouseWheelTrigger;
@@ -304,18 +338,6 @@ namespace ClassicAssist.Data
         {
             get => _limitMouseWheelTriggerMS;
             set => SetProperty( ref _limitMouseWheelTriggerMS, value );
-        }
-
-        public bool LimitHotkeyTrigger
-        {
-            get => _limitHotkeyTrigger;
-            set => SetProperty(ref _limitHotkeyTrigger, value);
-        }
-
-        public int LimitHotkeyTriggerMS
-        {
-            get => _limitHotkeyTriggerMs;
-            set => SetProperty(ref _limitHotkeyTriggerMs, value);
         }
 
         public bool LogoutDisconnectedPrompt
@@ -530,49 +552,49 @@ namespace ClassicAssist.Data
 
         public static void Save( Options options )
         {
-            BaseViewModel[] instances = BaseViewModel.Instances;
-
-            JObject obj = new JObject { { "Name", options.Name }, { "SelectedTabIndex", options.SelectedTabIndex } };
-
-            foreach ( BaseViewModel instance in instances )
+            lock ( _serializeLock )
             {
-                if ( instance is ISettingProvider settingProvider )
+                BaseViewModel[] instances = BaseViewModel.Instances;
+
+                JObject obj = new JObject { { "Name", options.Name }, { "SelectedTabIndex", options.SelectedTabIndex } };
+
+                foreach ( BaseViewModel instance in instances )
                 {
-                    settingProvider.Serialize( obj );
+                    if ( instance is ISettingProvider settingProvider )
+                    {
+                        settingProvider.Serialize( obj );
+                    }
+
+                    if ( !( instance is IGlobalSettingProvider globalSettingProvider ) )
+                    {
+                        continue;
+                    }
+
+                    JObject global = new JObject();
+
+                    globalSettingProvider.Serialize( global, true );
+
+                    File.WriteAllText( Path.Combine( AssistantOptions.GetGlobalPath(), globalSettingProvider.GetGlobalFilename() ), global.ToString() );
                 }
 
-                if ( !( instance is IGlobalSettingProvider globalSettingProvider ) )
+                string hash = obj.ToString().SHA1();
+                obj["Hash"] = hash;
+
+                if ( hash.Equals( options.Hash ) )
                 {
-                    continue;
+                    // ReSharper disable once LocalizableElement
+                    Console.WriteLine( "Profile hasn't changed, skipping profile save" );
+                    return;
                 }
 
-                JObject global = new JObject();
+                EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
 
-                globalSettingProvider.Serialize( global, true );
+                CheckModifiedOnDisk( options.Name, options.Hash );
 
-                File.WriteAllText(
-                    Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
-                        globalSettingProvider.GetGlobalFilename() ), global.ToString() );
+                File.WriteAllText( Path.Combine( _profilePath, options.Name ?? DEFAULT_SETTINGS_FILENAME ), obj.ToString() );
+
+                options.Hash = hash;
             }
-
-            string hash = obj.ToString().SHA1();
-            obj["Hash"] = hash;
-
-            if ( hash.Equals( options.Hash ) )
-            {
-                // ReSharper disable once LocalizableElement
-                Console.WriteLine( "Profile hasn't changed, skipping profile save" );
-                return;
-            }
-
-            EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
-
-            CheckModifiedOnDisk( options.Name, options.Hash );
-
-            File.WriteAllText( Path.Combine( _profilePath, options.Name ?? DEFAULT_SETTINGS_FILENAME ),
-                obj.ToString() );
-
-            options.Hash = hash;
         }
 
         private static void CheckModifiedOnDisk( string profileFilename, string hash )
@@ -616,7 +638,9 @@ namespace ClassicAssist.Data
 
         private static void EnsureProfilePath( string startupPath )
         {
-            _profilePath = Path.Combine( startupPath, "Profiles" );
+            _profilePath = Path.IsPathRooted( AssistantOptions.ProfileDirectory )
+                ? AssistantOptions.ProfileDirectory
+                : Path.Combine( startupPath, AssistantOptions.ProfileDirectory );
 
             if ( !Directory.Exists( _profilePath ) )
             {
@@ -634,58 +658,66 @@ namespace ClassicAssist.Data
 
         public static void Load( string optionsFile, Options options )
         {
-            AssistantOptions.OnProfileChanging( optionsFile );
-            AssistantOptions.LastProfile = optionsFile;
-
-            BaseViewModel[] instances = BaseViewModel.Instances;
-
-            EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
-
-            JObject json = new JObject();
-
-            string fullPath = Path.Combine( _profilePath, optionsFile );
-
-            if ( File.Exists( fullPath ) )
+            lock ( _serializeLock )
             {
-                json = JObject.Parse( File.ReadAllText( fullPath ) );
+                AssistantOptions.OnProfileChanging( optionsFile );
+                AssistantOptions.LastProfile = optionsFile;
+
+                BaseViewModel[] instances = BaseViewModel.Instances;
+
+                EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
+
+                JObject json = new JObject();
+
+                string fullPath = Path.Combine( _profilePath, optionsFile );
+
+                if ( File.Exists( fullPath ) )
+                {
+                    json = JObject.Parse( File.ReadAllText( fullPath ) );
+                }
+
+                options.Name = Path.GetFileName( optionsFile );
+                options.SelectedTabIndex = json["SelectedTabIndex"]?.ToObject<int>() ?? 0;
+                options.Hash = json["Hash"]?.ToObject<string>() ?? string.Empty;
+
+                foreach ( BaseViewModel instance in instances )
+                {
+                    if ( instance is ISettingProvider settingProvider )
+                    {
+                        settingProvider.Deserialize( json, options );
+                    }
+
+                    if ( !( instance is IGlobalSettingProvider globalSettingProvider ) )
+                    {
+                        continue;
+                    }
+
+                    string filePath = Path.Combine( AssistantOptions.GetGlobalPath(), globalSettingProvider.GetGlobalFilename() );
+
+                    if ( !File.Exists( filePath ) )
+                    {
+                        continue;
+                    }
+
+                    JObject global = JObject.Parse( File.ReadAllText( filePath ) );
+
+                    globalSettingProvider.Deserialize( global, options, true );
+                }
+
+                AssistantOptions.OnProfileChanged( optionsFile );
             }
-
-            options.Name = Path.GetFileName( optionsFile );
-            options.SelectedTabIndex = json["SelectedTabIndex"]?.ToObject<int>() ?? 0;
-            options.Hash = json["Hash"]?.ToObject<string>() ?? string.Empty;
-
-            foreach ( BaseViewModel instance in instances )
-            {
-                if ( instance is ISettingProvider settingProvider )
-                {
-                    settingProvider.Deserialize( json, options );
-                }
-
-                if ( !( instance is IGlobalSettingProvider globalSettingProvider ) )
-                {
-                    continue;
-                }
-
-                string filePath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
-                    globalSettingProvider.GetGlobalFilename() );
-
-                if ( !File.Exists( filePath ) )
-                {
-                    continue;
-                }
-
-                JObject global = JObject.Parse( File.ReadAllText( filePath ) );
-
-                globalSettingProvider.Deserialize( global, options, true );
-            }
-
-            AssistantOptions.OnProfileChanged( optionsFile );
         }
 
         public static string[] GetProfiles()
         {
             EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
             return Directory.EnumerateFiles( _profilePath, "*.json" ).ToArray();
+        }
+
+        public static string GetProfilePath()
+        {
+            EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
+            return _profilePath;
         }
     }
 

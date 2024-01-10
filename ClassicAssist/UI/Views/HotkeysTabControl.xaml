@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
              xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
              xmlns:local="clr-namespace:ClassicAssist.Data.Hotkeys"
-             xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+             xmlns:misc="clr-namespace:ClassicAssist.Misc"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              xmlns:sharedControls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+             xmlns:commands="clr-namespace:ClassicAssist.Data.Hotkeys.Commands"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500">
     <UserControl.DataContext>
@@ -21,11 +21,16 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <valueConverters:ValueConverterGroup x:Key="InvertAndVisibilitate">
-                <valueConverters:InverseBooleanConverter />
-                <BooleanToVisibilityConverter />
-            </valueConverters:ValueConverterGroup>
             <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <CollectionViewSource x:Key='src' Source="{Binding FilterItems}">
+                <CollectionViewSource.GroupDescriptions>
+                    <PropertyGroupDescription PropertyName="Name" />
+                </CollectionViewSource.GroupDescriptions>
+            </CollectionViewSource>
+            <misc:BindingProxy x:Key="Proxy" Data="{Binding}" />
+            <Style TargetType="{x:Type GridViewColumnHeader}">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -39,31 +44,58 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <sharedControls:FilterControl Grid.Row="0" FilterText="{Binding FilterText}" Margin="5,10,5,0" />
-            <TreeView x:Name="treeView" Grid.Row="1" Margin="5" ItemsSource="{Binding FilterItems}">
-                <i:Interaction.Behaviors>
-                    <misc:BindableSelectedItemBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
-                </i:Interaction.Behaviors>
-                <TreeView.ItemContainerStyle>
-                    <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource TreeViewItemStyle}">
-                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                    </Style>
-                </TreeView.ItemContainerStyle>
-                <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                        <ContentControl>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="{Binding Image}" Stretch="Uniform" Margin="0,0,5,0"
-                                       Visibility="{Binding IsCategory, Converter={StaticResource InvertAndVisibilitate}}" />
-                                <TextBlock Text="{Binding}" Foreground="{DynamicResource ThemeForegroundBrush}"
-                                           ToolTip="{Binding Tooltip}" />
-                            </StackPanel>
-                        </ContentControl>
-                    </HierarchicalDataTemplate>
-                </TreeView.ItemTemplate>
-            </TreeView>
+            <ListView Grid.Row="1" ItemsSource="{Binding Source={StaticResource src}}" Margin="5"
+                      PreviewMouseWheel="UIElement_OnPreviewMouseWheel">
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.ContainerStyle>
+                            <Style TargetType="{x:Type GroupItem}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type GroupItem}">
+                                            <Expander IsExpanded="{Binding Items/IsExpanded}" BorderThickness="0,0,0,0"
+                                                      Margin="5,2">
+                                                <Expander.Header>
+                                                    <TextBlock Text="{Binding Name}"
+                                                               Foreground="{StaticResource ThemeForegroundBrush}"
+                                                               d:DataContext="{d:DesignInstance {x:Type local:HotkeyEntry}}"
+                                                               Margin="5,0,0,0" />
+                                                </Expander.Header>
+                                                <Expander.Content>
+                                                    <ListBox ItemsSource="{Binding Items/Children}" BorderThickness="0"
+                                                             Margin="40,0,0,0"
+                                                             SelectedItem="{Binding Path=Data.(viewModels:HotkeysTabViewModel.SelectedItem), Source={StaticResource Proxy}}">
+                                                        <ListBox.ItemTemplate>
+                                                            <DataTemplate DataType="commands:HotkeyCommand">
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Image Source="{Binding Image}" Stretch="Uniform"
+                                                                           Margin="0,0,5,0" />
+                                                                    <TextBlock Text="{Binding}"
+                                                                               Foreground="{DynamicResource ThemeForegroundBrush}"
+                                                                               ToolTip="{Binding Tooltip}"
+                                                                               VerticalAlignment="Center" />
+                                                                </StackPanel>
+                                                            </DataTemplate>
+                                                        </ListBox.ItemTemplate>
+                                                    </ListBox>
+                                                </Expander.Content>
+                                            </Expander>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </GroupStyle.ContainerStyle>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+            </ListView>
         </Grid>
         <GroupBox Grid.Column="1" Header="{x:Static resources:Strings.Hotkeys}" Margin="0, 10, 5, 5">
             <Grid>
+                <Grid.Resources>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Padding" Value="4" />
+                    </Style>
+                </Grid.Resources>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />

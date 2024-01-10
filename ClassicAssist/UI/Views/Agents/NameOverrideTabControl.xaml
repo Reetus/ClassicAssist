@@ -8,6 +8,7 @@
              xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              xmlns:misc="clr-namespace:ClassicAssist.Misc"
+             xmlns:nameOverride="clr-namespace:ClassicAssist.Data.NameOverride"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500">
     <d:DesignerProperties.DesignStyle>
@@ -51,7 +52,7 @@
                         </GridViewColumn>
                         <GridViewColumn Header="{x:Static resources:Strings.Serial}" Width="100" x:Name="SerialColumn">
                             <GridViewColumn.CellTemplate>
-                                <DataTemplate>
+                                <DataTemplate DataType="nameOverride:NameOverrideEntry">
                                     <controls:EditTextBlock
                                         Text="{Binding Serial, Converter={StaticResource HexToIntValueConverter}, StringFormat=0x\{0:x\}}"
                                         TabIndex="1"
@@ -62,7 +63,7 @@
                         </GridViewColumn>
                         <GridViewColumn Header="{x:Static resources:Strings.Name}" Width="150" x:Name="NameColumn">
                             <GridViewColumn.CellTemplate>
-                                <DataTemplate>
+                                <DataTemplate DataType="nameOverride:NameOverrideEntry">
                                     <controls:EditTextBlock Text="{Binding Name}" Label="{Binding Name}"
                                                             ShowIcon="True"
                                                             Width="{Binding Path=Width, ElementName=NameColumn, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15}" />
@@ -71,7 +72,7 @@
                         </GridViewColumn>
                         <GridViewColumn Header="{x:Static resources:Strings.Notes}" Width="250" x:Name="NotesColumn">
                             <GridViewColumn.CellTemplate>
-                                <DataTemplate>
+                                <DataTemplate DataType="nameOverride:NameOverrideEntry">
                                     <controls:EditTextBlock Text="{Binding Notes}" Label="{Binding Notes}"
                                                             ShowIcon="True"
                                                             Width="{Binding Path=Width, ElementName=NotesColumn, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15}" />
@@ -83,15 +84,11 @@
             </ListView>
         </Grid>
         <StackPanel Orientation="Horizontal" Grid.Row="1">
-            <StackPanel.Resources>
-                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                    <Setter Property="Padding" Value="25,5" />
-                </Style>
-            </StackPanel.Resources>
             <Button Content="{x:Static resources:Strings.Insert}" Margin="0,5,5,5"
                     Command="{Binding AddCommand}">
                 <Button.ContextMenu>
                     <ContextMenu>
+                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                         <MenuItem Header="{x:Static resources:Strings.Insert_Empty_Entry}"
                                   Command="{Binding Data.AddEmptyCommand, Mode=OneWay, Source={StaticResource Proxy}}" />
                     </ContextMenu>

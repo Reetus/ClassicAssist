@@ -18,6 +18,8 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -28,11 +30,11 @@ namespace ClassicAssist.Shared
 {
     public class Updater
     {
-        public static async Task<ReleaseVersion> GetReleases( bool preleases )
+        public static async Task<IEnumerable<ChangelogEntry>> GetReleases()
         {
             HttpClient httpClient = new HttpClient();
 
-            HttpResponseMessage response = await httpClient.GetAsync( preleases ? Settings.Default.PrereleaseManifestURL : Settings.Default.UpdateManifestURL );
+            HttpResponseMessage response = await httpClient.GetAsync( Settings.Default.UpdateManifestURL );
 
             if ( response.StatusCode != HttpStatusCode.OK )
             {
@@ -41,36 +43,40 @@ namespace ClassicAssist.Shared
 
             string json = await response.Content.ReadAsStringAsync();
 
-            ReleaseVersion releaseVersion;
-
             try
             {
-                releaseVersion = JsonConvert.DeserializeObject<ReleaseVersion>( json );
+                return JsonConvert.DeserializeObject<IEnumerable<ChangelogEntry>>( json );
             }
             catch ( Exception )
             {
                 return null;
             }
+        }
 
-            return releaseVersion;
+        public static async Task<ChangelogEntry> GetLatestRelease( bool prereleases )
+        {
+            IEnumerable<ChangelogEntry> releases = await GetReleases();
+
+            ChangelogEntry latestRelease = releases.FirstOrDefault( e => prereleases || !e.Prerelease );
+
+            return latestRelease;
         }
 
         public static async Task<string> GetUpdateText( bool prereleases )
         {
-            ReleaseVersion releaseVersion = await GetReleases( prereleases );
+            IEnumerable<ChangelogEntry> releases = await GetReleases();
 
-            if ( releaseVersion?.Entries == null )
+            if ( !prereleases )
             {
-                return string.Empty;
+                releases = releases.Where( e => !e.Prerelease );
             }
 
             StringBuilder commitMessage = new StringBuilder();
 
-            foreach ( ChangelogEntry release in releaseVersion.Entries )
+            foreach ( ChangelogEntry release in releases )
             {
                 commitMessage.AppendLine( $"{release.CreatedAt.Date.Date.ToShortDateString()}:" );
                 commitMessage.AppendLine( release.Description );
-                commitMessage.AppendLine();
             }
 
             return commitMessage.ToString();

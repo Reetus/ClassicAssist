@@ -25,6 +25,9 @@ namespace ClassicAssist.Shared
     {
         public DateTimeOffset CreatedAt { get; set; }
         public string Description { get; set; }
+        public int DownloadSize { get; set; }
+        public string DownloadURL { get; set; }
+        public bool Prerelease { get; set; }
         public string Version { get; set; }
     }
 }

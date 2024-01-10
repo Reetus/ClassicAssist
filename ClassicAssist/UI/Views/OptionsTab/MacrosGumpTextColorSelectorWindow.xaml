@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         xmlns:optionsTab="clr-namespace:ClassicAssist.UI.Views.OptionsTab"
         mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
@@ -27,7 +27,7 @@
         </Grid.RowDefinitions>
         <xctk:ColorCanvas Grid.Row="0" UsingAlphaChannel="{Binding AllowAlpha}" SelectedColor="{Binding SelectedColor}">
             <xctk:ColorCanvas.Style>
-                <Style TargetType="{x:Type xctk:ColorCanvas}" BasedOn="{StaticResource {x:Type xctk:ColorCanvas}}">
+                <Style TargetType="{x:Type xctk:ColorCanvas}">
                     <Setter Property="Background" Value="{DynamicResource ThemeInnerControlBackgroundBrush}" />
                     <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
                     <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />

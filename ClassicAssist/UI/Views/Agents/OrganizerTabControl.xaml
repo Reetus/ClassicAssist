@@ -8,7 +8,7 @@
     xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
     xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:organizer="clr-namespace:ClassicAssist.Data.Organizer"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
     xmlns:controls1="clr-namespace:ClassicAssist.UI.Controls"
     xmlns:draggableListBox="clr-namespace:ClassicAssist.Controls.DraggableListBox;assembly=ClassicAssist.Controls"
@@ -30,20 +30,15 @@
     <UserControl.DataContext>
         <agents:OrganizerTabViewModel />
     </UserControl.DataContext>
-    <Grid>
+    <Grid Margin="10">
         <Grid.Resources>
             <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
-            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                <Setter Property="Margin" Value="5" />
-                <Setter Property="Height" Value="25" />
-                <Setter Property="Padding" Value="10,0,10,0" />
-            </Style>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Margin="10">
+        <Grid Grid.Column="0" Margin="0,0,5,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -53,7 +48,7 @@
             <Grid.Resources>
                 <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
             </Grid.Resources>
-            <controls1:StretchyWrapPanel Grid.Row="0" Orientation="Horizontal">
+            <controls1:StretchyWrapPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,5">
                 <Button Content="{Binding PlayStopButtonText}"
                         Command="{Binding OrganizeCommand}" CommandParameter="{Binding SelectedItem}">
                     <Button.Style>
@@ -94,26 +89,24 @@
             </Grid>
             <StackPanel Grid.Row="2" Margin="0,10,0,0">
                 <CheckBox Content="{x:Static resources:Strings.Complete}" IsChecked="{Binding SelectedItem.Complete}" />
-            </StackPanel>
-            <DockPanel Grid.Row="3" Margin="0,10,0,0">
-                <Button Content="{x:Static resources:Strings.Remove}" HorizontalAlignment="Left" Margin="0"
-                        Command="{Binding RemoveOrganizerAgentEntryCommand}" CommandParameter="{Binding SelectedItem}" />
-                <Button Content="{x:Static resources:Strings.New}" HorizontalAlignment="Right" Margin="0"
+                <Button Content="{x:Static resources:Strings.New}" Margin="0,5,0,0"
                         Command="{Binding NewOrganizerEntryCommand}" />
-            </DockPanel>
+                <Button Content="{x:Static resources:Strings.Remove}" Margin="0,5,0,0"
+                        Command="{Binding RemoveOrganizerAgentEntryCommand}" CommandParameter="{Binding SelectedItem}" />
+            </StackPanel>
         </Grid>
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Margin="5,0,0,0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ListView x:Name="itemsListView" Margin="10" Grid.Row="0" ItemsSource="{Binding SelectedItem.Items}">
+                <ListView x:Name="itemsListView" Grid.Row="0" ItemsSource="{Binding SelectedItem.Items}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="{x:Static resources:Strings.Item}" Width="120" x:Name="nameColumn">
                                 <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate DataType="{x:Type organizer:OrganizerItem}">
                                         <controls:EditTextBlock
                                             Text="{Binding Item, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                             Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=nameColumn, Mode=OneWay}" />
@@ -125,7 +118,7 @@
                             <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="80"
                                             x:Name="HueColumn">
                                 <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate DataType="organizer:OrganizerItem">
                                         <Grid>
                                             <controls:EditTextBlock
                                                 Text="{Binding Hue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
@@ -138,7 +131,7 @@
                             <GridViewColumn Header="{x:Static resources:Strings.Amount}" Width="80"
                                             x:Name="AmountColumn">
                                 <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate DataType="organizer:OrganizerItem">
                                         <Grid>
                                             <controls:EditTextBlock
                                                 Text="{Binding Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
@@ -151,7 +144,12 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <StackPanel Orientation="Horizontal" Grid.Row="1">
+                <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,5,0,0">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Margin" Value="0,0,5,0" />
+                        </Style>
+                    </StackPanel.Resources>
                     <Button Content="{x:Static resources:Strings.Set_Containers}"
                             Command="{Binding SetContainersCommand}" CommandParameter="{Binding SelectedItem}" />
                     <Button Content="{x:Static resources:Strings.Remove}" Command="{Binding RemoveItemCommand}"

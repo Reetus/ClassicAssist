@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         xmlns:validationRules="clr-namespace:ClassicAssist.Shared.UI.ValidationRules;assembly=ClassicAssist.Shared"
@@ -75,6 +75,9 @@
                 <DockPanel Grid.Row="4">
                     <Label Content="{x:Static resources:Strings.Backup_Days}" DockPanel.Dock="Left" />
                     <xctk:IntegerUpDown Value="{Binding BackupOptions.Days}"
+                                        Background="{StaticResource ThemeBackgroundBrush}"
+                                        Foreground="{StaticResource ThemeForegroundBrush}"
+                                        BorderBrush="{StaticResource ThemeBorderBrush}"
                                         ToolTip="{x:Static resources:Strings.Setting_to_zero_will_cause_it_to_backup_on_every_client_close}" />
                 </DockPanel>
                 <DockPanel Grid.Row="5">

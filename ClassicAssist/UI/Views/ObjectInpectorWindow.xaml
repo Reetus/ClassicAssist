@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
         xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
-        mc:Ignorable="d"
-        Title="{x:Static resources:Strings.Object_Inspector}" Height="396.8" Width="450" Topmost="True">
+        xmlns:models="clr-namespace:ClassicAssist.UI.Models"
+        mc:Ignorable="d" Topmost="True"
+        Title="{x:Static resources:Strings.Object_Inspector}" Height="396.8" Width="450">
     <Window.InputBindings>
         <KeyBinding Modifiers="Ctrl" Key="C" Command="{Binding CopyToClipboardCommand}" />
     </Window.InputBindings>
@@ -16,13 +17,34 @@
         <viewModels:ObjectInspectorViewModel />
     </Window.DataContext>
     <Window.Resources>
-        <CollectionViewSource x:Key='src' Source="{Binding Items}">
-            <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="Category" />
-            </CollectionViewSource.GroupDescriptions>
-        </CollectionViewSource>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <DrawingImage x:Key="PointerIcon">
+                <DrawingImage.Drawing>
+                    <DrawingGroup ClipGeometry="M0,0 V512 H320 V0 H0 Z">
+                        <GeometryDrawing Brush="{StaticResource ThemeForegroundBrush}"
+                                         Geometry="F1 M320,512z M0,0z M0,55.2L0,426C0,438.2 9.9,448 22,448 28.3,448 34.4,445.3 38.6,440.5L121.2,346 179.3,462.3C187.2,478.1 206.4,484.5 222.2,476.6 238,468.7 244.4,449.5 236.5,433.7L179.8,320 297.9,320C310.1,320 320,310.1 320,297.9 320,291.6 317.3,285.6 312.6,281.4L38.6,37.9C34.3,34.1 28.9,32 23.2,32 10.4,32 0,42.4 0,55.2z" />
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
+            <viewModels:ObjectInspectorViewModel x:Key="DummyData">
+                <viewModels:ObjectInspectorViewModel.Items>
+                    <models:ObjectInspectorData Category="Category" Name="Name" Value="Value" IsExpanded="False"/>
+                    <models:ObjectInspectorData Category="Category 2" Name="Name" Value="Value"/>
+                </viewModels:ObjectInspectorViewModel.Items>
+            </viewModels:ObjectInspectorViewModel>
+        </ResourceDictionary>
     </Window.Resources>
-    <Grid>
+    <Grid d:DataContext="{StaticResource DummyData}">
+        <Grid.Resources>
+            <CollectionViewSource x:Key='src' Source="{Binding Items}">
+                <CollectionViewSource.GroupDescriptions>
+                    <PropertyGroupDescription PropertyName="Category" />
+                </CollectionViewSource.GroupDescriptions>
+            </CollectionViewSource>
+        </Grid.Resources>
         <ListView ItemsSource="{Binding Source={StaticResource src}}"
                   SelectedValue="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Behaviors>
@@ -30,12 +52,41 @@
             </i:Interaction.Behaviors>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="150" Header="{x:Static resources:Strings.Property}"
-                                    DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Width="150" Header="{x:Static resources:Strings.Property}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap"
+                                               d:DataContext="{d:DesignInstance models:ObjectInspectorData}"
+                                               Foreground="{StaticResource ThemeForegroundBrush}" />
+                                    <Image Grid.Column="1" MaxHeight="12" Source="{StaticResource PointerIcon}"
+                                           d:DataContext="{d:DesignInstance models:ObjectInspectorData}">
+                                        <Image.Style>
+                                            <Style TargetType="{x:Type Image}">
+                                                <Style.Triggers>
+                                                    <DataTrigger
+                                                        Binding="{Binding OnDoubleClick}"
+                                                        Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Width="250" Header="{x:Static resources:Strings.Value}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Value}" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding Value}" TextWrapping="Wrap"
+                                           d:DataContext="{d:DesignInstance models:ObjectInspectorData}"
+                                           Foreground="{StaticResource ThemeForegroundBrush}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -52,8 +103,9 @@
                                         <Expander IsExpanded="{Binding Items/IsExpanded}" BorderThickness="0,0,0,0">
                                             <Expander.Header>
                                                 <DockPanel>
-                                                    <TextBlock FontSize="12" Text="{Binding Path=Name}"
-                                                               Margin="5,0,0,0" Width="100" />
+                                                    <TextBlock FontSize="12" Text="{Binding Path=Items/Category}"
+                                                               Margin="5,0,0,0" Width="100"
+                                                               Foreground="{StaticResource ThemeForegroundBrush}" />
                                                 </DockPanel>
                                             </Expander.Header>
                                             <Expander.Content>
@@ -67,6 +119,11 @@
                     </GroupStyle.ContainerStyle>
                 </GroupStyle>
             </ListView.GroupStyle>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
     </Grid>
 </Window>

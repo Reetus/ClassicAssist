@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClassicAssist.Launcher"
         xmlns:properties="clr-namespace:ClassicAssist.Launcher.Properties"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" Background="{DynamicResource ThemeBackgroundBrush}"
         Title="{x:Static properties:Resources.Options}" Height="400" Width="400">
@@ -29,11 +29,6 @@
                          ItemsSource="{Binding Plugins}" DisplayMemberPath="Name"
                          ToolTip="{Binding SelectedItem.FullPath, ElementName=listBox}" />
                 <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="0,10,0,0">
-                    <StackPanel.Resources>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                            <Setter Property="Padding" Value="10,0,10,0" />
-                        </Style>
-                    </StackPanel.Resources>
                     <Button Content="{x:Static properties:Resources.Add}" Command="{Binding AddPluginCommand}"
                             Margin="0,0,10,0" />
                     <Button Content="{x:Static properties:Resources.Remove}" Command="{Binding RemovePluginCommand}"
@@ -63,11 +58,6 @@
             </StackPanel>
         </GroupBox>
         <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="10,0,10,10">
-            <StackPanel.Resources>
-                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                    <Setter Property="Padding" Value="10,0,10,0" />
-                </Style>
-            </StackPanel.Resources>
             <Button Content="{x:Static properties:Resources.OK}" Margin="0,0,10,0"
                     Command="{Binding OKCommand, Mode=OneWay}">
                 <i:Interaction.Behaviors>

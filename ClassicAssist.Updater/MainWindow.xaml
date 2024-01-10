@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClassicAssist.Updater"
         xmlns:properties="clr-namespace:ClassicAssist.Updater.Properties"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
@@ -34,7 +34,7 @@
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <i:Interaction.Behaviors>
-                    <behaviours:ItemsControlAutoScrollBehaviour/>
+                    <behaviours:ItemsControlAutoScrollBehaviour />
                 </i:Interaction.Behaviors>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -56,7 +56,7 @@
                     <Run Text="{x:Static properties:Resources.Releases}" />
                 </Hyperlink>
             </TextBlock>
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0,5,0,0">
                 <Button ToolTip="{x:Static resources:Strings.Check_For_Updates}" Margin="0,0,10,0"
                         Command="{Binding CheckForUpdateCommand}">
                     <Button.Content>

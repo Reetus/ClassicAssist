@@ -12,8 +12,9 @@
 
 #endregion
 
+using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Media.Imaging;
+using System.Windows.Media;
 using ClassicAssist.Misc;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
@@ -22,32 +23,45 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class EntityCollectionData
     {
-        public BitmapSource Bitmap
+        private readonly Dictionary<int, ImageSource> _cache = new Dictionary<int, ImageSource>();
+
+        public ImageSource Bitmap
         {
             get
             {
-                BitmapSource result = Art.GetStatic( Entity.ID, Entity.Hue ).ToBitmapSource();
+                int key = ( Entity.ID << 16 ) | Entity.Hue;
+
+                if ( _cache.TryGetValue( key, out ImageSource bitmap ) )
+                {
+                    return bitmap;
+                }
+
+                ImageSource result = Art.GetStatic( Entity.ID, Entity.Hue ).ToImageSource();
 
                 if ( !( Entity is Item item ) || item.Layer != Layer.Mount )
                 {
+                    _cache.Add( key, result );
+
                     return result;
                 }
 
                 if ( !( EntityCollectionViewerViewModel.MountIDEntries.Value?.ContainsKey( Entity.ID ) ?? false ) )
                 {
+                    _cache.Add( key, result );
+
                     return result;
                 }
 
-                if ( EntityCollectionViewerViewModel.MountIDEntries.Value.ContainsKey( Entity.ID ) )
+                if ( !EntityCollectionViewerViewModel.MountIDEntries.Value.TryGetValue( Entity.ID, out int id ) )
                 {
-                    int id = EntityCollectionViewerViewModel.MountIDEntries.Value[Entity.ID];
-
-                    result = Art.GetStatic( id, Entity.Hue ).ToBitmapSource();
-
-                    return result;
+                    return null;
                 }
 
-                return null;
+                result = Art.GetStatic( id, Entity.Hue ).ToImageSource();
+
+                _cache.Add( key, result );
+
+                return result;
             }
         }
 
@@ -56,15 +70,14 @@ namespace ClassicAssist.UI.ViewModels
 
         public string Name => GetName( Entity );
 
-        private string GetProperties( Entity entity )
+        private static string GetProperties( Entity entity )
         {
             return entity.Properties == null
                 ? GetName( entity )
-                : entity.Properties.Aggregate( "",
-                    ( current, entityProperty ) => current + entityProperty.Text + "\r\n" ).TrimTrailingNewLine();
+                : entity.Properties.Aggregate( "", ( current, entityProperty ) => current + entityProperty.Text + "\r\n" ).TrimTrailingNewLine();
         }
 
-        private string GetName( Entity entity )
+        private static string GetName( Entity entity )
         {
             if ( !( entity is Item item ) || item.Layer != Layer.Mount )
             {

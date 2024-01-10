@@ -108,9 +108,13 @@ namespace ClassicAssist.Updater
                                 {
                                     AddText( string.Format( Resources.Copying__0____, entry.FullName ) );
 
-                                    EnsurePathsExist( modulesPath, entry.FullName );
+                                    ( string basePath, string fileName ) =
+                                        EnsurePathsExist( modulesPath, entry.FullName );
 
-                                    entry.ExtractToFile( Path.Combine( modulesPath, entry.FullName ), true );
+                                    if ( !string.IsNullOrEmpty( fileName ) )
+                                    {
+                                        entry.ExtractToFile( Path.Combine( basePath, entry.Name ), true );
+                                    }
                                 }
                             }
                         }
@@ -221,16 +225,23 @@ namespace ClassicAssist.Updater
             }
         }
 
-        private static void EnsurePathsExist( string modulesPath, string fullName )
+        private static (string basePath, string fileName) EnsurePathsExist( string modulesPath, string fullName )
         {
-            //TODO may need to recurse check path
+            string[] paths = fullName.Split( '/' );
 
-            string path = Path.Combine( modulesPath, Path.GetDirectoryName( fullName ) ?? string.Empty );
+            string basePath = modulesPath;
 
-            if ( !Directory.Exists( path ) )
+            for ( int i = 0; i < paths.Length - 1; i++ )
             {
-                Directory.CreateDirectory( path );
+                basePath = Path.Combine( basePath, paths[i] );
+
+                if ( !Directory.Exists( basePath ) )
+                {
+                    Directory.CreateDirectory( basePath );
+                }
             }
+
+            return ( basePath, paths[paths.Length - 1] );
         }
 
         //https://stackoverflow.com/questions/627504/what-is-the-best-way-to-recursively-copy-contents-in-c/627518#627518
@@ -277,7 +288,7 @@ namespace ClassicAssist.Updater
 
                 AddText( Resources.Checking_for_latest_release___ );
 
-                ReleaseVersion latestRelease = await GetLatestRelease();
+                ChangelogEntry latestRelease = await Shared.Updater.GetLatestRelease( UpdaterSettings.InstallPrereleases );
 
                 if ( latestRelease == null )
                 {
@@ -386,23 +397,6 @@ namespace ClassicAssist.Updater
             }
 
             return null;
-        }
-
-        private async Task<ReleaseVersion> GetLatestRelease()
-        {
-            ReleaseVersion latestRelease;
-
-            if ( string.IsNullOrEmpty( App.CurrentOptions.URL ) )
-            {
-                latestRelease = await Shared.Updater.GetReleases( UpdaterSettings.InstallPrereleases );
-            }
-            else
-            {
-                // for testing only
-                latestRelease = new ReleaseVersion { DownloadURL = $"{App.CurrentOptions.URL}/ClassicAssist.zip" };
-            }
-
-            return latestRelease;
         }
 
         private static async Task<string> ExtractPackage( string fileName, string newVersion )

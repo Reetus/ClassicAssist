@@ -9,6 +9,7 @@
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              xmlns:misc="clr-namespace:ClassicAssist.Misc"
              xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
+             xmlns:vendors="clr-namespace:ClassicAssist.Data.Vendors"
              mc:Ignorable="d"
              d:DesignWidth="493" d:DesignHeight="400">
     <d:DesignerProperties.DesignStyle>
@@ -36,6 +37,11 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Padding" Value="4"/>
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
@@ -49,7 +55,7 @@
                 <GridView>
                     <GridViewColumn Header="✓">
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate>
+                            <DataTemplate DataType="vendors:VendorSellAgentEntry">
                                 <CheckBox IsChecked="{Binding Enabled}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -60,7 +66,7 @@
                                     Width="150" />
                     <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="70" x:Name="HueColumn">
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate>
+                            <DataTemplate DataType="vendors:VendorSellAgentEntry">
                                 <controls:EditTextBlock Text="{Binding Hue}" TabIndex="0"
                                                         Width="{Binding Path=Width, ElementName=HueColumn, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15}"
                                                         ShowIcon="True" />
@@ -69,7 +75,7 @@
                     </GridViewColumn>
                     <GridViewColumn Header="{x:Static resources:Strings.Amount}" Width="70" x:Name="AmountColumn">
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate>
+                            <DataTemplate DataType="vendors:VendorSellAgentEntry">
                                 <controls:EditTextBlock Text="{Binding Amount}" TabIndex="0"
                                                         Width="{Binding Path=Width, ElementName=AmountColumn, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15}"
                                                         ShowIcon="True" />
@@ -78,7 +84,7 @@
                     </GridViewColumn>
                     <GridViewColumn Header="{x:Static resources:Strings.Min_Price}" Width="100" x:Name="MinPriceColumn">
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate>
+                            <DataTemplate DataType="vendors:VendorSellAgentEntry">
                                 <controls:EditTextBlock Text="{Binding MinPrice}" TabIndex="2"
                                                         Width="{Binding Path=Width, ElementName=MinPriceColumn, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15}"
                                                         ShowIcon="True" />
@@ -109,11 +115,10 @@
             <StackPanel.Resources>
                 <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="Margin" Value="5,5,5,5" />
-                    <Setter Property="Padding" Value="10,0,10,0" />
                     <Setter Property="MinWidth" Value="80" />
                 </Style>
             </StackPanel.Resources>
-            <Button Content="{x:Static resources:Strings.Insert}">
+            <Button Content="{x:Static resources:Strings.Insert}" Margin="10">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                         <Style.Triggers>
@@ -141,7 +146,7 @@
                     </ContextMenu>
                 </Button.ContextMenu>
             </Button>
-            <Button Content="{x:Static resources:Strings.Remove}" Command="{Binding RemoveCommand}"
+            <Button Content="{x:Static resources:Strings.Remove}" Command="{Binding RemoveCommand}" Margin="0,10,10,10"
                     CommandParameter="{Binding SelectedItem, ElementName=ListView}" />
         </StackPanel>
     </Grid>

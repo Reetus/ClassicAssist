@@ -1,0 +1,268 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+    xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+    xmlns:filter="clr-namespace:ClassicAssist.UI.Views.ECV.Filter"
+    xmlns:misc="clr-namespace:ClassicAssist.Misc"
+    xmlns:ecv="clr-namespace:ClassicAssist.UI.Views.ECV"
+    xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
+    xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
+    xmlns:autoloot="clr-namespace:ClassicAssist.Data.Autoloot"
+    xmlns:data="clr-namespace:ClassicAssist.UO.Data"
+    xmlns:models="clr-namespace:ClassicAssist.UI.Views.ECV.Filter.Models"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    x:Name="userControl" x:Class="ClassicAssist.UI.Views.ECV.Filter.EntityCollectionFilterControl"
+    mc:Ignorable="d"
+    Background="{DynamicResource ThemeBackgroundBrush}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DebugToolBarStyle.xaml" />
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <filter:EntityCollectionFilterViewModel />
+    </UserControl.DataContext>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5">
+        <ScrollViewer.InputBindings>
+            <KeyBinding Modifiers="Control" Key="S" Command="{Binding SaveProfilesCommand}" />
+        </ScrollViewer.InputBindings>
+        <Grid Margin="10">
+            <Grid.Resources>
+                <misc:BindingProxy x:Key="DataContextProxy" Data="{Binding}" />
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <controls:ImageButton ImageSource="{StaticResource AddIcon}" Margin="0,0,5,0"
+                                      Command="{Binding AddProfileCommand}" ToolTip="{x:Static resources:Strings.Add}" />
+                <controls:ImageButton ImageSource="{StaticResource RemoveIcon}" Margin="0,0,5,0"
+                                      Command="{Binding RemoveProfileCommand}"
+                                      ToolTip="{x:Static resources:Strings.Remove}" />
+                <ComboBox Width="200" IsEditable="True" ItemsSource="{Binding Profiles}" DisplayMemberPath="Name"
+                          SelectedItem="{Binding SelectedProfile}" Style="{StaticResource EditComboBox}">
+                    <i:Interaction.Behaviors>
+                        <misc1:ComboBoxBehavior CommandBinding="{Binding ChangeProfileCommand}"
+                                                CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}}"
+                                                OnlyUserTriggered="True" />
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+            </StackPanel>
+            <ItemsControl ItemsSource="{Binding Item.Groups}" Grid.Row="1">
+                <ItemsControl.Resources>
+                    <Style TargetType="{x:Type controls:ImageButton}"
+                           BasedOn="{StaticResource {x:Type controls:ImageButton}}">
+                        <Setter Property="VerticalAlignment" Value="Top" />
+                        <Setter Property="ImageHeight" Value="14" />
+                    </Style>
+                </ItemsControl.Resources>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Row="0">
+                                <StackPanel.Style>
+                                    <Style TargetType="{x:Type StackPanel}">
+                                        <Setter Property="Visibility">
+                                            <Setter.Value>
+                                                <MultiBinding
+                                                    Converter="{StaticResource CollectionIndexZeroVisibilityConverter}">
+                                                    <Binding
+                                                        Path="Data.(filter:EntityCollectionFilterViewModel.Item).Groups"
+                                                        Source="{StaticResource DataContextProxy}" />
+                                                    <Binding Path="." />
+                                                </MultiBinding>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </StackPanel.Style>
+                                <ComboBox ItemsSource="{misc1:EnumBindingSource {x:Type models:BooleanOperation}}"
+                                          MinWidth="100"
+                                          SelectedItem="{Binding Operation}" Margin="0,0,5,0" />
+                            </StackPanel>
+                            <ListView x:Name="listView" ItemsSource="{Binding Items}" Margin="0,5"
+                                      MinHeight="50" Grid.Row="1">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="{x:Static resources:Strings.Property}" Width="220"
+                                                        x:Name="NameColumn">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type models:EntityCollectionFilterItem}">
+                                                    <StackPanel>
+                                                        <ComboBox SelectedItem="{Binding Constraint}"
+                                                                  ItemsSource="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.Constraints), Source={StaticResource DataContextProxy}}"
+                                                                  Width="200"
+                                                                  DisplayMemberPath="Name" />
+                                                        <ecv:SkillBonusSelector Margin="0,5,0,0"
+                                                            DataContext="{Binding}">
+                                                            <ecv:SkillBonusSelector.Style>
+                                                                <Style TargetType="{x:Type ecv:SkillBonusSelector}">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger
+                                                                            Binding="{Binding Constraint.AllowedValuesEnum}"
+                                                                            Value="{x:Type agents:SkillBonusSkills}">
+                                                                            <Setter Property="Visibility"
+                                                                                Value="Visible" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </ecv:SkillBonusSelector.Style>
+                                                        </ecv:SkillBonusSelector>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="{x:Static resources:Strings.Operator}" Width="75">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type models:EntityCollectionFilterItem}">
+                                                    <ComboBox Width="50" SelectedItem="{Binding Operator}"
+                                                              ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type autoloot:AutolootOperator}}}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="{x:Static resources:Strings.Value}" Width="100"
+                                                        x:Name="GridViewColumn">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type models:EntityCollectionFilterItem}">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <ComboBox Grid.Column="0" Width="90"
+                                                                  SelectedItem="{Binding Value, Converter={StaticResource EnumToIntegerValueConverter}, ConverterParameter={x:Type data:Layer}}"
+                                                                  ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type data:Layer}}}">
+                                                            <ComboBox.Style>
+                                                                <Style TargetType="{x:Type ComboBox}"
+                                                                       BasedOn="{StaticResource {x:Type ComboBox}}">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger
+                                                                            Binding="{Binding Constraint.AllowedValuesEnum}"
+                                                                            Value="{x:Type data:Layer}">
+                                                                            <Setter Property="Visibility"
+                                                                                Value="Visible" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </ComboBox.Style>
+                                                        </ComboBox>
+                                                        <TextBox
+                                                            Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                            MinWidth="40" Grid.Column="0">
+                                                            <TextBox.Style>
+                                                                <Style TargetType="{x:Type TextBox}"
+                                                                       BasedOn="{StaticResource {x:Type TextBox}}">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger
+                                                                            Binding="{Binding Constraint.AllowedValuesEnum}"
+                                                                            Value="{x:Null}">
+                                                                            <Setter Property="Visibility"
+                                                                                Value="Visible" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger
+                                                                            Binding="{Binding Constraint.AllowedValuesEnum}"
+                                                                            Value="{x:Type agents:SkillBonusSkills}">
+                                                                            <Setter Property="Visibility"
+                                                                                Value="Visible" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBox.Style>
+                                                        </TextBox>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="+/-">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <StackPanel.Resources>
+                                                            <Style TargetType="{x:Type Button}"
+                                                                   BasedOn="{StaticResource {x:Type Button}}">
+                                                                <Setter Property="Padding" Value="5" />
+                                                            </Style>
+                                                        </StackPanel.Resources>
+                                                        <Button
+                                                            Command="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.AddCommand), Source={StaticResource DataContextProxy}}"
+                                                            CommandParameter="{Binding Path=ItemsSource, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}">
+                                                            <Image Source="{StaticResource PlusIcon}" Height="8" />
+                                                        </Button>
+                                                        <Button
+                                                            Command="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.RemoveCommand), Source={StaticResource DataContextProxy}}">
+                                                            <Button.CommandParameter>
+                                                                <MultiBinding
+                                                                    Converter="{StaticResource GroupItemMultiValueConverter}">
+                                                                    <Binding Path="ItemsSource"
+                                                                             RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ListView}}" />
+                                                                    <Binding
+                                                                        Path="." />
+                                                                </MultiBinding>
+                                                            </Button.CommandParameter>
+                                                            <Image Source="{StaticResource MinusIcon}" Height="8" />
+                                                        </Button>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <StackPanel Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal"
+                                        Margin="0,7,5,0">
+                                <controls:ImageButton ImageSource="{StaticResource CirclePlusItem}"
+                                                      ToolTip="{x:Static resources:Strings.New_Group}"
+                                                      Command="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.NewGroupCommand), Source={StaticResource DataContextProxy}}"
+                                                      CommandParameter="{Binding}" />
+                                <controls:ImageButton ImageSource="{StaticResource CircleRemoveIcon}"
+                                                      ToolTip="{x:Static resources:Strings.Remove_Group}"
+                                                      Command="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.RemoveGroupCommand), Source={StaticResource DataContextProxy}}"
+                                                      CommandParameter="{Binding}">
+                                    <controls:ImageButton.Style>
+                                        <Style TargetType="{x:Type controls:ImageButton}"
+                                               BasedOn="{StaticResource {x:Type controls:ImageButton}}">
+                                            <Setter Property="Visibility">
+                                                <Setter.Value>
+                                                    <MultiBinding
+                                                        Converter="{StaticResource CollectionIndexZeroVisibilityConverter}">
+                                                        <Binding
+                                                            Path="Data.(filter:EntityCollectionFilterViewModel.Item).Groups"
+                                                            Source="{StaticResource DataContextProxy}" />
+                                                        <Binding Path="." />
+                                                    </MultiBinding>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </controls:ImageButton.Style>
+                                </controls:ImageButton>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Margin="10,0">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Margin" Value="10,0,0,0" />
+                    </Style>
+                </StackPanel.Resources>
+                <Button Content="{x:Static resources:Strings.Apply}" Command="{Binding ApplyCommand}" />
+                <Button Content="{x:Static resources:Strings.Reset}" Command="{Binding ResetCommand}" />
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

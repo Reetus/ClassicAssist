@@ -417,7 +417,7 @@ namespace ClassicAssist.UO
             Engine.SendPacketToServer( new ChangeStatLock( stat, lockStatus ) );
         }
 
-        public static (int, bool) WaitForTargetOrFizzle( int timeout )
+        public static PacketWaitEntry[] GetFizzleWaitEntries()
         {
             PacketWaitEntry targetWe = CreateWaitEntry( new PacketFilterInfo( 0x6C ) );
 
@@ -474,69 +474,37 @@ namespace ClassicAssist.UO
                     PacketFilterConditions.ShortAtPositionCondition( Engine.Player.Z, 10 )
                 } ) );
 
+            return new[]
+            {
+                targetWe, fizzWe, fizzMessageWe, recoveredMessageWe, alreadyCastingWe, alreadyCasting2We,
+                concentrationWe, noManaWe, fizzChivWe
+            };
+        }
+
+        public static (int, bool) WaitForTargetOrFizzle( int timeout )
+        {
+            PacketWaitEntry[] entries = GetFizzleWaitEntries();
+
             Engine.WaitingForTarget = true;
 
-            List<Task> tasks = new List<Task>();
+            List<Task<bool>> tasks = entries.Select( t => t.Lock.ToTask() ).ToList();
 
             try
             {
-                Task<bool> targetTask = Task.Run( () =>
+                Task<bool> timeoutTask = Task.Run( async () =>
                 {
-                    do
-                    {
-                        bool result = targetWe.Lock.WaitOne( timeout );
+                    await Task.Delay( timeout );
 
-                        if ( !result )
-                        {
-                            return false;
-                        }
-
-                        if ( targetWe.Packet[6] == 0x03 )
-                        {
-                            continue;
-                        }
-
-                        return true;
-                    }
-                    while ( true );
+                    return true;
                 } );
 
-                Task fizzTask = Task.Factory.StartNew( () => fizzWe.Lock.WaitOne( timeout ),
-                    TaskCreationOptions.LongRunning );
-
-                Task fizzMessageTask = Task.Factory.StartNew( () => fizzMessageWe.Lock.WaitOne( timeout + 100 ),
-                    TaskCreationOptions.LongRunning );
-
-                Task recoveredMessageTask =
-                    Task.Factory.StartNew( () => recoveredMessageWe.Lock.WaitOne( timeout + 100 ),
-                        TaskCreationOptions.LongRunning );
-
-                Task alreadyCastingTask = Task.Factory.StartNew( () => alreadyCastingWe.Lock.WaitOne( timeout + 100 ),
-                    TaskCreationOptions.LongRunning );
-
-                Task alreadyCasting2Task = Task.Factory.StartNew( () => alreadyCasting2We.Lock.WaitOne( timeout + 100 ),
-                    TaskCreationOptions.LongRunning );
-
-                Task concentrationTask = Task.Factory.StartNew( () => concentrationWe.Lock.WaitOne( timeout + 100 ),
-                    TaskCreationOptions.LongRunning );
-
-                Task noManaTask = Task.Factory.StartNew( () => noManaWe.Lock.WaitOne( timeout + 100 ),
-                    TaskCreationOptions.LongRunning );
-
-                Task fizzChivTask = Task.Factory.StartNew( () => fizzChivWe.Lock.WaitOne( timeout + 100 ),
-                    TaskCreationOptions.LongRunning );
+                tasks.Add( timeoutTask );
 
                 int index;
 
-                tasks.AddRange( new[]
-                {
-                    targetTask, fizzTask, fizzMessageTask, recoveredMessageTask, alreadyCastingTask,
-                    alreadyCasting2Task, concentrationTask, noManaTask, fizzChivTask
-                } );
-
                 try
                 {
-                    index = Task.WaitAny( tasks.ToArray() );
+                    index = Task.WaitAny( tasks.Cast<Task>().ToArray() );
                 }
                 catch ( OperationCanceledException )
                 {
@@ -547,20 +515,11 @@ namespace ClassicAssist.UO
                     return ( -1, false );
                 }
 
-                return ( index, index == 0 && targetTask.Result );
+                return ( index, index == 0 && tasks[0].Result );
             }
             finally
             {
-                Engine.PacketWaitEntries.Remove( targetWe );
-                Engine.PacketWaitEntries.Remove( fizzWe );
-                Engine.PacketWaitEntries.Remove( fizzMessageWe );
-                Engine.PacketWaitEntries.Remove( recoveredMessageWe );
-                Engine.PacketWaitEntries.Remove( alreadyCastingWe );
-                Engine.PacketWaitEntries.Remove( alreadyCasting2We );
-                Engine.PacketWaitEntries.Remove( concentrationWe );
-                Engine.PacketWaitEntries.Remove( noManaWe );
-                Engine.PacketWaitEntries.Remove( fizzChivWe );
-
+                Engine.PacketWaitEntries.RemoveRange( entries );
                 Engine.WaitingForTarget = false;
             }
         }

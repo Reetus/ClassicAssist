@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:debug="clr-namespace:ClassicAssist.UI.ViewModels.Debug"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
-             xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+             xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
              d:DesignHeight="400" d:DesignWidth="550">
     <UserControl.DataContext>
@@ -24,14 +24,13 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ToolBar Style="{DynamicResource ToolBarStyle1}" Grid.Row="0">
-            <Button ToolTip="{x:Static resources:Strings.Clear}" Command="{Binding ClearCommand}">
-                <Image Source="{StaticResource RemoveIcon}" Height="11" />
-            </Button>
+        <ToolBar Grid.Row="0">
+            <controls:ImageButton ToolTip="{x:Static resources:Strings.Clear}" Command="{Binding ClearCommand}"
+                                  ImageSource="{StaticResource RemoveIcon}" />
         </ToolBar>
         <ListView Grid.Row="1" x:Name="ListView" ItemsSource="{Binding Items}">
             <i:Interaction.Behaviors>

@@ -10,26 +10,26 @@ namespace ClassicAssist.UI.Controls
     public partial class CustomWindowTitleControl
     {
         public static readonly DependencyProperty AdditionalContentProperty =
-            DependencyProperty.Register( "AdditionalContent", typeof( object ), typeof( CustomWindowTitleControl ),
+            DependencyProperty.Register( nameof( AdditionalContent ), typeof( object ), typeof( CustomWindowTitleControl ),
                 new PropertyMetadata( null ) );
 
         public static readonly DependencyProperty AdditionalButtonsProperty =
-            DependencyProperty.Register( "AdditionalButtons", typeof( object ), typeof( CustomWindowTitleControl ),
+            DependencyProperty.Register( nameof( AdditionalButtons ), typeof( object ), typeof( CustomWindowTitleControl ),
                 new PropertyMetadata( null ) );
 
-        public static readonly DependencyProperty CustomTitleProperty = DependencyProperty.Register( "CustomTitle",
+        public static readonly DependencyProperty CustomTitleProperty = DependencyProperty.Register( nameof( CustomTitle ),
             typeof( string ), typeof( CustomWindowTitleControl ),
             new FrameworkPropertyMetadata( default( string ), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
 
-        public static readonly DependencyProperty CanCloseProperty = DependencyProperty.Register( "CanClose",
+        public static readonly DependencyProperty CanCloseProperty = DependencyProperty.Register( nameof( CanClose ),
             typeof( bool ), typeof( CustomWindowTitleControl ),
             new FrameworkPropertyMetadata( true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
 
-        public static readonly DependencyProperty CanMinimizeProperty = DependencyProperty.Register( "CanMinimize",
+        public static readonly DependencyProperty CanMinimizeProperty = DependencyProperty.Register( nameof( CanMinimize ),
             typeof( bool ), typeof( CustomWindowTitleControl ),
             new FrameworkPropertyMetadata( true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
 
-        public static readonly DependencyProperty CanMaxmizeProperty = DependencyProperty.Register( "CanMaximize",
+        public static readonly DependencyProperty CanMaxmizeProperty = DependencyProperty.Register( nameof( CanMaximize ),
             typeof( bool ), typeof( CustomWindowTitleControl ),
             new FrameworkPropertyMetadata( true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
 

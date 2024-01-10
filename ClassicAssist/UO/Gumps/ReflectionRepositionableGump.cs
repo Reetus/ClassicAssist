@@ -34,6 +34,10 @@ namespace ClassicAssist.UO.Gumps
             Engine.ClientClosing += CloseGumps;
         }
 
+        public ReflectionRepositionableGump()
+        {
+        }
+
         public ReflectionRepositionableGump( int width, int height, int serial, uint gumpID ) : base( width, height,
             serial, gumpID )
         {

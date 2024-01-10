@@ -487,6 +487,8 @@ namespace ClassicAssist.UI.ViewModels
         {
             _dispatcher.Invoke( () =>
             {
+                HotkeyEntry selectedItem = SelectedItem;
+
                 if ( string.IsNullOrEmpty( FilterText ) )
                 {
                     FilterItems = Items;
@@ -531,6 +533,20 @@ namespace ClassicAssist.UI.ViewModels
 
                         return hkc;
                     } ) );
+
+                if ( selectedItem != null )
+                {
+                    foreach ( HotkeyCommand filterItem in FilterItems )
+                    {
+                        foreach ( HotkeyEntry child in filterItem.Children )
+                        {
+                            if ( ReferenceEquals( child, selectedItem ) )
+                            {
+                                SelectedItem = child;
+                            }
+                        }
+                    }
+                }
 
                 Searching = false;
             } );

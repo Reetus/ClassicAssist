@@ -7,7 +7,7 @@
     xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
     xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
     xmlns:data="clr-namespace:ClassicAssist.Data"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:cliloc="clr-namespace:ClassicAssist.UO.Data"
     xmlns:headered="clr-namespace:ClassicAssist.Controls.Headered;assembly=ClassicAssist.Controls"
     xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
@@ -158,6 +158,8 @@
                     <StackPanel Margin="5">
                         <CheckBox Content="{x:Static resources:Strings.Abilities_Gump}"
                                   IsChecked="{Binding CurrentOptions.AbilitiesGump}" />
+                        <CheckBox Content="{x:Static resources:Strings.Hotkeys_Status_Gump}"
+                                  IsChecked="{Binding CurrentOptions.HotkeysStatusGump}" />
                         <optionsTab:MacrosGumpControl DataContext="{Binding}" />
                     </StackPanel>
                 </GroupBox>

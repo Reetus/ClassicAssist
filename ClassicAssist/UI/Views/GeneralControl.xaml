@@ -6,7 +6,7 @@
     xmlns:r="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
     xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
     xmlns:misc="clr-namespace:ClassicAssist.Misc"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
     x:Name="userControl"
     x:Class="ClassicAssist.UI.Views.GeneralControl"
@@ -39,13 +39,19 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ListBox x:Name="listBox" ItemsSource="{Binding Filters}" Grid.Row="0">
-                    <ListBox.ItemTemplate>
+                <ItemsControl x:Name="listBox" ItemsSource="{Binding Filters}" Grid.Row="0"
+                              Background="{StaticResource ThemeInnerControlBackgroundBrush}">
+                    <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <CheckBox IsChecked="{Binding Enabled}" />
-                                <TextBlock Text="{Binding Name}" Margin="5,0,5,0" />
-                                <Button Background="Transparent" BorderThickness="0"
+                            <Grid Margin="5,2.5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <CheckBox IsChecked="{Binding Enabled}" Grid.Column="0" />
+                                <TextBlock Text="{Binding Name}" Margin="5,0,5,0" Grid.Column="1" />
+                                <Button Background="Transparent" BorderThickness="0" Grid.Column="2"
                                         ToolTip="{x:Static r:Strings.Options}"
                                         Visibility="{Binding IsConfigurable, Converter={StaticResource BooleanToVisibilityConverter}}"
                                         Command="{Binding DataContext.ConfigureFilterCommand, ElementName=userControl}"
@@ -54,16 +60,16 @@
                                         <Image Source="{StaticResource configureIcon}" Height="16" Margin="0" />
                                     </Button.Content>
                                 </Button>
-                            </StackPanel>
+                            </Grid>
                         </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                <Grid Grid.Row="1">
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Grid Grid.Row="1" Margin="5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Label Content="{x:Static r:Strings.Light}" Grid.Column="0" />
+                    <Label Content="{x:Static r:Strings.Light}" Grid.Column="0" VerticalAlignment="Center" />
                     <Slider Grid.Column="1" Maximum="31"
                             Value="{Binding Options.LightLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             IsDirectionReversed="True" Minimum="0" Height="20" VerticalAlignment="Center" />
@@ -92,6 +98,7 @@
                                 <ItemContainerTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <Label Content="{x:Static r:Strings.Action_Delay_}" Margin="0" />
+                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                                         <TextBox Width="40" Margin="10,0,10,0"
                                                  Text="{Binding Path=Data.Options.ActionDelayMS, Source={StaticResource proxy}}" />
                                         <Label Content="ms" Margin="0" Padding="0" />
@@ -114,7 +121,7 @@
                             </Grid.ColumnDefinitions>
                             <CheckBox Content="{x:Static r:Strings.Enabled}" Grid.Column="0"
                                       IsChecked="{Binding SavePasswords}" />
-                            <ComboBox x:Name="comboBox" Grid.Column="1" Margin="10,0,10,0" SelectedIndex="0"
+                            <ComboBox x:Name="comboBox" Grid.Column="1" Margin="5,0,5,0" SelectedIndex="0"
                                       ItemsSource="{Binding SavedPasswords}" DisplayMemberPath="Key" />
                             <Button Content="{x:Static r:Strings.Remove}" Grid.Column="2"
                                     Command="{Binding RemoveSavedPasswordCommand}"
@@ -156,12 +163,12 @@
                                 </i:Interaction.Behaviors>
                             </ComboBox>
                         </Grid>
-                        <DockPanel Grid.Column="1" Margin="5">
-                            <Button Content="{x:Static r:Strings.New}" Margin="0,0,10,0" Padding="10,0,10,0"
+                        <DockPanel Grid.Column="1" Margin="0,5,5,5">
+                            <Button Content="{x:Static r:Strings.New}" Margin="0,0,5,0" Padding="10,0,10,0"
                                     Command="{Binding NewProfileCommand}" />
-                            <Button Content="{x:Static r:Strings.Save}" Margin="0,0,10,0" Padding="10,0,10,0"
+                            <Button Content="{x:Static r:Strings.Save}" Margin="0,0,5,0" Padding="10,0,10,0"
                                     Command="{Binding SaveProfileCommand}" />
-                            <Button Command="{Binding LinkUnlinkProfileCommand}">
+                            <Button Command="{Binding LinkUnlinkProfileCommand}" Padding="4">
                                 <Image Width="16" Margin="3,0,3,0">
                                     <Image.Style>
                                         <Style TargetType="{x:Type Image}">
@@ -179,7 +186,7 @@
                                     </Image.Style>
                                 </Image>
                             </Button>
-                            <Button Command="{Binding BackupSettingsCommand}" Margin="10,0,0,0">
+                            <Button Command="{Binding BackupSettingsCommand}" Margin="5,0,0,0" Padding="4">
                                 <Image Width="16" Source="{DynamicResource BackupIcon}"
                                        ToolTip="{x:Static r:Strings.Backup_Settings}" />
                             </Button>

@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Assistant;
+using ClassicAssist.Misc;
+using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using Newtonsoft.Json;
 
@@ -71,12 +74,7 @@ namespace ClassicAssist.Data.Spells
 
             if ( sd != null )
             {
-                if ( sd.Target )
-                {
-                    Engine.WaitingForTarget = true;
-                }
-
-                CastSpell( sd.ID );
+                CastSpell( sd );
                 return;
             }
 
@@ -92,7 +90,57 @@ namespace ClassicAssist.Data.Spells
                 Engine.WaitingForTarget = true;
             }
 
-            CastSpell( md.ID );
+            CastSpell( md );
+        }
+
+        public void CastSpell( SpellData sd )
+        {
+            if ( sd.Target )
+            {
+                Engine.WaitingForTarget = true;
+            }
+
+            CastSpell( sd.ID );
+
+            if ( sd.Timeout <= 0 || !sd.Target)
+            {
+                return;
+            }
+
+            Task.Run( async () =>
+            {
+                if ( !Options.CurrentOptions.UseExperimentalFizzleDetection )
+                {
+                    await Task.Delay( sd.Timeout + 100 );
+                }
+                else
+                {
+                    Task<bool> timeoutTask = Task.Run( async () =>
+                    {
+                        await Task.Delay( sd.Timeout + 100 );
+
+                        return true;
+                    } );
+
+                    PacketWaitEntry[] entries = UO.Commands.GetFizzleWaitEntries();
+
+                    IEnumerable<Task<bool>> tasks = entries.Select( e => e.Lock.ToTask() ).Append( timeoutTask );
+
+                    try
+                    {
+                        await Task.WhenAny( tasks );
+                    }
+                    finally
+                    {
+                        Engine.PacketWaitEntries.RemoveRange( entries );
+                    }
+                }
+
+                if ( Engine.WaitingForTarget )
+                {
+                    Engine.WaitingForTarget = false;
+                }
+            } );
         }
 
         public void CastSpell( int id )

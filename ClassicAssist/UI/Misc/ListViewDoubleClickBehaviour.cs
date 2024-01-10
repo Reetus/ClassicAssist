@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interactivity;
+using Microsoft.Xaml.Behaviors;
 using ClassicAssist.UI.ViewModels;
 
 namespace ClassicAssist.UI.Misc
@@ -14,7 +14,7 @@ namespace ClassicAssist.UI.Misc
             AssociatedObject.MouseDoubleClick += OnMouseDoubleClick;
         }
 
-        private void OnMouseDoubleClick( object sender, MouseButtonEventArgs e )
+        private static void OnMouseDoubleClick( object sender, MouseButtonEventArgs e )
         {
             ObjectInspectorViewModel i = (ObjectInspectorViewModel) ( (ListView) sender ).DataContext;
 

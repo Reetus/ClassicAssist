@@ -5,52 +5,89 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
     xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
     xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+    xmlns:System="clr-namespace:System;assembly=mscorlib"
     x:Class="ClassicAssist.UI.Views.NewProfileWindow"
-    mc:Ignorable="d"
-    Title="{x:Static resources:Strings.New_Profile}" Height="130" Width="290" WindowStyle="ToolWindow">
+    mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
+    Title="{x:Static resources:Strings.New_Profile}" SizeToContent="Height" Width="350" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner">
     <Window.Resources>
-        <ValueConverters:EnumMatchToBooleanConverter x:Key="EnumMatchToBooleanConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <ValueConverters:EnumMatchToBooleanConverter x:Key="EnumMatchToBooleanConverter" />
+            <viewModels:NewProfileViewModel x:Key="DummyData">
+                <viewModels:NewProfileViewModel.Profiles>
+                    <System:String>fake1.json</System:String>
+                    <System:String>fake2.json</System:String>
+                    <System:String>fake3.json</System:String>
+                </viewModels:NewProfileViewModel.Profiles>
+            </viewModels:NewProfileViewModel>
+        </ResourceDictionary>
     </Window.Resources>
     <Window.DataContext>
         <viewModels:NewProfileViewModel />
     </Window.DataContext>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10,10,10,5">
-            <TextBlock Text="{x:Static resources:Strings.Name_}" Margin="0,0,20,0" />
-            <TextBox Width="200" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10,5,10,10">
-            <RadioButton Content="{x:Static resources:Strings.Blank}" Margin="0,0,30,0"
-                         IsChecked="{Binding Option, ConverterParameter=Blank, Converter={StaticResource EnumMatchToBooleanConverter}}" />
-            <RadioButton Content="{x:Static resources:Strings.Duplicate}"
-                         IsChecked="{Binding Option, ConverterParameter=Duplicate, Converter={StaticResource EnumMatchToBooleanConverter}}" />
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="2">
-            <StackPanel.Resources>
-                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                    <Setter Property="MinWidth" Value="80" />
-                    <Setter Property="Margin" Value="10,0,0,0" />
-                    <Setter Property="Padding" Value="20,2,20,2" />
-                </Style>
-            </StackPanel.Resources>
-            <Button Content="{x:Static resources:Strings.OK}" Command="{Binding OkCommand}">
-                <i:Interaction.Behaviors>
-                    <behaviours:CloseOnClickBehaviour />
-                </i:Interaction.Behaviors>
-            </Button>
-            <Button Content="{x:Static resources:Strings.Cancel}">
-                <i:Interaction.Behaviors>
-                    <behaviours:CloseOnClickBehaviour />
-                </i:Interaction.Behaviors>
-            </Button>
-        </StackPanel>
-    </Grid>
+    <Border Margin="10" BorderBrush="{StaticResource ThemeBorderBrush}"
+            Background="{StaticResource ThemeInnerControlBackgroundBrush}"
+            BorderThickness="1" d:DataContext="{StaticResource DummyData}">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{x:Static resources:Strings.Name_}" Grid.Column="0" VerticalAlignment="Center" />
+                <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"
+                         Grid.Column="1" />
+            </Grid>
+            <Grid Grid.Row="1" Margin="0,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Row="0">
+                    <RadioButton Content="{x:Static resources:Strings.Blank}" Margin="0,0,10,0"
+                                 IsChecked="{Binding Option, ConverterParameter=Blank, Converter={StaticResource EnumMatchToBooleanConverter}}" />
+                    <RadioButton Content="{x:Static resources:Strings.Duplicate}"
+                                 IsChecked="{Binding Option, ConverterParameter=Duplicate, Converter={StaticResource EnumMatchToBooleanConverter}}" />
+                </StackPanel>
+                <ComboBox Grid.Row="1" ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}" Margin="0,10,0,0">
+                    <ComboBox.Style>
+                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Option}" Value="Blank">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ComboBox.Style>
+                </ComboBox>
+            </Grid>
+            <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Margin" Value="5,0,0,0" />
+                    </Style>
+                </StackPanel.Resources>
+                <Button Content="{x:Static resources:Strings.OK}" Command="{Binding OKCommand}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:CloseOnClickBehaviour />
+                    </i:Interaction.Behaviors>
+                </Button>
+                <Button Content="{x:Static resources:Strings.Cancel}">
+                    <i:Interaction.Behaviors>
+                        <behaviours:CloseOnClickBehaviour />
+                    </i:Interaction.Behaviors>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>

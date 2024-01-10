@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Interactivity;
+using Microsoft.Xaml.Behaviors;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Shared;
@@ -30,16 +30,20 @@ namespace ClassicAssist.UI.Misc
         {
             AssistantOptions.OnWindowLoaded();
 
-            if ( !string.IsNullOrEmpty( Settings.Default.SentryDsn ) )
+            if ( string.IsNullOrEmpty( Settings.Default.SentryDsn ) )
             {
-                SentrySdk.Init( new SentryOptions
-                {
-                    Dsn = Settings.Default.SentryDsn,
-                    BeforeSend = SentryBeforeSend,
-                    AutoSessionTracking = true,
-                    Release = VersionHelpers.GetProductVersion( Assembly.GetExecutingAssembly() ).ToString()
-                } );
+                return;
             }
+
+            SentryOptions options = new SentryOptions
+            {
+                Dsn = Settings.Default.SentryDsn,
+                AutoSessionTracking = true,
+                Release = VersionHelpers.GetProductVersion( Assembly.GetExecutingAssembly() ).ToString()
+            };
+
+            options.SetBeforeSend( SentryBeforeSend );
+            SentrySdk.Init( options );
         }
 
         private static SentryEvent SentryBeforeSend( SentryEvent args )

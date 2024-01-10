@@ -194,5 +194,15 @@ namespace ClassicAssist.Properties {
                 return ResourceManager.GetString("Shrink", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap splash_logo {
+            get {
+                object obj = ResourceManager.GetObject("splash_logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

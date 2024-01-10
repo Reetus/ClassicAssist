@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:data="clr-namespace:ClassicAssist.Browser.Data"
              xmlns:browser="clr-namespace:ClassicAssist.Browser"
@@ -65,7 +65,8 @@
                                                  ClearCommandParameter="{x:Static data:FilterType.Author}"
                                                  SelectedItem="{Binding AuthorFilter}" />
                 </headered:HorizontalHeaderedContentControl>
-                <headered:HorizontalHeaderedContentControl Header="{x:Static resources:Strings.Category}" Margin="0" Grid.Column="3">
+                <headered:HorizontalHeaderedContentControl Header="{x:Static resources:Strings.Category}" Margin="0"
+                                                           Grid.Column="3">
                     <controls2:ClearableComboBox ItemsSource="{Binding Categories}"
                                                  ClearCommand="{Binding ClearCommand}"
                                                  ClearCommandParameter="{x:Static data:FilterType.Category}"
@@ -135,7 +136,7 @@
                         <ToggleButton x:Name="ToggleButton" Height="15" Margin="0"
                                       Style="{DynamicResource LeftRightIconToggleButton}" VerticalAlignment="Center" />
                         <Button Content="{x:Static resources:Strings.Copy_to_clipboard}"
-                                Command="{Binding CopyToClipboardCommand}" CommandParameter="{Binding SelectedMacro}" />
+                                Command="{Binding CopyToClipboardCommand}" CommandParameter="{Binding SelectedItem}" />
                         <Button Content="{x:Static resources:Strings.Create_Macro}"
                                 Command="{Binding CreateMacroCommand}" CommandParameter="{Binding SelectedItem}" />
                         <Button Content="{x:Static resources:Strings.Open_in_Github}"

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:avalon="http://icsharpcode.net/sharpdevelop/avalonedit"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              xmlns:local="clr-namespace:ClassicAssist.Data.Macros"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
@@ -197,15 +197,16 @@
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                             <Setter Property="Margin" Value="0" />
                             <Setter Property="FontSize" Value="10" />
+                            <Setter Property="Padding" Value="4" />
                         </Style>
                     </Grid.Resources>
                     <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="0" Margin="0,0,2.5,0"
                             Command="{Binding RemoveMacroConfirmCommand, Mode=OneWay}"
-                            CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}">
+                            CommandParameter="{Binding SelectedItem}">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=DraggableTreeView}"
+                                    <DataTrigger Binding="{Binding Path=SelectedItem}"
                                                  Value="{x:Null}">
                                         <Setter Property="IsEnabled" Value="False" />
                                     </DataTrigger>
@@ -229,9 +230,10 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
+                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                     <Button Content="{x:Static resources:Strings.Play}" Grid.Column="0" Margin="0,0,2.5,0"
                             Command="{Binding ExecuteCommand, Mode=OneWay}"
-                            CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}"
+                            CommandParameter="{Binding SelectedItem}"
                             IsEnabled="{Binding SelectedItem.IsRunning, Converter={StaticResource InverseBooleanConverter}, ElementName=DraggableTreeView}">
                         <Button.ContextMenu>
                             <ContextMenu>
@@ -240,8 +242,9 @@
                             </ContextMenu>
                         </Button.ContextMenu>
                     </Button>
+                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                     <Button Content="{x:Static resources:Strings.Stop}" Grid.Column="1" Margin="2.5,0,0,0"
-                            IsEnabled="{Binding SelectedItem.IsRunning, ElementName=DraggableTreeView}"
+                            IsEnabled="{Binding SelectedItem.IsRunning}"
                             Command="{Binding StopCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
                 </Grid>
                 <GroupBox Header="{x:Static resources:Strings.Hotkeys}" Grid.Row="6" Padding="5" Margin="0,5,0,0">
@@ -256,7 +259,7 @@
                                   Margin="0,5,0,0" IsChecked="{Binding SelectedItem.PassToUO}" />
                         <Button Content="{x:Static resources:Strings.Clear}" Grid.Row="2" Padding="1,0,1,1"
                                 Margin="0,5,0,0" Command="{Binding ClearHotkeyCommand, Mode=OneWay}"
-                                CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}" />
+                                CommandParameter="{Binding SelectedItem}" />
                     </Grid>
                 </GroupBox>
             </Grid>
@@ -274,16 +277,26 @@
                                HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
                                FontFamily="Consolas"
                                IsEnabled="{Binding SelectedItem, Converter={StaticResource NullBooleanConverter}}">
+                <avalon:TextEditor.Style>
+                    <Style TargetType="{x:Type avalon:TextEditor}" BasedOn="{StaticResource {x:Type avalon:TextEditor}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedItem}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </avalon:TextEditor.Style>
                 <avalon:TextEditor.InputBindings>
                     <KeyBinding Modifiers="Control" Key="S" Command="{Binding SaveMacroCommand}" />
                     <KeyBinding Key="F5" Command="{Binding ExecuteCommand, Mode=OneWay}"
-                                CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}" />
+                                CommandParameter="{Binding SelectedItem}" />
                     <KeyBinding Key="F12" Command="{Binding StopCommand, Mode=OneWay}"
-                                CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}" />
+                                CommandParameter="{Binding SelectedItem}" />
                 </avalon:TextEditor.InputBindings>
                 <i:Interaction.Behaviors>
+                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                     <misc:AvalonEditBehaviour
-                        TextBinding="{Binding SelectedItem.Macro, ElementName=DraggableTreeView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        TextBinding="{Binding SelectedItem.Macro}" />
                     <misc:AvalonBindingBehaviour DocumentBinding="{Binding Document}"
                                                  CaretBinding="{Binding CaretPosition}" />
                 </i:Interaction.Behaviors>
@@ -333,21 +346,22 @@
                     <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
                         <Setter Property="Margin" Value="0,0,10,0" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=DraggableTreeView}"
+                            <DataTrigger Binding="{Binding Path=SelectedItem}"
                                          Value="{x:Null}">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </WrapPanel.Resources>
+                <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
                 <CheckBox Content="{x:Static resources:Strings.Loop}"
-                          IsChecked="{Binding SelectedItem.Loop, ElementName=DraggableTreeView}" />
+                          IsChecked="{Binding SelectedItem.Loop}" />
                 <CheckBox Content="{x:Static resources:Strings.Do_not_auto_interupt}"
-                          IsChecked="{Binding SelectedItem.DoNotAutoInterrupt, ElementName=DraggableTreeView}" />
+                          IsChecked="{Binding SelectedItem.DoNotAutoInterrupt}" />
                 <CheckBox Content="{x:Static resources:Strings.Run_in_background}"
-                          IsChecked="{Binding SelectedItem.IsBackground, ElementName=DraggableTreeView}" />
+                          IsChecked="{Binding SelectedItem.IsBackground}" />
                 <CheckBox Content="{x:Static resources:Strings.Autostart}"
-                          IsChecked="{Binding SelectedItem.IsAutostart, ElementName=DraggableTreeView}"
+                          IsChecked="{Binding SelectedItem.IsAutostart}"
                           ToolTip="{x:Static resources:Strings.When_checked_macro_will_execute_automatically_after_login_}" />
                 <CheckBox Content="{x:Static resources:Strings.Undisableable}"
                           ToolTip="{x:Static resources:Strings.Hotkey_will_still_trigger_with_hotkeys_disabled}"
@@ -355,6 +369,7 @@
                 <CheckBox Content="{x:Static resources:Strings.Global}"
                           ToolTip="{x:Static resources:Strings.Loaded_to_all_profiles}"
                           IsChecked="{Binding SelectedItem.Global}" />
+                <!-- ReSharper restore Xaml.BindingWithContextNotResolved -->
             </WrapPanel>
             <Grid Grid.Row="4">
                 <Grid.ColumnDefinitions>
@@ -366,30 +381,28 @@
                 <controls1:StretchyWrapPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
                     <controls1:StretchyWrapPanel.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                            <Setter Property="Margin" Value="0,10,10,0" />
-                            <Setter Property="Padding" Value="10,0,10,0" />
-                            <Setter Property="Height" Value="25" />
+                            <Setter Property="Margin" Value="0,5,5,0" />
                         </Style>
                     </controls1:StretchyWrapPanel.Resources>
                     <Button Content="{x:Static resources:Strings.Object_Inspector}"
                             Command="{Binding InspectObjectCommand, Mode=OneWay}" />
                     <Button Content="{x:Static resources:Strings.Commands}" Command="{Binding ShowCommandsCommand}" />
-                    <Button Command="{Binding ShowMacrosWikiCommand}" Padding="5,0,5,0"
+                    <Button Command="{Binding ShowMacrosWikiCommand}" Padding="5"
                             ToolTip="{x:Static resources:Strings.Macro_Commands_Wiki__Launches_in_Browser_}">
                         <Image Source="{StaticResource WebIcon}" Height="16" />
                     </Button>
                     <Button Content="{x:Static resources:Strings.Active_Objects}"
                             Command="{Binding ShowActiveObjectsWindowCommand}" />
                     <Button Command="{Binding ShareMacroCommand}" CommandParameter="{Binding SelectedItem}"
-                            ToolTip="{x:Static resources:Strings.Share_Macro}" Padding="5,0,5,0">
+                            ToolTip="{x:Static resources:Strings.Share_Macro}" Padding="5">
                         <Image Source="{DynamicResource GithubIcon}" Height="16" />
                     </Button>
-                    <Button Command="{Binding OpenModulesFolderCommand}" Padding="5,0,5,0"
+                    <Button Command="{Binding OpenModulesFolderCommand}" Padding="5"
                             ToolTip="{x:Static resources:Strings.Open_Modules_Folder}">
                         <Image Source="{StaticResource ModulesIcon}" Height="16" />
                     </Button>
                     <Button Command="{Binding CreateMacroButtonCommand}" CommandParameter="{Binding SelectedItem}"
-                            ToolTip="{x:Static resources:Strings.Create_Macro_Button}" Padding="5,0,5,0">
+                            ToolTip="{x:Static resources:Strings.Create_Macro_Button}" Padding="5">
                         <Image Source="{StaticResource AddButtonIcon}" Height="16" />
                     </Button>
                     <Button Command="{Binding FormatCodeCommand}" CommandParameter="{Binding SelectedItem}"

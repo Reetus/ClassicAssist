@@ -50,6 +50,109 @@ namespace ClassicAssist.Data.Organizer
             }
         }
 
+        internal async Task Organize( OrganizerEntry entry, ItemCollection sourceContainer, int sourceContainerSerial = 0, int destinationContainer = 0,
+            CancellationToken token = default )
+        {
+            if ( IsOrganizing )
+            {
+                _cancellationTokenSource.Cancel();
+                return;
+            }
+
+            Entity destinationContainerItem = (Entity) Engine.Items.GetItem( destinationContainer ) ?? Engine.Mobiles.GetMobile( destinationContainer );
+
+            if ( destinationContainerItem == null )
+            {
+                //TODO
+                UOC.SystemMessage( Strings.Cannot_find_container___ );
+                return;
+            }
+
+            try
+            {
+                _cancellationTokenSource = new CancellationTokenSource();
+                IsOrganizing = true;
+
+                _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource( token, _cancellationTokenSource.Token );
+
+                UOC.SystemMessage( string.Format( Strings.Organizer__0__running___, entry.Name ) );
+
+                foreach ( OrganizerItem entryItem in entry.Items )
+                {
+                    Item[] moveItems = sourceContainer?.SelectEntities( i =>
+                        entryItem.ID == i.ID && ( entryItem.Hue == -1 || i.Hue == entryItem.Hue ) && !i.IsDescendantOf( destinationContainer, -1, sourceContainerSerial ) );
+
+                    if ( moveItems == null )
+                    {
+                        continue;
+                    }
+
+                    bool limitAmount = entryItem.Amount != -1;
+                    int moveAmount = entryItem.Amount;
+                    int moved = 0;
+
+                    if ( entry.Complete )
+                    {
+                        ItemCollection container = null;
+
+                        switch ( destinationContainerItem )
+                        {
+                            case Item item:
+                                container = item.Container;
+                                break;
+                            case Mobile mobile:
+                                container = mobile.Backpack.Container;
+                                break;
+                        }
+
+                        int existingCount = container?.SelectEntities( i => entryItem.ID == i.ID && ( entryItem.Hue == -1 || i.Hue == entryItem.Hue ) )?.Select( i => i.Count )
+                            .Sum() ?? 0;
+
+                        moved += existingCount;
+                    }
+
+                    foreach ( Item moveItem in moveItems )
+                    {
+                        if ( limitAmount && moved >= moveAmount )
+                        {
+                            break;
+                        }
+
+                        int amount = moveItem.Count;
+
+                        if ( limitAmount )
+                        {
+                            if ( moveItem.Count > moveAmount )
+                            {
+                                amount = moveAmount - moved;
+                            }
+
+                            moved += amount;
+                        }
+
+                        if ( entry.Stack )
+                        {
+                            await ActionPacketQueue.EnqueueDragDrop( moveItem.Serial, amount, destinationContainerItem.Serial );
+                        }
+                        else
+                        {
+                            await ActionPacketQueue.EnqueueDragDrop( moveItem.Serial, amount, destinationContainerItem.Serial, x: 0, y: 0 );
+                        }
+
+                        if ( _cancellationTokenSource.IsCancellationRequested )
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                UOC.SystemMessage( string.Format( Strings.Organizer__0__finished___, entry.Name ) );
+                IsOrganizing = false;
+            }
+        }
+
         internal async Task Organize( OrganizerEntry entry, int sourceContainer = 0, int destinationContainer = 0 )
         {
             if ( IsOrganizing )
@@ -83,11 +186,9 @@ namespace ClassicAssist.Data.Organizer
                 return;
             }
 
-            PacketFilterInfo pfi = new PacketFilterInfo( 0x3C,
-                new[] { PacketFilterConditions.IntAtPositionCondition( sourceContainerItem.Serial, 19 ) } );
+            PacketFilterInfo pfi = new PacketFilterInfo( 0x3C, new[] { PacketFilterConditions.IntAtPositionCondition( sourceContainerItem.Serial, 19 ) } );
 
-            if ( UOC.WaitForIncomingPacket( pfi, 1000,
-                    () => Engine.SendPacketToServer( new UseObject( sourceContainerItem.Serial ) ) ) )
+            if ( UOC.WaitForIncomingPacket( pfi, 1000, () => Engine.SendPacketToServer( new UseObject( sourceContainerItem.Serial ) ) ) )
             {
                 await Task.Delay( Options.CurrentOptions.ActionDelayMS );
             }
@@ -99,102 +200,7 @@ namespace ClassicAssist.Data.Organizer
                 return;
             }
 
-            Entity destinationContainerItem = (Entity) Engine.Items.GetItem( destinationContainer ) ??
-                                              Engine.Mobiles.GetMobile( destinationContainer );
-
-            if ( destinationContainerItem == null )
-            {
-                //TODO
-                UOC.SystemMessage( Strings.Cannot_find_container___ );
-                return;
-            }
-
-            try
-            {
-                _cancellationTokenSource = new CancellationTokenSource();
-                IsOrganizing = true;
-
-                UOC.SystemMessage( string.Format( Strings.Organizer__0__running___, entry.Name ) );
-
-                foreach ( OrganizerItem entryItem in entry.Items )
-                {
-                    Item[] moveItems = sourceContainerItem.Container?.SelectEntities( i =>
-                        entryItem.ID == i.ID && ( entryItem.Hue == -1 || i.Hue == entryItem.Hue ) &&
-                        !i.IsDescendantOf( destinationContainer, -1,sourceContainer ) );
-
-                    if ( moveItems == null )
-                    {
-                        continue;
-                    }
-
-                    bool limitAmount = entryItem.Amount != -1;
-                    int moveAmount = entryItem.Amount;
-                    int moved = 0;
-
-                    if ( entry.Complete )
-                    {
-                        ItemCollection container = null;
-
-                        switch ( destinationContainerItem )
-                        {
-                            case Item item:
-                                container = item.Container;
-                                break;
-                            case Mobile mobile:
-                                container = mobile.Backpack.Container;
-                                break;
-                        }
-
-                        int existingCount =
-                            container?.SelectEntities( i =>
-                                    entryItem.ID == i.ID && ( entryItem.Hue == -1 || i.Hue == entryItem.Hue ) )
-                                ?.Select( i => i.Count ).Sum() ?? 0;
-
-                        moved += existingCount;
-                    }
-
-                    foreach ( Item moveItem in moveItems )
-                    {
-                        if ( limitAmount && moved >= moveAmount )
-                        {
-                            break;
-                        }
-
-                        int amount = moveItem.Count;
-
-                        if ( limitAmount )
-                        {
-                            if ( moveItem.Count > moveAmount )
-                            {
-                                amount = moveAmount - moved;
-                            }
-
-                            moved += amount;
-                        }
-
-                        if ( entry.Stack )
-                        {
-                            await ActionPacketQueue.EnqueueDragDrop( moveItem.Serial, amount,
-                                destinationContainerItem.Serial );
-                        }
-                        else
-                        {
-                            await ActionPacketQueue.EnqueueDragDrop( moveItem.Serial, amount,
-                                destinationContainerItem.Serial, x: 0, y: 0 );
-                        }
-
-                        if ( _cancellationTokenSource.IsCancellationRequested )
-                        {
-                            break;
-                        }
-                    }
-                }
-            }
-            finally
-            {
-                UOC.SystemMessage( string.Format( Strings.Organizer__0__finished___, entry.Name ) );
-                IsOrganizing = false;
-            }
+            await Organize( entry, sourceContainerItem.Container, sourceContainer, destinationContainer );
         }
 
         public async Task SetContainers( object obj )

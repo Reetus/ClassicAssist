@@ -61,19 +61,10 @@ namespace ClassicAssist.Shared {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://classicassist.azurewebsites.net/version.json")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://classicassist.azurewebsites.net/releases.json")]
         public string UpdateManifestURL {
             get {
                 return ((string)(this["UpdateManifestURL"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://classicassist.azurewebsites.net/prerelease.json")]
-        public string PrereleaseManifestURL {
-            get {
-                return ((string)(this["PrereleaseManifestURL"]));
             }
         }
     }

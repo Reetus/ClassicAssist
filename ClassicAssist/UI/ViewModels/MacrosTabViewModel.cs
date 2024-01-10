@@ -293,7 +293,7 @@ namespace ClassicAssist.UI.ViewModels
                 string globalJson =
                     JsonConvert.SerializeObject( globalMacros.Select( e => e.ToJObject() ), Formatting.Indented );
 
-                File.WriteAllText( Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Macros.json" ),
+                File.WriteAllText( Path.Combine( AssistantOptions.GetGlobalPath(), "Macros.json" ),
                     globalJson );
             }
 
@@ -356,7 +356,7 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            string globalPath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Macros.json" );
+            string globalPath = Path.Combine( AssistantOptions.GetGlobalPath(), "Macros.json" );
 
             if ( File.Exists( globalPath ) )
             {

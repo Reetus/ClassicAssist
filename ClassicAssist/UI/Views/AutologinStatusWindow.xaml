@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" Topmost="True" WindowStartupLocation="CenterScreen"
         Title="{x:Static resources:Strings.Autologin}" Width="400" Height="300"
@@ -27,11 +27,11 @@
         </Grid.RowDefinitions>
         <ListBox Grid.Row="0" ItemsSource="{Binding Messages}">
             <i:Interaction.Behaviors>
-                <behaviours:ItemsControlAutoScrollBehaviour/>
+                <behaviours:ItemsControlAutoScrollBehaviour />
             </i:Interaction.Behaviors>
         </ListBox>
         <Button Content="{x:Static resources:Strings.Cancel}" HorizontalAlignment="Right" Grid.Row="1" Margin="0,5,0,0"
-                Padding="25,5" Command="{Binding CancelCommand}">
+                Command="{Binding CancelCommand}">
             <i:Interaction.Behaviors>
                 <behaviours:CloseOnClickBehaviour />
             </i:Interaction.Behaviors>

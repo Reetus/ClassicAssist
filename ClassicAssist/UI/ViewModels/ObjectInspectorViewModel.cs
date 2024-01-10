@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Assistant;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Models;
+using ClassicAssist.UI.ViewModels.Debug;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
@@ -402,7 +405,25 @@ namespace ClassicAssist.UI.ViewModels
                 return o => InspectObject( item.Serial );
             }
 
+            if ( value is Property[] properties )
+            {
+                return o => ShowProperties( properties );
+            }
+
             return null;
+        }
+
+        private static void ShowProperties( IEnumerable<Property> properties )
+        {
+            Thread t = new Thread( () =>
+            {
+                DebugWindow window = new DebugWindow( typeof(DebugPropertiesViewModel), properties ) { Topmost = true };
+                window.Show();
+                Dispatcher.Run();
+            } ) { IsBackground = true };
+
+            t.SetApartmentState( ApartmentState.STA );
+            t.Start();
         }
 
         private static void InspectObject( int serial )

@@ -88,6 +88,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A profile already exists by this name, choose a new name....
+        /// </summary>
+        public static string A_profile_already_exists_by_this_name__choose_a_new_name___ {
+            get {
+                return ResourceManager.GetString("A profile already exists by this name, choose a new name...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Abilities.
         /// </summary>
         public static string Abilities {
@@ -2185,6 +2194,24 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hotkeys Status Gump.
+        /// </summary>
+        public static string Hotkeys_Status_Gump {
+            get {
+                return ResourceManager.GetString("Hotkeys Status Gump", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hue Override.
+        /// </summary>
+        public static string Hue_Override {
+            get {
+                return ResourceManager.GetString("Hue Override", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hue Picker.
         /// </summary>
         public static string Hue_Picker {
@@ -3154,6 +3181,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move to bank.
+        /// </summary>
+        public static string Move_to_bank {
+            get {
+                return ResourceManager.GetString("Move to bank", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Move to container.
         /// </summary>
         public static string Move_to_container {
@@ -3555,6 +3591,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Overwrite_existing_hotkey___0____ {
             get {
                 return ResourceManager.GetString("Overwrite existing hotkey \'{0}\' ?", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packets.
+        /// </summary>
+        public static string Packets {
+            get {
+                return ResourceManager.GetString("Packets", resourceCulture);
             }
         }
         
@@ -4950,6 +4995,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Targeting {
             get {
                 return ResourceManager.GetString("Targeting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Targeting item {0} / {1}.
+        /// </summary>
+        public static string Targeting_item__0_____1_ {
+            get {
+                return ResourceManager.GetString("Targeting item {0} / {1}", resourceCulture);
             }
         }
         

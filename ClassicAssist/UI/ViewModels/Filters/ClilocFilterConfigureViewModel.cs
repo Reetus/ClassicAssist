@@ -1,9 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
+using ClassicAssist.Data;
 using ClassicAssist.Data.Filters;
 using ClassicAssist.Shared.UI;
+using ClassicAssist.UI.ViewModels.Autoloot;
+using ClassicAssist.UI.Views;
+using ClassicAssist.UI.Views.Autoloot;
 using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.UI.ViewModels.Filters
@@ -11,53 +17,23 @@ namespace ClassicAssist.UI.ViewModels.Filters
     public class ClilocFilterConfigureViewModel : BaseViewModel
     {
         private ICommand _addItemCommand;
-        private ObservableCollection<ClilocEntry> _allClilocs = new ObservableCollection<ClilocEntry>();
-        private ObservableCollection<ClilocEntry> _filteredClilocs = new ObservableCollection<ClilocEntry>();
-        private string _filterText;
+        private ICommand _chooseClilocCommand;
         private ObservableCollection<FilterClilocEntry> _items = new ObservableCollection<FilterClilocEntry>();
+        private ICommand _okCommand;
         private ICommand _removeItemCommand;
-        private ICommand _saveItemsCommand;
-        private ClilocEntry _selectedClilocEntry;
         private FilterClilocEntry _selectedItem;
+        private ICommand _selectHueCommand;
 
         public ClilocFilterConfigureViewModel()
         {
-            foreach ( KeyValuePair<int, string> kvp in Cliloc.GetItems() )
-            {
-                AllClilocs.Add( new ClilocEntry { Key = kvp.Key, Value = kvp.Value } );
-            }
-
-            foreach ( KeyValuePair<int, string> filterFilter in ClilocFilter.Filters )
-            {
-                Items.Add( new FilterClilocEntry { Cliloc = filterFilter.Key, Replacement = filterFilter.Value } );
-            }
-
-            UpdateEntries( _filterText );
+            ClilocFilter.Filters.ToList().ForEach( f =>
+                Items.Add( new FilterClilocEntry { Cliloc = f.Cliloc, Replacement = f.Replacement, Hue = f.Hue } ) );
         }
 
         public ICommand AddItemCommand => _addItemCommand ?? ( _addItemCommand = new RelayCommand( AddItem ) );
 
-        public ObservableCollection<ClilocEntry> AllClilocs
-        {
-            get => _allClilocs;
-            set => SetProperty( ref _allClilocs, value );
-        }
-
-        public ObservableCollection<ClilocEntry> FilteredClilocs
-        {
-            get => _filteredClilocs;
-            set => SetProperty( ref _filteredClilocs, value );
-        }
-
-        public string FilterText
-        {
-            get => _filterText;
-            set
-            {
-                SetProperty( ref _filterText, value );
-                UpdateEntries( _filterText );
-            }
-        }
+        public ICommand ChooseClilocCommand =>
+            _chooseClilocCommand ?? ( _chooseClilocCommand = new RelayCommand( ChooseCliloc ) );
 
         public ObservableCollection<FilterClilocEntry> Items
         {
@@ -65,22 +41,76 @@ namespace ClassicAssist.UI.ViewModels.Filters
             set => SetProperty( ref _items, value );
         }
 
+        public ICommand OKCommand => _okCommand ?? ( _okCommand = new RelayCommand( OK ) );
+
         public ICommand RemoveItemCommand =>
             _removeItemCommand ?? ( _removeItemCommand = new RelayCommand( RemoveItem, o => SelectedItem != null ) );
-
-        public ICommand SaveItemsCommand =>
-            _saveItemsCommand ?? ( _saveItemsCommand = new RelayCommand( SaveItems, o => true ) );
-
-        public ClilocEntry SelectedClilocEntry
-        {
-            get => _selectedClilocEntry;
-            set => SetProperty( ref _selectedClilocEntry, value );
-        }
 
         public FilterClilocEntry SelectedItem
         {
             get => _selectedItem;
             set => SetProperty( ref _selectedItem, value );
+        }
+
+        public ICommand SelectHueCommand => _selectHueCommand ?? ( _selectHueCommand = new RelayCommand( SelectHue ) );
+
+        private void OK( object obj )
+        {
+            ClilocFilter.Filters.Clear();
+
+            foreach ( FilterClilocEntry entry in Items )
+            {
+                if ( ClilocFilter.Filters.All( e => e.Cliloc != entry.Cliloc ) )
+                {
+                    ClilocFilter.Filters.Add( new FilterClilocEntry
+                    {
+                        Cliloc = entry.Cliloc, Replacement = entry.Replacement, Hue = entry.Hue
+                    } );
+                }
+            }
+        }
+
+        private static void ChooseCliloc( object obj )
+        {
+            if ( !( obj is FilterClilocEntry entry ) )
+            {
+                return;
+            }
+
+            ClilocSelectionViewModel vm = new ClilocSelectionViewModel();
+            ClilocSelectionWindow window = new ClilocSelectionWindow { DataContext = vm };
+
+            window.ShowDialog();
+
+            if ( vm.DialogResult != DialogResult.OK )
+            {
+                return;
+            }
+
+            entry.Cliloc = vm.SelectedCliloc.Key;
+            entry.Replacement = vm.SelectedCliloc.Value;
+        }
+
+        private static void SelectHue( object obj )
+        {
+            if ( !( obj is FilterClilocEntry entry ) )
+            {
+                return;
+            }
+
+            SingleHuePickerWindow window = new SingleHuePickerWindow
+            {
+                Topmost = Options.CurrentOptions.AlwaysOnTop, SelectedHue = entry.Hue
+            };
+
+            window.ShowDialog();
+
+            if ( window.SelectedHue == -1 )
+            {
+                return;
+            }
+
+            entry.Hue = window.SelectedHue;
         }
 
         private void RemoveItem( object obj )
@@ -93,57 +123,46 @@ namespace ClassicAssist.UI.ViewModels.Filters
             Items.Remove( entry );
         }
 
-        private void SaveItems( object obj )
-        {
-            ClilocFilter.Filters.Clear();
-
-            foreach ( FilterClilocEntry entry in Items )
-            {
-                if ( !ClilocFilter.Filters.ContainsKey( entry.Cliloc ) )
-                {
-                    ClilocFilter.Filters.Add( entry.Cliloc, entry.Replacement );
-                }
-            }
-        }
-
-        private void UpdateEntries( string filterText )
-        {
-            IEnumerable<ClilocEntry> matches = AllClilocs.Where( m =>
-                string.IsNullOrEmpty( filterText ) || m.Value.ToLower().Contains( filterText.ToLower() ) );
-            FilteredClilocs.Clear();
-
-            foreach ( ClilocEntry clilocEntry in matches )
-            {
-                FilteredClilocs.Add( clilocEntry );
-            }
-        }
-
         private void AddItem( object obj )
         {
-            if ( !( obj is ClilocEntry clilocEntry ) )
+            Items.Add( new FilterClilocEntry
             {
-                return;
-            }
+                Cliloc = 500000, Replacement = Cliloc.GetProperty( 500000 ), Hue = -1
+            } );
+        }
+    }
 
-            if ( Items.Any( i => i.Cliloc == clilocEntry.Key ) )
+    public class FilterClilocEntry : SetPropertyNotifyChanged
+    {
+        private int _cliloc;
+        private int _hue = -1;
+        private string _replacement;
+
+        public int Cliloc
+        {
+            get => _cliloc;
+            set
             {
-                return;
+                SetProperty( ref _cliloc, value );
+                OnPropertyChanged( nameof( Original ) );
             }
-
-            Items.Add( new FilterClilocEntry { Cliloc = clilocEntry.Key, Replacement = clilocEntry.Value } );
         }
 
-        public class ClilocEntry
+        public int Hue
         {
-            public int Key { get; set; }
-            public string Value { get; set; }
+            get => _hue;
+            set => SetProperty( ref _hue, value );
         }
 
-        public class FilterClilocEntry
+        public string Original =>
+            DesignerProperties.GetIsInDesignMode( new DependencyObject() )
+                ? Replacement
+                : UO.Data.Cliloc.GetProperty( Cliloc );
+
+        public string Replacement
         {
-            public int Cliloc { get; set; }
-            public string Original => UO.Data.Cliloc.GetProperty( Cliloc );
-            public string Replacement { get; set; }
+            get => _replacement;
+            set => SetProperty( ref _replacement, value );
         }
     }
 }

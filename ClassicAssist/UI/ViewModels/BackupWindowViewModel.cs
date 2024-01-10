@@ -27,6 +27,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using Assistant;
+using ClassicAssist.Data;
 using ClassicAssist.Data.Backup;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
@@ -110,8 +111,7 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             List<string> files = new List<string> { "Assistant.json", "Macros.json" };
-            files.AddRange( Directory.EnumerateFiles( Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
-                "Profiles" ) ) );
+            files.AddRange( Directory.EnumerateFiles( AssistantOptions.GetProfilePath() ) );
 
             foreach ( BaseViewModel baseViewModel in BaseViewModel.Instances )
             {

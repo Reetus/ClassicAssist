@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -13,23 +14,17 @@ namespace ClassicAssist.Controls.DraggableTreeView
      */
     public class DraggableTreeView : TreeView, IDropTarget
     {
-        public static readonly DependencyProperty BindableSelectedItemProperty = DependencyProperty.RegisterAttached(
-            nameof( BindableSelectedItem ), typeof( object ), typeof( DraggableTreeView ),
-            new FrameworkPropertyMetadata( default, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                OnSelectedPropertyChanged ) );
+        public static readonly DependencyProperty BindableSelectedItemProperty = DependencyProperty.RegisterAttached( nameof( BindableSelectedItem ), typeof( object ),
+            typeof( DraggableTreeView ), new FrameworkPropertyMetadata( default, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedPropertyChanged ) );
 
-        public static readonly DependencyProperty BindableSelectedGroupProperty = DependencyProperty.RegisterAttached(
-            nameof( BindableSelectedGroup ), typeof( object ), typeof( DraggableTreeView ),
-            new FrameworkPropertyMetadata( default, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                OnSelectedPropertyChanged ) );
+        public static readonly DependencyProperty BindableSelectedGroupProperty = DependencyProperty.RegisterAttached( nameof( BindableSelectedGroup ), typeof( object ),
+            typeof( DraggableTreeView ), new FrameworkPropertyMetadata( default, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedPropertyChanged ) );
 
         public static readonly DependencyProperty AllowDragGroupsProperty =
-            DependencyProperty.RegisterAttached( nameof( AllowDragGroups ), typeof( bool ), typeof( DraggableTreeView ),
-                new PropertyMetadata( true ) );
+            DependencyProperty.RegisterAttached( nameof( AllowDragGroups ), typeof( bool ), typeof( DraggableTreeView ), new PropertyMetadata( true ) );
 
         public static readonly DependencyProperty AllowDragItemsOntoItemsProperty =
-            DependencyProperty.RegisterAttached( nameof( AllowDragItemsOntoItems ), typeof( bool ),
-                typeof( DraggableTreeView ), new PropertyMetadata( true ) );
+            DependencyProperty.RegisterAttached( nameof( AllowDragItemsOntoItems ), typeof( bool ), typeof( DraggableTreeView ), new PropertyMetadata( true ) );
 
         public DraggableTreeView()
         {
@@ -37,6 +32,7 @@ namespace ClassicAssist.Controls.DraggableTreeView
             DragDrop.SetIsDropTarget( this, true );
             DragDrop.SetDropHandler( this, this );
             SelectedItemChanged += OnSelectedItemChanged;
+            ItemContainerGenerator.StatusChanged += OnStatusChanged;
         }
 
         public bool AllowDragGroups
@@ -81,8 +77,7 @@ namespace ClassicAssist.Controls.DraggableTreeView
 
             ObservableCollection<IDraggable> sourceParent = GetParent( sourceItem, items );
 
-            if ( !AllowDragItemsOntoItems && sourceItem is IDraggableEntry && sourceParent == items &&
-                 !( dropInfo?.TargetItem is IDraggableGroup ) )
+            if ( !AllowDragItemsOntoItems && sourceItem is IDraggableEntry && sourceParent == items && !( dropInfo?.TargetItem is IDraggableGroup ) )
             {
                 dropInfo.Effects = DragDropEffects.None;
 
@@ -105,8 +100,7 @@ namespace ClassicAssist.Controls.DraggableTreeView
                 {
                     IDraggable sourceItem = dropInfo.DragInfo.SourceItem as IDraggable;
 
-                    ObservableCollection<IDraggable> parent = GetParent( sourceItem,
-                        ItemsSource as ObservableCollection<IDraggable> );
+                    ObservableCollection<IDraggable> parent = GetParent( sourceItem, ItemsSource as ObservableCollection<IDraggable> );
 
                     switch ( sourceItem )
                     {
@@ -143,8 +137,7 @@ namespace ClassicAssist.Controls.DraggableTreeView
                         return;
                     }
 
-                    ObservableCollection<IDraggable> destinationParent = GetParent( destinationItem,
-                        ItemsSource as ObservableCollection<IDraggable> );
+                    ObservableCollection<IDraggable> destinationParent = GetParent( destinationItem, ItemsSource as ObservableCollection<IDraggable> );
 
                     if ( sourceParent != destinationParent )
                     {
@@ -173,6 +166,22 @@ namespace ClassicAssist.Controls.DraggableTreeView
 
                     items.Add( sourceItem );
                     break;
+                }
+            }
+        }
+
+        private void OnStatusChanged( object sender, EventArgs e )
+        {
+            foreach ( object item in ItemContainerGenerator.Items )
+            {
+                if ( !item.Equals( BindableSelectedItem ) )
+                {
+                    continue;
+                }
+
+                if ( ItemContainerGenerator.ContainerFromItem( item ) is TreeViewItem tvi && !tvi.IsSelected )
+                {
+                    tvi.IsSelected = true;
                 }
             }
         }
@@ -216,8 +225,7 @@ namespace ClassicAssist.Controls.DraggableTreeView
             }
         }
 
-        private static ObservableCollection<IDraggable> GetParent( IDraggable draggable,
-            ObservableCollection<IDraggable> parent )
+        private static ObservableCollection<IDraggable> GetParent( IDraggable draggable, ObservableCollection<IDraggable> parent )
         {
             if ( parent.Contains( draggable ) )
             {
@@ -226,8 +234,7 @@ namespace ClassicAssist.Controls.DraggableTreeView
 
             IEnumerable<IDraggableGroup> groups = GetGroups( parent );
 
-            return groups.Select( draggableGroup => GetParent( draggable, draggableGroup.Children ) )
-                .FirstOrDefault( childParent => childParent != null );
+            return groups.Select( draggableGroup => GetParent( draggable, draggableGroup.Children ) ).FirstOrDefault( childParent => childParent != null );
         }
     }
 }

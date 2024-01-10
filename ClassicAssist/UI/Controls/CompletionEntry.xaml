@@ -7,18 +7,18 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
-             mc:Ignorable="d" DataContext="{Binding RelativeSource={RelativeSource Self}}"
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d" DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary>
                     <DrawingImage x:Key="RightChevron">
                         <DrawingImage.Drawing>
                             <DrawingGroup ClipGeometry="M0,0 V256 H256 V0 H0 Z">
                                 <DrawingGroup Opacity="1">
                                     <DrawingGroup Opacity="1">
-                                        <GeometryDrawing Brush="#FF000000"
+                                        <GeometryDrawing Brush="{DynamicResource ThemeForegroundBrush}"
                                                          Geometry="F1 M256,256z M0,0z M79.093,0L79.093,0 48.907,30.187 146.72,128 48.907,225.813 79.093,256 207.093,128z" />
                                     </DrawingGroup>
                                 </DrawingGroup>
@@ -39,20 +39,23 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <TextBlock Text="{Binding EntryName, ElementName=userControl}" Grid.Column="0" VerticalAlignment="Center" />
-        <Button Grid.Column="1" Background="Transparent" BorderThickness="0" Margin="10,0,0,0"
+        <Button Grid.Row="0" Grid.Column="1" Background="Transparent" BorderThickness="0" Margin="10,0,0,0" Padding="4"
                 Command="{Binding ToggleExpandedCommand}"
                 Visibility="{Binding IsButtonEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Button.Content>
                 <Image Height="8" Source="{DynamicResource RightChevron}" />
             </Button.Content>
         </Button>
-        <Grid Grid.Column="2" Background="{DynamicResource ThemeWindowBackgroundBrush}"
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="{DynamicResource ThemeWindowBackgroundBrush}"
               Style="{DynamicResource HideNonExpanded}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />

@@ -202,11 +202,11 @@
                     </Grid.Resources>
                     <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="0" Margin="0,0,2.5,0"
                             Command="{Binding RemoveMacroConfirmCommand, Mode=OneWay}"
-                            CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}">
+                            CommandParameter="{Binding SelectedItem}">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=DraggableTreeView}"
+                                    <DataTrigger Binding="{Binding Path=SelectedItem}"
                                                  Value="{x:Null}">
                                         <Setter Property="IsEnabled" Value="False" />
                                     </DataTrigger>
@@ -233,7 +233,7 @@
                     <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                     <Button Content="{x:Static resources:Strings.Play}" Grid.Column="0" Margin="0,0,2.5,0"
                             Command="{Binding ExecuteCommand, Mode=OneWay}"
-                            CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}"
+                            CommandParameter="{Binding SelectedItem}"
                             IsEnabled="{Binding SelectedItem.IsRunning, Converter={StaticResource InverseBooleanConverter}, ElementName=DraggableTreeView}">
                         <Button.ContextMenu>
                             <ContextMenu>
@@ -244,7 +244,7 @@
                     </Button>
                     <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                     <Button Content="{x:Static resources:Strings.Stop}" Grid.Column="1" Margin="2.5,0,0,0"
-                            IsEnabled="{Binding SelectedItem.IsRunning, ElementName=DraggableTreeView}"
+                            IsEnabled="{Binding SelectedItem.IsRunning}"
                             Command="{Binding StopCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem}" />
                 </Grid>
                 <GroupBox Header="{x:Static resources:Strings.Hotkeys}" Grid.Row="6" Padding="5" Margin="0,5,0,0">
@@ -259,7 +259,7 @@
                                   Margin="0,5,0,0" IsChecked="{Binding SelectedItem.PassToUO}" />
                         <Button Content="{x:Static resources:Strings.Clear}" Grid.Row="2" Padding="1,0,1,1"
                                 Margin="0,5,0,0" Command="{Binding ClearHotkeyCommand, Mode=OneWay}"
-                                CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}" />
+                                CommandParameter="{Binding SelectedItem}" />
                     </Grid>
                 </GroupBox>
             </Grid>
@@ -277,17 +277,26 @@
                                HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
                                FontFamily="Consolas"
                                IsEnabled="{Binding SelectedItem, Converter={StaticResource NullBooleanConverter}}">
+                <avalon:TextEditor.Style>
+                    <Style TargetType="{x:Type avalon:TextEditor}" BasedOn="{StaticResource {x:Type avalon:TextEditor}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedItem}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </avalon:TextEditor.Style>
                 <avalon:TextEditor.InputBindings>
                     <KeyBinding Modifiers="Control" Key="S" Command="{Binding SaveMacroCommand}" />
                     <KeyBinding Key="F5" Command="{Binding ExecuteCommand, Mode=OneWay}"
-                                CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}" />
+                                CommandParameter="{Binding SelectedItem}" />
                     <KeyBinding Key="F12" Command="{Binding StopCommand, Mode=OneWay}"
-                                CommandParameter="{Binding SelectedItem, ElementName=DraggableTreeView}" />
+                                CommandParameter="{Binding SelectedItem}" />
                 </avalon:TextEditor.InputBindings>
                 <i:Interaction.Behaviors>
                     <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                     <misc:AvalonEditBehaviour
-                        TextBinding="{Binding SelectedItem.Macro, ElementName=DraggableTreeView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        TextBinding="{Binding SelectedItem.Macro}" />
                     <misc:AvalonBindingBehaviour DocumentBinding="{Binding Document}"
                                                  CaretBinding="{Binding CaretPosition}" />
                 </i:Interaction.Behaviors>
@@ -337,7 +346,7 @@
                     <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
                         <Setter Property="Margin" Value="0,0,10,0" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=DraggableTreeView}"
+                            <DataTrigger Binding="{Binding Path=SelectedItem}"
                                          Value="{x:Null}">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
@@ -346,13 +355,13 @@
                 </WrapPanel.Resources>
                 <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
                 <CheckBox Content="{x:Static resources:Strings.Loop}"
-                          IsChecked="{Binding SelectedItem.Loop, ElementName=DraggableTreeView}" />
+                          IsChecked="{Binding SelectedItem.Loop}" />
                 <CheckBox Content="{x:Static resources:Strings.Do_not_auto_interupt}"
-                          IsChecked="{Binding SelectedItem.DoNotAutoInterrupt, ElementName=DraggableTreeView}" />
+                          IsChecked="{Binding SelectedItem.DoNotAutoInterrupt}" />
                 <CheckBox Content="{x:Static resources:Strings.Run_in_background}"
-                          IsChecked="{Binding SelectedItem.IsBackground, ElementName=DraggableTreeView}" />
+                          IsChecked="{Binding SelectedItem.IsBackground}" />
                 <CheckBox Content="{x:Static resources:Strings.Autostart}"
-                          IsChecked="{Binding SelectedItem.IsAutostart, ElementName=DraggableTreeView}"
+                          IsChecked="{Binding SelectedItem.IsAutostart}"
                           ToolTip="{x:Static resources:Strings.When_checked_macro_will_execute_automatically_after_login_}" />
                 <CheckBox Content="{x:Static resources:Strings.Undisableable}"
                           ToolTip="{x:Static resources:Strings.Hotkey_will_still_trigger_with_hotkeys_disabled}"

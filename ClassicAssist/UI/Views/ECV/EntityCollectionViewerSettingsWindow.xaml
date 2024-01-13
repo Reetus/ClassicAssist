@@ -1,0 +1,44 @@
+﻿<Window x:Class="ClassicAssist.UI.Views.ECV.EntityCollectionViewerSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+        xmlns:settings="clr-namespace:ClassicAssist.UI.Views.ECV.Settings"
+        xmlns:ecv="clr-namespace:ClassicAssist.UI.Views.ECV"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+        mc:Ignorable="d"
+        Title="{x:Static resources:Strings.Entity_Collection_Viewer}"
+        Background="{DynamicResource ThemeWindowBackgroundBrush}"
+        SizeToContent="WidthAndHeight">
+    <Window.DataContext>
+        <ecv:EntityCollectionViewerSettingsViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <GroupBox Header="{x:Static resources:Strings.Combine_stacks}" Margin="10" Padding="10">
+                <settings:CombineStacksSettingsControl
+                    Items="{Binding DataContext.Options.CombineStacksIgnore, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}" />
+            </GroupBox>
+        </StackPanel>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,10,10">
+            <Button Content="{x:Static resources:Strings.OK}">
+                <b:Interaction.Behaviors>
+                    <behaviours:CloseOnClickBehaviour />
+                </b:Interaction.Behaviors>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

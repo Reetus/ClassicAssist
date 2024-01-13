@@ -80,6 +80,11 @@ namespace ClassicAssist.Data.Misc
 
             JArray combineStacksIgnore = new JArray();
 
+            if ( CombineStacksIgnore == null )
+            {
+                return config;
+            }
+
             foreach ( CombineStacksIgnoreEntry entry in CombineStacksIgnore )
             {
                 combineStacksIgnore.Add( new JObject { { "ID", entry.ID }, { "Cliloc", entry.Cliloc }, { "Hue", entry.Hue } } );

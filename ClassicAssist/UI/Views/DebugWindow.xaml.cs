@@ -27,7 +27,7 @@ namespace ClassicAssist.UI.Views
                     continue;
                 }
 
-                provider.Deserialize( Options.CurrentOptions.DebugWindowOptions, Options.CurrentOptions );
+                provider.Deserialize( AssistantOptions.DebugWindowOptions, Options.CurrentOptions );
             }
         }
 
@@ -67,7 +67,7 @@ namespace ClassicAssist.UI.Views
                 provider.Serialize( options );
             }
 
-            Options.CurrentOptions.DebugWindowOptions = options;
+            AssistantOptions.DebugWindowOptions = options;
         }
     }
 }

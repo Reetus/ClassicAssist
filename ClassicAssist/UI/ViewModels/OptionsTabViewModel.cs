@@ -103,7 +103,6 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "HotkeysStatusGump", CurrentOptions.HotkeysStatusGump );
             options.Add( "HotkeysStatusGumpX", CurrentOptions.HotkeysStatusGumpX );
             options.Add( "HotkeysStatusGumpY", CurrentOptions.HotkeysStatusGumpY );
-            options.Add( "DebugWindowOptions", CurrentOptions.DebugWindowOptions );
 
             json?.Add( "Options", options );
         }
@@ -206,7 +205,6 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.HotkeysStatusGump = config?["HotkeysStatusGump"]?.ToObject<bool>() ?? false;
             CurrentOptions.HotkeysStatusGumpX = config?["HotkeysStatusGumpX"]?.ToObject<int>() ?? 10;
             CurrentOptions.HotkeysStatusGumpY = config?["HotkeysStatusGumpY"]?.ToObject<int>() ?? 30;
-            CurrentOptions.DebugWindowOptions = config?["DebugWindowOptions"]?.ToObject<JObject>() ?? new JObject();
 
             HotkeyManager manager = HotkeyManager.GetInstance();
             manager.Enabled = !CurrentOptions.DisableHotkeysLoad;

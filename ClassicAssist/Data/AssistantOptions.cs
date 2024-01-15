@@ -23,6 +23,7 @@ namespace ClassicAssist.Data
         private static readonly Dictionary<int, string> _linkedProfiles = new Dictionary<int, string>();
         public static string[] Assemblies { get; set; }
         public static BackupOptions BackupOptions { get; set; }
+        public static JObject DebugWindowOptions { get; set; }
         public static string GlobalDirectory { get; set; } = ".";
         public static Language LanguageOverride { get; set; }
         public static string LastProfile { get; set; }
@@ -84,6 +85,7 @@ namespace ClassicAssist.Data
                 { "UseCUOClilocLanguage", UseCUOClilocLanguage },
                 { "ProfileDirectory", ProfileDirectory },
                 { "GlobalDirectory", GlobalDirectory },
+                { "DebugWindowOptions", DebugWindowOptions },
 #if !DEVELOP
                 { "WindowWidth", WindowWidth },
                 { "WindowHeight", WindowHeight },
@@ -184,6 +186,7 @@ namespace ClassicAssist.Data
             ProfileDirectory = json["ProfileDirectory"]?.ToObject<string>() ?? "Profiles";
             GlobalDirectory = json["GlobalDirectory"]?.ToObject<string>() ?? ".";
             SessionId = Guid.NewGuid().ToString();
+            DebugWindowOptions = json["DebugWindowOptions"]?.ToObject<JObject>() ?? new JObject();
 
             if ( json["Profiles"] != null )
             {

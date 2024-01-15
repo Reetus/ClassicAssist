@@ -44,7 +44,6 @@ namespace ClassicAssist.Data
         private bool _checkHandsPotions;
         private char _commandPrefix = '+';
         private bool _debug;
-        private JObject _debugWindowOptions;
         private bool _defaultMacroQuietMode;
         private bool _disableHotkeysLoad;
         private string _enemyTargetMessage;
@@ -217,12 +216,6 @@ namespace ClassicAssist.Data
         {
             get => _debug;
             set => SetProperty( ref _debug, value );
-        }
-
-        public JObject DebugWindowOptions
-        {
-            get => _debugWindowOptions;
-            set => SetProperty( ref _debugWindowOptions, value );
         }
 
         public bool DefaultMacroQuietMode

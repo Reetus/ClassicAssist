@@ -1701,4 +1701,292 @@ Czy chcesz kontynuować?</value>
   <data name="Packets" xml:space="preserve">
     <value>Pakiety</value>
   </data>
+  <data name="Reflection Error: {0}" xml:space="preserve">
+    <value>Błąd odbicia: {0}</value>
+  </data>
+  <data name="ID from target" xml:space="preserve">
+    <value>Identyfikator z miejsca docelowego</value>
+  </data>
+  <data name="Layer" xml:space="preserve">
+    <value>Warstwa</value>
+  </data>
+  <data name="Activated following" xml:space="preserve">
+    <value>Aktywowany po</value>
+  </data>
+  <data name="Deactivated following" xml:space="preserve">
+    <value>Dezaktywowano następujące</value>
+  </data>
+  <data name="Event" xml:space="preserve">
+    <value>Zdarzenie</value>
+  </data>
+  <data name="Caller" xml:space="preserve">
+    <value>Obiekt wywołujący</value>
+  </data>
+  <data name="Elapsed" xml:space="preserve">
+    <value>Elapsed</value>
+  </data>
+  <data name="Format Code" xml:space="preserve">
+    <value>Kod formatu</value>
+  </data>
+  <data name="Current month donations" xml:space="preserve">
+    <value>Aktualne darowizny na {0}: {1} USD</value>
+  </data>
+  <data name="Donate Now" xml:space="preserve">
+    <value>Wpłać teraz</value>
+  </data>
+  <data name="Context menu entry disabled" xml:space="preserve">
+    <value>Pozycja menu kontekstowego wyłączona</value>
+  </data>
+  <data name="Use Last Skill" xml:space="preserve">
+    <value>Użyj ostatniej umiejętności</value>
+  </data>
+  <data name="Login With Google" xml:space="preserve">
+    <value>Zaloguj się przez Google</value>
+  </data>
+  <data name="Authentication error or timeout" xml:space="preserve">
+    <value>Błąd uwierzytelniania lub przekroczenie limitu czasu</value>
+  </data>
+  <data name="Name Overrides" xml:space="preserve">
+    <value>Przesłonięcia nazw</value>
+  </data>
+  <data name="Insert Empty Entry" xml:space="preserve">
+    <value>Wstaw pusty wpis</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notatki</value>
+  </data>
+  <data name="Autologin" xml:space="preserve">
+    <value>Automatyczne logowanie</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>Rachunek</value>
+  </data>
+  <data name="Server Index" xml:space="preserve">
+    <value>Indeks serwera</value>
+  </data>
+  <data name="Character Index" xml:space="preserve">
+    <value>Indeks znaków</value>
+  </data>
+  <data name="Connect Delay" xml:space="preserve">
+    <value>Opóźnienie połączenia</value>
+  </data>
+  <data name="Reconnect Delay" xml:space="preserve">
+    <value>Opóźnienie ponownego połączenia</value>
+  </data>
+  <data name="Unknown account..." xml:space="preserve">
+    <value>Nieznane konto...</value>
+  </data>
+  <data name="Autologin in {0} seconds..." xml:space="preserve">
+    <value>Automatyczne logowanie w {0} sekund...</value>
+  </data>
+  <data name="Connecting..." xml:space="preserve">
+    <value>Łączenie...</value>
+  </data>
+  <data name="Timeout waiting for shard selection screen" xml:space="preserve">
+    <value>Przekroczenie limitu czasu oczekiwania na ekran wyboru fragmentu</value>
+  </data>
+  <data name="Failed to get server list" xml:space="preserve">
+    <value>Nie udało się pobrać listy serwerów</value>
+  </data>
+  <data name="Failed to get selected server index" xml:space="preserve">
+    <value>Nie można pobrać wybranego indeksu serwera</value>
+  </data>
+  <data name="Servers:" xml:space="preserve">
+    <value>Serwerów:</value>
+  </data>
+  <data name="Selecting server {0}..." xml:space="preserve">
+    <value>Wybieranie serwera {0}...</value>
+  </data>
+  <data name="Timeout waiting for character selection screen" xml:space="preserve">
+    <value>Timeout oczekiwania na ekran wyboru postaci</value>
+  </data>
+  <data name="Failed to get character list" xml:space="preserve">
+    <value>Nie udało się pobrać listy postaci</value>
+  </data>
+  <data name="Character index not found" xml:space="preserve">
+    <value>Nie znaleziono indeksu znaków</value>
+  </data>
+  <data name="Characters:" xml:space="preserve">
+    <value>Znaków:</value>
+  </data>
+  <data name="Selecting character {0}..." xml:space="preserve">
+    <value>Wybieranie postaci {0}...</value>
+  </data>
+  <data name="{0} agent is now {1}" xml:space="preserve">
+    <value>{0} agent jest teraz {1}</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Niepełnosprawny</value>
+  </data>
+  <data name="Trade" xml:space="preserve">
+    <value>Handel</value>
+  </data>
+  <data name="Match text value of property (UOAlive)" xml:space="preserve">
+    <value>Dopasuj wartość tekstową właściwości (UOAlive)</value>
+  </data>
+  <data name="Mini Heal / Cure Self" xml:space="preserve">
+    <value>Mini Uzdrowienie / Leczenie Siebie</value>
+  </data>
+  <data name="Greater Heal / Cure Self" xml:space="preserve">
+    <value>Większe Leczenie / Leczenie Siebie</value>
+  </data>
+  <data name="Cure" xml:space="preserve">
+    <value>Leczyć</value>
+  </data>
+  <data name="Arch Cure" xml:space="preserve">
+    <value>Leczenie łuku</value>
+  </data>
+  <data name="Healing" xml:space="preserve">
+    <value>Gojenie</value>
+  </data>
+  <data name="No items to display..." xml:space="preserve">
+    <value>Brak elementów do wyświetlenia...</value>
+  </data>
+  <data name="Backup Now" xml:space="preserve">
+    <value>Utwórz kopię zapasową teraz</value>
+  </data>
+  <data name="Linked" xml:space="preserve">
+    <value>Połączone</value>
+  </data>
+  <data name="Unlinked" xml:space="preserve">
+    <value>Niepołączone</value>
+  </data>
+  <data name="Logout on disconnected prompt" xml:space="preserve">
+    <value>Wyloguj się po wyświetleniu monitu o odłączenie</value>
+  </data>
+  <data name="Combine stacks" xml:space="preserve">
+    <value>Łączenie stosów</value>
+  </data>
+  <data name="Replace name with single click label" xml:space="preserve">
+    <value>Zastąp nazwę etykietą jednym kliknięciem</value>
+  </data>
+  <data name="Moving item {0} / {1}" xml:space="preserve">
+    <value>Element ruchomy {0} / {1}</value>
+  </data>
+  <data name="Text Color" xml:space="preserve">
+    <value>Kolor tekstu</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>Szerokość</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Wysokość</value>
+  </data>
+  <data name="Transparent background" xml:space="preserve">
+    <value>Przezroczyste tło</value>
+  </data>
+  <data name="ItemID Filter" xml:space="preserve">
+    <value>Filtr ItemID</value>
+  </data>
+  <data name="Source ID" xml:space="preserve">
+    <value>Identyfikator źródła</value>
+  </data>
+  <data name="Destination ID" xml:space="preserve">
+    <value>Identyfikator miejsca docelowego</value>
+  </data>
+  <data name="World Map" xml:space="preserve">
+    <value>Mapa świata</value>
+  </data>
+  <data name="Skill Bonus" xml:space="preserve">
+    <value>Premia do umiejętności</value>
+  </data>
+  <data name="Stop Organizer" xml:space="preserve">
+    <value>Zatrzymaj organizatora</value>
+  </data>
+  <data name="Stop Dress" xml:space="preserve">
+    <value>Zatrzymaj sukienkę</value>
+  </data>
+  <data name="Screenshot" xml:space="preserve">
+    <value>Zrzut ekranu</value>
+  </data>
+  <data name="Open Folder" xml:space="preserve">
+    <value>Otwórz folder</value>
+  </data>
+  <data name="Include Player Name" xml:space="preserve">
+    <value>Uwzględnij nazwę gracza</value>
+  </data>
+  <data name="Include Shard Name" xml:space="preserve">
+    <value>Uwzględnij nazwę fragmentu</value>
+  </data>
+  <data name="Include Timestamp" xml:space="preserve">
+    <value>Uwzględnij sygnaturę czasową</value>
+  </data>
+  <data name="Information Bar" xml:space="preserve">
+    <value>Pasek informacji</value>
+  </data>
+  <data name="Format:" xml:space="preserve">
+    <value>Format:</value>
+  </data>
+  <data name="Font Color:" xml:space="preserve">
+    <value>Kolor czcionki:</value>
+  </data>
+  <data name="Background Color:" xml:space="preserve">
+    <value>Kolor tła:</value>
+  </data>
+  <data name="Font Size:" xml:space="preserve">
+    <value>Rozmiar czcionki:</value>
+  </data>
+  <data name="Auto Screenshot" xml:space="preserve">
+    <value>Automatyczny zrzut ekranu</value>
+  </data>
+  <data name="Player Death" xml:space="preserve">
+    <value>Śmierć gracza</value>
+  </data>
+  <data name="Filename Format:" xml:space="preserve">
+    <value>Format nazwy pliku:</value>
+  </data>
+  <data name="Mobile Death" xml:space="preserve">
+    <value>Mobilna śmierć</value>
+  </data>
+  <data name="Player Death Delay:" xml:space="preserve">
+    <value>Opóźnienie śmierci gracza:</value>
+  </data>
+  <data name="Mobile Death Delay:" xml:space="preserve">
+    <value>Opóźnienie śmierci na urządzeniach mobilnych:</value>
+  </data>
+  <data name="(milliseconds)" xml:space="preserve">
+    <value>(milisekundy)</value>
+  </data>
+  <data name="UO Only" xml:space="preserve">
+    <value>Tylko UO</value>
+  </data>
+  <data name="Fullscreen" xml:space="preserve">
+    <value>Pełny ekran</value>
+  </data>
+  <data name="Max Distance:" xml:space="preserve">
+    <value>Maksymalna odległość:</value>
+  </data>
+  <data name="Only if enemy" xml:space="preserve">
+    <value>Tylko jeśli wróg</value>
+  </data>
+  <data name="Disable hotkeys on profile load" xml:space="preserve">
+    <value>Wyłącz skróty klawiszowe podczas ładowania profilu</value>
+  </data>
+  <data name="Limit Hotkey Retrigger" xml:space="preserve">
+    <value>Ogranicz ponowne wyzwalanie skrótu</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Inny __________</value>
+  </data>
+  <data name="Hue Override" xml:space="preserve">
+    <value>Zastąpienie odcienia</value>
+  </data>
+  <data name="Hotkeys Status Gump" xml:space="preserve">
+    <value>Skróty klawiszowe Stan Gumpa</value>
+  </data>
+  <data name="A profile already exists by this name, choose a new name..." xml:space="preserve">
+    <value>Profil już istnieje pod tą nazwą, wybierz nową nazwę...</value>
+  </data>
+  <data name="Targeting item {0} / {1}" xml:space="preserve">
+    <value>Element celowania {0} / {1}</value>
+  </data>
+  <data name="Move to bank" xml:space="preserve">
+    <value>Przenieś się do banku</value>
+  </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Kierunek</value>
+  </data>
+  <data name="Include Internal" xml:space="preserve">
+    <value>Uwzględnij wewnętrzne</value>
+  </data>
 </root>

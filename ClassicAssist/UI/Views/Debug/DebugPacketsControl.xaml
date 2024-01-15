@@ -10,6 +10,9 @@
              xmlns:debug="clr-namespace:ClassicAssist.UI.ViewModels.Debug"
              xmlns:sharedControls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              xmlns:local="clr-namespace:ClassicAssist.UI.Views.Debug"
+             xmlns:headered="clr-namespace:ClassicAssist.Controls.Headered;assembly=ClassicAssist.Controls"
+             xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+             xmlns:packetFilter="clr-namespace:ClassicAssist.UO.Network.PacketFilter"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -92,6 +95,12 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
+            <headered:HorizontalHeaderedContentControl Header="{x:Static resources:Strings.Direction}"
+                                                       Margin="10,0,0,0">
+                <ComboBox ItemsSource="{Binding Source={misc:EnumBindingSource {x:Type packetFilter:PacketDirection}}}" SelectedItem="{Binding Direction}" MinWidth="100" Margin="5,0,0,0" />
+            </headered:HorizontalHeaderedContentControl>
+            <CheckBox Margin="10,0,0,0" Content="{x:Static resources:Strings.Include_Internal}" IsChecked="{Binding IncludeInternal}" Foreground="{StaticResource ThemeForegroundBrush}"/>
+            <sharedControls:ImageButton ToolTip="{x:Static resources:Strings.Reset}" ImageSource="{StaticResource RefreshIcon}" Margin="10,0,0,0" Command="{Binding ResetCommand}"/>
         </ToolBar>
         <Border BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderBrush}" Grid.Row="1">
             <ListBox ItemsSource="{Binding Items}">

@@ -1857,4 +1857,10 @@ Are you sure you wish to continue?</value>
   <data name="Move to bank" xml:space="preserve">
     <value>Move to bank</value>
   </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Direction</value>
+  </data>
+  <data name="Include Internal" xml:space="preserve">
+    <value>Include Internal</value>
+  </data>
 </root>

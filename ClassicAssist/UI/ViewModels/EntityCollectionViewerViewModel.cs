@@ -20,6 +20,7 @@ using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Models;
 using ClassicAssist.UI.Views;
+using ClassicAssist.UI.Views.ECV;
 using ClassicAssist.UI.Views.ECV.Filter.Models;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
@@ -39,6 +40,7 @@ namespace ClassicAssist.UI.ViewModels
         private ItemCollection _collection = new ItemCollection( 0 );
 
         private ICommand _combineStacksCommand;
+        private ICommand _configureCommand;
         private ICommand _contextContextMenuRequestCommand;
         private ICommand _contextMoveToBackpackCommand;
         private ICommand _contextMoveToBankCommand;
@@ -136,6 +138,7 @@ namespace ClassicAssist.UI.ViewModels
         }
 
         public ICommand CombineStacksCommand => _combineStacksCommand ?? ( _combineStacksCommand = new RelayCommandAsync( CombineStacks, o => Collection.Serial > 0 ) );
+        public ICommand ConfigureCommand => _configureCommand ?? ( _configureCommand = new RelayCommand( Configure, o => true ) );
 
         public ICommand ContextContextMenuRequestCommand =>
             _contextContextMenuRequestCommand ?? ( _contextContextMenuRequestCommand = new RelayCommand( ContextMenuRequest, o => SelectedItems.Count > 0 ) );
@@ -234,6 +237,15 @@ namespace ClassicAssist.UI.ViewModels
         }
 
         private Dictionary<int, string> _nameOverrides { get; } = new Dictionary<int, string>();
+
+        private void Configure( object obj )
+        {
+            EntityCollectionViewerSettingsWindow window = new EntityCollectionViewerSettingsWindow { Topmost = Options.AlwaysOnTop, Options = Options };
+
+            window.ShowDialog();
+
+            Data.Options.CurrentOptions.EntityCollectionViewerOptions = Options;
+        }
 
         private async Task ContextMoveToBank( object arg )
         {
@@ -343,7 +355,9 @@ namespace ClassicAssist.UI.ViewModels
                     while ( true )
                     {
                         Item destStack = Collection.SelectEntity( i =>
-                            i.Count < 60000 && TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Stackable ) && !ignoreList.Contains( i.Serial ) );
+                            i.Count < 60000 && TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Stackable ) && !ignoreList.Contains( i.Serial ) &&
+                            !Options.CombineStacksIgnore.Any( e =>
+                                e.ID == i.ID && ( e.Hue == -1 || e.Hue == i.Hue ) && ( e.Cliloc == -1 || e.Cliloc == i.Properties?[0].Cliloc ) ) );
 
                         if ( destStack == null )
                         {

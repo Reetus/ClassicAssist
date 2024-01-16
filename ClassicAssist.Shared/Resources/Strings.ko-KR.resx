@@ -1704,4 +1704,289 @@
   <data name="Packets" xml:space="preserve">
     <value>패킷</value>
   </data>
+  <data name="ID from target" xml:space="preserve">
+    <value>대상의 ID</value>
+  </data>
+  <data name="Layer" xml:space="preserve">
+    <value>층</value>
+  </data>
+  <data name="Activated following" xml:space="preserve">
+    <value>활성화된 팔로잉</value>
+  </data>
+  <data name="Deactivated following" xml:space="preserve">
+    <value>비활성화된 팔로잉</value>
+  </data>
+  <data name="Event" xml:space="preserve">
+    <value>이벤트</value>
+  </data>
+  <data name="Caller" xml:space="preserve">
+    <value>방문객</value>
+  </data>
+  <data name="Elapsed" xml:space="preserve">
+    <value>경과</value>
+  </data>
+  <data name="Format Code" xml:space="preserve">
+    <value>형식 코드</value>
+  </data>
+  <data name="Current month donations" xml:space="preserve">
+    <value>현재 {0} 기부금: ${1}</value>
+  </data>
+  <data name="Donate Now" xml:space="preserve">
+    <value>지금 기부하기</value>
+  </data>
+  <data name="Context menu entry disabled" xml:space="preserve">
+    <value>상황에 맞는 메뉴 항목 사용 안 함</value>
+  </data>
+  <data name="Use Last Skill" xml:space="preserve">
+    <value>마지막 스킬 사용</value>
+  </data>
+  <data name="Login With Google" xml:space="preserve">
+    <value>Google로 로그인</value>
+  </data>
+  <data name="Authentication error or timeout" xml:space="preserve">
+    <value>인증 오류 또는 시간 초과</value>
+  </data>
+  <data name="Name Overrides" xml:space="preserve">
+    <value>이름 재정의</value>
+  </data>
+  <data name="Insert Empty Entry" xml:space="preserve">
+    <value>빈 항목 삽입</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>노트</value>
+  </data>
+  <data name="Autologin" xml:space="preserve">
+    <value>자동 로그인</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>계좌</value>
+  </data>
+  <data name="Server Index" xml:space="preserve">
+    <value>서버 인덱스</value>
+  </data>
+  <data name="Character Index" xml:space="preserve">
+    <value>문자 인덱스</value>
+  </data>
+  <data name="Connect Delay" xml:space="preserve">
+    <value>연결 지연</value>
+  </data>
+  <data name="Reconnect Delay" xml:space="preserve">
+    <value>재연결 지연</value>
+  </data>
+  <data name="Unknown account..." xml:space="preserve">
+    <value>알 수 없는 계정...</value>
+  </data>
+  <data name="Autologin in {0} seconds..." xml:space="preserve">
+    <value>{0}초 만에 자동 로그인...</value>
+  </data>
+  <data name="Connecting..." xml:space="preserve">
+    <value>연결...</value>
+  </data>
+  <data name="Timeout waiting for shard selection screen" xml:space="preserve">
+    <value>샤드 선택 화면 대기 시간 초과</value>
+  </data>
+  <data name="Failed to get server list" xml:space="preserve">
+    <value>서버 목록을 가져오지 못했습니다.</value>
+  </data>
+  <data name="Failed to get selected server index" xml:space="preserve">
+    <value>선택한 서버 인덱스를 가져오지 못했습니다.</value>
+  </data>
+  <data name="Servers:" xml:space="preserve">
+    <value>서버:</value>
+  </data>
+  <data name="Selecting server {0}..." xml:space="preserve">
+    <value>서버 {0} 선택 중...</value>
+  </data>
+  <data name="Timeout waiting for character selection screen" xml:space="preserve">
+    <value>문자 선택 화면 대기 시간 초과</value>
+  </data>
+  <data name="Failed to get character list" xml:space="preserve">
+    <value>캐릭터 목록을 가져오지 못했습니다.</value>
+  </data>
+  <data name="Character index not found" xml:space="preserve">
+    <value>문자 인덱스를 찾을 수 없습니다.</value>
+  </data>
+  <data name="Characters:" xml:space="preserve">
+    <value>문자:</value>
+  </data>
+  <data name="Selecting character {0}..." xml:space="preserve">
+    <value>캐릭터 {0} 선택 중...</value>
+  </data>
+  <data name="{0} agent is now {1}" xml:space="preserve">
+    <value>{0} 에이전트가 {1}</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>비활성화</value>
+  </data>
+  <data name="Trade" xml:space="preserve">
+    <value>무역</value>
+  </data>
+  <data name="Match text value of property (UOAlive)" xml:space="preserve">
+    <value>프로퍼티의 텍스트 값 일치(UOAlive)</value>
+  </data>
+  <data name="Mini Heal / Cure Self" xml:space="preserve">
+    <value>미니 힐(Mini Heal) / 큐어(Cure) 셀프셀프(Self)</value>
+  </data>
+  <data name="Greater Heal / Cure Self" xml:space="preserve">
+    <value>상급 치유 / 자기 치유</value>
+  </data>
+  <data name="Cure" xml:space="preserve">
+    <value>치료</value>
+  </data>
+  <data name="Arch Cure" xml:space="preserve">
+    <value>아치 큐어</value>
+  </data>
+  <data name="Healing" xml:space="preserve">
+    <value>치유</value>
+  </data>
+  <data name="No items to display..." xml:space="preserve">
+    <value>표시할 항목이 없습니다...</value>
+  </data>
+  <data name="Backup Now" xml:space="preserve">
+    <value>지금 백업</value>
+  </data>
+  <data name="Linked" xml:space="preserve">
+    <value>연결</value>
+  </data>
+  <data name="Unlinked" xml:space="preserve">
+    <value>연결 해제됨</value>
+  </data>
+  <data name="Logout on disconnected prompt" xml:space="preserve">
+    <value>연결이 끊긴 프롬프트에서 로그아웃</value>
+  </data>
+  <data name="Combine stacks" xml:space="preserve">
+    <value>스택 결합</value>
+  </data>
+  <data name="Replace name with single click label" xml:space="preserve">
+    <value>이름을 단일 클릭 레이블로 바꾸기</value>
+  </data>
+  <data name="Moving item {0} / {1}" xml:space="preserve">
+    <value>이동 항목 {0} / {1}</value>
+  </data>
+  <data name="Text Color" xml:space="preserve">
+    <value>글자 색깔</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>너비</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>높이</value>
+  </data>
+  <data name="Transparent background" xml:space="preserve">
+    <value>투명한 배경</value>
+  </data>
+  <data name="ItemID Filter" xml:space="preserve">
+    <value>ItemID 필터</value>
+  </data>
+  <data name="Source ID" xml:space="preserve">
+    <value>소스 ID</value>
+  </data>
+  <data name="Destination ID" xml:space="preserve">
+    <value>목적지 ID</value>
+  </data>
+  <data name="World Map" xml:space="preserve">
+    <value>세계지도</value>
+  </data>
+  <data name="Skill Bonus" xml:space="preserve">
+    <value>스킬 보너스</value>
+  </data>
+  <data name="Stop Organizer" xml:space="preserve">
+    <value>오거나이저 중지</value>
+  </data>
+  <data name="Stop Dress" xml:space="preserve">
+    <value>드레스 중지</value>
+  </data>
+  <data name="Screenshot" xml:space="preserve">
+    <value>스크린 샷</value>
+  </data>
+  <data name="Open Folder" xml:space="preserve">
+    <value>폴더 열기</value>
+  </data>
+  <data name="Include Player Name" xml:space="preserve">
+    <value>플레이어 이름 포함</value>
+  </data>
+  <data name="Include Shard Name" xml:space="preserve">
+    <value>샤드 이름 포함</value>
+  </data>
+  <data name="Include Timestamp" xml:space="preserve">
+    <value>타임스탬프 포함</value>
+  </data>
+  <data name="Information Bar" xml:space="preserve">
+    <value>정보 표시줄</value>
+  </data>
+  <data name="Format:" xml:space="preserve">
+    <value>판:</value>
+  </data>
+  <data name="Font Color:" xml:space="preserve">
+    <value>글꼴 색상:</value>
+  </data>
+  <data name="Background Color:" xml:space="preserve">
+    <value>배경색:</value>
+  </data>
+  <data name="Font Size:" xml:space="preserve">
+    <value>글꼴 크기:</value>
+  </data>
+  <data name="Auto Screenshot" xml:space="preserve">
+    <value>자동 스크린 샷</value>
+  </data>
+  <data name="Player Death" xml:space="preserve">
+    <value>플레이어 사망</value>
+  </data>
+  <data name="Filename Format:" xml:space="preserve">
+    <value>파일 이름 형식:</value>
+  </data>
+  <data name="Mobile Death" xml:space="preserve">
+    <value>모바일 데스</value>
+  </data>
+  <data name="Player Death Delay:" xml:space="preserve">
+    <value>플레이어 사망 지연:</value>
+  </data>
+  <data name="Mobile Death Delay:" xml:space="preserve">
+    <value>모바일 데스 딜레이:</value>
+  </data>
+  <data name="(milliseconds)" xml:space="preserve">
+    <value>(밀리초)</value>
+  </data>
+  <data name="UO Only" xml:space="preserve">
+    <value>UO 전용</value>
+  </data>
+  <data name="Fullscreen" xml:space="preserve">
+    <value>전체 화면</value>
+  </data>
+  <data name="Max Distance:" xml:space="preserve">
+    <value>최대 거리:</value>
+  </data>
+  <data name="Only if enemy" xml:space="preserve">
+    <value>적이 있는 경우에만</value>
+  </data>
+  <data name="Disable hotkeys on profile load" xml:space="preserve">
+    <value>프로필 로드 시 단축키 비활성화</value>
+  </data>
+  <data name="Limit Hotkey Retrigger" xml:space="preserve">
+    <value>단축키 재트리거 제한</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>다른</value>
+  </data>
+  <data name="Hue Override" xml:space="preserve">
+    <value>색조 재정의</value>
+  </data>
+  <data name="Hotkeys Status Gump" xml:space="preserve">
+    <value>단축키 상태 검프</value>
+  </data>
+  <data name="A profile already exists by this name, choose a new name..." xml:space="preserve">
+    <value>이 이름으로 프로필이 이미 있습니다. 새 이름을 선택하십시오...</value>
+  </data>
+  <data name="Targeting item {0} / {1}" xml:space="preserve">
+    <value>타겟팅 항목 {0}/{1}</value>
+  </data>
+  <data name="Move to bank" xml:space="preserve">
+    <value>은행으로 이동</value>
+  </data>
+  <data name="Direction" xml:space="preserve">
+    <value>방향</value>
+  </data>
+  <data name="Include Internal" xml:space="preserve">
+    <value>내부 포함</value>
+  </data>
 </root>

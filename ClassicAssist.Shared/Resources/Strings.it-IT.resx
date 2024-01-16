@@ -1836,4 +1836,157 @@ Sei sicuro di voler continuare?</value>
   <data name="Healing" xml:space="preserve">
     <value>Healing</value>
   </data>
+  <data name="No items to display..." xml:space="preserve">
+    <value>Nessun elemento da visualizzare...</value>
+  </data>
+  <data name="Backup Now" xml:space="preserve">
+    <value>Esegui il backup ora</value>
+  </data>
+  <data name="Linked" xml:space="preserve">
+    <value>Collegato</value>
+  </data>
+  <data name="Unlinked" xml:space="preserve">
+    <value>Sciolto</value>
+  </data>
+  <data name="Logout on disconnected prompt" xml:space="preserve">
+    <value>Disconnettiti alla richiesta di disconnessione</value>
+  </data>
+  <data name="Combine stacks" xml:space="preserve">
+    <value>Combina pile</value>
+  </data>
+  <data name="Replace name with single click label" xml:space="preserve">
+    <value>Sostituisci il nome con l'etichetta con un solo clic</value>
+  </data>
+  <data name="Moving item {0} / {1}" xml:space="preserve">
+    <value>Spostamento di oggetti {0} / {1}</value>
+  </data>
+  <data name="Text Color" xml:space="preserve">
+    <value>Colore del testo</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>Larghezza</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Altezza</value>
+  </data>
+  <data name="Transparent background" xml:space="preserve">
+    <value>Sfondo trasparente</value>
+  </data>
+  <data name="ItemID Filter" xml:space="preserve">
+    <value>Filtro ItemID</value>
+  </data>
+  <data name="Source ID" xml:space="preserve">
+    <value>ID di origine</value>
+  </data>
+  <data name="Destination ID" xml:space="preserve">
+    <value>ID destinazione</value>
+  </data>
+  <data name="World Map" xml:space="preserve">
+    <value>Mappa del mondo</value>
+  </data>
+  <data name="Skill Bonus" xml:space="preserve">
+    <value>Bonus abilità</value>
+  </data>
+  <data name="Stop Organizer" xml:space="preserve">
+    <value>Stop Organizer</value>
+  </data>
+  <data name="Stop Dress" xml:space="preserve">
+    <value>Fermati Vestito</value>
+  </data>
+  <data name="Screenshot" xml:space="preserve">
+    <value>Immagine dello schermo</value>
+  </data>
+  <data name="Open Folder" xml:space="preserve">
+    <value>Apri cartella</value>
+  </data>
+  <data name="Include Player Name" xml:space="preserve">
+    <value>Includi il nome del giocatore</value>
+  </data>
+  <data name="Include Shard Name" xml:space="preserve">
+    <value>Includi nome partizione</value>
+  </data>
+  <data name="Include Timestamp" xml:space="preserve">
+    <value>Includi timestamp</value>
+  </data>
+  <data name="Information Bar" xml:space="preserve">
+    <value>Barra delle informazioni</value>
+  </data>
+  <data name="Format:" xml:space="preserve">
+    <value>Formato:</value>
+  </data>
+  <data name="Font Color:" xml:space="preserve">
+    <value>Colore carattere:</value>
+  </data>
+  <data name="Background Color:" xml:space="preserve">
+    <value>Colore di sfondo:</value>
+  </data>
+  <data name="Font Size:" xml:space="preserve">
+    <value>Dimensione del carattere:</value>
+  </data>
+  <data name="Auto Screenshot" xml:space="preserve">
+    <value>Screenshot automatico</value>
+  </data>
+  <data name="Player Death" xml:space="preserve">
+    <value>Morte del giocatore</value>
+  </data>
+  <data name="Filename Format:" xml:space="preserve">
+    <value>Formato del nome del file:</value>
+  </data>
+  <data name="Mobile Death" xml:space="preserve">
+    <value>Morte mobile</value>
+  </data>
+  <data name="Player Death Delay:" xml:space="preserve">
+    <value>Ritardo morte giocatore:</value>
+  </data>
+  <data name="Mobile Death Delay:" xml:space="preserve">
+    <value>Ritardo morte mobile:</value>
+  </data>
+  <data name="(milliseconds)" xml:space="preserve">
+    <value>(millisecondi)</value>
+  </data>
+  <data name="UO Only" xml:space="preserve">
+    <value>Solo UO</value>
+  </data>
+  <data name="Fullscreen" xml:space="preserve">
+    <value>Schermo intero</value>
+  </data>
+  <data name="Max Distance:" xml:space="preserve">
+    <value>Distanza massima:</value>
+  </data>
+  <data name="Only if enemy" xml:space="preserve">
+    <value>Solo se il nemico</value>
+  </data>
+  <data name="Disable hotkeys on profile load" xml:space="preserve">
+    <value>Disabilita i tasti di scelta rapida al caricamento del profilo</value>
+  </data>
+  <data name="Limit Hotkey Retrigger" xml:space="preserve">
+    <value>Limita il riavvio dei tasti di scelta rapida</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Altro__________</value>
+  </data>
+  <data name="Packets" xml:space="preserve">
+    <value>Pacchetti</value>
+  </data>
+  <data name="Hue Override" xml:space="preserve">
+    <value>Sostituzione tonalità</value>
+  </data>
+  <data name="Hotkeys Status Gump" xml:space="preserve">
+    <value>Tasti di scelta rapida Stato Gump</value>
+  </data>
+  <data name="A profile already exists by this name, choose a new name..." xml:space="preserve">
+    <value>Esiste già un profilo con questo nome, scegli un nuovo nome...</value>
+  </data>
+  <data name="Targeting item {0} / {1}" xml:space="preserve">
+    <value>Targeting dell'elemento {0} / {1}</value>
+  </data>
+  <data name="Move to bank" xml:space="preserve">
+    <value>Trasferimento in banca</value>
+  </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Direzione</value>
+  </data>
+  <data name="Include Internal" xml:space="preserve">
+    <value>Includi interno</value>
+  </data>
 </root>

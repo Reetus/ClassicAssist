@@ -4,7 +4,7 @@
 
 Assistant for [ClassicUO](https://github.com/andreakarasho/ClassicUO) with UOSteam-like interface and macro syntax.
 
-![assist1](https://github.com/Reetus/ClassicAssist/assets/6239195/3e6b1a23-a548-4c46-b1b5-747db0f6ab24)
+![hotkeys](https://github.com/Reetus/ClassicAssist/assets/6239195/b40e8e20-c097-48e6-8447-a1ca35114860)
 
 ## Installation
 
@@ -45,7 +45,7 @@ Full documentation is still a work-in-progress but documentation on Macro Comman
 
 If your native language isn't English and you'd like to contribute a translation into your language, send a pull request or open an issue.
 
-![assist3](https://user-images.githubusercontent.com/6239195/73602831-da78c880-45b4-11ea-82e4-fe71c3ca41c8.png)
+![korean](https://github.com/Reetus/ClassicAssist/assets/6239195/409bd5e8-8d76-4755-8402-5351b4d0d498)
 
 Existing supported languages can be edited on POEditor
 * [UI](https://poeditor.com/join/project/64bC3Q4fdt)

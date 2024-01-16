@@ -51,8 +51,8 @@
                 <Setter Property="Margin" Value="0,0,0,5" />
             </Style>
         </Grid.Resources>
-        <controls:TwoColumnGrid>
-            <StackPanel x:Name="children">
+        <controls:ResponsiveGrid MinWidth="200">
+            <controls:ResponsiveGrid.Items>
                 <GroupBox Header="{x:Static resources:Strings.General}">
                     <StackPanel Margin="5">
                         <headered:HorizontalHeaderedContentControl Header="{x:Static resources:Strings.Language}">
@@ -187,7 +187,7 @@
                         </controls:OptionedCheckBoxControl>
                     </StackPanel>
                 </GroupBox>
-            </StackPanel>
-        </controls:TwoColumnGrid>
+            </controls:ResponsiveGrid.Items>
+        </controls:ResponsiveGrid>
     </Grid>
 </UserControl>

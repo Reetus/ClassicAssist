@@ -1357,6 +1357,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Direction.
+        /// </summary>
+        public static string Direction {
+            get {
+                return ResourceManager.GetString("Direction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disable all vendor buy entries on loading profile.
         /// </summary>
         public static string Disable_all_vendor_buy_entries_on_loading_profile {
@@ -2280,6 +2289,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Include_Backpack_Amount {
             get {
                 return ResourceManager.GetString("Include Backpack Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include Internal.
+        /// </summary>
+        public static string Include_Internal {
+            get {
+                return ResourceManager.GetString("Include Internal", resourceCulture);
             }
         }
         

@@ -1623,4 +1623,7 @@ Určitě chceš pokračovat?</value>
   <data name="Packets" xml:space="preserve">
     <value>Pakety</value>
   </data>
+  <data name="Include Internal" xml:space="preserve">
+    <value>Include Internal</value>
+  </data>
 </root>

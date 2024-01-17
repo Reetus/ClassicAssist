@@ -9,7 +9,7 @@
              xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
              xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
-             d:DesignHeight="400" d:DesignWidth="550">
+             d:DesignHeight="300" d:DesignWidth="350">
     <UserControl.DataContext>
         <debug:DebugJournalViewModel />
     </UserControl.DataContext>
@@ -21,22 +21,33 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel>
-        <ToolBar DockPanel.Dock="Top">
-            <controls:ImageButton Command="{Binding ClearCommand}" ImageSource="{StaticResource RemoveIcon}"
-                                  ToolTip="{x:Static resources:Strings.Clear_All}" />
-        </ToolBar>
-        <ListBox ItemsSource="{Binding Items}"
-                 SelectedItem="{Binding SelectedItem}">
-            <i:Interaction.Behaviors>
-                <behaviours:ItemsControlAutoScrollBehaviour />
-            </i:Interaction.Behaviors>
-            <ListBox.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="{x:Static resources:Strings.Copy}" Command="{Binding CopyCommand}"
-                              CommandParameter="{Binding SelectedItem}" />
-                </ContextMenu>
-            </ListBox.ContextMenu>
-        </ListBox>
-    </DockPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <DockPanel>
+            <ToolBar DockPanel.Dock="Top">
+                <controls:ImageButton Command="{Binding ClearCommand}" ImageSource="{StaticResource RemoveIcon}"
+                                      ToolTip="{x:Static resources:Strings.Clear_All}" />
+            </ToolBar>
+            <ListBox ItemsSource="{Binding Items}"
+                     SelectedItem="{Binding SelectedItem}">
+                <i:Interaction.Behaviors>
+                    <behaviours:ItemsControlAutoScrollBehaviour />
+                </i:Interaction.Behaviors>
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="{x:Static resources:Strings.Copy}" Command="{Binding CopyCommand}"
+                                  CommandParameter="{Binding SelectedItem}" />
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+            </ListBox>
+        </DockPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,10,0,0">
+            <CheckBox Content="{x:Static resources:Strings.Enabled}" VerticalAlignment="Center"
+                      Margin="0,0,10,0" IsChecked="{Binding Enabled}" />
+        </StackPanel>
+    </Grid>
+
 </UserControl>

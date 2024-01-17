@@ -1335,4 +1335,658 @@
   <data name="Packets" xml:space="preserve">
     <value>数据包</value>
   </data>
+  <data name="Author" xml:space="preserve">
+    <value>作者</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>类别</value>
+  </data>
+  <data name="Copy to clipboard" xml:space="preserve">
+    <value>复制到剪贴板</value>
+  </data>
+  <data name="Create Macro" xml:space="preserve">
+    <value>创建宏</value>
+  </data>
+  <data name="Era" xml:space="preserve">
+    <value>时代</value>
+  </data>
+  <data name="Open in Github" xml:space="preserve">
+    <value>在 Github 中打开</value>
+  </data>
+  <data name="Shard" xml:space="preserve">
+    <value>碎片</value>
+  </data>
+  <data name="Macro Warning" xml:space="preserve">
+    <value>运行恶意宏可能会危及您的帐户或计算机！
+
+在运行之前，您应该了解宏在做什么。
+
+尽管已尽一切努力确保宏不是恶意的，则不承担任何责任。
+
+您确定要继续吗？</value>
+  </data>
+  <data name="Public Macros" xml:space="preserve">
+    <value>公共宏</value>
+  </data>
+  <data name="Learn how to contribute your own macros..." xml:space="preserve">
+    <value>了解如何贡献自己的宏...</value>
+  </data>
+  <data name="Failed to download manifest..." xml:space="preserve">
+    <value>无法下载清单...</value>
+  </data>
+  <data name="Failed to download macro..." xml:space="preserve">
+    <value>无法下载宏...</value>
+  </data>
+  <data name="Additional Assemblies" xml:space="preserve">
+    <value>其他程序集</value>
+  </data>
+  <data name="Additional assemblies to load:" xml:space="preserve">
+    <value>要加载的其他程序集：</value>
+  </data>
+  <data name="Error loading assembly: {0}" xml:space="preserve">
+    <value>加载程序集时出错：{0}</value>
+  </data>
+  <data name="Special Moves" xml:space="preserve">
+    <value>必杀技</value>
+  </data>
+  <data name="Loaded to all profiles" xml:space="preserve">
+    <value>加载到所有配置文件</value>
+  </data>
+  <data name="Bards Music" xml:space="preserve">
+    <value>吟游诗人音乐</value>
+  </data>
+  <data name="Check hands before potions" xml:space="preserve">
+    <value>药水前检查双手</value>
+  </data>
+  <data name="Scavenging '{0}'" xml:space="preserve">
+    <value>拾荒“{0}”......</value>
+  </data>
+  <data name="Rehue friends" xml:space="preserve">
+    <value>Rehue 朋友</value>
+  </data>
+  <data name="Show running macros gump" xml:space="preserve">
+    <value>显示正在运行的宏 gump</value>
+  </data>
+  <data name="Item out of range..." xml:space="preserve">
+    <value>项目超出范围...</value>
+  </data>
+  <data name="Cast Last Spell" xml:space="preserve">
+    <value>施放最后的咒语</value>
+  </data>
+  <data name="Arm / Disarm already in progress..." xml:space="preserve">
+    <value>布防/撤防已经在进行中...</value>
+  </data>
+  <data name="Dress already in progress..." xml:space="preserve">
+    <value>着装已经在进行中了......</value>
+  </data>
+  <data name="Maximum distance exceeded." xml:space="preserve">
+    <value>超过最大距离。</value>
+  </data>
+  <data name="Show Child Items" xml:space="preserve">
+    <value>显示子项</value>
+  </data>
+  <data name="Open All Containers" xml:space="preserve">
+    <value>打开所有容器</value>
+  </data>
+  <data name="Requeue failed items" xml:space="preserve">
+    <value>对失败的项目重新排队</value>
+  </data>
+  <data name="Invalid organizer agent name..." xml:space="preserve">
+    <value>组织者代理名称无效...</value>
+  </data>
+  <data name="Loot humanoids" xml:space="preserve">
+    <value>战利品人形机器人</value>
+  </data>
+  <data name="Reset import cache" xml:space="preserve">
+    <value>重置导入缓存</value>
+  </data>
+  <data name="Macro not found..." xml:space="preserve">
+    <value>未找到宏...</value>
+  </data>
+  <data name="Module" xml:space="preserve">
+    <value>模块</value>
+  </data>
+  <data name="Snapshot Saved: {0}" xml:space="preserve">
+    <value>快照已保存：{0}</value>
+  </data>
+  <data name="Take Snapshot" xml:space="preserve">
+    <value>拍摄快照</value>
+  </data>
+  <data name="Priority:" xml:space="preserve">
+    <value>优先权：</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>优先权</value>
+  </data>
+  <data name="Object queue full" xml:space="preserve">
+    <value>对象队列已满</value>
+  </data>
+  <data name="Use Cliloc language from ClassicUO settings" xml:space="preserve">
+    <value>使用 ClassicUO 设置中的 Cliloc 语言</value>
+  </data>
+  <data name="Keyboard" xml:space="preserve">
+    <value>键盘</value>
+  </data>
+  <data name="Share Macro" xml:space="preserve">
+    <value>分享宏</value>
+  </data>
+  <data name="Check Weight" xml:space="preserve">
+    <value>检查重量</value>
+  </data>
+  <data name="Minimum Weight Available:" xml:space="preserve">
+    <value>最小可用称量值：</value>
+  </data>
+  <data name="Context menu entry not found..." xml:space="preserve">
+    <value>未找到上下文菜单项...</value>
+  </data>
+  <data name="Atleast one option must be provided..." xml:space="preserve">
+    <value>必须至少提供一个选项...</value>
+  </data>
+  <data name="Invalid VendorBuy list name..." xml:space="preserve">
+    <value>无效的 VendorBuy 列表名称...</value>
+  </data>
+  <data name="Invalid state name: &quot;on&quot;, &quot;off&quot;, or &quot;toggle&quot;..." xml:space="preserve">
+    <value>状态名称无效：“on”、“off”或“toggle”...</value>
+  </data>
+  <data name="Replay" xml:space="preserve">
+    <value>重播</value>
+  </data>
+  <data name="Ignore packet type" xml:space="preserve">
+    <value>忽略数据包类型</value>
+  </data>
+  <data name="Copy packet declaration" xml:space="preserve">
+    <value>复制数据包声明</value>
+  </data>
+  <data name="Configure Sound Filters" xml:space="preserve">
+    <value>配置声音过滤器</value>
+  </data>
+  <data name="Sound Filter" xml:space="preserve">
+    <value>声音过滤器</value>
+  </data>
+  <data name="Sound Type" xml:space="preserve">
+    <value>声音类型</value>
+  </data>
+  <data name="Animals" xml:space="preserve">
+    <value>动物</value>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>环境</value>
+  </data>
+  <data name="Bear Sounds" xml:space="preserve">
+    <value>熊声</value>
+  </data>
+  <data name="Bird Sounds" xml:space="preserve">
+    <value>鸟叫声</value>
+  </data>
+  <data name="Bull Sounds" xml:space="preserve">
+    <value>公牛之声</value>
+  </data>
+  <data name="Cat Sounds" xml:space="preserve">
+    <value>猫的声音</value>
+  </data>
+  <data name="Chicken Sounds" xml:space="preserve">
+    <value>鸡叫声</value>
+  </data>
+  <data name="Cougar Sounds" xml:space="preserve">
+    <value>美洲狮的声音</value>
+  </data>
+  <data name="Deer Sounds" xml:space="preserve">
+    <value>鹿的声音</value>
+  </data>
+  <data name="Dog Sounds" xml:space="preserve">
+    <value>狗的声音</value>
+  </data>
+  <data name="Dragon Sounds" xml:space="preserve">
+    <value>龙之声</value>
+  </data>
+  <data name="Eagle Sounds" xml:space="preserve">
+    <value>鹰声</value>
+  </data>
+  <data name="Goat Sounds" xml:space="preserve">
+    <value>山羊的声音</value>
+  </data>
+  <data name="Horse Sounds" xml:space="preserve">
+    <value>马的声音</value>
+  </data>
+  <data name="Pig Sounds" xml:space="preserve">
+    <value>猪的声音</value>
+  </data>
+  <data name="Rat Sounds" xml:space="preserve">
+    <value>老鼠的声音</value>
+  </data>
+  <data name="Sheep Sounds" xml:space="preserve">
+    <value>绵羊的声音</value>
+  </data>
+  <data name="Titan / Cyclops Sounds" xml:space="preserve">
+    <value>泰坦/独眼巨人的声音</value>
+  </data>
+  <data name="Wolf Sounds" xml:space="preserve">
+    <value>狼之声</value>
+  </data>
+  <data name="Door Sounds" xml:space="preserve">
+    <value>门声</value>
+  </data>
+  <data name="Emote Sounds" xml:space="preserve">
+    <value>表情声音</value>
+  </data>
+  <data name="Weapon Sounds" xml:space="preserve">
+    <value>武器声音</value>
+  </data>
+  <data name="Wrestling Sounds" xml:space="preserve">
+    <value>摔跤声</value>
+  </data>
+  <data name="Spell Fizzle Sounds" xml:space="preserve">
+    <value>咒语嘶嘶声</value>
+  </data>
+  <data name="Alchemy Sounds" xml:space="preserve">
+    <value>炼金术之声</value>
+  </data>
+  <data name="Inscribing Sounds" xml:space="preserve">
+    <value>铭刻声音</value>
+  </data>
+  <data name="Spirit Speak Sounds" xml:space="preserve">
+    <value>Spirit Speak 声音</value>
+  </data>
+  <data name="Expire Targets:" xml:space="preserve">
+    <value>过期目标：</value>
+  </data>
+  <data name="Time in milliseconds (-1 to not expire)" xml:space="preserve">
+    <value>以毫秒为单位的时间（-1 表示不过期）</value>
+  </data>
+  <data name="New Group" xml:space="preserve">
+    <value>新建组</value>
+  </data>
+  <data name="Remove Group" xml:space="preserve">
+    <value>删除组</value>
+  </data>
+  <data name="Auto disable when loading" xml:space="preserve">
+    <value>加载时自动禁用</value>
+  </data>
+  <data name="Disable all vendor buy entries on loading profile" xml:space="preserve">
+    <value>在加载配置文件上禁用所有供应商购买条目</value>
+  </data>
+  <data name="Open Modules Folder" xml:space="preserve">
+    <value>打开模块文件夹</value>
+  </data>
+  <data name="Backup Days" xml:space="preserve">
+    <value>备份天数</value>
+  </data>
+  <data name="Backup Settings" xml:space="preserve">
+    <value>备份设置</value>
+  </data>
+  <data name="Choose backup folder" xml:space="preserve">
+    <value>选择备份文件夹</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>路径</value>
+  </data>
+  <data name="Setting to zero will cause it to backup on every client close" xml:space="preserve">
+    <value>设置为零将导致它在每次客户端关闭时进行备份</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>登录</value>
+  </data>
+  <data name="Login With Windows" xml:space="preserve">
+    <value>使用 Windows 登录</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>注销</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>用户名</value>
+  </data>
+  <data name="Loading..." xml:space="preserve">
+    <value>装载。。。</value>
+  </data>
+  <data name="No items..." xml:space="preserve">
+    <value>没有项目...</value>
+  </data>
+  <data name="Backing up {0}..." xml:space="preserve">
+    <value>正在备份{0}...</value>
+  </data>
+  <data name="Done..." xml:space="preserve">
+    <value>做。。。</value>
+  </data>
+  <data name="Failed to backup file: {0}" xml:space="preserve">
+    <value>无法备份文件：{0}</value>
+  </data>
+  <data name="No backup type or path set..." xml:space="preserve">
+    <value>未设置备份类型或路径...</value>
+  </data>
+  <data name="Profile Backup" xml:space="preserve">
+    <value>配置文件备份</value>
+  </data>
+  <data name="Profile backup in progress..." xml:space="preserve">
+    <value>配置文件备份正在进行中...</value>
+  </data>
+  <data name="Folder Browser" xml:space="preserve">
+    <value>文件夹浏览器</value>
+  </data>
+  <data name="New Folder" xml:space="preserve">
+    <value>新建文件夹</value>
+  </data>
+  <data name="Incremental" xml:space="preserve">
+    <value>增量</value>
+  </data>
+  <data name="Only write files that have been modified" xml:space="preserve">
+    <value>只写入已修改的文件</value>
+  </data>
+  <data name="Backup path not set" xml:space="preserve">
+    <value>未设置备份路径</value>
+  </data>
+  <data name="Cannot locate backup folder" xml:space="preserve">
+    <value>找不到备份文件夹</value>
+  </data>
+  <data name="Overwrite Existing" xml:space="preserve">
+    <value>覆盖现有</value>
+  </data>
+  <data name="Overwrite existing files instead of creating new files with the same name" xml:space="preserve">
+    <value>覆盖现有文件，而不是创建同名的新文件</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="Minimize to system tray" xml:space="preserve">
+    <value>最小化到系统托盘</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>未知</value>
+  </data>
+  <data name="All Names" xml:space="preserve">
+    <value>所有名称</value>
+  </data>
+  <data name="Create Macro Button" xml:space="preserve">
+    <value>创建宏按钮</value>
+  </data>
+  <data name="Reflection Error: {0}" xml:space="preserve">
+    <value>反射误差：{0}</value>
+  </data>
+  <data name="Show player / shard name in CUO title" xml:space="preserve">
+    <value>在 CUO 标题中显示播放器/分片名称</value>
+  </data>
+  <data name="ID from target" xml:space="preserve">
+    <value>来自目标的 ID</value>
+  </data>
+  <data name="Layer" xml:space="preserve">
+    <value>层</value>
+  </data>
+  <data name="Activated following" xml:space="preserve">
+    <value>激活关注</value>
+  </data>
+  <data name="Deactivated following" xml:space="preserve">
+    <value>停用关注</value>
+  </data>
+  <data name="Event" xml:space="preserve">
+    <value>事件</value>
+  </data>
+  <data name="Caller" xml:space="preserve">
+    <value>访客</value>
+  </data>
+  <data name="Elapsed" xml:space="preserve">
+    <value>过去了</value>
+  </data>
+  <data name="Format Code" xml:space="preserve">
+    <value>格式代码</value>
+  </data>
+  <data name="Current month donations" xml:space="preserve">
+    <value>目前对{0}的捐款：{1} 美元</value>
+  </data>
+  <data name="Donate Now" xml:space="preserve">
+    <value>立即捐赠</value>
+  </data>
+  <data name="Context menu entry disabled" xml:space="preserve">
+    <value>上下文菜单项已禁用</value>
+  </data>
+  <data name="Use Last Skill" xml:space="preserve">
+    <value>使用最后的技能</value>
+  </data>
+  <data name="Login With Google" xml:space="preserve">
+    <value>使用Google登录</value>
+  </data>
+  <data name="Authentication error or timeout" xml:space="preserve">
+    <value>身份验证错误或超时</value>
+  </data>
+  <data name="Name Overrides" xml:space="preserve">
+    <value>名称覆盖</value>
+  </data>
+  <data name="Insert Empty Entry" xml:space="preserve">
+    <value>插入空条目</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>笔记</value>
+  </data>
+  <data name="Autologin" xml:space="preserve">
+    <value>自动登录</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>帐户</value>
+  </data>
+  <data name="Server Index" xml:space="preserve">
+    <value>服务器索引</value>
+  </data>
+  <data name="Character Index" xml:space="preserve">
+    <value>字符索引</value>
+  </data>
+  <data name="Connect Delay" xml:space="preserve">
+    <value>连接延迟</value>
+  </data>
+  <data name="Reconnect Delay" xml:space="preserve">
+    <value>重新连接延迟</value>
+  </data>
+  <data name="Unknown account..." xml:space="preserve">
+    <value>未知帐户...</value>
+  </data>
+  <data name="Autologin in {0} seconds..." xml:space="preserve">
+    <value>{0}秒内自动登录...</value>
+  </data>
+  <data name="Connecting..." xml:space="preserve">
+    <value>连接。。。</value>
+  </data>
+  <data name="Timeout waiting for shard selection screen" xml:space="preserve">
+    <value>等待分片选择屏幕超时</value>
+  </data>
+  <data name="Failed to get server list" xml:space="preserve">
+    <value>无法获取服务器列表</value>
+  </data>
+  <data name="Failed to get selected server index" xml:space="preserve">
+    <value>无法获取选定的服务器索引</value>
+  </data>
+  <data name="Servers:" xml:space="preserve">
+    <value>服务器：</value>
+  </data>
+  <data name="Selecting server {0}..." xml:space="preserve">
+    <value>正在选择服务器{0}...</value>
+  </data>
+  <data name="Timeout waiting for character selection screen" xml:space="preserve">
+    <value>等待字符选择屏幕的超时</value>
+  </data>
+  <data name="Failed to get character list" xml:space="preserve">
+    <value>无法获取字符列表</value>
+  </data>
+  <data name="Character index not found" xml:space="preserve">
+    <value>找不到字符索引</value>
+  </data>
+  <data name="Characters:" xml:space="preserve">
+    <value>字符：</value>
+  </data>
+  <data name="Selecting character {0}..." xml:space="preserve">
+    <value>正在选择角色{0}...</value>
+  </data>
+  <data name="{0} agent is now {1}" xml:space="preserve">
+    <value>{0}代理现已{1}</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>禁用</value>
+  </data>
+  <data name="Trade" xml:space="preserve">
+    <value>贸易</value>
+  </data>
+  <data name="Match text value of property (UOAlive)" xml:space="preserve">
+    <value>匹配属性的文本值 （UOAlive）</value>
+  </data>
+  <data name="Mini Heal / Cure Self" xml:space="preserve">
+    <value>迷你治愈/自我治愈</value>
+  </data>
+  <data name="Greater Heal / Cure Self" xml:space="preserve">
+    <value>更大的愈合/治愈自我</value>
+  </data>
+  <data name="Cure" xml:space="preserve">
+    <value>治</value>
+  </data>
+  <data name="Arch Cure" xml:space="preserve">
+    <value>拱形治疗</value>
+  </data>
+  <data name="Healing" xml:space="preserve">
+    <value>康复</value>
+  </data>
+  <data name="No items to display..." xml:space="preserve">
+    <value>没有要显示的项目...</value>
+  </data>
+  <data name="Backup Now" xml:space="preserve">
+    <value>立即备份</value>
+  </data>
+  <data name="Linked" xml:space="preserve">
+    <value>联系</value>
+  </data>
+  <data name="Unlinked" xml:space="preserve">
+    <value>未链接</value>
+  </data>
+  <data name="Logout on disconnected prompt" xml:space="preserve">
+    <value>断开连接提示时注销</value>
+  </data>
+  <data name="Combine stacks" xml:space="preserve">
+    <value>合并堆栈</value>
+  </data>
+  <data name="Replace name with single click label" xml:space="preserve">
+    <value>将名称替换为单击标签</value>
+  </data>
+  <data name="Moving item {0} / {1}" xml:space="preserve">
+    <value>移动项目 {0} / {1}</value>
+  </data>
+  <data name="Text Color" xml:space="preserve">
+    <value>文本颜色</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>宽度</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>高度</value>
+  </data>
+  <data name="Transparent background" xml:space="preserve">
+    <value>透明背景</value>
+  </data>
+  <data name="ItemID Filter" xml:space="preserve">
+    <value>ItemID 筛选器</value>
+  </data>
+  <data name="Source ID" xml:space="preserve">
+    <value>源 ID</value>
+  </data>
+  <data name="Destination ID" xml:space="preserve">
+    <value>目标 ID</value>
+  </data>
+  <data name="World Map" xml:space="preserve">
+    <value>世界地图</value>
+  </data>
+  <data name="Skill Bonus" xml:space="preserve">
+    <value>技能加成</value>
+  </data>
+  <data name="Stop Organizer" xml:space="preserve">
+    <value>停止组织者</value>
+  </data>
+  <data name="Stop Dress" xml:space="preserve">
+    <value>定点连衣裙</value>
+  </data>
+  <data name="Screenshot" xml:space="preserve">
+    <value>截屏</value>
+  </data>
+  <data name="Open Folder" xml:space="preserve">
+    <value>打开文件夹</value>
+  </data>
+  <data name="Include Player Name" xml:space="preserve">
+    <value>包括玩家名称</value>
+  </data>
+  <data name="Include Shard Name" xml:space="preserve">
+    <value>包括分片名称</value>
+  </data>
+  <data name="Include Timestamp" xml:space="preserve">
+    <value>包括时间戳</value>
+  </data>
+  <data name="Information Bar" xml:space="preserve">
+    <value>信息栏</value>
+  </data>
+  <data name="Format:" xml:space="preserve">
+    <value>格式：</value>
+  </data>
+  <data name="Font Color:" xml:space="preserve">
+    <value>字体颜色：</value>
+  </data>
+  <data name="Background Color:" xml:space="preserve">
+    <value>背景颜色：</value>
+  </data>
+  <data name="Font Size:" xml:space="preserve">
+    <value>字体大小：</value>
+  </data>
+  <data name="Auto Screenshot" xml:space="preserve">
+    <value>自动截图</value>
+  </data>
+  <data name="Player Death" xml:space="preserve">
+    <value>玩家死亡</value>
+  </data>
+  <data name="Filename Format:" xml:space="preserve">
+    <value>文件名格式：</value>
+  </data>
+  <data name="Mobile Death" xml:space="preserve">
+    <value>移动死亡</value>
+  </data>
+  <data name="Player Death Delay:" xml:space="preserve">
+    <value>玩家死亡延迟：</value>
+  </data>
+  <data name="Mobile Death Delay:" xml:space="preserve">
+    <value>移动死亡延迟：</value>
+  </data>
+  <data name="(milliseconds)" xml:space="preserve">
+    <value>（毫秒）</value>
+  </data>
+  <data name="UO Only" xml:space="preserve">
+    <value>仅限 UO</value>
+  </data>
+  <data name="Fullscreen" xml:space="preserve">
+    <value>全屏</value>
+  </data>
+  <data name="Max Distance:" xml:space="preserve">
+    <value>最大距离：</value>
+  </data>
+  <data name="Only if enemy" xml:space="preserve">
+    <value>只有当敌人</value>
+  </data>
+  <data name="Disable hotkeys on profile load" xml:space="preserve">
+    <value>在配置文件加载时禁用热键</value>
+  </data>
+  <data name="Limit Hotkey Retrigger" xml:space="preserve">
+    <value>限制热键重新触发</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>其他</value>
+  </data>
+  <data name="Hue Override" xml:space="preserve">
+    <value>色相覆盖</value>
+  </data>
+  <data name="Hotkeys Status Gump" xml:space="preserve">
+    <value>热键状态阿甘</value>
+  </data>
+  <data name="A profile already exists by this name, choose a new name..." xml:space="preserve">
+    <value>此名称的配置文件已存在，请选择一个新名称...</value>
+  </data>
+  <data name="Targeting item {0} / {1}" xml:space="preserve">
+    <value>定位项目 {0} / {1}</value>
+  </data>
+  <data name="Move to bank" xml:space="preserve">
+    <value>转移到银行</value>
+  </data>
+  <data name="Direction" xml:space="preserve">
+    <value>方向</value>
+  </data>
+  <data name="Include Internal" xml:space="preserve">
+    <value>包括内部</value>
+  </data>
 </root>

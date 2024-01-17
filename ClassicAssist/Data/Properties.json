@@ -631,5 +631,15 @@
     ],
     "ConstraintType": 0,
     "Name": "Use Best Weapon Skill"
+  },
+  {
+    "Name": "Weight",
+    "Clilocs": [
+      1072225,
+      1072788,
+      1072789
+    ],
+    "ClilocIndex": 0,
+    "ConstraintType": 0
   }
 ]

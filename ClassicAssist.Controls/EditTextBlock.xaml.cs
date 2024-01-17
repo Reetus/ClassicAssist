@@ -11,12 +11,10 @@ namespace ClassicAssist.Controls
     /// </summary>
     public partial class EditTextBlock
     {
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register( nameof( Text ), typeof( string ),
-            typeof( EditTextBlock ),
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register( nameof( Text ), typeof( string ), typeof( EditTextBlock ),
             new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
 
-        public static readonly DependencyProperty LabelProperty = DependencyProperty.Register( nameof( Label ),
-            typeof( string ), typeof( EditTextBlock ),
+        public static readonly DependencyProperty LabelProperty = DependencyProperty.Register( nameof( Label ), typeof( string ), typeof( EditTextBlock ),
             new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.None ) );
 
         public static readonly DependencyProperty ShowIconProperty = DependencyProperty.Register( nameof( ShowIcon ),
@@ -25,9 +23,17 @@ namespace ClassicAssist.Controls
         public static readonly DependencyProperty CanEditProperty = DependencyProperty.Register( nameof( CanEdit ),
             typeof( bool ), typeof( EditTextBlock ), new UIPropertyMetadata( true ) );
 
+        public static readonly DependencyProperty ButtonsProperty = DependencyProperty.Register( nameof( Buttons ), typeof( object ), typeof( EditTextBlock ) );
+
         public EditTextBlock()
         {
             InitializeComponent();
+        }
+
+        public object Buttons
+        {
+            get => GetValue( ButtonsProperty );
+            set => SetValue( ButtonsProperty, value );
         }
 
         public bool CanEdit
@@ -73,6 +79,7 @@ namespace ClassicAssist.Controls
         {
             textBlock.Visibility = Visibility.Collapsed;
             pencilButton.Visibility = Visibility.Collapsed;
+            buttonsPanel.Visibility = Visibility.Collapsed;
             textBox.Visibility = Visibility.Visible;
             textBox.CaretIndex = textBox.Text.Length;
             textBox.SelectAll();
@@ -92,6 +99,7 @@ namespace ClassicAssist.Controls
         {
             textBlock.Visibility = Visibility.Visible;
             pencilButton.Visibility = ShowIcon ? Visibility.Visible : Visibility.Hidden;
+            buttonsPanel.Visibility = Visibility.Visible;
             ( (TextBox) sender ).Visibility = Visibility.Collapsed;
         }
 

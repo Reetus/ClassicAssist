@@ -1623,4 +1623,370 @@ Určitě chceš pokračovat?</value>
   <data name="Packets" xml:space="preserve">
     <value>Pakety</value>
   </data>
+  <data name="Include Internal" xml:space="preserve">
+    <value>Include Internal</value>
+  </data>
+  <data name="Conflagration Potion" xml:space="preserve">
+    <value>Lektvar požáru</value>
+  </data>
+  <data name="Confusion Blast Potion" xml:space="preserve">
+    <value>Lektvar zmatku</value>
+  </data>
+  <data name="Cure Potion" xml:space="preserve">
+    <value>Léčivý lektvar</value>
+  </data>
+  <data name="Enchanted Apple" xml:space="preserve">
+    <value>Kouzelné jablko</value>
+  </data>
+  <data name="Explosion Potion" xml:space="preserve">
+    <value>Lektvar výbuchu</value>
+  </data>
+  <data name="Fruit Bowl" xml:space="preserve">
+    <value>Ovocná mísa</value>
+  </data>
+  <data name="Grapes of Wrath" xml:space="preserve">
+    <value>Hrozny hněvu</value>
+  </data>
+  <data name="Heal Potion" xml:space="preserve">
+    <value>Léčivý lektvar</value>
+  </data>
+  <data name="Invisibility Potion" xml:space="preserve">
+    <value>Lektvar neviditelnosti</value>
+  </data>
+  <data name="Made_For_Malo" xml:space="preserve">
+    <value>"Vyrobeno pro Malo"</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Orange Petal" xml:space="preserve">
+    <value>Oranžový okvětní lístek</value>
+  </data>
+  <data name="Persist Use Once" xml:space="preserve">
+    <value>Trvalé použití jednou</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>ClassicAssist</value>
+  </data>
+  <data name="Refresh Potion" xml:space="preserve">
+    <value>Osvěžující lektvar</value>
+  </data>
+  <data name="Regeneration" xml:space="preserve">
+    <value>Regenerace</value>
+  </data>
+  <data name="Smoke Bomb" xml:space="preserve">
+    <value>Dýmovnice</value>
+  </data>
+  <data name="Strength Potion" xml:space="preserve">
+    <value>Lektvar síly</value>
+  </data>
+  <data name="Trinsic Rose Petal" xml:space="preserve">
+    <value>Trinsic okvětní lístek růže</value>
+  </data>
+  <data name="UO_LOCALE" xml:space="preserve">
+    <value>ENU</value>
+  </data>
+  <data name="Use death screen whilst hidden" xml:space="preserve">
+    <value>Použití obrazovky smrti, když je skrytá (režim smíchu)</value>
+  </data>
+  <data name="Scavenger" xml:space="preserve">
+    <value>Mrchožrout</value>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="X:" xml:space="preserve">
+    <value>X:</value>
+  </data>
+  <data name="Y:" xml:space="preserve">
+    <value>Y:</value>
+  </data>
+  <data name="Show GIF Capture" xml:space="preserve">
+    <value>Zobrazit zachycení GIF</value>
+  </data>
+  <data name="Target Acquisition - Enemy" xml:space="preserve">
+    <value>Zaměření cíle - Nepřítel</value>
+  </data>
+  <data name="Target Acquisition - Friend" xml:space="preserve">
+    <value>Akvizice cíle - Přítel</value>
+  </data>
+  <data name="MACRO_WIKI_URL" xml:space="preserve">
+    <value>https://github.com/Reetus/ClassicAssist/wiki/Macro-Commands</value>
+  </data>
+  <data name="Shard:" xml:space="preserve">
+    <value>Střep:</value>
+  </data>
+  <data name="Scavenging '{0}'" xml:space="preserve">
+    <value>Úklid "{0}"...</value>
+  </data>
+  <data name="Reflection Error: {0}" xml:space="preserve">
+    <value>Chyba odrazu: {0}</value>
+  </data>
+  <data name="Event" xml:space="preserve">
+    <value>Událost</value>
+  </data>
+  <data name="Caller" xml:space="preserve">
+    <value>Volající</value>
+  </data>
+  <data name="Elapsed" xml:space="preserve">
+    <value>Uplynulý</value>
+  </data>
+  <data name="Format Code" xml:space="preserve">
+    <value>Formátovací kód</value>
+  </data>
+  <data name="Current month donations" xml:space="preserve">
+    <value>Aktuální dary pro {0}: ${1}</value>
+  </data>
+  <data name="Donate Now" xml:space="preserve">
+    <value>Přispějte nyní</value>
+  </data>
+  <data name="Context menu entry disabled" xml:space="preserve">
+    <value>Položka kontextové nabídky zakázána</value>
+  </data>
+  <data name="Use Last Skill" xml:space="preserve">
+    <value>Použít poslední dovednost</value>
+  </data>
+  <data name="Login With Google" xml:space="preserve">
+    <value>Přihlásit se přes Google</value>
+  </data>
+  <data name="Authentication error or timeout" xml:space="preserve">
+    <value>Chyba ověřování nebo vypršení časového limitu</value>
+  </data>
+  <data name="Name Overrides" xml:space="preserve">
+    <value>Přepsání názvů</value>
+  </data>
+  <data name="Insert Empty Entry" xml:space="preserve">
+    <value>Vložit prázdnou položku</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Poznámky</value>
+  </data>
+  <data name="Autologin" xml:space="preserve">
+    <value>Automatické přihlašování</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>Účet</value>
+  </data>
+  <data name="Server Index" xml:space="preserve">
+    <value>Index serveru</value>
+  </data>
+  <data name="Character Index" xml:space="preserve">
+    <value>Rejstřík znaků</value>
+  </data>
+  <data name="Connect Delay" xml:space="preserve">
+    <value>Zpoždění připojení</value>
+  </data>
+  <data name="Reconnect Delay" xml:space="preserve">
+    <value>Zpoždění opětovného připojení</value>
+  </data>
+  <data name="Unknown account..." xml:space="preserve">
+    <value>Neznámý účet...</value>
+  </data>
+  <data name="Autologin in {0} seconds..." xml:space="preserve">
+    <value>Automatické přihlášení za {0} sekund...</value>
+  </data>
+  <data name="Connecting..." xml:space="preserve">
+    <value>Připojování...</value>
+  </data>
+  <data name="Timeout waiting for shard selection screen" xml:space="preserve">
+    <value>Časový limit čekání na obrazovku pro výběr horizontálních oddílů</value>
+  </data>
+  <data name="Failed to get server list" xml:space="preserve">
+    <value>Nepodařilo se získat seznam serverů</value>
+  </data>
+  <data name="Failed to get selected server index" xml:space="preserve">
+    <value>Nepodařilo se získat vybraný index serveru</value>
+  </data>
+  <data name="Servers:" xml:space="preserve">
+    <value>Servery:</value>
+  </data>
+  <data name="Selecting server {0}..." xml:space="preserve">
+    <value>Výběr serveru {0}...</value>
+  </data>
+  <data name="Timeout waiting for character selection screen" xml:space="preserve">
+    <value>Obrazovka Timeout čekání na výběr znaku</value>
+  </data>
+  <data name="Failed to get character list" xml:space="preserve">
+    <value>Nepodařilo se získat seznam znaků</value>
+  </data>
+  <data name="Character index not found" xml:space="preserve">
+    <value>Index znaků nenalezen</value>
+  </data>
+  <data name="Characters:" xml:space="preserve">
+    <value>Znaky:</value>
+  </data>
+  <data name="Selecting character {0}..." xml:space="preserve">
+    <value>Výběr znaku {0}...</value>
+  </data>
+  <data name="{0} agent is now {1}" xml:space="preserve">
+    <value>{0} agent je nyní {1}</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Invalidní</value>
+  </data>
+  <data name="Trade" xml:space="preserve">
+    <value>Obchod</value>
+  </data>
+  <data name="Match text value of property (UOAlive)" xml:space="preserve">
+    <value>Shoda textové hodnoty vlastnosti (UOAlive)</value>
+  </data>
+  <data name="Mini Heal / Cure Self" xml:space="preserve">
+    <value>Mini Léčit / Vyléčit sám sebe</value>
+  </data>
+  <data name="Greater Heal / Cure Self" xml:space="preserve">
+    <value>Větší léčení / vyléčení sebe sama</value>
+  </data>
+  <data name="Cure" xml:space="preserve">
+    <value>Lék</value>
+  </data>
+  <data name="Arch Cure" xml:space="preserve">
+    <value>Oblouk Cure</value>
+  </data>
+  <data name="Healing" xml:space="preserve">
+    <value>Léčení</value>
+  </data>
+  <data name="No items to display..." xml:space="preserve">
+    <value>Žádné položky k zobrazení...</value>
+  </data>
+  <data name="Backup Now" xml:space="preserve">
+    <value>Zálohovat nyní</value>
+  </data>
+  <data name="Linked" xml:space="preserve">
+    <value>Spojen</value>
+  </data>
+  <data name="Unlinked" xml:space="preserve">
+    <value>Nepropojené</value>
+  </data>
+  <data name="Logout on disconnected prompt" xml:space="preserve">
+    <value>Výzva k odhlášení při odpojení</value>
+  </data>
+  <data name="Combine stacks" xml:space="preserve">
+    <value>Kombinování balíčků</value>
+  </data>
+  <data name="Replace name with single click label" xml:space="preserve">
+    <value>Nahraďte název štítkem na jedno kliknutí</value>
+  </data>
+  <data name="Moving item {0} / {1}" xml:space="preserve">
+    <value>Přesouvání položky {0} / {1}</value>
+  </data>
+  <data name="Text Color" xml:space="preserve">
+    <value>Barva textu</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>Šířka</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Výška</value>
+  </data>
+  <data name="Transparent background" xml:space="preserve">
+    <value>Průhledné pozadí</value>
+  </data>
+  <data name="ItemID Filter" xml:space="preserve">
+    <value>Filtr ItemID</value>
+  </data>
+  <data name="Source ID" xml:space="preserve">
+    <value>ID zdroje</value>
+  </data>
+  <data name="Destination ID" xml:space="preserve">
+    <value>ID cíle</value>
+  </data>
+  <data name="World Map" xml:space="preserve">
+    <value>Mapa světa</value>
+  </data>
+  <data name="Skill Bonus" xml:space="preserve">
+    <value>Bonus k dovednostem</value>
+  </data>
+  <data name="Stop Organizer" xml:space="preserve">
+    <value>Zastavit organizátor</value>
+  </data>
+  <data name="Stop Dress" xml:space="preserve">
+    <value>Zastavit šaty</value>
+  </data>
+  <data name="Screenshot" xml:space="preserve">
+    <value>Snímek obrazovky</value>
+  </data>
+  <data name="Open Folder" xml:space="preserve">
+    <value>Otevřít složku</value>
+  </data>
+  <data name="Include Player Name" xml:space="preserve">
+    <value>Zahrnout jméno hráče</value>
+  </data>
+  <data name="Include Shard Name" xml:space="preserve">
+    <value>Zahrnout název horizontálního oddílu</value>
+  </data>
+  <data name="Include Timestamp" xml:space="preserve">
+    <value>Zahrnout časové razítko</value>
+  </data>
+  <data name="Information Bar" xml:space="preserve">
+    <value>Informační lišta</value>
+  </data>
+  <data name="Format:" xml:space="preserve">
+    <value>Formát:</value>
+  </data>
+  <data name="Font Color:" xml:space="preserve">
+    <value>Barva písma:</value>
+  </data>
+  <data name="Background Color:" xml:space="preserve">
+    <value>Barva pozadí:</value>
+  </data>
+  <data name="Font Size:" xml:space="preserve">
+    <value>Velikost písma:</value>
+  </data>
+  <data name="Auto Screenshot" xml:space="preserve">
+    <value>Automatický snímek obrazovky</value>
+  </data>
+  <data name="Player Death" xml:space="preserve">
+    <value>Smrt hráče</value>
+  </data>
+  <data name="Filename Format:" xml:space="preserve">
+    <value>Formát názvu souboru:</value>
+  </data>
+  <data name="Mobile Death" xml:space="preserve">
+    <value>Mobilní smrt</value>
+  </data>
+  <data name="Player Death Delay:" xml:space="preserve">
+    <value>Prodleva smrti hráče:</value>
+  </data>
+  <data name="Mobile Death Delay:" xml:space="preserve">
+    <value>Zpoždění mobilní smrti:</value>
+  </data>
+  <data name="(milliseconds)" xml:space="preserve">
+    <value>(milisekundy)</value>
+  </data>
+  <data name="UO Only" xml:space="preserve">
+    <value>Pouze UO</value>
+  </data>
+  <data name="Fullscreen" xml:space="preserve">
+    <value>Celá obrazovka</value>
+  </data>
+  <data name="Max Distance:" xml:space="preserve">
+    <value>Maximální vzdálenost:</value>
+  </data>
+  <data name="Only if enemy" xml:space="preserve">
+    <value>Pouze v případě, že nepřítel</value>
+  </data>
+  <data name="Disable hotkeys on profile load" xml:space="preserve">
+    <value>Zakázat klávesové zkratky při načítání profilu</value>
+  </data>
+  <data name="Limit Hotkey Retrigger" xml:space="preserve">
+    <value>Omezte opětovné spuštění klávesové zkratky</value>
+  </data>
+  <data name="Hue Override" xml:space="preserve">
+    <value>Přepsání odstínu</value>
+  </data>
+  <data name="Hotkeys Status Gump" xml:space="preserve">
+    <value>Stavové klávesové zkratky Gump</value>
+  </data>
+  <data name="A profile already exists by this name, choose a new name..." xml:space="preserve">
+    <value>Profil pod tímto názvem již existuje, zvolte nový název...</value>
+  </data>
+  <data name="Targeting item {0} / {1}" xml:space="preserve">
+    <value>Cílení na položku {0} / {1}</value>
+  </data>
+  <data name="Move to bank" xml:space="preserve">
+    <value>Přesun do banky</value>
+  </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Směr</value>
+  </data>
 </root>

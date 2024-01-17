@@ -1,0 +1,105 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ClassicAssist.UI.Views.ECV.Settings"
+    xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+    xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+    xmlns:ValueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
+    xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+    x:Class="ClassicAssist.UI.Views.ECV.Settings.CombineStacksSettingsControl"
+    mc:Ignorable="d"
+    Background="Transparent">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../../Resources/DarkTheme.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DebugToolBarStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <valueConverters:IntToHexStringValueConverter x:Key="IntToHexStringValueConverter" />
+            <ValueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+            <local:CombineStacksSettingViewModel x:Key="DummyData">
+                <local:CombineStacksSettingViewModel.Items>
+                    <local:CombineStacksIgnoreEntry />
+                    <local:CombineStacksIgnoreEntry />
+                    <local:CombineStacksIgnoreEntry />
+                </local:CombineStacksSettingViewModel.Items>
+
+            </local:CombineStacksSettingViewModel>
+            <valueConverters:ClilocValueConverter x:Key="ClilocValueConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <local:CombineStacksSettingViewModel />
+    </UserControl.DataContext>
+    <GroupBox Header="{x:Static resources:Strings.Ignore_List}" Padding="5">
+        <Grid d:DataContext="{StaticResource DummyData}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <ToolBar Grid.Row="0" Margin="0,0,0,5">
+                <ToolBar.Resources>
+                    <Style TargetType="{x:Type controls:ImageButton}"
+                           BasedOn="{StaticResource {x:Type controls:ImageButton}}">
+                        <Setter Property="Margin" Value="0,0,5,0" />
+                    </Style>
+                </ToolBar.Resources>
+                <ToolBar.Style>
+                    <StaticResource ResourceKey="ToolBarStyle1" />
+                </ToolBar.Style>
+                <controls:ImageButton ImageSource="{StaticResource PlusIcon}" Command="{Binding AddEntryCommand}" />
+                <controls:ImageButton ImageSource="{StaticResource RemoveIcon}" Command="{Binding RemoveEntryCommand}"
+                                      CommandParameter="{Binding SelectedItem}" />
+            </ToolBar>
+            <ListView Grid.Row="1" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" MinHeight="150"
+                      MaxHeight="250">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="{x:Static resources:Strings.ID}" Width="115" x:Name="IDColumn">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type local:CombineStacksIgnoreEntry}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <controls:EditTextBlock
+                                            Text="{Binding ID, Converter={StaticResource IntToHexStringValueConverter}}"
+                                            ShowIcon="True"
+                                            Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, Mode=OneWay, ElementName=IDColumn}">
+                                            <controls:EditTextBlock.Buttons>
+                                                <controls:ImageButton ImageSource="{StaticResource CrosshairIcon}"
+                                                                      Command="{Binding DataContext.TargetCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:CombineStacksSettingsControl}}}"
+                                                                      CommandParameter="{Binding}" />
+                                            </controls:EditTextBlock.Buttons>
+                                        </controls:EditTextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="{x:Static resources:Strings.Cliloc}" Width="250" x:Name="ClilocColumn">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type local:CombineStacksIgnoreEntry}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <controls:EditTextBlock Text="{Binding Cliloc}" ShowIcon="True"
+                                                                Label="{Binding Cliloc, Converter={StaticResource ClilocValueConverter}}"
+                                                                Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, Mode=OneWay, ElementName=ClilocColumn}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="100" x:Name="HueColumn">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type local:CombineStacksIgnoreEntry}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <controls:EditTextBlock Text="{Binding Hue}" ShowIcon="True"
+                                                                Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, Mode=OneWay, ElementName=HueColumn}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </GroupBox>
+</UserControl>

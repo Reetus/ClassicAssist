@@ -17,7 +17,9 @@
 
 #endregion
 
+using System.Collections.ObjectModel;
 using ClassicAssist.Shared.UI;
+using ClassicAssist.UI.Views.ECV.Settings;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.Data.Misc
@@ -25,12 +27,19 @@ namespace ClassicAssist.Data.Misc
     public class EntityCollectionViewerOptions : SetPropertyNotifyChanged
     {
         private bool _alwaysOnTop;
+        private ObservableCollection<CombineStacksIgnoreEntry> _combineStacksIgnore;
         private bool _showChildItems;
 
         public bool AlwaysOnTop
         {
             get => _alwaysOnTop;
             set => SetProperty( ref _alwaysOnTop, value );
+        }
+
+        public ObservableCollection<CombineStacksIgnoreEntry> CombineStacksIgnore
+        {
+            get => _combineStacksIgnore;
+            set => SetProperty( ref _combineStacksIgnore, value );
         }
 
         public bool ShowChildItems
@@ -48,11 +57,40 @@ namespace ClassicAssist.Data.Misc
 
             AlwaysOnTop = config["AlwaysOnTop"]?.ToObject<bool>() ?? false;
             ShowChildItems = config["ShowChildItems"]?.ToObject<bool>() ?? false;
+
+            CombineStacksIgnore = new ObservableCollection<CombineStacksIgnoreEntry>();
+
+            if ( config["CombineStacksIgnore"] == null )
+            {
+                return;
+            }
+
+            foreach ( JToken entry in config["CombineStacksIgnore"] )
+            {
+                CombineStacksIgnore.Add( new CombineStacksIgnoreEntry
+                {
+                    ID = entry["ID"]?.ToObject<int>() ?? 0, Cliloc = entry["Cliloc"]?.ToObject<int>() ?? -1, Hue = entry["Hue"]?.ToObject<int>() ?? -1
+                } );
+            }
         }
 
         public JToken Serialize()
         {
             JObject config = new JObject { { "AlwaysOnTop", AlwaysOnTop }, { "ShowChildItems", ShowChildItems } };
+
+            JArray combineStacksIgnore = new JArray();
+
+            if ( CombineStacksIgnore == null )
+            {
+                return config;
+            }
+
+            foreach ( CombineStacksIgnoreEntry entry in CombineStacksIgnore )
+            {
+                combineStacksIgnore.Add( new JObject { { "ID", entry.ID }, { "Cliloc", entry.Cliloc }, { "Hue", entry.Hue } } );
+            }
+
+            config.Add( "CombineStacksIgnore", combineStacksIgnore );
 
             return config;
         }

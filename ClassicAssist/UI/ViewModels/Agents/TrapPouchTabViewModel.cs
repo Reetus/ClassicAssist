@@ -158,14 +158,14 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             config.Add( "Items", items );
 
-            json.Add( "UseOnceAgent", config );
+            json?.Add( "UseOnceAgent", config );
         }
 
         public void Deserialize( JObject json, Options options, bool global = false )
         {
             Items.Clear();
 
-            JToken config = json["UseOnceAgent"];
+            JToken config = json?["UseOnceAgent"];
 
             AutoAddTargetedPouches = config?["AutoAddTargetedPouches"]?.ToObject<bool>() ?? false;
             AutoAddOnlyMagicTrap = config?["AutoAddOnlyMagicTrap"]?.ToObject<bool>() ?? false;

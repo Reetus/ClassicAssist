@@ -169,7 +169,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             AutoAddTargetedPouches = config?["AutoAddTargetedPouches"]?.ToObject<bool>() ?? false;
             AutoAddOnlyMagicTrap = config?["AutoAddOnlyMagicTrap"]?.ToObject<bool>() ?? false;
-            AutoRemoveItem = config?["AutoRemoveItem"]?.ToObject<bool>() ?? false;
+            AutoRemoveItem = config?["AutoRemoveItem"]?.ToObject<bool>() ?? true;
             RehueItems = config?["RehueItems"]?.ToObject<bool>() ?? false;
             RehueItemsHue = config?["RehueItemsHue"]?.ToObject<int>() ?? 61;
             WarnItemCount = config?["WarnItemCount"]?.ToObject<bool>() ?? false;

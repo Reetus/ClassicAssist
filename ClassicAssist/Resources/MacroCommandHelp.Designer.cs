@@ -545,6 +545,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clears the items in the trap pouch agent....
+        /// </summary>
+        public static string CLEARTRAPPOUCH_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("CLEARTRAPPOUCH_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ClearTrapPouch().
+        /// </summary>
+        public static string CLEARTRAPPOUCH_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("CLEARTRAPPOUCH_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear UseOnce list..
         /// </summary>
         public static string CLEARUSEONCE_COMMAND_DESCRIPTION {
@@ -3676,6 +3694,37 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adds the specified item to the trap pouch agent item list....
+        /// </summary>
+        public static string SETTRAPPOUCH_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETTRAPPOUCH_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ClearTrapPouch()
+        ///
+        ///if FindType(0xe79, -1, &apos;backpack&apos;):
+        ///    Cast(&apos;Magic Trap&apos;, &apos;found&apos;)
+        ///    SetTrapPouch(&apos;found&apos;).
+        /// </summary>
+        public static string SETTRAPPOUCH_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("SETTRAPPOUCH_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetTrapPouch(&quot;pouch&quot;).
+        /// </summary>
+        public static string SETTRAPPOUCH_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETTRAPPOUCH_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enables or disables autobuying of the specified vendor buy list name....
         /// </summary>
         public static string SETVENDORBUYAUTOBUY_COMMAND_DESCRIPTION {
@@ -4520,6 +4569,24 @@ namespace ClassicAssist.Resources {
         public static string USETARGETEDITEM_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("USETARGETEDITEM_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uses the first item in the Trap Pouch agent list....
+        /// </summary>
+        public static string USETRAPPOUCH_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("USETRAPPOUCH_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UseTrapPouch().
+        /// </summary>
+        public static string USETRAPPOUCH_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("USETRAPPOUCH_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

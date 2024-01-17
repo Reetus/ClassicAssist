@@ -116,6 +116,9 @@
     <Compile Update="UI\Views\Agents\Screenshot\ScreenshotMobileFilterWindow.xaml.cs">
       <DependentUpon>ScreenshotMobileFilterWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Update="UI\Views\Agents\TrapPouchTabControl.xaml.cs">
+      <DependentUpon>TrapPouchTabControl.xaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\Views\Autoloot\ClilocSelectionWindow.xaml.cs">
       <DependentUpon>ClilocSelectionWindow.xaml</DependentUpon>
     </Compile>

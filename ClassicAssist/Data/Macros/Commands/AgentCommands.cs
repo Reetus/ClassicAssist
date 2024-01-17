@@ -5,6 +5,7 @@ using ClassicAssist.Data.Counters;
 using ClassicAssist.Data.Dress;
 using ClassicAssist.Data.Organizer;
 using ClassicAssist.Data.Scavenger;
+using ClassicAssist.Data.TrapPouch;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
@@ -15,8 +16,7 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class AgentCommands
     {
-        [CommandsDisplay( Category = nameof( Strings.Agents ),
-            Parameters = new[] { nameof( ParameterType.AgentEntryName ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Agents ), Parameters = new[] { nameof( ParameterType.AgentEntryName ) } )]
         public static void Dress( string name = null )
         {
             DressManager manager = DressManager.GetInstance();
@@ -53,8 +53,7 @@ namespace ClassicAssist.Data.Macros.Commands
             dressAgentEntry.Action( dressAgentEntry, null );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Agents ),
-            Parameters = new[] { nameof( ParameterType.AgentEntryName ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Agents ), Parameters = new[] { nameof( ParameterType.AgentEntryName ) } )]
         public static void Undress( string name )
         {
             DressManager manager = DressManager.GetInstance();
@@ -95,8 +94,7 @@ namespace ClassicAssist.Data.Macros.Commands
             manager.ImportItems( manager.TemporaryDress );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Agents ),
-            Parameters = new[] { nameof( ParameterType.AgentEntryName ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Agents ), Parameters = new[] { nameof( ParameterType.AgentEntryName ) } )]
         public static int Counter( string name )
         {
             CountersManager manager = CountersManager.GetInstance();
@@ -112,8 +110,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return 0;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Agents ),
-            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Agents ), Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static void SetAutolootContainer( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -122,13 +119,8 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = nameof( Strings.Agents ),
-            Parameters = new[]
-            {
-                nameof( ParameterType.AgentEntryName ), nameof( ParameterType.SerialOrAlias ),
-                nameof( ParameterType.SerialOrAlias )
-            } )]
-        public static void SetOrganizerContainers( string entryName, object sourceContainer = null,
-            object destinationContainer = null )
+            Parameters = new[] { nameof( ParameterType.AgentEntryName ), nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.SerialOrAlias ) } )]
+        public static void SetOrganizerContainers( string entryName, object sourceContainer = null, object destinationContainer = null )
         {
             int sourceSerial = AliasCommands.ResolveSerial( sourceContainer, false );
             int destinationSerial = AliasCommands.ResolveSerial( destinationContainer, false );
@@ -149,14 +141,12 @@ namespace ClassicAssist.Data.Macros.Commands
             UOC.SystemMessage( Strings.Organizer_containers_set___, true );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Agents ),
-            Parameters = new[] { nameof( ParameterType.ListName ), nameof( ParameterType.OnOff ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Agents ), Parameters = new[] { nameof( ParameterType.ListName ), nameof( ParameterType.OnOff ) } )]
         public static void SetVendorBuyAutoBuy( string listName, string onOff = "toggle" )
         {
             VendorBuyManager manager = VendorBuyManager.GetInstance();
 
-            VendorBuyAgentEntry entry =
-                manager.Items.FirstOrDefault( e => e.Name.Trim().ToLower().Equals( listName.Trim().ToLower() ) );
+            VendorBuyAgentEntry entry = manager.Items.FirstOrDefault( e => e.Name.Trim().ToLower().Equals( listName.Trim().ToLower() ) );
 
             if ( entry == null )
             {
@@ -189,8 +179,7 @@ namespace ClassicAssist.Data.Macros.Commands
             manager.Stop();
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Agents ),
-            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Agents ), Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static void Autoloot( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj, false );
@@ -221,17 +210,14 @@ namespace ClassicAssist.Data.Macros.Commands
                     break;
             }
 
-            UOC.SystemMessage(
-                string.Format( Strings._0__agent_is_now__1_, Strings.Scavenger,
-                    ( manager.IsEnabled() ? Strings.Enabled : Strings.Disabled ).ToLower() ), SystemMessageHues.Yellow,
-                true );
+            UOC.SystemMessage( string.Format( Strings._0__agent_is_now__1_, Strings.Scavenger, ( manager.IsEnabled() ? Strings.Enabled : Strings.Disabled ).ToLower() ),
+                SystemMessageHues.Yellow, true );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Trade ), Parameters = new[] { nameof( ParameterType.Timeout ) } )]
         public static bool WaitForTradeWindow( int timeout = -1 )
         {
-            PacketWaitEntry pwe = Engine.PacketWaitEntries.Add(
-                new PacketFilterInfo( 0x6F, new[] { PacketFilterConditions.ByteAtPositionCondition( 0, 3 ) } ),
+            PacketWaitEntry pwe = Engine.PacketWaitEntries.Add( new PacketFilterInfo( 0x6F, new[] { PacketFilterConditions.ByteAtPositionCondition( 0, 3 ) } ),
                 PacketDirection.Incoming, true );
 
             return pwe.Lock.WaitOne( timeout );
@@ -283,6 +269,32 @@ namespace ClassicAssist.Data.Macros.Commands
             writer.Write( gold );
             writer.Write( platinum );
             Engine.SendPacketToServer( writer );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Agents ) )]
+        public static void UseTrapPouch()
+        {
+            TrapPouchManager manager = TrapPouchManager.GetInstance();
+
+            manager.Use();
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Agents ) )]
+        public static void ClearTrapPouch()
+        {
+            TrapPouchManager manager = TrapPouchManager.GetInstance();
+
+            manager.Clear();
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Agents ), Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        public static void SetTrapPouch( object obj )
+        {
+            int serial = AliasCommands.ResolveSerial( obj, false );
+
+            TrapPouchManager manager = TrapPouchManager.GetInstance();
+
+            manager.Add( serial );
         }
     }
 }

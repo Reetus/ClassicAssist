@@ -26,6 +26,8 @@ namespace ClassicAssist.UO.Network
 {
     public static class IncomingPacketHandlers
     {
+        public delegate void dBackupItemAddedUpdate( Item item );
+
         public delegate void dBufficonEnabledDisabled( int type, bool enabled, int duration );
 
         public delegate void dContainerContents( int serial, ItemCollection container );
@@ -75,6 +77,7 @@ namespace ClassicAssist.UO.Network
         public static event dGump GumpEvent;
         public static event dBufficonEnabledDisabled BufficonEnabledDisabledEvent;
         public static event dCorpseContainerDisplay CorpseContainerDisplayEvent;
+        public static event dBackupItemAddedUpdate BackupItemAddedUpdateEvent;
 
         public static event dMenuAdded MenuAddedEvent;
 
@@ -1534,6 +1537,7 @@ namespace ClassicAssist.UO.Network
             if ( item.IsDescendantOf( backpack ) )
             {
                 Engine.RehueList.CheckItem( item );
+                BackupItemAddedUpdateEvent?.Invoke( item );
             }
 
             //rehueList

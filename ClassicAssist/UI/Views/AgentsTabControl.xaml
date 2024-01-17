@@ -38,5 +38,8 @@
         <TabItem Header="{x:Static resources:Strings.Screenshot}">
             <agents:ScreenshotTabControl />
         </TabItem>
+        <TabItem Header="{x:Static resources:Strings.Trap_Pouches}">
+            <agents:TrapPouchTabControl/>
+        </TabItem>
     </TabControl>
 </UserControl>

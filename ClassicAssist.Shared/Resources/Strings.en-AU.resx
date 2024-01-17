@@ -1995,4 +1995,34 @@ Are you sure you wish to continue?</value>
   <data name="Display system message as overhead message" xml:space="preserve">
     <value>Display system message as overhead message</value>
   </data>
+  <data name="Trap Pouches" xml:space="preserve">
+    <value>Trap Pouches</value>
+  </data>
+  <data name="Auto-add targeted pouches" xml:space="preserve">
+    <value>Auto-add targeted pouches</value>
+  </data>
+  <data name="Remove item on use object request" xml:space="preserve">
+    <value>Remove item on use object request</value>
+  </data>
+  <data name="Only if last spell is Magic Trap" xml:space="preserve">
+    <value>Only if last spell is Magic Trap</value>
+  </data>
+  <data name="Warn when item count below:" xml:space="preserve">
+    <value>Warn when item count below:</value>
+  </data>
+  <data name="Trap pouch count below {0}..." xml:space="preserve">
+    <value>Trap pouch count below {0}...</value>
+  </data>
+  <data name="Overhead Message" xml:space="preserve">
+    <value>Overhead Message</value>
+  </data>
+  <data name="Use Trap Pouch" xml:space="preserve">
+    <value>Use Trap Pouch</value>
+  </data>
+  <data name="Clear Trap Pouches" xml:space="preserve">
+    <value>Clear Trap Pouches</value>
+  </data>
+  <data name="Item already in list..." xml:space="preserve">
+    <value>Item already in list...</value>
+  </data>
 </root>

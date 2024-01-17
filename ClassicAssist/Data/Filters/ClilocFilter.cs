@@ -13,15 +13,13 @@ namespace ClassicAssist.Data.Filters
     [FilterOptions( Name = "Cliloc Filter", DefaultEnabled = false )]
     public class ClilocFilter : FilterEntry, IConfigurableFilter
     {
-        public static ObservableCollection<FilterClilocEntry> Filters { get; set; } =
-            new ObservableCollection<FilterClilocEntry>();
+        public static ObservableCollection<FilterClilocEntry> Filters { get; set; } = new ObservableCollection<FilterClilocEntry>();
 
         public static bool IsEnabled { get; set; }
 
         public void Configure()
         {
-            ClilocFilterConfigureWindow window =
-                new ClilocFilterConfigureWindow { Topmost = Options.CurrentOptions.AlwaysOnTop };
+            ClilocFilterConfigureWindow window = new ClilocFilterConfigureWindow { Topmost = Options.CurrentOptions.AlwaysOnTop };
 
             window.ShowDialog();
         }
@@ -39,7 +37,8 @@ namespace ClassicAssist.Data.Filters
                 {
                     Cliloc = filterToken["Key"]?.ToObject<int>() ?? -1,
                     Replacement = filterToken["Value"]?.ToObject<string>(),
-                    Hue = filterToken["Hue"]?.ToObject<int>() ?? -1
+                    Hue = filterToken["Hue"]?.ToObject<int>() ?? -1,
+                    ShowOverhead = filterToken["ShowOverhead"]?.ToObject<bool>() ?? false
                 };
 
                 if ( Filters.All( e => e.Cliloc != entry.Cliloc ) )
@@ -55,10 +54,7 @@ namespace ClassicAssist.Data.Filters
 
             foreach ( FilterClilocEntry filter in Filters )
             {
-                itemsArray.Add( new JObject
-                {
-                    { "Key", filter.Cliloc }, { "Value", filter.Replacement }, { "Hue", filter.Hue }
-                } );
+                itemsArray.Add( new JObject { { "Key", filter.Cliloc }, { "Value", filter.Replacement }, { "Hue", filter.Hue }, { "ShowOverhead", filter.ShowOverhead } } );
             }
 
             return new JObject { { "Filters", itemsArray } };
@@ -90,8 +86,16 @@ namespace ClassicAssist.Data.Filters
 
             if ( match != null )
             {
-                Engine.SendPacketToClient( new UnicodeText( journalEntry.Serial, journalEntry.ID,
-                    journalEntry.SpeechType, match.Hue == -1 ? journalEntry.SpeechHue : match.Hue,
+                int serial = journalEntry.Serial;
+                int id = journalEntry.ID;
+
+                if ( serial == -1 && match.ShowOverhead )
+                {
+                    serial = Engine.Player.Serial;
+                    id = Engine.Player.ID;
+                }
+
+                Engine.SendPacketToClient( new UnicodeText(serial, id, journalEntry.SpeechType, match.Hue == -1 ? journalEntry.SpeechHue : match.Hue,
                     journalEntry.SpeechFont, Strings.UO_LOCALE, journalEntry.Name, match.Replacement ) );
 
                 return true;
@@ -119,13 +123,10 @@ namespace ClassicAssist.Data.Filters
                 return false;
             }
 
-            string text = affixType.HasFlag( MessageAffixType.Prepend )
-                ? $"{affix}{match.Replacement}"
-                : $"{match.Replacement}{affix}";
+            string text = affixType.HasFlag( MessageAffixType.Prepend ) ? $"{affix}{match.Replacement}" : $"{match.Replacement}{affix}";
 
-            Engine.SendPacketToClient( new UnicodeText( journalEntry.Serial, journalEntry.ID, JournalSpeech.Say,
-                match.Hue == -1 ? journalEntry.SpeechHue : match.Hue, journalEntry.SpeechFont, Strings.UO_LOCALE,
-                journalEntry.Name, text ) );
+            Engine.SendPacketToClient( new UnicodeText( journalEntry.Serial, journalEntry.ID, JournalSpeech.Say, match.Hue == -1 ? journalEntry.SpeechHue : match.Hue,
+                journalEntry.SpeechFont, Strings.UO_LOCALE, journalEntry.Name, text ) );
 
             return true;
         }

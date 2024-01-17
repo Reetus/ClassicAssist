@@ -1411,6 +1411,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Display system message as overhead message.
+        /// </summary>
+        public static string Display_system_message_as_overhead_message {
+            get {
+                return ResourceManager.GetString("Display system message as overhead message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do not auto interupt.
         /// </summary>
         public static string Do_not_auto_interupt {
@@ -4527,6 +4536,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Show_Next_Target_In_Queue {
             get {
                 return ResourceManager.GetString("Show Next Target In Queue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Overhead.
+        /// </summary>
+        public static string Show_Overhead {
+            get {
+                return ResourceManager.GetString("Show Overhead", resourceCulture);
             }
         }
         

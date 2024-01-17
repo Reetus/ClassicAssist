@@ -27,13 +27,12 @@ namespace ClassicAssist.UI.ViewModels.Filters
         public ClilocFilterConfigureViewModel()
         {
             ClilocFilter.Filters.ToList().ForEach( f =>
-                Items.Add( new FilterClilocEntry { Cliloc = f.Cliloc, Replacement = f.Replacement, Hue = f.Hue } ) );
+                Items.Add( new FilterClilocEntry { Cliloc = f.Cliloc, Replacement = f.Replacement, Hue = f.Hue, ShowOverhead = f.ShowOverhead } ) );
         }
 
         public ICommand AddItemCommand => _addItemCommand ?? ( _addItemCommand = new RelayCommand( AddItem ) );
 
-        public ICommand ChooseClilocCommand =>
-            _chooseClilocCommand ?? ( _chooseClilocCommand = new RelayCommand( ChooseCliloc ) );
+        public ICommand ChooseClilocCommand => _chooseClilocCommand ?? ( _chooseClilocCommand = new RelayCommand( ChooseCliloc ) );
 
         public ObservableCollection<FilterClilocEntry> Items
         {
@@ -43,8 +42,7 @@ namespace ClassicAssist.UI.ViewModels.Filters
 
         public ICommand OKCommand => _okCommand ?? ( _okCommand = new RelayCommand( OK ) );
 
-        public ICommand RemoveItemCommand =>
-            _removeItemCommand ?? ( _removeItemCommand = new RelayCommand( RemoveItem, o => SelectedItem != null ) );
+        public ICommand RemoveItemCommand => _removeItemCommand ?? ( _removeItemCommand = new RelayCommand( RemoveItem, o => SelectedItem != null ) );
 
         public FilterClilocEntry SelectedItem
         {
@@ -64,7 +62,7 @@ namespace ClassicAssist.UI.ViewModels.Filters
                 {
                     ClilocFilter.Filters.Add( new FilterClilocEntry
                     {
-                        Cliloc = entry.Cliloc, Replacement = entry.Replacement, Hue = entry.Hue
+                        Cliloc = entry.Cliloc, Replacement = entry.Replacement, Hue = entry.Hue, ShowOverhead = entry.ShowOverhead
                     } );
                 }
             }
@@ -98,10 +96,7 @@ namespace ClassicAssist.UI.ViewModels.Filters
                 return;
             }
 
-            SingleHuePickerWindow window = new SingleHuePickerWindow
-            {
-                Topmost = Options.CurrentOptions.AlwaysOnTop, SelectedHue = entry.Hue
-            };
+            SingleHuePickerWindow window = new SingleHuePickerWindow { Topmost = Options.CurrentOptions.AlwaysOnTop, SelectedHue = entry.Hue };
 
             window.ShowDialog();
 
@@ -125,10 +120,7 @@ namespace ClassicAssist.UI.ViewModels.Filters
 
         private void AddItem( object obj )
         {
-            Items.Add( new FilterClilocEntry
-            {
-                Cliloc = 500000, Replacement = Cliloc.GetProperty( 500000 ), Hue = -1
-            } );
+            Items.Add( new FilterClilocEntry { Cliloc = 500000, Replacement = Cliloc.GetProperty( 500000 ), Hue = -1 } );
         }
     }
 
@@ -137,6 +129,7 @@ namespace ClassicAssist.UI.ViewModels.Filters
         private int _cliloc;
         private int _hue = -1;
         private string _replacement;
+        private bool _showOverhead;
 
         public int Cliloc
         {
@@ -154,15 +147,18 @@ namespace ClassicAssist.UI.ViewModels.Filters
             set => SetProperty( ref _hue, value );
         }
 
-        public string Original =>
-            DesignerProperties.GetIsInDesignMode( new DependencyObject() )
-                ? Replacement
-                : UO.Data.Cliloc.GetProperty( Cliloc );
+        public string Original => DesignerProperties.GetIsInDesignMode( new DependencyObject() ) ? Replacement : UO.Data.Cliloc.GetProperty( Cliloc );
 
         public string Replacement
         {
             get => _replacement;
             set => SetProperty( ref _replacement, value );
+        }
+
+        public bool ShowOverhead
+        {
+            get => _showOverhead;
+            set => SetProperty( ref _showOverhead, value );
         }
     }
 }

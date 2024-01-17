@@ -11,7 +11,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" Background="{DynamicResource ThemeWindowBackgroundBrush}"
-        Title="{x:Static resources:Strings.Cliloc_Filter}" Height="450" Width="550">
+        Title="{x:Static resources:Strings.Cliloc_Filter}" Height="450" Width="625">
     <Window.DataContext>
         <filters:ClilocFilterConfigureViewModel />
     </Window.DataContext>
@@ -23,9 +23,15 @@
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
             <misc:BindingProxy x:Key="Proxy" Data="{Binding}" />
+            <filters:ClilocFilterConfigureViewModel x:Key="Dummy">
+                <filters:ClilocFilterConfigureViewModel.Items>
+                    <filters:FilterClilocEntry />
+                </filters:ClilocFilterConfigureViewModel.Items>
+
+            </filters:ClilocFilterConfigureViewModel>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid Margin="10">
+    <Grid Margin="10" d:DataContext="{StaticResource Dummy}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -82,8 +88,7 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="{x:Static resources:Strings.Hue_Override}" Width="80"
-                                        x:Name="HueColumnHeader">
+                        <GridViewColumn Header="{x:Static resources:Strings.Hue_Override}" Width="80">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate DataType="{x:Type filters:FilterClilocEntry}">
                                     <Grid>
@@ -98,6 +103,16 @@
                                                               CommandParameter="{Binding}"
                                                               Command="{Binding Path=Data.(filters:ClilocFilterConfigureViewModel.SelectHueCommand), Source={StaticResource Proxy}}" />
                                     </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="{x:Static resources:Strings.Show_Overhead}" Width="100"
+                                        x:Name="HueColumnHeader">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type filters:FilterClilocEntry}">
+                                    <CheckBox IsChecked="{Binding ShowOverhead}" HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              ToolTip="{x:Static resources:Strings.Display_system_message_as_overhead_message}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

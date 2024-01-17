@@ -14,24 +14,34 @@ namespace ClassicAssist.UI.ViewModels.Debug
     {
         private ICommand _clearCommand;
         private ICommand _copyCommand;
+        private bool _enabled;
         private ObservableCollection<string> _items = new ObservableCollection<string>();
         private string _selectedItem;
-
-        public DebugJournalViewModel()
-        {
-            JournalEntry[] buffer = Engine.Journal.GetBuffer();
-
-            foreach ( JournalEntry journalEntry in buffer )
-            {
-                Items.Add( GetString( journalEntry ) );
-            }
-
-            IncomingPacketHandlers.JournalEntryAddedEvent += OnJournalEntryAddedEvent;
-        }
 
         public ICommand ClearCommand => _clearCommand ?? ( _clearCommand = new RelayCommand( Clear, o => true ) );
 
         public ICommand CopyCommand => _copyCommand ?? ( _copyCommand = new RelayCommand( Copy, o => o != null ) );
+
+        public bool Enabled
+        {
+            get => _enabled;
+            set
+            {
+                if ( value != _enabled )
+                {
+                    if ( value )
+                    {
+                        SetEnabled();
+                    }
+                    else
+                    {
+                        SetDisabled();
+                    }
+                }
+
+                SetProperty( ref _enabled, value );
+            }
+        }
 
         public ObservableCollection<string> Items
         {
@@ -43,6 +53,23 @@ namespace ClassicAssist.UI.ViewModels.Debug
         {
             get => _selectedItem;
             set => SetProperty( ref _selectedItem, value );
+        }
+
+        private void SetDisabled()
+        {
+            IncomingPacketHandlers.JournalEntryAddedEvent -= OnJournalEntryAddedEvent;
+        }
+
+        private void SetEnabled()
+        {
+            JournalEntry[] buffer = Engine.Journal.GetBuffer();
+
+            foreach ( JournalEntry journalEntry in buffer )
+            {
+                Items.Add( GetString( journalEntry ) );
+            }
+
+            IncomingPacketHandlers.JournalEntryAddedEvent += OnJournalEntryAddedEvent;
         }
 
         private static void Copy( object obj )

@@ -99,15 +99,17 @@ namespace ClassicAssist.UI.Views.ECV
                 serial = Convert.ToInt32( SelectedDestination );
             }
 
+            OrganizerEntry entry = SelectedEntry;
+
             QueueActions.Add( new QueueAction
             {
                 Action = async action =>
                 {
-                    await _manager.Organize( SelectedEntry, Collection, destinationContainer: serial, token: action.CancellationTokenSource.Token );
+                    await _manager.Organize( entry, Collection, destinationContainer: serial, token: action.CancellationTokenSource.Token );
                     return true;
                 },
                 CancellationTokenSource = new CancellationTokenSource(),
-                Status = Strings.Organizer
+                Status = $"{Strings.Organizer} - {SelectedEntry.Name}"
             } );
         }
 

@@ -1989,4 +1989,10 @@ Are you sure you wish to continue?</value>
   <data name="Moving item {0} / {1}" xml:space="preserve">
     <value>Moving item {0} / {1}</value>
   </data>
+  <data name="Show Overhead" xml:space="preserve">
+    <value>Show Overhead</value>
+  </data>
+  <data name="Display system message as overhead message" xml:space="preserve">
+    <value>Display system message as overhead message</value>
+  </data>
 </root>

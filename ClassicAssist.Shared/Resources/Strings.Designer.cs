@@ -457,6 +457,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto-add targeted pouches.
+        /// </summary>
+        public static string Auto_add_targeted_pouches {
+            get {
+                return ResourceManager.GetString("Auto-add targeted pouches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto disable when loading.
         /// </summary>
         public static string Auto_disable_when_loading {
@@ -993,6 +1002,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Clear_Target_Queue {
             get {
                 return ResourceManager.GetString("Clear Target Queue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Trap Pouches.
+        /// </summary>
+        public static string Clear_Trap_Pouches {
+            get {
+                return ResourceManager.GetString("Clear Trap Pouches", resourceCulture);
             }
         }
         
@@ -2554,6 +2572,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item already in list....
+        /// </summary>
+        public static string Item_already_in_list___ {
+            get {
+                return ResourceManager.GetString("Item already in list...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item out of range....
         /// </summary>
         public static string Item_out_of_range___ {
@@ -3451,6 +3478,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only if last spell is Magic Trap.
+        /// </summary>
+        public static string Only_if_last_spell_is_Magic_Trap {
+            get {
+                return ResourceManager.GetString("Only if last spell is Magic Trap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only overwrite blank password.
         /// </summary>
         public static string Only_overwrite_blank_password {
@@ -3591,6 +3627,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Other {
             get {
                 return ResourceManager.GetString("Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overhead Message.
+        /// </summary>
+        public static string Overhead_Message {
+            get {
+                return ResourceManager.GetString("Overhead Message", resourceCulture);
             }
         }
         
@@ -4032,6 +4077,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Remove_Group {
             get {
                 return ResourceManager.GetString("Remove Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove item on use object request.
+        /// </summary>
+        public static string Remove_item_on_use_object_request {
+            get {
+                return ResourceManager.GetString("Remove item on use object request", resourceCulture);
             }
         }
         
@@ -5215,6 +5269,24 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Trap pouch count below {0}....
+        /// </summary>
+        public static string Trap_pouch_count_below__0____ {
+            get {
+                return ResourceManager.GetString("Trap pouch count below {0}...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trap Pouches.
+        /// </summary>
+        public static string Trap_Pouches {
+            get {
+                return ResourceManager.GetString("Trap Pouches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trinsic Rose Petal.
         /// </summary>
         public static string Trinsic_Rose_Petal {
@@ -5467,6 +5539,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use Trap Pouch.
+        /// </summary>
+        public static string Use_Trap_Pouch {
+            get {
+                return ResourceManager.GetString("Use Trap Pouch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use UO3D Packets.
         /// </summary>
         public static string Use_UO3D_Packets {
@@ -5580,6 +5661,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Warn_when_counter_amount_below_ {
             get {
                 return ResourceManager.GetString("Warn when counter amount below:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warn when item count below:.
+        /// </summary>
+        public static string Warn_when_item_count_below_ {
+            get {
+                return ResourceManager.GetString("Warn when item count below:", resourceCulture);
             }
         }
         

@@ -1875,4 +1875,29 @@ PlayMacro("beep", 1, "moo")
   <data name="STOPDRESS_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>StopDress()</value>
   </data>
+  <data name="USETRAPPOUCH_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Uses the first item in the Trap Pouch agent list...</value>
+  </data>
+  <data name="USETRAPPOUCH_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>UseTrapPouch()</value>
+  </data>
+  <data name="CLEARTRAPPOUCH_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Clears the items in the trap pouch agent...</value>
+  </data>
+  <data name="CLEARTRAPPOUCH_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ClearTrapPouch()</value>
+  </data>
+  <data name="SETTRAPPOUCH_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Adds the specified item to the trap pouch agent item list...</value>
+  </data>
+  <data name="SETTRAPPOUCH_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetTrapPouch("pouch")</value>
+  </data>
+  <data name="SETTRAPPOUCH_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>ClearTrapPouch()
+
+if FindType(0xe79, -1, 'backpack'):
+    Cast('Magic Trap', 'found')
+    SetTrapPouch('found')</value>
+  </data>
 </root>

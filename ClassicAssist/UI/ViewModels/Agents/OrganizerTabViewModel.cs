@@ -131,7 +131,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public void Deserialize( JObject json, Options options, bool global = false )
         {
-            Items.Clear();
+            Items = new ObservableCollectionEx<OrganizerEntry>();
 
             if ( json?["Organizer"] == null )
             {
@@ -178,6 +178,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                 Items.Add( entry );
             }
+
+            _manager.Items = Items;
         }
 
         private void InvokeByName( string name )

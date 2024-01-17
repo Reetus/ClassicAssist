@@ -22,7 +22,6 @@ namespace ClassicAssist.Data.Organizer
 
         private OrganizerManager()
         {
-            Items.CollectionChanged += OnCollectionChanged;
         }
 
         public Action<string> InvokeByName { get; set; }
@@ -36,11 +35,6 @@ namespace ClassicAssist.Data.Organizer
         }
 
         private CancellationTokenSource _cancellationTokenSource { get; set; } = new CancellationTokenSource();
-
-        private void OnCollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
-        {
-            OnPropertyChanged( nameof( Items ) );
-        }
 
         public void Stop()
         {

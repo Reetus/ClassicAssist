@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,24 +27,18 @@ namespace ClassicAssist.Data.Dress
 
         private CancellationTokenSource _cancellationTokenSource;
 
-        private ObservableCollectionEx<DressAgentEntry> _items = new ObservableCollectionEx<DressAgentEntry>();
         private DressAgentEntry _temporaryDress;
         private bool _useUo3DPackets;
 
         private DressManager()
         {
-            Items.CollectionChanged += OnCollectionChanged;
         }
 
         public Action<string> InvokeByName { get; set; }
 
         public bool IsDressing { get; set; }
 
-        public ObservableCollectionEx<DressAgentEntry> Items
-        {
-            get => _items;
-            set => SetProperty( ref _items, value );
-        }
+        public ObservableCollectionEx<DressAgentEntry> Items { get; set; }
 
         public DressAgentEntry TemporaryDress
         {
@@ -57,11 +50,6 @@ namespace ClassicAssist.Data.Dress
         {
             get => _useUo3DPackets;
             set => SetProperty( ref _useUo3DPackets, value );
-        }
-
-        private void OnCollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
-        {
-            OnPropertyChanged( nameof( Items ) );
         }
 
         public static DressManager GetInstance()

@@ -18,7 +18,6 @@ namespace ClassicAssist.Data.Organizer
     {
         private static readonly object _lock = new object();
         private static OrganizerManager _instance;
-        private ObservableCollectionEx<OrganizerEntry> _items = new ObservableCollectionEx<OrganizerEntry>();
 
         private OrganizerManager()
         {
@@ -28,11 +27,7 @@ namespace ClassicAssist.Data.Organizer
 
         public bool IsOrganizing { get; set; }
 
-        public ObservableCollectionEx<OrganizerEntry> Items
-        {
-            get => _items;
-            set => SetProperty( ref _items, value );
-        }
+        public ObservableCollectionEx<OrganizerEntry> Items { get; set; }
 
         private CancellationTokenSource _cancellationTokenSource { get; set; } = new CancellationTokenSource();
 

@@ -22,6 +22,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data.Organizer;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Objects;
@@ -50,6 +51,7 @@ namespace ClassicAssist.Tests.Agents
             Engine.PacketWaitEntries = new PacketWaitEntries();
 
             OrganizerManager manager = OrganizerManager.GetInstance();
+            manager.Items = new ObservableCollectionEx<OrganizerEntry>();
 
             OrganizerEntry entry = new OrganizerEntry();
             entry.Items.Add( new OrganizerItem { ID = 0xf06, Hue = -1, Amount = -1, Item = "Test" } );
@@ -109,6 +111,7 @@ namespace ClassicAssist.Tests.Agents
             Engine.PacketWaitEntries = new PacketWaitEntries();
 
             OrganizerManager manager = OrganizerManager.GetInstance();
+            manager.Items = new ObservableCollectionEx<OrganizerEntry>();
 
             OrganizerEntry entry = new OrganizerEntry();
             entry.Items.Add( new OrganizerItem { ID = 0xf06, Hue = 1161, Amount = -1, Item = "Test" } );
@@ -187,6 +190,7 @@ namespace ClassicAssist.Tests.Agents
             Engine.Items.Add( sourceContainer );
 
             OrganizerManager manager = OrganizerManager.GetInstance();
+            manager.Items = new ObservableCollectionEx<OrganizerEntry>();
 
             OrganizerEntry entry = new OrganizerEntry();
             entry.Items.Add( new OrganizerItem { ID = 0x1f14, Hue = -1, Amount = -1, Item = "Test" } );
@@ -253,6 +257,7 @@ namespace ClassicAssist.Tests.Agents
             Engine.Items.Add( destinationContainer );
 
             OrganizerManager manager = OrganizerManager.GetInstance();
+            manager.Items = new ObservableCollectionEx<OrganizerEntry>();
 
             OrganizerEntry entry = new OrganizerEntry();
             entry.Items.Add( new OrganizerItem { ID = 0x1f14, Hue = -1, Amount = -1, Item = "Test" } );

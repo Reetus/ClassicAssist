@@ -131,7 +131,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public void Deserialize( JObject json, Options options, bool global = false )
         {
-            Items = new ObservableCollectionEx<OrganizerEntry>();
+            Items.Clear();
 
             if ( json?["Organizer"] == null )
             {

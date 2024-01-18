@@ -220,7 +220,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public void Deserialize( JObject json, Options options, bool global = false )
         {
-            Items = new ObservableCollectionEx<DressAgentEntry>();
+            Items.Clear();
 
             if ( json?["Dress"] == null )
             {
@@ -269,8 +269,6 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                 Items.Add( dae );
             }
-
-            _manager.Items = Items;
         }
 
         private void InvokeByName( string name )

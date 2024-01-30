@@ -147,7 +147,14 @@ namespace ClassicAssist.UO.Objects.Gumps
 
         private static Point GetWindowSize()
         {
-            if ( !NativeMethods.GetWindowRect( Engine.WindowHandle, out NativeMethods.RECT rect ) )
+            IntPtr windowHandle = Engine.WindowHandle;
+
+            if ( windowHandle == IntPtr.Zero )
+            {
+                windowHandle = NativeMethods.GetDesktopWindow();
+            }
+
+            if ( !NativeMethods.GetWindowRect( windowHandle, out NativeMethods.RECT rect ) )
             {
                 return Point.Empty;
             }

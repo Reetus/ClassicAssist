@@ -132,6 +132,9 @@ namespace ClassicAssist.Misc
         [DllImport( "user32.dll" )]
         public static extern bool SetWindowPos( IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags );
 
+        [DllImport( "user32.dll" )]
+        public static extern IntPtr GetDesktopWindow();
+
         public struct Windowplacement
         {
             public int length;

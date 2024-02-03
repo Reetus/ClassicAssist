@@ -45,6 +45,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _contextMoveToBackpackCommand;
         private ICommand _contextMoveToBankCommand;
         private ICommand _contextMoveToContainerCommand;
+        private ICommand _contextOpenContainerCommand;
         private ICommand _contextTargetCommand;
         private ICommand _contextUseItemCommand;
         private ObservableCollection<EntityCollectionData> _entities;
@@ -152,6 +153,10 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ContextMoveToContainerCommand =>
             _contextMoveToContainerCommand ?? ( _contextMoveToContainerCommand = new RelayCommandAsync( ContextMoveToContainer, o => SelectedItems != null ) );
 
+        public ICommand ContextOpenContainerCommand =>
+            _contextOpenContainerCommand ?? ( _contextOpenContainerCommand = new RelayCommand( ContextOpenContainer,
+                o => SelectedItems != null && SelectedItems.Any( e => e.Entity is Item item && item.Owner != 0 && !UOMath.IsMobile( item.Owner ) ) ) );
+
         public ICommand ContextTargetCommand => _contextTargetCommand ?? ( _contextTargetCommand = new RelayCommand( ContextTarget ) );
 
         public ICommand ContextUseItemCommand => _contextUseItemCommand ?? ( _contextUseItemCommand = new RelayCommandAsync( ContextUseItem, o => SelectedItems != null ) );
@@ -237,6 +242,23 @@ namespace ClassicAssist.UI.ViewModels
         }
 
         private Dictionary<int, string> _nameOverrides { get; } = new Dictionary<int, string>();
+
+        private void ContextOpenContainer( object arg )
+        {
+            int[] containerSerials = SelectedItems.Where( e => e.Entity is Item item && item.Owner != 0 && !UOMath.IsMobile( item.Owner ) ).Select( e => ( (Item) e.Entity ).Owner )
+                .ToArray();
+
+            EnqueueAction( async obj =>
+            {
+                foreach ( var item in containerSerials.Select( ( value, i ) => new { Index = i, Value = value } ) )
+                {
+                    _dispatcher.Invoke( () => { obj.Status = string.Format( Strings.Opening_container__0_____1____, item.Index, containerSerials.Length ); } );
+                    await ActionPacketQueue.EnqueuePacket( new UseObject( item.Value ) );
+                }
+
+                return true;
+            }, Strings.Open_container );
+        }
 
         private void Configure( object obj )
         {
@@ -531,11 +553,12 @@ namespace ClassicAssist.UI.ViewModels
         {
             EnqueueAction( async action =>
             {
-                List<Item> containers = Collection.Where( i => TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) ).ToList();
+                List<Item> containers = Collection
+                    .Where( i => TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) && Options.OpenContainersIgnore.All( e => e.ID != i.ID ) ).ToList();
 
                 do
                 {
-                    containers = await OpenContainers( containers, action.CancellationTokenSource.Token );
+                    containers = await OpenContainers( containers, action );
 
                     if ( action.CancellationTokenSource.IsCancellationRequested )
                     {
@@ -552,12 +575,15 @@ namespace ClassicAssist.UI.ViewModels
 
             return;
 
-            async Task<List<Item>> OpenContainers( IEnumerable<Item> items, CancellationToken cancellationToken )
+            async Task<List<Item>> OpenContainers( IEnumerable<Item> items, QueueAction queueAction )
             {
                 List<Item> containerItem = new List<Item>();
 
-                IEnumerable<Task<bool>> tasks = items.Select( item => ActionPacketQueue.EnqueueAction( item, arg =>
+                var containers = items.Select( ( item, index ) => new { item, index } ).ToList();
+
+                IEnumerable<Task<bool>> tasks = containers.Select( item => ActionPacketQueue.EnqueueAction( item, arg =>
                 {
+                    _dispatcher.Invoke( () => { queueAction.Status = string.Format( Strings.Opening_container__0_____1____, item.index, containers.Count ); } );
                     int pos = 19;
 
                     if ( Engine.ClientVersion < new Version( 6, 0, 1, 7 ) )
@@ -565,18 +591,18 @@ namespace ClassicAssist.UI.ViewModels
                         pos = 18;
                     }
 
-                    PacketFilterInfo pfi = new PacketFilterInfo( 0x3C, new[] { PacketFilterConditions.IntAtPositionCondition( item.Serial, pos ) } );
+                    PacketFilterInfo pfi = new PacketFilterInfo( 0x3C, new[] { PacketFilterConditions.IntAtPositionCondition( arg.item.Serial, pos ) } );
 
                     PacketWaitEntry we = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );
 
-                    Engine.SendPacketToServer( new UseObject( item.Serial ) );
+                    Engine.SendPacketToServer( new UseObject( arg.item.Serial ) );
 
                     try
                     {
                         bool result = we.Lock.WaitOne( 1000 );
 
                         IEnumerable<Item> newItem =
-                            Engine.Items.GetItem( item.Serial ).Container?.Where( i => TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) ) ??
+                            Engine.Items.GetItem( arg.item.Serial ).Container?.Where( i => TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) ) ??
                             Enumerable.Empty<Item>();
 
                         containerItem.AddRange( newItem );
@@ -587,7 +613,7 @@ namespace ClassicAssist.UI.ViewModels
                     {
                         Engine.PacketWaitEntries.Remove( we );
                     }
-                }, cancellationToken: cancellationToken ) );
+                }, cancellationToken: queueAction.CancellationTokenSource.Token ) );
 
                 await Task.WhenAll( tasks );
 

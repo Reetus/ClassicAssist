@@ -2025,4 +2025,10 @@ Are you sure you wish to continue?</value>
   <data name="Item already in list..." xml:space="preserve">
     <value>Item already in list...</value>
   </data>
+  <data name="Open container" xml:space="preserve">
+    <value>Open container</value>
+  </data>
+  <data name="Opening container {0} / {1}..." xml:space="preserve">
+    <value>Opening container {0} / {1}...</value>
+  </data>
 </root>

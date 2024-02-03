@@ -3514,6 +3514,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open container.
+        /// </summary>
+        public static string Open_container {
+            get {
+                return ResourceManager.GetString("Open container", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open Folder.
         /// </summary>
         public static string Open_Folder {
@@ -3537,6 +3546,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Open_Modules_Folder {
             get {
                 return ResourceManager.GetString("Open Modules Folder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opening container {0} / {1}....
+        /// </summary>
+        public static string Opening_container__0_____1____ {
+            get {
+                return ResourceManager.GetString("Opening container {0} / {1}...", resourceCulture);
             }
         }
         

@@ -30,7 +30,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="110" />
+            <ColumnDefinition Width="130" />
         </Grid.ColumnDefinitions>
         <Grid.Resources>
             <valueConverters:LockStatusValueConverter x:Key="LockStatusValueConverter" />

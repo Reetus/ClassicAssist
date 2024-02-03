@@ -92,7 +92,12 @@ namespace ClassicAssist.UO.Data
             {
                 for ( int x = 0; x < tokenizedString.Length; x++ )
                 {
-                    if ( tokenizedString[x] != '#' || x >= tokenizedString.Length - 1 )
+                    if ( x >= tokenizedString.Length - 1 )
+                    {
+                        return tokenizedString;
+                    }
+
+                    if ( tokenizedString[x] != '#' )
                     {
                         continue;
                     }

@@ -638,13 +638,16 @@ namespace ClassicAssist.Data
 
         private static void EnsureProfilePath( string startupPath )
         {
-            _profilePath = Path.IsPathRooted( AssistantOptions.ProfileDirectory )
-                ? AssistantOptions.ProfileDirectory
-                : Path.Combine( startupPath, AssistantOptions.ProfileDirectory );
-
-            if ( !Directory.Exists( _profilePath ) )
+            lock ( _serializeLock )
             {
-                Directory.CreateDirectory( _profilePath );
+                _profilePath = Path.IsPathRooted( AssistantOptions.ProfileDirectory )
+                    ? AssistantOptions.ProfileDirectory
+                    : Path.Combine( startupPath, AssistantOptions.ProfileDirectory );
+
+                if ( !Directory.Exists( _profilePath ) )
+                {
+                    Directory.CreateDirectory( _profilePath );
+                }
             }
         }
 
@@ -710,14 +713,20 @@ namespace ClassicAssist.Data
 
         public static string[] GetProfiles()
         {
-            EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
-            return Directory.EnumerateFiles( _profilePath, "*.json" ).ToArray();
+            lock ( _serializeLock )
+            {
+                EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
+                return Directory.EnumerateFiles( _profilePath, "*.json" ).ToArray();
+            }
         }
 
         public static string GetProfilePath()
         {
-            EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
-            return _profilePath;
+            lock ( _serializeLock )
+            {
+                EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
+                return _profilePath;
+            }
         }
     }
 

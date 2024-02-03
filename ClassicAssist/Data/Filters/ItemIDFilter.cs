@@ -127,7 +127,7 @@ namespace ClassicAssist.Data.Filters
 
                     int count = ( packet[3] << 8 ) | packet[4];
 
-                    if ( packet.Length / 20 != count )
+                    if ( length / 20 != count )
                     {
                         oldStyle = true;
                     }
@@ -173,7 +173,7 @@ namespace ClassicAssist.Data.Filters
                     packet[5] = (byte) ( entry.DestinationID >> 8 );
                     packet[6] = (byte) entry.DestinationID;
 
-                    bool oldStyle = packet.Length != 21;
+                    bool oldStyle = length != 21;
 
                     if ( entry.Hue == -1 )
                     {

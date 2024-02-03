@@ -328,7 +328,10 @@ namespace Assistant
                 _lastMouseAction[(int) mouse] = DateTime.Now;
             }
 
-            HotkeyManager.GetInstance().OnMouseAction( mouse );
+            Dispatcher.Invoke( () =>
+            {
+                HotkeyManager.GetInstance().OnMouseAction( mouse );
+            } );
         }
 
         private static bool OnHotkeyPressed( int key, int mod, bool pressed )

@@ -28,6 +28,7 @@ namespace ClassicAssist.Data.Misc
     {
         private bool _alwaysOnTop;
         private ObservableCollection<CombineStacksIgnoreEntry> _combineStacksIgnore;
+        private ObservableCollection<OpenContainersIgnoreEntry> _openContainersIgnore;
         private bool _showChildItems;
 
         public bool AlwaysOnTop
@@ -40,6 +41,12 @@ namespace ClassicAssist.Data.Misc
         {
             get => _combineStacksIgnore;
             set => SetProperty( ref _combineStacksIgnore, value );
+        }
+
+        public ObservableCollection<OpenContainersIgnoreEntry> OpenContainersIgnore
+        {
+            get => _openContainersIgnore;
+            set => SetProperty( ref _openContainersIgnore, value );
         }
 
         public bool ShowChildItems
@@ -60,17 +67,29 @@ namespace ClassicAssist.Data.Misc
 
             CombineStacksIgnore = new ObservableCollection<CombineStacksIgnoreEntry>();
 
-            if ( config["CombineStacksIgnore"] == null )
+            if ( config["CombineStacksIgnore"] != null )
+            {
+                foreach ( JToken entry in config["CombineStacksIgnore"] )
+                {
+                    CombineStacksIgnore.Add( new CombineStacksIgnoreEntry
+                    {
+                        ID = entry["ID"]?.ToObject<int>() ?? 0,
+                        Cliloc = entry["Cliloc"]?.ToObject<int>() ?? -1,
+                        Hue = entry["Hue"]?.ToObject<int>() ?? -1
+                    } );
+                }
+            }
+
+            OpenContainersIgnore = new ObservableCollection<OpenContainersIgnoreEntry>();
+
+            if ( config["OpenContainersIgnore"] == null )
             {
                 return;
             }
 
-            foreach ( JToken entry in config["CombineStacksIgnore"] )
+            foreach ( JToken entry in config["OpenContainersIgnore"] )
             {
-                CombineStacksIgnore.Add( new CombineStacksIgnoreEntry
-                {
-                    ID = entry["ID"]?.ToObject<int>() ?? 0, Cliloc = entry["Cliloc"]?.ToObject<int>() ?? -1, Hue = entry["Hue"]?.ToObject<int>() ?? -1
-                } );
+                OpenContainersIgnore.Add( new OpenContainersIgnoreEntry { ID = entry["ID"]?.ToObject<int>() ?? 0 } );
             }
         }
 
@@ -80,17 +99,29 @@ namespace ClassicAssist.Data.Misc
 
             JArray combineStacksIgnore = new JArray();
 
-            if ( CombineStacksIgnore == null )
+            if ( CombineStacksIgnore != null )
+            {
+                foreach ( CombineStacksIgnoreEntry entry in CombineStacksIgnore )
+                {
+                    combineStacksIgnore.Add( new JObject { { "ID", entry.ID }, { "Cliloc", entry.Cliloc }, { "Hue", entry.Hue } } );
+                }
+
+                config.Add( "CombineStacksIgnore", combineStacksIgnore );
+            }
+
+            JArray openContainersIgnore = new JArray();
+
+            if ( OpenContainersIgnore == null )
             {
                 return config;
             }
 
-            foreach ( CombineStacksIgnoreEntry entry in CombineStacksIgnore )
+            foreach ( OpenContainersIgnoreEntry entry in OpenContainersIgnore )
             {
-                combineStacksIgnore.Add( new JObject { { "ID", entry.ID }, { "Cliloc", entry.Cliloc }, { "Hue", entry.Hue } } );
+                openContainersIgnore.Add( new JObject { { "ID", entry.ID } } );
             }
 
-            config.Add( "CombineStacksIgnore", combineStacksIgnore );
+            config.Add( "OpenContainersIgnore", openContainersIgnore );
 
             return config;
         }

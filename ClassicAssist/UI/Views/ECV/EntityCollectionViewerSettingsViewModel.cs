@@ -12,6 +12,7 @@
 
 #endregion
 
+using System.Windows.Input;
 using ClassicAssist.Data.Misc;
 using ClassicAssist.Shared.UI;
 
@@ -20,11 +21,18 @@ namespace ClassicAssist.UI.Views.ECV
     public class EntityCollectionViewerSettingsViewModel : SetPropertyNotifyChanged
     {
         private EntityCollectionViewerOptions _options;
+        private ICommand _okCommand;
 
         public EntityCollectionViewerOptions Options
         {
             get => _options;
             set => SetProperty( ref _options, value );
+        }
+
+        public ICommand OKCommand => _okCommand ?? ( _okCommand = new RelayCommand( OK ) );
+
+        private static void OK( object obj )
+        {
         }
     }
 }

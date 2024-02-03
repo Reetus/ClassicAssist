@@ -32,9 +32,18 @@
                 <settings:CombineStacksSettingsControl
                     Items="{Binding DataContext.Options.CombineStacksIgnore, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}" />
             </GroupBox>
+            <GroupBox Header="{x:Static resources:Strings.Open_All_Containers}" Margin="10,0,10,10" Padding="10">
+                <settings:OpenContainersSettingsControl
+                    Items="{Binding DataContext.Options.OpenContainersIgnore, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}" />
+            </GroupBox>
         </StackPanel>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,10,10">
-            <Button Content="{x:Static resources:Strings.OK}">
+        <StackPanel Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,10,10" Orientation="Horizontal">
+            <Button Content="{x:Static resources:Strings.OK}" Margin="0,0,5,0" Command="{Binding OKCommand}">
+                <b:Interaction.Behaviors>
+                    <behaviours:CloseOnClickBehaviour />
+                </b:Interaction.Behaviors>
+            </Button>
+            <Button Content="{x:Static resources:Strings.Cancel}">
                 <b:Interaction.Behaviors>
                     <behaviours:CloseOnClickBehaviour />
                 </b:Interaction.Behaviors>

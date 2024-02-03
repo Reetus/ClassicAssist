@@ -26,28 +26,18 @@ using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UI.Views.ECV.Settings
 {
-    public class CombineStacksSettingViewModel : SetPropertyNotifyChanged
+    public class OpenContainersSettingsViewModel : SetPropertyNotifyChanged
     {
-        private readonly Dispatcher _dispatcher;
+        private readonly Dispatcher _dispatcher = Dispatcher.CurrentDispatcher;
         private ICommand _addEntryCommand;
-        private ObservableCollection<CombineStacksIgnoreEntry> _items = new ObservableCollection<CombineStacksIgnoreEntry>();
+        private ObservableCollection<OpenContainersIgnoreEntry> _items = new ObservableCollection<OpenContainersIgnoreEntry>();
         private ICommand _removeEntryCommand;
-        private CombineStacksIgnoreEntry _selectedItem;
+        private OpenContainersIgnoreEntry _selectedItem;
         private ICommand _targetCommand;
-
-        public CombineStacksSettingViewModel()
-        {
-            _dispatcher = Dispatcher.CurrentDispatcher;
-
-            if ( DesignerProperties.GetIsInDesignMode( new DependencyObject() ) )
-            {
-                Cliloc.Initialize( @"C:\Users\johns\Documents\UO\Ultima Online Classic" );
-            }
-        }
 
         public ICommand AddEntryCommand => _addEntryCommand ?? ( _addEntryCommand = new RelayCommand( AddEntry ) );
 
-        public ObservableCollection<CombineStacksIgnoreEntry> Items
+        public ObservableCollection<OpenContainersIgnoreEntry> Items
         {
             get => _items;
             set => SetProperty( ref _items, value );
@@ -55,7 +45,7 @@ namespace ClassicAssist.UI.Views.ECV.Settings
 
         public ICommand RemoveEntryCommand => _removeEntryCommand ?? ( _removeEntryCommand = new RelayCommand( RemoveEntry, o => o != null ) );
 
-        public CombineStacksIgnoreEntry SelectedItem
+        public OpenContainersIgnoreEntry SelectedItem
         {
             get => _selectedItem;
             set => SetProperty( ref _selectedItem, value );
@@ -65,7 +55,7 @@ namespace ClassicAssist.UI.Views.ECV.Settings
 
         private async Task Target( object arg )
         {
-            if ( !( arg is CombineStacksIgnoreEntry entry ) )
+            if ( !( arg is OpenContainersIgnoreEntry entry ) )
             {
                 return;
             }
@@ -79,23 +69,12 @@ namespace ClassicAssist.UI.Views.ECV.Settings
 
             Item item = Engine.Items.GetItem( serial );
 
-            if ( item == null )
-            {
-                entry.ID = itemId;
-                entry.Hue = -1;
-                entry.Cliloc = -1;
-            }
-            else
-            {
-                entry.ID = item.ID;
-                entry.Hue = item.Hue;
-                entry.Cliloc = item.Properties?[0]?.Cliloc ?? -1;
-            }
+            entry.ID = item?.ID ?? itemId;
         }
 
         private void RemoveEntry( object obj )
         {
-            if ( !( obj is CombineStacksIgnoreEntry entry ) )
+            if ( !( obj is OpenContainersIgnoreEntry entry ) )
             {
                 return;
             }
@@ -105,7 +84,7 @@ namespace ClassicAssist.UI.Views.ECV.Settings
 
         private void AddEntry( object obj )
         {
-            _dispatcher.Invoke( () => Items.Add( new CombineStacksIgnoreEntry() ) );
+            _dispatcher.Invoke( () => Items.Add( new OpenContainersIgnoreEntry() ) );
         }
     }
 }

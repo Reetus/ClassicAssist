@@ -784,8 +784,11 @@ namespace ClassicAssist.UI.ViewModels
                 SelectedItem.Macro = SelectedItem.Macro.TabsToSpaces( 4 );
             }
 
-            //Saves whole profile, think of better way
-            Options.Save( Options.CurrentOptions );
+            Engine.Dispatcher.Invoke( () =>
+            {
+                //Saves whole profile, think of better way
+                Options.Save( Options.CurrentOptions );
+            } );
         }
 
         private async Task Execute( object obj, object[] parameters )

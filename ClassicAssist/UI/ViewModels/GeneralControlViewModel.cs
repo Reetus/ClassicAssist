@@ -313,7 +313,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private static void SaveProfile( object obj )
         {
-            Options.Save( Options.CurrentOptions );
+            Engine.Dispatcher.Invoke( () => { Options.Save( Options.CurrentOptions ); } );
             Commands.SystemMessage( Strings.Profile_saved___ );
         }
 
@@ -372,9 +372,12 @@ namespace ClassicAssist.UI.ViewModels
                 filterEntry?.Action( false );
             }
 
-            Options.ClearOptions();
-            Options.CurrentOptions = new Options();
-            Options.Load( profile, Options.CurrentOptions );
+            Engine.Dispatcher.Invoke( () =>
+            {
+                Options.ClearOptions();
+                Options.CurrentOptions = new Options();
+                Options.Load( profile, Options.CurrentOptions );
+            } );
         }
 
         private async Task NewProfile( object arg )

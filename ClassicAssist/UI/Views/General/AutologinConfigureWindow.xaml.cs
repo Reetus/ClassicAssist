@@ -16,6 +16,7 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Assistant;
 using ClassicAssist.Annotations;
 using ClassicAssist.Data;
 using ClassicAssist.Shared.UI;
@@ -125,14 +126,17 @@ namespace ClassicAssist.UI.Views.General
 
         public void Ok( object obj )
         {
-            Options.CurrentOptions.AutologinUsername = Account;
-            Options.CurrentOptions.AutologinPassword = Password;
-            Options.CurrentOptions.AutologinServerIndex = ServerIndex;
-            Options.CurrentOptions.AutologinCharacterIndex = CharacterIndex;
-            Options.CurrentOptions.AutologinConnectDelay = ConnectDelay;
-            Options.CurrentOptions.AutologinReconnectDelay = ReconnectDelay;
+            Engine.Dispatcher.Invoke( () =>
+            {
+                Options.CurrentOptions.AutologinUsername = Account;
+                Options.CurrentOptions.AutologinPassword = Password;
+                Options.CurrentOptions.AutologinServerIndex = ServerIndex;
+                Options.CurrentOptions.AutologinCharacterIndex = CharacterIndex;
+                Options.CurrentOptions.AutologinConnectDelay = ConnectDelay;
+                Options.CurrentOptions.AutologinReconnectDelay = ReconnectDelay;
 
-            Options.Save( Options.CurrentOptions );
+                Options.Save( Options.CurrentOptions );
+            } );
         }
 
         [NotifyPropertyChangedInvocator]

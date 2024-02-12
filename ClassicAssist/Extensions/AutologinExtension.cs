@@ -48,6 +48,11 @@ namespace ClassicAssist.Extensions
             AssistantOptions.ProfileChangedEvent += OnProfileChangedEvent;
             Engine.DisconnectedEvent += OnDisconnectedEvent;
 
+            if ( Engine.ClassicAssembly == null )
+            {
+                return;
+            }
+
             Type gameSceneType = Engine.ClassicAssembly.GetType( "ClassicUO.Game.Scenes.LoginScene" );
 
             _connectMethod = gameSceneType.GetMethod( "Connect", BindingFlags.Public | BindingFlags.Instance );

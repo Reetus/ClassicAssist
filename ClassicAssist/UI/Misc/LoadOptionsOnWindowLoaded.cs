@@ -22,8 +22,11 @@ namespace ClassicAssist.UI.Misc
 
         private static void OnClosing( object sender, CancelEventArgs e )
         {
-            Options.Save( Options.CurrentOptions );
-            AssistantOptions.Save();
+            Engine.Dispatcher.Invoke( () =>
+            {
+                Options.Save( Options.CurrentOptions );
+                AssistantOptions.Save();
+            } );
         }
 
         private static void OnLoaded( object sender, RoutedEventArgs e )

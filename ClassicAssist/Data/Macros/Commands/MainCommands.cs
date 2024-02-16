@@ -389,10 +389,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 Options.CurrentOptions.AutologinCharacterIndex = characterIndex;
             }
 
-            Engine.Dispatcher.Invoke( () =>
-            {
-                Options.Save( Options.CurrentOptions );
-            } );
+            Options.Save( Options.CurrentOptions );
         }
     }
 }

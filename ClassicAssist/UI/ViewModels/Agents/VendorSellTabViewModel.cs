@@ -164,7 +164,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             foreach ( SellListEntry entry in entries )
             {
-                VendorSellAgentEntry match = Items?.FirstOrDefault( i =>
+                VendorSellAgentEntry match = Items.FirstOrDefault( i =>
                     ( i.Graphic == -1 || i.Graphic == entry.ID ) && ( i.Hue == -1 || i.Hue == entry.Hue ) &&
                     entry.Price >= i.MinPrice && i.Enabled );
 

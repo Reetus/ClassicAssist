@@ -378,21 +378,8 @@ namespace Assistant
         private static void OnClientClosing()
         {
             ClientClosing?.Invoke();
-
-            if ( Dispatcher != null )
-            {
-                Dispatcher.Invoke( () =>
-                {
-                    Options.Save( Options.CurrentOptions );
-                    AssistantOptions.Save();
-                } );
-            }
-            else
-            {
-                Options.Save( Options.CurrentOptions );
-                AssistantOptions.Save();
-            }
-
+            Options.Save( Options.CurrentOptions );
+            AssistantOptions.Save();
             SentrySdk.Close();
         }
 

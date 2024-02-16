@@ -337,10 +337,7 @@ namespace ClassicAssist.Data
                 LastProfile = Options.DEFAULT_SETTINGS_FILENAME;
             }
 
-            Engine.Dispatcher.Invoke( () =>
-            {
-                Options.Load( LastProfile, Options.CurrentOptions );
-            } );
+            Options.Load( LastProfile, Options.CurrentOptions );
         }
 
         public static void OnProfileChanging( string profile )

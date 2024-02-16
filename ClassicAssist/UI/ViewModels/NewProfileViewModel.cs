@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
@@ -70,44 +69,42 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( valid )
             {
-                Engine.Dispatcher.Invoke( () =>
+                string profilePath = Options.GetProfilePath();
+
+                if ( File.Exists( Path.Combine( profilePath, $"{profileName}.json" ) ) )
                 {
-                    string profilePath = Options.GetProfilePath();
+                    MessageBox.Show( Strings.A_profile_already_exists_by_this_name__choose_a_new_name___,
+                        Strings.Error );
+                    return;
+                }
 
-                    if ( File.Exists( Path.Combine( profilePath, $"{profileName}.json" ) ) )
+                FileName = $"{profileName}.json";
+
+                if ( Option == NewProfileOption.Duplicate )
+                {
+                    string fullPath = Path.Combine( profilePath, FileName );
+
+                    if ( SelectedProfile == Options.CurrentOptions.Name )
                     {
-                        MessageBox.Show( Strings.A_profile_already_exists_by_this_name__choose_a_new_name___, Strings.Error );
-                        return;
-                    }
-
-                    FileName = $"{profileName}.json";
-
-                    if ( Option == NewProfileOption.Duplicate )
-                    {
-                        string fullPath = Path.Combine( profilePath, FileName );
-
-                        if ( SelectedProfile == Options.CurrentOptions.Name )
-                        {
-                            Options options = Options.CurrentOptions;
-                            options.Name = $"{profileName}.json";
-                            Options.Save( options );
-                        }
-                        else
-                        {
-                            File.Copy( Path.Combine( profilePath, SelectedProfile ), fullPath, true );
-                            Options.Load( FileName, CurrentOptions );
-                            Options.Save( CurrentOptions );
-                        }
+                        Options options = Options.CurrentOptions;
+                        options.Name = $"{profileName}.json";
+                        Options.Save( options );
                     }
                     else
                     {
-                        Options.ClearOptions();
-                        Options options = new Options { Name = $"{profileName}.json" };
-                        Options.CurrentOptions = options;
-                        Options.Load( options.Name, options );
-                        Options.Save( options );
+                        File.Copy( Path.Combine( profilePath, SelectedProfile ), fullPath, true );
+                        Options.Load( FileName, CurrentOptions );
+                        Options.Save( CurrentOptions );
                     }
-                } );
+                }
+                else
+                {
+                    Options.ClearOptions();
+                    Options options = new Options { Name = $"{profileName}.json" };
+                    Options.CurrentOptions = options;
+                    Options.Load( options.Name, options );
+                    Options.Save( options );
+                }
             }
             else
             {

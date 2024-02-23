@@ -41,7 +41,7 @@ namespace ClassicAssist.Data.Hotkeys.Commands
                     break;
             }
 
-            Thread t = new Thread( () =>
+            Engine.Dispatcher.Invoke( () =>
             {
                 EntityCollectionViewer window = new EntityCollectionViewer
                 {
@@ -49,11 +49,8 @@ namespace ClassicAssist.Data.Hotkeys.Commands
                 };
 
                 window.Show();
-                Dispatcher.Run();
-            } ) { IsBackground = true };
-
-            t.SetApartmentState( ApartmentState.STA );
-            t.Start();
+                window.Activate();
+            } );
         }
     }
 }

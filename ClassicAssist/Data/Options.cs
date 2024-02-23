@@ -14,6 +14,7 @@ using ClassicAssist.Misc;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.ViewModels;
 using Newtonsoft.Json.Linq;
+using Sentry;
 
 namespace ClassicAssist.Data
 {
@@ -663,51 +664,62 @@ namespace ClassicAssist.Data
         {
             lock ( _serializeLock )
             {
-                AssistantOptions.OnProfileChanging( optionsFile );
-                AssistantOptions.LastProfile = optionsFile;
-
-                BaseViewModel[] instances = BaseViewModel.Instances;
-
-                EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
-
-                JObject json = new JObject();
-
-                string fullPath = Path.Combine( _profilePath, optionsFile );
-
-                if ( File.Exists( fullPath ) )
+                try
                 {
-                    json = JObject.Parse( File.ReadAllText( fullPath ) );
+                    AssistantOptions.OnProfileChanging( optionsFile );
+                    AssistantOptions.LastProfile = optionsFile;
+
+                    BaseViewModel[] instances = BaseViewModel.Instances;
+
+                    EnsureProfilePath( Engine.StartupPath ?? Environment.CurrentDirectory );
+
+                    JObject json = new JObject();
+
+                    string fullPath = Path.Combine( _profilePath, optionsFile );
+
+                    if ( File.Exists( fullPath ) )
+                    {
+                        json = JObject.Parse( File.ReadAllText( fullPath ) );
+                    }
+
+                    options.Name = Path.GetFileName( optionsFile );
+                    options.SelectedTabIndex = json["SelectedTabIndex"]?.ToObject<int>() ?? 0;
+                    options.Hash = json["Hash"]?.ToObject<string>() ?? string.Empty;
+
+                    foreach ( BaseViewModel instance in instances )
+                    {
+                        if ( instance is ISettingProvider settingProvider )
+                        {
+                            settingProvider.Deserialize( json, options );
+                        }
+
+                        if ( !( instance is IGlobalSettingProvider globalSettingProvider ) )
+                        {
+                            continue;
+                        }
+
+                        string filePath = Path.Combine( AssistantOptions.GetGlobalPath(), globalSettingProvider.GetGlobalFilename() );
+
+                        if ( !File.Exists( filePath ) )
+                        {
+                            continue;
+                        }
+
+                        JObject global = JObject.Parse( File.ReadAllText( filePath ) );
+
+                        globalSettingProvider.Deserialize( global, options, true );
+                    }
                 }
-
-                options.Name = Path.GetFileName( optionsFile );
-                options.SelectedTabIndex = json["SelectedTabIndex"]?.ToObject<int>() ?? 0;
-                options.Hash = json["Hash"]?.ToObject<string>() ?? string.Empty;
-
-                foreach ( BaseViewModel instance in instances )
+                catch ( Exception e )
                 {
-                    if ( instance is ISettingProvider settingProvider )
-                    {
-                        settingProvider.Deserialize( json, options );
-                    }
+                    Console.WriteLine( e );
 
-                    if ( !( instance is IGlobalSettingProvider globalSettingProvider ) )
-                    {
-                        continue;
-                    }
-
-                    string filePath = Path.Combine( AssistantOptions.GetGlobalPath(), globalSettingProvider.GetGlobalFilename() );
-
-                    if ( !File.Exists( filePath ) )
-                    {
-                        continue;
-                    }
-
-                    JObject global = JObject.Parse( File.ReadAllText( filePath ) );
-
-                    globalSettingProvider.Deserialize( global, options, true );
+                    SentrySdk.CaptureException( e, scope => scope.SetTag( "Profile", optionsFile ) );
                 }
-
-                AssistantOptions.OnProfileChanged( optionsFile );
+                finally
+                {
+                    AssistantOptions.OnProfileChanged( optionsFile );
+                }
             }
         }
 

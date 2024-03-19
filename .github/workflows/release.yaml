@@ -87,7 +87,7 @@ jobs:
     - name: Build
       run: dotnet build -c Release --no-restore /p:Version=$env:VERSION
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test -c Release --no-build --verbosity normal
     - name: Generate Manifest
       run: |
         cd Output\net48

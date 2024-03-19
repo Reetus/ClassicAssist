@@ -5,7 +5,7 @@ on:
       version:
         description: 'Version'
         required: true
-        type: string  
+        type: string
 jobs:
   build:
     runs-on: windows-latest
@@ -52,28 +52,28 @@ jobs:
           $settingsCode = Get-Content -Path $designerFile -Raw
           $pattern = "\[global::System\.Configuration\.DefaultSettingValueAttribute\((`".*`")\)\]\s+public string SentryDsn {"
           $match = [regex]::Match($settingsCode, $pattern)
-          
+
           if ($match.Success -eq $false) {
               Write-Error "Setting not found"
               exit 1
           }
-          
+
           $newSentryDsn = [regex]::Replace($match.Groups[0].Value, [regex]::Escape($match.Groups[1].Value), '"' + $env:SENTRY_DSN + '"')
           $settingsCode = [regex]::Replace($settingsCode, [regex]::Escape($match.Groups[0].Value), $newSentryDsn)
-          
+
           $pattern = "\[global::System\.Configuration\.DefaultSettingValueAttribute\((`".*`")\)\]\s+public string ExceptionlessKey {"
           $match = [regex]::Match($settingsCode, $pattern)
-          
+
           if ($match.Success -eq $false) {
               Write-Error "Setting not found"
               exit 1
           }
-          
+
           $newExceptionlessKey = [regex]::Replace($match.Groups[0].Value, [regex]::Escape($match.Groups[1].Value), '"' + $env:EXCEPTIONLESS_KEY + '"')
           $settingsCode = [regex]::Replace($settingsCode, [regex]::Escape($match.Groups[0].Value), $newExceptionlessKey)
-          
+
           $settingsCode | Set-Content -Path $designerFile -Force
-          
+
           Get-Content $designerFile
       env:
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
@@ -85,7 +85,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore /p:Version=$env:VERSION
+      run: dotnet build -c Release --no-restore /p:Version=$env:VERSION
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Generate Manifest
@@ -110,7 +110,7 @@ jobs:
             $json = $filespsobject | convertto-json
         }
         $json | Out-File MANIFEST.json
-      
+
     - name: Zip output
       run: Compress-Archive -Path Output/net48/* -DestinationPath ClassicAssist.zip
     - name: Draft Release

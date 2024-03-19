@@ -30,7 +30,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <ListView ItemsSource="{Binding Source={StaticResource src}}" SelectedItem="{Binding SelectedItem}">
+            <ListView ItemsSource="{Binding Source={StaticResource src}}">
                 <ListView.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.ContainerStyle>
@@ -49,7 +49,8 @@
                                                     </DockPanel>
                                                 </Expander.Header>
                                                 <Expander.Content>
-                                                    <ListBox ItemsSource="{Binding Items}" BorderThickness="0">
+                                                    <ListBox ItemsSource="{Binding Items}" BorderThickness="0"
+                                                             SelectedItem="{Binding DataContext.SelectedItem, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}">
                                                         <ListBox.ItemTemplate>
                                                             <DataTemplate>
                                                                 <TextBlock Text="{Binding Name}"

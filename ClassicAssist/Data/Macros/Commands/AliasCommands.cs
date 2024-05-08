@@ -11,6 +11,7 @@ namespace ClassicAssist.Data.Macros.Commands
     public static class AliasCommands
     {
         public static Dictionary<string, int> _aliases = new Dictionary<string, int>();
+        public static Dictionary<int, Dictionary<string, int>> _playerAliases = new Dictionary<int, Dictionary<string, int>>();
 
         internal static void SetDefaultAliases()
         {
@@ -62,8 +63,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return serial;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Aliases ),
-            Parameters = new[] { nameof( ParameterType.AliasName ), nameof( ParameterType.SerialOrAlias ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Aliases ), Parameters = new[] { nameof( ParameterType.AliasName ), nameof( ParameterType.SerialOrAlias ) } )]
         public static void SetAlias( string aliasName, object obj )
         {
             aliasName = aliasName.ToLower();
@@ -80,8 +80,46 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Aliases ),
-            Parameters = new[] { nameof( ParameterType.AliasName ), nameof( ParameterType.SerialOrAlias ) } )]
+        internal static void SetPlayerSerialAlias( int serial, string aliasName, object obj )
+        {
+            if ( !_playerAliases.ContainsKey( serial ) )
+            {
+                _playerAliases.Add( serial, new Dictionary<string, int>() );
+            }
+
+            if ( !_playerAliases[serial].ContainsKey( aliasName ) )
+            {
+                _playerAliases[serial].Add( aliasName, ResolveSerial( obj ) );
+            }
+            else
+            {
+                _playerAliases[serial][aliasName] = ResolveSerial( obj );
+            }
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Aliases ), Parameters = new[] { nameof( ParameterType.AliasName ), nameof( ParameterType.SerialOrAlias ) } )]
+        public static void SetPlayerAlias( string aliasName, object obj )
+        {
+            aliasName = aliasName.ToLower();
+
+            int value = ResolveSerial( obj );
+
+            if ( !_playerAliases.ContainsKey( Engine.Player.Serial ) )
+            {
+                _playerAliases.Add( Engine.Player.Serial, new Dictionary<string, int>() );
+            }
+
+            if ( _playerAliases[Engine.Player.Serial].ContainsKey( aliasName ) )
+            {
+                _playerAliases[Engine.Player.Serial][aliasName] = value;
+            }
+            else
+            {
+                _playerAliases[Engine.Player.Serial].Add( aliasName, value );
+            }
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Aliases ), Parameters = new[] { nameof( ParameterType.AliasName ), nameof( ParameterType.SerialOrAlias ) } )]
         public static void SetMacroAlias( string aliasName, object obj )
         {
             aliasName = aliasName.ToLower();
@@ -106,8 +144,7 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Aliases ),
-            Parameters = new[] { nameof( ParameterType.AliasName ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Aliases ), Parameters = new[] { nameof( ParameterType.AliasName ) } )]
         public static void UnsetAlias( string aliasName )
         {
             aliasName = aliasName.ToLower();
@@ -128,8 +165,23 @@ namespace ClassicAssist.Data.Macros.Commands
             }
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Aliases ),
-            Parameters = new[] { nameof( ParameterType.AliasName ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Aliases ), Parameters = new[] { nameof( ParameterType.AliasName ) } )]
+        public static void UnsetPlayerAlias( string aliasName )
+        {
+            aliasName = aliasName.ToLower();
+
+            if ( !_playerAliases.ContainsKey( Engine.Player.Serial ) )
+            {
+                return;
+            }
+
+            if ( _playerAliases[Engine.Player.Serial].ContainsKey( aliasName ) )
+            {
+                _playerAliases[Engine.Player.Serial].Remove( aliasName );
+            }
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Aliases ), Parameters = new[] { nameof( ParameterType.AliasName ) } )]
         public static int GetAlias( string aliasName )
         {
             aliasName = aliasName.ToLower();
@@ -138,18 +190,26 @@ namespace ClassicAssist.Data.Macros.Commands
 
             if ( macro != null )
             {
-                if ( macro.Aliases.ContainsKey( aliasName ) )
+                if ( macro.Aliases.TryGetValue( aliasName, out int macroAlias ) )
                 {
-                    return macro.Aliases[aliasName];
+                    return macroAlias;
                 }
             }
 
-            if ( _aliases.ContainsKey( aliasName ) )
+            return _aliases.TryGetValue( aliasName, out int alias ) ? alias : 0;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Aliases ), Parameters = new[] { nameof( ParameterType.AliasName ) } )]
+        public static int GetPlayerAlias( string aliasName )
+        {
+            aliasName = aliasName.ToLower();
+
+            if ( !_playerAliases.ContainsKey( Engine.Player.Serial ) )
             {
-                return _aliases[aliasName];
+                return 0;
             }
 
-            return 0;
+            return _playerAliases[Engine.Player.Serial].ContainsKey( aliasName ) ? _playerAliases[Engine.Player.Serial][aliasName] : 0;
         }
 
         internal static Dictionary<string, int> GetAllAliases()
@@ -157,8 +217,17 @@ namespace ClassicAssist.Data.Macros.Commands
             return _aliases;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Aliases ),
-            Parameters = new[] { nameof( ParameterType.AliasName ) } )]
+        internal static Dictionary<int, Dictionary<string, int>> GetAllPlayerAliases()
+        {
+            return _playerAliases;
+        }
+
+        internal static Dictionary<string, int> GetPlayerAliases()
+        {
+            return !_playerAliases.ContainsKey( Engine.Player.Serial ) ? new Dictionary<string, int>() : _playerAliases[Engine.Player.Serial];
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Aliases ), Parameters = new[] { nameof( ParameterType.AliasName ) } )]
         public static int PromptAlias( string aliasName )
         {
             int serial = UOC.GetTargetSerialAsync( string.Format( Strings.Target_object___0_____, aliasName ) ).Result;
@@ -166,17 +235,23 @@ namespace ClassicAssist.Data.Macros.Commands
             return serial;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Aliases ),
-            Parameters = new[] { nameof( ParameterType.AliasName ) } )]
-        public static int PromptMacroAlias(string aliasName)
+        [CommandsDisplay( Category = nameof( Strings.Aliases ), Parameters = new[] { nameof( ParameterType.AliasName ) } )]
+        public static int PromptMacroAlias( string aliasName )
         {
-            int serial = UOC.GetTargetSerialAsync(string.Format(Strings.Target_object___0_____, aliasName)).Result;
-            SetMacroAlias(aliasName, serial);
+            int serial = UOC.GetTargetSerialAsync( string.Format( Strings.Target_object___0_____, aliasName ) ).Result;
+            SetMacroAlias( aliasName, serial );
             return serial;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Aliases ),
-            Parameters = new[] { nameof( ParameterType.AliasName ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Aliases ), Parameters = new[] { nameof( ParameterType.AliasName ) } )]
+        public static int PromptPlayerAlias( string aliasName )
+        {
+            int serial = UOC.GetTargetSerialAsync( string.Format( Strings.Target_object___0_____, aliasName ) ).Result;
+            SetPlayerAlias( aliasName, serial );
+            return serial;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Aliases ), Parameters = new[] { nameof( ParameterType.AliasName ) } )]
         public static bool FindAlias( string aliasName )
         {
             aliasName = aliasName.ToLower();

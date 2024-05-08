@@ -148,6 +148,53 @@
                             </ListView.ItemContainerStyle>
                         </ListView>
                     </TabItem>
+                    <TabItem Header="{x:Static resources:Strings.Player}">
+                        <Grid Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <ListView ItemsSource="{Binding PlayerAliases}"
+                                      SelectedItem="{Binding SelectedPlayerAlias}">
+                                <ListView.ContextMenu>
+                                    <ContextMenu>
+                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                        <MenuItem Header="{x:Static resources:Strings.Remove}"
+                                                  Command="{Binding Data.RemovePlayerAliasCommand, Source={StaticResource Proxy}}"
+                                                  CommandParameter="{Binding SelectedAlias}" />
+                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                        <MenuItem Header="{x:Static resources:Strings.Set}"
+                                                  Command="{Binding Data.SetPlayerAliasCommand, Source={StaticResource Proxy}}"
+                                                  CommandParameter="{Binding SelectedAlias}" />
+                                    </ContextMenu>
+                                </ListView.ContextMenu>
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="{x:Static resources:Strings.Name}" Width="170"
+                                                        DisplayMemberBinding="{Binding Name}" />
+                                        <GridViewColumn Header="{x:Static resources:Strings.Serial}" Width="170"
+                                                        DisplayMemberBinding="{Binding Serial, Converter={StaticResource IntToHexStringValueConverter}}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0, 10,0,0">
+                                <StackPanel.Resources>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                        <Setter Property="Margin" Value="0,0,10,0" />
+                                    </Style>
+                                </StackPanel.Resources>
+                                <Button Content="{x:Static resources:Strings.Close}">
+                                    <i:Interaction.Behaviors>
+                                        <behaviours:CloseOnClickBehaviour />
+                                    </i:Interaction.Behaviors>
+                                </Button>
+                                <Button Content="{x:Static resources:Strings.Refresh}"
+                                        Command="{Binding RefreshPlayerAliasesCommand}" />
+                                <Button Content="{x:Static resources:Strings.Clear_All_Objects}"
+                                        Command="{Binding ClearAllPlayerAliasesCommand}" />
+                            </StackPanel>
+                        </Grid>
+                    </TabItem>
                 </TabControl>
             </TabItem>
             <TabItem Header="{x:Static resources:Strings.Lists}">

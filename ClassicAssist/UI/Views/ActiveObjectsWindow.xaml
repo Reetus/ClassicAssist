@@ -161,11 +161,11 @@
                                         <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                                         <MenuItem Header="{x:Static resources:Strings.Remove}"
                                                   Command="{Binding Data.RemovePlayerAliasCommand, Source={StaticResource Proxy}}"
-                                                  CommandParameter="{Binding SelectedAlias}" />
+                                                  CommandParameter="{Binding SelectedPlayerAlias}" />
                                         <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                                         <MenuItem Header="{x:Static resources:Strings.Set}"
                                                   Command="{Binding Data.SetPlayerAliasCommand, Source={StaticResource Proxy}}"
-                                                  CommandParameter="{Binding SelectedAlias}" />
+                                                  CommandParameter="{Binding SelectedPlayerAlias}" />
                                     </ContextMenu>
                                 </ListView.ContextMenu>
                                 <ListView.View>

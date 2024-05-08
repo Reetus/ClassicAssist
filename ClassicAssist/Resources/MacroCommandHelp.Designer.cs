@@ -1604,6 +1604,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gets the value of the given alias name, for the current player..
+        /// </summary>
+        public static string GETPLAYERALIAS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("GETPLAYERALIAS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GetPlayerAlias(&quot;mount&quot;).
+        /// </summary>
+        public static string GETPLAYERALIAS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("GETPLAYERALIAS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sends an internal prompt request and returns the text entered.
         /// </summary>
         public static string GETTEXT_COMMAND_DESCRIPTION {
@@ -3120,6 +3138,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Prompt with an in-game target cursor to supply value for given alias name, for the current player..
+        /// </summary>
+        public static string PROMPTPLAYERALIAS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("PROMPTPLAYERALIAS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PromptPlayerAlias(&quot;mount&quot;).
+        /// </summary>
+        public static string PROMPTPLAYERALIAS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("PROMPTPLAYERALIAS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returns true if the given text appears in the items item properties..
         /// </summary>
         public static string PROPERTY_COMMAND_DESCRIPTION {
@@ -3600,6 +3636,24 @@ namespace ClassicAssist.Resources {
         public static string SETORGANIZERCONTAINERS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("SETORGANIZERCONTAINERS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets the value of the given alias name, for the current player..
+        /// </summary>
+        public static string SETPLAYERALIAS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETPLAYERALIAS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetPlayerAlias(&quot;mount&quot;, 0x40000001).
+        /// </summary>
+        public static string SETPLAYERALIAS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETPLAYERALIAS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         
@@ -4461,6 +4515,24 @@ namespace ClassicAssist.Resources {
         public static string UNSETALIAS_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("UNSETALIAS_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removes the alias name given, for the current player..
+        /// </summary>
+        public static string UNSETPLAYERALIAS_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("UNSETPLAYERALIAS_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UnsetPlayerAlias(&quot;mount&quot;).
+        /// </summary>
+        public static string UNSETPLAYERALIAS_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("UNSETPLAYERALIAS_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

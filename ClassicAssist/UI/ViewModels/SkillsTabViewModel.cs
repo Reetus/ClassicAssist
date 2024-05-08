@@ -174,6 +174,10 @@ namespace ClassicAssist.UI.ViewModels
                         _hotkeyCategory.Children.Add( hke );
                         continue;
                     }
+
+                    if ( !hk.Hotkey.Equals( ShortcutKeys.Default ) && hke.Hotkey.Equals( ShortcutKeys.Default ) )
+                        continue;
+
                     hk.Hotkey = hke.Hotkey;
                     hk.PassToUO = hke.PassToUO;
                     hk.Disableable = hke.Disableable;

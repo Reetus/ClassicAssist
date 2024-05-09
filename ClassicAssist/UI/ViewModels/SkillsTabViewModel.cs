@@ -23,7 +23,7 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class SkillsTabViewModel : BaseViewModel, IGlobalSettingProvider
     {
-        private HotkeyCommand _hotkeyCategory;
+        internal HotkeyCommand _hotkeyCategory;
         private ObservableCollectionEx<SkillEntry> _items = new ObservableCollectionEx<SkillEntry>();
         private ICommand _resetDeltasCommand;
         private SkillEntry _selectedItem;
@@ -88,7 +88,7 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            foreach ( HotkeyEntry hks in _hotkeyCategory.Children )
+            foreach ( HotkeyEntry hks in _hotkeyCategory.Children.Where(o => o.IsGlobal == global))
             {
                 if ( Equals( hks.Hotkey, ShortcutKeys.Default ) )
                 {
@@ -152,10 +152,43 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            _hotkeyCategory = hotkey.Items.FirstOrDefault( hk => hk.IsCategory && hk.Name == Strings.Skills ) ??
-                              new HotkeyCommand { Name = Strings.Skills, IsCategory = true };
+            _hotkeyCategory = hotkey.Items.FirstOrDefault( hk => hk.IsCategory && hk.Name == Strings.Skills ) ?? new HotkeyCommand { Name = Strings.Skills, IsCategory = true };
 
-            _hotkeyCategory.Children = hotkeyEntries;
+            // maybe better new parameter use but implement IGlobalSettingProvider
+            // global called after private profile
+            // if call order change convert condition
+            if ( !global )
+            {
+                _hotkeyCategory.Children = hotkeyEntries;
+            }
+            else
+            {
+                foreach ( HotkeyEntry hke in hotkeyEntries )
+                {
+                    HotkeyEntry hk = _hotkeyCategory.Children.FirstOrDefault( o => o.Name == hke.Name );
+
+                    if ( hk != null && !hk.Hotkey.Equals( ShortcutKeys.Default ) && hke.Hotkey.Equals( ShortcutKeys.Default ) )
+                    {
+                        continue;
+                    }
+
+                    if ( hk == null )
+                    {
+                        _hotkeyCategory.Children.Add( hke );
+                        continue;
+                    }
+
+                    if ( !hk.Hotkey.Equals( ShortcutKeys.Default ) && hke.Hotkey.Equals( ShortcutKeys.Default ) )
+                    {
+                        continue;
+                    }
+
+                    hk.Hotkey = hke.Hotkey;
+                    hk.PassToUO = hke.PassToUO;
+                    hk.Disableable = hke.Disableable;
+                    hk.IsGlobal = hke.IsGlobal;
+                }
+            }
 
             hotkey.AddCategory( _hotkeyCategory );
         }

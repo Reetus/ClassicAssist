@@ -61,7 +61,7 @@ namespace ClassicAssist.UI.Misc
 #if DEBUG
             return null;
 #else
-            args.User = new User { Id = AssistantOptions.UserId };
+            args.User = new SentryUser { Id = AssistantOptions.UserId };
             args.SetTag( "SessionId", AssistantOptions.SessionId );
             args.SetExtra( "PlayerName", Engine.Player?.Name ?? "Unknown" );
             args.SetExtra( "PlayerSerial", Engine.Player?.Serial ?? 0 );

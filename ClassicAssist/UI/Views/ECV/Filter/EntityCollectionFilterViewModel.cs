@@ -154,6 +154,23 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                 AllowedValuesEnum = typeof( SkillBonusSkills )
             } );
 
+            Constraints.AddSorted( new PropertyEntry
+            {
+                Name = Strings.Name,
+                ConstraintType = PropertyType.PredicateWithValue,
+                Predicate = ( item, entry ) =>
+                {
+                    string propString = item.Properties == null ? item.Name : item.Properties.Aggregate( string.Empty, ( current, property ) => current + property.Text );
+
+                    if ( entry.Operator != AutolootOperator.NotPresent )
+                    {
+                        return propString.Contains( entry.Additional );
+                    }
+
+                    return !propString.Contains( entry.Additional );
+                }
+            } );
+
             LoadFilterProfiles();
         }
 

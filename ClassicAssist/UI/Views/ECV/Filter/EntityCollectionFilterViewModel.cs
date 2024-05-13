@@ -164,10 +164,10 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 
                     if ( entry.Operator != AutolootOperator.NotPresent )
                     {
-                        return propString.Contains( entry.Additional );
+                        return propString.IndexOf( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) >= 0;
                     }
 
-                    return !propString.Contains( entry.Additional );
+                    return propString.IndexOf( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) == -1;
                 }
             } );
 

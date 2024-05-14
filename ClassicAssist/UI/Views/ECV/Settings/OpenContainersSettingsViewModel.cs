@@ -13,16 +13,10 @@
 #endregion
 
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Assistant;
 using ClassicAssist.Shared.UI;
-using ClassicAssist.UO;
-using ClassicAssist.UO.Data;
-using ClassicAssist.UO.Objects;
+using ClassicAssist.UI.Views.ECV.Settings.Models;
 
 namespace ClassicAssist.UI.Views.ECV.Settings
 {
@@ -30,14 +24,13 @@ namespace ClassicAssist.UI.Views.ECV.Settings
     {
         private readonly Dispatcher _dispatcher = Dispatcher.CurrentDispatcher;
         private ICommand _addEntryCommand;
-        private ObservableCollection<OpenContainersIgnoreEntry> _items = new ObservableCollection<OpenContainersIgnoreEntry>();
+        private ObservableCollection<CombineStacksOpenContainersIgnoreEntry> _items = new ObservableCollection<CombineStacksOpenContainersIgnoreEntry>();
         private ICommand _removeEntryCommand;
-        private OpenContainersIgnoreEntry _selectedItem;
-        private ICommand _targetCommand;
+        private CombineStacksOpenContainersIgnoreEntry _selectedItem;
 
         public ICommand AddEntryCommand => _addEntryCommand ?? ( _addEntryCommand = new RelayCommand( AddEntry ) );
 
-        public ObservableCollection<OpenContainersIgnoreEntry> Items
+        public ObservableCollection<CombineStacksOpenContainersIgnoreEntry> Items
         {
             get => _items;
             set => SetProperty( ref _items, value );
@@ -45,36 +38,15 @@ namespace ClassicAssist.UI.Views.ECV.Settings
 
         public ICommand RemoveEntryCommand => _removeEntryCommand ?? ( _removeEntryCommand = new RelayCommand( RemoveEntry, o => o != null ) );
 
-        public OpenContainersIgnoreEntry SelectedItem
+        public CombineStacksOpenContainersIgnoreEntry SelectedItem
         {
             get => _selectedItem;
             set => SetProperty( ref _selectedItem, value );
         }
 
-        public ICommand TargetCommand => _targetCommand ?? ( _targetCommand = new RelayCommandAsync( Target, o => Engine.Connected ) );
-
-        private async Task Target( object arg )
-        {
-            if ( !( arg is OpenContainersIgnoreEntry entry ) )
-            {
-                return;
-            }
-
-            ( TargetType _, TargetFlags _, int serial, int _, int _, int _, int itemId ) = await Commands.GetTargetInfoAsync();
-
-            if ( serial <= 0 )
-            {
-                return;
-            }
-
-            Item item = Engine.Items.GetItem( serial );
-
-            entry.ID = item?.ID ?? itemId;
-        }
-
         private void RemoveEntry( object obj )
         {
-            if ( !( obj is OpenContainersIgnoreEntry entry ) )
+            if ( !( obj is CombineStacksOpenContainersIgnoreEntry entry ) )
             {
                 return;
             }
@@ -84,7 +56,7 @@ namespace ClassicAssist.UI.Views.ECV.Settings
 
         private void AddEntry( object obj )
         {
-            _dispatcher.Invoke( () => Items.Add( new OpenContainersIgnoreEntry() ) );
+            _dispatcher.Invoke( () => Items.Add( new CombineStacksOpenContainersIgnoreEntry() ) );
         }
     }
 }

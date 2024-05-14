@@ -237,12 +237,6 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _enemyTargetMessage, value );
         }
 
-        public EntityCollectionViewerOptions EntityCollectionViewerOptions
-        {
-            get => _entityCollectionViewerOptions;
-            set => SetProperty( ref _entityCollectionViewerOptions, value );
-        }
-
         public int ExpireTargetsMS
         {
             get => _expireTargetsMs;

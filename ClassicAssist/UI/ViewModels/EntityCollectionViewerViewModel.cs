@@ -29,6 +29,7 @@ using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.UI.ViewModels
 {
@@ -102,7 +103,7 @@ namespace ClassicAssist.UI.ViewModels
         public EntityCollectionViewerViewModel( ItemCollection collection )
         {
             Collection = collection;
-            Options = Data.Options.CurrentOptions.EntityCollectionViewerOptions;
+            Options = LoadOptions();
 
             Entities = new ObservableCollection<EntityCollectionData>( !Options.ShowChildItems
                 ? collection.ToEntityCollectionData( _sorter, _nameOverrides )
@@ -243,6 +244,38 @@ namespace ClassicAssist.UI.ViewModels
 
         private Dictionary<int, string> _nameOverrides { get; } = new Dictionary<int, string>();
 
+        public EntityCollectionViewerOptions LoadOptions()
+        {
+            string fileName = Path.Combine( Engine.StartupPath, "EntityCollectionViewerOptions.json" );
+
+            if ( !File.Exists( fileName ) )
+            {
+                return new EntityCollectionViewerOptions();
+            }
+
+            string json = File.ReadAllText( fileName );
+
+            return EntityCollectionViewerOptions.Deserialize( JObject.Parse( json ) );
+        }
+
+        public void SaveOptions( EntityCollectionViewerOptions options )
+        {
+            string fileName = Path.Combine( Engine.StartupPath, "EntityCollectionViewerOptions.json" );
+
+            JToken jObject = EntityCollectionViewerOptions.Serialize( options );
+
+            string hash = jObject.ToString().SHA1();
+
+            if ( options.Hash == hash )
+            {
+                return;
+            }
+
+            options.Hash = hash;
+
+            File.WriteAllText( fileName, jObject.ToString() );
+        }
+
         private void ContextOpenContainer( object arg )
         {
             int[] containerSerials = SelectedItems.Where( e => e.Entity is Item item && item.Owner != 0 && !UOMath.IsMobile( item.Owner ) ).Select( e => ( (Item) e.Entity ).Owner )
@@ -266,7 +299,7 @@ namespace ClassicAssist.UI.ViewModels
 
             window.ShowDialog();
 
-            Data.Options.CurrentOptions.EntityCollectionViewerOptions = Options;
+            SaveOptions( Options );
         }
 
         private async Task ContextMoveToBank( object arg )
@@ -377,9 +410,7 @@ namespace ClassicAssist.UI.ViewModels
                     while ( true )
                     {
                         Item destStack = Collection.SelectEntity( i =>
-                            i.Count < 60000 && TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Stackable ) && !ignoreList.Contains( i.Serial ) &&
-                            !Options.CombineStacksIgnore.Any( e =>
-                                e.ID == i.ID && ( e.Hue == -1 || e.Hue == i.Hue ) && ( e.Cliloc == -1 || e.Cliloc == i.Properties?[0].Cliloc ) ) );
+                            i.Count < 60000 && TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Stackable ) && !ignoreList.Contains( i.Serial ) && !Excluded( i ) );
 
                         if ( destStack == null )
                         {
@@ -417,6 +448,12 @@ namespace ClassicAssist.UI.ViewModels
             }, Strings.Combine_stacks );
 
             return Task.CompletedTask;
+
+            bool Excluded( Entity item )
+            {
+                return Options.CombineStacksIgnore.Any( e =>
+                    ( e.ID == -1 || e.ID == item.ID ) && ( e.Hue == -1 || e.Hue == item.Hue ) && ( e.Cliloc == -1 || e.Cliloc == item.Properties?[0].Cliloc ) );
+            }
         }
 
         private void TargetContainer( object obj )
@@ -544,7 +581,7 @@ namespace ClassicAssist.UI.ViewModels
 
         ~EntityCollectionViewerViewModel()
         {
-            Data.Options.CurrentOptions.EntityCollectionViewerOptions = Options;
+            SaveOptions( Options );
             Collection.CollectionChanged -= OnCollectionChanged;
             ThreadQueue?.Dispose();
         }
@@ -553,8 +590,7 @@ namespace ClassicAssist.UI.ViewModels
         {
             EnqueueAction( async action =>
             {
-                List<Item> containers = Collection
-                    .Where( i => TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) && Options.OpenContainersIgnore.All( e => e.ID != i.ID ) ).ToList();
+                List<Item> containers = Collection.Where( i => TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) && !Excluded( i ) ).ToList();
 
                 do
                 {
@@ -574,6 +610,13 @@ namespace ClassicAssist.UI.ViewModels
             }, Strings.Open_All_Containers );
 
             return;
+
+            bool Excluded( Entity item )
+            {
+                return Options.OpenContainersIgnore.Any( e =>
+                    ( e.ID == -1 || e.ID == item.ID ) && ( e.Cliloc == -1 || item.Properties == null || item.Properties.Any( p => p.Cliloc == e.Cliloc ) ) &&
+                    ( e.Hue == -1 || item.Hue == e.Hue ) );
+            }
 
             async Task<List<Item>> OpenContainers( IEnumerable<Item> items, QueueAction queueAction )
             {
@@ -601,9 +644,8 @@ namespace ClassicAssist.UI.ViewModels
                     {
                         bool result = we.Lock.WaitOne( 1000 );
 
-                        IEnumerable<Item> newItem =
-                            Engine.Items.GetItem( arg.item.Serial ).Container?.Where( i => TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) ) ??
-                            Enumerable.Empty<Item>();
+                        IEnumerable<Item> newItem = Engine.Items.GetItem( arg.item.Serial ).Container?.Where( i =>
+                            TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) && !Excluded( i ) ) ?? Enumerable.Empty<Item>();
 
                         containerItem.AddRange( newItem );
 

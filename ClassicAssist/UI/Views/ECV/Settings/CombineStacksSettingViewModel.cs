@@ -14,15 +14,12 @@
 
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Assistant;
 using ClassicAssist.Shared.UI;
-using ClassicAssist.UO;
+using ClassicAssist.UI.Views.ECV.Settings.Models;
 using ClassicAssist.UO.Data;
-using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UI.Views.ECV.Settings
 {
@@ -30,10 +27,9 @@ namespace ClassicAssist.UI.Views.ECV.Settings
     {
         private readonly Dispatcher _dispatcher;
         private ICommand _addEntryCommand;
-        private ObservableCollection<CombineStacksIgnoreEntry> _items = new ObservableCollection<CombineStacksIgnoreEntry>();
+        private ObservableCollection<CombineStacksOpenContainersIgnoreEntry> _items = new ObservableCollection<CombineStacksOpenContainersIgnoreEntry>();
         private ICommand _removeEntryCommand;
-        private CombineStacksIgnoreEntry _selectedItem;
-        private ICommand _targetCommand;
+        private CombineStacksOpenContainersIgnoreEntry _selectedItem;
 
         public CombineStacksSettingViewModel()
         {
@@ -47,7 +43,7 @@ namespace ClassicAssist.UI.Views.ECV.Settings
 
         public ICommand AddEntryCommand => _addEntryCommand ?? ( _addEntryCommand = new RelayCommand( AddEntry ) );
 
-        public ObservableCollection<CombineStacksIgnoreEntry> Items
+        public ObservableCollection<CombineStacksOpenContainersIgnoreEntry> Items
         {
             get => _items;
             set => SetProperty( ref _items, value );
@@ -55,47 +51,15 @@ namespace ClassicAssist.UI.Views.ECV.Settings
 
         public ICommand RemoveEntryCommand => _removeEntryCommand ?? ( _removeEntryCommand = new RelayCommand( RemoveEntry, o => o != null ) );
 
-        public CombineStacksIgnoreEntry SelectedItem
+        public CombineStacksOpenContainersIgnoreEntry SelectedItem
         {
             get => _selectedItem;
             set => SetProperty( ref _selectedItem, value );
         }
 
-        public ICommand TargetCommand => _targetCommand ?? ( _targetCommand = new RelayCommandAsync( Target, o => Engine.Connected ) );
-
-        private async Task Target( object arg )
-        {
-            if ( !( arg is CombineStacksIgnoreEntry entry ) )
-            {
-                return;
-            }
-
-            ( TargetType _, TargetFlags _, int serial, int _, int _, int _, int itemId ) = await Commands.GetTargetInfoAsync();
-
-            if ( serial <= 0 )
-            {
-                return;
-            }
-
-            Item item = Engine.Items.GetItem( serial );
-
-            if ( item == null )
-            {
-                entry.ID = itemId;
-                entry.Hue = -1;
-                entry.Cliloc = -1;
-            }
-            else
-            {
-                entry.ID = item.ID;
-                entry.Hue = item.Hue;
-                entry.Cliloc = item.Properties?[0]?.Cliloc ?? -1;
-            }
-        }
-
         private void RemoveEntry( object obj )
         {
-            if ( !( obj is CombineStacksIgnoreEntry entry ) )
+            if ( !( obj is CombineStacksOpenContainersIgnoreEntry entry ) )
             {
                 return;
             }
@@ -105,7 +69,7 @@ namespace ClassicAssist.UI.Views.ECV.Settings
 
         private void AddEntry( object obj )
         {
-            _dispatcher.Invoke( () => Items.Add( new CombineStacksIgnoreEntry() ) );
+            _dispatcher.Invoke( () => Items.Add( new CombineStacksOpenContainersIgnoreEntry() ) );
         }
     }
 }

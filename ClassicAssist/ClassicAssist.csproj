@@ -123,6 +123,13 @@
     <Compile Update="UI\Views\Autoloot\ClilocSelectionWindow.xaml.cs">
       <DependentUpon>ClilocSelectionWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Update="UI\Views\ECV\Settings\Controls\EditTextBlocks\ClilocEditTextBlock.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Views\ECV\Settings\Controls\IgnoreSettingsListViewControl.xaml.cs">
+      <DependentUpon>IgnoreSettingsListViewControl.xaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\Views\HotkeysTabControl.xaml.cs">
       <DependentUpon>HotkeysTabControl.xaml</DependentUpon>
     </Compile>

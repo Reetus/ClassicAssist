@@ -1,0 +1,12 @@
+﻿<UserControl x:Name="userControl"
+             x:Class="ClassicAssist.UI.Views.ECV.Settings.Controls.EditTextBlocks.HueEditTextBlock"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+             mc:Ignorable="d"
+             d:DesignWidth="400">
+    <controls:EditTextBlock ShowIcon="True" Label="{Binding Label, ElementName=userControl}"
+                            Text="{Binding Hue, ElementName=userControl}" />
+</UserControl>

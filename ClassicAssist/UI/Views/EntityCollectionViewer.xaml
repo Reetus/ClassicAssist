@@ -114,9 +114,9 @@
             <Button Height="24" Style="{StaticResource ToolbarButtonStyle}" Command="{Binding TargetContainerCommand}">
                 <Image Source="{StaticResource CrosshairIcon}" />
             </Button>
-            <!--<Button Height="24" Style="{StaticResource ToolbarButtonStyle}" Command="{Binding ConfigureCommand}">
+            <Button Height="24" Style="{StaticResource ToolbarButtonStyle}" Command="{Binding ConfigureCommand}">
                 <Image Source="{StaticResource configureIcon}" />
-            </Button>-->
+            </Button>
         </ToolBar>
         <ScrollViewer Grid.Row="1"
                       Visibility="{Binding ShowFilter, Converter={StaticResource BooleanToVisibilityConverter}}"

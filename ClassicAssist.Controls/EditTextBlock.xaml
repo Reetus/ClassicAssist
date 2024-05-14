@@ -27,8 +27,12 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <TextBlock x:Name="textBlock" VerticalAlignment="Center"
-                   MouseDown="TextBlock_OnMouseDown" Background="Transparent"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="textBlock" VerticalAlignment="Center" Grid.Column="0"
+                   MouseDown="TextBlock_OnMouseDown" Background="Transparent" TextTrimming="CharacterEllipsis"
                    Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type UserControl}, Mode=FindAncestor}}">
             <TextBlock.Text>
                 <MultiBinding Converter="{StaticResource PriorityMultiValueConverter}">
@@ -37,11 +41,11 @@
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>
-        <TextBox x:Name="textBox"
+        <TextBox x:Name="textBox" Grid.Column="0"  Grid.ColumnSpan="2"
                  Text="{Binding Text, ElementName=root, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                  VerticalAlignment="Center" Visibility="Collapsed" KeyDown="TextBox_OnKeyDown"
                  LostFocus="TextBox_LostFocus" />
-        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" x:Name="buttonsPanel">
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" x:Name="buttonsPanel" Grid.Column="1">
             <Button Width="12" Height="12" BorderThickness="0" Background="Transparent" Margin="0" Padding="0"
                     Visibility="{Binding ShowIcon, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=root}"
                     Click="Button_OnClick" x:Name="pencilButton">

@@ -18,8 +18,9 @@
 #endregion
 
 using System.Collections.ObjectModel;
+using ClassicAssist.Misc;
 using ClassicAssist.Shared.UI;
-using ClassicAssist.UI.Views.ECV.Settings;
+using ClassicAssist.UI.Views.ECV.Settings.Models;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.Data.Misc
@@ -27,8 +28,8 @@ namespace ClassicAssist.Data.Misc
     public class EntityCollectionViewerOptions : SetPropertyNotifyChanged
     {
         private bool _alwaysOnTop;
-        private ObservableCollection<CombineStacksIgnoreEntry> _combineStacksIgnore;
-        private ObservableCollection<OpenContainersIgnoreEntry> _openContainersIgnore;
+        private ObservableCollection<CombineStacksOpenContainersIgnoreEntry> _combineStacksIgnore;
+        private ObservableCollection<CombineStacksOpenContainersIgnoreEntry> _openContainersIgnore;
         private bool _showChildItems;
 
         public bool AlwaysOnTop
@@ -37,13 +38,15 @@ namespace ClassicAssist.Data.Misc
             set => SetProperty( ref _alwaysOnTop, value );
         }
 
-        public ObservableCollection<CombineStacksIgnoreEntry> CombineStacksIgnore
+        public ObservableCollection<CombineStacksOpenContainersIgnoreEntry> CombineStacksIgnore
         {
             get => _combineStacksIgnore;
             set => SetProperty( ref _combineStacksIgnore, value );
         }
 
-        public ObservableCollection<OpenContainersIgnoreEntry> OpenContainersIgnore
+        public string Hash { get; set; }
+
+        public ObservableCollection<CombineStacksOpenContainersIgnoreEntry> OpenContainersIgnore
         {
             get => _openContainersIgnore;
             set => SetProperty( ref _openContainersIgnore, value );
@@ -55,53 +58,60 @@ namespace ClassicAssist.Data.Misc
             set => SetProperty( ref _showChildItems, value );
         }
 
-        public void Deserialize( JToken config )
+        public static EntityCollectionViewerOptions Deserialize( JObject config )
         {
+            EntityCollectionViewerOptions options = new EntityCollectionViewerOptions();
+
             if ( config == null )
             {
-                return;
+                return options;
             }
 
-            AlwaysOnTop = config["AlwaysOnTop"]?.ToObject<bool>() ?? false;
-            ShowChildItems = config["ShowChildItems"]?.ToObject<bool>() ?? false;
+            options.AlwaysOnTop = config["AlwaysOnTop"]?.ToObject<bool>() ?? false;
+            options.ShowChildItems = config["ShowChildItems"]?.ToObject<bool>() ?? false;
 
-            CombineStacksIgnore = new ObservableCollection<CombineStacksIgnoreEntry>();
+            options.CombineStacksIgnore = new ObservableCollection<CombineStacksOpenContainersIgnoreEntry>();
 
             if ( config["CombineStacksIgnore"] != null )
             {
                 foreach ( JToken entry in config["CombineStacksIgnore"] )
                 {
-                    CombineStacksIgnore.Add( new CombineStacksIgnoreEntry
+                    options.CombineStacksIgnore.Add( new CombineStacksOpenContainersIgnoreEntry
                     {
-                        ID = entry["ID"]?.ToObject<int>() ?? 0,
-                        Cliloc = entry["Cliloc"]?.ToObject<int>() ?? -1,
-                        Hue = entry["Hue"]?.ToObject<int>() ?? -1
+                        ID = entry["ID"]?.ToObject<int>() ?? 0, Cliloc = entry["Cliloc"]?.ToObject<int>() ?? -1, Hue = entry["Hue"]?.ToObject<int>() ?? -1
                     } );
                 }
             }
 
-            OpenContainersIgnore = new ObservableCollection<OpenContainersIgnoreEntry>();
+            options.OpenContainersIgnore = new ObservableCollection<CombineStacksOpenContainersIgnoreEntry>();
 
             if ( config["OpenContainersIgnore"] == null )
             {
-                return;
+                return options;
             }
 
             foreach ( JToken entry in config["OpenContainersIgnore"] )
             {
-                OpenContainersIgnore.Add( new OpenContainersIgnoreEntry { ID = entry["ID"]?.ToObject<int>() ?? 0 } );
+                options.OpenContainersIgnore.Add( new CombineStacksOpenContainersIgnoreEntry
+                {
+                    ID = entry["ID"]?.ToObject<int>() ?? 0, Cliloc = entry["Cliloc"]?.ToObject<int>() ?? -1, Hue = entry["Hue"]?.ToObject<int>() ?? -1
+                } );
             }
+
+            options.Hash = config.ToString().SHA1();
+
+            return options;
         }
 
-        public JToken Serialize()
+        public static JToken Serialize( EntityCollectionViewerOptions options )
         {
-            JObject config = new JObject { { "AlwaysOnTop", AlwaysOnTop }, { "ShowChildItems", ShowChildItems } };
+            JObject config = new JObject { { "AlwaysOnTop", options.AlwaysOnTop }, { "ShowChildItems", options.ShowChildItems } };
 
             JArray combineStacksIgnore = new JArray();
 
-            if ( CombineStacksIgnore != null )
+            if ( options.CombineStacksIgnore != null )
             {
-                foreach ( CombineStacksIgnoreEntry entry in CombineStacksIgnore )
+                foreach ( CombineStacksOpenContainersIgnoreEntry entry in options.CombineStacksIgnore )
                 {
                     combineStacksIgnore.Add( new JObject { { "ID", entry.ID }, { "Cliloc", entry.Cliloc }, { "Hue", entry.Hue } } );
                 }
@@ -111,14 +121,14 @@ namespace ClassicAssist.Data.Misc
 
             JArray openContainersIgnore = new JArray();
 
-            if ( OpenContainersIgnore == null )
+            if ( options.OpenContainersIgnore == null )
             {
                 return config;
             }
 
-            foreach ( OpenContainersIgnoreEntry entry in OpenContainersIgnore )
+            foreach ( CombineStacksOpenContainersIgnoreEntry entry in options.OpenContainersIgnore )
             {
-                openContainersIgnore.Add( new JObject { { "ID", entry.ID } } );
+                openContainersIgnore.Add( new JObject { { "ID", entry.ID }, { "Cliloc", entry.Cliloc }, { "Hue", entry.Hue } } );
             }
 
             config.Add( "OpenContainersIgnore", openContainersIgnore );

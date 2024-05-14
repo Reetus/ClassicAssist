@@ -1,6 +1,6 @@
 ﻿#region License
 
-// Copyright (C) $CURRENT_YEAR$ Reetus
+// Copyright (C) 2024 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,11 +14,11 @@
 
 using ClassicAssist.Shared.UI;
 
-namespace ClassicAssist.UI.Views.ECV.Settings
+namespace ClassicAssist.UI.Views.ECV.Settings.Models
 {
-    public class CombineStacksIgnoreEntry : SetPropertyNotifyChanged
+    public class CombineStacksOpenContainersIgnoreEntry : SetPropertyNotifyChanged
     {
-        private int _cliloc;
+        private int _cliloc = -1;
         private int _hue;
         private int _id;
 

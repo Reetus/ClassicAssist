@@ -627,7 +627,7 @@ namespace ClassicAssist.UI.ViewModels
             {
                 return Options.OpenContainersIgnore.Any( e =>
                     ( e.ID == -1 || e.ID == item.ID ) && ( e.Cliloc == -1 || item.Properties == null || item.Properties.Any( p => p.Cliloc == e.Cliloc ) ) &&
-                    ( e.Hue == -1 || item.Hue == e.Hue ) ) || !Options.OpenContainersOnlyKnownContainers || containerGumpIds == null || !containerGumpIds.ContainsKey( item.ID );
+                    ( e.Hue == -1 || item.Hue == e.Hue ) ) || Options.OpenContainersOnlyKnownContainers && containerGumpIds != null && !containerGumpIds.ContainsKey( item.ID );
             }
 
             async Task<List<Item>> OpenContainers( IEnumerable<Item> items, QueueAction queueAction )

@@ -14,6 +14,7 @@
     xmlns:data="clr-namespace:ClassicAssist.UO.Data"
     xmlns:models="clr-namespace:ClassicAssist.UI.Views.ECV.Filter.Models"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     x:Name="userControl" x:Class="ClassicAssist.UI.Views.ECV.Filter.EntityCollectionFilterControl"
     mc:Ignorable="d"
     Background="{DynamicResource ThemeBackgroundBrush}">
@@ -24,6 +25,7 @@
                     Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DebugToolBarStyle.xaml" />
                 <ResourceDictionary Source="Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
@@ -161,6 +163,7 @@
                                                         </ComboBox>
                                                         <TextBox
                                                             Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                            Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}"
                                                             MinWidth="40" Grid.Column="0">
                                                             <TextBox.Style>
                                                                 <Style TargetType="{x:Type TextBox}"
@@ -176,6 +179,29 @@
                                                                         <DataTrigger
                                                                             Binding="{Binding Constraint.AllowedValuesEnum}"
                                                                             Value="{x:Type agents:SkillBonusSkills}">
+                                                                            <Setter Property="Visibility"
+                                                                                Value="Visible" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger
+                                                                            Binding="{Binding Constraint.Name}"
+                                                                            Value="{x:Static resources:Strings.Name}">
+                                                                            <Setter Property="Visibility"
+                                                                                Value="Collapsed" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBox.Style>
+                                                        </TextBox>
+                                                        <TextBox Text="{Binding Additional}"
+                                                                 Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}">
+                                                            <TextBox.Style>
+                                                                <Style TargetType="{x:Type TextBox}"
+                                                                       BasedOn="{StaticResource {x:Type TextBox}}">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger
+                                                                            Binding="{Binding Constraint.Name}"
+                                                                            Value="{x:Static resources:Strings.Name}">
                                                                             <Setter Property="Visibility"
                                                                                 Value="Visible" />
                                                                         </DataTrigger>

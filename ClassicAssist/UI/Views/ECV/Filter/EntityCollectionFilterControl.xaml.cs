@@ -15,7 +15,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             new PropertyMetadata( default( ICommand ), PropertyChangedCallback ) );
 
         public static readonly DependencyProperty AssembliesProperty = DependencyProperty.Register( nameof( Assemblies ), typeof( ObservableCollection<Assembly> ),
-            typeof( EntityCollectionFilterControl ), new PropertyMetadata( null, PropertyChangedCallback ) );
+            typeof( EntityCollectionFilterControl ), new PropertyMetadata( new ObservableCollection<Assembly>(), PropertyChangedCallback ) );
 
         public EntityCollectionFilterControl()
         {

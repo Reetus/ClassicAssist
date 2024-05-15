@@ -23,7 +23,7 @@ using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.UI.Views.ECV.Settings
 {
-    public class CombineStacksSettingViewModel : SetPropertyNotifyChanged
+    public class CombineStacksSettingsViewModel : SetPropertyNotifyChanged
     {
         private readonly Dispatcher _dispatcher;
         private ICommand _addEntryCommand;
@@ -31,7 +31,7 @@ namespace ClassicAssist.UI.Views.ECV.Settings
         private ICommand _removeEntryCommand;
         private CombineStacksOpenContainersIgnoreEntry _selectedItem;
 
-        public CombineStacksSettingViewModel()
+        public CombineStacksSettingsViewModel()
         {
             _dispatcher = Dispatcher.CurrentDispatcher;
 

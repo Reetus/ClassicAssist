@@ -1,0 +1,65 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+    xmlns:reflection="clr-namespace:System.Reflection;assembly=mscorlib"
+    xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
+    xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+    xmlns:local="clr-namespace:ClassicAssist.UI.Views.ECV.Settings.Controls"
+    x:Class="ClassicAssist.UI.Views.ECV.Settings.Controls.AdditionalAssembliesControl"
+    mc:Ignorable="d"
+    d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../../../Resources/DarkTheme.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DebugToolBarStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ToolBar Grid.Row="0" Margin="0,0,0,5">
+            <ToolBar.Resources>
+                <Style TargetType="{x:Type controls:ImageButton}"
+                       BasedOn="{StaticResource {x:Type controls:ImageButton}}">
+                    <Setter Property="Margin" Value="0,0,5,0" />
+                </Style>
+            </ToolBar.Resources>
+            <ToolBar.Style>
+                <StaticResource ResourceKey="ToolBarStyle1" />
+            </ToolBar.Style>
+            <controls:ImageButton ImageSource="{StaticResource PlusIcon}"
+                                  Command="{Binding LoadCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AdditionalAssembliesControl}}}" />
+            <controls:ImageButton ImageSource="{StaticResource RemoveIcon}"
+                                  Command="{Binding RemoveCommand, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AdditionalAssembliesControl}}}"
+                                  CommandParameter="{Binding SelectedItem, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AdditionalAssembliesControl}}}" />
+        </ToolBar>
+
+        <ListView x:Name="listView"
+                  ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AdditionalAssembliesControl}}}"
+                  SelectedItem="{Binding SelectedItem, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AdditionalAssembliesControl}}}"
+                  MinHeight="50" Grid.Row="1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="{x:Static resources:Strings.Name}"
+                                    Width="{Binding ActualWidth, ConverterParameter=20, Converter={StaticResource CellWidthValueConverter}, ElementName=listView, Mode=OneWay}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type reflection:Assembly}">
+                                <TextBlock Text="{Binding}" ToolTip="{Binding Location, Mode=OneWay}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>

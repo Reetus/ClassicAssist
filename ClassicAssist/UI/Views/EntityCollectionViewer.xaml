@@ -123,6 +123,7 @@
                       VerticalScrollBarVisibility="Auto">
             <filter:EntityCollectionFilterControl MaxHeight="400"
                                                   Command="{Binding DataContext.ApplyFiltersCommand, ElementName=window}"
+                                                  Assemblies="{Binding DataContext.Options.Assemblies, ElementName=window}"
                                                   PresentationTraceSources.TraceLevel="High" />
         </ScrollViewer>
         <Grid Grid.Row="2"

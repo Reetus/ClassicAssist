@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using Assistant;
@@ -37,13 +38,13 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 {
     public class EntityCollectionFilterViewModel : SetPropertyNotifyChanged
     {
-        private readonly string _propertiesFileCustom =
-            Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data", "Properties.Custom.json" );
+        private readonly string _propertiesFileCustom = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data", "Properties.Custom.json" );
 
         private ICommand _addCommand;
         private ICommand _addProfileCommand;
 
         private ICommand _applyCommand;
+        private Assembly[] _assemblies;
         private ICommand _changeProfileCommand;
 
         private ObservableCollection<PropertyEntry> _constraints = new ObservableCollection<PropertyEntry>();
@@ -52,8 +53,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 
         private ICommand _newGroupCommand;
 
-        private ObservableCollection<EntityCollectionFilterEntry> _profiles =
-            new ObservableCollection<EntityCollectionFilterEntry>();
+        private ObservableCollection<EntityCollectionFilterEntry> _profiles = new ObservableCollection<EntityCollectionFilterEntry>();
 
         private ICommand _removeCommand;
         private ICommand _removeGroupCommand;
@@ -73,8 +73,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             }
 #endif
 
-            string propertiesFile = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data",
-                "Properties.json" );
+            string propertiesFile = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data", "Properties.json" );
 
             if ( !File.Exists( propertiesFile ) )
             {
@@ -111,8 +110,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                 {
                     Layer layer = TileData.GetLayer( item.ID );
 
-                    return entry.Operator == AutolootOperator.NotPresent ||
-                           AutolootHelpers.Operation( entry.Operator, entry.Value, (int) layer );
+                    return entry.Operator == AutolootOperator.NotPresent || AutolootHelpers.Operation( entry.Operator, entry.Value, (int) layer );
                 },
                 AllowedValuesEnum = typeof( Layer )
             } );
@@ -130,24 +128,20 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                         return false;
                     }
 
-                    IEnumerable<Property> properties =
-                        item.Properties.Where( e => e != null && clilocs.Contains( e.Cliloc ) ).ToList();
+                    IEnumerable<Property> properties = item.Properties.Where( e => e != null && clilocs.Contains( e.Cliloc ) ).ToList();
 
                     if ( entry.Operator != AutolootOperator.NotPresent )
                     {
                         return properties
                             .Where( property => property.Arguments != null && property.Arguments.Length >= 1 &&
-                                                ( property.Arguments[0].Equals( entry.Additional,
-                                                      StringComparison.CurrentCultureIgnoreCase ) ||
+                                                ( property.Arguments[0].Equals( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) ||
                                                   string.IsNullOrEmpty( entry.Additional ) ) ).Any( property =>
-                                AutolootHelpers.Operation( entry.Operator, Convert.ToInt32( property.Arguments[1] ),
-                                    entry.Value ) );
+                                AutolootHelpers.Operation( entry.Operator, Convert.ToInt32( property.Arguments[1] ), entry.Value ) );
                     }
 
                     Property match = properties.FirstOrDefault( property =>
-                        property.Arguments != null && property.Arguments.Length >= 1 && ( property.Arguments[0]
-                                .Equals( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) ||
-                            string.IsNullOrEmpty( entry.Additional ) ) );
+                        property.Arguments != null && property.Arguments.Length >= 1 &&
+                        ( property.Arguments[0].Equals( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) || string.IsNullOrEmpty( entry.Additional ) ) );
 
                     return match == null;
                 },
@@ -176,14 +170,21 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 
         public ICommand AddCommand => _addCommand ?? ( _addCommand = new RelayCommand( AddItem, o => true ) );
 
-        public ICommand AddProfileCommand =>
-            _addProfileCommand ?? ( _addProfileCommand = new RelayCommand( AddProfile, o => true ) );
+        public ICommand AddProfileCommand => _addProfileCommand ?? ( _addProfileCommand = new RelayCommand( AddProfile, o => true ) );
 
         public ICommand ApplyCommand => _applyCommand ?? ( _applyCommand = new RelayCommand( Apply, o => true ) );
 
-        public ICommand ChangeProfileCommand =>
-            _changeProfileCommand ?? ( _changeProfileCommand =
-                new RelayCommand( ChangeProfile, o => o is EntityCollectionFilterEntry ) );
+        public Assembly[] Assemblies
+        {
+            get => _assemblies;
+            set
+            {
+                SetProperty( ref _assemblies, value );
+                LoadAssemblies( value );
+            }
+        }
+
+        public ICommand ChangeProfileCommand => _changeProfileCommand ?? ( _changeProfileCommand = new RelayCommand( ChangeProfile, o => o is EntityCollectionFilterEntry ) );
 
         public ICommand Command { get; set; }
 
@@ -199,8 +200,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             set => SetProperty( ref _item, value );
         }
 
-        public ICommand NewGroupCommand =>
-            _newGroupCommand ?? ( _newGroupCommand = new RelayCommand( NewGroup, o => true ) );
+        public ICommand NewGroupCommand => _newGroupCommand ?? ( _newGroupCommand = new RelayCommand( NewGroup, o => true ) );
 
         public ObservableCollection<EntityCollectionFilterEntry> Profiles
         {
@@ -208,21 +208,15 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             set => SetProperty( ref _profiles, value );
         }
 
-        public ICommand RemoveCommand =>
-            _removeCommand ?? ( _removeCommand =
-                new RelayCommand( Remove, o => o == null || ( (GroupItem) o ).Group.Count > 1 ) );
+        public ICommand RemoveCommand => _removeCommand ?? ( _removeCommand = new RelayCommand( Remove, o => o == null || ( (GroupItem) o ).Group.Count > 1 ) );
 
-        public ICommand RemoveGroupCommand =>
-            _removeGroupCommand ??
-            ( _removeGroupCommand = new RelayCommand( RemoveGroup, o => Item.Groups.Count > 1 ) );
+        public ICommand RemoveGroupCommand => _removeGroupCommand ?? ( _removeGroupCommand = new RelayCommand( RemoveGroup, o => Item.Groups.Count > 1 ) );
 
-        public ICommand RemoveProfileCommand =>
-            _removeProfileCommand ?? ( _removeProfileCommand = new RelayCommand( RemoveProfile, o => true ) );
+        public ICommand RemoveProfileCommand => _removeProfileCommand ?? ( _removeProfileCommand = new RelayCommand( RemoveProfile, o => true ) );
 
         public ICommand ResetCommand => _resetCommand ?? ( _resetCommand = new RelayCommand( Reset, o => true ) );
 
-        public ICommand SaveProfilesCommand =>
-            _saveProfilesCommand ?? ( _saveProfilesCommand = new RelayCommand( o => SaveFilterProfiles(), o => true ) );
+        public ICommand SaveProfilesCommand => _saveProfilesCommand ?? ( _saveProfilesCommand = new RelayCommand( o => SaveFilterProfiles(), o => true ) );
 
         public EntityCollectionFilterItem SelectedItem
         {
@@ -234,6 +228,26 @@ namespace ClassicAssist.UI.Views.ECV.Filter
         {
             get => _selectedProfile;
             set => SetProperty( ref _selectedProfile, value );
+        }
+
+        private void LoadAssemblies( IEnumerable<Assembly> assemblies )
+        {
+            foreach ( Assembly asm in assemblies )
+            {
+                IEnumerable<MethodInfo> initializeMethods = asm.GetTypes()
+                    .Where( e => e.IsClass && e.IsPublic && e.GetMethod( "Initialize", BindingFlags.Public | BindingFlags.Static, null,
+                        new[] { typeof( ObservableCollection<PropertyEntry> ) }, null ) != null ).Select( e =>
+                        e.GetMethod( "Initialize", BindingFlags.Public | BindingFlags.Static, null, new[] { typeof( ObservableCollection<PropertyEntry> ) }, null ) );
+
+                foreach ( MethodInfo initializeMethod in initializeMethods )
+                {
+                    // ReSharper disable once CoVariantArrayConversion
+                    initializeMethod?.Invoke( null, new[] { Constraints } );
+                }
+
+                Profiles.Clear();
+                LoadFilterProfiles();
+            }
         }
 
         private void ChangeProfile( object obj )
@@ -269,10 +283,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                 {
                     new EntityCollectionFilterGroup
                     {
-                        Items = new ObservableCollection<EntityCollectionFilterItem>
-                        {
-                            new EntityCollectionFilterItem { Constraint = Constraints.FirstOrDefault() }
-                        }
+                        Items = new ObservableCollection<EntityCollectionFilterItem> { new EntityCollectionFilterItem { Constraint = Constraints.FirstOrDefault() } }
                     }
                 }
             };
@@ -288,8 +299,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             try
             {
                 string json = File.ReadAllText( file );
-                JObject obj = (JObject) JsonConvert.DeserializeObject( json ) ??
-                              throw new ArgumentOutOfRangeException( nameof( json ) );
+                JObject obj = (JObject) JsonConvert.DeserializeObject( json ) ?? throw new ArgumentOutOfRangeException( nameof( json ) );
 
                 Guid? selectedProfile = obj["LastProfileID"]?.ToObject<Guid>();
 
@@ -308,10 +318,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                         {
                             foreach ( JToken groupObj in profileObj["Groups"] )
                             {
-                                EntityCollectionFilterGroup group = new EntityCollectionFilterGroup
-                                {
-                                    Operation = groupObj["Operation"]?.ToObject<BooleanOperation>() ?? 0
-                                };
+                                EntityCollectionFilterGroup group = new EntityCollectionFilterGroup { Operation = groupObj["Operation"]?.ToObject<BooleanOperation>() ?? 0 };
 
                                 if ( groupObj["Items"] != null )
                                 {
@@ -320,9 +327,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                                         EntityCollectionFilterItem item = new EntityCollectionFilterItem
                                         {
                                             Constraint =
-                                                Constraints.FirstOrDefault( e =>
-                                                    e.Name == itemObj["Constraint"]?["Name"]
-                                                        ?.ToObject<string>() ) ?? Constraints.FirstOrDefault(),
+                                                Constraints.FirstOrDefault( e => e.Name == itemObj["Constraint"]?["Name"]?.ToObject<string>() ) ?? Constraints.FirstOrDefault(),
                                             Operator = itemObj["Operator"]?.ToObject<AutolootOperator>() ?? 0,
                                             Value = itemObj["Value"]?.ToObject<int>() ?? 0,
                                             Additional = itemObj["Additional"]?.ToObject<string>()
@@ -379,12 +384,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 
                     foreach ( EntityCollectionFilterItem item in group.Items )
                     {
-                        JObject itemObj = new JObject
-                        {
-                            { "Operator", (int) item.Operator },
-                            { "Value", item.Value },
-                            { "Additional", item.Additional }
-                        };
+                        JObject itemObj = new JObject { { "Operator", (int) item.Operator }, { "Value", item.Value }, { "Additional", item.Additional } };
 
                         JObject constraint = new JObject { { "Name", item.Constraint.Name } };
 
@@ -417,10 +417,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                 {
                     new EntityCollectionFilterGroup
                     {
-                        Items = new ObservableCollection<EntityCollectionFilterItem>
-                        {
-                            new EntityCollectionFilterItem { Constraint = Constraints.FirstOrDefault() }
-                        }
+                        Items = new ObservableCollection<EntityCollectionFilterItem> { new EntityCollectionFilterItem { Constraint = Constraints.FirstOrDefault() } }
                     }
                 }
             };
@@ -456,10 +453,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             Item.Groups.Insert( Item.Groups.IndexOf( group ) + 1,
                 new EntityCollectionFilterGroup
                 {
-                    Items = new ObservableCollection<EntityCollectionFilterItem>
-                    {
-                        new EntityCollectionFilterItem { Constraint = Constraints.First() }
-                    }
+                    Items = new ObservableCollection<EntityCollectionFilterItem> { new EntityCollectionFilterItem { Constraint = Constraints.First() } }
                 } );
         }
 

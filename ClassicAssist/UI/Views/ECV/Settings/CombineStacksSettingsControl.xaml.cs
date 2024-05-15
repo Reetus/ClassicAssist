@@ -42,7 +42,7 @@ namespace ClassicAssist.UI.Views.ECV.Settings
                 return;
             }
 
-            if ( control.DataContext is CombineStacksSettingViewModel vm )
+            if ( control.DataContext is CombineStacksSettingsViewModel vm )
             {
                 vm.Items = (ObservableCollection<CombineStacksOpenContainersIgnoreEntry>) e.NewValue;
             }

@@ -1,23 +1,24 @@
 ﻿#region License
 
 // Copyright (C) 2020 Reetus
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #endregion
 
 using System.Collections.ObjectModel;
+using System.Reflection;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Views.ECV.Settings.Models;
@@ -28,6 +29,7 @@ namespace ClassicAssist.Data.Misc
     public class EntityCollectionViewerOptions : SetPropertyNotifyChanged
     {
         private bool _alwaysOnTop;
+        private ObservableCollection<Assembly> _assemblies = new ObservableCollection<Assembly>();
         private ObservableCollection<CombineStacksOpenContainersIgnoreEntry> _combineStacksIgnore;
         private ObservableCollection<CombineStacksOpenContainersIgnoreEntry> _openContainersIgnore;
         private bool _showChildItems;
@@ -36,6 +38,12 @@ namespace ClassicAssist.Data.Misc
         {
             get => _alwaysOnTop;
             set => SetProperty( ref _alwaysOnTop, value );
+        }
+
+        public ObservableCollection<Assembly> Assemblies
+        {
+            get => _assemblies;
+            set => SetProperty( ref _assemblies, value );
         }
 
         public ObservableCollection<CombineStacksOpenContainersIgnoreEntry> CombineStacksIgnore
@@ -100,6 +108,27 @@ namespace ClassicAssist.Data.Misc
 
             options.Hash = config.ToString().SHA1();
 
+            options.Assemblies = new ObservableCollection<Assembly>();
+
+            if ( config["Assemblies"] == null )
+            {
+                return options;
+            }
+
+            foreach ( JToken assemblyName in config["Assemblies"] )
+            {
+                try
+                {
+                    Assembly assembly = Assembly.LoadFile( assemblyName.ToObject<string>() );
+
+                    options.Assemblies.Add( assembly );
+                }
+                catch
+                {
+                    // We tried
+                }
+            }
+
             return options;
         }
 
@@ -132,6 +161,20 @@ namespace ClassicAssist.Data.Misc
             }
 
             config.Add( "OpenContainersIgnore", openContainersIgnore );
+
+            if ( options.Assemblies == null || options.Assemblies.Count == 0 )
+            {
+                return config;
+            }
+
+            JArray assemblies = new JArray();
+
+            foreach ( Assembly assembly in options.Assemblies )
+            {
+                assemblies.Add( assembly.Location );
+            }
+
+            config.Add( "Assemblies", assemblies );
 
             return config;
         }

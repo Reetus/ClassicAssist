@@ -18,17 +18,17 @@
                 <ResourceDictionary
                     Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DebugToolBarStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <local:CombineStacksSettingViewModel x:Key="DummyData">
-                <local:CombineStacksSettingViewModel.Items>
+            <local:CombineStacksSettingsViewModel x:Key="DummyData">
+                <local:CombineStacksSettingsViewModel.Items>
                     <models:CombineStacksOpenContainersIgnoreEntry />
                     <models:CombineStacksOpenContainersIgnoreEntry />
                     <models:CombineStacksOpenContainersIgnoreEntry Hue="-1" />
-                </local:CombineStacksSettingViewModel.Items>
-            </local:CombineStacksSettingViewModel>
+                </local:CombineStacksSettingsViewModel.Items>
+            </local:CombineStacksSettingsViewModel>
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
-        <local:CombineStacksSettingViewModel />
+        <local:CombineStacksSettingsViewModel />
     </UserControl.DataContext>
     <GroupBox Header="{x:Static resources:Strings.Ignore_List}" Padding="5">
         <Grid d:DataContext="{StaticResource DummyData}">

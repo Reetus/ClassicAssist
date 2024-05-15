@@ -31,6 +31,7 @@ namespace ClassicAssist.Data.Misc
         private bool _alwaysOnTop;
         private ObservableCollection<Assembly> _assemblies = new ObservableCollection<Assembly>();
         private ObservableCollection<CombineStacksOpenContainersIgnoreEntry> _combineStacksIgnore;
+        private bool _openContainersOnlyKnownContainers;
         private ObservableCollection<CombineStacksOpenContainersIgnoreEntry> _openContainersIgnore;
         private bool _showChildItems;
 
@@ -50,6 +51,12 @@ namespace ClassicAssist.Data.Misc
         {
             get => _combineStacksIgnore;
             set => SetProperty( ref _combineStacksIgnore, value );
+        }
+
+        public bool OpenContainersOnlyKnownContainers
+        {
+            get => _openContainersOnlyKnownContainers;
+            set => SetProperty( ref _openContainersOnlyKnownContainers, value );
         }
 
         public string Hash { get; set; }
@@ -77,6 +84,7 @@ namespace ClassicAssist.Data.Misc
 
             options.AlwaysOnTop = config["AlwaysOnTop"]?.ToObject<bool>() ?? false;
             options.ShowChildItems = config["ShowChildItems"]?.ToObject<bool>() ?? false;
+            options.OpenContainersOnlyKnownContainers = config["OpenContainersOnlyKnownContainers"]?.ToObject<bool>() ?? false;
 
             options.CombineStacksIgnore = new ObservableCollection<CombineStacksOpenContainersIgnoreEntry>();
 
@@ -147,6 +155,8 @@ namespace ClassicAssist.Data.Misc
 
                 config.Add( "CombineStacksIgnore", combineStacksIgnore );
             }
+
+            config["OpenContainersOnlyKnownContainers"] = options.OpenContainersOnlyKnownContainers;
 
             JArray openContainersIgnore = new JArray();
 

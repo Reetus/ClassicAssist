@@ -34,6 +34,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <ToolBar Grid.Row="0" Margin="0,0,0,5">
@@ -50,7 +51,7 @@
                 <controls:ImageButton ImageSource="{StaticResource RemoveIcon}" Command="{Binding RemoveEntryCommand}"
                                       CommandParameter="{Binding SelectedItem}" />
             </ToolBar>
-            <settingsControls:IgnoreSettingsControl Grid.Row="1" />
+            <settingsControls:IgnoreSettingsControl Grid.Row="2" />
         </Grid>
     </GroupBox>
 </UserControl>

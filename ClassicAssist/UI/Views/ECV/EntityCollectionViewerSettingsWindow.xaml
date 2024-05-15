@@ -34,8 +34,17 @@
                     Items="{Binding DataContext.Options.CombineStacksIgnore, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}" />
             </GroupBox>
             <GroupBox Header="{x:Static resources:Strings.Open_All_Containers}" Margin="10,0,10,10" Padding="10">
-                <settings:OpenContainersSettingsControl
-                    Items="{Binding DataContext.Options.OpenContainersIgnore, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}" />
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <CheckBox Grid.Row="0"
+                              IsChecked="{Binding DataContext.Options.OpenContainersOnlyKnownContainers, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}"
+                              Content="{x:Static resources:Strings.Only_known_containers}" Margin="0,0,0,5" />
+                    <settings:OpenContainersSettingsControl Grid.Row="1"
+                                                            Items="{Binding DataContext.Options.OpenContainersIgnore, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}" />
+                </Grid>
             </GroupBox>
             <GroupBox Header="{x:Static resources:Strings.Additional_Assemblies}" Margin="10,0,10,10" Padding="10">
                 <controls:AdditionalAssembliesControl

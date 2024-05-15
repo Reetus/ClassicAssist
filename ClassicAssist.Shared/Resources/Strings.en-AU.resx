@@ -2031,4 +2031,7 @@ Are you sure you wish to continue?</value>
   <data name="Opening container {0} / {1}..." xml:space="preserve">
     <value>Opening container {0} / {1}...</value>
   </data>
+  <data name="Only known containers" xml:space="preserve">
+    <value>Only known containers</value>
+  </data>
 </root>

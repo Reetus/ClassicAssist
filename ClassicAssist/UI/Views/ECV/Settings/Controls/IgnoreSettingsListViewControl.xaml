@@ -25,7 +25,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <ListView ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" MinHeight="150"
-              MaxHeight="250">
+              MaxHeight="200">
         <ListView.View>
             <GridView>
                 <GridViewColumn Header="{x:Static resources:Strings.ID}" Width="180" x:Name="IDColumn">

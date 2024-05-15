@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using System.Reflection;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ClassicAssist.UI.Views.ECV.Filter
@@ -8,15 +11,23 @@ namespace ClassicAssist.UI.Views.ECV.Filter
     /// </summary>
     public partial class EntityCollectionFilterControl
     {
-        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register( nameof( Command ),
-            typeof( ICommand ), typeof( EntityCollectionFilterControl ),
+        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register( nameof( Command ), typeof( ICommand ), typeof( EntityCollectionFilterControl ),
             new PropertyMetadata( default( ICommand ), PropertyChangedCallback ) );
+
+        public static readonly DependencyProperty AssembliesProperty = DependencyProperty.Register( nameof( Assemblies ), typeof( ObservableCollection<Assembly> ),
+            typeof( EntityCollectionFilterControl ), new PropertyMetadata( null, PropertyChangedCallback ) );
 
         public EntityCollectionFilterControl()
         {
             InitializeComponent();
 
             IsVisibleChanged += OnIsVisibleChanged;
+        }
+
+        public ObservableCollection<Assembly> Assemblies
+        {
+            get => (ObservableCollection<Assembly>) GetValue( AssembliesProperty );
+            set => SetValue( AssembliesProperty, value );
         }
 
         public ICommand Command
@@ -40,9 +51,19 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                 return;
             }
 
-            if ( control.DataContext is EntityCollectionFilterViewModel viewModel )
+            if ( !( control.DataContext is EntityCollectionFilterViewModel viewModel ) )
             {
-                viewModel.Command = (ICommand) e.NewValue;
+                return;
+            }
+
+            switch ( e.NewValue )
+            {
+                case ICommand command:
+                    viewModel.Command = command;
+                    break;
+                case ObservableCollection<Assembly> assemblies:
+                    viewModel.Assemblies = assemblies.ToArray();
+                    break;
             }
         }
     }

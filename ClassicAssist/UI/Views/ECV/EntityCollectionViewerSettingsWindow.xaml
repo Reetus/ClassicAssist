@@ -8,6 +8,7 @@
         xmlns:ecv="clr-namespace:ClassicAssist.UI.Views.ECV"
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+        xmlns:controls="clr-namespace:ClassicAssist.UI.Views.ECV.Settings.Controls"
         mc:Ignorable="d"
         Title="{x:Static resources:Strings.Entity_Collection_Viewer}"
         Background="{DynamicResource ThemeWindowBackgroundBrush}"
@@ -35,6 +36,10 @@
             <GroupBox Header="{x:Static resources:Strings.Open_All_Containers}" Margin="10,0,10,10" Padding="10">
                 <settings:OpenContainersSettingsControl
                     Items="{Binding DataContext.Options.OpenContainersIgnore, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}" />
+            </GroupBox>
+            <GroupBox Header="{x:Static resources:Strings.Additional_Assemblies}" Margin="10,0,10,10" Padding="10">
+                <controls:AdditionalAssembliesControl
+                    Items="{Binding DataContext.Options.Assemblies, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}" />
             </GroupBox>
         </StackPanel>
         <StackPanel Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,10,10" Orientation="Horizontal">

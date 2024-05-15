@@ -6,8 +6,8 @@
     xmlns:local="clr-namespace:ClassicAssist.UI.Views.ECV.Settings"
     xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
     xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
-    xmlns:ValueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
-    xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+    xmlns:settingsControls="clr-namespace:ClassicAssist.UI.Views.ECV.Settings.Controls"
+    xmlns:models="clr-namespace:ClassicAssist.UI.Views.ECV.Settings.Models"
     x:Class="ClassicAssist.UI.Views.ECV.Settings.OpenContainersSettingsControl"
     mc:Ignorable="d"
     Background="Transparent">
@@ -18,13 +18,11 @@
                 <ResourceDictionary
                     Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DebugToolBarStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <valueConverters:IntToHexStringValueConverter x:Key="IntToHexStringValueConverter" />
-            <ValueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
             <local:OpenContainersSettingsViewModel x:Key="DummyData">
                 <local:OpenContainersSettingsViewModel.Items>
-                    <local:OpenContainersIgnoreEntry/>
-                    <local:OpenContainersIgnoreEntry/>
-                    <local:OpenContainersIgnoreEntry/>
+                    <models:CombineStacksOpenContainersIgnoreEntry />
+                    <models:CombineStacksOpenContainersIgnoreEntry />
+                    <models:CombineStacksOpenContainersIgnoreEntry Hue="-1" />
                 </local:OpenContainersSettingsViewModel.Items>
             </local:OpenContainersSettingsViewModel>
         </ResourceDictionary>
@@ -52,33 +50,7 @@
                 <controls:ImageButton ImageSource="{StaticResource RemoveIcon}" Command="{Binding RemoveEntryCommand}"
                                       CommandParameter="{Binding SelectedItem}" />
             </ToolBar>
-            <ListView Grid.Row="1" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" MinHeight="150"
-                      MaxHeight="250">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="{x:Static resources:Strings.ID}" Width="115" x:Name="IDColumn">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate DataType="{x:Type local:CombineStacksIgnoreEntry}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <controls:EditTextBlock
-                                            Text="{Binding ID, Converter={StaticResource IntToHexStringValueConverter}}"
-                                            ShowIcon="True"
-                                            Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, Mode=OneWay, ElementName=IDColumn}">
-                                            <controls:EditTextBlock.Buttons>
-                                                <controls:ImageButton ImageSource="{StaticResource CrosshairIcon}"
-                                                                      Command="{Binding DataContext.TargetCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:OpenContainersSettingsControl}}}"
-                                                                      CommandParameter="{Binding}" />
-                                            </controls:EditTextBlock.Buttons>
-                                        </controls:EditTextBlock>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="{x:Static resources:Strings.Name}" Width="250" x:Name="NameColumn"
-                                        DisplayMemberBinding="{Binding Name}" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
+            <settingsControls:IgnoreSettingsControl Grid.Row="1" />
         </Grid>
     </GroupBox>
 </UserControl>

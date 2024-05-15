@@ -1,0 +1,41 @@
+﻿<UserControl x:Name="userControl"
+             x:Class="ClassicAssist.UI.Views.ECV.Settings.Controls.EditTextBlocks.GraphicEditTextBlock"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+             xmlns:settingsValueConverters="clr-namespace:ClassicAssist.UI.Views.ECV.Settings.ValueConverters"
+             xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+             xmlns:editTextBlocks="clr-namespace:ClassicAssist.UI.Views.ECV.Settings.Controls.EditTextBlocks"
+             mc:Ignorable="d"
+             d:DesignWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../../../../Resources/DarkTheme.xaml" />
+                <ResourceDictionary Source="../../../../Debug/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <settingsValueConverters:GraphicValueConverter x:Key="GraphicValueConverter" />
+            <valueConverters:IntToHexStringValueConverter x:Key="IntToHexStringValueConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <controls:EditTextBlock
+        Text="{Binding ID, ElementName=userControl, Converter={StaticResource IntToHexStringValueConverter}}"
+        ToolTip="{Binding Label, RelativeSource={RelativeSource Self}}"
+        ShowIcon="True" CanEdit="True">
+        <controls:EditTextBlock.Label>
+            <MultiBinding StringFormat="{}{0} {1}">
+                <Binding Path="Label" ElementName="userControl" />
+                <Binding Path="ID" ElementName="userControl" Converter="{StaticResource GraphicValueConverter}" />
+            </MultiBinding>
+        </controls:EditTextBlock.Label>
+        <controls:EditTextBlock.Buttons>
+            <StackPanel Orientation="Horizontal">
+                <controls:ImageButton ImageSource="{StaticResource CrosshairIcon}" BorderThickness="0"
+                                      HorizontalAlignment="Right" Padding="0" Margin="2,0,0,0"
+                                      Command="{Binding TargetCommand, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type editTextBlocks:GraphicEditTextBlock}}}" />
+            </StackPanel>
+        </controls:EditTextBlock.Buttons>
+    </controls:EditTextBlock>
+</UserControl>

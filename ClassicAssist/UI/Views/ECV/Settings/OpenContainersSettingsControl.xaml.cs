@@ -10,6 +10,7 @@
 
 using System.Collections.ObjectModel;
 using System.Windows;
+using ClassicAssist.UI.Views.ECV.Settings.Models;
 
 namespace ClassicAssist.UI.Views.ECV.Settings
 {
@@ -18,17 +19,18 @@ namespace ClassicAssist.UI.Views.ECV.Settings
     /// </summary>
     public partial class OpenContainersSettingsControl
     {
-        public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register( nameof( Items ), typeof( ObservableCollection<OpenContainersIgnoreEntry> ),
-            typeof( OpenContainersSettingsControl ), new PropertyMetadata( default( ObservableCollection<OpenContainersIgnoreEntry> ), PropertyChangedCallback ) );
+        public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register( nameof( Items ),
+            typeof( ObservableCollection<CombineStacksOpenContainersIgnoreEntry> ), typeof( OpenContainersSettingsControl ),
+            new PropertyMetadata( default( ObservableCollection<CombineStacksOpenContainersIgnoreEntry> ), PropertyChangedCallback ) );
 
         public OpenContainersSettingsControl()
         {
             InitializeComponent();
         }
 
-        public ObservableCollection<OpenContainersIgnoreEntry> Items
+        public ObservableCollection<CombineStacksOpenContainersIgnoreEntry> Items
         {
-            get => (ObservableCollection<OpenContainersIgnoreEntry>) GetValue( ItemsProperty );
+            get => (ObservableCollection<CombineStacksOpenContainersIgnoreEntry>) GetValue( ItemsProperty );
             set => SetValue( ItemsProperty, value );
         }
 
@@ -41,7 +43,7 @@ namespace ClassicAssist.UI.Views.ECV.Settings
 
             if ( control.DataContext is OpenContainersSettingsViewModel vm )
             {
-                vm.Items = (ObservableCollection<OpenContainersIgnoreEntry>) e.NewValue;
+                vm.Items = (ObservableCollection<CombineStacksOpenContainersIgnoreEntry>) e.NewValue;
             }
         }
     }

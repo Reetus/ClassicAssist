@@ -11,6 +11,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using ClassicAssist.UI.Views.ECV.Settings.Models;
 
 namespace ClassicAssist.UI.Views.ECV.Settings
 {
@@ -19,17 +20,18 @@ namespace ClassicAssist.UI.Views.ECV.Settings
     /// </summary>
     public partial class CombineStacksSettingsControl : UserControl
     {
-        public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register( nameof( Items ), typeof( ObservableCollection<CombineStacksIgnoreEntry> ),
-            typeof( CombineStacksSettingsControl ), new PropertyMetadata( default( ObservableCollection<CombineStacksIgnoreEntry> ), PropertyChangedCallback ) );
+        public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register( nameof( Items ),
+            typeof( ObservableCollection<CombineStacksOpenContainersIgnoreEntry> ), typeof( CombineStacksSettingsControl ),
+            new PropertyMetadata( default( ObservableCollection<CombineStacksOpenContainersIgnoreEntry> ), PropertyChangedCallback ) );
 
         public CombineStacksSettingsControl()
         {
             InitializeComponent();
         }
 
-        public ObservableCollection<CombineStacksIgnoreEntry> Items
+        public ObservableCollection<CombineStacksOpenContainersIgnoreEntry> Items
         {
-            get => (ObservableCollection<CombineStacksIgnoreEntry>) GetValue( ItemsProperty );
+            get => (ObservableCollection<CombineStacksOpenContainersIgnoreEntry>) GetValue( ItemsProperty );
             set => SetValue( ItemsProperty, value );
         }
 
@@ -42,7 +44,7 @@ namespace ClassicAssist.UI.Views.ECV.Settings
 
             if ( control.DataContext is CombineStacksSettingViewModel vm )
             {
-                vm.Items = (ObservableCollection<CombineStacksIgnoreEntry>) e.NewValue;
+                vm.Items = (ObservableCollection<CombineStacksOpenContainersIgnoreEntry>) e.NewValue;
             }
         }
     }

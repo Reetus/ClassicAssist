@@ -96,7 +96,6 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "MacrosGumpTransparent", CurrentOptions.MacrosGumpTransparent );
             options.Add( "ChatWindowHeight", CurrentOptions.ChatWindowHeight );
             options.Add( "ChatWindowWidth", CurrentOptions.ChatWindowWidth );
-            options.Add( "EntityCollectionViewerOptions", CurrentOptions.EntityCollectionViewerOptions.Serialize() );
             options.Add( "ExpireTargetsMS", CurrentOptions.ExpireTargetsMS );
             options.Add( "LogoutDisconnectedPrompt", CurrentOptions.LogoutDisconnectedPrompt );
             options.Add( "DisableHotkeysLoad", CurrentOptions.DisableHotkeysLoad );
@@ -198,7 +197,6 @@ namespace ClassicAssist.UI.ViewModels
                 MacrosGump.Initialize();
             }
 
-            CurrentOptions.EntityCollectionViewerOptions.Deserialize( config?["EntityCollectionViewerOptions"] );
             CurrentOptions.ExpireTargetsMS = config?["ExpireTargetsMS"]?.ToObject<int>() ?? -1;
             CurrentOptions.LogoutDisconnectedPrompt = config?["LogoutDisconnectedPrompt"]?.ToObject<bool>() ?? false;
             CurrentOptions.DisableHotkeysLoad = config?["DisableHotkeysLoad"]?.ToObject<bool>() ?? false;

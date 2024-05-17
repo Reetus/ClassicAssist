@@ -3487,6 +3487,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only known containers.
+        /// </summary>
+        public static string Only_known_containers {
+            get {
+                return ResourceManager.GetString("Only known containers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only overwrite blank password.
         /// </summary>
         public static string Only_overwrite_blank_password {

@@ -588,6 +588,18 @@ namespace ClassicAssist.UI.ViewModels
 
         private void OpenAllContainers( object obj )
         {
+            Dictionary<int, int> containerGumpIds = null;
+
+            if ( Options.OpenContainersOnlyKnownContainers )
+            {
+                string fileName = Path.Combine( Engine.StartupPath, "Data", "ContainerGumpIDs.json" );
+
+                if ( File.Exists( fileName ) )
+                {
+                    containerGumpIds = JsonConvert.DeserializeObject<Dictionary<int, int>>( File.ReadAllText( fileName ) );
+                }
+            }
+
             EnqueueAction( async action =>
             {
                 List<Item> containers = Collection.Where( i => TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Container ) && !Excluded( i ) ).ToList();
@@ -615,7 +627,7 @@ namespace ClassicAssist.UI.ViewModels
             {
                 return Options.OpenContainersIgnore.Any( e =>
                     ( e.ID == -1 || e.ID == item.ID ) && ( e.Cliloc == -1 || item.Properties == null || item.Properties.Any( p => p.Cliloc == e.Cliloc ) ) &&
-                    ( e.Hue == -1 || item.Hue == e.Hue ) );
+                    ( e.Hue == -1 || item.Hue == e.Hue ) ) || Options.OpenContainersOnlyKnownContainers && containerGumpIds != null && !containerGumpIds.ContainsKey( item.ID );
             }
 
             async Task<List<Item>> OpenContainers( IEnumerable<Item> items, QueueAction queueAction )

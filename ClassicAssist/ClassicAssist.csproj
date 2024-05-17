@@ -151,6 +151,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Update="Data\ContainerGumpIDs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Filters\Audio\Animals.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

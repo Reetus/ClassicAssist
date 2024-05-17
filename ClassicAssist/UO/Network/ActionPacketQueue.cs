@@ -156,7 +156,7 @@ namespace ClassicAssist.UO.Network
             return packetQueueItem.WaitHandle.ToTask();
         }
 
-        public static Task EnqueueDragDropGround( int serial, int amount, int x, int y, int z, QueuePriority priority = QueuePriority.Low, bool delaySend = true,
+        public static Task<bool> EnqueueDragDropGround( int serial, int amount, int x, int y, int z, QueuePriority priority = QueuePriority.Low, bool delaySend = true,
             CancellationToken cancellationToken = default, bool checkRange = false, [CallerMemberName] string caller = "" )
         {
             ActionQueueItem actionQueueItem = new ActionQueueItem( param =>

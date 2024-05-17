@@ -247,23 +247,25 @@ namespace ClassicAssist.UO
                 int z = 0;
                 int itemID = 0;
 
-                PacketFilterInfo pfi = new PacketFilterInfo( 0x6C,
-                    new[] { PacketFilterConditions.UIntAtPositionCondition( value, 2 ) }, ( packet, info ) =>
-                    {
-                        targetType = (TargetType) packet[1];
-                        targetFlags = (TargetFlags) packet[6];
-                        serial = ( packet[7] << 24 ) | ( packet[8] << 16 ) | ( packet[9] << 8 ) | packet[10];
-                        x = ( packet[11] << 8 ) | packet[12];
-                        y = ( packet[13] << 8 ) | packet[14];
-                        z = ( packet[15] << 8 ) | packet[16];
-                        itemID = ( packet[17] << 8 ) | packet[18];
+                PacketFilterInfo pfi = new PacketFilterInfo( 0x6C, new[] { PacketFilterConditions.UIntAtPositionCondition( value, 2 ) }, ( packet, info ) =>
+                {
+                    targetType = (TargetType) packet[1];
+                    targetFlags = (TargetFlags) packet[6];
+                    serial = ( packet[7] << 24 ) | ( packet[8] << 16 ) | ( packet[9] << 8 ) | packet[10];
+                    x = ( packet[11] << 8 ) | packet[12];
+                    y = ( packet[13] << 8 ) | packet[14];
+                    z = ( packet[15] << 8 ) | packet[16];
+                    itemID = ( packet[17] << 8 ) | packet[18];
 
-                        are.Set();
-                    } );
+                    are.Set();
+                } );
+
+                PacketFilterInfo pfi2 = new PacketFilterInfo( 0x6C, new[] { PacketFilterConditions.UIntAtPositionCondition( value, 2, true ) } );
 
                 try
                 {
                     Engine.AddSendPreFilter( pfi );
+                    PacketWaitEntry waitEntry = Engine.PacketWaitEntries.Add( pfi2, PacketDirection.Outgoing, true );
 
                     Engine.SendPacketToClient( pw );
 
@@ -271,16 +273,25 @@ namespace ClassicAssist.UO
                     Engine.InternalTarget = true;
                     Engine.InternalTargetSerial = (int) value;
 
-                    bool result = are.WaitOne( timeout );
+                    Task<bool> targetTask = are.ToTask();
+                    Task<bool> waitEntryTask = waitEntry.Lock.ToTask();
 
-                    if ( result )
+                    int result = Task.WaitAny( new Task[] { targetTask, waitEntryTask }, timeout );
+
+                    switch ( result )
                     {
-                        return ( targetType, targetFlags, serial, x, y, z, itemID );
+                        case 0:
+                            return ( targetType, targetFlags, serial, x, y, z, itemID );
+                        case -1:
+                            Engine.SendPacketToClient( new CancelTargetCursor( value ) );
+
+                            SystemMessage( Strings.Timeout___ );
+                            break;
                     }
 
-                    Engine.SendPacketToClient( new CancelTargetCursor( value ) );
-
-                    SystemMessage( Strings.Timeout___ );
+                    serial = -1;
+                    x = -1;
+                    y = -1;
 
                     return ( targetType, targetFlags, serial, x, y, z, itemID );
                 }

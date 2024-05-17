@@ -9,11 +9,11 @@
             return new PacketFilterCondition( position, valueBytes, 4 );
         }
 
-        public static PacketFilterCondition UIntAtPositionCondition( uint value, int position )
+        public static PacketFilterCondition UIntAtPositionCondition( uint value, int position, bool negate = false )
         {
             byte[] valueBytes = { (byte) ( value >> 24 ), (byte) ( value >> 16 ), (byte) ( value >> 8 ), (byte) value };
 
-            return new PacketFilterCondition( position, valueBytes, 4 );
+            return new PacketFilterCondition( position, valueBytes, 4, negate );
         }
 
         public static PacketFilterCondition ShortAtPositionCondition( int value, int position )

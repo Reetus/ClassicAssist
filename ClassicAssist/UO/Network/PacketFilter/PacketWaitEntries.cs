@@ -74,7 +74,9 @@ namespace ClassicAssist.UO.Network.PacketFilter
                             byte[] tmp = new byte[fc.Length];
                             Buffer.BlockCopy( packet, fc.Position, tmp, 0, fc.Length );
 
-                            if ( !tmp.SequenceEqual( fc.GetBytes() ) )
+                            bool equals = tmp.SequenceEqual( fc.GetBytes() );
+
+                            if ( fc.Negate && equals || !fc.Negate && !equals )
                             {
                                 result = false;
 

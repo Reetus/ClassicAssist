@@ -95,6 +95,7 @@ namespace ClassicAssist.UO.Network
             }
 
             Engine.LastSkillID = id;
+            Engine.LastSkillTime = DateTime.Now;
         }
 
         private static void OnSpellCast( PacketReader reader )

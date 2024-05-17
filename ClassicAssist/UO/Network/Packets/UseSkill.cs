@@ -43,6 +43,7 @@ namespace ClassicAssist.UO.Network.Packets
             _writer.Write( (byte) 0 );
 
             Engine.LastSkillID = index;
+            Engine.LastSkillTime = DateTime.Now;
         }
 
         public string Parse( byte[] packet, int length, PacketDirection direction )

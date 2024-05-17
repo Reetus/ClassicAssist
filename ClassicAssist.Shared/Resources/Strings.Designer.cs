@@ -3253,6 +3253,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move to ground.
+        /// </summary>
+        public static string Move_to_ground {
+            get {
+                return ResourceManager.GetString("Move to ground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Movement.
         /// </summary>
         public static string Movement {
@@ -5004,6 +5013,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Target_Last {
             get {
                 return ResourceManager.GetString("Target Last", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target location....
+        /// </summary>
+        public static string Target_location___ {
+            get {
+                return ResourceManager.GetString("Target location...", resourceCulture);
             }
         }
         

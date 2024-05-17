@@ -156,21 +156,46 @@ namespace ClassicAssist.UO.Network
             return packetQueueItem.WaitHandle.ToTask();
         }
 
-        //TODO Change to ActionQueueItem with CancellationToken
-        public static Task EnqueueDragDropGround( int serial, int amount, int x, int y, int z,
-            QueuePriority priority = QueuePriority.Low, bool delaySend = true, [CallerMemberName] string caller = "" )
+        public static Task<bool> EnqueueDragDropGround( int serial, int amount, int x, int y, int z, QueuePriority priority = QueuePriority.Low, bool delaySend = true,
+            CancellationToken cancellationToken = default, bool checkRange = false, [CallerMemberName] string caller = "" )
         {
-            byte[] dragPacket = new DragItem( serial, amount ).ToArray();
-            byte[] dropItem = new DropItem( serial, -1, x, y, z ).ToArray();
+            ActionQueueItem actionQueueItem = new ActionQueueItem( param =>
+            {
+                if ( cancellationToken.IsCancellationRequested )
+                {
+                    return false;
+                }
 
-            PacketQueueItem dragPacketQueueItem =
-                new PacketQueueItem( dragPacket, dragPacket.Length, delaySend, caller );
-            Enqueue( dragPacketQueueItem, priority );
+                if ( param is bool check && check )
+                {
+                    Item item = Engine.Items.GetItem( serial );
 
-            PacketQueueItem dropPacketQueueItem = new PacketQueueItem( dropItem, dropItem.Length, delaySend, caller );
-            Enqueue( dropPacketQueueItem, priority );
+                    if ( item == null || item.Distance >= DRAG_DROP_DISTANCE )
+                    {
+                        Commands.SystemMessage( Strings.Item_out_of_range___, true );
 
-            return new[] { dragPacketQueueItem.WaitHandle, dropPacketQueueItem.WaitHandle }.ToTask();
+                        return false;
+                    }
+                }
+
+                Engine.SendPacketToServer( new DragItem( serial, amount ) );
+                Thread.Sleep( DROP_DELAY );
+                Engine.SendPacketToServer( new DropItem( serial, -1, x, y, z ) );
+                Engine.LastActionPacket = DateTime.Now;
+
+                return true;
+            } )
+            {
+                CheckRange = checkRange,
+                DelaySend = delaySend,
+                Serial = serial,
+                Arguments = checkRange,
+                Caller = caller
+            };
+
+            Enqueue( actionQueueItem, priority );
+
+            return actionQueueItem.WaitHandle.ToTask( () => actionQueueItem.Result );
         }
 
         private static void Enqueue( BaseQueueItem queueItem, QueuePriority priority )

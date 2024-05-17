@@ -46,6 +46,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _contextMoveToBackpackCommand;
         private ICommand _contextMoveToBankCommand;
         private ICommand _contextMoveToContainerCommand;
+        private ICommand _contextMoveToGroundCommand;
         private ICommand _contextOpenContainerCommand;
         private ICommand _contextTargetCommand;
         private ICommand _contextUseItemCommand;
@@ -154,6 +155,9 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ContextMoveToContainerCommand =>
             _contextMoveToContainerCommand ?? ( _contextMoveToContainerCommand = new RelayCommandAsync( ContextMoveToContainer, o => SelectedItems != null ) );
 
+        public ICommand ContextMoveToGroundCommand =>
+            _contextMoveToGroundCommand ?? ( _contextMoveToGroundCommand = new RelayCommandAsync( ContextMoveToGround, o => SelectedItems != null ) );
+
         public ICommand ContextOpenContainerCommand =>
             _contextOpenContainerCommand ?? ( _contextOpenContainerCommand = new RelayCommand( ContextOpenContainer,
                 o => SelectedItems != null && SelectedItems.Any( e => e.Entity is Item item && item.Owner != 0 && !UOMath.IsMobile( item.Owner ) ) ) );
@@ -243,6 +247,36 @@ namespace ClassicAssist.UI.ViewModels
         }
 
         private Dictionary<int, string> _nameOverrides { get; } = new Dictionary<int, string>();
+
+        private async Task ContextMoveToGround( object arg )
+        {
+            ( TargetType _, TargetFlags _, int _, int x, int y, int z, int _ ) = await Commands.GetTargetInfoAsync( Strings.Target_location___ );
+
+            if ( x == -1 || y == -1 )
+            {
+                return;
+            }
+
+            int[] items = SelectedItems.Select( i => i.Entity.Serial ).ToArray();
+
+            EnqueueAction( async obj =>
+            {
+                foreach ( var item in items.Select( ( value, i ) => new { i, value } ) )
+                {
+                    if ( obj.CancellationTokenSource.IsCancellationRequested )
+                    {
+                        _dispatcher.Invoke( () => { obj.Status = Strings.Cancel; } );
+                        return false;
+                    }
+
+                    _dispatcher.Invoke( () => { obj.Status = string.Format( Strings.Moving_item__0_____1_, item.i, items.Length ); } );
+
+                    await ActionPacketQueue.EnqueueDragDropGround( item.value, -1, x, y, z );
+                }
+
+                return true;
+            }, string.Format( Strings.Moving_item__0_____1_, 0, items.Length ) );
+        }
 
         public EntityCollectionViewerOptions LoadOptions()
         {

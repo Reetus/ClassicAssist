@@ -15,6 +15,8 @@
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextMoveToContainerCommand)}" />
                 <MenuItem Header="{x:Static resources:Strings.Move_to_bank}"
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextMoveToBankCommand)}" />
+                <MenuItem Header="{x:Static resources:Strings.Move_to_ground}"
+                          Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextMoveToGroundCommand)}" />
                 <MenuItem Header="{x:Static resources:Strings.Open_container}"
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextOpenContainerCommand)}" />
                 <Separator />

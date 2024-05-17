@@ -2034,4 +2034,10 @@ Are you sure you wish to continue?</value>
   <data name="Only known containers" xml:space="preserve">
     <value>Only known containers</value>
   </data>
+  <data name="Target location..." xml:space="preserve">
+    <value>Target location...</value>
+  </data>
+  <data name="Move to ground" xml:space="preserve">
+    <value>Move to ground</value>
+  </data>
 </root>

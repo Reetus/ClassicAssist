@@ -999,6 +999,8 @@ namespace ClassicAssist.UO
 
                 if ( entity == null )
                 {
+                    SystemMessage( Strings.Cannot_find_item___ );
+
                     return;
                 }
 
@@ -1040,12 +1042,7 @@ namespace ClassicAssist.UO
                 {
                     StaticTile[] statics = Statics.GetStatics( (int) Engine.Player.Map, x, y );
 
-                    if ( statics == null )
-                    {
-                        return;
-                    }
-
-                    StaticTile selectedStatic = statics.FirstOrDefault( i => i.ID == itemID );
+                    StaticTile selectedStatic = statics?.FirstOrDefault( i => i.ID == itemID ) ?? new StaticTile();
 
                     if ( selectedStatic.ID == 0 )
                     {

@@ -16,6 +16,11 @@ namespace ClassicAssist.Data.Hotkeys.Commands
         {
             int serial = UOC.GetTargetSerialAsync( Strings.Target_container___ ).Result;
 
+            if ( serial <= 0 )
+            {
+                return;
+            }
+
             Entity entity = Engine.Items.GetItem( serial ) ?? (Entity) Engine.Mobiles.GetMobile( serial );
 
             if ( entity == null )

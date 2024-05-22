@@ -161,6 +161,24 @@
                                                                 </Style>
                                                             </ComboBox.Style>
                                                         </ComboBox>
+                                                        <ComboBox Grid.Column="0" Width="90"
+                                                                  SelectedItem="{Binding Value, Converter={StaticResource EnumToIntegerValueConverter}, ConverterParameter={x:Type data:TileFlags}}"
+                                                                  ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type data:TileFlags}}}">
+                                                            <ComboBox.Style>
+                                                                <Style TargetType="{x:Type ComboBox}"
+                                                                       BasedOn="{StaticResource {x:Type ComboBox}}">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger
+                                                                            Binding="{Binding Constraint.AllowedValuesEnum}"
+                                                                            Value="{x:Type data:TileFlags}">
+                                                                            <Setter Property="Visibility"
+                                                                                Value="Visible" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </ComboBox.Style>
+                                                        </ComboBox>
                                                         <TextBox
                                                             Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                             Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}"
@@ -181,6 +199,12 @@
                                                                             Value="{x:Type agents:SkillBonusSkills}">
                                                                             <Setter Property="Visibility"
                                                                                 Value="Visible" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger
+                                                                            Binding="{Binding Constraint.AllowedValuesEnum}"
+                                                                            Value="{x:Type data:TileFlags}">
+                                                                            <Setter Property="Visibility"
+                                                                                Value="Collapsed" />
                                                                         </DataTrigger>
                                                                         <DataTrigger
                                                                             Binding="{Binding Constraint.Name}"

@@ -165,6 +165,30 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                 }
             } );
 
+            Constraints.AddSorted( new PropertyEntry
+            {
+                Name = nameof( TileFlags ),
+                ConstraintType = PropertyType.Predicate,
+                Predicate = ( item, entry ) =>
+                {
+                    StaticTile tileFlags = TileData.GetStaticTile( item.ID );
+
+                    switch ( entry.Operator )
+                    {
+                        case AutolootOperator.NotEqual:
+                        case AutolootOperator.NotPresent:
+                            return !tileFlags.Flags.HasFlag( (TileFlags) entry.Value );
+                        case AutolootOperator.Equal:
+                            return tileFlags.Flags.HasFlag( (TileFlags) entry.Value );
+                        case AutolootOperator.GreaterThan:
+                        case AutolootOperator.LessThan:
+                        default:
+                            return false;
+                    }
+                },
+                AllowedValuesEnum = typeof( TileFlags )
+            } );
+
             LoadFilterProfiles();
         }
 

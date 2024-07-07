@@ -2040,4 +2040,19 @@ Are you sure you wish to continue?</value>
   <data name="Move to ground" xml:space="preserve">
     <value>Move to ground</value>
   </data>
+  <data name="CSV Import" xml:space="preserve">
+    <value>CSV Import</value>
+  </data>
+  <data name="Select File" xml:space="preserve">
+    <value>Select File</value>
+  </data>
+  <data name="Error loading file, ensure it isn't currently in use" xml:space="preserve">
+    <value>Error loading file, ensure it isn't currently in use</value>
+  </data>
+  <data name="Click here to learn how to use CSV Import." xml:space="preserve">
+    <value>Click here to learn how to use CSV Import.</value>
+  </data>
+  <data name="Ignore duplicate entries" xml:space="preserve">
+    <value>Ignore duplicate entries</value>
+  </data>
 </root>

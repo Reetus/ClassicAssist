@@ -18,7 +18,9 @@ using ClassicAssist.Misc;
 using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
+using ClassicAssist.UI.ViewModels.Agents.Autoloot.Folder;
 using ClassicAssist.UI.Views;
+using ClassicAssist.UI.Views.Agents.Autoloot.Import;
 using ClassicAssist.UI.Views.Autoloot;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
@@ -49,6 +51,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private ObservableCollection<PropertyEntry> _constraints = new ObservableCollection<PropertyEntry>();
 
         private int _containerSerial;
+        private ICommand _csvImportCommand;
         private ICommand _defineCustomPropertiesCommand;
 
         private bool _disableInGuardzone;
@@ -117,6 +120,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
             get => _containerSerial;
             set => SetProperty( ref _containerSerial, value );
         }
+
+        public ICommand CSVImportCommand => _csvImportCommand ?? ( _csvImportCommand = new RelayCommand( CSVImport, o => true ) );
 
         public ICommand DefineCustomPropertiesCommand =>
             _defineCustomPropertiesCommand ??
@@ -829,6 +834,42 @@ namespace ClassicAssist.UI.ViewModels.Agents
             };
 
             Items.Add( entry );
+        }
+
+        private void CSVImport( object obj )
+        {
+            CSVImportWindow importWindow = new CSVImportWindow { Topmost = Options.CurrentOptions.AlwaysOnTop };
+
+            importWindow.ShowDialog();
+
+            if ( !( importWindow.DataContext is CSVImportViewModel vm ) || !vm.Import )
+            {
+                return;
+            }
+
+            foreach ( AutolootEntry entry in vm.Entries )
+            {
+                if ( vm.IgnoreDuplicateEntries )
+                {
+                    IEnumerable<AutolootEntry> items = Items.Where( i => i.ID == entry.ID && i.Constraints.Count == entry.Constraints.Count ).ToList();
+
+                    if ( items.Any() )
+                    {
+                        bool exclude = ( from item in items
+                                select item.Constraints.All( constraint =>
+                                    entry.Constraints.Any( e =>
+                                        e.Property.Name == constraint.Property.Name && e.Operator == constraint.Operator && e.Value == constraint.Value ) ) )
+                            .Any( allMatch => allMatch );
+
+                        if ( exclude )
+                        {
+                            continue;
+                        }
+                    }
+                }
+
+                Items.Add( entry );
+            }
         }
 
         private async Task Remove( object arg )

@@ -9,6 +9,7 @@
   },
   {
     "Name": "Hue",
+    "ShortName": "HUE",
     "Clilocs": [
       0
     ],
@@ -17,6 +18,7 @@
   },
   {
     "Name": "ID",
+    "ShortName": "ID",
     "Clilocs": [
       0
     ],
@@ -25,6 +27,7 @@
   },
   {
     "Name": "Faster Casting",
+    "ShortName": "FC",
     "Clilocs": [
       1060413
     ],
@@ -33,6 +36,7 @@
   },
   {
     "Name": "Faster Cast Recovery",
+    "ShortName": "FCR",
     "Clilocs": [
       1060412
     ],
@@ -41,6 +45,7 @@
   },
   {
     "Name": "Mana Regeneration",
+    "ShortName": "MR",
     "Clilocs": [
       1060440
     ],
@@ -49,6 +54,7 @@
   },
   {
     "Name": "Balanced",
+    "ShortName": "BAL",
     "Clilocs": [
       1072792
     ],
@@ -57,6 +63,7 @@
   },
   {
     "Name": "Cold Resist",
+    "ShortName": "CR",
     "Clilocs": [
       1060445
     ],
@@ -65,6 +72,7 @@
   },
   {
     "Name": "Damage Increase",
+    "ShortName": "DI",
     "Clilocs": [
       1060401,
       1060402
@@ -74,6 +82,7 @@
   },
   {
     "Name": "Defense Chance Increase",
+    "ShortName": "DCI",
     "Clilocs": [
       1060408
     ],
@@ -82,6 +91,7 @@
   },
   {
     "Name": "Dexterity Bonus",
+    "ShortName": "DB",
     "Clilocs": [
       1060409
     ],
@@ -90,6 +100,7 @@
   },
   {
     "Name": "Energy Resist",
+    "ShortName": "ER",
     "Clilocs": [
       1060446
     ],
@@ -98,6 +109,7 @@
   },
   {
     "Name": "Fire Resist",
+    "ShortName": "FR",
     "Clilocs": [
       1060447
     ],
@@ -106,6 +118,7 @@
   },
   {
     "Name": "Hit Chance Increase",
+    "ShortName": "HCI",
     "Clilocs": [
       1060415
     ],
@@ -114,6 +127,7 @@
   },
   {
     "Name": "Hit Fireball",
+    "ShortName": "HFB",
     "Clilocs": [
       1060420
     ],
@@ -122,6 +136,7 @@
   },
   {
     "Name": "Hit Life Leech",
+    "ShortName": "HLL",
     "Clilocs": [
       1060422
     ],
@@ -130,6 +145,7 @@
   },
   {
     "Name": "Hit Lightning",
+    "ShortName": "HL",
     "Clilocs": [
       1060423
     ],
@@ -138,6 +154,7 @@
   },
   {
     "Name": "Hit Mana Leech",
+    "ShortName": "HML",
     "Clilocs": [
       1060427
     ],
@@ -146,6 +163,7 @@
   },
   {
     "Name": "Hit Point Increase",
+    "ShortName": "HPI",
     "Clilocs": [
       1060431
     ],
@@ -154,6 +172,7 @@
   },
   {
     "Name": "Hit Point Regeneration",
+    "ShortName": "HPR",
     "Clilocs": [
       1060444
     ],
@@ -162,6 +181,7 @@
   },
   {
     "Name": "Hit Stamina Leech",
+    "ShortName": "HSL",
     "Clilocs": [
       1060430
     ],
@@ -170,6 +190,7 @@
   },
   {
     "Name": "Intelligence Bonus",
+    "ShortName": "IB",
     "Clilocs": [
       1060432
     ],
@@ -178,6 +199,7 @@
   },
   {
     "Name": "Lower Mana Cost",
+    "ShortName": "LMC",
     "Clilocs": [
       1060433
     ],
@@ -186,6 +208,7 @@
   },
   {
     "Name": "Lower Reagent Cost",
+    "ShortName": "LRC",
     "Clilocs": [
       1060434
     ],
@@ -194,6 +217,7 @@
   },
   {
     "Name": "Luck",
+    "ShortName": "LUCK",
     "Clilocs": [
       1060436
     ],
@@ -202,6 +226,7 @@
   },
   {
     "Name": "Mana Increase",
+    "ShortName": "MI",
     "Clilocs": [
       1060439
     ],
@@ -210,6 +235,7 @@
   },
   {
     "Name": "Physical Resist",
+    "ShortName": "PR",
     "Clilocs": [
       1060448
     ],
@@ -218,6 +244,7 @@
   },
   {
     "Name": "Poison Resist",
+    "ShortName": "PSR",
     "Clilocs": [
       1060449
     ],
@@ -226,6 +253,7 @@
   },
   {
     "Name": "Spell Channeling",
+    "ShortName": "SC",
     "Clilocs": [
       1060482
     ],
@@ -234,6 +262,7 @@
   },
   {
     "Name": "Spell Damage Increase",
+    "ShortName": "SDI",
     "Clilocs": [
       1060483
     ],
@@ -242,6 +271,7 @@
   },
   {
     "Name": "Stamina Increase",
+    "ShortName": "SI",
     "Clilocs": [
       1060484
     ],
@@ -250,6 +280,7 @@
   },
   {
     "Name": "Strength Bonus",
+    "ShortName": "SB",
     "Clilocs": [
       1060485
     ],
@@ -258,6 +289,7 @@
   },
   {
     "Name": "Swing Speed Increase",
+    "ShortName": "SSI",
     "Clilocs": [
       1060486
     ],
@@ -266,6 +298,7 @@
   },
   {
     "Name": "Velocity",
+    "ShortName": "VELOCITY",
     "Clilocs": [
       1072793
     ],
@@ -294,7 +327,8 @@
       1116209
     ],
     "ConstraintType": 0,
-    "Name": "Brittle"
+    "Name": "Brittle",
+    "ShortName": "BRIT"
   },
   {
     "ClilocIndex": 0,
@@ -302,7 +336,8 @@
       1113696
     ],
     "ConstraintType": 0,
-    "Name": "Casting Focus"
+    "Name": "Casting Focus",
+    "ShortName": "CF"
   },
   {
     "ClilocIndex": 0,
@@ -318,7 +353,8 @@
       1060404
     ],
     "ConstraintType": 0,
-    "Name": "Cold Damage"
+    "Name": "Cold Damage",
+    "ShortName": "CD"
   },
   {
     "ClilocIndex": 0,
@@ -326,7 +362,8 @@
       1113594
     ],
     "ConstraintType": 0,
-    "Name": "Cold Eater"
+    "Name": "Cold Eater",
+    "ShortName": "CE"
   },
   {
     "ClilocIndex": -1,
@@ -334,7 +371,8 @@
       1049643
     ],
     "ConstraintType": 0,
-    "Name": "Cursed"
+    "Name": "Cursed",
+    "ShortName": "CURSED"
   },
   {
     "ClilocIndex": 0,
@@ -374,7 +412,8 @@
       1060411
     ],
     "ConstraintType": 0,
-    "Name": "Enhance Potions"
+    "Name": "Enhance Potions",
+    "ShortName": "EP"
   },
   {
     "ClilocIndex": 0,
@@ -382,7 +421,8 @@
       1060405
     ],
     "ConstraintType": 0,
-    "Name": "Fire Damage"
+    "Name": "Fire Damage",
+    "ShortName": "FD"
   },
   {
     "ClilocIndex": 0,
@@ -390,7 +430,8 @@
       1113593
     ],
     "ConstraintType": 0,
-    "Name": "Fire Eater"
+    "Name": "Fire Eater",
+    "ShortName": "FE"
   },
   {
     "ClilocIndex": -1,
@@ -406,7 +447,8 @@
       1151493
     ],
     "ConstraintType": 0,
-    "Name": "Greater Artifact"
+    "Name": "Greater Artifact",
+    "ShortName": "GA"
   },
   {
     "ClilocIndex": 0,
@@ -414,7 +456,8 @@
       1060417
     ],
     "ConstraintType": 0,
-    "Name": "Hit Dispel"
+    "Name": "Hit Dispel",
+    "ShortName": "HD"
   },
   {
     "ClilocIndex": 0,
@@ -422,7 +465,8 @@
       1113700
     ],
     "ConstraintType": 0,
-    "Name": "Hit Fatigue"
+    "Name": "Hit Fatigue",
+    "ShortName": "HF"
   },
   {
     "ClilocIndex": 0,
@@ -430,7 +474,8 @@
       1060424
     ],
     "ConstraintType": 0,
-    "Name": "Hit Lower Attack"
+    "Name": "Hit Lower Attack",
+    "ShortName": "HLA"
   },
   {
     "ClilocIndex": 0,
@@ -438,7 +483,8 @@
       1060425
     ],
     "ConstraintType": 0,
-    "Name": "Hit Lower Defense"
+    "Name": "Hit Lower Defense",
+    "ShortName": "HLD"
   },
   {
     "ClilocIndex": 0,
@@ -446,7 +492,8 @@
       1113699
     ],
     "ConstraintType": 0,
-    "Name": "Hit Mana Drain"
+    "Name": "Hit Mana Drain",
+    "ShortName": "HMD"
   },
   {
     "ClilocIndex": 0,
@@ -454,7 +501,8 @@
       1113597
     ],
     "ConstraintType": 0,
-    "Name": "Kinetic Eater"
+    "Name": "Kinetic Eater",
+    "ShortName": "KE"
   },
   {
     "ClilocIndex": -1,
@@ -462,7 +510,8 @@
       1151495
     ],
     "ConstraintType": 0,
-    "Name": "Legendary Artifact"
+    "Name": "Legendary Artifact",
+    "ShortName": "LGA"
   },
   {
     "ClilocIndex": -1,
@@ -470,7 +519,8 @@
       1151492
     ],
     "ConstraintType": 0,
-    "Name": "Lesser Artifact"
+    "Name": "Lesser Artifact",
+    "ShortName": "LA"
   },
   {
     "ClilocIndex": -1,
@@ -478,7 +528,8 @@
       1060437
     ],
     "ConstraintType": 0,
-    "Name": "Mage Armor"
+    "Name": "Mage Armor",
+    "ShortName": "MGA"
   },
   {
     "ClilocIndex": -1,
@@ -486,7 +537,8 @@
       1151489
     ],
     "ConstraintType": 0,
-    "Name": "Lesser Magic Item"
+    "Name": "Lesser Magic Item",
+    "ShortName": "LMI"
   },
   {
     "ClilocIndex": 0,
@@ -494,7 +546,8 @@
       1060435
     ],
     "ConstraintType": 0,
-    "Name": "Lower Requirements"
+    "Name": "Lower Requirements",
+    "ShortName": "LR"
   },
   {
     "ClilocIndex": 0,
@@ -502,7 +555,8 @@
       1060438
     ],
     "ConstraintType": 0,
-    "Name": "Mage Weapon"
+    "Name": "Mage Weapon",
+    "ShortName": "MW"
   },
   {
     "ClilocIndex": -1,
@@ -510,7 +564,8 @@
       1151494
     ],
     "ConstraintType": 0,
-    "Name": "Major Artifact"
+    "Name": "Major Artifact",
+    "ShortName": "MA"
   },
   {
     "ClilocIndex": -1,
@@ -518,7 +573,8 @@
       1151491
     ],
     "ConstraintType": 0,
-    "Name": "Major Magic Item"
+    "Name": "Major Magic Item",
+    "ShortName": "MMI"
   },
   {
     "ClilocIndex": -1,
@@ -526,7 +582,8 @@
       1116158
     ],
     "ConstraintType": 0,
-    "Name": "Mana Phase"
+    "Name": "Mana Phase",
+    "ShortName": "MP"
   },
   {
     "ClilocIndex": -1,
@@ -534,7 +591,8 @@
       1151488
     ],
     "ConstraintType": 0,
-    "Name": "Minor Magic Item"
+    "Name": "Minor Magic Item",
+    "ShortName": "MNMI"
   },
   {
     "ClilocIndex": -1,
@@ -542,7 +600,8 @@
       1060441
     ],
     "ConstraintType": 0,
-    "Name": "Night Sight"
+    "Name": "Night Sight",
+    "ShortName": "NS"
   },
   {
     "ClilocIndex": 0,
@@ -550,7 +609,8 @@
       1060403
     ],
     "ConstraintType": 0,
-    "Name": "Physical Damage"
+    "Name": "Physical Damage",
+    "ShortName": "PHD"
   },
   {
     "ClilocIndex": 0,
@@ -558,7 +618,8 @@
       1060406
     ],
     "ConstraintType": 0,
-    "Name": "Poison Damage"
+    "Name": "Poison Damage",
+    "ShortName": "PD"
   },
   {
     "ClilocIndex": 0,
@@ -566,7 +627,8 @@
       1113595
     ],
     "ConstraintType": 0,
-    "Name": "Poison Eater"
+    "Name": "Poison Eater",
+    "ShortName": "PE"
   },
   {
     "ClilocIndex": -1,
@@ -574,7 +636,8 @@
       1154910
     ],
     "ConstraintType": 0,
-    "Name": "Prized"
+    "Name": "Prized",
+    "ShortName": "PRIZED"
   },
   {
     "ClilocIndex": -1,
@@ -582,7 +645,8 @@
       1112364
     ],
     "ConstraintType": 0,
-    "Name": "Reactive Paralyze"
+    "Name": "Reactive Paralyze",
+    "ShortName": "RP"
   },
   {
     "ClilocIndex": 0,
@@ -590,7 +654,8 @@
       1060442
     ],
     "ConstraintType": 0,
-    "Name": "Reflect Physical Damage"
+    "Name": "Reflect Physical Damage",
+    "ShortName": "RPD"
   },
   {
     "ClilocIndex": 0,
@@ -598,7 +663,8 @@
       1060450
     ],
     "ConstraintType": 0,
-    "Name": "Self Repair"
+    "Name": "Self Repair",
+    "ShortName": "SFR"
   },
   {
     "ClilocIndex": 0,
@@ -606,7 +672,8 @@
       1113630
     ],
     "ConstraintType": 0,
-    "Name": "Soul Charge"
+    "Name": "Soul Charge",
+    "ShortName": "SOC"
   },
   {
     "ClilocIndex": 0,
@@ -614,7 +681,8 @@
       1112857
     ],
     "ConstraintType": 0,
-    "Name": "Splintering Weapon"
+    "Name": "Splintering Weapon",
+    "ShortName": "SW"
   },
   {
     "ClilocIndex": 0,
@@ -622,7 +690,8 @@
       1060443
     ],
     "ConstraintType": 0,
-    "Name": "Stamina Regeneration"
+    "Name": "Stamina Regeneration",
+    "ShortName": "SR"
   },
   {
     "ClilocIndex": -1,
@@ -630,7 +699,8 @@
       1060400
     ],
     "ConstraintType": 0,
-    "Name": "Use Best Weapon Skill"
+    "Name": "Use Best Weapon Skill",
+    "ShortName": "UBWS"
   },
   {
     "Name": "Weight",

@@ -208,6 +208,8 @@
                                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(agents:AutolootViewModel.ResetContainerCommand)}" />
                                 <MenuItem Header="{x:Static resources:Strings.Define_Custom_Properties}"
                                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(agents:AutolootViewModel.DefineCustomPropertiesCommand)}" />
+                                <MenuItem Header="{x:Static resources:Strings.CSV_Import}"
+                                          Command="{Binding Source={StaticResource Proxy}, Path=Data.(agents:AutolootViewModel.CSVImportCommand)}" />
                             </ContextMenu>
                         </Image.ContextMenu>
                     </Image>

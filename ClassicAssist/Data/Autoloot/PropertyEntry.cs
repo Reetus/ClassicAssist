@@ -13,6 +13,7 @@ namespace ClassicAssist.Data.Autoloot
         private PropertyType _constraintType;
         private string _name;
         private Func<Entity, AutolootConstraintEntry, bool> _predicate;
+        private string _shortName;
 
         [JsonIgnore]
         public Type AllowedValuesEnum
@@ -43,6 +44,12 @@ namespace ClassicAssist.Data.Autoloot
         {
             get => _name;
             set => SetProperty( ref _name, value );
+        }
+
+        public string ShortName
+        {
+            get => _shortName;
+            set => SetProperty( ref _shortName, value );
         }
 
         [JsonIgnore]

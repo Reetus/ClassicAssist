@@ -1024,6 +1024,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click here to learn how to use CSV Import..
+        /// </summary>
+        public static string Click_here_to_learn_how_to_use_CSV_Import_ {
+            get {
+                return ResourceManager.GetString("Click here to learn how to use CSV Import.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cliloc.
         /// </summary>
         public static string Cliloc {
@@ -1290,6 +1299,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Create_Macro_Button {
             get {
                 return ResourceManager.GetString("Create Macro Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CSV Import.
+        /// </summary>
+        public static string CSV_Import {
+            get {
+                return ResourceManager.GetString("CSV Import", resourceCulture);
             }
         }
         
@@ -1731,6 +1749,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Error_loading_assembly___0_ {
             get {
                 return ResourceManager.GetString("Error loading assembly: {0}", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error loading file, ensure it isn&apos;t currently in use.
+        /// </summary>
+        public static string Error_loading_file__ensure_it_isn_t_currently_in_use {
+            get {
+                return ResourceManager.GetString("Error loading file, ensure it isn\'t currently in use", resourceCulture);
             }
         }
         
@@ -2271,6 +2298,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string ID_from_target {
             get {
                 return ResourceManager.GetString("ID from target", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignore duplicate entries.
+        /// </summary>
+        public static string Ignore_duplicate_entries {
+            get {
+                return ResourceManager.GetString("Ignore duplicate entries", resourceCulture);
             }
         }
         
@@ -4338,6 +4374,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Select_destination_container___ {
             get {
                 return ResourceManager.GetString("Select destination container...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select File.
+        /// </summary>
+        public static string Select_File {
+            get {
+                return ResourceManager.GetString("Select File", resourceCulture);
             }
         }
         

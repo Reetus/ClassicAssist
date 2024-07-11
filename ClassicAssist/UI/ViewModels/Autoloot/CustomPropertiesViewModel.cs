@@ -20,14 +20,15 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data.Autoloot;
-using ClassicAssist.Misc;
 using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
@@ -40,8 +41,7 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
 {
     public class CustomPropertiesViewModel : BaseViewModel
     {
-        private readonly string _propertiesFileCustom =
-            Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data", "Properties.Custom.json" );
+        private readonly string _propertiesFileCustom = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data", "Properties.Custom.json" );
 
         private ICommand _chooseFromItemCommand;
         private ObservableCollection<CustomProperty> _properties = new ObservableCollection<CustomProperty>();
@@ -56,8 +56,7 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
 
         public ICommand ChooseFromClilocCommand => new RelayCommand( ChooseFromCliloc, o => true );
 
-        public ICommand ChooseFromItemCommand =>
-            _chooseFromItemCommand ?? ( _chooseFromItemCommand = new RelayCommandAsync( ChooseFromItem, o => true ) );
+        public ICommand ChooseFromItemCommand => _chooseFromItemCommand ?? ( _chooseFromItemCommand = new RelayCommandAsync( ChooseFromItem, o => true ) );
 
         public ObservableCollection<CustomProperty> Properties
         {
@@ -65,8 +64,7 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
             set => SetProperty( ref _properties, value );
         }
 
-        public ICommand RemoveCommand =>
-            _removeCommand ?? ( _removeCommand = new RelayCommand( Remove, o => SelectedProperty != null ) );
+        public ICommand RemoveCommand => _removeCommand ?? ( _removeCommand = new RelayCommand( Remove, o => SelectedProperty != null ) );
 
         public ICommand SaveCommand => _saveCommand ?? ( _saveCommand = new RelayCommand( Save, o => true ) );
 
@@ -93,12 +91,7 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
                 return;
             }
 
-            Properties.AddSorted( new CustomProperty
-            {
-                Cliloc = vm.SelectedCliloc.Key,
-                Name = vm.SelectedCliloc.Value,
-                Arguments = vm.SelectedCliloc.Value.Contains( "~" )
-            } );
+            Properties.AddSorted( new CustomProperty { Cliloc = vm.SelectedCliloc.Key, Name = vm.SelectedCliloc.Value, Arguments = vm.SelectedCliloc.Value.Contains( "~" ) } );
         }
 
         private async Task ChooseFromItem( object obj )
@@ -147,7 +140,8 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
                 {
                     Name = property.Name,
                     Cliloc = property.Property.Cliloc,
-                    Arguments = property.Property.Arguments != null && property.Property.Arguments.Length > 0
+                    Arguments = property.Property.Arguments != null && property.Property.Arguments.Length > 0,
+                    ArgumentIndex = property.Property.Arguments != null ? 0 : -1
                 } );
             }
         }
@@ -171,10 +165,7 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
         {
             List<PropertyEntry> properties = Properties.Select( property => new PropertyEntry
             {
-                ClilocIndex = property.Arguments ? 0 : -1,
-                Clilocs = new[] { property.Cliloc },
-                ConstraintType = 0,
-                Name = property.Name
+                ClilocIndex = property.ArgumentIndex, Clilocs = new[] { property.Cliloc }, ConstraintType = 0, Name = property.Name
             } ).ToList();
 
             File.WriteAllText( _propertiesFileCustom, JsonConvert.SerializeObject( properties ) );
@@ -199,9 +190,7 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
                     {
                         CustomProperty customProperty = new CustomProperty
                         {
-                            Name = constraint.Name,
-                            Cliloc = constraint.Clilocs[0],
-                            Arguments = constraint.ClilocIndex == 0
+                            Name = constraint.Name, Cliloc = constraint.Clilocs[0], Arguments = constraint.ClilocIndex >= 0, ArgumentIndex = constraint.ClilocIndex
                         };
 
                         Properties.AddSorted( customProperty );
@@ -211,9 +200,36 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
         }
     }
 
-    public class CustomProperty : IComparable<CustomProperty>
+    public class CustomProperty : IComparable<CustomProperty>, INotifyPropertyChanged
     {
-        public bool Arguments { get; set; }
+        private bool _arguments;
+        private int _argumentIndex = -1;
+
+        public int ArgumentIndex
+        {
+            get => _argumentIndex;
+            set => SetField( ref _argumentIndex, value );
+        }
+
+        public bool Arguments
+        {
+            get => _arguments;
+            set
+            {
+                switch ( value )
+                {
+                    case false when ArgumentIndex != -1:
+                        ArgumentIndex = -1;
+                        break;
+                    case true when ArgumentIndex < 0:
+                        ArgumentIndex = 0;
+                        break;
+                }
+
+                SetField( ref _arguments, value );
+            }
+        }
+
         public int Cliloc { get; set; }
         public string Name { get; set; }
 
@@ -224,9 +240,22 @@ namespace ClassicAssist.UI.ViewModels.Autoloot
                 return 0;
             }
 
-            return ReferenceEquals( null, other )
-                ? 1
-                : string.Compare( Name, other.Name, StringComparison.InvariantCultureIgnoreCase );
+            return ReferenceEquals( null, other ) ? 1 : string.Compare( Name, other.Name, StringComparison.InvariantCultureIgnoreCase );
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
+        {
+            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+        }
+
+        protected bool SetField<T>( ref T field, T value, [CallerMemberName] string propertyName = null )
+        {
+            if ( EqualityComparer<T>.Default.Equals( field, value ) ) return false;
+            field = value;
+            OnPropertyChanged( propertyName );
+            return true;
         }
     }
 }

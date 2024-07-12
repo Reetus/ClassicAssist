@@ -367,6 +367,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Argument Index.
+        /// </summary>
+        public static string Argument_Index {
+            get {
+                return ResourceManager.GetString("Argument Index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Arguments.
         /// </summary>
         public static string Arguments {

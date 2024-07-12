@@ -2055,4 +2055,7 @@ Are you sure you wish to continue?</value>
   <data name="Ignore duplicate entries" xml:space="preserve">
     <value>Ignore duplicate entries</value>
   </data>
+  <data name="Argument Index" xml:space="preserve">
+    <value>Argument Index</value>
+  </data>
 </root>

@@ -7,8 +7,10 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:autoloot1="clr-namespace:ClassicAssist.UI.ViewModels.Autoloot"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+        xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+        xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
         mc:Ignorable="d"
-        Title="{x:Static resources:Strings.Define_Custom_Properties}" Height="350" Width="650"
+        Title="{x:Static resources:Strings.Define_Custom_Properties}" Height="350" Width="725"
         Background="{DynamicResource ThemeWindowBackgroundBrush}" Topmost="True">
     <Window.DataContext>
         <autoloot1:CustomPropertiesViewModel />
@@ -18,6 +20,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -37,6 +41,18 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate DataType="autoloot1:CustomProperty">
                                 <CheckBox IsChecked="{Binding Arguments}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="{x:Static resources:Strings.Argument_Index}" Width="100"
+                                    x:Name="ArgumentIndexColumn">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="autoloot1:CustomProperty">
+                                <controls:EditTextBlock Text="{Binding ArgumentIndex}"
+                                                        Foreground="{StaticResource ThemeForegroundBrush}"
+                                                        ShowIcon="True"
+                                                        Visibility="{Binding Arguments, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                        Width="{Binding ActualWidth,ElementName=ArgumentIndexColumn, Converter={StaticResource CellWidthValueConverter}}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

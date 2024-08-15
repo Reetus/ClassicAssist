@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Helpers;
 
@@ -60,7 +61,10 @@ namespace ClassicAssist.UO.Data
                 throw new FileNotFoundException( "File not found.", filename );
             }
 
-            byte[] fileBytes = File.ReadAllBytes( filename );
+            bool newFormat = Engine.ClientVersion >= Version.Parse( "7.0.104.0" );
+            byte[] rawBytes = File.ReadAllBytes( filename );
+
+            byte[] fileBytes = newFormat ? BwtDecompress.Decompress( rawBytes ) : rawBytes;
 
             Dictionary<int, string> clilocList = new Dictionary<int, string>( 100000 );
 

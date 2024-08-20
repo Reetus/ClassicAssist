@@ -209,7 +209,7 @@ namespace ClassicAssist.Data.Organizer
 
                         if ( container == null )
                         {
-                            UOC.WaitForContainerContentsUse( container.Serial, 5000 );
+                            UOC.WaitForContainerContentsUse( itemDestinationContainerItem.Serial, 5000 );
                         }
 
                         int currentCount =

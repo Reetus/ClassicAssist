@@ -5,14 +5,22 @@ namespace ClassicAssist.Data.Organizer
     public class OrganizerItem : SetPropertyNotifyChanged
     {
         private int _amount;
+        private int? _destinationContainer;
         private int _hue;
         private int _id;
         private string _item;
+        private int? _sourceContainer;
 
         public int Amount
         {
             get => _amount;
             set => SetProperty( ref _amount, value );
+        }
+
+        public int? DestinationContainer
+        {
+            get => _destinationContainer;
+            set => SetProperty( ref _destinationContainer, value );
         }
 
         public int Hue
@@ -31,6 +39,12 @@ namespace ClassicAssist.Data.Organizer
         {
             get => _item;
             set => SetProperty( ref _item, value );
+        }
+
+        public int? SourceContainer
+        {
+            get => _sourceContainer;
+            set => SetProperty( ref _sourceContainer, value );
         }
     }
 }

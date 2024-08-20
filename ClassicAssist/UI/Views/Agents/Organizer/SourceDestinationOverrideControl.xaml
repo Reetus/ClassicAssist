@@ -1,0 +1,66 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+    xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+    xmlns:local="clr-namespace:ClassicAssist.UI.Views.Agents.Organizer"
+    xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+    x:Name="userControl"
+    x:Class="ClassicAssist.UI.Views.Agents.Organizer.SourceDestinationOverrideControl"
+    mc:Ignorable="d"
+    d:DesignWidth="100">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../../Resources/DarkTheme.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <valueConverters:IntToHexStringValueConverter x:Key="IntToHexStringValueConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="{x:Static resources:Strings.Default}">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Serial, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SourceDestinationOverrideControl}}}"
+                            Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <TextBlock Grid.Column="0"
+                   Text="{Binding Serial, Converter={StaticResource IntToHexStringValueConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SourceDestinationOverrideControl}}}">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Serial, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SourceDestinationOverrideControl}}}"
+                            Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <StackPanel Orientation="Horizontal" Grid.Column="1">
+            <controls:ImageButton ImageSource="{StaticResource CrosshairIcon}"
+                                  Command="{Binding SetCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SourceDestinationOverrideControl}}}"
+                                  CommandParameter="{Binding SetCommandParameter, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SourceDestinationOverrideControl}}}" />
+            <controls:ImageButton ImageSource="{StaticResource RemoveIcon}"
+                                  Command="{Binding ClearCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SourceDestinationOverrideControl}}}"
+                                  CommandParameter="{Binding SetCommandParameter, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SourceDestinationOverrideControl}}}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

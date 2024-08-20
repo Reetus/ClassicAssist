@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -68,8 +67,40 @@ namespace ClassicAssist.Data.Organizer
 
                 foreach ( OrganizerItem entryItem in entry.Items )
                 {
-                    Item[] moveItems = sourceContainer?.SelectEntities( i =>
-                        entryItem.ID == i.ID && ( entryItem.Hue == -1 || i.Hue == entryItem.Hue ) && !i.IsDescendantOf( destinationContainer, -1, sourceContainerSerial ) );
+                    int itemDestinationContainer = destinationContainer;
+                    Entity itemDestinationContainerItem = destinationContainerItem;
+
+                    if ( entryItem.DestinationContainer.HasValue )
+                    {
+                        itemDestinationContainer = entryItem.DestinationContainer.Value;
+
+                        itemDestinationContainerItem = (Entity) Engine.Items.GetItem( itemDestinationContainer ) ?? Engine.Mobiles.GetMobile( itemDestinationContainer );
+
+                        if ( itemDestinationContainerItem == null )
+                        {
+                            UOC.SystemMessage( Strings.Invalid_container___ );
+
+                            continue;
+                        }
+                    }
+
+                    int itemSourceContainerSerial = sourceContainerSerial;
+                    ItemCollection itemSourceContainer = sourceContainer;
+
+                    if ( entryItem.SourceContainer.HasValue )
+                    {
+                        itemSourceContainer = Engine.Items.GetItem( entryItem.SourceContainer.Value )?.Container;
+
+                        if ( itemSourceContainer == null )
+                        {
+                            UOC.SystemMessage( Strings.Invalid_container___ );
+
+                            continue;
+                        }
+                    }
+
+                    Item[] moveItems = itemSourceContainer?.SelectEntities( i =>
+                        entryItem.ID == i.ID && ( entryItem.Hue == -1 || i.Hue == entryItem.Hue ) && !i.IsDescendantOf( itemDestinationContainer, -1, itemSourceContainerSerial ) );
 
                     if ( moveItems == null )
                     {
@@ -84,7 +115,7 @@ namespace ClassicAssist.Data.Organizer
                     {
                         ItemCollection container = null;
 
-                        switch ( destinationContainerItem )
+                        switch ( itemDestinationContainerItem )
                         {
                             case Item item:
                                 container = item.Container;
@@ -111,7 +142,7 @@ namespace ClassicAssist.Data.Organizer
 
                         if ( limitAmount )
                         {
-                            if ( moveItem.Count > moveAmount )
+                            if ( moveItem.Count > moveAmount - moved )
                             {
                                 amount = moveAmount - moved;
                             }
@@ -121,11 +152,102 @@ namespace ClassicAssist.Data.Organizer
 
                         if ( entry.Stack )
                         {
-                            await ActionPacketQueue.EnqueueDragDrop( moveItem.Serial, amount, destinationContainerItem.Serial );
+                            await ActionPacketQueue.EnqueueDragDrop( moveItem.Serial, amount, itemDestinationContainerItem.Serial, cancellationToken: token );
                         }
                         else
                         {
-                            await ActionPacketQueue.EnqueueDragDrop( moveItem.Serial, amount, destinationContainerItem.Serial, x: 0, y: 0 );
+                            await ActionPacketQueue.EnqueueDragDrop( moveItem.Serial, amount, itemDestinationContainerItem.Serial, x: 0, y: 0, cancellationToken: token );
+                        }
+
+                        if ( _cancellationTokenSource.IsCancellationRequested )
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                if ( entry.ReturnExcess )
+                {
+                    foreach ( OrganizerItem entryItem in entry.Items )
+                    {
+                        ItemCollection container = null;
+
+                        int itemDestinationContainerSerial = destinationContainer;
+                        Entity itemDestinationContainerItem = destinationContainerItem;
+
+                        if ( entryItem.DestinationContainer.HasValue )
+                        {
+                            itemDestinationContainerSerial = entryItem.DestinationContainer.Value;
+
+                            itemDestinationContainerItem = (Entity) Engine.Items.GetItem( entryItem.DestinationContainer.Value ) ??
+                                                           Engine.Mobiles.GetMobile( entryItem.DestinationContainer.Value );
+
+                            if ( itemDestinationContainerItem == null )
+                            {
+                                UOC.SystemMessage( Strings.Invalid_container___ );
+
+                                continue;
+                            }
+                        }
+
+                        int itemSourceContainerSerial = sourceContainerSerial;
+
+                        if ( entryItem.SourceContainer.HasValue )
+                        {
+                            itemSourceContainerSerial = entryItem.SourceContainer.Value;
+                        }
+
+                        switch ( itemDestinationContainerItem )
+                        {
+                            case Item item:
+                                container = item.Container;
+                                break;
+                            case Mobile mobile:
+                                container = mobile.Backpack.Container;
+                                break;
+                        }
+
+                        if ( container == null )
+                        {
+                            UOC.WaitForContainerContentsUse( container.Serial, 5000 );
+                        }
+
+                        int currentCount =
+                            container?.SelectEntities( i => entryItem.ID == i.ID && ( entryItem.Hue == -1 || i.Hue == entryItem.Hue ) )?.Select( i => i.Count ).Sum() ?? 0;
+
+                        if ( currentCount <= entryItem.Amount )
+                        {
+                            continue;
+                        }
+
+                        int diffAmount = currentCount - entryItem.Amount;
+
+                        Item[] moveItems = container?.SelectEntities( i =>
+                            entryItem.ID == i.ID && ( entryItem.Hue == -1 || i.Hue == entryItem.Hue ) &&
+                            !i.IsDescendantOf( itemSourceContainerSerial, -1, itemDestinationContainerSerial ) );
+
+                        if ( moveItems == null )
+                        {
+                            continue;
+                        }
+
+                        foreach ( Item moveItem in moveItems )
+                        {
+                            int amount = moveItem.Count;
+
+                            if ( moveItem.Count > diffAmount )
+                            {
+                                amount = diffAmount;
+                            }
+
+                            await ActionPacketQueue.EnqueueDragDrop( moveItem.Serial, amount, itemSourceContainerSerial, cancellationToken: token );
+
+                            diffAmount -= amount;
+
+                            if ( diffAmount <= 0 )
+                            {
+                                break;
+                            }
                         }
 
                         if ( _cancellationTokenSource.IsCancellationRequested )

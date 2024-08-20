@@ -12,6 +12,8 @@
     xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
     xmlns:controls1="clr-namespace:ClassicAssist.UI.Controls"
     xmlns:draggableListBox="clr-namespace:ClassicAssist.Controls.DraggableListBox;assembly=ClassicAssist.Controls"
+    xmlns:organizer1="clr-namespace:ClassicAssist.UI.Views.Agents.Organizer"
+    xmlns:local="clr-namespace:ClassicAssist.UI.Views.Agents"
     x:Name="userControl" x:Class="ClassicAssist.UI.Views.Agents.OrganizerTabControl"
     mc:Ignorable="d"
     d:DesignHeight="250" d:DesignWidth="500">
@@ -68,27 +70,39 @@
             <Grid Grid.Row="1">
                 <draggableListBox:DraggableListBox x:Name="listBox" ItemsSource="{Binding Items}"
                                                    SelectedItem="{Binding SelectedItem}">
-                    <ListBox.InputBindings>
+                    <draggableListBox:DraggableListBox.InputBindings>
                         <KeyBinding Key="Delete"
                                     Command="{Binding RemoveItemCommand}" CommandParameter="{Binding SelectedItem}" />
-                    </ListBox.InputBindings>
+                    </draggableListBox:DraggableListBox.InputBindings>
                     <i:Interaction.Behaviors>
                         <misc:ItemsControlSelectNewEntryBehaviour SelectedItem="{Binding SelectedItem}"
                                                                   Type="{x:Type organizer:OrganizerEntry}" />
                     </i:Interaction.Behaviors>
-                    <ListBox.ItemTemplate>
+                    <draggableListBox:DraggableListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
                                 <controls:EditTextBlock
                                     Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                    Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}" />
+                                    Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type ListBox}, Mode=FindAncestor}}" />
                             </Grid>
                         </DataTemplate>
-                    </ListBox.ItemTemplate>
+                    </draggableListBox:DraggableListBox.ItemTemplate>
                 </draggableListBox:DraggableListBox>
             </Grid>
             <StackPanel Grid.Row="2" Margin="0,10,0,0">
                 <CheckBox Content="{x:Static resources:Strings.Complete}" IsChecked="{Binding SelectedItem.Complete}" />
+                <CheckBox Content="{x:Static resources:Strings.Return_Excess}"
+                          IsChecked="{Binding SelectedItem.ReturnExcess}">
+                    <CheckBox.Style>
+                        <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedItem.Complete}" Value="False">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </CheckBox.Style>
+                </CheckBox>
                 <Button Content="{x:Static resources:Strings.New}" Margin="0,5,0,0"
                         Command="{Binding NewOrganizerEntryCommand}" />
                 <Button Content="{x:Static resources:Strings.Remove}" Margin="0,5,0,0"
@@ -101,49 +115,78 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ListView x:Name="itemsListView" Grid.Row="0" ItemsSource="{Binding SelectedItem.Items}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="{x:Static resources:Strings.Item}" Width="120" x:Name="nameColumn">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate DataType="{x:Type organizer:OrganizerItem}">
-                                        <controls:EditTextBlock
-                                            Text="{Binding Item, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                            Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=nameColumn, Mode=OneWay}" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="{x:Static resources:Strings.Graphic}" Width="100"
-                                            DisplayMemberBinding="{Binding ID, StringFormat={}0x{0:x}}" />
-                            <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="80"
-                                            x:Name="HueColumn">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate DataType="organizer:OrganizerItem">
-                                        <Grid>
+                <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+                    <ListView x:Name="itemsListView" ItemsSource="{Binding SelectedItem.Items}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="{x:Static resources:Strings.Item}" Width="120"
+                                                x:Name="nameColumn">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="{x:Type organizer:OrganizerItem}">
                                             <controls:EditTextBlock
-                                                Text="{Binding Hue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                                Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=HueColumn, Mode=OneWay}"
-                                                ShowIcon="True" />
-                                        </Grid>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="{x:Static resources:Strings.Amount}" Width="80"
-                                            x:Name="AmountColumn">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate DataType="organizer:OrganizerItem">
-                                        <Grid>
-                                            <controls:EditTextBlock
-                                                Text="{Binding Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                                Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=AmountColumn, Mode=OneWay}"
-                                                ShowIcon="True" />
-                                        </Grid>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                                                Text="{Binding Item, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                                Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ElementName=nameColumn, Mode=OneWay}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="{x:Static resources:Strings.Graphic}" Width="100"
+                                                DisplayMemberBinding="{Binding ID, StringFormat=0x\{0:x\}}" />
+                                <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="80"
+                                                x:Name="HueColumn">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="organizer:OrganizerItem">
+                                            <Grid>
+                                                <controls:EditTextBlock
+                                                    Text="{Binding Hue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                                    Width="{Binding ActualWidth, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=HueColumn, Mode=OneWay}"
+                                                    ShowIcon="True" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="{x:Static resources:Strings.Amount}" Width="80"
+                                                x:Name="AmountColumn">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="organizer:OrganizerItem">
+                                            <Grid>
+                                                <controls:EditTextBlock
+                                                    Text="{Binding Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                                    Width="{Binding ActualWidth, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=AmountColumn, Mode=OneWay}"
+                                                    ShowIcon="True" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="{x:Static resources:Strings.Source}" Width="120"
+                                                x:Name="SourceColumn">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="organizer:OrganizerItem">
+                                            <organizer1:SourceDestinationOverrideControl
+                                                Serial="{Binding SourceContainer}"
+                                                SetCommand="{Binding DataContext.SetEntrySourceContainerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:OrganizerTabControl}}}"
+                                                SetCommandParameter="{Binding}"
+                                                ClearCommand="{Binding DataContext.ClearEntrySourceContainerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:OrganizerTabControl}}}"
+                                                Width="{Binding ActualWidth, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=SourceColumn, Mode=OneWay}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="{x:Static resources:Strings.Destination}" Width="120"
+                                                x:Name="DestinationColumn">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="organizer:OrganizerItem">
+                                            <organizer1:SourceDestinationOverrideControl
+                                                Serial="{Binding DestinationContainer}"
+                                                SetCommand="{Binding DataContext.SetEntryDestinationContainerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:OrganizerTabControl}}}"
+                                                SetCommandParameter="{Binding}"
+                                                ClearCommand="{Binding DataContext.ClearEntryDestinationContainerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:OrganizerTabControl}}}"
+                                                Width="{Binding ActualWidth, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=DestinationColumn, Mode=OneWay}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </ScrollViewer>
                 <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,5,0,0">
                     <StackPanel.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">

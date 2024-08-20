@@ -1384,11 +1384,29 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default.
+        /// </summary>
+        public static string Default {
+            get {
+                return ResourceManager.GetString("Default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Define Custom Properties.
         /// </summary>
         public static string Define_Custom_Properties {
             get {
                 return ResourceManager.GetString("Define Custom Properties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Destination.
+        /// </summary>
+        public static string Destination {
+            get {
+                return ResourceManager.GetString("Destination", resourceCulture);
             }
         }
         
@@ -4297,6 +4315,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Return Excess.
+        /// </summary>
+        public static string Return_Excess {
+            get {
+                return ResourceManager.GetString("Return Excess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Run in background.
         /// </summary>
         public static string Run_in_background {
@@ -4815,6 +4842,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Sound_Type {
             get {
                 return ResourceManager.GetString("Sound Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source.
+        /// </summary>
+        public static string Source {
+            get {
+                return ResourceManager.GetString("Source", resourceCulture);
             }
         }
         

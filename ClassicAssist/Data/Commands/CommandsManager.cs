@@ -192,7 +192,8 @@ namespace ClassicAssist.Data.Commands
                 }
                 else
                 {
-                    MacroManager.GetInstance().Execute( macro );
+                    object[] macroArgs = parameters.Skip( 1 ).Cast<object>().ToArray();
+                    MacroManager.GetInstance().Execute( macro, macroArgs );
                 }
 
                 return true;

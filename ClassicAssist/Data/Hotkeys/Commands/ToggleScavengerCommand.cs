@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (C) 2024 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -8,13 +9,14 @@
 // 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
+
 #endregion
 
 using ClassicAssist.Data.Macros.Commands;
 
 namespace ClassicAssist.Data.Hotkeys.Commands
 {
-    [HotkeyCommand( Name = "Toggle Scavenger", Category = "Scavenger")]
+    [HotkeyCommand( Name = "Toggle Scavenger", Category = "Scavenger" )]
     public class ToggleScavengerCommand : HotkeyCommand
     {
         public override void Execute()

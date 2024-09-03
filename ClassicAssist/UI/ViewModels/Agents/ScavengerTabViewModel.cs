@@ -61,8 +61,6 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 {
                     CheckArea();
                 }
-
-                return Enabled = val;
             };
             _ignoreList = new List<int>();
         }

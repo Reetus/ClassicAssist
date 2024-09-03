@@ -5359,6 +5359,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toggle Scavenger.
+        /// </summary>
+        public static string Toggle_Scavenger {
+            get {
+                return ResourceManager.GetString("Toggle Scavenger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Toggle Secondary Ability.
         /// </summary>
         public static string Toggle_Secondary_Ability {

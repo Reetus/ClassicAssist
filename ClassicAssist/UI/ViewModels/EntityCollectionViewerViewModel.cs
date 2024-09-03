@@ -464,8 +464,8 @@ namespace ClassicAssist.UI.ViewModels
 
                         Commands.SystemMessage( $"{sourceStack.Name} => {destStack.Name}", SystemMessageHues.Green );
 
-                        await ActionPacketQueue.EnqueueDragDrop( sourceStack.Serial, needed > sourceStack.Count ? sourceStack.Count : needed, destStack.Serial, QueuePriority.Low,
-                            false, true, false );
+                        await ActionPacketQueue.EnqueueDragDrop( sourceStack.Serial, needed > sourceStack.Count ? sourceStack.Count : needed, destStack.Serial,
+                            options: new DragDropOptions { CheckExisting = true, DelaySend = false } );
 
                         await Task.Delay( TimeSpan.FromMilliseconds( Data.Options.CurrentOptions.ActionDelayMS ), action.CancellationTokenSource.Token );
 

@@ -53,7 +53,15 @@ namespace ClassicAssist.UI.ViewModels.Agents
             manager.Items = Items;
             manager.CheckArea = CheckArea;
             manager.IsEnabled = () => Enabled;
-            manager.SetEnabled = val => Enabled = val;
+            manager.SetEnabled = val =>
+            {
+                Enabled = val;
+
+                if ( val )
+                {
+                    CheckArea();
+                }
+            };
             _ignoreList = new List<int>();
         }
 
@@ -347,6 +355,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 foreach ( Item scavengerItem in scavengerItems.Where( i =>
                     i.Distance <= SCAVENGER_DISTANCE && !_ignoreList.Contains( i.Serial ) ) )
                 {
+                    if ( !Enabled )
+                    {
+                        break;
+                    }
+
                     Item refetchedItem = Engine.Items.GetItem( scavengerItem.Serial );
 
                     if ( refetchedItem == null || refetchedItem.IsDescendantOf( ContainerSerial == 0
@@ -357,9 +370,19 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     }
 
                     UOC.SystemMessage( string.Format( Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown" ), 61 );
-                    Task<bool> t = ActionPacketQueue.EnqueueDragDrop( scavengerItem.Serial, scavengerItem.Count,
-                        container.Serial, QueuePriority.Low, true, true, requeueOnFailure: false,
-                        successPredicate: CheckItemContainer );
+
+                    DragDropOptions options = new DragDropOptions
+                    {
+                        CheckRange = true,
+                        CheckExisting = true,
+                        RequeueFailure = false,
+                        SuccessPredicate = CheckItemContainer,
+                        RecheckWeight = true,
+                        WeightPredicate = RecheckWeight,
+                        CanPerformAction = () => Enabled
+                    };
+
+                    Task<bool> t = ActionPacketQueue.EnqueueDragDrop( scavengerItem.Serial, scavengerItem.Count, container.Serial, options: options );
 
                     if ( t.Result )
                     {
@@ -371,6 +394,16 @@ namespace ClassicAssist.UI.ViewModels.Agents
             {
                 Monitor.Exit( _scavengeLock );
             }
+        }
+
+        private bool RecheckWeight( int serial, int containerSerial )
+        {
+            if ( !CheckWeight )
+            {
+                return true;
+            }
+
+            return Engine.Player.WeightMax - Engine.Player.Weight > MinWeightAvailable;
         }
 
         private static bool CheckItemContainer( int serial, int containerSerial )

@@ -40,6 +40,18 @@ namespace ClassicAssist.UO.Network
         Finish
     }
 
+    public class DragDropOptions
+    {
+        public bool CheckRange { get; set; }
+        public bool CheckExisting { get; set; }
+        public bool RecheckWeight { get; set; }
+        public bool RequeueFailure { get; set; }
+        public bool DelaySend { get; set; } = true;
+        public Func<bool> CanPerformAction { get; set; }
+        public Func<int, int, bool> SuccessPredicate { get; set; }
+        public Func<int, int, bool> WeightPredicate { get; set; }
+    }
+
     public static class ActionPacketQueue
     {
         public delegate void dActionQueueEvent( ActionQueueEvents actionEvent, BaseQueueItem queueItem );
@@ -96,25 +108,40 @@ namespace ClassicAssist.UO.Network
                 case ActionQueueItem actionItem:
                     {
                         actionItem.TimeSpan = DateTime.Now - actionItem.DateTime;
+                        bool? result;
+
                         ActionQueueEvent?.Invoke( ActionQueueEvents.Enter, actionItem );
 
-                        if ( Options.CurrentOptions.ActionDelay && actionItem.DelaySend )
+                        bool canPerformAction = true;
+
+                        if (actionItem.Options?.CanPerformAction != null )
                         {
-                            while ( Engine.LastActionPacket +
-                                TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) > DateTime.Now )
-                            {
-                                Thread.Sleep( 1 );
-                            }
+                            canPerformAction = actionItem.Options.CanPerformAction.Invoke();
                         }
 
-                        actionItem.TimeSpan = DateTime.Now - actionItem.DateTime;
-                        ActionQueueEvent?.Invoke( ActionQueueEvents.Execute, actionItem );
-
-                        bool? result = actionItem.Action?.Invoke( actionItem.Arguments );
-
-                        if ( result.HasValue && result.Value )
+                        if ( canPerformAction)
                         {
-                            Engine.LastActionPacket = DateTime.Now;
+                            if ( Options.CurrentOptions.ActionDelay && actionItem.DelaySend )
+                            {
+                                while ( Engine.LastActionPacket + TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) > DateTime.Now )
+                                {
+                                    Thread.Sleep( 1 );
+                                }
+                            }
+
+                            actionItem.TimeSpan = DateTime.Now - actionItem.DateTime;
+                            ActionQueueEvent?.Invoke( ActionQueueEvents.Execute, actionItem );
+
+                            result = actionItem.Action?.Invoke( actionItem.Arguments );
+
+                            if ( result.HasValue && result.Value )
+                            {
+                                Engine.LastActionPacket = DateTime.Now;
+                            }
+                        }
+                        else
+                        {
+                            result = false;
                         }
 
                         actionItem.Result = result ?? true;
@@ -232,15 +259,27 @@ namespace ClassicAssist.UO.Network
             return handles.ToTask();
         }
 
-        public static Task<bool> EnqueueDragDrop( int serial, int amount, int containerSerial,
-            QueuePriority priority = QueuePriority.Low, bool checkRange = false, bool checkExisting = false,
-            bool delaySend = true, int x = -1, int y = -1, CancellationToken cancellationToken = default,
-            bool requeueOnFailure = false, Func<int, int, bool> successPredicate = null, int attempt = 0,
-            [CallerMemberName] string caller = "" )
+        public static Task<bool> EnqueueDragDrop( int serial, int amount, int containerSerial, QueuePriority priority = QueuePriority.Low, int x = -1,
+            int y = -1, CancellationToken cancellationToken = default, DragDropOptions options = null, int attempt = 0, [CallerMemberName] string caller = "" )
         {
-            if ( checkExisting && _actionPacketQueue.Contains( e => e is ActionQueueItem aqi && aqi.Serial == serial ) )
+            if ( (options?.CheckExisting ?? false) && _actionPacketQueue.Contains( e => e is ActionQueueItem aqi && aqi.Serial == serial ) )
             {
-                return Task.FromResult( true );
+                return Task.FromResult( false );
+            }
+
+            if ( ( options?.RecheckWeight ?? false ) )
+            {
+                bool canHold = Engine.Player.Weight < Engine.Player.WeightMax;
+
+                if ( options.WeightPredicate != null )
+                {
+                    canHold = options.WeightPredicate.Invoke( serial, containerSerial );
+                }
+
+                if ( !canHold )
+                {
+                    return Task.FromResult( false );
+                }
             }
 
             ActionQueueItem actionQueueItem = new ActionQueueItem( param =>
@@ -267,14 +306,14 @@ namespace ClassicAssist.UO.Network
                 Engine.SendPacketToServer( new DropItem( serial, containerSerial, x, y, 0 ) );
                 Engine.LastActionPacket = DateTime.Now;
 
-                if ( !requeueOnFailure || successPredicate == null || attempt >= MAX_ATTEMPTS )
+                if ( !(options?.RequeueFailure ?? false) || options.SuccessPredicate == null || attempt >= MAX_ATTEMPTS )
                 {
                     return true;
                 }
 
                 Commands.WaitForContainerContents( containerSerial, Options.CurrentOptions.ActionDelayMS );
 
-                bool result = successPredicate.Invoke( serial, containerSerial );
+                bool result = options.SuccessPredicate.Invoke( serial, containerSerial );
 
                 if ( result )
                 {
@@ -284,18 +323,18 @@ namespace ClassicAssist.UO.Network
 #if DEBUG
                 Commands.SystemMessage( $"Requeue: 0x{serial:x8}" );
 #endif
-                EnqueueDragDrop( serial, amount, containerSerial, priority, checkRange, checkExisting, delaySend, x, y,
-                    cancellationToken, true, successPredicate, ++attempt );
+                EnqueueDragDrop( serial, amount, containerSerial, priority, x, y, cancellationToken, options, ++attempt );
 
                 //// Return false so we don't rewait the action delay
                 return false;
             } )
             {
-                CheckRange = checkRange,
-                DelaySend = delaySend,
+                CheckRange = options?.CheckRange ?? false,
+                DelaySend = options?.DelaySend ?? true,
                 Serial = serial,
-                Arguments = checkRange,
-                Caller = caller
+                Arguments = options?.CheckRange ?? false,
+                Caller = caller,
+                Options = options
             };
 
             Enqueue( actionQueueItem, priority );
@@ -339,7 +378,7 @@ namespace ClassicAssist.UO.Network
 
         public static bool CheckUseObjectQueueLength()
         {
-            if ( _actionPacketQueue.Count() < Options.CurrentOptions.UseObjectQueueAmount )
+            if ( !Options.CurrentOptions.UseObjectQueue || _actionPacketQueue.Count() < Options.CurrentOptions.UseObjectQueueAmount )
             {
                 return true;
             }

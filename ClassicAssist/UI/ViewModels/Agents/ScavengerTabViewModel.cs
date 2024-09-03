@@ -27,7 +27,6 @@ namespace ClassicAssist.UI.ViewModels.Agents
     public class ScavengerTabViewModel : BaseViewModel, ISettingProvider
     {
         private const int SCAVENGER_DISTANCE = 2;
-        private readonly List<int> _ignoreList;
         private readonly object _scavengeLock = new object();
         private bool _checkWeight;
         private ICommand _clearAllCommand;
@@ -53,8 +52,15 @@ namespace ClassicAssist.UI.ViewModels.Agents
             manager.Items = Items;
             manager.CheckArea = CheckArea;
             manager.IsEnabled = () => Enabled;
-            manager.SetEnabled = val => Enabled = val;
-            _ignoreList = new List<int>();
+            manager.SetEnabled = val =>
+            {
+                Enabled = val;
+
+                if ( val )
+                {
+                    CheckArea();
+                }
+            };
         }
 
         public bool CheckWeight
@@ -301,10 +307,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     }
 
                     Item[] matches = Engine.Items.SelectEntities( i =>
-                        i?.Distance <= SCAVENGER_DISTANCE && i.Owner == 0 && i.ID == entry.Graphic &&
-                        ( entry.Hue == -1 || i.Hue == entry.Hue ) && !_ignoreList.Contains( i.Serial ) &&
-                        ( !FilterEnabled ||
-                          !i.Properties.Any( e => Filters.Select( f => f.Cliloc ).Contains( e.Cliloc ) ) ) );
+                        i?.Distance <= SCAVENGER_DISTANCE && i.Owner == 0 && i.ID == entry.Graphic && ( entry.Hue == -1 || i.Hue == entry.Hue ) 
+                        && ( !FilterEnabled || !i.Properties.Any( e => Filters.Select( f => f.Cliloc ).Contains( e.Cliloc ) ) ) );
 
                     if ( matches == null )
                     {
@@ -313,8 +317,6 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                     scavengerItems.AddRange( matches );
                 }
-
-                _ignoreList.Clear();
 
                 if ( scavengerItems.Count == 0 )
                 {
@@ -344,9 +346,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
 #endif
                 }
 
-                foreach ( Item scavengerItem in scavengerItems.Where( i =>
-                    i.Distance <= SCAVENGER_DISTANCE && !_ignoreList.Contains( i.Serial ) ) )
+                foreach ( Item scavengerItem in scavengerItems.Where( i => i.Distance <= SCAVENGER_DISTANCE) )
                 {
+                    if ( !Enabled )
+                    {
+                        break;
+                    }
+
                     Item refetchedItem = Engine.Items.GetItem( scavengerItem.Serial );
 
                     if ( refetchedItem == null || refetchedItem.IsDescendantOf( ContainerSerial == 0
@@ -356,21 +362,38 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         continue;
                     }
 
-                    UOC.SystemMessage( string.Format( Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown" ), 61 );
-                    Task<bool> t = ActionPacketQueue.EnqueueDragDrop( scavengerItem.Serial, scavengerItem.Count,
-                        container.Serial, QueuePriority.Low, true, true, requeueOnFailure: false,
-                        successPredicate: CheckItemContainer );
-
-                    if ( t.Result )
+                    DragDropOptions options = new DragDropOptions
                     {
-                        _ignoreList.Add( scavengerItem.Serial );
-                    }
+                        CheckRange = true,
+                        CheckExisting = true,
+                        RequeueFailure = false,
+                        SuccessPredicate = CheckItemContainer,
+                        CanPerformAction = CheckEnabledWeight,
+                        BeforeDragDrop = item => UOC.SystemMessage( string.Format( Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown" ), 61 )
+                    };
+
+                    ActionPacketQueue.EnqueueDragDrop( scavengerItem, scavengerItem.Count, container.Serial, options: options );
                 }
             }
             finally
             {
                 Monitor.Exit( _scavengeLock );
             }
+        }
+
+        private bool CheckEnabledWeight()
+        {
+            if (!Enabled)
+            {
+                return false;
+            }
+
+            if ( !CheckWeight )
+            {
+                return true;
+            }
+
+            return Engine.Player.WeightMax - Engine.Player.Weight > MinWeightAvailable;
         }
 
         private static bool CheckItemContainer( int serial, int containerSerial )

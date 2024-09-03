@@ -211,7 +211,7 @@ namespace ClassicAssist.Data.Macros.Commands
             }
 
             UOC.SystemMessage( string.Format( Strings._0__agent_is_now__1_, Strings.Scavenger, ( manager.IsEnabled() ? Strings.Enabled : Strings.Disabled ).ToLower() ),
-                SystemMessageHues.Yellow, true );
+                SystemMessageHues.Yellow );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Trade ), Parameters = new[] { nameof( ParameterType.Timeout ) } )]

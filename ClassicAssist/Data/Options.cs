@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Media;
 using Assistant;
 using ClassicAssist.Data.Friends;
@@ -706,6 +707,10 @@ namespace ClassicAssist.Data
                 }
                 catch ( Exception e )
                 {
+#if DEBUG
+                    MessageBox.Show( "Error loading profile: \n\n" + e );
+                    Environment.Exit( 0 );
+#endif
                     Console.WriteLine( e );
 
                     SentrySdk.CaptureException( e, scope => scope.SetTag( "Profile", optionsFile ) );

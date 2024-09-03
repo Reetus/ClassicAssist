@@ -2070,4 +2070,7 @@ Are you sure you wish to continue?</value>
   <data name="Default" xml:space="preserve">
     <value>Default</value>
   </data>
+  <data name="Toggle Scavenger" xml:space="preserve">
+    <value>Toggle Scavenger</value>
+  </data>
 </root>

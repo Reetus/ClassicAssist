@@ -350,8 +350,8 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            ActionPacketQueue.EnqueueDragDrop( itemSerial, amount, containerSerial, QueuePriority.Low, false, true,
-                false, x, y );
+            ActionPacketQueue.EnqueueDragDrop( itemSerial, amount, containerSerial, QueuePriority.Low, x, y,
+                options: new DragDropOptions { CheckExisting = true, DelaySend = false } );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Entity ),

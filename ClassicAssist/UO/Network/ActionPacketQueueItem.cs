@@ -65,5 +65,6 @@ namespace ClassicAssist.UO.Network
         public object Arguments { get; set; }
         public bool CheckRange { get; set; }
         public int Serial { get; set; }
+        public DragDropOptions Options { get; set; }
     }
 }

@@ -717,9 +717,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         UOC.SystemMessage( string.Format( Strings.Autolooting___0__, lootItem.Name ),
                             (int) SystemMessageHues.Yellow );
 
-                        Task t = ActionPacketQueue.EnqueueDragDrop( lootItem.Serial, lootItem.Count, containerSerial,
-                            QueuePriority.High, true, true, requeueOnFailure: RequeueFailedItems,
-                            successPredicate: CheckItemContainer );
+                        DragDropOptions options = new DragDropOptions
+                        {
+                            CheckRange = true, CheckExisting = true, RequeueFailure = RequeueFailedItems, SuccessPredicate = CheckItemContainer
+                        };
+
+                        Task t = ActionPacketQueue.EnqueueDragDrop( lootItem.Serial, lootItem.Count, containerSerial, QueuePriority.High, options: options );
 
                         t.Wait( LOOT_TIMEOUT );
                     }

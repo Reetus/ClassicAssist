@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using Assistant;
@@ -71,9 +72,10 @@ namespace ClassicAssist.UI.ViewModels.Debug
             sb.AppendLine( $"Gump ID: 0x{value.ID:x8}" );
             sb.AppendLine( $"Serial: 0x{value.Serial:x8}" );
             sb.AppendLine( $"Pages: {value.Pages?.Length}" );
+            sb.AppendLine( $"X: {value.X}, Y: {value.Y}" );
             sb.AppendLine();
             sb.AppendLine(
-                $"Layout: ({value.Layout?.Length})\r\n\r\n{string.Join( "}\r\n", value.Layout?.Split( '}' ) ?? new string[0] )}" );
+                $"Layout: ({value.Layout?.Length})\r\n\r\n{string.Join( "}\r\n", value.Layout?.Split( '}' ) ?? Array.Empty<string>() )}" );
             sb.AppendLine();
             sb.AppendLine( $"Text: ({value.Strings.Length})\r\n\r\n{string.Join( "\r\n", value.Strings )}" );
             sb.AppendLine();

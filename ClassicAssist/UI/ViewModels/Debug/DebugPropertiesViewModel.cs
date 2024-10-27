@@ -23,6 +23,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using Assistant;
@@ -38,7 +39,9 @@ namespace ClassicAssist.UI.ViewModels.Debug
 {
     public class DebugPropertiesViewModel : DebugBaseViewModel
     {
+        private ICommand _clipboardCopyCommand;
         private ObservableCollection<Property> _items = new ObservableCollection<Property>();
+        private Property _selectedItem;
         private ICommand _targetCommand;
 
         public DebugPropertiesViewModel()
@@ -53,12 +56,12 @@ namespace ClassicAssist.UI.ViewModels.Debug
                 Items.Clear();
                 Items.AddRange( properties.Select( entityProperty => new Property
                 {
-                    Cliloc = entityProperty.Cliloc,
-                    Text = Cliloc.GetProperty( entityProperty.Cliloc ),
-                    Arguments = entityProperty.Arguments
+                    Cliloc = entityProperty.Cliloc, Text = Cliloc.GetProperty( entityProperty.Cliloc ), Arguments = entityProperty.Arguments
                 } ).ToList() );
             };
         }
+
+        public ICommand ClipboardCopyCommand => _clipboardCopyCommand ?? ( _clipboardCopyCommand = new RelayCommand( ClipboardCopy ) );
 
         public ObservableCollection<Property> Items
         {
@@ -66,8 +69,23 @@ namespace ClassicAssist.UI.ViewModels.Debug
             set => SetProperty( ref _items, value );
         }
 
-        public ICommand TargetCommand =>
-            _targetCommand ?? ( _targetCommand = new RelayCommandAsync( Target, o => Engine.Connected ) );
+        public Property SelectedItem
+        {
+            get => _selectedItem;
+            set => SetProperty( ref _selectedItem, value );
+        }
+
+        public ICommand TargetCommand => _targetCommand ?? ( _targetCommand = new RelayCommandAsync( Target, o => Engine.Connected ) );
+
+        private void ClipboardCopy( object obj )
+        {
+            if (SelectedItem == null )
+            {
+                return;
+            }
+
+            Clipboard.SetText( $"{SelectedItem.Cliloc} // {SelectedItem.Text}" );
+        }
 
         private async Task Target( object arg )
         {
@@ -78,9 +96,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
                 return;
             }
 
-            Entity entity = UOMath.IsMobile( serial )
-                ? Engine.Mobiles.GetMobile( serial )
-                : (Entity) Engine.Items.GetItem( serial );
+            Entity entity = UOMath.IsMobile( serial ) ? Engine.Mobiles.GetMobile( serial ) : (Entity) Engine.Items.GetItem( serial );
 
             if ( entity == null )
             {
@@ -103,9 +119,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
             List<Property> properties = entity.Properties.Select( entityProperty => new Property
             {
-                Cliloc = entityProperty.Cliloc,
-                Text = Cliloc.GetProperty( entityProperty.Cliloc ),
-                Arguments = entityProperty.Arguments
+                Cliloc = entityProperty.Cliloc, Text = Cliloc.GetProperty( entityProperty.Cliloc ), Arguments = entityProperty.Arguments
             } ).ToList();
 
             Items.Clear();

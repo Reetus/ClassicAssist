@@ -115,6 +115,7 @@ namespace ClassicAssist.Launcher
                             Port = token["Port"]?.ToObject<int>() ?? 2593,
                             HasStatusProtocol = token["HasStatusProtocol"]?.ToObject<bool>() ?? true,
                             Encryption = token["Encryption"]?.ToObject<bool>() ?? false,
+                            Website = token["Website"]?.ToObject<string>(),
                             IsPreset = true
                         };
 

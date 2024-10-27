@@ -2073,4 +2073,7 @@ Are you sure you wish to continue?</value>
   <data name="Toggle Scavenger" xml:space="preserve">
     <value>Toggle Scavenger</value>
   </data>
+  <data name="Backpack Graphic" xml:space="preserve">
+    <value>Backpack Graphic</value>
+  </data>
 </root>

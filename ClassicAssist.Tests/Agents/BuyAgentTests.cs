@@ -340,7 +340,8 @@ namespace ClassicAssist.Tests.Agents
                 Enabled = true,
                 Graphic = 0xFA9,
                 Hue = -1,
-                MaxPrice = -1
+                MaxPrice = -1,
+                BackpackGraphic = 0xFA9
             } );
 
             vm.Items.Add( entry );

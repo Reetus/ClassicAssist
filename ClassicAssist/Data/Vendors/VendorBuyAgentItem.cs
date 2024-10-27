@@ -10,6 +10,7 @@ namespace ClassicAssist.Data.Vendors
         private int _hue;
         private int _maxPrice;
         private string _name;
+        private int _backpackGraphic;
 
         public int Amount
         {
@@ -45,6 +46,12 @@ namespace ClassicAssist.Data.Vendors
         {
             get => _name;
             set => SetProperty( ref _name, value );
+        }
+
+        public int BackpackGraphic
+        {
+            get => _backpackGraphic;
+            set => SetProperty( ref _backpackGraphic, value );
         }
     }
 }

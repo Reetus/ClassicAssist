@@ -583,6 +583,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Backpack Graphic.
+        /// </summary>
+        public static string Backpack_Graphic {
+            get {
+                return ResourceManager.GetString("Backpack Graphic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Backup Days.
         /// </summary>
         public static string Backup_Days {

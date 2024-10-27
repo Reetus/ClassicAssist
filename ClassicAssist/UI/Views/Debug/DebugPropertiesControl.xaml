@@ -6,6 +6,8 @@
              xmlns:debug="clr-namespace:ClassicAssist.UI.ViewModels.Debug"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+             xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -29,7 +31,10 @@
             <controls:ImageButton ToolTip="{x:Static resources:Strings.Target_object___}"
                                   Command="{Binding TargetCommand}" ImageSource="{StaticResource CrosshairIcon}" />
         </ToolBar>
-        <ListView Grid.Row="1" ItemsSource="{Binding Items}">
+        <ListView Grid.Row="1" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
+            <b:Interaction.Behaviors>
+                <misc:ClipboardBehaviour CopyCommand="{Binding ClipboardCopyCommand}" />
+            </b:Interaction.Behaviors>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="{x:Static resources:Strings.Cliloc}" Width="75"

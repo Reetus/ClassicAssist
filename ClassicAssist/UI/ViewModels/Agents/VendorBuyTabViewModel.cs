@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data;
-using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Misc;
@@ -55,12 +54,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set => SetProperty( ref _items, value );
         }
 
-        public ICommand RemoveCommand =>
-            _removeCommand ?? ( _removeCommand = new RelayCommand( Remove, o => SelectedItem != null ) );
+        public ICommand RemoveCommand => _removeCommand ?? ( _removeCommand = new RelayCommand( Remove, o => SelectedItem != null ) );
 
-        public ICommand RemoveEntryCommand =>
-            _removeEntryCommand ??
-            ( _removeEntryCommand = new RelayCommand( RemoveEntry, o => SelectedEntry != null ) );
+        public ICommand RemoveEntryCommand => _removeEntryCommand ?? ( _removeEntryCommand = new RelayCommand( RemoveEntry, o => SelectedEntry != null ) );
 
         public VendorBuyAgentItem SelectedEntry
         {
@@ -107,7 +103,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         { "Graphic", item.Graphic },
                         { "Hue", item.Hue },
                         { "Amount", item.Amount },
-                        { "MaxPrice", item.MaxPrice }
+                        { "MaxPrice", item.MaxPrice },
+                        { "BackpackGraphic", item.BackpackGraphic }
                     };
 
                     itemObj.Add( entryObj );
@@ -154,8 +151,14 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         Graphic = token["Graphic"]?.ToObject<int>() ?? 0,
                         Hue = token["Hue"]?.ToObject<int>() ?? 0,
                         Amount = token["Amount"]?.ToObject<int>() ?? 0,
-                        MaxPrice = token["MaxPrice"]?.ToObject<int>() ?? 0
+                        MaxPrice = token["MaxPrice"]?.ToObject<int>() ?? 0,
+                        BackpackGraphic = token["BackpackGraphic"]?.ToObject<int>() ?? 0
                     };
+
+                    if ( vbae.BackpackGraphic == 0 )
+                    {
+                        vbae.BackpackGraphic = vbae.Graphic;
+                    }
 
                     entry.Items.Add( vbae );
                 }
@@ -188,8 +191,14 @@ namespace ClassicAssist.UI.ViewModels.Agents
                             Graphic = item["Graphic"]?.ToObject<int>() ?? 0,
                             Hue = item["Hue"]?.ToObject<int>() ?? 0,
                             Amount = item["Amount"]?.ToObject<int>() ?? 0,
-                            MaxPrice = item["MaxPrice"]?.ToObject<int>() ?? 0
+                            MaxPrice = item["MaxPrice"]?.ToObject<int>() ?? 0,
+                            BackpackGraphic = item["BackpackGraphic"]?.ToObject<int>() ?? 0
                         };
+
+                        if ( vbae.BackpackGraphic == 0 )
+                        {
+                            vbae.BackpackGraphic = vbae.Graphic;
+                        }
 
                         entry.Items.Add( vbae );
                     }
@@ -212,9 +221,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
             {
                 foreach ( VendorBuyAgentItem item in entry.Items.Where( e => e.Enabled ) )
                 {
-                    IEnumerable<ShopListEntry> matches = entries.Where( i =>
-                        i.Item.ID == item.Graphic && ( item.Hue == -1 || i.Item.Hue == item.Hue ) &&
-                        ( item.MaxPrice == -1 || i.Price <= item.MaxPrice ) );
+                    ShopListEntry[] matches = entries.Where( i =>
+                        i.Item.ID == item.Graphic && ( item.Hue == -1 || i.Item.Hue == item.Hue ) && ( item.MaxPrice == -1 || i.Price <= item.MaxPrice ) ).ToArray();
+
+                    if ( matches.Length > 0 && Engine.CharacterListFlags.HasFlag( CharacterListFlags.PaladinNecromancerClassTooltips ) )
+                    {
+                        UOC.WaitForPropertiesAsync( matches.Select( e => e.Item ), 2000 ).ConfigureAwait( false );
+                    }
 
                     foreach ( ShopListEntry match in matches )
                     {
@@ -227,7 +240,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                             if ( entry.IncludeBackpackAmount )
                             {
-                                int currentAmount = ObjectCommands.CountType( item.Graphic, "backpack", item.Hue );
+                                int currentAmount = ObjectCommands.CountType( item.BackpackGraphic, "backpack", item.Hue );
 
                                 if ( currentAmount + match.Amount > item.Amount )
                                 {
@@ -297,7 +310,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 Graphic = item.ID,
                 Amount = -1,
                 Hue = item.Hue,
-                MaxPrice = -1
+                MaxPrice = -1,
+                BackpackGraphic = item.ID
             } );
         }
 

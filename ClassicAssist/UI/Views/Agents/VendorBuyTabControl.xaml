@@ -8,6 +8,7 @@
     xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
     xmlns:draggableListBox="clr-namespace:ClassicAssist.Controls.DraggableListBox;assembly=ClassicAssist.Controls"
+    xmlns:vendors="clr-namespace:ClassicAssist.Data.Vendors"
     x:Class="ClassicAssist.UI.Views.Agents.VendorBuyTabControl"
     mc:Ignorable="d"
     d:DesignWidth="493" d:DesignHeight="400">
@@ -31,7 +32,7 @@
     <Grid Margin="5">
         <Grid.Resources>
             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                <Setter Property="Padding" Value="4"/>
+                <Setter Property="Padding" Value="4" />
             </Style>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
@@ -47,8 +48,9 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <draggableListBox:DraggableListBox x:Name="listView" Grid.Row="0" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}"
-                     HorizontalContentAlignment="Stretch">
+            <draggableListBox:DraggableListBox x:Name="listView" Grid.Row="0" ItemsSource="{Binding Items}"
+                                               SelectedItem="{Binding SelectedItem}"
+                                               HorizontalContentAlignment="Stretch">
                 <draggableListBox:DraggableListBox.Resources>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                         <Style.Triggers>
@@ -101,66 +103,81 @@
                     <CheckBox IsChecked="{Binding SelectedItem.IncludeBackpackAmount}"
                               Content="{x:Static resources:Strings.Include_Backpack_Amount}" />
                 </DockPanel>
-                <ListView x:Name="ListView" Grid.Row="1"
-                          ItemsSource="{Binding SelectedItem.Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          SelectedItem="{Binding SelectedEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          Foreground="Black">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="✓">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Enabled}" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="{x:Static resources:Strings.Graphic}" Width="70"
-                                            x:Name="ItemIDColumn">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <controls:EditTextBlock
-                                            Text="{Binding Graphic, Converter={StaticResource HexToIntValueConverter}, StringFormat=0x\{0:x\}}"
-                                            TabIndex="1"
-                                            Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=ItemIDColumn}"
-                                            ShowIcon="True" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="{x:Static resources:Strings.Name}"
-                                            DisplayMemberBinding="{Binding Name}"
-                                            Width="100" />
-                            <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="70" x:Name="HueColumn">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <controls:EditTextBlock Text="{Binding Hue}" TabIndex="0"
-                                                                Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=HueColumn}"
-                                                                ShowIcon="True" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="{x:Static resources:Strings.Amount}" x:Name="AmountColumn"
-                                            Width="70">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <controls:EditTextBlock Text="{Binding Amount}" TabIndex="1"
-                                                                Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=AmountColumn}"
-                                                                ShowIcon="True" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="{x:Static resources:Strings.Max_Price}" Width="70"
-                                            x:Name="MaxPriceColumn">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <controls:EditTextBlock Text="{Binding MaxPrice}" TabIndex="2"
-                                                                Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=MaxPriceColumn}"
-                                                                ShowIcon="True" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Grid.Row="1">
+                    <ListView x:Name="ListView"
+                              ItemsSource="{Binding SelectedItem.Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding SelectedEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              Foreground="Black">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="✓">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="vendors:VendorBuyAgentItem">
+                                            <CheckBox IsChecked="{Binding Enabled}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="{x:Static resources:Strings.Graphic}" Width="70"
+                                                x:Name="ItemIDColumn">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="vendors:VendorBuyAgentItem">
+                                            <controls:EditTextBlock
+                                                Text="{Binding Graphic, Converter={StaticResource HexToIntValueConverter}, StringFormat=0x\{0:x\}}"
+                                                TabIndex="1"
+                                                Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=ItemIDColumn}"
+                                                ShowIcon="True" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="{x:Static resources:Strings.Name}"
+                                                DisplayMemberBinding="{Binding Name}"
+                                                Width="100" />
+                                <GridViewColumn Header="{x:Static resources:Strings.Color}" Width="70"
+                                                x:Name="HueColumn">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="vendors:VendorBuyAgentItem">
+                                            <controls:EditTextBlock Text="{Binding Hue}" TabIndex="0"
+                                                                    Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=HueColumn}"
+                                                                    ShowIcon="True" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="{x:Static resources:Strings.Amount}" x:Name="AmountColumn"
+                                                Width="70">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="vendors:VendorBuyAgentItem">
+                                            <controls:EditTextBlock Text="{Binding Amount}" TabIndex="1"
+                                                                    Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=AmountColumn}"
+                                                                    ShowIcon="True" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="{x:Static resources:Strings.Max_Price}" Width="70"
+                                                x:Name="MaxPriceColumn">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="vendors:VendorBuyAgentItem">
+                                            <controls:EditTextBlock Text="{Binding MaxPrice}" TabIndex="2"
+                                                                    Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=MaxPriceColumn}"
+                                                                    ShowIcon="True" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="{x:Static resources:Strings.Backpack_Graphic}" Width="100"
+                                                x:Name="BackpackItemIDColumn">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="vendors:VendorBuyAgentItem">
+                                            <controls:EditTextBlock
+                                                Text="{Binding BackpackGraphic, Converter={StaticResource HexToIntValueConverter}, StringFormat=0x\{0:x\}}"
+                                                TabIndex="1"
+                                                Width="{Binding Width, ConverterParameter=15, Converter={StaticResource CellWidthValueConverter}, ElementName=BackpackItemIDColumn}"
+                                                ShowIcon="True" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </ScrollViewer>
                 <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,10,0,0">
                     <Button Content="{x:Static resources:Strings.Insert}" MinWidth="80"
                             Command="{Binding InsertEntryCommand, Mode=OneWay}" Margin="0,0,10,0"

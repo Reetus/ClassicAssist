@@ -24,7 +24,7 @@ namespace ClassicAssist.Launcher
                 Port = 2593,
                 IsPreset = true,
                 HasStatusProtocol = true,
-                Website = "http://www.uocrossroads.net/"
+                Website = "https://www.uocrossroads.net/"
             }, _comparer );
 
             Shards.AddSorted(

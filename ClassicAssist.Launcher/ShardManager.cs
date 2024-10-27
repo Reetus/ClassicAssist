@@ -17,6 +17,16 @@ namespace ClassicAssist.Launcher
 
         private ShardManager()
         {
+            Shards.AddSorted( new ShardEntry
+            {
+                Name = "The Crossroads (ML)",
+                Address = "login.uocrossroads.net",
+                Port = 2593,
+                IsPreset = true,
+                HasStatusProtocol = true,
+                Website = "https://www.uocrossroads.net/"
+            }, _comparer );
+
             Shards.AddSorted(
                 new ShardEntry
                 {
@@ -37,16 +47,6 @@ namespace ClassicAssist.Launcher
                     Port = 2593,
                     IsPreset = true,
                     Website = "https://uogdemise.com/"
-                }, _comparer );
-
-            Shards.AddSorted(
-                new ShardEntry
-                {
-                    Name = "UOGamers: Hybrid",
-                    Address = "login.uohybrid.com",
-                    Port = 2593,
-                    IsPreset = true,
-                    Website = "http://uohybrid.com/"
                 }, _comparer );
 
             Shards.AddSorted(

@@ -132,11 +132,11 @@ namespace ClassicAssist.Data.Macros.Commands
                 nameof( ParameterType.XCoordinate ), nameof( ParameterType.YCoordinate ),
                 nameof( ParameterType.ZCoordinate )
             } )]
-        public static bool Pathfind( int x, int y, int z )
+        public static bool Pathfind( int x, int y, int z, bool checkDistance = true )
         {
             int distance = Math.Max( Math.Abs( x - Engine.Player?.X ?? x ), Math.Abs( y - Engine.Player?.Y ?? y ) );
 
-            if ( distance > PATHFIND_MAX_DISTANCE )
+            if ( distance > PATHFIND_MAX_DISTANCE && checkDistance)
             {
                 UOC.SystemMessage( Strings.Maximum_distance_exceeded_ );
                 return false;

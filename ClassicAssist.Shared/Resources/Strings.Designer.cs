@@ -745,6 +745,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Buy_Agent___Not_enough_weight_available___ {
+            get {
+                return ResourceManager.GetString("Buy Agent - Not enough weight available...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Buy Agent: No matches found..
         /// </summary>
         public static string Buy_Agent__No_matches_found_ {
@@ -2667,6 +2676,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Item_properties_null_or_not_loaded___ {
             get {
                 return ResourceManager.GetString("Item properties null or not loaded...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Weight.
+        /// </summary>
+        public static string Item_Weight {
+            get {
+                return ResourceManager.GetString("Item Weight", resourceCulture);
             }
         }
         

@@ -2076,4 +2076,10 @@ Are you sure you wish to continue?</value>
   <data name="Backpack Graphic" xml:space="preserve">
     <value>Backpack Graphic</value>
   </data>
+  <data name="Item Weight" xml:space="preserve">
+    <value>Item Weight</value>
+  </data>
+  <data name="Buy Agent: Not enough weight available..." xml:space="preserve">
+    <value>Buy Agent: Not enough weight available...</value>
+  </data>
 </root>

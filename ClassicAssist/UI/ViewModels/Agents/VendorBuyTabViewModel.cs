@@ -242,6 +242,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             List<ShopListEntry> buyList = new List<ShopListEntry>();
 
+            int purchasedWeight = 0;
+
             foreach ( VendorBuyAgentEntry entry in Items.Where( e => e.Enabled ) )
             {
                 foreach ( VendorBuyAgentItem item in entry.Items.Where( e => e.Enabled ) )
@@ -254,7 +256,6 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         UOC.WaitForPropertiesAsync( matches.Select( e => e.Item ), 2000 ).ConfigureAwait( false );
                     }
 
-                    int purchasedWeight = 0;
 
                     foreach ( ShopListEntry match in matches )
                     {

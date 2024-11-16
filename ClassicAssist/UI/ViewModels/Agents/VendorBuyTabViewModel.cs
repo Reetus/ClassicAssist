@@ -211,7 +211,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                             Amount = item["Amount"]?.ToObject<int>() ?? 0,
                             MaxPrice = item["MaxPrice"]?.ToObject<int>() ?? 0,
                             BackpackGraphic = item["BackpackGraphic"]?.ToObject<int>() ?? 0,
-                            Weight = token["Weight"]?.ToObject<int>() ?? 0
+                            Weight = item["Weight"]?.ToObject<int>() ?? 0
                         };
 
                         if ( vbae.BackpackGraphic == 0 )

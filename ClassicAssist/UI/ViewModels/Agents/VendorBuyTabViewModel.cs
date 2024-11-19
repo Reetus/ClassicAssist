@@ -286,8 +286,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
                             if ( match.Amount > maxBuy )
                             {
                                 match.Amount = maxBuy;
-                                purchasedWeight += (int) ( match.Amount * item.Weight );
                             }
+
+                            purchasedWeight += (int) ( match.Amount * item.Weight );
                         }
 
                         if ( match.Amount > 0 && buyList.All( e => e.Item.Serial != match.Item.Serial ) )

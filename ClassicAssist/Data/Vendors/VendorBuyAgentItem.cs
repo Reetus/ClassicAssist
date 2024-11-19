@@ -5,17 +5,24 @@ namespace ClassicAssist.Data.Vendors
     public class VendorBuyAgentItem : SetPropertyNotifyChanged
     {
         private int _amount;
+        private int _backpackGraphic;
         private bool _enabled;
         private int _graphic;
         private int _hue;
         private int _maxPrice;
         private string _name;
-        private int _backpackGraphic;
+        private double _weight;
 
         public int Amount
         {
             get => _amount;
             set => SetProperty( ref _amount, value );
+        }
+
+        public int BackpackGraphic
+        {
+            get => _backpackGraphic;
+            set => SetProperty( ref _backpackGraphic, value );
         }
 
         public bool Enabled
@@ -48,10 +55,10 @@ namespace ClassicAssist.Data.Vendors
             set => SetProperty( ref _name, value );
         }
 
-        public int BackpackGraphic
+        public double Weight
         {
-            get => _backpackGraphic;
-            set => SetProperty( ref _backpackGraphic, value );
+            get => _weight;
+            set => SetProperty( ref _weight, value );
         }
     }
 }

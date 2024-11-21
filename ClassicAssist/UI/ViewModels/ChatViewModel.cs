@@ -21,12 +21,12 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Assistant;
 using ClassicAssist.Data.Chat;
 using ClassicAssist.Data.Macros.Commands;
-using ClassicAssist.Misc;
 using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
@@ -36,8 +36,7 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class ChatViewModel : BaseViewModel
     {
-        private readonly SolidColorBrush _defaultBrush =
-            new SolidColorBrush( Color.FromArgb( 0xff, 0xcc, 0xcc, 0xcc ) );
+        private readonly SolidColorBrush _defaultBrush = new SolidColorBrush( Color.FromArgb( 0xff, 0xcc, 0xcc, 0xcc ) );
 
         private readonly SolidColorBrush _enemyBrush = new SolidColorBrush( Colors.Orange );
 
@@ -49,6 +48,7 @@ namespace ClassicAssist.UI.ViewModels
         private ObservableCollection<string> _channels = new ObservableCollection<string>();
         private string _currentChannel;
         private ObservableCollection<ChatMessage> _messages = new ObservableCollection<ChatMessage>();
+        private GridLength _rightColumnSize = new GridLength( 220 );
         private string _selectedChannel;
         private string _title;
         private ICommand _toggleOptionCommand;
@@ -64,9 +64,10 @@ namespace ClassicAssist.UI.ViewModels
             _manager.ClearUsersEvent += OnClearUsers;
             _manager.JoinedChatChannelEvent += OnJoinedChatChannel;
             _manager.LeftChatChannelEvent += OnLeftChatChannel;
-            Engine.DisconnectedEvent += () => OnLeftChatChannel( string.Empty );
             _manager.ChannelCreatedEvent += OnChannelCreated;
             _manager.ChannelRemovedEvent += OnChannelRemoved;
+
+            Engine.DisconnectedEvent += () => OnLeftChatChannel( string.Empty );
 
             if ( !string.IsNullOrEmpty( _manager.CurrentChannel ) )
             {
@@ -87,17 +88,15 @@ namespace ClassicAssist.UI.ViewModels
                 OnChannelCreated( channel );
             }
 
-            //foreach ( ChatMessage message in _manager.Messages )
-            //{
-            //    Messages.Add( message );
-            //}
+            foreach ( ChatMessage message in _manager.Messages.Skip( Math.Max( 0, _manager.Messages.Count - 32 ) ) )
+            {
+                OnChatMessage( message.Username, message.Channel, message.Text );
+            }
 
             _manager.ChatMessageEvent += OnChatMessage;
         }
 
-        public ICommand ChangeChannelCommand =>
-            _changeChannelCommand ??
-            ( _changeChannelCommand = new RelayCommand( ChangeChannel, o => Channels.Count != 0 ) );
+        public ICommand ChangeChannelCommand => _changeChannelCommand ?? ( _changeChannelCommand = new RelayCommand( ChangeChannel, o => Channels.Count != 0 ) );
 
         public ObservableCollection<string> Channels
         {
@@ -117,6 +116,12 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _messages, value );
         }
 
+        public GridLength RightColumnSize
+        {
+            get => _rightColumnSize;
+            set => SetProperty( ref _rightColumnSize, value );
+        }
+
         public string SelectedChannel
         {
             get => _selectedChannel;
@@ -129,8 +134,7 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _title, value );
         }
 
-        public ICommand ToggleOptionCommand =>
-            _toggleOptionCommand ?? ( _toggleOptionCommand = new RelayCommand( ToggleOption, o => true ) );
+        public ICommand ToggleOptionCommand => _toggleOptionCommand ?? ( _toggleOptionCommand = new RelayCommand( ToggleOption, o => true ) );
 
         public bool Topmost
         {
@@ -170,10 +174,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private void OnChatMessage( string username, string channel, string message )
         {
-            _dispatcher.Invoke( () => Messages.Add( new ChatMessage
-            {
-                Username = username, Channel = channel, Text = message, Colour = GetUserColour( username )
-            } ) );
+            _dispatcher.Invoke( () => Messages.Add( new ChatMessage { Username = username, Channel = channel, Text = message, Colour = GetUserColour( username ) } ) );
         }
 
         private void OnLeftChatChannel( string channel )

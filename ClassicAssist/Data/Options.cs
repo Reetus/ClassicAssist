@@ -42,6 +42,7 @@ namespace ClassicAssist.Data
         private int _autologinServerIndex;
         private string _autologinUsername;
         private double _chatWindowHeight = 350;
+        private GridLength _chatWindowRightColumn;
         private double _chatWindowWidth = 650;
         private bool _checkHandsPotions;
         private char _commandPrefix = '+';
@@ -97,6 +98,7 @@ namespace ClassicAssist.Data
         private bool _useExperimentalFizzleDetection;
         private bool _useObjectQueue;
         private int _useObjectQueueAmount = 5;
+        private int _selectedTabIndexAgents;
 
         public bool AbilitiesGump
         {
@@ -192,6 +194,12 @@ namespace ClassicAssist.Data
         {
             get => _chatWindowHeight;
             set => SetProperty( ref _chatWindowHeight, value );
+        }
+
+        public GridLength ChatWindowRightColumn
+        {
+            get => _chatWindowRightColumn;
+            set => SetProperty( ref _chatWindowRightColumn, value );
         }
 
         public double ChatWindowWidth
@@ -470,6 +478,12 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _selectedTabIndex, value );
         }
 
+        public int SelectedTabIndexAgents
+        {
+            get => _selectedTabIndexAgents;
+            set => SetProperty( ref _selectedTabIndexAgents, value );
+        }
+
         public bool SetUOTitle
         {
             get => _setUOTitle;
@@ -552,7 +566,10 @@ namespace ClassicAssist.Data
             {
                 BaseViewModel[] instances = BaseViewModel.Instances;
 
-                JObject obj = new JObject { { "Name", options.Name }, { "SelectedTabIndex", options.SelectedTabIndex } };
+                JObject obj = new JObject
+                {
+                    { "Name", options.Name }, { "SelectedTabIndex", options.SelectedTabIndex }, { "SelectedTabIndexAgents", options.SelectedTabIndexAgents }
+                };
 
                 foreach ( BaseViewModel instance in instances )
                 {
@@ -679,6 +696,7 @@ namespace ClassicAssist.Data
 
                     options.Name = Path.GetFileName( optionsFile );
                     options.SelectedTabIndex = json["SelectedTabIndex"]?.ToObject<int>() ?? 0;
+                    options.SelectedTabIndexAgents = json["SelectedTabIndexAgents"]?.ToObject<int>() ?? 0;
                     options.Hash = json["Hash"]?.ToObject<string>() ?? string.Empty;
 
                     foreach ( BaseViewModel instance in instances )

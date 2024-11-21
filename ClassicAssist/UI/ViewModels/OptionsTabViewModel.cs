@@ -96,6 +96,7 @@ namespace ClassicAssist.UI.ViewModels
             options.Add( "MacrosGumpTransparent", CurrentOptions.MacrosGumpTransparent );
             options.Add( "ChatWindowHeight", CurrentOptions.ChatWindowHeight );
             options.Add( "ChatWindowWidth", CurrentOptions.ChatWindowWidth );
+            options.Add( "ChatWindowRightColumn", CurrentOptions.ChatWindowRightColumn.Value );
             options.Add( "ExpireTargetsMS", CurrentOptions.ExpireTargetsMS );
             options.Add( "LogoutDisconnectedPrompt", CurrentOptions.LogoutDisconnectedPrompt );
             options.Add( "DisableHotkeysLoad", CurrentOptions.DisableHotkeysLoad );
@@ -181,6 +182,7 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions.MacrosGumpTextColor = config?["MacrosGumpTextColor"]?.ToObject<Color>() ?? Colors.White;
             CurrentOptions.MacrosGumpTransparent = config?["MacrosGumpTransparent"]?.ToObject<bool>() ?? true;
             CurrentOptions.ChatWindowHeight = config?["ChatWindowHeight"]?.ToObject<double>() ?? 350;
+            CurrentOptions.ChatWindowRightColumn = new GridLength( config?["ChatWindowRightColumn"]?.ToObject<double>() ?? 220 );
 
             if ( CurrentOptions.AbilitiesGumpX < 0 )
             {

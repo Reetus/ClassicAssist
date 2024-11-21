@@ -17,6 +17,7 @@
 
 #endregion
 
+using System;
 using System.Windows.Media;
 
 namespace ClassicAssist.Data.Chat
@@ -25,12 +26,13 @@ namespace ClassicAssist.Data.Chat
     {
         public string Channel { get; set; }
         public SolidColorBrush Colour { get; set; }
+        public DateTime Received { get; set; } = DateTime.Now;
         public string Text { get; set; }
         public string Username { get; set; }
 
         public override string ToString()
         {
-            return $"{Username}: {Text}";
+            return $"{Received.ToShortTimeString()} {Username}: {Text}";
         }
     }
 }

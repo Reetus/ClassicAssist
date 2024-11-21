@@ -5,9 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:agents="clr-namespace:ClassicAssist.UI.Views.Agents"
+             xmlns:misc="clr-namespace:ClassicAssist.Misc"
+             xmlns:data="clr-namespace:ClassicAssist.Data"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <TabControl Margin="5">
+    <TabControl Margin="5"
+                SelectedIndex="{Binding SelectedTabIndexAgents, Source={x:Static data:Options.CurrentOptions}}">
         <TabItem Header="{x:Static resources:Strings.Organizer}">
             <agents:OrganizerTabControl />
         </TabItem>

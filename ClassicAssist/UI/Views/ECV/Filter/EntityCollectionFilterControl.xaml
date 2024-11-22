@@ -90,7 +90,7 @@
                                         </Setter>
                                     </Style>
                                 </StackPanel.Style>
-                                <ComboBox ItemsSource="{misc1:EnumBindingSource {x:Type models:BooleanOperation}}"
+                                <ComboBox ItemsSource="{misc1:EnumBindingSource {x:Type autoloot:BooleanOperation}}"
                                           MinWidth="100"
                                           SelectedItem="{Binding Operation}" Margin="0,0,5,0" />
                             </StackPanel>

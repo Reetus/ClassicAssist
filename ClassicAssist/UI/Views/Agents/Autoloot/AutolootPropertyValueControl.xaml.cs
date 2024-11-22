@@ -9,21 +9,20 @@
 // but WITHOUT ANY WARRANTY
 
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Media;
 using ClassicAssist.Controls;
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Shared.UI.ValueConverters;
 using ClassicAssist.UI.Misc;
-using ClassicAssist.UI.ViewModels.Agents;
+using ClassicAssist.UI.Misc.ValueConverters;
 using ClassicAssist.UO.Data;
 
-namespace ClassicAssist.UI.Views.Autoloot
+namespace ClassicAssist.UI.Views.Agents.Autoloot
 {
     /// <summary>
     ///     Interaction logic for AutolootValueControl.xaml
@@ -38,47 +37,66 @@ namespace ClassicAssist.UI.Views.Autoloot
         private void OnDataContextChanged( object sender, DependencyPropertyChangedEventArgs e )
         {
             // TODO: Convert to XAML
+            if ( e.OldValue is AutolootConstraintEntry oldEntry )
+            {
+                oldEntry.PropertyChanged -= PropertyOnPropertyChanged;
+            }
+
             if ( !( e.NewValue is AutolootConstraintEntry autolootConstraintEntry ) )
             {
                 return;
             }
 
-            Grid.Children.Clear();
+            autolootConstraintEntry.PropertyChanged += PropertyOnPropertyChanged;
+            PropertyOnPropertyChanged( autolootConstraintEntry, new PropertyChangedEventArgs( nameof( autolootConstraintEntry.Property ) ) );
+        }
 
-            if ( autolootConstraintEntry.Property.AllowedValuesEnum != null &&
-                 autolootConstraintEntry.Property.AllowedValuesEnum == typeof( Layer ) )
+        private void PropertyOnPropertyChanged( object sender, PropertyChangedEventArgs e )
+        {
+            if ( !( sender is AutolootConstraintEntry autolootConstraintEntry ) )
+            {
+                return;
+            }
+
+            if ( e.PropertyName != nameof( autolootConstraintEntry.Property ) )
+            {
+                return;
+            }
+
+            Content = null;
+
+            if ( autolootConstraintEntry.Property.AllowedValuesEnum != null && autolootConstraintEntry.Property.AllowedValuesEnum == typeof( Layer ) )
             {
                 EnumToIntegerValueConverter enumToIntegerValueConverter = new EnumToIntegerValueConverter();
 
                 Binding selectedItemBinding = new Binding( nameof( autolootConstraintEntry.Value ) )
                 {
-                    Source = autolootConstraintEntry,
-                    Converter = enumToIntegerValueConverter,
-                    ConverterParameter = typeof( Layer ),
-                    Mode = BindingMode.TwoWay
+                    Source = autolootConstraintEntry, Converter = enumToIntegerValueConverter, ConverterParameter = typeof( Layer ), Mode = BindingMode.TwoWay
                 };
 
                 EnumBindingSourceExtension itemSource = new EnumBindingSourceExtension( typeof( Layer ) );
 
                 ComboBox comboBox = new ComboBox
                 {
-                    Width = 90, ItemsSource = itemSource.ProvideValue( null ) as IEnumerable
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    HorizontalContentAlignment = HorizontalAlignment.Stretch,
+                    ItemsSource = itemSource.ProvideValue( null ) as IEnumerable
                 };
 
                 BindingOperations.SetBinding( comboBox, Selector.SelectedItemProperty, selectedItemBinding );
 
-                Grid.Children.Add( comboBox );
+                Content = comboBox;
 
                 return;
             }
 
-            Binding binding = new Binding( "Value" ) { Source = autolootConstraintEntry };
+            Binding binding = new Binding( "Value" ) { Source = autolootConstraintEntry, Converter = new HexToIntValueConverter() };
 
-            EditTextBlock editTextBlock = new EditTextBlock { Width = 100, MinWidth = 40, ShowIcon = true };
+            EditTextBlock editTextBlock = new EditTextBlock { Width = 100, MinWidth = 40, ShowIcon = true, Foreground = (Brush) FindResource( "ThemeForegroundBrush" ) };
 
             BindingOperations.SetBinding( editTextBlock, EditTextBlock.TextProperty, binding );
 
-            Grid.Children.Add( editTextBlock );
+            Content = editTextBlock;
         }
     }
 }

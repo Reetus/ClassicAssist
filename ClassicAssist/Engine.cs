@@ -79,7 +79,6 @@ namespace Assistant
         private static OnGetPacketLength _getPacketLength;
         private static OnUpdatePlayerPosition _onPlayerPositionChanged;
         private static OnSetTitle _setTitle;
-        private static MainWindow _window;
         private static Thread _mainThread;
         private static OnClientClose _onClientClosing;
         private static readonly PacketFilter _incomingPacketFilter = new PacketFilter();
@@ -179,8 +178,8 @@ namespace Assistant
                 SplashWindow splashWindow = new SplashWindow();
                 splashWindow.Show();
 
-                _window = new MainWindow();
-                _window.Show();
+                Window = new MainWindow();
+                Window.Show();
 
                 splashWindow.Close();
 
@@ -1020,6 +1019,8 @@ namespace Assistant
         public static bool InternalTarget { get; set; }
         public static int InternalTargetSerial { get; set; }
         public static Trade Trade { get; set; } = new Trade();
+
+        public static MainWindow Window { get; set; }
 
         private static bool OnPacketReceive( ref byte[] data, ref int length )
         {

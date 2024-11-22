@@ -631,6 +631,30 @@
                     </DrawingGroup>
                 </DrawingImage.Drawing>
             </DrawingImage>
+            <DrawingImage x:Key="PopOutIcon">
+                <DrawingImage.Drawing>
+                    <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                        <GeometryDrawing Brush="{DynamicResource ThemeForegroundBrush}"
+                                         Geometry="F1 M512,512z M0,0z M352,0C339.1,0 327.4,7.8 322.4,19.8 317.4,31.8 320.2,45.5 329.3,54.7L370.7,96 201.4,265.4C188.9,277.9 188.9,298.2 201.4,310.7 213.9,323.2 234.2,323.2 246.7,310.7L416,141.3 457.4,182.7C466.6,191.9 480.3,194.6 492.3,189.6 504.3,184.6 512.1,173 512.1,160L512.1,32C512.1,14.3,497.8,2.8421709430404E-14,480.1,2.8421709430404E-14L352,0z M80,32C35.8,32,0,67.8,0,112L0,432C0,476.2,35.8,512,80,512L400,512C444.2,512,480,476.2,480,432L480,320C480,302.3 465.7,288 448,288 430.3,288 416,302.3 416,320L416,432C416,440.8,408.8,448,400,448L80,448C71.2,448,64,440.8,64,432L64,112C64,103.2,71.2,96,80,96L192,96C209.7,96 224,81.7 224,64 224,46.3 209.7,32 192,32L80,32z" />
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
+            <DrawingImage x:Key="CirclePlusItem">
+                <DrawingImage.Drawing>
+                    <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                        <GeometryDrawing Brush="{DynamicResource ThemeForegroundBrush}"
+                                         Geometry="F1 M512,512z M0,0z M256,512A256,256,0,1,0,256,0A256,256,0,1,0,256,512z M232,344L232,280 168,280C154.7,280 144,269.3 144,256 144,242.7 154.7,232 168,232L232,232 232,168C232,154.7 242.7,144 256,144 269.3,144 280,154.7 280,168L280,232 344,232C357.3,232 368,242.7 368,256 368,269.3 357.3,280 344,280L280,280 280,344C280,357.3 269.3,368 256,368 242.7,368 232,357.3 232,344z" />
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
+            <DrawingImage x:Key="CircleRemoveIcon">
+                <DrawingImage.Drawing>
+                    <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                        <GeometryDrawing Brush="{DynamicResource ThemeForegroundBrush}"
+                                         Geometry="F1 M512,512z M0,0z M256,512A256,256,0,1,0,256,0A256,256,0,1,0,256,512z M175,175C184.4,165.6,199.6,165.6,208.9,175L255.9,222 302.9,175C312.3,165.6 327.5,165.6 336.8,175 346.1,184.4 346.2,199.6 336.8,208.9L289.8,255.9 336.8,302.9C346.2,312.3 346.2,327.5 336.8,336.8 327.4,346.1 312.2,346.2 302.9,336.8L255.9,289.8 208.9,336.8C199.5,346.2 184.3,346.2 175,336.8 165.7,327.4 165.6,312.2 175,302.9L222,255.9 175,208.9C165.6,199.5,165.6,184.3,175,175z" />
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

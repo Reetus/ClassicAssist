@@ -35,13 +35,13 @@ namespace ClassicAssist.UI.ViewModels.Debug
     {
         private ICommand _clearResultsCommand;
         private int _containerSerial;
+        private bool _onlyShowMatchingEntries = true;
         private ICommand _retestContainerCommand;
         private ICommand _testContainerCommand;
         private ICommand _testItemCommand;
         private string _testResults;
 
-        public ICommand ClearResultsCommand =>
-            _clearResultsCommand ?? ( _clearResultsCommand = new RelayCommand( ClearResults, o => true ) );
+        public ICommand ClearResultsCommand => _clearResultsCommand ?? ( _clearResultsCommand = new RelayCommand( ClearResults, o => true ) );
 
         public int ContainerSerial
         {
@@ -49,15 +49,17 @@ namespace ClassicAssist.UI.ViewModels.Debug
             set => SetProperty( ref _containerSerial, value );
         }
 
-        public ICommand RetestContainerCommand =>
-            _retestContainerCommand ??
-            ( _retestContainerCommand = new RelayCommand( RetestContainer, o => ContainerSerial != 0 ) );
+        public bool OnlyShowMatchingEntries
+        {
+            get => _onlyShowMatchingEntries;
+            set => SetProperty( ref _onlyShowMatchingEntries, value );
+        }
 
-        public ICommand TestContainerCommand =>
-            _testContainerCommand ?? ( _testContainerCommand = new RelayCommandAsync( TestContainerAsync, o => true ) );
+        public ICommand RetestContainerCommand => _retestContainerCommand ?? ( _retestContainerCommand = new RelayCommand( RetestContainer, o => ContainerSerial != 0 ) );
 
-        public ICommand TestItemCommand =>
-            _testItemCommand ?? ( _testItemCommand = new RelayCommandAsync( TestItemAsync, o => true ) );
+        public ICommand TestContainerCommand => _testContainerCommand ?? ( _testContainerCommand = new RelayCommandAsync( TestContainerAsync, o => true ) );
+
+        public ICommand TestItemCommand => _testItemCommand ?? ( _testItemCommand = new RelayCommandAsync( TestItemAsync, o => true ) );
 
         public string TestResults
         {
@@ -108,29 +110,30 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
         private void TestContainer( ItemCollection container )
         {
-            Engine.SendPacketToServer(
-                new BatchQueryProperties( container.GetItems().Select( i => i.Serial ).ToArray() ) );
+            Engine.SendPacketToServer( new BatchQueryProperties( container.GetItems().Select( i => i.Serial ).ToArray() ) );
 
-            foreach ( AutolootEntry entry in AutolootManager.GetInstance().GetEntries()
-                .OrderByDescending( x => x.Priority ) )
+            int matchEntries = 0;
+
+            foreach ( AutolootEntry entry in AutolootManager.GetInstance().GetEntries().OrderByDescending( x => x.Priority ) )
             {
                 if ( !entry.Enabled )
                 {
-                    TestResults += $"Entry {entry.Name} disabled...\n";
+                    if ( !OnlyShowMatchingEntries )
+                    {
+                        TestResults += $"Entry {entry.Name} disabled...\n";
+                    }
+
                     continue;
                 }
 
-                TestResults += $"Entry {entry.Name}...\n\n";
-
-                IEnumerable<Item> matchItems = AutolootHelpers.AutolootFilter( container.GetItems(), entry );
-
-                if ( matchItems == null )
-                {
-                    TestResults += "No items matched...\n";
-                    continue;
-                }
+                List<Item> matchItems = AutolootHelpers.AutolootFilter( container.GetItems(), entry ).ToList();
 
                 int count = 0;
+
+                if ( matchItems.Any() || !OnlyShowMatchingEntries )
+                {
+                    TestResults += $"Entry {entry.Name} {entry.Describe()}...\n\n";
+                }
 
                 foreach ( Item matchItem in matchItems )
                 {
@@ -151,7 +154,18 @@ namespace ClassicAssist.UI.ViewModels.Debug
                     TestResults += "\n";
                 }
 
+                if ( count <= 0 && OnlyShowMatchingEntries )
+                {
+                    continue;
+                }
+
                 TestResults += $"{count} matches...\n\n";
+                matchEntries++;
+            }
+
+            if ( OnlyShowMatchingEntries && matchEntries == 0 )
+            {
+                TestResults += "No matching entries...\n";
             }
         }
     }

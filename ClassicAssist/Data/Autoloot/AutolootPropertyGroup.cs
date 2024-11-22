@@ -8,29 +8,26 @@
 // (at your option) any later version.
 // 
 // This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
 
 #endregion
 
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using ClassicAssist.Data.Autoloot;
-using ClassicAssist.Shared.UI;
-using ClassicAssist.UI.Misc;
+using ClassicAssist.UI.Views.ECV.Filter.Models;
 
-namespace ClassicAssist.UI.Views.ECV.Filter.Models
+namespace ClassicAssist.Data.Autoloot
 {
-    public class EntityCollectionFilterGroup : SetPropertyNotifyChanged
+    public class AutolootPropertyGroup : AutolootBaseModel
     {
-        private ObservableCollection<EntityCollectionFilterItem> _items =
-            new ObservableCollection<EntityCollectionFilterItem>();
-
+        private ObservableCollection<AutolootBaseModel> _children = new ObservableCollection<AutolootBaseModel>();
         private BooleanOperation _operation;
 
-        public ObservableCollection<EntityCollectionFilterItem> Items
+        public ObservableCollection<AutolootBaseModel> Children
         {
-            get => _items;
-            set => SetProperty( ref _items, value );
+            get => _children;
+            set => SetProperty( ref _children, value );
         }
 
         public BooleanOperation Operation

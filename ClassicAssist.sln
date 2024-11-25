@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29409.12
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35506.116 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassicAssist", "ClassicAssist\ClassicAssist.csproj", "{2161A709-F90A-4308-976F-3457A9DAB80A}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicAssist.Controls", "ClassicAssist.Controls\ClassicAssist.Controls.csproj", "{F2737FDD-E7B0-4887-A531-71F4FADB77C5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicAssist.Shared", "ClassicAssist.Shared\ClassicAssist.Shared.csproj", "{F4DD685D-6E90-4713-9134-7AB83E9B88F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncPOEditor", "Tools\SyncPOEditor\SyncPOEditor.csproj", "{9967E68D-72FF-4F02-AA34-180E299DC72F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,12 +78,19 @@ Global
 		{F4DD685D-6E90-4713-9134-7AB83E9B88F0}.Develop|Any CPU.Build.0 = Debug|Any CPU
 		{F4DD685D-6E90-4713-9134-7AB83E9B88F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4DD685D-6E90-4713-9134-7AB83E9B88F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9967E68D-72FF-4F02-AA34-180E299DC72F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9967E68D-72FF-4F02-AA34-180E299DC72F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9967E68D-72FF-4F02-AA34-180E299DC72F}.Develop|Any CPU.ActiveCfg = Debug|Any CPU
+		{9967E68D-72FF-4F02-AA34-180E299DC72F}.Develop|Any CPU.Build.0 = Debug|Any CPU
+		{9967E68D-72FF-4F02-AA34-180E299DC72F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9967E68D-72FF-4F02-AA34-180E299DC72F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{52BF9AF6-77E1-487D-9996-44258B0F519D} = {5D66EE29-B1A3-4EBA-8D70-22968AD88EE7}
+		{9967E68D-72FF-4F02-AA34-180E299DC72F} = {5D66EE29-B1A3-4EBA-8D70-22968AD88EE7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9D303253-94E6-4A3E-B0B6-7E0E06B3E9CD}

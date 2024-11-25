@@ -43,13 +43,17 @@ Full documentation is still a work-in-progress but documentation on Macro Comman
 
 ## Translation
 
-If your native language isn't English and you'd like to contribute a translation into your language, send a pull request or open an issue.
-
 ![korean](https://github.com/Reetus/ClassicAssist/assets/6239195/409bd5e8-8d76-4755-8402-5351b4d0d498)
 
-Existing supported languages can be edited on POEditor
+ClassicAssist uses [POEditor](https://poeditor.com/) for translations...
+
+[![poeditor](https://github.com/user-attachments/assets/c19b1d2b-01e1-4682-a007-12356c42147c)](https://poeditor.com)
+
+Existing supported languages can be edited on POEditor:
 * [UI](https://poeditor.com/join/project/64bC3Q4fdt)
-* [Macros](https://poeditor.com/projects/view?id=671853)
+* [Macros](https://poeditor.com/join/project/ZQaLDBBdaO)
+
+If you want to contribute to a language not currently supported, open a GitHub issue to have it added.
 
 ## License
 

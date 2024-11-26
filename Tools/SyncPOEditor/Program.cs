@@ -104,6 +104,12 @@ foreach ( ( string? lang, string? fileName ) in _langCodeFileName )
             modded[term.Term] = ( value, term.Translation.Content );
             modified = true;
         }
+        else
+        {
+            resxTerms.Add( term.Term, term.Translation.Content );
+            modded[term.Term] = ( string.Empty, term.Translation.Content );
+            modified = true;
+        }
     }
 
     if ( modified )
@@ -163,7 +169,7 @@ async Task<POEditorResponse<POEditorTerms>?> GetNeutralTerms()
 }
 
 async Task AddTerms( POEditorTerm[] terms )
-{   
+{
     using HttpResponseMessage response = await client.PostAsync( "https://api.poeditor.com/v2/terms/add", new FormUrlEncodedContent( [
         new KeyValuePair<string, string>( "api_token", apiToken ), new KeyValuePair<string, string>( "id", PROJECT_ID.ToString() ),
         new KeyValuePair<string, string>( "data", JsonSerializer.Serialize( terms ) )

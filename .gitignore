@@ -20,3 +20,5 @@ ClassicAssist.Controls/ClassicAssist.Controls.csproj.user
 ClassicAssist.Shared/ClassicAssist.Shared.csproj.user
 ClassicAssist.Controls/bin/
 ClassicAssist.Shared/bin/
+Tools/SyncPOEditor/obj/
+Tools/SyncPOEditor/Properties/launchSettings.json

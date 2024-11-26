@@ -1,64 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
-    Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
-    associated with the data types.
-    
-    Example:
-    
-    ... ado.net/XML headers & schema ...
-    <resheader name="resmimetype">text/microsoft-resx</resheader>
-    <resheader name="version">2.0</resheader>
-    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-        <value>[base64 mime encoded serialized .NET Framework object]</value>
-    </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-        <comment>This is a comment</comment>
-    </data>
-                
-    There are any number of "resheader" rows that contain simple 
-    name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
-    mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
-    extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
-    read any of the formats listed below.
-    
-    mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-            : and then encoded with base64 encoding.
-    
-    mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-            : and then encoded with base64 encoding.
-
-    mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
-            : using a System.ComponentModel.TypeConverter
-            : and then encoded with base64 encoding.
-    -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -112,10 +53,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Made_For_Malo" xml:space="preserve">
     <value>Translated by Mark Hunt &amp; Andy H.</value>
@@ -499,7 +440,7 @@
     <value>오류가 발생했습니다</value>
   </data>
   <data name="Error: Cannot find player backpack" xml:space="preserve">
-    <value>오류 : 너의 배낭을 못찾겠다</value>
+    <value>오류 : 배낭을 찾을 수 없습니다</value>
   </data>
   <data name="Error: Cannot find type" xml:space="preserve">
     <value>오류 : 해당 유형을 찾을 수 없다</value>
@@ -703,7 +644,7 @@
     <value>공격스펠을 친구에게 타게팅 금지</value>
   </data>
   <data name="Profile name contains illegal characters." xml:space="preserve">
-    <value>프로필 이름을 제대로 적어라! .</value>
+    <value>프로필 이름에 잘못된 글자가 있습니다.</value>
   </data>
   <data name="Properties" xml:space="preserve">
     <value>속성</value>
@@ -727,7 +668,7 @@
     <value>다시세기</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>리프레쉬</value>
+    <value>갱신</value>
   </data>
   <data name="Reset +/-" xml:space="preserve">
     <value>리셋 +/-</value>
@@ -880,7 +821,7 @@
     <value>두번째 특수기 전환</value>
   </data>
   <data name="Topmost" xml:space="preserve">
-    <value>Topmost</value>
+    <value>제일 위</value>
   </data>
   <data name="Trinsic Rose Petal" xml:space="preserve">
     <value>트린식 장미 꽃잎</value>
@@ -946,7 +887,7 @@
     <value>UseOnce : 유형을 찾을 수 없습니다...</value>
   </data>
   <data name="Value" xml:space="preserve">
-    <value>밸류</value>
+    <value>값</value>
   </data>
   <data name="{0} items, {1} selected, {2} total amount" xml:space="preserve">
     <value>{0} items, {1} selected, {2} total amount</value>
@@ -991,7 +932,7 @@
     <value>단축키/매크로에만 적용됩니다.</value>
   </data>
   <data name="Hue Picker" xml:space="preserve">
-    <value>색상 채집</value>
+    <value>색상 선택</value>
   </data>
   <data name="Cannot find sound file..." xml:space="preserve">
     <value>사운드 파일을 찾을 수 없습니다...</value>
@@ -1069,7 +1010,7 @@
     <value>GetFriend/GetEnemy는 무시 목록을 사용합니다</value>
   </data>
   <data name="Ignore List" xml:space="preserve">
-    <value>목록 무시</value>
+    <value>무시 목록</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>경고</value>
@@ -1123,7 +1064,7 @@
     <value>글로벌</value>
   </data>
   <data name="Instance" xml:space="preserve">
-    <value>글로벌</value>
+    <value>객체</value>
   </data>
   <data name="Waiting for ClassicAssist to initialize..." xml:space="preserve">
     <value>클래식 어시스트가 초기화되기를 기다리는 중...</value>
@@ -1183,7 +1124,7 @@
     <value>항목 중에서 선택</value>
   </data>
   <data name="Toggle mounted" xml:space="preserve">
-    <value>토글 장착</value>
+    <value>탈것 토글</value>
   </data>
   <data name="Target Acquisition - Enemy" xml:space="preserve">
     <value>대상 획득 - 적</value>
@@ -1988,5 +1929,89 @@
   </data>
   <data name="Include Internal" xml:space="preserve">
     <value>내부 포함</value>
+  </data>
+  <data name="Enabled Packets:" xml:space="preserve">
+    <value>사용 가능한 패킷:</value>
+  </data>
+  <data name="Show Overhead" xml:space="preserve">
+    <value>머리위에 보이기</value>
+  </data>
+  <data name="Display system message as overhead message" xml:space="preserve">
+    <value>시스템 메시지를 머리위에 보여줍니다</value>
+  </data>
+  <data name="Trap Pouches" xml:space="preserve">
+    <value>함정 주머니</value>
+  </data>
+  <data name="Remove item on use object request" xml:space="preserve">
+    <value>오브젝트 사용 요청에서 아이템 제거</value>
+  </data>
+  <data name="Only if last spell is Magic Trap" xml:space="preserve">
+    <value>마법 함정이 마지막 주문 인 경우만</value>
+  </data>
+  <data name="Overhead Message" xml:space="preserve">
+    <value>머리위에 표시</value>
+  </data>
+  <data name="Auto-add targeted pouches" xml:space="preserve">
+    <value>타겟 지정된 주머니를 자동 추가</value>
+  </data>
+  <data name="Warn when item count below:" xml:space="preserve">
+    <value>아이템 개수가 이하면 경고:</value>
+  </data>
+  <data name="Trap pouch count below {0}..." xml:space="preserve">
+    <value>함정 주머니 개수가 {0} 이하...</value>
+  </data>
+  <data name="Use Trap Pouch" xml:space="preserve">
+    <value>함정 주머니 사용</value>
+  </data>
+  <data name="Clear Trap Pouches" xml:space="preserve">
+    <value>함정 주머니들 제거</value>
+  </data>
+  <data name="Item already in list..." xml:space="preserve">
+    <value>아이템이 이미 목록에 있음...</value>
+  </data>
+  <data name="Open container" xml:space="preserve">
+    <value>상자 열기</value>
+  </data>
+  <data name="Opening container {0} / {1}..." xml:space="preserve">
+    <value>상자 여는중 {0} / {1}...</value>
+  </data>
+  <data name="Only known containers" xml:space="preserve">
+    <value>알려진 상자들만</value>
+  </data>
+  <data name="Target location..." xml:space="preserve">
+    <value>타겟 위치...</value>
+  </data>
+  <data name="Move to ground" xml:space="preserve">
+    <value>바닥으로 옮기기</value>
+  </data>
+  <data name="CSV Import" xml:space="preserve">
+    <value>CSV 불러오기</value>
+  </data>
+  <data name="Select File" xml:space="preserve">
+    <value>파일 선택</value>
+  </data>
+  <data name="Error loading file, ensure it isn't currently in use" xml:space="preserve">
+    <value>파일을 불러오는데 문제 발생, 이 파일은 현재 쓰이지 않습니다</value>
+  </data>
+  <data name="Click here to learn how to use CSV Import." xml:space="preserve">
+    <value>여기를 클릭 하여, CSV 불러오기를 사용하는법을 확인하세요.</value>
+  </data>
+  <data name="Ignore duplicate entries" xml:space="preserve">
+    <value>중복된 항목 무시</value>
+  </data>
+  <data name="Argument Index" xml:space="preserve">
+    <value>인수 순서</value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>공급 상자</value>
+  </data>
+  <data name="Destination" xml:space="preserve">
+    <value>대상 상자</value>
+  </data>
+  <data name="Default" xml:space="preserve">
+    <value>기본</value>
+  </data>
+  <data name="Toggle Scavenger" xml:space="preserve">
+    <value>자동 줍기 상태 변경</value>
   </data>
 </root>

@@ -31,7 +31,7 @@ There has been some effort to port ClassicAssist to Avalonia, but this requires 
 
 ## Community
 
-Join our discord channel on the official ClassicUO discord server [here](https://discord.gg/DKgfjMqH)
+Join our discord channel on the official ClassicUO discord server [here](https://discord.gg/classicuo-458277173208547350)
 
 ## Issues / Feature Requests
 

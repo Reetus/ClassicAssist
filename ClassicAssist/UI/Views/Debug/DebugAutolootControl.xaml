@@ -160,6 +160,8 @@
             <controls:ImageButton ToolTip="Test Container" Command="{Binding TestContainerCommand}" ImageSource="{StaticResource ContainerIcon}"/>
             <controls:ImageButton ToolTip="Retest Container" Command="{Binding RetestContainerCommand}" ImageSource="{StaticResource RefreshIcon}"/>
             <controls:ImageButton ToolTip="{x:Static resources:Strings.Clear}" Command="{Binding ClearResultsCommand}" ImageSource="{StaticResource RemoveIcon}"/>
+            <CheckBox Content="Only show matching entries" Foreground="{StaticResource ThemeForegroundBrush}"
+                      Margin="25, 0,0,0" IsChecked="{Binding OnlyShowMatchingEntries}" />
         </ToolBar>
         <TextBox Grid.Row="1" VerticalScrollBarVisibility="Visible" Text="{Binding TestResults}"
                  Style="{DynamicResource TextBoxStyle}">

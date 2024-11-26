@@ -1982,7 +1982,7 @@
     <value>타겟 위치...</value>
   </data>
   <data name="Move to ground" xml:space="preserve">
-    <value>바닥으로 옴기기</value>
+    <value>바닥으로 옮기기</value>
   </data>
   <data name="CSV Import" xml:space="preserve">
     <value>CSV 불러오기</value>

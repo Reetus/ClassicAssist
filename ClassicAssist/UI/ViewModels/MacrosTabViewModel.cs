@@ -304,6 +304,7 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             macros.Add( "LeftColumnWidth", LeftColumnWidth );
+            macros.Add( "Selected", SelectedItem?.Name );
             macros.Add( "Groups", groupArray );
             macros.Add( "Macros", macroArray );
 
@@ -476,7 +477,14 @@ namespace ClassicAssist.UI.ViewModels
                 Directory.CreateDirectory( modulePath );
             }
 
-            SelectedItem = Items.LastOrDefault();
+            MacroEntry selected = Items.LastOrDefault();
+
+            if ( config?["Selected"] != null )
+            {
+                selected = Items.FirstOrDefault( e => e.Name == config["Selected"]?.ToObject<string>() );
+            }
+
+            SelectedItem = selected;
         }
 
         private void NewPublicMacro( Metadata metadata )

@@ -236,7 +236,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         {
             if ( CheckWeight && Engine.Player.WeightMax - Engine.Player.Weight < MinWeightAvailable )
             {
-                UOC.SystemMessage( Strings.Buy_Agent___Not_enough_weight_available___, false );
+                UOC.SystemMessage( Strings.Buy_Agent__Not_enough_weight_available___, false );
                 return;
             }
 

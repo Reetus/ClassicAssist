@@ -745,20 +745,20 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string Buy_Agent___Not_enough_weight_available___ {
-            get {
-                return ResourceManager.GetString("Buy Agent - Not enough weight available...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Buy Agent: No matches found..
         /// </summary>
         public static string Buy_Agent__No_matches_found_ {
             get {
                 return ResourceManager.GetString("Buy Agent: No matches found.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buy Agent: Not enough weight available....
+        /// </summary>
+        public static string Buy_Agent__Not_enough_weight_available___ {
+            get {
+                return ResourceManager.GetString("Buy Agent: Not enough weight available...", resourceCulture);
             }
         }
         
@@ -1650,6 +1650,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Enabled_Packets {
             get {
                 return ResourceManager.GetString("Enabled Packets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled Packets:.
+        /// </summary>
+        public static string Enabled_Packets_ {
+            get {
+                return ResourceManager.GetString("Enabled Packets:", resourceCulture);
             }
         }
         

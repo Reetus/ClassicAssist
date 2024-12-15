@@ -59,15 +59,20 @@ namespace ClassicAssist.Helpers
 
         protected void CreateMemberCache()
         {
-            foreach ( PropertyInfo propertyInfo in AssociatedObject.GetType()
-                .GetProperties( InstanceDefaultBindingFlags ) )
+            foreach ( PropertyInfo propertyInfo in AssociatedObject.GetType().GetProperties( InstanceDefaultBindingFlags ) )
             {
-                _properties.Add( propertyInfo.Name, propertyInfo );
+                if ( !_properties.ContainsKey( propertyInfo.Name ) )
+                {
+                    _properties.Add( propertyInfo.Name, propertyInfo );
+                }
             }
 
             foreach ( FieldInfo fieldInfo in AssociatedObject.GetType().GetFields( InstanceDefaultBindingFlags ) )
             {
-                _fields.Add( fieldInfo.Name, fieldInfo );
+                if ( !_fields.ContainsKey( fieldInfo.Name ) )
+                {
+                    _fields.Add( fieldInfo.Name, fieldInfo );
+                }
             }
         }
 

@@ -51,7 +51,7 @@ namespace ClassicAssist.Data.Macros
 
         private void PacketSentEvent( byte[] data, int length )
         {
-            if ( !IsRecording() )
+            if ( IsRecording == null || !IsRecording() )
             {
                 return;
             }
@@ -61,7 +61,7 @@ namespace ClassicAssist.Data.Macros
 
         private void PacketReceivedEvent( byte[] data, int length )
         {
-            if ( !IsRecording() )
+            if ( IsRecording == null || !IsRecording() )
             {
                 return;
             }

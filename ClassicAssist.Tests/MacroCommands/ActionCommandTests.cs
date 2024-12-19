@@ -148,6 +148,100 @@ namespace ClassicAssist.Tests.MacroCommands
         }
 
         [TestMethod]
+        public void MoveItemXYZWillSendDropPacket()
+        {
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            Engine.InternalPacketSentEvent += OnInternalPacketSentEvent;
+
+            Engine.Items.Add( new Item( 0x00aabbcc ) { Count = 50 } );
+
+            ObjectCommands.MoveItemXYZ( 0x00aabbcc, 1000, 1000, 0 );
+
+            bool result = are.WaitOne( 5000 );
+
+            Assert.IsTrue( result );
+
+            Engine.InternalPacketSentEvent -= OnInternalPacketSentEvent;
+            return;
+
+            void OnInternalPacketSentEvent( byte[] data, int length )
+            {
+                if ( data[0] != 0x08 )
+                {
+                    return;
+                }
+
+                int serial = ( data[1] << 24 ) | ( data[2] << 16 ) | ( data[3] << 8 ) | data[4];
+                short x = (short) ( data[5] << 8 | data[6] );
+                short y = (short) ( data[7] << 8 | data[8] );
+                sbyte z = (sbyte) data[9];
+
+                Assert.AreEqual( 0x00aabbcc, serial );
+                Assert.AreEqual( 1000, x );
+                Assert.AreEqual( 1000, y );
+                Assert.AreEqual( 0, z );
+
+                are.Set();
+            }
+        }
+
+        [TestMethod]
+        public void MoveTypeXYZWillSendDropPacket()
+        {
+            PlayerMobile player = new PlayerMobile( 0x01 );
+
+            Item backpack = new Item( 0x02 )
+            {
+                Container = new ItemCollection( 0x02 ) { new Item( 0x00aabbcc ) { ID = 0xff, Count = 1, Owner = 0x02 } },
+                Owner = 0x01,
+                Layer = Layer.Backpack
+            };
+
+            player.SetLayer( Layer.Backpack, 0x02 );
+
+            Engine.Player = player;
+            Engine.Items.Add( backpack );
+
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            Engine.InternalPacketSentEvent += OnInternalPacketSentEvent;
+
+            ObjectCommands.MoveTypeXYZ( 0xff, 0x02, 1000, 1000, 0 );
+
+            bool result = are.WaitOne( 5000 );
+
+            Assert.IsTrue( result );
+
+            Engine.InternalPacketSentEvent -= OnInternalPacketSentEvent;
+
+            Engine.Items.Clear();
+            Engine.Player = null;
+
+            return;
+
+            void OnInternalPacketSentEvent( byte[] data, int length )
+            {
+                if ( data[0] != 0x08 )
+                {
+                    return;
+                }
+
+                int serial = ( data[1] << 24 ) | ( data[2] << 16 ) | ( data[3] << 8 ) | data[4];
+                short x = (short) ( data[5] << 8 | data[6] );
+                short y = (short) ( data[7] << 8 | data[8] );
+                sbyte z = (sbyte) data[9];
+
+                Assert.AreEqual( 0x00aabbcc, serial );
+                Assert.AreEqual( 1000, x );
+                Assert.AreEqual( 1000, y );
+                Assert.AreEqual( 0, z );
+
+                are.Set();
+            }
+        }
+
+        [TestMethod]
         public void FeedWillSendDragPacket()
         {
             PlayerMobile player = new PlayerMobile( 0x01 );

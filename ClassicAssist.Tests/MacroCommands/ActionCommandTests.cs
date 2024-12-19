@@ -145,6 +145,8 @@ namespace ClassicAssist.Tests.MacroCommands
             Assert.IsTrue( result );
 
             Engine.InternalPacketSentEvent -= OnInternalPacketSentEvent;
+
+            Engine.Items.Clear();
         }
 
         [TestMethod]
@@ -163,6 +165,7 @@ namespace ClassicAssist.Tests.MacroCommands
             Assert.IsTrue( result );
 
             Engine.InternalPacketSentEvent -= OnInternalPacketSentEvent;
+            Engine.Items.Clear();
             return;
 
             void OnInternalPacketSentEvent( byte[] data, int length )

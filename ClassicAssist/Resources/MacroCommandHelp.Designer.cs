@@ -2564,6 +2564,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Moves the specified serial/alias to the given coordinates.
+        /// </summary>
+        public static string MOVEITEMXYZ_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MOVEITEMXYZ_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MoveItemXYZ(&apos;found&apos;, 0, 0, 0).
+        /// </summary>
+        public static string MOVEITEMXYZ_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MOVEITEMXYZ_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Move a type from source to destintion..
         /// </summary>
         public static string MOVETYPE_COMMAND_DESCRIPTION {
@@ -2614,6 +2632,24 @@ namespace ClassicAssist.Resources {
         public static string MOVETYPEOFFSET_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("MOVETYPEOFFSET_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move the given type from the specified source container to the specified X, Y, Z, no amount specified or -1 will move the full stack..
+        /// </summary>
+        public static string MOVETYPEXYZ_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("MOVETYPEXYZ_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MoveTypeXYZ(0xf0e, &quot;backpack&quot;, 0, 0, 0, -1).
+        /// </summary>
+        public static string MOVETYPEXYZ_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("MOVETYPEXYZ_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

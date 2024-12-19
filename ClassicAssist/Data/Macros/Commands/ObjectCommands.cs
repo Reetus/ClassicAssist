@@ -357,6 +357,39 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = nameof( Strings.Entity ),
             Parameters = new[]
             {
+                nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.XCoordinate ),
+                nameof( ParameterType.YCoordinate ), nameof( ParameterType.ZCoordinate ),
+                nameof( ParameterType.Amount )
+            } )]
+        public static void MoveItemXYZ( object item, int x, int y, int z, int amount = -1 )
+        {
+            int itemSerial = AliasCommands.ResolveSerial( item, false );
+
+            if ( itemSerial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
+                return;
+            }
+
+            Item itemObj = Engine.Items.GetItem( itemSerial );
+
+            if ( itemObj == null )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
+                return;
+            }
+
+            if ( amount == -1 )
+            {
+                amount = itemObj.Count;
+            }
+
+            ActionPacketQueue.EnqueueDragDropGround( itemSerial, amount, x, y, z );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[]
+            {
                 nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.XCoordinateOffset ),
                 nameof( ParameterType.YCoordinateOffset ), nameof( ParameterType.ZCoordinateOffset ),
                 nameof( ParameterType.Amount )
@@ -449,6 +482,53 @@ namespace ClassicAssist.Data.Macros.Commands
             ActionPacketQueue.EnqueueDragDropGround( entity.Serial, amount, x, y, z );
 
             return true;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.ItemID ), nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.XCoordinate ), nameof( ParameterType.YCoordinate ),
+                nameof( ParameterType.ZCoordinate ), nameof( ParameterType.Amount ), nameof( ParameterType.Hue ), nameof( ParameterType.Distance )
+            } )]
+        public static bool MoveTypeXYZ( int id, object findLocation, int x, int y, int z, int amount = -1, int hue = -1, int range = -1 )
+        {
+            bool fromGround = findLocation == null || findLocation is string str && str.Equals( "ground", StringComparison.InvariantCultureIgnoreCase );
+
+            int owner = 0;
+
+            if ( !fromGround )
+            {
+                owner = AliasCommands.ResolveSerial( findLocation );
+
+                if ( owner == 0 )
+                {
+                    UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
+
+                    return false;
+                }
+            }
+
+            Item entity = fromGround ? Engine.Items.SelectEntities( PredicateGround )?.FirstOrDefault() : Engine.Items.SelectEntities( Predicate )?.FirstOrDefault();
+
+            if ( entity == null )
+            {
+                UOC.SystemMessage( Strings.Cannot_find_item___, true );
+                return false;
+            }
+
+            ActionPacketQueue.EnqueueDragDropGround( entity.Serial, amount, x, y, z );
+
+            return true;
+
+            bool PredicateGround( Item i )
+            {
+                return i.ID == id && i.Owner == 0 && ( hue == -1 || i.Hue == hue ) && ( range == -1 || i.Distance <= range );
+            }
+
+            bool Predicate( Item i )
+            {
+                return i.ID == id && i.IsDescendantOf( owner ) && ( hue == -1 || i.Hue == hue );
+            }
         }
 
         [CommandsDisplay( Category = nameof( Strings.Entity ),

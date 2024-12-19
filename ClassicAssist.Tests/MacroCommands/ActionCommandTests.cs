@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using Assistant;
@@ -88,6 +89,18 @@ namespace ClassicAssist.Tests.MacroCommands
         {
             AutoResetEvent are = new AutoResetEvent( false );
 
+            Engine.InternalPacketSentEvent += OnInternalPacketSentEvent;
+
+            AliasCommands.SetAlias( "thing", 0x00aabbcc );
+            ActionCommands.ClickObject( "thing" );
+
+            bool result = are.WaitOne( 5000 );
+
+            Assert.IsTrue( result );
+
+            Engine.InternalPacketSentEvent -= OnInternalPacketSentEvent;
+            return;
+
             void OnInternalPacketSentEvent( byte[] data, int length )
             {
                 if ( data[0] != 0x09 )
@@ -101,18 +114,6 @@ namespace ClassicAssist.Tests.MacroCommands
 
                 are.Set();
             }
-
-            Engine.InternalPacketSentEvent += OnInternalPacketSentEvent;
-
-            AliasCommands.SetAlias( "thing", 0x00aabbcc );
-            ActionCommands.ClickObject( "thing" );
-
-            bool result = are.WaitOne( 5000 );
-
-            Assert.IsTrue( result );
-
-            Engine.InternalPacketSentEvent -= OnInternalPacketSentEvent;
-            Engine.Player = null;
         }
 
         [TestMethod]
@@ -152,13 +153,15 @@ namespace ClassicAssist.Tests.MacroCommands
         [TestMethod]
         public void MoveItemXYZWillSendDropPacket()
         {
+            ActionPacketQueue.Clear();
+
             AutoResetEvent are = new AutoResetEvent( false );
 
             Engine.InternalPacketSentEvent += OnInternalPacketSentEvent;
 
-            Engine.Items.Add( new Item( 0x00aabbcc ) { Count = 50 } );
+            Engine.Items.Add( new Item( 0x00aabbdd ) { Count = 50 } );
 
-            ObjectCommands.MoveItemXYZ( 0x00aabbcc, 1000, 1000, 0 );
+            ObjectCommands.MoveItemXYZ( 0x00aabbdd, 1000, 1000, 0 );
 
             bool result = are.WaitOne( 5000 );
 
@@ -176,11 +179,19 @@ namespace ClassicAssist.Tests.MacroCommands
                 }
 
                 int serial = ( data[1] << 24 ) | ( data[2] << 16 ) | ( data[3] << 8 ) | data[4];
+
+                Debug.WriteLine( $"Serial: 0x{serial:x}" );
+
+                if ( serial != 0x00aabbdd )
+                {
+                    return;
+                }
+
                 short x = (short) ( data[5] << 8 | data[6] );
                 short y = (short) ( data[7] << 8 | data[8] );
                 sbyte z = (sbyte) data[9];
 
-                Assert.AreEqual( 0x00aabbcc, serial );
+                Assert.AreEqual( 0x00aabbdd, serial );
                 Assert.AreEqual( 1000, x );
                 Assert.AreEqual( 1000, y );
                 Assert.AreEqual( 0, z );
@@ -192,11 +203,13 @@ namespace ClassicAssist.Tests.MacroCommands
         [TestMethod]
         public void MoveTypeXYZWillSendDropPacket()
         {
+            ActionPacketQueue.Clear();
+
             PlayerMobile player = new PlayerMobile( 0x01 );
 
             Item backpack = new Item( 0x02 )
             {
-                Container = new ItemCollection( 0x02 ) { new Item( 0x00aabbcc ) { ID = 0xff, Count = 1, Owner = 0x02 } },
+                Container = new ItemCollection( 0x02 ) { new Item( 0x00aabbee ) { ID = 0xff, Count = 1, Owner = 0x02 } },
                 Owner = 0x01,
                 Layer = Layer.Backpack
             };
@@ -231,11 +244,17 @@ namespace ClassicAssist.Tests.MacroCommands
                 }
 
                 int serial = ( data[1] << 24 ) | ( data[2] << 16 ) | ( data[3] << 8 ) | data[4];
+
+                if ( serial != 0x00aabbee )
+                {
+                    return;
+                }
+
                 short x = (short) ( data[5] << 8 | data[6] );
                 short y = (short) ( data[7] << 8 | data[8] );
                 sbyte z = (sbyte) data[9];
 
-                Assert.AreEqual( 0x00aabbcc, serial );
+                Assert.AreEqual( 0x00aabbee, serial );
                 Assert.AreEqual( 1000, x );
                 Assert.AreEqual( 1000, y );
                 Assert.AreEqual( 0, z );

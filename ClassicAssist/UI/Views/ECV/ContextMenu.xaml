@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
                     xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
-                    xmlns:misc="clr-namespace:ClassicAssist.Misc">
+                    xmlns:misc="clr-namespace:ClassicAssist.Misc"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary>
             <misc:BindingProxy x:Key="Proxy" Data="{Binding}" />
@@ -26,6 +27,28 @@
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.EquipItemCommand)}" />
                 <MenuItem Header="{x:Static resources:Strings.Hide}"
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.HideItemCommand)}" />
+                <MenuItem Header="{x:Static resources:Strings.Custom_Actions}"
+                          ItemsSource="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.CustomContextActions)}">
+                    <MenuItem.Style>
+                        <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
+                            <Style.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.CustomContextActions).Count}"
+                                    Value="0">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </MenuItem.Style>
+                    <MenuItem.ItemContainerStyle>
+                        <Style TargetType="MenuItem">
+                            <Setter Property="Header" Value="{Binding Key}" />
+                            <Setter Property="Command"
+                                    Value="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextCustomActionCommand)}" />
+                            <Setter Property="CommandParameter" Value="{Binding}" />
+                        </Style>
+                    </MenuItem.ItemContainerStyle>
+                </MenuItem>
                 <Separator />
                 <MenuItem Header="{x:Static resources:Strings.Target}"
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextTargetCommand)}" />

@@ -2026,4 +2026,7 @@ Are you sure you wish to continue?</value>
   <data name="Enabled Packets:" xml:space="preserve">
     <value>Enabled Packets:</value>
   </data>
+  <data name="Custom Actions" xml:space="preserve">
+    <value>Custom Actions</value>
+  </data>
 </root>

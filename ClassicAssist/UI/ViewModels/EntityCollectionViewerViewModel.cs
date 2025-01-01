@@ -43,6 +43,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _combineStacksCommand;
         private ICommand _configureCommand;
         private ICommand _contextContextMenuRequestCommand;
+        private ICommand _contextCustomActionCommand;
         private ICommand _contextMoveToBackpackCommand;
         private ICommand _contextMoveToBankCommand;
         private ICommand _contextMoveToContainerCommand;
@@ -96,9 +97,20 @@ namespace ClassicAssist.UI.ViewModels
             Entities = new ObservableCollection<EntityCollectionData>( Collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
         }
 
-        public EntityCollectionViewerViewModel( ItemCollection collection, Func<ItemCollection> refreshCommand ) : this( collection )
+        public EntityCollectionViewerViewModel( ItemCollection collection, Func<ItemCollection> refreshCommand, Dictionary<string, Action<Item>> customActions = null ) :
+            this( collection )
         {
             _customRefreshCommand = refreshCommand;
+
+            if ( customActions == null )
+            {
+                return;
+            }
+
+            foreach ( KeyValuePair<string, Action<Item>> customAction in customActions )
+            {
+                CustomContextActions.Add( customAction );
+            }
         }
 
         public EntityCollectionViewerViewModel( ItemCollection collection )
@@ -146,6 +158,9 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ContextContextMenuRequestCommand =>
             _contextContextMenuRequestCommand ?? ( _contextContextMenuRequestCommand = new RelayCommand( ContextMenuRequest, o => SelectedItems.Count > 0 ) );
 
+        public ICommand ContextCustomActionCommand =>
+            _contextCustomActionCommand ?? ( _contextCustomActionCommand = new RelayCommand( ContextCustomAction, o => SelectedItems != null ) );
+
         public ICommand ContextMoveToBackpackCommand =>
             _contextMoveToBackpackCommand ?? ( _contextMoveToBackpackCommand = new RelayCommandAsync( ContextMoveToBackpack, o => SelectedItems != null ) );
 
@@ -165,6 +180,8 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ContextTargetCommand => _contextTargetCommand ?? ( _contextTargetCommand = new RelayCommand( ContextTarget ) );
 
         public ICommand ContextUseItemCommand => _contextUseItemCommand ?? ( _contextUseItemCommand = new RelayCommandAsync( ContextUseItem, o => SelectedItems != null ) );
+
+        public ObservableCollection<KeyValuePair<string, Action<Item>>> CustomContextActions { get; set; } = new ObservableCollection<KeyValuePair<string, Action<Item>>>();
 
         public ObservableCollection<EntityCollectionData> Entities
         {
@@ -247,6 +264,27 @@ namespace ClassicAssist.UI.ViewModels
         }
 
         private Dictionary<int, string> _nameOverrides { get; } = new Dictionary<int, string>();
+
+        private void ContextCustomAction( object arg )
+        {
+            if ( !( arg is KeyValuePair<string, Action<Item>> action ) )
+            {
+                return;
+            }
+
+            var items = SelectedItems.Select( ( e, i ) => new { e.Entity, i } ).ToList();
+
+            EnqueueAction( obj =>
+            {
+                foreach ( var item in items )
+                {
+                    _dispatcher.Invoke( () => { obj.Status = $"{action.Key} {item.i} / {items.Count}"; } );
+                    action.Value.Invoke( item.Entity as Item );
+                }
+
+                return Task.FromResult( true );
+            }, action.Key );
+        }
 
         private async Task ContextMoveToGround( object arg )
         {

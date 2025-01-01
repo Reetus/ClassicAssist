@@ -1384,6 +1384,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom Actions.
+        /// </summary>
+        public static string Custom_Actions {
+            get {
+                return ResourceManager.GetString("Custom Actions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deactivated following.
         /// </summary>
         public static string Deactivated_following {

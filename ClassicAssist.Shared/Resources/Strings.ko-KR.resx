@@ -1,5 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -53,238 +112,13 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Made_For_Malo" xml:space="preserve">
-    <value>Translated by Mark Hunt &amp; Andy H.</value>
-  </data>
-  <data name="UO_LOCALE" xml:space="preserve">
-    <value>KOR</value>
-  </data>
-  <data name="General" xml:space="preserve">
-    <value>일반</value>
-  </data>
-  <data name="Options" xml:space="preserve">
-    <value>옵션</value>
-  </data>
-  <data name="About" xml:space="preserve">
-    <value>상태</value>
-  </data>
-  <data name="Agents" xml:space="preserve">
-    <value>에이전트</value>
-  </data>
-  <data name="Counters" xml:space="preserve">
-    <value>카운터</value>
-  </data>
-  <data name="Dress" xml:space="preserve">
-    <value>장비착용</value>
-  </data>
-  <data name="Friends" xml:space="preserve">
-    <value>친구</value>
-  </data>
-  <data name="Hotkeys" xml:space="preserve">
-    <value>단축키</value>
-  </data>
-  <data name="Macros" xml:space="preserve">
-    <value>매크로</value>
-  </data>
-  <data name="Organizer" xml:space="preserve">
-    <value>정리</value>
-  </data>
-  <data name="Skills" xml:space="preserve">
-    <value>스킬</value>
-  </data>
-  <data name="Vendor Buy" xml:space="preserve">
-    <value>벤더에서 구매</value>
-  </data>
-  <data name="Vendor Sell" xml:space="preserve">
-    <value>벤더에게 판매</value>
-  </data>
-  <data name="Weather" xml:space="preserve">
-    <value>날씨</value>
-  </data>
-  <data name="Seasons" xml:space="preserve">
-    <value>계절</value>
-  </data>
-  <data name="Light Level" xml:space="preserve">
-    <value>조명 레벨</value>
-  </data>
-  <data name="Filters" xml:space="preserve">
-    <value>필터</value>
-  </data>
-  <data name="Light" xml:space="preserve">
-    <value>빛</value>
-  </data>
-  <data name="Profiles" xml:space="preserve">
-    <value>프로필</value>
-  </data>
   <data name="Abilities" xml:space="preserve">
     <value>특수기</value>
-  </data>
-  <data name="Commands" xml:space="preserve">
-    <value>명령</value>
-  </data>
-  <data name="Commands:" xml:space="preserve">
-    <value>명령:</value>
-  </data>
-  <data name="Consume" xml:space="preserve">
-    <value>물약과 버프</value>
-  </data>
-  <data name="Movement" xml:space="preserve">
-    <value>이동</value>
-  </data>
-  <data name="Spells" xml:space="preserve">
-    <value>주문</value>
-  </data>
-  <data name="Targeting" xml:space="preserve">
-    <value>타겟팅</value>
-  </data>
-  <data name="Software" xml:space="preserve">
-    <value>소프트웨어</value>
-  </data>
-  <data name="Product:" xml:space="preserve">
-    <value>제품:</value>
-  </data>
-  <data name="Version:" xml:space="preserve">
-    <value>버전:</value>
-  </data>
-  <data name="Build Date:" xml:space="preserve">
-    <value>빌드:</value>
-  </data>
-  <data name="World_Status" xml:space="preserve">
-    <value>세계 상태</value>
-  </data>
-  <data name="Connected:" xml:space="preserve">
-    <value>연결됨 :</value>
-  </data>
-  <data name="Items:" xml:space="preserve">
-    <value>아이템:</value>
-  </data>
-  <data name="items" xml:space="preserve">
-    <value>아이템</value>
-  </data>
-  <data name="Mobiles:" xml:space="preserve">
-    <value>모빌들:</value>
-  </data>
-  <data name="Latency:" xml:space="preserve">
-    <value>지연 시간:</value>
-  </data>
-  <data name="Player" xml:space="preserve">
-    <value>플레이어</value>
-  </data>
-  <data name="Name:" xml:space="preserve">
-    <value>이름:</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>이름</value>
-  </data>
-  <data name="Serial:" xml:space="preserve">
-    <value>시리얼:</value>
-  </data>
-  <data name="Last Target:" xml:space="preserve">
-    <value>라스트 타겟:</value>
-  </data>
-  <data name="Active Objects" xml:space="preserve">
-    <value>활성 객체</value>
-  </data>
-  <data name="Add Friend" xml:space="preserve">
-    <value>친구 추가</value>
-  </data>
-  <data name="Always On Top" xml:space="preserve">
-    <value>항상 위로 보이기</value>
-  </data>
-  <data name="Both" xml:space="preserve">
-    <value>둘다</value>
-  </data>
-  <data name="Bought" xml:space="preserve">
-    <value>샀다</value>
-  </data>
-  <data name="BuffIcon" xml:space="preserve">
-    <value>버프아이콘</value>
-  </data>
-  <data name="Check For Updates" xml:space="preserve">
-    <value>업데이트를 확인</value>
-  </data>
-  <data name="Clear" xml:space="preserve">
-    <value>삭제</value>
-  </data>
-  <data name="Execute" xml:space="preserve">
-    <value>적용</value>
-  </data>
-  <data name="Insert" xml:space="preserve">
-    <value>삽입</value>
-  </data>
-  <data name="Location:" xml:space="preserve">
-    <value>장소:</value>
-  </data>
-  <data name="Loop" xml:space="preserve">
-    <value>반복</value>
-  </data>
-  <data name="Map:" xml:space="preserve">
-    <value>지도:</value>
-  </data>
-  <data name="Messages" xml:space="preserve">
-    <value>메시지</value>
-  </data>
-  <data name="New" xml:space="preserve">
-    <value>추가</value>
-  </data>
-  <data name="New Item" xml:space="preserve">
-    <value>새 아이템</value>
-  </data>
-  <data name="New version available:" xml:space="preserve">
-    <value>사용가능한 새 버전:</value>
-  </data>
-  <data name="Object Inspector" xml:space="preserve">
-    <value>오프젝트 검사기</value>
-  </data>
-  <data name="OK" xml:space="preserve">
-    <value>오케이</value>
-  </data>
-  <data name="Pass to UO" xml:space="preserve">
-    <value>키보드 키 동시 사용</value>
-  </data>
-  <data name="Play" xml:space="preserve">
-    <value>재생</value>
-  </data>
-  <data name="ProductName" xml:space="preserve">
-    <value>클래식어시스트</value>
-  </data>
-  <data name="Record" xml:space="preserve">
-    <value>녹화</value>
-  </data>
-  <data name="Refresh Potion" xml:space="preserve">
-    <value>스탬 포션</value>
-  </data>
-  <data name="Regeneration" xml:space="preserve">
-    <value>재생</value>
-  </data>
-  <data name="Remove" xml:space="preserve">
-    <value>삭제</value>
-  </data>
-  <data name="Remove Friend" xml:space="preserve">
-    <value>친구 삭제</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>저장</value>
-  </data>
-  <data name="Set" xml:space="preserve">
-    <value>설정</value>
-  </data>
-  <data name="Set Containers" xml:space="preserve">
-    <value>상자 선택</value>
-  </data>
-  <data name="Stack" xml:space="preserve">
-    <value>쌓다</value>
-  </data>
-  <data name="Stop" xml:space="preserve">
-    <value>정지</value>
-  </data>
-  <data name="Warn when counter amount below:" xml:space="preserve">
-    <value>카운터의 수량이 설정값보다 아래일 때 경고:</value>
   </data>
   <data name="Ability already set..." xml:space="preserve">
     <value>특수기가 이미 설정됐습니다...</value>
@@ -292,14 +126,26 @@
   <data name="Ability not set..." xml:space="preserve">
     <value>특수기가 설정 설정되지 않았습니다...</value>
   </data>
+  <data name="About" xml:space="preserve">
+    <value>상태</value>
+  </data>
   <data name="Action Delay:" xml:space="preserve">
     <value>행동 딜레이:</value>
   </data>
   <data name="Actions" xml:space="preserve">
     <value>행동</value>
   </data>
+  <data name="Active Objects" xml:space="preserve">
+    <value>활성 객체</value>
+  </data>
+  <data name="Add Friend" xml:space="preserve">
+    <value>친구 추가</value>
+  </data>
   <data name="Address:" xml:space="preserve">
     <value>주소:</value>
+  </data>
+  <data name="Agents" xml:space="preserve">
+    <value>에이전트</value>
   </data>
   <data name="Agility Potion" xml:space="preserve">
     <value>덱스 포션</value>
@@ -309,6 +155,9 @@
   </data>
   <data name="All skills:" xml:space="preserve">
     <value>모든 스킬:</value>
+  </data>
+  <data name="Always On Top" xml:space="preserve">
+    <value>항상 위로 보이기</value>
   </data>
   <data name="Amount" xml:space="preserve">
     <value>수량</value>
@@ -331,8 +180,20 @@
   <data name="Bola" xml:space="preserve">
     <value>볼라</value>
   </data>
+  <data name="Both" xml:space="preserve">
+    <value>둘다</value>
+  </data>
+  <data name="Bought" xml:space="preserve">
+    <value>샀다</value>
+  </data>
+  <data name="BuffIcon" xml:space="preserve">
+    <value>버프아이콘</value>
+  </data>
   <data name="Buffs / Penalties" xml:space="preserve">
     <value>버프 / 페널티</value>
+  </data>
+  <data name="Build Date:" xml:space="preserve">
+    <value>빌드:</value>
   </data>
   <data name="Buy Agent: No matches found." xml:space="preserve">
     <value>구매 에이전트: 일치하는 항목이 없습니다.</value>
@@ -354,6 +215,12 @@
   </data>
   <data name="Character" xml:space="preserve">
     <value>캐릭터</value>
+  </data>
+  <data name="Check For Updates" xml:space="preserve">
+    <value>업데이트를 확인</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>삭제</value>
   </data>
   <data name="Clear All" xml:space="preserve">
     <value>모두 삭제</value>
@@ -379,11 +246,23 @@
   <data name="Command Prefix:" xml:space="preserve">
     <value>명령 접두사:</value>
   </data>
+  <data name="Commands" xml:space="preserve">
+    <value>명령</value>
+  </data>
+  <data name="Commands:" xml:space="preserve">
+    <value>명령:</value>
+  </data>
   <data name="Conflagration Potion" xml:space="preserve">
     <value>불장판 포션</value>
   </data>
   <data name="Confusion Blast Potion" xml:space="preserve">
     <value>거대한 혼란 포션</value>
+  </data>
+  <data name="Connected:" xml:space="preserve">
+    <value>연결됨 :</value>
+  </data>
+  <data name="Consume" xml:space="preserve">
+    <value>물약과 버프</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>복사</value>
@@ -397,6 +276,9 @@
   <data name="Counter &quot;{0}&quot; amount is now {1}..." xml:space="preserve">
     <value>카운터 이름 "{0}" 현재 갯수 {1}...</value>
   </data>
+  <data name="Counters" xml:space="preserve">
+    <value>카운터</value>
+  </data>
   <data name="Cure Potion" xml:space="preserve">
     <value>해독 포션</value>
   </data>
@@ -408,6 +290,9 @@
   </data>
   <data name="Do not auto interupt" xml:space="preserve">
     <value>자동으로 중단하지 않습니다</value>
+  </data>
+  <data name="Dress" xml:space="preserve">
+    <value>장비착용</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
     <value>복제</value>
@@ -448,8 +333,14 @@
   <data name="Error: No Player" xml:space="preserve">
     <value>오류 : 플레이어가 없다</value>
   </data>
+  <data name="Execute" xml:space="preserve">
+    <value>적용</value>
+  </data>
   <data name="Explosion Potion" xml:space="preserve">
     <value>폭탄 포션</value>
+  </data>
+  <data name="Filters" xml:space="preserve">
+    <value>필터</value>
   </data>
   <data name="Force Walk Off" xml:space="preserve">
     <value>강제로 걷기 비활성</value>
@@ -460,8 +351,14 @@
   <data name="Friend" xml:space="preserve">
     <value>친구</value>
   </data>
+  <data name="Friends" xml:space="preserve">
+    <value>친구</value>
+  </data>
   <data name="Fruit Bowl" xml:space="preserve">
     <value>과일 그릇</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>일반</value>
   </data>
   <data name="Get Closest Gray" xml:space="preserve">
     <value>가까운 그레이 선택</value>
@@ -493,6 +390,9 @@
   <data name="Heal Potion" xml:space="preserve">
     <value>치료 포션</value>
   </data>
+  <data name="Hotkeys" xml:space="preserve">
+    <value>단축키</value>
+  </data>
   <data name="Hotkeys disabled..." xml:space="preserve">
     <value>단축키 비활성화...</value>
   </data>
@@ -513,6 +413,9 @@
   </data>
   <data name="Include Purchased Amount" xml:space="preserve">
     <value>구매 금액 포함</value>
+  </data>
+  <data name="Insert" xml:space="preserve">
+    <value>삽입</value>
   </data>
   <data name="Interrupt Spell" xml:space="preserve">
     <value>스펠끊기/디스텁</value>
@@ -553,11 +456,29 @@
   <data name="Item properties null or not loaded..." xml:space="preserve">
     <value>아이템 속성이 존재하지 않거나 불러오지 못했습니다...</value>
   </data>
+  <data name="items" xml:space="preserve">
+    <value>아이템</value>
+  </data>
+  <data name="Items:" xml:space="preserve">
+    <value>아이템:</value>
+  </data>
   <data name="Journal" xml:space="preserve">
     <value>저널</value>
   </data>
   <data name="Last Target" xml:space="preserve">
     <value>라스트 타겟</value>
+  </data>
+  <data name="Last Target:" xml:space="preserve">
+    <value>라스트 타겟:</value>
+  </data>
+  <data name="Latency:" xml:space="preserve">
+    <value>지연 시간:</value>
+  </data>
+  <data name="Light" xml:space="preserve">
+    <value>빛</value>
+  </data>
+  <data name="Light Level" xml:space="preserve">
+    <value>조명 레벨</value>
   </data>
   <data name="Limit Mouse Wheel Retrigger" xml:space="preserve">
     <value>마우스 휠 리트리거 제한</value>
@@ -568,11 +489,23 @@
   <data name="Lists" xml:space="preserve">
     <value>목록</value>
   </data>
+  <data name="Location:" xml:space="preserve">
+    <value>장소:</value>
+  </data>
+  <data name="Loop" xml:space="preserve">
+    <value>반복</value>
+  </data>
   <data name="Loop time: {0}" xml:space="preserve">
     <value>반복 시간: {0}</value>
   </data>
   <data name="Macro error: {0}" xml:space="preserve">
     <value>매크로 오류: {0}</value>
+  </data>
+  <data name="Macros" xml:space="preserve">
+    <value>매크로</value>
+  </data>
+  <data name="Made_For_Malo" xml:space="preserve">
+    <value>Translated by Mark Hunt &amp; Andy H.</value>
   </data>
   <data name="Magical" xml:space="preserve">
     <value>마법</value>
@@ -580,8 +513,14 @@
   <data name="Main" xml:space="preserve">
     <value>메인</value>
   </data>
+  <data name="Map:" xml:space="preserve">
+    <value>지도:</value>
+  </data>
   <data name="Max Price" xml:space="preserve">
     <value>최대 가격</value>
+  </data>
+  <data name="Messages" xml:space="preserve">
+    <value>메시지</value>
   </data>
   <data name="Min Price" xml:space="preserve">
     <value>최소 가격</value>
@@ -595,6 +534,9 @@
   <data name="Mobile not found..." xml:space="preserve">
     <value>모빌을 찾지 못했습니다...</value>
   </data>
+  <data name="Mobiles:" xml:space="preserve">
+    <value>모빌들:</value>
+  </data>
   <data name="Move conflicting items" xml:space="preserve">
     <value>충돌하는 아이템 이동</value>
   </data>
@@ -604,8 +546,26 @@
   <data name="Move to container" xml:space="preserve">
     <value>상자로 이동</value>
   </data>
+  <data name="Movement" xml:space="preserve">
+    <value>이동</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>이름</value>
+  </data>
+  <data name="Name:" xml:space="preserve">
+    <value>이름:</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>추가</value>
+  </data>
+  <data name="New Item" xml:space="preserve">
+    <value>새 아이템</value>
+  </data>
   <data name="New Profile" xml:space="preserve">
     <value>새 프로필</value>
+  </data>
+  <data name="New version available:" xml:space="preserve">
+    <value>사용가능한 새 버전:</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>없음</value>
@@ -613,11 +573,23 @@
   <data name="Object &quot;{0}&quot; updated..." xml:space="preserve">
     <value>오프젝트 "{0}" 업데이트완료...</value>
   </data>
+  <data name="Object Inspector" xml:space="preserve">
+    <value>오프젝트 검사기</value>
+  </data>
   <data name="Objects" xml:space="preserve">
     <value>오브젝트</value>
   </data>
+  <data name="OK" xml:space="preserve">
+    <value>오케이</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>옵션</value>
+  </data>
   <data name="Orange Petal" xml:space="preserve">
     <value>오렌지 꽃잎</value>
+  </data>
+  <data name="Organizer" xml:space="preserve">
+    <value>정리</value>
   </data>
   <data name="Organizer &quot;{0}&quot; not found..." xml:space="preserve">
     <value>정리 "{0}" 을 못찾았다...</value>
@@ -631,8 +603,17 @@
   <data name="Organizer {0} running..." xml:space="preserve">
     <value>정리 "{0}" 실행중...</value>
   </data>
+  <data name="Pass to UO" xml:space="preserve">
+    <value>키보드 키 동시 사용</value>
+  </data>
   <data name="Persist Use Once" xml:space="preserve">
     <value>한 번만 사용</value>
+  </data>
+  <data name="Play" xml:space="preserve">
+    <value>재생</value>
+  </data>
+  <data name="Player" xml:space="preserve">
+    <value>플레이어</value>
   </data>
   <data name="Port:" xml:space="preserve">
     <value>포트:</value>
@@ -643,8 +624,17 @@
   <data name="Prevent targeting friends with Harmful spells" xml:space="preserve">
     <value>공격스펠을 친구에게 타게팅 금지</value>
   </data>
+  <data name="Product:" xml:space="preserve">
+    <value>제품:</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>클래식어시스트</value>
+  </data>
   <data name="Profile name contains illegal characters." xml:space="preserve">
     <value>프로필 이름에 잘못된 글자가 있습니다.</value>
+  </data>
+  <data name="Profiles" xml:space="preserve">
+    <value>프로필</value>
   </data>
   <data name="Properties" xml:space="preserve">
     <value>속성</value>
@@ -664,11 +654,26 @@
   <data name="Ready..." xml:space="preserve">
     <value>준비...</value>
   </data>
+  <data name="Record" xml:space="preserve">
+    <value>녹화</value>
+  </data>
   <data name="Recount" xml:space="preserve">
     <value>다시세기</value>
   </data>
   <data name="Refresh" xml:space="preserve">
     <value>갱신</value>
+  </data>
+  <data name="Refresh Potion" xml:space="preserve">
+    <value>스탬 포션</value>
+  </data>
+  <data name="Regeneration" xml:space="preserve">
+    <value>재생</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>삭제</value>
+  </data>
+  <data name="Remove Friend" xml:space="preserve">
+    <value>친구 삭제</value>
   </data>
   <data name="Reset +/-" xml:space="preserve">
     <value>리셋 +/-</value>
@@ -678,6 +683,12 @@
   </data>
   <data name="Resync" xml:space="preserve">
     <value>다시 동기화</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>저장</value>
+  </data>
+  <data name="Seasons" xml:space="preserve">
+    <value>계절</value>
   </data>
   <data name="Select destination container..." xml:space="preserve">
     <value>대상 상자 선택...</value>
@@ -691,8 +702,17 @@
   <data name="Serial" xml:space="preserve">
     <value>시리얼</value>
   </data>
+  <data name="Serial:" xml:space="preserve">
+    <value>시리얼:</value>
+  </data>
   <data name="Server" xml:space="preserve">
     <value>서버</value>
+  </data>
+  <data name="Set" xml:space="preserve">
+    <value>설정</value>
+  </data>
+  <data name="Set Containers" xml:space="preserve">
+    <value>상자 선택</value>
   </data>
   <data name="Set Down" xml:space="preserve">
     <value>내리기</value>
@@ -727,17 +747,32 @@
   <data name="Show World Items" xml:space="preserve">
     <value>현재화면 아이템 확인</value>
   </data>
+  <data name="Skills" xml:space="preserve">
+    <value>스킬</value>
+  </data>
   <data name="Smart last target:" xml:space="preserve">
     <value>스마트 라스트 타겟:</value>
   </data>
   <data name="Smoke Bomb" xml:space="preserve">
     <value>스모크밤</value>
   </data>
+  <data name="Software" xml:space="preserve">
+    <value>소프트웨어</value>
+  </data>
+  <data name="Spells" xml:space="preserve">
+    <value>주문</value>
+  </data>
+  <data name="Stack" xml:space="preserve">
+    <value>쌓다</value>
+  </data>
   <data name="Stats" xml:space="preserve">
     <value>스탯</value>
   </data>
   <data name="Status:" xml:space="preserve">
     <value>스탯:</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>정지</value>
   </data>
   <data name="Stop Current Macro" xml:space="preserve">
     <value>현재 매크로 정지</value>
@@ -795,6 +830,9 @@
   </data>
   <data name="Target timeout..." xml:space="preserve">
     <value>타겟팅 시간초과...</value>
+  </data>
+  <data name="Targeting" xml:space="preserve">
+    <value>타겟팅</value>
   </data>
   <data name="The item needs to be equipped..." xml:space="preserve">
     <value>아이템을 장착해야합니다...</value>
@@ -856,6 +894,9 @@
   <data name="Unset Secondary Ability" xml:space="preserve">
     <value>두번째 특수기 해제</value>
   </data>
+  <data name="UO_LOCALE" xml:space="preserve">
+    <value>KOR</value>
+  </data>
   <data name="Use death screen whilst hidden" xml:space="preserve">
     <value>하이딩상태에서 죽었을때 화면 사용</value>
   </data>
@@ -888,6 +929,24 @@
   </data>
   <data name="Value" xml:space="preserve">
     <value>값</value>
+  </data>
+  <data name="Vendor Buy" xml:space="preserve">
+    <value>벤더에서 구매</value>
+  </data>
+  <data name="Vendor Sell" xml:space="preserve">
+    <value>벤더에게 판매</value>
+  </data>
+  <data name="Version:" xml:space="preserve">
+    <value>버전:</value>
+  </data>
+  <data name="Warn when counter amount below:" xml:space="preserve">
+    <value>카운터의 수량이 설정값보다 아래일 때 경고:</value>
+  </data>
+  <data name="Weather" xml:space="preserve">
+    <value>날씨</value>
+  </data>
+  <data name="World_Status" xml:space="preserve">
+    <value>세계 상태</value>
   </data>
   <data name="{0} items, {1} selected, {2} total amount" xml:space="preserve">
     <value>{0} items, {1} selected, {2} total amount</value>
@@ -922,20 +981,17 @@
   <data name="Scavenger" xml:space="preserve">
     <value>스캐빈저</value>
   </data>
-  <data name="Prevent attacking innocents in guardzone" xml:space="preserve">
-    <value>가드존에서 블루공격 방지</value>
-  </data>
   <data name="Prevent targeting innocents in guardzone" xml:space="preserve">
     <value>가드존에서 블루타겟 방지</value>
+  </data>
+  <data name="Prevent attacking innocents in guardzone" xml:space="preserve">
+    <value>가드존에서 블루공격 방지</value>
   </data>
   <data name="Applies to hotkeys / macros only." xml:space="preserve">
     <value>단축키/매크로에만 적용됩니다.</value>
   </data>
   <data name="Hue Picker" xml:space="preserve">
     <value>색상 선택</value>
-  </data>
-  <data name="Cannot find sound file..." xml:space="preserve">
-    <value>사운드 파일을 찾을 수 없습니다...</value>
   </data>
   <data name="Disable inside guardzone" xml:space="preserve">
     <value>가드존내 자동룻 비활성화</value>
@@ -951,6 +1007,9 @@
   </data>
   <data name="Operator" xml:space="preserve">
     <value>연산자</value>
+  </data>
+  <data name="Cannot find sound file..." xml:space="preserve">
+    <value>사운드 파일을 찾을 수 없습니다...</value>
   </data>
   <data name="Autolooting '{0}'" xml:space="preserve">
     <value>자동룻팅 '{0}'</value>
@@ -1050,6 +1109,9 @@
   </data>
   <data name="Cannot PlayMacro from background macro..." xml:space="preserve">
     <value>배경 매크로에서 매크로를 재생할 수 없습니다...</value>
+  </data>
+  <data name="Autostart" xml:space="preserve">
+    <value>자동시작</value>
   </data>
   <data name="When checked macro will execute automatically after login." xml:space="preserve">
     <value>확인되면 매크로는 로그인 후 자동으로 실행됩니다.</value>
@@ -1210,9 +1272,6 @@
   <data name="Status" xml:space="preserve">
     <value>상태</value>
   </data>
-  <data name="Autostart" xml:space="preserve">
-    <value>자동시작</value>
-  </data>
   <data name="Total base:" xml:space="preserve">
     <value>총 기준:</value>
   </data>
@@ -1330,11 +1389,11 @@
   <data name="Loaded to all profiles" xml:space="preserve">
     <value>모든 프로파일을 불러옴</value>
   </data>
-  <data name="Check hands before potions" xml:space="preserve">
-    <value>포션을 마시기전 손이 빈것 확인</value>
-  </data>
   <data name="Bards Music" xml:space="preserve">
     <value>바드 음악</value>
+  </data>
+  <data name="Check hands before potions" xml:space="preserve">
+    <value>포션을 마시기전 손이 빈것 확인</value>
   </data>
   <data name="Scavenging '{0}'" xml:space="preserve">
     <value>{0} 청소중</value>
@@ -1642,9 +1701,6 @@
   <data name="Show player / shard name in CUO title" xml:space="preserve">
     <value>게임윈도우 제목에 플레이어/서버 이름 표시 </value>
   </data>
-  <data name="Packets" xml:space="preserve">
-    <value>패킷</value>
-  </data>
   <data name="ID from target" xml:space="preserve">
     <value>대상의 ID</value>
   </data>
@@ -1909,6 +1965,9 @@
   <data name="Other" xml:space="preserve">
     <value>다른</value>
   </data>
+  <data name="Packets" xml:space="preserve">
+    <value>패킷</value>
+  </data>
   <data name="Hue Override" xml:space="preserve">
     <value>색조 재정의</value>
   </data>
@@ -1930,9 +1989,6 @@
   <data name="Include Internal" xml:space="preserve">
     <value>내부 포함</value>
   </data>
-  <data name="Enabled Packets:" xml:space="preserve">
-    <value>사용 가능한 패킷:</value>
-  </data>
   <data name="Show Overhead" xml:space="preserve">
     <value>머리위에 보이기</value>
   </data>
@@ -1942,23 +1998,23 @@
   <data name="Trap Pouches" xml:space="preserve">
     <value>함정 주머니</value>
   </data>
+  <data name="Auto-add targeted pouches" xml:space="preserve">
+    <value>타겟 지정된 주머니를 자동 추가</value>
+  </data>
   <data name="Remove item on use object request" xml:space="preserve">
     <value>오브젝트 사용 요청에서 아이템 제거</value>
   </data>
   <data name="Only if last spell is Magic Trap" xml:space="preserve">
     <value>마법 함정이 마지막 주문 인 경우만</value>
   </data>
-  <data name="Overhead Message" xml:space="preserve">
-    <value>머리위에 표시</value>
-  </data>
-  <data name="Auto-add targeted pouches" xml:space="preserve">
-    <value>타겟 지정된 주머니를 자동 추가</value>
-  </data>
   <data name="Warn when item count below:" xml:space="preserve">
     <value>아이템 개수가 이하면 경고:</value>
   </data>
   <data name="Trap pouch count below {0}..." xml:space="preserve">
     <value>함정 주머니 개수가 {0} 이하...</value>
+  </data>
+  <data name="Overhead Message" xml:space="preserve">
+    <value>머리위에 표시</value>
   </data>
   <data name="Use Trap Pouch" xml:space="preserve">
     <value>함정 주머니 사용</value>
@@ -2013,5 +2069,8 @@
   </data>
   <data name="Toggle Scavenger" xml:space="preserve">
     <value>자동 줍기 상태 변경</value>
+  </data>
+  <data name="Enabled Packets:" xml:space="preserve">
+    <value>사용 가능한 패킷:</value>
   </data>
 </root>

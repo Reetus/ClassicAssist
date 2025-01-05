@@ -1,5 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -53,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Abilities" xml:space="preserve">
     <value>Umiejętności...</value>
@@ -192,6 +251,12 @@
   </data>
   <data name="Commands:" xml:space="preserve">
     <value>Komendy:</value>
+  </data>
+  <data name="Conflagration Potion" xml:space="preserve">
+    <value>Mikstura pożogi</value>
+  </data>
+  <data name="Confusion Blast Potion" xml:space="preserve">
+    <value>Mikstura Confusion Blast</value>
   </data>
   <data name="Connected:" xml:space="preserve">
     <value>Połączono</value>
@@ -778,6 +843,27 @@
   <data name="Timers" xml:space="preserve">
     <value>Liczniki</value>
   </data>
+  <data name="Toggle Force Walk" xml:space="preserve">
+    <value>Przełącznik wymuszenia chodzenia</value>
+  </data>
+  <data name="Toggle hotkeys" xml:space="preserve">
+    <value>Przełącznik skrótów klawiszowych</value>
+  </data>
+  <data name="Toggle item properties" xml:space="preserve">
+    <value>Przełącznik właściwości przedmiotów</value>
+  </data>
+  <data name="Toggle Primary Ability" xml:space="preserve">
+    <value>Przełącznik pierwszej umiejętności</value>
+  </data>
+  <data name="Toggle Secondary Ability" xml:space="preserve">
+    <value>Przełącznik drugiej umiejętności</value>
+  </data>
+  <data name="Topmost" xml:space="preserve">
+    <value>Najbardziej używane</value>
+  </data>
+  <data name="Trinsic Rose Petal" xml:space="preserve">
+    <value>Trinsic Rose Petal</value>
+  </data>
   <data name="Undress" xml:space="preserve">
     <value>Zdejmij</value>
   </data>
@@ -979,6 +1065,9 @@
   <data name="Macros default to quiet mode" xml:space="preserve">
     <value>Makra w tle (tryb cichy)</value>
   </data>
+  <data name="GetFriend/GetEnemy uses ignore list" xml:space="preserve">
+    <value>Lista ignorowanych (dla GetFriend/GetEnemy)</value>
+  </data>
   <data name="Ignore List" xml:space="preserve">
     <value>Lista ignorowanych</value>
   </data>
@@ -1081,6 +1170,9 @@
   <data name="Use UO3D Packets" xml:space="preserve">
     <value>Użyj pakietów UO3D </value>
   </data>
+  <data name="Define Custom Properties" xml:space="preserve">
+    <value>Zdefiniuj niestandardowe właściwości</value>
+  </data>
   <data name="Cliloc" xml:space="preserve">
     <value>Cliloc</value>
   </data>
@@ -1092,6 +1184,15 @@
   </data>
   <data name="Choose from Item" xml:space="preserve">
     <value>Wybierz z przedmiotu</value>
+  </data>
+  <data name="Toggle mounted" xml:space="preserve">
+    <value>Przełącznik osiodłania</value>
+  </data>
+  <data name="Target Acquisition - Enemy" xml:space="preserve">
+    <value>Target Acquisition - Enemy</value>
+  </data>
+  <data name="Target Acquisition - Friend" xml:space="preserve">
+    <value>Target Acquisition - Friend</value>
   </data>
   <data name="Get Next Friend" xml:space="preserve">
     <value>Wybierz następnego przyjaciela</value>
@@ -1156,6 +1257,9 @@
   <data name="Chat" xml:space="preserve">
     <value>Chat</value>
   </data>
+  <data name="Target object '{0}'..." xml:space="preserve">
+    <value>Target object '{0}'...</value>
+  </data>
   <data name="Miscellaneous" xml:space="preserve">
     <value>Różne</value>
   </data>
@@ -1170,6 +1274,9 @@
   </data>
   <data name="Total base:" xml:space="preserve">
     <value>Maksymalna wartość skilli:</value>
+  </data>
+  <data name="Drop Holding Object" xml:space="preserve">
+    <value>Upuść trzymany obiekt</value>
   </data>
   <data name="Journal receives filtered messages" xml:space="preserve">
     <value>Dziennik odbiera odfiltrowane wiadomości  (usuwanie duplikatów).</value>
@@ -1186,59 +1293,11 @@
   <data name="Last Object" xml:space="preserve">
     <value>Ostatni obiekt</value>
   </data>
-  <data name="Undisableable" xml:space="preserve">
-    <value>Nie możliwe do wyłączenia</value>
-  </data>
-  <data name="Conflagration Potion" xml:space="preserve">
-    <value>Mikstura pożogi</value>
-  </data>
-  <data name="Confusion Blast Potion" xml:space="preserve">
-    <value>Mikstura Confusion Blast</value>
-  </data>
-  <data name="Toggle Force Walk" xml:space="preserve">
-    <value>Przełącznik wymuszenia chodzenia</value>
-  </data>
-  <data name="Toggle hotkeys" xml:space="preserve">
-    <value>Przełącznik skrótów klawiszowych</value>
-  </data>
-  <data name="Toggle item properties" xml:space="preserve">
-    <value>Przełącznik właściwości przedmiotów</value>
-  </data>
-  <data name="Toggle Primary Ability" xml:space="preserve">
-    <value>Przełącznik pierwszej umiejętności</value>
-  </data>
-  <data name="Toggle Secondary Ability" xml:space="preserve">
-    <value>Przełącznik drugiej umiejętności</value>
-  </data>
-  <data name="Topmost" xml:space="preserve">
-    <value>Najbardziej używane</value>
-  </data>
-  <data name="Trinsic Rose Petal" xml:space="preserve">
-    <value>Trinsic Rose Petal</value>
-  </data>
-  <data name="GetFriend/GetEnemy uses ignore list" xml:space="preserve">
-    <value>Lista ignorowanych (dla GetFriend/GetEnemy)</value>
-  </data>
-  <data name="Define Custom Properties" xml:space="preserve">
-    <value>Zdefiniuj niestandardowe właściwości</value>
-  </data>
-  <data name="Toggle mounted" xml:space="preserve">
-    <value>Przełącznik osiodłania</value>
-  </data>
-  <data name="Target Acquisition - Enemy" xml:space="preserve">
-    <value>Target Acquisition - Enemy</value>
-  </data>
-  <data name="Target Acquisition - Friend" xml:space="preserve">
-    <value>Target Acquisition - Friend</value>
-  </data>
-  <data name="Target object '{0}'..." xml:space="preserve">
-    <value>Target object '{0}'...</value>
-  </data>
-  <data name="Drop Holding Object" xml:space="preserve">
-    <value>Upuść trzymany obiekt</value>
-  </data>
   <data name="Features:" xml:space="preserve">
     <value>Funkcje:</value>
+  </data>
+  <data name="Undisableable" xml:space="preserve">
+    <value>Nie możliwe do wyłączenia</value>
   </data>
   <data name="Hotkey will still trigger with hotkeys disabled" xml:space="preserve">
     <value>Skrótu klawiszowe będą ciągle akywne mimo wyłączenia skrótów klawiszowych</value>
@@ -1294,9 +1353,6 @@
   <data name="Shard" xml:space="preserve">
     <value>Shard:</value>
   </data>
-  <data name="Public Macros" xml:space="preserve">
-    <value>Makra publiczne</value>
-  </data>
   <data name="Macro Warning" xml:space="preserve">
     <value>Uwaga! Uruchamianie złośiwych makro może skutkować uzyskaniem hasła do konta przez osoby trzecie lub uszkodzić komputer!
 
@@ -1305,6 +1361,9 @@ Przed uruchomieniem makra, pownieneś zrozumieć co ono robi.
 Dołożyliśmy wszelkich starań, by makra tutaj zawarte nie były złośliwe, jednakże nie da sę sprawdzić wszystkiego. Nie ponosimy odpowiedzialności za używanie makr.
 
 Czy chcesz kontynuować?</value>
+  </data>
+  <data name="Public Macros" xml:space="preserve">
+    <value>Makra publiczne</value>
   </data>
   <data name="Learn how to contribute your own macros..." xml:space="preserve">
     <value>Zobacz, jak  przekazać własne makro dla innych...</value>
@@ -1336,6 +1395,9 @@ Czy chcesz kontynuować?</value>
   <data name="Check hands before potions" xml:space="preserve">
     <value>Sprawdź ręce przed piciem mikstur</value>
   </data>
+  <data name="Scavenging '{0}'" xml:space="preserve">
+    <value>Zbieranie '{0}'...</value>
+  </data>
   <data name="Rehue friends" xml:space="preserve">
     <value>Pokoloruj znajomych</value>
   </data>
@@ -1347,9 +1409,6 @@ Czy chcesz kontynuować?</value>
   </data>
   <data name="Cast Last Spell" xml:space="preserve">
     <value>Rzuć ostatni czar</value>
-  </data>
-  <data name="Scavenging '{0}'" xml:space="preserve">
-    <value>Zbieranie '{0}'...</value>
   </data>
   <data name="Arm / Disarm already in progress..." xml:space="preserve">
     <value>W trakcie zmiany broni...</value>
@@ -1636,14 +1695,11 @@ Czy chcesz kontynuować?</value>
   <data name="Create Macro Button" xml:space="preserve">
     <value>Utworz przycisk Makro</value>
   </data>
-  <data name="Show player / shard name in CUO title" xml:space="preserve">
-    <value>Pokaż gracza / nazwę shardu w pasku tytułu CUO</value>
-  </data>
-  <data name="Packets" xml:space="preserve">
-    <value>Pakiety</value>
-  </data>
   <data name="Reflection Error: {0}" xml:space="preserve">
     <value>Błąd odbicia: {0}</value>
+  </data>
+  <data name="Show player / shard name in CUO title" xml:space="preserve">
+    <value>Pokaż gracza / nazwę shardu w pasku tytułu CUO</value>
   </data>
   <data name="ID from target" xml:space="preserve">
     <value>Identyfikator z miejsca docelowego</value>
@@ -1908,6 +1964,9 @@ Czy chcesz kontynuować?</value>
   </data>
   <data name="Other" xml:space="preserve">
     <value>Inny __________</value>
+  </data>
+  <data name="Packets" xml:space="preserve">
+    <value>Pakiety</value>
   </data>
   <data name="Hue Override" xml:space="preserve">
     <value>Zastąpienie odcienia</value>

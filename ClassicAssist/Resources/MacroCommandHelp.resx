@@ -1924,4 +1924,16 @@ if FindType(0xe79, -1, 'backpack'):
   <data name="UNSETPLAYERALIAS_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>UnsetPlayerAlias("mount")</value>
   </data>
+  <data name="MOVEITEMXYZ_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Moves the specified serial/alias to the given coordinates</value>
+  </data>
+  <data name="MOVEITEMXYZ_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>MoveItemXYZ('found', 0, 0, 0)</value>
+  </data>
+  <data name="MOVETYPEXYZ_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Move the given type from the specified source container to the specified X, Y, Z, no amount specified or -1 will move the full stack.</value>
+  </data>
+  <data name="MOVETYPEXYZ_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>MoveTypeXYZ(0xf0e, "backpack", 0, 0, 0, -1)</value>
+  </data>
 </root>

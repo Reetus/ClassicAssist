@@ -50,12 +50,21 @@ namespace ClassicAssist.UO.Network.Packets
                 containerSerial = ( packet[11] << 24 ) | ( packet[12] << 16 ) | ( packet[13] << 8 ) | packet[14];
             }
 
-            if ( serial == 0 || containerSerial == 0 )
+            if ( serial == 0 )
             {
                 return null;
             }
 
-            return $"MoveItem(0x{serial:x}, 0x{containerSerial:x})\r\n";
+            if ( containerSerial != -1 )
+            {
+                return $"MoveItem(0x{serial:x}, 0x{containerSerial:x})\r\n";
+            }
+
+            int x = ( packet[5] << 8 ) | packet[6];
+            int y = ( packet[7] << 8 ) | packet[8];
+            int z = packet[9];
+
+            return $"MoveItemXYZ(0x{serial:x}, {x}, {y}, {z})\r\n";
         }
     }
 }

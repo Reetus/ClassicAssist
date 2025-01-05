@@ -58,9 +58,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="UO_LOCALE" xml:space="preserve">
-    <value>ITA</value>
-  </data>
   <data name="Abilities" xml:space="preserve">
     <value>Abilità</value>
   </data>
@@ -838,6 +835,9 @@
   <data name="Unset Secondary Ability" xml:space="preserve">
     <value>Deseleziona Secondary Ability</value>
   </data>
+  <data name="UO_LOCALE" xml:space="preserve">
+    <value>ITA</value>
+  </data>
   <data name="Use death screen whilst hidden" xml:space="preserve">
     <value>Schermo grigio da Hiddati</value>
   </data>
@@ -934,9 +934,6 @@
   <data name="Hue Picker" xml:space="preserve">
     <value>Prendi colore</value>
   </data>
-  <data name="Cannot find sound file..." xml:space="preserve">
-    <value>Impossibile trovare il file audio...</value>
-  </data>
   <data name="Disable inside guardzone" xml:space="preserve">
     <value>Disattiva in zona guardie</value>
   </data>
@@ -951,6 +948,9 @@
   </data>
   <data name="Operator" xml:space="preserve">
     <value>Operatore</value>
+  </data>
+  <data name="Cannot find sound file..." xml:space="preserve">
+    <value>Impossibile trovare il file audio...</value>
   </data>
   <data name="Autolooting '{0}'" xml:space="preserve">
     <value>Autolooting '{0}'</value>
@@ -1063,11 +1063,11 @@
   <data name="Stops all running macros including background and autostart macros." xml:space="preserve">
     <value>Interrompe tutti gli Script in esecuzione, inclusi quelli in Background e Autostart.</value>
   </data>
-  <data name="Instance" xml:space="preserve">
-    <value>Istanziato</value>
-  </data>
   <data name="Global" xml:space="preserve">
     <value>Globale</value>
+  </data>
+  <data name="Instance" xml:space="preserve">
+    <value>Istanziato</value>
   </data>
   <data name="Waiting for ClassicAssist to initialize..." xml:space="preserve">
     <value>Avvio di ClassicAssist in corso...</value>
@@ -1204,14 +1204,14 @@
   <data name="Miscellaneous" xml:space="preserve">
     <value>Varie</value>
   </data>
-  <data name="Status" xml:space="preserve">
-    <value>Stato</value>
-  </data>
   <data name="Base" xml:space="preserve">
     <value>Base</value>
   </data>
   <data name="Cap" xml:space="preserve">
     <value>Cap</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Stato</value>
   </data>
   <data name="Total base:" xml:space="preserve">
     <value>Base totale:</value>

@@ -1,5 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -53,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Abilities" xml:space="preserve">
     <value>Schopnosti</value>
@@ -193,6 +252,12 @@
   <data name="Commands:" xml:space="preserve">
     <value>Příkazy:</value>
   </data>
+  <data name="Conflagration Potion" xml:space="preserve">
+    <value>Lektvar požáru</value>
+  </data>
+  <data name="Confusion Blast Potion" xml:space="preserve">
+    <value>Lektvar zmatku</value>
+  </data>
   <data name="Connected:" xml:space="preserve">
     <value>Připojeno:</value>
   </data>
@@ -214,6 +279,9 @@
   <data name="Counters" xml:space="preserve">
     <value>Počítadla</value>
   </data>
+  <data name="Cure Potion" xml:space="preserve">
+    <value>Léčivý lektvar</value>
+  </data>
   <data name="Current Ability Cleared" xml:space="preserve">
     <value>Aktuální schopnost smazána</value>
   </data>
@@ -231,6 +299,9 @@
   </data>
   <data name="Enabled" xml:space="preserve">
     <value>Povoleno</value>
+  </data>
+  <data name="Enchanted Apple" xml:space="preserve">
+    <value>Kouzelné jablko</value>
   </data>
   <data name="Enemy" xml:space="preserve">
     <value>Nepřítel</value>
@@ -265,6 +336,9 @@
   <data name="Execute" xml:space="preserve">
     <value>Provést</value>
   </data>
+  <data name="Explosion Potion" xml:space="preserve">
+    <value>Lektvar výbuchu</value>
+  </data>
   <data name="Filters" xml:space="preserve">
     <value>Filtr</value>
   </data>
@@ -279,6 +353,9 @@
   </data>
   <data name="Friends" xml:space="preserve">
     <value>Přátelé</value>
+  </data>
+  <data name="Fruit Bowl" xml:space="preserve">
+    <value>Ovocná mísa</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>Obecné</value>
@@ -298,6 +375,9 @@
   <data name="Get Next Unfriendly" xml:space="preserve">
     <value>Následující nepřátelský</value>
   </data>
+  <data name="Grapes of Wrath" xml:space="preserve">
+    <value>Hrozny hněvu</value>
+  </data>
   <data name="Graphic" xml:space="preserve">
     <value>Grafika</value>
   </data>
@@ -306,6 +386,9 @@
   </data>
   <data name="Gumps" xml:space="preserve">
     <value>Gumpy</value>
+  </data>
+  <data name="Heal Potion" xml:space="preserve">
+    <value>Léčivý lektvar</value>
   </data>
   <data name="Hotkeys" xml:space="preserve">
     <value>Klávesové zkratky</value>
@@ -364,6 +447,9 @@
   <data name="Invalid source container..." xml:space="preserve">
     <value>Nevalidní zdrojový kontejner..</value>
   </data>
+  <data name="Invisibility Potion" xml:space="preserve">
+    <value>Lektvar neviditelnosti</value>
+  </data>
   <data name="Item" xml:space="preserve">
     <value>Předmět</value>
   </data>
@@ -417,6 +503,9 @@
   </data>
   <data name="Macros" xml:space="preserve">
     <value>Makra</value>
+  </data>
+  <data name="Made_For_Malo" xml:space="preserve">
+    <value>"Vyrobeno pro Malo"</value>
   </data>
   <data name="Magical" xml:space="preserve">
     <value>Magický</value>
@@ -490,8 +579,14 @@
   <data name="Objects" xml:space="preserve">
     <value>Objekty</value>
   </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
   <data name="Options" xml:space="preserve">
     <value>Nastavení</value>
+  </data>
+  <data name="Orange Petal" xml:space="preserve">
+    <value>Oranžový okvětní lístek</value>
   </data>
   <data name="Organizer" xml:space="preserve">
     <value>Organizér</value>
@@ -511,6 +606,9 @@
   <data name="Pass to UO" xml:space="preserve">
     <value>Poslat do UO</value>
   </data>
+  <data name="Persist Use Once" xml:space="preserve">
+    <value>Trvalé použití jednou</value>
+  </data>
   <data name="Play" xml:space="preserve">
     <value>Přehrát</value>
   </data>
@@ -528,6 +626,9 @@
   </data>
   <data name="Product:" xml:space="preserve">
     <value>Produkt:</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>ClassicAssist</value>
   </data>
   <data name="Profile name contains illegal characters." xml:space="preserve">
     <value>Název profilu obsahuje nevalidní znaky.</value>
@@ -561,6 +662,12 @@
   </data>
   <data name="Refresh" xml:space="preserve">
     <value>Obnovit</value>
+  </data>
+  <data name="Refresh Potion" xml:space="preserve">
+    <value>Osvěžující lektvar</value>
+  </data>
+  <data name="Regeneration" xml:space="preserve">
+    <value>Regenerace</value>
   </data>
   <data name="Remove" xml:space="preserve">
     <value>Odebrat</value>
@@ -646,6 +753,9 @@
   <data name="Smart last target:" xml:space="preserve">
     <value>Chytrý Last Target:</value>
   </data>
+  <data name="Smoke Bomb" xml:space="preserve">
+    <value>Dýmovnice</value>
+  </data>
   <data name="Software" xml:space="preserve">
     <value>Aplikace</value>
   </data>
@@ -666,6 +776,9 @@
   </data>
   <data name="Stop Current Macro" xml:space="preserve">
     <value>Zastavit současné makro</value>
+  </data>
+  <data name="Strength Potion" xml:space="preserve">
+    <value>Lektvar síly</value>
   </data>
   <data name="Target" xml:space="preserve">
     <value>Cíl</value>
@@ -748,6 +861,9 @@
   <data name="Topmost" xml:space="preserve">
     <value>Vždy navrchu</value>
   </data>
+  <data name="Trinsic Rose Petal" xml:space="preserve">
+    <value>Trinsic okvětní lístek růže</value>
+  </data>
   <data name="Undress" xml:space="preserve">
     <value>Svléknout</value>
   </data>
@@ -777,6 +893,12 @@
   </data>
   <data name="Unset Secondary Ability" xml:space="preserve">
     <value>Zrušit sekundární abilitu</value>
+  </data>
+  <data name="UO_LOCALE" xml:space="preserve">
+    <value>ENU</value>
+  </data>
+  <data name="Use death screen whilst hidden" xml:space="preserve">
+    <value>Použití obrazovky smrti, když je skrytá (režim smíchu)</value>
   </data>
   <data name="Use experimental fizzle detection" xml:space="preserve">
     <value>Použít experimentální detekci fizzu</value>
@@ -856,6 +978,9 @@
   <data name="Set Container" xml:space="preserve">
     <value>Nastavit kontejner</value>
   </data>
+  <data name="Scavenger" xml:space="preserve">
+    <value>Mrchožrout</value>
+  </data>
   <data name="Prevent targeting innocents in guardzone" xml:space="preserve">
     <value>Zabránit cílení nevinných ve strážené zóně</value>
   </data>
@@ -922,6 +1047,9 @@
   <data name="Cliloc Filter" xml:space="preserve">
     <value>Filtr clilocu</value>
   </data>
+  <data name="ID" xml:space="preserve">
+    <value>ID</value>
+  </data>
   <data name="Filter:" xml:space="preserve">
     <value>Filtr:</value>
   </data>
@@ -952,11 +1080,20 @@
   <data name="Abilities Gump" xml:space="preserve">
     <value>Gump schopností</value>
   </data>
+  <data name="X:" xml:space="preserve">
+    <value>X:</value>
+  </data>
+  <data name="Y:" xml:space="preserve">
+    <value>Y:</value>
+  </data>
   <data name="Saved Passwords:" xml:space="preserve">
     <value>Uložená hesla:</value>
   </data>
   <data name="Only overwrite blank password" xml:space="preserve">
     <value>Přepsat pouze prázdné heslo</value>
+  </data>
+  <data name="Show GIF Capture" xml:space="preserve">
+    <value>Zobrazit zachycení GIF</value>
   </data>
   <data name="Requires Server Support" xml:space="preserve">
     <value>Vyžaduje podporu serveru</value>
@@ -1051,6 +1188,12 @@
   <data name="Toggle mounted" xml:space="preserve">
     <value>Přepnout osedlání</value>
   </data>
+  <data name="Target Acquisition - Enemy" xml:space="preserve">
+    <value>Zaměření cíle - Nepřítel</value>
+  </data>
+  <data name="Target Acquisition - Friend" xml:space="preserve">
+    <value>Akvizice cíle - Přítel</value>
+  </data>
   <data name="Get Next Friend" xml:space="preserve">
     <value>Vyber dalšího přítele</value>
   </data>
@@ -1075,6 +1218,9 @@
   <data name="Macro Commands Wiki (Launches in Browser)" xml:space="preserve">
     <value>Wiki příkazů maker (Otevře v prohlížeči)</value>
   </data>
+  <data name="MACRO_WIKI_URL" xml:space="preserve">
+    <value>https://github.com/Reetus/ClassicAssist/wiki/Macro-Commands</value>
+  </data>
   <data name="Really remove macro &quot;{0}&quot;?" xml:space="preserve">
     <value>Opravdu smazat makro "{0}"?</value>
   </data>
@@ -1095,6 +1241,9 @@
   </data>
   <data name="Show Next Target In Queue" xml:space="preserve">
     <value>Zobrazit další cíl ve frontě</value>
+  </data>
+  <data name="Shard:" xml:space="preserve">
+    <value>Střep:</value>
   </data>
   <data name="Sort Macros Alphabetical" xml:space="preserve">
     <value>Seřadit makra podle abecedy</value>
@@ -1245,6 +1394,9 @@ Určitě chceš pokračovat?</value>
   </data>
   <data name="Check hands before potions" xml:space="preserve">
     <value>Zkontroluj ruce před pitím lektvaru</value>
+  </data>
+  <data name="Scavenging '{0}'" xml:space="preserve">
+    <value>Úklid "{0}"...</value>
   </data>
   <data name="Rehue friends" xml:space="preserve">
     <value>Přebarvit přátele</value>
@@ -1543,6 +1695,9 @@ Určitě chceš pokračovat?</value>
   <data name="Create Macro Button" xml:space="preserve">
     <value>Vytvořit tlačítko makra</value>
   </data>
+  <data name="Reflection Error: {0}" xml:space="preserve">
+    <value>Chyba odrazu: {0}</value>
+  </data>
   <data name="Show player / shard name in CUO title" xml:space="preserve">
     <value>Zobrazit jméno hráče / shardu v titulku CUO</value>
   </data>
@@ -1557,111 +1712,6 @@ Určitě chceš pokračovat?</value>
   </data>
   <data name="Deactivated following" xml:space="preserve">
     <value>Deaktivováno sledování</value>
-  </data>
-  <data name="Other" xml:space="preserve">
-    <value>Other</value>
-  </data>
-  <data name="Packets" xml:space="preserve">
-    <value>Pakety</value>
-  </data>
-  <data name="Include Internal" xml:space="preserve">
-    <value>Include Internal</value>
-  </data>
-  <data name="Conflagration Potion" xml:space="preserve">
-    <value>Lektvar požáru</value>
-  </data>
-  <data name="Confusion Blast Potion" xml:space="preserve">
-    <value>Lektvar zmatku</value>
-  </data>
-  <data name="Cure Potion" xml:space="preserve">
-    <value>Léčivý lektvar</value>
-  </data>
-  <data name="Enchanted Apple" xml:space="preserve">
-    <value>Kouzelné jablko</value>
-  </data>
-  <data name="Explosion Potion" xml:space="preserve">
-    <value>Lektvar výbuchu</value>
-  </data>
-  <data name="Fruit Bowl" xml:space="preserve">
-    <value>Ovocná mísa</value>
-  </data>
-  <data name="Grapes of Wrath" xml:space="preserve">
-    <value>Hrozny hněvu</value>
-  </data>
-  <data name="Heal Potion" xml:space="preserve">
-    <value>Léčivý lektvar</value>
-  </data>
-  <data name="Invisibility Potion" xml:space="preserve">
-    <value>Lektvar neviditelnosti</value>
-  </data>
-  <data name="Made_For_Malo" xml:space="preserve">
-    <value>"Vyrobeno pro Malo"</value>
-  </data>
-  <data name="OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="Orange Petal" xml:space="preserve">
-    <value>Oranžový okvětní lístek</value>
-  </data>
-  <data name="Persist Use Once" xml:space="preserve">
-    <value>Trvalé použití jednou</value>
-  </data>
-  <data name="ProductName" xml:space="preserve">
-    <value>ClassicAssist</value>
-  </data>
-  <data name="Refresh Potion" xml:space="preserve">
-    <value>Osvěžující lektvar</value>
-  </data>
-  <data name="Regeneration" xml:space="preserve">
-    <value>Regenerace</value>
-  </data>
-  <data name="Smoke Bomb" xml:space="preserve">
-    <value>Dýmovnice</value>
-  </data>
-  <data name="Strength Potion" xml:space="preserve">
-    <value>Lektvar síly</value>
-  </data>
-  <data name="Trinsic Rose Petal" xml:space="preserve">
-    <value>Trinsic okvětní lístek růže</value>
-  </data>
-  <data name="UO_LOCALE" xml:space="preserve">
-    <value>ENU</value>
-  </data>
-  <data name="Use death screen whilst hidden" xml:space="preserve">
-    <value>Použití obrazovky smrti, když je skrytá (režim smíchu)</value>
-  </data>
-  <data name="Scavenger" xml:space="preserve">
-    <value>Mrchožrout</value>
-  </data>
-  <data name="ID" xml:space="preserve">
-    <value>ID</value>
-  </data>
-  <data name="X:" xml:space="preserve">
-    <value>X:</value>
-  </data>
-  <data name="Y:" xml:space="preserve">
-    <value>Y:</value>
-  </data>
-  <data name="Show GIF Capture" xml:space="preserve">
-    <value>Zobrazit zachycení GIF</value>
-  </data>
-  <data name="Target Acquisition - Enemy" xml:space="preserve">
-    <value>Zaměření cíle - Nepřítel</value>
-  </data>
-  <data name="Target Acquisition - Friend" xml:space="preserve">
-    <value>Akvizice cíle - Přítel</value>
-  </data>
-  <data name="MACRO_WIKI_URL" xml:space="preserve">
-    <value>https://github.com/Reetus/ClassicAssist/wiki/Macro-Commands</value>
-  </data>
-  <data name="Shard:" xml:space="preserve">
-    <value>Střep:</value>
-  </data>
-  <data name="Scavenging '{0}'" xml:space="preserve">
-    <value>Úklid "{0}"...</value>
-  </data>
-  <data name="Reflection Error: {0}" xml:space="preserve">
-    <value>Chyba odrazu: {0}</value>
   </data>
   <data name="Event" xml:space="preserve">
     <value>Událost</value>
@@ -1912,6 +1962,12 @@ Určitě chceš pokračovat?</value>
   <data name="Limit Hotkey Retrigger" xml:space="preserve">
     <value>Omezte opětovné spuštění klávesové zkratky</value>
   </data>
+  <data name="Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="Packets" xml:space="preserve">
+    <value>Pakety</value>
+  </data>
   <data name="Hue Override" xml:space="preserve">
     <value>Přepsání odstínu</value>
   </data>
@@ -1929,6 +1985,9 @@ Určitě chceš pokračovat?</value>
   </data>
   <data name="Direction" xml:space="preserve">
     <value>Směr</value>
+  </data>
+  <data name="Include Internal" xml:space="preserve">
+    <value>Include Internal</value>
   </data>
   <data name="Enabled Packets:" xml:space="preserve">
     <value>Povolit pakety:</value>

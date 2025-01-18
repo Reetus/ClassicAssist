@@ -2035,4 +2035,7 @@ Are you sure you wish to continue?</value>
   <data name="Trap pouches remaining: {0}" xml:space="preserve">
     <value>Trap pouches remaining: {0}</value>
   </data>
+  <data name="Toggle Autoloot" xml:space="preserve">
+    <value>Toggle Autoloot</value>
+  </data>
 </root>

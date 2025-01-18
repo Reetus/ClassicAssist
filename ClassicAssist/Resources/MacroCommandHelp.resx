@@ -1936,4 +1936,10 @@ if FindType(0xe79, -1, 'backpack'):
   <data name="MOVETYPEXYZ_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>MoveTypeXYZ(0xf0e, "backpack", 0, 0, 0, -1)</value>
   </data>
+  <data name="SETAUTOLOOT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>SetAutoloot("off")</value>
+  </data>
+  <data name="SETAUTOLOOT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Enable/Disable/Toggle the Autoloot agent</value>
+  </data>
 </root>

@@ -58,48 +58,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="UO_LOCALE" xml:space="preserve">
-    <value>CHT</value>
-  </data>
-  <data name="Vendor Buy" xml:space="preserve">
-    <value>供应商购买</value>
-  </data>
-  <data name="Vendor Sell" xml:space="preserve">
-    <value>供应商销售</value>
-  </data>
-  <data name="Skills" xml:space="preserve">
-    <value>技能专长</value>
-  </data>
-  <data name="About" xml:space="preserve">
-    <value>关于</value>
-  </data>
-  <data name="Agents" xml:space="preserve">
-    <value>代理商</value>
-  </data>
-  <data name="Counters" xml:space="preserve">
-    <value>专柜</value>
-  </data>
-  <data name="Dress" xml:space="preserve">
-    <value>连衣裙</value>
-  </data>
-  <data name="Friends" xml:space="preserve">
-    <value>朋友们</value>
-  </data>
-  <data name="General" xml:space="preserve">
-    <value>一般</value>
-  </data>
-  <data name="Hotkeys" xml:space="preserve">
-    <value>热键</value>
-  </data>
-  <data name="Macros" xml:space="preserve">
-    <value>巨集</value>
-  </data>
-  <data name="Options" xml:space="preserve">
-    <value>选件</value>
-  </data>
-  <data name="Organizer" xml:space="preserve">
-    <value>组织者</value>
-  </data>
   <data name="Abilities" xml:space="preserve">
     <value>能力</value>
   </data>
@@ -108,6 +66,9 @@
   </data>
   <data name="Ability not set..." xml:space="preserve">
     <value>能力未设置...</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>关于</value>
   </data>
   <data name="Action Delay:" xml:space="preserve">
     <value>操作延迟：</value>
@@ -123,6 +84,9 @@
   </data>
   <data name="Address:" xml:space="preserve">
     <value>地址：</value>
+  </data>
+  <data name="Agents" xml:space="preserve">
+    <value>代理商</value>
   </data>
   <data name="Agility Potion" xml:space="preserve">
     <value>敏捷药水</value>
@@ -253,6 +217,9 @@
   <data name="Counter &quot;{0}&quot; amount is now {1}..." xml:space="preserve">
     <value>计数器"{0}"金额现在{1}...</value>
   </data>
+  <data name="Counters" xml:space="preserve">
+    <value>专柜</value>
+  </data>
   <data name="Cure Potion" xml:space="preserve">
     <value>治疗药水</value>
   </data>
@@ -264,6 +231,9 @@
   </data>
   <data name="Do not auto interupt" xml:space="preserve">
     <value>不自动插接</value>
+  </data>
+  <data name="Dress" xml:space="preserve">
+    <value>连衣裙</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
     <value>重复</value>
@@ -322,8 +292,14 @@
   <data name="Friend" xml:space="preserve">
     <value>朋友</value>
   </data>
+  <data name="Friends" xml:space="preserve">
+    <value>朋友们</value>
+  </data>
   <data name="Fruit Bowl" xml:space="preserve">
     <value>水果碗</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>一般</value>
   </data>
   <data name="Get Closest Gray" xml:space="preserve">
     <value>获取最接近的灰色</value>
@@ -354,6 +330,9 @@
   </data>
   <data name="Heal Potion" xml:space="preserve">
     <value>治疗药水</value>
+  </data>
+  <data name="Hotkeys" xml:space="preserve">
+    <value>热键</value>
   </data>
   <data name="Hotkeys disabled..." xml:space="preserve">
     <value>热键已禁用...</value>
@@ -463,6 +442,9 @@
   <data name="Macro error: {0}" xml:space="preserve">
     <value>宏错误：{0}</value>
   </data>
+  <data name="Macros" xml:space="preserve">
+    <value>巨集</value>
+  </data>
   <data name="Made_For_Malo" xml:space="preserve">
     <value>"为马洛制作"</value>
   </data>
@@ -541,8 +523,14 @@
   <data name="OK" xml:space="preserve">
     <value>还行</value>
   </data>
+  <data name="Options" xml:space="preserve">
+    <value>选件</value>
+  </data>
   <data name="Orange Petal" xml:space="preserve">
     <value>橙色花瓣</value>
+  </data>
+  <data name="Organizer" xml:space="preserve">
+    <value>组织者</value>
   </data>
   <data name="Organizer &quot;{0}&quot; not found..." xml:space="preserve">
     <value>未找到组织者"{0}"...</value>
@@ -700,6 +688,9 @@
   <data name="Show World Items" xml:space="preserve">
     <value>显示世界物品</value>
   </data>
+  <data name="Skills" xml:space="preserve">
+    <value>技能专长</value>
+  </data>
   <data name="Smart last target:" xml:space="preserve">
     <value>智能最后一个目标：</value>
   </data>
@@ -844,6 +835,9 @@
   <data name="Unset Secondary Ability" xml:space="preserve">
     <value>未设置辅助能力</value>
   </data>
+  <data name="UO_LOCALE" xml:space="preserve">
+    <value>CHT</value>
+  </data>
   <data name="Use death screen whilst hidden" xml:space="preserve">
     <value>使用死屏，而隐藏（查克模式）</value>
   </data>
@@ -876,6 +870,12 @@
   </data>
   <data name="Value" xml:space="preserve">
     <value>价值</value>
+  </data>
+  <data name="Vendor Buy" xml:space="preserve">
+    <value>供应商购买</value>
+  </data>
+  <data name="Vendor Sell" xml:space="preserve">
+    <value>供应商销售</value>
   </data>
   <data name="Version:" xml:space="preserve">
     <value>版本：</value>
@@ -934,9 +934,6 @@
   <data name="Hue Picker" xml:space="preserve">
     <value>色调选取器</value>
   </data>
-  <data name="Cannot find sound file..." xml:space="preserve">
-    <value>找不到声音文件...</value>
-  </data>
   <data name="Disable inside guardzone" xml:space="preserve">
     <value>禁用内部防护区</value>
   </data>
@@ -951,6 +948,9 @@
   </data>
   <data name="Operator" xml:space="preserve">
     <value>算子</value>
+  </data>
+  <data name="Cannot find sound file..." xml:space="preserve">
+    <value>找不到声音文件...</value>
   </data>
   <data name="Autolooting '{0}'" xml:space="preserve">
     <value>自动抢劫"{0}"</value>
@@ -1272,9 +1272,6 @@
   </data>
   <data name="Hide" xml:space="preserve">
     <value>隐藏</value>
-  </data>
-  <data name="Packets" xml:space="preserve">
-    <value>数据包</value>
   </data>
   <data name="Author" xml:space="preserve">
     <value>作者</value>
@@ -1908,6 +1905,9 @@
   </data>
   <data name="Other" xml:space="preserve">
     <value>其他</value>
+  </data>
+  <data name="Packets" xml:space="preserve">
+    <value>数据包</value>
   </data>
   <data name="Hue Override" xml:space="preserve">
     <value>色相覆盖</value>

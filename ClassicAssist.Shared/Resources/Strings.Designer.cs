@@ -4783,6 +4783,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show remaining trap pouches on use.
+        /// </summary>
+        public static string Show_remaining_trap_pouches_on_use {
+            get {
+                return ResourceManager.GetString("Show remaining trap pouches on use", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show resurrection waypoints.
         /// </summary>
         public static string Show_resurrection_waypoints {
@@ -5472,6 +5481,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Trap_Pouches {
             get {
                 return ResourceManager.GetString("Trap Pouches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trap pouches remaining: {0}.
+        /// </summary>
+        public static string Trap_pouches_remaining___0_ {
+            get {
+                return ResourceManager.GetString("Trap pouches remaining: {0}", resourceCulture);
             }
         }
         

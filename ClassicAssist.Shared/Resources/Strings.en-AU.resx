@@ -2029,4 +2029,10 @@ Are you sure you wish to continue?</value>
   <data name="Custom Actions" xml:space="preserve">
     <value>Custom Actions</value>
   </data>
+  <data name="Show remaining trap pouches on use" xml:space="preserve">
+    <value>Show remaining trap pouches on use</value>
+  </data>
+  <data name="Trap pouches remaining: {0}" xml:space="preserve">
+    <value>Trap pouches remaining: {0}</value>
+  </data>
 </root>

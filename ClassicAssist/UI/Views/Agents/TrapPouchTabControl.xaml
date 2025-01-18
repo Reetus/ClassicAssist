@@ -97,6 +97,10 @@
             </CheckBox>
             <CheckBox Content="{x:Static resources:Strings.Overhead_Message}" Margin="20,0,0,0"
                       IsChecked="{Binding WarnOverheadMessage}" IsEnabled="{Binding WarnItemCount}" />
+            <CheckBox Content="{x:Static resources:Strings.Show_remaining_trap_pouches_on_use}"
+                      IsChecked="{Binding ShowRemainingCount}" />
+            <CheckBox Content="{x:Static resources:Strings.Overhead_Message}" Margin="20,0,0,0"
+                      IsChecked="{Binding ShowRemainingOverhead}" IsEnabled="{Binding ShowRemainingCount}" />
         </StackPanel>
     </Grid>
 </UserControl>

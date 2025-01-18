@@ -50,6 +50,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private ICommand _removeCommand;
         private TrapPouchEntry _selectedItem;
         private ICommand _selectHueCommand;
+        private bool _showRemainingCount;
+        private bool _showRemainingOverhead;
         private bool _warnItemCount;
         private int _warnItemCountAmount;
         private bool _warnOverheadMessage;
@@ -117,6 +119,18 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         public ICommand SelectHueCommand => _selectHueCommand ?? ( _selectHueCommand = new RelayCommand( SelectHue ) );
 
+        public bool ShowRemainingCount
+        {
+            get => _showRemainingCount;
+            set => SetProperty( ref _showRemainingCount, value );
+        }
+
+        public bool ShowRemainingOverhead
+        {
+            get => _showRemainingOverhead;
+            set => SetProperty( ref _showRemainingOverhead, value );
+        }
+
         public bool WarnItemCount
         {
             get => _warnItemCount;
@@ -146,7 +160,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 ["RehueItemsHue"] = RehueItemsHue,
                 ["WarnItemCount"] = WarnItemCount,
                 ["WarnItemCountAmount"] = WarnItemCountAmount,
-                ["WarnOverheadMessage"] = WarnOverheadMessage
+                ["WarnOverheadMessage"] = WarnOverheadMessage,
+                ["ShowRemainingCount"] = ShowRemainingCount,
+                ["ShowRemainingOverhead"] = ShowRemainingOverhead
             };
 
             JArray items = new JArray();
@@ -175,6 +191,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
             WarnItemCount = config?["WarnItemCount"]?.ToObject<bool>() ?? false;
             WarnItemCountAmount = config?["WarnItemCountAmount"]?.ToObject<int>() ?? 5;
             WarnOverheadMessage = config?["WarnOverheadMessage"]?.ToObject<bool>() ?? false;
+            ShowRemainingCount = config?["ShowRemainingCount"]?.ToObject<bool>() ?? false;
+            ShowRemainingOverhead = config?["ShowRemainingOverhead"]?.ToObject<bool>() ?? false;
 
             if ( config?["Items"] == null )
             {
@@ -328,12 +346,25 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private void CheckWarn()
         {
-            if ( !WarnItemCount )
+            if ( !WarnItemCount && !ShowRemainingCount )
             {
                 return;
             }
 
-            if ( Items.Count >= WarnItemCountAmount )
+            if ( ShowRemainingCount )
+            {
+                if ( ShowRemainingOverhead )
+                {
+                    Commands.OverheadMessage( string.Format( $"{Strings.Trap_pouches_remaining___0_}", Items.Count ), (int) SystemMessageHues.Red,
+                        Engine.Player?.Serial ?? -1 );
+                }
+                else
+                {
+                    Commands.SystemMessage( string.Format( $"{Strings.Trap_pouches_remaining___0_}", Items.Count ), SystemMessageHues.Red );
+                }
+            }
+
+            if ( !WarnItemCount || Items.Count >= WarnItemCountAmount )
             {
                 return;
             }

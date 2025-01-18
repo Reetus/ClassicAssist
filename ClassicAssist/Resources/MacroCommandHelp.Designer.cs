@@ -3550,6 +3550,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable/Disable/Toggle the Autoloot agent.
+        /// </summary>
+        public static string SETAUTOLOOT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SETAUTOLOOT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SetAutoloot(&quot;off&quot;).
+        /// </summary>
+        public static string SETAUTOLOOT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SETAUTOLOOT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sets the container for the Autoloot agent to put items into....
         /// </summary>
         public static string SETAUTOLOOTCONTAINER_COMMAND_DESCRIPTION {

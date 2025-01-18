@@ -5359,6 +5359,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Toggle_Autoloot {
+            get {
+                return ResourceManager.GetString("Toggle Autoloot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Toggle Force Walk.
         /// </summary>
         public static string Toggle_Force_Walk {

@@ -16,7 +16,7 @@ using ClassicAssist.Data.Macros.Commands;
 
 namespace ClassicAssist.Data.Hotkeys.Commands
 {
-    [HotkeyCommand( Name = "Toggle Scavenger", Category = "Scavenger" )]
+    [HotkeyCommand( Name = "Toggle Scavenger", Category = "Agents" )]
     public class ToggleScavengerCommand : HotkeyCommand
     {
         public override void Execute()

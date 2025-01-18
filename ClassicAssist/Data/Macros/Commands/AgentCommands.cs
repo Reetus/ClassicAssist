@@ -214,6 +214,28 @@ namespace ClassicAssist.Data.Macros.Commands
                 SystemMessageHues.Yellow );
         }
 
+        [CommandsDisplay( Category = nameof( Strings.Agents ), Parameters = new[] { nameof( ParameterType.OnOff ) } )]
+        public static void SetAutoloot( string onOff = "toggle" )
+        {
+            AutolootManager manager = AutolootManager.GetInstance();
+
+            switch ( onOff.Trim().ToLower() )
+            {
+                case "on":
+                    manager.SetEnabled( true );
+                    break;
+                case "off":
+                    manager.SetEnabled( false );
+                    break;
+                case "toggle":
+                    manager.SetEnabled( !manager.IsEnabled() );
+                    break;
+            }
+
+            UOC.SystemMessage( string.Format( Strings._0__agent_is_now__1_, Strings.Autoloot, ( manager.IsEnabled() ? Strings.Enabled : Strings.Disabled ).ToLower() ),
+                SystemMessageHues.Yellow );
+        }
+
         [CommandsDisplay( Category = nameof( Strings.Trade ), Parameters = new[] { nameof( ParameterType.Timeout ) } )]
         public static bool WaitForTradeWindow( int timeout = -1 )
         {

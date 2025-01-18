@@ -29,8 +29,11 @@ namespace ClassicAssist.Data.Autoloot
         public Action<int, bool> CheckContainer { get; set; }
 
         public Func<List<AutolootEntry>> GetEntries { get; set; } = () => new List<AutolootEntry>();
+
+        public Func<bool> IsEnabled { get; set; }
         public Func<bool> IsRunning { get; set; }
         public Func<bool> MatchTextValue { get; set; }
+        public Action<bool> SetEnabled { get; set; }
 
         public static AutolootManager GetInstance()
         {

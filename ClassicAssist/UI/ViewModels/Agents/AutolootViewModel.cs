@@ -12,6 +12,7 @@ using Assistant;
 using ClassicAssist.Controls.DraggableTreeView;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Autoloot;
+using ClassicAssist.Data.ClassicUO.Objects;
 using ClassicAssist.Data.Regions;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Misc;
@@ -96,10 +97,15 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             AutolootHelpers.SetAutolootContainer = serial => ContainerSerial = serial;
             IncomingPacketHandlers.CorpseContainerDisplayEvent += OnCorpseEvent;
-            AutolootManager.GetInstance().GetEntries = () => _items.ToList();
-            AutolootManager.GetInstance().CheckContainer = OnCorpseEvent;
-            AutolootManager.GetInstance().IsRunning = () => IsRunning;
-            AutolootManager.GetInstance().MatchTextValue = () => MatchTextValue;
+
+            AutolootManager manager = AutolootManager.GetInstance();
+            manager.GetEntries = () => _items.ToList();
+            manager.CheckContainer = OnCorpseEvent;
+            manager.IsRunning = () => IsRunning;
+            manager.MatchTextValue = () => MatchTextValue;
+            manager.IsEnabled = () => Enabled;
+            manager.SetEnabled = val => Enabled = val;
+
             Items.CollectionChanged += UpdateDraggables;
         }
 

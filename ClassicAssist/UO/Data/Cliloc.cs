@@ -74,7 +74,11 @@ namespace ClassicAssist.UO.Data
             {
                 len = BitConverter.ToUInt16( fileBytes, x + 5 );
                 int cliloc = BitConverter.ToInt32( fileBytes, x );
-                string value = Encoding.UTF8.GetString( fileBytes, x + 7, len );
+
+                //buffer overflow protection
+                int readLen = fileBytes.Length < x + 7 + len ? fileBytes.Length - ( x + 7 ) : len;
+
+                string value = Encoding.UTF8.GetString( fileBytes, x + 7, readLen );
 
                 if ( !clilocList.ContainsKey( cliloc ) )
                 {

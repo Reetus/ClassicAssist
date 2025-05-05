@@ -26,6 +26,7 @@
                 <ResourceDictionary Source="Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+            <valueConverters:HexToIntValueConverter x:Key="HexToIntValueConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
@@ -98,6 +99,13 @@
                                       MinHeight="50" Grid.Row="1">
                                 <ListView.View>
                                     <GridView>
+                                        <GridViewColumn Header="✓" Width="30">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type models:EntityCollectionFilterItem}">
+                                                    <CheckBox IsChecked="{Binding Enabled }" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
                                         <GridViewColumn Header="{x:Static resources:Strings.Property}" Width="220"
                                                         x:Name="NameColumn">
                                             <GridViewColumn.CellTemplate>
@@ -180,7 +188,7 @@
                                                             </ComboBox.Style>
                                                         </ComboBox>
                                                         <TextBox
-                                                            Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                            Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource HexToIntValueConverter}}"
                                                             Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}"
                                                             MinWidth="40" Grid.Column="0">
                                                             <TextBox.Style>

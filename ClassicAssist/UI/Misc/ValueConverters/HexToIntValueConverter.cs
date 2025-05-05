@@ -39,7 +39,14 @@ namespace ClassicAssist.UI.Misc.ValueConverters
         {
             if ( value is string val && val.StartsWith( "0x" ) )
             {
-                return System.Convert.ToInt32( val, 16 );
+                try
+                {
+                    return System.Convert.ToInt32( val, 16 );
+                }
+                catch ( FormatException )
+                {
+                    return value;
+                }
             }
 
             return value;

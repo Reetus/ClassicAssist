@@ -9,6 +9,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter.Models
         private PropertyEntry _constraint;
         private AutolootOperator _operator = AutolootOperator.Equal;
         private int _value;
+        private bool _enabled = true;
 
         public string Additional
         {
@@ -32,6 +33,12 @@ namespace ClassicAssist.UI.Views.ECV.Filter.Models
         {
             get => _value;
             set => SetProperty( ref _value, value );
+        }
+
+        public bool Enabled
+        {
+            get => _enabled;
+            set => SetProperty( ref _enabled, value );
         }
     }
 }

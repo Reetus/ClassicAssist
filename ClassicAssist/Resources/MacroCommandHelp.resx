@@ -1942,4 +1942,10 @@ if FindType(0xe79, -1, 'backpack'):
   <data name="SETAUTOLOOT_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Enable/Disable/Toggle the Autoloot agent</value>
   </data>
+  <data name="SWINGSPEEDINCREASE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Return SwingSpeed Increase value.</value>
+  </data>
+  <data name="SWINGSPEEDINCREASE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>ssi = SwingSpeedIncrease()</value>
+  </data>
 </root>

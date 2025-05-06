@@ -702,18 +702,6 @@
   <data name="CONFIRMPROMPT_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>메시지와 함께 게임 내 프롬프트를 표시하고, Okay를 누르면 True로, 그렇지 않으면 False로 동작합니다.</value>
   </data>
-  <data name="SETVENDORBUYAUTOBUY_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>지정된 이름의 자동구매를 활성화 또는 비활성화합니다.</value>
-  </data>
-  <data name="ISRUNNING_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>실행중_명령_설명</value>
-  </data>
-  <data name="LOGOUT_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>서버와의 연결을 종료하고 로그인 화면으로 돌아갑니다.</value>
-  </data>
-  <data name="QUIT_COMMAND_DESCRIPTION" xml:space="preserve">
-    <value>클라이언트를 닫습니다.</value>
-  </data>
   <data name="TARGETTILEOFFSETRESOURCE_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>플레이어를 기준으로 지정된 오프셋의 타일을 대상으로 합니다. (제공된 경우 나무/나무 타일/물 자동 대상 지정)</value>
   </data>
@@ -764,6 +752,18 @@
 
 OK버튼 클릭 클릭 여부를 나타내는 tuple과 선택된 entry index를 반환합니다.</value>
   </data>
+  <data name="SETVENDORBUYAUTOBUY_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>지정된 이름의 자동구매를 활성화 또는 비활성화합니다.</value>
+  </data>
+  <data name="ISRUNNING_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>실행중_명령_설명</value>
+  </data>
+  <data name="LOGOUT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>서버와의 연결을 종료하고 로그인 화면으로 돌아갑니다.</value>
+  </data>
+  <data name="QUIT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>클라이언트를 닫습니다.</value>
+  </data>
   <data name="PROMPTMACROALIAS_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>주어진 별칭 이름에 대한 값을 제공하도록 게임 내 대상 커서로 프롬프트(Prompt)합니다. 별칭은 현재 매크로에서만 유효합니다.</value>
   </data>
@@ -784,5 +784,11 @@ OK버튼 클릭 클릭 여부를 나타내는 tuple과 선택된 entry index를 
   </data>
   <data name="OPENHELPGUMP_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>OpenHelpGump()</value>
+  </data>
+  <data name="SWINGSPEEDINCREASE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>현재 플레이어의 공격속도증가 값을 반환합니다.</value>
+  </data>
+  <data name="SWINGSPEEDINCREASE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value />
   </data>
 </root>

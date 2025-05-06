@@ -978,4 +978,10 @@ HeadMsg("Zemři bídný červe", "self")</value>
   <data name="WAITFORJOURNALARRAY_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Vyčkat až se jeden nebo více z daných řetězců objeví v deníku nebo max timeout</value>
   </data>
+  <data name="SWINGSPEEDINCREASE_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SWINGSPEEDINCREASE_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value />
+  </data>
 </root>

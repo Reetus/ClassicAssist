@@ -426,5 +426,11 @@ namespace ClassicAssist.Data.Macros.Commands
             UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
             return false;
         }
+
+        [CommandsDisplay( Category = nameof( Strings.Entity ) )]
+        public static int SwingSpeedIncrease()
+        {
+            return Engine.Player?.SwingSpeedIncrease ?? 0;
+        }
     }
 }

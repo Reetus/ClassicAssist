@@ -354,7 +354,8 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                                                 Constraints.FirstOrDefault( e => e.Name == itemObj["Constraint"]?["Name"]?.ToObject<string>() ) ?? Constraints.FirstOrDefault(),
                                             Operator = itemObj["Operator"]?.ToObject<AutolootOperator>() ?? 0,
                                             Value = itemObj["Value"]?.ToObject<int>() ?? 0,
-                                            Additional = itemObj["Additional"]?.ToObject<string>()
+                                            Additional = itemObj["Additional"]?.ToObject<string>(),
+                                            Enabled = itemObj["Enabled"]?.ToObject<bool>() ?? true
                                         };
 
                                         group.Items.Add( item );
@@ -408,7 +409,10 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 
                     foreach ( EntityCollectionFilterItem item in group.Items )
                     {
-                        JObject itemObj = new JObject { { "Operator", (int) item.Operator }, { "Value", item.Value }, { "Additional", item.Additional } };
+                        JObject itemObj = new JObject
+                        {
+                            { "Operator", (int) item.Operator }, { "Value", item.Value }, { "Additional", item.Additional }, { "Enabled", item.Enabled }
+                        };
 
                         JObject constraint = new JObject { { "Name", item.Constraint.Name } };
 

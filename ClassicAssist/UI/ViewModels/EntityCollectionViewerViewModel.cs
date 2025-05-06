@@ -1114,7 +1114,7 @@ namespace ClassicAssist.UI.ViewModels
         {
             ItemCollection newCollection = new ItemCollection( collection.Serial );
 
-            IEnumerable<Predicate<Item>> predicates = FiltersToPredicates( filterList ).ToList();
+            IEnumerable<Predicate<Item>> predicates = FiltersToPredicates( filterList.Where( f => f.Enabled ) ).ToList();
 
             if ( !predicates.Any() )
             {

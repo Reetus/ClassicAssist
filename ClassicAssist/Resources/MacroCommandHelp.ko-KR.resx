@@ -789,6 +789,6 @@ OK버튼 클릭 클릭 여부를 나타내는 tuple과 선택된 entry index를 
     <value>현재 플레이어의 공격속도증가 값을 반환합니다.</value>
   </data>
   <data name="SWINGSPEEDINCREASE_COMMAND_INSERTTEXT" xml:space="preserve">
-    <value />
+    <value>ssi = SwingSpeedIncrease()</value>
   </data>
 </root>

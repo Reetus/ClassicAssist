@@ -7,7 +7,7 @@ namespace ClassicAssist.UI.Misc
 {
     public sealed class AvalonEditBehaviour : Behavior<TextEditor>
     {
-        public static readonly DependencyProperty TextBindingProperty = DependencyProperty.Register( "TextBinding",
+        public static readonly DependencyProperty TextBindingProperty = DependencyProperty.Register( nameof( TextBinding ),
             typeof( string ), typeof( AvalonEditBehaviour ),
             new FrameworkPropertyMetadata( default( string ), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 PropertyChangedCallback ) );

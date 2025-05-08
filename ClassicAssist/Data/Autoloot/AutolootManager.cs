@@ -19,6 +19,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Objects;
+using IronPython.Hosting;
+using Microsoft.Scripting;
+using Microsoft.Scripting.Hosting;
+using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.Data.Autoloot
 {
@@ -26,14 +34,18 @@ namespace ClassicAssist.Data.Autoloot
     {
         private static AutolootManager _instance;
         private static readonly object _lock = new object();
+        private ScriptEngine _engine;
+        private ScriptScope _scope;
         public Action<int, bool> CheckContainer { get; set; }
 
         public Func<List<AutolootEntry>> GetEntries { get; set; } = () => new List<AutolootEntry>();
+        public Func<string> GetPythonFunctionText { get; set; }
 
         public Func<bool> IsEnabled { get; set; }
         public Func<bool> IsRunning { get; set; }
         public Func<bool> MatchTextValue { get; set; }
         public Action<bool> SetEnabled { get; set; }
+        public Action<string> SetPythonFunctionText { get; set; }
 
         public static AutolootManager GetInstance()
         {
@@ -53,6 +65,70 @@ namespace ClassicAssist.Data.Autoloot
             }
 
             return _instance;
+        }
+
+        public bool ExecuteFunction( string function, Item item )
+        {
+#if DEBUG
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+#endif
+
+            if ( _engine == null )
+            {
+                InitializeEngine();
+            }
+
+            dynamic func = _scope.GetVariable( function );
+
+            if ( func == null )
+            {
+                UOC.SystemMessage( string.Format( Strings.Predicate_function___0___not_found___, function ), (int) SystemMessageHues.Red, throttleRepeating: true );
+
+                return true;
+            }
+
+            try
+            {
+                dynamic result = _engine?.Operations.Invoke( func, item );
+
+                return !( result is bool res ) || res;
+            }
+            catch ( Exception exception )
+            {
+                UOC.SystemMessage( string.Format( Strings.Predicate_function___0___error___1_, function, exception.Message ), (int) SystemMessageHues.Red,
+                    throttleRepeating: true );
+
+                if ( exception is SyntaxErrorException syntaxError )
+                {
+                    UOC.SystemMessage( $"{Strings.Line_Number}: {syntaxError.RawSpan.Start.Line}", (int) SystemMessageHues.Red, throttleRepeating: true );
+                }
+            }
+            finally
+            {
+#if DEBUG
+                stopWatch.Stop();
+                UOC.SystemMessage( $"Predicate Time = {stopWatch.Elapsed}" );
+#endif
+            }
+
+            return true;
+        }
+
+        public void InitializeEngine()
+        {
+            _engine = Python.CreateEngine();
+            _scope = _engine.CreateScope();
+
+            try
+            {
+                ScriptSource source = _engine.CreateScriptSourceFromString( GetPythonFunctionText() );
+                source.Execute( _scope );
+            }
+            catch ( Exception exception )
+            {
+                UOC.SystemMessage( exception.Message );                
+            }
         }
     }
 }

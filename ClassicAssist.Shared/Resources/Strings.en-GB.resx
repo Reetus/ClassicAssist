@@ -2038,4 +2038,16 @@ Are you sure you wish to continue?</value>
   <data name="Toggle Autoloot" xml:space="preserve">
     <value>Toggle Autoloot</value>
   </data>
+  <data name="Edit Predicate Functions" xml:space="preserve">
+    <value>Edit Predicate Functions</value>
+  </data>
+  <data name="Predicate Function:" xml:space="preserve">
+    <value>Predicate Function:</value>
+  </data>
+  <data name="Predicate function '{0}' not found..." xml:space="preserve">
+    <value>Predicate function '{0}' not found...</value>
+  </data>
+  <data name="Predicate function '{0}' error: {1}" xml:space="preserve">
+    <value>Predicate function '{0}' error: {1}</value>
+  </data>
 </root>

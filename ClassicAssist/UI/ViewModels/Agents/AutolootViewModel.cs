@@ -12,7 +12,6 @@ using Assistant;
 using ClassicAssist.Controls.DraggableTreeView;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Autoloot;
-using ClassicAssist.Data.ClassicUO.Objects;
 using ClassicAssist.Data.Regions;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Misc;
@@ -20,6 +19,7 @@ using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.ViewModels.Agents.Autoloot.Folder;
+using ClassicAssist.UI.ViewModels.Agents.Autoloot.Python;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UI.Views.Agents.Autoloot.Import;
 using ClassicAssist.UI.Views.Autoloot;
@@ -37,14 +37,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
 {
     public class AutolootViewModel : BaseViewModel, ISettingProvider
     {
+        private const string DEFAULT_FUNCTIONS_TEXT = "def SampleFunction(item):\n    return True";
         private const int LOOT_TIMEOUT = 5000;
         private readonly object _autolootLock = new object();
 
-        private readonly string _propertiesFile = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory,
-            "Data", "Properties.json" );
+        private readonly string _propertiesFile = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data", "Properties.json" );
 
-        private readonly string _propertiesFileCustom =
-            Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data", "Properties.Custom.json" );
+        private readonly string _propertiesFileCustom = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data", "Properties.Custom.json" );
 
         private ICommand _clipboardCopyCommand;
         private ICommand _clipboardPasteCommand;
@@ -57,7 +56,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private bool _disableInGuardzone;
         private ObservableCollection<IDraggable> _draggables = new ObservableCollection<IDraggable>();
+        private ICommand _editPythonFunctionsCommand;
         private bool _enabled;
+        private string _functionsText;
 
         private ICommand _insertCommand;
         private ICommand _insertConstraintCommand;
@@ -78,8 +79,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private AutolootGroup _selectedGroup;
         private AutolootEntry _selectedItem;
 
-        private ObservableCollection<AutolootConstraintEntry> _selectedProperties =
-            new ObservableCollection<AutolootConstraintEntry>();
+        private ObservableCollection<AutolootConstraintEntry> _selectedProperties = new ObservableCollection<AutolootConstraintEntry>();
 
         private AutolootConstraintEntry _selectedProperty;
         private ICommand _selectHueCommand;
@@ -105,15 +105,15 @@ namespace ClassicAssist.UI.ViewModels.Agents
             manager.MatchTextValue = () => MatchTextValue;
             manager.IsEnabled = () => Enabled;
             manager.SetEnabled = val => Enabled = val;
+            manager.GetPythonFunctionText = () => FunctionsText;
+            manager.SetPythonFunctionText = str => FunctionsText = str;
 
             Items.CollectionChanged += UpdateDraggables;
         }
 
-        public ICommand ClipboardCopyCommand =>
-            _clipboardCopyCommand ?? ( _clipboardCopyCommand = new RelayCommand( ClipboardCopy, o => true ) );
+        public ICommand ClipboardCopyCommand => _clipboardCopyCommand ?? ( _clipboardCopyCommand = new RelayCommand( ClipboardCopy, o => true ) );
 
-        public ICommand ClipboardPasteCommand =>
-            _clipboardPasteCommand ?? ( _clipboardPasteCommand = new RelayCommand( ClipboardPaste, o => true ) );
+        public ICommand ClipboardPasteCommand => _clipboardPasteCommand ?? ( _clipboardPasteCommand = new RelayCommand( ClipboardPaste, o => true ) );
 
         public ObservableCollection<PropertyEntry> Constraints
         {
@@ -130,8 +130,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         public ICommand CSVImportCommand => _csvImportCommand ?? ( _csvImportCommand = new RelayCommand( CSVImport, o => true ) );
 
         public ICommand DefineCustomPropertiesCommand =>
-            _defineCustomPropertiesCommand ??
-            ( _defineCustomPropertiesCommand = new RelayCommand( DefineCustomProperties, o => true ) );
+            _defineCustomPropertiesCommand ?? ( _defineCustomPropertiesCommand = new RelayCommand( DefineCustomProperties, o => true ) );
 
         public bool DisableInGuardzone
         {
@@ -145,21 +144,25 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set => SetProperty( ref _draggables, value );
         }
 
+        public ICommand EditPythonFunctionsCommand => _editPythonFunctionsCommand ?? ( _editPythonFunctionsCommand = new RelayCommand( EditPythonFunctions, o => true ) );
+
         public bool Enabled
         {
             get => _enabled;
             set => SetProperty( ref _enabled, value );
         }
 
-        public ICommand InsertCommand =>
-            _insertCommand ?? ( _insertCommand = new RelayCommandAsync( Insert, o => /*Engine.Connected*/true ) );
+        public string FunctionsText
+        {
+            get => _functionsText;
+            set => SetProperty( ref _functionsText, value );
+        }
 
-        public ICommand InsertConstraintCommand =>
-            _insertConstraintCommand ?? ( _insertConstraintCommand =
-                new RelayCommand( InsertConstraint, o => SelectedItem != null ) );
+        public ICommand InsertCommand => _insertCommand ?? ( _insertCommand = new RelayCommandAsync( Insert, o => /*Engine.Connected*/true ) );
 
-        public ICommand InsertMatchAnyCommand =>
-            _insertMatchAnyCommand ?? ( _insertMatchAnyCommand = new RelayCommand( InsertMatchAny, o => true ) );
+        public ICommand InsertConstraintCommand => _insertConstraintCommand ?? ( _insertConstraintCommand = new RelayCommand( InsertConstraint, o => SelectedItem != null ) );
+
+        public ICommand InsertMatchAnyCommand => _insertMatchAnyCommand ?? ( _insertMatchAnyCommand = new RelayCommand( InsertMatchAny, o => true ) );
 
         public bool IsRunning
         {
@@ -191,18 +194,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set => SetProperty( ref _matchTextValue, value );
         }
 
-        public ICommand NewGroupCommand =>
-            _newGroupCommand ?? ( _newGroupCommand = new RelayCommand( NewGroup, o => true ) );
+        public ICommand NewGroupCommand => _newGroupCommand ?? ( _newGroupCommand = new RelayCommand( NewGroup, o => true ) );
 
-        public ICommand RemoveCommand =>
-            _removeCommand ?? ( _removeCommand = new RelayCommandAsync( Remove, o => SelectedItem != null ) );
+        public ICommand RemoveCommand => _removeCommand ?? ( _removeCommand = new RelayCommandAsync( Remove, o => SelectedItem != null ) );
 
-        public ICommand RemoveConstraintCommand =>
-            _removeConstraintCommand ?? ( _removeConstraintCommand =
-                new RelayCommand( RemoveConstraint, o => SelectedProperty != null ) );
+        public ICommand RemoveConstraintCommand => _removeConstraintCommand ?? ( _removeConstraintCommand = new RelayCommand( RemoveConstraint, o => SelectedProperty != null ) );
 
-        public ICommand RemoveGroupCommand =>
-            _removeGroupCommand ?? ( _removeGroupCommand = new RelayCommand( RemoveGroup, o => o is IDraggableGroup ) );
+        public ICommand RemoveGroupCommand => _removeGroupCommand ?? ( _removeGroupCommand = new RelayCommand( RemoveGroup, o => o is IDraggableGroup ) );
 
         public bool RequeueFailedItems
         {
@@ -210,8 +208,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set => SetProperty( ref _requeueFailedItems, value );
         }
 
-        public ICommand ResetContainerCommand =>
-            _resetContainerCommand ?? ( _resetContainerCommand = new RelayCommand( ResetContainer, o => true ) );
+        public ICommand ResetContainerCommand => _resetContainerCommand ?? ( _resetContainerCommand = new RelayCommand( ResetContainer, o => true ) );
 
         public AutolootGroup SelectedGroup
         {
@@ -237,11 +234,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set => SetProperty( ref _selectedProperty, value );
         }
 
-        public ICommand SelectHueCommand =>
-            _selectHueCommand ?? ( _selectHueCommand = new RelayCommand( SelectHue, o => SelectedItem != null ) );
+        public ICommand SelectHueCommand => _selectHueCommand ?? ( _selectHueCommand = new RelayCommand( SelectHue, o => SelectedItem != null ) );
 
-        public ICommand SetContainerCommand =>
-            _setContainerCommand ?? ( _setContainerCommand = new RelayCommandAsync( SetContainer, o => true ) );
+        public ICommand SetContainerCommand => _setContainerCommand ?? ( _setContainerCommand = new RelayCommandAsync( SetContainer, o => true ) );
 
         public void Serialize( JObject json, bool _ )
         {
@@ -252,8 +247,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             JArray groupArray = new JArray();
 
-            foreach ( AutolootGroup draggableGroup in Draggables.Where( i => i is AutolootGroup )
-                         .OrderBy( e => DraggableTreeViewHelpers.GetIndex( e, Draggables ) ).Cast<AutolootGroup>() )
+            foreach ( AutolootGroup draggableGroup in Draggables.Where( i => i is AutolootGroup ).OrderBy( e => DraggableTreeViewHelpers.GetIndex( e, Draggables ) )
+                         .Cast<AutolootGroup>() )
             {
                 JObject entry = new JObject { { "Name", draggableGroup.Name }, { "Enabled", draggableGroup.Enabled } };
 
@@ -269,7 +264,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 { "LootHumanoids", LootHumanoids },
                 { "LeftColumnWidth", LeftColumnWidth },
                 { "Groups", groupArray },
-                { "MatchTextValue", MatchTextValue }
+                { "MatchTextValue", MatchTextValue },
+                { "FunctionsText", FunctionsText }
             };
 
             JArray itemsArray = new JArray();
@@ -285,7 +281,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     { "RehueHue", entry.RehueHue },
                     { "Enabled", entry.Enabled },
                     { "Priority", entry.Priority.ToString() },
-                    { "Group", entry.Group?.Name }
+                    { "Group", entry.Group?.Name },
+                    { "Function", entry.Function }
                 };
 
                 if ( entry.Constraints != null )
@@ -337,6 +334,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             LeftColumnWidth = config["LeftColumnWidth"]?.ToObject<double>() ?? 200;
 #endif
             MatchTextValue = config["MatchTextValue"]?.ToObject<bool>() ?? false;
+            FunctionsText = config["FunctionsText"]?.ToObject<string>() ?? DEFAULT_FUNCTIONS_TEXT;
 
             if ( config["Groups"] != null )
             {
@@ -344,11 +342,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                 foreach ( JToken token in groups )
                 {
-                    AutolootGroup group = new AutolootGroup
-                    {
-                        Name = token["Name"]?.ToObject<string>() ?? "Unknown",
-                        Enabled = token["Enabled"]?.ToObject<bool>() ?? false
-                    };
+                    AutolootGroup group = new AutolootGroup { Name = token["Name"]?.ToObject<string>() ?? "Unknown", Enabled = token["Enabled"]?.ToObject<bool>() ?? false };
 
                     Draggables.Add( group );
                 }
@@ -368,15 +362,15 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         Rehue = token["Rehue"]?.ToObject<bool>() ?? false,
                         RehueHue = token["RehueHue"]?.ToObject<int>() ?? 0,
                         Enabled = token["Enabled"]?.ToObject<bool>() ?? true,
-                        Priority = token["Priority"]?.ToObject<AutolootPriority>() ?? AutolootPriority.Normal
+                        Priority = token["Priority"]?.ToObject<AutolootPriority>() ?? AutolootPriority.Normal,
+                        Function = token["Function"]?.ToObject<string>() ?? string.Empty
                     };
 
                     string groupName = token["Group"]?.ToObject<string>();
 
                     if ( !string.IsNullOrEmpty( groupName ) )
                     {
-                        AutolootGroup group = (AutolootGroup) Draggables.FirstOrDefault(
-                            i => i is AutolootGroup gr && gr.Name == groupName );
+                        AutolootGroup group = (AutolootGroup) Draggables.FirstOrDefault( i => i is AutolootGroup gr && gr.Name == groupName );
 
                         if ( group == null )
                         {
@@ -406,11 +400,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
                             AutolootConstraintEntry constraintObj = new AutolootConstraintEntry
                             {
                                 Property = propertyEntry,
-                                Operator = constraintToken["Operator"]?.ToObject<AutolootOperator>() ??
-                                           AutolootOperator.Equal,
+                                Operator = constraintToken["Operator"]?.ToObject<AutolootOperator>() ?? AutolootOperator.Equal,
                                 Value = constraintToken["Value"]?.ToObject<int>() ?? 0,
-                                Additional = constraintToken[nameof( AutolootConstraintEntry.Additional )]
-                                    ?.ToString()
+                                Additional = constraintToken[nameof( AutolootConstraintEntry.Additional )]?.ToString()
                             };
 
                             constraintsList.Add( constraintObj );
@@ -483,8 +475,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            foreach ( AutolootEntry groupChild in
-                     group.Children.Where( i => i is AutolootEntry ).Cast<AutolootEntry>() )
+            foreach ( AutolootEntry groupChild in group.Children.Where( i => i is AutolootEntry ).Cast<AutolootEntry>() )
             {
                 Draggables.Add( groupChild );
 
@@ -524,8 +515,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 {
                     Layer layer = TileData.GetLayer( item.ID );
 
-                    return entry.Operator == AutolootOperator.NotPresent ||
-                           AutolootHelpers.Operation( entry.Operator, entry.Value, (int) layer );
+                    return entry.Operator == AutolootOperator.NotPresent || AutolootHelpers.Operation( entry.Operator, entry.Value, (int) layer );
                 },
                 AllowedValuesEnum = typeof( Layer )
             } );
@@ -543,24 +533,20 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         return false;
                     }
 
-                    IEnumerable<Property> properties =
-                        item.Properties.Where( e => e != null && clilocs.Contains( e.Cliloc ) ).ToList();
+                    IEnumerable<Property> properties = item.Properties.Where( e => e != null && clilocs.Contains( e.Cliloc ) ).ToList();
 
                     if ( entry.Operator != AutolootOperator.NotPresent )
                     {
                         return properties
                             .Where( property => property.Arguments != null && property.Arguments.Length >= 1 &&
-                                                ( property.Arguments[0].Equals( entry.Additional,
-                                                      StringComparison.CurrentCultureIgnoreCase ) ||
+                                                ( property.Arguments[0].Equals( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) ||
                                                   string.IsNullOrEmpty( entry.Additional ) ) ).Any( property =>
-                                AutolootHelpers.Operation( entry.Operator, Convert.ToInt32( property.Arguments[1] ),
-                                    entry.Value ) );
+                                AutolootHelpers.Operation( entry.Operator, Convert.ToInt32( property.Arguments[1] ), entry.Value ) );
                     }
 
                     Property match = properties.FirstOrDefault( property =>
-                        property.Arguments != null && property.Arguments.Length >= 1 && ( property.Arguments[0]
-                                .Equals( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) ||
-                            string.IsNullOrEmpty( entry.Additional ) ) );
+                        property.Arguments != null && property.Arguments.Length >= 1 &&
+                        ( property.Arguments[0].Equals( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) || string.IsNullOrEmpty( entry.Additional ) ) );
 
                     return match == null;
                 },
@@ -574,8 +560,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             try
             {
-                IEnumerable<AutolootConstraintEntry> entries =
-                    JsonConvert.DeserializeObject<IEnumerable<AutolootConstraintEntry>>( text );
+                IEnumerable<AutolootConstraintEntry> entries = JsonConvert.DeserializeObject<IEnumerable<AutolootConstraintEntry>>( text );
 
                 if ( entries == null )
                 {
@@ -628,16 +613,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         return;
                     }
 
-                    if ( !LootHumanoids && TargetManager.GetInstance().BodyData
-                            .Where( bd => bd.BodyType == TargetBodyType.Humanoid ).Select( bd => bd.Graphic )
+                    if ( !LootHumanoids && TargetManager.GetInstance().BodyData.Where( bd => bd.BodyType == TargetBodyType.Humanoid ).Select( bd => bd.Graphic )
                             .Contains( item.Count ) )
                     {
                         return;
                     }
 
-                    PacketWaitEntry we = Engine.PacketWaitEntries.Add(
-                        new PacketFilterInfo( 0x3C,
-                            new[] { PacketFilterConditions.IntAtPositionCondition( serial, 19 ) } ),
+                    PacketWaitEntry we = Engine.PacketWaitEntries.Add( new PacketFilterInfo( 0x3C, new[] { PacketFilterConditions.IntAtPositionCondition( serial, 19 ) } ),
                         PacketDirection.Incoming );
 
                     we.Lock.WaitOne( 2000 );
@@ -655,13 +637,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         Stopwatch stopWatch = new Stopwatch();
                         stopWatch.Start();
 #endif
-                        bool result = UOC.WaitForPropertiesAsync( items.Where( e => e?.Properties == null ), 1000 )
-                            .Result;
+                        bool result = UOC.WaitForPropertiesAsync( items.Where( e => e?.Properties == null ), 1000 ).Result;
 
 #if DEBUG
                         stopWatch.Stop();
-                        UOC.SystemMessage(
-                            $"WaitForPropertiesAsync Result = {result}, Time = {stopWatch.ElapsedMilliseconds}" );
+                        UOC.SystemMessage( $"WaitForPropertiesAsync Result = {result}, Time = {stopWatch.ElapsedMilliseconds}" );
 #endif
                     }
 
@@ -692,13 +672,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         {
                             if ( entry.Rehue )
                             {
-                                Engine.SendPacketToClient( new ContainerContentUpdate( matchItem.Serial, matchItem.ID,
-                                    matchItem.Direction, matchItem.Count, matchItem.X, matchItem.Y, matchItem.Grid,
-                                    matchItem.Owner, entry.RehueHue ) );
+                                Engine.SendPacketToClient( new ContainerContentUpdate( matchItem.Serial, matchItem.ID, matchItem.Direction, matchItem.Count, matchItem.X,
+                                    matchItem.Y, matchItem.Grid, matchItem.Owner, entry.RehueHue ) );
                             }
 
-                            if ( DisableInGuardzone &&
-                                 Engine.Player.GetRegion().Attributes.HasFlag( RegionAttributes.Guarded ) )
+                            if ( DisableInGuardzone && Engine.Player.GetRegion().Attributes.HasFlag( RegionAttributes.Guarded ) )
                             {
                                 continue;
                             }
@@ -714,14 +692,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     {
                         int containerSerial = ContainerSerial;
 
-                        if ( containerSerial == 0 ||
-                             Engine.Player?.Backpack?.Container?.GetItem( containerSerial ) == null )
+                        if ( containerSerial == 0 || Engine.Player?.Backpack?.Container?.GetItem( containerSerial ) == null )
                         {
                             containerSerial = Engine.Player?.GetLayer( Layer.Backpack ) ?? 0;
                         }
 
-                        UOC.SystemMessage( string.Format( Strings.Autolooting___0__, lootItem.Name ),
-                            (int) SystemMessageHues.Yellow );
+                        UOC.SystemMessage( string.Format( Strings.Autolooting___0__, lootItem.Name ), (int) SystemMessageHues.Yellow );
 
                         DragDropOptions options = new DragDropOptions
                         {
@@ -767,11 +743,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            List<AutolootConstraintEntry> constraints =
-                new List<AutolootConstraintEntry>( SelectedItem.Constraints )
-                {
-                    new AutolootConstraintEntry { Property = propertyEntry }
-                };
+            List<AutolootConstraintEntry> constraints = new List<AutolootConstraintEntry>( SelectedItem.Constraints ) { new AutolootConstraintEntry { Property = propertyEntry } };
 
             SelectedItem.Constraints = new ObservableCollection<AutolootConstraintEntry>( constraints );
         }
@@ -809,10 +781,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private void InsertMatchAny( object obj )
         {
-            AutolootEntry entry = new AutolootEntry
-            {
-                Name = Strings.Any, ID = -1, Constraints = new ObservableCollection<AutolootConstraintEntry>()
-            };
+            AutolootEntry entry = new AutolootEntry { Name = Strings.Any, ID = -1, Constraints = new ObservableCollection<AutolootConstraintEntry>() };
 
             Items.Add( entry );
         }
@@ -837,9 +806,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             AutolootEntry entry = new AutolootEntry
             {
-                Name = TileData.GetStaticTile( item.ID ).Name,
-                ID = item.ID,
-                Constraints = new ObservableCollection<AutolootConstraintEntry>()
+                Name = TileData.GetStaticTile( item.ID ).Name, ID = item.ID, Constraints = new ObservableCollection<AutolootConstraintEntry>()
             };
 
             Items.Add( entry );
@@ -949,6 +916,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     Draggables.Remove( autolootEntry );
                 }
             }
+        }
+
+        private static void EditPythonFunctions( object obj )
+        {
+            PythonFunctionsWindow window = new PythonFunctionsWindow();
+
+            window.ShowDialog();
         }
     }
 }

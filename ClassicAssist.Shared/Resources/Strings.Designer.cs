@@ -1627,6 +1627,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Predicate Functions.
+        /// </summary>
+        public static string Edit_Predicate_Functions {
+            get {
+                return ResourceManager.GetString("Edit Predicate Functions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Elapsed.
         /// </summary>
         public static string Elapsed {
@@ -3910,6 +3919,33 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Predicate Function:.
+        /// </summary>
+        public static string Predicate_Function_ {
+            get {
+                return ResourceManager.GetString("Predicate Function:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Predicate function &apos;{0}&apos; error: {1}.
+        /// </summary>
+        public static string Predicate_function___0___error___1_ {
+            get {
+                return ResourceManager.GetString("Predicate function \'{0}\' error: {1}", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Predicate function &apos;{0}&apos; not found....
+        /// </summary>
+        public static string Predicate_function___0___not_found___ {
+            get {
+                return ResourceManager.GetString("Predicate function \'{0}\' not found...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Prevent attacking friends in war mode.
         /// </summary>
         public static string Prevent_attacking_friends_in_war_mode {
@@ -5368,7 +5404,7 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Toggle Autoloot.
         /// </summary>
         public static string Toggle_Autoloot {
             get {

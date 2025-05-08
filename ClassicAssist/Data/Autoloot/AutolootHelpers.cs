@@ -23,13 +23,17 @@ namespace ClassicAssist.Data.Autoloot
 
         public static IEnumerable<Item> AutolootFilter( IEnumerable<Item> items, AutolootEntry entry )
         {
-            return items == null
-                ? null
-                : ( from item in items
-                    where entry.ID == -1 || item.ID == entry.ID
-                    let predicates = ConstraintsToPredicates( entry.Constraints )
-                    where !predicates.Any() || CheckPredicates( item, predicates )
-                    select item ).ToList();
+            return ( from item in items
+                where entry.ID == -1 || item.ID == entry.ID
+                let predicates = ConstraintsToPredicates( entry.Constraints )
+                where !predicates.Any() && string.IsNullOrEmpty( entry.Function ) ||
+                      CheckPredicates( item, predicates ) && ( string.IsNullOrEmpty( entry.Function ) || CheckPredicateFunction( entry, item ) )
+                select item ).ToList();
+        }
+
+        private static bool CheckPredicateFunction( AutolootEntry entry, Item item )
+        {
+            return _manager.ExecuteFunction( entry.Function, item );
         }
 
         private static bool CheckPredicates( Item item, IEnumerable<Predicate<Item>> predicates )

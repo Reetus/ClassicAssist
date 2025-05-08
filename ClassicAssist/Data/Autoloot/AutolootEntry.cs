@@ -18,6 +18,7 @@ namespace ClassicAssist.Data.Autoloot
         private AutolootPriority _priority = AutolootPriority.Normal;
         private bool _rehue;
         private int _rehueHue = 1153;
+        private string _function;
 
         public bool Autoloot
         {
@@ -71,6 +72,12 @@ namespace ClassicAssist.Data.Autoloot
         {
             get => _name;
             set => SetProperty( ref _name, value );
+        }
+
+        public string Function
+        {
+            get => _function;
+            set => SetProperty(ref _function, value);
         }
     }
 }

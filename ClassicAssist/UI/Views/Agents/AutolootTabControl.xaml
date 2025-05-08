@@ -158,7 +158,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                            <Setter Property="Padding" Value="4"/>
+                            <Setter Property="Padding" Value="4" />
                         </Style>
                     </Grid.Resources>
                     <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="0" Margin="0,0,5,0"
@@ -197,6 +197,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Button Content="{x:Static resources:Strings.Set_Container}" Margin="0,10,5,0"
                             Command="{Binding SetContainerCommand}" Grid.Column="0" />
@@ -210,6 +211,8 @@
                                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(agents:AutolootViewModel.DefineCustomPropertiesCommand)}" />
                                 <MenuItem Header="{x:Static resources:Strings.CSV_Import}"
                                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(agents:AutolootViewModel.CSVImportCommand)}" />
+                                <MenuItem Header="{x:Static resources:Strings.Edit_Predicate_Functions}"
+                                          Command="{Binding Source={StaticResource Proxy}, Path=Data.(agents:AutolootViewModel.EditPythonFunctionsCommand)}" />
                             </ContextMenu>
                         </Image.ContextMenu>
                     </Image>
@@ -286,6 +289,11 @@
                             Command="{Binding InsertConstraintCommand}"
                             CommandParameter="{Binding SelectedValue, ElementName=comboBox}" />
                 </Grid>
+                <StackPanel Orientation=" Horizontal" Margin="0,0,0,5">
+                    <TextBlock Text="{x:Static resources:Strings.Predicate_Function_}" VerticalAlignment="Center"
+                               Margin="0,0,10,0" />
+                    <TextBox Text="{Binding SelectedItem.Function}" Width="150" />
+                </StackPanel>
                 <WrapPanel Orientation="Horizontal">
                     <WrapPanel.Resources>
                         <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">

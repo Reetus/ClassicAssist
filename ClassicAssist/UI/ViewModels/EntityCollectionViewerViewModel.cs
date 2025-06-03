@@ -523,6 +523,11 @@ namespace ClassicAssist.UI.ViewModels
 
             bool Excluded( Entity item )
             {
+                if (Options.CombineStacksIgnore == null || Options.CombineStacksIgnore.Count == 0 )
+                {
+                    return false;
+                }
+
                 return Options.CombineStacksIgnore.Any( e =>
                     ( e.ID == -1 || e.ID == item.ID ) && ( e.Hue == -1 || e.Hue == item.Hue ) && ( e.Cliloc == -1 || e.Cliloc == item.Properties?[0].Cliloc ) );
             }

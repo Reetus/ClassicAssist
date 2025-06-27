@@ -540,6 +540,16 @@ namespace ClassicAssist.UI.ViewModels
             string sourceStackName = GetNameMinusAmount( item );
             string destStackName = GetNameMinusAmount( destStack );
 
+            if ( item.Count > 1 && sourceStackName.EndsWith( "s" ) && destStack.Count == 1 && !destStackName.EndsWith( "s" ) )
+            {
+                sourceStackName = sourceStackName.TrimEnd( 's' );
+            }
+
+            if ( destStack.Count > 1 && destStackName.EndsWith( "s" ) && item.Count == 1 && !sourceStackName.EndsWith( "s" ) )
+            {
+                destStackName = destStackName.TrimEnd( 's' );
+            }
+
             return sourceStackName.Equals( destStackName );
         }
 

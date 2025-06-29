@@ -210,6 +210,8 @@
                                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(agents:AutolootViewModel.DefineCustomPropertiesCommand)}" />
                                 <MenuItem Header="{x:Static resources:Strings.CSV_Import}"
                                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(agents:AutolootViewModel.CSVImportCommand)}" />
+                                <!--<MenuItem Header="{x:Static resources:Strings.Additional_Assemblies}"
+                                          Command="{Binding Source={StaticResource Proxy}, Path=Data.(agents:AutolootViewModel.AdditionalAssembliesCommand)}" />-->
                             </ContextMenu>
                         </Image.ContextMenu>
                     </Image>

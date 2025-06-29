@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -12,7 +13,6 @@ using Assistant;
 using ClassicAssist.Controls.DraggableTreeView;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Autoloot;
-using ClassicAssist.Data.ClassicUO.Objects;
 using ClassicAssist.Data.Regions;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Misc;
@@ -84,6 +84,35 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private AutolootConstraintEntry _selectedProperty;
         private ICommand _selectHueCommand;
         private ICommand _setContainerCommand;
+        private string[] _assemblies;
+
+        public string[] Assemblies
+        {
+            get => _assemblies;
+            set
+            {
+                SetProperty( ref _assemblies, value );
+                LoadAssemblies( value );
+            }
+        }
+
+        private void LoadAssemblies( IEnumerable<string> assemblies )
+        {
+            foreach ( string fileName in assemblies )
+            {
+                Assembly asm = Assembly.LoadFile( fileName );
+                IEnumerable<MethodInfo> initializeMethods = asm.GetTypes()
+                    .Where( e => e.IsClass && e.IsPublic && e.GetMethod( "Initialize", BindingFlags.Public | BindingFlags.Static, null,
+                        new[] { typeof( ObservableCollection<PropertyEntry> ) }, null ) != null ).Select( e =>
+                        e.GetMethod( "Initialize", BindingFlags.Public | BindingFlags.Static, null, new[] { typeof( ObservableCollection<PropertyEntry> ) }, null ) );
+
+                foreach ( MethodInfo initializeMethod in initializeMethods )
+                {
+                    // ReSharper disable once CoVariantArrayConversion
+                    initializeMethod?.Invoke( null, new[] { Constraints } );
+                }
+            }
+        }
 
         public AutolootViewModel()
         {
@@ -272,6 +301,18 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 { "MatchTextValue", MatchTextValue }
             };
 
+            JArray assembliesArray = new JArray();
+
+            if ( Assemblies != null )
+            {
+                foreach ( string assembly in Assemblies )
+                {
+                    assembliesArray.Add( assembly );
+                }
+
+                autolootObj.Add( "Assemblies", assembliesArray );
+            }
+
             JArray itemsArray = new JArray();
 
             foreach ( AutolootEntry entry in Items.OrderBy( e => DraggableTreeViewHelpers.GetIndex( e, Draggables ) ) )
@@ -352,6 +393,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                     Draggables.Add( group );
                 }
+            }
+
+            if ( config["Assemblies"] != null )
+            {
+                Assemblies = config["Assemblies"].Select( a => a.ToObject<string>() ).ToArray();
             }
 
             if ( config["Items"] != null )

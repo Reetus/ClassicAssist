@@ -43,7 +43,7 @@ namespace ClassicAssist.UO.Network
             Register( 0x06, 5, OnUseRequest );
             Register( 0x07, 7, OnLiftRequest );
             Register( 0x08, 15, OnDropRequest );
-            Register( 0x12, 0, OnUseSkill );
+            Register( 0x12, 0, OnUseSkillOrLegacySpell );
             Register( 0x13, 10, OnEquipRequest );
             Register( 0x6C, 19, OnTargetSent );
             Register( 0x6F, 0, OnSecureTrade );
@@ -75,27 +75,50 @@ namespace ClassicAssist.UO.Network
             Engine.Trade.PlatinumLocal = value2;
         }
 
-        private static void OnUseSkill( PacketReader reader )
+        private static void OnUseSkillOrLegacySpell( PacketReader reader )
         {
             int command = reader.ReadByte();
 
-            if ( command != 0x24 )
+            if ( command == 0x24 )
             {
-                return;
+                OnUseSkill( reader );
             }
+            else if (  command == 0x56 )
+            {
+                OnLegacySpellCast( reader );
+            }
+        }
 
+        private static void OnLegacySpellCast( PacketReader reader )
+        {
+            if ( ReadIdAsString( reader, out int id ) )
+            {
+                Engine.LastSpellID = id;
+            }
+        }
+
+        private static void OnUseSkill( PacketReader reader )
+        {
+            if ( ReadIdAsString( reader, out int id ) )
+            {
+                Engine.LastSkillID = id;
+                Engine.LastSkillTime = DateTime.Now;
+            }
+        }
+
+        private static bool ReadIdAsString( PacketReader reader, out int id )
+        {
             Span<byte> span = new Span<byte>( reader.GetData(), (int) reader.Index,
-                (int) ( reader.Size - reader.Index ) );
+                            (int) ( reader.Size - reader.Index ) );
 
             string skill = Encoding.ASCII.GetString( span.ToArray() );
 
-            if ( !int.TryParse( skill.Substring( 0, skill.IndexOf( ' ' ) ), out int id ) )
+            if ( !int.TryParse( skill.Substring( 0, skill.IndexOf( ' ' ) ), out id ) )
             {
-                return;
+                return false;
             }
 
-            Engine.LastSkillID = id;
-            Engine.LastSkillTime = DateTime.Now;
+            return true;
         }
 
         private static void OnSpellCast( PacketReader reader )

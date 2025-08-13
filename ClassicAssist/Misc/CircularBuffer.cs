@@ -18,7 +18,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Input;
 
 namespace ClassicAssist.Misc
 {
@@ -35,7 +34,7 @@ namespace ClassicAssist.Misc
         private T[] _buffer;
         private int _capacity, _head, _tail;
 
-        private Dictionary<string, int> _readOffsets = new Dictionary<string, int>();
+        private readonly Dictionary<string, int> _readOffsets = new Dictionary<string, int>();
 
         public CircularBuffer( int capacity )
         {

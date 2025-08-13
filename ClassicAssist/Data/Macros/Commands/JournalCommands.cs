@@ -14,6 +14,7 @@ namespace ClassicAssist.Data.Macros.Commands
     public static class JournalCommands
     {
         private const string DEFAULT_JOURNAL_BUFFER = "main";
+        private const string SYSTEM_MESSAGE_AUTHOR = "system";
 
         [CommandsDisplay( Category = nameof( Strings.Journal ),
             Parameters = new[]
@@ -29,10 +30,10 @@ namespace ClassicAssist.Data.Macros.Commands
                 WaitForJournal( text, timeout, author, hue );
             }
 
-            if ( author.ToLower().Equals( "system" ) )
+            if ( author.ToLower().Equals( SYSTEM_MESSAGE_AUTHOR ) )
             {
                 match = Engine.Journal.FindAny( je => je.Text.ToLower().Contains( text.ToLower() ) &&
-                                                            ( je.SpeechType == JournalSpeech.System || je.Name.ToLower() == "system" ) &&
+                                                            ( je.SpeechType == JournalSpeech.System || je.Name.ToLower() == SYSTEM_MESSAGE_AUTHOR ) &&
                                                             ( hue == -1 || je.SpeechHue == hue ), buffer );
             }
             else
@@ -79,10 +80,10 @@ namespace ClassicAssist.Data.Macros.Commands
             {
                 bool match;
 
-                if ( author.ToLower().Equals( "system" ) )
+                if ( author.ToLower().Equals( SYSTEM_MESSAGE_AUTHOR ) )
                 {
                     match = je.Text.ToLower().Contains( text.ToLower() ) &&
-                          ( je.SpeechType == JournalSpeech.System || je.Name.ToLower() == "system" ) &&
+                          ( je.SpeechType == JournalSpeech.System || je.Name.ToLower() == SYSTEM_MESSAGE_AUTHOR ) &&
                           ( hue == -1 || je.SpeechHue == hue );
                 }
                 else
@@ -142,10 +143,10 @@ namespace ClassicAssist.Data.Macros.Commands
 
             void OnIncomingPacketHandlersOnJournalEntryAddedEvent( JournalEntry je )
             {
-                if ( author.ToLower().Equals( "system" ) )
+                if ( author.ToLower().Equals( SYSTEM_MESSAGE_AUTHOR ) )
                 {
                     var entry = wanted.Select( ( txt, idx ) => new { Text = txt, Index = idx } ).FirstOrDefault( e => je.Text.ToLower().Contains( e.Text.ToLower() ) &&
-                                                                                                                    ( je.SpeechType == JournalSpeech.System || je.Name.ToLower() == "system" ) );
+                                                                                                                    ( je.SpeechType == JournalSpeech.System || je.Name.ToLower() == SYSTEM_MESSAGE_AUTHOR ) );
 
                     if ( entry != null )
                     {

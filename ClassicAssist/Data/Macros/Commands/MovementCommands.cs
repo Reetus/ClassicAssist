@@ -132,7 +132,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 nameof( ParameterType.XCoordinate ), nameof( ParameterType.YCoordinate ),
                 nameof( ParameterType.ZCoordinate )
             } )]
-        public static bool Pathfind( int x, int y, int z, bool checkDistance = true )
+        public static bool Pathfind( int x, int y, int z, bool checkDistance = true, int desiredDistance = 0 )
         {
             int distance = Math.Max( Math.Abs( x - Engine.Player?.X ?? x ), Math.Abs( y - Engine.Player?.Y ?? y ) );
 
@@ -142,12 +142,12 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
-            return Pathfinder.WalkTo( x, y, z, 0 );
+            return Pathfinder.WalkTo( x, y, z, desiredDistance );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Movement ),
             Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
-        public static bool Pathfind( object obj )
+        public static bool Pathfind( object obj, bool checkDistance = true, int desiredDistance = 0 )
         {
             if ( obj is int i && i == -1 )
             {
@@ -173,7 +173,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
-            return Pathfind( entity.X, entity.Y, entity.Z );
+            return Pathfind( entity.X, entity.Y, entity.Z, checkDistance, desiredDistance);
         }
 
         [CommandsDisplay( Category = nameof( Strings.Movement ) )]

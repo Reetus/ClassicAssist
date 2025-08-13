@@ -193,11 +193,11 @@ namespace ClassicAssist.Misc
 
         private IEnumerable<T> EnumerateNamedBuffer( string key )
         {
-            int readPos = ( _head + _readOffsets[key] ) % _buffer.Length;
+            int readPos = ( _head + _readOffsets[key] );
 
-            while ( readPos < _tail )
+            while ( readPos % _buffer.Length != _tail )
             {
-                yield return _buffer[readPos++];
+                yield return _buffer[readPos++ % _buffer.Length];
             }
         }
 

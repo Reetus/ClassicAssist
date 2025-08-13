@@ -338,6 +338,24 @@ namespace ClassicAssist.Tests
             } );
         }
 
+        [TestMethod]
+        public void LegacyCastSpellRequest()
+        {
+            Engine.ClientVersion = new Version( 6, 0, 14, 1 ); // before the packet switch
+
+            CastSpell classUnderTest = new CastSpell( 32 ); // Recall
+
+            // 0x33, 0x32, 0x00 = "32"
+            byte[] expectedCastRecallPacket = new byte[] { 0x12, 0x00, 0x07, 0x56, 0x33, 0x32, 0x00 };
+
+            CollectionAssert.AreEqual( expectedCastRecallPacket, classUnderTest.ToArray() , "The produced legacy cast spell packet was not as expected.");
+
+            string result = classUnderTest.Parse( expectedCastRecallPacket, 7,
+                PacketDirection.Outgoing );
+
+            Assert.AreEqual( "Cast(\"Recall\")\r\n", result, "The parsed legacy cast spell packet did not produce the correct textual representation." );
+        }
+
         //[TestMethod]
         //public void WillWaitForGumpUncompressedGumps()
         //{

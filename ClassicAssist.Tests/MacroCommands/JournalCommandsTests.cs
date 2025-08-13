@@ -1,16 +1,23 @@
-﻿using System.Collections.Generic;
-using Assistant;
+﻿using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Misc;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace ClassicAssist.Tests.MacroCommands
 {
     [TestClass]
     public class JournalCommandsTests
     {
+        [TestInitialize]
+        public void Initialize()
+        {
+            Engine.Journal = new CircularBuffer<JournalEntry>( 1024 );
+        }
+
         [TestMethod]
         public void WillMatchSystem()
         {
@@ -20,8 +27,6 @@ namespace ClassicAssist.Tests.MacroCommands
             } );
 
             Assert.IsTrue( JournalCommands.InJournal( "town guards", "system" ) );
-
-            Engine.Journal.Clear();
         }
 
         [TestMethod]
@@ -59,8 +64,6 @@ namespace ClassicAssist.Tests.MacroCommands
             } );
 
             Assert.IsTrue( JournalCommands.InJournal( "lazy dog", "tony" ) );
-
-            Engine.Journal.Clear();
         }
 
         [TestMethod]
@@ -81,8 +84,6 @@ namespace ClassicAssist.Tests.MacroCommands
             Assert.IsTrue( JournalCommands.InJournal( "town guards" ) );
 
             Assert.IsTrue( JournalCommands.InJournal( "lazy dog" ) );
-
-            Engine.Journal.Clear();
         }
 
         [TestMethod]
@@ -95,11 +96,13 @@ namespace ClassicAssist.Tests.MacroCommands
                 Name = "Tony"
             } );
 
-            JournalCommands.ClearJournal();
+            Assert.IsTrue( Engine.Journal.FindAny( je => je.Name == "Tony", "toClear" ));
+            Assert.IsTrue( Engine.Journal.FindAny( je => je.Name == "Tony", "notToClear" ) );
 
-            Assert.AreEqual( 0, Engine.Journal.Count );
+            JournalCommands.ClearJournal( "toClear" );
 
-            Engine.Journal.Clear();
+            Assert.IsFalse( Engine.Journal.FindAny( je => je.Name == "Tony", "toClear" ) );
+            Assert.IsTrue( Engine.Journal.FindAny( je => je.Name == "Tony", "notToClear" ) );
         }
 
         //[TestMethod]

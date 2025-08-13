@@ -23,13 +23,99 @@ namespace ClassicAssist.Data.Autoloot
 
         public static IEnumerable<Item> AutolootFilter( IEnumerable<Item> items, AutolootEntry entry )
         {
-            return items == null
-                ? null
-                : ( from item in items
-                    where entry.ID == -1 || item.ID == entry.ID
-                    let predicates = ConstraintsToPredicates( entry.Constraints )
-                    where !predicates.Any() || CheckPredicates( item, predicates )
-                    select item ).ToList();
+            List<Item> list = new List<Item>();
+
+            if ( items == null )
+            {
+                return list;
+            }
+
+            list.AddRange( from item in items where entry.ID == -1 || item.ID == entry.ID where MatchItemEntryChildren( item, entry ) select item );
+
+            return list;
+        }
+
+        public static bool MatchItemEntryChildren( Item item, AutolootEntry entry )
+        {
+            if ( entry.ID >= 0 && item.ID != entry.ID )
+            {
+                return false;
+            }
+
+            foreach ( AutolootBaseModel child in entry.Children )
+            {
+                if ( child is AutolootPropertyGroup group )
+                {
+                    if ( !MatchItemEntryChildren( item, group ) )
+                    {
+                        return false;
+                    }
+                }
+                else if ( child is AutolootPropertyEntry propertyEntry )
+                {
+                    if ( !CheckPredicates( item, ConstraintsToPredicates( propertyEntry.Constraints ) ) )
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException( "Unknown child type in entry." );
+                }
+            }
+
+            return true;
+        }
+
+        private static bool MatchItemEntryChildren( Item item, AutolootPropertyGroup group )
+        {
+            bool result = group.Operation == BooleanOperation.And;
+
+            foreach ( AutolootBaseModel child in group.Children )
+            {
+                bool match;
+
+                switch ( child )
+                {
+                    case AutolootPropertyGroup childGroup:
+                        match = MatchItemEntryChildren( item, childGroup );
+                        break;
+                    case AutolootPropertyEntry propertyEntry:
+                        match = CheckPredicates( item, ConstraintsToPredicates( propertyEntry.Constraints ) );
+                        break;
+                    default:
+                        throw new InvalidOperationException( "Unknown child type in group." );
+                }
+
+                switch ( group.Operation )
+                {
+                    case BooleanOperation.And:
+                        result &= match;
+
+                        if ( !result )
+                        {
+                            return false;
+                        }
+
+                        break;
+                    case BooleanOperation.Or:
+                        result |= match;
+
+                        if ( result )
+                        {
+                            return true;
+                        }
+
+                        break;
+                    case BooleanOperation.Not:
+                        result = !match;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            return result;
         }
 
         private static bool CheckPredicates( Item item, IEnumerable<Predicate<Item>> predicates )
@@ -37,8 +123,7 @@ namespace ClassicAssist.Data.Autoloot
             return predicates.All( predicate => predicate( item ) );
         }
 
-        public static IEnumerable<Predicate<Item>> ConstraintsToPredicates(
-            IEnumerable<AutolootConstraintEntry> constraints )
+        public static IEnumerable<Predicate<Item>> ConstraintsToPredicates( IEnumerable<AutolootConstraintEntry> constraints )
         {
             List<Predicate<Item>> predicates = new List<Predicate<Item>>();
 
@@ -50,30 +135,25 @@ namespace ClassicAssist.Data.Autoloot
                         if ( constraint.Operator != AutolootOperator.NotPresent )
                         {
                             predicates.Add( i => i.Properties != null && constraint.Property.Clilocs.Any( cliloc =>
-                                i.Properties.Any( p => MatchProperty( p, cliloc, constraint.Property,
-                                    constraint.Operator, constraint.Value ) ) ) );
+                                i.Properties.Any( p => MatchProperty( p, cliloc, constraint.Property, constraint.Operator, constraint.Value ) ) ) );
                         }
                         else
                         {
-                            predicates.Add( i =>
-                                i.Properties != null && !constraint.Property.Clilocs.Any( cliloc =>
-                                    i.Properties.Any( p => p.Cliloc == cliloc ) ) );
+                            predicates.Add( i => i.Properties != null && !constraint.Property.Clilocs.Any( cliloc => i.Properties.Any( p => p.Cliloc == cliloc ) ) );
                         }
 
                         break;
                     case PropertyType.Object:
 
                         predicates.Add( i =>
-                            ItemHasObjectProperty( i, constraint.Property.Name ) && Operation( constraint.Operator,
-                                GetItemObjectPropertyValue<int>( i, constraint.Property.Name ), constraint.Value ) );
+                            ItemHasObjectProperty( i, constraint.Property.Name ) && Operation( constraint.Operator, GetItemObjectPropertyValue<int>( i, constraint.Property.Name ),
+                                constraint.Value ) );
 
                         break;
                     case PropertyType.Predicate:
                     case PropertyType.PredicateWithValue:
 
-                        predicates.Add( i =>
-                            constraint.Property.Predicate != null &&
-                            constraint.Property.Predicate.Invoke( i, constraint ) );
+                        predicates.Add( i => constraint.Property.Predicate != null && constraint.Property.Predicate.Invoke( i, constraint ) );
 
                         break;
 
@@ -143,13 +223,12 @@ namespace ClassicAssist.Data.Autoloot
             }
         }
 
-        public static bool MatchProperty( Property property, int cliloc, PropertyEntry constraint,
-            AutolootOperator @operator, int value )
+        public static bool MatchProperty( Property property, int cliloc, PropertyEntry constraint, AutolootOperator @operator, int value )
         {
             try
             {
-                bool result = property.Cliloc == cliloc && ( constraint.ClilocIndex == -1 || Operation( @operator,
-                    int.Parse( property.Arguments[constraint.ClilocIndex] ), value ) );
+                bool result = property.Cliloc == cliloc &&
+                              ( constraint.ClilocIndex == -1 || Operation( @operator, int.Parse( property.Arguments[constraint.ClilocIndex] ), value ) );
 
                 if ( result )
                 {

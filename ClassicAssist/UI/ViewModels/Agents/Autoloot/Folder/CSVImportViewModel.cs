@@ -128,7 +128,13 @@ namespace ClassicAssist.UI.ViewModels.Agents.Autoloot.Folder
                                     Enabled = true,
                                     Priority = AutolootPriority.Normal,
                                     Name = name,
-                                    Constraints = new ObservableCollection<AutolootConstraintEntry>(),
+                                    Children = new ObservableCollection<AutolootBaseModel>()
+                                    {
+                                        new AutolootPropertyEntry()
+                                        {
+                                            Constraints = new ObservableCollection<AutolootConstraintEntry>()
+                                        }
+                                    },
                                     Rehue = false
                                 };
 
@@ -173,7 +179,8 @@ namespace ClassicAssist.UI.ViewModels.Agents.Autoloot.Folder
 
                                         int value = remaining.Length > 0 ? Convert.ToInt32( remaining ) : 0;
 
-                                        autolootEntry.Constraints.Add( new AutolootConstraintEntry { Property = entry, Operator = operation, Value = value } );
+                                        ( autolootEntry.Children.First() as AutolootPropertyEntry ).Constraints.Add(
+                                            new AutolootConstraintEntry { Property = entry, Operator = operation, Value = value } );
                                     }
                                 }
 

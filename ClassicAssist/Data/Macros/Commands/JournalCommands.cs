@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Assistant;
+using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
@@ -12,12 +13,15 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class JournalCommands
     {
+        private const string DEFAULT_JOURNAL_BUFFER = "main";
+        private const string SYSTEM_MESSAGE_AUTHOR = "system";
+
         [CommandsDisplay( Category = nameof( Strings.Journal ),
             Parameters = new[]
             {
-                nameof( ParameterType.String ), nameof( ParameterType.String ), nameof( ParameterType.Hue ), nameof( ParameterType.Timeout )
+                nameof( ParameterType.String ), nameof( ParameterType.String ), nameof( ParameterType.Hue ), nameof( ParameterType.Timeout ), nameof( ParameterType.String )
             } )]
-        public static bool InJournal( string text, string author = "", int hue = -1, int timeout = -1 )
+        public static bool InJournal( string text, string author = "", int hue = -1, int timeout = -1, string buffer = DEFAULT_JOURNAL_BUFFER )
         {
             bool match;
 
@@ -26,11 +30,11 @@ namespace ClassicAssist.Data.Macros.Commands
                 WaitForJournal( text, timeout, author, hue );
             }
 
-            if ( author.ToLower().Equals( "system" ) )
+            if ( string.Equals( author, SYSTEM_MESSAGE_AUTHOR, StringComparison.CurrentCultureIgnoreCase ))
             {
-                match = Engine.Journal.GetBuffer().Any( je => je.Text.ToLower().Contains( text.ToLower() ) &&
-                                                            ( je.SpeechType == JournalSpeech.System || je.Name == "System" ) &&
-                                                            ( hue == -1 || je.SpeechHue == hue ) );
+                match = Engine.Journal.FindAny( je => je.Text.IndexOf(text, StringComparison.CurrentCultureIgnoreCase) >= 0 &&
+                                                            ( je.SpeechType == JournalSpeech.System || string.Equals( je.Name, SYSTEM_MESSAGE_AUTHOR, StringComparison.CurrentCultureIgnoreCase ) ) &&
+                                                            ( hue == -1 || je.SpeechHue == hue ), buffer );
             }
             else
             {
@@ -45,18 +49,22 @@ namespace ClassicAssist.Data.Macros.Commands
                     }
                 }
 
-                match = Engine.Journal.GetBuffer().Any( je => je.Text.ToLower().Contains( text.ToLower() ) &&
-                                                            ( string.IsNullOrEmpty( author ) || je.Name.Equals( author.Trim(), StringComparison.CurrentCultureIgnoreCase ) ) &&
-                                                            ( hue == -1 || je.SpeechHue == hue ) );
+                match = Engine.Journal.FindAny( je => je.Text.IndexOf(text, StringComparison.CurrentCultureIgnoreCase) >= 0 &&
+                                                            ( string.IsNullOrEmpty( author ) || string.Equals( je.Name, author.Trim(), StringComparison.CurrentCultureIgnoreCase ) ) &&
+                                                            ( hue == -1 || je.SpeechHue == hue ), buffer );
             }
 
             return match;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Journal ) )]
-        public static void ClearJournal()
+        [CommandsDisplay( Category = nameof( Strings.Journal ),
+            Parameters = new[]
+            {
+                nameof( ParameterType.String )
+            } )]
+        public static void ClearJournal( string buffer = DEFAULT_JOURNAL_BUFFER )
         {
-            Engine.Journal.Clear();
+            Engine.Journal.Clear( buffer );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Journal ),
@@ -72,10 +80,10 @@ namespace ClassicAssist.Data.Macros.Commands
             {
                 bool match;
 
-                if ( author.ToLower().Equals( "system" ) )
+                if ( string.Equals( author, SYSTEM_MESSAGE_AUTHOR, StringComparison.CurrentCultureIgnoreCase ) )
                 {
-                    match = je.Text.ToLower().Contains( text.ToLower() ) &&
-                          ( je.SpeechType == JournalSpeech.System || je.Name == "System" ) &&
+                    match = je.Text.IndexOf( text, StringComparison.CurrentCultureIgnoreCase ) >= 0 &&
+                          ( je.SpeechType == JournalSpeech.System || string.Equals( je.Name, SYSTEM_MESSAGE_AUTHOR, StringComparison.CurrentCultureIgnoreCase ) ) &&
                           ( hue == -1 || je.SpeechHue == hue );
                 }
                 else
@@ -91,7 +99,7 @@ namespace ClassicAssist.Data.Macros.Commands
                         }
                     }
 
-                    match = je.Text.ToLower().Contains( text.ToLower() ) &&
+                    match = je.Text.IndexOf( text, StringComparison.CurrentCultureIgnoreCase ) >= 0 &&
                           ( string.IsNullOrEmpty( author ) || je.Name.Equals( author.Trim(), StringComparison.CurrentCultureIgnoreCase ) ) &&
                           ( hue == -1 || je.SpeechHue == hue );
                 }
@@ -135,10 +143,10 @@ namespace ClassicAssist.Data.Macros.Commands
 
             void OnIncomingPacketHandlersOnJournalEntryAddedEvent( JournalEntry je )
             {
-                if ( author.ToLower().Equals( "system" ) )
+                if ( string.Equals(author, SYSTEM_MESSAGE_AUTHOR, StringComparison.CurrentCultureIgnoreCase) )
                 {
-                    var entry = wanted.Select( ( txt, idx ) => new { Text = txt, Index = idx } ).FirstOrDefault( e => je.Text.ToLower().Contains( e.Text.ToLower() ) &&
-                                                                                                                    ( je.SpeechType == JournalSpeech.System || je.Name == "System" ) );
+                    var entry = wanted.Select( ( txt, idx ) => new { Text = txt, Index = idx } ).FirstOrDefault( e => je.Text.IndexOf( e.Text, StringComparison.CurrentCultureIgnoreCase ) >= 0 &&
+                                                                                                                    ( je.SpeechType == JournalSpeech.System || string.Equals(je.Name, SYSTEM_MESSAGE_AUTHOR, StringComparison.CurrentCultureIgnoreCase) ) );
 
                     if ( entry != null )
                     {
@@ -149,7 +157,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 else
                 {
                     var entry = wanted.Select( ( txt, idx ) => new { Text = txt, Index = idx } )
-                        .FirstOrDefault( e => je.Text.ToLower().Contains( e.Text.ToLower() ) &&
+                        .FirstOrDefault( e => je.Text.IndexOf(e.Text, StringComparison.CurrentCultureIgnoreCase) >= 0 &&
                                               ( string.IsNullOrEmpty( author ) || je.Name.Equals( author.Trim(), StringComparison.CurrentCultureIgnoreCase ) ) );
 
 

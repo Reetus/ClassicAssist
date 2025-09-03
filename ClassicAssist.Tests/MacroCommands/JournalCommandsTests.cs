@@ -1,16 +1,26 @@
-﻿using System.Collections.Generic;
-using Assistant;
+﻿using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Misc;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Web.UI.WebControls;
 
 namespace ClassicAssist.Tests.MacroCommands
 {
     [TestClass]
     public class JournalCommandsTests
     {
+        [TestInitialize]
+        public void Initialize()
+        {
+            Engine.Journal = new CircularBuffer<JournalEntry>( 5 );
+        }
+
         [TestMethod]
         public void WillMatchSystem()
         {
@@ -20,8 +30,6 @@ namespace ClassicAssist.Tests.MacroCommands
             } );
 
             Assert.IsTrue( JournalCommands.InJournal( "town guards", "system" ) );
-
-            Engine.Journal.Clear();
         }
 
         [TestMethod]
@@ -59,8 +67,6 @@ namespace ClassicAssist.Tests.MacroCommands
             } );
 
             Assert.IsTrue( JournalCommands.InJournal( "lazy dog", "tony" ) );
-
-            Engine.Journal.Clear();
         }
 
         [TestMethod]
@@ -81,8 +87,6 @@ namespace ClassicAssist.Tests.MacroCommands
             Assert.IsTrue( JournalCommands.InJournal( "town guards" ) );
 
             Assert.IsTrue( JournalCommands.InJournal( "lazy dog" ) );
-
-            Engine.Journal.Clear();
         }
 
         [TestMethod]
@@ -95,47 +99,71 @@ namespace ClassicAssist.Tests.MacroCommands
                 Name = "Tony"
             } );
 
-            JournalCommands.ClearJournal();
+            Assert.IsTrue( Engine.Journal.FindAny( je => je.Name == "Tony", "toClear" ));
+            Assert.IsTrue( Engine.Journal.FindAny( je => je.Name == "Tony", "notToClear" ) );
 
-            Assert.AreEqual( 0, Engine.Journal.Count );
+            JournalCommands.ClearJournal( "toClear" );
 
-            Engine.Journal.Clear();
+            Assert.IsFalse( Engine.Journal.FindAny( je => je.Name == "Tony", "toClear" ) );
+            Assert.IsTrue( Engine.Journal.FindAny( je => je.Name == "Tony", "notToClear" ) );
         }
 
-        //[TestMethod]
-        //public void WaitForJournalWillMatch()
-        //{
-        //    const string text = "You are now under the protection of town guards.";
+        [TestMethod]
+        public void BufferWrapsAround()
+        {
+                       
+            new string[] { "One", "Two", "Three", "Four", "Five", "Six" }.ToList().ForEach(s =>
+            {
+                Engine.Journal.Write(new JournalEntry
+                {
+                    Text = s,
+                    SpeechType = JournalSpeech.Say,
+                    Name = "Unit Test"
+                });
+            });
 
-        //    byte[] textBytes = Encoding.Unicode.GetBytes( text );
+            Assert.IsFalse( Engine.Journal.FindAny( je => je.Text == "One", "Unit Test" ) );
+            Assert.IsTrue( Engine.Journal.FindAny( je => je.Text == "Two", "Unit Test" ) );
+            Assert.IsTrue( Engine.Journal.FindAny( je => je.Text == "Three", "Unit Test" ) );
+            Assert.IsTrue( Engine.Journal.FindAny( je => je.Text == "Four", "Unit Test" ) );
+            Assert.IsTrue( Engine.Journal.FindAny( je => je.Text == "Five", "Unit Test" ) );
+            Assert.IsTrue( Engine.Journal.FindAny( je => je.Text == "Six", "Unit Test" ) );
+        }
 
-        //    PacketWriter pw = new PacketWriter( 48 + textBytes.Length );
+            //[TestMethod]
+            //public void WaitForJournalWillMatch()
+            //{
+            //    const string text = "You are now under the protection of town guards.";
 
-        //    pw.Write( (byte) 0xAE );
-        //    pw.Write( (short) ( 48 + textBytes.Length ));
-        //    pw.Write((int)0  );
-        //    pw.Write( (short) 0 );
-        //    pw.Write((byte)1  ); // system
-        //    pw.Seek( 39, SeekOrigin.Current );
-        //    pw.Write(textBytes, 0, textBytes.Length  );
+            //    byte[] textBytes = Encoding.Unicode.GetBytes( text );
 
-        //    IncomingPacketHandlers.Initialize();
+            //    PacketWriter pw = new PacketWriter( 48 + textBytes.Length );
 
-        //    PacketHandler handler = IncomingPacketHandlers.GetHandler( 0xAE );
+            //    pw.Write( (byte) 0xAE );
+            //    pw.Write( (short) ( 48 + textBytes.Length ));
+            //    pw.Write((int)0  );
+            //    pw.Write( (short) 0 );
+            //    pw.Write((byte)1  ); // system
+            //    pw.Seek( 39, SeekOrigin.Current );
+            //    pw.Write(textBytes, 0, textBytes.Length  );
 
-        //    Task<bool> t = Task.Run(() => JournalCommands.WaitForJournal("town guards", 20000, "system"));
+            //    IncomingPacketHandlers.Initialize();
 
-        //    handler?.OnReceive(new PacketReader( pw.ToArray(), pw.ToArray().Length, false ));
+            //    PacketHandler handler = IncomingPacketHandlers.GetHandler( 0xAE );
 
-        //    bool finished = t.Wait( 20000 );
+            //    Task<bool> t = Task.Run(() => JournalCommands.WaitForJournal("town guards", 20000, "system"));
 
-        //    Assert.IsTrue( finished );
+            //    handler?.OnReceive(new PacketReader( pw.ToArray(), pw.ToArray().Length, false ));
 
-        //    bool result = t.Result;
+            //    bool finished = t.Wait( 20000 );
 
-        //    Assert.IsTrue( result );
+            //    Assert.IsTrue( finished );
 
-        //    Engine.Journal.Clear();
-        //}
-    }
+            //    bool result = t.Result;
+
+            //    Assert.IsTrue( result );
+
+            //    Engine.Journal.Clear();
+            //}
+        }
 }

@@ -62,7 +62,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
         private void SetEnabled()
         {
-            JournalEntry[] buffer = Engine.Journal.GetBuffer();
+            JournalEntry[] buffer = Engine.Journal.GetEntireBuffer();
 
             foreach ( JournalEntry journalEntry in buffer )
             {

@@ -219,7 +219,7 @@ namespace ClassicAssist.UO.Network
             return actionQueueItem.WaitHandle.ToTask( () => actionQueueItem.Result );
         }
 
-        private static void Enqueue( BaseQueueItem queueItem, QueuePriority priority )
+        public static void Enqueue( BaseQueueItem queueItem, QueuePriority priority )
         {
             queueItem.DateTime = DateTime.Now;
 

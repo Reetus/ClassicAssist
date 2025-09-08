@@ -206,13 +206,13 @@ namespace ClassicAssist.UO
         public static async Task<int> GetTargetSerialAsync( string message = "", int timeout = 30000 )
         {
             ( TargetType _, TargetFlags _, int serial, int _, int _, int _, int _ ) =
-                await GetTargetInfoAsync( message, timeout );
+                await GetTargetInfoAsync( message, timeout, true );
 
             return serial;
         }
 
         public static async Task<(TargetType, TargetFlags, int, int, int, int, int)> GetTargetInfoAsync(
-            string message = "", int timeout = 30000 )
+            string message = "", int timeout = 30000, bool objectTarget = false )
         {
             if ( string.IsNullOrEmpty( message ) )
             {
@@ -232,7 +232,7 @@ namespace ClassicAssist.UO
                 //TODO
                 PacketWriter pw = new PacketWriter( 19 );
                 pw.Write( (byte) 0x6C );
-                pw.Write( (byte) 1 );
+                pw.Write( (byte) ( objectTarget ? 0 : 1 ) );
                 pw.Write( value );
                 pw.Write( (byte) 0 );
                 pw.Fill();

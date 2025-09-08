@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1065,11 +1066,71 @@ namespace ClassicAssist.UI.ViewModels
 
                     _dispatcher.Invoke( () => { obj.Status = string.Format( Strings.Moving_item__0_____1_, item.i, items.Length ); } );
 
-                    await ActionPacketQueue.EnqueueDragDrop( item.value, -1, serial, cancellationToken: obj.CancellationTokenSource.Token );
+                    int attempts;
+
+                    for (attempts = 0; attempts < 5; attempts++ )
+                    {
+                        if ( !await EnqueueDragDrop( item.value, -1, serial, obj.CancellationTokenSource.Token ) )
+                        {
+                            Commands.SystemMessage( $"Retrying {serial:x}..." );
+                            continue;
+                        }
+
+                        break;
+                    }
                 }
 
                 return true;
             }, string.Format( Strings.Moving_item__0_____1_, 0, items.Length ) );
+        }
+
+        private static Task<bool> EnqueueDragDrop( int serial, int amount, int containerSerial, CancellationToken cancellationToken = default, [CallerMemberName] string caller = "" )
+        {
+            ActionQueueItem actionQueueItem = new ActionQueueItem( param =>
+            {
+                if ( cancellationToken.IsCancellationRequested )
+                {
+                    return false;
+                }
+
+                PacketFilterInfo pfi1 = new PacketFilterInfo( 0x27 );
+                PacketFilterInfo pfi2 = new PacketFilterInfo( 0x54,
+                    new[]
+                    {
+                        PacketFilterConditions.ShortAtPositionCondition( 0x57, 2 ), PacketFilterConditions.ShortAtPositionCondition( Engine.Player.X, 6 ),
+                        PacketFilterConditions.ShortAtPositionCondition( Engine.Player.Y, 8 ),
+                        PacketFilterConditions.ShortAtPositionCondition( Engine.Player.Z, 10 )
+                    } );
+
+                PacketWaitEntry pwe1 = Engine.PacketWaitEntries.Add( pfi1, PacketDirection.Incoming, true );
+                PacketWaitEntry pwe2 = Engine.PacketWaitEntries.Add( pfi2, PacketDirection.Incoming, true );
+
+                Engine.SendPacketToServer( new DragItem( serial, amount ) );
+                Engine.LastActionPacket = DateTime.Now;
+
+                int result = Task.WaitAny( new Task[] { pwe1.Lock.ToTask(), pwe2.Lock.ToTask() }, 2000 );
+
+                if ( result <= 0 )
+                {
+                    return false;
+                }
+
+                Engine.SendPacketToServer( new DropItem( serial, containerSerial, -1, -1, 0 ) );
+
+                return true;
+            } )
+            {
+                CheckRange = false,
+                DelaySend = true,
+                Serial = serial,
+                Arguments = false,
+                Caller = caller,
+                Options = null
+            };
+
+            ActionPacketQueue.Enqueue( actionQueueItem, QueuePriority.High );
+
+            return actionQueueItem.WaitHandle.ToTask( () => actionQueueItem.Result );
         }
 
         private async Task ContextMoveToBackpack( object arg )

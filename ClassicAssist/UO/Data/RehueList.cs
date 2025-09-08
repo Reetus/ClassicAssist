@@ -42,6 +42,11 @@ namespace ClassicAssist.UO.Data
             return _rehueList.ContainsKey( serial );
         }
 
+        public bool TryGetValue( int serial, out RehueEntry entry )
+        {
+            return _rehueList.TryGetValue( serial, out entry );
+        }
+
         public void RemoveByType( RehueType type )
         {
             IEnumerable<int> keys = _rehueList.Where( kvp => kvp.Value.Type == type ).Select( kvp => kvp.Key );

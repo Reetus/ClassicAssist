@@ -491,8 +491,10 @@ namespace ClassicAssist.UI.ViewModels
 
                         int needed = 60000 - destStack.Count;
 
-                        Item sourceStack = Collection.SelectEntities( i => i.ID == destStack.ID && i.Hue == destStack.Hue && i.Serial != destStack.Serial && i.Count != 60000 )
-                            ?.OrderBy( i => i.Count ).FirstOrDefault();
+                        Item sourceStack = Collection
+                            .SelectEntities( i =>
+                                i.ID == destStack.ID && i.Hue == destStack.Hue && i.Serial != destStack.Serial && i.Count != 60000 &&
+                                ( !Engine.TooltipsEnabled || StackNamesMatch( i, destStack ) ) )?.OrderBy( i => i.Count ).FirstOrDefault();
 
                         if ( sourceStack == null )
                         {
@@ -531,6 +533,43 @@ namespace ClassicAssist.UI.ViewModels
                 return Options.CombineStacksIgnore.Any( e =>
                     ( e.ID == -1 || e.ID == item.ID ) && ( e.Hue == -1 || e.Hue == item.Hue ) && ( e.Cliloc == -1 || e.Cliloc == item.Properties?[0].Cliloc ) );
             }
+        }
+
+        private static bool StackNamesMatch( Item item, Item destStack )
+        {
+            string sourceStackName = GetNameMinusAmount( item );
+            string destStackName = GetNameMinusAmount( destStack );
+
+            if ( item.Count > 1 && sourceStackName.EndsWith( "s" ) && destStack.Count == 1 && !destStackName.EndsWith( "s" ) )
+            {
+                sourceStackName = sourceStackName.TrimEnd( 's' );
+            }
+
+            if ( destStack.Count > 1 && destStackName.EndsWith( "s" ) && item.Count == 1 && !sourceStackName.EndsWith( "s" ) )
+            {
+                destStackName = destStackName.TrimEnd( 's' );
+            }
+
+            return sourceStackName.Equals( destStackName );
+        }
+
+        private static string GetNameMinusAmount( Item item )
+        {
+            if ( item.Properties == null || item.Properties.Length == 0 )
+            {
+                return item.Name.Trim();
+            }
+
+            Property property = item.Properties.First();
+
+            if ( property.Arguments == null || property.Arguments.Length == 0 )
+            {
+                return item.Name.Trim();
+            }
+
+            List<string> newArguments = ( from argument in property.Arguments select argument.Equals( item.Count.ToString() ) ? string.Empty : argument ).ToList();
+
+            return newArguments.Count == 0 ? item.Name.Trim() : Cliloc.GetLocalString( property.Cliloc, newArguments.ToArray() ).Trim();
         }
 
         private void TargetContainer( object obj )

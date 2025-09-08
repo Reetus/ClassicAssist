@@ -1221,6 +1221,11 @@ namespace ClassicAssist.UI.ViewModels
                 item.Name = nameOverride;
             }
 
+            if ( Engine.RehueList.TryGetValue( item.Serial, out RehueEntry entry ) )
+            {
+                item.Hue = entry.Hue;
+            }
+
             return new EntityCollectionData { Entity = item };
         }
     }

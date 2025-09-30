@@ -50,9 +50,11 @@ namespace ClassicAssist.Data.Macros.Commands
             int index = 0;
             bool result;
 
+            int senderSerial = -1;
+
             if ( Options.CurrentOptions.UseExperimentalFizzleDetection )
             {
-                ( index, result ) = UOC.WaitForTargetOrFizzle( sd.Timeout + 1000 );
+                ( index, result ) = UOC.WaitForTargetOrFizzle( sd.Timeout + 1000, out senderSerial );
             }
             else
             {
@@ -80,7 +82,7 @@ namespace ClassicAssist.Data.Macros.Commands
             }
             //
 
-            TargetCommands.Target( serial );
+            TargetCommands.Target( serial, senderSerial: senderSerial );
 
             return true;
         }

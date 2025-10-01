@@ -29,12 +29,7 @@ namespace ClassicAssist.Tests.ActionPacketQueueTests
         {
             bool dragSent = false;
 
-            ActionPacketQueue.Clear();
-
-            while ( DateTime.Now - ActionPacketQueue.LastProcess < TimeSpan.FromSeconds( 2 ) )
-            {
-                await Task.Delay( 100 );
-            }
+            await ActionQueueEmpty();
 
             Task task = ActionPacketQueue.EnqueueDragDropGround( 0x1234, 0x5678, 0x9ABC, 0xDEF0, -80 );
 
@@ -45,6 +40,9 @@ namespace ClassicAssist.Tests.ActionPacketQueueTests
             Assert.IsTrue( result );
 
             Engine.InternalPacketSentEvent -= OnPacketSentEvent;
+
+            ActionPacketQueue.Clear();
+
             return;
 
             void OnPacketSentEvent( byte[] data, int length )
@@ -81,9 +79,21 @@ namespace ClassicAssist.Tests.ActionPacketQueueTests
             }
         }
 
-        [TestMethod]
-        public void WillCancelEnqueueDragDropGround()
+        private static async Task ActionQueueEmpty()
         {
+            ActionPacketQueue.Clear();
+
+            while ( ActionPacketQueue.Count() > 0 || DateTime.Now - ActionPacketQueue.LastProcess < TimeSpan.FromSeconds( 2 ) )
+            {
+                await Task.Delay( 100 );
+            }
+        }
+
+        [TestMethod]
+        public async Task WillCancelEnqueueDragDropGround()
+        {
+            await ActionQueueEmpty();
+
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             cancellationTokenSource.Cancel();
 
@@ -97,6 +107,9 @@ namespace ClassicAssist.Tests.ActionPacketQueueTests
             Assert.IsFalse( result );
 
             Engine.InternalPacketSentEvent -= OnPacketSentEvent;
+
+            ActionPacketQueue.Clear();
+
             return;
 
             void OnPacketSentEvent( byte[] data, int length )

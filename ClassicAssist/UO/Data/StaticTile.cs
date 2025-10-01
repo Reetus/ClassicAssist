@@ -4,8 +4,8 @@
     {
         public TileFlags Flags { get; set; }
         public byte Weight { get; set; }
-        public byte Quality { get; set; }
-        public byte Quantity { get; set; }
+        public byte Layer { get; set; }
+        public int Quantity { get; set; }
         public ushort ID { get; set; }
         public string Name { get; set; }
         public int X { get; set; }

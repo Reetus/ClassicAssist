@@ -42,7 +42,7 @@ namespace ClassicAssist.Tests
             StaticTile td = TileData.GetStaticTile( 0x1bf8 );
 
             Assert.AreEqual( "silver ingot", td.Name );
-            Assert.IsTrue( td.Flags.HasFlag( TileFlags.Stackable ) );
+            Assert.IsTrue( td.Flags.HasFlag( TileFlags.Generic ) );
         }
 
         [TestMethod]
@@ -58,7 +58,7 @@ namespace ClassicAssist.Tests
             StaticTile td = TileData.GetStaticTile( 0x1bf8 );
 
             Assert.AreEqual( "silver ingot", td.Name );
-            Assert.IsTrue( td.Flags.HasFlag( TileFlags.Stackable ) );
+            Assert.IsTrue( td.Flags.HasFlag( TileFlags.Generic ) );
         }
     }
 }

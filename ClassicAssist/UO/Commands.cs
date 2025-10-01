@@ -90,7 +90,7 @@ namespace ClassicAssist.UO
             if ( layer == Layer.Invalid )
             {
                 StaticTile tileData = TileData.GetStaticTile( item.ID );
-                layer = (Layer) tileData.Quality;
+                layer = (Layer) tileData.Layer;
             }
 
             if ( layer == Layer.Invalid )
@@ -112,7 +112,7 @@ namespace ClassicAssist.UO
             if ( layer == Layer.Invalid )
             {
                 StaticTile tileData = TileData.GetStaticTile( item.ID );
-                layer = (Layer) tileData.Quality;
+                layer = (Layer) tileData.Layer;
             }
 
             return EquipItem( item.Serial, layer, queuePriority );

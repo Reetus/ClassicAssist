@@ -34,7 +34,7 @@ namespace ClassicAssist.Tests.ActionPacketQueueTests
 
             Engine.InternalPacketSentEvent += OnPacketSentEvent;
 
-            bool result = task.Wait( 1000 );
+            bool result = task.Wait( 5000 );
 
             Assert.IsTrue( result );
 

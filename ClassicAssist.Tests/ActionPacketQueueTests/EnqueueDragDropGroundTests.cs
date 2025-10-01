@@ -29,6 +29,7 @@ namespace ClassicAssist.Tests.ActionPacketQueueTests
         {
             bool dragSent = false;
 
+            ActionPacketQueue.Clear();
             Task task = ActionPacketQueue.EnqueueDragDropGround( 0x1234, 0x5678, 0x9ABC, 0xDEF0, -80 );
 
             Engine.InternalPacketSentEvent += OnPacketSentEvent;

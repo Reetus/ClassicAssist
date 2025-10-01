@@ -25,11 +25,12 @@ namespace ClassicAssist.Tests.ActionPacketQueueTests
     public class EnqueueDragDropGroundTests
     {
         [TestMethod]
-        public void WillEnqueueDragDropGroundSendDragDropPacket()
+        public async Task WillEnqueueDragDropGroundSendDragDropPacket()
         {
             bool dragSent = false;
 
             ActionPacketQueue.Clear();
+            await Task.Delay( 5000 );
             Task task = ActionPacketQueue.EnqueueDragDropGround( 0x1234, 0x5678, 0x9ABC, 0xDEF0, -80 );
 
             Engine.InternalPacketSentEvent += OnPacketSentEvent;

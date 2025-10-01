@@ -62,6 +62,7 @@ namespace ClassicAssist.UO.Network
         private static readonly ThreadPriorityQueue<BaseQueueItem> _actionPacketQueue = new ThreadPriorityQueue<BaseQueueItem>( ProcessActionPacketQueue );
 
         public static event dActionQueueEvent ActionQueueEvent;
+        public static DateTime LastProcess { get; set; }
 
         private static void ProcessActionPacketQueue( BaseQueueItem queueItem )
         {
@@ -148,6 +149,8 @@ namespace ClassicAssist.UO.Network
                     break;
                 }
             }
+
+            LastProcess = DateTime.Now;
         }
 
         // ReSharper disable once UnusedMember.Global

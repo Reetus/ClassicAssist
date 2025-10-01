@@ -12,6 +12,7 @@
 
 #endregion
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
@@ -29,11 +30,17 @@ namespace ClassicAssist.Tests.ActionPacketQueueTests
             bool dragSent = false;
 
             ActionPacketQueue.Clear();
+
+            while ( DateTime.Now - ActionPacketQueue.LastProcess < TimeSpan.FromSeconds( 2 ) )
+            {
+                await Task.Delay( 100 );
+            }
+
             Task task = ActionPacketQueue.EnqueueDragDropGround( 0x1234, 0x5678, 0x9ABC, 0xDEF0, -80 );
 
             Engine.InternalPacketSentEvent += OnPacketSentEvent;
 
-            bool result = task.Wait( 5000 );
+            bool result = task.Wait( 1000 );
 
             Assert.IsTrue( result );
 
@@ -67,6 +74,9 @@ namespace ClassicAssist.Tests.ActionPacketQueueTests
                         Assert.AreEqual( location, -1 );
                         break;
                     }
+                    default:
+                        Assert.Fail();
+                        break;
                 }
             }
         }

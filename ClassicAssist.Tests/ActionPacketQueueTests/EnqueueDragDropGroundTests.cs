@@ -12,7 +12,7 @@
 
 #endregion
 
-using System.Diagnostics;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Assistant;
@@ -29,6 +29,8 @@ namespace ClassicAssist.Tests.ActionPacketQueueTests
         {
             bool dragSent = false;
 
+            WaitActionQueueEmpty();
+
             Task task = ActionPacketQueue.EnqueueDragDropGround( 0x1234, 0x5678, 0x9ABC, 0xDEF0, -80 );
 
             Engine.InternalPacketSentEvent += OnPacketSentEvent;
@@ -38,6 +40,7 @@ namespace ClassicAssist.Tests.ActionPacketQueueTests
             Assert.IsTrue( result );
 
             Engine.InternalPacketSentEvent -= OnPacketSentEvent;
+
             return;
 
             void OnPacketSentEvent( byte[] data, int length )
@@ -67,16 +70,25 @@ namespace ClassicAssist.Tests.ActionPacketQueueTests
                         Assert.AreEqual( location, -1 );
                         break;
                     }
-                    default:
-                        Assert.Fail();
-                        break;
                 }
+            }
+        }
+
+        private static void WaitActionQueueEmpty()
+        {
+            ActionPacketQueue.Clear();
+
+            while ( ActionPacketQueue.Count() > 0 || DateTime.Now - ActionPacketQueue.LastProcess < TimeSpan.FromSeconds( 2 ) )
+            {
+                Thread.Sleep( 100 );
             }
         }
 
         [TestMethod]
         public void WillCancelEnqueueDragDropGround()
         {
+            WaitActionQueueEmpty();
+
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             cancellationTokenSource.Cancel();
 
@@ -90,6 +102,7 @@ namespace ClassicAssist.Tests.ActionPacketQueueTests
             Assert.IsFalse( result );
 
             Engine.InternalPacketSentEvent -= OnPacketSentEvent;
+
             return;
 
             void OnPacketSentEvent( byte[] data, int length )

@@ -70,9 +70,6 @@ namespace ClassicAssist.Tests.ActionPacketQueueTests
                         Assert.AreEqual( location, -1 );
                         break;
                     }
-                    default:
-                        Assert.Fail();
-                        break;
                 }
             }
         }

@@ -64,7 +64,7 @@ namespace ClassicAssist.Data.Macros.Commands
 
         [CommandsDisplay( Category = nameof( Strings.Target ),
             Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
-        public static void Target( object obj, bool checkRange = false, bool useQueue = false )
+        public static void Target( object obj, bool checkRange = false, bool useQueue = false, int senderSerial = -1 )
         {
             int serial = AliasCommands.ResolveSerial( obj );
 
@@ -138,7 +138,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 }
             }
 
-            Engine.SendPacketToServer( new Target( TargetTypeEnum.Object, -1, TargetFlags.None, serial, -1, -1, -1, 0,
+            Engine.SendPacketToServer( new Target( TargetTypeEnum.Object, senderSerial, TargetFlags.None, serial, -1, -1, -1, 0,
                 true ) );
             Engine.TargetExists = false;
         }
@@ -608,7 +608,7 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = nameof( Strings.Target ), Parameters = new[] { nameof( ParameterType.Timeout ) } )]
         public static bool WaitForTargetOrFizzle( int timeout )
         {
-            ( _, bool result ) = UOC.WaitForTargetOrFizzle( timeout );
+            ( _, bool result ) = UOC.WaitForTargetOrFizzle( timeout, out int senderSerial );
 
             return result;
         }

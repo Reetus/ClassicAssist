@@ -554,8 +554,8 @@ namespace ClassicAssist.UO
 
         public static bool WaitForTarget( int timeout )
         {
-            PacketFilterInfo pfi = new PacketFilterInfo( 0x6C );
-            PacketFilterInfo pfi2 = new PacketFilterInfo( 0x99 );
+            PacketFilterInfo pfi = new PacketFilterInfo( 0x6C, new[] { PacketFilterConditions.ByteAtPositionCondition( 3, 6, true ) } );
+            PacketFilterInfo pfi2 = new PacketFilterInfo( 0x99, new[] { PacketFilterConditions.ByteAtPositionCondition( 3, 6, true ) } );
 
             Engine.WaitingForTarget = true;
 

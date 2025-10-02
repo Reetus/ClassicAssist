@@ -86,7 +86,7 @@ namespace ClassicAssist.UI.ViewModels
             AddData( "Position", $"{staticTile.X}, {staticTile.Y}, {staticTile.Z}", Strings.Entity );
             AddData( "Weight", staticTile.Weight.ToString(), Strings.Entity );
             AddData( "Height", staticTile.Height.ToString(), Strings.Entity );
-            AddData( "Quality", staticTile.Quality.ToString(), Strings.Entity );
+            AddData( "Layer", staticTile.Layer.ToString(), Strings.Entity );
             AddData( "Quantity", staticTile.Quantity.ToString(), Strings.Entity );
         }
 

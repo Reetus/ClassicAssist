@@ -1,5 +1,10 @@
-﻿using System;
+﻿/**
+ * This was mostly copied from the ClassicUO project, to harmonize the data structures and the ability to read the same files.
+ */
+using Assistant;
+using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace ClassicAssist.UO.Data
@@ -7,21 +12,20 @@ namespace ClassicAssist.UO.Data
     public static class TileData
     {
         private static string _dataPath;
-        private static readonly Lazy<LandTile[]> _landTiles = new Lazy<LandTile[]>( LoadLandTiles );
-        private static readonly Lazy<StaticTile[]> _staticTiles = new Lazy<StaticTile[]>( LoadStaticTiles );
-
-        private static bool _oldFormat;
+        private static StaticTile[] _staticData;
+        private static LandTile[] _landData;
 
         public static void Initialize( string dataPath )
         {
             _dataPath = dataPath;
         }
 
-        private static StaticTile[] LoadStaticTiles()
+        private static void Load()
         {
             if ( string.IsNullOrEmpty( _dataPath ) || !Directory.Exists( _dataPath ) )
             {
-                return null;
+                // throwing an exception would be correct - but the unit tests depend on this behavior
+                return;
             }
 
             string fileName = Path.Combine( _dataPath, "tiledata.mul" );
@@ -31,156 +35,105 @@ namespace ClassicAssist.UO.Data
                 throw new FileNotFoundException( "File not found.", fileName );
             }
 
-            byte[] fileBytes = File.ReadAllBytes( fileName );
-
-            StaticTile[] staticTiles = new StaticTile[( fileBytes.Length - 428032 ) / 1188 * 32];
-
-            MemoryStream ms = new MemoryStream( fileBytes, false );
-
-            using ( BinaryReader reader = new BinaryReader( ms ) )
+            using ( FileStream stream = File.Open( fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite ) )
+            using ( BinaryReader tileData = new BinaryReader( stream ) )
             {
-                ms.Seek( 36, SeekOrigin.Begin );
-                string name = Encoding.ASCII.GetString( reader.ReadBytes( 20 ) ).TrimEnd( '\0' );
+                bool isold = Engine.ClientVersion < Version.Parse( "7.0.9.0" );
+                const int LAND_SIZE = 512;
 
-                if ( name == "VOID!!!!!!" )
+                int land_group = isold ? Marshal.SizeOf<LandGroupOld>() : Marshal.SizeOf<LandGroupNew>();
+                int static_group = isold ? Marshal.SizeOf<StaticGroupOld>() : Marshal.SizeOf<StaticGroupNew>();
+                int staticscount = (int) ( ( stream.Length - LAND_SIZE * land_group ) / static_group );
+
+                if ( staticscount > 2048 )
                 {
-                    _oldFormat = true;
+                    staticscount = 2048;
                 }
 
-                if ( _oldFormat )
+                stream.Seek( 0, System.IO.SeekOrigin.Begin );
+
+                _landData = new LandTile[0x4000];
+                _staticData = new StaticTile[staticscount * 32];
+
+                Span<byte> buf = stackalloc byte[20];
+
+                for ( int i = 0; i < 512; i++ )
                 {
-                    const int offset = 428032;
+                    tileData.ReadUInt32();
 
-                    ms.Seek( offset, SeekOrigin.Begin );
-
-                    for ( int i = 0; i < 0x4000; ++i )
+                    for ( int j = 0; j < 32; j++ )
                     {
-                        if ( ( i & 0x1F ) == 0 )
+                        if ( stream.Position + ( isold ? 4 : 8 ) + 2 + 20 > stream.Length )
                         {
-                            reader.ReadInt32(); // header
+                            goto END;
                         }
 
-                        staticTiles[i].ID = (ushort) i;
-                        staticTiles[i].Flags = (TileFlags) reader.ReadInt32();
-                        staticTiles[i].Weight = reader.ReadByte();
-                        staticTiles[i].Quality = reader.ReadByte();
-                        reader.ReadInt16();
-                        reader.ReadByte();
-                        staticTiles[i].Quantity = reader.ReadByte();
-                        reader.ReadInt16();
-                        reader.ReadByte();
-                        reader.ReadByte();
-                        reader.ReadInt16();
-                        staticTiles[i].Height = reader.ReadByte();
-                        staticTiles[i].Name = Encoding.ASCII.GetString( reader.ReadBytes( 20 ) ).TrimEnd( '\0' );
+                        int idx = i * 32 + j;
+                        _landData[idx].Flags = (TileFlags) ( isold ? tileData.ReadUInt32() : tileData.ReadUInt64() );
+                        _landData[idx].ID = tileData.ReadUInt16();
+
+                        _landData[idx].Name = string.Intern( Encoding.UTF8.GetString( tileData.ReadBytes( 20 ) ).TrimEnd( '\0' ) );
                     }
                 }
-                else
+
+                END:
+
+                for ( int i = 0; i < staticscount; i++ )
                 {
-                    const int offset = 493568;
-
-                    ms.Seek( offset, SeekOrigin.Begin );
-
-                    for ( int i = 0; i < 0x10000; ++i )
+                    if ( stream.Position >= stream.Length )
                     {
-                        if ( ( i & 0x1F ) == 0 )
+                        break;
+                    }
+
+                    tileData.ReadUInt32();
+
+                    for ( int j = 0; j < 32; j++ )
+                    {
+                        if ( stream.Position + ( isold ? 4 : 8 ) + 13 + 20 > stream.Length )
                         {
-                            reader.ReadInt32(); // header
+                            goto END_2;
                         }
 
-                        staticTiles[i].ID = (ushort) i;
-                        staticTiles[i].Flags = (TileFlags) reader.ReadInt64();
-                        staticTiles[i].Weight = reader.ReadByte();
-                        staticTiles[i].Quality = reader.ReadByte();
-                        reader.ReadInt16();
-                        reader.ReadByte();
-                        staticTiles[i].Quantity = reader.ReadByte();
-                        reader.ReadInt32();
-                        reader.ReadByte();
-                        /*int value = */
-                        reader.ReadByte();
-                        staticTiles[i].Height = reader.ReadByte();
-                        staticTiles[i].Name = Encoding.ASCII.GetString( reader.ReadBytes( 20 ) ).TrimEnd( '\0' );
+                        int idx = i * 32 + j;
+                        _staticData[idx].ID = (ushort)idx;
+                        _staticData[idx].Flags = (TileFlags) ( isold ? tileData.ReadUInt32() : tileData.ReadUInt64() );
+                        _staticData[idx].Weight = tileData.ReadByte();
+                        _staticData[idx].Layer = tileData.ReadByte();
+                        _staticData[idx].Quantity = tileData.ReadInt32();
+                        /*_staticData[idx].AnimId =*/
+                        tileData.ReadUInt16();
+                        _staticData[idx].Hue = tileData.ReadUInt16();
+                        /*_staticData[idx].LightIndex =*/
+                        tileData.ReadUInt16();
+                        _staticData[idx].Height = tileData.ReadByte();
+
+                        _staticData[idx].Name = string.Intern( Encoding.UTF8.GetString( tileData.ReadBytes( 20 ) ).TrimEnd( '\0' ) );
                     }
                 }
+
+            END_2:
+                tileData.Dispose();
             }
-
-            ms.Close();
-            return staticTiles;
-        }
-
-        private static LandTile[] LoadLandTiles()
-        {
-            string fileName = Path.Combine( _dataPath, "tiledata.mul" );
-
-            if ( !File.Exists( fileName ) )
-            {
-                throw new FileNotFoundException( "File not found.", fileName );
-            }
-
-            byte[] fileBytes = File.ReadAllBytes( fileName );
-
-            LandTile[] landTiles = new LandTile[16384];
-
-            MemoryStream ms = new MemoryStream( fileBytes, false );
-
-            using ( BinaryReader bin = new BinaryReader( ms ) )
-            {
-                ms.Seek( 36, SeekOrigin.Begin );
-
-                string name = Encoding.ASCII.GetString( bin.ReadBytes( 20 ) ).TrimEnd( '\0' );
-
-                if ( name == "VOID!!!!!!" )
-                {
-                    _oldFormat = true;
-                }
-
-                ms.Seek( 0, SeekOrigin.Begin );
-
-                if ( _oldFormat )
-                {
-                    for ( int i = 0; i < 0x4000; ++i )
-                    {
-                        if ( i == 0 || i > 0 && ( i & 0x1f ) == 0 )
-                        {
-                            bin.ReadInt32(); // block header
-                        }
-
-                        landTiles[i].Flags = (TileFlags) bin.ReadInt32();
-                        landTiles[i].ID = bin.ReadInt16();
-                        landTiles[i].Name = Encoding.ASCII.GetString( bin.ReadBytes( 20 ) ).TrimEnd( '\0' );
-                    }
-                }
-                else
-                {
-                    for ( int i = 0; i < 0x4000; ++i )
-                    {
-                        if ( i == 1 || i > 0 && ( i & 0x1f ) == 0 )
-                        {
-                            bin.ReadInt32(); // block header
-                        }
-
-                        landTiles[i].Flags = (TileFlags) bin.ReadInt64();
-                        landTiles[i].ID = bin.ReadInt16();
-                        landTiles[i].Name = Encoding.ASCII.GetString( bin.ReadBytes( 20 ) ).TrimEnd( '\0' );
-                    }
-                }
-            }
-
-            ms.Close();
-            return landTiles;
         }
 
         public static LandTile GetLandTile( int index )
         {
-            return _landTiles.Value[index];
+            if (_landData == null )
+            {
+                Load();
+            }
+            return _landData[index];
         }
 
         public static StaticTile GetStaticTile( int index )
         {
+            if ( _staticData == null )
+            {
+                Load();
+            }
             try
             {
-                return _staticTiles.Value[index];
+                return _staticData[index];
             }
             catch ( NullReferenceException )
             {
@@ -188,7 +141,7 @@ namespace ClassicAssist.UO.Data
             }
             catch ( IndexOutOfRangeException )
             {
-                return _staticTiles.Value[0];
+                return _staticData[0];
             }
         }
 
@@ -201,9 +154,245 @@ namespace ClassicAssist.UO.Data
                 return Layer.Invalid;
             }
 
-            Layer layer = (Layer) td.Quality;
+            Layer layer = (Layer) td.Layer;
 
             return layer;
         }
+    }
+
+
+    // old
+
+    [StructLayout( LayoutKind.Sequential, Pack = 1 )]
+    public struct LandGroupOld
+    {
+        public uint Unknown;
+        [MarshalAs( UnmanagedType.ByValArray, SizeConst = 32 )]
+        public LandTilesOld[] Tiles;
+    }
+
+    [StructLayout( LayoutKind.Sequential, Pack = 1 )]
+    public struct LandTilesOld
+    {
+        public uint Flags;
+        public ushort TexID;
+        [MarshalAs( UnmanagedType.LPStr, SizeConst = 20 )]
+        public string Name;
+    }
+
+    [StructLayout( LayoutKind.Sequential, Pack = 1 )]
+    public struct StaticGroupOld
+    {
+        public uint Unk;
+        [MarshalAs( UnmanagedType.ByValArray, SizeConst = 32 )]
+        public StaticTilesOld[] Tiles;
+    }
+
+    [StructLayout( LayoutKind.Sequential, Pack = 1 )]
+    public struct StaticTilesOld
+    {
+        public uint Flags;
+        public byte Weight;
+        public byte Layer;
+        public int Count;
+        public ushort AnimID;
+        public ushort Hue;
+        public ushort LightIndex;
+        public byte Height;
+        [MarshalAs( UnmanagedType.LPStr, SizeConst = 20 )]
+        public string Name;
+    }
+
+    // new
+
+    [StructLayout( LayoutKind.Sequential, Pack = 1 )]
+    public struct LandGroupNew
+    {
+        public uint Unknown;
+        [MarshalAs( UnmanagedType.ByValArray, SizeConst = 32 )]
+        public LandTilesNew[] Tiles;
+    }
+
+    [StructLayout( LayoutKind.Sequential, Pack = 1 )]
+    public struct LandTilesNew
+    {
+        public TileFlag Flags;
+        public ushort TexID;
+        [MarshalAs( UnmanagedType.LPStr, SizeConst = 20 )]
+        public string Name;
+    }
+
+    [StructLayout( LayoutKind.Sequential, Pack = 1 )]
+    public struct StaticGroupNew
+    {
+        public uint Unk;
+        [MarshalAs( UnmanagedType.ByValArray, SizeConst = 32 )]
+        public StaticTilesNew[] Tiles;
+    }
+
+    [StructLayout( LayoutKind.Sequential, Pack = 1 )]
+    public struct StaticTilesNew
+    {
+        public TileFlag Flags;
+        public byte Weight;
+        public byte Layer;
+        public int Count;
+        public ushort AnimID;
+        public ushort Hue;
+        public ushort LightIndex;
+        public byte Height;
+        [MarshalAs( UnmanagedType.LPStr, SizeConst = 20 )]
+        public string Name;
+    }
+
+    [Flags]
+    public enum TileFlag : ulong
+    {
+        /// <summary>
+        ///     Nothing is flagged.
+        /// </summary>
+        None = 0x00000000,
+        /// <summary>
+        ///     Not yet documented.
+        /// </summary>
+        Background = 0x00000001,
+        /// <summary>
+        ///     Not yet documented.
+        /// </summary>
+        Weapon = 0x00000002,
+        /// <summary>
+        ///     Not yet documented.
+        /// </summary>
+        Transparent = 0x00000004,
+        /// <summary>
+        ///     The tile is rendered with partial alpha-transparency.
+        /// </summary>
+        Translucent = 0x00000008,
+        /// <summary>
+        ///     The tile is a wall.
+        /// </summary>
+        Wall = 0x00000010,
+        /// <summary>
+        ///     The tile can cause damage when moved over.
+        /// </summary>
+        Damaging = 0x00000020,
+        /// <summary>
+        ///     The tile may not be moved over or through.
+        /// </summary>
+        Impassable = 0x00000040,
+        /// <summary>
+        ///     Not yet documented.
+        /// </summary>
+        Wet = 0x00000080,
+        /// <summary>
+        ///     Unknown.
+        /// </summary>
+        Unknown1 = 0x00000100,
+        /// <summary>
+        ///     The tile is a surface. It may be moved over, but not through.
+        /// </summary>
+        Surface = 0x00000200,
+        /// <summary>
+        ///     The tile is a stair, ramp, or ladder.
+        /// </summary>
+        Bridge = 0x00000400,
+        /// <summary>
+        ///     The tile is stackable
+        /// </summary>
+        Generic = 0x00000800,
+        /// <summary>
+        ///     The tile is a window. Like <see cref="TileFlag.NoShoot" />, tiles with this flag block line of sight.
+        /// </summary>
+        Window = 0x00001000,
+        /// <summary>
+        ///     The tile blocks line of sight.
+        /// </summary>
+        NoShoot = 0x00002000,
+        /// <summary>
+        ///     For single-amount tiles, the string "a " should be prepended to the tile name.
+        /// </summary>
+        ArticleA = 0x00004000,
+        /// <summary>
+        ///     For single-amount tiles, the string "an " should be prepended to the tile name.
+        /// </summary>
+        ArticleAn = 0x00008000,
+        /// <summary>
+        ///     Not yet documented.
+        /// </summary>
+        Internal = 0x00010000,
+        /// <summary>
+        ///     The tile becomes translucent when walked behind. Boat masts also have this flag.
+        /// </summary>
+        Foliage = 0x00020000,
+        /// <summary>
+        ///     Only gray pixels will be hued
+        /// </summary>
+        PartialHue = 0x00040000,
+        /// <summary>
+        ///     Unknown.
+        /// </summary>
+        NoHouse = 0x00080000,
+        /// <summary>
+        ///     The tile is a map--in the cartography sense. Unknown usage.
+        /// </summary>
+        Map = 0x00100000,
+        /// <summary>
+        ///     The tile is a container.
+        /// </summary>
+        Container = 0x00200000,
+        /// <summary>
+        ///     The tile may be equiped.
+        /// </summary>
+        Wearable = 0x00400000,
+        /// <summary>
+        ///     The tile gives off light.
+        /// </summary>
+        LightSource = 0x00800000,
+        /// <summary>
+        ///     The tile is animated.
+        /// </summary>
+        Animation = 0x01000000,
+        /// <summary>
+        ///     Gargoyles can fly over
+        /// </summary>
+        NoDiagonal = 0x02000000,
+        /// <summary>
+        ///     Unknown.
+        /// </summary>
+        Unknown2 = 0x04000000,
+        /// <summary>
+        ///     Not yet documented.
+        /// </summary>
+        Armor = 0x08000000,
+        /// <summary>
+        ///     The tile is a slanted roof.
+        /// </summary>
+        Roof = 0x10000000,
+        /// <summary>
+        ///     The tile is a door. Tiles with this flag can be moved through by ghosts and GMs.
+        /// </summary>
+        Door = 0x20000000,
+        /// <summary>
+        ///     Not yet documented.
+        /// </summary>
+        StairBack = 0x40000000,
+        /// <summary>
+        ///     Not yet documented.
+        /// </summary>
+        StairRight = 0x80000000,
+        /// Blend Alphas, tile blending.
+        AlphaBlend = 0x0100000000,
+        /// Uses new art style?
+        UseNewArt = 0x0200000000,
+        /// Has art being used?
+        ArtUsed = 0x0400000000,
+        /// Disallow shadow on this tile, lightsource? lava?
+        NoShadow = 0x1000000000,
+        /// Let pixels bleed in to other tiles? Is this Disabling Texture Clamp?
+        PixelBleed = 0x2000000000,
+        /// Play tile animation once.
+        PlayAnimOnce = 0x4000000000,
+        /// Movable multi? Cool ships and vehicles etc?
+        MultiMovable = 0x10000000000
     }
 }

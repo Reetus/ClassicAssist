@@ -48,7 +48,7 @@ namespace ClassicAssist.UO.Data
         /// <summary>
         ///     Unknown.
         /// </summary>
-        Unknown1 = 0x00000100,
+        Unknown = 0x00000100,
         /// <summary>
         ///     The tile is a surface. It may be moved over, but not through.
         /// </summary>
@@ -60,7 +60,7 @@ namespace ClassicAssist.UO.Data
         /// <summary>
         ///     The tile is stackable
         /// </summary>
-        Generic = 0x00000800,
+        Stackable = 0x00000800,
         /// <summary>
         ///     The tile is a window. Like <see cref="TileFlag.NoShoot" />, tiles with this flag block line of sight.
         /// </summary>
@@ -72,11 +72,11 @@ namespace ClassicAssist.UO.Data
         /// <summary>
         ///     For single-amount tiles, the string "a " should be prepended to the tile name.
         /// </summary>
-        ArticleA = 0x00004000,
+        PrefixA = 0x00004000,
         /// <summary>
         ///     For single-amount tiles, the string "an " should be prepended to the tile name.
         /// </summary>
-        ArticleAn = 0x00008000,
+        PrefixAn = 0x00008000,
         /// <summary>
         ///     Not yet documented.
         /// </summary>
@@ -112,7 +112,7 @@ namespace ClassicAssist.UO.Data
         /// <summary>
         ///     The tile is animated.
         /// </summary>
-        Animation = 0x01000000,
+        Animated = 0x01000000,
         /// <summary>
         ///     Gargoyles can fly over
         /// </summary>

@@ -483,7 +483,7 @@ namespace ClassicAssist.UI.ViewModels
                     while ( true )
                     {
                         Item destStack = Collection.SelectEntity( i =>
-                            i.Count < 60000 && TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Generic ) && !ignoreList.Contains( i.Serial ) && !Excluded( i ) );
+                            i.Count < 60000 && TileData.GetStaticTile( i.ID ).Flags.HasFlag( TileFlags.Stackable ) && !ignoreList.Contains( i.Serial ) && !Excluded( i ) );
 
                         if ( destStack == null )
                         {

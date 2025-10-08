@@ -4486,6 +4486,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selected Season:.
+        /// </summary>
+        public static string Selected_Season_ {
+            get {
+                return ResourceManager.GetString("Selected Season:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selecting character {0}....
         /// </summary>
         public static string Selecting_character__0____ {

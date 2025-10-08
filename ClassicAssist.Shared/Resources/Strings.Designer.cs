@@ -754,6 +754,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Buy Agent: Not enough backpack space available....
+        /// </summary>
+        public static string Buy_Agent__Not_enough_backpack_space_available___ {
+            get {
+                return ResourceManager.GetString("Buy Agent: Not enough backpack space available...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Buy Agent: Not enough weight available....
         /// </summary>
         public static string Buy_Agent__Not_enough_weight_available___ {
@@ -921,6 +930,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Chat {
             get {
                 return ResourceManager.GetString("Chat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check Backpack Item Count.
+        /// </summary>
+        public static string Check_Backpack_Item_Count {
+            get {
+                return ResourceManager.GetString("Check Backpack Item Count", resourceCulture);
             }
         }
         
@@ -3244,6 +3262,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minimum Items Available:.
+        /// </summary>
+        public static string Minimum_Items_Available_ {
+            get {
+                return ResourceManager.GetString("Minimum Items Available:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Minimum Weight Available:.
         /// </summary>
         public static string Minimum_Weight_Available_ {
@@ -4972,6 +4999,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stackable.
+        /// </summary>
+        public static string Stackable {
+            get {
+                return ResourceManager.GetString("Stackable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stats.
         /// </summary>
         public static string Stats {
@@ -5377,7 +5413,7 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Toggle Autoloot.
         /// </summary>
         public static string Toggle_Autoloot {
             get {

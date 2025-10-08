@@ -32,6 +32,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private ICommand _removeEntryCommand;
         private VendorBuyAgentItem _selectedEntry;
         private VendorBuyAgentEntry _selectedItem;
+        private bool _checkItemCount;
+        private int _minItemsAvailable;
 
         public VendorBuyTabViewModel()
         {
@@ -52,6 +54,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set => SetProperty( ref _checkWeight, value );
         }
 
+        public bool CheckItemCount
+        {
+            get => _checkItemCount;
+            set => SetProperty( ref _checkItemCount, value );
+        }
+
         public ICommand InsertCommand => _insertCommand ?? ( _insertCommand = new RelayCommand( Insert, o => true ) );
 
         public ICommand InsertEntryCommand => _insertEntryCommand ?? ( _insertEntryCommand = new RelayCommandAsync( InsertEntry, o => Engine.Connected && SelectedItem != null ) );
@@ -66,6 +74,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
         {
             get => _minWeightAvailable;
             set => SetProperty( ref _minWeightAvailable, value );
+        }
+
+        public int MinItemsAvailable
+        {
+            get => _minItemsAvailable;
+            set => SetProperty( ref _minItemsAvailable, value );
         }
 
         public ICommand RemoveCommand => _removeCommand ?? ( _removeCommand = new RelayCommand( Remove, o => SelectedItem != null ) );
@@ -98,6 +112,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
             vendorBuy.Add( "AutoDisableOnLogin", AutoDisableOnLogin );
             vendorBuy.Add( "CheckWeight", CheckWeight );
             vendorBuy.Add( "MinWeightAvailable", MinWeightAvailable );
+            vendorBuy.Add( "CheckItemCount", CheckItemCount );
+            vendorBuy.Add( "MinItemsAvailable", MinItemsAvailable );
 
             foreach ( VendorBuyAgentEntry entry in Items )
             {
@@ -150,6 +166,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
             AutoDisableOnLogin = config["AutoDisableOnLogin"]?.ToObject<bool>() ?? false;
             CheckWeight = config["CheckWeight"]?.ToObject<bool>() ?? false;
             MinWeightAvailable = config["MinWeightAvailable"]?.ToObject<int>() ?? 0;
+            CheckItemCount = config["CheckItemCount"]?.ToObject<bool>() ?? false;
+            MinItemsAvailable = config["MinItemsAvailable"]?.ToObject<int>() ?? 0;
 
             if ( config["Items"] != null )
             {
@@ -240,6 +258,16 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
+            if ( CheckItemCount && Engine.TooltipsEnabled )
+            {
+                (int count, int max) = GetBackpackItemCount();
+                if ( max - count < MinItemsAvailable )
+                {
+                    UOC.SystemMessage( Strings.Buy_Agent__Not_enough_backpack_space_available___, false );
+                    return;
+                }
+            }
+
             List<ShopListEntry> buyList = new List<ShopListEntry>();
 
             int purchasedWeight = 0;
@@ -289,6 +317,18 @@ namespace ClassicAssist.UI.ViewModels.Agents
                             }
 
                             purchasedWeight += (int) ( match.Amount * item.Weight );
+                        }
+
+                        if ( CheckItemCount && Engine.TooltipsEnabled )
+                        {
+                            int itemCount = item.Stackable ? 1 : match.Amount;
+
+                            ( int count, int max ) = GetBackpackItemCount();
+
+                            if ( max - count - MinItemsAvailable < itemCount )
+                            {
+                                match.Amount = Math.Max( 0, max - count - MinItemsAvailable );
+                            }
                         }
 
                         if ( match.Amount > 0 && buyList.All( e => e.Item.Serial != match.Item.Serial ) )
@@ -358,6 +398,10 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 }
             }
 
+            StaticTile staticTile = TileData.GetStaticTile( item.ID );
+
+            bool stackable = staticTile.Flags.HasFlag( TileFlags.Stackable );
+
             entry.Items.Add( new VendorBuyAgentItem
             {
                 Enabled = true,
@@ -367,7 +411,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 Hue = item.Hue,
                 MaxPrice = -1,
                 BackpackGraphic = item.ID,
-                Weight = weight
+                Weight = weight,
+                Stackable = stackable
             } );
         }
 
@@ -379,6 +424,27 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
 
             SelectedItem?.Items.Remove( item );
+        }
+
+        public (int count, int max) GetBackpackItemCount()
+        {
+            if (Engine.Player?.Backpack == null || Engine.Player.Backpack.Properties == null )
+            {
+                return (-1, -1);
+            }
+
+            int count = -1;
+            int max = -1;
+
+            Property contentsProperty = Engine.Player.Backpack.Properties.FirstOrDefault( p => p.Cliloc == 1072241 || p.Cliloc == 1073841 );
+
+            if ( contentsProperty != null && contentsProperty.Arguments.Length > 0 )
+            {
+                int.TryParse( contentsProperty.Arguments[0], out count );
+                int.TryParse( contentsProperty.Arguments[1], out max );
+            }
+
+            return (count, max);
         }
     }
 }

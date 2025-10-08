@@ -2038,6 +2038,9 @@ Are you sure you wish to continue?</value>
   <data name="Toggle Autoloot" xml:space="preserve">
     <value>Toggle Autoloot</value>
   </data>
+  <data name="Selected Season:" xml:space="preserve">
+    <value>Selected Season:</value>
+  </data>  
   <data name="Check Backpack Item Count" xml:space="preserve">
     <value>Check Backpack Item Count</value>
   </data>
@@ -2049,5 +2052,5 @@ Are you sure you wish to continue?</value>
   </data>
   <data name="Stackable" xml:space="preserve">
     <value>Stackable</value>
-  </data>
+  </data>    
 </root>

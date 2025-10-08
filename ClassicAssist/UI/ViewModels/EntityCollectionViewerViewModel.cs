@@ -38,6 +38,7 @@ namespace ClassicAssist.UI.ViewModels
     {
         private readonly Func<ItemCollection> _customRefreshCommand;
         private ICommand _applyFiltersCommand;
+        private ICommand _autolootContainerCommand;
         private ICommand _changeSortStyleCommand;
         private ItemCollection _collection = new ItemCollection( 0 );
 
@@ -144,6 +145,8 @@ namespace ClassicAssist.UI.ViewModels
         }
 
         public ICommand ApplyFiltersCommand => _applyFiltersCommand ?? ( _applyFiltersCommand = new RelayCommand( ApplyFilters, o => true ) );
+
+        public ICommand AutolootContainerCommand => _autolootContainerCommand ?? ( _autolootContainerCommand = new RelayCommand( AutolootContainer, o => true ) );
 
         public ICommand ChangeSortStyleCommand => _changeSortStyleCommand ?? ( _changeSortStyleCommand = new RelayCommand( ChangeSortStyle, o => true ) );
 
@@ -265,6 +268,52 @@ namespace ClassicAssist.UI.ViewModels
         }
 
         private Dictionary<int, string> _nameOverrides { get; } = new Dictionary<int, string>();
+
+        private void AutolootContainer( object param )
+        {
+            Item[] items = Collection.GetItems();
+
+            if ( items.Length == 0 )
+            {
+                return;
+            }
+
+            List<Item> lootItems = AutolootManager.GetInstance().CheckItems?.Invoke( items );
+
+            if ( lootItems == null || lootItems.Count == 0 )
+            {
+                return;
+            }
+
+            EnqueueAction( async obj =>
+            {
+                foreach ( var item in lootItems.Select( ( value, i ) => new { i, value } ) )
+                {
+                    if ( obj.CancellationTokenSource.IsCancellationRequested )
+                    {
+                        _dispatcher.Invoke( () => { obj.Status = Strings.Cancel; } );
+                        return false;
+                    }
+
+                    _dispatcher.Invoke( () => { obj.Status = string.Format( Strings.Moving_item__0_____1_, item.i, lootItems.Count ); } );
+
+                    int attempts;
+
+                    for ( attempts = 0; attempts < 5; attempts++ )
+                    {
+                        if ( !await EnqueueDragDrop( item.value.Serial, -1, Engine.Player.Backpack.Serial, obj.CancellationTokenSource.Token ) )
+                        {
+                            Commands.SystemMessage( $"Retrying 0x{item.value.Serial:x}..." );
+                            continue;
+                        }
+
+                        break;
+                    }
+                }
+
+                return true;
+            }, string.Format( Strings.Moving_item__0_____1_, 0, lootItems.Count ) );
+        }
 
         private void ContextCustomAction( object arg )
         {
@@ -1072,7 +1121,7 @@ namespace ClassicAssist.UI.ViewModels
                     {
                         if ( !await EnqueueDragDrop( item.value, -1, serial, obj.CancellationTokenSource.Token ) )
                         {
-                            Commands.SystemMessage( $"Retrying {serial:x}..." );
+                            Commands.SystemMessage( $"Retrying 0x{item.value:x}..." );
                             continue;
                         }
 

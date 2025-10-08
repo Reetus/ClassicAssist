@@ -101,6 +101,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             AutolootManager manager = AutolootManager.GetInstance();
             manager.GetEntries = () => _items.ToList();
             manager.CheckContainer = OnCorpseEvent;
+            manager.CheckItems = CheckItems;
             manager.IsRunning = () => IsRunning;
             manager.MatchTextValue = () => MatchTextValue;
             manager.IsEnabled = () => Enabled;
@@ -665,52 +666,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
 #endif
                     }
 
-                    List<Item> lootItems = new List<Item>();
+                    List<Item> lootItems = CheckItems( items );
 
-                    // If change logic, also change in DebugAutolootViewModel
-
-                    foreach ( AutolootEntry entry in Items.OrderByDescending( x => x.Priority ) )
-                    {
-                        if ( !entry.Enabled )
-                        {
-                            continue;
-                        }
-
-                        if ( entry.Group != null && !entry.Group.Enabled )
-                        {
-                            continue;
-                        }
-
-                        IEnumerable<Item> matchItems = AutolootHelpers.AutolootFilter( items, entry );
-
-                        if ( matchItems == null )
-                        {
-                            continue;
-                        }
-
-                        foreach ( Item matchItem in matchItems )
-                        {
-                            if ( entry.Rehue )
-                            {
-                                Engine.SendPacketToClient( new ContainerContentUpdate( matchItem.Serial, matchItem.ID,
-                                    matchItem.Direction, matchItem.Count, matchItem.X, matchItem.Y, matchItem.Grid,
-                                    matchItem.Owner, entry.RehueHue ) );
-                            }
-
-                            if ( DisableInGuardzone &&
-                                 Engine.Player.GetRegion().Attributes.HasFlag( RegionAttributes.Guarded ) )
-                            {
-                                continue;
-                            }
-
-                            if ( entry.Autoloot && !lootItems.Contains( matchItem ) )
-                            {
-                                lootItems.Add( matchItem );
-                            }
-                        }
-                    }
-
-                    foreach ( Item lootItem in lootItems.Distinct() )
+                    foreach (Item lootItem in lootItems)
                     {
                         int containerSerial = ContainerSerial;
 
@@ -740,7 +698,56 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
         }
 
-        private static bool CheckItemContainer( int serial, int containerSerial )
+        private List<Item> CheckItems( IEnumerable<Item> itemsEnumerable )
+        {
+            List<Item> items = new List<Item>( itemsEnumerable.Where( i => i != null ) );
+            List<Item> lootItems = new List<Item>();
+
+            // If change logic, also change in DebugAutolootViewModel
+
+            foreach( AutolootEntry entry in Items.OrderByDescending( x => x.Priority ) )
+            {
+                if( !entry.Enabled )
+                {
+                    continue;
+                }
+
+                if( entry.Group != null && !entry.Group.Enabled )
+                {
+                    continue;
+                }
+
+                IEnumerable<Item> matchItems = AutolootHelpers.AutolootFilter( items, entry );
+
+                if( matchItems == null )
+                {
+                    continue;
+                }
+
+                foreach( Item matchItem in matchItems )
+                {
+                    if( entry.Rehue )
+                    {
+                        Engine.SendPacketToClient( new ContainerContentUpdate( matchItem.Serial, matchItem.ID, matchItem.Direction, matchItem.Count, matchItem.X, matchItem.Y,
+                            matchItem.Grid, matchItem.Owner, entry.RehueHue ) );
+                    }
+
+                    if( DisableInGuardzone && Engine.Player.GetRegion().Attributes.HasFlag( RegionAttributes.Guarded ) )
+                    {
+                        continue;
+                    }
+
+                    if( entry.Autoloot && !lootItems.Contains( matchItem ) )
+                    {
+                        lootItems.Add( matchItem );
+                    }
+                }
+            }
+
+            return lootItems.Distinct().ToList();
+        }
+
+        private static bool CheckItemContainer(int serial, int containerSerial)
         {
             Item item = Engine.Items.GetItem( serial );
 

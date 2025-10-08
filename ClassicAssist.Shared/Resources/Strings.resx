@@ -2038,4 +2038,16 @@ Are you sure you wish to continue?</value>
   <data name="Toggle Autoloot" xml:space="preserve">
     <value>Toggle Autoloot</value>
   </data>
+  <data name="Check Backpack Item Count" xml:space="preserve">
+    <value>Check Backpack Item Count</value>
+  </data>
+  <data name="Minimum Items Available:" xml:space="preserve">
+    <value>Minimum Items Available:</value>
+  </data>
+  <data name="Buy Agent: Not enough backpack space available..." xml:space="preserve">
+    <value>Buy Agent: Not enough backpack space available...</value>
+  </data>
+  <data name="Stackable" xml:space="preserve">
+    <value>Stackable</value>
+  </data>
 </root>

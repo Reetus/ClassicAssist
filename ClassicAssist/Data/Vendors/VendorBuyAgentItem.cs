@@ -12,6 +12,7 @@ namespace ClassicAssist.Data.Vendors
         private int _maxPrice;
         private string _name;
         private double _weight;
+        private bool _stackable;
 
         public int Amount
         {
@@ -59,6 +60,12 @@ namespace ClassicAssist.Data.Vendors
         {
             get => _weight;
             set => SetProperty( ref _weight, value );
+        }
+
+        public bool Stackable
+        {
+            get => _stackable;
+            set => SetProperty( ref _stackable, value );
         }
     }
 }

@@ -186,6 +186,13 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
+                                <GridViewColumn Header="{x:Static resources:Strings.Stackable}" Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="vendors:VendorBuyAgentItem">
+                                            <CheckBox IsChecked="{Binding Stackable}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -200,14 +207,22 @@
                 </StackPanel>
             </Grid>
         </Grid>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="5,0" Grid.ColumnSpan="2" Grid.Column="0">
+        <WrapPanel Orientation="Horizontal" Grid.Row="1" Margin="5,0" Grid.ColumnSpan="2" Grid.Column="0">
             <CheckBox IsChecked="{Binding AutoDisableOnLogin}"
                       Content="{x:Static resources:Strings.Auto_disable_when_loading}"
                       ToolTip="{x:Static resources:Strings.Disable_all_vendor_buy_entries_on_loading_profile}" />
             <CheckBox IsChecked="{Binding CheckWeight}" Content="{x:Static resources:Strings.Check_Weight}"
                       Margin="10,5" />
-            <Label Content="{x:Static resources:Strings.Minimum_Weight_Available_}" Margin="0,0,10,0" />
-            <TextBox MinWidth="100" Text="{Binding MinWeightAvailable}" IsEnabled="{Binding CheckWeight}" />
-        </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="{x:Static resources:Strings.Minimum_Weight_Available_}" Margin="0,0,10,0" />
+                <TextBox MinWidth="100" Text="{Binding MinWeightAvailable}" IsEnabled="{Binding CheckWeight}" />
+            </StackPanel>
+            <CheckBox IsChecked="{Binding CheckItemCount}" Content="{x:Static resources:Strings.Check_Backpack_Item_Count}"
+                      Margin="10,5" />
+            <StackPanel Orientation="Horizontal">
+                <Label Content="{x:Static resources:Strings.Minimum_Items_Available_}" Margin="0,0,10,0" />
+                <TextBox MinWidth="100" Text="{Binding MinItemsAvailable}" IsEnabled="{Binding CheckItemCount}" />
+            </StackPanel>
+        </WrapPanel>
     </Grid>
 </UserControl>

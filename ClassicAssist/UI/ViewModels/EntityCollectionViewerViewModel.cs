@@ -50,6 +50,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _contextMoveToBankCommand;
         private ICommand _contextMoveToContainerCommand;
         private ICommand _contextMoveToGroundCommand;
+        private ICommand _contextMoveToSetCommand;
         private ICommand _contextOpenContainerCommand;
         private ICommand _contextTargetCommand;
         private ICommand _contextUseItemCommand;
@@ -176,6 +177,8 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand ContextMoveToGroundCommand =>
             _contextMoveToGroundCommand ?? ( _contextMoveToGroundCommand = new RelayCommandAsync( ContextMoveToGround, o => SelectedItems != null ) );
+
+        public ICommand ContextMoveToSetCommand => _contextMoveToSetCommand ?? ( _contextMoveToSetCommand = new RelayCommand( ContextMoveToSet, o => SelectedItems != null ) );
 
         public ICommand ContextOpenContainerCommand =>
             _contextOpenContainerCommand ?? ( _contextOpenContainerCommand = new RelayCommand( ContextOpenContainer,
@@ -364,6 +367,117 @@ namespace ClassicAssist.UI.ViewModels
 
                 return true;
             }, string.Format( Strings.Moving_item__0_____1_, 0, items.Length ) );
+        }
+
+        private void ContextMoveToSet( object arg )
+        {
+            List<int> usedContainers = new List<int>();
+
+            if ( !( arg is ObservableCollection<int> containers ) )
+            {
+                return;
+            }
+
+            Item[] items = SelectedItems.Where( i => i.Entity is Item ).Select( i => i.Entity ).Cast<Item>().ToArray();
+
+            EnqueueAction( async obj =>
+            {
+                foreach ( var item in items.Select( ( value, i ) => new { i, value } ) )
+                {
+                    if ( obj.CancellationTokenSource.IsCancellationRequested )
+                    {
+                        _dispatcher.Invoke( () => { obj.Status = Strings.Cancel; } );
+                        return false;
+                    }
+
+                    _dispatcher.Invoke( () => { obj.Status = string.Format( Strings.Moving_item__0_____1_, item.i, items.Length ); } );
+
+                    int attempts;
+
+                    for ( attempts = 0; attempts < 5; attempts++ )
+                    {
+                        int serial = await GetContainer();
+
+                        if ( item.value.Owner == serial )
+                        {
+                            break;
+                        }
+
+                        PacketFilterInfo pfi = new PacketFilterInfo( 0x25, new[] { PacketFilterConditions.IntAtPositionCondition( item.value.Serial, 1 ), PacketFilterConditions.IntAtPositionCondition( serial, 15 ) } );
+                        PacketWaitEntry waitEntry = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );
+
+                        if ( !await EnqueueDragDrop( item.value.Serial, -1, serial, obj.CancellationTokenSource.Token ) )
+                        {
+                            Commands.SystemMessage( $"Retrying 0x{item.value.Serial:x}..." );
+                            continue;
+                        }
+
+                        bool result = waitEntry.Lock.WaitOne( 3000 );
+
+                        if ( !result )
+                        {
+                            Commands.SystemMessage( $"Retrying 0x{item.value.Serial:x}..." );
+                            continue;
+                        }
+
+                        break;
+                    }
+                }
+
+                return true;
+            }, string.Format( Strings.Moving_item__0_____1_, 0, items.Length ) );
+
+            return;
+
+            async Task<int> GetContainer()
+            {
+                if ( !Engine.TooltipsEnabled )
+                {
+                    return containers.FirstOrDefault();
+                }
+
+                int serial = containers.FirstOrDefault();
+
+                foreach ( int container in containers )
+                {
+                    Item item = Engine.Items.GetItem( container );
+
+                    if ( item == null )
+                    {
+                        continue;
+                    }
+
+                    if ( item.Properties == null )
+                    {
+                        await Commands.WaitForPropertiesAsync( new[] { item }, 5000 );
+                    }
+
+                    Property property = item.Properties?.FirstOrDefault( e => e.Cliloc == 1073841 );
+
+                    if ( property == null )
+                    {
+                        continue;
+                    }
+
+                    if ( property.Arguments[0].Equals( property.Arguments[1] ) )
+                    {
+                        continue;
+                    }
+
+                    serial = container;
+
+                    if ( !usedContainers.Contains( serial ) )
+                    {
+                        Commands.WaitForContainerContentsUse( serial, 5000 );
+                        await Task.Delay( CurrentOptions.ActionDelayMS );
+                        usedContainers.Add( serial );
+                    }
+
+                    break;
+                }
+
+                return serial;
+            }
         }
 
         public EntityCollectionViewerOptions LoadOptions()
@@ -575,7 +689,7 @@ namespace ClassicAssist.UI.ViewModels
 
             bool Excluded( Entity item )
             {
-                if (Options.CombineStacksIgnore == null || Options.CombineStacksIgnore.Count == 0 )
+                if ( Options.CombineStacksIgnore == null || Options.CombineStacksIgnore.Count == 0 )
                 {
                     return false;
                 }
@@ -1117,7 +1231,7 @@ namespace ClassicAssist.UI.ViewModels
 
                     int attempts;
 
-                    for (attempts = 0; attempts < 5; attempts++ )
+                    for ( attempts = 0; attempts < 5; attempts++ )
                     {
                         if ( !await EnqueueDragDrop( item.value, -1, serial, obj.CancellationTokenSource.Token ) )
                         {
@@ -1133,7 +1247,8 @@ namespace ClassicAssist.UI.ViewModels
             }, string.Format( Strings.Moving_item__0_____1_, 0, items.Length ) );
         }
 
-        private static Task<bool> EnqueueDragDrop( int serial, int amount, int containerSerial, CancellationToken cancellationToken = default, [CallerMemberName] string caller = "" )
+        private static Task<bool> EnqueueDragDrop( int serial, int amount, int containerSerial, CancellationToken cancellationToken = default,
+            [CallerMemberName] string caller = "" )
         {
             ActionQueueItem actionQueueItem = new ActionQueueItem( param =>
             {
@@ -1147,8 +1262,7 @@ namespace ClassicAssist.UI.ViewModels
                     new[]
                     {
                         PacketFilterConditions.ShortAtPositionCondition( 0x57, 2 ), PacketFilterConditions.ShortAtPositionCondition( Engine.Player.X, 6 ),
-                        PacketFilterConditions.ShortAtPositionCondition( Engine.Player.Y, 8 ),
-                        PacketFilterConditions.ShortAtPositionCondition( Engine.Player.Z, 10 )
+                        PacketFilterConditions.ShortAtPositionCondition( Engine.Player.Y, 8 ), PacketFilterConditions.ShortAtPositionCondition( Engine.Player.Z, 10 )
                     } );
 
                 PacketWaitEntry pwe1 = Engine.PacketWaitEntries.Add( pfi1, PacketDirection.Incoming, true );

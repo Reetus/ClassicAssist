@@ -28,29 +28,46 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel>
-            <GroupBox Header="{x:Static resources:Strings.Combine_stacks}" Margin="10" Padding="10">
-                <settings:CombineStacksSettingsControl
-                    Items="{Binding DataContext.Options.CombineStacksIgnore, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}" />
-            </GroupBox>
-            <GroupBox Header="{x:Static resources:Strings.Open_All_Containers}" Margin="10,0,10,10" Padding="10">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <CheckBox Grid.Row="0"
-                              IsChecked="{Binding DataContext.Options.OpenContainersOnlyKnownContainers, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}"
-                              Content="{x:Static resources:Strings.Only_known_containers}" Margin="0,0,0,5" />
-                    <settings:OpenContainersSettingsControl Grid.Row="1"
-                                                            Items="{Binding DataContext.Options.OpenContainersIgnore, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}" />
-                </Grid>
-            </GroupBox>
-            <GroupBox Header="{x:Static resources:Strings.Additional_Assemblies}" Margin="10,0,10,10" Padding="10">
-                <controls:AdditionalAssembliesControl
-                    Items="{Binding DataContext.Options.Assemblies, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}" />
-            </GroupBox>
-        </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <GroupBox Header="{x:Static resources:Strings.Combine_stacks}" Margin="10" Padding="10">
+                    <settings:CombineStacksSettingsControl
+                        Items="{Binding DataContext.Options.CombineStacksIgnore, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}" />
+                </GroupBox>
+                <GroupBox Header="{x:Static resources:Strings.Open_All_Containers}" Margin="10,0,10,10" Padding="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <CheckBox Grid.Row="0"
+                                  IsChecked="{Binding DataContext.Options.OpenContainersOnlyKnownContainers, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}"
+                                  Content="{x:Static resources:Strings.Only_known_containers}" Margin="0,0,0,5" />
+                        <settings:OpenContainersSettingsControl Grid.Row="1"
+                                                                Items="{Binding DataContext.Options.OpenContainersIgnore, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}" />
+                    </Grid>
+                </GroupBox>
+            </StackPanel>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <GroupBox Header="{x:Static resources:Strings.Container_Sets}" Margin="0,10,10,15" Padding="10">
+                    <settings:ContainerSetsSettingsControl
+                        Items="{Binding DataContext.Options.ContainerSets, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}" />
+                </GroupBox>
+                <GroupBox Grid.Row="1" Header="{x:Static resources:Strings.Additional_Assemblies}" Margin="0,0,10,10"
+                          Padding="10">
+                    <controls:AdditionalAssembliesControl
+                        Items="{Binding DataContext.Options.Assemblies, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}" />
+                </GroupBox>
+            </Grid>
+        </Grid>
         <StackPanel Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,10,10" Orientation="Horizontal">
             <Button Content="{x:Static resources:Strings.OK}" Margin="0,0,5,0" Command="{Binding OKCommand}">
                 <b:Interaction.Behaviors>

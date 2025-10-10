@@ -466,7 +466,7 @@ namespace ClassicAssist.UI.ViewModels
 
                     serial = container;
 
-                    if (!usedContainers.Contains( serial ) )
+                    if ( !usedContainers.Contains( serial ) )
                     {
                         Commands.WaitForContainerContentsUse( serial, 5000 );
                         await Task.Delay( CurrentOptions.ActionDelayMS );

@@ -1231,6 +1231,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Container Sets.
+        /// </summary>
+        public static string Container_Sets {
+            get {
+                return ResourceManager.GetString("Container Sets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Context menu entry disabled.
         /// </summary>
         public static string Context_menu_entry_disabled {
@@ -3393,6 +3402,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Move_to_ground {
             get {
                 return ResourceManager.GetString("Move to ground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to set.
+        /// </summary>
+        public static string Move_to_set {
+            get {
+                return ResourceManager.GetString("Move to set", resourceCulture);
             }
         }
         

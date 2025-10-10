@@ -55,16 +55,10 @@
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <GroupBox Header="{x:Static resources:Strings.Container_Sets}" Margin="0,10,10,15" Padding="10">
+                <GroupBox Header="{x:Static resources:Strings.Container_Sets}" Margin="0,10,10,10" Padding="10">
                     <settings:ContainerSetsSettingsControl
                         Items="{Binding DataContext.Options.ContainerSets, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}" />
-                </GroupBox>
-                <GroupBox Grid.Row="1" Header="{x:Static resources:Strings.Additional_Assemblies}" Margin="0,0,10,10"
-                          Padding="10">
-                    <controls:AdditionalAssembliesControl
-                        Items="{Binding DataContext.Options.Assemblies, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ecv:EntityCollectionViewerSettingsWindow}}}" />
                 </GroupBox>
             </Grid>
         </Grid>

@@ -61,9 +61,6 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                 case ICommand command:
                     viewModel.Command = command;
                     break;
-                case ObservableCollection<Assembly> assemblies:
-                    viewModel.Assemblies = assemblies.ToArray();
-                    break;
             }
         }
     }

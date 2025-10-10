@@ -218,6 +218,13 @@
                     </DrawingGroup>
                 </DrawingImage.Drawing>
             </DrawingImage>
+            <DrawingImage x:Key="FindIcon">
+                <DrawingImage.Drawing>
+                    <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                        <GeometryDrawing Brush="{DynamicResource ThemeForegroundBrush}" Geometry="F1 M512,512z M0,0z M416,208C416,253.9,401.1,296.3,376,330.7L502.6,457.4C515.1,469.9 515.1,490.2 502.6,502.7 490.1,515.2 469.8,515.2 457.3,502.7L330.7,376C296.3,401.1 253.9,416 208,416 93.1,416 0,322.9 0,208 0,93.1 93.1,0 208,0 322.9,0 416,93.1 416,208z M208,352A144,144,0,1,0,208,64A144,144,0,1,0,208,352z" />
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -142,6 +142,9 @@
     <Compile Update="UI\Views\Autoloot\ClilocSelectionWindow.xaml.cs">
       <DependentUpon>ClilocSelectionWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Update="UI\Views\ECV\Settings\ContainerSetsSettingsControl.xaml.cs">
+      <DependentUpon>ContainerSetsSettingsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\Views\ECV\Settings\Controls\EditTextBlocks\ClilocEditTextBlock.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>%(Filename)</DependentUpon>

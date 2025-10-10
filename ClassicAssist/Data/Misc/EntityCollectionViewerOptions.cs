@@ -17,7 +17,9 @@
 
 #endregion
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reflection;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.UI;
@@ -31,8 +33,9 @@ namespace ClassicAssist.Data.Misc
         private bool _alwaysOnTop;
         private ObservableCollection<Assembly> _assemblies = new ObservableCollection<Assembly>();
         private ObservableCollection<CombineStacksOpenContainersIgnoreEntry> _combineStacksIgnore;
-        private bool _openContainersOnlyKnownContainers;
+        private ObservableCollection<ContainerSet> _containerSets = new ObservableCollection<ContainerSet>();
         private ObservableCollection<CombineStacksOpenContainersIgnoreEntry> _openContainersIgnore;
+        private bool _openContainersOnlyKnownContainers;
         private bool _showChildItems;
 
         public bool AlwaysOnTop
@@ -53,10 +56,10 @@ namespace ClassicAssist.Data.Misc
             set => SetProperty( ref _combineStacksIgnore, value );
         }
 
-        public bool OpenContainersOnlyKnownContainers
+        public ObservableCollection<ContainerSet> ContainerSets
         {
-            get => _openContainersOnlyKnownContainers;
-            set => SetProperty( ref _openContainersOnlyKnownContainers, value );
+            get => _containerSets;
+            set => SetProperty( ref _containerSets, value );
         }
 
         public string Hash { get; set; }
@@ -65,6 +68,12 @@ namespace ClassicAssist.Data.Misc
         {
             get => _openContainersIgnore;
             set => SetProperty( ref _openContainersIgnore, value );
+        }
+
+        public bool OpenContainersOnlyKnownContainers
+        {
+            get => _openContainersOnlyKnownContainers;
+            set => SetProperty( ref _openContainersOnlyKnownContainers, value );
         }
 
         public bool ShowChildItems
@@ -118,22 +127,35 @@ namespace ClassicAssist.Data.Misc
 
             options.Assemblies = new ObservableCollection<Assembly>();
 
-            if ( config["Assemblies"] == null )
+            if ( config["Assemblies"] != null )
+            {
+                foreach ( JToken assemblyName in config["Assemblies"] )
+                {
+                    try
+                    {
+                        Assembly assembly = Assembly.LoadFile( assemblyName.ToObject<string>() );
+
+                        options.Assemblies.Add( assembly );
+                    }
+                    catch
+                    {
+                        // We tried
+                    }
+                }
+            }
+
+            options.ContainerSets = new ObservableCollection<ContainerSet>();
+
+            if ( config["ContainerSets"] == null )
             {
                 return options;
             }
 
-            foreach ( JToken assemblyName in config["Assemblies"] )
+            foreach ( JToken set in config["ContainerSets"] )
             {
-                try
+                foreach ( JProperty property in set.Children<JProperty>() )
                 {
-                    Assembly assembly = Assembly.LoadFile( assemblyName.ToObject<string>() );
-
-                    options.Assemblies.Add( assembly );
-                }
-                catch
-                {
-                    // We tried
+                    options.ContainerSets.Add( new ContainerSet() { Name = property.Name, Items = property.Value.ToObject<ObservableCollection<int>>() } );
                 }
             }
 
@@ -185,6 +207,15 @@ namespace ClassicAssist.Data.Misc
             }
 
             config.Add( "Assemblies", assemblies );
+
+            JArray containerSets = new JArray();
+
+            foreach ( ContainerSet set in options.ContainerSets )
+            {
+                containerSets.Add( new JObject { { set.Name, new JArray( from id in set.Items select id ) } } );
+            }
+
+            config.Add( "ContainerSets", containerSets );
 
             return config;
         }

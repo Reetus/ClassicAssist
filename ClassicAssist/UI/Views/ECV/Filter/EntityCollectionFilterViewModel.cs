@@ -39,8 +39,6 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 {
     public class EntityCollectionFilterViewModel : SetPropertyNotifyChanged
     {
-        private readonly string _propertiesFileCustom = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data", "Properties.Custom.json" );
-
         private ICommand _addCommand;
         private ICommand _addProfileCommand;
 
@@ -258,6 +256,11 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                                             Enabled = itemObj["Enabled"]?.ToObject<bool>() ?? true
                                         };
 
+                                        if ( itemObj["Values"] != null )
+                                        {
+                                            item.Values = itemObj["Values"].ToObject<ObservableCollection<int>>() ?? new ObservableCollection<int>();
+                                        }
+
                                         group.Items.Add( item );
                                     }
                                 }
@@ -313,6 +316,11 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                         {
                             { "Operator", (int) item.Operator }, { "Value", item.Value }, { "Additional", item.Additional }, { "Enabled", item.Enabled }
                         };
+
+                        if ( item.Values != null && item.Values.Count > 0 )
+                        {
+                            itemObj.Add( "Values", JArray.FromObject( item.Values ) );
+                        }
 
                         JObject constraint = new JObject { { "Name", item.Constraint.Name } };
 

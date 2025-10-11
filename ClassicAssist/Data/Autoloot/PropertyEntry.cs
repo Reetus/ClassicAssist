@@ -14,6 +14,7 @@ namespace ClassicAssist.Data.Autoloot
         private string _name;
         private Func<Entity, AutolootConstraintEntry, bool> _predicate;
         private string _shortName;
+        private bool _useMultipleValues;
 
         [JsonIgnore]
         public Type AllowedValuesEnum
@@ -57,6 +58,12 @@ namespace ClassicAssist.Data.Autoloot
         {
             get => _predicate;
             set => SetProperty( ref _predicate, value );
+        }
+
+        public bool UseMultipleValues
+        {
+            get => _useMultipleValues;
+            set => SetProperty(ref _useMultipleValues, value);
         }
 
         public int CompareTo( PropertyEntry other )

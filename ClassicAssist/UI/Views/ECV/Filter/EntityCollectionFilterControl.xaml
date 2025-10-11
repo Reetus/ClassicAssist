@@ -15,6 +15,7 @@
     xmlns:models="clr-namespace:ClassicAssist.UI.Views.ECV.Filter.Models"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+    xmlns:views="clr-namespace:ClassicAssist.UI.Views"
     x:Name="userControl" x:Class="ClassicAssist.UI.Views.ECV.Filter.EntityCollectionFilterControl"
     mc:Ignorable="d"
     Background="{DynamicResource ThemeBackgroundBrush}">
@@ -143,7 +144,7 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="{x:Static resources:Strings.Value}" Width="100"
+                                        <GridViewColumn Header="{x:Static resources:Strings.Value}" Width="160"
                                                         x:Name="GridViewColumn">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate DataType="{x:Type models:EntityCollectionFilterItem}">
@@ -187,6 +188,22 @@
                                                                 </Style>
                                                             </ComboBox.Style>
                                                         </ComboBox>
+                                                        <views:MultiItemIDSelector Grid.Column="0" Values="{Binding Values, Mode=TwoWay}"
+                                                            Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}">
+                                                            <views:MultiItemIDSelector.Style>
+                                                                <Style TargetType="{x:Type views:MultiItemIDSelector}">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger
+                                                                            Binding="{Binding Constraint.UseMultipleValues}"
+                                                                            Value="True">
+                                                                            <Setter Property="Visibility"
+                                                                                Value="Visible" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </views:MultiItemIDSelector.Style>
+                                                        </views:MultiItemIDSelector>
                                                         <TextBox
                                                             Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource HexToIntValueConverter}}"
                                                             Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}"
@@ -217,6 +234,12 @@
                                                                         <DataTrigger
                                                                             Binding="{Binding Constraint.Name}"
                                                                             Value="{x:Static resources:Strings.Name}">
+                                                                            <Setter Property="Visibility"
+                                                                                Value="Collapsed" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger
+                                                                            Binding="{Binding Constraint.UseMultipleValues}"
+                                                                            Value="True">
                                                                             <Setter Property="Visibility"
                                                                                 Value="Collapsed" />
                                                                         </DataTrigger>

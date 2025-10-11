@@ -292,6 +292,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
                             { nameof( constraint.Additional ), constraint.Additional }
                         };
 
+                        if ( constraint.Values != null && constraint.Values.Count > 0 )
+                        {
+                            constraintObj.Add( "Values", JArray.FromObject( constraint.Values ) );
+                        }
+
                         constraintsArray.Add( constraintObj );
                     }
 
@@ -395,6 +400,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
                                 Value = constraintToken["Value"]?.ToObject<int>() ?? 0,
                                 Additional = constraintToken[nameof( AutolootConstraintEntry.Additional )]?.ToString()
                             };
+
+                            if ( constraintToken["Values"] != null )
+                            {
+                                constraintObj.Values = constraintToken["Values"].ToObject<ObservableCollection<int>>() ?? new ObservableCollection<int>();
+                            }
 
                             constraintsList.Add( constraintObj );
                         }

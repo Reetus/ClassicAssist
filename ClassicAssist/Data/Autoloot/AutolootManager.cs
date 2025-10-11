@@ -1,4 +1,4 @@
-#region License
+﻿#region License
 
 // Copyright (C) 2025 Reetus
 // 
@@ -161,6 +161,27 @@ namespace ClassicAssist.Data.Autoloot
                 AllowedValuesEnum = typeof(SkillBonusSkills)
             });
 
+            constraints.AddSorted(new PropertyEntry
+            {
+                Name = Strings.ID__Multiple_,
+                ConstraintType = PropertyType.PredicateWithValue,
+                UseMultipleValues = true,
+                Predicate = (item, entry) =>
+                {
+                    switch (entry.Operator)
+                    {
+                        case AutolootOperator.NotEqual:
+                        case AutolootOperator.NotPresent:
+                            return entry.Values == null || !entry.Values.Contains(item.ID);
+                        case AutolootOperator.Equal:
+                            return entry.Values != null && entry.Values.Contains(item.ID);
+                        case AutolootOperator.GreaterThan:
+                        case AutolootOperator.LessThan:
+                        default:
+                            return false;
+                    }
+                }
+            });
 
             return;
 

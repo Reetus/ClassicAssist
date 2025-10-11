@@ -45,7 +45,6 @@ namespace ClassicAssist.UI.Views.ECV.Settings
 
         private ICommand _addSetCommand;
         private ICommand _identifyContainerCommand;
-        private ICommand _identifySetCommand;
         private ICommand _removeItemCommand;
         private ICommand _removeSetCommand;
         private int _selectedItem;

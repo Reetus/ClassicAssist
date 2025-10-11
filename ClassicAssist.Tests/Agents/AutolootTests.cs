@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using Assistant;
 using ClassicAssist.Data.Autoloot;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.ViewModels.Agents;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
@@ -1649,6 +1650,90 @@ namespace ClassicAssist.Tests.Agents
             Engine.PacketWaitEntries = null;
             Engine.InternalPacketSentEvent -= OnPacketSentEvent;
             Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillLootItemIDMultipleEqual()
+        {
+            Engine.Player = new PlayerMobile( 0x01 );
+            Item backpack = new Item( 0x40000001, 0x01 ) { Container = new ItemCollection( 0x40000001 ) };
+            Engine.Player.SetLayer( Layer.Backpack, backpack.Serial );
+            Engine.Items.Add( backpack );
+
+            Item corpse = new Item( 0x40000000 ) { ID = 0x2006 };
+
+            Engine.Items.Add( corpse );
+            
+            IncomingPacketHandlers.Initialize();
+            AutolootViewModel vm = new AutolootViewModel { Enabled = true };
+
+            AutolootEntry lootEntry = new AutolootEntry
+            {
+                Rehue = false,
+                Autoloot = true,
+                Constraints = new ObservableCollection<AutolootConstraintEntry>(),
+                ID = -1
+            };
+
+            AutolootConstraintEntry autolootConstraint = new AutolootConstraintEntry
+            {
+                Property = vm.Constraints.FirstOrDefault( c => c.Name == Strings.ID__Multiple_ ),
+                Values = new ObservableCollection<int>(new int[] { 0x108A}),
+                Additional = string.Empty,
+                Operator = AutolootOperator.Equal
+            };
+            lootEntry.Constraints.Add( autolootConstraint );
+
+            vm.Items.Add( lootEntry );
+            
+            Engine.PacketWaitEntries = new PacketWaitEntries();
+
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            Engine.InternalPacketSentEvent += OnPacketSentEvent;
+
+            Engine.PacketWaitEntries.WaitEntryAddedEvent += entry =>
+            {
+                byte[] containerContentsPacket =
+                {
+                    0x3C, 0x00, 0x19, 0x00, 0x01, 0x46, 0x6B, 0xB4, 0x9E, 0x10, 0x8A, 0x00, 0x00, 0x01, 0x00, 0x13,
+                    0x00, 0x82, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x64
+                };
+
+                PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x3C );
+
+                handler.OnReceive( new PacketReader( containerContentsPacket, containerContentsPacket.Length, false ) );
+
+                entry.Packet = containerContentsPacket;
+                entry.Lock.Set();
+            };
+
+            vm.OnCorpseEvent( corpse.Serial );
+
+            bool result = are.WaitOne( 5000 );
+
+            Assert.IsTrue( result );
+
+            Engine.Items.Clear();
+            Engine.PacketWaitEntries = null;
+            //Engine.InternalPacketSentEvent -= OnPacketSentEvent;
+            Engine.Player = null;
+            return;
+
+            void OnPacketSentEvent( byte[] data, int length )
+            {
+                if ( data[0] == 0x07 || data[0] == 0x08 )
+                {
+                    are.Set();
+                }
+                else if ( data[0] == 0xD6 || data[0] == 0x06 )
+                {
+                }
+                else
+                {
+                    Assert.Fail();
+                }
+            }
         }
     }
 }

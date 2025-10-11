@@ -20,6 +20,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -38,19 +39,19 @@ namespace ClassicAssist.Controls
         public static readonly DependencyProperty ValuesProperty = DependencyProperty.Register( nameof( Values ), typeof( ObservableCollection<int> ), typeof( MultiValueSelector ),
             new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValuesChanged ) );
 
-        public static readonly DependencyProperty ButtonsProperty = DependencyProperty.Register(nameof(Buttons), typeof(object), typeof(MultiValueSelector));
-
-        public object Buttons
-        {
-            get => GetValue(ButtonsProperty);
-            set => SetValue(ButtonsProperty, value);
-        }
+        public static readonly DependencyProperty ButtonsProperty = DependencyProperty.Register( nameof( Buttons ), typeof( object ), typeof( MultiValueSelector ) );
 
         private RelayCommand _removeItemCommand;
 
         public MultiValueSelector()
         {
             InitializeComponent();
+        }
+
+        public object Buttons
+        {
+            get => GetValue( ButtonsProperty );
+            set => SetValue( ButtonsProperty, value );
         }
 
         public ICommand RemoveItemCommand =>
@@ -115,9 +116,7 @@ namespace ClassicAssist.Controls
 
             if ( text.StartsWith( "0x" ) )
             {
-                int value = Convert.ToInt32( text, 16 );
-
-                if ( !Values.Contains( value ) )
+                if ( int.TryParse( text.Substring( 2, text.Length - 2), NumberStyles.HexNumber, null, out int value ) && !Values.Contains( value ) )
                 {
                     Values.Add( value );
                 }

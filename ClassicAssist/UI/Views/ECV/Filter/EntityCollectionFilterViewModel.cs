@@ -43,6 +43,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
         private ICommand _addProfileCommand;
 
         private ICommand _applyCommand;
+        private ObservableCollection<string> _autolootEntryNames = new ObservableCollection<string>();
         private ICommand _changeProfileCommand;
 
         private ObservableCollection<PropertyEntry> _constraints = new ObservableCollection<PropertyEntry>();
@@ -83,7 +84,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                 {
                     string propString = item.Properties == null ? item.Name : item.Properties.Aggregate( string.Empty, ( current, property ) => current + property.Text );
 
-                    if ( entry.Operator != AutolootOperator.NotEqual )
+                    if ( entry.Operator == AutolootOperator.Equal )
                     {
                         return propString.IndexOf( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) >= 0;
                     }
@@ -120,6 +121,8 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             manager.LoadAssemblies( Constraints );
 
             LoadFilterProfiles();
+
+            AutolootEntryNames = new ObservableCollection<string>( manager.GetEntries().Select( ale => ale.Name ) );
         }
 
         public ICommand AddCommand => _addCommand ?? ( _addCommand = new RelayCommand( AddItem, o => true ) );
@@ -127,6 +130,12 @@ namespace ClassicAssist.UI.Views.ECV.Filter
         public ICommand AddProfileCommand => _addProfileCommand ?? ( _addProfileCommand = new RelayCommand( AddProfile, o => true ) );
 
         public ICommand ApplyCommand => _applyCommand ?? ( _applyCommand = new RelayCommand( Apply, o => true ) );
+
+        public ObservableCollection<string> AutolootEntryNames
+        {
+            get => _autolootEntryNames;
+            set => SetProperty( ref _autolootEntryNames, value );
+        }
 
         public ICommand ChangeProfileCommand => _changeProfileCommand ?? ( _changeProfileCommand = new RelayCommand( ChangeProfile, o => o is EntityCollectionFilterEntry ) );
 

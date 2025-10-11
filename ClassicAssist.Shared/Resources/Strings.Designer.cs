@@ -520,6 +520,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Autoloot Match.
+        /// </summary>
+        public static string Autoloot_Match {
+            get {
+                return ResourceManager.GetString("Autoloot Match", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Autoloot matching items.
         /// </summary>
         public static string Autoloot_matching_items {

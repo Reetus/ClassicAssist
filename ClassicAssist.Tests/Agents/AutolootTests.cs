@@ -1,4 +1,23 @@
-﻿using System;
+#region License
+
+// Copyright (C) 2025 Reetus
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -1653,27 +1672,11 @@ namespace ClassicAssist.Tests.Agents
         }
 
         [TestMethod]
-        public void WillLootItemIDMultipleEqual()
+        public void WillMatchItemIDMultipleEqual()
         {
-            Engine.Player = new PlayerMobile( 0x01 );
-            Item backpack = new Item( 0x40000001, 0x01 ) { Container = new ItemCollection( 0x40000001 ) };
-            Engine.Player.SetLayer( Layer.Backpack, backpack.Serial );
-            Engine.Items.Add( backpack );
-
-            Item corpse = new Item( 0x40000000 ) { ID = 0x2006 };
-
-            Engine.Items.Add( corpse );
-            
-            IncomingPacketHandlers.Initialize();
             AutolootViewModel vm = new AutolootViewModel { Enabled = true };
 
-            AutolootEntry lootEntry = new AutolootEntry
-            {
-                Rehue = false,
-                Autoloot = true,
-                Constraints = new ObservableCollection<AutolootConstraintEntry>(),
-                ID = -1
-            };
+            AutolootEntry lootEntry = new AutolootEntry { Rehue = false, Autoloot = true, Constraints = new ObservableCollection<AutolootConstraintEntry>(), ID = -1 };
 
             AutolootConstraintEntry autolootConstraint = new AutolootConstraintEntry
             {
@@ -1685,55 +1688,37 @@ namespace ClassicAssist.Tests.Agents
             lootEntry.Constraints.Add( autolootConstraint );
 
             vm.Items.Add( lootEntry );
-            
-            Engine.PacketWaitEntries = new PacketWaitEntries();
 
-            AutoResetEvent are = new AutoResetEvent( false );
+            AutolootManager manager = AutolootManager.GetInstance();
 
-            Engine.InternalPacketSentEvent += OnPacketSentEvent;
+            List<Item> result = manager.CheckItems( new[] { new Item( 0x40000001 ) { ID = 0x108A } } );
 
-            Engine.PacketWaitEntries.WaitEntryAddedEvent += entry =>
+            Assert.IsTrue( result.Any() );
+        }
+
+        [TestMethod]
+        public void WontMatchItemIDMultipleNotEqual()
+        {
+            AutolootViewModel vm = new AutolootViewModel { Enabled = true };
+
+            AutolootEntry lootEntry = new AutolootEntry { Rehue = false, Autoloot = true, Constraints = new ObservableCollection<AutolootConstraintEntry>(), ID = -1 };
+
+            AutolootConstraintEntry autolootConstraint = new AutolootConstraintEntry
             {
-                byte[] containerContentsPacket =
-                {
-                    0x3C, 0x00, 0x19, 0x00, 0x01, 0x46, 0x6B, 0xB4, 0x9E, 0x10, 0x8A, 0x00, 0x00, 0x01, 0x00, 0x13,
-                    0x00, 0x82, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x64
-                };
-
-                PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x3C );
-
-                handler.OnReceive( new PacketReader( containerContentsPacket, containerContentsPacket.Length, false ) );
-
-                entry.Packet = containerContentsPacket;
-                entry.Lock.Set();
+                Property = vm.Constraints.FirstOrDefault( c => c.Name == Strings.ID__Multiple_ ),
+                Values = new ObservableCollection<int>( new[] { 0x108A } ),
+                Additional = string.Empty,
+                Operator = AutolootOperator.NotEqual
             };
+            lootEntry.Constraints.Add( autolootConstraint );
 
-            vm.OnCorpseEvent( corpse.Serial );
+            vm.Items.Add( lootEntry );
 
-            bool result = are.WaitOne( 5000 );
+            AutolootManager manager = AutolootManager.GetInstance();
 
-            Assert.IsTrue( result );
+            List<Item> result = manager.CheckItems( new[] { new Item( 0x40000001 ) { ID = 0x108A } } );
 
-            Engine.Items.Clear();
-            Engine.PacketWaitEntries = null;
-            Engine.InternalPacketSentEvent -= OnPacketSentEvent;
-            Engine.Player = null;
-            return;
-
-            void OnPacketSentEvent( byte[] data, int length )
-            {
-                if ( data[0] == 0x07 || data[0] == 0x08 )
-                {
-                    are.Set();
-                }
-                else if ( data[0] == 0xD6 || data[0] == 0x06 )
-                {
-                }
-                else
-                {
-                    Assert.Fail();
-                }
-            }
+            Assert.IsTrue( !result.Any() );
         }
     }
 }

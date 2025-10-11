@@ -190,7 +190,7 @@ namespace ClassicAssist.Data.Autoloot
                 Name = Strings.Autoloot_Match,
                 ConstraintType = PropertyType.PredicateWithValue,
                 AllowedOperators = AutolootAllowedOperators.Equal | AutolootAllowedOperators.NotEqual,
-                Predicate = ( item, entry ) =>
+                Predicate = ( entity, entry ) =>
                 {
                     AutolootEntry autoLootEntry = GetEntries().FirstOrDefault( ale => ale.Name == entry.Additional );
 
@@ -199,7 +199,12 @@ namespace ClassicAssist.Data.Autoloot
                         return false;
                     }
 
-                    IEnumerable<Item> matchItems = AutolootHelpers.AutolootFilter( new[] { item as Item }, autoLootEntry );
+                    if ( !( entity is Item item ) )
+                    {
+                        return false;
+                    }
+
+                    IEnumerable<Item> matchItems = AutolootHelpers.AutolootFilter( new[] { item }, autoLootEntry );
 
                     if ( entry.Operator == AutolootOperator.NotEqual )
                     {

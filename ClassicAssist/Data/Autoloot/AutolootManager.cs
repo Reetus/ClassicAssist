@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 
 // Copyright (C) 2025 Reetus
 // 
@@ -69,6 +69,11 @@ namespace ClassicAssist.Data.Autoloot
 
         public void LoadAssemblies( ObservableCollection<PropertyEntry> constraints )
         {
+            if ( AssistantOptions.Assemblies == null )
+            {
+                return;
+            }
+
             foreach ( string fileName in AssistantOptions.Assemblies )
             {
                 Assembly asm = Assembly.LoadFrom( fileName );

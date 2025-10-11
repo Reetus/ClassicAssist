@@ -83,7 +83,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                 {
                     string propString = item.Properties == null ? item.Name : item.Properties.Aggregate( string.Empty, ( current, property ) => current + property.Text );
 
-                    if ( entry.Operator != AutolootOperator.NotEqual )
+                    if ( entry.Operator == AutolootOperator.Equal )
                     {
                         return propString.IndexOf( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) >= 0;
                     }

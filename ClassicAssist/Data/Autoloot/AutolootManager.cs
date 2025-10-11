@@ -185,6 +185,31 @@ namespace ClassicAssist.Data.Autoloot
                 }
             });
 
+            constraints.AddSorted( new PropertyEntry
+            {
+                Name = Strings.Autoloot_Match,
+                ConstraintType = PropertyType.PredicateWithValue,
+                AllowedOperators = AutolootAllowedOperators.Equal | AutolootAllowedOperators.NotEqual,
+                Predicate = ( item, entry ) =>
+                {
+                    AutolootEntry autoLootEntry = GetEntries().FirstOrDefault( ale => ale.Name == entry.Additional );
+
+                    if ( autoLootEntry == null )
+                    {
+                        return false;
+                    }
+
+                    IEnumerable<Item> matchItems = AutolootHelpers.AutolootFilter( new[] { item as Item }, autoLootEntry );
+
+                    if ( entry.Operator == AutolootOperator.NotEqual )
+                    {
+                        return !matchItems.Any();
+                    }
+
+                    return matchItems.Any();
+                }
+            } );
+
             return;
 
             IEnumerable<PropertyEntry> LoadFile( string fileName )

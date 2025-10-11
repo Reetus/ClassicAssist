@@ -2062,4 +2062,7 @@ Are you sure you wish to continue?</value>
   <data name="ID (Multiple)" xml:space="preserve">
     <value>ID (Multiple)</value>
   </data>
+  <data name="Autoloot Match" xml:space="preserve">
+    <value>Autoloot Match</value>
+  </data>
 </root>

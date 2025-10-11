@@ -212,6 +212,25 @@
                                                                 </Style>
                                                             </views:MultiItemIDSelector.Style>
                                                         </views:MultiItemIDSelector>
+                                                        <ComboBox Grid.Column="0" MinWidth="40"
+                                                                  ItemsSource="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.AutolootEntryNames), Source={StaticResource DataContextProxy}}"
+                                                                  SelectedItem="{Binding Additional}"
+                                                                  Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}">
+                                                            <ComboBox.Style>
+                                                                <Style TargetType="{x:Type ComboBox}"
+                                                                       BasedOn="{StaticResource {x:Type ComboBox}}">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger
+                                                                            Binding="{Binding Constraint.Name}"
+                                                                            Value="{x:Static resources:Strings.Autoloot_Match}">
+                                                                            <Setter Property="Visibility"
+                                                                                Value="Visible" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </ComboBox.Style>
+                                                        </ComboBox>
                                                         <TextBox
                                                             Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource HexToIntValueConverter}}"
                                                             Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}"
@@ -248,6 +267,12 @@
                                                                         <DataTrigger
                                                                             Binding="{Binding Constraint.UseMultipleValues}"
                                                                             Value="True">
+                                                                            <Setter Property="Visibility"
+                                                                                Value="Collapsed" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger
+                                                                            Binding="{Binding Constraint.Name}"
+                                                                            Value="{x:Static resources:Strings.Autoloot_Match}">
                                                                             <Setter Property="Visibility"
                                                                                 Value="Collapsed" />
                                                                         </DataTrigger>

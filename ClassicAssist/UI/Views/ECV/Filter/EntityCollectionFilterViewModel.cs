@@ -78,11 +78,12 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             {
                 Name = Strings.Name,
                 ConstraintType = PropertyType.PredicateWithValue,
+                AllowedOperators = AutolootAllowedOperators.Equal | AutolootAllowedOperators.NotEqual,
                 Predicate = ( item, entry ) =>
                 {
                     string propString = item.Properties == null ? item.Name : item.Properties.Aggregate( string.Empty, ( current, property ) => current + property.Text );
 
-                    if ( entry.Operator != AutolootOperator.NotPresent )
+                    if ( entry.Operator != AutolootOperator.NotEqual )
                     {
                         return propString.IndexOf( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) >= 0;
                     }
@@ -95,6 +96,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             {
                 Name = nameof( TileFlags ),
                 ConstraintType = PropertyType.Predicate,
+                AllowedOperators = AutolootAllowedOperators.Equal | AutolootAllowedOperators.NotEqual,
                 Predicate = ( item, entry ) =>
                 {
                     StaticTile tileFlags = TileData.GetStaticTile( item.ID );

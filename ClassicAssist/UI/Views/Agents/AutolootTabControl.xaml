@@ -26,6 +26,7 @@
             </ResourceDictionary.MergedDictionaries>
             <misc1:BindingProxy x:Key="Proxy" Data="{Binding}" />
             <ValueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+            <ValueConverters:AutolootOperatorFilterValueConverter x:Key="AutolootOperatorFilterValueConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
@@ -258,8 +259,15 @@
                         <GridViewColumn Header="{x:Static resources:Strings.Operator}" Width="75">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate DataType="autoloot:AutolootConstraintEntry">
-                                    <ComboBox Width="50" SelectedItem="{Binding Operator}"
-                                              ItemsSource="{Binding Source={misc:EnumBindingSource {x:Type autoloot:AutolootOperator}}}" />
+                                    <ComboBox Width="50" SelectedItem="{Binding Operator}">
+                                        <ComboBox.ItemsSource>
+                                            <MultiBinding
+                                                Converter="{StaticResource AutolootOperatorFilterValueConverter}">
+                                                <Binding Source="{x:Type autoloot:AutolootOperator}" />
+                                                <Binding Path="Property" />
+                                            </MultiBinding>
+                                        </ComboBox.ItemsSource>
+                                    </ComboBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

@@ -28,6 +28,7 @@
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
             <valueConverters:HexToIntValueConverter x:Key="HexToIntValueConverter" />
+            <valueConverters:AutolootOperatorFilterValueConverter x:Key="AutolootOperatorFilterValueConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
@@ -139,8 +140,15 @@
                                         <GridViewColumn Header="{x:Static resources:Strings.Operator}" Width="75">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate DataType="{x:Type models:EntityCollectionFilterItem}">
-                                                    <ComboBox Width="50" SelectedItem="{Binding Operator}"
-                                                              ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type autoloot:AutolootOperator}}}" />
+                                                    <ComboBox Width="50" SelectedItem="{Binding Operator}">
+                                                        <ComboBox.ItemsSource>
+                                                            <MultiBinding
+                                                                Converter="{StaticResource AutolootOperatorFilterValueConverter}">
+                                                                <Binding Source="{x:Type autoloot:AutolootOperator}" />
+                                                                <Binding Path="Constraint" />
+                                                            </MultiBinding>
+                                                        </ComboBox.ItemsSource>
+                                                    </ComboBox>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>

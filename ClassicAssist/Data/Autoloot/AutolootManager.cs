@@ -119,6 +119,7 @@ namespace ClassicAssist.Data.Autoloot
             {
                 Name = Strings.Layer,
                 ConstraintType = PropertyType.Predicate,
+                AllowedOperators = AutolootAllowedOperators.Equal | AutolootAllowedOperators.NotEqual,
                 Predicate = (item, entry) =>
                 {
                     Layer layer = TileData.GetLayer(item.ID);
@@ -166,6 +167,7 @@ namespace ClassicAssist.Data.Autoloot
                 Name = Strings.ID__Multiple_,
                 ConstraintType = PropertyType.PredicateWithValue,
                 UseMultipleValues = true,
+                AllowedOperators = AutolootAllowedOperators.Equal | AutolootAllowedOperators.NotEqual,
                 Predicate = (item, entry) =>
                 {
                     switch (entry.Operator)

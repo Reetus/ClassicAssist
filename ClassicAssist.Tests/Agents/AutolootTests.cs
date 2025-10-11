@@ -1,4 +1,23 @@
-﻿using System;
+#region License
+
+// Copyright (C) 2025 Reetus
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -7,6 +26,7 @@ using System.Text;
 using System.Threading;
 using Assistant;
 using ClassicAssist.Data.Autoloot;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.ViewModels.Agents;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
@@ -1649,6 +1669,56 @@ namespace ClassicAssist.Tests.Agents
             Engine.PacketWaitEntries = null;
             Engine.InternalPacketSentEvent -= OnPacketSentEvent;
             Engine.Player = null;
+        }
+
+        [TestMethod]
+        public void WillMatchItemIDMultipleEqual()
+        {
+            AutolootViewModel vm = new AutolootViewModel { Enabled = true };
+
+            AutolootEntry lootEntry = new AutolootEntry { Rehue = false, Autoloot = true, Constraints = new ObservableCollection<AutolootConstraintEntry>(), ID = -1 };
+
+            AutolootConstraintEntry autolootConstraint = new AutolootConstraintEntry
+            {
+                Property = vm.Constraints.FirstOrDefault( c => c.Name == Strings.ID__Multiple_ ),
+                Values = new ObservableCollection<int>( new[] { 0x108A } ),
+                Additional = string.Empty,
+                Operator = AutolootOperator.Equal
+            };
+            lootEntry.Constraints.Add( autolootConstraint );
+
+            vm.Items.Add( lootEntry );
+
+            AutolootManager manager = AutolootManager.GetInstance();
+
+            List<Item> result = manager.CheckItems( new[] { new Item( 0x40000001 ) { ID = 0x108A } } );
+
+            Assert.IsTrue( result.Any() );
+        }
+
+        [TestMethod]
+        public void WontMatchItemIDMultipleNotEqual()
+        {
+            AutolootViewModel vm = new AutolootViewModel { Enabled = true };
+
+            AutolootEntry lootEntry = new AutolootEntry { Rehue = false, Autoloot = true, Constraints = new ObservableCollection<AutolootConstraintEntry>(), ID = -1 };
+
+            AutolootConstraintEntry autolootConstraint = new AutolootConstraintEntry
+            {
+                Property = vm.Constraints.FirstOrDefault( c => c.Name == Strings.ID__Multiple_ ),
+                Values = new ObservableCollection<int>( new[] { 0x108A } ),
+                Additional = string.Empty,
+                Operator = AutolootOperator.NotEqual
+            };
+            lootEntry.Constraints.Add( autolootConstraint );
+
+            vm.Items.Add( lootEntry );
+
+            AutolootManager manager = AutolootManager.GetInstance();
+
+            List<Item> result = manager.CheckItems( new[] { new Item( 0x40000001 ) { ID = 0x108A } } );
+
+            Assert.IsTrue( !result.Any() );
         }
     }
 }

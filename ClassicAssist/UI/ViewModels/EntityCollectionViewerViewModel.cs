@@ -1441,7 +1441,7 @@ namespace ClassicAssist.UI.ViewModels
                     case PropertyType.PredicateWithValue:
                     {
                         predicates.Add( i => constraint.Predicate != null && constraint.Predicate.Invoke( i,
-                            new AutolootConstraintEntry { Operator = filter.Operator, Property = constraint, Value = filter.Value, Additional = filter.Additional } ) );
+                            new AutolootConstraintEntry { Operator = filter.Operator, Property = constraint, Value = filter.Value, Additional = filter.Additional, Values = filter.Values} ) );
 
                         break;
                     }

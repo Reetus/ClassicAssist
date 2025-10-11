@@ -2383,6 +2383,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ID (Multiple).
+        /// </summary>
+        public static string ID__Multiple_ {
+            get {
+                return ResourceManager.GetString("ID (Multiple)", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ID from target.
         /// </summary>
         public static string ID_from_target {

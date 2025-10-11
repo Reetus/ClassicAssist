@@ -55,6 +55,11 @@ namespace ClassicAssist.UI.Views
 
         private async Task Target( object obj )
         {
+            if ( Values == null )
+            {
+                Values = new ObservableCollection<int>();
+            }
+
             ( TargetType _, TargetFlags _, int serial, int _, int _, int _, int itemId ) = await Commands.GetTargetInfoAsync( objectTarget: true );
 
             if ( itemId <= 0 && serial <= 0 )

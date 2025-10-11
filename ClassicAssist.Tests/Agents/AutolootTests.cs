@@ -1678,7 +1678,7 @@ namespace ClassicAssist.Tests.Agents
             AutolootConstraintEntry autolootConstraint = new AutolootConstraintEntry
             {
                 Property = vm.Constraints.FirstOrDefault( c => c.Name == Strings.ID__Multiple_ ),
-                Values = new ObservableCollection<int>(new int[] { 0x108A}),
+                Values = new ObservableCollection<int>( new[] { 0x108A } ),
                 Additional = string.Empty,
                 Operator = AutolootOperator.Equal
             };
@@ -1716,7 +1716,7 @@ namespace ClassicAssist.Tests.Agents
 
             Engine.Items.Clear();
             Engine.PacketWaitEntries = null;
-            //Engine.InternalPacketSentEvent -= OnPacketSentEvent;
+            Engine.InternalPacketSentEvent -= OnPacketSentEvent;
             Engine.Player = null;
             return;
 

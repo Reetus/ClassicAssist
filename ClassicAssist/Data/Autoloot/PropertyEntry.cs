@@ -63,7 +63,7 @@ namespace ClassicAssist.Data.Autoloot
         public bool UseMultipleValues
         {
             get => _useMultipleValues;
-            set => SetProperty(ref _useMultipleValues, value);
+            set => SetProperty( ref _useMultipleValues, value );
         }
 
         public int CompareTo( PropertyEntry other )

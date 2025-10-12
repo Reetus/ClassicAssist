@@ -1720,5 +1720,93 @@ namespace ClassicAssist.Tests.Agents
 
             Assert.IsTrue( !result.Any() );
         }
+
+        [TestMethod]
+        public void WillMatchAutolootMatchEqual()
+        {
+            AutolootViewModel vm = new AutolootViewModel { Enabled = true };
+
+            AutolootEntry lootEntry = new AutolootEntry
+            {
+                Name = "Autoloot Match",
+                Rehue = false,
+                Autoloot = true,
+                Enabled = false,
+                Constraints = new ObservableCollection<AutolootConstraintEntry>(),
+                ID = -1
+            };
+
+            AutolootConstraintEntry autolootConstraint = new AutolootConstraintEntry
+            {
+                Property = vm.Constraints.FirstOrDefault( c => c.Name == Strings.ID__Multiple_ ),
+                Values = new ObservableCollection<int>( new[] { 0x108A } ),
+                Additional = string.Empty,
+                Operator = AutolootOperator.Equal
+            };
+            lootEntry.Constraints.Add( autolootConstraint );
+
+            vm.Items.Add( lootEntry );
+
+            AutolootEntry lootEntry2 = new AutolootEntry { Autoloot = true, Enabled = true, Constraints = new ObservableCollection<AutolootConstraintEntry>(), ID = -1 };
+
+            AutolootConstraintEntry autolootConstraint2 = new AutolootConstraintEntry
+            {
+                Property = vm.Constraints.FirstOrDefault( c => c.Name == Strings.Autoloot_Match ), Additional = "Autoloot Match", Operator = AutolootOperator.Equal
+            };
+
+            lootEntry2.Constraints.Add( autolootConstraint2 );
+
+            vm.Items.Add( lootEntry2 );
+
+            AutolootManager manager = AutolootManager.GetInstance();
+
+            List<Item> result = manager.CheckItems( new[] { new Item( 0x40000001 ) { ID = 0x108A } } );
+
+            Assert.IsTrue( result.Any() );
+        }
+
+        [TestMethod]
+        public void WontMatchAutolootMatchNotEqual()
+        {
+            AutolootViewModel vm = new AutolootViewModel { Enabled = true };
+
+            AutolootEntry lootEntry = new AutolootEntry
+            {
+                Name = "Autoloot Match",
+                Rehue = false,
+                Autoloot = true,
+                Enabled = false,
+                Constraints = new ObservableCollection<AutolootConstraintEntry>(),
+                ID = -1
+            };
+
+            AutolootConstraintEntry autolootConstraint = new AutolootConstraintEntry
+            {
+                Property = vm.Constraints.FirstOrDefault( c => c.Name == Strings.ID__Multiple_ ),
+                Values = new ObservableCollection<int>( new[] { 0x108A } ),
+                Additional = string.Empty,
+                Operator = AutolootOperator.Equal
+            };
+            lootEntry.Constraints.Add( autolootConstraint );
+
+            vm.Items.Add( lootEntry );
+
+            AutolootEntry lootEntry2 = new AutolootEntry { Autoloot = true, Enabled = true, Constraints = new ObservableCollection<AutolootConstraintEntry>(), ID = -1 };
+
+            AutolootConstraintEntry autolootConstraint2 = new AutolootConstraintEntry
+            {
+                Property = vm.Constraints.FirstOrDefault( c => c.Name == Strings.Autoloot_Match ), Additional = "Autoloot Match", Operator = AutolootOperator.NotEqual
+            };
+
+            lootEntry2.Constraints.Add( autolootConstraint2 );
+
+            vm.Items.Add( lootEntry2 );
+
+            AutolootManager manager = AutolootManager.GetInstance();
+
+            List<Item> result = manager.CheckItems( new[] { new Item( 0x40000001 ) { ID = 0x108A } } );
+
+            Assert.IsTrue( !result.Any() );
+        }
     }
 }

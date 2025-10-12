@@ -18,12 +18,14 @@
 #endregion
 
 using System.Collections;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using ClassicAssist.Controls;
 using ClassicAssist.Data.Autoloot;
+using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI.ValueConverters;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UO.Data;
@@ -62,6 +64,33 @@ namespace ClassicAssist.UI.Views.Autoloot
                 EnumBindingSourceExtension itemSource = new EnumBindingSourceExtension( typeof( Layer ) );
 
                 ComboBox comboBox = new ComboBox { Width = 90, ItemsSource = itemSource.ProvideValue( null ) as IEnumerable };
+
+                BindingOperations.SetBinding( comboBox, Selector.SelectedItemProperty, selectedItemBinding );
+
+                Grid.Children.Add( comboBox );
+
+                return;
+            }
+
+            if ( autolootConstraintEntry.Property.UseMultipleValues )
+            {
+                Binding valuesBinding = new Binding( nameof( autolootConstraintEntry.Values ) ) { Source = autolootConstraintEntry, Mode = BindingMode.TwoWay };
+
+                MultiItemIDSelector control = new MultiItemIDSelector { Width = 100, MinWidth = 40 };
+                BindingOperations.SetBinding( control, MultiItemIDSelector.ValuesProperty, valuesBinding );
+
+                Grid.Children.Add( control );
+
+                return;
+            }
+
+            if ( autolootConstraintEntry.Property.Name == Strings.Autoloot_Match )
+            {
+                AutolootManager manager = AutolootManager.GetInstance();
+
+                Binding selectedItemBinding = new Binding( nameof( autolootConstraintEntry.Additional ) ) { Source = autolootConstraintEntry, Mode = BindingMode.TwoWay };
+
+                ComboBox comboBox = new ComboBox { Width = 100, ItemsSource = manager.GetEntries().Select( ale => ale.Name ) };
 
                 BindingOperations.SetBinding( comboBox, Selector.SelectedItemProperty, selectedItemBinding );
 

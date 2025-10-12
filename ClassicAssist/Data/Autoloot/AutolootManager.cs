@@ -238,8 +238,6 @@ namespace ClassicAssist.Data.Autoloot
                 AllowedValuesEnum = typeof( SkillBonusSkills )
             } );
 
-            return;
-
             IEnumerable<PropertyEntry> LoadFile( string fileName )
             {
                 JsonSerializer serializer = new JsonSerializer();

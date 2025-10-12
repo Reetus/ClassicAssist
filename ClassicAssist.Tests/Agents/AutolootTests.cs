@@ -1808,5 +1808,73 @@ namespace ClassicAssist.Tests.Agents
 
             Assert.IsTrue( !result.Any() );
         }
+
+        [TestMethod]
+        public void WillMatchSkillBonusAny()
+        {
+            AutolootViewModel vm = new AutolootViewModel { Enabled = true };
+
+            AutolootEntry lootEntry = new AutolootEntry
+            {
+                Rehue = false,
+                Autoloot = true,
+                Enabled = true,
+                Constraints = new ObservableCollection<AutolootConstraintEntry>(),
+                ID = -1
+            };
+
+            AutolootConstraintEntry autolootConstraint = new AutolootConstraintEntry
+            {
+                Property = vm.Constraints.FirstOrDefault( c => c.Name == Strings.Skill_Bonus ),
+                Value = 10,
+                Additional = nameof(SkillBonusSkills.Any),
+                Operator = AutolootOperator.GreaterThan
+            };
+            lootEntry.Constraints.Add( autolootConstraint );
+
+            vm.Items.Add( lootEntry );
+
+            AutolootManager manager = AutolootManager.GetInstance();
+
+            Item[] items = { new Item( 0x40000001 ) { ID = 0x108A, Properties = new[] { new Property { Cliloc = 1060451, Arguments = new[] { "Animal Taming", "15" } } } } };
+
+            List<Item> result = manager.CheckItems( items );
+
+            Assert.IsTrue( result.Any() );
+        }
+
+        [TestMethod]
+        public void WontMatchSkillBonusAnyNotPresent()
+        {
+            AutolootViewModel vm = new AutolootViewModel { Enabled = true };
+
+            AutolootEntry lootEntry = new AutolootEntry
+            {
+                Rehue = false,
+                Autoloot = true,
+                Enabled = true,
+                Constraints = new ObservableCollection<AutolootConstraintEntry>(),
+                ID = -1
+            };
+
+            AutolootConstraintEntry autolootConstraint = new AutolootConstraintEntry
+            {
+                Property = vm.Constraints.FirstOrDefault( c => c.Name == Strings.Skill_Bonus ),
+                Value = 10,
+                Additional = nameof( SkillBonusSkills.Any ),
+                Operator = AutolootOperator.NotPresent
+            };
+            lootEntry.Constraints.Add( autolootConstraint );
+
+            vm.Items.Add( lootEntry );
+
+            AutolootManager manager = AutolootManager.GetInstance();
+
+            Item[] items = { new Item( 0x40000001 ) { ID = 0x108A, Properties = new[] { new Property { Cliloc = 1060451, Arguments = new[] { "Animal Taming", "15" } } } } };
+
+            List<Item> result = manager.CheckItems( items );
+
+            Assert.IsTrue( !result.Any() );
+        }
     }
 }

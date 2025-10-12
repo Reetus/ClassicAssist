@@ -5152,6 +5152,24 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Talisman Exceptional Skill Bonus.
+        /// </summary>
+        public static string Talisman_Exceptional_Skill_Bonus {
+            get {
+                return ResourceManager.GetString("Talisman Exceptional Skill Bonus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Talisman Skill Bonus.
+        /// </summary>
+        public static string Talisman_Skill_Bonus {
+            get {
+                return ResourceManager.GetString("Talisman Skill Bonus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Target.
         /// </summary>
         public static string Target {

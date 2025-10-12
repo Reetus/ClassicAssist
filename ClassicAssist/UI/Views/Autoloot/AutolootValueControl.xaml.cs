@@ -52,6 +52,8 @@ namespace ClassicAssist.UI.Views.Autoloot
 
             Grid.Children.Clear();
 
+            Binding widthBinding = new Binding( "ActualWidth" ) { RelativeSource = new RelativeSource( RelativeSourceMode.FindAncestor, typeof( AutolootValueControl ), 1 ) };
+
             if ( autolootConstraintEntry.Property.AllowedValuesEnum != null && autolootConstraintEntry.Property.AllowedValuesEnum == typeof( Layer ) )
             {
                 EnumToIntegerValueConverter enumToIntegerValueConverter = new EnumToIntegerValueConverter();
@@ -63,9 +65,10 @@ namespace ClassicAssist.UI.Views.Autoloot
 
                 EnumBindingSourceExtension itemSource = new EnumBindingSourceExtension( typeof( Layer ) );
 
-                ComboBox comboBox = new ComboBox { Width = 90, ItemsSource = itemSource.ProvideValue( null ) as IEnumerable };
+                ComboBox comboBox = new ComboBox { ItemsSource = itemSource.ProvideValue( null ) as IEnumerable };
 
                 BindingOperations.SetBinding( comboBox, Selector.SelectedItemProperty, selectedItemBinding );
+                BindingOperations.SetBinding( comboBox, WidthProperty, widthBinding );
 
                 Grid.Children.Add( comboBox );
 
@@ -76,8 +79,9 @@ namespace ClassicAssist.UI.Views.Autoloot
             {
                 Binding valuesBinding = new Binding( nameof( autolootConstraintEntry.Values ) ) { Source = autolootConstraintEntry, Mode = BindingMode.TwoWay };
 
-                MultiItemIDSelector control = new MultiItemIDSelector { Width = 100, MinWidth = 40 };
+                MultiItemIDSelector control = new MultiItemIDSelector { MinWidth = 40 };
                 BindingOperations.SetBinding( control, MultiItemIDSelector.ValuesProperty, valuesBinding );
+                BindingOperations.SetBinding( control, WidthProperty, widthBinding );
 
                 Grid.Children.Add( control );
 
@@ -90,32 +94,22 @@ namespace ClassicAssist.UI.Views.Autoloot
 
                 Binding selectedItemBinding = new Binding( nameof( autolootConstraintEntry.Additional ) ) { Source = autolootConstraintEntry, Mode = BindingMode.TwoWay };
 
-                ComboBox comboBox = new ComboBox { Width = 100, ItemsSource = manager.GetEntries().Select( ale => ale.Name ) };
+                ComboBox comboBox = new ComboBox { ItemsSource = manager.GetEntries().Select( ale => ale.Name ) };
 
                 BindingOperations.SetBinding( comboBox, Selector.SelectedItemProperty, selectedItemBinding );
+                BindingOperations.SetBinding( comboBox, WidthProperty, widthBinding );
 
                 Grid.Children.Add( comboBox );
 
                 return;
             }
 
-            if ( autolootConstraintEntry.Property.UseMultipleValues )
-            {
-                Binding valuesBinding = new Binding( nameof( autolootConstraintEntry.Values ) ) { Source = autolootConstraintEntry, Mode = BindingMode.TwoWay };
-
-                MultiItemIDSelector control = new MultiItemIDSelector { Width = 100, MinWidth = 40 };
-                BindingOperations.SetBinding( control, MultiItemIDSelector.ValuesProperty, valuesBinding );
-
-                Grid.Children.Add( control );
-
-                return;
-            }
-
             Binding binding = new Binding( "Value" ) { Source = autolootConstraintEntry };
 
-            EditTextBlock editTextBlock = new EditTextBlock { Width = 100, MinWidth = 40, ShowIcon = true };
+            EditTextBlock editTextBlock = new EditTextBlock { ShowIcon = true };
 
             BindingOperations.SetBinding( editTextBlock, EditTextBlock.TextProperty, binding );
+            BindingOperations.SetBinding( editTextBlock, WidthProperty, widthBinding );
 
             Grid.Children.Add( editTextBlock );
         }

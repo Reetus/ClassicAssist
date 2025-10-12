@@ -129,38 +129,25 @@ namespace ClassicAssist.Data.Autoloot
                 AllowedValuesEnum = typeof(Layer)
             });
 
-            constraints.AddSorted(new PropertyEntry
+            constraints.AddSorted( new PropertyEntry
             {
                 Name = Strings.Skill_Bonus,
                 ConstraintType = PropertyType.PredicateWithValue,
-                Predicate = (item, entry) =>
+                Predicate = ( item, entry ) =>
                 {
                     int[] clilocs = { 1060451, 1060452, 1060453, 1060454, 1060455, 1072394, 1072395 };
 
-                    if (item.Properties == null)
+                    if ( item.Properties == null )
                     {
                         return false;
                     }
 
-                    IEnumerable<Property> properties = item.Properties.Where(e => e != null && clilocs.Contains(e.Cliloc)).ToList();
+                    List<Property> properties = item.Properties.Where( e => e != null && clilocs.Contains( e.Cliloc ) ).ToList();
 
-                    if (entry.Operator != AutolootOperator.NotPresent)
-                    {
-                        return properties
-                            .Where(property => property.Arguments != null && property.Arguments.Length >= 1 &&
-                                                (property.Arguments[0].Equals(entry.Additional, StringComparison.CurrentCultureIgnoreCase) ||
-                                                  string.IsNullOrEmpty(entry.Additional))).Any(property =>
-                                AutolootHelpers.Operation(entry.Operator, Convert.ToInt32(property.Arguments[1]), entry.Value));
-                    }
-
-                    Property match = properties.FirstOrDefault(property =>
-                        property.Arguments != null && property.Arguments.Length >= 1 &&
-                        (property.Arguments[0].Equals(entry.Additional, StringComparison.CurrentCultureIgnoreCase) || string.IsNullOrEmpty(entry.Additional)));
-
-                    return match == null;
+                    return MatchSkillBonus( entry, properties );
                 },
-                AllowedValuesEnum = typeof(SkillBonusSkills)
-            });
+                AllowedValuesEnum = typeof( SkillBonusSkills )
+            } );
 
             constraints.AddSorted(new PropertyEntry
             {
@@ -215,6 +202,42 @@ namespace ClassicAssist.Data.Autoloot
                 }
             } );
 
+            constraints.AddSorted( new PropertyEntry
+            {
+                Name = Strings.Talisman_Skill_Bonus,
+                ConstraintType = PropertyType.PredicateWithValue,
+                Predicate = ( item, entry ) =>
+                {
+                    if ( item.Properties == null )
+                    {
+                        return false;
+                    }
+
+                    List<Property> properties = item.Properties.Where( e => e != null && e.Cliloc == 1072394 ).ToList();
+
+                    return MatchSkillBonus( entry, properties );
+                },
+                AllowedValuesEnum = typeof( SkillBonusSkills )
+            } );
+
+            constraints.AddSorted( new PropertyEntry
+            {
+                Name = Strings.Talisman_Exceptional_Skill_Bonus,
+                ConstraintType = PropertyType.PredicateWithValue,
+                Predicate = ( item, entry ) =>
+                {
+                    if ( item.Properties == null )
+                    {
+                        return false;
+                    }
+
+                    List<Property> properties = item.Properties.Where( e => e != null && e.Cliloc == 1072395 ).ToList();
+
+                    return MatchSkillBonus( entry, properties );
+                },
+                AllowedValuesEnum = typeof( SkillBonusSkills )
+            } );
+
             return;
 
             IEnumerable<PropertyEntry> LoadFile( string fileName )
@@ -228,6 +251,26 @@ namespace ClassicAssist.Data.Autoloot
                         return serializer.Deserialize<PropertyEntry[]>( reader );
                     }
                 }
+            }
+        }
+
+        private static bool MatchSkillBonus( AutolootConstraintEntry entry, List<Property> properties )
+        {
+            if ( entry.Operator != AutolootOperator.NotPresent )
+            {
+                return properties.Where( property => PropertyMatches( entry, property ) )
+                    .Any( property => AutolootHelpers.Operation( entry.Operator, Convert.ToInt32( property.Arguments[1] ), entry.Value ) );
+            }
+
+            Property match = properties.FirstOrDefault( property => PropertyMatches( entry, property ) );
+
+            return match == null;
+
+            bool PropertyMatches( AutolootConstraintEntry e, Property p )
+            {
+                return p.Arguments != null && p.Arguments.Length >= 1 && ( e.Additional == nameof( SkillBonusSkills.Any ) ||
+                                                                           p.Arguments[0].Equals( e.Additional, StringComparison.CurrentCultureIgnoreCase ) ||
+                                                                           string.IsNullOrEmpty( e.Additional ) );
             }
         }
     }

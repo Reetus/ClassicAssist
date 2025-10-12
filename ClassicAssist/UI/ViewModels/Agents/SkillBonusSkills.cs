@@ -20,6 +20,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
     [TypeConverter( typeof( EnumDescriptionTypeConverter ) )]
     public enum SkillBonusSkills
     {
+        Any = -1,
         Alchemy,
         Anatomy,
         [Description( "Animal Lore" )]

@@ -99,6 +99,18 @@ namespace ClassicAssist.UI.Views.Autoloot
                 return;
             }
 
+            if ( autolootConstraintEntry.Property.UseMultipleValues )
+            {
+                Binding valuesBinding = new Binding( nameof( autolootConstraintEntry.Values ) ) { Source = autolootConstraintEntry, Mode = BindingMode.TwoWay };
+
+                MultiItemIDSelector control = new MultiItemIDSelector { Width = 100, MinWidth = 40 };
+                BindingOperations.SetBinding( control, MultiItemIDSelector.ValuesProperty, valuesBinding );
+
+                Grid.Children.Add( control );
+
+                return;
+            }
+
             Binding binding = new Binding( "Value" ) { Source = autolootConstraintEntry };
 
             EditTextBlock editTextBlock = new EditTextBlock { Width = 100, MinWidth = 40, ShowIcon = true };

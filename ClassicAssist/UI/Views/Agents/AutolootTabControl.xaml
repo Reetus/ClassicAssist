@@ -274,7 +274,7 @@
                         <GridViewColumn Header="{x:Static resources:Strings.Value}" Width="150" x:Name="ValueColumn">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <autoloot1:AutolootValueControl DataContext="{Binding}" />
+                                    <autoloot1:AutolootValueControl DataContext="{Binding}" Width="130" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

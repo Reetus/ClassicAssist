@@ -116,7 +116,7 @@ namespace ClassicAssist.Controls
 
             if ( text.StartsWith( "0x" ) )
             {
-                if ( int.TryParse( text.Substring( 2, text.Length - 2), NumberStyles.HexNumber, null, out int value ) && !Values.Contains( value ) )
+                if ( int.TryParse( text.Substring( 2 ), NumberStyles.HexNumber, null, out int value ) && !Values.Contains( value ) )
                 {
                     Values.Add( value );
                 }

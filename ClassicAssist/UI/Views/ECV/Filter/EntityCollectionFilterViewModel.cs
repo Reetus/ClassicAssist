@@ -1,6 +1,6 @@
 ﻿#region License
 
-// Copyright (C) 2024 Reetus
+// Copyright (C) 2025 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -8,17 +8,20 @@
 // (at your option) any later version.
 // 
 // This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using Assistant;
@@ -26,10 +29,8 @@ using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
-using ClassicAssist.UI.ViewModels.Agents;
 using ClassicAssist.UI.Views.ECV.Filter.Models;
 using ClassicAssist.UO.Data;
-using ClassicAssist.UO.Objects;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sentry;
@@ -38,13 +39,11 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 {
     public class EntityCollectionFilterViewModel : SetPropertyNotifyChanged
     {
-        private readonly string _propertiesFileCustom = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data", "Properties.Custom.json" );
-
         private ICommand _addCommand;
         private ICommand _addProfileCommand;
 
         private ICommand _applyCommand;
-        private Assembly[] _assemblies;
+        private ObservableCollection<string> _autolootEntryNames = new ObservableCollection<string>();
         private ICommand _changeProfileCommand;
 
         private ObservableCollection<PropertyEntry> _constraints = new ObservableCollection<PropertyEntry>();
@@ -73,90 +72,19 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             }
 #endif
 
-            string propertiesFile = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data", "Properties.json" );
-
-            if ( !File.Exists( propertiesFile ) )
-            {
-                return;
-            }
-
-            JsonSerializer serializer = new JsonSerializer();
-
-            using ( StreamReader sr = new StreamReader( propertiesFile ) )
-            {
-                using ( JsonTextReader reader = new JsonTextReader( sr ) )
-                {
-                    PropertyEntry[] constraints = serializer.Deserialize<PropertyEntry[]>( reader );
-
-                    foreach ( PropertyEntry constraint in constraints )
-                    {
-                        Constraints.AddSorted( constraint );
-                    }
-                }
-            }
-
-            // TODO: Use autoloot methods to not duplicate code
-
-            if ( File.Exists( _propertiesFileCustom ) )
-            {
-                LoadCustomProperties();
-            }
-
-            Constraints.AddSorted( new PropertyEntry
-            {
-                Name = Strings.Layer,
-                ConstraintType = PropertyType.Predicate,
-                Predicate = ( item, entry ) =>
-                {
-                    Layer layer = TileData.GetLayer( item.ID );
-
-                    return entry.Operator == AutolootOperator.NotPresent || AutolootHelpers.Operation( entry.Operator, entry.Value, (int) layer );
-                },
-                AllowedValuesEnum = typeof( Layer )
-            } );
-
-            Constraints.AddSorted( new PropertyEntry
-            {
-                Name = Strings.Skill_Bonus,
-                ConstraintType = PropertyType.PredicateWithValue,
-                Predicate = ( item, entry ) =>
-                {
-                    int[] clilocs = { 1060451, 1060452, 1060453, 1060454, 1060455, 1072394, 1072395 };
-
-                    if ( item.Properties == null )
-                    {
-                        return false;
-                    }
-
-                    IEnumerable<Property> properties = item.Properties.Where( e => e != null && clilocs.Contains( e.Cliloc ) ).ToList();
-
-                    if ( entry.Operator != AutolootOperator.NotPresent )
-                    {
-                        return properties
-                            .Where( property => property.Arguments != null && property.Arguments.Length >= 1 &&
-                                                ( property.Arguments[0].Equals( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) ||
-                                                  string.IsNullOrEmpty( entry.Additional ) ) ).Any( property =>
-                                AutolootHelpers.Operation( entry.Operator, Convert.ToInt32( property.Arguments[1] ), entry.Value ) );
-                    }
-
-                    Property match = properties.FirstOrDefault( property =>
-                        property.Arguments != null && property.Arguments.Length >= 1 &&
-                        ( property.Arguments[0].Equals( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) || string.IsNullOrEmpty( entry.Additional ) ) );
-
-                    return match == null;
-                },
-                AllowedValuesEnum = typeof( SkillBonusSkills )
-            } );
+            AutolootManager manager = AutolootManager.GetInstance();
+            manager.LoadProperties( Constraints );
 
             Constraints.AddSorted( new PropertyEntry
             {
                 Name = Strings.Name,
                 ConstraintType = PropertyType.PredicateWithValue,
+                AllowedOperators = AutolootAllowedOperators.Equal | AutolootAllowedOperators.NotEqual,
                 Predicate = ( item, entry ) =>
                 {
                     string propString = item.Properties == null ? item.Name : item.Properties.Aggregate( string.Empty, ( current, property ) => current + property.Text );
 
-                    if ( entry.Operator != AutolootOperator.NotPresent )
+                    if ( entry.Operator == AutolootOperator.Equal )
                     {
                         return propString.IndexOf( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) >= 0;
                     }
@@ -169,6 +97,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             {
                 Name = nameof( TileFlags ),
                 ConstraintType = PropertyType.Predicate,
+                AllowedOperators = AutolootAllowedOperators.Equal | AutolootAllowedOperators.NotEqual,
                 Predicate = ( item, entry ) =>
                 {
                     StaticTile tileFlags = TileData.GetStaticTile( item.ID );
@@ -189,7 +118,11 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                 AllowedValuesEnum = typeof( TileFlags )
             } );
 
+            manager.LoadAssemblies( Constraints );
+
             LoadFilterProfiles();
+
+            AutolootEntryNames = new ObservableCollection<string>( manager.GetEntries().Select( ale => ale.Name ) );
         }
 
         public ICommand AddCommand => _addCommand ?? ( _addCommand = new RelayCommand( AddItem, o => true ) );
@@ -198,14 +131,10 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 
         public ICommand ApplyCommand => _applyCommand ?? ( _applyCommand = new RelayCommand( Apply, o => true ) );
 
-        public Assembly[] Assemblies
+        public ObservableCollection<string> AutolootEntryNames
         {
-            get => _assemblies;
-            set
-            {
-                SetProperty( ref _assemblies, value );
-                LoadAssemblies( value );
-            }
+            get => _autolootEntryNames;
+            set => SetProperty( ref _autolootEntryNames, value );
         }
 
         public ICommand ChangeProfileCommand => _changeProfileCommand ?? ( _changeProfileCommand = new RelayCommand( ChangeProfile, o => o is EntityCollectionFilterEntry ) );
@@ -252,26 +181,6 @@ namespace ClassicAssist.UI.Views.ECV.Filter
         {
             get => _selectedProfile;
             set => SetProperty( ref _selectedProfile, value );
-        }
-
-        private void LoadAssemblies( IEnumerable<Assembly> assemblies )
-        {
-            foreach ( Assembly asm in assemblies )
-            {
-                IEnumerable<MethodInfo> initializeMethods = asm.GetTypes()
-                    .Where( e => e.IsClass && e.IsPublic && e.GetMethod( "Initialize", BindingFlags.Public | BindingFlags.Static, null,
-                        new[] { typeof( ObservableCollection<PropertyEntry> ) }, null ) != null ).Select( e =>
-                        e.GetMethod( "Initialize", BindingFlags.Public | BindingFlags.Static, null, new[] { typeof( ObservableCollection<PropertyEntry> ) }, null ) );
-
-                foreach ( MethodInfo initializeMethod in initializeMethods )
-                {
-                    // ReSharper disable once CoVariantArrayConversion
-                    initializeMethod?.Invoke( null, new[] { Constraints } );
-                }
-
-                Profiles.Clear();
-                LoadFilterProfiles();
-            }
         }
 
         private void ChangeProfile( object obj )
@@ -358,6 +267,11 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                                             Enabled = itemObj["Enabled"]?.ToObject<bool>() ?? true
                                         };
 
+                                        if ( itemObj["Values"] != null )
+                                        {
+                                            item.Values = itemObj["Values"].ToObject<ObservableCollection<int>>() ?? new ObservableCollection<int>();
+                                        }
+
                                         group.Items.Add( item );
                                     }
                                 }
@@ -414,6 +328,11 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                             { "Operator", (int) item.Operator }, { "Value", item.Value }, { "Additional", item.Additional }, { "Enabled", item.Enabled }
                         };
 
+                        if ( item.Values != null && item.Values.Count > 0 )
+                        {
+                            itemObj.Add( "Values", JArray.FromObject( item.Values ) );
+                        }
+
                         JObject constraint = new JObject { { "Name", item.Constraint.Name } };
 
                         itemObj.Add( "Constraint", constraint );
@@ -451,24 +370,6 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             };
 
             Profiles = new ObservableCollection<EntityCollectionFilterEntry> { Item };
-        }
-
-        private void LoadCustomProperties()
-        {
-            JsonSerializer serializer = new JsonSerializer();
-
-            using ( StreamReader sr = new StreamReader( _propertiesFileCustom ) )
-            {
-                using ( JsonTextReader reader = new JsonTextReader( sr ) )
-                {
-                    PropertyEntry[] constraints = serializer.Deserialize<PropertyEntry[]>( reader );
-
-                    foreach ( PropertyEntry constraint in constraints )
-                    {
-                        Constraints.AddSorted( constraint );
-                    }
-                }
-            }
         }
 
         private void NewGroup( object obj )

@@ -2059,4 +2059,16 @@ Are you sure you wish to continue?</value>
   <data name="Move to set" xml:space="preserve">
     <value>Move to set</value>
   </data>
+  <data name="ID (Multiple)" xml:space="preserve">
+    <value>ID (Multiple)</value>
+  </data>
+  <data name="Autoloot Match" xml:space="preserve">
+    <value>Autoloot Match</value>
+  </data>
+  <data name="Talisman Skill Bonus" xml:space="preserve">
+    <value>Talisman Skill Bonus</value>
+  </data>
+  <data name="Talisman Exceptional Skill Bonus" xml:space="preserve">
+    <value>Talisman Exceptional Skill Bonus</value>
+  </data>
 </root>

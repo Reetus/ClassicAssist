@@ -520,6 +520,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Autoloot Match.
+        /// </summary>
+        public static string Autoloot_Match {
+            get {
+                return ResourceManager.GetString("Autoloot Match", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Autoloot matching items.
         /// </summary>
         public static string Autoloot_matching_items {
@@ -2379,6 +2388,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string ID {
             get {
                 return ResourceManager.GetString("ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID (Multiple).
+        /// </summary>
+        public static string ID__Multiple_ {
+            get {
+                return ResourceManager.GetString("ID (Multiple)", resourceCulture);
             }
         }
         
@@ -5130,6 +5148,24 @@ namespace ClassicAssist.Shared.Resources {
         public static string Take_Snapshot {
             get {
                 return ResourceManager.GetString("Take Snapshot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Talisman Exceptional Skill Bonus.
+        /// </summary>
+        public static string Talisman_Exceptional_Skill_Bonus {
+            get {
+                return ResourceManager.GetString("Talisman Exceptional Skill Bonus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Talisman Skill Bonus.
+        /// </summary>
+        public static string Talisman_Skill_Bonus {
+            get {
+                return ResourceManager.GetString("Talisman Skill Bonus", resourceCulture);
             }
         }
         

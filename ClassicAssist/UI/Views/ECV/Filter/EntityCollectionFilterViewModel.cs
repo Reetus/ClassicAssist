@@ -39,8 +39,6 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 {
     public class EntityCollectionFilterViewModel : SetPropertyNotifyChanged
     {
-        private readonly string _propertiesFileCustom = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Data", "Properties.Custom.json" );
-
         private ICommand _addCommand;
         private ICommand _addProfileCommand;
 
@@ -80,11 +78,12 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             {
                 Name = Strings.Name,
                 ConstraintType = PropertyType.PredicateWithValue,
+                AllowedOperators = AutolootAllowedOperators.Equal | AutolootAllowedOperators.NotEqual,
                 Predicate = ( item, entry ) =>
                 {
                     string propString = item.Properties == null ? item.Name : item.Properties.Aggregate( string.Empty, ( current, property ) => current + property.Text );
 
-                    if ( entry.Operator != AutolootOperator.NotPresent )
+                    if ( entry.Operator == AutolootOperator.Equal )
                     {
                         return propString.IndexOf( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) >= 0;
                     }
@@ -97,6 +96,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             {
                 Name = nameof( TileFlags ),
                 ConstraintType = PropertyType.Predicate,
+                AllowedOperators = AutolootAllowedOperators.Equal | AutolootAllowedOperators.NotEqual,
                 Predicate = ( item, entry ) =>
                 {
                     StaticTile tileFlags = TileData.GetStaticTile( item.ID );
@@ -258,6 +258,11 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                                             Enabled = itemObj["Enabled"]?.ToObject<bool>() ?? true
                                         };
 
+                                        if ( itemObj["Values"] != null )
+                                        {
+                                            item.Values = itemObj["Values"].ToObject<ObservableCollection<int>>() ?? new ObservableCollection<int>();
+                                        }
+
                                         group.Items.Add( item );
                                     }
                                 }
@@ -313,6 +318,11 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                         {
                             { "Operator", (int) item.Operator }, { "Value", item.Value }, { "Additional", item.Additional }, { "Enabled", item.Enabled }
                         };
+
+                        if ( item.Values != null && item.Values.Count > 0 )
+                        {
+                            itemObj.Add( "Values", JArray.FromObject( item.Values ) );
+                        }
 
                         JObject constraint = new JObject { { "Name", item.Constraint.Name } };
 

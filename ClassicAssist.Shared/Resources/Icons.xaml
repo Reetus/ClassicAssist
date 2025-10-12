@@ -631,6 +631,13 @@
                     </DrawingGroup>
                 </DrawingImage.Drawing>
             </DrawingImage>
+            <DrawingImage x:Key="EllipsisIcon">
+                <DrawingImage.Drawing>
+                    <DrawingGroup ClipGeometry="M0,0 V512 H448 V0 H0 Z">
+                        <GeometryDrawing Brush="{DynamicResource ThemeForegroundBrush}" Geometry="F1 M448,512z M0,0z M0,256A56,56,0,1,1,112,256A56,56,0,1,1,0,256z M168,256A56,56,0,1,1,280,256A56,56,0,1,1,168,256z M392,200A56,56,0,1,1,392,312A56,56,0,1,1,392,200z" />
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

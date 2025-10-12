@@ -1,4 +1,23 @@
-﻿using System;
+﻿#region License
+
+// Copyright (C) 2025 Reetus
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#endregion
+
+using System;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Objects;
 using Newtonsoft.Json;
@@ -7,6 +26,7 @@ namespace ClassicAssist.Data.Autoloot
 {
     public class PropertyEntry : SetPropertyNotifyChanged, IComparable<PropertyEntry>
     {
+        private AutolootAllowedOperators _allowedOperators;
         private Type _allowedValuesEnum;
         private int _clilocIndex;
         private int[] _clilocs;
@@ -14,6 +34,13 @@ namespace ClassicAssist.Data.Autoloot
         private string _name;
         private Func<Entity, AutolootConstraintEntry, bool> _predicate;
         private string _shortName;
+        private bool _useMultipleValues;
+
+        public AutolootAllowedOperators AllowedOperators
+        {
+            get => _allowedOperators;
+            set => SetProperty( ref _allowedOperators, value );
+        }
 
         [JsonIgnore]
         public Type AllowedValuesEnum
@@ -46,17 +73,23 @@ namespace ClassicAssist.Data.Autoloot
             set => SetProperty( ref _name, value );
         }
 
+        [JsonIgnore]
+        public Func<Entity, AutolootConstraintEntry, bool> Predicate
+        {
+            get => _predicate;
+            set => SetProperty( ref _predicate, value );
+        }
+
         public string ShortName
         {
             get => _shortName;
             set => SetProperty( ref _shortName, value );
         }
 
-        [JsonIgnore]
-        public Func<Entity, AutolootConstraintEntry, bool> Predicate
+        public bool UseMultipleValues
         {
-            get => _predicate;
-            set => SetProperty( ref _predicate, value );
+            get => _useMultipleValues;
+            set => SetProperty( ref _useMultipleValues, value );
         }
 
         public int CompareTo( PropertyEntry other )

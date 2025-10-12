@@ -258,19 +258,20 @@ namespace ClassicAssist.Data.Autoloot
         {
             if ( entry.Operator != AutolootOperator.NotPresent )
             {
-                return properties.Where( property => property.Arguments != null && property.Arguments.Length >= 1 && ( entry.Additional == nameof( SkillBonusSkills.Any ) ||
-                                                                                                                       property.Arguments[0].Equals( entry.Additional,
-                                                                                                                           StringComparison.CurrentCultureIgnoreCase ) ||
-                                                                                                                       string.IsNullOrEmpty( entry.Additional ) ) ).Any( property =>
-                    AutolootHelpers.Operation( entry.Operator, Convert.ToInt32( property.Arguments[1] ), entry.Value ) );
+                return properties.Where( property => PropertyMatches( entry, property ) )
+                    .Any( property => AutolootHelpers.Operation( entry.Operator, Convert.ToInt32( property.Arguments[1] ), entry.Value ) );
             }
 
-            Property match = properties.FirstOrDefault( property =>
-                property.Arguments != null && property.Arguments.Length >= 1 && ( entry.Additional == nameof( SkillBonusSkills.Any ) ||
-                                                                                  property.Arguments[0].Equals( entry.Additional, StringComparison.CurrentCultureIgnoreCase ) ||
-                                                                                  string.IsNullOrEmpty( entry.Additional ) ) );
+            Property match = properties.FirstOrDefault( property => PropertyMatches( entry, property ) );
 
             return match == null;
+
+            bool PropertyMatches( AutolootConstraintEntry e, Property p )
+            {
+                return p.Arguments != null && p.Arguments.Length >= 1 && ( e.Additional == nameof( SkillBonusSkills.Any ) ||
+                                                                           p.Arguments[0].Equals( e.Additional, StringComparison.CurrentCultureIgnoreCase ) ||
+                                                                           string.IsNullOrEmpty( e.Additional ) );
+            }
         }
     }
 }

@@ -49,6 +49,8 @@ namespace ClassicAssist.Data
         private bool _debug;
         private bool _defaultMacroQuietMode;
         private bool _disableHotkeysLoad;
+        private bool _dragDelay;
+        private int _dragDelayMs;
         private string _enemyTargetMessage;
         private EntityCollectionViewerOptions _entityCollectionViewerOptions = new EntityCollectionViewerOptions();
         private int _expireTargetsMs;
@@ -238,6 +240,17 @@ namespace ClassicAssist.Data
         {
             get => _disableHotkeysLoad;
             set => SetProperty( ref _disableHotkeysLoad, value );
+        }
+        public bool DragDelay
+        {
+            get => _dragDelay;
+            set => SetProperty( ref _dragDelay, value );
+        }
+
+        public int DragDelayMS
+        {
+            get => _dragDelayMs;
+            set => SetProperty( ref _dragDelayMs, value );
         }
 
         public string EnemyTargetMessage

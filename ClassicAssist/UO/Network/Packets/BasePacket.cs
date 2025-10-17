@@ -27,5 +27,10 @@ namespace ClassicAssist.UO.Network.Packets
         {
             return _writer?.ToArray();
         }
+
+        public virtual void ThrottleBeforeSend()
+        {
+            // No throtteling by default
+        }
     }
 }

@@ -160,6 +160,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Action Delay Dragging (Sphere-X):.
+        /// </summary>
+        public static string Action_Delay_Dragging__Sphere_X__ {
+            get {
+                return ResourceManager.GetString("Action Delay Dragging (Sphere-X):", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Actions.
         /// </summary>
         public static string Actions {

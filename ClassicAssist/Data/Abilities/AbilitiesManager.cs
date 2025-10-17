@@ -342,7 +342,7 @@ namespace ClassicAssist.Data.Abilities
             ActionPacketQueue.EnqueuePackets(
                 new BasePacket[]
                 {
-                    new UseObject( serial ), new DragItem( leftHand.Serial, 1 ),
+                    new UseObject( serial ), new DragItem( leftHand.Serial, 1, Options.CurrentOptions.DragDelay ? Options.CurrentOptions.DragDelayMS : 0 ),
                     new EquipRequest( leftHand.Serial, leftHand.Layer, (int) Engine.Player?.Serial )
                 }, QueuePriority.High ).ContinueWith( t => _checkHandsInProgress = false );
 

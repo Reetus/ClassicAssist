@@ -135,6 +135,8 @@ namespace ClassicAssist.UI.ViewModels
                 ["LightLevel"] = Options.CurrentOptions.LightLevel,
                 ["ActionDelay"] = Options.CurrentOptions.ActionDelay,
                 ["ActionDelayMS"] = Options.CurrentOptions.ActionDelayMS,
+                ["DragDelay"] = Options.CurrentOptions.DragDelay,
+                ["DragDelayMS"] = Options.CurrentOptions.DragDelayMS,
                 ["Debug"] = Options.CurrentOptions.Debug,
                 ["SysTray"] = Options.CurrentOptions.SysTray,
                 ["SlowHandlerThreshold"] = Options.CurrentOptions.SlowHandlerThreshold,
@@ -204,6 +206,8 @@ namespace ClassicAssist.UI.ViewModels
             Options.LightLevel = general["LightLevel"]?.ToObject<int>() ?? 100;
             Options.ActionDelay = general["ActionDelay"]?.ToObject<bool>() ?? true;
             Options.ActionDelayMS = general["ActionDelayMS"]?.ToObject<int>() ?? 1000;
+            Options.DragDelay = general["DragDelay"]?.ToObject<bool>() ?? false;
+            Options.DragDelayMS = general["DragDelayMS"]?.ToObject<int>() ?? 450;
             Options.AlwaysOnTop = general["AlwaysOnTop"]?.ToObject<bool>() ?? false;
             Options.Debug = general["Debug"]?.ToObject<bool>() ?? false;
             Options.SysTray = general["SysTray"]?.ToObject<bool>() ?? false;

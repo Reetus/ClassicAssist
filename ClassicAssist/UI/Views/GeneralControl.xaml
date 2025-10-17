@@ -107,6 +107,24 @@
                             </CheckBox.ContentTemplate>
                         </CheckBox>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel.Resources>
+                            <misc:BindingProxy x:Key="proxy" Data="{Binding}" />
+                        </StackPanel.Resources>
+                        <CheckBox IsChecked="{Binding Options.DragDelay}" DataContext="{Binding}">
+                            <CheckBox.ContentTemplate>
+                                <ItemContainerTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="{x:Static r:Strings.Action_Delay_Dragging__Sphere_X__}" Margin="0" />
+                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                        <TextBox Width="40" Margin="10,0,10,0"
+                                                 Text="{Binding Path=Data.Options.DragDelayMS, Source={StaticResource proxy}}" />
+                                        <Label Content="ms" Margin="0" Padding="0" />
+                                    </StackPanel>
+                                </ItemContainerTemplate>
+                            </CheckBox.ContentTemplate>
+                        </CheckBox>
+                    </StackPanel>
                 </StackPanel>
             </GroupBox>
             <Control Grid.Row="1" />

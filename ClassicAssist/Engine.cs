@@ -867,6 +867,8 @@ namespace Assistant
                 return;
             }
 
+            basePacket.ThrottleBeforeSend();
+
             SendPacketToServer( data, data.Length );
         }
 

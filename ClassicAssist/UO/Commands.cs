@@ -33,7 +33,7 @@ namespace ClassicAssist.UO
 
         public static void DragItem( int serial, int amount )
         {
-            Engine.SendPacketToServer( new DragItem( serial, amount ) );
+            Engine.SendPacketToServer( new DragItem( serial, amount, Options.CurrentOptions.DragDelay ? Options.CurrentOptions.DragDelayMS : 0 ) );
         }
 
         public static void DropItem( int serial, int containerSerial, int x = -1, int y = -1, int z = 0 )
@@ -100,7 +100,7 @@ namespace ClassicAssist.UO
 
             return ActionPacketQueue.EnqueueAction( item, i =>
             {
-                Engine.SendPacketToServer( new DragItem( item.Serial, 1 ) );
+                Engine.SendPacketToServer( new DragItem( item.Serial, 1, Options.CurrentOptions.DragDelay ? Options.CurrentOptions.DragDelayMS : 0 ) );
                 Thread.Sleep( 50 );
                 Engine.SendPacketToServer( new EquipRequest( item.Serial, layer, containerSerial ) );
                 return true;
@@ -135,7 +135,7 @@ namespace ClassicAssist.UO
 
             return ActionPacketQueue.EnqueueAction( serial, i =>
             {
-                Engine.SendPacketToServer( new DragItem( i, 1 ) );
+                Engine.SendPacketToServer( new DragItem( i, 1, Options.CurrentOptions.DragDelay ? Options.CurrentOptions.DragDelayMS : 0 ) );
                 Thread.Sleep( 50 );
                 Engine.SendPacketToServer( new EquipRequest( i, layer, containerSerial ) );
                 return true;

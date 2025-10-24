@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -110,9 +110,40 @@ namespace ClassicAssist.Controls.DraggableTreeView
                             return;
                     }
 
+                    int? previousIndex = parent?.IndexOf( sourceItem );
+
+                    int newSelectedIndex = 0;
+
+                    if ( previousIndex.HasValue )
+                    {
+                        if ( previousIndex.Value > 0 )
+                        {
+                            newSelectedIndex = previousIndex.Value - 1;
+                        }
+                        else if ( previousIndex.Value < parent.Count - 1 )
+                        {
+                            newSelectedIndex = previousIndex.Value;
+                        }
+                        else
+                        {
+                            newSelectedIndex = -1;
+                        }
+                    }
+
                     parent?.Remove( sourceItem );
 
+                    if ( newSelectedIndex != -1 && parent != null )
+                    {
+                        IDraggable item = parent[newSelectedIndex];
+
+                        if ( item != null && ItemContainerGenerator.ContainerFromItem( item ) is TreeViewItem tvi && !tvi.IsSelected )
+                        {
+                            tvi.IsSelected = true;
+                        }
+                    }
+
                     destinationGroup.Children.Add( sourceItem );
+
                     break;
                 }
                 case IDraggableEntry destinationItem:

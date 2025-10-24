@@ -12,12 +12,13 @@
 
 #endregion
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Media;
 using ClassicAssist.Misc;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Media;
 
 namespace ClassicAssist.UI.ViewModels
 {
@@ -25,18 +26,34 @@ namespace ClassicAssist.UI.ViewModels
     {
         private readonly Dictionary<int, ImageSource> _cache = new Dictionary<int, ImageSource>();
 
+        public bool IsCoin => Entity?.ID == 0x0EEA || Entity?.ID == 0x0EED || Entity?.ID == 0x0EF0;
+
         public ImageSource Bitmap
         {
             get
             {
-                int key = ( Entity.ID << 16 ) | Entity.Hue;
+                int id = Entity.ID;
+
+                if ( IsCoin && Entity is Item coin )
+                {
+                    if ( coin.Count > 5 )
+                    {
+                        id += 2;
+                    }
+                    else if ( coin.Count > 1 )
+                    {
+                        id += 1;
+                    }
+                }
+
+                int key = ( id << 16 ) | Entity.Hue;
 
                 if ( _cache.TryGetValue( key, out ImageSource bitmap ) )
                 {
                     return bitmap;
                 }
 
-                ImageSource result = Art.GetStatic( Entity.ID, Entity.Hue ).ToImageSource();
+                ImageSource result = Art.GetStatic( id, Entity.Hue ).ToImageSource();
 
                 if ( !( Entity is Item item ) || item.Layer != Layer.Mount )
                 {
@@ -52,12 +69,12 @@ namespace ClassicAssist.UI.ViewModels
                     return result;
                 }
 
-                if ( !EntityCollectionViewerViewModel.MountIDEntries.Value.TryGetValue( Entity.ID, out int id ) )
+                if ( !EntityCollectionViewerViewModel.MountIDEntries.Value.TryGetValue( Entity.ID, out int mountId ) )
                 {
                     return null;
                 }
 
-                result = Art.GetStatic( id, Entity.Hue ).ToImageSource();
+                result = Art.GetStatic( mountId, Entity.Hue ).ToImageSource();
 
                 _cache.Add( key, result );
 

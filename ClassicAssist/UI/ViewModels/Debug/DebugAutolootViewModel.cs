@@ -120,6 +120,12 @@ namespace ClassicAssist.UI.ViewModels.Debug
                     continue;
                 }
 
+                if ( entry.Group != null && !entry.Group.Enabled )
+                {
+                    TestResults += $"Group {entry.Group.Name} containing {entry.Name} disabled...\n";
+                    continue;
+                }
+
                 TestResults += $"Entry {entry.Name}...\n\n";
 
                 IEnumerable<Item> matchItems = AutolootHelpers.AutolootFilter( container.GetItems(), entry );

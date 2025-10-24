@@ -1,4 +1,4 @@
-﻿<UserControl
+<UserControl
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -15,6 +15,7 @@
     xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
     xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
     xmlns:autoloot1="clr-namespace:ClassicAssist.UI.Views.Autoloot"
+    xmlns:autoloot2="clr-namespace:ClassicAssist.UI.Views.Agents.Autoloot"
     x:Class="ClassicAssist.UI.Views.Agents.AutolootTabControl"
     mc:Ignorable="d"
     d:DesignHeight="250" d:DesignWidth="600" x:Name="userControl">
@@ -26,7 +27,8 @@
             </ResourceDictionary.MergedDictionaries>
             <misc1:BindingProxy x:Key="Proxy" Data="{Binding}" />
             <ValueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
-            <ValueConverters:AutolootOperatorFilterValueConverter x:Key="AutolootOperatorFilterValueConverter"/>
+            <ValueConverters:AutolootOperatorFilterValueConverter x:Key="AutolootOperatorFilterValueConverter" />
+            <autoloot2:DraggableGroupVisibilityValueConverter x:Key="DraggableGroupVisibilityConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
@@ -146,6 +148,43 @@
                                 <MenuItem Header="{x:Static resources:Strings.Remove_Group}"
                                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(agents:AutolootViewModel.RemoveGroupCommand)}"
                                           CommandParameter="{Binding SelectedGroup}" />
+                                <Separator>
+                                    <Separator.Style>
+                                        <Style TargetType="Separator">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedItem}" Value="{x:Null}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Separator.Style>
+                                </Separator>
+                                <MenuItem Header="{x:Static resources:Strings.Move_to_group}"
+                                          ItemsSource="{Binding Draggables}">
+                                    <MenuItem.Style>
+                                        <Style TargetType="MenuItem">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedItem}" Value="{x:Null}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </MenuItem.Style>
+                                    <MenuItem.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" />
+                                        </DataTemplate>
+                                    </MenuItem.ItemTemplate>
+                                    <MenuItem.ItemContainerStyle>
+                                        <Style TargetType="MenuItem">
+                                            <Setter Property="Visibility"
+                                                    Value="{Binding Converter={StaticResource DraggableGroupVisibilityConverter}}" />
+                                            <Setter Property="Command"
+                                                    Value="{Binding Source={StaticResource Proxy}, Path=Data.(agents:AutolootViewModel.MoveToGroupCommand)}" />
+                                            <Setter Property="CommandParameter" Value="{Binding}" />
+                                        </Style>
+                                    </MenuItem.ItemContainerStyle>
+                                </MenuItem>
                             </ContextMenu>
                         </draggableTreeView:DraggableTreeView.ContextMenu>
                     </draggableTreeView:DraggableTreeView>

@@ -53,6 +53,7 @@ namespace ClassicAssist.UI.Views.Autoloot
             Grid.Children.Clear();
 
             Binding widthBinding = new Binding( "ActualWidth" ) { RelativeSource = new RelativeSource( RelativeSourceMode.FindAncestor, typeof( AutolootValueControl ), 1 ) };
+            Binding valuesBinding = new Binding( nameof( autolootConstraintEntry.Values ) ) { Source = autolootConstraintEntry, Mode = BindingMode.TwoWay };
 
             if ( autolootConstraintEntry.Property.AllowedValuesEnum != null && autolootConstraintEntry.Property.AllowedValuesEnum == typeof( Layer ) )
             {
@@ -75,12 +76,21 @@ namespace ClassicAssist.UI.Views.Autoloot
                 return;
             }
 
-            if ( autolootConstraintEntry.Property.UseMultipleValues )
+            if ( autolootConstraintEntry.Property.UseMultipleValues && autolootConstraintEntry.Property.Name != Strings.Cliloc__Multiple_ )
             {
-                Binding valuesBinding = new Binding( nameof( autolootConstraintEntry.Values ) ) { Source = autolootConstraintEntry, Mode = BindingMode.TwoWay };
-
                 MultiItemIDSelector control = new MultiItemIDSelector { MinWidth = 40 };
                 BindingOperations.SetBinding( control, MultiItemIDSelector.ValuesProperty, valuesBinding );
+                BindingOperations.SetBinding( control, WidthProperty, widthBinding );
+
+                Grid.Children.Add( control );
+
+                return;
+            }
+
+            if ( autolootConstraintEntry.Property.Name == Strings.Cliloc__Multiple_ )
+            {
+                MultiClilocSelector control = new MultiClilocSelector { MinWidth = 40 };
+                BindingOperations.SetBinding( control, MultiClilocSelector.ValuesProperty, valuesBinding );
                 BindingOperations.SetBinding( control, WidthProperty, widthBinding );
 
                 Grid.Children.Add( control );

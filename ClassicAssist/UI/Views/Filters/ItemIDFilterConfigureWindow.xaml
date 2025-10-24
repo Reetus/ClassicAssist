@@ -11,6 +11,7 @@
         xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
         xmlns:misc="clr-namespace:ClassicAssist.Misc"
         xmlns:filters1="clr-namespace:ClassicAssist.Data.Filters"
+        xmlns:itemIdFilter="clr-namespace:ClassicAssist.UI.Views.Filters.ItemIDFilter"
         mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         Title="{x:Static resources:Strings.ItemID_Filter}" Height="350" Width="420">
     <Window.Resources>
@@ -104,22 +105,27 @@
                                 <DataTemplate DataType="filters1:ItemIDFilterEntry">
                                     <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
                                         <controls:EditTextBlock
-                                            Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=50, ElementName=SourceIDColumn, Mode=OneWay}"
+                                            Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=SourceIDColumn, Mode=OneWay}"
                                             Text="{Binding SourceID, Converter={StaticResource IntToHexStringValueConverter}}"
-                                            ShowIcon="True" />
-
-                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                                        <Button Padding="3,0,0,0"
-                                                Command="{Binding Data.SelectSourceIDCommand, Source={StaticResource Proxy}}"
-                                                CommandParameter="{Binding}">
-                                            <Image Source="{DynamicResource PopupIcon}" Height="12" />
-                                        </Button>
-                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                                        <Button Padding="3,0,0,0"
-                                                Command="{Binding Data.TargetSourceIDCommand, Source={StaticResource Proxy}}"
-                                                CommandParameter="{Binding}">
-                                            <Image Source="{DynamicResource CrosshairIcon}" Height="12" />
-                                        </Button>
+                                            ShowIcon="True">
+                                            <controls:EditTextBlock.Buttons>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                                    <controls:ImageButton ImageSource="{StaticResource PopupIcon}"
+                                                                          ImageHeight="12"
+                                                                          Command="{Binding Data.SelectSourceIDCommand, Source={StaticResource Proxy}}"
+                                                                          CommandParameter="{Binding}" />
+                                                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                                    <controls:ImageButton ImageSource="{StaticResource CrosshairIcon}"
+                                                                          ImageHeight="12"
+                                                                          Command="{Binding Data.TargetSourceIDCommand, Source={StaticResource Proxy}}"
+                                                                          CommandParameter="{Binding}" />
+                                                </StackPanel>
+                                            </controls:EditTextBlock.Buttons>
+                                            <controls:EditTextBlock.ToolTip>
+                                                <itemIdFilter:ItemIDTooltipControl ItemID="{Binding SourceID}" />
+                                            </controls:EditTextBlock.ToolTip>
+                                        </controls:EditTextBlock>
                                     </StackPanel>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
@@ -130,22 +136,28 @@
                                 <DataTemplate DataType="filters1:ItemIDFilterEntry">
                                     <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
                                         <controls:EditTextBlock
-                                            Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=50, ElementName=DestinationIDColumn, Mode=OneWay}"
+                                            Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=DestinationIDColumn, Mode=OneWay}"
                                             Text="{Binding DestinationID, Converter={StaticResource IntToHexStringValueConverter}}"
-                                            ShowIcon="True" />
-
-                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                                        <Button Padding="3,0,0,0"
-                                                Command="{Binding Data.SelectDestinationIDCommand, Source={StaticResource Proxy}}"
-                                                CommandParameter="{Binding}">
-                                            <Image Source="{DynamicResource PopupIcon}" Height="12" />
-                                        </Button>
-                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                                        <Button Padding="3,0,0,0"
-                                                Command="{Binding Data.TargetDestinationIDCommand, Source={StaticResource Proxy}}"
-                                                CommandParameter="{Binding}">
-                                            <Image Source="{DynamicResource CrosshairIcon}" Height="12" />
-                                        </Button>
+                                            ShowIcon="True">
+                                            <controls:EditTextBlock.Buttons>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                                    <controls:ImageButton ImageSource="{StaticResource PopupIcon}"
+                                                                          ImageHeight="12"
+                                                                          Command="{Binding Data.SelectDestinationIDCommand, Source={StaticResource Proxy}}"
+                                                                          CommandParameter="{Binding}" />
+                                                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                                    <controls:ImageButton ImageSource="{StaticResource CrosshairIcon}"
+                                                                          ImageHeight="12"
+                                                                          Command="{Binding Data.TargetDestinationIDCommand, Source={StaticResource Proxy}}"
+                                                                          CommandParameter="{Binding}" />
+                                                </StackPanel>
+                                            </controls:EditTextBlock.Buttons>
+                                            <controls:EditTextBlock.ToolTip>
+                                                <itemIdFilter:ItemIDTooltipControl ItemID="{Binding DestinationID}"
+                                                        Hue="{Binding Hue}" />
+                                            </controls:EditTextBlock.ToolTip>
+                                        </controls:EditTextBlock>
                                     </StackPanel>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>

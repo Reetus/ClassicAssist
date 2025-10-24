@@ -15,6 +15,10 @@
                 <ResourceDictionary
                     Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <DataTemplate x:Key="DefaultItemTemplate">
+                <TextBlock Text="{Binding ., StringFormat={}0x{0:x8}}"
+                           Foreground="{StaticResource ThemeForegroundBrush}" />
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -29,7 +33,7 @@
         </Grid>
         <Popup x:Name="Popup" StaysOpen="False" Opened="Popup_Opened">
             <Border Padding="5">
-                <StackPanel Width="200">
+                <StackPanel Width="{Binding ElementName=userControl, Path=PopupWidth}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -51,10 +55,16 @@
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{Binding ., StringFormat={}0x{0:x8}}" Grid.Column="0"
-                                                   Width="170"
-                                                   Foreground="{StaticResource ThemeForegroundBrush}" />
-                                        <controls:ImageButton ImageSource="{StaticResource RemoveIcon}" ImageHeight="12" Grid.Column="1"
+                                        <ContentPresenter Grid.Column="0"
+                                                          Content="{Binding}">
+                                            <ContentPresenter.ContentTemplate>
+                                                <Binding Path="ItemTemplate"
+                                                         ElementName="userControl"
+                                                         FallbackValue="{StaticResource DefaultItemTemplate}" />
+                                            </ContentPresenter.ContentTemplate>
+                                        </ContentPresenter>
+                                        <controls:ImageButton ImageSource="{StaticResource RemoveIcon}"
+                                                              ImageHeight="12" Grid.Column="1"
                                                               Command="{Binding RemoveItemCommand, ElementName=userControl}"
                                                               CommandParameter="{Binding}" />
                                     </Grid>

@@ -1,16 +1,35 @@
-﻿using System;
-using System.Windows;
-using Microsoft.Xaml.Behaviors;
-using ICSharpCode.AvalonEdit;
+﻿#region License
 
-namespace ClassicAssist.UI.Misc
+// Copyright (C) 2025 Reetus
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#endregion
+
+using ICSharpCode.AvalonEdit;
+using Microsoft.Xaml.Behaviors;
+using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Windows;
+
+namespace ClassicAssist.UI.Misc.Behaviours
 {
     public sealed class AvalonEditBehaviour : Behavior<TextEditor>
     {
-        public static readonly DependencyProperty TextBindingProperty = DependencyProperty.Register( "TextBinding",
-            typeof( string ), typeof( AvalonEditBehaviour ),
-            new FrameworkPropertyMetadata( default( string ), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                PropertyChangedCallback ) );
+        public static readonly DependencyProperty TextBindingProperty = DependencyProperty.Register( nameof( TextBinding ), typeof( string ), typeof( AvalonEditBehaviour ),
+            new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, PropertyChangedCallback ) );
 
         public string TextBinding
         {
@@ -70,8 +89,7 @@ namespace ClassicAssist.UI.Misc
             textEditor.CaretOffset = carot;
         }
 
-        private static void PropertyChangedCallback( DependencyObject dependencyObject,
-            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs )
+        private static void PropertyChangedCallback( DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs )
         {
             AvalonEditBehaviour behavior = dependencyObject as AvalonEditBehaviour;
 

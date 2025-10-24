@@ -8,6 +8,7 @@
              xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:behaviours="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
              mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -33,7 +34,7 @@
         </ToolBar>
         <ListView Grid.Row="1" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
             <b:Interaction.Behaviors>
-                <misc:ClipboardBehaviour CopyCommand="{Binding ClipboardCopyCommand}" />
+                <behaviours:ClipboardBehaviour CopyCommand="{Binding ClipboardCopyCommand}" />
             </b:Interaction.Behaviors>
             <ListView.View>
                 <GridView>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
@@ -2076,5 +2076,11 @@ Are you sure you wish to continue?</value>
   </data>
   <data name="Move to group" xml:space="preserve">
     <value>Move to group</value>
+  </data>
+  <data name="Debugger paused on line {0}" xml:space="preserve">
+    <value>Debugger paused on line {0}</value>
+  </data>
+  <data name="Open in external editor" xml:space="preserve">
+    <value>Open in external editor</value>
   </data>
 </root>

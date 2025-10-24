@@ -11,7 +11,9 @@
     xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
     xmlns:filter="clr-namespace:ClassicAssist.UI.Views.ECV.Filter"
     xmlns:ecv="clr-namespace:ClassicAssist.UI.Views.ECV"
-    xmlns:local="clr-namespace:ClassicAssist.UI.Views" x:Name="window"
+    xmlns:local="clr-namespace:ClassicAssist.UI.Views"
+    xmlns:behaviours="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
+    x:Name="window"
     x:Class="ClassicAssist.UI.Views.EntityCollectionViewer"
     mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
     Width="600" Title="{x:Static resources:Strings.Entity_Collection_Viewer}"
@@ -143,7 +145,7 @@
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="3"
                   Style="{StaticResource EntityListViewStyle}">
             <i:Interaction.Behaviors>
-                <uimisc:MultiSelectionBehaviour SelectedItems="{Binding SelectedItems}" />
+                <behaviours:MultiSelectionBehaviour SelectedItems="{Binding SelectedItems}" />
             </i:Interaction.Behaviors>
         </ListView>
         <ItemsControl ItemsSource="{Binding QueueActions}" Grid.Row="4">

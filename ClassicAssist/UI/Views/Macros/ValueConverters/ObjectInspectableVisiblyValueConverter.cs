@@ -1,6 +1,5 @@
 ﻿#region License
-
-// Copyright (C) 2020 Reetus
+// Copyright (C) 2025 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,36 +13,26 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
 #endregion
 
-using System.Windows.Controls;
-using Microsoft.Xaml.Behaviors;
+using System;
+using System.Globalization;
+using System.Windows;
+using System.Windows.Data;
+using ClassicAssist.UO.Objects;
 
-namespace ClassicAssist.UI.Misc
+namespace ClassicAssist.UI.Views.Macros.ValueConverters
 {
-    public class AutoScrollTextBoxBehaviour : Behavior<TextBox>
+    public class ObjectInspectableVisiblyValueConverter : IValueConverter
     {
-        protected override void OnAttached()
+        public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
         {
-            base.OnAttached();
-
-            AssociatedObject.TextChanged += OnTextChanged;
+            return value is Item ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private void OnTextChanged( object sender, TextChangedEventArgs e )
+        public object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture )
         {
-            AssociatedObject.ScrollToEnd();
-        }
-
-        protected override void OnDetaching()
-        {
-            base.OnDetaching();
-
-            if ( AssociatedObject != null )
-            {
-                AssociatedObject.TextChanged -= OnTextChanged;
-            }
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿#region License
 
-// Copyright (C) 2021 Reetus
+// Copyright (C) 2025 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,22 +17,33 @@
 
 #endregion
 
-using System;
-using System.Globalization;
-using System.Windows.Data;
+using System.Windows.Controls;
+using Microsoft.Xaml.Behaviors;
 
-namespace ClassicAssist.UI.Misc.ValueConverters
+namespace ClassicAssist.UI.Misc.Behaviours
 {
-    public class NullBooleanConverter : IValueConverter
+    public class AutoScrollTextBoxBehaviour : Behavior<TextBox>
     {
-        public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
+        protected override void OnAttached()
         {
-            return value != null;
+            base.OnAttached();
+
+            AssociatedObject.TextChanged += OnTextChanged;
         }
 
-        public object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture )
+        private void OnTextChanged( object sender, TextChangedEventArgs e )
         {
-            throw new NotImplementedException();
+            AssociatedObject.ScrollToEnd();
+        }
+
+        protected override void OnDetaching()
+        {
+            base.OnDetaching();
+
+            if ( AssociatedObject != null )
+            {
+                AssociatedObject.TextChanged -= OnTextChanged;
+            }
         }
     }
 }

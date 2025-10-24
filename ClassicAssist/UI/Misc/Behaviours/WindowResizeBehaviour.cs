@@ -22,7 +22,7 @@ using System.Windows;
 using Microsoft.Xaml.Behaviors;
 using ClassicAssist.Data;
 
-namespace ClassicAssist.UI.Misc
+namespace ClassicAssist.UI.Misc.Behaviours
 {
     public class WindowResizeBehaviour : Behavior<Window>
     {

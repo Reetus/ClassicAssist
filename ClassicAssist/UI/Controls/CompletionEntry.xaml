@@ -7,6 +7,7 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+             xmlns:behaviours="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
              mc:Ignorable="d" DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -72,7 +73,7 @@
                                    HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
                                    FontFamily="Consolas" Margin="10,0,0,0" IsReadOnly="True" Padding="10">
                 <i:Interaction.Behaviors>
-                    <misc:AvalonEditBehaviour
+                    <behaviours:AvalonEditBehaviour
                         TextBinding="{Binding EntryExample}" />
                 </i:Interaction.Behaviors>
             </avalonedit:TextEditor>

@@ -12,7 +12,7 @@ namespace ClassicAssist.UI.Misc
 
     public class ListViewMultiSelectionBehaviour : Behavior<ListView>
     {
-        public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register( "SelectedItems",
+        public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register( nameof( SelectedItems ),
             typeof( IList ), typeof( ListViewMultiSelectionBehaviour ),
             new UIPropertyMetadata( null, SelectedItemsChanged ) );
 

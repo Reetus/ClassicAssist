@@ -17,11 +17,17 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <!-- ReSharper disable once Xaml.BindingWithoutContextNotResolved -->
-    <controls:MultiValueSelector Values="{Binding Values}">
+    <controls:MultiValueSelector Values="{Binding Values}" HexDisplay="True">
         <controls:MultiValueSelector.Buttons>
             <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
             <controls:ImageButton ImageSource="{StaticResource CrosshairIcon}" Margin="5,0,0,0"
                                   Command="{Binding Data.TargetCommand, Source={StaticResource Proxy}}" />
         </controls:MultiValueSelector.Buttons>
+        <controls:MultiValueSelector.ItemTemplate>
+            <DataTemplate>
+                <TextBlock Text="{Binding ., StringFormat={}0x{0:x8}}"
+                           Foreground="{StaticResource ThemeForegroundBrush}" />
+            </DataTemplate>
+        </controls:MultiValueSelector.ItemTemplate>
     </controls:MultiValueSelector>
 </UserControl>

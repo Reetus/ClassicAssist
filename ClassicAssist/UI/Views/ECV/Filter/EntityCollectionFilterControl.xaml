@@ -208,10 +208,32 @@
                                                                             <Setter Property="Visibility"
                                                                                 Value="Visible" />
                                                                         </DataTrigger>
+                                                                        <DataTrigger
+                                                                            Binding="{Binding Constraint.Name}"
+                                                                            Value="{x:Static resources:Strings.Cliloc__Multiple_}">
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Collapsed" />
+                                                                        </DataTrigger>
                                                                     </Style.Triggers>
                                                                 </Style>
                                                             </views:MultiItemIDSelector.Style>
                                                         </views:MultiItemIDSelector>
+                                                        <views:MultiClilocSelector Grid.Column="0" Values="{Binding Values, Mode=TwoWay}"
+                                                                Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}">
+                                                            <views:MultiClilocSelector.Style>
+                                                                <Style TargetType="{x:Type views:MultiClilocSelector}">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger
+                                                                            Binding="{Binding Constraint.Name}"
+                                                                            Value="{x:Static resources:Strings.Cliloc__Multiple_}">
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Visible" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </views:MultiClilocSelector.Style>
+                                                        </views:MultiClilocSelector>
                                                         <ComboBox Grid.Column="0" MinWidth="40"
                                                                   ItemsSource="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.AutolootEntryNames), Source={StaticResource DataContextProxy}}"
                                                                   SelectedItem="{Binding Additional}"

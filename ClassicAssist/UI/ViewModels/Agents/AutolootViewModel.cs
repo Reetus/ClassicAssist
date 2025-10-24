@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 
 // Copyright (C) 2025 Reetus
 // 
@@ -79,6 +79,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private double _leftColumnWidth = 200;
         private bool _lootHumanoids;
         private bool _matchTextValue;
+        private ICommand _moveToGroupCommand;
         private ICommand _newGroupCommand;
 
         private ICommand _removeCommand;
@@ -188,6 +189,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
             get => _matchTextValue;
             set => SetProperty( ref _matchTextValue, value );
         }
+
+        public ICommand MoveToGroupCommand => _moveToGroupCommand ?? ( _moveToGroupCommand = new RelayCommand( MoveToGroup, o => SelectedItem != null ) );
 
         public ICommand NewGroupCommand => _newGroupCommand ?? ( _newGroupCommand = new RelayCommand( NewGroup, o => true ) );
 
@@ -716,12 +719,45 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            AutolootEntry entry = new AutolootEntry
+            string name = TileData.GetStaticTile( item.ID ).Name;
+
+            if ( string.IsNullOrEmpty( name ) )
             {
-                Name = TileData.GetStaticTile( item.ID ).Name, ID = item.ID, Constraints = new ObservableCollection<AutolootConstraintEntry>()
-            };
+                name = item.Name;
+            }
+
+            if ( Engine.TooltipsEnabled && item.Properties != null )
+            {
+                string propertyName = GetNameMinusAmount( item );
+
+                if ( !string.IsNullOrEmpty( propertyName ) )
+                {
+                    name = propertyName;
+                }
+            }
+
+            AutolootEntry entry = new AutolootEntry { Name = name, ID = item.ID, Constraints = new ObservableCollection<AutolootConstraintEntry>() };
 
             Items.Add( entry );
+        }
+
+        private static string GetNameMinusAmount( Item item )
+        {
+            if ( item.Properties == null || item.Properties.Length == 0 )
+            {
+                return item.Name.Trim();
+            }
+
+            Property property = item.Properties.First();
+
+            if ( property.Arguments == null || property.Arguments.Length == 0 )
+            {
+                return item.Name.Trim();
+            }
+
+            List<string> newArguments = ( from argument in property.Arguments select argument.Equals( item.Count.ToString() ) ? string.Empty : argument ).ToList();
+
+            return newArguments.Count == 0 ? item.Name.Trim() : Cliloc.GetLocalString( property.Cliloc, newArguments.ToArray() ).Trim();
         }
 
         private void CSVImport( object obj )
@@ -767,7 +803,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
+            int newSelectedIndex = GetNewSelectedIndex( entry );
+
             Items.Remove( entry );
+
+            SetNewSelectedIndex( newSelectedIndex );
 
             await Task.CompletedTask;
         }
@@ -828,6 +868,70 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     Draggables.Remove( autolootEntry );
                 }
             }
+        }
+
+        private void MoveToGroup( object obj )
+        {
+            if ( SelectedItem == null || !( obj is AutolootGroup autolootGroup ) )
+            {
+                return;
+            }
+
+            AutolootEntry item = SelectedItem;
+
+            int newSelectedIndex = GetNewSelectedIndex( item );
+
+            Draggables.Remove( item );
+            item.Group = autolootGroup;
+            autolootGroup.Children.Add( item );
+
+            SetNewSelectedIndex( newSelectedIndex );
+        }
+
+        private void SetNewSelectedIndex( int newSelectedIndex )
+        {
+            try
+            {
+                IDraggable newSelection = Draggables[newSelectedIndex];
+
+                if ( newSelection is AutolootGroup group )
+                {
+                    SelectedGroup = group;
+                }
+                else
+                {
+                    SelectedItem = newSelection as AutolootEntry;
+                }
+            }
+            catch ( Exception )
+            {
+                // ignored 
+            }
+        }
+
+        private int GetNewSelectedIndex( AutolootEntry item )
+        {
+            int newSelectedIndex = 0;
+
+            if ( item.Group == null )
+            {
+                int previousIndex = Draggables.IndexOf( item );
+
+                if ( previousIndex > 0 )
+                {
+                    newSelectedIndex = previousIndex - 1;
+                }
+                else if ( previousIndex < Draggables.Count - 1 )
+                {
+                    newSelectedIndex = previousIndex;
+                }
+                else
+                {
+                    newSelectedIndex = -1;
+                }
+            }
+
+            return newSelectedIndex;
         }
     }
 }

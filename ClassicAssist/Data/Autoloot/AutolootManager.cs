@@ -181,6 +181,36 @@ namespace ClassicAssist.Data.Autoloot
 
             constraints.AddSorted( new PropertyEntry
             {
+                Name = Strings.Cliloc__Multiple_,
+                ConstraintType = PropertyType.PredicateWithValue,
+                UseMultipleValues = true,
+                AllowedOperators = AutolootAllowedOperators.Equal | AutolootAllowedOperators.NotEqual,
+                Predicate = ( item, entry ) =>
+                {
+                    if ( item.Properties == null )
+                    {
+                        return false;
+                    }
+
+                    List<Property> properties = item.Properties.Where( e => e != null && entry.Values != null && entry.Values.Contains( e.Cliloc ) ).ToList();
+
+                    switch ( entry.Operator )
+                    {
+                        case AutolootOperator.NotEqual:
+                        case AutolootOperator.NotPresent:
+                            return !properties.Any();
+                        case AutolootOperator.Equal:
+                            return properties.Any();
+                        case AutolootOperator.GreaterThan:
+                        case AutolootOperator.LessThan:
+                        default:
+                            return false;
+                    }
+                }
+            } );
+
+            constraints.AddSorted( new PropertyEntry
+            {
                 Name = Strings.Autoloot_Match,
                 ConstraintType = PropertyType.PredicateWithValue,
                 AllowedOperators = AutolootAllowedOperators.Equal | AutolootAllowedOperators.NotEqual,

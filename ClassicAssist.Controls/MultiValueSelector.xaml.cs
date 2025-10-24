@@ -40,7 +40,15 @@ namespace ClassicAssist.Controls
         public static readonly DependencyProperty ValuesProperty = DependencyProperty.Register( nameof( Values ), typeof( ObservableCollection<int> ), typeof( MultiValueSelector ),
             new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValuesChanged ) );
 
+        public static readonly DependencyProperty PopupWidthProperty = DependencyProperty.Register( nameof( PopupWidth ), typeof( int ), typeof( MultiValueSelector ),
+            new FrameworkPropertyMetadata( 200, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
+
         public static readonly DependencyProperty ButtonsProperty = DependencyProperty.Register( nameof( Buttons ), typeof( object ), typeof( MultiValueSelector ) );
+
+        public static readonly DependencyProperty HexDisplayProperty = DependencyProperty.Register( nameof( HexDisplay ), typeof( bool ), typeof( MultiValueSelector ) );
+
+        public static readonly DependencyProperty ItemTemplateProperty =
+            DependencyProperty.Register( nameof( ItemTemplate ), typeof( DataTemplate ), typeof( MultiValueSelector ) );
 
         private RelayCommand _removeItemCommand;
 
@@ -53,6 +61,24 @@ namespace ClassicAssist.Controls
         {
             get => GetValue( ButtonsProperty );
             set => SetValue( ButtonsProperty, value );
+        }
+
+        public bool HexDisplay
+        {
+            get => (bool) GetValue( HexDisplayProperty );
+            set => SetValue( HexDisplayProperty, value );
+        }
+
+        public DataTemplate ItemTemplate
+        {
+            get => (DataTemplate) GetValue( ItemTemplateProperty );
+            set => SetValue( ItemTemplateProperty, value );
+        }
+
+        public int PopupWidth
+        {
+            get => (int) GetValue( PopupWidthProperty );
+            set => SetValue( PopupWidthProperty, value );
         }
 
         public ICommand RemoveItemCommand =>
@@ -72,7 +98,7 @@ namespace ClassicAssist.Controls
             set => SetValue( ValuesProperty, value );
         }
 
-        public string ValuesDisplay => string.Join( ", ", Values?.Select( v => $"0x{v:x}" ) ?? Array.Empty<string>() );
+        public string ValuesDisplay => string.Join( ", ", Values?.Select( v => HexDisplay ? $"0x{v:x}" : $"{v}" ) ?? Array.Empty<string>() );
 
         public event PropertyChangedEventHandler PropertyChanged;
 

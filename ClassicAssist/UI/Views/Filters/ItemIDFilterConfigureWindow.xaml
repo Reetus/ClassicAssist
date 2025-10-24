@@ -154,7 +154,8 @@
                                                 </StackPanel>
                                             </controls:EditTextBlock.Buttons>
                                             <controls:EditTextBlock.ToolTip>
-                                                    <itemIdFilter:ItemIDTooltipControl ItemID="{Binding DestinationID}" Hue="{Binding Hue}" />
+                                                <itemIdFilter:ItemIDTooltipControl ItemID="{Binding DestinationID}"
+                                                        Hue="{Binding Hue}" />
                                             </controls:EditTextBlock.ToolTip>
                                         </controls:EditTextBlock>
                                     </StackPanel>

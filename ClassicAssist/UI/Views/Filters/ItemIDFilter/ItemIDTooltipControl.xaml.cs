@@ -19,6 +19,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -101,7 +102,8 @@ namespace ClassicAssist.UI.Views.Filters.ItemIDFilter
 
         private void UpdateImage()
         {
-            Image = Art.GetStatic( ItemID, Hue > 0 ? Hue : 0 ).ToImageSource();
+            Bitmap bitmap = Art.GetStatic( ItemID, Hue > 0 ? Hue : 0 );
+            Image = bitmap?.ToImageSource();
             ItemName = TileData.GetStaticTile( ItemID ).Name;
         }
 

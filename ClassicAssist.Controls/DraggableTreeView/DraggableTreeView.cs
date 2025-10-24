@@ -132,7 +132,7 @@ namespace ClassicAssist.Controls.DraggableTreeView
 
                     parent?.Remove( sourceItem );
 
-                    if ( newSelectedIndex != -1 && parent != null)
+                    if ( newSelectedIndex != -1 && parent != null )
                     {
                         IDraggable item = parent[newSelectedIndex];
 

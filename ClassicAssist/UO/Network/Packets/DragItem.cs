@@ -8,6 +8,7 @@ namespace ClassicAssist.UO.Network.Packets
 {
     public class DragItem : BasePacket
     {
+        private static readonly object _dragPacketLock = new object();
         private static DateTime _lastDragPacketTime = DateTime.MinValue;
         private readonly int _dragDelayMs;
         public DragItem( int serial, int amount, int dragDelayMs, bool checkAmount = false )
@@ -40,15 +41,18 @@ namespace ClassicAssist.UO.Network.Packets
                 return;
             }
 
-            DateTime nextAllowedDragTime = _lastDragPacketTime + TimeSpan.FromMilliseconds( _dragDelayMs );
-            DateTime now = DateTime.Now;
-
-            if ( nextAllowedDragTime > now )
+            lock ( _dragPacketLock )
             {
-                Thread.Sleep( nextAllowedDragTime - now );
-            }
+                DateTime nextAllowedDragTime = _lastDragPacketTime + TimeSpan.FromMilliseconds( _dragDelayMs );
+                DateTime now = DateTime.Now;
 
-            _lastDragPacketTime = DateTime.Now;
+                if ( nextAllowedDragTime > now )
+                {
+                    Thread.Sleep( nextAllowedDragTime - now );
+                }
+
+                _lastDragPacketTime = DateTime.Now;
+            }
         }
     }
 }

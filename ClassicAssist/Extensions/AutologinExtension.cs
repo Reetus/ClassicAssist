@@ -45,6 +45,7 @@ namespace ClassicAssist.Extensions
 
         public void Initialize()
         {
+#if !NET
             AssistantOptions.ProfileChangedEvent += OnProfileChangedEvent;
             Engine.DisconnectedEvent += OnDisconnectedEvent;
 
@@ -57,6 +58,7 @@ namespace ClassicAssist.Extensions
 
             _selectCharacterMethod =
                 gameSceneType.GetMethod( "SelectCharacter", BindingFlags.Public | BindingFlags.Instance );
+#endif
         }
 
         private void OnDisconnectedEvent()

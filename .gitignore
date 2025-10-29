@@ -22,3 +22,5 @@ ClassicAssist.Controls/bin/
 ClassicAssist.Shared/bin/
 Tools/SyncPOEditor/obj/
 Tools/SyncPOEditor/Properties/launchSettings.json
+
+.idea/.idea.ClassicAssist/.idea/

@@ -1,12 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
+      <OutputType>WinExe</OutputType>
+      <TargetFrameworks>net48;net9.0-windows</TargetFrameworks>
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <OutputPath>..\Output\</OutputPath>
     <UseWPF>true</UseWPF>
+      <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	  <UseWindowsForms>true</UseWindowsForms>
     <Configurations>Debug;Release;Develop</Configurations>
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+    <ApplicationIcon>Resources\logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Data\Bodies.json" />
@@ -83,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassicAssist.Controls\ClassicAssist.Controls.csproj" />
+    <ProjectReference Include="..\ClassicAssist.Plugin.Shared\ClassicAssist.Plugin.Shared.csproj" />
     <ProjectReference Include="..\ClassicAssist.Shared\ClassicAssist.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>

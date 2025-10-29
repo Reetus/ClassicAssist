@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>net48;net9.0</TargetFrameworks>
+        <OutputPath>..\Output\</OutputPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="StreamJsonRpc" Version="2.22.23" />
+    </ItemGroup>
+</Project>

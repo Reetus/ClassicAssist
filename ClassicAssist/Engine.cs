@@ -1,3 +1,17 @@
+#region License
+
+// Copyright (C) 2025 Reetus
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY
+
+#endregion
+
 // ReSharper disable once RedundantUsingDirective
 
 using System;
@@ -37,6 +51,7 @@ using ClassicAssist.UO.Objects;
 using CUO_API;
 using Newtonsoft.Json;
 using Sentry;
+using StreamJsonRpc;
 using static ClassicAssist.Misc.SDLKeys;
 using MacroManager = ClassicAssist.Data.Macros.MacroManager;
 
@@ -48,6 +63,8 @@ namespace Assistant
 {
     public static partial class Engine
     {
+        private static IHostMethods _host;
+
         public delegate void dClientClosing();
 
         public delegate void dConnected();
@@ -168,8 +185,56 @@ namespace Assistant
         public static event dDisconnected DisconnectedEvent;
         public static event dPlayerInitialized PlayerInitializedEvent;
 
+        public static void Install( JsonRpc rpc, IHostMethods hostMethods, PluginMethods pluginMethods )
+        {
+            _host = hostMethods;
+            
+            Initialize();
+
+            ClientPath = _host.GetClientPath().Result;
+            ClientVersion = _host.GetClientVersion().Result;
+            
+            SplashWindow splashWindow = new SplashWindow();
+            splashWindow.Show();
+            
+            Art.Initialize( ClientPath );
+            Hues.Initialize( ClientPath );
+            Cliloc.Initialize( ClientPath );
+            Skills.Initialize( ClientPath );
+            Speech.Initialize( ClientPath );
+            TileData.Initialize( ClientPath );
+            Statics.Initialize( ClientPath );
+            MapInfo.Initialize( ClientPath );
+
+            _getPacketLength = (id) => _host.GetPacketLength( id ).Result;
+            _getUOFilePath = () => _host.GetUOFilePath().Result;
+            _sendToClient = SendPacketToClientPlugin;
+            _sendToServer = SendPacketToServerPlugin;
+            _requestMove = ( dir, run ) => _host.RequestMove(dir, run).Result;
+            _setTitle = title => _host.SetTitle(title);
+            
+            _window = new MainWindow();
+            _window.Show();
+
+            splashWindow.Close();
+
+            Dispatcher.Run();
+        }
+
+        private static bool SendPacketToServerPlugin( ref byte[] data, ref int length )
+        {
+            return _host.SendPacketToServer( data, length ).Result;
+        }
+
+        private static bool SendPacketToClientPlugin( ref byte[] data, ref int length )
+        {
+            return _host.SendPacketToClient( data, length ).Result;
+        }
+
         public static unsafe void Install( PluginHeader* plugin )
         {
+            AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
+
             Initialize();
 
             InitializePlugin( plugin );
@@ -287,19 +352,26 @@ namespace Assistant
 
         private static void InitializeExtensions()
         {
-            IEnumerable<Type> types = Assembly.GetExecutingAssembly().GetTypes().Where( t => typeof( IExtension ).IsAssignableFrom( t ) && t.IsClass );
-
-            foreach ( Type type in types )
+            try
             {
-                try
+                IEnumerable<Type> types = Assembly.GetExecutingAssembly().GetTypes().Where( t => typeof( IExtension ).IsAssignableFrom( t ) && t.IsClass );
+
+                foreach ( Type type in types )
                 {
-                    IExtension instance = (IExtension) Activator.CreateInstance( type );
-                    instance?.Initialize();
+                    try
+                    {
+                        IExtension instance = (IExtension) Activator.CreateInstance( type );
+                        instance?.Initialize();
+                    }
+                    catch ( Exception e )
+                    {
+                        Console.WriteLine( e.ToString() );
+                    }
                 }
-                catch ( Exception e )
-                {
-                    Console.WriteLine( e.ToString() );
-                }
+            }
+            catch ( Exception ex )
+            {
+                // np
             }
         }
 
@@ -329,10 +401,7 @@ namespace Assistant
                 _lastMouseAction[(int) mouse] = DateTime.Now;
             }
 
-            Dispatcher.Invoke( () =>
-            {
-                HotkeyManager.GetInstance().OnMouseAction( mouse );
-            } );
+            Dispatcher.Invoke( () => { HotkeyManager.GetInstance().OnMouseAction( mouse ); } );
         }
 
         private static bool OnHotkeyPressed( int key, int mod, bool pressed )
@@ -382,6 +451,11 @@ namespace Assistant
             Options.Save( Options.CurrentOptions );
             AssistantOptions.Save();
             SentrySdk.Close();
+
+            if ( _host != null )
+            {
+                Environment.Exit( 0 );
+            }
         }
 
         private static void OnPlayerPositionChanged( int x, int y, int z )
@@ -440,7 +514,7 @@ namespace Assistant
             return mobile;
         }
 
-        private static void Initialize()
+        public static void Initialize()
         {
             StartupPath = Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location );
 
@@ -449,7 +523,7 @@ namespace Assistant
                 throw new InvalidOperationException();
             }
 
-            AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
+            //AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
 
             PacketWaitEntries = new PacketWaitEntries();
 
@@ -569,9 +643,11 @@ namespace Assistant
 
         private static Assembly OnAssemblyResolve( object sender, ResolveEventArgs args )
         {
+            string startup = Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location );
+
             string assemblyname = new AssemblyName( args.Name ).Name;
 
-            string[] searchPaths = { StartupPath, RuntimeEnvironment.GetRuntimeDirectory() };
+            string[] searchPaths = { startup, RuntimeEnvironment.GetRuntimeDirectory() };
 
             if ( AssistantOptions.Assemblies?.Length > 0 )
             {
@@ -1085,5 +1161,58 @@ namespace Assistant
         }
 
         #endregion
+
+        public class PluginMethods : IPluginMethods
+        {
+            public void OnConnected()
+            {
+                Engine.OnConnected();
+            }
+
+            public void OnDisconnected()
+            {
+                Engine.OnDisconnected();
+            }
+
+            public Task<bool> OnPacketReceive( byte[] data, int length )
+            {
+                return Task.FromResult( Engine.OnPacketReceive( ref data, ref length ) );
+            }
+
+            public Task<bool> OnPacketSend( byte[] data, int length )
+            {
+                return Task.FromResult( Engine.OnPacketSend( ref data, ref length ) );
+            }
+
+            public void OnClientClosing()
+            {
+                Engine.OnClientClosing();
+            }
+
+            public Task<bool> OnHotkeyPressed( int key, int mod, bool pressed )
+            {
+                return Task.FromResult( Engine.OnHotkeyPressed( key, mod, pressed ) );
+            }
+
+            public void OnMouse( int button, int wheel )
+            {
+                Engine.OnMouse( button, wheel );
+            }
+
+            public void OnTick()
+            {
+                Engine.OnTick();
+            }
+
+            public void OnFocusChanged( bool focus )
+            {
+                Engine.OnFocusChanged( focus );
+            }
+
+            public void OnPlayerPositionChanged( int x, int y, int z )
+            {
+                Engine.OnPlayerPositionChanged( x, y, z );
+            }
+        }
     }
 }

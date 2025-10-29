@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35506.116 d17.12
+VisualStudioVersion = 17.12.35506.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassicAssist", "ClassicAssist\ClassicAssist.csproj", "{2161A709-F90A-4308-976F-3457A9DAB80A}"
 EndProject
@@ -22,6 +22,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicAssist.Shared", "ClassicAssist.Shared\ClassicAssist.Shared.csproj", "{F4DD685D-6E90-4713-9134-7AB83E9B88F0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncPOEditor", "Tools\SyncPOEditor\SyncPOEditor.csproj", "{9967E68D-72FF-4F02-AA34-180E299DC72F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicAssist.Plugin", "ClassicAssist.Plugin\ClassicAssist.Plugin.csproj", "{7D0BE552-2C27-453B-B5C7-C848E5FC4317}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicAssist.Plugin.Shared", "ClassicAssist.Plugin.Shared\ClassicAssist.Plugin.Shared.csproj", "{862373A0-CA28-452C-A3AC-2B95702C9B6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,6 +88,18 @@ Global
 		{9967E68D-72FF-4F02-AA34-180E299DC72F}.Develop|Any CPU.Build.0 = Debug|Any CPU
 		{9967E68D-72FF-4F02-AA34-180E299DC72F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9967E68D-72FF-4F02-AA34-180E299DC72F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D0BE552-2C27-453B-B5C7-C848E5FC4317}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D0BE552-2C27-453B-B5C7-C848E5FC4317}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D0BE552-2C27-453B-B5C7-C848E5FC4317}.Develop|Any CPU.ActiveCfg = Release|Any CPU
+		{7D0BE552-2C27-453B-B5C7-C848E5FC4317}.Develop|Any CPU.Build.0 = Release|Any CPU
+		{7D0BE552-2C27-453B-B5C7-C848E5FC4317}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D0BE552-2C27-453B-B5C7-C848E5FC4317}.Release|Any CPU.Build.0 = Release|Any CPU
+		{862373A0-CA28-452C-A3AC-2B95702C9B6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{862373A0-CA28-452C-A3AC-2B95702C9B6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{862373A0-CA28-452C-A3AC-2B95702C9B6C}.Develop|Any CPU.ActiveCfg = Debug|Any CPU
+		{862373A0-CA28-452C-A3AC-2B95702C9B6C}.Develop|Any CPU.Build.0 = Debug|Any CPU
+		{862373A0-CA28-452C-A3AC-2B95702C9B6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{862373A0-CA28-452C-A3AC-2B95702C9B6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

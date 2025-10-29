@@ -2077,4 +2077,7 @@ Are you sure you wish to continue?</value>
   <data name="Move to group" xml:space="preserve">
     <value>Move to group</value>
   </data>
+  <data name="Framework:" xml:space="preserve">
+    <value>Framework:</value>
+  </data>
 </root>

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Reflection;
-using System.Timers;
-using System.Windows.Input;
-using System.Windows.Threading;
-using Assistant;
+﻿using Assistant;
 using ClassicAssist.Shared;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
@@ -15,6 +9,13 @@ using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
 using Semver;
+using System;
+using System.Diagnostics;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Timers;
+using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace ClassicAssist.UI.ViewModels
 {
@@ -37,6 +38,7 @@ namespace ClassicAssist.UI.ViewModels
         private string _shardName = "Unknown";
         private ICommand _showItemsCommand;
         private Timer _timer;
+        public string Framework { get; } = RuntimeInformation.FrameworkDescription;
 
         public AboutControlViewModel()
         {

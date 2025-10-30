@@ -13,22 +13,29 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.IO.Pipes;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using ClassicAssist.Plugin.Shared;
+using ClassicAssist.Plugin.Shared.Reflection;
+using ClassicAssist.Plugin.Shared.Reflection.ClassicUO.Objects;
 using ClassicAssist.Shared;
 using CUO_API;
 using StreamJsonRpc;
 
-#pragma warning disable IDE0130
+// ReSharper disable once CheckNamespace
 namespace Assistant
-#pragma warning restore IDE0130
 {
     public static class Engine
     {
+        public static Queue<Action> TickWorkQueue { get; set; } = new Queue<Action>();
+        
         private static IPluginMethods _plugin;
         private static HostMethods _hostMethods;
         private static OnConnected _onConnected;
@@ -48,6 +55,8 @@ namespace Assistant
         private static OnMouse _onMouse;
         private static OnFocusGained _onFocusGained;
         private static OnFocusLost _onFocusLost;
+
+        public static Assembly ClassicAssembly { get; set; }
 
         public static string ClientPath { get; set; }
 
@@ -80,7 +89,7 @@ namespace Assistant
 
             foreach ( string searchPath in searchPaths )
             {
-                if (searchPath == null)
+                if ( searchPath == null )
                 {
                     continue;
                 }
@@ -117,8 +126,17 @@ namespace Assistant
 
             InitializePlugin( plugin );
 
+            ClassicAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault( a => a.FullName.StartsWith( "ClassicUO," ) || a.FullName.StartsWith( "TazUO," ) );
+            
+            if ( ClassicAssembly != null )
+            {
+                CUOPath = Path.GetDirectoryName( ClassicAssembly.Location );
+            }
+
             LaunchUI();
         }
+
+        public static string CUOPath { get; set; }
 
         private static unsafe void InitializePlugin( PluginHeader* plugin )
         {
@@ -190,9 +208,9 @@ namespace Assistant
 #else
             string pipeName = $"CAPlugin_{Process.GetCurrentProcess().Id}";
 #endif
+            NativeMethods.SetCurrentProcessExplicitAppUserModelID( pipeName );
 
-            ProcessStartInfo process =
-                new ProcessStartInfo { FileName = exePath, WorkingDirectory = Path.GetDirectoryName( exePath ), Arguments = pipeName, UseShellExecute = false };
+            ProcessStartInfo process = new ProcessStartInfo { FileName = exePath, WorkingDirectory = Path.GetDirectoryName( exePath ), Arguments = pipeName, UseShellExecute = false };
 
             Process.Start( process );
 
@@ -202,6 +220,8 @@ namespace Assistant
             pipe.WaitForConnection();
             JsonRpc rpc = JsonRpc.Attach( pipe, _hostMethods );
             _plugin = rpc.Attach<IPluginMethods>();
+            
+            ReflectionImpl.Initialize( ClassicAssembly, CUOPath, TickWorkQueue, Move );
         }
 
         private static void OnFocusChanged( bool focus )
@@ -211,6 +231,13 @@ namespace Assistant
 
         private static void OnTick()
         {
+            while ( TickWorkQueue.Count > 0 )
+            {
+                Action action = TickWorkQueue.Dequeue();
+
+                action?.Invoke();
+            }
+            
             _plugin?.OnTick();
         }
 
@@ -244,10 +271,15 @@ namespace Assistant
             byte[] buffer = new byte[length];
             Buffer.BlockCopy( data, 0, buffer, 0, length );
 
-            bool result = _plugin.OnPacketSend( buffer, buffer.Length ).Result;
+            (bool result, byte[] newPacket, int newLength) = _plugin.OnPacketSend( buffer, buffer.Length ).Result;
 
-            length = buffer.Length;
-            Buffer.BlockCopy( buffer, 0, data, 0, length );
+            if ( newLength == 0 )
+            {
+                return result;
+            }
+
+            length = newLength;
+            Buffer.BlockCopy( newPacket, 0, data, 0, length );
 
             return result;
         }
@@ -262,10 +294,15 @@ namespace Assistant
             byte[] buffer = new byte[length];
             Buffer.BlockCopy( data, 0, buffer, 0, length );
 
-            bool result = _plugin.OnPacketReceive( buffer, buffer.Length ).Result;
+            (bool result, byte[] newPacket, int newLength) = _plugin.OnPacketReceive( buffer, buffer.Length ).Result;
 
-            length = buffer.Length;
-            Buffer.BlockCopy( buffer, 0, data, 0, length );
+            if ( newLength == 0 )
+            {
+                return result;
+            }
+
+            length = newLength;
+            Buffer.BlockCopy( newPacket, 0, data, 0, length );
 
             return result;
         }
@@ -321,6 +358,91 @@ namespace Assistant
             {
                 _setTitle( title );
             }
+
+            public Task<(int x, int y)> GetGumpPosition( uint id )
+            {
+                return Task.FromResult( ReflectionImpl.GetGumpPosition( id ) );
+            }
+
+            public Task<bool> WalkTo( int x, int y, int z, int distance )
+            {
+                return Task.FromResult( Pathfinder.WalkTo( x, y, z, distance ) );
+            }
+
+            public Task<bool> Pathfinding()
+            {
+                return Task.FromResult( Pathfinder.AutoWalking );
+            }
+
+            public void CancelPathfinding()
+            {
+                Pathfinder.Cancel();
+            }
+
+            public Task<IntPtr> GetWindowHandle()
+            {
+                return Task.FromResult( WindowHandle );
+            }
+
+            public void CreateMacroButton( string name, string value )
+            {
+                ReflectionImpl.CreateMacroButton( name, value );
+            }
+
+            public Task<Point> GetGameWindowCenter()
+            {
+                return Task.FromResult( ReflectionImpl.GetGameWindowCenter() );
+            }
+
+            public Task<bool> UsePrimaryAbility()
+            {
+                return Task.FromResult( GameActions.UsePrimaryAbility() );
+            }
+
+            public Task<bool> UseSecondaryAbility()
+            {
+                return Task.FromResult( GameActions.UseSecondaryAbility() );
+            }
+
+            public Task<bool> Following()
+            {
+                return Task.FromResult( ReflectionImpl.Following() );
+            }
+
+            public void Logout()
+            {
+                ReflectionImpl.Logout();
+            }
+
+            public void Quit()
+            {
+                ReflectionImpl.Quit();
+            }
+
+            public void AddMapMarker( string name, int x, int y, int facet, int zoomLevel, string iconName )
+            {
+                WorldMapGump.AddMarker( name, x, y, facet, zoomLevel, iconName );
+            }
+
+            public Task<bool> Follow( int serial )
+            {
+                return Task.FromResult( ReflectionImpl.Follow( serial ) );
+            }
+
+            public void PlayCUOMacro( string name )
+            {
+                ReflectionImpl.PlayCUOMacro( name );
+            }
+
+            public Task<bool> HasDisconnectedGump()
+            {
+                return Task.FromResult( ReflectionImpl.HasDisconnectedGump() );
+            }
+        }
+
+        public static void Move( int subCode, bool b )
+        {
+            _requestMove(subCode, b );
         }
     }
 }

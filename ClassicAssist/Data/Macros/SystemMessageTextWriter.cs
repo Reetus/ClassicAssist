@@ -24,7 +24,11 @@ namespace ClassicAssist.Data.Macros
 {
     public class SystemMessageTextWriter : TextWriter
     {
+#if NET
         public override Encoding Encoding { get; } = Encoding.Unicode;
+#else
+        public override Encoding Encoding { get; } = Encoding.UTF8;
+#endif
 
         public override void Write( string value )
         {
@@ -36,6 +40,12 @@ namespace ClassicAssist.Data.Macros
             }
 
             UO.Commands.SystemMessage( value );
+        }
+
+        public override void Write( char[] buffer, int index, int count )
+        {
+            string value = Encoding.UTF8.GetString( Encoding.UTF8.GetBytes( buffer, 0, count ) );
+            Write( value );
         }
     }
 }

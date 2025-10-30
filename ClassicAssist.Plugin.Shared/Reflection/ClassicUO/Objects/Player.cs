@@ -1,6 +1,5 @@
-﻿#region License
-
-// Copyright (C) 2023 Reetus
+#region License
+// Copyright (C) 2025 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -9,21 +8,16 @@
 // 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
-
 #endregion
 
-using ClassicAssist.Helpers;
+using ClassicAssist.Plugin.Shared.Reflections.Helpers;
 
-namespace ClassicAssist.Data.ClassicUO.Objects.Gumps
+namespace ClassicAssist.Plugin.Shared.Reflection.ClassicUO.Objects
 {
-    public class Gump : ReflectionObject
+    public class Player : ReflectionObject
     {
-        public Gump( object sealedObject ) : base( sealedObject )
+        public Player(object sealedObject) : base(sealedObject)
         {
         }
-
-        public dynamic Location => WrapProperty<dynamic>();
-
-        public uint ServerSerial => WrapProperty<uint>();
     }
 }

@@ -22,8 +22,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Assistant;
-using ClassicAssist.Helpers;
 using ClassicAssist.Misc;
+using ClassicAssist.Plugin.Shared.Reflection;
 using ClassicAssist.UO.Data;
 
 namespace ClassicAssist.UO.Objects.Gumps
@@ -167,41 +167,7 @@ namespace ClassicAssist.UO.Objects.Gumps
 
         public static Point GetGameWindowCenter()
         {
-            dynamic settings = Reflection.GetTypeFieldValue<dynamic>( "ClassicUO.Configuration.Settings",
-                "GlobalSettings", null );
-
-            string[] possibleProperties = { "Current", "CurrentProfile" };
-
-            dynamic currentProfile = null;
-
-            foreach ( string possibleProperty in possibleProperties )
-            {
-                currentProfile = Reflection.GetTypePropertyValue<dynamic>( "ClassicUO.Configuration.ProfileManager",
-                    possibleProperty, null );
-
-                if ( currentProfile != null )
-                {
-                    break;
-                }
-            }
-
-            if ( currentProfile == null )
-            {
-                return Point.Empty;
-            }
-
-            dynamic gameWindowSize =
-                Reflection.GetTypePropertyValue<dynamic>( currentProfile.GetType(), "GameWindowSize", currentProfile );
-            dynamic gameWindowPosition = Reflection.GetTypePropertyValue<dynamic>( currentProfile.GetType(),
-                "GameWindowPosition", currentProfile );
-
-            if ( gameWindowSize == null || gameWindowPosition == null )
-            {
-                return Point.Empty;
-            }
-
-            return new Point( gameWindowPosition.X + ( gameWindowSize.X >> 1 ),
-                gameWindowPosition.Y + ( gameWindowSize.Y >> 1 ) );
+            return ReflectionCommands.GetGameWindowCenter();
         }
 
         public void SetCenterPosition( int width, int height )

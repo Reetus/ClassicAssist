@@ -17,9 +17,9 @@
 
 #endregion
 
-using ClassicAssist.Helpers;
+using ClassicAssist.Plugin.Shared.Reflections.Helpers;
 
-namespace ClassicAssist.Data.ClassicUO.Objects.Gumps
+namespace ClassicAssist.Plugin.Shared.Reflection.ClassicUO.Objects.Gumps
 {
     public class MacroButtonGump : ReflectionObject
     {
@@ -27,8 +27,14 @@ namespace ClassicAssist.Data.ClassicUO.Objects.Gumps
 
         public MacroButtonGump( Macro macro, int x, int y ) : base( null )
         {
-            AssociatedObject =
-                Reflection.CreateInstanceOfType( MACRO_BUTTON_GUMP_TYPE, null, macro.AssociatedObject, x, y );
+            try
+            {
+                AssociatedObject = ReflectionHelper.CreateInstanceOfType( MACRO_BUTTON_GUMP_TYPE, null, macro.AssociatedObject, x, y );
+            }
+            catch
+            {
+                AssociatedObject = ReflectionHelper.CreateInstanceOfType( MACRO_BUTTON_GUMP_TYPE, null, new World().AssociatedObject, macro.AssociatedObject, x, y );
+            }
 
             CreateMemberCache();
         }

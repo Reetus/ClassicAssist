@@ -20,10 +20,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Assistant;
-using ClassicAssist.UO.Data;
 
-namespace ClassicAssist.Data.ClassicUO.Objects
+namespace ClassicAssist.Plugin.Shared.Reflection.ClassicUO.Objects
 {
     public class MacroManager : LinkedObject<Macro, Macro>
     {
@@ -84,13 +82,13 @@ namespace ClassicAssist.Data.ClassicUO.Objects
 
                     if ( code == 5 /*Walk*/ )
                     {
-                        Engine.Move( (Direction) subCode, false );
+                        ReflectionImpl.Move( subCode, false );
                         return;
                     }
                 }
             }
 
-            Engine.TickWorkQueue.Enqueue( () =>
+            ReflectionImpl.TickWorkQueue.Enqueue( () =>
             {
                 ( (dynamic) this ).SetMacroToExecute( items );
                 ( (dynamic) this ).WaitingBandageTarget = false;

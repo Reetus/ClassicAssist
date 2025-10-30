@@ -5,11 +5,13 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
+using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Data.Spells;
 using ClassicAssist.Misc;
+using ClassicAssist.Plugin.Shared.Reflection;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Views.Hotkeys;
@@ -411,7 +413,9 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            Data.ClassicUO.Macros.CreateMacroButton( hotkeyEntry );
+            var value = $"{hotkeyEntry.GetType()}|{hotkeyEntry.Name}";
+
+            ReflectionCommands.CreateMacroButton( hotkeyEntry.Name, value );
         }
 
         private JArray SerializeMasteries( Func<HotkeyEntry, bool> predicate )

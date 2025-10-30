@@ -17,9 +17,13 @@
 
 #endregion
 
+using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection.Metadata;
+using System.Reflection.PortableExecutable;
 using System.Threading.Tasks;
 
 namespace ClassicAssist.Launcher
@@ -36,6 +40,72 @@ namespace ClassicAssist.Launcher
             IPHostEntry hostentry = await Dns.GetHostEntryAsync( hostname );
 
             return hostentry?.AddressList.FirstOrDefault( i => i.AddressFamily == AddressFamily.InterNetwork );
+        }
+
+        public static (bool netAssembly, string version) GetExeType( string path )
+        {
+            try
+            {
+                using ( FileStream stream = File.OpenRead( path ) )
+                {
+                    using ( PEReader peReader = new PEReader( stream ) )
+                    {
+                        if ( !peReader.HasMetadata )
+                        {
+                            return ( false, string.Empty );
+                        }
+
+                        MetadataReader metadataReader = peReader.GetMetadataReader();
+
+                        string framework = GetTargetFramework( metadataReader );
+
+                        return ( true, framework );
+                    }
+                }
+            }
+            catch ( Exception ex )
+            {
+                return ( false, string.Empty );
+            }
+        }
+
+        private static string GetTargetFramework( MetadataReader reader )
+        {
+            foreach ( BlobReader valueBlob in from handle in reader.GetCustomAttributes( EntityHandle.AssemblyDefinition )
+                     select reader.GetCustomAttribute( handle )
+                     into attribute
+                     let ctor = attribute.Constructor
+                     let attrTypeName = GetAttributeTypeName( reader, ctor )
+                     where attrTypeName == "System.Runtime.Versioning.TargetFrameworkAttribute"
+                     select reader.GetBlobReader( attribute.Value ) )
+            {
+                // CustomAttributeValue: Prolog (2 bytes), then string
+                valueBlob.ReadUInt16(); // skip prolog
+                return valueBlob.ReadSerializedString();
+            }
+
+            return null;
+        }
+
+        private static string GetAttributeTypeName( MetadataReader reader, EntityHandle ctor )
+        {
+            if ( ctor.Kind != HandleKind.MemberReference )
+            {
+                return null;
+            }
+
+            MemberReference memberRef = reader.GetMemberReference( (MemberReferenceHandle) ctor );
+            EntityHandle container = memberRef.Parent;
+
+            if ( container.Kind != HandleKind.TypeReference )
+            {
+                return null;
+            }
+
+            TypeReference typeRef = reader.GetTypeReference( (TypeReferenceHandle) container );
+            string ns = reader.GetString( typeRef.Namespace );
+            string name = reader.GetString( typeRef.Name );
+            return $"{ns}.{name}";
         }
     }
 }

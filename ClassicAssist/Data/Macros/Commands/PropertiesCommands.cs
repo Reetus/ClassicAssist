@@ -97,6 +97,12 @@ namespace ClassicAssist.Data.Macros.Commands
                     return default;
                 }
 
+                // https://github.com/IronLanguages/ironpython3/wiki/Upgrading-from-IronPython2#int-type
+                if ( typeof( T ) == typeof( System.Numerics.BigInteger ) )
+                {
+                    return (T) (object) System.Numerics.BigInteger.Parse( p.Arguments?[argument] ?? string.Empty );
+                }
+
                 return (T) Convert.ChangeType( p?.Arguments?[argument], typeof( T ) );
             }
 

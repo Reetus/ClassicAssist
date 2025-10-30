@@ -11,9 +11,11 @@
 #endregion
 
 using System;
+using System.Drawing;
+using System.Reflection;
 using System.Threading.Tasks;
 
-namespace ClassicAssist.Shared
+namespace ClassicAssist.Plugin.Shared
 {
     public interface IHostMethods
     {
@@ -25,5 +27,21 @@ namespace ClassicAssist.Shared
         Task<string> GetUOFilePath();
         Task<bool> RequestMove( int dir, bool run );
         void SetTitle( string title );
+        Task<(int x, int y)> GetGumpPosition( uint id );
+        Task<bool> WalkTo( int x, int y, int z, int distance );
+        Task<bool> Pathfinding();
+        void CancelPathfinding();
+        Task<IntPtr> GetWindowHandle();
+        void CreateMacroButton( string name, string value );
+        Task<Point> GetGameWindowCenter();
+        Task<bool> UsePrimaryAbility();
+        Task<bool> UseSecondaryAbility();
+        Task<bool> Following();
+        void Logout();
+        void Quit();
+        void AddMapMarker( string name, int x, int y, int facet, int zoomLevel, string iconName );
+        Task<bool> Follow( int serial );
+        void PlayCUOMacro( string name );
+        Task<bool> HasDisconnectedGump();
     }
 }

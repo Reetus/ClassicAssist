@@ -19,11 +19,11 @@
 
 using System;
 using System.Reflection;
-using Assistant;
+using ClassicAssist.Plugin.Shared.Reflection;
 
-namespace ClassicAssist.Helpers
+namespace ClassicAssist.Plugin.Shared.Reflections.Helpers
 {
-    public static class Reflection
+    public static class ReflectionHelper
     {
         public static T GetTypePropertyValue<T>( Type type, string property, object obj = null,
             BindingFlags bindingFlags = BindingFlags.Default )
@@ -46,7 +46,7 @@ namespace ClassicAssist.Helpers
         {
             if ( assembly == null )
             {
-                assembly = Engine.ClassicAssembly;
+                assembly = ReflectionImpl.DefaultAssembly;
             }
 
             Type t = assembly?.GetType( type );
@@ -75,7 +75,7 @@ namespace ClassicAssist.Helpers
         {
             if ( assembly == null )
             {
-                assembly = Engine.ClassicAssembly;
+                assembly = ReflectionImpl.DefaultAssembly;
             }
 
             Type t = assembly?.GetType( type );
@@ -88,7 +88,7 @@ namespace ClassicAssist.Helpers
         {
             if ( assembly == null )
             {
-                assembly = Engine.ClassicAssembly;
+                assembly = ReflectionImpl.DefaultAssembly;
             }
 
             Type t = assembly?.GetType( type );
@@ -105,7 +105,7 @@ namespace ClassicAssist.Helpers
         {
             if ( assembly == null )
             {
-                assembly = Engine.ClassicAssembly;
+                assembly = ReflectionImpl.DefaultAssembly;
             }
 
             Type t = assembly?.GetType( type );
@@ -117,7 +117,7 @@ namespace ClassicAssist.Helpers
         {
             if ( assembly == null )
             {
-                assembly = Engine.ClassicAssembly;
+                assembly = ReflectionImpl.DefaultAssembly;
             }
 
             Type t = assembly?.GetType( type );
@@ -129,7 +129,7 @@ namespace ClassicAssist.Helpers
         {
             if( assembly == null )
             {
-                assembly = Engine.ClassicAssembly;
+                assembly = ReflectionImpl.DefaultAssembly;
             }
 
             Type t = assembly?.GetType( type );

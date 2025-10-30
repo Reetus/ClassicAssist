@@ -14,28 +14,29 @@
 
 using System;
 using System.IO.Pipes;
-using System.Windows.Forms;
+using System.Text;
 using Assistant;
+using ClassicAssist.Plugin.Shared;
 using ClassicAssist.Shared;
-using ClassicAssist.UI.Views;
-using ClassicAssist.UO.Data;
 using StreamJsonRpc;
 
 namespace ClassicAssist
 {
     public static class Program
     {
-        private static MainWindow _window;
-
         [STAThread]
         public static void Main( string[] args )
         {
+            Encoding.RegisterProvider( CodePagesEncodingProvider.Instance );
+            
             if ( args == null || args.Length == 0 )
             {
                 return;
             }
 
             string pipeName = args[0];
+            
+            NativeMethods.SetCurrentProcessExplicitAppUserModelID( pipeName );
 
             NamedPipeClientStream clientStream = new NamedPipeClientStream( ".", pipeName, PipeDirection.InOut, PipeOptions.Asynchronous );
             clientStream.Connect();
@@ -45,7 +46,7 @@ namespace ClassicAssist
             JsonRpc rpc = JsonRpc.Attach( clientStream, pluginMethods );
             IHostMethods host = rpc.Attach<IHostMethods>();
 
-            Engine.Install( rpc, host, pluginMethods );
+            Engine.InstallRPC( rpc, host, pluginMethods );
         }
     }
 }

@@ -430,7 +430,7 @@ namespace ClassicAssist.Launcher
             {
                 CheckFileExists = true,
                 Multiselect = false,
-                Filter = "ClassicUO.exe|ClassicUO.exe",
+                Filter = "ClassicUO.exe|ClassicUO.exe;TazUO.exe",
                 Title = Resources.Select_a_client
             };
 
@@ -487,8 +487,7 @@ namespace ClassicAssist.Launcher
 
             StringBuilder args = new StringBuilder();
 
-            List<string> pluginList =
-                new List<string> { Path.Combine( Environment.CurrentDirectory, "ClassicAssist.dll" ) };
+            List<string> pluginList = new List<string> { GetPluginPath() };
 
             foreach ( PluginEntry plugin in Plugins )
             {
@@ -504,7 +503,7 @@ namespace ClassicAssist.Launcher
             args.Append( SelectedShard.ShardType > 0 ? $"-shard {SelectedShard.ShardType} " : "-shard 0 " );
 
             BuildClassicOptions( args );
-
+            
             ProcessStartInfo psi = new ProcessStartInfo
             {
                 WorkingDirectory =
@@ -520,6 +519,27 @@ namespace ClassicAssist.Launcher
             {
                 Application.Current.Shutdown( 0 );
             }
+        }
+
+        private string GetPluginPath()
+        {
+            string plugin = Path.Combine( Environment.CurrentDirectory, "ClassicAssist.dll" );
+
+            ( bool netAssembly, string version ) = Utility.GetExeType( SelectedClientPath );
+
+            if ( netAssembly || !File.Exists( SelectedClientPath.Replace( ".exe", ".dll" ) ) )
+            {
+                return plugin;
+            }
+
+            ( netAssembly, version ) = Utility.GetExeType( SelectedClientPath.Replace( ".exe", ".dll" ) );
+
+            if ( netAssembly && version.Contains( "NETCoreApp" ) )
+            {
+                plugin = Path.Combine( Environment.CurrentDirectory, "..", "net9.0-windows", "ClassicAssist.Plugin.dll" );
+            }
+
+            return plugin;
         }
 
         private void BuildClassicOptions( StringBuilder args )

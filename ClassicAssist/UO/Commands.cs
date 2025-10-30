@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Abilities;
-using ClassicAssist.Data.ClassicUO.Objects;
 using ClassicAssist.Data.Skills;
 using ClassicAssist.Data.Vendors;
 using ClassicAssist.Misc;
+using ClassicAssist.Plugin.Shared.Reflection.ClassicUO.Objects;
 using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.ViewModels;
@@ -664,10 +664,10 @@ namespace ClassicAssist.UO
             switch ( abilityType )
             {
                 case AbilityType.Primary:
-                    result = GameActions.UsePrimaryAbility();
+                    result = ReflectionCommands.UsePrimaryAbility();
                     break;
                 case AbilityType.Secondary:
-                    result = GameActions.UseSecondaryAbility();
+                    result = ReflectionCommands.UseSecondaryAbility();
                     break;
             }
 

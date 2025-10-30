@@ -20,17 +20,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ClassicAssist.Data.ClassicUO.Objects;
-using ClassicAssist.Data.ClassicUO.Objects.Gumps;
-using ClassicAssist.Data.Dress;
-using ClassicAssist.Data.Hotkeys;
-using ClassicAssist.Data.Hotkeys.Commands;
-using ClassicAssist.Data.Macros;
-using ClassicAssist.Data.Organizer;
-using ClassicAssist.Shared.Resources;
-using Sentry;
+using ClassicAssist.Plugin.Shared.Reflection.ClassicUO.Objects;
+using ClassicAssist.Plugin.Shared.Reflection.ClassicUO.Objects.Gumps;
 
-namespace ClassicAssist.Data.ClassicUO
+namespace ClassicAssist.Plugin.Shared.Reflection.ClassicUO
 {
     public static class Macros
     {
@@ -44,14 +37,13 @@ namespace ClassicAssist.Data.ClassicUO
 
             if ( selectedMacro == null )
             {
-                UO.Commands.SystemMessage( Strings.Macro_not_found___ );
                 return;
             }
 
             gameScene.Macros.PlayMacro( selectedMacro );
         }
 
-        public static void CreateMacroButton( MacroEntry macroEntry )
+        public static void CreateMacroButton( string name )
         {
             try
             {
@@ -59,16 +51,16 @@ namespace ClassicAssist.Data.ClassicUO
 
                 IEnumerable<Macro> allMacros = gameScene.Macros.GetAllMacros();
 
-                Macro macroObj = allMacros.FirstOrDefault( e => e.Name == macroEntry.Name );
+                Macro macroObj = allMacros.FirstOrDefault( e => e.Name == name );
 
                 if ( macroObj == null )
                 {
-                    macroObj = new Macro( macroEntry.Name );
+                    macroObj = new Macro( name );
 
                     gameScene.Macros.PushToBack( macroObj );
                 }
 
-                macroObj.Items = new MacroObjectString( macroEntry.Name );
+                macroObj.Items = new MacroObjectString( name );
 
                 MacroButtonGump macroButton = new MacroButtonGump( macroObj, 200, 200 );
 
@@ -76,12 +68,11 @@ namespace ClassicAssist.Data.ClassicUO
             }
             catch ( Exception e )
             {
-                SentrySdk.CaptureException( e );
-                UO.Commands.SystemMessage( string.Format( Strings.Reflection_Error___0_, e.Message ) );
+                // TODO
             }
         }
 
-        public static void CreateMacroButton( HotkeyEntry hotkeyEntry )
+        public static void CreateMacroButton( string name, string contents )
         {
             try
             {
@@ -89,28 +80,16 @@ namespace ClassicAssist.Data.ClassicUO
 
                 IEnumerable<Macro> allMacros = gameScene.Macros.GetAllMacros();
 
-                Macro macroObj = allMacros.FirstOrDefault( e => e.Name == hotkeyEntry.Name );
+                Macro macroObj = allMacros.FirstOrDefault( e => e.Name == name );
 
                 if ( macroObj == null )
                 {
-                    macroObj = new Macro( hotkeyEntry.Name );
+                    macroObj = new Macro( name );
 
                     gameScene.Macros.PushToBack( macroObj );
                 }
 
-                string macroText = hotkeyEntry.GetType().ToString();
-
-                switch ( hotkeyEntry )
-                {
-                    case MacroEntry entry:
-                        macroText = entry.Name;
-                        break;
-                    case HotkeyCommand _:
-                    case OrganizerEntry _:
-                    case DressAgentEntry _:
-                        macroText = $"{hotkeyEntry.GetType()}|{hotkeyEntry.Name}";
-                        break;
-                }
+                string macroText = contents;
 
                 macroObj.Items = new MacroObjectString( macroText );
 
@@ -120,8 +99,7 @@ namespace ClassicAssist.Data.ClassicUO
             }
             catch ( Exception e )
             {
-                SentrySdk.CaptureException( e );
-                UO.Commands.SystemMessage( string.Format( Strings.Reflection_Error___0_, e.Message ) );
+                // TODO
             }
         }
     }

@@ -7,8 +7,9 @@ using System.Windows;
 using Assistant;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Screenshot;
-using ClassicAssist.Helpers;
 using ClassicAssist.Misc;
+using ClassicAssist.Plugin.Shared.Reflection;
+using ClassicAssist.Plugin.Shared.Reflections.Helpers;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UI.Views;
@@ -327,38 +328,13 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = nameof( Strings.Main ) )]
         public static void Logout()
         {
-            Engine.TickWorkQueue.Enqueue( () =>
-            {
-                dynamic socket =
-                    new ReflectionObject(
-                        Reflection.GetTypePropertyValue<dynamic>( "ClassicUO.Network.NetClient", "Socket", null ) );
-
-                if ( socket.IsConnected )
-                {
-                    socket.Disconnect();
-                }
-
-                dynamic game =
-                    new ReflectionObject(
-                        Reflection.GetTypePropertyValue<dynamic>( "ClassicUO.Client", "Game", null ) );
-
-                object instance = Reflection.CreateInstanceOfType( "ClassicUO.Game.Scenes.LoginScene" );
-
-                game.SetScene( instance );
-            } );
+            ReflectionCommands.Logout();
         }
 
         [CommandsDisplay( Category = nameof( Strings.Main ) )]
         public static void Quit()
         {
-            Engine.TickWorkQueue.Enqueue( () =>
-            {
-                dynamic game =
-                    new ReflectionObject(
-                        Reflection.GetTypePropertyValue<dynamic>( "ClassicUO.Client", "Game", null ) );
-
-                game.Exit();
-            } );
+            ReflectionCommands.Quit();
         }
 
         [CommandsDisplay( Category = nameof( Strings.Main ) )]

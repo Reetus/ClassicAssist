@@ -38,6 +38,8 @@ using ClassicAssist.Data.Misc;
 using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Misc;
+using ClassicAssist.Plugin.Shared;
+using ClassicAssist.Plugin.Shared.Reflection;
 using ClassicAssist.Shared;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UI.Views;
@@ -63,7 +65,7 @@ namespace Assistant
 {
     public static partial class Engine
     {
-        private static IHostMethods _host;
+        public static IHostMethods Host { get; set; }
 
         public delegate void dClientClosing();
 
@@ -185,14 +187,14 @@ namespace Assistant
         public static event dDisconnected DisconnectedEvent;
         public static event dPlayerInitialized PlayerInitializedEvent;
 
-        public static void Install( JsonRpc rpc, IHostMethods hostMethods, PluginMethods pluginMethods )
+        public static void InstallRPC( JsonRpc rpc, IHostMethods hostMethods, PluginMethods pluginMethods )
         {
-            _host = hostMethods;
+            Host = hostMethods;
             
             Initialize();
-
-            ClientPath = _host.GetClientPath().Result;
-            ClientVersion = _host.GetClientVersion().Result;
+        
+            ClientPath = Host.GetClientPath().Result;
+            ClientVersion = Host.GetClientVersion().Result;
             
             SplashWindow splashWindow = new SplashWindow();
             splashWindow.Show();
@@ -205,30 +207,32 @@ namespace Assistant
             TileData.Initialize( ClientPath );
             Statics.Initialize( ClientPath );
             MapInfo.Initialize( ClientPath );
-
-            _getPacketLength = (id) => _host.GetPacketLength( id ).Result;
-            _getUOFilePath = () => _host.GetUOFilePath().Result;
+            
+            InitializeExtensions();
+        
+            _getPacketLength = id => Host.GetPacketLength( id ).Result;
+            _getUOFilePath = () => Host.GetUOFilePath().Result;
             _sendToClient = SendPacketToClientPlugin;
             _sendToServer = SendPacketToServerPlugin;
-            _requestMove = ( dir, run ) => _host.RequestMove(dir, run).Result;
-            _setTitle = title => _host.SetTitle(title);
+            _requestMove = ( dir, run ) => Host.RequestMove(dir, run).Result;
+            _setTitle = title => Host.SetTitle(title);
             
             _window = new MainWindow();
             _window.Show();
-
+        
             splashWindow.Close();
-
+        
             Dispatcher.Run();
         }
 
         private static bool SendPacketToServerPlugin( ref byte[] data, ref int length )
         {
-            return _host.SendPacketToServer( data, length ).Result;
+            return Host.SendPacketToServer( data, length ).Result;
         }
 
         private static bool SendPacketToClientPlugin( ref byte[] data, ref int length )
         {
-            return _host.SendPacketToClient( data, length ).Result;
+            return Host.SendPacketToClient( data, length ).Result;
         }
 
         public static unsafe void Install( PluginHeader* plugin )
@@ -316,6 +320,7 @@ namespace Assistant
             }
 
             InitializeExtensions();
+            ReflectionImpl.Initialize( ClassicAssembly, CUOPath, TickWorkQueue, (a, b) => Move((Direction)a, b) );
         }
 
         private static void OnFocusChanged( bool focus )
@@ -452,7 +457,7 @@ namespace Assistant
             AssistantOptions.Save();
             SentrySdk.Close();
 
-            if ( _host != null )
+            if ( Host != null )
             {
                 Environment.Exit( 0 );
             }
@@ -1174,14 +1179,30 @@ namespace Assistant
                 Engine.OnDisconnected();
             }
 
-            public Task<bool> OnPacketReceive( byte[] data, int length )
+            public Task<(bool, byte[], int)> OnPacketReceive( byte[] data, int length )
             {
-                return Task.FromResult( Engine.OnPacketReceive( ref data, ref length ) );
+                byte[] original = new byte[length];
+                int originalLength = length;
+                Array.Copy( data, original, length );
+                
+                bool result = Engine.OnPacketReceive( ref data, ref length );
+                
+                bool modified = length != originalLength || !original.SequenceEqual( data );
+
+                return Task.FromResult( ( result, modified ? data : Array.Empty<byte>(), modified ? length : 0 ) );
             }
 
-            public Task<bool> OnPacketSend( byte[] data, int length )
+            public Task<(bool, byte[], int)> OnPacketSend( byte[] data, int length )
             {
-                return Task.FromResult( Engine.OnPacketSend( ref data, ref length ) );
+                byte[] original = new byte[length];
+                int originalLength = length;
+                Array.Copy( data, original, length );
+
+                bool result = Engine.OnPacketSend( ref data, ref length );
+
+                bool modified = length != originalLength || !original.SequenceEqual( data );
+
+                return Task.FromResult( ( result, modified ? data : Array.Empty<byte>(), modified ? length : 0 ) );
             }
 
             public void OnClientClosing()

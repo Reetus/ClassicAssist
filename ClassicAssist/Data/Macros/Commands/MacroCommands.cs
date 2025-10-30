@@ -77,7 +77,7 @@ namespace ClassicAssist.Data.Macros.Commands
             Parameters = new[] { nameof( ParameterType.MacroName ) } )]
         public static void PlayCUOMacro( string name )
         {
-            ClassicUO.Macros.PlayCUOMacro( name );
+            ReflectionCommands.PlayCUOMacro( name );
         }
     }
 }

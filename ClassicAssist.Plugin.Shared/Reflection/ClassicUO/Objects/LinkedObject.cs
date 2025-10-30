@@ -17,11 +17,9 @@
 
 #endregion
 
-using System;
-using System.Runtime.CompilerServices;
-using ClassicAssist.Helpers;
+using ClassicAssist.Plugin.Shared.Reflections.Helpers;
 
-namespace ClassicAssist.Data.ClassicUO.Objects
+namespace ClassicAssist.Plugin.Shared.Reflection.ClassicUO.Objects
 {
     public class LinkedObject<T, T2> : ReflectionObject
     {

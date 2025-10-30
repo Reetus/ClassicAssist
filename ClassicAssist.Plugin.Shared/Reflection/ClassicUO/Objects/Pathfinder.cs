@@ -20,13 +20,12 @@
 using System;
 using System.Reflection;
 using System.Threading;
-using Assistant;
-using ClassicAssist.UO.Network.Packets;
 
-namespace ClassicAssist.Data.ClassicUO.Objects
+namespace ClassicAssist.Plugin.Shared.Reflection.ClassicUO.Objects
 {
     public static class Pathfinder
     {
+        private static object _pathfinderInstance;
         private const string TYPE = "ClassicUO.Game.Pathfinder";
         private static Type _type;
         private static MethodInfo _walkMethod;
@@ -37,7 +36,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
             {
                 if ( _type == null )
                 {
-                    _type = Engine.ClassicAssembly?.GetType( TYPE );
+                    _type = ReflectionImpl.DefaultAssembly?.GetType( TYPE );
                 }
 
                 if ( _type == null )
@@ -52,7 +51,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
                     return false;
                 }
 
-                return (bool) property.GetValue( null );
+                return (bool) property.GetValue( _pathfinderInstance );
             }
         }
 
@@ -60,7 +59,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
         {
             if ( _type == null )
             {
-                _type = Engine.ClassicAssembly?.GetType( TYPE );
+                _type = ReflectionImpl.DefaultAssembly?.GetType( TYPE );
             }
 
             if ( _type == null )
@@ -75,7 +74,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
                 return false;
             }
 
-            property.SetValue( null, false );
+            property.SetValue( _pathfinderInstance, false );
 
             return !AutoWalking;
         }
@@ -86,7 +85,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
             {
                 if ( _type == null )
                 {
-                    _type = Engine.ClassicAssembly?.GetType( TYPE );
+                    _type = ReflectionImpl.DefaultAssembly?.GetType( TYPE );
                 }
 
                 if ( _type == null )
@@ -101,6 +100,24 @@ namespace ClassicAssist.Data.ClassicUO.Objects
 
                 if ( _walkMethod == null )
                 {
+                    _walkMethod = _type?.GetMethod( "WalkTo", BindingFlags.Instance | BindingFlags.Public );
+
+                    if ( _walkMethod != null )
+                    {
+                        World world = new World();
+                        PropertyInfo property;
+
+                        if ( (property = world.Player.AssociatedObject.GetType().GetProperty( "Pathfinder" )) != null )
+                        {
+                            object pathfinder = property.GetValue( world.Player.AssociatedObject );
+
+                            _pathfinderInstance = pathfinder ?? throw new InvalidOperationException( "Failed to get Pathfinder" );
+                        }
+                    }
+                }
+
+                if ( _walkMethod == null )
+                {
                     throw new Exception( "Cannot find method" );
                 }
 
@@ -108,9 +125,9 @@ namespace ClassicAssist.Data.ClassicUO.Objects
 
                 bool retval = false;
 
-                Engine.TickWorkQueue.Enqueue( () =>
+                ReflectionImpl.TickWorkQueue.Enqueue( () =>
                 {
-                    retval = (bool) _walkMethod.Invoke( null, new object[] { x, y, z, distance } );
+                    retval = (bool) _walkMethod.Invoke( _pathfinderInstance, new object[] { x, y, z, distance } );
                     are.Set();
                 } );
 
@@ -120,9 +137,11 @@ namespace ClassicAssist.Data.ClassicUO.Objects
             }
             catch
             {
-                // Fallback to old method
-                Engine.SendPacketToClient( new Pathfind( x, y, z ) );
+                // TODO
                 return true;
+                // // Fallback to old method
+                // Engine.SendPacketToClient( new Pathfind( x, y, z ) );
+                // return true;
             }
         }
     }

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
 using Assistant;
-using ClassicAssist.Data.ClassicUO.Objects;
 using ClassicAssist.Misc;
+using ClassicAssist.Plugin.Shared.Reflection;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
@@ -91,9 +91,7 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = nameof( Strings.Movement ) )]
         public static bool Following()
         {
-            dynamic gameScene = new GameScene();
-
-            return gameScene._followingMode;
+            return ReflectionCommands.Following();
         }
 
         [CommandsDisplay( Category = nameof( Strings.Movement ),
@@ -107,23 +105,9 @@ namespace ClassicAssist.Data.Macros.Commands
                 serial = AliasCommands.ResolveSerial( obj, false );
             }
 
-            dynamic gameScene = new GameScene();
-
-            if ( obj == null )
-            {
-                if ( gameScene._followingMode )
-                {
-                    UOC.SystemMessage( Strings.Deactivated_following, SystemMessageHues.Normal, true );
-                }
-
-                gameScene._followingMode = false;
-            }
-            else
-            {
-                gameScene._followingMode = true;
-                gameScene._followingTarget = (uint) serial;
-                UOC.SystemMessage( Strings.Activated_following, SystemMessageHues.Normal, true );
-            }
+            bool result = ReflectionCommands.Follow( serial );
+            
+            UOC.SystemMessage( result ? Strings.Activated_following: Strings.Deactivated_following, SystemMessageHues.Normal, true );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Movement ),
@@ -142,7 +126,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return false;
             }
 
-            return Pathfinder.WalkTo( x, y, z, desiredDistance );
+            return ReflectionCommands.WalkTo( x, y, z, desiredDistance );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Movement ),
@@ -151,7 +135,7 @@ namespace ClassicAssist.Data.Macros.Commands
         {
             if ( obj is int i && i == -1 )
             {
-                Pathfinder.Cancel();
+                ReflectionCommands.CancelPathfinding();
                 return true;
             }
 
@@ -179,7 +163,7 @@ namespace ClassicAssist.Data.Macros.Commands
         [CommandsDisplay( Category = nameof( Strings.Movement ) )]
         public static bool Pathfinding()
         {
-            return Pathfinder.AutoWalking;
+            return ReflectionCommands.Pathfinding();
         }
     }
 }

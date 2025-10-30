@@ -18,10 +18,8 @@
 #endregion
 
 using System;
-using Assistant;
-using ClassicAssist.Helpers;
 
-namespace ClassicAssist.Data.ClassicUO.Objects
+namespace ClassicAssist.Plugin.Shared.Reflection.ClassicUO.Objects
 {
     public class MacroObjectString : LinkedObject<object, object>
     {
@@ -31,13 +29,13 @@ namespace ClassicAssist.Data.ClassicUO.Objects
 
         public MacroObjectString( string text ) : base( null )
         {
-            Type macroTypeType = Engine.ClassicAssembly.GetType( MACRO_TYPE_TYPE );
-            Type macroSubTypeType = Engine.ClassicAssembly.GetType( MACRO_SUB_TYPE_TYPE );
+            Type macroTypeType = ReflectionImpl.DefaultAssembly.GetType( MACRO_TYPE_TYPE );
+            Type macroSubTypeType = ReflectionImpl.DefaultAssembly.GetType( MACRO_SUB_TYPE_TYPE );
 
             object macroType = Enum.Parse( macroTypeType, "RazorMacro" );
             object macroSubType = Enum.Parse( macroSubTypeType, "MSC_NONE" );
 
-            object macroObjStr = Reflection.CreateInstanceOfType( MACRO_OBJ_STRING_TYPE, null, macroType,
+            object macroObjStr = Reflections.Helpers.ReflectionHelper.CreateInstanceOfType( MACRO_OBJ_STRING_TYPE, null, macroType,
                 macroSubType, text );
 
             AssociatedObject = macroObjStr;

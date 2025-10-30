@@ -4,7 +4,6 @@ using System.IO;
 using System.Text;
 using Assistant;
 using ClassicAssist.Data;
-using ClassicAssist.Helpers;
 
 namespace ClassicAssist.UO.Data
 {
@@ -24,37 +23,38 @@ namespace ClassicAssist.UO.Data
         {
             string filename = Path.Combine( _dataPath, "Cliloc.enu" );
 
-            if ( AssistantOptions.UseCUOClilocLanguage && !englishOnly )
-            {
-                dynamic settings = Reflection.GetTypeFieldValue<dynamic>( "ClassicUO.Configuration.Settings",
-                    "GlobalSettings", null );
-
-                if ( settings != null )
-                {
-                    dynamic clilocFile =
-                        Reflection.GetTypePropertyValue<dynamic>( settings.GetType(), "ClilocFile", settings )
-                            ?.ToString() ?? string.Empty;
-
-                    if ( string.IsNullOrEmpty( clilocFile ) )
-                    {
-                        dynamic language =
-                            Reflection.GetTypePropertyValue<dynamic>( settings.GetType(), "Language", settings )
-                                ?.ToString() ?? string.Empty;
-
-                        clilocFile = $"cliloc.{language}";
-                    }
-
-
-                    if ( string.IsNullOrEmpty( clilocFile ) && !File.Exists( Path.Combine( _dataPath, clilocFile ) ) )
-                    {
-                        CanUseCUOClilocLanguage = false;
-                    }
-                    else
-                    {
-                        filename = Path.Combine( _dataPath, clilocFile );
-                    }
-                }
-            }
+            //TODO
+            // if ( AssistantOptions.UseCUOClilocLanguage && !englishOnly )
+            // {
+            //     dynamic settings = Reflection.GetTypeFieldValue<dynamic>( "ClassicUO.Configuration.Settings",
+            //         "GlobalSettings", null );
+            //
+            //     if ( settings != null )
+            //     {
+            //         dynamic clilocFile =
+            //             Reflection.GetTypePropertyValue<dynamic>( settings.GetType(), "ClilocFile", settings )
+            //                 ?.ToString() ?? string.Empty;
+            //
+            //         if ( string.IsNullOrEmpty( clilocFile ) )
+            //         {
+            //             dynamic language =
+            //                 Reflection.GetTypePropertyValue<dynamic>( settings.GetType(), "Language", settings )
+            //                     ?.ToString() ?? string.Empty;
+            //
+            //             clilocFile = $"cliloc.{language}";
+            //         }
+            //
+            //
+            //         if ( string.IsNullOrEmpty( clilocFile ) && !File.Exists( Path.Combine( _dataPath, clilocFile ) ) )
+            //         {
+            //             CanUseCUOClilocLanguage = false;
+            //         }
+            //         else
+            //         {
+            //             filename = Path.Combine( _dataPath, clilocFile );
+            //         }
+            //     }
+            // }
 
             if ( !File.Exists( filename ) )
             {

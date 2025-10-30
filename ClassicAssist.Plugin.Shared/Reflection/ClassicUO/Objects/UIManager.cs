@@ -20,12 +20,9 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Assistant;
-using ClassicAssist.Data.ClassicUO.Objects.Gumps;
-using ClassicAssist.Shared.Resources;
-using Sentry;
+using ClassicAssist.Plugin.Shared.Reflection.ClassicUO.Objects.Gumps;
 
-namespace ClassicAssist.Data.ClassicUO.Objects
+namespace ClassicAssist.Plugin.Shared.Reflection.ClassicUO.Objects
 {
     public static class UIManager
     {
@@ -38,7 +35,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
         {
             if ( _uiManagerType == null )
             {
-                _uiManagerType = Engine.ClassicAssembly?.GetType( UI_MANAGER_TYPE );
+                _uiManagerType = ReflectionImpl.DefaultAssembly?.GetType( UI_MANAGER_TYPE );
             }
 
             if ( _addMethod == null )
@@ -46,7 +43,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
                 _addMethod = _uiManagerType?.GetMethod( "Add", BindingFlags.Public | BindingFlags.Static );
             }
 
-            Engine.TickWorkQueue.Enqueue( () =>
+            ReflectionImpl.TickWorkQueue.Enqueue( () =>
             {
                 List<object> param = new List<object>();
 
@@ -73,8 +70,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
                 }
                 catch ( Exception e )
                 {
-                    SentrySdk.CaptureException( e );
-                    UO.Commands.SystemMessage( string.Format( Strings.Reflection_Error___0_, e.Message ) );
+                    // TODO
                 }
             } );
         }
@@ -83,7 +79,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
         {
             if ( _uiManagerType == null )
             {
-                _uiManagerType = Engine.ClassicAssembly?.GetType( UI_MANAGER_TYPE );
+                _uiManagerType = ReflectionImpl.DefaultAssembly?.GetType( UI_MANAGER_TYPE );
             }
 
             if ( _savePositionMethod == null )
@@ -101,7 +97,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
 
             object point = Activator.CreateInstance( type, x, y );
 
-            Engine.TickWorkQueue.Enqueue( () => { _savePositionMethod.Invoke( gumpId, new[] { gumpId, point } ); } );
+            ReflectionImpl.TickWorkQueue.Enqueue( () => { _savePositionMethod.Invoke( gumpId, new[] { gumpId, point } ); } );
         }
     }
 }

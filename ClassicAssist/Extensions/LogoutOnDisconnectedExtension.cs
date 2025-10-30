@@ -19,10 +19,8 @@ using System.Reflection;
 using System.Windows.Threading;
 using Assistant;
 using ClassicAssist.Data;
-using ClassicAssist.Data.ClassicUO.Objects.Gumps;
 using ClassicAssist.Data.Macros.Commands;
 using Sentry;
-using CUO = ClassicAssist.Data.ClassicUO.Gumps;
 
 namespace ClassicAssist.Extensions
 {
@@ -45,53 +43,10 @@ namespace ClassicAssist.Extensions
                 return;
             }
 
-            Engine.TickWorkQueue.Enqueue( () =>
+            if ( ReflectionCommands.HasConnectionLostGump() )
             {
-                try
-                {
-                    IEnumerable<dynamic> gumps = CUO.GetGumps();
-
-                    dynamic obj = gumps.FirstOrDefault( g => g.GetType().ToString().Contains( "MessageBoxGump" ) );
-
-                    if ( obj == null )
-                    {
-                        return;
-                    }
-
-                    MessageBoxGump messageBox = new MessageBoxGump( obj );
-
-                    dynamic label = messageBox.Children.FirstOrDefault(
-                        ele => ele.GetType().ToString().Contains( "Label" ) );
-
-                    dynamic button = messageBox.Children.FirstOrDefault(
-                        ele => ele.GetType().ToString().Contains( "Button" ) );
-
-                    if ( label == null || button == null )
-                    {
-                        return;
-                    }
-
-                    dynamic textProperty = label.GetType()
-                        .GetProperty( "Text", BindingFlags.Instance | BindingFlags.Public );
-
-                    dynamic textValue = textProperty.GetValue( label, null );
-
-                    // TODO: resources
-                    if ( !textValue.Contains( "Connection lost:" ) )
-                    {
-                        return;
-                    }
-
-                    //TODO: actually click the button
-                    MainCommands.Logout();
-                }
-                catch ( Exception ex )
-                {
-                    Console.WriteLine( ex.ToString() );
-
-                    SentrySdk.CaptureException( ex );
-                }
-            } );
+                ReflectionCommands.Logout();
+            }
         }
 
         private void EngineOnDisconnectedEvent()

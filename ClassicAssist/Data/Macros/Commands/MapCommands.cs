@@ -12,7 +12,9 @@
 
 #endregion
 
-using ClassicAssist.Data.ClassicUO.Objects;
+using Assistant;
+using ClassicAssist.Plugin.Shared.Reflection;
+using ClassicAssist.Plugin.Shared.Reflection.ClassicUO.Objects;
 using ClassicAssist.Shared.Resources;
 
 namespace ClassicAssist.Data.Macros.Commands
@@ -29,7 +31,7 @@ namespace ClassicAssist.Data.Macros.Commands
         public static void AddMapMarker( string name, int x, int y, int facet, int zoomLevel = 3,
             string iconName = "bank" )
         {
-            WorldMapGump.AddMarker( name, x, y, facet, zoomLevel, iconName );
+            ReflectionCommands.AddMapMarker( name, x, y, facet, zoomLevel, iconName );
         }
 
         [CommandsDisplay( Category = nameof( Strings.World_Map ),

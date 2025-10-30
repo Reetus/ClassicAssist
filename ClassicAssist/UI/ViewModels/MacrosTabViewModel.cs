@@ -18,6 +18,7 @@ using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Misc;
+using ClassicAssist.Plugin.Shared.Reflection;
 using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
@@ -788,7 +789,7 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            Data.ClassicUO.Macros.CreateMacroButton( macro );
+            ReflectionCommands.CreateMacroButton( macro.Name, macro.Name );
         }
 
         private void CheckOverwriteHotkey( HotkeyEntry selectedItem, ShortcutKeys hotkey )

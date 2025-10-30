@@ -157,5 +157,18 @@ namespace ClassicAssist.Tests
                 Assert.Fail();
             }
         }
+
+        [TestMethod]
+        public void WillParseFunctionCapitalized()
+        {
+            const string layout = "{ Button 554 16 4005 4007 1 0 1 }";
+            
+            Gump gump = GumpParser.Parse( 0x01, 0x01, 1, 1, layout, new string[] { } );
+            
+            GumpElement gumpElement = gump.GetElementByXY( 554, 16 );
+            
+            Assert.IsNotNull( gumpElement );
+            Assert.AreEqual( ElementType.button, gumpElement.Type );
+        }
     }
 }

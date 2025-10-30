@@ -17,9 +17,7 @@
 
 #endregion
 
-using ClassicAssist.Helpers;
-
-namespace ClassicAssist.Data.ClassicUO.Objects
+namespace ClassicAssist.Plugin.Shared.Reflection.ClassicUO.Objects
 {
     public class Macro : LinkedObject<Macro, MacroObjectString>
     {
@@ -27,7 +25,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
 
         public Macro( string name ) : base( null )
         {
-            AssociatedObject = Reflection.CreateInstanceOfType( MACRO_TYPE, null, name );
+            AssociatedObject = Reflections.Helpers.ReflectionHelper.CreateInstanceOfType( MACRO_TYPE, null, name );
             CreateMemberCache();
         }
 

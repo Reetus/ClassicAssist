@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net48;net9.0;net9.0-windows</TargetFrameworks>
@@ -11,6 +11,7 @@
     <Reference Include="cuoapi">
       <HintPath>..\ClassicAssist\cuoapi.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
   <ItemGroup>

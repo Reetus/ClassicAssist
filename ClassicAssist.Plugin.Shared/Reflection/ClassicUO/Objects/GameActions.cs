@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Reflection;
-using Assistant;
 
-namespace ClassicAssist.Data.ClassicUO.Objects
+namespace ClassicAssist.Plugin.Shared.Reflection.ClassicUO.Objects
 {
     public static class GameActions
     {
@@ -15,7 +14,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
         {
             if ( _type == null )
             {
-                _type = Engine.ClassicAssembly?.GetType( TYPE );
+                _type = ReflectionImpl.DefaultAssembly?.GetType( TYPE );
             }
 
             if ( _usePrimaryMethod == null )
@@ -28,7 +27,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
                 return false;
             }
 
-            Engine.TickWorkQueue.Enqueue( () => { _usePrimaryMethod.Invoke( null, null ); } );
+            ReflectionImpl.TickWorkQueue.Enqueue( () => { _usePrimaryMethod.Invoke( null, null ); } );
 
             return true;
         }
@@ -37,7 +36,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
         {
             if ( _type == null )
             {
-                _type = Engine.ClassicAssembly?.GetType( TYPE );
+                _type = ReflectionImpl.DefaultAssembly?.GetType( TYPE );
             }
 
             if ( _useSecondaryMethod == null )
@@ -51,7 +50,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
                 return false;
             }
 
-            Engine.TickWorkQueue.Enqueue( () => { _useSecondaryMethod.Invoke( null, null ); } );
+            ReflectionImpl.TickWorkQueue.Enqueue( () => { _useSecondaryMethod.Invoke( null, null ); } );
 
             return true;
         }

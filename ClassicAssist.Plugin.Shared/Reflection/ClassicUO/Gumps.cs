@@ -19,9 +19,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using ClassicAssist.Helpers;
 
-namespace ClassicAssist.Data.ClassicUO
+namespace ClassicAssist.Plugin.Shared.Reflection.ClassicUO
 {
     public static class Gumps
     {
@@ -29,7 +28,7 @@ namespace ClassicAssist.Data.ClassicUO
 
         static Gumps()
         {
-            _gumps = Reflection.GetTypePropertyValue<dynamic>( "ClassicUO.Game.Managers.UIManager", "Gumps", null );
+            _gumps = Reflections.Helpers.ReflectionHelper.GetTypePropertyValue<dynamic>( "ClassicUO.Game.Managers.UIManager", "Gumps", null );
         }
 
         public static IEnumerable<dynamic> GetGumps()

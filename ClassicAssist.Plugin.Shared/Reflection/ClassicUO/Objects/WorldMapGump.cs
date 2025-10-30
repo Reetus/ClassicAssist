@@ -17,9 +17,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Assistant;
 
-namespace ClassicAssist.Data.ClassicUO.Objects
+namespace ClassicAssist.Plugin.Shared.Reflection.ClassicUO.Objects
 {
     public static class WorldMapGump
     {
@@ -28,7 +27,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
         public static bool AddMarker( string name, int x, int y, int facet, int zoomLevel = 3,
             string iconName = "bank" )
         {
-            string mapFilePath = Path.Combine( Engine.CUOPath, "Data", "Client" );
+            string mapFilePath = Path.Combine( ReflectionImpl.ClassicUOPath, "Data", "Client" );
             string markerFilePath = Path.Combine( mapFilePath, "ClassicAssist.csv" );
 
             using ( FileStream fileStream =
@@ -60,13 +59,13 @@ namespace ClassicAssist.Data.ClassicUO.Objects
 
             if ( method != null )
             {
-                Engine.TickWorkQueue.Enqueue( () => { method.Invoke( gump, null ); } );
+                ReflectionImpl.TickWorkQueue.Enqueue( () => { method.Invoke( gump, null ); } );
             }
         }
 
         public static bool RemoveMarker( string name )
         {
-            string mapFilePath = Path.Combine( Engine.CUOPath, "Data", "Client" );
+            string mapFilePath = Path.Combine( ReflectionImpl.ClassicUOPath, "Data", "Client" );
             string markerFilePath = Path.Combine( mapFilePath, "ClassicAssist.csv" );
 
             string[] lines = File.ReadAllLines( markerFilePath );
@@ -94,7 +93,7 @@ namespace ClassicAssist.Data.ClassicUO.Objects
 
         public static void ClearMarkers()
         {
-            string mapFilePath = Path.Combine( Engine.CUOPath, "Data", "Client" );
+            string mapFilePath = Path.Combine( ReflectionImpl.ClassicUOPath, "Data", "Client" );
             string markerFilePath = Path.Combine( mapFilePath, "ClassicAssist.csv" );
 
             if ( File.Exists( markerFilePath ) )

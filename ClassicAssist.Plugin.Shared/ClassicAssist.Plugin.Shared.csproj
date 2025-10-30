@@ -8,4 +8,8 @@
     <ItemGroup>
         <PackageReference Include="StreamJsonRpc" Version="2.22.23" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.CSharp" />
+    </ItemGroup>
 </Project>

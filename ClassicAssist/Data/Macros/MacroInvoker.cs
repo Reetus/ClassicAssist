@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Shared.Resources;
 using IronPython.Hosting;
 using IronPython.Runtime.Exceptions;
+using Microsoft.Graph;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
 
@@ -23,9 +25,8 @@ namespace ClassicAssist.Data.Macros
 
         public delegate void dMacroStartStop();
 
-        private static readonly ScriptEngine _engine = Python.CreateEngine();
+        private static ScriptEngine _engine = Python.CreateEngine();
         private static Dictionary<string, object> _importCache;
-        private readonly MemoryStream _memoryStream = new MemoryStream();
         private readonly SystemMessageTextWriter _textWriter = new SystemMessageTextWriter();
         private CancellationTokenSource _cancellationToken;
         private MacroEntry _macro;
@@ -43,8 +44,10 @@ namespace ClassicAssist.Data.Macros
                 _importCache = InitializeImports( _engine );
             }
 
-            _engine.Runtime.IO.SetOutput( _memoryStream, _textWriter );
-            _engine.Runtime.IO.SetErrorOutput( _memoryStream, _textWriter );
+            runtime.IO.SetOutput( new TextStream( _textWriter ), Encoding.Unicode );
+            runtime.IO.SetErrorOutput( new TextStream( _textWriter), Encoding.Unicode );
+            
+            _engine = Python.GetEngine( runtime );
 
             string modulePath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Modules" );
             ICollection<string> searchPaths = _engine.GetSearchPaths();
@@ -287,7 +290,15 @@ namespace ClassicAssist.Data.Macros
                 return OnTrace;
             }
 
-            _macroScope.Engine.Execute( "sys.exit()", _macroScope );
+            try
+            {
+                _macroScope.Engine.Execute("sys.exit()", _macroScope);
+            }
+            catch (SystemExitException)
+            {
+                throw new TaskCanceledException();
+            }
+            
             return null;
         }
 
@@ -325,7 +336,10 @@ namespace ClassicAssist.Data.Macros
                 }
 
                 //Thread?.Abort();
+#if !NET
                 Thread?.Interrupt();
+#endif
+                
                 Thread?.Join( 100 );
 
                 MacroManager.GetInstance().Replay = false;

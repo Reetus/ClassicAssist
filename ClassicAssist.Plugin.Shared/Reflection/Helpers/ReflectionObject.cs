@@ -24,7 +24,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace ClassicAssist.Helpers
+namespace ClassicAssist.Plugin.Shared.Reflections.Helpers
 {
     /*
      * https://stackoverflow.com/questions/36557845/can-one-convert-a-dynamic-object-to-an-expandoobject-c

@@ -13,13 +13,11 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Assistant;
-using ClassicAssist.Helpers;
+using ClassicAssist.Plugin.Shared.Reflection;
+using ClassicAssist.Plugin.Shared.Reflections.Helpers;
 using ClassicAssist.UO.Objects.Gumps;
-using CUOGump = ClassicAssist.Data.ClassicUO.Objects.Gumps.Gump;
-using CUOGumps = ClassicAssist.Data.ClassicUO.Gumps;
 
 namespace ClassicAssist.UO.Gumps
 {
@@ -87,7 +85,13 @@ namespace ClassicAssist.UO.Gumps
         {
             try
             {
-                dynamic gumps = Reflection.GetTypePropertyValue<dynamic>( "ClassicUO.Game.Managers.UIManager", "Gumps",
+                if ( Engine.Host != null )
+                {
+                    return true;
+                }
+                
+                // TODO
+                dynamic gumps = ReflectionHelper.GetTypePropertyValue<dynamic>( "ClassicUO.Game.Managers.UIManager", "Gumps",
                     null );
 
                 return gumps != null;
@@ -110,24 +114,13 @@ namespace ClassicAssist.UO.Gumps
 
             try
             {
-                IEnumerable<dynamic> gumps = CUOGumps.GetGumps();
-
-                List<CUOGump> cuoGumps = ( from g in gumps select new CUOGump( g ) ).ToList();
-
-                CUOGump gump = cuoGumps.FirstOrDefault( g => g.ServerSerial == ID );
-
-                if ( gump != null )
-                {
-                    x = gump.Location.X;
-                    y = gump.Location.Y;
-                }
+                (x, y) = ReflectionCommands.GetGumpPosition( ID );
+                return ( x, y );
             }
             catch ( Exception )
             {
                 return ( x, y );
             }
-
-            return ( x, y );
         }
     }
 }

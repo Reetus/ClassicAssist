@@ -202,7 +202,7 @@ namespace ClassicAssist.UO.Network
                     }
                 }
 
-                Engine.SendPacketToServer( new DragItem( serial, amount ) );
+                Engine.SendPacketToServer( new DragItem( serial, amount, Options.CurrentOptions.DragDelay ? Options.CurrentOptions.DragDelayMS : 0 ) );
                 Thread.Sleep( DROP_DELAY );
                 Engine.SendPacketToServer( new DropItem( serial, -1, x, y, z ) );
                 Engine.LastActionPacket = DateTime.Now;
@@ -291,7 +291,7 @@ namespace ClassicAssist.UO.Network
 
                 options?.BeforeDragDrop?.Invoke( item );
 
-                Engine.SendPacketToServer( new DragItem( item.Serial, amount ) );
+                Engine.SendPacketToServer( new DragItem( item.Serial, amount, Options.CurrentOptions.DragDelay ? Options.CurrentOptions.DragDelayMS : 0 ) );
                 Thread.Sleep( DROP_DELAY );
                 Engine.SendPacketToServer( new DropItem( item.Serial, containerSerial, x, y, 0 ) );
                 Engine.LastActionPacket = DateTime.Now;

@@ -997,7 +997,7 @@ namespace ClassicAssist.UI.ViewModels
 
                 IEnumerable<Task<bool>> tasks = data.Select( e => ActionPacketQueue.EnqueueAction( e, arg =>
                 {
-                    Engine.SendPacketToServer( new DragItem( e.Serial, 1 ) );
+                    Engine.SendPacketToServer( new DragItem( e.Serial, 1, Data.Options.CurrentOptions.DragDelay ? Data.Options.CurrentOptions.DragDelayMS : 0 ) );
                     Thread.Sleep( 50 );
                     Engine.SendPacketToServer( new EquipRequest( e.Serial, e.Layer, Engine.Player?.Serial ?? 0 ) );
 
@@ -1268,7 +1268,7 @@ namespace ClassicAssist.UI.ViewModels
                 PacketWaitEntry pwe1 = Engine.PacketWaitEntries.Add( pfi1, PacketDirection.Incoming, true );
                 PacketWaitEntry pwe2 = Engine.PacketWaitEntries.Add( pfi2, PacketDirection.Incoming, true );
 
-                Engine.SendPacketToServer( new DragItem( serial, amount ) );
+                Engine.SendPacketToServer( new DragItem( serial, amount, Data.Options.CurrentOptions.DragDelay ? Data.Options.CurrentOptions.DragDelayMS : 0 ) );
                 Engine.LastActionPacket = DateTime.Now;
 
                 int result = Task.WaitAny( new Task[] { pwe1.Lock.ToTask(), pwe2.Lock.ToTask() }, 2000 );

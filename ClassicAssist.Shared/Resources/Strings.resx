@@ -2077,4 +2077,7 @@ Are you sure you wish to continue?</value>
   <data name="Move to group" xml:space="preserve">
     <value>Move to group</value>
   </data>
+  <data name="Action Delay Dragging (Sphere-X):" xml:space="preserve">
+    <value>Action Delay Dragging (Sphere-X):</value>
+  </data>
 </root>

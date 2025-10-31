@@ -1,4 +1,4 @@
-﻿/* Copyright (C) 2009 Matthew Geyer
+/* Copyright (C) 2009 Matthew Geyer
  * 
  * This file is part of UO Machine.
  * 
@@ -90,7 +90,7 @@ namespace ClassicAssist.UO.Objects.Gumps
                     formatted[j] = formatted[j].Trim();
                 }
 
-                switch ( formatted[0] )
+                switch ( formatted[0].ToLower() )
                 {
                     case "noclose":
                         closable = false;

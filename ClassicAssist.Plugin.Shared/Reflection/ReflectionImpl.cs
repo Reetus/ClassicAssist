@@ -213,6 +213,11 @@ namespace ClassicAssist.Plugin.Shared.Reflection
             }
             
             dynamic obj = gumps.FirstOrDefault( g => g.GetType().Name == "MessageBoxGump" );
+
+            if ( obj == null )
+            {
+                return false;
+            }
             
             MessageBoxGump messageBox = new MessageBoxGump( obj );
 

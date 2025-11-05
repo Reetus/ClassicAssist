@@ -89,11 +89,18 @@ namespace ClassicAssist.UI.Views.ECV.Filter.Behaviours
             else
             {
                 _cancellationTokenSource?.Cancel();
+                _cancellationTokenSource?.Dispose();
+                _cancellationTokenSource = null;
 
                 if ( DeleteCommand?.CanExecute( Item ) == true )
                 {
                     DeleteCommand.Execute( Item );
                 }
+                
+                _isPending = false;
+                _clonedDrawingImage = null;
+                _originalBrush = null;
+            }
             }
         }
 

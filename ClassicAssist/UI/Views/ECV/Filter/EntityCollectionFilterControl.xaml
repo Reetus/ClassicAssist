@@ -16,6 +16,7 @@
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:views="clr-namespace:ClassicAssist.UI.Views"
+    xmlns:behaviours="clr-namespace:ClassicAssist.UI.Views.ECV.Filter.Behaviours"
     x:Name="userControl" x:Class="ClassicAssist.UI.Views.ECV.Filter.EntityCollectionFilterControl"
     mc:Ignorable="d"
     Background="{DynamicResource ThemeBackgroundBrush}">
@@ -53,8 +54,24 @@
                 <controls:ImageButton ImageSource="{StaticResource RemoveIcon}" Margin="0,0,5,0"
                                       Command="{Binding RemoveProfileCommand}"
                                       ToolTip="{x:Static resources:Strings.Remove}" />
-                <ComboBox Width="200" IsEditable="True" ItemsSource="{Binding Profiles}" DisplayMemberPath="Name"
+                <ComboBox Width="200" IsEditable="True" ItemsSource="{Binding Profiles}"
                           SelectedItem="{Binding SelectedProfile}" Style="{StaticResource EditComboBox}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" Grid.Column="0"/>
+                                <controls:ImageButton ImageSource="{StaticResource ClearIcon}" Grid.Column="1">
+                                    <i:Interaction.Behaviors>
+                                        <behaviours:ImageButtonConfirmDeleteBehaviour Item="{Binding}" DeleteCommand="{Binding ElementName=userControl, Path=DataContext.RemoveProfileCommand}"/>
+                                    </i:Interaction.Behaviors>
+                                </controls:ImageButton>
+                            </Grid>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
                     <i:Interaction.Behaviors>
                         <misc1:ComboBoxBehavior CommandBinding="{Binding ChangeProfileCommand}"
                                                 CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}}"

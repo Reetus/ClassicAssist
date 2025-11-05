@@ -72,7 +72,10 @@ namespace ClassicAssist.UI.Views.ECV.Filter.Behaviours
             {
                 _isPending = true;
                 _lastClickTime = DateTime.Now;
-                _originalBrush = AssociatedObject.Background;
+     _isPending = true;
+     _lastClickTime = DateTime.Now;
+     PrepareClone();
+     StoreOriginalBrush();
                 PrepareClone();
                 StoreOriginalBrush();
                 SetDrawingImageColor( Brushes.Red );

@@ -12,52 +12,40 @@
 
 #endregion
 
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using ClassicAssist.Controls;
-using ClassicAssist.UI.Views.ECV.Filter.Models;
 using Microsoft.Xaml.Behaviors;
 using Brush = System.Windows.Media.Brush;
 using Image = System.Windows.Controls.Image;
 
-namespace ClassicAssist.UI.Views.ECV.Filter.Behaviours
+namespace ClassicAssist.Controls.Misc.Behaviours
 {
     public class ImageButtonConfirmDeleteBehaviour : Behavior<ImageButton>
     {
-        public static readonly DependencyProperty DeleteCommandProperty = DependencyProperty.Register( nameof( DeleteCommand ), typeof( ICommand ),
-            typeof( ImageButtonConfirmDeleteBehaviour ), new PropertyMetadata( default( ICommand ) ) );
-
-        public static readonly DependencyProperty ItemProperty = DependencyProperty.Register( nameof( Item ), typeof( EntityCollectionFilterEntry ),
-            typeof( ImageButtonConfirmDeleteBehaviour ), new PropertyMetadata( default( EntityCollectionFilterEntry ) ) );
+        private ICommand _deleteCommand;
+        private CancellationTokenSource _cancellationTokenSource;
 
         private DrawingImage _clonedDrawingImage;
 
         private bool _isPending;
-        private DateTime _lastClickTime;
         private Brush _originalBrush;
-        private CancellationTokenSource _cancellationTokenSource;
-
-        public ICommand DeleteCommand
-        {
-            get => (ICommand) GetValue( DeleteCommandProperty );
-            set => SetValue( DeleteCommandProperty, value );
-        }
-
-        public EntityCollectionFilterEntry Item
-        {
-            get => (EntityCollectionFilterEntry) GetValue( ItemProperty );
-            set => SetValue( ItemProperty, value );
-        }
 
         protected override void OnAttached()
         {
             base.OnAttached();
             AssociatedObject.Click += OnClick;
+
+            if ( AssociatedObject.Command == null )
+            {
+                return;
+            }
+
+            _deleteCommand = AssociatedObject.Command;
+            AssociatedObject.Command = null;
         }
 
         protected override void OnDetaching()
@@ -71,11 +59,6 @@ namespace ClassicAssist.UI.Views.ECV.Filter.Behaviours
             if ( !_isPending )
             {
                 _isPending = true;
-                _lastClickTime = DateTime.Now;
-     _isPending = true;
-     _lastClickTime = DateTime.Now;
-     PrepareClone();
-     StoreOriginalBrush();
                 PrepareClone();
                 StoreOriginalBrush();
                 SetDrawingImageColor( Brushes.Red );
@@ -95,16 +78,17 @@ namespace ClassicAssist.UI.Views.ECV.Filter.Behaviours
                 _cancellationTokenSource?.Dispose();
                 _cancellationTokenSource = null;
 
-                if ( DeleteCommand?.CanExecute( Item ) == true )
+                if ( _deleteCommand?.CanExecute( AssociatedObject.CommandParameter ) == true )
                 {
-                    DeleteCommand.Execute( Item );
+                    _deleteCommand.Execute( AssociatedObject.CommandParameter );
                 }
-                
+
                 _isPending = false;
                 _clonedDrawingImage = null;
                 _originalBrush = null;
             }
-            }
+
+            e.Handled = true;
         }
 
         private void StoreOriginalBrush()

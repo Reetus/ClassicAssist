@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:ClassicAssist.Controls"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:behaviours="clr-namespace:ClassicAssist.Controls.Misc.Behaviours"
              mc:Ignorable="d"
              d:DesignWidth="400">
     <UserControl.Resources>
@@ -66,7 +68,11 @@
                                         <controls:ImageButton ImageSource="{StaticResource RemoveIcon}"
                                                               ImageHeight="12" Grid.Column="1"
                                                               Command="{Binding RemoveItemCommand, ElementName=userControl}"
-                                                              CommandParameter="{Binding}" />
+                                                              CommandParameter="{Binding}">
+                                            <b:Interaction.Behaviors>
+                                                <behaviours:ImageButtonConfirmDeleteBehaviour />
+                                            </b:Interaction.Behaviors>
+                                        </controls:ImageButton>
                                     </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>

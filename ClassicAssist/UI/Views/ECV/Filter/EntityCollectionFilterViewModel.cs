@@ -195,7 +195,9 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 
         private void RemoveProfile( object obj )
         {
-            Profiles.Remove( SelectedProfile );
+            EntityCollectionFilterEntry entry = obj as EntityCollectionFilterEntry ?? SelectedProfile;
+
+            Profiles.Remove( entry );
 
             if ( Profiles.Count > 0 )
             {

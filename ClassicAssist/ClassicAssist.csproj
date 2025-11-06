@@ -222,7 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <AssemblyAttribute Include="BuildDateAttribute">
-      <_Parameter1>$([System.DateTime]::UtcNow.Ticks)</_Parameter1>
+      <_Parameter1>$([System.DateTime]::UtcNow.Date.Ticks)</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
   <ItemGroup>

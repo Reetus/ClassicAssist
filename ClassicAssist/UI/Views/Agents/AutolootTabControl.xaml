@@ -1,4 +1,4 @@
-<UserControl
+﻿<UserControl
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -16,6 +16,7 @@
     xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
     xmlns:autoloot1="clr-namespace:ClassicAssist.UI.Views.Autoloot"
     xmlns:autoloot2="clr-namespace:ClassicAssist.UI.Views.Agents.Autoloot"
+    xmlns:behaviours1="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
     x:Class="ClassicAssist.UI.Views.Agents.AutolootTabControl"
     mc:Ignorable="d"
     d:DesignHeight="250" d:DesignWidth="600" x:Name="userControl">
@@ -39,7 +40,7 @@
             <valueConverters:NullToBooleanConverter x:Key="NullToBooleanValueConverter" />
         </Grid.Resources>
         <i:Interaction.Behaviors>
-            <misc:ClipboardBehaviour CopyCommand="{Binding ClipboardCopyCommand}"
+            <behaviours1:ClipboardBehaviour CopyCommand="{Binding ClipboardCopyCommand}"
                                      PasteCommand="{Binding ClipboardPasteCommand}"
                                      CommandParameter="{Binding SelectedProperties}" />
         </i:Interaction.Behaviors>
@@ -138,7 +139,7 @@
                                         Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedItem}" />
                         </draggableTreeView:DraggableTreeView.InputBindings>
                         <i:Interaction.Behaviors>
-                            <misc:ItemsControlSelectNewEntryBehaviour SelectedItem="{Binding SelectedItem}"
+                            <behaviours1:ItemsControlSelectNewEntryBehaviour SelectedItem="{Binding SelectedItem}"
                                                                       Type="{x:Type autoloot:AutolootEntry}" />
                         </i:Interaction.Behaviors>
                         <draggableTreeView:DraggableTreeView.ContextMenu>
@@ -198,7 +199,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                            <Setter Property="Padding" Value="4"/>
+                            <Setter Property="Padding" Value="4" />
                         </Style>
                     </Grid.Resources>
                     <Button Content="{x:Static resources:Strings.Remove}" Grid.Column="0" Margin="0,0,5,0"
@@ -241,7 +242,7 @@
                     <Button Content="{x:Static resources:Strings.Set_Container}" Margin="0,10,5,0"
                             Command="{Binding SetContainerCommand}" Grid.Column="0" />
                     <Image Source="{StaticResource configureIcon}" Height="16" Margin="5,10,0,0" Grid.Column="1"
-                           misc:ClickOpensContextMenuBehaviour.Enabled="True">
+                           behaviours1:ClickOpensContextMenuBehaviour.Enabled="True">
                         <Image.ContextMenu>
                             <ContextMenu IsOpen="False">
                                 <MenuItem Header="{x:Static resources:Strings.Reset_Container}"
@@ -284,11 +285,11 @@
             <ListView x:Name="listView1" Grid.Row="2" Margin="0,10,0,10"
                       ItemsSource="{Binding SelectedItem.Constraints}" SelectedItem="{Binding SelectedProperty}">
                 <i:Interaction.Behaviors>
-                    <misc:ListViewMultiSelectionBehaviour SelectedItems="{Binding SelectedProperties}" />
+                    <behaviours1:ListViewMultiSelectionBehaviour SelectedItems="{Binding SelectedProperties}" />
                 </i:Interaction.Behaviors>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="{x:Static resources:Strings.Property}" Width="150">
+                        <GridViewColumn Header="{x:Static resources:Strings.Property}" Width="175">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <autoloot1:AutolootPropertyControl DataContext="{Binding}" />
@@ -298,7 +299,7 @@
                         <GridViewColumn Header="{x:Static resources:Strings.Operator}" Width="75">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate DataType="autoloot:AutolootConstraintEntry">
-                                    <ComboBox Width="50" SelectedItem="{Binding Operator}">
+                                    <ComboBox Width="60" SelectedItem="{Binding Operator}">
                                         <ComboBox.ItemsSource>
                                             <MultiBinding
                                                 Converter="{StaticResource AutolootOperatorFilterValueConverter}">
@@ -310,10 +311,10 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="{x:Static resources:Strings.Value}" Width="150" x:Name="ValueColumn">
+                        <GridViewColumn Header="{x:Static resources:Strings.Value}" x:Name="ValueColumn" Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=275}">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <autoloot1:AutolootValueControl DataContext="{Binding}" Width="130" />
+                                    <autoloot1:AutolootValueControl DataContext="{Binding}" Width="{Binding ElementName=ValueColumn, Path=ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=25}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

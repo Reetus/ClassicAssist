@@ -14,6 +14,7 @@
     xmlns:draggableListBox="clr-namespace:ClassicAssist.Controls.DraggableListBox;assembly=ClassicAssist.Controls"
     xmlns:organizer1="clr-namespace:ClassicAssist.UI.Views.Agents.Organizer"
     xmlns:local="clr-namespace:ClassicAssist.UI.Views.Agents"
+    xmlns:behaviours="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
     x:Name="userControl" x:Class="ClassicAssist.UI.Views.Agents.OrganizerTabControl"
     mc:Ignorable="d"
     d:DesignHeight="250" d:DesignWidth="500">
@@ -75,7 +76,7 @@
                                     Command="{Binding RemoveItemCommand}" CommandParameter="{Binding SelectedItem}" />
                     </draggableListBox:DraggableListBox.InputBindings>
                     <i:Interaction.Behaviors>
-                        <misc:ItemsControlSelectNewEntryBehaviour SelectedItem="{Binding SelectedItem}"
+                        <behaviours:ItemsControlSelectNewEntryBehaviour SelectedItem="{Binding SelectedItem}"
                                                                   Type="{x:Type organizer:OrganizerEntry}" />
                     </i:Interaction.Behaviors>
                     <draggableListBox:DraggableListBox.ItemTemplate>

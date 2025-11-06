@@ -1,22 +1,38 @@
-﻿using System.Windows;
+﻿#region License
+
+// Copyright (C) 2025 Reetus
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#endregion
+
+using System.Windows;
 using System.Windows.Input;
 using Microsoft.Xaml.Behaviors;
 
-namespace ClassicAssist.UI.Misc
+namespace ClassicAssist.UI.Misc.Behaviours
 {
     public class ClipboardBehaviour : Behavior<UIElement>
     {
-        public static readonly DependencyProperty CopyCommandProperty = DependencyProperty.Register( "CopyCommand",
-            typeof( ICommand ), typeof( ClipboardBehaviour ),
+        public static readonly DependencyProperty CopyCommandProperty = DependencyProperty.Register( nameof( CopyCommand ), typeof( ICommand ), typeof( ClipboardBehaviour ),
             new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.None ) );
 
-        public static readonly DependencyProperty PasteCommandProperty = DependencyProperty.Register( "PasteCommand",
-            typeof( ICommand ), typeof( ClipboardBehaviour ),
+        public static readonly DependencyProperty PasteCommandProperty = DependencyProperty.Register( nameof( PasteCommand ), typeof( ICommand ), typeof( ClipboardBehaviour ),
             new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.None ) );
 
-        public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register(
-            "CommandParameter", typeof( object ), typeof( ClipboardBehaviour ),
-            new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.None ) );
+        public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register( nameof( CommandParameter ), typeof( object ),
+            typeof( ClipboardBehaviour ), new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.None ) );
 
         public object CommandParameter
         {
@@ -40,16 +56,13 @@ namespace ClassicAssist.UI.Misc
         {
             base.OnAttached();
 
-            CommandBinding CopyCommandBinding = new CommandBinding(
-                ApplicationCommands.Copy, CopyCommandExecuted, CopyCommandCanExecute );
+            CommandBinding CopyCommandBinding = new CommandBinding( ApplicationCommands.Copy, CopyCommandExecuted, CopyCommandCanExecute );
             AssociatedObject.CommandBindings.Add( CopyCommandBinding );
 
-            CommandBinding CutCommandBinding = new CommandBinding(
-                ApplicationCommands.Cut, CutCommandExecuted, CutCommandCanExecute );
+            CommandBinding CutCommandBinding = new CommandBinding( ApplicationCommands.Cut, CutCommandExecuted, CutCommandCanExecute );
             AssociatedObject.CommandBindings.Add( CutCommandBinding );
 
-            CommandBinding PasteCommandBinding = new CommandBinding( ApplicationCommands.Paste, PasteCommandExecuted,
-                PasteCommandCanExecute );
+            CommandBinding PasteCommandBinding = new CommandBinding( ApplicationCommands.Paste, PasteCommandExecuted, PasteCommandCanExecute );
             AssociatedObject.CommandBindings.Add( PasteCommandBinding );
         }
 

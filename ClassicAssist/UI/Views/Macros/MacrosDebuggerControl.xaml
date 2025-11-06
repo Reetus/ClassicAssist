@@ -1,0 +1,119 @@
+﻿<UserControl x:Name="userControl" x:Class="ClassicAssist.UI.Views.Macros.MacrosDebuggerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+             xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Views.Macros.ValueConverters"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:behaviours="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="500">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <DrawingImage x:Key="PlayIcon">
+                <DrawingImage.Drawing>
+                    <DrawingGroup ClipGeometry="M0,0 V512 H448 V0 H0 Z">
+                        <GeometryDrawing Brush="{StaticResource ThemeForegroundBrush}"
+                                         Geometry="F1 M448,512z M0,0z M91.2,36.9C78.8,30.1 63.8,30.4 51.6,37.6 39.4,44.8 32,57.9 32,72L32,440C32,454.1 39.5,467.2 51.6,474.4 63.7,481.6 78.8,481.9 91.2,475.1L427.2,291.1C440,284.1 448,270.6 448,256 448,241.4 440,227.9 427.2,220.9L91.2,36.9z" />
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
+            <DrawingImage x:Key="StepIcon">
+                <DrawingImage.Drawing>
+                    <DrawingGroup ClipGeometry="M0,0 V512 H576 V0 H0 Z">
+                        <GeometryDrawing Brush="{StaticResource ThemeForegroundBrush}"
+                                         Geometry="F1 M576,512z M0,0z M296,192C274.9,179.9,253.7,167.8,224,162.7L224,22.4C257.7,13 311.4,0 352,0 448,0 576,48 576,128 576,208 456.4,224 400,224 352,224 324,208 296,192z M128,32L176,32 176,160 128,160C92.7,160 64,131.3 64,96 64,60.7 92.7,32 128,32z M232,320C260,304 288,288 336,288 392.4,288 512,304 512,384 512,464 384,512 288,512 247.5,512 193.7,499 160,489.6L160,349.3C189.7,344.1,210.9,332,232,319.9z M64,480C28.7,480 0,451.3 0,416 0,380.7 28.7,352 64,352L112,352 112,480 64,480z" />
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
+            <DrawingImage x:Key="StopIcon">
+                <DrawingImage.Drawing>
+                    <DrawingGroup ClipGeometry="M0,0 V512 H448 V0 H0 Z">
+                        <GeometryDrawing Brush="{StaticResource ThemeForegroundBrush}"
+                                         Geometry="F1 M448,512z M0,0z M64,32L384,32C419.3,32,448,60.7,448,96L448,416C448,451.3,419.3,480,384,480L64,480C28.7,480,0,451.3,0,416L0,96C0,60.7,28.7,32,64,32z" />
+                    </DrawingGroup>
+                </DrawingImage.Drawing>
+            </DrawingImage>
+            <valueConverters:VariableDisplayValueConverter x:Key="VariableDisplayValueConverter" />
+            <valueConverters:ObjectInspectableVisiblyValueConverter x:Key="ObjectInspectableVisiblyValueConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid Background="{StaticResource ThemeBackgroundBrush}" HorizontalAlignment="Right"
+              VerticalAlignment="Stretch"
+              Width="{Binding OverlayWidth, Mode=TwoWay, ElementName=userControl}">
+            <ListView ItemsSource="{Binding MacroEntry.FrameVariables, ElementName=userControl}" Margin="5"
+                      SelectedItem="{Binding SelectedItem, ElementName=userControl}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name" Width="150">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                    <TextBlock Text="{Binding Key}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Value" Width="200">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                        <Image MaxHeight="12" Source="{StaticResource PointerIcon}"
+                                               Visibility="{Binding Value, Converter={StaticResource ObjectInspectableVisiblyValueConverter}}"
+                                               Margin="0,0,5,0"/>
+                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                        <TextBlock
+                                            Text="{Binding Value, Converter={StaticResource VariableDisplayValueConverter}}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+                <b:Interaction.Behaviors>
+                    <behaviours:ClipboardBehaviour
+                        CopyCommand="{Binding ClipboardCopyCommand, ElementName=userControl}" />
+                </b:Interaction.Behaviors>
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="MouseDoubleClick">
+                        <b:InvokeCommandAction Command="{Binding ItemDoubleClickCommand, ElementName=userControl}" CommandParameter="{Binding SelectedItem, ElementName=userControl}" />
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </ListView>
+            <Thumb x:Name="ResizeThumb"
+                   HorizontalAlignment="Left"
+                   Width="6"
+                   Cursor="SizeWE"
+                   Background="Transparent">
+                <Thumb.Template>
+                    <ControlTemplate>
+                        <Border Background="Transparent">
+                            <Rectangle Width="2"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Stretch"
+                                       RadiusX="1"
+                                       RadiusY="1" />
+                        </Border>
+                    </ControlTemplate>
+                </Thumb.Template>
+            </Thumb>
+        </Grid>
+        <Border BorderThickness="1, 0, 1, 1" Padding="10, 5" CornerRadius="0, 0, 10, 10"
+                BorderBrush="{StaticResource ThemeBorderBrush}" Background="{StaticResource ThemeBackgroundBrush}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal">
+                <controls:ImageButton ImageSource="{StaticResource PlayIcon}"
+                                      Command="{Binding ResumeCommand, ElementName=userControl}" />
+                <controls:ImageButton ImageSource="{StaticResource StepIcon}"
+                                      Command="{Binding StepCommand, ElementName=userControl}" Margin="5,0,0,0" />
+                <controls:ImageButton ImageSource="{StaticResource StopIcon}"
+                                      Command="{Binding StopCommand, ElementName=userControl}" Margin="5,0,0,0" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

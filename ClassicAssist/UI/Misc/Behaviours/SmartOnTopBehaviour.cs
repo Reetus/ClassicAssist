@@ -17,7 +17,7 @@ using System.Windows.Threading;
 using Assistant;
 using Microsoft.Xaml.Behaviors;
 
-namespace ClassicAssist.UI.Misc
+namespace ClassicAssist.UI.Misc.Behaviours
 {
     public class SmartOnTopBehaviour : Behavior<Window>
     {

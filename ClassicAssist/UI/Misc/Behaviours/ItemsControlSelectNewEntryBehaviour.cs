@@ -1,6 +1,6 @@
 ﻿#region License
 
-// Copyright (C) 2020 Reetus
+// Copyright (C) 2025 Reetus
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,17 +23,14 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Xaml.Behaviors;
 
-namespace ClassicAssist.UI.Misc
+namespace ClassicAssist.UI.Misc.Behaviours
 {
     public class ItemsControlSelectNewEntryBehaviour : Behavior<ItemsControl>
     {
-        public static readonly DependencyProperty SelectedItemProperty =
-            DependencyProperty.Register( nameof( SelectedItem ), typeof( object ),
-                typeof( ItemsControlSelectNewEntryBehaviour ),
-                new FrameworkPropertyMetadata( default, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
+        public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register( nameof( SelectedItem ), typeof( object ),
+            typeof( ItemsControlSelectNewEntryBehaviour ), new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
 
-        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register( nameof( Type ),
-            typeof( Type ), typeof( ItemsControlSelectNewEntryBehaviour ),
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register( nameof( Type ), typeof( Type ), typeof( ItemsControlSelectNewEntryBehaviour ),
             new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
 
         public object SelectedItem

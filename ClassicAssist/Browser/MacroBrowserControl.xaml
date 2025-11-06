@@ -11,6 +11,7 @@
              xmlns:browser="clr-namespace:ClassicAssist.Browser"
              xmlns:controls2="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              xmlns:headered="clr-namespace:ClassicAssist.Controls.Headered;assembly=ClassicAssist.Controls"
+             xmlns:behaviours="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
              mc:Ignorable="d"
              d:DesignHeight="550" d:DesignWidth="900">
     <UserControl.DataContext>
@@ -121,7 +122,7 @@
                                            HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
                                            FontFamily="Consolas" Margin="10,0,0,0" IsReadOnly="True">
                         <i:Interaction.Behaviors>
-                            <misc:AvalonEditBehaviour
+                            <behaviours:AvalonEditBehaviour
                                 TextBinding="{Binding SelectedItem.Macro}" />
                         </i:Interaction.Behaviors>
                     </avalonedit:TextEditor>

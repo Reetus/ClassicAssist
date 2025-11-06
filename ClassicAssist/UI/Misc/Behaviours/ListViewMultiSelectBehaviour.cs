@@ -1,10 +1,29 @@
-﻿using System.Collections;
+﻿#region License
+
+// Copyright (C) 2025 Reetus
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#endregion
+
+using System.Collections;
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Xaml.Behaviors;
 
-namespace ClassicAssist.UI.Misc
+namespace ClassicAssist.UI.Misc.Behaviours
 {
     /*
      * https://stackoverflow.com/questions/8088595/synchronizing-multi-select-listbox-with-mvvm
@@ -12,9 +31,8 @@ namespace ClassicAssist.UI.Misc
 
     public class ListViewMultiSelectionBehaviour : Behavior<ListView>
     {
-        public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register( nameof( SelectedItems ),
-            typeof( IList ), typeof( ListViewMultiSelectionBehaviour ),
-            new UIPropertyMetadata( null, SelectedItemsChanged ) );
+        public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register( nameof( SelectedItems ), typeof( IList ),
+            typeof( ListViewMultiSelectionBehaviour ), new UIPropertyMetadata( null, SelectedItemsChanged ) );
 
         private bool _isUpdatingSource;
 

@@ -4,10 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
-        xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:models="clr-namespace:ClassicAssist.UI.Models"
+        xmlns:behaviours="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
         mc:Ignorable="d" Topmost="True"
         Title="{x:Static resources:Strings.Object_Inspector}" Height="396.8" Width="450">
     <Window.InputBindings>
@@ -21,14 +21,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <DrawingImage x:Key="PointerIcon">
-                <DrawingImage.Drawing>
-                    <DrawingGroup ClipGeometry="M0,0 V512 H320 V0 H0 Z">
-                        <GeometryDrawing Brush="{StaticResource ThemeForegroundBrush}"
-                                         Geometry="F1 M320,512z M0,0z M0,55.2L0,426C0,438.2 9.9,448 22,448 28.3,448 34.4,445.3 38.6,440.5L121.2,346 179.3,462.3C187.2,478.1 206.4,484.5 222.2,476.6 238,468.7 244.4,449.5 236.5,433.7L179.8,320 297.9,320C310.1,320 320,310.1 320,297.9 320,291.6 317.3,285.6 312.6,281.4L38.6,37.9C34.3,34.1 28.9,32 23.2,32 10.4,32 0,42.4 0,55.2z" />
-                    </DrawingGroup>
-                </DrawingImage.Drawing>
-            </DrawingImage>
             <viewModels:ObjectInspectorViewModel x:Key="DummyData">
                 <viewModels:ObjectInspectorViewModel.Items>
                     <models:ObjectInspectorData Category="Category" Name="Name" Value="Value" IsExpanded="False"/>
@@ -48,7 +40,7 @@
         <ListView ItemsSource="{Binding Source={StaticResource src}}"
                   SelectedValue="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Behaviors>
-                <misc:ListViewDoubleClickBehaviour />
+                <behaviours:ListViewDoubleClickBehaviour />
             </i:Interaction.Behaviors>
             <ListView.View>
                 <GridView>

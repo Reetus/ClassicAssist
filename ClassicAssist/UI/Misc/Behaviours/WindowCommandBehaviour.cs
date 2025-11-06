@@ -1,10 +1,29 @@
-﻿using System;
+﻿#region License
+
+// Copyright (C) 2025 Reetus
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#endregion
+
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Xaml.Behaviors;
 
-namespace ClassicAssist.UI.Misc
+namespace ClassicAssist.UI.Misc.Behaviours
 {
     public enum WindowCommand
     {
@@ -15,14 +34,11 @@ namespace ClassicAssist.UI.Misc
 
     public class WindowCommandBehaviour : Behavior<Button>
     {
-        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register( "Command",
-            typeof( WindowCommand ), typeof( WindowCommandBehaviour ),
+        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register( nameof( Command ), typeof( WindowCommand ), typeof( WindowCommandBehaviour ),
             new FrameworkPropertyMetadata( WindowCommand.Close ) );
 
-        public static readonly DependencyProperty MinimizeCommandProperty =
-            DependencyProperty.Register( nameof( MinimizeCommand ), typeof( ICommand ),
-                typeof( WindowCommandBehaviour ),
-                new FrameworkPropertyMetadata( default ) );
+        public static readonly DependencyProperty MinimizeCommandProperty = DependencyProperty.Register( nameof( MinimizeCommand ), typeof( ICommand ),
+            typeof( WindowCommandBehaviour ), new FrameworkPropertyMetadata( null ) );
 
         public WindowCommand Command
         {
@@ -72,9 +88,7 @@ namespace ClassicAssist.UI.Misc
                 }
                 case WindowCommand.Maximize:
                 {
-                    window.WindowState = window.WindowState == WindowState.Maximized
-                        ? WindowState.Normal
-                        : WindowState.Maximized;
+                    window.WindowState = window.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
 
                     break;
                 }

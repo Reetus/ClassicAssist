@@ -1456,6 +1456,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Debugger paused on line {0}.
+        /// </summary>
+        public static string Debugger_paused_on_line__0_ {
+            get {
+                return ResourceManager.GetString("Debugger paused on line {0}", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deer Sounds.
         /// </summary>
         public static string Deer_Sounds {
@@ -3753,6 +3762,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Open_Folder {
             get {
                 return ResourceManager.GetString("Open Folder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open in external editor.
+        /// </summary>
+        public static string Open_in_external_editor {
+            get {
+                return ResourceManager.GetString("Open in external editor", resourceCulture);
             }
         }
         

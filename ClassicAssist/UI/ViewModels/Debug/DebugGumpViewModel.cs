@@ -89,8 +89,9 @@ namespace ClassicAssist.UI.ViewModels.Debug
                 {
                     foreach ( GumpElement element in value.GumpElements )
                     {
-                        sb.AppendLine(
-                            $"X: {element.X}, Y: {element.Y}, Type: {element.Type}, Cliloc: {element.Cliloc}, Text: {element.Text}" );
+                        sb.AppendLine( element.Type == ElementType.button
+                            ? $"X: {element.X}, Y: {element.Y}, Type: {element.Type}, Cliloc: {element.Cliloc}, ElementID: {element.ElementID}"
+                            : $"X: {element.X}, Y: {element.Y}, Type: {element.Type}, Cliloc: {element.Cliloc}, Text: {element.Text}" );
                     }
                 }
 
@@ -109,8 +110,9 @@ namespace ClassicAssist.UI.ViewModels.Debug
                     {
                         foreach ( GumpElement element in page.GumpElements )
                         {
-                            sb.AppendLine(
-                                $"X: {element.X}, Y: {element.Y}, Type: {element.Type}, Cliloc: {element.Cliloc}, Text: {element.Text}" );
+                            sb.AppendLine( element.Type == ElementType.button
+                                ? $"X: {element.X}, Y: {element.Y}, Type: {element.Type}, Cliloc: {element.Cliloc}, ElementID: {element.ElementID}"
+                                : $"X: {element.X}, Y: {element.Y}, Type: {element.Type}, Cliloc: {element.Cliloc}, Text: {element.Text}" );
                         }
                     }
 

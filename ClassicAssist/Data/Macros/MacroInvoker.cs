@@ -1,4 +1,34 @@
+#region License
+
+// Copyright (C) 2025 Reetus
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#endregion
+
+using Assistant;
+using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Shared.Resources;
+using ClassicAssist.UO.Objects;
+using IronPython.Hosting;
+using IronPython.Runtime;
+using IronPython.Runtime.Exceptions;
+using IronPython.Runtime.Types;
+using Microsoft.Scripting;
+using Microsoft.Scripting.Hosting;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -8,14 +38,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Assistant;
-using ClassicAssist.Data.Macros.Commands;
-using ClassicAssist.Shared.Resources;
-using IronPython.Hosting;
-using IronPython.Runtime.Exceptions;
+using ClassicAssist.Annotations;
 using Microsoft.Graph;
-using Microsoft.Scripting;
-using Microsoft.Scripting.Hosting;
+using Entity = ClassicAssist.UO.Objects.Entity;
 
 namespace ClassicAssist.Data.Macros
 {
@@ -23,16 +48,20 @@ namespace ClassicAssist.Data.Macros
     {
         public delegate void dMacroException( Exception e );
 
+        public delegate void dMacroPaused( int lineNumber, AutoResetEvent autoResetEvent, Dictionary<string, object> frameVariables );
+
         public delegate void dMacroStartStop();
 
         private static ScriptEngine _engine = Python.CreateEngine();
         private static Dictionary<string, object> _importCache;
+        private readonly MemoryStream _memoryStream = new MemoryStream();
+        private readonly AutoResetEvent _pauseEvent = new AutoResetEvent( false );
         private readonly SystemMessageTextWriter _textWriter = new SystemMessageTextWriter();
         private CancellationTokenSource _cancellationToken;
-        private MacroEntry _macro;
-        private ScriptScope _macroScope;
         private CompiledCode _compiled;
         private string _lastCompiledHash = string.Empty;
+        private MacroEntry _macro;
+        private ScriptScope _macroScope;
 
         public MacroInvoker()
         {
@@ -71,12 +100,11 @@ namespace ClassicAssist.Data.Macros
         public event dMacroStartStop StartedEvent;
         public event dMacroStartStop StoppedEvent;
         public event dMacroException ExceptionEvent;
+        public event dMacroPaused PausedEvent;
 
         private static string GetScriptingImports()
         {
-            string prepend = Assembly.GetExecutingAssembly().GetTypes()
-                .Where( t =>
-                    t.Namespace != null && t.IsPublic && t.IsClass && t.Namespace.EndsWith( "Macros.Commands" ) )
+            string prepend = Assembly.GetExecutingAssembly().GetTypes().Where( t => t.Namespace != null && t.IsPublic && t.IsClass && t.Namespace.EndsWith( "Macros.Commands" ) )
                 .Aggregate( string.Empty, ( current, t ) => current + $"from {t.FullName} import * \n" );
 
             foreach ( string assemblyName in AssistantOptions.Assemblies ?? Array.Empty<string>() )
@@ -85,11 +113,8 @@ namespace ClassicAssist.Data.Macros
                 {
                     Assembly assembly = Assembly.LoadFile( assemblyName );
 
-                    prepend += assembly.GetTypes()
-                        .Where( t =>
-                            t.Namespace != null && t.IsPublic && t.IsClass &&
-                            t.Namespace.EndsWith( "Macros.Commands" ) ).Aggregate( string.Empty,
-                            ( current, t ) => current + $"from {t.FullName} import * \n" );
+                    prepend += assembly.GetTypes().Where( t => t.Namespace != null && t.IsPublic && t.IsClass && t.Namespace.EndsWith( "Macros.Commands" ) )
+                        .Aggregate( string.Empty, ( current, t ) => current + $"from {t.FullName} import * \n" );
                 }
                 catch ( Exception )
                 {
@@ -107,27 +132,25 @@ namespace ClassicAssist.Data.Macros
         {
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
 
-            foreach( string assembly in AssistantOptions.Assemblies ?? new string[0] )
+            foreach ( string assembly in AssistantOptions.Assemblies ?? new string[0] )
             {
                 try
                 {
                     _engine.Runtime.LoadAssembly( Assembly.LoadFile( assembly ) );
                 }
-                catch( Exception )
+                catch ( Exception )
                 {
                     // ignored
                 }
             }
 
-            ScriptSource importSource =
-                engine.CreateScriptSourceFromString( GetScriptingImports(), SourceCodeKind.Statements );
+            ScriptSource importSource = engine.CreateScriptSourceFromString( GetScriptingImports(), SourceCodeKind.Statements );
 
             CompiledCode importCompiled = importSource.Compile();
             ScriptScope importScope = engine.CreateScope( dictionary );
             importCompiled.Execute( importScope );
 
-            foreach ( KeyValuePair<string, object> kvp in dictionary.Where( e =>
-                e.Key.EndsWith( "Message" ) || e.Key.EndsWith( "Msg" ) ).ToList() )
+            foreach ( KeyValuePair<string, object> kvp in dictionary.Where( e => e.Key.EndsWith( "Message" ) || e.Key.EndsWith( "Msg" ) ).ToList() )
             {
                 string funcName = Regex.Replace( kvp.Key, "(Message|Msg)$", "" );
 
@@ -198,7 +221,7 @@ namespace ClassicAssist.Data.Macros
                     _macroScope.SetVariable( "Events", new Events() );
                     _engine.SetTrace( OnTrace );
 
-                    _macroScope.SetVariable( "args", parameters ?? Array.Empty<object>());
+                    _macroScope.SetVariable( "args", parameters ?? Array.Empty<object>() );
 
                     StopWatch.Reset();
                     StopWatch.Start();
@@ -283,8 +306,64 @@ namespace ClassicAssist.Data.Macros
             }
         }
 
+        private static Dictionary<string, object> GetFrameVariables( TraceBackFrame frame )
+        {
+            Dictionary<string, object> variables = new Dictionary<string, object>();
+
+            // Locals
+            if ( frame.f_locals is PythonDictionary locals )
+            {
+                foreach ( KeyValuePair<object, object> kvp in locals )
+                {
+                    if ( !( kvp.Key is string key ) )
+                    {
+                        continue;
+                    }
+
+                    object value = kvp.Value;
+
+                    // Skip built-in functions / methods
+                    if ( value is BuiltinFunction || value is BuiltinMethodDescriptor || value is PythonType || value is PythonModule )
+                    {
+                        continue;
+                    }
+
+                    variables[key] = value;
+                }
+            }
+
+            // Globals (optional)
+            if ( frame.f_globals is PythonDictionary globals )
+            {
+                foreach ( KeyValuePair<object, object> kvp in globals )
+                {
+                    if ( kvp.Key is string key && !variables.ContainsKey( key ) ) // don't overwrite locals
+                    {
+                        object value = kvp.Value;
+
+                        // Skip built-in functions / methods
+                        if ( value is BuiltinFunction || value is BuiltinMethodDescriptor || value is PythonType || value is PythonModule )
+                        {
+                            continue;
+                        }
+
+                        variables[key] = value;
+                    }
+                }
+            }
+
+            return variables;
+        }
+
         private TracebackDelegate OnTrace( TraceBackFrame frame, string result, object payload )
         {
+            if ( result == "line" && ( _macro.Breakpoints != null && _macro.Breakpoints.Contains( (int) frame.f_lineno ) || _macro.IsPaused ) )
+            {
+                _pauseEvent.Reset();
+                PausedEvent?.Invoke( (int) frame.f_lineno, _pauseEvent, GetFrameVariables( frame ) );
+                _pauseEvent.WaitOne();
+            }
+
             if ( !_cancellationToken.IsCancellationRequested )
             {
                 return OnTrace;
@@ -349,6 +428,77 @@ namespace ClassicAssist.Data.Macros
             {
                 UO.Commands.SystemMessage( string.Format( Strings.Macro_error___0_, e.Message ) );
             }
+        }
+
+        public static string GetDisplayValue( [CanBeNull] object value, bool isClipboardCopy = false )
+        {
+            switch ( value )
+            {
+                case null:
+                    return "None";
+                case string s:
+                    return $"\"{s}\"";
+                case bool b:
+                    return b ? "True" : "False";
+                case double _:
+                case int _:
+                case long _:
+                case float _:
+                case decimal _:
+                    return value.ToString();
+                case Entity entity:
+                    return isClipboardCopy ? $"0x{entity.Serial:x8}" : $"{entity.Name} (0x{entity.Serial:x8})";
+            }
+
+            switch ( value )
+            {
+                //case List pyList:
+                //    if ( isClipboardCopy )
+                //    {
+                //        return "[" + string.Join( ", ", pyList.Select( e => GetDisplayValue( e ) ) ) + "]";
+                //    }
+
+                //    return "[" + string.Join( ", ", pyList.Take( 10 ).Select( e => GetDisplayValue( e ) ) ) + ( pyList.__len__() > 10 ? ", ..." : "" ) + "]";
+                case PythonDictionary pyDict:
+                    if ( isClipboardCopy )
+                    {
+                        return "{" + string.Join( ", ", pyDict.Select( kv => $"{GetDisplayValue( kv.Key )}: {GetDisplayValue( kv.Value )}" ) ) + "}";
+                    }
+
+                    return "{" + string.Join( ", ", pyDict.Take( 5 ).Select( kv => $"{GetDisplayValue( kv.Key )}: {GetDisplayValue( kv.Value )}" ) ) +
+                           ( pyDict.Count > 5 ? ", ..." : "" ) + "}";
+            }
+
+            if ( value is IEnumerable enumerable && value.GetType() != typeof( string ) )
+            {
+                if ( isClipboardCopy )
+                {
+                    IEnumerable<string> allItems = enumerable.Cast<object>().Select( i => GetDisplayValue( i ) );
+                    return "[" + string.Join( ", ", allItems ) + "]";
+                }
+
+                IEnumerable<string> items = enumerable.Cast<object>().Take( 10 ).Select( i => GetDisplayValue( i ) );
+                return "[" + string.Join( ", ", items ) + "]";
+            }
+
+            // Fallback to repr() if available
+            try
+            {
+                dynamic dyn = value;
+                dynamic repr = dyn.__repr__();
+
+                if ( repr is string repStr )
+                {
+                    return repStr;
+                }
+            }
+            catch
+            {
+                /* ignore */
+            }
+
+            // Fallback: type name
+            return value.ToString() ?? value.GetType().Name;
         }
     }
 

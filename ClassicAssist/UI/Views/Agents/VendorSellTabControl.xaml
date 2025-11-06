@@ -10,6 +10,7 @@
              xmlns:misc="clr-namespace:ClassicAssist.Misc"
              xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:vendors="clr-namespace:ClassicAssist.Data.Vendors"
+             xmlns:behaviours="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
              mc:Ignorable="d"
              d:DesignWidth="493" d:DesignHeight="400">
     <d:DesignerProperties.DesignStyle>
@@ -102,7 +103,7 @@
             <Button Content="{x:Static resources:Strings.Set_Container}"
                     Command="{Binding SetContainerCommand}" Grid.Column="0" />
             <Image Source="{StaticResource configureIcon}" Height="16" Grid.Column="1" Margin="10,0,0,0"
-                   misc1:ClickOpensContextMenuBehaviour.Enabled="True">
+                   behaviours:ClickOpensContextMenuBehaviour.Enabled="True">
                 <Image.ContextMenu>
                     <ContextMenu IsOpen="False">
                         <MenuItem Header="{x:Static resources:Strings.Reset_Container}"

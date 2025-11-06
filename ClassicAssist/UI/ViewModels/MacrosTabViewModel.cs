@@ -1,4 +1,23 @@
-﻿using System;
+﻿#region License
+
+// Copyright (C) 2025 Reetus
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -58,6 +77,7 @@ namespace ClassicAssist.UI.ViewModels
         private double _leftColumnWidth = 200;
         private ICommand _newGroupCommand;
         private RelayCommand _newMacroCommand;
+        private ICommand _openExternalCommand;
         private ICommand _openModulesFolderCommand;
         private ICommand _recordCommand;
         private ICommand _removeGroupCommand;
@@ -71,6 +91,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _showActiveObjectsWindowCommand;
         private ICommand _showCommandsCommand;
         private ICommand _showMacrosWikiCommand;
+        private ICommand _stepCommand;
         private ICommand _stopCommand;
         private ICommand _toggleSearchCommand;
 
@@ -105,15 +126,11 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _caretPosition, value );
         }
 
-        public ICommand ClearExceptionCommand =>
-            _clearExceptionCommand ?? ( _clearExceptionCommand = new RelayCommand( ClearException ) );
+        public ICommand ClearExceptionCommand => _clearExceptionCommand ?? ( _clearExceptionCommand = new RelayCommand( ClearException ) );
 
-        public ICommand ClearHotkeyCommand =>
-            _clearHotkeyCommand ?? ( _clearHotkeyCommand = new RelayCommand( ClearHotkey, o => SelectedItem != null ) );
+        public ICommand ClearHotkeyCommand => _clearHotkeyCommand ?? ( _clearHotkeyCommand = new RelayCommand( ClearHotkey, o => SelectedItem != null ) );
 
-        public ICommand CreateMacroButtonCommand =>
-            _createMacroButtonCommand ?? ( _createMacroButtonCommand =
-                new RelayCommand( CreateMacroButton, o => Engine.Connected ) );
+        public ICommand CreateMacroButtonCommand => _createMacroButtonCommand ?? ( _createMacroButtonCommand = new RelayCommand( CreateMacroButton, o => Engine.Connected ) );
 
         public TextDocument Document
         {
@@ -127,8 +144,7 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _draggables, value );
         }
 
-        public ICommand ExecuteCommand =>
-            _executeCommand ?? ( _executeCommand = new RelayCommandAsync( obj => Execute( obj, null ), CanExecute ) );
+        public ICommand ExecuteCommand => _executeCommand ?? ( _executeCommand = new RelayCommandAsync( obj => Execute( obj, null ), CanExecute ) );
 
         public ObservableCollection<IDraggable> FilterDraggables
         {
@@ -146,9 +162,7 @@ namespace ClassicAssist.UI.ViewModels
             }
         }
 
-        public ICommand FormatCodeCommand =>
-            _formatCodeCommand ??
-            ( _formatCodeCommand = new RelayCommandAsync( FormatCode, o => SelectedItem != null ) );
+        public ICommand FormatCodeCommand => _formatCodeCommand ?? ( _formatCodeCommand = new RelayCommandAsync( FormatCode, o => SelectedItem != null ) );
 
         public string FormatError
         {
@@ -162,9 +176,7 @@ namespace ClassicAssist.UI.ViewModels
             set => CheckOverwriteHotkey( SelectedItem, value );
         }
 
-        public ICommand InspectObjectCommand =>
-            _inspectObjectCommand ??
-            ( _inspectObjectCommand = new RelayCommandAsync( InspectObject, o => Engine.Connected ) );
+        public ICommand InspectObjectCommand => _inspectObjectCommand ?? ( _inspectObjectCommand = new RelayCommandAsync( InspectObject, o => Engine.Connected ) );
 
         public bool IsFilterOpen
         {
@@ -192,38 +204,32 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _leftColumnWidth, value );
         }
 
-        public ICommand NewGroupCommand =>
-            _newGroupCommand ?? ( _newGroupCommand = new RelayCommand( NewGroup, o => true ) );
+        public ICommand NewGroupCommand => _newGroupCommand ?? ( _newGroupCommand = new RelayCommand( NewGroup, o => true ) );
 
-        public RelayCommand NewMacroCommand =>
-            _newMacroCommand ?? ( _newMacroCommand = new RelayCommand( NewMacro, o => true ) );
+        public RelayCommand NewMacroCommand => _newMacroCommand ?? ( _newMacroCommand = new RelayCommand( NewMacro, o => true ) );
 
-        public ICommand OpenModulesFolderCommand =>
-            _openModulesFolderCommand ??
-            ( _openModulesFolderCommand = new RelayCommand( OpenModulesFolder, o => true ) );
+        public ICommand OpenExternalCommand =>
+            _openExternalCommand ??
+            ( _openExternalCommand = new RelayCommandAsync( OpenExternal, o => o != null && ( !( o is MacroEntry macroEntry ) || !macroEntry.IsRunning ) ) );
 
-        public ICommand RecordCommand =>
-            _recordCommand ?? ( _recordCommand = new RelayCommand( Record, o => SelectedItem != null ) );
+        public ICommand OpenModulesFolderCommand => _openModulesFolderCommand ?? ( _openModulesFolderCommand = new RelayCommand( OpenModulesFolder, o => true ) );
+
+        public ICommand RecordCommand => _recordCommand ?? ( _recordCommand = new RelayCommand( Record, o => SelectedItem != null ) );
 
         public string RecordLabel => IsRecording ? Strings.Stop : Strings.Record;
 
-        public ICommand RemoveGroupCommand =>
-            _removeGroupCommand ?? ( _removeGroupCommand = new RelayCommand( RemoveGroup, o => o is IDraggableGroup ) );
+        public ICommand RemoveGroupCommand => _removeGroupCommand ?? ( _removeGroupCommand = new RelayCommand( RemoveGroup, o => o is IDraggableGroup ) );
 
         public RelayCommand RemoveMacroCommand =>
-            _removeMacroCommand ?? ( _removeMacroCommand =
-                new RelayCommand( RemoveMacro, o => !SelectedItem?.IsRunning ?? SelectedItem != null ) );
+            _removeMacroCommand ?? ( _removeMacroCommand = new RelayCommand( RemoveMacro, o => !SelectedItem?.IsRunning ?? SelectedItem != null ) );
 
         public ICommand RemoveMacroConfirmCommand =>
-            _removeMacroConfirmCommand ?? ( _removeMacroConfirmCommand =
-                new RelayCommand( RemoveMacroConfirm, o => SelectedItem != null ) );
+            _removeMacroConfirmCommand ?? ( _removeMacroConfirmCommand = new RelayCommand( RemoveMacroConfirm, o => SelectedItem != null ) );
 
         public ICommand ResetImportCacheCommand =>
-            _resetImportCacheCommand ?? ( _resetImportCacheCommand = new RelayCommand( ResetImportCache,
-                o => SelectedItem != null && !SelectedItem.IsRunning ) );
+            _resetImportCacheCommand ?? ( _resetImportCacheCommand = new RelayCommand( ResetImportCache, o => SelectedItem != null && !SelectedItem.IsRunning ) );
 
-        public ICommand SaveMacroCommand =>
-            _saveMacroCommand ?? ( _saveMacroCommand = new RelayCommand( SaveMacro, o => true ) );
+        public ICommand SaveMacroCommand => _saveMacroCommand ?? ( _saveMacroCommand = new RelayCommand( SaveMacro, o => true ) );
 
         public MacroGroup SelectedGroup
         {
@@ -246,25 +252,20 @@ namespace ClassicAssist.UI.ViewModels
             }
         }
 
-        public ICommand ShareMacroCommand =>
-            _shareMacroCommand ??
-            ( _shareMacroCommand = new RelayCommandAsync( ShareMacro, o => SelectedItem != null ) );
+        public ICommand ShareMacroCommand => _shareMacroCommand ?? ( _shareMacroCommand = new RelayCommandAsync( ShareMacro, o => SelectedItem != null ) );
 
         public ICommand ShowActiveObjectsWindowCommand =>
-            _showActiveObjectsWindowCommand ?? ( _showActiveObjectsWindowCommand =
-                new RelayCommand( ShowActiveObjectsWindow, o => true ) );
+            _showActiveObjectsWindowCommand ?? ( _showActiveObjectsWindowCommand = new RelayCommand( ShowActiveObjectsWindow, o => true ) );
 
-        public ICommand ShowCommandsCommand =>
-            _showCommandsCommand ?? ( _showCommandsCommand = new RelayCommand( ShowCommands, o => true ) );
+        public ICommand ShowCommandsCommand => _showCommandsCommand ?? ( _showCommandsCommand = new RelayCommand( ShowCommands, o => true ) );
 
-        public ICommand ShowMacrosWikiCommand =>
-            _showMacrosWikiCommand ?? ( _showMacrosWikiCommand = new RelayCommand( ShowMacrosWiki, o => true ) );
+        public ICommand ShowMacrosWikiCommand => _showMacrosWikiCommand ?? ( _showMacrosWikiCommand = new RelayCommand( ShowMacrosWiki, o => true ) );
 
-        public ICommand StopCommand =>
-            _stopCommand ?? ( _stopCommand = new RelayCommandAsync( Stop, o => SelectedItem?.IsRunning ?? false ) );
+        public ICommand StepCommand => _stepCommand ?? ( _stepCommand = new RelayCommand( Step, o => o is MacroEntry entry && entry.IsPaused ) );
 
-        public ICommand ToggleSearchCommand =>
-            _toggleSearchCommand ?? ( _toggleSearchCommand = new RelayCommand( ToggleSearch ) );
+        public ICommand StopCommand => _stopCommand ?? ( _stopCommand = new RelayCommandAsync( Stop, o => SelectedItem?.IsRunning ?? false ) );
+
+        public ICommand ToggleSearchCommand => _toggleSearchCommand ?? ( _toggleSearchCommand = new RelayCommand( ToggleSearch ) );
 
         public void Serialize( JObject json, bool global = false )
         {
@@ -278,28 +279,24 @@ namespace ClassicAssist.UI.ViewModels
                 _dispatcher.Invoke( () => { macroEntry.Group = FindGroup( macroEntry ); } );
             }
 
-            foreach ( IDraggableGroup draggableGroup in Draggables.Where( i => i is IDraggableGroup )
-                         .OrderBy( e => DraggableTreeViewHelpers.GetIndex( e, Draggables ) ).Cast<IDraggableGroup>() )
+            foreach ( IDraggableGroup draggableGroup in Draggables.Where( i => i is IDraggableGroup ).OrderBy( e => DraggableTreeViewHelpers.GetIndex( e, Draggables ) )
+                         .Cast<IDraggableGroup>() )
             {
                 JObject entry = new JObject { { "Name", draggableGroup.Name } };
 
                 groupArray.Add( entry );
             }
 
-            IEnumerable<MacroEntry> globalMacros = Items.Where( e => e.Global )
-                .OrderBy( e => DraggableTreeViewHelpers.GetIndex( e, Draggables ) ).ToList();
+            IEnumerable<MacroEntry> globalMacros = Items.Where( e => e.Global ).OrderBy( e => DraggableTreeViewHelpers.GetIndex( e, Draggables ) ).ToList();
 
             if ( globalMacros.Any() )
             {
-                string globalJson =
-                    JsonConvert.SerializeObject( globalMacros.Select( e => e.ToJObject() ), Formatting.Indented );
+                string globalJson = JsonConvert.SerializeObject( globalMacros.Select( e => e.ToJObject() ), Formatting.Indented );
 
-                File.WriteAllText( Path.Combine( AssistantOptions.GetGlobalPath(), "Macros.json" ),
-                    globalJson );
+                File.WriteAllText( Path.Combine( AssistantOptions.GetGlobalPath(), "Macros.json" ), globalJson );
             }
 
-            foreach ( MacroEntry macroEntry in Items.Where( e => !e.Global )
-                         .OrderBy( e => DraggableTreeViewHelpers.GetIndex( e, Draggables ) ).ToList() )
+            foreach ( MacroEntry macroEntry in Items.Where( e => !e.Global ).OrderBy( e => DraggableTreeViewHelpers.GetIndex( e, Draggables ) ).ToList() )
             {
                 macroArray.Add( macroEntry.ToJObject() );
             }
@@ -311,8 +308,7 @@ namespace ClassicAssist.UI.ViewModels
 
             JArray aliasArray = new JArray();
 
-            foreach ( JObject entry in AliasCommands.GetAllAliases()
-                         .Select( kvp => new JObject { { "Name", kvp.Key }, { "Value", kvp.Value } } ) )
+            foreach ( JObject entry in AliasCommands.GetAllAliases().Select( kvp => new JObject { { "Name", kvp.Key }, { "Value", kvp.Value } } ) )
             {
                 aliasArray.Add( entry );
             }
@@ -488,16 +484,66 @@ namespace ClassicAssist.UI.ViewModels
             SelectedItem = selected;
         }
 
+        private static async Task OpenExternal( object arg )
+        {
+            if ( !( arg is MacroEntry macroEntry ) )
+            {
+                return;
+            }
+
+            string tempPath = Path.Combine( Path.GetTempPath(), $"{macroEntry.Name}_{Guid.NewGuid()}.py" );
+
+            try
+            {
+                File.WriteAllText( tempPath, macroEntry.Macro );
+
+                ProcessStartInfo psi = new ProcessStartInfo
+                {
+                    FileName = "cmd.exe",
+                    Arguments = $"/c code --wait \"{tempPath}\"",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = false,
+                    RedirectStandardError = false
+                };
+
+                Process process = Process.Start( psi );
+                await Task.Run( () => process?.WaitForExit() );
+
+                if ( File.Exists( tempPath ) )
+                {
+                    macroEntry.Macro = File.ReadAllText( tempPath );
+                }
+            }
+            finally
+            {
+                try
+                {
+                    File.Delete( tempPath );
+                }
+                catch
+                {
+                    // we tried
+                }
+            }
+        }
+
+        private static void Step( object obj )
+        {
+            if ( !( obj is MacroEntry entry ) )
+            {
+                return;
+            }
+
+            entry.Step();
+        }
+
         private void NewPublicMacro( Metadata metadata )
         {
             MacroEntry macro = new MacroEntry
             {
                 Name = metadata.Name,
                 Macro = metadata.Macro,
-                Metadata = new Dictionary<string, string>
-                {
-                    { PUBLIC_ID_FIELD, metadata.Id }, { PUBLIC_SHA1_FIELD, metadata.SHA1 }
-                }
+                Metadata = new Dictionary<string, string> { { PUBLIC_ID_FIELD, metadata.Id }, { PUBLIC_SHA1_FIELD, metadata.SHA1 } }
             };
 
             macro.Action = async ( hks, parameters ) => await Execute( macro, parameters );
@@ -553,8 +599,7 @@ namespace ClassicAssist.UI.ViewModels
                     switch ( e )
                     {
                         case IDraggableEntry entry when Predicate( entry ):
-                        case IDraggableGroup group when group.Children.Where( ide => ide is IDraggableEntry )
-                            .Cast<IDraggableEntry>().Any( Predicate ):
+                        case IDraggableGroup group when group.Children.Where( ide => ide is IDraggableEntry ).Cast<IDraggableEntry>().Any( Predicate ):
                             return true;
                         default:
                             return false;
@@ -566,13 +611,9 @@ namespace ClassicAssist.UI.ViewModels
                         return e;
                     }
 
-                    IEnumerable<IDraggable> children =
-                        group.Children.Where( c => c.Name.ToLower().Contains( FilterText.ToLower() ) );
+                    IEnumerable<IDraggable> children = group.Children.Where( c => c.Name.ToLower().Contains( FilterText.ToLower() ) );
 
-                    return new MacroGroup
-                    {
-                        Name = group.Name, Children = new ObservableCollection<IDraggable>( children )
-                    };
+                    return new MacroGroup { Name = group.Name, Children = new ObservableCollection<IDraggable>( children ) };
                 } ).ToList();
 
                 FilterDraggables = new ObservableCollection<IDraggable>( items );
@@ -599,8 +640,7 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( Options.CurrentOptions.SortMacrosAlphabetical )
             {
-                Draggables.AddSorted( new MacroGroup { Name = $"Group-{count + 1}" },
-                    new GroupsBeforeMacrosComparer() );
+                Draggables.AddSorted( new MacroGroup { Name = $"Group-{count + 1}" }, new GroupsBeforeMacrosComparer() );
             }
             else
             {
@@ -621,9 +661,7 @@ namespace ClassicAssist.UI.ViewModels
 
                     if ( !string.IsNullOrEmpty( macroEntry.Group ) )
                     {
-                        MacroGroup macroGroup =
-                            (MacroGroup) Draggables.FirstOrDefault( i =>
-                                i is MacroGroup && i.Name == macroEntry.Group );
+                        MacroGroup macroGroup = (MacroGroup) Draggables.FirstOrDefault( i => i is MacroGroup && i.Name == macroEntry.Group );
 
                         if ( macroGroup == null )
                         {
@@ -682,8 +720,7 @@ namespace ClassicAssist.UI.ViewModels
                 }
                 else
                 {
-                    MacroGroup macroGroup =
-                        (MacroGroup) Draggables.FirstOrDefault( i => i is MacroGroup && i.Name == macroEntry.Group );
+                    MacroGroup macroGroup = (MacroGroup) Draggables.FirstOrDefault( i => i is MacroGroup && i.Name == macroEntry.Group );
 
                     macroGroup?.Children.Remove( macroEntry );
                 }
@@ -704,8 +741,7 @@ namespace ClassicAssist.UI.ViewModels
 
                 ShareMacroModel data = new ShareMacroModel { Content = macro.Macro };
 
-                HttpResponseMessage response = await httpClient.PostAsync(
-                    "https://classicassist.azurewebsites.net/api/macros/stage",
+                HttpResponseMessage response = await httpClient.PostAsync( "https://classicassist.azurewebsites.net/api/macros/stage",
                     new StringContent( JsonConvert.SerializeObject( data ), Encoding.UTF8, "application/json" ) );
 
                 string json = await response.Content.ReadAsStringAsync();
@@ -751,8 +787,8 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            MessageBoxResult result = MessageBox.Show( string.Format( Strings.Really_remove_macro___0___, entry.Name ),
-                Strings.Warning, MessageBoxButton.YesNo, MessageBoxImage.Warning );
+            MessageBoxResult result = MessageBox.Show( string.Format( Strings.Really_remove_macro___0___, entry.Name ), Strings.Warning, MessageBoxButton.YesNo,
+                MessageBoxImage.Warning );
 
             if ( result == MessageBoxResult.No )
             {
@@ -772,6 +808,11 @@ namespace ClassicAssist.UI.ViewModels
             if ( !( arg is MacroEntry entry ) )
             {
                 return false;
+            }
+
+            if ( entry.IsPaused )
+            {
+                return true;
             }
 
             if ( entry.IsRunning )
@@ -809,9 +850,7 @@ namespace ClassicAssist.UI.ViewModels
 
             if ( conflict != null && !ReferenceEquals( selectedItem, conflict ) )
             {
-                MessageBoxResult result =
-                    MessageBox.Show( string.Format( Strings.Overwrite_existing_hotkey___0____, conflict ),
-                        Strings.Warning, MessageBoxButton.YesNo );
+                MessageBoxResult result = MessageBox.Show( string.Format( Strings.Overwrite_existing_hotkey___0____, conflict ), Strings.Warning, MessageBoxButton.YesNo );
 
                 if ( result == MessageBoxResult.No )
                 {
@@ -839,6 +878,12 @@ namespace ClassicAssist.UI.ViewModels
         {
             if ( !( obj is MacroEntry entry ) )
             {
+                return;
+            }
+
+            if ( entry.IsPaused )
+            {
+                entry.Resume();
                 return;
             }
 
@@ -971,8 +1016,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private static void OpenModulesFolder( object obj )
         {
-            Process.Start( "explorer.exe",
-                Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Modules" ) );
+            Process.Start( "explorer.exe", Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Modules" ) );
         }
 
         private async Task FormatCode( object obj )

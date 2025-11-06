@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:avalon="http://icsharpcode.net/sharpdevelop/avalonedit"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              xmlns:local="clr-namespace:ClassicAssist.Data.Macros"
@@ -16,6 +15,7 @@
              xmlns:draggableTreeView="clr-namespace:ClassicAssist.Controls.DraggableTreeView;assembly=ClassicAssist.Controls"
              xmlns:controls1="clr-namespace:ClassicAssist.UI.Controls"
              xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+             xmlns:macros="clr-namespace:ClassicAssist.UI.Views.Macros"
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="700" Padding="5">
     <d:DesignerProperties.DesignStyle>
@@ -31,15 +31,18 @@
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
             <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
-            <valueConverters:NullBooleanConverter x:Key="NullBooleanConverter" />
-            <valueConverters:MacroExceptionValueConverter x:Key="MacroExceptionValueConverter" />
-            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <misc1:BindingProxy x:Key="Proxy" Data="{Binding}" />
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
         <viewModels:MacrosTabViewModel />
     </UserControl.DataContext>
+    <UserControl.InputBindings>
+        <KeyBinding Modifiers="Control" Key="S" Command="{Binding SaveMacroCommand}" />
+        <KeyBinding Key="F5" Command="{Binding ExecuteCommand}" CommandParameter="{Binding SelectedItem}" />
+        <KeyBinding Key="F8" Command="{Binding StepCommand}" CommandParameter="{Binding SelectedItem}" />
+        <KeyBinding Key="F12" Command="{Binding StopCommand}" CommandParameter="{Binding SelectedItem}" />
+    </UserControl.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition>
@@ -265,7 +268,7 @@
             </Grid>
         </Grid>
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-        <Grid Grid.Column="2" Initialized="Grid_Initialized" Margin="5,0,0,0">
+        <Grid Grid.Column="2" Margin="5,0,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
@@ -273,74 +276,11 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <avalon:TextEditor ShowLineNumbers="True" x:Name="CodeTextEditor" Grid.Row="0"
-                               HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
-                               FontFamily="Consolas"
-                               IsEnabled="{Binding SelectedItem, Converter={StaticResource NullBooleanConverter}}">
-                <avalon:TextEditor.Style>
-                    <Style TargetType="{x:Type avalon:TextEditor}" BasedOn="{StaticResource {x:Type avalon:TextEditor}}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding SelectedItem}" Value="{x:Null}">
-                                <Setter Property="IsEnabled" Value="False"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </avalon:TextEditor.Style>
-                <avalon:TextEditor.InputBindings>
-                    <KeyBinding Modifiers="Control" Key="S" Command="{Binding SaveMacroCommand}" />
-                    <KeyBinding Key="F5" Command="{Binding ExecuteCommand, Mode=OneWay}"
-                                CommandParameter="{Binding SelectedItem}" />
-                    <KeyBinding Key="F12" Command="{Binding StopCommand, Mode=OneWay}"
-                                CommandParameter="{Binding SelectedItem}" />
-                </avalon:TextEditor.InputBindings>
-                <i:Interaction.Behaviors>
-                    <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                    <misc:AvalonEditBehaviour
-                        TextBinding="{Binding SelectedItem.Macro}" />
-                    <misc:AvalonBindingBehaviour DocumentBinding="{Binding Document}"
-                                                 CaretBinding="{Binding CaretPosition}" />
-                </i:Interaction.Behaviors>
-            </avalon:TextEditor>
-            <ProgressBar IsIndeterminate="True" Grid.Row="0" Height="5" VerticalAlignment="Bottom"
-                         Visibility="{Binding IsPerformingAction, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Bottom"
-                        Background="{DynamicResource ThemeBackgroundBrush}">
-                <StackPanel.Style>
-                    <Style TargetType="{x:Type StackPanel}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding FormatError,TargetNullValue=''}" Value="">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </StackPanel.Style>
-                <Image Source="{DynamicResource ExclamationIcon}" Height="12" Margin="10,0,10,0" />
-                <TextBlock Text="{Binding FormatError}" />
-            </StackPanel>
-            <Grid Grid.Row="1" Margin="5">
-                <Grid.Style>
-                    <Style TargetType="{x:Type Grid}">
-                        <Setter Property="Visibility" Value="Visible" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding SelectedItem.LastException}" Value="{x:Null}">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Grid.Style>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <TextBlock
-                    Text="{Binding SelectedItem.LastException, Converter={StaticResource MacroExceptionValueConverter}}"
-                    Grid.Column="0" />
-                <Button Background="Transparent" Padding="0" Margin="0" BorderThickness="0" BorderBrush="Transparent"
-                        HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding ClearExceptionCommand}"
-                        CommandParameter="{Binding SelectedItem}" Height="12" Grid.Column="1">
-                    <Image Source="{StaticResource closeIcon}" Margin="0,0,0,0" />
-                </Button>
-            </Grid>
+            <macros:MacrosCodeTextEditor SelectedItem="{Binding SelectedItem}" Document="{Binding Document}"
+                                         CaretPosition="{Binding CaretPosition}"
+                                         IsPerformingAction="{Binding IsPerformingAction}"
+                                         ClearExceptionCommand="{Binding ClearExceptionCommand}"
+                                         FormatError="{Binding FormatError}" />
             <WrapPanel Orientation="Horizontal" Grid.Row="2" Margin="5">
                 <WrapPanel.Resources>
                     <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
@@ -408,6 +348,10 @@
                     <Button Command="{Binding FormatCodeCommand}" CommandParameter="{Binding SelectedItem}"
                             Padding="5,0,5,0" ToolTip="{x:Static resources:Strings.Format_Code}">
                         <Image Source="{StaticResource AlignLeftIcon}" Height="16" />
+                    </Button>
+                    <Button Command="{Binding OpenExternalCommand}" CommandParameter="{Binding SelectedItem}"
+                            Padding="5,0,5,0" ToolTip="{x:Static resources:Strings.Open_in_external_editor}">
+                        <Image Source="{StaticResource VSCodeIcon}" Height="16" />
                     </Button>
                 </controls1:StretchyWrapPanel>
             </Grid>

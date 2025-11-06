@@ -8,6 +8,7 @@
         xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
         xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+        xmlns:behaviours1="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
         mc:Ignorable="d"
         Title="{Binding Title}" Height="350" Width="650" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         Topmost="{Binding Topmost}" WindowStyle="None" ResizeMode="CanResizeWithGrip" AllowsTransparency="True">
@@ -99,7 +100,7 @@
                     <ComboBox x:Name="comboBox" Grid.Column="1" ItemsSource="{Binding Channels}"
                               SelectedItem="{Binding SelectedChannel}">
                         <i:Interaction.Behaviors>
-                            <misc:ComboBoxBehavior CommandBinding="{Binding ChangeChannelCommand}"
+                            <behaviours1:ComboBoxBehavior CommandBinding="{Binding ChangeChannelCommand}"
                                                    OnlyUserTriggered="True"
                                                    CommandParameter="{Binding SelectedItem, ElementName=comboBox}" />
                         </i:Interaction.Behaviors>

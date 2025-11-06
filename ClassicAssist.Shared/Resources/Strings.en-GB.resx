@@ -2077,6 +2077,12 @@ Are you sure you wish to continue?</value>
   <data name="Move to group" xml:space="preserve">
     <value>Move to group</value>
   </data>
+  <data name="Debugger paused on line {0}" xml:space="preserve">
+    <value>Debugger paused on line {0}</value>
+  </data>
+  <data name="Open in external editor" xml:space="preserve">
+    <value>Open in external editor</value>
+  </data>
   <data name="Framework:" xml:space="preserve">
     <value>Framework:</value>
   </data>

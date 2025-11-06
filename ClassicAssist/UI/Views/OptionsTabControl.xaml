@@ -12,6 +12,7 @@
     xmlns:headered="clr-namespace:ClassicAssist.Controls.Headered;assembly=ClassicAssist.Controls"
     xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
     xmlns:optionsTab="clr-namespace:ClassicAssist.UI.Views.OptionsTab"
+    xmlns:behaviours="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
     x:Class="ClassicAssist.UI.Views.OptionsTabControl"
     mc:Ignorable="d"
     d:DesignHeight="633.233" d:DesignWidth="798.666">
@@ -60,7 +61,7 @@
                                       SelectedItem="{x:Static data:AssistantOptions.LanguageOverride}"
                                       MinWidth="100">
                                 <i:Interaction.Behaviors>
-                                    <misc1:ComboBoxBehavior CommandBinding="{Binding SetLanguageOverrideCommand}"
+                                    <behaviours:ComboBoxBehavior CommandBinding="{Binding SetLanguageOverrideCommand}"
                                                             CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}}"
                                                             OnlyUserTriggered="True" />
                                 </i:Interaction.Behaviors>

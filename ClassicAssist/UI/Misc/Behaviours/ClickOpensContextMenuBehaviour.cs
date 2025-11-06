@@ -23,7 +23,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 
 //https://stackoverflow.com/questions/4305565/wpf-context-menu-on-left-click
-namespace ClassicAssist.UI.Misc
+namespace ClassicAssist.UI.Misc.Behaviours
 {
     public class ClickOpensContextMenuBehaviour
     {

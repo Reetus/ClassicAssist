@@ -23,7 +23,7 @@ using System.Windows;
 using System.Windows.Data;
 using ClassicAssist.Controls.DraggableTreeView;
 
-namespace ClassicAssist.UI.Views.Agents.Autoloot
+namespace ClassicAssist.UI.Misc.ValueConverters
 {
     public class DraggableGroupVisibilityValueConverter : IValueConverter
     {

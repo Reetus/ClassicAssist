@@ -20,7 +20,7 @@ using ClassicAssist.Plugin.Shared;
 using ClassicAssist.Shared;
 using StreamJsonRpc;
 
-namespace ClassicAssist
+namespace ClassicAssist.UI
 {
     public static class Program
     {
@@ -42,7 +42,7 @@ namespace ClassicAssist
             clientStream.Connect();
 
             // Attach client RPC
-            var pluginMethods = new Engine.PluginMethods();
+            Engine.PluginMethods pluginMethods = new Engine.PluginMethods();
             JsonRpc rpc = JsonRpc.Attach( clientStream, pluginMethods );
             IHostMethods host = rpc.Attach<IHostMethods>();
 

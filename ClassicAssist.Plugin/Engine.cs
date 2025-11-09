@@ -191,11 +191,11 @@ namespace Assistant
 
         private static void LaunchUI()
         {
-            string exePath = Path.Combine( StartupPath, "ClassicAssist.exe" );
+            string exePath = Path.Combine( StartupPath, "ClassicAssist.UI.exe" );
 
             if ( !File.Exists( exePath ) )
             {
-                exePath = Path.Combine( StartupPath, "..", "net9.0-windows", "ClassicAssist.exe" );
+                exePath = Path.Combine( StartupPath, "..", "net48", "ClassicAssist.UI.exe" );
             }
 
             if ( !File.Exists( exePath ) )

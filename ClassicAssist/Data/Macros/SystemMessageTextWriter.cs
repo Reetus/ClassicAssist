@@ -24,11 +24,7 @@ namespace ClassicAssist.Data.Macros
 {
     public class SystemMessageTextWriter : TextWriter
     {
-#if NET
         public override Encoding Encoding { get; } = Encoding.Unicode;
-#else
-        public override Encoding Encoding { get; } = Encoding.UTF8;
-#endif
 
         public override void Write( string value )
         {

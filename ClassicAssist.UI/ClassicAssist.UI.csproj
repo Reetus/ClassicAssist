@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net48</TargetFramework>
+        <OutputPath>..\Output\</OutputPath>
+        <ApplicationIcon>..\ClassicAssist\Resources\logo.ico</ApplicationIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\ClassicAssist.Plugin.Shared\ClassicAssist.Plugin.Shared.csproj" />
+        <ProjectReference Include="..\ClassicAssist\ClassicAssist.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AssemblyAttribute Include="BuildDateAttribute">
+            <_Parameter1>$([System.DateTime]::UtcNow.Date.Ticks)</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
+    <PropertyGroup>
+        <BuildDate>$([System.DateTime]::op_Subtraction($([System.DateTime]::get_Now().get_Date()),$([System.DateTime]::new(2020,7,3))).get_TotalDays())</BuildDate>
+        <Version>0.5.0-develop+$(BuildDate)</Version>
+        <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+
+</Project>

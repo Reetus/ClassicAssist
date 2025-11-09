@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicAssist.Plugin", "Cla
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicAssist.Plugin.Shared", "ClassicAssist.Plugin.Shared\ClassicAssist.Plugin.Shared.csproj", "{862373A0-CA28-452C-A3AC-2B95702C9B6C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicAssist.UI", "ClassicAssist.UI\ClassicAssist.UI.csproj", "{6B9E6C86-EE0A-47B1-922B-B2D17D63C293}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -100,6 +102,12 @@ Global
 		{862373A0-CA28-452C-A3AC-2B95702C9B6C}.Develop|Any CPU.Build.0 = Debug|Any CPU
 		{862373A0-CA28-452C-A3AC-2B95702C9B6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{862373A0-CA28-452C-A3AC-2B95702C9B6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B9E6C86-EE0A-47B1-922B-B2D17D63C293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B9E6C86-EE0A-47B1-922B-B2D17D63C293}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B9E6C86-EE0A-47B1-922B-B2D17D63C293}.Develop|Any CPU.ActiveCfg = Release|Any CPU
+		{6B9E6C86-EE0A-47B1-922B-B2D17D63C293}.Develop|Any CPU.Build.0 = Release|Any CPU
+		{6B9E6C86-EE0A-47B1-922B-B2D17D63C293}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B9E6C86-EE0A-47B1-922B-B2D17D63C293}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

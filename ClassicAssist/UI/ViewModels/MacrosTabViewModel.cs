@@ -1032,7 +1032,16 @@ namespace ClassicAssist.UI.ViewModels
 
             int newSelectedIndex = GetNewSelectedIndex( item );
 
-            Draggables.Remove( item );
+            if ( !string.IsNullOrEmpty( item.Group ) )
+            {
+                MacroGroup oldGroup = (MacroGroup) Draggables.FirstOrDefault( i => i is MacroGroup && i.Name == item.Group );
+                oldGroup?.Children.Remove( item );
+            }
+            else
+            {
+                Draggables.Remove( item );
+            }
+
             item.Group = macroGroup.Name;
             macroGroup.Children.Add( item );
 

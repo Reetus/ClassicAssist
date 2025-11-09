@@ -124,7 +124,7 @@ namespace ClassicAssist.UI.Misc.Behaviours
             }
 
             dataView.SortDescriptions.Clear();
-            dataView.SortDescriptions.Add( new SortDescription( column.Header.ToString(), direction ) );
+            dataView.SortDescriptions.Add( new SortDescription( column.SortField.ToString(), direction ) );
             dataView.CustomSort = new SkillComparer( direction, column.SortField );
             dataView.Refresh();
         }

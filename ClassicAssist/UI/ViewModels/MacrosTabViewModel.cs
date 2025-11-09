@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 
 // Copyright (C) 2025 Reetus
 // 
@@ -75,6 +75,7 @@ namespace ClassicAssist.UI.ViewModels
         private bool _isPerformingAction;
         private bool _isRecording;
         private double _leftColumnWidth = 200;
+        private ICommand _moveToGroupCommand;
         private ICommand _newGroupCommand;
         private RelayCommand _newMacroCommand;
         private ICommand _openExternalCommand;
@@ -203,6 +204,8 @@ namespace ClassicAssist.UI.ViewModels
             get => _leftColumnWidth;
             set => SetProperty( ref _leftColumnWidth, value );
         }
+
+        public ICommand MoveToGroupCommand => _moveToGroupCommand ?? ( _moveToGroupCommand = new RelayCommand( MoveToGroup, o => SelectedItem != null && o is MacroGroup ) );
 
         public ICommand NewGroupCommand => _newGroupCommand ?? ( _newGroupCommand = new RelayCommand( NewGroup, o => true ) );
 
@@ -1017,6 +1020,81 @@ namespace ClassicAssist.UI.ViewModels
         private static void OpenModulesFolder( object obj )
         {
             Process.Start( "explorer.exe", Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Modules" ) );
+        }
+
+        private void MoveToGroup( object obj )
+        {
+            if ( SelectedItem == null || !( obj is MacroGroup macroGroup ) )
+            {
+                return;
+            }
+
+            MacroEntry item = SelectedItem;
+
+            int newSelectedIndex = GetNewSelectedIndex( item );
+
+            if ( !string.IsNullOrEmpty( item.Group ) )
+            {
+                MacroGroup oldGroup = (MacroGroup) Draggables.FirstOrDefault( i => i is MacroGroup && i.Name == item.Group );
+                oldGroup?.Children.Remove( item );
+            }
+            else
+            {
+                Draggables.Remove( item );
+            }
+
+            item.Group = macroGroup.Name;
+            macroGroup.Children.Add( item );
+
+            SetNewSelectedIndex( newSelectedIndex );
+        }
+
+        private void SetNewSelectedIndex( int newSelectedIndex )
+        {
+            try
+            {
+                IDraggable newSelection = Draggables[newSelectedIndex];
+
+                if ( newSelection is MacroGroup group )
+                {
+                    SelectedGroup = group;
+                }
+                else
+                {
+                    SelectedItem = newSelection as MacroEntry;
+                }
+            }
+            catch ( Exception )
+            {
+                // ignored 
+            }
+        }
+
+        private int GetNewSelectedIndex( MacroEntry item )
+        {
+            int newSelectedIndex = 0;
+
+            if ( item.Group != null )
+            {
+                return newSelectedIndex;
+            }
+
+            int previousIndex = Draggables.IndexOf( item );
+
+            if ( previousIndex > 0 )
+            {
+                newSelectedIndex = previousIndex - 1;
+            }
+            else if ( previousIndex < Draggables.Count - 1 )
+            {
+                newSelectedIndex = previousIndex;
+            }
+            else
+            {
+                newSelectedIndex = -1;
+            }
+
+            return newSelectedIndex;
         }
 
         private async Task FormatCode( object obj )

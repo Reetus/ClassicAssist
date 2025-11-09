@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
@@ -13,6 +14,7 @@ using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Misc;
+using ClassicAssist.UI.Misc.Behaviours;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
@@ -29,6 +31,9 @@ namespace ClassicAssist.UI.ViewModels
         private SkillEntry _selectedItem;
         private ICommand _setAllSkillLocksCommand;
         private ICommand _setSkillLocksCommand;
+        private ICommand _sortChangedCommand;
+
+        private SkillsSortInfo _sortInfo;
         private float _totalBase;
         private ICommand _useSkillCommand;
 
@@ -79,6 +84,10 @@ namespace ClassicAssist.UI.ViewModels
             _useSkillCommand ?? ( _useSkillCommand =
                 new RelayCommand( UseSkill, o => SelectedItem?.Skill.Invokable ?? false ) );
 
+        public ICommand SetSortCommand { get; set; }
+
+        public ICommand SortChangedCommand => _sortChangedCommand ?? ( _sortChangedCommand = new RelayCommand( OnSortChanged ) );
+
         public void Serialize( JObject json, bool global = false )
         {
             JArray skills = new JArray();
@@ -105,6 +114,15 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             json.Add( "Skills", skills );
+
+            if ( _sortInfo == null || global )
+            {
+                return;
+            }
+
+            JObject obj = new JObject { { "SortField", _sortInfo.SortBy.ToString() }, { "SortDirection", _sortInfo.Direction.ToString() } };
+
+            json.Add( "SkillsSort", obj );
         }
 
         public void Deserialize( JObject json, Options options, bool global = false )
@@ -191,11 +209,35 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             hotkey.AddCategory( _hotkeyCategory );
+
+            if ( !( json["SkillsSort"] is JObject obj ) || obj["SortField"] == null || obj["SortDirection"] == null || global )
+            {
+                return;
+            }
+
+            if ( !Enum.TryParse( obj["SortField"].ToObject<string>(), out SkillsGridViewColumn.Enums sortBy ) ||
+                 !Enum.TryParse( obj["SortDirection"].ToObject<string>(), out ListSortDirection direction ) )
+            {
+                return;
+            }
+
+            _sortInfo = new SkillsSortInfo( sortBy, direction );
+            SetSortCommand?.Execute( _sortInfo );
         }
 
         public string GetGlobalFilename()
         {
             return "Skills.json";
+        }
+
+        private void OnSortChanged( object obj )
+        {
+            if (!( obj is SkillsSortInfo info ) )
+            {
+                return;
+            }
+
+            _sortInfo = info;
         }
 
         private void ResetDeltas( object obj )

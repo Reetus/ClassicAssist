@@ -29,7 +29,7 @@
             <misc1:BindingProxy x:Key="Proxy" Data="{Binding}" />
             <ValueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
             <ValueConverters:AutolootOperatorFilterValueConverter x:Key="AutolootOperatorFilterValueConverter" />
-            <autoloot2:DraggableGroupVisibilityValueConverter x:Key="DraggableGroupVisibilityConverter" />
+            <ValueConverters:DraggableGroupVisibilityValueConverter x:Key="DraggableGroupVisibilityConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>

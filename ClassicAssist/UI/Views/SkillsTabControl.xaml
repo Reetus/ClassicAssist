@@ -11,6 +11,8 @@
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              xmlns:sharedResources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:skills="clr-namespace:ClassicAssist.Data.Skills"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:behaviours="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
              mc:Ignorable="d">
     <d:DesignerProperties.DesignStyle>
         <Style TargetType="UserControl">
@@ -57,7 +59,6 @@
             </ContextMenu>
         </Grid.Resources>
         <ListView Grid.Column="0" ItemsSource="{Binding Items}" Margin="5"
-                  GridViewColumnHeader.Click="GridViewHeaderOnClick" x:Name="listView"
                   SelectedItem="{Binding SelectedItem}" ContextMenu="{StaticResource ItemContextMenu}">
             <ListView.View>
                 <GridView>
@@ -88,6 +89,10 @@
                     </misc1:SkillsGridViewColumn>
                 </GridView>
             </ListView.View>
+            <b:Interaction.Behaviors>
+                <behaviours:SkillsGridViewSortBehaviour SortChangedCommand="{Binding SortChangedCommand}"
+                                                        SetSortCommand="{Binding SetSortCommand, Mode=OneWayToSource}" />
+            </b:Interaction.Behaviors>
         </ListView>
         <StackPanel Grid.Column="1" Margin="10,0,10,10">
             <StackPanel.Resources>

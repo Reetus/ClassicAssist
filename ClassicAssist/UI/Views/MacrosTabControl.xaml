@@ -31,6 +31,7 @@
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
             <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
+            <valueConverters:DraggableGroupVisibilityValueConverter x:Key="DraggableGroupVisibilityConverter" />
             <misc1:BindingProxy x:Key="Proxy" Data="{Binding}" />
         </ResourceDictionary>
     </UserControl.Resources>
@@ -123,6 +124,43 @@
                                     <MenuItem Header="{x:Static resources:Strings.Remove_Group}"
                                               Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:MacrosTabViewModel.RemoveGroupCommand)}"
                                               CommandParameter="{Binding SelectedGroup}" />
+                                    <Separator>
+                                        <Separator.Style>
+                                            <Style TargetType="Separator">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding SelectedItem}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Separator.Style>
+                                    </Separator>
+                                    <MenuItem Header="{x:Static resources:Strings.Move_to_group}"
+                                          ItemsSource="{Binding Draggables}">
+                                        <MenuItem.Style>
+                                            <Style TargetType="MenuItem">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding SelectedItem}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </MenuItem.Style>
+                                        <MenuItem.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Name}" />
+                                            </DataTemplate>
+                                        </MenuItem.ItemTemplate>
+                                        <MenuItem.ItemContainerStyle>
+                                            <Style TargetType="MenuItem">
+                                                <Setter Property="Visibility"
+                                                    Value="{Binding Converter={StaticResource DraggableGroupVisibilityConverter}}" />
+                                                <Setter Property="Command"
+                                                    Value="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:MacrosTabViewModel.MoveToGroupCommand)}" />
+                                                <Setter Property="CommandParameter" Value="{Binding}" />
+                                            </Style>
+                                        </MenuItem.ItemContainerStyle>
+                                    </MenuItem>
                                 </ContextMenu>
                             </draggableTreeView:DraggableTreeView.ContextMenu>
                             <draggableTreeView:DraggableTreeView.Resources>

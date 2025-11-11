@@ -3865,6 +3865,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Organizer Match.
+        /// </summary>
+        public static string Organizer_Match {
+            get {
+                return ResourceManager.GetString("Organizer Match", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Original.
         /// </summary>
         public static string Original {

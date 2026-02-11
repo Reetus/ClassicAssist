@@ -137,7 +137,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         { "Amount", item.Amount },
                         { "MaxPrice", item.MaxPrice },
                         { "BackpackGraphic", item.BackpackGraphic },
-                        { "Weight", item.Weight }
+                        { "Weight", item.Weight },
+                        { "Stackable", item.Stackable }
                     };
 
                     itemObj.Add( entryObj );
@@ -188,7 +189,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         Amount = token["Amount"]?.ToObject<int>() ?? 0,
                         MaxPrice = token["MaxPrice"]?.ToObject<int>() ?? 0,
                         BackpackGraphic = token["BackpackGraphic"]?.ToObject<int>() ?? 0,
-                        Weight = token["Weight"]?.ToObject<int>() ?? 0
+                        Weight = token["Weight"]?.ToObject<double>() ?? 0,
+                        Stackable = token["Stackable"]?.ToObject<bool>() ?? false
                     };
 
                     if ( vbae.BackpackGraphic == 0 )
@@ -229,7 +231,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
                             Amount = item["Amount"]?.ToObject<int>() ?? 0,
                             MaxPrice = item["MaxPrice"]?.ToObject<int>() ?? 0,
                             BackpackGraphic = item["BackpackGraphic"]?.ToObject<int>() ?? 0,
-                            Weight = item["Weight"]?.ToObject<int>() ?? 0
+                            Weight = item["Weight"]?.ToObject<double>() ?? 0,
+                            Stackable = item["Stackable"]?.ToObject<bool>() ?? false
                         };
 
                         if ( vbae.BackpackGraphic == 0 )

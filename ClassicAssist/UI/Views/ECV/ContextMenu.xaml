@@ -73,6 +73,8 @@
                 <Separator />
                 <MenuItem Header="{x:Static resources:Strings.Target}"
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextTargetCommand)}" />
+                <MenuItem Header="{x:Static resources:Strings.Target_Owner}"
+                          Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextTargetOwnerCommand)}" />
             </ContextMenu>
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>

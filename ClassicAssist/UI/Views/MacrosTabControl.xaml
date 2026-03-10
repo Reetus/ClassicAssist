@@ -17,7 +17,7 @@
              xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
              xmlns:macros="clr-namespace:ClassicAssist.UI.Views.Macros"
              mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="700" Padding="5">
+             d:DesignHeight="500" Padding="5">
     <d:DesignerProperties.DesignStyle>
         <Style TargetType="UserControl">
             <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
@@ -33,6 +33,26 @@
             <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
             <valueConverters:DraggableGroupVisibilityValueConverter x:Key="DraggableGroupVisibilityConverter" />
             <misc1:BindingProxy x:Key="Proxy" Data="{Binding}" />
+            <local:MacroEntry x:Key="Macro" Loop="True" Macro="print('hi')" Name="Macro">
+                <local:MacroEntry.Hotkey>
+                    <hotkeys:ShortcutKeys Key="A" Modifier="LeftAlt"/>
+                </local:MacroEntry.Hotkey>
+                <local:MacroEntry.MacroInvoker>
+                    <local:MacroInvoker/>
+                </local:MacroEntry.MacroInvoker>
+            </local:MacroEntry>
+            <viewModels:MacrosTabViewModel SelectedItem="{StaticResource Macro}" x:Key="DummyData">
+                <viewModels:MacrosTabViewModel.Items>
+                    <local:MacroEntry Loop="True" Macro="print('hi')" Name="Macro">
+                        <local:MacroEntry.Hotkey>
+                            <hotkeys:ShortcutKeys Key="A" Modifier="LeftAlt" />
+                        </local:MacroEntry.Hotkey>
+                        <local:MacroEntry.MacroInvoker>
+                            <local:MacroInvoker />
+                        </local:MacroEntry.MacroInvoker>
+                    </local:MacroEntry>
+                </viewModels:MacrosTabViewModel.Items>
+            </viewModels:MacrosTabViewModel>
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
@@ -44,7 +64,7 @@
         <KeyBinding Key="F8" Command="{Binding StepCommand}" CommandParameter="{Binding SelectedItem}" />
         <KeyBinding Key="F12" Command="{Binding StopCommand}" CommandParameter="{Binding SelectedItem}" />
     </UserControl.InputBindings>
-    <Grid>
+    <Grid d:DataContext="{StaticResource DummyData}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition>
                 <ColumnDefinition.Style>

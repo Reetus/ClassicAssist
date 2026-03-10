@@ -27,8 +27,6 @@ namespace ClassicAssist.UI
         [STAThread]
         public static void Main( string[] args )
         {
-            Encoding.RegisterProvider( CodePagesEncodingProvider.Instance );
-            
             if ( args == null || args.Length == 0 )
             {
                 return;

@@ -18,6 +18,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -26,6 +27,7 @@ using System.Windows;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data.Autoloot;
+using ClassicAssist.Data.Organizer;
 using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
@@ -116,6 +118,57 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                     }
                 },
                 AllowedValuesEnum = typeof( TileFlags )
+            } );
+
+            Constraints.AddSorted( new PropertyEntry()
+            {
+                Name = "Distance",
+                ConstraintType = PropertyType.Predicate,
+                AllowedOperators = AutolootAllowedOperators.LessThan | AutolootAllowedOperators.GreaterThan | AutolootAllowedOperators.Equal | AutolootAllowedOperators.NotEqual,
+                Predicate = ( item, entry ) =>
+                {
+                    int distance = item.Distance;
+
+                    switch ( entry.Operator )
+                    {
+                        case AutolootOperator.LessThan:
+                            return distance < entry.Value;
+                        case AutolootOperator.GreaterThan:
+                            return distance > entry.Value;
+                        case AutolootOperator.Equal:
+                            return distance == entry.Value;
+                        case AutolootOperator.NotEqual:
+                            return distance != entry.Value;
+                        default:
+                            return false;
+                    }
+                }
+            } );
+
+            Constraints.AddSorted( new PropertyEntry
+            {
+                Name = Strings.Organizer_Match,
+                ConstraintType = PropertyType.PredicateWithValue,
+                AllowedOperators = AutolootAllowedOperators.Equal | AutolootAllowedOperators.NotEqual,
+                Predicate = ( item, entry ) =>
+                {
+                    if ( entry.Additional == null )
+                    {
+                        return false;
+                    }
+
+                    OrganizerEntry organizer = OrganizerManager.GetInstance().Items.FirstOrDefault( e => e.Name == entry.Additional );
+
+                    if ( organizer == null )
+                    {
+                        return false;
+                    }
+
+                    bool match = organizer.Items.Any( e => e.ID == item.ID && ( e.Hue == -1 || e.Hue == item.Hue ) );
+
+                    return entry.Operator == AutolootOperator.NotEqual ? !match : match;
+                },
+                Options = new ObservableCollection<string>( OrganizerManager.GetInstance().Items?.Select( o => o.Name ) ?? new List<string>() )
             } );
 
             manager.LoadAssemblies( Constraints );

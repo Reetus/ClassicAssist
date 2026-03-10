@@ -229,6 +229,7 @@ namespace ClassicAssist.UO.Network
             int sequence = reader.ReadByte();
 
             Engine.SetSequence( sequence, direction );
+            Engine.LastMoveRequested = DateTime.Now;
         }
 
         private static void OnGumpButtonPressed( PacketReader reader )

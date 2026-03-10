@@ -8,16 +8,12 @@
 // (at your option) any later version.
 // 
 // This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+// but WITHOUT ANY WARRANTY
 
 #endregion
 
 using System;
+using System.Collections.ObjectModel;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Objects;
 using Newtonsoft.Json;
@@ -32,6 +28,7 @@ namespace ClassicAssist.Data.Autoloot
         private int[] _clilocs;
         private PropertyType _constraintType;
         private string _name;
+        private ObservableCollection<string> _options;
         private Func<Entity, AutolootConstraintEntry, bool> _predicate;
         private string _shortName;
         private bool _useMultipleValues;
@@ -71,6 +68,12 @@ namespace ClassicAssist.Data.Autoloot
         {
             get => _name;
             set => SetProperty( ref _name, value );
+        }
+
+        public ObservableCollection<string> Options
+        {
+            get => _options;
+            set => SetProperty( ref _options, value );
         }
 
         [JsonIgnore]

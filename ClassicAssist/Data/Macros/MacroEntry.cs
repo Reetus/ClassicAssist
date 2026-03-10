@@ -62,6 +62,10 @@ namespace ClassicAssist.Data.Macros
         private int _pausedLinedNumber;
         private Version _languageVersion;
 
+        public MacroEntry() : this( null )
+        {
+        }
+
         public MacroEntry( JToken token = null )
         {
             _dispatcher = Dispatcher.CurrentDispatcher;
@@ -357,6 +361,12 @@ namespace ClassicAssist.Data.Macros
         {
             MacroManager manager = MacroManager.GetInstance();
 
+            if ( manager?.Items == null )
+            {
+                SetProperty( ref _name, value );
+                return;
+            }
+
             bool exists = manager.Items.Any( m => m.Name == value && !ReferenceEquals( m, this ) );
 
             if ( exists && name == null )
@@ -376,7 +386,7 @@ namespace ClassicAssist.Data.Macros
 
         public void Execute( object[] parameters = null )
         {
-            _dispatcher.Invoke( () =>
+            (_dispatcher ?? Application.Current.Dispatcher).Invoke( () =>
             {
                 LastException = null;
                 IsRunning = true;

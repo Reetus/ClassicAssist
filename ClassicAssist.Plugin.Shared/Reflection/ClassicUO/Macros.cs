@@ -66,7 +66,7 @@ namespace ClassicAssist.Plugin.Shared.Reflection.ClassicUO
 
                 UIManager.Add( macroButton );
             }
-            catch ( Exception e )
+            catch ( Exception )
             {
                 // TODO
             }
@@ -97,7 +97,7 @@ namespace ClassicAssist.Plugin.Shared.Reflection.ClassicUO
 
                 UIManager.Add( macroButton );
             }
-            catch ( Exception e )
+            catch ( Exception )
             {
                 // TODO
             }

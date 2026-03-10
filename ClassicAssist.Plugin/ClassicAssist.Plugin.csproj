@@ -1,21 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>net48;net9.0</TargetFrameworks>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-      <OutputPath>..\Output\</OutputPath>
-      <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>net48;net9.0</TargetFrameworks>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <OutputPath>..\Output\</OutputPath>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Reference Include="cuoapi">
-      <HintPath>..\ClassicAssist\cuoapi.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
+    <ItemGroup>
+        <Reference Include="cuoapi">
+            <HintPath>..\ClassicAssist\cuoapi.dll</HintPath>
+        </Reference>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ClassicAssist.Plugin.Shared\ClassicAssist.Plugin.Shared.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\ClassicAssist.Plugin.Shared\ClassicAssist.Plugin.Shared.csproj" />
+    </ItemGroup>
 
 </Project>

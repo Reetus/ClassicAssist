@@ -97,8 +97,14 @@ namespace ClassicAssist.UI.Views.Macros
 
         private void Grid_Initialized( object sender, EventArgs e )
         {
-            CodeTextEditor.SyntaxHighlighting = HighlightingLoader.Load(
-                new XmlTextReader( Path.Combine( Engine.StartupPath, "Python.Dark.xshd" ) ), HighlightingManager.Instance );
+            string stylePath = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "Python.Dark.xshd" );
+
+            if ( !File.Exists( stylePath ) )
+            {
+                return;
+            }
+
+            CodeTextEditor.SyntaxHighlighting = HighlightingLoader.Load( new XmlTextReader( stylePath ), HighlightingManager.Instance );
 
             SearchPanel.Install( CodeTextEditor );
         }

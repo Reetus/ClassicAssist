@@ -17,13 +17,14 @@
 
 #endregion
 
+using Assistant;
+using ClassicAssist.Data;
+using ClassicAssist.Data.Macros;
+using ClassicAssist.UO.Objects.Gumps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using ClassicAssist.Data;
-using ClassicAssist.Data.Macros;
-using ClassicAssist.UO.Objects.Gumps;
 
 namespace ClassicAssist.UO.Gumps
 {
@@ -85,6 +86,11 @@ namespace ClassicAssist.UO.Gumps
 
         public static void ResendGump( bool force = false )
         {
+            if ( !Engine.Connected || Engine.Player == null )
+            {
+                return;
+            }
+
             try
             {
                 if ( !Options.CurrentOptions.MacrosGump )

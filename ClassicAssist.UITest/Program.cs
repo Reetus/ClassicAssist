@@ -11,16 +11,17 @@ namespace ClassicAssist.UITest
 {
     internal class Program
     {
-        private const string UO_FOLDER = @"path\to";
+        private const string UO_FOLDER = @"C:\Users\johns\Documents\UO\Ultima Online Classic";
 
         [STAThread]
         private static void Main()
         {
             Engine.StartupPath = Environment.CurrentDirectory;
+            Engine.ClientVersion = Version.Parse( "7.0.103.0" );
 
             LoadData( UO_FOLDER );
-            ShowECV();
-            //ShowMain();
+            //ShowECV();
+            ShowMain();
         }
 
         // ReSharper disable once UnusedMember.Global

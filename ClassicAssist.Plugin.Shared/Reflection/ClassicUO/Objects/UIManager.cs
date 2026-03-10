@@ -68,7 +68,7 @@ namespace ClassicAssist.Plugin.Shared.Reflection.ClassicUO.Objects
                 {
                     _addMethod?.Invoke( null, param.ToArray() );
                 }
-                catch ( Exception e )
+                catch ( Exception )
                 {
                     // TODO
                 }

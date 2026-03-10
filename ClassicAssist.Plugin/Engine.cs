@@ -273,9 +273,14 @@ namespace Assistant
 
             (bool result, byte[] newPacket, int newLength) = _plugin.OnPacketSend( buffer, buffer.Length ).Result;
 
-            if ( newLength == 0 )
+            if ( newLength == 0 || !result )
             {
                 return result;
+            }
+
+            if ( newLength > data.Length )
+            {
+                data = new byte[newLength];
             }
 
             length = newLength;
@@ -296,9 +301,14 @@ namespace Assistant
 
             (bool result, byte[] newPacket, int newLength) = _plugin.OnPacketReceive( buffer, buffer.Length ).Result;
 
-            if ( newLength == 0 )
+            if ( newLength == 0 || !result )
             {
                 return result;
+            }
+
+            if ( newLength > data.Length )
+            {
+                data = new byte[newLength];
             }
 
             length = newLength;

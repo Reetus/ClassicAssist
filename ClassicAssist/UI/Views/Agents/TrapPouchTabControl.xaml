@@ -10,14 +10,14 @@
     xmlns:trapPouch="clr-namespace:ClassicAssist.Data.TrapPouch"
     x:Class="ClassicAssist.UI.Views.Agents.TrapPouchTabControl"
     mc:Ignorable="d"
-    d:DesignHeight="450" d:DesignWidth="800">
+    d:DesignHeight="300">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <ValueConverters:IntToHexStringValueConverter x:Key="IntToHexStringValueConverter" />
-            <agents:TrapPouchTabViewModel x:Key="DummyData">
+            <agents:TrapPouchTabViewModel x:Key="DummyData" AutoAddTargetedPouches="True">
                 <agents:TrapPouchTabViewModel.Items>
                     <trapPouch:TrapPouchEntry Name="pouch" Serial="4660" />
                     <trapPouch:TrapPouchEntry Name="pouch" Serial="5678" />
@@ -73,34 +73,39 @@
             </Grid>
         </Grid>
         <StackPanel Grid.Column="1" Margin="0,10,10,10">
-            <CheckBox Content="{x:Static resources:Strings.Auto_add_targeted_pouches}"
-                      IsChecked="{Binding AutoAddTargetedPouches}" />
-            <CheckBox Content="{x:Static resources:Strings.Only_if_last_spell_is_Magic_Trap}" Margin="20,0,0,0"
-                      IsChecked="{Binding AutoAddOnlyMagicTrap}" IsEnabled="{Binding AutoAddTargetedPouches}" />
-            <CheckBox Content="{x:Static resources:Strings.Remove_item_on_use_object_request}"
-                      IsChecked="{Binding AutoRemoveItem}" />
-            <StackPanel Orientation="Horizontal">
-                <CheckBox Content="{x:Static resources:Strings.Rehue_matching_items}"
-                          IsChecked="{Binding RehueItems}" />
-                <Button Margin="10,0,0,0" Command="{Binding SelectHueCommand}"
-                        CommandParameter="{Binding RehueItemsHue}" Padding="4">
-                    <Image Source="{StaticResource ColorWheelIcon}" Height="12" Width="12" />
-                </Button>
-            </StackPanel>
-            <CheckBox IsChecked="{Binding WarnItemCount}">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{x:Static resources:Strings.Warn_when_item_count_below_}"
-                               VerticalAlignment="Center" Margin="0,0,5,0" />
-                    <xctk:IntegerUpDown Minimum="0" Value="{Binding WarnItemCountAmount}" UpdateValueOnEnterKey="True"
-                                        IsEnabled="{Binding WarnItemCount}" />
+            <GroupBox Header="{x:Static resources:Strings.Options}">
+                <StackPanel Margin="10">
+                    <CheckBox Content="{x:Static resources:Strings.Auto_add_targeted_pouches}"
+                              IsChecked="{Binding AutoAddTargetedPouches}" />
+                    <CheckBox Content="{x:Static resources:Strings.Only_if_last_spell_is_Magic_Trap}" Margin="20,0,0,0"
+                              IsChecked="{Binding AutoAddOnlyMagicTrap}" IsEnabled="{Binding AutoAddTargetedPouches}" />
+                    <CheckBox Content="{x:Static resources:Strings.Remove_item_on_use_object_request}"
+                              IsChecked="{Binding AutoRemoveItem}" />
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox Content="{x:Static resources:Strings.Rehue_matching_items}"
+                                  IsChecked="{Binding RehueItems}" />
+                        <Button Margin="10,0,0,0" Command="{Binding SelectHueCommand}"
+                                CommandParameter="{Binding RehueItemsHue}" Padding="4">
+                            <Image Source="{StaticResource ColorWheelIcon}" Height="12" Width="12" />
+                        </Button>
+                    </StackPanel>
+                    <CheckBox IsChecked="{Binding WarnItemCount}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{x:Static resources:Strings.Warn_when_item_count_below_}"
+                                       VerticalAlignment="Center" Margin="0,0,5,0" />
+                            <xctk:IntegerUpDown Minimum="0" Value="{Binding WarnItemCountAmount}"
+                                                UpdateValueOnEnterKey="True"
+                                                IsEnabled="{Binding WarnItemCount}" />
+                        </StackPanel>
+                    </CheckBox>
+                    <CheckBox Content="{x:Static resources:Strings.Overhead_Message}" Margin="20,0,0,0"
+                              IsChecked="{Binding WarnOverheadMessage}" IsEnabled="{Binding WarnItemCount}" />
+                    <CheckBox Content="{x:Static resources:Strings.Show_remaining_trap_pouches_on_use}"
+                              IsChecked="{Binding ShowRemainingCount}" />
+                    <CheckBox Content="{x:Static resources:Strings.Overhead_Message}" Margin="20,0,0,0"
+                              IsChecked="{Binding ShowRemainingOverhead}" IsEnabled="{Binding ShowRemainingCount}" />
                 </StackPanel>
-            </CheckBox>
-            <CheckBox Content="{x:Static resources:Strings.Overhead_Message}" Margin="20,0,0,0"
-                      IsChecked="{Binding WarnOverheadMessage}" IsEnabled="{Binding WarnItemCount}" />
-            <CheckBox Content="{x:Static resources:Strings.Show_remaining_trap_pouches_on_use}"
-                      IsChecked="{Binding ShowRemainingCount}" />
-            <CheckBox Content="{x:Static resources:Strings.Overhead_Message}" Margin="20,0,0,0"
-                      IsChecked="{Binding ShowRemainingOverhead}" IsEnabled="{Binding ShowRemainingCount}" />
+            </GroupBox>
         </StackPanel>
     </Grid>
 </UserControl>

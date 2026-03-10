@@ -1,4 +1,18 @@
-﻿using System;
+﻿#region License
+
+// Copyright (C) 2026 Reetus
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY
+
+#endregion
+
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -13,6 +27,7 @@ namespace ClassicAssist.Launcher
         private string _address;
         private bool _deleted;
         private bool _encryption;
+        private DateTime _lastPlayed;
         private string _name;
         private string _ping;
         private int _port;
@@ -47,6 +62,13 @@ namespace ClassicAssist.Launcher
 
         [JsonIgnore]
         public bool IsPreset { get; set; }
+
+        [JsonProperty( "last_played" )]
+        public DateTime LastPlayed
+        {
+            get => _lastPlayed;
+            set => SetProperty( ref _lastPlayed, value );
+        }
 
         [JsonProperty( "name" )]
         public string Name

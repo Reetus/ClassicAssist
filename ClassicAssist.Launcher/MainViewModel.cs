@@ -1,4 +1,23 @@
-﻿using System;
+#region License
+
+// Copyright (C) 2026 Reetus
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
@@ -12,8 +31,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Shell;
 using ClassicAssist.Launcher.Properties;
 using ClassicAssist.Shared.Misc;
+using ClassicAssist.Shared.Resources;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Trinet.Core.IO.Ntfs;
@@ -116,7 +137,8 @@ namespace ClassicAssist.Launcher
                             HasStatusProtocol = token["HasStatusProtocol"]?.ToObject<bool>() ?? true,
                             Encryption = token["Encryption"]?.ToObject<bool>() ?? false,
                             Website = token["Website"]?.ToObject<string>(),
-                            IsPreset = true
+                            IsPreset = true,
+                            LastPlayed = token["LastPlayed"]?.ToObject<DateTime>() ?? default
                         };
 
                         ShardManager.Shards.AddSorted( shard, new ShardEntryComparer() );
@@ -134,7 +156,8 @@ namespace ClassicAssist.Launcher
                             Port = token["Port"]?.ToObject<int>() ?? 2593,
                             Website = token["Website"]?.ToObject<string>(),
                             HasStatusProtocol = token["HasStatusProtocol"]?.ToObject<bool>() ?? true,
-                            Encryption = token["Encryption"]?.ToObject<bool>() ?? false
+                            Encryption = token["Encryption"]?.ToObject<bool>() ?? false,
+                            LastPlayed = token["LastPlayed"]?.ToObject<DateTime>() ?? default
                         };
 
                         ShardManager.Shards.AddSorted( shard, new ShardEntryComparer() );
@@ -145,10 +168,7 @@ namespace ClassicAssist.Launcher
                 {
                     foreach ( JToken token in config["DeletedPresets"] )
                     {
-                        ShardEntry shard = new ShardEntry
-                        {
-                            Name = token["Name"]?.ToObject<string>() ?? "Unknown", IsPreset = true
-                        };
+                        ShardEntry shard = new ShardEntry { Name = token["Name"]?.ToObject<string>() ?? "Unknown", IsPreset = true };
 
                         ShardEntry preset = ShardManager.Shards.FirstOrDefault( e => e.Equals( shard ) );
 
@@ -161,8 +181,7 @@ namespace ClassicAssist.Launcher
 
                 if ( config["SelectedShard"] != null )
                 {
-                    ShardEntry match = ShardManager.Shards.FirstOrDefault(
-                        s => s.Name == config["SelectedShard"]?.ToObject<string>() );
+                    ShardEntry match = ShardManager.Shards.FirstOrDefault( s => s.Name == config["SelectedShard"]?.ToObject<string>() );
 
                     if ( match != null )
                     {
@@ -185,11 +204,25 @@ namespace ClassicAssist.Launcher
                 {
                     CheckPresets().ConfigureAwait( false );
                 }
+
+                if ( !string.IsNullOrEmpty( App.CurrentOptions.Shard ) )
+                {
+                    ShardEntry shard = ShardManager.VisibleShards.FirstOrDefault( e => e.Name == App.CurrentOptions.Shard );
+
+                    if ( shard == null )
+                    {
+                        MessageBox.Show( Resources.Shard_not_found, Strings.Error );
+                        return;
+                    }
+
+                    SelectedShard = shard;
+
+                    StartCommand.Execute( null );
+                }
             }
         }
 
-        public ICommand CheckForUpdateCommand =>
-            _checkforUpdateCommand ?? ( _checkforUpdateCommand = new RelayCommand( CheckForUpdate, UpdaterExists ) );
+        public ICommand CheckForUpdateCommand => _checkforUpdateCommand ?? ( _checkforUpdateCommand = new RelayCommand( CheckForUpdate, UpdaterExists ) );
 
         public ClassicOptions ClassicOptions { get; set; } = new ClassicOptions();
 
@@ -199,8 +232,7 @@ namespace ClassicAssist.Launcher
             set => SetProperty( ref _clientPaths, value );
         }
 
-        public ICommand ClosingCommand =>
-            _closingCommand ?? ( _closingCommand = new RelayCommand( Closing, o => true ) );
+        public ICommand ClosingCommand => _closingCommand ?? ( _closingCommand = new RelayCommand( Closing, o => true ) );
 
         public ObservableCollection<string> DataPaths
         {
@@ -208,16 +240,13 @@ namespace ClassicAssist.Launcher
             set => SetProperty( ref _dataPaths, value );
         }
 
-        public ICommand OptionsCommand =>
-            _optionsCommand ?? ( _optionsCommand = new RelayCommand( ShowOptionsWindow, o => true ) );
+        public ICommand OptionsCommand => _optionsCommand ?? ( _optionsCommand = new RelayCommand( ShowOptionsWindow, o => true ) );
 
         public List<PluginEntry> Plugins { get; set; } = new List<PluginEntry>();
 
-        public ICommand SelectClientPathCommand =>
-            _selectClientPathCommand ?? ( _selectClientPathCommand = new RelayCommand( SelectClientPath ) );
+        public ICommand SelectClientPathCommand => _selectClientPathCommand ?? ( _selectClientPathCommand = new RelayCommand( SelectClientPath ) );
 
-        public ICommand SelectDataPathCommand =>
-            _selectDataPathCommand ?? ( _selectDataPathCommand = new RelayCommand( SelectDataPath ) );
+        public ICommand SelectDataPathCommand => _selectDataPathCommand ?? ( _selectDataPathCommand = new RelayCommand( SelectDataPath ) );
 
         public string SelectedClientPath
         {
@@ -243,12 +272,10 @@ namespace ClassicAssist.Launcher
 
         public string ShardsHash { get; set; } = string.Empty;
 
-        public ICommand ShowShardsWindowCommand =>
-            _showShardsWindowCommand ?? ( _showShardsWindowCommand = new RelayCommand( ShowShardsWindow, o => true ) );
+        public ICommand ShowShardsWindowCommand => _showShardsWindowCommand ?? ( _showShardsWindowCommand = new RelayCommand( ShowShardsWindow, o => true ) );
 
         public ICommand StartCommand =>
-            _startCommand ?? ( _startCommand = new RelayCommandAsync( Start,
-                o => !string.IsNullOrEmpty( SelectedClientPath ) && !string.IsNullOrEmpty( SelectedDataPath ) ) );
+            _startCommand ?? ( _startCommand = new RelayCommandAsync( Start, o => !string.IsNullOrEmpty( SelectedClientPath ) && !string.IsNullOrEmpty( SelectedDataPath ) ) );
 
         private async Task CheckPresets()
         {
@@ -336,8 +363,7 @@ namespace ClassicAssist.Launcher
 
             string json = File.ReadAllText( manifestFile );
 
-            IEnumerable<ManifestEntry> manifestEntries =
-                JsonConvert.DeserializeObject<IEnumerable<ManifestEntry>>( json );
+            IEnumerable<ManifestEntry> manifestEntries = JsonConvert.DeserializeObject<IEnumerable<ManifestEntry>>( json );
 
             if ( manifestEntries == null )
             {
@@ -364,8 +390,7 @@ namespace ClassicAssist.Launcher
 
         private void ReadClassicOptions( JObject config )
         {
-            PropertyInfo[] properties =
-                typeof( ClassicOptions ).GetProperties( BindingFlags.Public | BindingFlags.Instance );
+            PropertyInfo[] properties = typeof( ClassicOptions ).GetProperties( BindingFlags.Public | BindingFlags.Instance );
 
             foreach ( PropertyInfo property in properties )
             {
@@ -426,13 +451,7 @@ namespace ClassicAssist.Launcher
 
         private void SelectClientPath( object obj )
         {
-            OpenFileDialog ofd = new OpenFileDialog
-            {
-                CheckFileExists = true,
-                Multiselect = false,
-                Filter = "ClassicUO.exe|ClassicUO.exe",
-                Title = Resources.Select_a_client
-            };
+            OpenFileDialog ofd = new OpenFileDialog { CheckFileExists = true, Multiselect = false, Filter = "ClassicUO.exe|ClassicUO.exe", Title = Resources.Select_a_client };
 
             bool? result = ofd.ShowDialog();
 
@@ -451,10 +470,7 @@ namespace ClassicAssist.Launcher
 
         private void SelectDataPath( object obj )
         {
-            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog
-            {
-                Description = Resources.Select_your_Ultima_Online_directory, ShowNewFolderButton = false
-            };
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog { Description = Resources.Select_your_Ultima_Online_directory, ShowNewFolderButton = false };
             DialogResult result = folderBrowserDialog.ShowDialog();
 
             if ( result != DialogResult.OK )
@@ -487,8 +503,7 @@ namespace ClassicAssist.Launcher
 
             StringBuilder args = new StringBuilder();
 
-            List<string> pluginList =
-                new List<string> { Path.Combine( Environment.CurrentDirectory, "ClassicAssist.dll" ) };
+            List<string> pluginList = new List<string> { Path.Combine( Environment.CurrentDirectory, "ClassicAssist.dll" ) };
 
             foreach ( PluginEntry plugin in Plugins )
             {
@@ -507,8 +522,7 @@ namespace ClassicAssist.Launcher
 
             ProcessStartInfo psi = new ProcessStartInfo
             {
-                WorkingDirectory =
-                    Path.GetDirectoryName( SelectedClientPath ) ?? throw new InvalidOperationException(),
+                WorkingDirectory = Path.GetDirectoryName( SelectedClientPath ) ?? throw new InvalidOperationException(),
                 FileName = SelectedClientPath,
                 Arguments = args.ToString(),
                 UseShellExecute = true
@@ -516,16 +530,52 @@ namespace ClassicAssist.Launcher
 
             Process p = Process.Start( psi );
 
+            SelectedShard.LastPlayed = DateTime.Now;
+
+            UpdateJumpList( SelectedShard.Name );
+
             if ( p != null && !p.HasExited )
             {
                 Application.Current.Shutdown( 0 );
             }
         }
 
+        private void UpdateJumpList( string shardName )
+        {
+            ProcessModule processModule = Process.GetCurrentProcess().MainModule;
+
+            if ( processModule == null )
+            {
+                return;
+            }
+
+            string fileName = processModule.FileName;
+            string directory = Path.GetDirectoryName( fileName );
+
+            JumpList jumpList = new JumpList { ShowRecentCategory = true };
+
+            IOrderedEnumerable<ShardEntry> playedShards = ShardManager.VisibleShards.Where( e => e.LastPlayed != default ).OrderBy( e => e.LastPlayed );
+
+            foreach ( ShardEntry shard in playedShards )
+            {
+                jumpList.JumpItems.Add( new JumpTask
+                {
+                    Title = shard.Name,
+                    Arguments = $"--shard \"{shard.Name}\"",
+                    ApplicationPath = fileName,
+                    IconResourcePath = fileName,
+                    WorkingDirectory = directory,
+                    CustomCategory = "Shards"
+                } );
+            }
+
+            JumpList.SetJumpList( Application.Current, jumpList );
+            jumpList.Apply();
+        }
+
         private void BuildClassicOptions( StringBuilder args )
         {
-            PropertyInfo[] properties =
-                typeof( ClassicOptions ).GetProperties( BindingFlags.Public | BindingFlags.Instance );
+            PropertyInfo[] properties = typeof( ClassicOptions ).GetProperties( BindingFlags.Public | BindingFlags.Instance );
 
             foreach ( PropertyInfo property in properties )
             {
@@ -537,7 +587,7 @@ namespace ClassicAssist.Launcher
                     continue;
                 }
 
-                bool skip = val is bool b && b == false && !attr.IncludeIfFalse;
+                bool skip = val is bool b && !b && !attr.IncludeIfFalse;
                 bool canInclude = true;
 
                 if ( !string.IsNullOrEmpty( attr.CanIncludeProperty ) )
@@ -562,8 +612,7 @@ namespace ClassicAssist.Launcher
             ShardsWindow window = new ShardsWindow();
             window.ShowDialog();
 
-            if ( !( window.DataContext is ShardsViewModel vm ) || vm.DialogResult != DialogResult.OK ||
-                 vm.SelectedShard == null )
+            if ( !( window.DataContext is ShardsViewModel vm ) || vm.DialogResult != DialogResult.OK || vm.SelectedShard == null )
             {
                 return;
             }
@@ -657,7 +706,8 @@ namespace ClassicAssist.Launcher
                         { "Port", shard.Port },
                         { "HasStatusProtocol", shard.HasStatusProtocol },
                         { "Website", shard.Website },
-                        { "Encryption", shard.Encryption }
+                        { "Encryption", shard.Encryption },
+                        { "LastPlayed", shard.LastPlayed }
                     };
 
                     presetsArray.Add( shardObj );
@@ -668,9 +718,7 @@ namespace ClassicAssist.Launcher
 
             WriteClassicOptions( config );
 
-            using ( JsonTextWriter jtw =
-                   new JsonTextWriter(
-                       new StreamWriter( Path.Combine( Environment.CurrentDirectory, CONFIG_FILENAME ) ) ) )
+            using ( JsonTextWriter jtw = new JsonTextWriter( new StreamWriter( Path.Combine( Environment.CurrentDirectory, CONFIG_FILENAME ) ) ) )
             {
                 jtw.Formatting = Formatting.Indented;
                 config.WriteTo( jtw );
@@ -679,8 +727,7 @@ namespace ClassicAssist.Launcher
 
         private void WriteClassicOptions( JObject config )
         {
-            PropertyInfo[] properties =
-                typeof( ClassicOptions ).GetProperties( BindingFlags.Public | BindingFlags.Instance );
+            PropertyInfo[] properties = typeof( ClassicOptions ).GetProperties( BindingFlags.Public | BindingFlags.Instance );
 
             foreach ( PropertyInfo property in properties )
             {

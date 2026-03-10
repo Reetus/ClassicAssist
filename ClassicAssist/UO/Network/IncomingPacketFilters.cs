@@ -1,7 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Filters;
@@ -10,6 +6,12 @@ using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 using ClassicAssist.UO.Objects;
+using Sentry;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using ClassicAssist.Misc;
 
 namespace ClassicAssist.UO.Network
 {
@@ -71,12 +73,15 @@ namespace ClassicAssist.UO.Network
 
             length = packet.Length - span.Length + newArgumentsBytes.Length;
 
-            packet[19] = (byte) ( newArgumentsBytes.Length << 8 );
+            packet[19] = (byte) ( newArgumentsBytes.Length >> 8 );
             packet[20] = (byte) newArgumentsBytes.Length;
 
             Array.Resize( ref packet, length );
             Array.Copy( newArgumentsBytes, 0, packet, 21, newArgumentsBytes.Length );
             Array.Copy( remainingPacket.ToArray(), 0, packet, 21 + newArgumentsBytes.Length, remainingPacket.Length );
+
+            packet[1] = (byte) ( length >> 8 );
+            packet[2] = (byte) length;
 
             return false;
         }
@@ -168,6 +173,9 @@ namespace ClassicAssist.UO.Network
                 Array.Resize( ref nameOverrideBytes, 30 );
                 Array.Copy( nameOverrideBytes, 0, packet, 14, 30 );
                 Array.Copy( nameOverrideBytes, 0, packet, 44, length - 44 );
+
+                packet[1] = (byte) ( length >> 8 );
+                packet[2] = (byte) length;
             }
 
             bool block = RepeatedMessagesFilter.CheckMessage( journalEntry );
@@ -411,7 +419,7 @@ namespace ClassicAssist.UO.Network
                     Array.Resize( ref packet, length );
                     Array.Copy( nameOverrideBytes, 0, packet, 18, 30 );
                     Array.Copy( unicodeBytes, 0, packet, 47, unicodeBytes.Length );
-                    packet[1] = (byte) ( length << 8 );
+                    packet[1] = (byte) ( length >> 8 );
                     packet[2] = (byte) length;
                 }
             }
@@ -489,13 +497,16 @@ namespace ClassicAssist.UO.Network
             {
                 bool result = dynamicFilterEntry.CheckPacket( ref data, ref length, PacketDirection.Incoming );
 
-                if ( result )
+                if ( !result )
                 {
-                    return true;
+                    continue;
                 }
+
+                filtered = true;
+                break;
             }
 
-            return filtered;
+            return !Engine.VerifyPacketLengthCorrect( data ) || filtered;
         }
     }
 }

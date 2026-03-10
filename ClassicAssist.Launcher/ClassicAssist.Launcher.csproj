@@ -22,10 +22,11 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Exceptionless" Version="6.0.4" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="CommandLineParser" Version="2.9.1" />
+    <PackageReference Include="Exceptionless" Version="6.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
-    <PackageReference Include="Trinet.Core.IO.Ntfs" Version="4.1.1" />
+    <PackageReference Include="Trinet.Core.IO.Ntfs" Version="4.1.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassicAssist.Controls\ClassicAssist.Controls.csproj" />

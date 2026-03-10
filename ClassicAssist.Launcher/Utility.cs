@@ -63,7 +63,7 @@ namespace ClassicAssist.Launcher
                     }
                 }
             }
-            catch ( Exception ex )
+            catch ( Exception )
             {
                 return ( false, string.Empty );
             }

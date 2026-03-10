@@ -4,27 +4,23 @@ using ClassicAssist.UO.Network.PacketFilter;
 namespace ClassicAssist.Data.Filters
 {
     [FilterOptions( Name = "Weather", DefaultEnabled = true )]
-    public class WeatherFilter : FilterEntry
+    public class WeatherFilter : DynamicFilterEntry
     {
-        private static void OnWeatherPacket( byte[] arg1, PacketFilterInfo arg2 )
-        {
-            byte[] packet = { 0x65, 0xFF, 0x00, 0x00 };
-
-            Engine.SendPacketToClient( packet, packet.Length );
-        }
+        public static bool IsEnabled { get; set; }
 
         protected override void OnChanged( bool enabled )
         {
-            PacketFilterInfo pfi = new PacketFilterInfo( 0x65, null, OnWeatherPacket );
+            IsEnabled = enabled;
+        }
 
-            if ( enabled )
+        public override bool CheckPacket( ref byte[] packet, ref int length, PacketDirection direction )
+        {
+            if ( !IsEnabled || direction != PacketDirection.Incoming )
             {
-                Engine.AddReceiveFilter( pfi );
+                return false;
             }
-            else
-            {
-                Engine.RemoveReceiveFilter( pfi );
-            }
+
+            return packet[0] == 0x65;
         }
     }
 }

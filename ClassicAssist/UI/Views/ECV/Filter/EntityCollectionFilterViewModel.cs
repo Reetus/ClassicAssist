@@ -18,6 +18,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -26,6 +27,7 @@ using System.Windows;
 using System.Windows.Input;
 using Assistant;
 using ClassicAssist.Data.Autoloot;
+using ClassicAssist.Data.Organizer;
 using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
@@ -116,6 +118,25 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                     }
                 },
                 AllowedValuesEnum = typeof( TileFlags )
+            } );
+
+            Constraints.AddSorted( new PropertyEntry
+            {
+                Name = Strings.Organizer_Match,
+                ConstraintType = PropertyType.PredicateWithValue,
+                AllowedOperators = AutolootAllowedOperators.Equal | AutolootAllowedOperators.NotEqual,
+                Predicate = ( item, entry ) =>
+                {
+                    if ( entry.Additional == null )
+                    {
+                        return false;
+                    }
+
+                    OrganizerEntry organizer = OrganizerManager.GetInstance().Items.FirstOrDefault( e => e.Name == entry.Additional );
+
+                    return organizer != null && organizer.Items.Any( e => e.ID == item.ID && ( e.Hue == -1 || e.Hue == item.Hue ) );
+                },
+                Options = new ObservableCollection<string>( OrganizerManager.GetInstance().Items?.Select( o => o.Name ) ?? new List<string>() )
             } );
 
             manager.LoadAssemblies( Constraints );

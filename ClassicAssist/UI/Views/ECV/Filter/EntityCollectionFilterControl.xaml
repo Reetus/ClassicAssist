@@ -18,6 +18,7 @@
     xmlns:views="clr-namespace:ClassicAssist.UI.Views"
     xmlns:behaviours="clr-namespace:ClassicAssist.Controls.Misc.Behaviours;assembly=ClassicAssist.Controls"
     xmlns:behaviours1="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
+    xmlns:valueConverters1="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
     x:Name="userControl" x:Class="ClassicAssist.UI.Views.ECV.Filter.EntityCollectionFilterControl"
     mc:Ignorable="d"
     Background="{DynamicResource ThemeBackgroundBrush}">
@@ -31,6 +32,7 @@
             <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />
             <valueConverters:HexToIntValueConverter x:Key="HexToIntValueConverter" />
             <valueConverters:AutolootOperatorFilterValueConverter x:Key="AutolootOperatorFilterValueConverter" />
+            <valueConverters1:NullToBooleanConverter x:Key="NullToBooleanConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
@@ -59,12 +61,13 @@
                           SelectedItem="{Binding SelectedProfile}" Style="{StaticResource EditComboBox}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}}">
+                            <Grid
+                                Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}}">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" Grid.Column="0"/>
+                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" Grid.Column="0" />
                                 <controls:ImageButton ImageSource="{StaticResource ClearIcon}" Grid.Column="1"
                                                       Command="{Binding ElementName=userControl, Path=DataContext.RemoveProfileCommand}"
                                                       CommandParameter="{Binding}">
@@ -77,8 +80,8 @@
                     </ComboBox.ItemTemplate>
                     <i:Interaction.Behaviors>
                         <behaviours1:ComboBoxBehavior CommandBinding="{Binding ChangeProfileCommand}"
-                                                CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}}"
-                                                OnlyUserTriggered="True" />
+                                                      CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}}"
+                                                      OnlyUserTriggered="True" />
                     </i:Interaction.Behaviors>
                 </ComboBox>
             </StackPanel>
@@ -273,6 +276,25 @@
                                                                 </Style>
                                                             </ComboBox.Style>
                                                         </ComboBox>
+                                                        <ComboBox Grid.Column="0" MinWidth="40"
+                                                                  ItemsSource="{Binding Constraint.Options}"
+                                                                  SelectedItem="{Binding Additional}"
+                                                                  Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}">
+                                                            <ComboBox.Style>
+                                                                <Style TargetType="{x:Type ComboBox}"
+                                                                       BasedOn="{StaticResource {x:Type ComboBox}}">
+                                                                    <Setter Property="Visibility" Value="Visible" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger
+                                                                            Binding="{Binding Constraint.Options}"
+                                                                            Value="{x:Null}">
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Collapsed" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </ComboBox.Style>
+                                                        </ComboBox>
                                                         <TextBox
                                                             Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource HexToIntValueConverter}}"
                                                             Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}"
@@ -315,6 +337,12 @@
                                                                         <DataTrigger
                                                                             Binding="{Binding Constraint.Name}"
                                                                             Value="{x:Static resources:Strings.Autoloot_Match}">
+                                                                            <Setter Property="Visibility"
+                                                                                Value="Collapsed" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger
+                                                                            Binding="{Binding Constraint.Options, Converter={StaticResource NullToBooleanConverter}}"
+                                                                            Value="True">
                                                                             <Setter Property="Visibility"
                                                                                 Value="Collapsed" />
                                                                         </DataTrigger>

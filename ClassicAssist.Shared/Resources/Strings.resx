@@ -2086,4 +2086,7 @@ Are you sure you wish to continue?</value>
   <data name="Open in external editor" xml:space="preserve">
     <value>Open in external editor</value>
   </data>
+  <data name="Organizer Match" xml:space="preserve">
+    <value>Organizer Match</value>
+  </data>
 </root>

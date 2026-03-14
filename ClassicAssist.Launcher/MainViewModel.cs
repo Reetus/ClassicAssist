@@ -8,7 +8,12 @@
 // (at your option) any later version.
 // 
 // This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -206,14 +211,11 @@ namespace ClassicAssist.Launcher
 
                     if ( shard == null )
                     {
-                        MessageBox.Show( @"Shard not found", Strings.Error );
+                        MessageBox.Show( Resources.Shard_not_found, Strings.Error );
                         return;
                     }
 
-                    if ( shard != null )
-                    {
-                        SelectedShard = shard;
-                    }
+                    SelectedShard = shard;
 
                     StartCommand.Execute( null );
                 }
@@ -449,13 +451,7 @@ namespace ClassicAssist.Launcher
 
         private void SelectClientPath( object obj )
         {
-            OpenFileDialog ofd = new OpenFileDialog
-            {
-                CheckFileExists = true,
-                Multiselect = false,
-                Filter = "ClassicUO.exe|ClassicUO.exe",
-                Title = Resources.Select_a_client
-            };
+            OpenFileDialog ofd = new OpenFileDialog { CheckFileExists = true, Multiselect = false, Filter = "ClassicUO.exe|ClassicUO.exe", Title = Resources.Select_a_client };
 
             bool? result = ofd.ShowDialog();
 
@@ -507,8 +503,7 @@ namespace ClassicAssist.Launcher
 
             StringBuilder args = new StringBuilder();
 
-            List<string> pluginList =
-                new List<string> { Path.Combine( Environment.CurrentDirectory, "ClassicAssist.dll" ) };
+            List<string> pluginList = new List<string> { Path.Combine( Environment.CurrentDirectory, "ClassicAssist.dll" ) };
 
             foreach ( PluginEntry plugin in Plugins )
             {

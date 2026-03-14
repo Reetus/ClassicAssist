@@ -222,4 +222,7 @@
   <data name="Moving item {0} / {1}" xml:space="preserve">
     <value>Moving item {0} / {1}</value>
   </data>
+  <data name="Shard not found" xml:space="preserve">
+    <value>Shard not found</value>
+  </data>
 </root>

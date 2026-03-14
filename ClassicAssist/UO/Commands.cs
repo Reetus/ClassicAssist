@@ -254,7 +254,7 @@ namespace ClassicAssist.UO
                     serial = ( packet[7] << 24 ) | ( packet[8] << 16 ) | ( packet[9] << 8 ) | packet[10];
                     x = ( packet[11] << 8 ) | packet[12];
                     y = ( packet[13] << 8 ) | packet[14];
-                    z = ( packet[15] << 8 ) | packet[16];
+                    z = (short) ( ( packet[15] << 8 ) | packet[16] );
                     itemID = ( packet[17] << 8 ) | packet[18];
 
                     are.Set();

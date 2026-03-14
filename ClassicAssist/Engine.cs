@@ -1,3 +1,22 @@
+#region License
+
+// Copyright (C) 2026 Reetus
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#endregion
+
 // ReSharper disable once RedundantUsingDirective
 
 using System;
@@ -127,6 +146,7 @@ namespace Assistant
         public static int KeyboardLayoutId { get; set; }
 
         public static DateTime LastActionPacket { get; set; }
+        public static DateTime LastMoveRequested { get; set; }
         public static int LastPromptID { get; set; }
         public static int LastPromptSerial { get; set; }
         public static DateTime LastSkillTime { get; set; }
@@ -170,6 +190,8 @@ namespace Assistant
 
         public static unsafe void Install( PluginHeader* plugin )
         {
+            AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
+
             Initialize();
 
             InitializePlugin( plugin );
@@ -287,19 +309,26 @@ namespace Assistant
 
         private static void InitializeExtensions()
         {
-            IEnumerable<Type> types = Assembly.GetExecutingAssembly().GetTypes().Where( t => typeof( IExtension ).IsAssignableFrom( t ) && t.IsClass );
-
-            foreach ( Type type in types )
+            try
             {
-                try
+                IEnumerable<Type> types = Assembly.GetExecutingAssembly().GetTypes().Where( t => typeof( IExtension ).IsAssignableFrom( t ) && t.IsClass );
+
+                foreach ( Type type in types )
                 {
-                    IExtension instance = (IExtension) Activator.CreateInstance( type );
-                    instance?.Initialize();
+                    try
+                    {
+                        IExtension instance = (IExtension) Activator.CreateInstance( type );
+                        instance?.Initialize();
+                    }
+                    catch ( Exception e )
+                    {
+                        Console.WriteLine( e.ToString() );
+                    }
                 }
-                catch ( Exception e )
-                {
-                    Console.WriteLine( e.ToString() );
-                }
+            }
+            catch ( Exception )
+            {
+                // np
             }
         }
 
@@ -329,10 +358,7 @@ namespace Assistant
                 _lastMouseAction[(int) mouse] = DateTime.Now;
             }
 
-            Dispatcher.Invoke( () =>
-            {
-                HotkeyManager.GetInstance().OnMouseAction( mouse );
-            } );
+            Dispatcher.Invoke( () => { HotkeyManager.GetInstance().OnMouseAction( mouse ); } );
         }
 
         private static bool OnHotkeyPressed( int key, int mod, bool pressed )
@@ -440,7 +466,7 @@ namespace Assistant
             return mobile;
         }
 
-        private static void Initialize()
+        public static void Initialize()
         {
             StartupPath = Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location );
 
@@ -449,7 +475,7 @@ namespace Assistant
                 throw new InvalidOperationException();
             }
 
-            AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
+            //AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
 
             PacketWaitEntries = new PacketWaitEntries();
 
@@ -569,9 +595,11 @@ namespace Assistant
 
         private static Assembly OnAssemblyResolve( object sender, ResolveEventArgs args )
         {
+            string startup = Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location );
+
             string assemblyname = new AssemblyName( args.Name ).Name;
 
-            string[] searchPaths = { StartupPath, RuntimeEnvironment.GetRuntimeDirectory() };
+            string[] searchPaths = { startup, RuntimeEnvironment.GetRuntimeDirectory() };
 
             if ( AssistantOptions.Assemblies?.Length > 0 )
             {
@@ -742,7 +770,7 @@ namespace Assistant
 
                 PacketWaitEntries?.CheckWait( packet, PacketDirection.Outgoing, true );
 
-                if (!VerifyPacketLengthCorrect( packet ))
+                if ( !VerifyPacketLengthCorrect( packet ) )
                 {
                     return;
                 }
@@ -773,12 +801,12 @@ namespace Assistant
 
                     PacketWaitEntries?.CheckWait( packet, PacketDirection.Incoming, true );
 
-                    if ( !VerifyPacketLengthCorrect( packet ) || length != packet.Length)
+                    if ( !VerifyPacketLengthCorrect( packet ) || length != packet.Length )
                     {
                         return;
                     }
 
-                    (byte[] data, int dataLength) = Utility.CopyBuffer( packet, length );
+                    ( byte[] data, int dataLength ) = Utility.CopyBuffer( packet, length );
 
                     _sendToClient?.Invoke( ref data, ref dataLength );
 

@@ -33,6 +33,336 @@
             <valueConverters:HexToIntValueConverter x:Key="HexToIntValueConverter" />
             <valueConverters:AutolootOperatorFilterValueConverter x:Key="AutolootOperatorFilterValueConverter" />
             <valueConverters1:NullToBooleanConverter x:Key="NullToBooleanConverter" />
+            <misc:BindingProxy x:Key="DataContextProxy" Data="{Binding}" />
+            <!-- Implicit DataTemplate for EntityCollectionFilterGroup - renders recursively -->
+            <DataTemplate DataType="{x:Type models:EntityCollectionFilterGroup}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <!-- Boolean operation selector (hidden for first top-level group via style override) -->
+                    <StackPanel Orientation="Horizontal" Grid.Row="0" x:Name="OperationPanel">
+                        <ComboBox ItemsSource="{misc1:EnumBindingSource {x:Type models:BooleanOperation}}"
+                                  MinWidth="100"
+                                  SelectedItem="{Binding Operation}" Margin="0,0,5,0" />
+                    </StackPanel>
+                    <!-- Filter items list -->
+                    <ListView x:Name="listView" ItemsSource="{Binding Items}" Margin="0,5"
+                              MinHeight="50" Grid.Row="1">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="✓" Width="30">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="{x:Type models:EntityCollectionFilterItem}">
+                                            <CheckBox IsChecked="{Binding Enabled }" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="{x:Static resources:Strings.Property}" Width="220"
+                                                x:Name="NameColumn">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="{x:Type models:EntityCollectionFilterItem}">
+                                            <StackPanel>
+                                                <ComboBox SelectedItem="{Binding Constraint}"
+                                                          ItemsSource="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.Constraints), Source={StaticResource DataContextProxy}}"
+                                                          Width="200"
+                                                          DisplayMemberPath="Name" />
+                                                <ecv:SkillBonusSelector Margin="0,5,0,0"
+                                                        DataContext="{Binding}">
+                                                    <ecv:SkillBonusSelector.Style>
+                                                        <Style TargetType="{x:Type ecv:SkillBonusSelector}">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger
+                                                                    Binding="{Binding Constraint.AllowedValuesEnum}"
+                                                                    Value="{x:Type agents:SkillBonusSkills}">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Visible" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ecv:SkillBonusSelector.Style>
+                                                </ecv:SkillBonusSelector>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="{x:Static resources:Strings.Operator}" Width="75">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="{x:Type models:EntityCollectionFilterItem}">
+                                            <ComboBox Width="50" SelectedItem="{Binding Operator}">
+                                                <ComboBox.ItemsSource>
+                                                    <MultiBinding
+                                                        Converter="{StaticResource AutolootOperatorFilterValueConverter}">
+                                                        <Binding Source="{x:Type autoloot:AutolootOperator}" />
+                                                        <Binding Path="Constraint" />
+                                                    </MultiBinding>
+                                                </ComboBox.ItemsSource>
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="{x:Static resources:Strings.Value}" Width="160"
+                                                x:Name="GridViewColumn">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="{x:Type models:EntityCollectionFilterItem}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <ComboBox Grid.Column="0" Width="90"
+                                                          SelectedItem="{Binding Value, Converter={StaticResource EnumToIntegerValueConverter}, ConverterParameter={x:Type data:Layer}}"
+                                                          ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type data:Layer}}}">
+                                                    <ComboBox.Style>
+                                                        <Style TargetType="{x:Type ComboBox}"
+                                                               BasedOn="{StaticResource {x:Type ComboBox}}">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger
+                                                                    Binding="{Binding Constraint.AllowedValuesEnum}"
+                                                                    Value="{x:Type data:Layer}">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Visible" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ComboBox.Style>
+                                                </ComboBox>
+                                                <ComboBox Grid.Column="0" Width="90"
+                                                          SelectedItem="{Binding Value, Converter={StaticResource EnumToIntegerValueConverter}, ConverterParameter={x:Type data:TileFlags}}"
+                                                          ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type data:TileFlags}}}">
+                                                    <ComboBox.Style>
+                                                        <Style TargetType="{x:Type ComboBox}"
+                                                               BasedOn="{StaticResource {x:Type ComboBox}}">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger
+                                                                    Binding="{Binding Constraint.AllowedValuesEnum}"
+                                                                    Value="{x:Type data:TileFlags}">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Visible" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ComboBox.Style>
+                                                </ComboBox>
+                                                <views:MultiItemIDSelector Grid.Column="0"
+                                                        Values="{Binding Values, Mode=TwoWay}"
+                                                        Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}">
+                                                    <views:MultiItemIDSelector.Style>
+                                                        <Style TargetType="{x:Type views:MultiItemIDSelector}">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger
+                                                                    Binding="{Binding Constraint.UseMultipleValues}"
+                                                                    Value="True">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Visible" />
+                                                                </DataTrigger>
+                                                                <DataTrigger
+                                                                    Binding="{Binding Constraint.Name}"
+                                                                    Value="{x:Static resources:Strings.Cliloc__Multiple_}">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Collapsed" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </views:MultiItemIDSelector.Style>
+                                                </views:MultiItemIDSelector>
+                                                <views:MultiClilocSelector Grid.Column="0"
+                                                        Values="{Binding Values, Mode=TwoWay}"
+                                                        Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}">
+                                                    <views:MultiClilocSelector.Style>
+                                                        <Style TargetType="{x:Type views:MultiClilocSelector}">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger
+                                                                    Binding="{Binding Constraint.Name}"
+                                                                    Value="{x:Static resources:Strings.Cliloc__Multiple_}">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Visible" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </views:MultiClilocSelector.Style>
+                                                </views:MultiClilocSelector>
+                                                <ComboBox Grid.Column="0" MinWidth="40"
+                                                          ItemsSource="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.AutolootEntryNames), Source={StaticResource DataContextProxy}}"
+                                                          SelectedItem="{Binding Additional}"
+                                                          Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}">
+                                                    <ComboBox.Style>
+                                                        <Style TargetType="{x:Type ComboBox}"
+                                                               BasedOn="{StaticResource {x:Type ComboBox}}">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger
+                                                                    Binding="{Binding Constraint.Name}"
+                                                                    Value="{x:Static resources:Strings.Autoloot_Match}">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Visible" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ComboBox.Style>
+                                                </ComboBox>
+                                                <ComboBox Grid.Column="0" MinWidth="40"
+                                                          ItemsSource="{Binding Constraint.Options}"
+                                                          SelectedItem="{Binding Additional}"
+                                                          Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}">
+                                                    <ComboBox.Style>
+                                                        <Style TargetType="{x:Type ComboBox}"
+                                                               BasedOn="{StaticResource {x:Type ComboBox}}">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger
+                                                                    Binding="{Binding Constraint.Options}"
+                                                                    Value="{x:Null}">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Collapsed" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ComboBox.Style>
+                                                </ComboBox>
+                                                <TextBox
+                                                    Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource HexToIntValueConverter}}"
+                                                    Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}"
+                                                    MinWidth="40" Grid.Column="0">
+                                                    <TextBox.Style>
+                                                        <Style TargetType="{x:Type TextBox}"
+                                                               BasedOn="{StaticResource {x:Type TextBox}}">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger
+                                                                    Binding="{Binding Constraint.AllowedValuesEnum}"
+                                                                    Value="{x:Null}">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Visible" />
+                                                                </DataTrigger>
+                                                                <DataTrigger
+                                                                    Binding="{Binding Constraint.AllowedValuesEnum}"
+                                                                    Value="{x:Type agents:SkillBonusSkills}">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Visible" />
+                                                                </DataTrigger>
+                                                                <DataTrigger
+                                                                    Binding="{Binding Constraint.AllowedValuesEnum}"
+                                                                    Value="{x:Type data:TileFlags}">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Collapsed" />
+                                                                </DataTrigger>
+                                                                <DataTrigger
+                                                                    Binding="{Binding Constraint.Name}"
+                                                                    Value="{x:Static resources:Strings.Name}">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Collapsed" />
+                                                                </DataTrigger>
+                                                                <DataTrigger
+                                                                    Binding="{Binding Constraint.UseMultipleValues}"
+                                                                    Value="True">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Collapsed" />
+                                                                </DataTrigger>
+                                                                <DataTrigger
+                                                                    Binding="{Binding Constraint.Name}"
+                                                                    Value="{x:Static resources:Strings.Autoloot_Match}">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Collapsed" />
+                                                                </DataTrigger>
+                                                                <DataTrigger
+                                                                    Binding="{Binding Constraint.Options, Converter={StaticResource NullToBooleanConverter}}"
+                                                                    Value="True">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Collapsed" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBox.Style>
+                                                </TextBox>
+                                                <TextBox Text="{Binding Additional}"
+                                                         Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}">
+                                                    <TextBox.Style>
+                                                        <Style TargetType="{x:Type TextBox}"
+                                                               BasedOn="{StaticResource {x:Type TextBox}}">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger
+                                                                    Binding="{Binding Constraint.Name}"
+                                                                    Value="{x:Static resources:Strings.Name}">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Visible" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBox.Style>
+                                                </TextBox>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn>
+                                    <GridViewColumn.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <controls:ImageButton ImageSource="{StaticResource CirclePlusItem}"
+                                                                  ToolTip="{x:Static resources:Strings.New_Group}"
+                                                                  Command="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.AddSubGroupCommand), Source={StaticResource DataContextProxy}}"
+                                                                  CommandParameter="{Binding}" />
+                                            <controls:ImageButton ImageSource="{StaticResource CircleRemoveIcon}"
+                                                                  ToolTip="{x:Static resources:Strings.Remove_Group}"
+                                                                  Command="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.RemoveSubGroupCommand), Source={StaticResource DataContextProxy}}"
+                                                                  CommandParameter="{Binding}" />
+                                        </StackPanel>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <StackPanel.Resources>
+                                                    <Style TargetType="{x:Type Button}"
+                                                           BasedOn="{StaticResource {x:Type Button}}">
+                                                        <Setter Property="Padding" Value="5" />
+                                                    </Style>
+                                                </StackPanel.Resources>
+                                                <Button
+                                                    Command="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.AddCommand), Source={StaticResource DataContextProxy}}"
+                                                    CommandParameter="{Binding Path=ItemsSource, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}">
+                                                    <Image Source="{StaticResource PlusIcon}" Height="8" />
+                                                </Button>
+                                                <Button
+                                                    Command="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.RemoveCommand), Source={StaticResource DataContextProxy}}">
+                                                    <Button.CommandParameter>
+                                                        <MultiBinding
+                                                            Converter="{StaticResource GroupItemMultiValueConverter}">
+                                                            <Binding Path="ItemsSource"
+                                                                     RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ListView}}" />
+                                                            <Binding
+                                                                Path="." />
+                                                        </MultiBinding>
+                                                    </Button.CommandParameter>
+                                                    <Image Source="{StaticResource MinusIcon}" Height="8" />
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <!-- Nested child groups (recursive via implicit DataTemplate) -->
+                    <ItemsControl ItemsSource="{Binding Children}" Grid.Row="2" Margin="20,0,0,0">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1,0,0,0"
+                                        Padding="5,0,0,0" Margin="0,0,0,5">
+                                    <ContentPresenter Content="{Binding}" />
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
@@ -43,14 +373,12 @@
             <KeyBinding Modifiers="Control" Key="S" Command="{Binding SaveProfilesCommand}" />
         </ScrollViewer.InputBindings>
         <Grid Margin="10">
-            <Grid.Resources>
-                <misc:BindingProxy x:Key="DataContextProxy" Data="{Binding}" />
-            </Grid.Resources>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
+            <!-- Profile selector -->
             <StackPanel Orientation="Horizontal">
                 <controls:ImageButton ImageSource="{StaticResource AddIcon}" Margin="0,0,5,0"
                                       Command="{Binding AddProfileCommand}" ToolTip="{x:Static resources:Strings.Add}" />
@@ -85,6 +413,7 @@
                     </i:Interaction.Behaviors>
                 </ComboBox>
             </StackPanel>
+            <!-- Top-level groups using the implicit DataTemplate -->
             <ItemsControl ItemsSource="{Binding Item.Groups}" Grid.Row="1">
                 <ItemsControl.Resources>
                     <Style TargetType="{x:Type controls:ImageButton}"
@@ -93,351 +422,8 @@
                         <Setter Property="ImageHeight" Value="14" />
                     </Style>
                 </ItemsControl.Resources>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <StackPanel Orientation="Horizontal" Grid.Row="0">
-                                <StackPanel.Style>
-                                    <Style TargetType="{x:Type StackPanel}">
-                                        <Setter Property="Visibility">
-                                            <Setter.Value>
-                                                <MultiBinding
-                                                    Converter="{StaticResource CollectionIndexZeroVisibilityConverter}">
-                                                    <Binding
-                                                        Path="Data.(filter:EntityCollectionFilterViewModel.Item).Groups"
-                                                        Source="{StaticResource DataContextProxy}" />
-                                                    <Binding Path="." />
-                                                </MultiBinding>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </StackPanel.Style>
-                                <ComboBox ItemsSource="{misc1:EnumBindingSource {x:Type models:BooleanOperation}}"
-                                          MinWidth="100"
-                                          SelectedItem="{Binding Operation}" Margin="0,0,5,0" />
-                            </StackPanel>
-                            <ListView x:Name="listView" ItemsSource="{Binding Items}" Margin="0,5"
-                                      MinHeight="50" Grid.Row="1">
-                                <ListView.View>
-                                    <GridView>
-                                        <GridViewColumn Header="✓" Width="30">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate DataType="{x:Type models:EntityCollectionFilterItem}">
-                                                    <CheckBox IsChecked="{Binding Enabled }" />
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="{x:Static resources:Strings.Property}" Width="220"
-                                                        x:Name="NameColumn">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate DataType="{x:Type models:EntityCollectionFilterItem}">
-                                                    <StackPanel>
-                                                        <ComboBox SelectedItem="{Binding Constraint}"
-                                                                  ItemsSource="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.Constraints), Source={StaticResource DataContextProxy}}"
-                                                                  Width="200"
-                                                                  DisplayMemberPath="Name" />
-                                                        <ecv:SkillBonusSelector Margin="0,5,0,0"
-                                                            DataContext="{Binding}">
-                                                            <ecv:SkillBonusSelector.Style>
-                                                                <Style TargetType="{x:Type ecv:SkillBonusSelector}">
-                                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger
-                                                                            Binding="{Binding Constraint.AllowedValuesEnum}"
-                                                                            Value="{x:Type agents:SkillBonusSkills}">
-                                                                            <Setter Property="Visibility"
-                                                                                Value="Visible" />
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </ecv:SkillBonusSelector.Style>
-                                                        </ecv:SkillBonusSelector>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="{x:Static resources:Strings.Operator}" Width="75">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate DataType="{x:Type models:EntityCollectionFilterItem}">
-                                                    <ComboBox Width="50" SelectedItem="{Binding Operator}">
-                                                        <ComboBox.ItemsSource>
-                                                            <MultiBinding
-                                                                Converter="{StaticResource AutolootOperatorFilterValueConverter}">
-                                                                <Binding Source="{x:Type autoloot:AutolootOperator}" />
-                                                                <Binding Path="Constraint" />
-                                                            </MultiBinding>
-                                                        </ComboBox.ItemsSource>
-                                                    </ComboBox>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="{x:Static resources:Strings.Value}" Width="160"
-                                                        x:Name="GridViewColumn">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate DataType="{x:Type models:EntityCollectionFilterItem}">
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*" />
-                                                        </Grid.ColumnDefinitions>
-                                                        <ComboBox Grid.Column="0" Width="90"
-                                                                  SelectedItem="{Binding Value, Converter={StaticResource EnumToIntegerValueConverter}, ConverterParameter={x:Type data:Layer}}"
-                                                                  ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type data:Layer}}}">
-                                                            <ComboBox.Style>
-                                                                <Style TargetType="{x:Type ComboBox}"
-                                                                       BasedOn="{StaticResource {x:Type ComboBox}}">
-                                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger
-                                                                            Binding="{Binding Constraint.AllowedValuesEnum}"
-                                                                            Value="{x:Type data:Layer}">
-                                                                            <Setter Property="Visibility"
-                                                                                Value="Visible" />
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </ComboBox.Style>
-                                                        </ComboBox>
-                                                        <ComboBox Grid.Column="0" Width="90"
-                                                                  SelectedItem="{Binding Value, Converter={StaticResource EnumToIntegerValueConverter}, ConverterParameter={x:Type data:TileFlags}}"
-                                                                  ItemsSource="{Binding Source={misc1:EnumBindingSource {x:Type data:TileFlags}}}">
-                                                            <ComboBox.Style>
-                                                                <Style TargetType="{x:Type ComboBox}"
-                                                                       BasedOn="{StaticResource {x:Type ComboBox}}">
-                                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger
-                                                                            Binding="{Binding Constraint.AllowedValuesEnum}"
-                                                                            Value="{x:Type data:TileFlags}">
-                                                                            <Setter Property="Visibility"
-                                                                                Value="Visible" />
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </ComboBox.Style>
-                                                        </ComboBox>
-                                                        <views:MultiItemIDSelector Grid.Column="0" Values="{Binding Values, Mode=TwoWay}"
-                                                            Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}">
-                                                            <views:MultiItemIDSelector.Style>
-                                                                <Style TargetType="{x:Type views:MultiItemIDSelector}">
-                                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger
-                                                                            Binding="{Binding Constraint.UseMultipleValues}"
-                                                                            Value="True">
-                                                                            <Setter Property="Visibility"
-                                                                                Value="Visible" />
-                                                                        </DataTrigger>
-                                                                        <DataTrigger
-                                                                            Binding="{Binding Constraint.Name}"
-                                                                            Value="{x:Static resources:Strings.Cliloc__Multiple_}">
-                                                                            <Setter Property="Visibility"
-                                                                                    Value="Collapsed" />
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </views:MultiItemIDSelector.Style>
-                                                        </views:MultiItemIDSelector>
-                                                        <views:MultiClilocSelector Grid.Column="0" Values="{Binding Values, Mode=TwoWay}"
-                                                                Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}">
-                                                            <views:MultiClilocSelector.Style>
-                                                                <Style TargetType="{x:Type views:MultiClilocSelector}">
-                                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger
-                                                                            Binding="{Binding Constraint.Name}"
-                                                                            Value="{x:Static resources:Strings.Cliloc__Multiple_}">
-                                                                            <Setter Property="Visibility"
-                                                                                    Value="Visible" />
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </views:MultiClilocSelector.Style>
-                                                        </views:MultiClilocSelector>
-                                                        <ComboBox Grid.Column="0" MinWidth="40"
-                                                                  ItemsSource="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.AutolootEntryNames), Source={StaticResource DataContextProxy}}"
-                                                                  SelectedItem="{Binding Additional}"
-                                                                  Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}">
-                                                            <ComboBox.Style>
-                                                                <Style TargetType="{x:Type ComboBox}"
-                                                                       BasedOn="{StaticResource {x:Type ComboBox}}">
-                                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger
-                                                                            Binding="{Binding Constraint.Name}"
-                                                                            Value="{x:Static resources:Strings.Autoloot_Match}">
-                                                                            <Setter Property="Visibility"
-                                                                                Value="Visible" />
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </ComboBox.Style>
-                                                        </ComboBox>
-                                                        <ComboBox Grid.Column="0" MinWidth="40"
-                                                                  ItemsSource="{Binding Constraint.Options}"
-                                                                  SelectedItem="{Binding Additional}"
-                                                                  Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}">
-                                                            <ComboBox.Style>
-                                                                <Style TargetType="{x:Type ComboBox}"
-                                                                       BasedOn="{StaticResource {x:Type ComboBox}}">
-                                                                    <Setter Property="Visibility" Value="Visible" />
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger
-                                                                            Binding="{Binding Constraint.Options}"
-                                                                            Value="{x:Null}">
-                                                                            <Setter Property="Visibility"
-                                                                                    Value="Collapsed" />
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </ComboBox.Style>
-                                                        </ComboBox>
-                                                        <TextBox
-                                                            Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource HexToIntValueConverter}}"
-                                                            Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}"
-                                                            MinWidth="40" Grid.Column="0">
-                                                            <TextBox.Style>
-                                                                <Style TargetType="{x:Type TextBox}"
-                                                                       BasedOn="{StaticResource {x:Type TextBox}}">
-                                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger
-                                                                            Binding="{Binding Constraint.AllowedValuesEnum}"
-                                                                            Value="{x:Null}">
-                                                                            <Setter Property="Visibility"
-                                                                                Value="Visible" />
-                                                                        </DataTrigger>
-                                                                        <DataTrigger
-                                                                            Binding="{Binding Constraint.AllowedValuesEnum}"
-                                                                            Value="{x:Type agents:SkillBonusSkills}">
-                                                                            <Setter Property="Visibility"
-                                                                                Value="Visible" />
-                                                                        </DataTrigger>
-                                                                        <DataTrigger
-                                                                            Binding="{Binding Constraint.AllowedValuesEnum}"
-                                                                            Value="{x:Type data:TileFlags}">
-                                                                            <Setter Property="Visibility"
-                                                                                Value="Collapsed" />
-                                                                        </DataTrigger>
-                                                                        <DataTrigger
-                                                                            Binding="{Binding Constraint.Name}"
-                                                                            Value="{x:Static resources:Strings.Name}">
-                                                                            <Setter Property="Visibility"
-                                                                                Value="Collapsed" />
-                                                                        </DataTrigger>
-                                                                        <DataTrigger
-                                                                            Binding="{Binding Constraint.UseMultipleValues}"
-                                                                            Value="True">
-                                                                            <Setter Property="Visibility"
-                                                                                Value="Collapsed" />
-                                                                        </DataTrigger>
-                                                                        <DataTrigger
-                                                                            Binding="{Binding Constraint.Name}"
-                                                                            Value="{x:Static resources:Strings.Autoloot_Match}">
-                                                                            <Setter Property="Visibility"
-                                                                                Value="Collapsed" />
-                                                                        </DataTrigger>
-                                                                        <DataTrigger
-                                                                            Binding="{Binding Constraint.Options, Converter={StaticResource NullToBooleanConverter}}"
-                                                                            Value="True">
-                                                                            <Setter Property="Visibility"
-                                                                                Value="Collapsed" />
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </TextBox.Style>
-                                                        </TextBox>
-                                                        <TextBox Text="{Binding Additional}"
-                                                                 Width="{Binding ActualWidth, Converter={StaticResource CellWidthValueConverter}, ConverterParameter=15, ElementName=GridViewColumn, Mode=OneWay}">
-                                                            <TextBox.Style>
-                                                                <Style TargetType="{x:Type TextBox}"
-                                                                       BasedOn="{StaticResource {x:Type TextBox}}">
-                                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger
-                                                                            Binding="{Binding Constraint.Name}"
-                                                                            Value="{x:Static resources:Strings.Name}">
-                                                                            <Setter Property="Visibility"
-                                                                                Value="Visible" />
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </TextBox.Style>
-                                                        </TextBox>
-                                                    </Grid>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="+/-">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <StackPanel.Resources>
-                                                            <Style TargetType="{x:Type Button}"
-                                                                   BasedOn="{StaticResource {x:Type Button}}">
-                                                                <Setter Property="Padding" Value="5" />
-                                                            </Style>
-                                                        </StackPanel.Resources>
-                                                        <Button
-                                                            Command="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.AddCommand), Source={StaticResource DataContextProxy}}"
-                                                            CommandParameter="{Binding Path=ItemsSource, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}">
-                                                            <Image Source="{StaticResource PlusIcon}" Height="8" />
-                                                        </Button>
-                                                        <Button
-                                                            Command="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.RemoveCommand), Source={StaticResource DataContextProxy}}">
-                                                            <Button.CommandParameter>
-                                                                <MultiBinding
-                                                                    Converter="{StaticResource GroupItemMultiValueConverter}">
-                                                                    <Binding Path="ItemsSource"
-                                                                             RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ListView}}" />
-                                                                    <Binding
-                                                                        Path="." />
-                                                                </MultiBinding>
-                                                            </Button.CommandParameter>
-                                                            <Image Source="{StaticResource MinusIcon}" Height="8" />
-                                                        </Button>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
-                            <StackPanel Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal"
-                                        Margin="0,7,5,0">
-                                <controls:ImageButton ImageSource="{StaticResource CirclePlusItem}"
-                                                      ToolTip="{x:Static resources:Strings.New_Group}"
-                                                      Command="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.NewGroupCommand), Source={StaticResource DataContextProxy}}"
-                                                      CommandParameter="{Binding}" />
-                                <controls:ImageButton ImageSource="{StaticResource CircleRemoveIcon}"
-                                                      ToolTip="{x:Static resources:Strings.Remove_Group}"
-                                                      Command="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.RemoveGroupCommand), Source={StaticResource DataContextProxy}}"
-                                                      CommandParameter="{Binding}">
-                                    <controls:ImageButton.Style>
-                                        <Style TargetType="{x:Type controls:ImageButton}"
-                                               BasedOn="{StaticResource {x:Type controls:ImageButton}}">
-                                            <Setter Property="Visibility">
-                                                <Setter.Value>
-                                                    <MultiBinding
-                                                        Converter="{StaticResource CollectionIndexZeroVisibilityConverter}">
-                                                        <Binding
-                                                            Path="Data.(filter:EntityCollectionFilterViewModel.Item).Groups"
-                                                            Source="{StaticResource DataContextProxy}" />
-                                                        <Binding Path="." />
-                                                    </MultiBinding>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </controls:ImageButton.Style>
-                                </controls:ImageButton>
-                            </StackPanel>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
             </ItemsControl>
+            <!-- Apply / Reset buttons -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Margin="10,0">
                 <StackPanel.Resources>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">

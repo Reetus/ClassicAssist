@@ -19,6 +19,7 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class ActionCommands
     {
+        private static int _lastCombatChangeSerial = 0;
         internal static UseOnceList UseOnceList { get; set; } = new UseOnceList();
 
         [CommandsDisplay( Category = nameof( Strings.Actions ),
@@ -125,7 +126,12 @@ namespace ClassicAssist.Data.Macros.Commands
                 }
             }
 
-            Engine.SendPacketToClient( new ChangeCombatant( serial ) );
+            if ( serial != _lastCombatChangeSerial )
+            {
+                Engine.SendPacketToClient( new ChangeCombatant( serial ) );
+                _lastCombatChangeSerial = serial;
+            }
+
             Engine.SendPacketToServer( new AttackRequest( serial ) );
         }
 

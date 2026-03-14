@@ -1,4 +1,4 @@
-using Assistant;
+﻿using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Filters;
 using ClassicAssist.Data.NameOverride;
@@ -20,6 +20,16 @@ namespace ClassicAssist.UO.Network
         public delegate bool OnReceive( ref byte[] packet, ref int length );
 
         private static readonly Dictionary<byte, OnReceive> _filters = new Dictionary<byte, OnReceive>();
+
+        // Each of these are localized to "~1_NOTHING~" which allows the string argument to be used
+        private static readonly int[] _stringNumbers =
+        {
+            1042971,
+            1070722,
+            1114057, // ~1_val~
+            1114778, // ~1_val~
+            1114779 // ~1_val~
+        };
 
         public static void Initialize()
         {
@@ -53,20 +63,53 @@ namespace ClassicAssist.UO.Network
 
             int firstCliloc = ( packet[15] << 24 ) | ( packet[16] << 16 ) | ( packet[17] << 8 ) | packet[18];
 
-            if ( firstCliloc != 1050045 )
-            {
-                return false;
-            }
-
             int argumentsLength = ( packet[19] << 8 ) | packet[20];
 
             Span<byte> span = new Span<byte>( packet, 21, argumentsLength );
 
-            string[] arguments = Encoding.Unicode.GetString( span.ToArray() ).Split( '\t' );
+            byte[] newArgumentsBytes;
 
-            string[] newArguments = { arguments[0], nameOverride, arguments[2] };
+            if ( firstCliloc == 1050045 )
+            {
+                // Mobile: cliloc 1050045 format is \t#~\t, replace the name segment
+                string[] arguments = Encoding.Unicode.GetString( span.ToArray() ).Split( '\t' );
 
-            byte[] newArgumentsBytes = Encoding.Unicode.GetBytes( string.Join( "\t", newArguments ) );
+                string[] newArguments = { arguments[0], nameOverride, arguments[2] };
+
+                newArgumentsBytes = Encoding.Unicode.GetBytes( string.Join( "\t", newArguments ) );
+            }
+            else
+            {
+                // Item: replace first cliloc with a ~1_NOTHING~ cliloc and set argument to override name
+                // Collect all clilocs in the packet to avoid duplicating an existing one
+                HashSet<int> existingClilocs = new HashSet<int>();
+                int offset = 15;
+
+                while ( offset + 6 <= length )
+                {
+                    int cliloc = ( packet[offset] << 24 ) | ( packet[offset + 1] << 16 ) |
+                                 ( packet[offset + 2] << 8 ) | packet[offset + 3];
+
+                    if ( cliloc == 0 )
+                    {
+                        break;
+                    }
+
+                    existingClilocs.Add( cliloc );
+
+                    int argLen = ( packet[offset + 4] << 8 ) | packet[offset + 5];
+                    offset += 6 + argLen;
+                }
+
+                int stringNumber = _stringNumbers.First( n => !existingClilocs.Contains( n ) );
+
+                packet[15] = (byte) ( stringNumber >> 24 );
+                packet[16] = (byte) ( stringNumber >> 16 );
+                packet[17] = (byte) ( stringNumber >> 8 );
+                packet[18] = (byte) stringNumber;
+
+                newArgumentsBytes = Encoding.Unicode.GetBytes( nameOverride );
+            }
 
             Span<byte> remainingPacket =
                 new Span<byte>( packet, 21 + argumentsLength, packet.Length - ( 21 + argumentsLength ) );

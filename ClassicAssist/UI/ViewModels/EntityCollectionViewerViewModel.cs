@@ -1,4 +1,23 @@
-﻿using System;
+﻿#region License
+
+// Copyright (C) 2026 Reetus
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -53,6 +72,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _contextMoveToSetCommand;
         private ICommand _contextOpenContainerCommand;
         private ICommand _contextTargetCommand;
+        private ICommand _contextTargetOwnerCommand;
         private ICommand _contextUseItemCommand;
         private ObservableCollection<EntityCollectionData> _entities;
         private ICommand _equipItemCommand;
@@ -186,6 +206,9 @@ namespace ClassicAssist.UI.ViewModels
 
         public ICommand ContextTargetCommand => _contextTargetCommand ?? ( _contextTargetCommand = new RelayCommand( ContextTarget ) );
 
+        public ICommand ContextTargetOwnerCommand =>
+            _contextTargetOwnerCommand ?? ( _contextTargetOwnerCommand = new RelayCommand( ContextTargetOwner, o => SelectedItems.Any() && SelectedItems.Count == 1 ) );
+
         public ICommand ContextUseItemCommand => _contextUseItemCommand ?? ( _contextUseItemCommand = new RelayCommandAsync( ContextUseItem, o => SelectedItems != null ) );
 
         public ObservableCollection<KeyValuePair<string, Action<Item>>> CustomContextActions { get; set; } = new ObservableCollection<KeyValuePair<string, Action<Item>>>();
@@ -271,6 +294,29 @@ namespace ClassicAssist.UI.ViewModels
         }
 
         private Dictionary<int, string> _nameOverrides { get; } = new Dictionary<int, string>();
+
+        private void ContextTargetOwner( object obj )
+        {
+            EntityCollectionData entity = SelectedItems.FirstOrDefault();
+
+            if ( !( entity?.Entity is Item item ) )
+            {
+                return;
+            }
+
+            EnqueueAction( queueAction =>
+            {
+                if ( queueAction.CancellationTokenSource.IsCancellationRequested )
+                {
+                    _dispatcher.Invoke( () => { queueAction.Status = Strings.Cancel; } );
+                    return Task.FromResult( false );
+                }
+
+                TargetCommands.Target( item.Owner );
+
+                return Task.FromResult( true );
+            }, string.Format( Strings.Targeting_item__0_____1_, 0, 1 ) );
+        }
 
         private void AutolootContainer( object param )
         {
@@ -403,7 +449,8 @@ namespace ClassicAssist.UI.ViewModels
                             break;
                         }
 
-                        PacketFilterInfo pfi = new PacketFilterInfo( 0x25, new[] { PacketFilterConditions.IntAtPositionCondition( item.value.Serial, 1 ), PacketFilterConditions.IntAtPositionCondition( serial, 15 ) } );
+                        PacketFilterInfo pfi = new PacketFilterInfo( 0x25,
+                            new[] { PacketFilterConditions.IntAtPositionCondition( item.value.Serial, 1 ), PacketFilterConditions.IntAtPositionCondition( serial, 15 ) } );
                         PacketWaitEntry waitEntry = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );
 
                         if ( !await EnqueueDragDrop( item.value.Serial, -1, serial, obj.CancellationTokenSource.Token ) )
@@ -1028,15 +1075,15 @@ namespace ClassicAssist.UI.ViewModels
 
             ItemCollection collection = new ItemCollection( Collection.Serial ) { Collection.GetItems() };
 
-            ItemCollection items = collection.Filter( list[0].Items );
+            ItemCollection items = EvaluateGroup( list[0], collection );
 
             for ( int i = 1; i < list.Count; i++ )
             {
-                EntityCollectionFilterGroup groups = list[i];
+                EntityCollectionFilterGroup group = list[i];
 
-                ItemCollection groupItems = groups.Operation == BooleanOperation.Or ? collection.Filter( groups.Items ) : items.Filter( groups.Items );
+                ItemCollection groupItems = group.Operation == BooleanOperation.Or ? EvaluateGroup( group, collection ) : EvaluateGroup( group, items );
 
-                switch ( groups.Operation )
+                switch ( group.Operation )
                 {
                     case BooleanOperation.And:
                         items = groupItems;
@@ -1057,6 +1104,42 @@ namespace ClassicAssist.UI.ViewModels
             UpdateStatusLabel();
 
             _filters = list;
+        }
+
+        private static ItemCollection EvaluateGroup( EntityCollectionFilterGroup group, ItemCollection source )
+        {
+            ItemCollection result = source.Filter( group.Items );
+
+            if ( group.Children.Count == 0 )
+            {
+                return result;
+            }
+
+            ItemCollection childResult = EvaluateGroup( group.Children[0], result );
+
+            for ( int i = 1; i < group.Children.Count; i++ )
+            {
+                EntityCollectionFilterGroup child = group.Children[i];
+
+                ItemCollection childItems = child.Operation == BooleanOperation.Or ? EvaluateGroup( child, result ) : EvaluateGroup( child, childResult );
+
+                switch ( child.Operation )
+                {
+                    case BooleanOperation.And:
+                        childResult = childItems;
+                        break;
+                    case BooleanOperation.Or:
+                        childResult.Add( childItems.GetItems() );
+                        break;
+                    case BooleanOperation.Not:
+                        childResult.Remove( childItems.GetItems() );
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            return childResult;
         }
 
         private void ChangeSortStyle( object obj )
@@ -1441,7 +1524,14 @@ namespace ClassicAssist.UI.ViewModels
                     case PropertyType.PredicateWithValue:
                     {
                         predicates.Add( i => constraint.Predicate != null && constraint.Predicate.Invoke( i,
-                            new AutolootConstraintEntry { Operator = filter.Operator, Property = constraint, Value = filter.Value, Additional = filter.Additional, Values = filter.Values} ) );
+                            new AutolootConstraintEntry
+                            {
+                                Operator = filter.Operator,
+                                Property = constraint,
+                                Value = filter.Value,
+                                Additional = filter.Additional,
+                                Values = filter.Values
+                            } ) );
 
                         break;
                     }

@@ -61,6 +61,11 @@ namespace ClassicAssist.UO.Gumps
 
         public static void ResendGump()
         {
+            if ( !Engine.Connected || Engine.Player == null )
+            {
+                return;
+            }
+
             try
             {
                 Commands.CloseClientGump( typeof( HotkeyStatusGump ) );

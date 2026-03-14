@@ -19,7 +19,7 @@ namespace ClassicAssist.Shared.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Strings {
@@ -2082,6 +2082,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Format_Code {
             get {
                 return ResourceManager.GetString("Format Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Framework:.
+        /// </summary>
+        public static string Framework_ {
+            get {
+                return ResourceManager.GetString("Framework:", resourceCulture);
             }
         }
         
@@ -5373,6 +5382,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Target_out_of_range__try_again___ {
             get {
                 return ResourceManager.GetString("Target out of range, try again...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target Owner.
+        /// </summary>
+        public static string Target_Owner {
+            get {
+                return ResourceManager.GetString("Target Owner", resourceCulture);
             }
         }
         

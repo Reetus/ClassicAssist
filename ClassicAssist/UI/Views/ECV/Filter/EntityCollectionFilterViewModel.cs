@@ -1,17 +1,17 @@
-﻿#region License
+#region License
 
 // Copyright (C) 2025 Reetus
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -43,6 +43,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
     {
         private ICommand _addCommand;
         private ICommand _addProfileCommand;
+        private ICommand _addSubGroupCommand;
 
         private ICommand _applyCommand;
         private ObservableCollection<string> _autolootEntryNames = new ObservableCollection<string>();
@@ -59,6 +60,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
         private ICommand _removeCommand;
         private ICommand _removeGroupCommand;
         private ICommand _removeProfileCommand;
+        private ICommand _removeSubGroupCommand;
 
         private ICommand _resetCommand;
         private ICommand _saveProfilesCommand;
@@ -120,6 +122,31 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                 AllowedValuesEnum = typeof( TileFlags )
             } );
 
+            Constraints.AddSorted( new PropertyEntry()
+            {
+                Name = "Distance",
+                ConstraintType = PropertyType.Predicate,
+                AllowedOperators = AutolootAllowedOperators.LessThan | AutolootAllowedOperators.GreaterThan | AutolootAllowedOperators.Equal | AutolootAllowedOperators.NotEqual,
+                Predicate = ( item, entry ) =>
+                {
+                    int distance = item.Distance;
+
+                    switch ( entry.Operator )
+                    {
+                        case AutolootOperator.LessThan:
+                            return distance < entry.Value;
+                        case AutolootOperator.GreaterThan:
+                            return distance > entry.Value;
+                        case AutolootOperator.Equal:
+                            return distance == entry.Value;
+                        case AutolootOperator.NotEqual:
+                            return distance != entry.Value;
+                        default:
+                            return false;
+                    }
+                }
+            } );
+
             Constraints.AddSorted( new PropertyEntry
             {
                 Name = Strings.Organizer_Match,
@@ -134,7 +161,14 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 
                     OrganizerEntry organizer = OrganizerManager.GetInstance().Items.FirstOrDefault( e => e.Name == entry.Additional );
 
-                    return organizer != null && organizer.Items.Any( e => e.ID == item.ID && ( e.Hue == -1 || e.Hue == item.Hue ) );
+                    if ( organizer == null )
+                    {
+                        return false;
+                    }
+
+                    bool match = organizer.Items.Any( e => e.ID == item.ID && ( e.Hue == -1 || e.Hue == item.Hue ) );
+
+                    return entry.Operator == AutolootOperator.NotEqual ? !match : match;
                 },
                 Options = new ObservableCollection<string>( OrganizerManager.GetInstance().Items?.Select( o => o.Name ) ?? new List<string>() )
             } );
@@ -149,6 +183,8 @@ namespace ClassicAssist.UI.Views.ECV.Filter
         public ICommand AddCommand => _addCommand ?? ( _addCommand = new RelayCommand( AddItem, o => true ) );
 
         public ICommand AddProfileCommand => _addProfileCommand ?? ( _addProfileCommand = new RelayCommand( AddProfile, o => true ) );
+
+        public ICommand AddSubGroupCommand => _addSubGroupCommand ?? ( _addSubGroupCommand = new RelayCommand( AddSubGroup, o => true ) );
 
         public ICommand ApplyCommand => _applyCommand ?? ( _applyCommand = new RelayCommand( Apply, o => true ) );
 
@@ -187,6 +223,8 @@ namespace ClassicAssist.UI.Views.ECV.Filter
         public ICommand RemoveGroupCommand => _removeGroupCommand ?? ( _removeGroupCommand = new RelayCommand( RemoveGroup, o => Item.Groups.Count > 1 ) );
 
         public ICommand RemoveProfileCommand => _removeProfileCommand ?? ( _removeProfileCommand = new RelayCommand( RemoveProfile, o => true ) );
+
+        public ICommand RemoveSubGroupCommand => _removeSubGroupCommand ?? ( _removeSubGroupCommand = new RelayCommand( RemoveSubGroup, o => true ) );
 
         public ICommand ResetCommand => _resetCommand ?? ( _resetCommand = new RelayCommand( Reset, o => true ) );
 
@@ -274,32 +312,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                         {
                             foreach ( JToken groupObj in profileObj["Groups"] )
                             {
-                                EntityCollectionFilterGroup group = new EntityCollectionFilterGroup { Operation = groupObj["Operation"]?.ToObject<BooleanOperation>() ?? 0 };
-
-                                if ( groupObj["Items"] != null )
-                                {
-                                    foreach ( JToken itemObj in groupObj["Items"] )
-                                    {
-                                        EntityCollectionFilterItem item = new EntityCollectionFilterItem
-                                        {
-                                            Constraint =
-                                                Constraints.FirstOrDefault( e => e.Name == itemObj["Constraint"]?["Name"]?.ToObject<string>() ) ?? Constraints.FirstOrDefault(),
-                                            Operator = itemObj["Operator"]?.ToObject<AutolootOperator>() ?? 0,
-                                            Value = itemObj["Value"]?.ToObject<int>() ?? 0,
-                                            Additional = itemObj["Additional"]?.ToObject<string>(),
-                                            Enabled = itemObj["Enabled"]?.ToObject<bool>() ?? true
-                                        };
-
-                                        if ( itemObj["Values"] != null )
-                                        {
-                                            item.Values = itemObj["Values"].ToObject<ObservableCollection<int>>() ?? new ObservableCollection<int>();
-                                        }
-
-                                        group.Items.Add( item );
-                                    }
-                                }
-
-                                profile.Groups.Add( group );
+                                profile.Groups.Add( DeserializeGroup( groupObj ) );
                             }
                         }
 
@@ -324,6 +337,44 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             }
         }
 
+        private EntityCollectionFilterGroup DeserializeGroup( JToken groupObj )
+        {
+            EntityCollectionFilterGroup group = new EntityCollectionFilterGroup { Operation = groupObj["Operation"]?.ToObject<BooleanOperation>() ?? 0 };
+
+            if ( groupObj["Items"] != null )
+            {
+                foreach ( JToken itemObj in groupObj["Items"] )
+                {
+                    EntityCollectionFilterItem item = new EntityCollectionFilterItem
+                    {
+                        Constraint =
+                            Constraints.FirstOrDefault( e => e.Name == itemObj["Constraint"]?["Name"]?.ToObject<string>() ) ?? Constraints.FirstOrDefault(),
+                        Operator = itemObj["Operator"]?.ToObject<AutolootOperator>() ?? 0,
+                        Value = itemObj["Value"]?.ToObject<int>() ?? 0,
+                        Additional = itemObj["Additional"]?.ToObject<string>(),
+                        Enabled = itemObj["Enabled"]?.ToObject<bool>() ?? true
+                    };
+
+                    if ( itemObj["Values"] != null )
+                    {
+                        item.Values = itemObj["Values"].ToObject<ObservableCollection<int>>() ?? new ObservableCollection<int>();
+                    }
+
+                    group.Items.Add( item );
+                }
+            }
+
+            if ( groupObj["Children"] != null )
+            {
+                foreach ( JToken childObj in groupObj["Children"] )
+                {
+                    group.Children.Add( DeserializeGroup( childObj ) );
+                }
+            }
+
+            return group;
+        }
+
         public void SaveFilterProfiles()
         {
             string file = Path.Combine( Engine.StartupPath ?? Environment.CurrentDirectory, "FilterProfiles.json" );
@@ -340,32 +391,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 
                 foreach ( EntityCollectionFilterGroup group in profile.Groups )
                 {
-                    JObject groupObj = new JObject { { "Operation", (int) group.Operation } };
-
-                    JArray items = new JArray();
-
-                    foreach ( EntityCollectionFilterItem item in group.Items )
-                    {
-                        JObject itemObj = new JObject
-                        {
-                            { "Operator", (int) item.Operator }, { "Value", item.Value }, { "Additional", item.Additional }, { "Enabled", item.Enabled }
-                        };
-
-                        if ( item.Values != null && item.Values.Count > 0 )
-                        {
-                            itemObj.Add( "Values", JArray.FromObject( item.Values ) );
-                        }
-
-                        JObject constraint = new JObject { { "Name", item.Constraint.Name } };
-
-                        itemObj.Add( "Constraint", constraint );
-
-                        items.Add( itemObj );
-                    }
-
-                    groupObj.Add( "Items", items );
-
-                    groups.Add( groupObj );
+                    groups.Add( SerializeGroup( group ) );
                 }
 
                 profileObj.Add( "Groups", groups );
@@ -376,6 +402,48 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             obj.Add( "Profiles", profiles );
 
             File.WriteAllText( file, JsonConvert.SerializeObject( obj, Formatting.Indented ) );
+        }
+
+        private static JObject SerializeGroup( EntityCollectionFilterGroup group )
+        {
+            JObject groupObj = new JObject { { "Operation", (int) group.Operation } };
+
+            JArray items = new JArray();
+
+            foreach ( EntityCollectionFilterItem item in group.Items )
+            {
+                JObject itemObj = new JObject
+                {
+                    { "Operator", (int) item.Operator }, { "Value", item.Value }, { "Additional", item.Additional }, { "Enabled", item.Enabled }
+                };
+
+                if ( item.Values != null && item.Values.Count > 0 )
+                {
+                    itemObj.Add( "Values", JArray.FromObject( item.Values ) );
+                }
+
+                JObject constraint = new JObject { { "Name", item.Constraint.Name } };
+
+                itemObj.Add( "Constraint", constraint );
+
+                items.Add( itemObj );
+            }
+
+            groupObj.Add( "Items", items );
+
+            if ( group.Children.Count > 0 )
+            {
+                JArray children = new JArray();
+
+                foreach ( EntityCollectionFilterGroup child in group.Children )
+                {
+                    children.Add( SerializeGroup( child ) );
+                }
+
+                groupObj.Add( "Children", children );
+            }
+
+            return groupObj;
         }
 
         private void AddDefaultEntry()
@@ -419,6 +487,53 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             Item.Groups.Remove( group );
 
             OnPropertyChanged( nameof( Item ) );
+        }
+
+        private void AddSubGroup( object obj )
+        {
+            if ( !( obj is EntityCollectionFilterGroup parent ) )
+            {
+                return;
+            }
+
+            parent.Children.Add( new EntityCollectionFilterGroup
+            {
+                Items = new ObservableCollection<EntityCollectionFilterItem> { new EntityCollectionFilterItem { Constraint = Constraints.FirstOrDefault() } }
+            } );
+        }
+
+        private void RemoveSubGroup( object obj )
+        {
+            if ( !( obj is EntityCollectionFilterGroup childGroup ) )
+            {
+                return;
+            }
+
+            foreach ( EntityCollectionFilterGroup group in Item.Groups )
+            {
+                if ( RemoveChildRecursive( group, childGroup ) )
+                {
+                    break;
+                }
+            }
+        }
+
+        private static bool RemoveChildRecursive( EntityCollectionFilterGroup parent, EntityCollectionFilterGroup child )
+        {
+            if ( parent.Children.Remove( child ) )
+            {
+                return true;
+            }
+
+            foreach ( EntityCollectionFilterGroup subGroup in parent.Children )
+            {
+                if ( RemoveChildRecursive( subGroup, child ) )
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void Apply( object obj )

@@ -161,12 +161,6 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             if ( serial != 0 )
             {
-                if ( !UOMath.IsMobile( serial ) )
-                {
-                    Commands.SystemMessage( Strings.Mobile_not_found___ );
-                    return;
-                }
-
                 Entity entity = UOMath.IsMobile( serial )
                     ? (Entity) Engine.Mobiles.GetMobile( serial )
                     : Engine.Items.GetItem( serial );

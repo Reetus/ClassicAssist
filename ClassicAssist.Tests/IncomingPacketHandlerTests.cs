@@ -20,6 +20,14 @@ namespace ClassicAssist.Tests
             IncomingPacketHandlers.Initialize();
         }
 
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Engine.Player = null;
+            Engine.Items = new ItemCollection( 0 );
+            Engine.Mobiles = new MobileCollection( Engine.Items );
+        }
+
         [TestMethod]
         public void ContainerContentsWillAddToPlayerBackpack()
         {

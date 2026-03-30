@@ -19,6 +19,13 @@ namespace ClassicAssist.Tests.MacroCommands
             Engine.Player = _player;
         }
 
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Engine.Player = null;
+            AliasCommands._aliases.Clear();
+        }
+
         [TestMethod]
         public void WillSetDefaultAliases()
         {

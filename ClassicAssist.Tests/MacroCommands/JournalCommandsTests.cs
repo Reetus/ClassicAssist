@@ -165,5 +165,11 @@ namespace ClassicAssist.Tests.MacroCommands
 
             //    Engine.Journal.Clear();
             //}
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Engine.Journal = new CircularBuffer<JournalEntry>( 1024 );
+        }
         }
 }

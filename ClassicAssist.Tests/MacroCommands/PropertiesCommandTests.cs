@@ -14,12 +14,14 @@ namespace ClassicAssist.Tests.MacroCommands
     [TestClass]
     public class PropertiesCommandTests
     {
+        private Engine.dSendRecvPacket _internalPacketSentHandler;
+
         [TestMethod]
         public void WillWaitForProperties()
         {
             Engine.PacketWaitEntries = new PacketWaitEntries();
 
-            void OnInternalPacketSentEvent( byte[] data, int length )
+            _internalPacketSentHandler = ( byte[] data, int length ) =>
             {
                 if ( data[0] != 0xD6 )
                 {
@@ -31,16 +33,13 @@ namespace ClassicAssist.Tests.MacroCommands
                 byte[] packet = { 0xD6, 0x00, 0x09, 0x00, 0x01, data[3], data[4], data[5], data[6] };
 
                 Engine.PacketWaitEntries.CheckWait( packet, PacketDirection.Incoming );
-            }
+            };
 
-            Engine.InternalPacketSentEvent += OnInternalPacketSentEvent;
+            Engine.InternalPacketSentEvent += _internalPacketSentHandler;
 
             bool result = PropertiesCommands.WaitForProperties( 0x00aabbcc, 5000 );
 
             Assert.IsTrue( result );
-
-            Engine.PacketWaitEntries = null;
-            Engine.InternalPacketSentEvent -= OnInternalPacketSentEvent;
         }
 
         [TestMethod]
@@ -121,6 +120,12 @@ namespace ClassicAssist.Tests.MacroCommands
         [TestCleanup]
         public void Cleanup()
         {
+            if ( _internalPacketSentHandler != null )
+            {
+                Engine.InternalPacketSentEvent -= _internalPacketSentHandler;
+                _internalPacketSentHandler = null;
+            }
+
             Engine.Player = null;
             Engine.Items.Clear();
             Engine.PacketWaitEntries = null;

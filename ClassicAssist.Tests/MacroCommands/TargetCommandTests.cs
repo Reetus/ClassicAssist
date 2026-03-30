@@ -1192,5 +1192,18 @@ namespace ClassicAssist.Tests.MacroCommands
                 Engine.PacketWaitEntries = null;
             }
         }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Engine.Player = null;
+            Engine.Mobiles.Clear();
+            Engine.Items.Clear();
+            Engine.PacketWaitEntries = null;
+            Options.CurrentOptions.GetFriendEnemyUsesIgnoreList = false;
+            Options.CurrentOptions.Friends.Clear();
+            ObjectCommands.ClearIgnoreList();
+            AliasCommands._aliases.Clear();
+        }
     }
 }

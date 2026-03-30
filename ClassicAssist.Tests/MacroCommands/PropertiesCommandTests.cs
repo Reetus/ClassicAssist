@@ -117,5 +117,13 @@ namespace ClassicAssist.Tests.MacroCommands
 
             Engine.Items.Clear();
         }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Engine.Player = null;
+            Engine.Items.Clear();
+            Engine.PacketWaitEntries = null;
+        }
     }
 }

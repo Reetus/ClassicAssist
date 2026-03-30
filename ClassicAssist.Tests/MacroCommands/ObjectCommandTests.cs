@@ -371,6 +371,11 @@ namespace ClassicAssist.Tests.MacroCommands
         public void Cleanup()
         {
             ActionPacketQueue.Clear();
+            Engine.Player = null;
+            Engine.Items.Clear();
+            Engine.Mobiles.Clear();
+            ObjectCommands.ClearIgnoreList();
+            AliasCommands._aliases.Clear();
         }
     }
 }

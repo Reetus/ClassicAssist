@@ -8,13 +8,14 @@
     xmlns:ValueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:trapPouch="clr-namespace:ClassicAssist.Data.TrapPouch"
+    xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
     x:Class="ClassicAssist.UI.Views.Agents.TrapPouchTabControl"
     mc:Ignorable="d"
     d:DesignHeight="300">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <ValueConverters:IntToHexStringValueConverter x:Key="IntToHexStringValueConverter" />
             <agents:TrapPouchTabViewModel x:Key="DummyData" AutoAddTargetedPouches="True">

@@ -9,6 +9,7 @@
     xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
     xmlns:draggableListBox="clr-namespace:ClassicAssist.Controls.DraggableListBox;assembly=ClassicAssist.Controls"
     xmlns:vendors="clr-namespace:ClassicAssist.Data.Vendors"
+    xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
     x:Class="ClassicAssist.UI.Views.Agents.VendorBuyTabControl"
     mc:Ignorable="d"
     d:DesignWidth="493" d:DesignHeight="400">
@@ -20,7 +21,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <ValueConverters:HexToIntValueConverter x:Key="HexToIntValueConverter" />
             <ValueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />

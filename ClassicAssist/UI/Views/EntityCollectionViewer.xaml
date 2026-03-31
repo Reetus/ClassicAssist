@@ -13,6 +13,7 @@
     xmlns:ecv="clr-namespace:ClassicAssist.UI.Views.ECV"
     xmlns:local="clr-namespace:ClassicAssist.UI.Views"
     xmlns:behaviours="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
+    xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
     x:Name="window"
     x:Class="ClassicAssist.UI.Views.EntityCollectionViewer"
     mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
@@ -23,7 +24,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary
                     Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DebugToolBarStyle.xaml" />
                 <ResourceDictionary Source="ECV/Icons.xaml" />

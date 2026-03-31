@@ -9,6 +9,7 @@
         xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         xmlns:behaviours1="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
+        xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
         mc:Ignorable="d"
         Title="{Binding Title}" Height="350" Width="650" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         Topmost="{Binding Topmost}" WindowStyle="None" ResizeMode="CanResizeWithGrip" AllowsTransparency="True">
@@ -18,7 +19,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary>
                     <DrawingImage x:Key="PersonIcon">
                         <DrawingImage.Drawing>

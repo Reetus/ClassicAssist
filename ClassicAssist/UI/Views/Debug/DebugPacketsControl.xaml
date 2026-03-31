@@ -13,12 +13,13 @@
              xmlns:headered="clr-namespace:ClassicAssist.Controls.Headered;assembly=ClassicAssist.Controls"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
              xmlns:packetFilter="clr-namespace:ClassicAssist.UO.Network.PacketFilter"
+             xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary Source="../Debug/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

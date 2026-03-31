@@ -9,7 +9,8 @@
         xmlns:scavenger="clr-namespace:ClassicAssist.UI.ViewModels.Agents.Scavenger"
         xmlns:scavengerData="clr-namespace:ClassicAssist.Data.Scavenger"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors" x:Name="Window"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared" x:Name="Window"
         mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         Foreground="{DynamicResource ThemeForegroundBrush}"
         Title="{x:Static resources:Strings.Cliloc_Filter}" Height="450" Width="400">
@@ -19,7 +20,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>

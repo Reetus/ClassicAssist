@@ -6,6 +6,7 @@
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:misc="clr-namespace:ClassicAssist.Misc"
              xmlns:debug="clr-namespace:ClassicAssist.UI.ViewModels.Debug"
+             xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
              Background="{DynamicResource ThemeBackgroundBrush}"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
@@ -13,7 +14,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary Source="Styles.xaml" />
                 <ResourceDictionary>
                     <misc:BindingProxy x:Key="Proxy" Data="{Binding}" />

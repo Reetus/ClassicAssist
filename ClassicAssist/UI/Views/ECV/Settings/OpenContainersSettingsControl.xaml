@@ -8,13 +8,14 @@
     xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
     xmlns:settingsControls="clr-namespace:ClassicAssist.UI.Views.ECV.Settings.Controls"
     xmlns:models="clr-namespace:ClassicAssist.UI.Views.ECV.Settings.Models"
+    xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
     x:Class="ClassicAssist.UI.Views.ECV.Settings.OpenContainersSettingsControl"
     mc:Ignorable="d"
     Background="Transparent">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary
                     Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DebugToolBarStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>

@@ -17,8 +17,7 @@
 
 #endregion
 
-using System.Threading;
-using System.Windows.Threading;
+using System;
 using Assistant;
 using ClassicAssist.UI.Views;
 
@@ -29,19 +28,11 @@ namespace ClassicAssist.Data.Hotkeys.Commands
     {
         public override void Execute()
         {
-            Engine.Dispatcher.Invoke( () =>
+            _ = Engine.Dispatcher.BeginInvoke( (Action) ( () =>
             {
-                Thread t = new Thread( () =>
-                {
-                    ChatWindow window = new ChatWindow();
-
-                    window.Show();
-                    Dispatcher.Run();
-                } ) { IsBackground = true };
-
-                t.SetApartmentState( ApartmentState.STA );
-                t.Start();
-            } );
+                ChatWindow window = new ChatWindow();
+                window.Show();
+            } ) );
         }
     }
 }

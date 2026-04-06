@@ -17,7 +17,8 @@
 
 #endregion
 
-using System.Threading;
+using System;
+using Assistant;
 using ClassicAssist.UI.Views;
 
 namespace ClassicAssist.Data.Hotkeys.Commands
@@ -29,15 +30,11 @@ namespace ClassicAssist.Data.Hotkeys.Commands
 
         public override void Execute()
         {
-            Thread t = new Thread( () =>
+            _ = Engine.Dispatcher.BeginInvoke( (Action) ( () =>
             {
                 _window = new GIFRecorderWindow();
-                _window.ShowDialog();
-            } );
-
-            t.SetApartmentState( ApartmentState.STA );
-            t.IsBackground = true;
-            t.Start();
+                _window.Show();
+            } ) );
         }
     }
 }

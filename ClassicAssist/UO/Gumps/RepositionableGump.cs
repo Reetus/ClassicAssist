@@ -17,8 +17,8 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Windows.Interop;
 using Assistant;
 using ClassicAssist.UI.ViewModels;
@@ -62,21 +62,15 @@ namespace ClassicAssist.UO.Gumps
         {
             if ( buttonID == REPOSITION_BUTTON_ID )
             {
-                Engine.Dispatcher.Invoke( () =>
+                _ = Engine.Dispatcher.BeginInvoke( (Action) ( () =>
                 {
-                    Thread t = new Thread( () =>
-                    {
-                        SetPosition( GumpX, GumpY );
-                        RepositionableGumpViewModel vm = new RepositionableGumpViewModel( this, GumpX, GumpY );
-                        RepositionableGumpWindow window = new RepositionableGumpWindow { DataContext = vm };
-                        WindowInteropHelper helper = new WindowInteropHelper( window ) { Owner = Engine.WindowHandle };
-                        window.ShowInTaskbar = false;
-                        window.ShowDialog();
-                    } ) { IsBackground = true };
-
-                    t.SetApartmentState( ApartmentState.STA );
-                    t.Start();
-                } );
+                    SetPosition( GumpX, GumpY );
+                    RepositionableGumpViewModel vm = new RepositionableGumpViewModel( this, GumpX, GumpY );
+                    RepositionableGumpWindow window = new RepositionableGumpWindow { DataContext = vm };
+                    WindowInteropHelper helper = new WindowInteropHelper( window ) { Owner = Engine.WindowHandle };
+                    window.ShowInTaskbar = false;
+                    window.ShowDialog();
+                } ) );
             }
 
             base.OnResponse( buttonID, switches, textEntries );

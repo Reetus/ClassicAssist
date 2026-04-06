@@ -1020,16 +1020,13 @@ namespace ClassicAssist.UO
                     return;
                 }
 
-                Thread t = new Thread( () =>
+                _ = Engine.Dispatcher.BeginInvoke( (Action) ( () =>
                 {
                     ObjectInspectorWindow window =
                         new ObjectInspectorWindow { DataContext = new ObjectInspectorViewModel( entity ) };
 
                     window.ShowDialog();
-                } ) { IsBackground = true };
-
-                t.SetApartmentState( ApartmentState.STA );
-                t.Start();
+                } ) );
             }
             else
             {
@@ -1041,7 +1038,7 @@ namespace ClassicAssist.UO
                     }
 
                     LandTile landTile = MapInfo.GetLandTile( (int) Engine.Player.Map, x, y );
-                    Thread t = new Thread( () =>
+                    _ = Engine.Dispatcher.BeginInvoke( (Action) ( () =>
                     {
                         ObjectInspectorWindow window = new ObjectInspectorWindow
                         {
@@ -1049,10 +1046,7 @@ namespace ClassicAssist.UO
                         };
 
                         window.ShowDialog();
-                    } ) { IsBackground = true };
-
-                    t.SetApartmentState( ApartmentState.STA );
-                    t.Start();
+                    } ) );
                 }
                 else
                 {
@@ -1068,7 +1062,7 @@ namespace ClassicAssist.UO
                         selectedStatic.Z = z;
                     }
 
-                    Thread t = new Thread( () =>
+                    _ = Engine.Dispatcher.BeginInvoke( (Action) ( () =>
                     {
                         ObjectInspectorWindow window = new ObjectInspectorWindow
                         {
@@ -1076,10 +1070,7 @@ namespace ClassicAssist.UO
                         };
 
                         window.ShowDialog();
-                    } ) { IsBackground = true };
-
-                    t.SetApartmentState( ApartmentState.STA );
-                    t.Start();
+                    } ) );
                 }
             }
         }

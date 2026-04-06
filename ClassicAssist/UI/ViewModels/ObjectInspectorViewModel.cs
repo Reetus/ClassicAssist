@@ -415,15 +415,11 @@ namespace ClassicAssist.UI.ViewModels
 
         private static void ShowProperties( IEnumerable<Property> properties )
         {
-            Thread t = new Thread( () =>
+            _ = Engine.Dispatcher.BeginInvoke( (Action) ( () =>
             {
                 DebugWindow window = new DebugWindow( typeof(DebugPropertiesViewModel), properties ) { Topmost = true };
                 window.Show();
-                Dispatcher.Run();
-            } ) { IsBackground = true };
-
-            t.SetApartmentState( ApartmentState.STA );
-            t.Start();
+            } ) );
         }
 
         private static void InspectObject( int serial )

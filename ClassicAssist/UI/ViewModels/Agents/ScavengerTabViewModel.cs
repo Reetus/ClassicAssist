@@ -377,6 +377,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         continue;
                     }
 
+                    if ( Engine.TooltipsEnabled && refetchedItem.Properties != null &&
+                        refetchedItem.Properties.Any( p => p.Cliloc == 501643 || p.Cliloc == 501644 ) )
+                    {
+                        continue;
+                    }
+
                     int pendingSerial = scavengerItem.Serial;
 
                     lock ( _pendingSerialsLock )

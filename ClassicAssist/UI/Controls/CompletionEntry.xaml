@@ -9,18 +9,19 @@
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:behaviours="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
              xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
+             xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
              mc:Ignorable="d" DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <shared:SharedResourceDictionary Source="../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary>
-                    <DrawingImage x:Key="RightChevron">
+                    <DrawingImage x:Key="RightChevron" po:Freeze="True">
                         <DrawingImage.Drawing>
                             <DrawingGroup ClipGeometry="M0,0 V256 H256 V0 H0 Z">
                                 <DrawingGroup Opacity="1">
                                     <DrawingGroup Opacity="1">
-                                        <GeometryDrawing Brush="{DynamicResource ThemeForegroundBrush}"
+                                        <GeometryDrawing Brush="{StaticResource ThemeForegroundBrush}"
                                                          Geometry="F1 M256,256z M0,0z M79.093,0L79.093,0 48.907,30.187 146.72,128 48.907,225.813 79.093,256 207.093,128z" />
                                     </DrawingGroup>
                                 </DrawingGroup>
@@ -54,11 +55,11 @@
                 Command="{Binding ToggleExpandedCommand}"
                 Visibility="{Binding IsButtonEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Button.Content>
-                <Image Height="8" Source="{DynamicResource RightChevron}" />
+                <Image Height="8" Source="{StaticResource RightChevron}" />
             </Button.Content>
         </Button>
-        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="{DynamicResource ThemeWindowBackgroundBrush}"
-              Style="{DynamicResource HideNonExpanded}">
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="{StaticResource ThemeWindowBackgroundBrush}"
+              Style="{StaticResource HideNonExpanded}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />

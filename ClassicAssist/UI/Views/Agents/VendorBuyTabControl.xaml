@@ -106,7 +106,7 @@
                 </DockPanel>
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Grid.Row="1">
                     <ListView x:Name="ListView"
-                              ItemsSource="{Binding SelectedItem.Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              ItemsSource="{Binding SelectedItem.Items}"
                               SelectedItem="{Binding SelectedEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               Foreground="Black">
                         <ListView.View>

@@ -50,7 +50,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <ListView x:Name="ListView" Margin="10" Grid.Row="0"
-                  ItemsSource="{Binding Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  ItemsSource="{Binding Items}"
                   SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Foreground="Black" Grid.IsSharedSizeScope="True">
             <ListView.View>

@@ -1948,4 +1948,16 @@ if FindType(0xe79, -1, 'backpack'):
   <data name="SWINGSPEEDINCREASE_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>ssi = SwingSpeedIncrease()</value>
   </data>
+  <data name="WAITFORBUFFENABLED_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns True if Buff Icon is Enabled before the timeout, else False</value>
+  </data>
+  <data name="WAITFORBUFFENABLED_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForBuffEnabled('Active Meditation', 5000)</value>
+  </data>
+  <data name="WAITFORBUFFDISABLED_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns True if Buff Icon is Disabled before the timeout, else False</value>
+  </data>
+  <data name="WAITFORBUFFDISABLED_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForBuffDisabled('Active Meditation', 5000)</value>
+  </data>
 </root>

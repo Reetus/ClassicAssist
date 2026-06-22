@@ -1,10 +1,30 @@
-﻿using System;
+﻿#region License
+
+// Copyright (C) 2026 Reetus
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#endregion
+
+using System;
 using System.Reflection;
 using Assistant;
 using ClassicAssist.Data.BuffIcons;
 using ClassicAssist.Data.SpecialMoves;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO;
+using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Objects;
 using UOC = ClassicAssist.UO.Commands;
 
@@ -12,8 +32,7 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class EntityCommands
     {
-        [CommandsDisplay( Category = nameof( Strings.Entity ),
-            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ), Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static int Distance( object obj = null )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -37,8 +56,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return Math.Max( Math.Abs( x - Engine.Player?.X ?? x ), Math.Abs( y - Engine.Player?.Y ?? y ) );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ),
-            Parameters = new[] { nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Distance ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ), Parameters = new[] { nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Distance ) } )]
         public static bool InRange( object obj, int distance )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -59,8 +77,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return false;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ),
-            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ), Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static int Hue( object obj = null )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -71,9 +88,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return 0;
             }
 
-            Entity entity = UOMath.IsMobile( serial )
-                ? Engine.Mobiles.GetMobile( serial )
-                : Engine.Items.GetItem( serial ) as Entity;
+            Entity entity = UOMath.IsMobile( serial ) ? Engine.Mobiles.GetMobile( serial ) : Engine.Items.GetItem( serial ) as Entity;
 
             if ( entity != null )
             {
@@ -85,8 +100,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return 0;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ),
-            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ), Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static int Graphic( object obj = null )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -97,9 +111,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return 0;
             }
 
-            Entity entity = UOMath.IsMobile( serial )
-                ? Engine.Mobiles.GetMobile( serial )
-                : Engine.Items.GetItem( serial ) as Entity;
+            Entity entity = UOMath.IsMobile( serial ) ? Engine.Mobiles.GetMobile( serial ) : Engine.Items.GetItem( serial ) as Entity;
 
             if ( entity != null )
             {
@@ -111,8 +123,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return 0;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ),
-            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ), Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static int X( object obj = null )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -123,9 +134,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return 0;
             }
 
-            Entity entity = UOMath.IsMobile( serial )
-                ? Engine.Mobiles.GetMobile( serial )
-                : Engine.Items.GetItem( serial ) as Entity;
+            Entity entity = UOMath.IsMobile( serial ) ? Engine.Mobiles.GetMobile( serial ) : Engine.Items.GetItem( serial ) as Entity;
 
             if ( entity != null )
             {
@@ -137,8 +146,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return 0;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ),
-            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ), Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static int Y( object obj = null )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -149,9 +157,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return 0;
             }
 
-            Entity entity = UOMath.IsMobile( serial )
-                ? Engine.Mobiles.GetMobile( serial )
-                : Engine.Items.GetItem( serial ) as Entity;
+            Entity entity = UOMath.IsMobile( serial ) ? Engine.Mobiles.GetMobile( serial ) : Engine.Items.GetItem( serial ) as Entity;
 
             if ( entity != null )
             {
@@ -169,8 +175,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return (int) Engine.Player.Map;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ),
-            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ), Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static int Z( object obj = null )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -181,9 +186,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return 0;
             }
 
-            Entity entity = UOMath.IsMobile( serial )
-                ? Engine.Mobiles.GetMobile( serial )
-                : Engine.Items.GetItem( serial ) as Entity;
+            Entity entity = UOMath.IsMobile( serial ) ? Engine.Mobiles.GetMobile( serial ) : Engine.Items.GetItem( serial ) as Entity;
 
             if ( entity != null )
             {
@@ -195,29 +198,67 @@ namespace ClassicAssist.Data.Macros.Commands
             return 0;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ),
-            Parameters = new[] { nameof( ParameterType.BuffName ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ), Parameters = new[] { nameof( ParameterType.BuffName ) } )]
         public static bool BuffExists( string name )
         {
             return BuffIconManager.GetInstance().BuffExists( name );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ),
-            Parameters = new[] { nameof( ParameterType.BuffName ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ), Parameters = new[] { nameof( ParameterType.Name ), nameof( ParameterType.Timeout ) } )]
+        public static bool WaitForBuffEnabled( string name, int timeout = 5000 )
+        {
+            BuffIconManager manager = BuffIconManager.GetInstance();
+
+            BuffIconData data = manager.GetDataByName( name );
+
+            if ( data == null )
+            {
+                UOC.SystemMessage( Strings.Invalid_type___ );
+                return false;
+            }
+
+            PacketFilterInfo pfi = new PacketFilterInfo( 0xDF,
+                new[] { PacketFilterConditions.ShortAtPositionCondition( data.ID, 7 ), PacketFilterConditions.ByteAtPositionCondition( 1, 10 ) } );
+
+            PacketWaitEntry pwe = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );
+
+            return pwe.Lock.WaitOne( timeout );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Entity ), Parameters = new[] { nameof( ParameterType.Name ), nameof( ParameterType.Timeout ) } )]
+        public static bool WaitForBuffDisabled( string name, int timeout = 5000 )
+        {
+            BuffIconManager manager = BuffIconManager.GetInstance();
+
+            BuffIconData data = manager.GetDataByName( name );
+
+            if ( data == null )
+            {
+                UOC.SystemMessage( Strings.Invalid_type___ );
+                return false;
+            }
+
+            PacketFilterInfo pfi = new PacketFilterInfo( 0xDF,
+                new[] { PacketFilterConditions.ShortAtPositionCondition( data.ID, 7 ), PacketFilterConditions.ByteAtPositionCondition( 0, 10 ) } );
+
+            PacketWaitEntry pwe = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );
+
+            return pwe.Lock.WaitOne( timeout );
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Entity ), Parameters = new[] { nameof( ParameterType.BuffName ) } )]
         public static double BuffTime( string name )
         {
             return BuffIconManager.GetInstance().BuffTime( name );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ),
-            Parameters = new[] { nameof( ParameterType.SpecialMoveName ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ), Parameters = new[] { nameof( ParameterType.SpecialMoveName ) } )]
         public static bool SpecialMoveExists( string name )
         {
             return SpecialMovesManager.GetInstance().SpecialMoveExists( name );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ),
-            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ), Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static string DirectionTo( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -227,9 +268,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return UO.Data.Direction.Invalid.ToString();
             }
 
-            Entity entity = UOMath.IsMobile( serial )
-                ? Engine.Mobiles.GetMobile( serial )
-                : Engine.Items.GetItem( serial ) as Entity;
+            Entity entity = UOMath.IsMobile( serial ) ? Engine.Mobiles.GetMobile( serial ) : Engine.Items.GetItem( serial ) as Entity;
 
             if ( entity == null )
             {
@@ -239,15 +278,12 @@ namespace ClassicAssist.Data.Macros.Commands
             return UOMath.MapDirection( Engine.Player.X, Engine.Player.Y, entity.X, entity.Y ).ToString();
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ),
-            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ), Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static string Direction( object obj = null )
         {
             int serial = AliasCommands.ResolveSerial( obj );
 
-            Entity entity = UOMath.IsMobile( serial )
-                ? Engine.Mobiles.GetMobile( serial )
-                : Engine.Items.GetItem( serial ) as Entity;
+            Entity entity = UOMath.IsMobile( serial ) ? Engine.Mobiles.GetMobile( serial ) : Engine.Items.GetItem( serial ) as Entity;
 
             if ( serial == 0 || entity == null )
             {
@@ -258,8 +294,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return entity.Direction.ToString();
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Entity ),
-            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Entity ), Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static string Name( object obj = null )
         {
             return GetEntityProperty<string>( obj, nameof( Entity.Name ) )?.Trim() ?? string.Empty;
@@ -275,9 +310,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 return default;
             }
 
-            Entity entity = UOMath.IsMobile( serial )
-                ? Engine.Mobiles.GetMobile( serial )
-                : (Entity) Engine.Items.GetItem( serial );
+            Entity entity = UOMath.IsMobile( serial ) ? Engine.Mobiles.GetMobile( serial ) : (Entity) Engine.Items.GetItem( serial );
 
             if ( entity == null )
             {
@@ -297,8 +330,7 @@ namespace ClassicAssist.Data.Macros.Commands
             return val;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Main ),
-            Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Main ), Parameters = new[] { nameof( ParameterType.SerialOrAlias ) } )]
         public static void HideEntity( object obj )
         {
             int serial = AliasCommands.ResolveSerial( obj );

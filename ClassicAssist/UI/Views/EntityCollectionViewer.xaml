@@ -6,7 +6,6 @@
     xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
     xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-    xmlns:uimisc="clr-namespace:ClassicAssist.UI.Misc"
     xmlns:models="clr-namespace:ClassicAssist.UI.Models"
     xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
     xmlns:filter="clr-namespace:ClassicAssist.UI.Views.ECV.Filter"
@@ -101,6 +100,9 @@
                     <MenuItem Header="{x:Static resources:Strings.Amount}"
                               Command="{Binding ChangeSortStyleCommand}"
                               CommandParameter="{x:Static models:EntityCollectionSortStyle.Quantity}" />
+                    <MenuItem Header="{x:Static resources:Strings.Item_Weight}"
+                              Command="{Binding ChangeSortStyleCommand}"
+                              CommandParameter="{x:Static models:EntityCollectionSortStyle.Weight}" />
                 </MenuItem>
             </Menu>
             <Button Height="24" Style="{StaticResource ToolbarButtonStyle}" Command="{Binding CombineStacksCommand}"
@@ -129,8 +131,7 @@
                       VerticalScrollBarVisibility="Auto">
             <filter:EntityCollectionFilterControl MaxHeight="400"
                                                   Command="{Binding DataContext.ApplyFiltersCommand, ElementName=window}"
-                                                  Assemblies="{Binding DataContext.Options.Assemblies, ElementName=window}"
-                                                  PresentationTraceSources.TraceLevel="High" />
+                                                  Assemblies="{Binding DataContext.Options.Assemblies, ElementName=window}" />
         </ScrollViewer>
         <Grid Grid.Row="2"
               Visibility="{Binding ShowOrganizer, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -147,6 +148,9 @@
             <i:Interaction.Behaviors>
                 <behaviours:MultiSelectionBehaviour SelectedItems="{Binding SelectedItems}" />
             </i:Interaction.Behaviors>
+            <ListView.InputBindings>
+                <KeyBinding Modifiers="Ctrl" Key="C" Command="{Binding CopyToClipboardCommand}" />
+            </ListView.InputBindings>
         </ListView>
         <ItemsControl ItemsSource="{Binding QueueActions}" Grid.Row="4">
             <ItemsControl.ItemTemplate>

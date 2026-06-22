@@ -99,6 +99,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _togglePropertiesCommand;
         private bool _tooltipsEnabled;
         private bool _topmost;
+        private ICommand _copyToClipboardCommand;
 
         public EntityCollectionViewerViewModel()
         {
@@ -294,6 +295,34 @@ namespace ClassicAssist.UI.ViewModels
         }
 
         private Dictionary<int, string> _nameOverrides { get; } = new Dictionary<int, string>();
+        public ICommand CopyToClipboardCommand => _copyToClipboardCommand ?? ( _copyToClipboardCommand = new RelayCommand( CopyToClipboard, o => true ) );
+
+        private void CopyToClipboard( object obj )
+        {
+            ObservableCollection<EntityCollectionData> items = SelectedItems.Any() ? SelectedItems : Entities;
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach ( EntityCollectionData item in items )
+            {
+                stringBuilder.AppendLine( $"Serial: 0x{item.Entity.Serial:x8}" );
+                stringBuilder.AppendLine( "Properties:" );
+                stringBuilder.Append( item.FullName );
+
+                Layer layer = TileData.GetLayer( item.Entity.ID );
+
+                if ( layer != Layer.Invalid )
+                {
+                    stringBuilder.AppendLine();
+                    stringBuilder.AppendLine( $"Layer: {layer}" );
+                }
+
+                stringBuilder.AppendLine();
+                stringBuilder.AppendLine();
+            }
+
+            Clipboard.SetText( stringBuilder.ToString() );
+        }
 
         private void ContextTargetOwner( object obj )
         {
@@ -1173,6 +1202,11 @@ namespace ClassicAssist.UI.ViewModels
 
                 case EntityCollectionSortStyle.Quantity:
                     _sorter = new QuantityThenSerialComparer();
+
+                    break;
+
+                case EntityCollectionSortStyle.Weight:
+                    _sorter = new WeightThenSerialComparer();
 
                     break;
 

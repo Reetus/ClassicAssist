@@ -138,7 +138,25 @@ namespace ClassicAssist.Data.Macros.Commands
                 }
             }
 
-            Engine.SendPacketToServer( new Target( TargetTypeEnum.Object, senderSerial, TargetFlags.None, serial, -1, -1, -1, 0,
+            int x = -1;
+            int y = -1;
+            int z = -1;
+            int id = 0;
+
+            if ( Engine.TargetType == TargetTypeEnum.Tile )
+            {
+                Entity entity = UOMath.IsMobile( serial ) ? (Entity) Engine.Mobiles.GetMobile( serial ) : Engine.Items.GetItem( serial );
+
+                if ( entity != null )
+                {
+                    x = entity.X;
+                    y = entity.Y;
+                    z = entity.Z;
+                    id = entity.ID;
+                }
+            }
+
+            Engine.SendPacketToServer( new Target( TargetTypeEnum.Object, senderSerial, Engine.TargetFlags, serial, x, y, z, id,
                 true ) );
             Engine.TargetExists = false;
         }

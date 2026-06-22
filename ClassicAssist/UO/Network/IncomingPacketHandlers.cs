@@ -1459,6 +1459,8 @@ namespace ClassicAssist.UO.Network
                 Engine.Player.Map = map;
             }
 
+            Engine.Items.ClearMultis();
+
             MapChangedEvent?.Invoke( map );
         }
 
@@ -1564,6 +1566,7 @@ namespace ClassicAssist.UO.Network
             {
                 Engine.Mobiles.Remove( serial );
                 Engine.Items.RemoveByOwner( serial );
+                Engine.Items.Remove( serial ); // For damageable objects with mobile serials
             }
             else
             {

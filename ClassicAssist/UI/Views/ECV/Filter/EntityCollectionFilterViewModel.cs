@@ -33,6 +33,7 @@ using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Views.ECV.Filter.Models;
 using ClassicAssist.UO.Data;
+using ClassicAssist.UO.Objects;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sentry;
@@ -169,6 +170,26 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                     bool match = organizer.Items.Any( e => e.ID == item.ID && ( e.Hue == -1 || e.Hue == item.Hue ) );
 
                     return entry.Operator == AutolootOperator.NotEqual ? !match : match;
+                },
+                Options = new ObservableCollection<string>( OrganizerManager.GetInstance().Items?.Select( o => o.Name ) ?? new List<string>() )
+            } );
+
+            Constraints.AddSorted( new PropertyEntry
+            {
+                Name = "Is Multi",
+                ConstraintType = PropertyType.Predicate,
+                AllowedOperators = AutolootAllowedOperators.Equal | AutolootAllowedOperators.NotEqual,
+                Predicate = ( item, entry ) =>
+                {
+                    switch ( entry.Operator )
+                    {
+                        case AutolootOperator.Equal:
+                            return item is Item i && i.ArtDataID == 2;
+                        case AutolootOperator.NotEqual:
+                            return item is Item i2 && i2.ArtDataID != 2;
+                        default:
+                            return false;
+                    }
                 },
                 Options = new ObservableCollection<string>( OrganizerManager.GetInstance().Items?.Select( o => o.Name ) ?? new List<string>() )
             } );

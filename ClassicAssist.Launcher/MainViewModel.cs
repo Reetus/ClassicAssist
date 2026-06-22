@@ -536,6 +536,7 @@ namespace ClassicAssist.Launcher
 
             if ( p != null && !p.HasExited )
             {
+                Closing( null );
                 Application.Current.Shutdown( 0 );
             }
         }

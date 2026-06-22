@@ -203,6 +203,7 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" x:Name="LeftColumn" />
                                             <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <controls:EditTextBlock
                                             Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
@@ -226,8 +227,22 @@
                                                 </Style>
                                             </controls:EditTextBlock.Resources>
                                         </controls:EditTextBlock>
+                                        <Image Grid.Column="1" Height="12" Margin="2,0,0,0"
+                                               Source="{StaticResource FileIcon}"
+                                               ToolTip="{Binding FilePath}">
+                                            <Image.Style>
+                                                <Style TargetType="Image">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsFileBacked}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
                                         <TextBlock x:Name="Hotkey" Text="{Binding Hotkey}" Margin="2,0,0,0"
-                                                   Grid.Column="1" FontSize="9" Foreground="SpringGreen"
+                                                   Grid.Column="2" FontSize="9" Foreground="SpringGreen"
                                                    TextAlignment="Right"
                                                    VerticalAlignment="Center" HorizontalAlignment="Right">
                                             <TextBlock.Style>
@@ -411,6 +426,10 @@
                     <Button Command="{Binding OpenExternalCommand}" CommandParameter="{Binding SelectedItem}"
                             Padding="5,0,5,0" ToolTip="{x:Static resources:Strings.Open_in_external_editor}">
                         <Image Source="{StaticResource VSCodeIcon}" Height="16" />
+                    </Button>
+                    <Button Command="{Binding OpenMacrosFolderCommand}"
+                            Padding="5,0,5,0" ToolTip="{x:Static resources:Strings.Open_Macros_Folder}">
+                        <Image Source="{StaticResource FolderIcon}" Height="16" />
                     </Button>
                 </controls1:StretchyWrapPanel>
             </Grid>

@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -44,6 +45,7 @@ namespace ClassicAssist.Data.Macros
         private AutoResetEvent _autoResetEvent;
         private ObservableCollection<int> _breakpoints = new ObservableCollection<int>();
         private bool _doNotAutoInterrupt;
+        private string _filePath;
         private Dictionary<string, object> _frameVariables;
         private bool _global;
         private string _group;
@@ -79,7 +81,17 @@ namespace ClassicAssist.Data.Macros
             Name = GetJsonValue( token, "Name", string.Empty );
             Loop = GetJsonValue( token, "Loop", false );
             DoNotAutoInterrupt = GetJsonValue( token, "DoNotAutoInterrupt", false );
-            Macro = GetJsonValue( token, "Macro", string.Empty );
+            FilePath = GetJsonValue<string>( token, "FilePath", null );
+
+            if ( !string.IsNullOrEmpty( FilePath ) && File.Exists( FilePath ) )
+            {
+                Macro = File.ReadAllText( FilePath );
+            }
+            else
+            {
+                Macro = GetJsonValue( token, "Macro", string.Empty );
+            }
+
             PassToUO = GetJsonValue( token, "PassToUO", true );
             IsBackground = GetJsonValue( token, "IsBackground", false );
             IsAutostart = GetJsonValue( token, "IsAutostart", false );
@@ -155,6 +167,18 @@ namespace ClassicAssist.Data.Macros
             get => _doNotAutoInterrupt;
             set => SetProperty( ref _doNotAutoInterrupt, value );
         }
+
+        public string FilePath
+        {
+            get => _filePath;
+            set
+            {
+                SetProperty( ref _filePath, value );
+                OnPropertyChanged( nameof( IsFileBacked ) );
+            }
+        }
+
+        public bool IsFileBacked => !string.IsNullOrEmpty( FilePath );
 
         public Dictionary<string, object> FrameVariables
         {
@@ -483,7 +507,8 @@ namespace ClassicAssist.Data.Macros
                 { "Name", Name },
                 { "Loop", Loop },
                 { "DoNotAutoInterrupt", DoNotAutoInterrupt },
-                { "Macro", Macro },
+                // File-backed macros keep their content in the .py file, not the profile.
+                { "Macro", IsFileBacked ? string.Empty : Macro },
                 { "PassToUO", PassToUO },
                 { "Keys", Hotkey.ToJObject() },
                 { "IsBackground", IsBackground },
@@ -493,6 +518,11 @@ namespace ClassicAssist.Data.Macros
                 { "Global", Global },
                 { "LastSavedHash", Hash }
             };
+
+            if ( IsFileBacked )
+            {
+                entry.Add( "FilePath", FilePath );
+            }
 
             if ( Metadata?.Count > 0 )
             {

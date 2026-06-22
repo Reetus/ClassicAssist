@@ -31,7 +31,10 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <ListView ItemsSource="{Binding Source={StaticResource src}}">
+            <ListView ItemsSource="{Binding Source={StaticResource src}}"
+                      VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                      VirtualizingPanel.ScrollUnit="Pixel"
+                      VirtualizingPanel.VirtualizationMode="Recycling">
                 <ListView.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.ContainerStyle>
@@ -51,6 +54,7 @@
                                                 </Expander.Header>
                                                 <Expander.Content>
                                                     <ListBox ItemsSource="{Binding Items}" BorderThickness="0"
+                                                             VirtualizingStackPanel.VirtualizationMode="Recycling"
                                                              SelectedItem="{Binding DataContext.SelectedItem, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}">
                                                         <ListBox.ItemTemplate>
                                                             <DataTemplate>

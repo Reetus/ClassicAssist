@@ -42,6 +42,7 @@ using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Models;
 using ClassicAssist.UI.Views;
 using ClassicAssist.UI.Views.ECV;
+using ClassicAssist.UI.Views.ECV.Extensibility;
 using ClassicAssist.UI.Views.ECV.Filter.Models;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
@@ -78,6 +79,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _contextTargetOwnerCommand;
         private ICommand _contextToggleLockCommand;
         private ICommand _contextUseItemCommand;
+        private ObservableCollection<EntityCollectionViewerActionViewModel> _customToolbarActions;
         private ObservableCollection<EntityCollectionData> _entities;
         private ICommand _equipItemCommand;
         private List<EntityCollectionFilterGroup> _filters;
@@ -176,6 +178,27 @@ namespace ClassicAssist.UI.ViewModels
 
             ThreadQueue = new ThreadPriorityQueue<QueueAction>( ProcessQueue );
             QueueActions.CollectionChanged += QueueActions_CollectionChanged;
+
+            CustomToolbarActions = new ObservableCollection<EntityCollectionViewerActionViewModel>(
+                EntityCollectionViewerExtensions.ToolbarActions.Select( action =>
+                    new EntityCollectionViewerActionViewModel( action, CreateActionContext ) ) );
+        }
+
+        private IEntityCollectionViewerContext CreateActionContext()
+        {
+            Item[] selectedItems = SelectedItems.Where( e => e.Entity is Item ).Select( e => (Item) e.Entity ).ToArray();
+
+            return new EntityCollectionViewerActionContext( Collection, selectedItems, ShowProperties, () => _dispatcher.Invoke( () => Refresh( null ) ),
+                ( action, status ) => EnqueueAction( queueAction =>
+                {
+                    if ( queueAction.CancellationTokenSource.IsCancellationRequested )
+                    {
+                        _dispatcher.Invoke( () => { queueAction.Status = Strings.Cancel; } );
+                        return Task.FromResult( false );
+                    }
+
+                    return Task.FromResult( action() );
+                }, status ) );
         }
 
         public ICommand ApplyFiltersCommand => _applyFiltersCommand ?? ( _applyFiltersCommand = new RelayCommand( ApplyFilters, o => true ) );
@@ -235,6 +258,12 @@ namespace ClassicAssist.UI.ViewModels
         public bool SelectedItemsAllLocked => SelectedItems.Count > 0 && SelectedItems.All( e => e.IsLocked );
 
         public ObservableCollection<KeyValuePair<string, Action<Item>>> CustomContextActions { get; set; } = new ObservableCollection<KeyValuePair<string, Action<Item>>>();
+
+        public ObservableCollection<EntityCollectionViewerActionViewModel> CustomToolbarActions
+        {
+            get => _customToolbarActions;
+            set => SetProperty( ref _customToolbarActions, value );
+        }
 
         public ObservableCollection<EntityCollectionData> Entities
         {

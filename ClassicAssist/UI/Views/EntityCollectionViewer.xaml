@@ -126,6 +126,32 @@
             <Button Height="24" Style="{StaticResource ToolbarButtonStyle}" Command="{Binding ConfigureCommand}">
                 <Image Source="{StaticResource configureIcon}" />
             </Button>
+            <ItemsControl ItemsSource="{Binding CustomToolbarActions}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Height="24" Padding="0"
+                                Command="{Binding ExecuteCommand}" ToolTip="{Binding Name}">
+                            <Button.Style>
+                                <Style TargetType="Button"
+                                       BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                                    <Setter Property="Margin" Value="0,0,5,0" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Image.Opacity" Value="0.5" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <Image Source="{Binding Icon}" />
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </ToolBar>
         <ScrollViewer Grid.Row="1"
                       Visibility="{Binding ShowFilter, Converter={StaticResource BooleanToVisibilityConverter}}"

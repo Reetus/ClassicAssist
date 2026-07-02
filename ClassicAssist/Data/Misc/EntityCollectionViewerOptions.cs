@@ -34,6 +34,7 @@ namespace ClassicAssist.Data.Misc
         private ObservableCollection<Assembly> _assemblies = new ObservableCollection<Assembly>();
         private ObservableCollection<CombineStacksOpenContainersIgnoreEntry> _combineStacksIgnore;
         private ObservableCollection<ContainerSet> _containerSets = new ObservableCollection<ContainerSet>();
+        private ObservableCollection<int> _lockedItems = new ObservableCollection<int>();
         private ObservableCollection<CombineStacksOpenContainersIgnoreEntry> _openContainersIgnore;
         private bool _openContainersOnlyKnownContainers;
         private bool _showChildItems;
@@ -63,6 +64,12 @@ namespace ClassicAssist.Data.Misc
         }
 
         public string Hash { get; set; }
+
+        public ObservableCollection<int> LockedItems
+        {
+            get => _lockedItems;
+            set => SetProperty( ref _lockedItems, value );
+        }
 
         public ObservableCollection<CombineStacksOpenContainersIgnoreEntry> OpenContainersIgnore
         {
@@ -94,6 +101,8 @@ namespace ClassicAssist.Data.Misc
             options.AlwaysOnTop = config["AlwaysOnTop"]?.ToObject<bool>() ?? false;
             options.ShowChildItems = config["ShowChildItems"]?.ToObject<bool>() ?? false;
             options.OpenContainersOnlyKnownContainers = config["OpenContainersOnlyKnownContainers"]?.ToObject<bool>() ?? false;
+
+            options.LockedItems = config["LockedItems"]?.ToObject<ObservableCollection<int>>() ?? new ObservableCollection<int>();
 
             options.CombineStacksIgnore = new ObservableCollection<CombineStacksOpenContainersIgnoreEntry>();
 
@@ -165,6 +174,11 @@ namespace ClassicAssist.Data.Misc
         public static JToken Serialize( EntityCollectionViewerOptions options )
         {
             JObject config = new JObject { { "AlwaysOnTop", options.AlwaysOnTop }, { "ShowChildItems", options.ShowChildItems } };
+
+            if ( options.LockedItems != null )
+            {
+                config.Add( "LockedItems", new JArray( from serial in options.LockedItems select serial ) );
+            }
 
             JArray combineStacksIgnore = new JArray();
 

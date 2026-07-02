@@ -3424,6 +3424,24 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lock Item.
+        /// </summary>
+        public static string Lock_item {
+            get {
+                return ResourceManager.GetString("Lock item", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Unlock Item.
+        /// </summary>
+        public static string Unlock_item {
+            get {
+                return ResourceManager.GetString("Unlock item", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Move to backpack.
         /// </summary>
         public static string Move_to_backpack {

@@ -18,19 +18,27 @@
                                       CommandParameter="{Binding SelectedItem, ElementName=listView}" />
                     </DockPanel.InputBindings>
                     <StackPanel ContextMenu="{StaticResource ContextMenu}">
-                        <Image Source="{Binding (viewModels:EntityCollectionData.Bitmap)}" Height="32"
-                               DockPanel.Dock="Top" Stretch="Uniform"
-                               HorizontalAlignment="Center" />
+                        <Grid DockPanel.Dock="Top" HorizontalAlignment="Center">
+                            <Image Source="{Binding Bitmap}" Height="32"
+                                   Stretch="Uniform" HorizontalAlignment="Center" />
+                            <Image x:Name="LockIcon" Width="12" Height="12"
+                                   HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                   Source="{x:Static viewModels:EntityCollectionViewerViewModel.PadlockIcon}"
+                                   Visibility="Collapsed" />
+                        </Grid>
                         <Border x:Name="Border" BorderThickness="1">
-                            <TextBlock x:Name="TextBlock" Text="{Binding (viewModels:EntityCollectionData.Name)}"
+                            <TextBlock x:Name="TextBlock" Text="{Binding Name}"
                                        TextAlignment="Center"
                                        Foreground="{DynamicResource ThemeForegroundBrush}"
                                        DockPanel.Dock="Bottom" Padding="1" TextWrapping="WrapWithOverflow"
-                                       ToolTip="{Binding (viewModels:EntityCollectionData.FullName)}" />
+                                       ToolTip="{Binding FullName}" />
                         </Border>
                     </StackPanel>
                 </DockPanel>
                 <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding IsLocked}" Value="True">
+                        <Setter TargetName="LockIcon" Property="Visibility" Value="Visible" />
+                    </DataTrigger>
                     <DataTrigger
                         Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}"
                         Value="True">
@@ -47,7 +55,7 @@
                         <Setter Property="Width" Value="60" />
                         <Setter TargetName="TextBlock" Property="FontSize" Value="10" />
                         <Setter TargetName="TextBlock" Property="Text"
-                                Value="{Binding (viewModels:EntityCollectionData.Name)}" />
+                                Value="{Binding Name}" />
                     </DataTrigger>
                     <DataTrigger
                         Binding="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ShowProperties)}"
@@ -55,7 +63,7 @@
                         <Setter Property="Width" Value="120" />
                         <Setter TargetName="TextBlock" Property="FontSize" Value="10" />
                         <Setter TargetName="TextBlock" Property="Text"
-                                Value="{Binding (viewModels:EntityCollectionData.FullName)}" />
+                                Value="{Binding FullName}" />
                     </DataTrigger>
                 </DataTemplate.Triggers>
             </DataTemplate>

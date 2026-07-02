@@ -13,6 +13,7 @@
 #endregion
 
 using ClassicAssist.Misc;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
 using System.Collections.Generic;
@@ -22,11 +23,18 @@ using System.Windows.Media;
 
 namespace ClassicAssist.UI.ViewModels
 {
-    public class EntityCollectionData
+    public class EntityCollectionData : SetPropertyNotifyChanged
     {
         private readonly Dictionary<int, ImageSource> _cache = new Dictionary<int, ImageSource>();
+        private bool _isLocked;
 
         public bool IsCoin => Entity?.ID == 0x0EEA || Entity?.ID == 0x0EED || Entity?.ID == 0x0EF0;
+
+        public bool IsLocked
+        {
+            get => _isLocked;
+            set => SetProperty( ref _isLocked, value );
+        }
 
         public ImageSource Bitmap
         {

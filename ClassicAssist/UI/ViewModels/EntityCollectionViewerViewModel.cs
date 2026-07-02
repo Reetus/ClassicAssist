@@ -30,6 +30,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Autoloot;
@@ -73,6 +74,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _contextOpenContainerCommand;
         private ICommand _contextTargetCommand;
         private ICommand _contextTargetOwnerCommand;
+        private ICommand _contextToggleLockCommand;
         private ICommand _contextUseItemCommand;
         private ObservableCollection<EntityCollectionData> _entities;
         private ICommand _equipItemCommand;
@@ -154,6 +156,7 @@ namespace ClassicAssist.UI.ViewModels
                 }
 
                 UpdateStatusLabel();
+                OnPropertyChanged( nameof( SelectedItemsAllLocked ) );
             };
 
             UpdateStatusLabel();
@@ -210,14 +213,21 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ContextTargetOwnerCommand =>
             _contextTargetOwnerCommand ?? ( _contextTargetOwnerCommand = new RelayCommand( ContextTargetOwner, o => SelectedItems.Any() && SelectedItems.Count == 1 ) );
 
+        public ICommand ContextToggleLockCommand =>
+            _contextToggleLockCommand ?? ( _contextToggleLockCommand = new RelayCommand( ContextToggleLock, o => SelectedItems != null && SelectedItems.Count > 0 ) );
+
         public ICommand ContextUseItemCommand => _contextUseItemCommand ?? ( _contextUseItemCommand = new RelayCommandAsync( ContextUseItem, o => SelectedItems != null ) );
+
+        public static ImageSource PadlockIcon { get; } = Properties.Resources.padlock.ToImageSource();
+
+        public bool SelectedItemsAllLocked => SelectedItems.Count > 0 && SelectedItems.All( e => e.IsLocked );
 
         public ObservableCollection<KeyValuePair<string, Action<Item>>> CustomContextActions { get; set; } = new ObservableCollection<KeyValuePair<string, Action<Item>>>();
 
         public ObservableCollection<EntityCollectionData> Entities
         {
             get => _entities;
-            set => SetProperty( ref _entities, value );
+            set => SetProperty( ref _entities, value, afterChange: _ => ApplyLockState() );
         }
 
         public ICommand EquipItemCommand => _equipItemCommand ?? ( _equipItemCommand = new RelayCommandAsync( EquipItem, o => SelectedItems != null ) );
@@ -423,7 +433,7 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            int[] items = SelectedItems.Select( i => i.Entity.Serial ).ToArray();
+            int[] items = SelectedItems.Where( i => !i.IsLocked ).Select( i => i.Entity.Serial ).ToArray();
 
             EnqueueAction( async obj =>
             {
@@ -453,7 +463,7 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            Item[] items = SelectedItems.Where( i => i.Entity is Item ).Select( i => i.Entity ).Cast<Item>().ToArray();
+            Item[] items = SelectedItems.Where( i => i.Entity is Item && !i.IsLocked ).Select( i => i.Entity ).Cast<Item>().ToArray();
 
             EnqueueAction( async obj =>
             {
@@ -831,6 +841,8 @@ namespace ClassicAssist.UI.ViewModels
                         Entities.Add( entity.ToEntityCollectionData( _nameOverrides ) );
                     }
 
+                    ApplyLockState();
+
                     if ( _filters != null )
                     {
                         ApplyFilters( _filters );
@@ -933,6 +945,45 @@ namespace ClassicAssist.UI.ViewModels
             {
                 Commands.RemoveObject( entity.Serial );
             }
+        }
+
+        private void ApplyLockState()
+        {
+            if ( _entities == null || Options?.LockedItems == null )
+            {
+                return;
+            }
+
+            foreach ( EntityCollectionData ecd in _entities )
+            {
+                ecd.IsLocked = Options.LockedItems.Contains( ecd.Entity.Serial );
+            }
+        }
+
+        private void ContextToggleLock( object obj )
+        {
+            bool lockTarget = !SelectedItemsAllLocked;
+
+            foreach ( EntityCollectionData ecd in SelectedItems.ToList() )
+            {
+                ecd.IsLocked = lockTarget;
+
+                if ( lockTarget )
+                {
+                    if ( !Options.LockedItems.Contains( ecd.Entity.Serial ) )
+                    {
+                        Options.LockedItems.Add( ecd.Entity.Serial );
+                    }
+                }
+                else
+                {
+                    Options.LockedItems.Remove( ecd.Entity.Serial );
+                }
+            }
+
+            SaveOptions( Options );
+
+            OnPropertyChanged( nameof( SelectedItemsAllLocked ) );
         }
 
         ~EntityCollectionViewerViewModel()
@@ -1314,7 +1365,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private async Task ContextMoveToContainer( object arg )
         {
-            int[] items = SelectedItems.Select( i => i.Entity.Serial ).ToArray();
+            int[] items = SelectedItems.Where( i => !i.IsLocked ).Select( i => i.Entity.Serial ).ToArray();
 
             int serial = 0;
 

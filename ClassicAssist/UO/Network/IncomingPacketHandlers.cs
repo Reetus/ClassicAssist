@@ -373,9 +373,9 @@ namespace ClassicAssist.UO.Network
         {
             int serial = reader.ReadInt32();
 
-            QuestPointer pointer = Engine.QuestPointers.FirstOrDefault( p => p.Serial == serial );
+            QuestPointer[] pointers = Engine.QuestPointers.Where( p => p.Serial == serial ).ToArray();
 
-            if ( pointer != null )
+            foreach ( QuestPointer pointer in pointers )
             {
                 Engine.QuestPointers.Remove( pointer );
             }

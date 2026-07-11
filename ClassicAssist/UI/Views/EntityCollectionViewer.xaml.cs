@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace ClassicAssist.UI.Views
 {
@@ -10,6 +11,15 @@ namespace ClassicAssist.UI.Views
         public EntityCollectionViewer()
         {
             InitializeComponent();
+
+            Closed += OnClosed;
+        }
+
+        private void OnClosed( object sender, EventArgs e )
+        {
+            Closed -= OnClosed;
+
+            ( DataContext as IDisposable )?.Dispose();
         }
     }
 }

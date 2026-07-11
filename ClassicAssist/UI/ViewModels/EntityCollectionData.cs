@@ -95,6 +95,18 @@ namespace ClassicAssist.UI.ViewModels
 
         public string Name => GetName( Entity );
 
+        /// <summary>
+        ///     Re-raises change notification for the computed, entity-derived properties. Called when the
+        ///     underlying entity's name/properties/hue are updated after the row was created (e.g. an OPL
+        ///     packet arriving after the item was added to the viewer).
+        /// </summary>
+        public void NotifyPropertiesUpdated()
+        {
+            OnPropertyChanged( nameof( Name ) );
+            OnPropertyChanged( nameof( FullName ) );
+            OnPropertyChanged( nameof( Bitmap ) );
+        }
+
         private static string GetProperties( Entity entity )
         {
             return entity.Properties == null

@@ -125,5 +125,49 @@ namespace ClassicAssist.Tests
 
             Engine.Player = null;
         }
+
+        [TestMethod]
+        public void WillFireItemPropertiesUpdatedEventOnProperties()
+        {
+            const int itemSerial = 0x40000002;
+
+            // 0xD6 (Object Property List): id, length, word, serial, word, hash, then a zero cliloc
+            // terminator (empty property list keeps the test independent of Cliloc data files).
+            byte[] packet =
+            {
+                0xD6,
+                0x00, 0x13, // length
+                0x00, 0x01, // word 1
+                0x40, 0x00, 0x00, 0x02, // serial
+                0x00, 0x00, // word 0
+                0x00, 0x00, 0x00, 0x00, // hash
+                0x00, 0x00, 0x00, 0x00 // cliloc terminator
+            };
+
+            PacketHandler handler = IncomingPacketHandlers.GetHandler( 0xD6 );
+
+            Assert.IsNotNull( handler );
+
+            Item firedItem = null;
+
+            void OnItemPropertiesUpdated( Item item )
+            {
+                firedItem = item;
+            }
+
+            IncomingPacketHandlers.ItemPropertiesUpdatedEvent += OnItemPropertiesUpdated;
+
+            try
+            {
+                handler.OnReceive( new PacketReader( packet, packet.Length, false ) );
+            }
+            finally
+            {
+                IncomingPacketHandlers.ItemPropertiesUpdatedEvent -= OnItemPropertiesUpdated;
+            }
+
+            Assert.IsNotNull( firedItem, "ItemPropertiesUpdatedEvent did not fire." );
+            Assert.AreEqual( itemSerial, firedItem.Serial );
+        }
     }
 }

@@ -264,7 +264,11 @@ namespace ClassicAssist.UO.Objects
                 {
                     Item owner = Engine.Items.GetItem( item.Owner );
 
-                    if ( owner?.Container?.GetItem( serial ) != null )
+                    // Only purge the item from the owner's container when it's a different
+                    // collection to this one. If it's the same collection, base.Remove below
+                    // handles the removal and raises CollectionChanged - removing it here first
+                    // would leave nothing for base.Remove to remove, swallowing the event.
+                    if ( !ReferenceEquals( owner?.Container, this ) && owner?.Container?.GetItem( serial ) != null )
                     {
                         owner.Container.EntityList.TryRemove( serial, out _ );
                     }
@@ -359,13 +363,15 @@ namespace ClassicAssist.UO.Objects
             return null;
         }
 
-        public void OnCollectionChanged( bool rippleDown, bool added, Item[] items )
+        public void OnCollectionChanged( bool rippleUp, bool added, Item[] items )
         {
             OnCollectionChanged( added, items );
 
-            // Ripple down
+            // Ripple up through every ancestor container so viewers watching a parent
+            // collection (e.g. the flattened ShowChildItems view) are notified of changes
+            // to any descendant, regardless of nesting depth.
 
-            if ( !rippleDown )
+            if ( !rippleUp )
             {
                 return;
             }
@@ -377,7 +383,7 @@ namespace ClassicAssist.UO.Objects
 
             if ( Engine.Items.GetItem( item.Owner, out Item parent ) )
             {
-                parent.Container?.OnCollectionChanged( false, added, items );
+                parent.Container?.OnCollectionChanged( true, added, items );
             }
         }
 

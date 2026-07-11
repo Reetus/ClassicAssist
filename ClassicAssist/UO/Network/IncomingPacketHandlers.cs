@@ -36,6 +36,8 @@ namespace ClassicAssist.UO.Network
 
         public delegate void dGump( uint gumpId, int serial, Gump gump );
 
+        public delegate void dItemPropertiesUpdated( Item item );
+
         public delegate void dJournalEntryAdded( JournalEntry je );
 
         public delegate void dMapChanged( Map newMap );
@@ -67,6 +69,7 @@ namespace ClassicAssist.UO.Network
 
         public static event dVendorSellDisplay VendorSellDisplayEvent;
         public static event dJournalEntryAdded JournalEntryAddedEvent;
+        public static event dItemPropertiesUpdated ItemPropertiesUpdatedEvent;
         public static event dSkillUpdated SkillUpdatedEvent;
         public static event dSkillList SkillsListEvent;
         public static event dMobileUpdated MobileUpdatedEvent;
@@ -1666,6 +1669,8 @@ namespace ClassicAssist.UO.Network
 
                 item.Name = name;
                 item.Properties = propertyArray;
+
+                ItemPropertiesUpdatedEvent?.Invoke( item );
             }
         }
 

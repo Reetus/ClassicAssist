@@ -28,6 +28,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
     {
         private const int SCAVENGER_DISTANCE = 2;
         private readonly object _scavengeLock = new object();
+        private readonly HashSet<int> _pendingSerials = new HashSet<int>();
+        private readonly object _pendingSerialsLock = new object();
         private bool _checkWeight;
         private ICommand _clearAllCommand;
         private int _containerSerial;
@@ -346,11 +348,24 @@ namespace ClassicAssist.UI.ViewModels.Agents
 #endif
                 }
 
+                lock ( _pendingSerialsLock )
+                {
+                    _pendingSerials.RemoveWhere( s => Engine.Items.GetItem( s ) == null );
+                }
+
                 foreach ( Item scavengerItem in scavengerItems.Where( i => i.Distance <= SCAVENGER_DISTANCE) )
                 {
                     if ( !Enabled )
                     {
                         break;
+                    }
+
+                    lock ( _pendingSerialsLock )
+                    {
+                        if ( _pendingSerials.Contains( scavengerItem.Serial ) )
+                        {
+                            continue;
+                        }
                     }
 
                     Item refetchedItem = Engine.Items.GetItem( scavengerItem.Serial );
@@ -360,6 +375,13 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         : ContainerSerial ) )
                     {
                         continue;
+                    }
+
+                    int pendingSerial = scavengerItem.Serial;
+
+                    lock ( _pendingSerialsLock )
+                    {
+                        _pendingSerials.Add( pendingSerial );
                     }
 
                     DragDropOptions options = new DragDropOptions
@@ -372,7 +394,14 @@ namespace ClassicAssist.UI.ViewModels.Agents
                         BeforeDragDrop = item => UOC.SystemMessage( string.Format( Strings.Scavenging___0__, scavengerItem.Name ?? "Unknown" ), 61 )
                     };
 
-                    ActionPacketQueue.EnqueueDragDrop( scavengerItem, scavengerItem.Count, container.Serial, options: options );
+                    ActionPacketQueue.EnqueueDragDrop( scavengerItem, scavengerItem.Count, container.Serial, options: options )
+                        .ContinueWith( _ =>
+                        {
+                            lock ( _pendingSerialsLock )
+                            {
+                                _pendingSerials.Remove( pendingSerial );
+                            }
+                        } );
                 }
             }
             finally

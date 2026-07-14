@@ -38,6 +38,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
         private bool _topmost = true;
         private ICommand _viewPlayerEquipmentCommand;
+        private readonly bool[] _packetEnabled = new bool[256];
 
         public DebugPacketsViewModel()
         {
@@ -47,7 +48,20 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
             for ( byte i = 0; i < 0xFF; i++ )
             {
-                PacketEntries.Add( new PacketEnabledEntry { Name = $"0x{i:x2}", PacketID = i, Enabled = i != 0x73 } );
+                bool enabled = i != 0x73;
+                PacketEntries.Add( new PacketEnabledEntry { Name = $"0x{i:x2}", PacketID = i, Enabled = enabled } );
+                _packetEnabled[i] = enabled;
+            }
+
+            foreach ( PacketEnabledEntry entry in PacketEntries )
+            {
+                entry.PropertyChanged += ( s, e ) =>
+                {
+                    if ( e.PropertyName == "Enabled" && s is PacketEnabledEntry pee && pee.PacketID >= 0 && pee.PacketID < 256 )
+                    {
+                        _packetEnabled[pee.PacketID] = pee.Enabled;
+                    }
+                };
             }
 
             Queue = new ThreadQueue<PacketEntry>( ProcessQueue );
@@ -230,7 +244,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
         private void OnInternalPacketSentEvent( byte[] data, int length )
         {
-            if ( !IncludeInternal )
+            if ( !Enabled || !IncludeInternal )
             {
                 return;
             }
@@ -240,24 +254,17 @@ namespace ClassicAssist.UI.ViewModels.Debug
                 return;
             }
 
-            if ( PacketEntries.FirstOrDefault( e => e.PacketID == data[0] )?.Enabled == false )
+            if ( !_packetEnabled[data[0]] )
             {
                 return;
             }
 
-            if ( !Enabled )
-            {
-                return;
-            }
-
-            PacketEntry entry = new PacketEntry { Title = "Internal Outgoing Packet", Data = data, Direction = PacketDirection.Outgoing };
-
-            Queue.Enqueue( entry );
+            Queue.Enqueue( new PacketEntry { Title = "Internal Outgoing Packet", Data = data, Direction = PacketDirection.Outgoing } );
         }
 
         private void OnInternalPacketReceivedEvent( byte[] data, int length )
         {
-            if ( !IncludeInternal )
+            if ( !Enabled || !IncludeInternal )
             {
                 return;
             }
@@ -267,63 +274,52 @@ namespace ClassicAssist.UI.ViewModels.Debug
                 return;
             }
 
-            if ( PacketEntries.FirstOrDefault( e => e.PacketID == data[0] )?.Enabled == false )
+            if ( !_packetEnabled[data[0]] )
             {
                 return;
             }
 
+            Queue.Enqueue( new PacketEntry { Title = "Internal Incoming Packet", Data = data, Direction = PacketDirection.Incoming } );
+        }
+
+        private void OnPacketSentEvent( byte[] data, int length )
+        {
             if ( !Enabled )
             {
                 return;
             }
 
-            PacketEntry entry = new PacketEntry { Title = "Internal Incoming Packet", Data = data, Direction = PacketDirection.Incoming };
-
-            Queue.Enqueue( entry );
-        }
-
-        private void OnPacketSentEvent( byte[] data, int length )
-        {
             if ( Direction != PacketDirection.Any && Direction != PacketDirection.Outgoing )
             {
                 return;
             }
 
-            if ( PacketEntries.FirstOrDefault( e => e.PacketID == data[0] )?.Enabled == false )
+            if ( !_packetEnabled[data[0]] )
             {
                 return;
             }
 
+            Queue.Enqueue( new PacketEntry { Title = "Outgoing Packet", Data = data, Direction = PacketDirection.Outgoing } );
+        }
+
+        private void OnPacketReceivedEvent( byte[] data, int length )
+        {
             if ( !Enabled )
             {
                 return;
             }
 
-            PacketEntry entry = new PacketEntry { Title = "Outgoing Packet", Data = data, Direction = PacketDirection.Outgoing };
-
-            Queue.Enqueue( entry );
-        }
-
-        private void OnPacketReceivedEvent( byte[] data, int length )
-        {
             if ( Direction != PacketDirection.Any && Direction != PacketDirection.Incoming )
             {
                 return;
             }
 
-            if ( PacketEntries.FirstOrDefault( e => e.PacketID == data[0] )?.Enabled == false )
+            if ( !_packetEnabled[data[0]] )
             {
                 return;
             }
 
-            if ( !Enabled )
-            {
-                return;
-            }
-
-            PacketEntry entry = new PacketEntry { Title = "Incoming Packet", Data = data, Direction = PacketDirection.Incoming };
-
-            Queue.Enqueue( entry );
+            Queue.Enqueue( new PacketEntry { Title = "Incoming Packet", Data = data, Direction = PacketDirection.Incoming } );
         }
 
         private void ViewPlayerEquipment( object obj )

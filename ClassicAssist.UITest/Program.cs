@@ -11,7 +11,7 @@ namespace ClassicAssist.UITest
 {
     internal class Program
     {
-        private const string UO_FOLDER = @"path\to";
+        private const string UO_FOLDER = @"C:\Users\johns\Documents\UO\Ultima Online Classic";
 
         [STAThread]
         private static void Main()
@@ -19,8 +19,8 @@ namespace ClassicAssist.UITest
             Engine.StartupPath = Environment.CurrentDirectory;
 
             LoadData( UO_FOLDER );
-            ShowECV();
-            //ShowMain();
+            //ShowECV();
+            ShowMain();
         }
 
         // ReSharper disable once UnusedMember.Global

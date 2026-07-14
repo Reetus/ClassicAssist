@@ -25,7 +25,7 @@ namespace ClassicAssist.UI.ViewModels
 {
     public class EntityCollectionData : SetPropertyNotifyChanged
     {
-        private readonly Dictionary<int, ImageSource> _cache = new Dictionary<int, ImageSource>();
+        private static readonly Dictionary<int, ImageSource> _cache = new Dictionary<int, ImageSource>();
         private bool _isLocked;
 
         public bool IsCoin => Entity?.ID == 0x0EEA || Entity?.ID == 0x0EED || Entity?.ID == 0x0EF0;

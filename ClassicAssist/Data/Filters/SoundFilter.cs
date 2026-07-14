@@ -175,9 +175,17 @@ namespace ClassicAssist.Data.Filters
 
             int soundId = ( packet[2] << 8 ) | packet[3];
 
-            IEnumerable<int> allEnabledSoundIds = Items.Where( e => e.Enabled ).SelectMany( e => e.SoundIDs );
+            for ( int i = 0; i < Items.Count; i++ )
+            {
+                SoundFilterEntry entry = Items[i];
 
-            return allEnabledSoundIds.Contains( soundId );
+                if ( entry.Enabled && entry.SoundIDs != null && Array.IndexOf( entry.SoundIDs, soundId ) >= 0 )
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 

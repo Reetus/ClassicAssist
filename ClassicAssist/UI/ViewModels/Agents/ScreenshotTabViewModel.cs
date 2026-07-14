@@ -569,17 +569,21 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 height = rect.Bottom - rect.Top;
             }
 
+            bool isFullscreen = fullscreen.HasValue && fullscreen.Value || Fullscreen;
+            IntPtr dcOwner = isFullscreen ? IntPtr.Zero : Engine.WindowHandle;
+
             IntPtr memDC = CreateCompatibleDC( screenDC );
             IntPtr hBitmap = CreateCompatibleBitmap( screenDC, width, height );
-            SelectObject( memDC, hBitmap );
+            IntPtr oldBitmap = SelectObject( memDC, hBitmap );
 
             BitBlt( memDC, 0, 0, width, height, screenDC, 0, 0, TernaryRasterOperations.SRCCOPY );
             BitmapSource bitmapSource = Imaging.CreateBitmapSourceFromHBitmap( hBitmap, IntPtr.Zero, Int32Rect.Empty,
                 BitmapSizeOptions.FromEmptyOptions() );
 
+            SelectObject( memDC, oldBitmap );
             DeleteObject( hBitmap );
-            ReleaseDC( IntPtr.Zero, screenDC );
-            ReleaseDC( IntPtr.Zero, memDC );
+            DeleteDC( memDC );
+            ReleaseDC( dcOwner, screenDC );
 
             DateTime now = DateTime.Now;
 

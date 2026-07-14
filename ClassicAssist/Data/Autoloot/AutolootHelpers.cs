@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -23,13 +24,17 @@ namespace ClassicAssist.Data.Autoloot
 
         public static IEnumerable<Item> AutolootFilter( IEnumerable<Item> items, AutolootEntry entry )
         {
-            return items == null
-                ? null
-                : ( from item in items
-                    where entry.ID == -1 || item.ID == entry.ID
-                    let predicates = ConstraintsToPredicates( entry.Constraints )
-                    where !predicates.Any() || CheckPredicates( item, predicates )
-                    select item ).ToList();
+            if ( items == null )
+            {
+                return null;
+            }
+
+            List<Predicate<Item>> predicates = ConstraintsToPredicates( entry.Constraints ).ToList();
+
+            return ( from item in items
+                where entry.ID == -1 || item.ID == entry.ID
+                where predicates.Count == 0 || CheckPredicates( item, predicates )
+                select item ).ToList();
         }
 
         private static bool CheckPredicates( Item item, IEnumerable<Predicate<Item>> predicates )
@@ -85,30 +90,31 @@ namespace ClassicAssist.Data.Autoloot
             return predicates;
         }
 
+        private static readonly ConcurrentDictionary<string, PropertyInfo> _propertyInfoCache =
+            new ConcurrentDictionary<string, PropertyInfo>();
+
+        private static PropertyInfo GetCachedPropertyInfo( Type type, string propertyName )
+        {
+            string key = string.Concat( type.FullName, ".", propertyName );
+
+            return _propertyInfoCache.GetOrAdd( key, _ => type.GetProperty( propertyName ) );
+        }
+
         public static bool ItemHasObjectProperty( Item item, string propertyName )
         {
-            PropertyInfo propertyInfo = item.GetType().GetProperty( propertyName );
-
-            if ( propertyInfo == null )
-            {
-                return false;
-            }
-
-            return true;
+            return GetCachedPropertyInfo( item.GetType(), propertyName ) != null;
         }
 
         public static T GetItemObjectPropertyValue<T>( Item item, string propertyName )
         {
-            PropertyInfo propertyInfo = item.GetType().GetProperty( propertyName );
+            PropertyInfo propertyInfo = GetCachedPropertyInfo( item.GetType(), propertyName );
 
             if ( propertyInfo == null )
             {
                 return default;
             }
 
-            T val = (T) propertyInfo.GetValue( item );
-
-            return val;
+            return (T) propertyInfo.GetValue( item );
         }
 
         public static bool Operation( AutolootOperator @operator, int x, int y )

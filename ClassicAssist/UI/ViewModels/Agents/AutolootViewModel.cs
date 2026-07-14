@@ -75,7 +75,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private ICommand _insertMatchAnyCommand;
         private bool _isRunning;
 
-        private ObservableCollectionEx<AutolootEntry> _items = new ObservableCollectionEx<AutolootEntry>();
+        private ObservableCollection<AutolootEntry> _items = new ObservableCollection<AutolootEntry>();
         private double _leftColumnWidth = 200;
         private bool _lootHumanoids;
         private bool _matchTextValue;
@@ -166,7 +166,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
             set => SetProperty( ref _isRunning, value );
         }
 
-        public ObservableCollectionEx<AutolootEntry> Items
+        public ObservableCollection<AutolootEntry> Items
         {
             get => _items;
             set => SetProperty( ref _items, value );

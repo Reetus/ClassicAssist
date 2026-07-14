@@ -83,39 +83,45 @@ namespace ClassicAssist.Data.Filters
                 return true;
             }
 
-            RepeatedMessageEntry entry = RepeatedMessageEntries.FirstOrDefault( e => e.Message == journalEntry.Text );
+            DateTime now = DateTime.Now;
+            string text = journalEntry.Text;
 
-            if ( entry != null && entry.Blocked && entry.Expires < DateTime.Now )
+            RepeatedMessageEntry entry = null;
+
+            for ( int i = RepeatedMessageEntries.Count - 1; i >= 0; i-- )
             {
-                RepeatedMessageEntries.Remove( entry );
+                if ( RepeatedMessageEntries[i].Message == text )
+                {
+                    entry = RepeatedMessageEntries[i];
+                    break;
+                }
             }
 
-            if ( entry != null && entry.Blocked && entry.Expires > DateTime.Now )
+            if ( entry != null && entry.Blocked && entry.Expires < now )
+            {
+                RepeatedMessageEntries.Remove( entry );
+                entry = null;
+            }
+
+            if ( entry != null && entry.Blocked && entry.Expires > now )
             {
                 return true;
             }
 
-            if ( RepeatedMessageEntries.All( e => e.Message != journalEntry.Text ) )
+            if ( entry == null )
             {
                 RepeatedMessageEntries.Add( new RepeatedMessageEntry
                 {
-                    FirstReceived = DateTime.Now,
-                    LastReceived = DateTime.Now,
+                    FirstReceived = now,
+                    LastReceived = now,
                     Count = 1,
-                    Message = journalEntry.Text
+                    Message = text
                 } );
 
                 return false;
             }
 
-            entry = RepeatedMessageEntries.FirstOrDefault( e => e.Message == journalEntry.Text );
-
-            if ( entry == null )
-            {
-                return false;
-            }
-
-            if ( entry.LastReceived < DateTime.Now - TimeSpan.FromSeconds( FilterOptions.TimeLimit ) )
+            if ( entry.LastReceived < now - TimeSpan.FromSeconds( FilterOptions.TimeLimit ) )
             {
                 RepeatedMessageEntries.Remove( entry );
                 return false;
@@ -124,18 +130,18 @@ namespace ClassicAssist.Data.Filters
             if ( entry.Count < FilterOptions.MessageLimit )
             {
                 entry.Count++;
-                entry.LastReceived = DateTime.Now;
+                entry.LastReceived = now;
 
                 return false;
             }
 
             if ( Options.CurrentOptions.Debug )
             {
-                UO.Commands.SystemMessage( $"Filtering message: {journalEntry.Text}" );
+                UO.Commands.SystemMessage( $"Filtering message: {text}" );
             }
 
             entry.Blocked = true;
-            entry.Expires = DateTime.Now + TimeSpan.FromSeconds( FilterOptions.BlockedTime );
+            entry.Expires = now + TimeSpan.FromSeconds( FilterOptions.BlockedTime );
 
             return true;
         }

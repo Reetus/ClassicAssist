@@ -78,7 +78,7 @@ namespace ClassicAssist.UI.ViewModels
             set => CheckOverwriteHotkey( SelectedItem, value );
         }
 
-        public ObservableCollectionEx<HotkeyCommand> Items
+        public ObservableCollection<HotkeyCommand> Items
         {
             get => _hotkeyManager.Items;
             set => _hotkeyManager.Items = value;
@@ -150,7 +150,7 @@ namespace ClassicAssist.UI.ViewModels
                     {
                         if ( category.Children == null )
                         {
-                            category.Children = new ObservableCollectionEx<HotkeyEntry>();
+                            category.Children = new ObservableCollection<HotkeyEntry>();
                         }
 
                         if ( category.Children.Contains( hkc ) )
@@ -166,7 +166,7 @@ namespace ClassicAssist.UI.ViewModels
                         {
                             Name = categoryName,
                             IsCategory = true,
-                            Children = new ObservableCollectionEx<HotkeyEntry> { hkc }
+                            Children = new ObservableCollection<HotkeyEntry> { hkc }
                         };
 
                         _hotkeyManager.AddCategory( category );
@@ -269,7 +269,7 @@ namespace ClassicAssist.UI.ViewModels
 
                 SpellData[] spells = spellManager.GetSpellData();
 
-                ObservableCollectionEx<HotkeyEntry> children = new ObservableCollectionEx<HotkeyEntry>();
+                ObservableCollection<HotkeyEntry> children = new ObservableCollection<HotkeyEntry>();
 
                 foreach ( SpellData spell in spells )
                 {
@@ -322,7 +322,7 @@ namespace ClassicAssist.UI.ViewModels
 
                 SpellData[] masteries = spellManager.GetMasteryData();
 
-                ObservableCollectionEx<HotkeyEntry> masteryChildren = new ObservableCollectionEx<HotkeyEntry>();
+                ObservableCollection<HotkeyEntry> masteryChildren = new ObservableCollection<HotkeyEntry>();
 
                 foreach ( SpellData mastery in masteries )
                 {
@@ -507,7 +507,7 @@ namespace ClassicAssist.UI.ViewModels
                     return hke.Name.ToLower().Contains( FilterText.ToLower() );
                 }
 
-                FilterItems = new ObservableCollectionEx<HotkeyCommand>( Items.Where( e => e.Children.Any( Predicate ) )
+                FilterItems = new ObservableCollection<HotkeyCommand>( Items.Where( e => e.Children.Any( Predicate ) )
                     .Select( e =>
                     {
                         HotkeyCommand hkc = new HotkeyCommand
@@ -529,7 +529,7 @@ namespace ClassicAssist.UI.ViewModels
                             child.PropertyChanged += ( s, ea ) => UpdateFilteredItems();
                         }
 
-                        hkc.Children = new ObservableCollectionEx<HotkeyEntry>( children );
+                        hkc.Children = new ObservableCollection<HotkeyEntry>( children );
 
                         return hkc;
                     } ) );

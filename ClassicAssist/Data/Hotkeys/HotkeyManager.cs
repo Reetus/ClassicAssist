@@ -7,6 +7,7 @@ using Assistant;
 using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Shared.UI;
+using System.Collections.ObjectModel;
 using static ClassicAssist.Misc.SDLKeys;
 
 namespace ClassicAssist.Data.Hotkeys
@@ -26,7 +27,7 @@ namespace ClassicAssist.Data.Hotkeys
 
         private bool _enabled = true;
 
-        private ObservableCollectionEx<HotkeyCommand> _items = new ObservableCollectionEx<HotkeyCommand>();
+        private ObservableCollection<HotkeyCommand> _items = new ObservableCollection<HotkeyCommand>();
 
         private HotkeyManager()
         {
@@ -50,7 +51,7 @@ namespace ClassicAssist.Data.Hotkeys
 
         public Action<string, Type> InvokeByName { get; set; }
 
-        public ObservableCollectionEx<HotkeyCommand> Items
+        public ObservableCollection<HotkeyCommand> Items
         {
             get => _items;
             set => SetProperty( ref _items, value );

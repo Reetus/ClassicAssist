@@ -35,9 +35,9 @@ namespace ClassicAssist.UI.Views.ECV
         private readonly Dispatcher _dispatcher;
         private readonly OrganizerManager _manager;
         private ItemCollection _collection;
-        private ObservableCollectionEx<OrganizerEntry> _items;
+        private ObservableCollection<OrganizerEntry> _items;
         private ICommand _playCommand;
-        private ObservableCollectionEx<QueueAction> _queueActions;
+        private ObservableCollection<QueueAction> _queueActions;
         private string _selectedDestination;
         private OrganizerEntry _selectedEntry;
         private ICommand _targetCommand;
@@ -57,7 +57,7 @@ namespace ClassicAssist.UI.Views.ECV
 
         public ObservableCollection<string> Destinations { get; set; } = new ObservableCollection<string> { "backpack", "bank" };
 
-        public ObservableCollectionEx<OrganizerEntry> Items
+        public ObservableCollection<OrganizerEntry> Items
         {
             get => _items;
             set { _dispatcher.Invoke( () => { SetProperty( ref _items, value ); } ); }
@@ -65,7 +65,7 @@ namespace ClassicAssist.UI.Views.ECV
 
         public ICommand PlayCommand => _playCommand ?? ( _playCommand = new RelayCommand( Play, o => Engine.Connected ) );
 
-        public ObservableCollectionEx<QueueAction> QueueActions
+        public ObservableCollection<QueueAction> QueueActions
         {
             get => _queueActions;
             set => SetProperty( ref _queueActions, value );

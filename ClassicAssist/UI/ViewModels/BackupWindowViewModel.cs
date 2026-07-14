@@ -106,7 +106,7 @@ namespace ClassicAssist.UI.ViewModels
         {
             if ( _options.Provider == null || string.IsNullOrEmpty( _options.Provider.BackupPath ) )
             {
-                Messages.Add( Strings.No_backup_type_or_path_set___ );
+                _dispatcher.Invoke( () => Messages.Add( Strings.No_backup_type_or_path_set___ ) );
                 return;
             }
 

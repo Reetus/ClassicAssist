@@ -444,9 +444,15 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            IsDressing = true;
-            await _manager.DressAllItems( dae, MoveConflictingItems );
-            IsDressing = false;
+            try
+            {
+                IsDressing = true;
+                await _manager.DressAllItems( dae, MoveConflictingItems );
+            }
+            finally
+            {
+                IsDressing = false;
+            }
         }
 
         private void ImportItems( object obj )

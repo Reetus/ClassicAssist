@@ -2,6 +2,7 @@
 using System.Windows.Media;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.UI;
+using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 
 namespace ClassicAssist.Data.Hotkeys
@@ -14,7 +15,7 @@ namespace ClassicAssist.Data.Hotkeys
 
         private bool _canGlobal = true;
 
-        private ObservableCollectionEx<HotkeyEntry> _children = new ObservableCollectionEx<HotkeyEntry>();
+        private ObservableCollection<HotkeyEntry> _children = new ObservableCollection<HotkeyEntry>();
 
         private ShortcutKeys _hotkey = new ShortcutKeys();
         private bool _isCategory;
@@ -34,7 +35,7 @@ namespace ClassicAssist.Data.Hotkeys
         }
 
         [JsonIgnore]
-        public ObservableCollectionEx<HotkeyEntry> Children
+        public ObservableCollection<HotkeyEntry> Children
         {
             get
             {
@@ -68,15 +69,20 @@ namespace ClassicAssist.Data.Hotkeys
                 }
 
                 SetProperty( ref _hotkey, value );
+                OnPropertyChanged( nameof( Image ) );
                 HotkeyChanged?.Invoke( this, new HotkeyChangedEventArgs( _hotkey, value ) );
             }
         }
 
+        private static readonly Lazy<ImageSource> _redCircle =
+            new Lazy<ImageSource>( () => Properties.Resources.red_circle.ToImageSource() );
+
+        private static readonly Lazy<ImageSource> _greenCircle =
+            new Lazy<ImageSource>( () => Properties.Resources.green_circle.ToImageSource() );
+
         [JsonIgnore]
         public ImageSource Image =>
-            Equals( Hotkey, ShortcutKeys.Default )
-                ? Properties.Resources.red_circle.ToImageSource()
-                : Properties.Resources.green_circle.ToImageSource();
+            Equals( Hotkey, ShortcutKeys.Default ) ? _redCircle.Value : _greenCircle.Value;
 
         public bool IsCategory
         {

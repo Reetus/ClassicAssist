@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using System.Windows.Media;
 using ClassicAssist.Misc;
 using ClassicAssist.UO.Data;
 
@@ -8,6 +9,15 @@ namespace ClassicAssist.UI.Misc.ValueConverters
 {
     public class LockStatusValueConverter : IValueConverter
     {
+        private static readonly Lazy<ImageSource> _upImage =
+            new Lazy<ImageSource>( () => Properties.Resources.arrow_up.ToImageSource() );
+
+        private static readonly Lazy<ImageSource> _downImage =
+            new Lazy<ImageSource>( () => Properties.Resources.arrow_down.ToImageSource() );
+
+        private static readonly Lazy<ImageSource> _lockedImage =
+            new Lazy<ImageSource>( () => Properties.Resources.padlock.ToImageSource() );
+
         public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
         {
             if ( !( value is LockStatus ) )
@@ -21,13 +31,13 @@ namespace ClassicAssist.UI.Misc.ValueConverters
             {
                 case LockStatus.Up:
 
-                    return Properties.Resources.arrow_up.ToImageSource();
+                    return _upImage.Value;
                 case LockStatus.Down:
 
-                    return Properties.Resources.arrow_down.ToImageSource();
+                    return _downImage.Value;
                 case LockStatus.Locked:
 
-                    return Properties.Resources.padlock.ToImageSource();
+                    return _lockedImage.Value;
                 default:
 
                     throw new ArgumentOutOfRangeException();

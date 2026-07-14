@@ -646,7 +646,7 @@ namespace ClassicAssist.UI.ViewModels
             }
             else
             {
-                Draggables.Add( new MacroGroup { Name = $"Group-{count + 1}" } );
+                Draggables.Insert( 0, new MacroGroup { Name = $"Group-{count + 1}" } );
             }
         }
 

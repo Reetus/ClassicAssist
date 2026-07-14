@@ -6,29 +6,30 @@ namespace ClassicAssist.UI.Misc.ValueConverters
 {
     public class CellWidthValueConverter : IValueConverter
     {
-        private double substractValue = 15;
-
         public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
         {
+            double subtractValue = 15;
+
             if ( parameter != null )
             {
-                if ( double.Parse( parameter.ToString() ) < 0 )
-                {
-                    substractValue = 0;
-                }
-                else
-                {
-                    substractValue = double.Parse( parameter.ToString() );
-                }
+                double parsed = double.Parse( parameter.ToString(), CultureInfo.InvariantCulture );
+                subtractValue = parsed < 0 ? 0 : parsed;
             }
 
-            double? val = (double?) value - substractValue;
-            return val;
+            return (double?) value - subtractValue;
         }
 
         public object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture )
         {
-            return (double?) value + substractValue;
+            double subtractValue = 15;
+
+            if ( parameter != null )
+            {
+                double parsed = double.Parse( parameter.ToString(), CultureInfo.InvariantCulture );
+                subtractValue = parsed < 0 ? 0 : parsed;
+            }
+
+            return (double?) value + subtractValue;
         }
     }
 }

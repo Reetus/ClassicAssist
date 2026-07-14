@@ -1,13 +1,14 @@
 ﻿using System;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Shared.UI;
+using System.Collections.ObjectModel;
 
 namespace ClassicAssist.Data.Organizer
 {
     public class OrganizerEntry : HotkeyEntry
     {
         private bool _complete;
-        private ObservableCollectionEx<OrganizerItem> _items = new ObservableCollectionEx<OrganizerItem>();
+        private ObservableCollection<OrganizerItem> _items = new ObservableCollection<OrganizerItem>();
         private bool _returnExcess;
         private bool _stack = true;
 
@@ -29,7 +30,7 @@ namespace ClassicAssist.Data.Organizer
 
         public int DestinationContainer { get; set; }
 
-        public ObservableCollectionEx<OrganizerItem> Items
+        public ObservableCollection<OrganizerItem> Items
         {
             get => _items;
             set => SetProperty( ref _items, value );

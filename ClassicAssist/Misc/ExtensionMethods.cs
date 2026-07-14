@@ -64,8 +64,15 @@ namespace ClassicAssist.Misc
 
             try
             {
-                return Imaging.CreateBitmapSourceFromHBitmap( handle, IntPtr.Zero, Int32Rect.Empty,
+                BitmapSource source = Imaging.CreateBitmapSourceFromHBitmap( handle, IntPtr.Zero, Int32Rect.Empty,
                     BitmapSizeOptions.FromEmptyOptions() );
+
+                if ( source.CanFreeze )
+                {
+                    source.Freeze();
+                }
+
+                return source;
             }
             finally
             {

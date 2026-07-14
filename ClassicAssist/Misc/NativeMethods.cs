@@ -87,6 +87,9 @@ namespace ClassicAssist.Misc
         [DllImport( "gdi32.dll" )]
         public static extern bool DeleteObject( IntPtr hObject );
 
+        [DllImport( "gdi32.dll" )]
+        public static extern bool DeleteDC( IntPtr hdc );
+
         [DllImport( "user32.dll" )]
         public static extern IntPtr GetDC( IntPtr hWnd );
 

@@ -129,7 +129,7 @@ namespace ClassicAssist.Launcher
 
         public bool OverridePresets { get; set; }
 
-        public ObservableCollectionEx<ShardEntry> Shards { get; set; } = new ObservableCollectionEx<ShardEntry>();
+        public ObservableCollection<ShardEntry> Shards { get; set; } = new ObservableCollection<ShardEntry>();
 
         public ObservableCollection<ShardEntry> VisibleShards =>
             new ObservableCollection<ShardEntry>( Shards.Where( e => !e.Deleted ) );

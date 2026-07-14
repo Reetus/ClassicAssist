@@ -4,6 +4,7 @@ using System.Linq;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Shared.UI;
+using System.Collections.ObjectModel;
 using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.UI.ViewModels
@@ -11,7 +12,7 @@ namespace ClassicAssist.UI.ViewModels
     public abstract class HotkeyEntryViewModel<T> : BaseViewModel where T : HotkeyEntry
     {
         private readonly HotkeyCommand _category;
-        private ObservableCollectionEx<T> _items = new ObservableCollectionEx<T>();
+        private ObservableCollection<T> _items = new ObservableCollection<T>();
         protected List<HotkeyCommand> _staticOptions = new List<HotkeyCommand>();
 
         protected HotkeyEntryViewModel( string name )
@@ -24,10 +25,10 @@ namespace ClassicAssist.UI.ViewModels
 
             Items.CollectionChanged += OnCollectionChanged;
 
-            _category.Children = new ObservableCollectionEx<HotkeyEntry>();
+            _category.Children = new ObservableCollection<HotkeyEntry>();
         }
 
-        public ObservableCollectionEx<T> Items
+        public ObservableCollection<T> Items
         {
             get => _items;
             set => SetProperty( ref _items, value );
@@ -40,7 +41,7 @@ namespace ClassicAssist.UI.ViewModels
 
         protected virtual void OnCollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
         {
-            _category.Children = new ObservableCollectionEx<HotkeyEntry>();
+            _category.Children = new ObservableCollection<HotkeyEntry>();
 
             if ( _staticOptions.Any() )
             {

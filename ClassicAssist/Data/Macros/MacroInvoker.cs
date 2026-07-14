@@ -182,9 +182,17 @@ namespace ClassicAssist.Data.Macros
         {
             _macro = macro;
 
-            if ( Thread != null && Thread.IsAlive )
+            Thread previousThread = Thread;
+
+            if ( previousThread != null && previousThread.IsAlive )
             {
                 Stop();
+
+                // The static engine, _macroScope, _compiled and _cancellationToken are shared state
+                // that gets replaced below. The previous run must fully exit first, otherwise it
+                // carries on against the new (un-cancelled) token as an untracked orphan - the macro
+                // disappears from the running list but keeps executing.
+                previousThread.Join( 2000 );
             }
 
             MainCommands.SetQuietMode( Options.CurrentOptions.DefaultMacroQuietMode );
@@ -352,7 +360,8 @@ namespace ClassicAssist.Data.Macros
 
         private TracebackDelegate OnTrace( TraceBackFrame frame, string result, object payload )
         {
-            if ( result == "line" && ( _macro.Breakpoints != null && _macro.Breakpoints.Contains( (int) frame.f_lineno ) || _macro.IsPaused ) )
+            if ( ( result == "line" || result == "call" ) && _macro.Breakpoints != null && _macro.Breakpoints.Contains( (int) frame.f_lineno )
+                 || result == "line" && _macro.IsPaused )
             {
                 _pauseEvent.Reset();
                 PausedEvent?.Invoke( (int) frame.f_lineno, _pauseEvent, GetFrameVariables( frame ) );

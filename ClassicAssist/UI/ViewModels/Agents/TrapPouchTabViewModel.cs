@@ -12,6 +12,7 @@
 
 #endregion
 
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -332,9 +333,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            _dispatcher.Invoke( () => Items.Remove( item ) );
-
-            CheckWarn();
+            _dispatcher.BeginInvoke( (Action) ( () =>
+            {
+                Items.Remove( item );
+                CheckWarn();
+            } ) );
 
             if ( !RehueItems )
             {
@@ -414,7 +417,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             if ( item.IsDescendantOf( Engine.Player.Backpack.Serial ) && Items.All( e => e.Serial != serial ) )
             {
-                _dispatcher.Invoke( () =>
+                _dispatcher.BeginInvoke( (Action) ( () =>
                 {
                     Items.Add( new TrapPouchEntry { Serial = serial, Name = item.Name } );
 
@@ -422,7 +425,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                     {
                         Rehue( item, RehueItemsHue );
                     }
-                } );
+                } ) );
             }
         }
 

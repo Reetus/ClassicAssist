@@ -70,7 +70,7 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ConfigureFilterCommand =>
             _configureFilterCommand ?? ( _configureFilterCommand = new RelayCommand( ConfigureFilter ) );
 
-        public ObservableCollectionEx<FilterEntry> Filters { get; set; } = new ObservableCollectionEx<FilterEntry>();
+        public ObservableCollection<FilterEntry> Filters { get; set; } = new ObservableCollection<FilterEntry>();
 
         public bool IsLinkedProfile
         {

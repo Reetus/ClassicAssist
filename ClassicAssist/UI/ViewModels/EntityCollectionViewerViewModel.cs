@@ -70,6 +70,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _contextMoveToBackpackCommand;
         private ICommand _contextMoveToBankCommand;
         private ICommand _contextMoveToContainerCommand;
+        private ICommand _contextDropToGroundCommand;
         private ICommand _contextMoveToGroundCommand;
         private ICommand _contextMoveToSetCommand;
         private ICommand _contextOpenContainerCommand;
@@ -216,6 +217,9 @@ namespace ClassicAssist.UI.ViewModels
             _contextOpenContainerCommand ?? ( _contextOpenContainerCommand = new RelayCommand( ContextOpenContainer,
                 o => SelectedItems != null && SelectedItems.Any( e => e.Entity is Item item && item.Owner != 0 && !UOMath.IsMobile( item.Owner ) ) ) );
 
+        public ICommand ContextDropToGroundCommand =>
+            _contextDropToGroundCommand ?? ( _contextDropToGroundCommand = new RelayCommand( ContextDropToGround, o => SelectedItems != null ) );
+
         public ICommand ContextTargetCommand => _contextTargetCommand ?? ( _contextTargetCommand = new RelayCommand( ContextTarget ) );
 
         public ICommand ContextTargetOwnerCommand =>
@@ -254,7 +258,7 @@ namespace ClassicAssist.UI.ViewModels
             set => SetProperty( ref _options, value );
         }
 
-        public ObservableCollectionEx<QueueAction> QueueActions { get; set; } = new ObservableCollectionEx<QueueAction>();
+        public ObservableCollection<QueueAction> QueueActions { get; set; } = new ObservableCollection<QueueAction>();
 
         public ICommand RefreshCommand => _refreshCommand ?? ( _refreshCommand = new RelayCommand( Refresh, o => true ) );
 
@@ -456,6 +460,54 @@ namespace ClassicAssist.UI.ViewModels
                     _dispatcher.Invoke( () => { obj.Status = string.Format( Strings.Moving_item__0_____1_, item.i, items.Length ); } );
 
                     await ActionPacketQueue.EnqueueDragDropGround( item.value, -1, x, y, z );
+                }
+
+                return true;
+            }, string.Format( Strings.Moving_item__0_____1_, 0, items.Length ) );
+        }
+
+        private void ContextDropToGround( object arg )
+        {
+            if ( Engine.Player == null )
+            {
+                return;
+            }
+
+            Item[] items = SelectedItems.Where( i => i.Entity is Item && !i.IsLocked ).Select( i => i.Entity ).Cast<Item>().ToArray();
+
+            int map = (int) Engine.Player.Map;
+
+            // 8 adjacent tiles, clockwise from north: N, NE, E, SE, S, SW, W, NW.
+            int[][] offsets =
+            {
+                new[] { 0, -1 }, new[] { 1, -1 }, new[] { 1, 0 }, new[] { 1, 1 }, new[] { 0, 1 }, new[] { -1, 1 },
+                new[] { -1, 0 }, new[] { -1, -1 }
+            };
+
+            EnqueueAction( async obj =>
+            {
+                foreach ( var item in items.Select( ( value, i ) => new { i, value } ) )
+                {
+                    if ( obj.CancellationTokenSource.IsCancellationRequested )
+                    {
+                        _dispatcher.Invoke( () => { obj.Status = Strings.Cancel; } );
+                        return false;
+                    }
+
+                    _dispatcher.Invoke( () => { obj.Status = string.Format( Strings.Moving_item__0_____1_, item.i, items.Length ); } );
+
+                    foreach ( int[] offset in offsets )
+                    {
+                        int tx = Engine.Player.X + offset[0];
+                        int ty = Engine.Player.Y + offset[1];
+
+                        if ( MapInfo.ItemCanFit( map, tx, ty, item.value.ID, out int dropZ ) )
+                        {
+                            await ActionPacketQueue.EnqueueDragDropGround( item.value.Serial, -1, tx, ty, dropZ );
+
+                            break;
+                        }
+                    }
                 }
 
                 return true;

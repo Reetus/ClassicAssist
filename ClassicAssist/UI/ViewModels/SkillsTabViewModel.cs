@@ -13,6 +13,7 @@ using ClassicAssist.Misc;
 using ClassicAssist.Shared.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
+using System.Collections.ObjectModel;
 using ClassicAssist.UI.Misc;
 using ClassicAssist.UI.Misc.Behaviours;
 using ClassicAssist.UO;
@@ -26,7 +27,7 @@ namespace ClassicAssist.UI.ViewModels
     public class SkillsTabViewModel : BaseViewModel, IGlobalSettingProvider
     {
         internal HotkeyCommand _hotkeyCategory;
-        private ObservableCollectionEx<SkillEntry> _items = new ObservableCollectionEx<SkillEntry>();
+        private ObservableCollection<SkillEntry> _items = new ObservableCollection<SkillEntry>();
         private ICommand _resetDeltasCommand;
         private SkillEntry _selectedItem;
         private ICommand _setAllSkillLocksCommand;
@@ -53,7 +54,7 @@ namespace ClassicAssist.UI.ViewModels
             manager.Items = Items;
         }
 
-        public ObservableCollectionEx<SkillEntry> Items
+        public ObservableCollection<SkillEntry> Items
         {
             get => _items;
             set => SetProperty( ref _items, value );
@@ -137,7 +138,7 @@ namespace ClassicAssist.UI.ViewModels
             IOrderedEnumerable<SkillData> skills =
                 Skills.GetSkillsArray().Where( s => s.Invokable ).OrderBy( s => s.Name );
 
-            ObservableCollectionEx<HotkeyEntry> hotkeyEntries = new ObservableCollectionEx<HotkeyEntry>();
+            ObservableCollection<HotkeyEntry> hotkeyEntries = new ObservableCollection<HotkeyEntry>();
 
             foreach ( SkillData skill in skills )
             {
@@ -343,6 +344,7 @@ namespace ClassicAssist.UI.ViewModels
                 entry.Base = baseValue;
                 entry.Cap = skillCap;
                 entry.LockStatus = lockStatus;
+                UpdateTotalBase();
             } );
         }
     }

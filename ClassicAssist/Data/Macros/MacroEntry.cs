@@ -66,6 +66,7 @@ namespace ClassicAssist.Data.Macros
         {
             _dispatcher = Dispatcher.CurrentDispatcher;
             _macroInvoker.ExceptionEvent += OnExceptionEvent;
+            _macroInvoker.StartedEvent += OnStartedEvent;
             _macroInvoker.StoppedEvent += OnStoppedEvent;
             _macroInvoker.PausedEvent += OnPausedEvent;
 
@@ -332,15 +333,51 @@ namespace ClassicAssist.Data.Macros
             return json[name] == null ? defaultValue : json[name].ToObject<T2>();
         }
 
+        private void OnStartedEvent()
+        {
+            // Fires on the run's own thread. Mark running only while this is still the invoker's
+            // current run, so a superseded run can't flip state for the one that replaced it. This
+            // also re-asserts the running state after a restart, in case the previous run's stop
+            // notification lands after the new run started.
+            Thread startedThread = Thread.CurrentThread;
+
+            _dispatcher.BeginInvoke( (Action) ( () =>
+            {
+                if ( ReferenceEquals( _macroInvoker.Thread, startedThread ) )
+                {
+                    IsRunning = true;
+                }
+            } ) );
+        }
+
         private void OnStoppedEvent()
         {
-            _dispatcher.Invoke( () => IsRunning = false );
+            bool wasPaused = IsPaused;
 
-            if ( IsPaused )
+            if ( wasPaused )
             {
                 AutoResetEvent.Set();
-                _dispatcher.Invoke( () => IsPaused = false );
             }
+
+            // Captured on the macro thread that is stopping. If a restart has already begun, the
+            // invoker's Thread will point at the new run, so this (superseded) stop must not clear
+            // IsRunning - otherwise the macro keeps running but shows as stopped.
+            Thread stoppingThread = Thread.CurrentThread;
+
+            _dispatcher.BeginInvoke( (Action) ( () =>
+            {
+                if ( !ReferenceEquals( _macroInvoker.Thread, stoppingThread ) )
+                {
+                    return;
+                }
+
+                IsRunning = false;
+
+                if ( wasPaused )
+                {
+                    IsPaused = false;
+                }
+            } ) );
 
             if ( IsBackground )
             {
@@ -395,14 +432,24 @@ namespace ClassicAssist.Data.Macros
         {
             if ( IsRunning )
             {
+                Thread stoppingThread = _macroInvoker.Thread;
+
                 _macroInvoker.Stop();
-                _dispatcher.Invoke( () => IsRunning = false );
+
+                _dispatcher.BeginInvoke( (Action) ( () =>
+                {
+                    // Don't clear running state if a restart has already swapped in a new run.
+                    if ( ReferenceEquals( _macroInvoker.Thread, stoppingThread ) )
+                    {
+                        IsRunning = false;
+                    }
+                } ) );
             }
         }
 
         private void OnExceptionEvent( Exception exception )
         {
-            _dispatcher.Invoke( () => { LastException = exception; } );
+            _dispatcher.BeginInvoke( (Action) ( () => { LastException = exception; } ) );
 
             UO.Commands.SystemMessage( string.Format( Strings.Macro_error___0_, exception.Message ) );
 

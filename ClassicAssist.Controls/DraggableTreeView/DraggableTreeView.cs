@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using GongSolutions.Wpf.DragDrop;
 using DragDrop = GongSolutions.Wpf.DragDrop.DragDrop;
 
@@ -201,6 +203,24 @@ namespace ClassicAssist.Controls.DraggableTreeView
             }
         }
 
+        protected override void PrepareContainerForItemOverride( DependencyObject element, object item )
+        {
+            base.PrepareContainerForItemOverride( element, item );
+
+            // Under container recycling a reused TreeViewItem can keep a stale IsSelected from the
+            // item it previously displayed, making several rows appear selected at once. Sync it to
+            // the bound selection every time a container is (re)assigned to an item.
+            if ( element is TreeViewItem tvi )
+            {
+                bool selected = ReferenceEquals( item, BindableSelectedItem ) || ReferenceEquals( item, BindableSelectedGroup );
+
+                if ( tvi.IsSelected != selected )
+                {
+                    tvi.IsSelected = selected;
+                }
+            }
+        }
+
         private void OnStatusChanged( object sender, EventArgs e )
         {
             foreach ( object item in ItemContainerGenerator.Items )
@@ -230,15 +250,63 @@ namespace ClassicAssist.Controls.DraggableTreeView
 
         private static void OnSelectedPropertyChanged( DependencyObject d, DependencyPropertyChangedEventArgs e )
         {
-            if ( !( d is DraggableTreeView draggableTreeView ) )
+            if ( !( d is DraggableTreeView draggableTreeView ) || e.NewValue == null )
             {
                 return;
             }
 
-            if ( draggableTreeView.ItemContainerGenerator.ContainerFromItem( e.NewValue ) is TreeViewItem tvi )
+            draggableTreeView.SelectAndBringIntoView( e.NewValue );
+        }
+
+        private void SelectAndBringIntoView( object item )
+        {
+            // Already realized (non-virtualized or currently on-screen).
+            if ( ItemContainerGenerator.ContainerFromItem( item ) is TreeViewItem container )
             {
-                tvi.IsSelected = true;
+                container.IsSelected = true;
+                container.BringIntoView();
+
+                return;
             }
+
+            // The container hasn't been generated yet - either layout is still pending or, under
+            // virtualization, the item is scrolled out of view. For a top-level item we force its
+            // container to be realized by scrolling its index into view; nested items are handled
+            // by OnStatusChanged once the generator produces the container.
+            int index = Items.IndexOf( item );
+
+            if ( index < 0 )
+            {
+                return;
+            }
+
+            Dispatcher.BeginInvoke( (Action) ( () =>
+            {
+                if ( GetItemsHost() is VirtualizingPanel panel )
+                {
+                    ScrollIndexIntoView( panel, index );
+                    UpdateLayout();
+                }
+
+                if ( ItemContainerGenerator.ContainerFromItem( item ) is TreeViewItem tvi )
+                {
+                    tvi.IsSelected = true;
+                    tvi.BringIntoView();
+                }
+            } ), DispatcherPriority.Loaded );
+        }
+
+        private Panel GetItemsHost()
+        {
+            return typeof( ItemsControl ).GetProperty( "ItemsHost", BindingFlags.Instance | BindingFlags.NonPublic )?.GetValue( this ) as Panel;
+        }
+
+        private static void ScrollIndexIntoView( VirtualizingPanel panel, int index )
+        {
+            // VirtualizingPanel.BringIndexIntoView is protected internal, so there is no public
+            // way to realize an off-screen container; reflection is the standard workaround.
+            typeof( VirtualizingPanel ).GetMethod( "BringIndexIntoView", BindingFlags.Instance | BindingFlags.NonPublic, null, new[] { typeof( int ) }, null )
+                ?.Invoke( panel, new object[] { index } );
         }
 
         private void OnSelectedItemChanged( object sender, RoutedPropertyChangedEventArgs<object> e )

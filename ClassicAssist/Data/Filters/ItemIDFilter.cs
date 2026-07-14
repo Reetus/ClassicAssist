@@ -84,6 +84,19 @@ namespace ClassicAssist.Data.Filters
             Items.Clear();
         }
 
+        private ItemIDFilterEntry FindEnabledEntry( int sourceId )
+        {
+            for ( int i = 0; i < Items.Count; i++ )
+            {
+                if ( Items[i].SourceID == sourceId && Items[i].Enabled )
+                {
+                    return Items[i];
+                }
+            }
+
+            return null;
+        }
+
         public override bool CheckPacket( ref byte[] packet, ref int length, PacketDirection direction )
         {
             if ( packet == null || !Enabled )
@@ -102,7 +115,7 @@ namespace ClassicAssist.Data.Filters
                 {
                     int itemId = ( packet[8] << 8 ) | packet[9];
 
-                    ItemIDFilterEntry entry = Items.FirstOrDefault( e => e.SourceID == itemId && e.Enabled );
+                    ItemIDFilterEntry entry = FindEnabledEntry( itemId );
 
                     if ( entry == null )
                     {
@@ -138,7 +151,7 @@ namespace ClassicAssist.Data.Filters
 
                         int itemId = ( packet[offset + 4] << 8 ) | packet[offset + 5];
 
-                        ItemIDFilterEntry entry = Items.FirstOrDefault( e => e.SourceID == itemId && e.Enabled );
+                        ItemIDFilterEntry entry = FindEnabledEntry( itemId );
 
                         if ( entry == null )
                         {
@@ -163,7 +176,7 @@ namespace ClassicAssist.Data.Filters
                 {
                     int itemId = ( packet[5] << 8 ) | packet[6];
 
-                    ItemIDFilterEntry entry = Items.FirstOrDefault( e => e.SourceID == itemId && e.Enabled );
+                    ItemIDFilterEntry entry = FindEnabledEntry( itemId );
 
                     if ( entry == null )
                     {
@@ -189,7 +202,7 @@ namespace ClassicAssist.Data.Filters
                     int serial = ( packet[3] << 24 ) | ( packet[4] << 16 ) | ( packet[5] << 8 ) | packet[6];
                     int itemId = ( packet[7] << 8 ) | packet[8];
 
-                    ItemIDFilterEntry entry = Items.FirstOrDefault( e => e.SourceID == itemId && e.Enabled );
+                    ItemIDFilterEntry entry = FindEnabledEntry( itemId );
 
                     if ( entry == null )
                     {

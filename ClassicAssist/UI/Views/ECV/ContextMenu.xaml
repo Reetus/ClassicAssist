@@ -41,6 +41,8 @@
                 </MenuItem>
                 <MenuItem Header="{x:Static resources:Strings.Open_container}"
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextOpenContainerCommand)}" />
+                <MenuItem Header="{x:Static resources:Strings.Drop_to_ground}"
+                          Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextDropToGroundCommand)}" />
                 <Separator />
                 <MenuItem Header="{x:Static resources:Strings.Lock_item}"
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextToggleLockCommand)}">

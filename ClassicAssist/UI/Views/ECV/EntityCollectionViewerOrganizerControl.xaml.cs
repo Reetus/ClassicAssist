@@ -10,6 +10,7 @@
 
 using System.Windows;
 using ClassicAssist.Shared.UI;
+using System.Collections.ObjectModel;
 using ClassicAssist.UI.ViewModels;
 using ClassicAssist.UO.Objects;
 
@@ -24,7 +25,7 @@ namespace ClassicAssist.UI.Views.ECV
             typeof( EntityCollectionViewerOrganizerControl ),
             new FrameworkPropertyMetadata( default, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, PropertyChangedCallback ) );
 
-        public static readonly DependencyProperty QueueActionsProperty = DependencyProperty.Register( nameof( QueueActions ), typeof( ObservableCollectionEx<QueueAction> ),
+        public static readonly DependencyProperty QueueActionsProperty = DependencyProperty.Register( nameof( QueueActions ), typeof( ObservableCollection<QueueAction> ),
             typeof( EntityCollectionViewerOrganizerControl ),
             new FrameworkPropertyMetadata( default, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, PropertyChangedCallback ) );
 
@@ -39,9 +40,9 @@ namespace ClassicAssist.UI.Views.ECV
             set => SetValue( CollectionProperty, value );
         }
 
-        public ObservableCollectionEx<QueueAction> QueueActions
+        public ObservableCollection<QueueAction> QueueActions
         {
-            get => (ObservableCollectionEx<QueueAction>) GetValue( QueueActionsProperty );
+            get => (ObservableCollection<QueueAction>) GetValue( QueueActionsProperty );
             set => SetValue( QueueActionsProperty, value );
         }
 
@@ -63,7 +64,7 @@ namespace ClassicAssist.UI.Views.ECV
             }
             else if ( e.Property == QueueActionsProperty )
             {
-                viewModel.QueueActions = (ObservableCollectionEx<QueueAction>) e.NewValue;
+                viewModel.QueueActions = (ObservableCollection<QueueAction>) e.NewValue;
             }
         }
     }

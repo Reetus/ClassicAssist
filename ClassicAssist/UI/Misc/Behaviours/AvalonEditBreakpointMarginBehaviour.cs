@@ -17,6 +17,7 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -41,6 +42,8 @@ namespace ClassicAssist.UI.Misc.Behaviours
             element?.SetValue( BreakpointsProperty, value );
         }
 
+        private TextDocument _subscribedDocument;
+
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -48,72 +51,113 @@ namespace ClassicAssist.UI.Misc.Behaviours
             if ( AssociatedObject != null )
             {
                 _textEditor = AssociatedObject;
-                // TODO
-                //_textEditor.TextArea.TextView.Document.Changed += Document_Changed;
+                _textEditor.DocumentChanged += OnEditorDocumentChanged;
+                SubscribeToDocument( _textEditor.Document );
+            }
+        }
+
+        protected override void OnDetaching()
+        {
+            if ( _textEditor != null )
+            {
+                _textEditor.DocumentChanged -= OnEditorDocumentChanged;
+                UnsubscribeFromDocument();
+            }
+
+            base.OnDetaching();
+        }
+
+        private void OnEditorDocumentChanged( object sender, System.EventArgs e )
+        {
+            UnsubscribeFromDocument();
+            SubscribeToDocument( _textEditor?.Document );
+        }
+
+        private void SubscribeToDocument( TextDocument document )
+        {
+            if ( document == null )
+            {
+                return;
+            }
+
+            _subscribedDocument = document;
+            _subscribedDocument.Changed += Document_Changed;
+        }
+
+        private void UnsubscribeFromDocument()
+        {
+            if ( _subscribedDocument != null )
+            {
+                _subscribedDocument.Changed -= Document_Changed;
+                _subscribedDocument = null;
             }
         }
 
         private void Document_Changed( object sender, DocumentChangeEventArgs e )
         {
-            TextDocument doc = _textEditor.Document;
-            int startLine = doc.GetLineByOffset( e.Offset ).LineNumber;
-
-            int lineDelta = 0;
-
-            if ( e.InsertionLength == doc.TextLength )
+            if ( AvalonEditBehaviour.IsProgrammaticTextChange )
             {
                 return;
             }
 
-            if ( e.InsertionLength > 0 )
+            if ( _breakPointMargin?.Breakpoints == null || _breakPointMargin.Breakpoints.Count == 0 )
             {
-                // Count inserted newlines
-                string insertedText = e.InsertedText.Text;
-                lineDelta = insertedText.Count( c => c == '\n' );
-
-                if ( lineDelta > 0 )
-                {
-                    ShiftBreakpoints( startLine, lineDelta );
-                }
+                return;
             }
-            else if ( e.RemovalLength > 0 )
-            {
-                // Count removed newlines
-                string removedText = e.RemovedText.Text;
-                lineDelta = -removedText.Count( c => c == '\n' );
 
-                if ( lineDelta < 0 )
-                {
-                    ShiftBreakpoints( startLine, lineDelta );
-                }
+            TextDocument doc = _textEditor.Document;
+
+            int startLine = doc.GetLineByOffset( e.Offset ).LineNumber;
+
+            int insertedNewlines = e.InsertionLength > 0
+                ? e.InsertedText.Text.Count( c => c == '\n' )
+                : 0;
+
+            int removedNewlines = e.RemovalLength > 0
+                ? e.RemovedText.Text.Count( c => c == '\n' )
+                : 0;
+
+            int lineDelta = insertedNewlines - removedNewlines;
+
+            if ( lineDelta != 0 )
+            {
+                ShiftBreakpoints( startLine, lineDelta );
             }
         }
 
         private void ShiftBreakpoints( int fromLine, int delta )
         {
-            if ( delta == 0 )
+            ObservableCollection<int> breakpoints = _breakPointMargin?.Breakpoints;
+
+            if ( breakpoints == null || breakpoints.Count == 0 )
             {
                 return;
             }
 
-            ObservableCollection<int> breakpoints = (ObservableCollection<int>) GetValue( BreakpointsProperty );
+            List<int> shifted = new List<int>( breakpoints.Count );
 
-            if ( breakpoints == null )
+            foreach ( int bp in breakpoints )
             {
-                return;
+                if ( bp > fromLine )
+                {
+                    int newLine = bp + delta;
+
+                    if ( newLine > 0 )
+                    {
+                        shifted.Add( newLine );
+                    }
+                }
+                else
+                {
+                    shifted.Add( bp );
+                }
             }
 
-            foreach ( int bp in breakpoints.ToList().Where( bp => bp > fromLine ) )
-            {
-                breakpoints.Remove( bp );
-                breakpoints.Add( bp + delta );
-            }
-
-            List<int> sortedBreakpoints = breakpoints.OrderBy( x => x ).ToList();
+            shifted.Sort();
 
             breakpoints.Clear();
 
-            foreach ( int bp in sortedBreakpoints )
+            foreach ( int bp in shifted )
             {
                 breakpoints.Add( bp );
             }
@@ -126,9 +170,33 @@ namespace ClassicAssist.UI.Misc.Behaviours
                 return;
             }
 
-            if ( e.OldValue != null )
+            if ( editor._breakPointMargin != null )
             {
-                editor.RemoveBreakpointMargin();
+                // Reuse existing margin, just swap breakpoints
+                if ( editor._breakPointMargin.Breakpoints != null )
+                {
+                    editor._breakPointMargin.Breakpoints.CollectionChanged -= editor.Breakpoints_CollectionChanged;
+                }
+
+                // Unsubscribe from Document.Changed during macro switch so the
+                // full-text replacement doesn't shift/clear the new macro's breakpoints.
+                // Resubscribe on next dispatcher idle after the text swap completes.
+                editor.UnsubscribeFromDocument();
+
+                editor._breakPointMargin.Breakpoints = (ObservableCollection<int>) e.NewValue;
+
+                if ( editor._breakPointMargin.Breakpoints != null )
+                {
+                    editor._breakPointMargin.Breakpoints.CollectionChanged += editor.Breakpoints_CollectionChanged;
+                }
+
+                editor._breakPointMargin.InvalidateVisual();
+
+                editor._textEditor?.Dispatcher.BeginInvoke(
+                    (Action) ( () => editor.SubscribeToDocument( editor._textEditor?.Document ) ),
+                    System.Windows.Threading.DispatcherPriority.Loaded );
+
+                return;
             }
 
             if ( e.NewValue != null )
@@ -156,7 +224,7 @@ namespace ClassicAssist.UI.Misc.Behaviours
 
         private void Breakpoints_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
         {
-            SetValue( BreakpointsProperty, (ObservableCollection<int>) sender );
+            _breakPointMargin?.InvalidateVisual();
         }
 
         private void RemoveBreakpointMargin()

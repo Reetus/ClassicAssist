@@ -67,16 +67,14 @@
             </StackPanel>
             <Border BorderBrush="{DynamicResource ThemeBorderBrush}"
                     BorderThickness="1" Grid.Row="1" Margin="0,10,0,10">
-                <ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
-                    <i:Interaction.Behaviors>
-                        <misc:ScrollOnDragDrop />
-                    </i:Interaction.Behaviors>
                     <draggableTreeView:DraggableTreeView x:Name="listView"
                                                          ItemsSource="{Binding Draggables}"
                                                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                         ScrollViewer.CanContentScroll="True"
+                                                         VirtualizingStackPanel.IsVirtualizing="True"
+                                                         VirtualizingStackPanel.VirtualizationMode="Recycling"
                                                          BorderThickness="0"
                                                          AllowDragGroups="False"
-                                                         PreviewMouseWheel="DraggableTreeView_OnPreviewMouseWheel"
                                                          BindableSelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                          BindableSelectedGroup="{Binding SelectedGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                          HorizontalContentAlignment="Stretch"
@@ -142,6 +140,7 @@
                         <i:Interaction.Behaviors>
                             <behaviours1:ItemsControlSelectNewEntryBehaviour SelectedItem="{Binding SelectedItem}"
                                                                       Type="{x:Type autoloot:AutolootEntry}" />
+                            <misc:ScrollOnDragDrop />
                         </i:Interaction.Behaviors>
                         <draggableTreeView:DraggableTreeView.ContextMenu>
                             <ContextMenu>
@@ -190,7 +189,6 @@
                             </ContextMenu>
                         </draggableTreeView:DraggableTreeView.ContextMenu>
                     </draggableTreeView:DraggableTreeView>
-                </ScrollViewer>
             </Border>
             <StackPanel Grid.Row="2">
                 <Grid>

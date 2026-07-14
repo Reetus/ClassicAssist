@@ -536,17 +536,20 @@ namespace ClassicAssist.UO.Network
                 filtered = onReceive.Invoke( ref data, ref length );
             }
 
-            foreach ( DynamicFilterEntry dynamicFilterEntry in DynamicFilterEntry.Filters.Where( e => e.Enabled ) )
+            for ( int i = 0; i < DynamicFilterEntry.Filters.Count; i++ )
             {
-                bool result = dynamicFilterEntry.CheckPacket( ref data, ref length, PacketDirection.Incoming );
+                DynamicFilterEntry dynamicFilterEntry = DynamicFilterEntry.Filters[i];
 
-                if ( !result )
+                if ( !dynamicFilterEntry.Enabled )
                 {
                     continue;
                 }
 
-                filtered = true;
-                break;
+                if ( dynamicFilterEntry.CheckPacket( ref data, ref length, PacketDirection.Incoming ) )
+                {
+                    filtered = true;
+                    break;
+                }
             }
 
             return !Engine.VerifyPacketLengthCorrect( data ) || filtered;

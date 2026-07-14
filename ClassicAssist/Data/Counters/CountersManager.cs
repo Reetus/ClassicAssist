@@ -44,6 +44,11 @@ namespace ClassicAssist.Data.Counters
 
         private void OnNewWorldItemEvent( Item item )
         {
+            if ( item.Owner == 0 )
+            {
+                return;
+            }
+
             RecountAll?.Invoke();
         }
 

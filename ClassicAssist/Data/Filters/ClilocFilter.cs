@@ -77,31 +77,26 @@ namespace ClassicAssist.Data.Filters
                 return false;
             }
 
-            if ( Filters.All( f => f.Cliloc != journalEntry.Cliloc ) )
+            FilterClilocEntry match = FindByCliloc( journalEntry.Cliloc );
+
+            if ( match == null )
             {
                 return false;
             }
 
-            FilterClilocEntry match = Filters.FirstOrDefault( f => f.Cliloc == journalEntry.Cliloc );
+            int serial = journalEntry.Serial;
+            int id = journalEntry.ID;
 
-            if ( match != null )
+            if ( serial == -1 && match.ShowOverhead )
             {
-                int serial = journalEntry.Serial;
-                int id = journalEntry.ID;
-
-                if ( serial == -1 && match.ShowOverhead )
-                {
-                    serial = Engine.Player.Serial;
-                    id = Engine.Player.ID;
-                }
-
-                Engine.SendPacketToClient( new UnicodeText(serial, id, journalEntry.SpeechType, match.Hue == -1 ? journalEntry.SpeechHue : match.Hue,
-                    journalEntry.SpeechFont, Strings.UO_LOCALE, journalEntry.Name, match.Replacement ) );
-
-                return true;
+                serial = Engine.Player.Serial;
+                id = Engine.Player.ID;
             }
 
-            return false;
+            Engine.SendPacketToClient( new UnicodeText( serial, id, journalEntry.SpeechType, match.Hue == -1 ? journalEntry.SpeechHue : match.Hue,
+                journalEntry.SpeechFont, Strings.UO_LOCALE, journalEntry.Name, match.Replacement ) );
+
+            return true;
         }
 
         public static bool CheckMessageAffix( JournalEntry journalEntry, MessageAffixType affixType, string affix )
@@ -111,12 +106,7 @@ namespace ClassicAssist.Data.Filters
                 return false;
             }
 
-            if ( Filters.All( f => f.Cliloc != journalEntry.Cliloc ) )
-            {
-                return false;
-            }
-
-            FilterClilocEntry match = Filters.FirstOrDefault( f => f.Cliloc == journalEntry.Cliloc );
+            FilterClilocEntry match = FindByCliloc( journalEntry.Cliloc );
 
             if ( match == null )
             {
@@ -129,6 +119,19 @@ namespace ClassicAssist.Data.Filters
                 journalEntry.SpeechFont, Strings.UO_LOCALE, journalEntry.Name, text ) );
 
             return true;
+        }
+
+        private static FilterClilocEntry FindByCliloc( int cliloc )
+        {
+            for ( int i = 0; i < Filters.Count; i++ )
+            {
+                if ( Filters[i].Cliloc == cliloc )
+                {
+                    return Filters[i];
+                }
+            }
+
+            return null;
         }
     }
 }

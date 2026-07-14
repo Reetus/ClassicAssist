@@ -5,6 +5,7 @@ using System.Reflection;
 using Assistant;
 using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Shared.UI;
+using System.Collections.ObjectModel;
 using ClassicAssist.UI.Misc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -19,7 +20,7 @@ namespace ClassicAssist.Tests
             IEnumerable<Type> hotkeyCommands = Assembly.GetAssembly( typeof( Engine ) ).GetTypes()
                 .Where( i => i.IsSubclassOf( typeof( HotkeyCommand ) ) );
 
-            ObservableCollectionEx<HotkeyCommand> hotkeys = new ObservableCollectionEx<HotkeyCommand>();
+            ObservableCollection<HotkeyCommand> hotkeys = new ObservableCollection<HotkeyCommand>();
 
             foreach ( Type hotkeyCommand in hotkeyCommands )
             {

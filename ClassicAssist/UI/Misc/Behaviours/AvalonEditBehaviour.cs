@@ -28,6 +28,8 @@ namespace ClassicAssist.UI.Misc.Behaviours
 {
     public sealed class AvalonEditBehaviour : Behavior<TextEditor>
     {
+        internal static bool IsProgrammaticTextChange { get; private set; }
+
         public static readonly DependencyProperty TextBindingProperty = DependencyProperty.Register( nameof( TextBinding ), typeof( string ), typeof( AvalonEditBehaviour ),
             new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, PropertyChangedCallback ) );
 
@@ -100,7 +102,16 @@ namespace ClassicAssist.UI.Misc.Behaviours
                 return;
             }
 
-            editor.Document.Text = dependencyPropertyChangedEventArgs.NewValue?.ToString() ?? string.Empty;
+            IsProgrammaticTextChange = true;
+
+            try
+            {
+                editor.Document.Text = dependencyPropertyChangedEventArgs.NewValue?.ToString() ?? string.Empty;
+            }
+            finally
+            {
+                IsProgrammaticTextChange = false;
+            }
             editor.CaretOffset = 0;
 
             if ( editor.Document.UndoStack.SizeLimit == 0 )

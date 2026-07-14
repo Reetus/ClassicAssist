@@ -1672,6 +1672,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Drop to ground.
+        /// </summary>
+        public static string Drop_to_ground {
+            get {
+                return ResourceManager.GetString("Drop to ground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duplicate.
         /// </summary>
         public static string Duplicate {
@@ -3013,6 +3022,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lock Item.
+        /// </summary>
+        public static string Lock_item {
+            get {
+                return ResourceManager.GetString("Lock item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
         public static string Login {
@@ -3423,24 +3441,6 @@ namespace ClassicAssist.Shared.Resources {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Lock Item.
-        /// </summary>
-        public static string Lock_item {
-            get {
-                return ResourceManager.GetString("Lock item", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Unlock Item.
-        /// </summary>
-        public static string Unlock_item {
-            get {
-                return ResourceManager.GetString("Unlock item", resourceCulture);
-            }
-        }
-
         /// <summary>
         ///   Looks up a localized string similar to Move to backpack.
         /// </summary>
@@ -5814,6 +5814,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Unlinked {
             get {
                 return ResourceManager.GetString("Unlinked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unlock Item.
+        /// </summary>
+        public static string Unlock_item {
+            get {
+                return ResourceManager.GetString("Unlock item", resourceCulture);
             }
         }
         

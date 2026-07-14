@@ -9,7 +9,7 @@ namespace ClassicAssist.UI.Misc
      * https://weblogs.asp.net/akjoshi/Attached-behavior-for-auto-scrolling-containers-while-doing-drag-amp-drop
      */
 
-    public class ScrollOnDragDrop : Behavior<ScrollViewer>
+    public class ScrollOnDragDrop : Behavior<FrameworkElement>
     {
         protected override void OnAttached()
         {

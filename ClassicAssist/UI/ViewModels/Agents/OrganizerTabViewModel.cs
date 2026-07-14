@@ -289,8 +289,10 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             OrganizerEntry entry = new OrganizerEntry
             {
-                Name = $"Organizer-{count}", Action = ( hks, _ ) => Task.Run( async () => await _manager.Organize( SelectedItem ) ), IsRunning = () => IsOrganizing
+                Name = $"Organizer-{count}", IsRunning = () => IsOrganizing
             };
+
+            entry.Action = ( hks, _ ) => Task.Run( async () => await _manager.Organize( entry ) );
 
             Items.Add( entry );
         }

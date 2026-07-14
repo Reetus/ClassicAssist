@@ -6,6 +6,7 @@ using System.Threading;
 using Assistant;
 using ClassicAssist.Browser.Models;
 using ClassicAssist.Shared.UI;
+using System.Collections.ObjectModel;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
 
@@ -40,7 +41,7 @@ namespace ClassicAssist.Data.Macros
         public MacroEntry CurrentMacro { get; set; }
         public Action<string> InsertDocument { get; set; }
         public Func<bool> IsRecording { get; set; }
-        public ObservableCollectionEx<MacroEntry> Items { get; set; }
+        public ObservableCollection<MacroEntry> Items { get; set; }
         public Action<string, string> NewMacro { get; set; }
         public static bool QuietMode { get; set; }
         public bool Replay { get; set; }

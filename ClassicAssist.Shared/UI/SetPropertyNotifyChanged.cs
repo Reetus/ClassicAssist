@@ -18,6 +18,7 @@
 #endregion
 
 using System;
+using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -27,9 +28,13 @@ namespace ClassicAssist.Shared.UI
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private static readonly ConcurrentDictionary<string, PropertyChangedEventArgs> _argsCache =
+            new ConcurrentDictionary<string, PropertyChangedEventArgs>();
+
         protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
         {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+            PropertyChanged?.Invoke( this,
+                _argsCache.GetOrAdd( propertyName, name => new PropertyChangedEventArgs( name ) ) );
         }
 
         protected virtual void SetProperty<T>( ref T obj, T value, bool skipIfUnchanged = true,

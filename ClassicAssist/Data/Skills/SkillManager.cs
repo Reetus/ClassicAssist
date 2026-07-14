@@ -1,4 +1,5 @@
-﻿using ClassicAssist.Shared.UI;
+﻿using System.Collections.ObjectModel;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.Misc;
 
 namespace ClassicAssist.Data.Skills
@@ -7,13 +8,13 @@ namespace ClassicAssist.Data.Skills
     {
         private static readonly object _lock = new object();
         private static SkillManager _instance;
-        private ObservableCollectionEx<SkillEntry> _items = new ObservableCollectionEx<SkillEntry>();
+        private ObservableCollection<SkillEntry> _items = new ObservableCollection<SkillEntry>();
 
         private SkillManager()
         {
         }
 
-        public ObservableCollectionEx<SkillEntry> Items
+        public ObservableCollection<SkillEntry> Items
         {
             get => _items;
             set => SetProperty( ref _items, value );

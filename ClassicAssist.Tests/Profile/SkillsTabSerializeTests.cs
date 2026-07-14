@@ -18,6 +18,7 @@ using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Hotkeys.Commands;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.UI;
+using System.Collections.ObjectModel;
 using ClassicAssist.UI.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
@@ -35,7 +36,7 @@ namespace ClassicAssist.Tests.Profile
             {
                 _hotkeyCategory = new HotkeyCommand
                 {
-                    Children = new ObservableCollectionEx<HotkeyEntry>
+                    Children = new ObservableCollection<HotkeyEntry>
                     {
                         new HotkeyCommand { IsGlobal = true, Hotkey = new ShortcutKeys( SDLKeys.ModKey.None, Key.A ) },
                         new HotkeyCommand { IsGlobal = false, Hotkey = new ShortcutKeys( SDLKeys.ModKey.None, Key.B ) }

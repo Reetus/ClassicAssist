@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
+using System.Collections.ObjectModel;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.PacketFilter;
 using ClassicAssist.UO.Network.Packets;
@@ -26,7 +27,7 @@ namespace ClassicAssist.Data.Organizer
 
         public bool IsOrganizing { get; set; }
 
-        public ObservableCollectionEx<OrganizerEntry> Items { get; set; }
+        public ObservableCollection<OrganizerEntry> Items { get; set; }
 
         private CancellationTokenSource _cancellationTokenSource { get; set; } = new CancellationTokenSource();
 

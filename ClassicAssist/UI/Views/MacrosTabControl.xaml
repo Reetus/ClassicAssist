@@ -112,10 +112,6 @@
                 </controls:FilterControl>
                 <Border BorderBrush="{DynamicResource ThemeBorderBrush}"
                         BorderThickness="1" Grid.Row="1">
-                    <ScrollViewer x:Name="ScrollViewer">
-                        <i:Interaction.Behaviors>
-                            <misc:ScrollOnDragDrop />
-                        </i:Interaction.Behaviors>
                         <draggableTreeView:DraggableTreeView ItemsSource="{Binding FilterDraggables}"
                                                              x:Name="DraggableTreeView"
                                                              BindableSelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -123,10 +119,12 @@
                                                              HorizontalContentAlignment="Stretch"
                                                              IsEnabled="{Binding IsRecording, Converter={StaticResource InverseBooleanConverter}}"
                                                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                             ScrollViewer.CanContentScroll="True"
+                                                             VirtualizingStackPanel.IsVirtualizing="True"
+                                                             VirtualizingStackPanel.VirtualizationMode="Recycling"
                                                              BorderThickness="0"
                                                              AllowDragGroups="False"
                                                              Style="{StaticResource CompressedTreeViewStyle}"
-                                                             PreviewMouseWheel="DraggableTreeView_OnPreviewMouseWheel"
                                                              AllowDragItemsOntoItems="{Binding CurrentOptions.SortMacrosAlphabetical, Converter={StaticResource InverseBooleanConverter}}">
                             <draggableTreeView:DraggableTreeView.InputBindings>
                                 <KeyBinding Modifiers="Control" Key="Delete"
@@ -246,8 +244,10 @@
                                     </Grid>
                                 </HierarchicalDataTemplate>
                             </draggableTreeView:DraggableTreeView.Resources>
+                        <i:Interaction.Behaviors>
+                                <misc:ScrollOnDragDrop />
+                            </i:Interaction.Behaviors>
                         </draggableTreeView:DraggableTreeView>
-                    </ScrollViewer>
                 </Border>
                 <Grid Grid.Row="2" Margin="0,5,0,0">
                     <Grid.ColumnDefinitions>

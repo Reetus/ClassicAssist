@@ -109,6 +109,11 @@ namespace ClassicAssist.UI.ViewModels
 
         public void Deserialize( JObject json, Options options, bool global = false )
         {
+            if ( CurrentOptions != null )
+            {
+                CurrentOptions.PropertyChanged -= OnOptionsChanged;
+            }
+
             CurrentOptions = options;
 
             CurrentOptions.PropertyChanged += OnOptionsChanged;

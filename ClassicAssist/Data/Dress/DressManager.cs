@@ -7,6 +7,7 @@ using Assistant;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
+using System.Collections.ObjectModel;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Objects;
@@ -38,7 +39,7 @@ namespace ClassicAssist.Data.Dress
 
         public bool IsDressing { get; set; }
 
-        public ObservableCollectionEx<DressAgentEntry> Items { get; set; }
+        public ObservableCollection<DressAgentEntry> Items { get; set; }
 
         public DressAgentEntry TemporaryDress
         {

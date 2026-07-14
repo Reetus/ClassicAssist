@@ -110,7 +110,8 @@ namespace ClassicAssist.Tests
         {
             fixed ( void* func = &_pluginHeader )
             {
-                Engine.Install( (PluginHeader*) func );
+                Engine.Initialize();
+                Engine.InitializePlugin( (PluginHeader*) func );
             }
 
             using ( AutoResetEvent are = new AutoResetEvent( false ) )
@@ -149,7 +150,8 @@ namespace ClassicAssist.Tests
         {
             fixed ( void* func = &_pluginHeader )
             {
-                Engine.Install( (PluginHeader*) func );
+                Engine.Initialize();
+                Engine.InitializePlugin( (PluginHeader*) func );
             }
 
             byte[] packet = { 0x06, 0xAA, 0xBB, 0xCC, 0xDD };
@@ -197,7 +199,8 @@ namespace ClassicAssist.Tests
         {
             fixed ( void* func = &_pluginHeader )
             {
-                Engine.Install( (PluginHeader*) func );
+                Engine.Initialize();
+                Engine.InitializePlugin( (PluginHeader*) func );
             }
 
             byte[] packet = { 0x2F, 0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88 };
@@ -246,7 +249,8 @@ namespace ClassicAssist.Tests
         {
             fixed ( void* func = &_pluginHeader )
             {
-                Engine.Install( (PluginHeader*) func );
+                Engine.Initialize();
+                Engine.InitializePlugin( (PluginHeader*) func );
             }
 
             byte[] packet = { 0x2F, 0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88 };

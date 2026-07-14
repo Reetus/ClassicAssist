@@ -7,13 +7,14 @@
         xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+        xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         Title="{x:Static resources:Strings.ItemID_Filter}" Height="450" Width="300"
         DataContext="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <DrawingImage x:Key="LoadIcon">
                 <DrawingImage.Drawing>

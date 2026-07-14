@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:behaviours="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
+             xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
              mc:Ignorable="d" x:Name="UserControl"
              d:DesignHeight="50" d:DesignWidth="800"
              Background="{DynamicResource ThemeWindowBackgroundBrush}">
@@ -15,7 +16,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -35,10 +36,10 @@
         <ContentPresenter Content="{Binding AdditionalContent, ElementName=UserControl}" DockPanel.Dock="Left" />
         <Label DockPanel.Dock="Left" Content="{Binding CustomTitle, ElementName=UserControl}" FontSize="16"
                Margin="5,0,5,0"
-               Foreground="{DynamicResource ThemeForegroundBrush}" />
+               Foreground="{StaticResource ThemeForegroundBrush}" />
         <StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right" Orientation="Horizontal">
             <ContentPresenter Content="{Binding AdditionalButtons, ElementName=UserControl}" />
-            <Button Background="{DynamicResource ThemeWindowBackgroundBrush}"
+            <Button Background="{StaticResource ThemeWindowBackgroundBrush}"
                     IsEnabled="{Binding CanMinimize, ElementName=UserControl}">
                 <i:Interaction.Behaviors>
                     <behaviours:WindowCommandBehaviour Command="Minimize"
@@ -46,14 +47,14 @@
                 </i:Interaction.Behaviors>
                 <Image Source="{StaticResource minusIcon}" />
             </Button>
-            <Button Background="{DynamicResource ThemeWindowBackgroundBrush}"
+            <Button Background="{StaticResource ThemeWindowBackgroundBrush}"
                     IsEnabled="{Binding CanMaximize, ElementName=UserControl}">
                 <i:Interaction.Behaviors>
                     <behaviours:WindowCommandBehaviour Command="Maximize" />
                 </i:Interaction.Behaviors>
                 <Image Source="{StaticResource squareIcon}" />
             </Button>
-            <Button Background="{DynamicResource ThemeWindowBackgroundBrush}"
+            <Button Background="{StaticResource ThemeWindowBackgroundBrush}"
                     IsEnabled="{Binding CanClose, ElementName=UserControl}">
                 <i:Interaction.Behaviors>
                     <behaviours:WindowCommandBehaviour Command="Close" />

@@ -19,7 +19,7 @@ using System.Windows.Media;
 
 namespace ClassicAssist.Controls
 {
-    public partial class ImageButton : Button
+    public class ImageButton : Button
     {
         public static readonly DependencyProperty ImageSourceProperty =
             DependencyProperty.Register( nameof( ImageSource ), typeof( ImageSource ), typeof( ImageButton ),

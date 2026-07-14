@@ -114,16 +114,13 @@ namespace ClassicAssist.Data.Macros.Commands
                 return;
             }
 
-            Thread t = new Thread( () =>
+            _ = Engine.Dispatcher.BeginInvoke( (Action) ( () =>
             {
                 ObjectInspectorWindow window =
                     new ObjectInspectorWindow { DataContext = new ObjectInspectorViewModel( entity ) };
 
                 window.ShowDialog();
-            } ) { IsBackground = true };
-
-            t.SetApartmentState( ApartmentState.STA );
-            t.Start();
+            } ) );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Main ),

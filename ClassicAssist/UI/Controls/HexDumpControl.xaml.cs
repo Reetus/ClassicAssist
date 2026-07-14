@@ -51,12 +51,9 @@ namespace ClassicAssist.UI.Controls
         public PacketEntry Packet
         {
             get => (PacketEntry) GetValue( PacketProperty );
-            set
-            {
-                SetValue( PacketProperty, value );
-                BinaryData = SetBinary( value );
-                TextData = SetText( value );
-            }
+            // BinaryData / TextData are refreshed by PropertyChangedCallback, which fires for both
+            // XAML bindings and direct assignment - don't recompute them here as well.
+            set => SetValue( PacketProperty, value );
         }
 
         public ObservableCollection<DebugPacketsViewModel.PacketEnabledEntry> PacketEntries
@@ -109,7 +106,7 @@ namespace ClassicAssist.UI.Controls
                 return string.Empty;
             }
 
-            StringBuilder textBuilder = new StringBuilder();
+            StringBuilder textBuilder = new StringBuilder( packetEntry.Length + packetEntry.Length / 16 + 2 );
 
             for ( int i = 0; i < packetEntry.Length; i++ )
             {
@@ -138,7 +135,7 @@ namespace ClassicAssist.UI.Controls
                 return string.Empty;
             }
 
-            StringBuilder binaryBuilder = new StringBuilder();
+            StringBuilder binaryBuilder = new StringBuilder( packetEntry.Length * 3 + 2 );
 
             for ( int i = 0; i < packetEntry.Length; i++ )
             {
@@ -164,21 +161,21 @@ namespace ClassicAssist.UI.Controls
         {
             try
             {
-                string prepend = "byte[] packet = new byte[] { ";
+                StringBuilder prepend = new StringBuilder( "byte[] packet = new byte[] { " );
 
                 for ( int i = 0; i < Packet.Data.Length; i++ )
                 {
-                    prepend += $"0x{Packet.Data[i]:X2}";
+                    prepend.Append( $"0x{Packet.Data[i]:X2}" );
 
                     if ( i + 1 < Packet.Data.Length )
                     {
-                        prepend += ", ";
+                        prepend.Append( ", " );
                     }
                 }
 
-                prepend += " };";
+                prepend.Append( " };" );
 
-                Clipboard.SetData( DataFormats.Text, prepend );
+                Clipboard.SetData( DataFormats.Text, prepend.ToString() );
             }
             catch ( Exception )
             {

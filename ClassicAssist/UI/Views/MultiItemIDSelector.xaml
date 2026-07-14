@@ -6,11 +6,12 @@
              xmlns:local="clr-namespace:ClassicAssist.UI.Views"
              xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              xmlns:misc="clr-namespace:ClassicAssist.Misc"
+             xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
              mc:Ignorable="d" d:DesignWidth="400">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <misc:BindingProxy x:Key="Proxy"
                                Data="{Binding Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MultiItemIDSelector}}}" />

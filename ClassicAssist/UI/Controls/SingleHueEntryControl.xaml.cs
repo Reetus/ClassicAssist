@@ -36,8 +36,9 @@ namespace ClassicAssist.UI.Controls
 
         private void SetHues( HueEntry entry )
         {
-            // TODO: Rush job, verify logic for single hue later
-            SolidColorBrush brush = new SolidColorBrush( Convert555ToARGB( entry.Colors[30] ) );
+            // ClassicUO uses ColorTable index 8 as a hue's single representative colour
+            // ( HuesLoader.GetUnicodeFontColor, the shade used to render solid hued text ).
+            SolidColorBrush brush = new SolidColorBrush( Convert555ToARGB( entry.Colors[8] ) );
 
             StackPanel.Children.Add( new Rectangle { Fill = brush, Width = 320 } );
         }

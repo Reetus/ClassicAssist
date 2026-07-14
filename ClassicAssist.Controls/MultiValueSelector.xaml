@@ -6,6 +6,7 @@
              xmlns:controls="clr-namespace:ClassicAssist.Controls"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:behaviours="clr-namespace:ClassicAssist.Controls.Misc.Behaviours"
+             xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
              mc:Ignorable="d"
              d:DesignWidth="400">
     <UserControl.Resources>
@@ -14,8 +15,7 @@
                 <ResourceDictionary Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/Icons.xaml" />
                 <ResourceDictionary
                     Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/Colours.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <DataTemplate x:Key="DefaultItemTemplate">
                 <TextBlock Text="{Binding ., StringFormat={}0x{0:x8}}"

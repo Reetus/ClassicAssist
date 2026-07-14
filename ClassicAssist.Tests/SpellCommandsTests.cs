@@ -75,5 +75,13 @@ namespace ClassicAssist.Tests
             Engine.Player = null;
             Engine.PacketWaitEntries = null;
         }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Engine.Player = null;
+            Engine.PacketWaitEntries = null;
+            Options.CurrentOptions.UseExperimentalFizzleDetection = false;
+        }
     }
 }

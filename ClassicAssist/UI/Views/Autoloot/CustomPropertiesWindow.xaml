@@ -9,6 +9,7 @@
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
         xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
+        xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
         mc:Ignorable="d"
         Title="{x:Static resources:Strings.Define_Custom_Properties}" Height="350" Width="725"
         Background="{DynamicResource ThemeWindowBackgroundBrush}" Topmost="True">
@@ -18,7 +19,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />

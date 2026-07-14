@@ -12,12 +12,13 @@
         xmlns:misc="clr-namespace:ClassicAssist.Misc"
         xmlns:filters1="clr-namespace:ClassicAssist.Data.Filters"
         xmlns:itemIdFilter="clr-namespace:ClassicAssist.UI.Views.Filters.ItemIDFilter"
+        xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         Title="{x:Static resources:Strings.ItemID_Filter}" Height="350" Width="420">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary
                     Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DebugToolBarStyle.xaml" />
                 <ResourceDictionary>

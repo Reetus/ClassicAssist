@@ -112,9 +112,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>MacroCommandHelp.resx</DependentUpon>
     </Compile>
-    <Compile Update="UI\Controls\TextBoxKey.xaml.cs">
-      <DependentUpon>TextBoxKey.xaml</DependentUpon>
-    </Compile>
     <Compile Update="UI\Views\Agents\AutolootNewTabControl.xaml.cs">
       <DependentUpon>AutolootNewTabControl.xaml</DependentUpon>
     </Compile>

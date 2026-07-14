@@ -13,6 +13,7 @@
              xmlns:skills="clr-namespace:ClassicAssist.Data.Skills"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:behaviours="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
+             xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
              mc:Ignorable="d">
     <d:DesignerProperties.DesignStyle>
         <Style TargetType="UserControl">
@@ -25,7 +26,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>

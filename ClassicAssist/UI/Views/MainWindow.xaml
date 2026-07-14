@@ -11,6 +11,7 @@
         xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
         xmlns:browser="clr-namespace:ClassicAssist.Browser"
         xmlns:behaviours="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
+        xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
         mc:Ignorable="d"
         Height="500" Width="625" Topmost="{Binding CurrentOptions.AlwaysOnTop}"
         MinHeight="400" MinWidth="400"
@@ -23,6 +24,7 @@
     <i:Interaction.Behaviors>
         <misc:LoadOptionsOnWindowLoaded />
         <behaviours:WindowResizeBehaviour />
+        <behaviours:WindowMaximizeBehaviour />
     </i:Interaction.Behaviors>
     <Window.DataContext>
         <viewModels:MainWindowViewModel />
@@ -30,7 +32,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>

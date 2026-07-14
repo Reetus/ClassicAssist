@@ -11,6 +11,7 @@
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              xmlns:sharedControls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              xmlns:commands="clr-namespace:ClassicAssist.Data.Hotkeys.Commands"
+             xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500">
     <UserControl.DataContext>
@@ -19,7 +20,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
             <CollectionViewSource x:Key='src' Source="{Binding FilterItems}">
@@ -45,7 +46,10 @@
             </Grid.RowDefinitions>
             <sharedControls:FilterControl Grid.Row="0" FilterText="{Binding FilterText}" Margin="5,10,5,0" />
             <ListView Grid.Row="1" ItemsSource="{Binding Source={StaticResource src}}" Margin="5"
-                      PreviewMouseWheel="UIElement_OnPreviewMouseWheel">
+                      PreviewMouseWheel="UIElement_OnPreviewMouseWheel"
+                      VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                      VirtualizingPanel.ScrollUnit="Pixel"
+                      VirtualizingPanel.VirtualizationMode="Recycling">
                 <ListView.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.ContainerStyle>
@@ -64,6 +68,7 @@
                                                 <Expander.Content>
                                                     <ListBox ItemsSource="{Binding Items/Children}" BorderThickness="0"
                                                              Margin="40,0,0,0"
+                                                             VirtualizingStackPanel.VirtualizationMode="Recycling"
                                                              SelectedItem="{Binding Path=Data.(viewModels:HotkeysTabViewModel.SelectedItem), Source={StaticResource Proxy}}">
                                                         <ListBox.ItemTemplate>
                                                             <DataTemplate DataType="commands:HotkeyCommand">
@@ -108,7 +113,7 @@
                                      Shortcut="{Binding Hotkey}" Grid.Row="0"
                                      Margin="10">
                     <controls:TextBoxKey.Style>
-                        <Style TargetType="controls:TextBoxKey">
+                        <Style TargetType="controls:TextBoxKey" BasedOn="{StaticResource {x:Type TextBox}}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Path=SelectedItem.IsCategory}" Value="True">
                                     <Setter Property="IsEnabled" Value="False" />

@@ -7,13 +7,14 @@
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+        xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         WindowStartupLocation="CenterScreen"
         Title="{x:Static resources:Strings.Profile_Backup}" Height="500" Width="600">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary>
                     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
                 </ResourceDictionary>

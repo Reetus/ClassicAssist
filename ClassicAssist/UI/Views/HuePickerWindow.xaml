@@ -7,13 +7,14 @@
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+        xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         Title="{x:Static resources:Strings.Hue_Picker}" Height="350" Width="450"
         DataContext="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>

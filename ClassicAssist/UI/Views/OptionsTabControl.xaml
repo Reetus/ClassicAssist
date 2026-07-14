@@ -13,6 +13,7 @@
     xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
     xmlns:optionsTab="clr-namespace:ClassicAssist.UI.Views.OptionsTab"
     xmlns:behaviours="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
+    xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
     x:Class="ClassicAssist.UI.Views.OptionsTabControl"
     mc:Ignorable="d"
     d:DesignHeight="633.233" d:DesignWidth="798.666">
@@ -24,7 +25,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>

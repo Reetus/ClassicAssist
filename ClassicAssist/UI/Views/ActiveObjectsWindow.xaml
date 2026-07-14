@@ -9,13 +9,14 @@
     xmlns:misc1="clr-namespace:ClassicAssist.Misc"
     xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+    xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
     x:Class="ClassicAssist.UI.Views.ActiveObjectsWindow"
     mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
     Title="{x:Static resources:Strings.Active_Objects}" Height="350" Width="400">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:IntToHexStringValueConverter x:Key="IntToHexStringValueConverter" />
             <misc1:BindingProxy x:Key="Proxy" Data="{Binding}" />

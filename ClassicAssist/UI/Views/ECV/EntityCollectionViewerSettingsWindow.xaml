@@ -9,6 +9,7 @@
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         xmlns:controls="clr-namespace:ClassicAssist.UI.Views.ECV.Settings.Controls"
+        xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
         mc:Ignorable="d"
         Title="{x:Static resources:Strings.Entity_Collection_Viewer}"
         Background="{DynamicResource ThemeWindowBackgroundBrush}"
@@ -19,7 +20,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>

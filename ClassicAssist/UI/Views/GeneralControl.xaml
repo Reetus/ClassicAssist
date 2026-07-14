@@ -9,6 +9,7 @@
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
     xmlns:behaviours="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
+    xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
     x:Name="userControl"
     x:Class="ClassicAssist.UI.Views.GeneralControl"
     mc:Ignorable="d"
@@ -21,7 +22,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>

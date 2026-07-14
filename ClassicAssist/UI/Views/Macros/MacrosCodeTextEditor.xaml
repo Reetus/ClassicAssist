@@ -8,12 +8,13 @@
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:behaviours="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
+             xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary Source="../../../Resources/LeftRightIconToggleButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:LinePausedValueConverter x:Key="LinePausedValueConverter" />

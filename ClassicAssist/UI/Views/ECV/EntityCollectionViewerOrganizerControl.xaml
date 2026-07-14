@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:ClassicAssist.UI.Views.ECV"
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
+             xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
              mc:Ignorable="d">
     <UserControl.DataContext>
         <local:EntityCollectionViewerOrganizerViewModel />
@@ -13,7 +14,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>

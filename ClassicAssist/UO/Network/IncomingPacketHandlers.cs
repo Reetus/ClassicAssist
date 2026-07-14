@@ -62,6 +62,13 @@ namespace ClassicAssist.UO.Network
         private static PacketHandler[] _handlers;
         private static PacketHandler[] _extendedHandlers;
 
+        private static readonly Version _version6017 = new Version( 6, 0, 1, 7 );
+        private static readonly Version _version7000 = new Version( 7, 0, 0, 0 );
+        private static readonly Version _version70130 = new Version( 7, 0, 13, 0 );
+        private static readonly Version _version70331 = new Version( 7, 0, 33, 1 );
+        private static readonly char[] _tabSeparator = { '\t' };
+        private static readonly XYComparer _xyComparer = new XYComparer();
+
         public static ConcurrentDictionary<int, Property[]> PropertyCache { get; set; } =
             new ConcurrentDictionary<int, Property[]>();
 
@@ -320,7 +327,7 @@ namespace ClassicAssist.UO.Network
 
             int cities = reader.ReadByte();
 
-            bool isNew = Engine.ClientVersion >= new Version( 7, 0, 13, 0 );
+            bool isNew = Engine.ClientVersion >= _version70130;
 
             for ( int i = 0; i < cities; i++ )
             {
@@ -774,7 +781,7 @@ namespace ClassicAssist.UO.Network
             }
 
             List<Item> containerItems = new List<Item>( containerItem.Container.GetItems() );
-            containerItems.Sort( new XYComparer() );
+            containerItems.Sort( _xyComparer );
 
             for ( int i = 0; i < shopList.Count; i++ )
             {
@@ -1004,7 +1011,7 @@ namespace ClassicAssist.UO.Network
 
             HealthbarColour healthbar = HealthbarColour.None;
 
-            if ( Engine.ClientVersion < new Version( 7, 0, 0, 0 ) )
+            if ( Engine.ClientVersion < _version7000 )
             {
                 for ( int i = 0; i < count; i++ )
                 {
@@ -1472,7 +1479,7 @@ namespace ClassicAssist.UO.Network
             int count = reader.ReadUInt16();
             int x = reader.ReadInt16();
             int y = reader.ReadInt16();
-            int grid = Engine.ClientVersion == null || Engine.ClientVersion >= new Version( 6, 0, 1, 7 )
+            int grid = Engine.ClientVersion == null || Engine.ClientVersion >= _version6017
                 ? reader.ReadByte()
                 : 0;
             int containerSerial = reader.ReadInt32();
@@ -1490,8 +1497,7 @@ namespace ClassicAssist.UO.Network
             // Check mobile layer items if container is not a mobile
             if ( !UOMath.IsMobile( containerSerial ) )
             {
-                Layer layer = Engine.Player?.GetAllLayers().Select( ( s, i ) => new { i, s } )
-                    .Where( t => t.s == serial ).Select( t => (Layer) t.i ).FirstOrDefault() ?? Layer.Invalid;
+                Layer layer = FindLayerBySerial( Engine.Player?.GetAllLayers(), serial );
 
                 if ( layer != Layer.Invalid )
                 {
@@ -1499,14 +1505,29 @@ namespace ClassicAssist.UO.Network
                 }
                 else
                 {
-                    Mobile mobile = Engine.Mobiles.SelectEntity( m => m.GetAllLayers().Contains( serial ) );
-
-                    layer = mobile?.GetAllLayers().Select( ( s, i ) => new { i, s } ).Where( t => t.s == serial )
-                        .Select( t => (Layer) t.i ).FirstOrDefault() ?? Layer.Invalid;
-
-                    if ( layer != Layer.Invalid )
+                    Mobile mobile = Engine.Mobiles.SelectEntity( m =>
                     {
-                        mobile?.SetLayer( layer, 0 );
+                        int[] layers = m.GetAllLayers();
+
+                        for ( int i = 0; i < layers.Length; i++ )
+                        {
+                            if ( layers[i] == serial )
+                            {
+                                return true;
+                            }
+                        }
+
+                        return false;
+                    } );
+
+                    if ( mobile != null )
+                    {
+                        layer = FindLayerBySerial( mobile.GetAllLayers(), serial );
+
+                        if ( layer != Layer.Invalid )
+                        {
+                            mobile.SetLayer( layer, 0 );
+                        }
                     }
                 }
             }
@@ -1547,7 +1568,20 @@ namespace ClassicAssist.UO.Network
         {
             int serial = reader.ReadInt32();
 
-            Mobile mobile = Engine.Mobiles.FirstOrDefault( m => m.GetAllLayers().Contains( serial ) );
+            Mobile mobile = Engine.Mobiles.FirstOrDefault( m =>
+            {
+                int[] layers = m.GetAllLayers();
+
+                for ( int i = 0; i < layers.Length; i++ )
+                {
+                    if ( layers[i] == serial )
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            } );
 
             if ( mobile != null )
             {
@@ -1630,7 +1664,7 @@ namespace ClassicAssist.UO.Network
                 int length = reader.ReadInt16();
 
                 property.Arguments = reader.ReadUnicodeString( length )
-                    .Split( new[] { '\t' }, StringSplitOptions.RemoveEmptyEntries );
+                    .Split( _tabSeparator, StringSplitOptions.RemoveEmptyEntries );
 
                 property.Text = Cliloc.GetLocalString( cliloc, property.Arguments );
 
@@ -1777,7 +1811,7 @@ namespace ClassicAssist.UO.Network
             mobile.Status = (MobileStatus) reader.ReadByte();
             mobile.Notoriety = (Notoriety) reader.ReadByte();
 
-            bool useNewIncoming = Engine.ClientVersion == null || Engine.ClientVersion >= new Version( 7, 0, 33, 1 );
+            bool useNewIncoming = Engine.ClientVersion == null || Engine.ClientVersion >= _version70331;
 
             for ( ;; )
             {
@@ -1809,15 +1843,17 @@ namespace ClassicAssist.UO.Network
                 container.Add( item );
             }
 
-            mobile.Equipment.Clear();
-            mobile.Equipment.Add( container.GetItems() );
+            Item[] equippedItems = container.GetItems();
 
-            foreach ( Item item in container.GetItems() )
+            mobile.Equipment.Clear();
+            mobile.Equipment.Add( equippedItems );
+
+            foreach ( Item item in equippedItems )
             {
                 mobile.SetLayer( item.Layer, item.Serial );
             }
 
-            Engine.Items.Add( container.GetItems() );
+            Engine.Items.Add( equippedItems );
 
             if ( !( mobile is PlayerMobile ) )
             {
@@ -2002,6 +2038,24 @@ namespace ClassicAssist.UO.Network
         internal static PacketHandler GetHandler( int packetId )
         {
             return _handlers[packetId];
+        }
+
+        private static Layer FindLayerBySerial( int[] layers, int serial )
+        {
+            if ( layers == null )
+            {
+                return Layer.Invalid;
+            }
+
+            for ( int i = 0; i < layers.Length; i++ )
+            {
+                if ( layers[i] == serial )
+                {
+                    return (Layer) i;
+                }
+            }
+
+            return Layer.Invalid;
         }
 
         private static PacketHandler GetExtendedHandler( int packetId )

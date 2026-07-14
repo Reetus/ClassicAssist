@@ -12,48 +12,81 @@ namespace ClassicAssist.Data.Macros.Commands
 {
     public static class MsgCommands
     {
-        private const int DEFAULT_SPEAK_HUE = 34;
+        // Eligible outgoing chat hue range (per POL / ClassicUO): 2 .. 0x03B2 (946).
+        private const int MIN_SPEAK_HUE = 2;
+        private const int MAX_SPEAK_HUE = 0x03B2;
+
+        // Sentinel default: resolve the hue from the player's serial at call time.
+        private const int DERIVED_SPEAK_HUE = -1;
+
+        /// <summary>
+        ///     Deterministically derives a valid speech hue from the player's serial so that every character
+        ///     speaks in a stable, per-character colour instead of a single shared hue (which is a bot tell),
+        ///     mimicking the per-profile speech hue a real client would have. The same serial always maps to
+        ///     the same hue; different serials are well distributed across the eligible chat hue range.
+        /// </summary>
+        private static int GetSpeakHue()
+        {
+            int serial = Engine.Player?.Serial ?? 0;
+
+            // Murmur3-style finalizer to scramble sequential serials into well-spread hues.
+            uint h = (uint) serial;
+            h ^= h >> 16;
+            h *= 0x7feb352d;
+            h ^= h >> 15;
+            h *= 0x846ca68b;
+            h ^= h >> 16;
+
+            const uint range = MAX_SPEAK_HUE - MIN_SPEAK_HUE + 1;
+
+            return MIN_SPEAK_HUE + (int) ( h % range );
+        }
+
+        private static int ResolveSpeakHue( int hue )
+        {
+            return hue == DERIVED_SPEAK_HUE ? GetSpeakHue() : hue;
+        }
 
         [CommandsDisplay( Category = nameof( Strings.Messages ),
             Parameters = new[] { nameof( ParameterType.String ), nameof( ParameterType.Hue ) } )]
-        public static void Msg( string message, int hue = DEFAULT_SPEAK_HUE )
+        public static void Msg( string message, int hue = DERIVED_SPEAK_HUE )
         {
-            UOC.Speak( message, hue );
+            UOC.Speak( message, ResolveSpeakHue( hue ) );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Messages ),
             Parameters = new[] { nameof( ParameterType.String ) } )]
         public static void YellMsg( string message )
         {
-            UOC.Speak( message, DEFAULT_SPEAK_HUE, JournalSpeech.Yell );
+            UOC.Speak( message, GetSpeakHue(), JournalSpeech.Yell );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Messages ),
             Parameters = new[] { nameof( ParameterType.String ) } )]
         public static void WhisperMsg( string message )
         {
-            UOC.Speak( message, DEFAULT_SPEAK_HUE, JournalSpeech.Whisper );
+            UOC.Speak( message, GetSpeakHue(), JournalSpeech.Whisper );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Messages ),
             Parameters = new[] { nameof( ParameterType.String ) } )]
         public static void EmoteMsg( string message )
         {
-            UOC.Speak( message, DEFAULT_SPEAK_HUE, JournalSpeech.Emote );
+            UOC.Speak( message, GetSpeakHue(), JournalSpeech.Emote );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Messages ),
             Parameters = new[] { nameof( ParameterType.String ) } )]
         public static void GuildMsg( string message )
         {
-            UOC.Speak( message, DEFAULT_SPEAK_HUE, JournalSpeech.Guild );
+            UOC.Speak( message, GetSpeakHue(), JournalSpeech.Guild );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Messages ),
             Parameters = new[] { nameof( ParameterType.String ) } )]
         public static void AllyMsg( string message )
         {
-            UOC.Speak( message, DEFAULT_SPEAK_HUE, JournalSpeech.Alliance );
+            UOC.Speak( message, GetSpeakHue(), JournalSpeech.Alliance );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Messages ),
@@ -68,11 +101,11 @@ namespace ClassicAssist.Data.Macros.Commands
             {
                 nameof( ParameterType.String ), nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Hue )
             } )]
-        public static void HeadMsg( string message, object obj = null, int hue = DEFAULT_SPEAK_HUE )
+        public static void HeadMsg( string message, object obj = null, int hue = DERIVED_SPEAK_HUE )
         {
             int serial = AliasCommands.ResolveSerial( obj );
 
-            UOC.OverheadMessage( message, hue, serial );
+            UOC.OverheadMessage( message, ResolveSpeakHue( hue ), serial );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Messages ),

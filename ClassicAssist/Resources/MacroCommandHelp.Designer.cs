@@ -19,7 +19,7 @@ namespace ClassicAssist.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class MacroCommandHelp {
@@ -4137,6 +4137,24 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Return SwingSpeed Increase value..
+        /// </summary>
+        public static string SWINGSPEEDINCREASE_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("SWINGSPEEDINCREASE_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ssi = SwingSpeedIncrease().
+        /// </summary>
+        public static string SWINGSPEEDINCREASE_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("SWINGSPEEDINCREASE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send a text message..
         /// </summary>
         public static string SYSMESSAGE_COMMAND_DESCRIPTION {
@@ -4731,6 +4749,42 @@ namespace ClassicAssist.Resources {
         public static string USETYPE_COMMAND_INSERTTEXT {
             get {
                 return ResourceManager.GetString("USETYPE_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns True if Buff Icon is Disabled before the timeout, else False.
+        /// </summary>
+        public static string WAITFORBUFFDISABLED_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WAITFORBUFFDISABLED_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WaitForBuffDisabled(&apos;Active Meditation&apos;, 5000).
+        /// </summary>
+        public static string WAITFORBUFFDISABLED_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WAITFORBUFFDISABLED_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returns True if Buff Icon is Enabled before the timeout, else False.
+        /// </summary>
+        public static string WAITFORBUFFENABLED_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WAITFORBUFFENABLED_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WaitForBuffEnabled(&apos;Active Meditation&apos;, 5000).
+        /// </summary>
+        public static string WAITFORBUFFENABLED_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WAITFORBUFFENABLED_COMMAND_INSERTTEXT", resourceCulture);
             }
         }
         

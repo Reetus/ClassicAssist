@@ -1924,6 +1924,12 @@ if FindType(0xe79, -1, 'backpack'):
   <data name="UNSETPLAYERALIAS_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>UnsetPlayerAlias("mount")</value>
   </data>
+  <data name="DROPITEMTOGROUND_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Drops the specified serial/alias onto the first of the 8 tiles adjacent to the player where it will fit, no amount specified or -1 will drop the full stack. Returns true if the item was dropped.</value>
+  </data>
+  <data name="DROPITEMTOGROUND_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>DropItemToGround('found', -1)</value>
+  </data>
   <data name="MOVEITEMXYZ_COMMAND_DESCRIPTION" xml:space="preserve">
     <value>Moves the specified serial/alias to the given coordinates</value>
   </data>

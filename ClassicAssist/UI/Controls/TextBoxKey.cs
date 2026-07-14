@@ -1,21 +1,22 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using ClassicAssist.Data.Hotkeys;
 using static ClassicAssist.Misc.SDLKeys;
 
 namespace ClassicAssist.UI.Controls
 {
-    /// <inheritdoc cref="TextBox" />
     /// <summary>
-    ///     Interaction logic for TestBoxKey.xaml
+    ///     A read-only <see cref="TextBox" /> that captures a key, mouse-button or mouse-wheel shortcut
+    ///     and exposes it through the <see cref="Shortcut" /> property.
     /// </summary>
-    public partial class TextBoxKey
+    public class TextBoxKey : TextBox
     {
         public static readonly DependencyProperty ShortcutProperty = DependencyProperty.Register( nameof( Shortcut ),
             typeof( ShortcutKeys ), typeof( TextBoxKey ),
             new FrameworkPropertyMetadata( default( ShortcutKeys ),
-                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnShortcutChanged ) );
 
         private readonly Key[] _modifiers =
         {
@@ -24,16 +25,31 @@ namespace ClassicAssist.UI.Controls
 
         public TextBoxKey()
         {
-            InitializeComponent();
+            IsReadOnly = true;
+            IsReadOnlyCaretVisible = false;
+            IsUndoEnabled = false;
+
+            // WPF implicit styles only match the exact type, so a TextBox subclass does not inherit
+            // the theme's implicit { x:Type TextBox } style. Resolve it explicitly so we keep the
+            // dark theme wherever DarkTheme.xaml is in scope.
+            SetResourceReference( StyleProperty, typeof( TextBox ) );
         }
 
         public Key Key { get; private set; }
         public ModKey Modifier { get; set; }
 
-        public object Shortcut
+        public ShortcutKeys Shortcut
         {
-            get => GetValue( ShortcutProperty );
+            get => (ShortcutKeys) GetValue( ShortcutProperty );
             set => SetValue( ShortcutProperty, value );
+        }
+
+        private static void OnShortcutChanged( DependencyObject d, DependencyPropertyChangedEventArgs e )
+        {
+            if ( d is TextBoxKey textBoxKey )
+            {
+                textBoxKey.Text = e.NewValue?.ToString() ?? string.Empty;
+            }
         }
 
         private ModKey CheckModifiers()
@@ -46,7 +62,7 @@ namespace ClassicAssist.UI.Controls
             return _modifiers.Any( k => key == k );
         }
 
-        private void TextBox_PreviewKeyDown( object sender, KeyEventArgs e )
+        protected override void OnPreviewKeyDown( KeyEventArgs e )
         {
             e.Handled = true;
             Key key = e.Key;
@@ -58,8 +74,6 @@ namespace ClassicAssist.UI.Controls
 
             if ( IsModifier( key ) )
             {
-                e.Handled = true;
-
                 return;
             }
 
@@ -82,13 +96,11 @@ namespace ClassicAssist.UI.Controls
             Key = key;
 
             Shortcut = new ShortcutKeys { Modifier = Modifier, Key = Key };
-
-            //ShortcutChanged?.Execute( new ShortcutKeys { Modifier = Modifier, Key = Key } );
         }
 
-        private void UIElement_OnPreviewMouseDown( object sender, MouseButtonEventArgs e )
+        protected override void OnPreviewMouseDown( MouseButtonEventArgs e )
         {
-            if ( ( e.ChangedButton == MouseButton.Left ) | ( e.ChangedButton == MouseButton.Right ) )
+            if ( e.ChangedButton == MouseButton.Left || e.ChangedButton == MouseButton.Right )
             {
                 return;
             }
@@ -100,7 +112,7 @@ namespace ClassicAssist.UI.Controls
             Shortcut = new ShortcutKeys { Modifier = Modifier, Mouse = (MouseOptions) e.ChangedButton };
         }
 
-        private void UIElement_OnMouseWheel( object sender, MouseWheelEventArgs e )
+        protected override void OnMouseWheel( MouseWheelEventArgs e )
         {
             e.Handled = true;
 

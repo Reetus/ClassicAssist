@@ -52,6 +52,8 @@ namespace ClassicAssist.Controls
 
             if ( button != null )
             {
+                // OnApplyTemplate can run more than once; avoid double-wiring the handler.
+                button.Click -= ClearButtonOnClick;
                 button.Click += ClearButtonOnClick;
             }
         }

@@ -108,7 +108,7 @@
                                      Shortcut="{Binding Hotkey}" Grid.Row="0"
                                      Margin="10">
                     <controls:TextBoxKey.Style>
-                        <Style TargetType="controls:TextBoxKey">
+                        <Style TargetType="controls:TextBoxKey" BasedOn="{StaticResource {x:Type TextBox}}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Path=SelectedItem.IsCategory}" Value="True">
                                     <Setter Property="IsEnabled" Value="False" />

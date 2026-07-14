@@ -388,6 +388,65 @@ namespace ClassicAssist.Data.Macros.Commands
         }
 
         [CommandsDisplay( Category = nameof( Strings.Entity ),
+            Parameters = new[] { nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Amount ) } )]
+        public static bool DropItemToGround( object item, int amount = -1 )
+        {
+            int itemSerial = AliasCommands.ResolveSerial( item, false );
+
+            if ( itemSerial == 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
+
+                return false;
+            }
+
+            Item itemObj = Engine.Items.GetItem( itemSerial );
+
+            if ( itemObj == null )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id, true );
+
+                return false;
+            }
+
+            PlayerMobile player = Engine.Player;
+
+            if ( player == null )
+            {
+                return false;
+            }
+
+            if ( amount == -1 )
+            {
+                amount = itemObj.Count;
+            }
+
+            int map = (int) player.Map;
+
+            // 8 adjacent tiles, clockwise from north: N, NE, E, SE, S, SW, W, NW.
+            int[][] offsets =
+            {
+                new[] { 0, -1 }, new[] { 1, -1 }, new[] { 1, 0 }, new[] { 1, 1 }, new[] { 0, 1 }, new[] { -1, 1 },
+                new[] { -1, 0 }, new[] { -1, -1 }
+            };
+
+            foreach ( int[] offset in offsets )
+            {
+                int tx = player.X + offset[0];
+                int ty = player.Y + offset[1];
+
+                if ( MapInfo.ItemCanFit( map, tx, ty, itemObj.ID, out int dropZ ) )
+                {
+                    ActionPacketQueue.EnqueueDragDropGround( itemSerial, amount, tx, ty, dropZ );
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        [CommandsDisplay( Category = nameof( Strings.Entity ),
             Parameters = new[]
             {
                 nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.XCoordinateOffset ),

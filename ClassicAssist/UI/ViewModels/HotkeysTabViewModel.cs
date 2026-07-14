@@ -595,13 +595,16 @@ namespace ClassicAssist.UI.ViewModels
             {
                 spellEntry.Hotkey = ShortcutKeys.Default;
             }
+
+            OnPropertyChanged( nameof( Hotkey ) );
         }
 
-        private static void ClearHotkey( object obj )
+        private void ClearHotkey( object obj )
         {
             if ( obj is HotkeyEntry cmd )
             {
                 cmd.Hotkey = ShortcutKeys.Default;
+                OnPropertyChanged( nameof( Hotkey ) );
             }
         }
 

@@ -9,6 +9,7 @@
              xmlns:controls="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              xmlns:scavenger="clr-namespace:ClassicAssist.Data.Scavenger"
              xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
+             xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
              mc:Ignorable="d"
              d:DesignWidth="493" d:DesignHeight="400">
     <d:DesignerProperties.DesignStyle>
@@ -22,7 +23,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                 <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
@@ -64,7 +65,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <ListView x:Name="ListView" Grid.Row="0" Margin="10"
-                      ItemsSource="{Binding Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      ItemsSource="{Binding Items}"
                       SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       Foreground="Black">
                 <ListView.View>

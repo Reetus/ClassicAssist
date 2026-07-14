@@ -8,13 +8,14 @@
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:misc="clr-namespace:ClassicAssist.UI.Misc"
         xmlns:filters="clr-namespace:ClassicAssist.Data.Filters"
+        xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         Title="{x:Static resources:Strings.Seasons}" Width="400" SizeToContent="Height"
         DataContext="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}" Topmost="True">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>

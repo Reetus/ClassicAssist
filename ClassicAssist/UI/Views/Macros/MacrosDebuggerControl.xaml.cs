@@ -17,11 +17,12 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
+using Assistant;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -94,17 +95,13 @@ namespace ClassicAssist.UI.Views.Macros
                 return Task.CompletedTask;
             }
 
-            Thread t = new Thread( () =>
-                {
-                    ObjectInspectorWindow window =
-                        new ObjectInspectorWindow { DataContext = new ObjectInspectorViewModel( entity ) };
+            _ = Engine.Dispatcher.BeginInvoke( (Action) ( () =>
+            {
+                ObjectInspectorWindow window =
+                    new ObjectInspectorWindow { DataContext = new ObjectInspectorViewModel( entity ) };
 
-                    window.ShowDialog();
-                } )
-                { IsBackground = true };
-
-            t.SetApartmentState( ApartmentState.STA );
-            t.Start();
+                window.ShowDialog();
+            } ) );
 
             return Task.CompletedTask;
         }

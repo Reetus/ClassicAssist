@@ -6,6 +6,7 @@
         xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+        xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" Opacity="0.5" WindowStyle="None"
         AllowsTransparency="True" Topmost="True"
         Title="Position" Height="130" Width="200" Background="{DynamicResource ThemeWindowBackgroundBrush}"
@@ -16,7 +17,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary>
                     <DrawingImage x:Key="TickIcon">
                         <DrawingImage.Drawing>

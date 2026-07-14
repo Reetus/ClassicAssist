@@ -10,12 +10,13 @@
              xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
              xmlns:editTextBlocks="clr-namespace:ClassicAssist.UI.Views.ECV.Settings.Controls.EditTextBlocks"
              xmlns:models="clr-namespace:ClassicAssist.UI.Views.ECV.Settings.Models"
+             xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
              mc:Ignorable="d"
              d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../../../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary
                     Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DebugToolBarStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>

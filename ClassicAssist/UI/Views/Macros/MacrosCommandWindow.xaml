@@ -7,6 +7,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:macros="clr-namespace:ClassicAssist.UI.ViewModels.Macros"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+        xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         Title="{x:Static resources:Strings.Commands}" Height="350" Width="400">
     <Window.DataContext>
@@ -15,7 +16,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <CollectionViewSource x:Key='src' Source="{Binding Items}">
                 <CollectionViewSource.GroupDescriptions>
@@ -30,7 +31,10 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <ListView ItemsSource="{Binding Source={StaticResource src}}">
+            <ListView ItemsSource="{Binding Source={StaticResource src}}"
+                      VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                      VirtualizingPanel.ScrollUnit="Pixel"
+                      VirtualizingPanel.VirtualizationMode="Recycling">
                 <ListView.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.ContainerStyle>
@@ -50,6 +54,7 @@
                                                 </Expander.Header>
                                                 <Expander.Content>
                                                     <ListBox ItemsSource="{Binding Items}" BorderThickness="0"
+                                                             VirtualizingStackPanel.VirtualizationMode="Recycling"
                                                              SelectedItem="{Binding DataContext.SelectedItem, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}">
                                                         <ListBox.ItemTemplate>
                                                             <DataTemplate>

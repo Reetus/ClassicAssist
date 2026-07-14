@@ -9,6 +9,7 @@
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              xmlns:misc="clr-namespace:ClassicAssist.Misc"
              xmlns:nameOverride="clr-namespace:ClassicAssist.Data.NameOverride"
+             xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500">
     <d:DesignerProperties.DesignStyle>
@@ -22,7 +23,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:HexToIntValueConverter x:Key="HexToIntValueConverter" />
             <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />

@@ -9,13 +9,14 @@
     xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
     xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
     xmlns:System="clr-namespace:System;assembly=mscorlib"
+    xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
     x:Class="ClassicAssist.UI.Views.NewProfileWindow"
     mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
     Title="{x:Static resources:Strings.New_Profile}" SizeToContent="Height" Width="350" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <ValueConverters:EnumMatchToBooleanConverter x:Key="EnumMatchToBooleanConverter" />
             <viewModels:NewProfileViewModel x:Key="DummyData">

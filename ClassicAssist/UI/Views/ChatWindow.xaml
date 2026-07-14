@@ -9,6 +9,7 @@
         xmlns:controls="clr-namespace:ClassicAssist.UI.Controls"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
         xmlns:behaviours1="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
+        xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
         mc:Ignorable="d"
         Title="{Binding Title}" Height="350" Width="650" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         Topmost="{Binding Topmost}" WindowStyle="None" ResizeMode="CanResizeWithGrip" AllowsTransparency="True">
@@ -18,7 +19,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary>
                     <DrawingImage x:Key="PersonIcon">
                         <DrawingImage.Drawing>
@@ -56,21 +57,30 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ScrollViewer x:Name="ScrollViewer" Grid.Row="0">
-                    <ItemsControl Background="{DynamicResource ThemeBackgroundBrush}"
-                                  ItemsSource="{Binding Messages}" ScrollViewer.VerticalScrollBarVisibility="Visible">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding}" Margin="5" Foreground="{Binding Colour}"
-                                           VerticalAlignment="Center" TextWrapping="WrapWithOverflow" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <i:Interaction.Behaviors>
-                            <behaviours:ItemsControlAutoScrollBehaviour
-                                ScrollViewer="{Binding ElementName=ScrollViewer}" />
-                        </i:Interaction.Behaviors>
-                    </ItemsControl>
-                </ScrollViewer>
+                <ListBox Grid.Row="0" Background="{DynamicResource ThemeBackgroundBrush}"
+                         ItemsSource="{Binding Messages}"
+                         ScrollViewer.VerticalScrollBarVisibility="Visible"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         HorizontalContentAlignment="Stretch"
+                         VirtualizingStackPanel.IsVirtualizing="True"
+                         VirtualizingStackPanel.VirtualizationMode="Recycling">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Padding" Value="0" />
+                            <Setter Property="Focusable" Value="False" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Margin="5" Foreground="{Binding Colour}"
+                                       VerticalAlignment="Center" TextWrapping="WrapWithOverflow" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <i:Interaction.Behaviors>
+                        <behaviours:ItemsControlAutoScrollBehaviour />
+                    </i:Interaction.Behaviors>
+                </ListBox>
                 <TextBox Grid.Row="1" KeyDown="TextBox_KeyDown" />
             </Grid>
             <GridSplitter Grid.Column="1" ResizeDirection="Columns"

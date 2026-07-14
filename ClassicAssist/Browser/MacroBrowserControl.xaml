@@ -12,6 +12,7 @@
              xmlns:controls2="clr-namespace:ClassicAssist.Controls;assembly=ClassicAssist.Controls"
              xmlns:headered="clr-namespace:ClassicAssist.Controls.Headered;assembly=ClassicAssist.Controls"
              xmlns:behaviours="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
+             xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
              mc:Ignorable="d"
              d:DesignHeight="550" d:DesignWidth="900">
     <UserControl.DataContext>
@@ -20,7 +21,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../Resources/DarkTheme.xaml" />
                 <ResourceDictionary
                     Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DebugToolBarStyle.xaml" />
                 <ResourceDictionary Source="../Resources/LeftRightIconToggleButton.xaml" />

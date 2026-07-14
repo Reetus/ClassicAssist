@@ -7,13 +7,13 @@
         xmlns:virtualFolderBrowse="clr-namespace:ClassicAssist.Controls.VirtualFolderBrowse"
         xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
         xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+        xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
         mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
         Title="{x:Static resources:Strings.Folder_Browser}" Height="350" Width="400" Topmost="True">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary
-                    Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DarkTheme.xaml" />
                 <ResourceDictionary
                     Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/DebugToolBarStyle.xaml" />
                 <ResourceDictionary>

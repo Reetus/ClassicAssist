@@ -7,6 +7,7 @@
              xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
              xmlns:valueConverters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
              xmlns:reflection="clr-namespace:System.Reflection;assembly=mscorlib"
+             xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
              mc:Ignorable="d" Background="{DynamicResource ThemeBackgroundBrush}"
              d:DesignHeight="250" d:DesignWidth="300">
     <UserControl.DataContext>
@@ -15,7 +16,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+                <shared:SharedResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
                 <ResourceDictionary Source="Styles.xaml" />
                 <ResourceDictionary>
                     <valueConverters:CellWidthValueConverter x:Key="CellWidthValueConverter" />

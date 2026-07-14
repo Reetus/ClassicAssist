@@ -14,9 +14,6 @@
     <Window.InputBindings>
         <KeyBinding Modifiers="Ctrl" Key="C" Command="{Binding CopyToClipboardCommand}" />
     </Window.InputBindings>
-    <Window.DataContext>
-        <viewModels:ObjectInspectorViewModel />
-    </Window.DataContext>
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

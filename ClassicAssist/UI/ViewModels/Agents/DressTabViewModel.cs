@@ -345,7 +345,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            if ( !SelectedItem.Items.Contains( removeItem ) )
+            if ( SelectedItem == null || !SelectedItem.Items.Contains( removeItem ) )
             {
                 return;
             }
@@ -363,6 +363,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
             }
 
             int serial = await Commands.GetTargetSerialAsync( Strings.Target_clothing_item___ );
+
+            if ( serial <= 0 )
+            {
+                return;
+            }
 
             Item item = Engine.Items.GetItem( serial );
 

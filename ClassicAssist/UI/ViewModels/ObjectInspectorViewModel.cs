@@ -113,7 +113,7 @@ namespace ClassicAssist.UI.ViewModels
             {
                 float health = mobile.Hits;
                 float maxHealth = mobile.HitsMax;
-                float per = health / maxHealth * 100;
+                float per = maxHealth > 0 ? health / maxHealth * 100 : 0;
                 AddData( "Hits", ( (uint) per ).ToString() + '%', Strings.Mobile );
             }
 
@@ -355,13 +355,25 @@ namespace ClassicAssist.UI.ViewModels
 
             foreach ( PropertyInfo p in properties )
             {
-                object value = p.GetValue( entity );
-                string valueString = "null";
-
-                if ( value != null )
+                // Indexers throw when GetValue is called without index arguments.
+                if ( p.GetIndexParameters().Length > 0 )
                 {
-                    valueString = value.ToString();
+                    continue;
                 }
+
+                object value;
+
+                try
+                {
+                    value = p.GetValue( entity );
+                }
+                catch ( Exception )
+                {
+                    // A single throwing getter shouldn't abort the whole inspector.
+                    continue;
+                }
+
+                string valueString = value?.ToString() ?? "null";
 
                 DisplayFormatAttribute attr = entity.GetType().GetPropertyAttribute<DisplayFormatAttribute>( p.Name );
 
@@ -415,15 +427,11 @@ namespace ClassicAssist.UI.ViewModels
 
         private static void ShowProperties( IEnumerable<Property> properties )
         {
-            Thread t = new Thread( () =>
+            _ = Engine.Dispatcher.BeginInvoke( (Action) ( () =>
             {
                 DebugWindow window = new DebugWindow( typeof(DebugPropertiesViewModel), properties ) { Topmost = true };
                 window.Show();
-                Dispatcher.Run();
-            } ) { IsBackground = true };
-
-            t.SetApartmentState( ApartmentState.STA );
-            t.Start();
+            } ) );
         }
 
         private static void InspectObject( int serial )

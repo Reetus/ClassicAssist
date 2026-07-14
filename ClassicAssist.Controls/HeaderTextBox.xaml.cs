@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 
 namespace ClassicAssist.Controls
 {
@@ -14,8 +13,7 @@ namespace ClassicAssist.Controls
 
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register( nameof( Value ),
             typeof( object ), typeof( HeaderTextBox ),
-            new FrameworkPropertyMetadata( string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                OnTextChanged ) );
+            new FrameworkPropertyMetadata( string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
 
         public HeaderTextBox()
         {
@@ -32,15 +30,6 @@ namespace ClassicAssist.Controls
         {
             get => GetValue( ValueProperty );
             set => SetValue( ValueProperty, value );
-        }
-
-        private static void OnTextChanged( DependencyObject d, DependencyPropertyChangedEventArgs e )
-        {
-        }
-
-        private void TextBox_OnTextChanged( object sender, TextChangedEventArgs e )
-        {
-            Value = TextBox.Text;
         }
     }
 }

@@ -24,6 +24,7 @@
     <i:Interaction.Behaviors>
         <misc:LoadOptionsOnWindowLoaded />
         <behaviours:WindowResizeBehaviour />
+        <behaviours:WindowMaximizeBehaviour />
     </i:Interaction.Behaviors>
     <Window.DataContext>
         <viewModels:MainWindowViewModel />

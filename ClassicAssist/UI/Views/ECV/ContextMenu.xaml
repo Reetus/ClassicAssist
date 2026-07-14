@@ -42,6 +42,35 @@
                 <MenuItem Header="{x:Static resources:Strings.Open_container}"
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextOpenContainerCommand)}" />
                 <Separator />
+                <MenuItem Header="{x:Static resources:Strings.Lock_item}"
+                          Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextToggleLockCommand)}">
+                    <MenuItem.Style>
+                        <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
+                            <Style.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.SelectedItemsAllLocked)}"
+                                    Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </MenuItem.Style>
+                </MenuItem>
+                <MenuItem Header="{x:Static resources:Strings.Unlock_item}"
+                          Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextToggleLockCommand)}">
+                    <MenuItem.Style>
+                        <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
+                            <Style.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.SelectedItemsAllLocked)}"
+                                    Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </MenuItem.Style>
+                </MenuItem>
+                <Separator />
                 <MenuItem Header="{x:Static resources:Strings.Context_menu_request}"
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextContextMenuRequestCommand)}" />
                 <MenuItem Header="{x:Static resources:Strings.Equip_Item}"

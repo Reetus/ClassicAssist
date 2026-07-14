@@ -6,6 +6,7 @@ namespace ClassicAssist.UI.Models
         Serial,
         Hue,
         ID,
-        Quantity
+        Quantity,
+        Weight
     }
 }

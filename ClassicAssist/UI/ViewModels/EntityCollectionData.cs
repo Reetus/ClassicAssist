@@ -13,6 +13,7 @@
 #endregion
 
 using ClassicAssist.Misc;
+using ClassicAssist.Shared.UI;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
 using System.Collections.Generic;
@@ -22,11 +23,18 @@ using System.Windows.Media;
 
 namespace ClassicAssist.UI.ViewModels
 {
-    public class EntityCollectionData
+    public class EntityCollectionData : SetPropertyNotifyChanged
     {
         private readonly Dictionary<int, ImageSource> _cache = new Dictionary<int, ImageSource>();
+        private bool _isLocked;
 
         public bool IsCoin => Entity?.ID == 0x0EEA || Entity?.ID == 0x0EED || Entity?.ID == 0x0EF0;
+
+        public bool IsLocked
+        {
+            get => _isLocked;
+            set => SetProperty( ref _isLocked, value );
+        }
 
         public ImageSource Bitmap
         {
@@ -86,6 +94,18 @@ namespace ClassicAssist.UI.ViewModels
         public string FullName => GetProperties( Entity );
 
         public string Name => GetName( Entity );
+
+        /// <summary>
+        ///     Re-raises change notification for the computed, entity-derived properties. Called when the
+        ///     underlying entity's name/properties/hue are updated after the row was created (e.g. an OPL
+        ///     packet arriving after the item was added to the viewer).
+        /// </summary>
+        public void NotifyPropertiesUpdated()
+        {
+            OnPropertyChanged( nameof( Name ) );
+            OnPropertyChanged( nameof( FullName ) );
+            OnPropertyChanged( nameof( Bitmap ) );
+        }
 
         private static string GetProperties( Entity entity )
         {

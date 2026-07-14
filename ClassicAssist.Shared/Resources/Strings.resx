@@ -1579,6 +1579,12 @@ Are you sure you wish to continue?</value>
   <data name="No items..." xml:space="preserve">
     <value>No items...</value>
   </data>
+  <data name="Lock item" xml:space="preserve">
+    <value>Lock Item</value>
+  </data>
+  <data name="Unlock item" xml:space="preserve">
+    <value>Unlock Item</value>
+  </data>
   <data name="Backing up {0}..." xml:space="preserve">
     <value>Backing up {0}...</value>
   </data>

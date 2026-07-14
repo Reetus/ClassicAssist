@@ -30,6 +30,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Autoloot;
@@ -53,9 +54,10 @@ using Newtonsoft.Json.Linq;
 
 namespace ClassicAssist.UI.ViewModels
 {
-    public class EntityCollectionViewerViewModel : BaseViewModel
+    public class EntityCollectionViewerViewModel : BaseViewModel, IDisposable
     {
         private readonly Func<ItemCollection> _customRefreshCommand;
+        private ItemCollection _eventSource;
         private ICommand _applyFiltersCommand;
         private ICommand _autolootContainerCommand;
         private ICommand _changeSortStyleCommand;
@@ -73,6 +75,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _contextOpenContainerCommand;
         private ICommand _contextTargetCommand;
         private ICommand _contextTargetOwnerCommand;
+        private ICommand _contextToggleLockCommand;
         private ICommand _contextUseItemCommand;
         private ObservableCollection<EntityCollectionData> _entities;
         private ICommand _equipItemCommand;
@@ -99,6 +102,7 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _togglePropertiesCommand;
         private bool _tooltipsEnabled;
         private bool _topmost;
+        private ICommand _copyToClipboardCommand;
 
         public EntityCollectionViewerViewModel()
         {
@@ -153,11 +157,19 @@ namespace ClassicAssist.UI.ViewModels
                 }
 
                 UpdateStatusLabel();
+                OnPropertyChanged( nameof( SelectedItemsAllLocked ) );
             };
 
             UpdateStatusLabel();
 
-            Collection.CollectionChanged += OnCollectionChanged;
+            // Subscribe to the real source container. In ShowChildItems mode Collection is
+            // replaced by a flattened copy, so we track the underlying container separately
+            // to keep receiving live add/remove notifications for (nested) child items.
+            SetEventSource( collection );
+
+            // Item names/properties arrive in a separate OPL packet slightly after the item is
+            // added, so refresh the displayed row when its properties are (re)populated.
+            IncomingPacketHandlers.ItemPropertiesUpdatedEvent += OnItemPropertiesUpdated;
 
             TooltipsEnabled = Engine.CharacterListFlags.HasFlag( CharacterListFlags.PaladinNecromancerClassTooltips );
 
@@ -209,14 +221,21 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ContextTargetOwnerCommand =>
             _contextTargetOwnerCommand ?? ( _contextTargetOwnerCommand = new RelayCommand( ContextTargetOwner, o => SelectedItems.Any() && SelectedItems.Count == 1 ) );
 
+        public ICommand ContextToggleLockCommand =>
+            _contextToggleLockCommand ?? ( _contextToggleLockCommand = new RelayCommand( ContextToggleLock, o => SelectedItems != null && SelectedItems.Count > 0 ) );
+
         public ICommand ContextUseItemCommand => _contextUseItemCommand ?? ( _contextUseItemCommand = new RelayCommandAsync( ContextUseItem, o => SelectedItems != null ) );
+
+        public static ImageSource PadlockIcon { get; } = Properties.Resources.padlock.ToImageSource();
+
+        public bool SelectedItemsAllLocked => SelectedItems.Count > 0 && SelectedItems.All( e => e.IsLocked );
 
         public ObservableCollection<KeyValuePair<string, Action<Item>>> CustomContextActions { get; set; } = new ObservableCollection<KeyValuePair<string, Action<Item>>>();
 
         public ObservableCollection<EntityCollectionData> Entities
         {
             get => _entities;
-            set => SetProperty( ref _entities, value );
+            set => SetProperty( ref _entities, value, afterChange: _ => ApplyLockState() );
         }
 
         public ICommand EquipItemCommand => _equipItemCommand ?? ( _equipItemCommand = new RelayCommandAsync( EquipItem, o => SelectedItems != null ) );
@@ -294,6 +313,34 @@ namespace ClassicAssist.UI.ViewModels
         }
 
         private Dictionary<int, string> _nameOverrides { get; } = new Dictionary<int, string>();
+        public ICommand CopyToClipboardCommand => _copyToClipboardCommand ?? ( _copyToClipboardCommand = new RelayCommand( CopyToClipboard, o => true ) );
+
+        private void CopyToClipboard( object obj )
+        {
+            ObservableCollection<EntityCollectionData> items = SelectedItems.Any() ? SelectedItems : Entities;
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach ( EntityCollectionData item in items )
+            {
+                stringBuilder.AppendLine( $"Serial: 0x{item.Entity.Serial:x8}" );
+                stringBuilder.AppendLine( "Properties:" );
+                stringBuilder.Append( item.FullName );
+
+                Layer layer = TileData.GetLayer( item.Entity.ID );
+
+                if ( layer != Layer.Invalid )
+                {
+                    stringBuilder.AppendLine();
+                    stringBuilder.AppendLine( $"Layer: {layer}" );
+                }
+
+                stringBuilder.AppendLine();
+                stringBuilder.AppendLine();
+            }
+
+            Clipboard.SetText( stringBuilder.ToString() );
+        }
 
         private void ContextTargetOwner( object obj )
         {
@@ -394,7 +441,7 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            int[] items = SelectedItems.Select( i => i.Entity.Serial ).ToArray();
+            int[] items = SelectedItems.Where( i => !i.IsLocked ).Select( i => i.Entity.Serial ).ToArray();
 
             EnqueueAction( async obj =>
             {
@@ -424,7 +471,7 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            Item[] items = SelectedItems.Where( i => i.Entity is Item ).Select( i => i.Entity ).Cast<Item>().ToArray();
+            Item[] items = SelectedItems.Where( i => i.Entity is Item && !i.IsLocked ).Select( i => i.Entity ).Cast<Item>().ToArray();
 
             EnqueueAction( async obj =>
             {
@@ -788,6 +835,55 @@ namespace ClassicAssist.UI.ViewModels
             TargetCommands.Target( Collection.Serial );
         }
 
+        private void SetEventSource( ItemCollection source )
+        {
+            if ( ReferenceEquals( _eventSource, source ) )
+            {
+                return;
+            }
+
+            if ( _eventSource != null )
+            {
+                _eventSource.CollectionChanged -= OnCollectionChanged;
+            }
+
+            _eventSource = source;
+
+            if ( _eventSource != null )
+            {
+                _eventSource.CollectionChanged += OnCollectionChanged;
+            }
+        }
+
+        private void OnItemPropertiesUpdated( Item item )
+        {
+            // Runs on the network thread. Filter cheaply against the (thread-safe) collection so we
+            // only marshal to the UI thread for items this viewer actually displays.
+            if ( item == null || !Collection.GetItem( item.Serial, out _ ) )
+            {
+                return;
+            }
+
+            _dispatcher.Invoke( () =>
+            {
+                EntityCollectionData ecd = Entities.FirstOrDefault( e => e.Entity.Serial == item.Serial );
+
+                if ( ecd == null )
+                {
+                    return;
+                }
+
+                // OnProperties overwrites Item.Name with the server value, which would clobber a
+                // user-applied rename - re-apply the override before refreshing the row.
+                if ( _nameOverrides.TryGetValue( item.Serial, out string nameOverride ) )
+                {
+                    item.Name = nameOverride;
+                }
+
+                ecd.NotifyPropertiesUpdated();
+            } );
+        }
+
         private void OnCollectionChanged( int totalcount, bool added, Item[] entities )
         {
             if ( added )
@@ -801,6 +897,8 @@ namespace ClassicAssist.UI.ViewModels
                     {
                         Entities.Add( entity.ToEntityCollectionData( _nameOverrides ) );
                     }
+
+                    ApplyLockState();
 
                     if ( _filters != null )
                     {
@@ -906,11 +1004,62 @@ namespace ClassicAssist.UI.ViewModels
             }
         }
 
-        ~EntityCollectionViewerViewModel()
+        private void ApplyLockState()
+        {
+            if ( _entities == null || Options?.LockedItems == null )
+            {
+                return;
+            }
+
+            foreach ( EntityCollectionData ecd in _entities )
+            {
+                ecd.IsLocked = Options.LockedItems.Contains( ecd.Entity.Serial );
+            }
+        }
+
+        private void ContextToggleLock( object obj )
+        {
+            bool lockTarget = !SelectedItemsAllLocked;
+
+            foreach ( EntityCollectionData ecd in SelectedItems.ToList() )
+            {
+                ecd.IsLocked = lockTarget;
+
+                if ( lockTarget )
+                {
+                    if ( !Options.LockedItems.Contains( ecd.Entity.Serial ) )
+                    {
+                        Options.LockedItems.Add( ecd.Entity.Serial );
+                    }
+                }
+                else
+                {
+                    Options.LockedItems.Remove( ecd.Entity.Serial );
+                }
+            }
+
+            SaveOptions( Options );
+
+            OnPropertyChanged( nameof( SelectedItemsAllLocked ) );
+        }
+
+        public void Dispose()
+        {
+            Dispose( true );
+            GC.SuppressFinalize( this );
+        }
+
+        protected virtual void Dispose( bool disposing )
         {
             SaveOptions( Options );
-            Collection.CollectionChanged -= OnCollectionChanged;
+            SetEventSource( null );
+            IncomingPacketHandlers.ItemPropertiesUpdatedEvent -= OnItemPropertiesUpdated;
             ThreadQueue?.Dispose();
+        }
+
+        ~EntityCollectionViewerViewModel()
+        {
+            Dispose( false );
         }
 
         private void OpenAllContainers( object obj )
@@ -1176,6 +1325,11 @@ namespace ClassicAssist.UI.ViewModels
 
                     break;
 
+                case EntityCollectionSortStyle.Weight:
+                    _sorter = new WeightThenSerialComparer();
+
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -1196,6 +1350,7 @@ namespace ClassicAssist.UI.ViewModels
                 Task.Run( () => _customRefreshCommand.Invoke() ).ContinueWith( t =>
                 {
                     Collection = t.Result;
+                    SetEventSource( t.Result );
                     Entities = new ObservableCollection<EntityCollectionData>( Collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
 
                     if ( _filters != null )
@@ -1256,6 +1411,9 @@ namespace ClassicAssist.UI.ViewModels
 
             Collection = !Options.ShowChildItems ? collection : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) };
 
+            // Track the real container for live notifications, even when Collection is a flattened copy.
+            SetEventSource( collection );
+
             Entities = new ObservableCollection<EntityCollectionData>( Collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
 
             if ( _filters != null )
@@ -1280,7 +1438,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private async Task ContextMoveToContainer( object arg )
         {
-            int[] items = SelectedItems.Select( i => i.Entity.Serial ).ToArray();
+            int[] items = SelectedItems.Where( i => !i.IsLocked ).Select( i => i.Entity.Serial ).ToArray();
 
             int serial = 0;
 

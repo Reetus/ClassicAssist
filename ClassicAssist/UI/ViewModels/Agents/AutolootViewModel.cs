@@ -463,6 +463,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
         private void ClipboardPaste( object obj )
         {
+            if ( SelectedItem == null )
+            {
+                return;
+            }
+
             string text = Clipboard.GetText();
 
             try
@@ -478,7 +483,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 {
                     if ( !SelectedItem.Constraints.Contains( entry ) )
                     {
-                        SelectedItem?.Constraints.Add( entry );
+                        SelectedItem.Constraints.Add( entry );
                     }
                 }
             }
@@ -495,9 +500,16 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 return;
             }
 
-            string text = JsonConvert.SerializeObject( entries );
+            try
+            {
+                string text = JsonConvert.SerializeObject( entries );
 
-            Clipboard.SetText( text );
+                Clipboard.SetText( text );
+            }
+            catch ( Exception )
+            {
+                // ignored
+            }
         }
 
         internal void OnCorpseEvent( int serial, bool force = false )

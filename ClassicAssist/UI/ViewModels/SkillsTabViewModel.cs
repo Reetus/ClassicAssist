@@ -262,7 +262,7 @@ namespace ClassicAssist.UI.ViewModels
 
         private void SetAllSkillLocks( object obj )
         {
-            LockStatus lockStatus = (LockStatus) (int) obj;
+            LockStatus lockStatus = (LockStatus) obj;
 
             IEnumerable<SkillEntry> skillsToSet = Items.Where( i => i.LockStatus != lockStatus );
 
@@ -271,7 +271,10 @@ namespace ClassicAssist.UI.ViewModels
                 Commands.ChangeSkillLock( skillEntry, lockStatus, false );
             }
 
-            Commands.MobileQuery( Engine.Player.Serial, MobileQueryType.SkillsRequest );
+            if ( Engine.Player != null )
+            {
+                Commands.MobileQuery( Engine.Player.Serial, MobileQueryType.SkillsRequest );
+            }
         }
 
         private void UpdateTotalBase()

@@ -307,6 +307,40 @@ namespace ClassicAssist.UO.Objects
             Remove( items );
         }
 
+        public override void RemoveByDistance( int maxDistance, int x, int y )
+        {
+            Item[] items = SelectEntities( i => i is Item item && item.Owner == 0 && UOMath.Distance( x, y, item.X, item.Y ) > maxDistance && i.ArtDataID != 2 );
+
+            if ( items == null )
+            {
+                return;
+            }
+
+            bool changed = Remove( items );
+
+            if ( changed )
+            {
+                OnCollectionChanged( false, items );
+            }
+        }
+
+        public void ClearMultis()
+        {
+            Item[] items = SelectEntities( i => i is Item item && i.ArtDataID == 2 );
+
+            if ( items == null )
+            {
+                return;
+            }
+
+            bool changed = Remove( items );
+
+            if ( changed )
+            {
+                OnCollectionChanged( false, items );
+            }
+        }
+
         public override Item[] SelectEntities( Func<Item, bool> func )
         {
             List<Item> itemList = new List<Item>();

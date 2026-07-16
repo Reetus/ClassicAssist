@@ -83,13 +83,32 @@ namespace ClassicAssist.Data.Macros
             DoNotAutoInterrupt = GetJsonValue( token, "DoNotAutoInterrupt", false );
             FilePath = GetJsonValue<string>( token, "FilePath", null );
 
-            if ( !string.IsNullOrEmpty( FilePath ) && File.Exists( FilePath ) )
+            string embeddedMacro = GetJsonValue( token, "Macro", string.Empty );
+
+            if ( IsFileBacked && !string.IsNullOrEmpty( embeddedMacro ) )
             {
-                Macro = File.ReadAllText( FilePath );
+                // The last save couldn't write the backing file and embedded the newer content in
+                // the profile instead - prefer it and re-attempt the file write on the next save.
+                Macro = embeddedMacro;
+                BackingFileWritePending = true;
+            }
+            else if ( IsFileBacked && File.Exists( FilePath ) )
+            {
+                try
+                {
+                    Macro = File.ReadAllText( FilePath );
+                }
+                catch
+                {
+                    // Unreadable backing file - load the entry without content rather than failing
+                    // the whole profile; the folder scan will reload it once readable.
+                    Macro = string.Empty;
+                    BackingFileReadFailed = true;
+                }
             }
             else
             {
-                Macro = GetJsonValue( token, "Macro", string.Empty );
+                Macro = embeddedMacro;
             }
 
             PassToUO = GetJsonValue( token, "PassToUO", true );
@@ -179,6 +198,19 @@ namespace ClassicAssist.Data.Macros
         }
 
         public bool IsFileBacked => !string.IsNullOrEmpty( FilePath );
+
+        /// <summary>
+        ///     The backing file couldn't be read when the profile loaded; saves must not write
+        ///     (empty) content over it until the folder scan has reloaded it.
+        /// </summary>
+        public bool BackingFileReadFailed { get; set; }
+
+        /// <summary>
+        ///     The in-memory content is newer than the backing file (the last file write failed and
+        ///     the content was embedded in the profile instead); the folder scan must not reload
+        ///     over it and the next save should retry the file write.
+        /// </summary>
+        public bool BackingFileWritePending { get; set; }
 
         public Dictionary<string, object> FrameVariables
         {
@@ -507,8 +539,9 @@ namespace ClassicAssist.Data.Macros
                 { "Name", Name },
                 { "Loop", Loop },
                 { "DoNotAutoInterrupt", DoNotAutoInterrupt },
-                // File-backed macros keep their content in the .py file, not the profile.
-                { "Macro", IsFileBacked ? string.Empty : Macro },
+                // File-backed macros keep their content in the .py file, not the profile, unless
+                // the backing file couldn't be written - then embed the content so it isn't lost.
+                { "Macro", IsFileBacked && !BackingFileWritePending ? string.Empty : Macro },
                 { "PassToUO", PassToUO },
                 { "Keys", Hotkey.ToJObject() },
                 { "IsBackground", IsBackground },

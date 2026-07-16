@@ -197,7 +197,7 @@ namespace ClassicAssist.UI.ViewModels
                         return Task.FromResult( false );
                     }
 
-                    return Task.FromResult( action() );
+                    return Task.FromResult( action( queueAction.CancellationTokenSource.Token ) );
                 }, status ) );
         }
 

@@ -290,6 +290,39 @@ namespace ClassicAssist.UI.ViewModels
             JArray macroArray = new JArray();
             JArray groupArray = new JArray();
 
+            // Persist file-backed macro content to their .py files before serialising the entries
+            // so that a failed write can fall back to embedding the content in the profile.
+            foreach ( MacroEntry entry in Items.Where( e => e.IsFileBacked ).ToList() )
+            {
+                if ( entry.BackingFileReadFailed )
+                {
+                    // The file's content was never loaded - don't write over it with nothing.
+                    continue;
+                }
+
+                try
+                {
+                    string dir = Path.GetDirectoryName( entry.FilePath );
+
+                    if ( !string.IsNullOrEmpty( dir ) )
+                    {
+                        Directory.CreateDirectory( dir );
+                    }
+
+                    File.WriteAllText( entry.FilePath, entry.Macro );
+
+                    // Remember our own write so the folder scan doesn't treat it as an external edit.
+                    _fileSyncTimes[entry.FilePath] = File.GetLastWriteTimeUtc( entry.FilePath );
+                    entry.BackingFileWritePending = false;
+                }
+                catch
+                {
+                    // Couldn't write the file - embed the content in the profile instead so the
+                    // edit isn't lost, and retry the file write on the next save.
+                    entry.BackingFileWritePending = true;
+                }
+            }
+
             foreach ( MacroEntry macroEntry in Items )
             {
                 _dispatcher.Invoke( () => { macroEntry.Group = FindGroup( macroEntry ); } );
@@ -352,29 +385,6 @@ namespace ClassicAssist.UI.ViewModels
             macros.Add( "PlayerAliases", playerAliasArray );
 
             json?.Add( "Macros", macros );
-
-            // Persist file-backed macro content to their .py files
-            foreach ( MacroEntry entry in Items.Where( e => e.IsFileBacked ).ToList() )
-            {
-                try
-                {
-                    string dir = Path.GetDirectoryName( entry.FilePath );
-
-                    if ( !string.IsNullOrEmpty( dir ) )
-                    {
-                        Directory.CreateDirectory( dir );
-                    }
-
-                    File.WriteAllText( entry.FilePath, entry.Macro );
-
-                    // Remember our own write so the folder scan doesn't treat it as an external edit.
-                    _fileSyncTimes[entry.FilePath] = File.GetLastWriteTimeUtc( entry.FilePath );
-                }
-                catch
-                {
-                    // Don't crash save if file write fails
-                }
-            }
         }
 
         public void Deserialize( JObject json, Options options, bool global = false )
@@ -426,8 +436,9 @@ namespace ClassicAssist.UI.ViewModels
                 {
                     MacroEntry entry = new MacroEntry( token ) { Global = true };
 
-                    // File-backed macro whose file has been removed - drop the entry.
-                    if ( entry.IsFileBacked && !File.Exists( entry.FilePath ) )
+                    // File-backed macro whose file has been removed - drop the entry, unless its
+                    // content is still waiting to be written back to the file.
+                    if ( entry.IsFileBacked && !entry.BackingFileWritePending && !File.Exists( entry.FilePath ) )
                     {
                         continue;
                     }
@@ -467,8 +478,9 @@ namespace ClassicAssist.UI.ViewModels
                 {
                     MacroEntry entry = new MacroEntry( token );
 
-                    // File-backed macro whose file has been removed - drop the entry.
-                    if ( entry.IsFileBacked && !File.Exists( entry.FilePath ) )
+                    // File-backed macro whose file has been removed - drop the entry, unless its
+                    // content is still waiting to be written back to the file.
+                    if ( entry.IsFileBacked && !entry.BackingFileWritePending && !File.Exists( entry.FilePath ) )
                     {
                         continue;
                     }
@@ -1163,7 +1175,11 @@ namespace ClassicAssist.UI.ViewModels
 
                     _fileSyncTimes[filePath] = lastWrite;
                 }
-                else if ( !_fileSyncTimes.TryGetValue( filePath, out DateTime synced ) || lastWrite > synced )
+                else if ( entry.BackingFileWritePending )
+                {
+                    // The in-memory content is newer than the file (failed write) - don't reload over it.
+                }
+                else if ( !_fileSyncTimes.TryGetValue( filePath, out DateTime synced ) || lastWrite != synced )
                 {
                     // File changed on disk since we last synced it (external edit) - reload content.
                     string content = TryReadAllText( filePath );
@@ -1178,12 +1194,15 @@ namespace ClassicAssist.UI.ViewModels
                         entry.Macro = content;
                     }
 
+                    entry.BackingFileReadFailed = false;
                     _fileSyncTimes[filePath] = lastWrite;
                 }
             }
 
-            // Remove file-backed entries whose file has been deleted (never while running).
-            foreach ( MacroEntry entry in Items.Where( e => e.IsFileBacked && !e.IsRunning && !seen.Contains( e.FilePath ) ).ToList() )
+            // Remove file-backed entries whose file has been deleted (never while running, nor
+            // while their content is still waiting to be written back to the file).
+            foreach ( MacroEntry entry in Items.Where( e =>
+                         e.IsFileBacked && !e.IsRunning && !e.BackingFileWritePending && !seen.Contains( e.FilePath ) ).ToList() )
             {
                 _fileSyncTimes.Remove( entry.FilePath );
 

@@ -18,6 +18,7 @@
 #endregion
 
 using System;
+using System.Threading;
 using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UI.Views.ECV.Extensibility
@@ -52,8 +53,10 @@ namespace ClassicAssist.UI.Views.ECV.Extensibility
         /// <summary>
         ///     Queue a long-running action on the viewer's action queue, surfacing
         ///     <paramref name="status" /> in the viewer's status list with a cancel button.
+        ///     The <see cref="CancellationToken" /> passed to <paramref name="action" /> is
+        ///     signalled when the user presses cancel; observe it in long-running work.
         ///     Return <c>false</c> from <paramref name="action" /> to indicate cancellation.
         /// </summary>
-        void EnqueueAction( Func<bool> action, string status );
+        void EnqueueAction( Func<CancellationToken, bool> action, string status );
     }
 }

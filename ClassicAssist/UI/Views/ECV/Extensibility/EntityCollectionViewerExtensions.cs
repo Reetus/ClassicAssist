@@ -30,12 +30,22 @@ namespace ClassicAssist.UI.Views.ECV.Extensibility
     /// </summary>
     public static class EntityCollectionViewerExtensions
     {
+        private static readonly object _lock = new object();
         private static readonly List<IEntityCollectionViewerAction> _toolbarActions = new List<IEntityCollectionViewerAction>();
 
         /// <summary>
-        ///     The currently registered toolbar actions.
+        ///     A snapshot of the currently registered toolbar actions.
         /// </summary>
-        public static IReadOnlyList<IEntityCollectionViewerAction> ToolbarActions => _toolbarActions;
+        public static IReadOnlyList<IEntityCollectionViewerAction> ToolbarActions
+        {
+            get
+            {
+                lock ( _lock )
+                {
+                    return _toolbarActions.ToArray();
+                }
+            }
+        }
 
         /// <summary>
         ///     Register a toolbar action. Has no effect if <paramref name="action" /> is already registered.
@@ -47,9 +57,12 @@ namespace ClassicAssist.UI.Views.ECV.Extensibility
                 throw new ArgumentNullException( nameof( action ) );
             }
 
-            if ( !_toolbarActions.Contains( action ) )
+            lock ( _lock )
             {
-                _toolbarActions.Add( action );
+                if ( !_toolbarActions.Contains( action ) )
+                {
+                    _toolbarActions.Add( action );
+                }
             }
         }
 
@@ -58,7 +71,10 @@ namespace ClassicAssist.UI.Views.ECV.Extensibility
         /// </summary>
         public static bool UnregisterToolbarAction( IEntityCollectionViewerAction action )
         {
-            return _toolbarActions.Remove( action );
+            lock ( _lock )
+            {
+                return _toolbarActions.Remove( action );
+            }
         }
     }
 }

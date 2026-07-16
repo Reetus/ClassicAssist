@@ -18,6 +18,7 @@
 #endregion
 
 using System;
+using System.Threading;
 using ClassicAssist.UO.Objects;
 
 namespace ClassicAssist.UI.Views.ECV.Extensibility
@@ -30,11 +31,11 @@ namespace ClassicAssist.UI.Views.ECV.Extensibility
     /// </summary>
     internal class EntityCollectionViewerActionContext : IEntityCollectionViewerContext
     {
-        private readonly Action<Func<bool>, string> _enqueue;
+        private readonly Action<Func<CancellationToken, bool>, string> _enqueue;
         private readonly Action _refresh;
 
         public EntityCollectionViewerActionContext( ItemCollection collection, Item[] selectedItems, bool showProperties,
-            Action refresh, Action<Func<bool>, string> enqueue )
+            Action refresh, Action<Func<CancellationToken, bool>, string> enqueue )
         {
             Collection = collection;
             SelectedItems = selectedItems ?? Array.Empty<Item>();
@@ -54,7 +55,7 @@ namespace ClassicAssist.UI.Views.ECV.Extensibility
             _refresh?.Invoke();
         }
 
-        public void EnqueueAction( Func<bool> action, string status )
+        public void EnqueueAction( Func<CancellationToken, bool> action, string status )
         {
             _enqueue?.Invoke( action, status );
         }

@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -44,6 +45,7 @@ namespace ClassicAssist.Data.Macros
         private AutoResetEvent _autoResetEvent;
         private ObservableCollection<int> _breakpoints = new ObservableCollection<int>();
         private bool _doNotAutoInterrupt;
+        private string _filePath;
         private Dictionary<string, object> _frameVariables;
         private bool _global;
         private string _group;
@@ -79,7 +81,36 @@ namespace ClassicAssist.Data.Macros
             Name = GetJsonValue( token, "Name", string.Empty );
             Loop = GetJsonValue( token, "Loop", false );
             DoNotAutoInterrupt = GetJsonValue( token, "DoNotAutoInterrupt", false );
-            Macro = GetJsonValue( token, "Macro", string.Empty );
+            FilePath = GetJsonValue<string>( token, "FilePath", null );
+
+            string embeddedMacro = GetJsonValue( token, "Macro", string.Empty );
+
+            if ( IsFileBacked && !string.IsNullOrEmpty( embeddedMacro ) )
+            {
+                // The last save couldn't write the backing file and embedded the newer content in
+                // the profile instead - prefer it and re-attempt the file write on the next save.
+                Macro = embeddedMacro;
+                BackingFileWritePending = true;
+            }
+            else if ( IsFileBacked && File.Exists( FilePath ) )
+            {
+                try
+                {
+                    Macro = File.ReadAllText( FilePath );
+                }
+                catch
+                {
+                    // Unreadable backing file - load the entry without content rather than failing
+                    // the whole profile; the folder scan will reload it once readable.
+                    Macro = string.Empty;
+                    BackingFileReadFailed = true;
+                }
+            }
+            else
+            {
+                Macro = embeddedMacro;
+            }
+
             PassToUO = GetJsonValue( token, "PassToUO", true );
             IsBackground = GetJsonValue( token, "IsBackground", false );
             IsAutostart = GetJsonValue( token, "IsAutostart", false );
@@ -155,6 +186,31 @@ namespace ClassicAssist.Data.Macros
             get => _doNotAutoInterrupt;
             set => SetProperty( ref _doNotAutoInterrupt, value );
         }
+
+        public string FilePath
+        {
+            get => _filePath;
+            set
+            {
+                SetProperty( ref _filePath, value );
+                OnPropertyChanged( nameof( IsFileBacked ) );
+            }
+        }
+
+        public bool IsFileBacked => !string.IsNullOrEmpty( FilePath );
+
+        /// <summary>
+        ///     The backing file couldn't be read when the profile loaded; saves must not write
+        ///     (empty) content over it until the folder scan has reloaded it.
+        /// </summary>
+        public bool BackingFileReadFailed { get; set; }
+
+        /// <summary>
+        ///     The in-memory content is newer than the backing file (the last file write failed and
+        ///     the content was embedded in the profile instead); the folder scan must not reload
+        ///     over it and the next save should retry the file write.
+        /// </summary>
+        public bool BackingFileWritePending { get; set; }
 
         public Dictionary<string, object> FrameVariables
         {
@@ -483,7 +539,9 @@ namespace ClassicAssist.Data.Macros
                 { "Name", Name },
                 { "Loop", Loop },
                 { "DoNotAutoInterrupt", DoNotAutoInterrupt },
-                { "Macro", Macro },
+                // File-backed macros keep their content in the .py file, not the profile, unless
+                // the backing file couldn't be written - then embed the content so it isn't lost.
+                { "Macro", IsFileBacked && !BackingFileWritePending ? string.Empty : Macro },
                 { "PassToUO", PassToUO },
                 { "Keys", Hotkey.ToJObject() },
                 { "IsBackground", IsBackground },
@@ -493,6 +551,11 @@ namespace ClassicAssist.Data.Macros
                 { "Global", Global },
                 { "LastSavedHash", Hash }
             };
+
+            if ( IsFileBacked )
+            {
+                entry.Add( "FilePath", FilePath );
+            }
 
             if ( Metadata?.Count > 0 )
             {

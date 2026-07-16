@@ -3809,7 +3809,34 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Open Modules Folder", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Open Macros Folder.
+        /// </summary>
+        public static string Open_Macros_Folder {
+            get {
+                return ResourceManager.GetString("Open Macros Folder", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Link to File....
+        /// </summary>
+        public static string Link_to_file {
+            get {
+                return ResourceManager.GetString("Link to file", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Unlink from File.
+        /// </summary>
+        public static string Unlink_from_file {
+            get {
+                return ResourceManager.GetString("Unlink from file", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Opening container {0} / {1}....
         /// </summary>

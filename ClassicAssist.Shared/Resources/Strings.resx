@@ -1546,6 +1546,15 @@ Are you sure you wish to continue?</value>
   <data name="Open Modules Folder" xml:space="preserve">
     <value>Open Modules Folder</value>
   </data>
+  <data name="Open Macros Folder" xml:space="preserve">
+    <value>Open Macros Folder</value>
+  </data>
+  <data name="Link to file" xml:space="preserve">
+    <value>Link to File...</value>
+  </data>
+  <data name="Unlink from file" xml:space="preserve">
+    <value>Unlink from File</value>
+  </data>
   <data name="Backup Days" xml:space="preserve">
     <value>Backup Days</value>
   </data>

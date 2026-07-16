@@ -88,6 +88,11 @@ jobs:
       run: dotnet build -c Release --no-restore /p:Version=$env:VERSION
     - name: Test
       run: dotnet test -c Release --no-build --verbosity normal
+    - name: Generate Python stubs
+      run: |
+        cd Output\net48
+        $fullPath = (Get-Location).Path
+        .\ExportCommands.exe $fullPath\ClassicAssist.dll --pyi $fullPath\pyi
     - name: Generate Manifest
       run: |
         cd Output\net48

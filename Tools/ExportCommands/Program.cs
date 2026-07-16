@@ -37,6 +37,36 @@ namespace ExportCommands
 
             Environment.CurrentDirectory = Path.GetDirectoryName( args[0] ) ?? throw new InvalidOperationException();
 
+            int pyiIndex = Array.FindIndex( args, a => a.Equals( "--pyi", StringComparison.OrdinalIgnoreCase ) );
+
+            if ( pyiIndex >= 0 )
+            {
+                string outputPath = pyiIndex + 1 < args.Length && !args[pyiIndex + 1].StartsWith( "--" )
+                    ? args[pyiIndex + 1]
+                    : Path.Combine( originalDirectory, "pyi" );
+
+                if ( !Path.IsPathRooted( outputPath ) )
+                {
+                    outputPath = Path.Combine( originalDirectory, outputPath );
+                }
+
+                Assembly stubAssembly;
+
+                try
+                {
+                    stubAssembly = Assembly.LoadFile( args[0] );
+                }
+                catch ( Exception e )
+                {
+                    Console.WriteLine( $"Failed to load assembly: {e}" );
+                    return;
+                }
+
+                StubGenerator.Generate( stubAssembly, outputPath );
+
+                return;
+            }
+
             string docPath = Path.Combine( originalDirectory, "Docs" );
 
             if ( !Directory.Exists( docPath ) )

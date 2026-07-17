@@ -219,6 +219,8 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 
         public ICommand Command { get; set; }
 
+        public bool IsFilterApplied { get; set; }
+
         public ObservableCollection<PropertyEntry> Constraints
         {
             get => _constraints;
@@ -271,6 +273,12 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             }
 
             SelectedProfile = Item = entry;
+
+            // If a filter is already applied, switching to another filter re-applies it immediately.
+            if ( IsFilterApplied )
+            {
+                Apply( null );
+            }
         }
 
         private void RemoveProfile( object obj )

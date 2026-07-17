@@ -17,6 +17,9 @@ namespace ClassicAssist.UI.Views.ECV.Filter
         public static readonly DependencyProperty AssembliesProperty = DependencyProperty.Register( nameof( Assemblies ), typeof( ObservableCollection<Assembly> ),
             typeof( EntityCollectionFilterControl ), new PropertyMetadata( new ObservableCollection<Assembly>(), PropertyChangedCallback ) );
 
+        public static readonly DependencyProperty IsFilterAppliedProperty = DependencyProperty.Register( nameof( IsFilterApplied ), typeof( bool ),
+            typeof( EntityCollectionFilterControl ), new PropertyMetadata( default( bool ), PropertyChangedCallback ) );
+
         public EntityCollectionFilterControl()
         {
             InitializeComponent();
@@ -34,6 +37,12 @@ namespace ClassicAssist.UI.Views.ECV.Filter
         {
             get => (ICommand) GetValue( CommandProperty );
             set => SetValue( CommandProperty, value );
+        }
+
+        public bool IsFilterApplied
+        {
+            get => (bool) GetValue( IsFilterAppliedProperty );
+            set => SetValue( IsFilterAppliedProperty, value );
         }
 
         private void OnIsVisibleChanged( object sender, DependencyPropertyChangedEventArgs e )
@@ -61,6 +70,11 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                 case ICommand command:
                     viewModel.Command = command;
                     break;
+            }
+
+            if ( e.Property == IsFilterAppliedProperty )
+            {
+                viewModel.IsFilterApplied = (bool) e.NewValue;
             }
         }
     }

@@ -103,7 +103,7 @@
                     <ListBox.ContextMenu>
                         <ContextMenu>
                             <ContextMenu.Resources>
-                                <Style TargetType="MenuItem">
+                                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding SelectedDressItem.Type}"
                                                      Value="{x:Static dress:DressAgentItemType.ID}">

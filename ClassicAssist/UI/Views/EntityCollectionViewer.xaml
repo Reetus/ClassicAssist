@@ -8,6 +8,7 @@
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:models="clr-namespace:ClassicAssist.UI.Models"
     xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
+    xmlns:converters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:filter="clr-namespace:ClassicAssist.UI.Views.ECV.Filter"
     xmlns:ecv="clr-namespace:ClassicAssist.UI.Views.ECV"
     xmlns:local="clr-namespace:ClassicAssist.UI.Views"
@@ -32,6 +33,7 @@
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <valueConverters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+            <converters:EnumMatchToBooleanConverter x:Key="EnumMatchToBooleanConverter" />
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -83,25 +85,35 @@
                 <Image Source="{StaticResource ContainerIcon}" Height="19" />
             </Button>
             <Menu Background="Transparent" Height="24">
-                <MenuItem Height="24">
+                <!-- Explicit style refs: menu popup items don't reliably pick up the theme's
+                     implicit {x:Type MenuItem} style, so bind it at load in the window scope. -->
+                <MenuItem Height="24" Style="{StaticResource {x:Type MenuItem}}"
+                          ItemContainerStyle="{StaticResource {x:Type MenuItem}}">
                     <MenuItem.Header>
-                        <Image Source="{StaticResource SortIcon}" />
+                        <Image Source="{StaticResource SortIcon}" Height="19" Width="19" />
                     </MenuItem.Header>
-                    <MenuItem Header="{x:Static resources:Strings.Name}" Command="{Binding ChangeSortStyleCommand}"
+                    <MenuItem Header="{x:Static resources:Strings.Name}" IsCheckable="True"
+                              IsChecked="{Binding SortStyle, Mode=OneWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter={x:Static models:EntityCollectionSortStyle.Name}}"
+                              Command="{Binding ChangeSortStyleCommand}"
                               CommandParameter="{x:Static models:EntityCollectionSortStyle.Name}" />
-                    <MenuItem Header="{x:Static resources:Strings.Serial}"
+                    <MenuItem Header="{x:Static resources:Strings.Serial}" IsCheckable="True"
+                              IsChecked="{Binding SortStyle, Mode=OneWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter={x:Static models:EntityCollectionSortStyle.Serial}}"
                               Command="{Binding ChangeSortStyleCommand}"
                               CommandParameter="{x:Static models:EntityCollectionSortStyle.Serial}" />
-                    <MenuItem Header="{x:Static resources:Strings.Color}"
+                    <MenuItem Header="{x:Static resources:Strings.Color}" IsCheckable="True"
+                              IsChecked="{Binding SortStyle, Mode=OneWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter={x:Static models:EntityCollectionSortStyle.Hue}}"
                               Command="{Binding ChangeSortStyleCommand}"
                               CommandParameter="{x:Static models:EntityCollectionSortStyle.Hue}" />
-                    <MenuItem Header="{x:Static resources:Strings.Graphic}"
+                    <MenuItem Header="{x:Static resources:Strings.Graphic}" IsCheckable="True"
+                              IsChecked="{Binding SortStyle, Mode=OneWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter={x:Static models:EntityCollectionSortStyle.ID}}"
                               Command="{Binding ChangeSortStyleCommand}"
                               CommandParameter="{x:Static models:EntityCollectionSortStyle.ID}" />
-                    <MenuItem Header="{x:Static resources:Strings.Amount}"
+                    <MenuItem Header="{x:Static resources:Strings.Amount}" IsCheckable="True"
+                              IsChecked="{Binding SortStyle, Mode=OneWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter={x:Static models:EntityCollectionSortStyle.Quantity}}"
                               Command="{Binding ChangeSortStyleCommand}"
                               CommandParameter="{x:Static models:EntityCollectionSortStyle.Quantity}" />
-                    <MenuItem Header="{x:Static resources:Strings.Item_Weight}"
+                    <MenuItem Header="{x:Static resources:Strings.Item_Weight}" IsCheckable="True"
+                              IsChecked="{Binding SortStyle, Mode=OneWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter={x:Static models:EntityCollectionSortStyle.Weight}}"
                               Command="{Binding ChangeSortStyleCommand}"
                               CommandParameter="{x:Static models:EntityCollectionSortStyle.Weight}" />
                 </MenuItem>
@@ -158,6 +170,7 @@
                       VerticalScrollBarVisibility="Auto">
             <filter:EntityCollectionFilterControl MaxHeight="400"
                                                   Command="{Binding DataContext.ApplyFiltersCommand, ElementName=window}"
+                                                  IsFilterApplied="{Binding DataContext.IsFilterApplied, ElementName=window, Mode=OneWay}"
                                                   Assemblies="{Binding DataContext.Options.Assemblies, ElementName=window}" />
         </ScrollViewer>
         <Grid Grid.Row="2"

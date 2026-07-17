@@ -163,7 +163,7 @@
                                 <MenuItem Header="{x:Static resources:Strings.Move_to_group}"
                                           ItemsSource="{Binding Draggables}">
                                     <MenuItem.Style>
-                                        <Style TargetType="MenuItem">
+                                        <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding SelectedItem}" Value="{x:Null}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -177,7 +177,7 @@
                                         </DataTemplate>
                                     </MenuItem.ItemTemplate>
                                     <MenuItem.ItemContainerStyle>
-                                        <Style TargetType="MenuItem">
+                                        <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                                             <Setter Property="Visibility"
                                                     Value="{Binding Converter={StaticResource DraggableGroupVisibilityConverter}}" />
                                             <Setter Property="Command"

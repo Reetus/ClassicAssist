@@ -149,6 +149,7 @@ namespace Assistant
         public static DateTime LastMoveRequested { get; set; }
         public static int LastPromptID { get; set; }
         public static int LastPromptSerial { get; set; }
+        public static int LastPromptType { get; set; }
         public static DateTime LastSkillTime { get; set; }
 
         public static TargetQueue<TargetQueueObject> LastTargetQueue { get; set; } = new TargetQueue<TargetQueueObject>();

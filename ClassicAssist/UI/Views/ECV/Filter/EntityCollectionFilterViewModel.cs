@@ -219,6 +219,8 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 
         public ICommand Command { get; set; }
 
+        public bool IsFilterApplied { get; set; }
+
         public ObservableCollection<PropertyEntry> Constraints
         {
             get => _constraints;
@@ -270,7 +272,19 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                 return;
             }
 
+            SetActiveProfile( entry );
+        }
+
+        // All profile transitions route through here so an applied filter is kept in sync with the
+        // active profile (switching, adding or removing a profile re-applies when a filter is live).
+        private void SetActiveProfile( EntityCollectionFilterEntry entry )
+        {
             SelectedProfile = Item = entry;
+
+            if ( IsFilterApplied )
+            {
+                Apply( null );
+            }
         }
 
         private void RemoveProfile( object obj )
@@ -281,11 +295,12 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 
             if ( Profiles.Count > 0 )
             {
-                SelectedProfile = Item = Profiles[0];
+                SetActiveProfile( Profiles[0] );
             }
             else
             {
                 AddDefaultEntry();
+                SetActiveProfile( Item );
             }
         }
 
@@ -304,7 +319,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             };
 
             Profiles.Add( newProfile );
-            SelectedProfile = Item = newProfile;
+            SetActiveProfile( newProfile );
         }
 
         public void LoadFilterProfiles()

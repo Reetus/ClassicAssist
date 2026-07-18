@@ -97,7 +97,8 @@ namespace ClassicAssist.UI.ViewModels
 
         private bool _showProperties;
 
-        private IComparer<Entity> _sorter = new IDThenSerialComparer();
+        private IComparer<Entity> _sorter;
+        private EntityCollectionSortStyle _sortStyle = EntityCollectionSortStyle.None;
         private string _statusLabel;
         private ICommand _targetContainerCommand;
         private ICommand _toggleAlwaysOnTopCommand;
@@ -145,12 +146,16 @@ namespace ClassicAssist.UI.ViewModels
 
         public EntityCollectionViewerViewModel( ItemCollection collection )
         {
-            Collection = collection;
             Options = LoadOptions();
 
-            Entities = new ObservableCollection<EntityCollectionData>( !Options.ShowChildItems
-                ? collection.ToEntityCollectionData( _sorter, _nameOverrides )
-                : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) }.ToEntityCollectionData( _sorter, _nameOverrides ) );
+            // Build the display source once (flattened when showing child items) and keep it in
+            // Collection, so later sorting/filtering rebuild from the same source - consistent with
+            // Refresh. The real container is tracked separately (SetEventSource) for live updates.
+            Collection = !Options.ShowChildItems
+                ? collection
+                : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) };
+
+            Entities = new ObservableCollection<EntityCollectionData>( Collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
 
             SelectedItems.CollectionChanged += ( sender, args ) =>
             {
@@ -206,6 +211,12 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand AutolootContainerCommand => _autolootContainerCommand ?? ( _autolootContainerCommand = new RelayCommand( AutolootContainer, o => true ) );
 
         public ICommand ChangeSortStyleCommand => _changeSortStyleCommand ?? ( _changeSortStyleCommand = new RelayCommand( ChangeSortStyle, o => true ) );
+
+        public EntityCollectionSortStyle SortStyle
+        {
+            get => _sortStyle;
+            set => SetProperty( ref _sortStyle, value );
+        }
 
         public ItemCollection Collection
         {
@@ -302,8 +313,19 @@ namespace ClassicAssist.UI.ViewModels
         public bool ShowFilter
         {
             get => _showFilter;
-            set => SetProperty( ref _showFilter, value );
+            set
+            {
+                SetProperty( ref _showFilter, value );
+
+                // Disabling the filter panel removes any currently applied filter.
+                if ( !value && _filters != null )
+                {
+                    ApplyFilters( null );
+                }
+            }
         }
+
+        public bool IsFilterApplied => _filters != null;
 
         public bool ShowOrganizer
         {
@@ -962,6 +984,40 @@ namespace ClassicAssist.UI.ViewModels
                 }
 
                 ecd.NotifyPropertiesUpdated();
+
+                // Names/properties arrive after the row was inserted, so under a property-derived
+                // sort (e.g. Name or Weight) the item may now be in the wrong place - move it.
+                if ( _sorter != null )
+                {
+                    int oldIndex = Entities.IndexOf( ecd );
+
+                    if ( oldIndex >= 0 )
+                    {
+                        int newIndex = 0;
+
+                        for ( int i = 0; i < Entities.Count; i++ )
+                        {
+                            if ( i == oldIndex )
+                            {
+                                continue;
+                            }
+
+                            if ( _sorter.Compare( Entities[i].Entity, ecd.Entity ) <= 0 )
+                            {
+                                newIndex++;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+
+                        if ( newIndex != oldIndex )
+                        {
+                            Entities.Move( oldIndex, newIndex );
+                        }
+                    }
+                }
             } );
         }
 
@@ -976,7 +1032,24 @@ namespace ClassicAssist.UI.ViewModels
 
                     foreach ( Item entity in newEntities )
                     {
-                        Entities.Add( entity.ToEntityCollectionData( _nameOverrides ) );
+                        EntityCollectionData data = entity.ToEntityCollectionData( _nameOverrides );
+
+                        if ( _sorter == null )
+                        {
+                            Entities.Add( data );
+                        }
+                        else
+                        {
+                            // Keep the active sort applied as items stream in live, rather than appending unsorted.
+                            int index = 0;
+
+                            while ( index < Entities.Count && _sorter.Compare( Entities[index].Entity, entity ) <= 0 )
+                            {
+                                index++;
+                            }
+
+                            Entities.Insert( index, data );
+                        }
                     }
 
                     ApplyLockState();
@@ -1293,6 +1366,7 @@ namespace ClassicAssist.UI.ViewModels
             if ( !( obj is List<EntityCollectionFilterGroup> list ) )
             {
                 _filters = null;
+                OnPropertyChanged( nameof( IsFilterApplied ) );
 
                 Entities = new ObservableCollection<EntityCollectionData>( Collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
 
@@ -1334,6 +1408,7 @@ namespace ClassicAssist.UI.ViewModels
             UpdateStatusLabel();
 
             _filters = list;
+            OnPropertyChanged( nameof( IsFilterApplied ) );
         }
 
         private static ItemCollection EvaluateGroup( EntityCollectionFilterGroup group, ItemCollection source )
@@ -1379,43 +1454,39 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            switch ( val )
-            {
-                case EntityCollectionSortStyle.Name:
-                    _sorter = new NameThenSerialComparer();
-
-                    break;
-
-                case EntityCollectionSortStyle.Serial:
-                    _sorter = new SerialComparer();
-
-                    break;
-
-                case EntityCollectionSortStyle.Hue:
-                    _sorter = new HueThenAmountComparer();
-
-                    break;
-
-                case EntityCollectionSortStyle.ID:
-                    _sorter = new IDThenSerialComparer();
-
-                    break;
-
-                case EntityCollectionSortStyle.Quantity:
-                    _sorter = new QuantityThenSerialComparer();
-
-                    break;
-
-                case EntityCollectionSortStyle.Weight:
-                    _sorter = new WeightThenSerialComparer();
-
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            // Toggle: clicking the active sort style again clears the sort (back to no order).
+            SortStyle = SortStyle == val ? EntityCollectionSortStyle.None : val;
+            _sorter = GetComparer( SortStyle );
 
             Entities = new ObservableCollection<EntityCollectionData>( Collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
+
+            if ( _filters != null )
+            {
+                ApplyFilters( _filters );
+            }
+        }
+
+        private static IComparer<Entity> GetComparer( EntityCollectionSortStyle style )
+        {
+            switch ( style )
+            {
+                case EntityCollectionSortStyle.None:
+                    return null;
+                case EntityCollectionSortStyle.Name:
+                    return new NameThenSerialComparer();
+                case EntityCollectionSortStyle.Serial:
+                    return new SerialComparer();
+                case EntityCollectionSortStyle.Hue:
+                    return new HueThenAmountComparer();
+                case EntityCollectionSortStyle.ID:
+                    return new IDThenSerialComparer();
+                case EntityCollectionSortStyle.Quantity:
+                    return new QuantityThenSerialComparer();
+                case EntityCollectionSortStyle.Weight:
+                    return new WeightThenSerialComparer();
+                default:
+                    throw new ArgumentOutOfRangeException( nameof( style ), style, null );
+            }
         }
 
         private void UpdateStatusLabel()
@@ -1796,7 +1867,9 @@ namespace ClassicAssist.UI.ViewModels
 
             Item[] items = itemCollection.GetItems();
 
-            return items.OrderBy( i => i, comparer ).Select( item => item.ToEntityCollectionData( nameOverrides ) ).ToList();
+            IEnumerable<Item> ordered = comparer == null ? items : (IEnumerable<Item>) items.OrderBy( i => i, comparer );
+
+            return ordered.Select( item => item.ToEntityCollectionData( nameOverrides ) ).ToList();
         }
 
         public static EntityCollectionData ToEntityCollectionData( this Item item, Dictionary<int, string> nameOverrides )

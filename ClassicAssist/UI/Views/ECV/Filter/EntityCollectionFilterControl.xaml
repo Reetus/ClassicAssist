@@ -43,8 +43,23 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <!-- Boolean operation selector (hidden for first top-level group via style override) -->
+                    <!-- Boolean operation selector (hidden for first top-level group, where the operation has no effect) -->
                     <StackPanel Orientation="Horizontal" Grid.Row="0" x:Name="OperationPanel">
+                        <StackPanel.Style>
+                            <Style TargetType="{x:Type StackPanel}">
+                                <Setter Property="Visibility">
+                                    <Setter.Value>
+                                        <MultiBinding
+                                            Converter="{StaticResource CollectionIndexZeroVisibilityConverter}">
+                                            <Binding
+                                                Path="Data.(filter:EntityCollectionFilterViewModel.Item).Groups"
+                                                Source="{StaticResource DataContextProxy}" />
+                                            <Binding Path="." />
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </StackPanel.Style>
                         <ComboBox ItemsSource="{misc1:EnumBindingSource {x:Type models:BooleanOperation}}"
                                   MinWidth="100"
                                   SelectedItem="{Binding Operation}" Margin="0,0,5,0" />

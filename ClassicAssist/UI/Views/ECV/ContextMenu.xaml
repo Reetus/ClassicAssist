@@ -4,6 +4,8 @@
                     xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
                     xmlns:misc="clr-namespace:ClassicAssist.Misc">
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary
+            Source="pack://application:,,,/ClassicAssist.Shared;component/Resources/MenuStyles.xaml" />
         <ResourceDictionary>
             <misc:BindingProxy x:Key="Proxy" Data="{Binding}" />
             <ContextMenu x:Key="ContextMenu">
@@ -31,7 +33,7 @@
                         </Style>
                     </MenuItem.Style>
                     <MenuItem.ItemContainerStyle>
-                        <Style TargetType="MenuItem">
+                        <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                             <Setter Property="Header" Value="{Binding Name}" />
                             <Setter Property="Command"
                                     Value="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextMoveToSetCommand)}" />
@@ -93,7 +95,7 @@
                         </Style>
                     </MenuItem.Style>
                     <MenuItem.ItemContainerStyle>
-                        <Style TargetType="MenuItem">
+                        <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                             <Setter Property="Header" Value="{Binding Key}" />
                             <Setter Property="Command"
                                     Value="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextCustomActionCommand)}" />

@@ -146,12 +146,16 @@ namespace ClassicAssist.UI.ViewModels
 
         public EntityCollectionViewerViewModel( ItemCollection collection )
         {
-            Collection = collection;
             Options = LoadOptions();
 
-            Entities = new ObservableCollection<EntityCollectionData>( !Options.ShowChildItems
-                ? collection.ToEntityCollectionData( _sorter, _nameOverrides )
-                : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) }.ToEntityCollectionData( _sorter, _nameOverrides ) );
+            // Build the display source once (flattened when showing child items) and keep it in
+            // Collection, so later sorting/filtering rebuild from the same source - consistent with
+            // Refresh. The real container is tracked separately (SetEventSource) for live updates.
+            Collection = !Options.ShowChildItems
+                ? collection
+                : new ItemCollection( collection.Serial ) { ItemCollection.GetAllItems( collection.GetItems() ) };
+
+            Entities = new ObservableCollection<EntityCollectionData>( Collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
 
             SelectedItems.CollectionChanged += ( sender, args ) =>
             {
@@ -980,6 +984,40 @@ namespace ClassicAssist.UI.ViewModels
                 }
 
                 ecd.NotifyPropertiesUpdated();
+
+                // Names/properties arrive after the row was inserted, so under a property-derived
+                // sort (e.g. Name or Weight) the item may now be in the wrong place - move it.
+                if ( _sorter != null )
+                {
+                    int oldIndex = Entities.IndexOf( ecd );
+
+                    if ( oldIndex >= 0 )
+                    {
+                        int newIndex = 0;
+
+                        for ( int i = 0; i < Entities.Count; i++ )
+                        {
+                            if ( i == oldIndex )
+                            {
+                                continue;
+                            }
+
+                            if ( _sorter.Compare( Entities[i].Entity, ecd.Entity ) <= 0 )
+                            {
+                                newIndex++;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+
+                        if ( newIndex != oldIndex )
+                        {
+                            Entities.Move( oldIndex, newIndex );
+                        }
+                    }
+                }
             } );
         }
 

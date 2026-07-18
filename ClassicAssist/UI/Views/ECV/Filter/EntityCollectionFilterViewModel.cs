@@ -272,9 +272,15 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                 return;
             }
 
+            SetActiveProfile( entry );
+        }
+
+        // All profile transitions route through here so an applied filter is kept in sync with the
+        // active profile (switching, adding or removing a profile re-applies when a filter is live).
+        private void SetActiveProfile( EntityCollectionFilterEntry entry )
+        {
             SelectedProfile = Item = entry;
 
-            // If a filter is already applied, switching to another filter re-applies it immediately.
             if ( IsFilterApplied )
             {
                 Apply( null );
@@ -289,11 +295,12 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 
             if ( Profiles.Count > 0 )
             {
-                SelectedProfile = Item = Profiles[0];
+                SetActiveProfile( Profiles[0] );
             }
             else
             {
                 AddDefaultEntry();
+                SetActiveProfile( Item );
             }
         }
 
@@ -312,7 +319,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             };
 
             Profiles.Add( newProfile );
-            SelectedProfile = Item = newProfile;
+            SetActiveProfile( newProfile );
         }
 
         public void LoadFilterProfiles()

@@ -122,6 +122,7 @@ namespace ClassicAssist.UO.Network
             Register( 0x77, 17, OnMobileMoving );
             Register( 0x7C, 0, OnDisplayItemListMenu );
             Register( 0x78, 0, OnMobileIncoming );
+            Register( 0x9A, 0, OnAsciiPrompt );
             Register( 0x98, 0, OnMobileName );
             Register( 0x99, 30, OnTarget );
             Register( 0x9E, 0, OnShopSell );
@@ -154,6 +155,16 @@ namespace ClassicAssist.UO.Network
             RegisterExtended( 0x21, 0, OnClearWeaponAbility );
             RegisterExtended( 0x25, 0, OnToggleSpecialMoves );
             RegisterExtended( 0x26, 0, OnMovementSpeed );
+        }
+
+        private static void OnAsciiPrompt( PacketReader reader )
+        {
+            int senderSerial = reader.ReadInt32();
+            int promptId = reader.ReadInt32();
+
+            Engine.LastPromptSerial = senderSerial;
+            Engine.LastPromptID = promptId;
+            Engine.LastPromptType = 0;
         }
 
         private static void OnDeathAnimation( PacketReader reader )
@@ -679,6 +690,7 @@ namespace ClassicAssist.UO.Network
 
             Engine.LastPromptSerial = senderSerial;
             Engine.LastPromptID = promptId;
+            Engine.LastPromptType = 1;
         }
 
         private static void OnShopSell( PacketReader reader )

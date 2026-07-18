@@ -1,7 +1,29 @@
-﻿using System;
+#region License
+
+// Copyright (C) 2026 Reetus
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#endregion
+
+using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Assistant;
+using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network.PacketFilter;
@@ -47,60 +69,50 @@ namespace ClassicAssist.Data.Macros.Commands
             return hue == DERIVED_SPEAK_HUE ? GetSpeakHue() : hue;
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Messages ),
-            Parameters = new[] { nameof( ParameterType.String ), nameof( ParameterType.Hue ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Messages ), Parameters = new[] { nameof( ParameterType.String ), nameof( ParameterType.Hue ) } )]
         public static void Msg( string message, int hue = DERIVED_SPEAK_HUE )
         {
             UOC.Speak( message, ResolveSpeakHue( hue ) );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Messages ),
-            Parameters = new[] { nameof( ParameterType.String ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Messages ), Parameters = new[] { nameof( ParameterType.String ) } )]
         public static void YellMsg( string message )
         {
             UOC.Speak( message, GetSpeakHue(), JournalSpeech.Yell );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Messages ),
-            Parameters = new[] { nameof( ParameterType.String ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Messages ), Parameters = new[] { nameof( ParameterType.String ) } )]
         public static void WhisperMsg( string message )
         {
             UOC.Speak( message, GetSpeakHue(), JournalSpeech.Whisper );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Messages ),
-            Parameters = new[] { nameof( ParameterType.String ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Messages ), Parameters = new[] { nameof( ParameterType.String ) } )]
         public static void EmoteMsg( string message )
         {
             UOC.Speak( message, GetSpeakHue(), JournalSpeech.Emote );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Messages ),
-            Parameters = new[] { nameof( ParameterType.String ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Messages ), Parameters = new[] { nameof( ParameterType.String ) } )]
         public static void GuildMsg( string message )
         {
             UOC.Speak( message, GetSpeakHue(), JournalSpeech.Guild );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Messages ),
-            Parameters = new[] { nameof( ParameterType.String ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Messages ), Parameters = new[] { nameof( ParameterType.String ) } )]
         public static void AllyMsg( string message )
         {
             UOC.Speak( message, GetSpeakHue(), JournalSpeech.Alliance );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Messages ),
-            Parameters = new[] { nameof( ParameterType.String ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Messages ), Parameters = new[] { nameof( ParameterType.String ) } )]
         public static void PartyMsg( string message )
         {
             UOC.PartyMessage( message );
         }
 
         [CommandsDisplay( Category = nameof( Strings.Messages ),
-            Parameters = new[]
-            {
-                nameof( ParameterType.String ), nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Hue )
-            } )]
+            Parameters = new[] { nameof( ParameterType.String ), nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Hue ) } )]
         public static void HeadMsg( string message, object obj = null, int hue = DERIVED_SPEAK_HUE )
         {
             int serial = AliasCommands.ResolveSerial( obj );
@@ -108,16 +120,17 @@ namespace ClassicAssist.Data.Macros.Commands
             UOC.OverheadMessage( message, ResolveSpeakHue( hue ), serial );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Messages ),
-            Parameters = new[] { nameof( ParameterType.String ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Messages ), Parameters = new[] { nameof( ParameterType.String ) } )]
         public static void PromptMsg( string message )
         {
-            Engine.SendPacketToServer( new UnicodePromptResponse( Engine.LastPromptSerial, Engine.LastPromptID,
-                message ) );
+            BasePacket packet = Engine.LastPromptType == 0
+                ? (BasePacket) new AsciiPromptResponse( Engine.LastPromptSerial, Engine.LastPromptID, message )
+                : new UnicodePromptResponse( Engine.LastPromptSerial, Engine.LastPromptID, message );
+
+            Engine.SendPacketToServer( packet );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Messages ),
-            Parameters = new[] { nameof( ParameterType.String ), nameof( ParameterType.Timeout ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Messages ), Parameters = new[] { nameof( ParameterType.String ), nameof( ParameterType.Timeout ) } )]
         public static (bool Result, string Message) GetText( string prompt, int timeout = 30000 )
         {
             int id = new Random().Next();
@@ -130,11 +143,7 @@ namespace ClassicAssist.Data.Macros.Commands
             string message = string.Empty;
 
             Engine.AddSendPreFilter( new PacketFilterInfo( 0xC2,
-                new[]
-                {
-                    PacketFilterConditions.IntAtPositionCondition( id, 3 ),
-                    PacketFilterConditions.IntAtPositionCondition( id, 7 )
-                }, ( bytes, info ) =>
+                new[] { PacketFilterConditions.IntAtPositionCondition( id, 3 ), PacketFilterConditions.IntAtPositionCondition( id, 7 ) }, ( bytes, info ) =>
                 {
                     PacketReader pr = new PacketReader( bytes, bytes.Length, false );
                     pr.Seek( 16, SeekOrigin.Current );
@@ -152,34 +161,46 @@ namespace ClassicAssist.Data.Macros.Commands
             return ( result, message );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Messages ),
-            Parameters = new[] { nameof( ParameterType.Timeout ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Messages ), Parameters = new[] { nameof( ParameterType.Timeout ) } )]
         public static bool WaitForPrompt( int timeout )
         {
-            PacketFilterInfo pfi = new PacketFilterInfo( 0xC2 );
+            PacketFilterInfo[] pfis = {
+                new PacketFilterInfo( 0xC2 ),
+                new PacketFilterInfo( 0x9A )
+            };
 
-            PacketWaitEntry packetWaitEntry = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );
+            PacketWaitEntry[] packetWaitEntries = pfis.Select( pfi => Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true ) ).ToArray();
+
+            Task timeoutTask = Task.Delay( timeout );
+
+            Task[] tasks = packetWaitEntries.Select( pwe => pwe.Lock.ToTask() ).Append( timeoutTask ).ToArray();
 
             try
             {
-                bool result = packetWaitEntry.Lock.WaitOne( timeout );
+                int index = Task.WaitAny( tasks );
 
-                return result;
+                return index != tasks.Length -1;
             }
             finally
             {
-                Engine.PacketWaitEntries.Remove( packetWaitEntry );
+                foreach ( PacketWaitEntry pwe in packetWaitEntries )
+                {
+                    Engine.PacketWaitEntries.Remove( pwe );
+                }
             }
         }
 
         [CommandsDisplay( Category = nameof( Strings.Messages ) )]
         public static void CancelPrompt()
         {
-            Engine.SendPacketToServer( new UnicodePromptCancel( Engine.LastPromptSerial, Engine.LastPromptID ) );
+            BasePacket packet = Engine.LastPromptType == 0
+                ? (BasePacket) new AsciiPromptCancel( Engine.LastPromptSerial, Engine.LastPromptID )
+                : new UnicodePromptCancel( Engine.LastPromptSerial, Engine.LastPromptID );
+
+            Engine.SendPacketToServer( packet );
         }
 
-        [CommandsDisplay( Category = nameof( Strings.Messages ),
-            Parameters = new[] { nameof( ParameterType.String ) } )]
+        [CommandsDisplay( Category = nameof( Strings.Messages ), Parameters = new[] { nameof( ParameterType.String ) } )]
         public static void ChatMsg( string message )
         {
             UOC.ChatMsg( message );

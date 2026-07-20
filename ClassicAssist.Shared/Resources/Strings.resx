@@ -238,6 +238,9 @@
   <data name="Duplicate" xml:space="preserve">
     <value>Duplicate</value>
   </data>
+  <data name="Enable Hotkeys" xml:space="preserve">
+    <value>Enable Hotkeys</value>
+  </data>
   <data name="Enabled" xml:space="preserve">
     <value>Enabled</value>
   </data>
@@ -1272,6 +1275,9 @@
   </data>
   <data name="Hide" xml:space="preserve">
     <value>Hide</value>
+  </data>
+  <data name="Hide Locked Items" xml:space="preserve">
+    <value>Hide Locked Items</value>
   </data>
   <data name="Author" xml:space="preserve">
     <value>Author</value>

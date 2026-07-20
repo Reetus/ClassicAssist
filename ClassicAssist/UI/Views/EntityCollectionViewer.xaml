@@ -135,6 +135,20 @@
                     Command="{Binding AutolootContainerCommand}" ToolTip="{x:Static resources:Strings.Autoloot}">
                 <Image Source="{StaticResource AutoLootIcon}" />
             </Button>
+            <ToggleButton Height="24" ToolTip="{x:Static resources:Strings.Hide_Locked_Items}"
+                          Style="{StaticResource ToolbarToggleButtonStyle}"
+                          Command="{Binding ToggleHideLockedItemsCommand}"
+                          CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Mode=Self}}"
+                          IsChecked="{Binding Options.HideLockedItems}">
+                <Image Source="{StaticResource HideLockedIcon}" />
+            </ToggleButton>
+            <ToggleButton Height="24" ToolTip="{x:Static resources:Strings.Enable_Hotkeys}"
+                          Style="{StaticResource ToolbarToggleButtonStyle}"
+                          Command="{Binding ToggleEnableHotkeysCommand}"
+                          CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Mode=Self}}"
+                          IsChecked="{Binding Options.EnableHotkeys}">
+                <Image Source="{StaticResource KeyboardIcon}" />
+            </ToggleButton>
             <Button Height="24" Style="{StaticResource ToolbarButtonStyle}" Command="{Binding ConfigureCommand}">
                 <Image Source="{StaticResource configureIcon}" />
             </Button>
@@ -190,6 +204,11 @@
             </i:Interaction.Behaviors>
             <ListView.InputBindings>
                 <KeyBinding Modifiers="Ctrl" Key="C" Command="{Binding CopyToClipboardCommand}" />
+                <KeyBinding Key="C" Command="{Binding HotkeyActionCommand}" CommandParameter="Container" />
+                <KeyBinding Key="B" Command="{Binding HotkeyActionCommand}" CommandParameter="Backpack" />
+                <KeyBinding Key="K" Command="{Binding HotkeyActionCommand}" CommandParameter="Bank" />
+                <KeyBinding Key="G" Command="{Binding HotkeyActionCommand}" CommandParameter="Ground" />
+                <KeyBinding Key="D" Command="{Binding HotkeyActionCommand}" CommandParameter="Drop" />
             </ListView.InputBindings>
         </ListView>
         <ItemsControl ItemsSource="{Binding QueueActions}" Grid.Row="4">

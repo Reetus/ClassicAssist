@@ -1717,6 +1717,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable Hotkeys.
+        /// </summary>
+        public static string Enable_Hotkeys {
+            get {
+                return ResourceManager.GetString("Enable Hotkeys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enabled.
         /// </summary>
         public static string Enabled {
@@ -2356,6 +2365,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hide Locked Items.
+        /// </summary>
+        public static string Hide_Locked_Items {
+            get {
+                return ResourceManager.GetString("Hide Locked Items", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Horse Sounds.
         /// </summary>
         public static string Horse_Sounds {
@@ -2964,6 +2982,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Line_Number {
             get {
                 return ResourceManager.GetString("Line Number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link to File....
+        /// </summary>
+        public static string Link_to_file {
+            get {
+                return ResourceManager.GetString("Link to file", resourceCulture);
             }
         }
         
@@ -3802,15 +3829,6 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open Modules Folder.
-        /// </summary>
-        public static string Open_Modules_Folder {
-            get {
-                return ResourceManager.GetString("Open Modules Folder", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to Open Macros Folder.
         /// </summary>
         public static string Open_Macros_Folder {
@@ -3818,25 +3836,16 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Open Macros Folder", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Link to File....
+        ///   Looks up a localized string similar to Open Modules Folder.
         /// </summary>
-        public static string Link_to_file {
+        public static string Open_Modules_Folder {
             get {
-                return ResourceManager.GetString("Link to file", resourceCulture);
+                return ResourceManager.GetString("Open Modules Folder", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Unlink from File.
-        /// </summary>
-        public static string Unlink_from_file {
-            get {
-                return ResourceManager.GetString("Unlink from file", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Opening container {0} / {1}....
         /// </summary>
@@ -5832,6 +5841,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Unknown_timer___ {
             get {
                 return ResourceManager.GetString("Unknown timer...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unlink from File.
+        /// </summary>
+        public static string Unlink_from_file {
+            get {
+                return ResourceManager.GetString("Unlink from file", resourceCulture);
             }
         }
         

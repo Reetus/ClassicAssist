@@ -17,12 +17,14 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.UI;
+using ClassicAssist.UI.Models;
 using ClassicAssist.UI.Views.ECV.Settings.Models;
 using Newtonsoft.Json.Linq;
 
@@ -31,6 +33,8 @@ namespace ClassicAssist.Data.Misc
     public class EntityCollectionViewerOptions : SetPropertyNotifyChanged
     {
         private bool _alwaysOnTop;
+        private bool _enableHotkeys;
+        private bool _hideLockedItems;
         private ObservableCollection<Assembly> _assemblies = new ObservableCollection<Assembly>();
         private ObservableCollection<CombineStacksOpenContainersIgnoreEntry> _combineStacksIgnore;
         private ObservableCollection<ContainerSet> _containerSets = new ObservableCollection<ContainerSet>();
@@ -38,6 +42,7 @@ namespace ClassicAssist.Data.Misc
         private ObservableCollection<CombineStacksOpenContainersIgnoreEntry> _openContainersIgnore;
         private bool _openContainersOnlyKnownContainers;
         private bool _showChildItems;
+        private EntityCollectionSortStyle _sortStyle;
 
         public bool AlwaysOnTop
         {
@@ -61,6 +66,18 @@ namespace ClassicAssist.Data.Misc
         {
             get => _containerSets;
             set => SetProperty( ref _containerSets, value );
+        }
+
+        public bool EnableHotkeys
+        {
+            get => _enableHotkeys;
+            set => SetProperty( ref _enableHotkeys, value );
+        }
+
+        public bool HideLockedItems
+        {
+            get => _hideLockedItems;
+            set => SetProperty( ref _hideLockedItems, value );
         }
 
         public string Hash { get; set; }
@@ -89,6 +106,12 @@ namespace ClassicAssist.Data.Misc
             set => SetProperty( ref _showChildItems, value );
         }
 
+        public EntityCollectionSortStyle SortStyle
+        {
+            get => _sortStyle;
+            set => SetProperty( ref _sortStyle, value );
+        }
+
         public static EntityCollectionViewerOptions Deserialize( JObject config )
         {
             EntityCollectionViewerOptions options = new EntityCollectionViewerOptions();
@@ -100,6 +123,9 @@ namespace ClassicAssist.Data.Misc
 
             options.AlwaysOnTop = config["AlwaysOnTop"]?.ToObject<bool>() ?? false;
             options.ShowChildItems = config["ShowChildItems"]?.ToObject<bool>() ?? false;
+            options.HideLockedItems = config["HideLockedItems"]?.ToObject<bool>() ?? false;
+            options.EnableHotkeys = config["EnableHotkeys"]?.ToObject<bool>() ?? false;
+            options.SortStyle = Enum.TryParse( config["SortStyle"]?.ToObject<string>(), out EntityCollectionSortStyle sortStyle ) ? sortStyle : EntityCollectionSortStyle.None;
             options.OpenContainersOnlyKnownContainers = config["OpenContainersOnlyKnownContainers"]?.ToObject<bool>() ?? false;
 
             options.LockedItems = config["LockedItems"]?.ToObject<ObservableCollection<int>>() ?? new ObservableCollection<int>();
@@ -173,7 +199,11 @@ namespace ClassicAssist.Data.Misc
 
         public static JToken Serialize( EntityCollectionViewerOptions options )
         {
-            JObject config = new JObject { { "AlwaysOnTop", options.AlwaysOnTop }, { "ShowChildItems", options.ShowChildItems } };
+            JObject config = new JObject
+            {
+                { "AlwaysOnTop", options.AlwaysOnTop }, { "ShowChildItems", options.ShowChildItems }, { "HideLockedItems", options.HideLockedItems },
+                { "EnableHotkeys", options.EnableHotkeys }, { "SortStyle", options.SortStyle.ToString() }
+            };
 
             if ( options.LockedItems != null )
             {

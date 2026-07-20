@@ -11,13 +11,13 @@
             <ContextMenu x:Key="ContextMenu">
                 <MenuItem Header="{x:Static resources:Strings.Use_item}"
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextUseItemCommand)}" />
-                <MenuItem Header="{x:Static resources:Strings.Move_to_backpack}"
+                <MenuItem Header="{x:Static resources:Strings.Move_to_backpack}" InputGestureText="B"
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextMoveToBackpackCommand)}" />
-                <MenuItem Header="{x:Static resources:Strings.Move_to_container}"
+                <MenuItem Header="{x:Static resources:Strings.Move_to_container}" InputGestureText="C"
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextMoveToContainerCommand)}" />
-                <MenuItem Header="{x:Static resources:Strings.Move_to_bank}"
+                <MenuItem Header="{x:Static resources:Strings.Move_to_bank}" InputGestureText="K"
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextMoveToBankCommand)}" />
-                <MenuItem Header="{x:Static resources:Strings.Move_to_ground}"
+                <MenuItem Header="{x:Static resources:Strings.Move_to_ground}" InputGestureText="G"
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextMoveToGroundCommand)}" />
                 <MenuItem Header="{x:Static resources:Strings.Move_to_set}"
                           ItemsSource="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.Options).ContainerSets}">
@@ -43,7 +43,7 @@
                 </MenuItem>
                 <MenuItem Header="{x:Static resources:Strings.Open_container}"
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextOpenContainerCommand)}" />
-                <MenuItem Header="{x:Static resources:Strings.Drop_to_ground}"
+                <MenuItem Header="{x:Static resources:Strings.Drop_to_ground}" InputGestureText="D"
                           Command="{Binding Source={StaticResource Proxy}, Path=Data.(viewModels:EntityCollectionViewerViewModel.ContextDropToGroundCommand)}" />
                 <Separator />
                 <MenuItem Header="{x:Static resources:Strings.Lock_item}"

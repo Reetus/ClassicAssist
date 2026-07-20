@@ -29,6 +29,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using Assistant;
@@ -103,6 +104,9 @@ namespace ClassicAssist.UI.ViewModels
         private ICommand _targetContainerCommand;
         private ICommand _toggleAlwaysOnTopCommand;
         private ICommand _toggleChildItemsCommand;
+        private ICommand _toggleEnableHotkeysCommand;
+        private ICommand _hotkeyActionCommand;
+        private ICommand _toggleHideLockedItemsCommand;
         private ICommand _togglePropertiesCommand;
         private bool _tooltipsEnabled;
         private bool _topmost;
@@ -147,6 +151,11 @@ namespace ClassicAssist.UI.ViewModels
         public EntityCollectionViewerViewModel( ItemCollection collection )
         {
             Options = LoadOptions();
+
+            // Restore the persisted sort order so the collection opens sorted as the user left it,
+            // rather than resetting to None each time.
+            SortStyle = Options.SortStyle;
+            _sorter = GetComparer( SortStyle );
 
             // Build the display source once (flattened when showing child items) and keep it in
             // Collection, so later sorting/filtering rebuild from the same source - consistent with
@@ -279,7 +288,11 @@ namespace ClassicAssist.UI.ViewModels
         public ObservableCollection<EntityCollectionData> Entities
         {
             get => _entities;
-            set => SetProperty( ref _entities, value, afterChange: _ => ApplyLockState() );
+            set => SetProperty( ref _entities, value, afterChange: _ =>
+            {
+                ApplyLockState();
+                ApplyHideLockedItemsFilter();
+            } );
         }
 
         public ICommand EquipItemCommand => _equipItemCommand ?? ( _equipItemCommand = new RelayCommandAsync( EquipItem, o => SelectedItems != null ) );
@@ -352,6 +365,16 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ToggleAlwaysOnTopCommand => _toggleAlwaysOnTopCommand ?? ( _toggleAlwaysOnTopCommand = new RelayCommand( ToggleAlwaysOnTop, o => true ) );
 
         public ICommand ToggleChildItemsCommand => _toggleChildItemsCommand ?? ( _toggleChildItemsCommand = new RelayCommand( ToggleChildItems, o => true ) );
+
+        public ICommand ToggleHideLockedItemsCommand =>
+            _toggleHideLockedItemsCommand ?? ( _toggleHideLockedItemsCommand = new RelayCommand( ToggleHideLockedItems, o => true ) );
+
+        public ICommand ToggleEnableHotkeysCommand =>
+            _toggleEnableHotkeysCommand ?? ( _toggleEnableHotkeysCommand = new RelayCommand( ToggleEnableHotkeys, o => true ) );
+
+        public ICommand HotkeyActionCommand =>
+            _hotkeyActionCommand ?? ( _hotkeyActionCommand = new RelayCommandAsync( HotkeyAction,
+                o => Options != null && Options.EnableHotkeys && SelectedItems != null && SelectedItems.Count > 0 ) );
 
         public ICommand TogglePropertiesCommand => _togglePropertiesCommand ?? ( _togglePropertiesCommand = new RelayCommand( ToggleProperties, o => true ) );
 
@@ -1194,6 +1217,11 @@ namespace ClassicAssist.UI.ViewModels
 
             SaveOptions( Options );
 
+            if ( Options.HideLockedItems )
+            {
+                CollectionViewSource.GetDefaultView( _entities )?.Refresh();
+            }
+
             OnPropertyChanged( nameof( SelectedItemsAllLocked ) );
         }
 
@@ -1458,6 +1486,9 @@ namespace ClassicAssist.UI.ViewModels
             SortStyle = SortStyle == val ? EntityCollectionSortStyle.None : val;
             _sorter = GetComparer( SortStyle );
 
+            Options.SortStyle = SortStyle;
+            SaveOptions( Options );
+
             Entities = new ObservableCollection<EntityCollectionData>( Collection.ToEntityCollectionData( _sorter, _nameOverrides ) );
 
             if ( _filters != null )
@@ -1714,6 +1745,90 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             ShowProperties = showProperties;
+        }
+
+        private void ToggleHideLockedItems( object obj )
+        {
+            if ( !( obj is bool hideLockedItems ) )
+            {
+                return;
+            }
+
+            Options.HideLockedItems = hideLockedItems;
+
+            SaveOptions( Options );
+
+            ApplyHideLockedItemsFilter();
+        }
+
+        private void ToggleEnableHotkeys( object obj )
+        {
+            if ( !( obj is bool enableHotkeys ) )
+            {
+                return;
+            }
+
+            Options.EnableHotkeys = enableHotkeys;
+
+            SaveOptions( Options );
+        }
+
+        private async Task HotkeyAction( object arg )
+        {
+            if ( Options == null || !Options.EnableHotkeys || !( arg is string action ) )
+            {
+                return;
+            }
+
+            switch ( action )
+            {
+                case "Container":
+                    await ContextMoveToContainer( null );
+                    break;
+                case "Backpack":
+                    await ContextMoveToBackpack( null );
+                    break;
+                case "Bank":
+                    await ContextMoveToBank( null );
+                    break;
+                case "Ground":
+                    await ContextMoveToGround( null );
+                    break;
+                case "Drop":
+                    ContextDropToGround( null );
+                    break;
+            }
+        }
+
+        private void ApplyHideLockedItemsFilter()
+        {
+            if ( _entities == null )
+            {
+                return;
+            }
+
+            void OnApply()
+            {
+                ICollectionView view = CollectionViewSource.GetDefaultView( _entities );
+
+                if ( view == null )
+                {
+                    return;
+                }
+
+                view.Filter = Options != null && Options.HideLockedItems
+                    ? (Predicate<object>) ( o => !( o is EntityCollectionData ecd && ecd.IsLocked ) )
+                    : null;
+            }
+
+            if ( _dispatcher != null && !_dispatcher.CheckAccess() )
+            {
+                _dispatcher.Invoke( OnApply );
+            }
+            else
+            {
+                OnApply();
+            }
         }
 
         private static void ItemDoubleClick( object obj )

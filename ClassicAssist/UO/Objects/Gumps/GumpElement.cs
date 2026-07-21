@@ -16,6 +16,7 @@
  * along with UO Machine.  If not, see <http://www.gnu.org/licenses/>. */
 
 using System;
+using System.Collections.Generic;
 
 namespace ClassicAssist.UO.Objects.Gumps
 {
@@ -49,6 +50,7 @@ namespace ClassicAssist.UO.Objects.Gumps
         public int Size { get; set; }
         public string Text { get; set; }
         public int Tooltip { get; set; }
+        public List<Property> Tooltips { get; set; }
         public ElementType Type { get; set; }
         public int Width { get; set; }
         public int X { get; set; }

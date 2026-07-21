@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using ClassicAssist.UO.Data;
 
@@ -555,8 +556,40 @@ namespace ClassicAssist.UO.Objects.Gumps
                             {
                                 if ( lastGumpElement != null )
                                 {
+                                    // Reassemble the (space-split) arguments the same way xmfhtmltok does; the
+                                    // leading @ marks the free-text arg so multi-word values survive the split.
+                                    string[] args = null;
+
+                                    if ( formatted.Length > 2 )
+                                    {
+                                        StringBuilder sb = new StringBuilder( formatted[2] );
+
+                                        for ( int a = 3; a < formatted.Length; a++ )
+                                        {
+                                            sb.Append( ' ' );
+                                            sb.Append( formatted[a] );
+                                        }
+
+                                        args = GetTokens( sb.ToString() );
+                                    }
+
+                                    if ( lastGumpElement.Tooltips == null )
+                                    {
+                                        lastGumpElement.Tooltips = new List<Property>();
+                                    }
+
+                                    // GetLocalString resolves #-tokens in place, so pass a copy to keep raw args.
+                                    Property property = new Property
+                                    {
+                                        Cliloc = tooltip,
+                                        Arguments = args,
+                                        Text = Cliloc.GetLocalString( tooltip, args?.ToArray() )
+                                    };
+
+                                    lastGumpElement.Tooltips.Add( property );
+
                                     lastGumpElement.Tooltip = tooltip;
-                                    lastGumpElement.Text = Cliloc.GetProperty( tooltip );
+                                    lastGumpElement.Text = property.Text;
                                 }
                             }
                             else

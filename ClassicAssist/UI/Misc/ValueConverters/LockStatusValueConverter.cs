@@ -39,8 +39,8 @@ namespace ClassicAssist.UI.Misc.ValueConverters
 
                     return _lockedImage.Value;
                 default:
-
-                    throw new ArgumentOutOfRangeException();
+                    return _upImage.Value;
+                    //throw new ArgumentOutOfRangeException();
             }
         }
 

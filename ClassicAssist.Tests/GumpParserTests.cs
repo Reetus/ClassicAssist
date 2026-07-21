@@ -159,6 +159,47 @@ namespace ClassicAssist.Tests
         }
 
         [TestMethod]
+        public void WillParseMultipleTooltipsWithArguments()
+        {
+            Cliloc.Initialize( () => new Dictionary<int, string>
+            {
+                { 1163908, "Regent Sculpture" },
+                { 1072788, "Weight: ~1_WEIGHT~ stones" },
+                { 1043304, "Value: ~1_val~" },
+                { 1043305, "~1_val~" }
+            } );
+
+            const string layout =
+                "{ buttontileart 50 101 2328 2328 0 0 0 44963 2661 18 0 }{ tooltip 1163908 }{ tooltip 1072788 @1 }{ tooltip 1043304 @250,000 }{ tooltip 1043305 @Burning Regent Sculpture }";
+
+            Gump gump = GumpParser.Parse( 0x01, 0x01, 1, 1, layout, new string[] { } );
+
+            GumpElement ge = gump.GetElementByXY( 50, 101 );
+
+            Assert.IsNotNull( ge );
+            Assert.IsNotNull( ge.Tooltips );
+            Assert.AreEqual( 4, ge.Tooltips.Count );
+
+            // No-argument tooltip.
+            Assert.AreEqual( 1163908, ge.Tooltips[0].Cliloc );
+            Assert.IsNull( ge.Tooltips[0].Arguments );
+            Assert.AreEqual( "Regent Sculpture", ge.Tooltips[0].Text );
+
+            // Single numeric argument.
+            Assert.AreEqual( 1072788, ge.Tooltips[1].Cliloc );
+            Assert.AreEqual( "1", ge.Tooltips[1].Arguments[0] );
+            Assert.AreEqual( "Weight: 1 stones", ge.Tooltips[1].Text );
+
+            // Argument containing a comma.
+            Assert.AreEqual( "250,000", ge.Tooltips[2].Arguments[0] );
+            Assert.AreEqual( "Value: 250,000", ge.Tooltips[2].Text );
+
+            // Multi-word (space-containing) argument survives the space-split.
+            Assert.AreEqual( "Burning Regent Sculpture", ge.Tooltips[3].Arguments[0] );
+            Assert.AreEqual( "Burning Regent Sculpture", ge.Tooltips[3].Text );
+        }
+
+        [TestMethod]
         public void WillParseFunctionCapitalized()
         {
             const string layout = "{ Button 554 16 4005 4007 1 0 1 }";

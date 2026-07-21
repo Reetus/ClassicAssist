@@ -19,7 +19,7 @@ using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.UI.ViewModels.Agents
 {
-    public class VendorSellTabViewModel : BaseViewModel, ISettingProvider
+    public class VendorSellTabViewModel : BaseViewModel, ISettingProvider, IDisposable
     {
         private int _containerSerial;
         private ICommand _insertCommand;
@@ -33,6 +33,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
         public VendorSellTabViewModel()
         {
             IncomingPacketHandlers.VendorSellDisplayEvent += OnVendorSellDisplayEvent;
+        }
+
+        public void Dispose()
+        {
+            IncomingPacketHandlers.VendorSellDisplayEvent -= OnVendorSellDisplayEvent;
         }
 
         public int ContainerSerial
@@ -162,26 +167,44 @@ namespace ClassicAssist.UI.ViewModels.Agents
         {
             List<SellListEntry> sellList = new List<SellListEntry>();
 
+            // Track the remaining sell budget per matched agent entry so the Amount limit is a
+            // total across all matching stacks, rather than being applied to each stack separately.
+            Dictionary<VendorSellAgentEntry, int> remaining = new Dictionary<VendorSellAgentEntry, int>();
+
             foreach ( SellListEntry entry in entries )
             {
                 VendorSellAgentEntry match = Items.FirstOrDefault( i =>
                     ( i.Graphic == -1 || i.Graphic == entry.ID ) && ( i.Hue == -1 || i.Hue == entry.Hue ) &&
                     entry.Price >= i.MinPrice && i.Enabled );
 
-                if ( match != null && match.Amount != -1 )
+                if ( match == null )
                 {
-                    entry.Amount = Math.Min( match.Amount, entry.Amount );
+                    continue;
                 }
 
-                if ( match != null )
+                if ( match.Amount != -1 )
                 {
-                    sellList.Add( entry );
+                    if ( !remaining.TryGetValue( match, out int budget ) )
+                    {
+                        budget = match.Amount;
+                    }
+
+                    entry.Amount = Math.Min( budget, entry.Amount );
+                    remaining[match] = budget - entry.Amount;
+
+                    if ( entry.Amount <= 0 )
+                    {
+                        continue;
+                    }
                 }
+
+                sellList.Add( entry );
             }
 
             if ( ContainerSerial != 0 )
             {
-                if ( !Engine.Player.Backpack.Container.GetItem( ContainerSerial, out Item container ) )
+                if ( Engine.Player?.Backpack?.Container == null ||
+                     !Engine.Player.Backpack.Container.GetItem( ContainerSerial, out Item container ) )
                 {
                     SystemMessage( Strings.Invalid_container___ );
 

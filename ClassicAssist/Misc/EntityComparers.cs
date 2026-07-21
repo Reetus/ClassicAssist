@@ -124,8 +124,8 @@ namespace ClassicAssist.Misc
             }
             else
             {
-                int itemXWeight = Convert.ToInt32( itemX.Properties.FirstOrDefault( p => p.Cliloc == 1072225 || p.Cliloc == 1072788 )?.Arguments[0] ?? "-1" );
-                int itemYWeight = Convert.ToInt32( itemY.Properties.FirstOrDefault( p => p.Cliloc == 1072225 || p.Cliloc == 1072788 )?.Arguments[0] ?? "-1" );
+                int itemXWeight = Convert.ToInt32( itemX.Properties?.FirstOrDefault( p => p.Cliloc == 1072225 || p.Cliloc == 1072788 )?.Arguments[0] ?? "-1" );
+                int itemYWeight = Convert.ToInt32( itemY.Properties?.FirstOrDefault( p => p.Cliloc == 1072225 || p.Cliloc == 1072788 )?.Arguments[0] ?? "-1" );
 
                 if ( itemXWeight == -1 )
                 {

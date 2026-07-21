@@ -56,6 +56,7 @@ namespace ClassicAssist.Tests.Agents
 
             vsvm.Items.Clear();
             Engine.InternalPacketSentEvent -= OnPacket;
+            vsvm.Dispose();
         }
 
         [TestMethod]
@@ -96,6 +97,7 @@ namespace ClassicAssist.Tests.Agents
 
             vsvm.Items.Clear();
             Engine.InternalPacketSentEvent -= OnPacket;
+            vsvm.Dispose();
         }
 
         [TestMethod]
@@ -115,7 +117,7 @@ namespace ClassicAssist.Tests.Agents
 
             VendorSellTabViewModel vsvm = new VendorSellTabViewModel();
 
-            vsvm.Items.Add( new VendorSellAgentEntry { Enabled = true, Graphic = 0xff, MinPrice = 9, Name = "Shmoo" } );
+            vsvm.Items.Add( new VendorSellAgentEntry { Enabled = true, Graphic = 0xff, MinPrice = 9, Amount = -1, Name = "Shmoo" } );
 
             IncomingPacketHandlers.Initialize();
             PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x9E );
@@ -142,6 +144,7 @@ namespace ClassicAssist.Tests.Agents
 
             vsvm.Items.Clear();
             Engine.InternalPacketSentEvent -= OnPacket;
+            vsvm.Dispose();
         }
 
         [TestMethod]
@@ -198,6 +201,76 @@ namespace ClassicAssist.Tests.Agents
 
             vsvm.Items.Clear();
             Engine.InternalPacketSentEvent -= OnPacket;
+            vsvm.Dispose();
+        }
+
+        [TestMethod]
+        public void WontSellMoreThanAmountAcrossMultipleStacks()
+        {
+            AutoResetEvent are = new AutoResetEvent( false );
+
+            int totalSold = 0;
+
+            void OnPacket( byte[] data, int length )
+            {
+                if ( data[0] != 0x9F )
+                {
+                    return;
+                }
+
+                int count = ( data[7] << 8 ) | data[8];
+
+                for ( int i = 0; i < count; i++ )
+                {
+                    int offset = 9 + i * 6 + 4;
+                    totalSold += ( data[offset] << 8 ) | data[offset + 1];
+                }
+
+                are.Set();
+            }
+
+            Engine.InternalPacketSentEvent += OnPacket;
+
+            VendorSellTabViewModel vsvm = new VendorSellTabViewModel();
+
+            vsvm.Items.Add( new VendorSellAgentEntry { Enabled = true, Graphic = 0xff, Amount = 10, Name = "Shmoo" } );
+
+            IncomingPacketHandlers.Initialize();
+            PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x9E );
+
+            // Two separate stacks (distinct serials) of the same item, 100 each.
+            PacketWriter pw = new PacketWriter( 37 );
+            pw.Write( (byte) 0x9E );
+            pw.Write( (short) 37 );
+            pw.Write( 0 );
+            pw.Write( (short) 2 );
+
+            pw.Write( 1 );
+            pw.Write( (short) 0xFF );
+            pw.Write( (short) 0 );
+            pw.Write( (short) 100 );
+            pw.Write( (short) 9 );
+            pw.Write( (short) 0 );
+
+            pw.Write( 2 );
+            pw.Write( (short) 0xFF );
+            pw.Write( (short) 0 );
+            pw.Write( (short) 100 );
+            pw.Write( (short) 9 );
+            pw.Write( (short) 0 );
+
+            byte[] packet = pw.ToArray();
+
+            handler.OnReceive( new PacketReader( packet, packet.Length, false ) );
+
+            bool result = are.WaitOne( 1000 );
+
+            Assert.IsTrue( result );
+            Assert.AreEqual( 10, totalSold );
+
+            vsvm.Items.Clear();
+            Engine.InternalPacketSentEvent -= OnPacket;
+            vsvm.Dispose();
         }
 
         [TestMethod]
@@ -261,6 +334,7 @@ namespace ClassicAssist.Tests.Agents
 
             vsvm.Items.Clear();
             Engine.InternalPacketSentEvent -= OnPacket;
+            vsvm.Dispose();
 
             Engine.Player = null;
             Engine.ClientVersion = null;

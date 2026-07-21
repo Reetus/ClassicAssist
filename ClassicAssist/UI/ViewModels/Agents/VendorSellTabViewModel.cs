@@ -19,7 +19,7 @@ using UOC = ClassicAssist.UO.Commands;
 
 namespace ClassicAssist.UI.ViewModels.Agents
 {
-    public class VendorSellTabViewModel : BaseViewModel, ISettingProvider
+    public class VendorSellTabViewModel : BaseViewModel, ISettingProvider, IDisposable
     {
         private int _containerSerial;
         private ICommand _insertCommand;
@@ -33,6 +33,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
         public VendorSellTabViewModel()
         {
             IncomingPacketHandlers.VendorSellDisplayEvent += OnVendorSellDisplayEvent;
+        }
+
+        public void Dispose()
+        {
+            IncomingPacketHandlers.VendorSellDisplayEvent -= OnVendorSellDisplayEvent;
         }
 
         public int ContainerSerial
@@ -198,7 +203,8 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
             if ( ContainerSerial != 0 )
             {
-                if ( !Engine.Player.Backpack.Container.GetItem( ContainerSerial, out Item container ) )
+                if ( Engine.Player?.Backpack?.Container == null ||
+                     !Engine.Player.Backpack.Container.GetItem( ContainerSerial, out Item container ) )
                 {
                     SystemMessage( Strings.Invalid_container___ );
 

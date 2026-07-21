@@ -56,6 +56,7 @@ namespace ClassicAssist.Tests.Agents
 
             vsvm.Items.Clear();
             Engine.InternalPacketSentEvent -= OnPacket;
+            vsvm.Dispose();
         }
 
         [TestMethod]
@@ -96,6 +97,7 @@ namespace ClassicAssist.Tests.Agents
 
             vsvm.Items.Clear();
             Engine.InternalPacketSentEvent -= OnPacket;
+            vsvm.Dispose();
         }
 
         [TestMethod]
@@ -115,7 +117,7 @@ namespace ClassicAssist.Tests.Agents
 
             VendorSellTabViewModel vsvm = new VendorSellTabViewModel();
 
-            vsvm.Items.Add( new VendorSellAgentEntry { Enabled = true, Graphic = 0xff, MinPrice = 9, Name = "Shmoo" } );
+            vsvm.Items.Add( new VendorSellAgentEntry { Enabled = true, Graphic = 0xff, MinPrice = 9, Amount = -1, Name = "Shmoo" } );
 
             IncomingPacketHandlers.Initialize();
             PacketHandler handler = IncomingPacketHandlers.GetHandler( 0x9E );
@@ -142,6 +144,7 @@ namespace ClassicAssist.Tests.Agents
 
             vsvm.Items.Clear();
             Engine.InternalPacketSentEvent -= OnPacket;
+            vsvm.Dispose();
         }
 
         [TestMethod]
@@ -198,6 +201,7 @@ namespace ClassicAssist.Tests.Agents
 
             vsvm.Items.Clear();
             Engine.InternalPacketSentEvent -= OnPacket;
+            vsvm.Dispose();
         }
 
         [TestMethod]
@@ -266,6 +270,7 @@ namespace ClassicAssist.Tests.Agents
 
             vsvm.Items.Clear();
             Engine.InternalPacketSentEvent -= OnPacket;
+            vsvm.Dispose();
         }
 
         [TestMethod]
@@ -329,6 +334,7 @@ namespace ClassicAssist.Tests.Agents
 
             vsvm.Items.Clear();
             Engine.InternalPacketSentEvent -= OnPacket;
+            vsvm.Dispose();
 
             Engine.Player = null;
             Engine.ClientVersion = null;

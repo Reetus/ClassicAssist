@@ -204,15 +204,14 @@ namespace ClassicAssist.Data.Macros
                 _importCache = InitializeImports( _engine );
             }
 
-            // Use the backing file path (when file-backed) as the script "filename" so IronPython
-            // reports it in traceback frames — this is what lets the DAP debugger map breakpoints to
-            // the file open in VSCode. In-memory macros keep the default "<string>".
-            string scriptPath = _macro.IsFileBacked && !string.IsNullOrEmpty( _macro.FilePath )
-                ? _macro.FilePath
-                : "<string>";
-
-            ScriptSource source =
-                _engine.CreateScriptSourceFromString( _macro.Macro, scriptPath, SourceCodeKind.Statements );
+            // For file-backed macros, use the backing file path as the script "filename" so
+            // IronPython reports it in traceback frames — this is what lets the DAP debugger map
+            // breakpoints to the file open in VSCode. In-memory macros use the pathless overload:
+            // passing a placeholder like "<string>" would make the tracer run path operations on
+            // illegal path characters and throw "Illegal characters in path".
+            ScriptSource source = _macro.IsFileBacked && !string.IsNullOrEmpty( _macro.FilePath )
+                ? _engine.CreateScriptSourceFromString( _macro.Macro, _macro.FilePath, SourceCodeKind.Statements )
+                : _engine.CreateScriptSourceFromString( _macro.Macro, SourceCodeKind.Statements );
 
             Dictionary<string, object> importCache = new Dictionary<string, object>( _importCache );
 

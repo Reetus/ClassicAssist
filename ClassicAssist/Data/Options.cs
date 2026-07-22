@@ -101,6 +101,8 @@ namespace ClassicAssist.Data
         private bool _useObjectQueue;
         private int _useObjectQueueAmount = 5;
         private int _selectedTabIndexAgents;
+        private bool _debugAdapterEnabled;
+        private int _debugAdapterPort = 4712;
 
         public bool AbilitiesGump
         {
@@ -429,6 +431,20 @@ namespace ClassicAssist.Data
         {
             get => _persistUseOnce;
             set => SetProperty( ref _persistUseOnce, value );
+        }
+
+        // Session-only: intentionally not persisted to the profile so multiple ClassicAssist
+        // instances don't fight over the same port on load. Enabled/port reset each session.
+        public bool DebugAdapterEnabled
+        {
+            get => _debugAdapterEnabled;
+            set => SetProperty( ref _debugAdapterEnabled, value );
+        }
+
+        public int DebugAdapterPort
+        {
+            get => _debugAdapterPort;
+            set => SetProperty( ref _debugAdapterPort, value );
         }
 
         public bool PreventAttackingFriendsInWarMode

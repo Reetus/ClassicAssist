@@ -204,7 +204,14 @@ namespace ClassicAssist.Data.Macros
                 _importCache = InitializeImports( _engine );
             }
 
-            ScriptSource source = _engine.CreateScriptSourceFromString( _macro.Macro, SourceCodeKind.Statements );
+            // For file-backed macros, use the backing file path as the script "filename" so
+            // IronPython reports it in traceback frames — this is what lets the DAP debugger map
+            // breakpoints to the file open in VSCode. In-memory macros use the pathless overload:
+            // passing a placeholder like "<string>" would make the tracer run path operations on
+            // illegal path characters and throw "Illegal characters in path".
+            ScriptSource source = _macro.IsFileBacked && !string.IsNullOrEmpty( _macro.FilePath )
+                ? _engine.CreateScriptSourceFromString( _macro.Macro, _macro.FilePath, SourceCodeKind.Statements )
+                : _engine.CreateScriptSourceFromString( _macro.Macro, SourceCodeKind.Statements );
 
             Dictionary<string, object> importCache = new Dictionary<string, object>( _importCache );
 
@@ -360,6 +367,28 @@ namespace ClassicAssist.Data.Macros
 
         private TracebackDelegate OnTrace( TraceBackFrame frame, string result, object payload )
         {
+            // DAP debugger — only engages while a VSCode client is attached (IsActive). When inactive
+            // this is a couple of cheap checks and the existing in-app debugger below is unaffected.
+            ClassicAssist.DebugAdapter.DebugManager debugMgr = ClassicAssist.DebugAdapter.DebugManager.Instance;
+
+            if ( debugMgr != null && debugMgr.IsActive )
+            {
+                int threadId = Thread.CurrentThread.ManagedThreadId;
+                CancellationToken debugToken = _cancellationToken?.Token ?? CancellationToken.None;
+
+                if ( result == "line" &&
+                     debugMgr.ShouldBreak( frame.f_code.co_filename, (int) frame.f_lineno, threadId, frame ) )
+                {
+                    debugMgr.OnBreakpoint( threadId, frame );
+                    debugMgr.WaitForResume( threadId, debugToken );
+                }
+                else if ( result == "exception" && debugMgr.ShouldBreakOnException( threadId, payload ) )
+                {
+                    debugMgr.OnBreakpoint( threadId, frame, "exception" );
+                    debugMgr.WaitForResume( threadId, debugToken );
+                }
+            }
+
             if ( ( result == "line" || result == "call" ) && _macro.Breakpoints != null && _macro.Breakpoints.Contains( (int) frame.f_lineno )
                  || result == "line" && _macro.IsPaused )
             {

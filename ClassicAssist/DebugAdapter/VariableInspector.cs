@@ -4,14 +4,14 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using ClassicAssist.Debug.Dap;
+using ClassicAssist.DebugAdapter.Dap;
 using IronPython.Hosting;
 using IronPython.Runtime;
 using IronPython.Runtime.Exceptions;
 using IronPython.Runtime.Operations;
 using Microsoft.Scripting.Hosting;
 
-namespace ClassicAssist.Debug
+namespace ClassicAssist.DebugAdapter
 {
     public sealed class VariableInspector
     {

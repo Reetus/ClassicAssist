@@ -1,7 +1,7 @@
 using System.Threading;
 using IronPython.Runtime.Exceptions;
 
-namespace ClassicAssist.Debug
+namespace ClassicAssist.DebugAdapter
 {
     public enum StepMode
     {

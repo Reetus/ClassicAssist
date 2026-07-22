@@ -865,6 +865,9 @@
   <data name="Debug adapter tooltip" xml:space="preserve">
     <value>Exposes a Debug Adapter Protocol server on localhost for debugging file-backed macros from VSCode. Session-only, not saved to the profile.</value>
   </data>
+  <data name="Debug adapter invalid port" xml:space="preserve">
+    <value>The debug adapter port must be between 1 and 65535.</value>
+  </data>
   <data name="Use Right Hand" xml:space="preserve">
     <value>Use Right Hand</value>
   </data>

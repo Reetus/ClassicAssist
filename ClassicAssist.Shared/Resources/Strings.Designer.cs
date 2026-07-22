@@ -5991,6 +5991,12 @@ namespace ClassicAssist.Shared.Resources {
             }
         }
 
+        public static string Debug_adapter_invalid_port {
+            get {
+                return ResourceManager.GetString("Debug adapter invalid port", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Use Right Hand.
         /// </summary>

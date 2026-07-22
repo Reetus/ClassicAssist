@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace ClassicAssist.Debug.Dap
+namespace ClassicAssist.DebugAdapter.Dap
 {
     // --- Capabilities ---
 
@@ -39,11 +39,13 @@ namespace ClassicAssist.Debug.Dap
         [JsonProperty( "supportsExceptionInfoRequest" )]
         public bool SupportsExceptionInfoRequest { get; set; } = true;
 
+        // Only "all" is advertised: the IronPython trace "exception" event fires at every frame as
+        // an exception propagates and cannot reliably distinguish caught from uncaught, so we don't
+        // expose an "uncaught" filter we couldn't honour.
         [JsonProperty( "exceptionBreakpointFilters" )]
         public ExceptionBreakpointFilter[] ExceptionBreakpointFilters { get; set; } =
         {
-            new ExceptionBreakpointFilter { Filter = "all", Label = "All Exceptions", Default = false },
-            new ExceptionBreakpointFilter { Filter = "uncaught", Label = "Uncaught Exceptions", Default = true }
+            new ExceptionBreakpointFilter { Filter = "all", Label = "All Exceptions", Default = false }
         };
     }
 

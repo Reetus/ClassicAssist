@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using ClassicAssist.Data.Macros;
 using IronPython.Runtime.Exceptions;
 
-namespace ClassicAssist.Debug.Dap
+namespace ClassicAssist.DebugAdapter.Dap
 {
     public sealed class DapSession
     {

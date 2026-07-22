@@ -6,6 +6,7 @@
     xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
     xmlns:viewModels="clr-namespace:ClassicAssist.UI.ViewModels"
     xmlns:misc1="clr-namespace:ClassicAssist.UI.Misc"
+    xmlns:converters="clr-namespace:ClassicAssist.UI.Misc.ValueConverters"
     xmlns:data="clr-namespace:ClassicAssist.Data"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:cliloc="clr-namespace:ClassicAssist.UO.Data"
@@ -27,6 +28,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <shared:SharedResourceDictionary Source="../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
@@ -193,7 +195,8 @@
                                                           ToolTip="{x:Static resources:Strings.Debug_adapter_tooltip}">
                             <controls:OptionedCheckBoxControl.ChildContent>
                                 <TextBox Width="50" Margin="5,0,0,0"
-                                         Text="{Binding CurrentOptions.DebugAdapterPort}" />
+                                         Text="{Binding CurrentOptions.DebugAdapterPort}"
+                                         IsEnabled="{Binding CurrentOptions.DebugAdapterEnabled, Converter={StaticResource InverseBooleanConverter}}" />
                             </controls:OptionedCheckBoxControl.ChildContent>
                         </controls:OptionedCheckBoxControl>
                     </StackPanel>

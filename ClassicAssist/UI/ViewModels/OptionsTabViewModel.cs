@@ -6,7 +6,7 @@ using System.Windows.Media;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros.Commands;
-using ClassicAssist.Debug.Dap;
+using ClassicAssist.DebugAdapter.Dap;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
@@ -293,7 +293,16 @@ namespace ClassicAssist.UI.ViewModels
             {
                 if ( CurrentOptions.DebugAdapterEnabled )
                 {
-                    DapServer.Initialize( CurrentOptions.DebugAdapterPort );
+                    int port = CurrentOptions.DebugAdapterPort;
+
+                    if ( port < 1 || port > 65535 )
+                    {
+                        CurrentOptions.DebugAdapterEnabled = false;
+                        MessageBox.Show( Strings.Debug_adapter_invalid_port, Strings.Error );
+                        return;
+                    }
+
+                    DapServer.Initialize( port );
                 }
                 else
                 {
@@ -302,6 +311,8 @@ namespace ClassicAssist.UI.ViewModels
             }
             catch ( Exception e )
             {
+                // Ensure any partially-initialised server is torn down before reverting the toggle.
+                DapServer.Shutdown();
                 CurrentOptions.DebugAdapterEnabled = false;
                 MessageBox.Show( e.Message, Strings.Error );
             }

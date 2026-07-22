@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ClassicAssist.Debug.Dap
+namespace ClassicAssist.DebugAdapter.Dap
 {
     public static class DapServer
     {
@@ -31,9 +31,21 @@ namespace ClassicAssist.Debug.Dap
 
             _cts = new CancellationTokenSource();
 
-            // Bind to loopback only — the debug port must never be exposed on the network
-            _listener = new TcpListener( IPAddress.Loopback, port );
-            _listener.Start();
+            try
+            {
+                // Bind to loopback only — the debug port must never be exposed on the network
+                _listener = new TcpListener( IPAddress.Loopback, port );
+                _listener.Start();
+            }
+            catch
+            {
+                // Binding failed — tear down partial state so IsRunning stays false and a later
+                // Initialize attempt isn't short-circuited by a stale, unusable listener.
+                _cts.Dispose();
+                _cts = null;
+                _listener = null;
+                throw;
+            }
 
             CancellationToken token = _cts.Token;
             Task.Run( () => AcceptLoop( token ) );

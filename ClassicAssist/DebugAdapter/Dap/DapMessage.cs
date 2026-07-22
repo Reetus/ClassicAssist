@@ -3,7 +3,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace ClassicAssist.Debug.Dap
+namespace ClassicAssist.DebugAdapter.Dap
 {
     public class DapMessage
     {

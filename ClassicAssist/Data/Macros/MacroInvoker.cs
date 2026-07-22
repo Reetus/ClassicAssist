@@ -370,7 +370,7 @@ namespace ClassicAssist.Data.Macros
         {
             // DAP debugger — only engages while a VSCode client is attached (IsActive). When inactive
             // this is a couple of cheap checks and the existing in-app debugger below is unaffected.
-            Debug.DebugManager debugMgr = Debug.DebugManager.Instance;
+            ClassicAssist.DebugAdapter.DebugManager debugMgr = ClassicAssist.DebugAdapter.DebugManager.Instance;
 
             if ( debugMgr != null && debugMgr.IsActive )
             {

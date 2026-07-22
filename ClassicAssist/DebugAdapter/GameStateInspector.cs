@@ -6,7 +6,7 @@ using Assistant;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Objects;
 
-namespace ClassicAssist.Debug
+namespace ClassicAssist.DebugAdapter
 {
     public static class GameStateInspector
     {

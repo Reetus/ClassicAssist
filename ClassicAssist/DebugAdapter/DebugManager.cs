@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using ClassicAssist.Data.Macros;
-using ClassicAssist.Debug.Dap;
+using ClassicAssist.DebugAdapter.Dap;
 using IronPython.Hosting;
 using IronPython.Runtime;
 using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting.Hosting;
 
-namespace ClassicAssist.Debug
+namespace ClassicAssist.DebugAdapter
 {
     public sealed class BreakpointInfo
     {
@@ -336,6 +336,38 @@ namespace ClassicAssist.Debug
             return depth;
         }
 
+        private static void PopulateScope( ScriptScope scope, TraceBackFrame frame )
+        {
+            // Globals first, then locals so same-named locals shadow globals. Loading globals is
+            // what lets conditions/logpoints reference module globals, imported macro commands and
+            // args — not just locals — matching VariableInspector.Evaluate.
+            if ( frame.f_globals is PythonDictionary globals )
+            {
+                foreach ( KeyValuePair<object, object> kvp in globals )
+                {
+                    string key = kvp.Key as string;
+
+                    if ( key != null )
+                    {
+                        scope.SetVariable( key, kvp.Value );
+                    }
+                }
+            }
+
+            if ( frame.f_locals is PythonDictionary locals )
+            {
+                foreach ( KeyValuePair<object, object> kvp in locals )
+                {
+                    string key = kvp.Key as string;
+
+                    if ( key != null )
+                    {
+                        scope.SetVariable( key, kvp.Value );
+                    }
+                }
+            }
+        }
+
         private static bool IsTruthy( object value )
         {
             if ( value == null )
@@ -363,18 +395,7 @@ namespace ClassicAssist.Debug
                 ScriptEngine engine = Python.CreateEngine();
                 ScriptScope scope = engine.CreateScope();
 
-                if ( frame.f_locals is PythonDictionary locals )
-                {
-                    foreach ( KeyValuePair<object, object> kvp in locals )
-                    {
-                        string key = kvp.Key as string;
-
-                        if ( key != null )
-                        {
-                            scope.SetVariable( key, kvp.Value );
-                        }
-                    }
-                }
+                PopulateScope( scope, frame );
 
                 object result = engine.Execute( condition, scope );
                 return IsTruthy( result );
@@ -398,18 +419,7 @@ namespace ClassicAssist.Debug
                 ScriptEngine engine = Python.CreateEngine();
                 ScriptScope scope = engine.CreateScope();
 
-                if ( frame.f_locals is PythonDictionary locals )
-                {
-                    foreach ( KeyValuePair<object, object> kvp in locals )
-                    {
-                        string key = kvp.Key as string;
-
-                        if ( key != null )
-                        {
-                            scope.SetVariable( key, kvp.Value );
-                        }
-                    }
-                }
+                PopulateScope( scope, frame );
 
                 return Regex.Replace( message, @"\{(.+?)\}", m =>
                 {

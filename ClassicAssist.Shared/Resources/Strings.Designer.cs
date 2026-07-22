@@ -5978,7 +5978,19 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Use object queue", resourceCulture);
             }
         }
-        
+
+        public static string Debug_adapter {
+            get {
+                return ResourceManager.GetString("Debug adapter", resourceCulture);
+            }
+        }
+
+        public static string Debug_adapter_tooltip {
+            get {
+                return ResourceManager.GetString("Debug adapter tooltip", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Use Right Hand.
         /// </summary>

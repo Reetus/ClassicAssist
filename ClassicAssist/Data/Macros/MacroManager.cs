@@ -175,11 +175,13 @@ namespace ClassicAssist.Data.Macros
         public void OnMacroStarted( MacroEntry macroEntry )
         {
             MacroStartedEvent?.Invoke( macroEntry );
+            Debug.DebugManager.Instance?.OnMacroStarted( macroEntry );
         }
 
         public void OnMacroStopped( MacroEntry macroEntry )
         {
             MacroStoppedEvent?.Invoke( macroEntry );
+            Debug.DebugManager.Instance?.OnMacroStopped( macroEntry );
         }
     }
 }

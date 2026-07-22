@@ -859,6 +859,12 @@
   <data name="Use object queue" xml:space="preserve">
     <value>Use object queue</value>
   </data>
+  <data name="Debug adapter" xml:space="preserve">
+    <value>Debug adapter (VSCode)</value>
+  </data>
+  <data name="Debug adapter tooltip" xml:space="preserve">
+    <value>Exposes a Debug Adapter Protocol server on localhost for debugging file-backed macros from VSCode. Session-only, not saved to the profile.</value>
+  </data>
   <data name="Use Right Hand" xml:space="preserve">
     <value>Use Right Hand</value>
   </data>

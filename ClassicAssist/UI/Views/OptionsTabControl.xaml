@@ -187,6 +187,15 @@
                                          Text="{Binding CurrentOptions.UseObjectQueueAmount}" />
                             </controls:OptionedCheckBoxControl.ChildContent>
                         </controls:OptionedCheckBoxControl>
+                        <controls:OptionedCheckBoxControl IsChecked="{Binding CurrentOptions.DebugAdapterEnabled}"
+                                                          Command="{Binding ToggleDebugAdapterCommand}"
+                                                          Content="{x:Static resources:Strings.Debug_adapter}"
+                                                          ToolTip="{x:Static resources:Strings.Debug_adapter_tooltip}">
+                            <controls:OptionedCheckBoxControl.ChildContent>
+                                <TextBox Width="50" Margin="5,0,0,0"
+                                         Text="{Binding CurrentOptions.DebugAdapterPort}" />
+                            </controls:OptionedCheckBoxControl.ChildContent>
+                        </controls:OptionedCheckBoxControl>
                     </StackPanel>
                 </GroupBox>
             </controls:ResponsiveGrid.Items>

@@ -1,10 +1,12 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.DebugAdapter.Dap;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
@@ -34,6 +36,12 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand SetUseClilocLanguageCommand =>
             _setUseClilocLanguageCommand ??
             ( _setUseClilocLanguageCommand = new RelayCommand( SetUseClilocLanguage, o => true ) );
+
+        private ICommand _toggleDebugAdapterCommand;
+
+        public ICommand ToggleDebugAdapterCommand =>
+            _toggleDebugAdapterCommand ??
+            ( _toggleDebugAdapterCommand = new RelayCommand( ToggleDebugAdapter, o => true ) );
 
         public void Serialize( JObject json, bool global = false )
         {
@@ -117,6 +125,16 @@ namespace ClassicAssist.UI.ViewModels
             CurrentOptions = options;
 
             CurrentOptions.PropertyChanged += OnOptionsChanged;
+
+            // The debug adapter is a session-only, app-level toggle that isn't persisted per profile.
+            // A running server outlives profile switches, so reflect its actual state in the (fresh)
+            // options rather than letting the checkbox revert to off while the server is still bound.
+            CurrentOptions.DebugAdapterEnabled = DapServer.IsRunning;
+
+            if ( DapServer.IsRunning )
+            {
+                CurrentOptions.DebugAdapterPort = DapServer.Port;
+            }
 
             ActionCommands.UseOnceList.Clear();
 
@@ -266,6 +284,37 @@ namespace ClassicAssist.UI.ViewModels
             {
                 Options.CurrentOptions.GetType().GetProperty( args.PropertyName )
                     ?.SetValue( Options.CurrentOptions, val );
+            }
+        }
+
+        private void ToggleDebugAdapter( object obj )
+        {
+            try
+            {
+                if ( CurrentOptions.DebugAdapterEnabled )
+                {
+                    int port = CurrentOptions.DebugAdapterPort;
+
+                    if ( port < 1 || port > 65535 )
+                    {
+                        CurrentOptions.DebugAdapterEnabled = false;
+                        MessageBox.Show( Strings.Debug_adapter_invalid_port, Strings.Error );
+                        return;
+                    }
+
+                    DapServer.Initialize( port );
+                }
+                else
+                {
+                    DapServer.Shutdown();
+                }
+            }
+            catch ( Exception e )
+            {
+                // Ensure any partially-initialised server is torn down before reverting the toggle.
+                DapServer.Shutdown();
+                CurrentOptions.DebugAdapterEnabled = false;
+                MessageBox.Show( e.Message, Strings.Error );
             }
         }
 

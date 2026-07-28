@@ -552,7 +552,7 @@ namespace ClassicAssist.UO.Network
                 }
             }
 
-            return !Engine.VerifyPacketLengthCorrect( data ) || filtered;
+            return !Engine.VerifyPacketLengthCorrect( data, ref length ) || filtered;
         }
     }
 }

@@ -771,7 +771,7 @@ namespace Assistant
 
                 PacketWaitEntries?.CheckWait( packet, PacketDirection.Outgoing, true );
 
-                if ( !VerifyPacketLengthCorrect( packet ) )
+                if ( !VerifyPacketLengthCorrect( packet, ref length ) )
                 {
                     return;
                 }
@@ -802,7 +802,7 @@ namespace Assistant
 
                     PacketWaitEntries?.CheckWait( packet, PacketDirection.Incoming, true );
 
-                    if ( !VerifyPacketLengthCorrect( packet ) || length != packet.Length )
+                    if ( !VerifyPacketLengthCorrect( packet, ref length ) || length != packet.Length )
                     {
                         return;
                     }
@@ -937,9 +937,9 @@ namespace Assistant
             SendPacketToServer( data, data.Length );
         }
 
-        public static bool VerifyPacketLengthCorrect( byte[] packet, [CallerMemberName] string callerMemberName = null )
+        public static bool VerifyPacketLengthCorrect( byte[] packet, ref int packetLength, [CallerMemberName] string callerMemberName = null )
         {
-            int length = packet.Length;
+            int length = packetLength;
             int expectedLength = length;
 
             if ( _getPacketLength == null )
@@ -954,7 +954,7 @@ namespace Assistant
                 expectedLength = ( packet[1] << 8 ) | packet[2];
             }
 
-            if ( packet.Length != expectedLength )
+            if ( packetLength != expectedLength )
             {
                 string message = $"Invalid packet length: {length} != {expectedLength}";
 
@@ -970,7 +970,7 @@ namespace Assistant
                 } );
             }
 
-            return packet.Length == expectedLength;
+            return packetLength == expectedLength;
         }
 
         public static bool Move( Direction direction, bool run )

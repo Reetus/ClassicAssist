@@ -86,6 +86,13 @@ namespace ClassicAssist.UO.Objects.Gumps
                 split[i] = split[i].TrimStart( '{', ' ' ).Trim();
                 string[] formatted = split[i].Split( new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries );
 
+                // Layouts can contain an empty element, e.g. "{ button ... }{  }{ text ... }" where a
+                // conditional block emitted no command.  Nothing to parse, don't index into it.
+                if ( formatted.Length == 0 )
+                {
+                    continue;
+                }
+
                 for ( int j = 0; j < formatted.Length; j++ )
                 {
                     formatted[j] = formatted[j].Trim();

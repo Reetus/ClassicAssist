@@ -246,6 +246,39 @@ namespace ClassicAssist.Data.Macros.Commands
             return pwe.Lock.WaitOne( timeout );
         }
 
+        /// <summary>
+        ///     Waits on the 0x1D remove object packet for <paramref name="obj" />, i.e. the server telling the
+        ///     client the entity has gone out of view or been deleted. Defaults to no timeout - the macro thread
+        ///     blocks until the packet arrives or the macro is stopped.
+        /// </summary>
+        [CommandsDisplay( Category = nameof( Strings.Entity ), Parameters = new[] { nameof( ParameterType.SerialOrAlias ), nameof( ParameterType.Timeout ) } )]
+        public static bool WaitForRemoveObject( object obj, int timeout = -1 )
+        {
+            // <= 0 rather than == 0: an unknown alias resolves to -1, and with no timeout by default that
+            // would otherwise wait forever on a serial the server will never send.
+            int serial = AliasCommands.ResolveSerial( obj );
+
+            if ( serial <= 0 )
+            {
+                UOC.SystemMessage( Strings.Invalid_or_unknown_object_id );
+
+                return false;
+            }
+
+            PacketFilterInfo pfi = new PacketFilterInfo( 0x1D, new[] { PacketFilterConditions.IntAtPositionCondition( serial, 1 ) } );
+
+            PacketWaitEntry pwe = Engine.PacketWaitEntries.Add( pfi, PacketDirection.Incoming, true );
+
+            try
+            {
+                return pwe.Lock.WaitOne( timeout );
+            }
+            finally
+            {
+                Engine.PacketWaitEntries.Remove( pwe );
+            }
+        }
+
         [CommandsDisplay( Category = nameof( Strings.Entity ), Parameters = new[] { nameof( ParameterType.BuffName ) } )]
         public static double BuffTime( string name )
         {

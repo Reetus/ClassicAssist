@@ -4971,6 +4971,35 @@ namespace ClassicAssist.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Returns True if the given object is removed before the timeout, else False, -1 for infinite (default).
+        /// </summary>
+        public static string WAITFORREMOVEOBJECT_COMMAND_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("WAITFORREMOVEOBJECT_COMMAND_DESCRIPTION", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to if FindType(&apos;0x0f0e&apos;):
+        ///    UseObject(&apos;found&apos;)
+        ///    WaitForRemoveObject(&apos;found&apos;, 5000).
+        /// </summary>
+        public static string WAITFORREMOVEOBJECT_COMMAND_EXAMPLE {
+            get {
+                return ResourceManager.GetString("WAITFORREMOVEOBJECT_COMMAND_EXAMPLE", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to WaitForRemoveObject(&apos;found&apos;).
+        /// </summary>
+        public static string WAITFORREMOVEOBJECT_COMMAND_INSERTTEXT {
+            get {
+                return ResourceManager.GetString("WAITFORREMOVEOBJECT_COMMAND_INSERTTEXT", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Wait for target packet from server, optional timeout parameter (default 5000 milliseconds)..
         /// </summary>
         public static string WAITFORTARGET_COMMAND_DESCRIPTION {

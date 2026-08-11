@@ -456,7 +456,8 @@ namespace ClassicAssist.UI.ViewModels
             {
                 DataContext = new ObjectInspectorViewModel( entity ), Topmost = true
             };
-            window.ShowDialog();
+
+            window.Show();
         }
 
         private static void ShowItemCollection( ItemCollection collection )
@@ -471,7 +472,7 @@ namespace ClassicAssist.UI.ViewModels
                 DataContext = new EntityCollectionViewerViewModel( collection ), Topmost = true
             };
 
-            window.ShowDialog();
+            window.Show();
         }
     }
 

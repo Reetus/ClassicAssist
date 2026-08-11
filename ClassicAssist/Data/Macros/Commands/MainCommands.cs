@@ -119,7 +119,7 @@ namespace ClassicAssist.Data.Macros.Commands
                 ObjectInspectorWindow window =
                     new ObjectInspectorWindow { DataContext = new ObjectInspectorViewModel( entity ) };
 
-                window.ShowDialog();
+                window.Show();
             } ) );
         }
 

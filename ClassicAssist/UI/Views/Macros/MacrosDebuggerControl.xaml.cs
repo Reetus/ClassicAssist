@@ -100,7 +100,7 @@ namespace ClassicAssist.UI.Views.Macros
                 ObjectInspectorWindow window =
                     new ObjectInspectorWindow { DataContext = new ObjectInspectorViewModel( entity ) };
 
-                window.ShowDialog();
+                window.Show();
             } ) );
 
             return Task.CompletedTask;

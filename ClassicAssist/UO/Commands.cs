@@ -1025,7 +1025,7 @@ namespace ClassicAssist.UO
                     ObjectInspectorWindow window =
                         new ObjectInspectorWindow { DataContext = new ObjectInspectorViewModel( entity ) };
 
-                    window.ShowDialog();
+                    window.Show();
                 } ) );
             }
             else
@@ -1045,7 +1045,7 @@ namespace ClassicAssist.UO
                             DataContext = new ObjectInspectorViewModel( landTile )
                         };
 
-                        window.ShowDialog();
+                        window.Show();
                     } ) );
                 }
                 else
@@ -1069,7 +1069,7 @@ namespace ClassicAssist.UO
                             DataContext = new ObjectInspectorViewModel( selectedStatic )
                         };
 
-                        window.ShowDialog();
+                        window.Show();
                     } ) );
                 }
             }

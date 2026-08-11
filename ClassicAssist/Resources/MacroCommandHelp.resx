@@ -1966,4 +1966,15 @@ if FindType(0xe79, -1, 'backpack'):
   <data name="WAITFORBUFFDISABLED_COMMAND_INSERTTEXT" xml:space="preserve">
     <value>WaitForBuffDisabled('Active Meditation', 5000)</value>
   </data>
+  <data name="WAITFORREMOVEOBJECT_COMMAND_DESCRIPTION" xml:space="preserve">
+    <value>Returns True if the given object is removed before the timeout, else False, -1 for infinite (default)</value>
+  </data>
+  <data name="WAITFORREMOVEOBJECT_COMMAND_INSERTTEXT" xml:space="preserve">
+    <value>WaitForRemoveObject('found')</value>
+  </data>
+  <data name="WAITFORREMOVEOBJECT_COMMAND_EXAMPLE" xml:space="preserve">
+    <value>if FindType('0x0f0e'):
+    UseObject('found')
+    WaitForRemoveObject('found', 5000)</value>
+  </data>
 </root>

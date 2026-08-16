@@ -103,6 +103,8 @@ namespace ClassicAssist.Data
         private int _selectedTabIndexAgents;
         private bool _debugAdapterEnabled;
         private int _debugAdapterPort = 4712;
+        private bool _mcpEnabled;
+        private int _mcpPort = 4713;
 
         public bool AbilitiesGump
         {
@@ -445,6 +447,20 @@ namespace ClassicAssist.Data
         {
             get => _debugAdapterPort;
             set => SetProperty( ref _debugAdapterPort, value );
+        }
+
+        // Session-only: intentionally not persisted to the profile so multiple ClassicAssist
+        // instances don't fight over the same port on load. Enabled/port reset each session.
+        public bool McpEnabled
+        {
+            get => _mcpEnabled;
+            set => SetProperty( ref _mcpEnabled, value );
+        }
+
+        public int McpPort
+        {
+            get => _mcpPort;
+            set => SetProperty( ref _mcpPort, value );
         }
 
         public bool PreventAttackingFriendsInWarMode

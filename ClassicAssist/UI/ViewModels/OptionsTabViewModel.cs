@@ -7,6 +7,7 @@ using ClassicAssist.Data;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.DebugAdapter.Dap;
+using ClassicAssist.Mcp;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.Resources;
 using ClassicAssist.Shared.UI;
@@ -42,6 +43,12 @@ namespace ClassicAssist.UI.ViewModels
         public ICommand ToggleDebugAdapterCommand =>
             _toggleDebugAdapterCommand ??
             ( _toggleDebugAdapterCommand = new RelayCommand( ToggleDebugAdapter, o => true ) );
+
+        private ICommand _toggleMcpCommand;
+
+        public ICommand ToggleMcpCommand =>
+            _toggleMcpCommand ??
+            ( _toggleMcpCommand = new RelayCommand( ToggleMcp, o => true ) );
 
         public void Serialize( JObject json, bool global = false )
         {
@@ -134,6 +141,13 @@ namespace ClassicAssist.UI.ViewModels
             if ( DapServer.IsRunning )
             {
                 CurrentOptions.DebugAdapterPort = DapServer.Port;
+            }
+
+            CurrentOptions.McpEnabled = McpServer.IsRunning;
+
+            if ( McpServer.IsRunning )
+            {
+                CurrentOptions.McpPort = McpServer.Port;
             }
 
             ActionCommands.UseOnceList.Clear();
@@ -314,6 +328,37 @@ namespace ClassicAssist.UI.ViewModels
                 // Ensure any partially-initialised server is torn down before reverting the toggle.
                 DapServer.Shutdown();
                 CurrentOptions.DebugAdapterEnabled = false;
+                MessageBox.Show( e.Message, Strings.Error );
+            }
+        }
+
+        private void ToggleMcp( object obj )
+        {
+            try
+            {
+                if ( CurrentOptions.McpEnabled )
+                {
+                    int port = CurrentOptions.McpPort;
+
+                    if ( port < 1 || port > 65535 )
+                    {
+                        CurrentOptions.McpEnabled = false;
+                        MessageBox.Show( Strings.MCP_invalid_port, Strings.Error );
+                        return;
+                    }
+
+                    McpServer.Initialize( port );
+                }
+                else
+                {
+                    McpServer.Shutdown();
+                }
+            }
+            catch ( Exception e )
+            {
+                // Ensure any partially-initialised server is torn down before reverting the toggle.
+                McpServer.Shutdown();
+                CurrentOptions.McpEnabled = false;
                 MessageBox.Show( e.Message, Strings.Error );
             }
         }

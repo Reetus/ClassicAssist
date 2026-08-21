@@ -199,6 +199,16 @@
                                          IsEnabled="{Binding CurrentOptions.DebugAdapterEnabled, Converter={StaticResource InverseBooleanConverter}}" />
                             </controls:OptionedCheckBoxControl.ChildContent>
                         </controls:OptionedCheckBoxControl>
+                        <controls:OptionedCheckBoxControl IsChecked="{Binding CurrentOptions.McpEnabled}"
+                                                          Command="{Binding ToggleMcpCommand}"
+                                                          Content="{x:Static resources:Strings.MCP}"
+                                                          ToolTip="{x:Static resources:Strings.MCP_tooltip}">
+                            <controls:OptionedCheckBoxControl.ChildContent>
+                                <TextBox Width="50" Margin="5,0,0,0"
+                                         Text="{Binding CurrentOptions.McpPort}"
+                                         IsEnabled="{Binding CurrentOptions.McpEnabled, Converter={StaticResource InverseBooleanConverter}}" />
+                            </controls:OptionedCheckBoxControl.ChildContent>
+                        </controls:OptionedCheckBoxControl>
                     </StackPanel>
                 </GroupBox>
             </controls:ResponsiveGrid.Items>

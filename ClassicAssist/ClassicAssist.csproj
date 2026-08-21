@@ -58,6 +58,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <InternalsVisibleTo Include="ClassicAssist.Tests" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="AnimatedGif" Version="1.0.5" />
     <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
     <PackageReference Include="Crc32.NET" Version="1.2.0" />

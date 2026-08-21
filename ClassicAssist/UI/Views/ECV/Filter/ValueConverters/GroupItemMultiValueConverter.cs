@@ -24,10 +24,15 @@ namespace ClassicAssist.UI.Views.ECV.Filter.ValueConverters
     {
         public object Convert( object[] values, Type targetType, object parameter, CultureInfo culture )
         {
+            if ( !( values[0] is ObservableCollection<EntityCollectionFilterItem> group ) )
+            {
+                return new GroupItem { Group = null, Item = null };
+            }
+
             return new GroupItem
             {
-                Group = (ObservableCollection<EntityCollectionFilterItem>) values[0],
-                Item = (EntityCollectionFilterItem) values[1]
+                Group = group,
+                Item = values[1] as EntityCollectionFilterItem
             };
         }
 

@@ -20,12 +20,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Assistant;
+using ClassicAssist.Controls.DraggableTreeView;
 using ClassicAssist.Data.Autoloot;
 using ClassicAssist.Data.Organizer;
 using ClassicAssist.Shared.Misc;
@@ -67,6 +69,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
         private ICommand _saveProfilesCommand;
         private EntityCollectionFilterItem _selectedItem;
         private EntityCollectionFilterEntry _selectedProfile;
+        private EntityCollectionFilterGroup _selectedGroup;
 
         public EntityCollectionFilterViewModel()
         {
@@ -230,7 +233,75 @@ namespace ClassicAssist.UI.Views.ECV.Filter
         public EntityCollectionFilterEntry Item
         {
             get => _item;
-            set => SetProperty( ref _item, value );
+            set
+            {
+                if ( _item != null )
+                {
+                    _item.Groups.CollectionChanged -= OnItemGroupsChanged;
+                    UnsubscribeGroupsRecursive( _item.Groups );
+                }
+
+                SetProperty( ref _item, value );
+
+                if ( _item != null )
+                {
+                    _item.Groups.CollectionChanged += OnItemGroupsChanged;
+                    SubscribeGroupsRecursive( _item.Groups );
+                }
+
+                OnPropertyChanged( nameof( HasSubgroups ) );
+            }
+        }
+
+        private void OnItemGroupsChanged( object sender, NotifyCollectionChangedEventArgs e )
+        {
+            if ( e.NewItems != null )
+            {
+                foreach ( object obj in e.NewItems )
+                {
+                    if ( obj is EntityCollectionFilterGroup g )
+                    {
+                        SubscribeGroupsRecursive( new[] { (IDraggable) g } );
+                    }
+                }
+            }
+
+            if ( e.OldItems != null )
+            {
+                foreach ( object obj in e.OldItems )
+                {
+                    if ( obj is EntityCollectionFilterGroup g )
+                    {
+                        UnsubscribeGroupsRecursive( new[] { (IDraggable) g } );
+                    }
+                }
+            }
+
+            OnPropertyChanged( nameof( HasSubgroups ) );
+        }
+
+        private void SubscribeGroupsRecursive( IEnumerable<IDraggable> groups )
+        {
+            foreach ( IDraggable draggable in groups )
+            {
+                if ( draggable is EntityCollectionFilterGroup group )
+                {
+                    group.Children.CollectionChanged += OnItemGroupsChanged;
+                    SubscribeGroupsRecursive( group.Children );
+                }
+            }
+        }
+
+        private void UnsubscribeGroupsRecursive( IEnumerable<IDraggable> groups )
+        {
+            foreach ( IDraggable draggable in groups )
+            {
+                if ( draggable is EntityCollectionFilterGroup group )
+                {
+                    group.Children.CollectionChanged -= OnItemGroupsChanged;
+                    UnsubscribeGroupsRecursive( group.Children );
+                }
+            }
         }
 
         public ICommand NewGroupCommand => _newGroupCommand ?? ( _newGroupCommand = new RelayCommand( NewGroup, o => true ) );
@@ -241,7 +312,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             set => SetProperty( ref _profiles, value );
         }
 
-        public ICommand RemoveCommand => _removeCommand ?? ( _removeCommand = new RelayCommand( Remove, o => o == null || ( (GroupItem) o ).Group.Count > 1 ) );
+        public ICommand RemoveCommand => _removeCommand ?? ( _removeCommand = new RelayCommand( Remove, o => o is GroupItem gi && gi.Group != null && gi.Item != null && gi.Group.Count > 1 ) );
 
         public ICommand RemoveGroupCommand => _removeGroupCommand ?? ( _removeGroupCommand = new RelayCommand( RemoveGroup, o => Item.Groups.Count > 1 ) );
 
@@ -265,6 +336,42 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             set => SetProperty( ref _selectedProfile, value );
         }
 
+        public EntityCollectionFilterGroup SelectedGroup
+        {
+            get => _selectedGroup;
+            set => SetProperty( ref _selectedGroup, value );
+        }
+
+        public bool HasSubgroups => HasSubgroupsRecursive( Item?.Groups );
+
+        private static bool HasSubgroupsRecursive( IEnumerable<IDraggable> groups )
+        {
+            if ( groups == null )
+            {
+                return false;
+            }
+
+            foreach ( IDraggable draggable in groups )
+            {
+                if ( !( draggable is EntityCollectionFilterGroup group ) )
+                {
+                    continue;
+                }
+
+                if ( group.Children.Count > 0 )
+                {
+                    return true;
+                }
+
+                if ( HasSubgroupsRecursive( group.Children ) )
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private void ChangeProfile( object obj )
         {
             if ( !( obj is EntityCollectionFilterEntry entry ) )
@@ -279,7 +386,10 @@ namespace ClassicAssist.UI.Views.ECV.Filter
         // active profile (switching, adding or removing a profile re-applies when a filter is live).
         private void SetActiveProfile( EntityCollectionFilterEntry entry )
         {
+            entry?.UpdateGroupsFirstFlags();
             SelectedProfile = Item = entry;
+            SelectedGroup = entry?.Groups?.FirstOrDefault() as EntityCollectionFilterGroup;
+            OnPropertyChanged( nameof( HasSubgroups ) );
 
             if ( IsFilterApplied )
             {
@@ -309,7 +419,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             EntityCollectionFilterEntry newProfile = new EntityCollectionFilterEntry
             {
                 Name = "New Filter Profile",
-                Groups = new ObservableCollection<EntityCollectionFilterGroup>
+                Groups = new ObservableCollection<IDraggable>
                 {
                     new EntityCollectionFilterGroup
                     {
@@ -341,7 +451,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                         {
                             ID = profileObj["ID"]?.ToObject<Guid>() ?? Guid.NewGuid(),
                             Name = profileObj["Name"]?.ToObject<string>(),
-                            Groups = new ObservableCollection<EntityCollectionFilterGroup>()
+                            Groups = new ObservableCollection<IDraggable>()
                         };
 
                         if ( profileObj["Groups"] != null )
@@ -352,17 +462,20 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                             }
                         }
 
+                        profile.UpdateGroupsFirstFlags();
+
                         Profiles.Add( profile );
                     }
                 }
 
                 if ( Profiles != null && Profiles.Count > 0 )
                 {
-                    SelectedProfile = Item = Profiles.FirstOrDefault( e => e.ID == selectedProfile ) ?? Profiles[0];
+                    SetActiveProfile( Profiles.FirstOrDefault( e => e.ID == selectedProfile ) ?? Profiles[0] );
                 }
                 else
                 {
                     AddDefaultEntry();
+                    SetActiveProfile( Item );
                 }
             }
             catch ( Exception ex )
@@ -425,7 +538,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 
                 JArray groups = new JArray();
 
-                foreach ( EntityCollectionFilterGroup group in profile.Groups )
+                foreach ( EntityCollectionFilterGroup group in profile.Groups.OfType<EntityCollectionFilterGroup>() )
                 {
                     groups.Add( SerializeGroup( group ) );
                 }
@@ -471,7 +584,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
             {
                 JArray children = new JArray();
 
-                foreach ( EntityCollectionFilterGroup child in group.Children )
+                foreach ( EntityCollectionFilterGroup child in group.Children.OfType<EntityCollectionFilterGroup>() )
                 {
                     children.Add( SerializeGroup( child ) );
                 }
@@ -484,10 +597,10 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 
         private void AddDefaultEntry()
         {
-            SelectedProfile = Item = new EntityCollectionFilterEntry
+            EntityCollectionFilterEntry entry = new EntityCollectionFilterEntry
             {
                 Name = "Default",
-                Groups = new ObservableCollection<EntityCollectionFilterGroup>
+                Groups = new ObservableCollection<IDraggable>
                 {
                     new EntityCollectionFilterGroup
                     {
@@ -496,7 +609,11 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                 }
             };
 
+            ( entry.Groups[0] as EntityCollectionFilterGroup ).IsFirst = true;
+            SelectedProfile = Item = entry;
+            SelectedGroup = entry.Groups[0] as EntityCollectionFilterGroup;
             Profiles = new ObservableCollection<EntityCollectionFilterEntry> { Item };
+            OnPropertyChanged( nameof( HasSubgroups ) );
         }
 
         private void NewGroup( object obj )
@@ -545,7 +662,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                 return;
             }
 
-            foreach ( EntityCollectionFilterGroup group in Item.Groups )
+            foreach ( EntityCollectionFilterGroup group in Item.Groups.OfType<EntityCollectionFilterGroup>() )
             {
                 if ( RemoveChildRecursive( group, childGroup ) )
                 {
@@ -561,7 +678,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
                 return true;
             }
 
-            foreach ( EntityCollectionFilterGroup subGroup in parent.Children )
+            foreach ( EntityCollectionFilterGroup subGroup in parent.Children.OfType<EntityCollectionFilterGroup>() )
             {
                 if ( RemoveChildRecursive( subGroup, child ) )
                 {
@@ -574,7 +691,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 
         private void Apply( object obj )
         {
-            Command?.Execute( Item.Groups.ToList() );
+            Command?.Execute( Item.Groups.OfType<EntityCollectionFilterGroup>().ToList() );
         }
 
         private void Reset( object obj )
@@ -584,7 +701,7 @@ namespace ClassicAssist.UI.Views.ECV.Filter
 
         private void Remove( object obj )
         {
-            if ( !( obj is GroupItem groupItem ) )
+            if ( !( obj is GroupItem groupItem ) || groupItem.Group == null || groupItem.Item == null )
             {
                 return;
             }

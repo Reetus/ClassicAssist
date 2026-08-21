@@ -14,23 +14,61 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using ClassicAssist.Controls.DraggableTreeView;
 using ClassicAssist.Shared.UI;
 
 namespace ClassicAssist.UI.Views.ECV.Filter.Models
 {
     public class EntityCollectionFilterEntry : SetPropertyNotifyChanged
     {
-        private ObservableCollection<EntityCollectionFilterGroup> _groups =
-            new ObservableCollection<EntityCollectionFilterGroup>();
+        private ObservableCollection<IDraggable> _groups = new ObservableCollection<IDraggable>();
 
         private Guid _id = Guid.NewGuid();
 
         private string _name;
 
-        public ObservableCollection<EntityCollectionFilterGroup> Groups
+        public EntityCollectionFilterEntry()
+        {
+            _groups.CollectionChanged += OnGroupsChanged;
+        }
+
+        public ObservableCollection<IDraggable> Groups
         {
             get => _groups;
-            set => SetProperty( ref _groups, value );
+            set
+            {
+                if ( _groups != null )
+                {
+                    _groups.CollectionChanged -= OnGroupsChanged;
+                }
+
+                SetProperty( ref _groups, value );
+
+                if ( _groups != null )
+                {
+                    _groups.CollectionChanged += OnGroupsChanged;
+                }
+
+                UpdateGroupsFirstFlags();
+            }
+        }
+
+        private void OnGroupsChanged( object sender, NotifyCollectionChangedEventArgs e )
+        {
+            UpdateGroupsFirstFlags();
+        }
+
+        public void UpdateGroupsFirstFlags()
+        {
+            for ( int i = 0; i < _groups.Count; i++ )
+            {
+                if ( _groups[i] is EntityCollectionFilterGroup g )
+                {
+                    g.IsFirst = i == 0;
+                    g.UpdateChildrenFirstFlags();
+                }
+            }
         }
 
         public Guid ID

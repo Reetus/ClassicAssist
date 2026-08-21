@@ -1407,13 +1407,32 @@ namespace ClassicAssist.UI.ViewModels
 
             ItemCollection collection = new ItemCollection( Collection.Serial ) { Collection.GetItems() };
 
-            ItemCollection items = EvaluateGroup( list[0], collection );
+            ItemCollection items = EvaluateGroups( list, collection );
 
-            for ( int i = 1; i < list.Count; i++ )
+            Entities = new ObservableCollection<EntityCollectionData>( items.ToEntityCollectionData( _sorter, _nameOverrides ) );
+
+            UpdateStatusLabel();
+
+            _filters = list;
+            OnPropertyChanged( nameof( IsFilterApplied ) );
+        }
+
+        // Combines top-level groups left-to-right using each group's Operation (first group's
+        // operation is ignored - there is nothing before it to combine with).
+        internal static ItemCollection EvaluateGroups( List<EntityCollectionFilterGroup> groups, ItemCollection source )
+        {
+            if ( groups == null || groups.Count == 0 )
             {
-                EntityCollectionFilterGroup group = list[i];
+                return source;
+            }
 
-                ItemCollection groupItems = group.Operation == BooleanOperation.Or ? EvaluateGroup( group, collection ) : EvaluateGroup( group, items );
+            ItemCollection items = EvaluateGroup( groups[0], source );
+
+            for ( int i = 1; i < groups.Count; i++ )
+            {
+                EntityCollectionFilterGroup group = groups[i];
+
+                ItemCollection groupItems = group.Operation == BooleanOperation.Or ? EvaluateGroup( group, source ) : EvaluateGroup( group, items );
 
                 switch ( group.Operation )
                 {
@@ -1431,28 +1450,24 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            Entities = new ObservableCollection<EntityCollectionData>( items.ToEntityCollectionData( _sorter, _nameOverrides ) );
-
-            UpdateStatusLabel();
-
-            _filters = list;
-            OnPropertyChanged( nameof( IsFilterApplied ) );
+            return items;
         }
 
-        private static ItemCollection EvaluateGroup( EntityCollectionFilterGroup group, ItemCollection source )
+        internal static ItemCollection EvaluateGroup( EntityCollectionFilterGroup group, ItemCollection source )
         {
-            ItemCollection result = source.Filter( group.Items );
+            // Branch groups (with sub-groups) are pure boolean containers - their own filters are ignored (hidden in UI)
+            ItemCollection result = group.Children.Count > 0 ? source : source.Filter( group.Items );
 
             if ( group.Children.Count == 0 )
             {
                 return result;
             }
 
-            ItemCollection childResult = EvaluateGroup( group.Children[0], result );
+            ItemCollection childResult = EvaluateGroup( (EntityCollectionFilterGroup) group.Children[0], result );
 
             for ( int i = 1; i < group.Children.Count; i++ )
             {
-                EntityCollectionFilterGroup child = group.Children[i];
+                EntityCollectionFilterGroup child = (EntityCollectionFilterGroup) group.Children[i];
 
                 ItemCollection childItems = child.Operation == BooleanOperation.Or ? EvaluateGroup( child, result ) : EvaluateGroup( child, childResult );
 

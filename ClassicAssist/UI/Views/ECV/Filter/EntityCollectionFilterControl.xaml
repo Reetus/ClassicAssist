@@ -19,6 +19,7 @@
     xmlns:behaviours="clr-namespace:ClassicAssist.Controls.Misc.Behaviours;assembly=ClassicAssist.Controls"
     xmlns:behaviours1="clr-namespace:ClassicAssist.UI.Misc.Behaviours"
     xmlns:valueConverters1="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
+    xmlns:draggableTreeView="clr-namespace:ClassicAssist.Controls.DraggableTreeView;assembly=ClassicAssist.Controls"
     x:Name="userControl" x:Class="ClassicAssist.UI.Views.ECV.Filter.EntityCollectionFilterControl"
     mc:Ignorable="d"
     Background="{DynamicResource ThemeBackgroundBrush}">
@@ -34,39 +35,105 @@
             <valueConverters:AutolootOperatorFilterValueConverter x:Key="AutolootOperatorFilterValueConverter" />
             <valueConverters1:NullToBooleanConverter x:Key="NullToBooleanConverter" />
             <misc:BindingProxy x:Key="DataContextProxy" Data="{Binding}" />
-            <!-- Implicit DataTemplate for EntityCollectionFilterGroup - renders recursively -->
+            <!-- Hierarchical template for TreeView (IsFirst hides boolean selector for first child) -->
+            <HierarchicalDataTemplate x:Key="FilterGroupTreeTemplate" DataType="{x:Type models:EntityCollectionFilterGroup}" ItemsSource="{Binding Children}">
+                <StackPanel Orientation="Horizontal" Margin="2">
+                    <ComboBox ItemsSource="{misc1:EnumBindingSource {x:Type models:BooleanOperation}}"
+                              SelectedItem="{Binding Operation}" MinWidth="60" Margin="0,0,5,0">
+                        <ComboBox.Style>
+                            <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                                <Setter Property="Visibility" Value="Visible" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsFirst}" Value="True">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
+                    </ComboBox>
+                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="{DynamicResource ThemeForegroundBrush}" />
+                </StackPanel>
+            </HierarchicalDataTemplate>
+            <!-- Implicit DataTemplate for EntityCollectionFilterGroup - renders ListView exactly as HEAD, minus indented children -->
             <DataTemplate DataType="{x:Type models:EntityCollectionFilterGroup}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <!-- Boolean operation selector (hidden for first top-level group, where the operation has no effect) -->
+                    <!-- Boolean operation selector (hidden for first group/child via IsFirst) + sub-group buttons always visible -->
                     <StackPanel Orientation="Horizontal" Grid.Row="0" x:Name="OperationPanel">
-                        <StackPanel.Style>
-                            <Style TargetType="{x:Type StackPanel}">
-                                <Setter Property="Visibility">
-                                    <Setter.Value>
-                                        <MultiBinding
-                                            Converter="{StaticResource CollectionIndexZeroVisibilityConverter}">
-                                            <Binding
-                                                Path="Data.(filter:EntityCollectionFilterViewModel.Item).Groups"
-                                                Source="{StaticResource DataContextProxy}" />
-                                            <Binding Path="." />
-                                        </MultiBinding>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </StackPanel.Style>
                         <ComboBox ItemsSource="{misc1:EnumBindingSource {x:Type models:BooleanOperation}}"
                                   MinWidth="100"
-                                  SelectedItem="{Binding Operation}" Margin="0,0,5,0" />
+                                  SelectedItem="{Binding Operation}" Margin="0,0,5,0">
+                            <ComboBox.Style>
+                                <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsFirst}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ComboBox.Style>
+                        </ComboBox>
+                        <controls:ImageButton ImageSource="{StaticResource CirclePlusItem}"
+                                              ToolTip="{x:Static resources:Strings.New_Group}"
+                                              Command="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.AddSubGroupCommand), Source={StaticResource DataContextProxy}}"
+                                              CommandParameter="{Binding}" Margin="5,0,0,0">
+                            <controls:ImageButton.Style>
+                                <Style TargetType="{x:Type controls:ImageButton}" BasedOn="{StaticResource {x:Type controls:ImageButton}}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasChildren}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:ImageButton.Style>
+                        </controls:ImageButton>
+                        <controls:ImageButton ImageSource="{StaticResource CircleRemoveIcon}"
+                                              ToolTip="{x:Static resources:Strings.Remove_Group}"
+                                              Command="{Binding Path=Data.(filter:EntityCollectionFilterViewModel.RemoveSubGroupCommand), Source={StaticResource DataContextProxy}}"
+                                              CommandParameter="{Binding}" Margin="5,0,0,0">
+                            <controls:ImageButton.Style>
+                                <Style TargetType="{x:Type controls:ImageButton}" BasedOn="{StaticResource {x:Type controls:ImageButton}}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasChildren}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:ImageButton.Style>
+                        </controls:ImageButton>
                     </StackPanel>
-                    <!-- Filter items list -->
+                    <!-- Filter items list - hidden when group has sub-groups (branch vs leaf) -->
+                    <TextBlock Grid.Row="1" Margin="0,5" FontStyle="Italic" Foreground="{DynamicResource ThemeForegroundBrush}" Opacity="0.6"
+                               Text="{x:Static resources:Strings.Filter_Group_BranchPlaceholder}">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HasChildren}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                     <ListView x:Name="listView" ItemsSource="{Binding Items}" Margin="0,5"
                               MinHeight="50" Grid.Row="1">
+                        <ListView.Style>
+                            <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource {x:Type ListView}}">
+                                <Setter Property="Visibility" Value="Visible" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HasChildren}" Value="True">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListView.Style>
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="✓" Width="30">
@@ -365,17 +432,6 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <!-- Nested child groups (recursive via implicit DataTemplate) -->
-                    <ItemsControl ItemsSource="{Binding Children}" Grid.Row="2" Margin="20,0,0,0">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1,0,0,0"
-                                        Padding="5,0,0,0" Margin="0,0,0,5">
-                                    <ContentPresenter Content="{Binding}" />
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>
@@ -394,7 +450,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <!-- Profile selector -->
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Grid.Row="0">
                 <controls:ImageButton ImageSource="{StaticResource AddIcon}" Margin="0,0,5,0"
                                       Command="{Binding AddProfileCommand}" ToolTip="{x:Static resources:Strings.Add}" />
                 <controls:ImageButton ImageSource="{StaticResource RemoveIcon}" Margin="0,0,5,0"
@@ -428,16 +484,54 @@
                     </i:Interaction.Behaviors>
                 </ComboBox>
             </StackPanel>
-            <!-- Top-level groups using the implicit DataTemplate -->
-            <ItemsControl ItemsSource="{Binding Item.Groups}" Grid.Row="1">
-                <ItemsControl.Resources>
-                    <Style TargetType="{x:Type controls:ImageButton}"
-                           BasedOn="{StaticResource {x:Type controls:ImageButton}}">
-                        <Setter Property="VerticalAlignment" Value="Top" />
-                        <Setter Property="ImageHeight" Value="14" />
+            <!-- Flat view when no subgroups - shows all top-level groups via implicit DataTemplate (ListView identical to HEAD) -->
+            <ItemsControl ItemsSource="{Binding Item.Groups}" Grid.Row="1" Margin="0,5">
+                <ItemsControl.Style>
+                    <Style TargetType="{x:Type ItemsControl}">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding HasSubgroups}" Value="False">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
                     </Style>
-                </ItemsControl.Resources>
+                </ItemsControl.Style>
             </ItemsControl>
+            <!-- Split-panel when subgroups exist -->
+            <Grid Grid.Row="1" Margin="0,5">
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding HasSubgroups}" Value="True">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200" MinWidth="150" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <draggableTreeView:DraggableTreeView Grid.Column="0"
+                                                     ItemsSource="{Binding Item.Groups}"
+                                                     ItemTemplate="{StaticResource FilterGroupTreeTemplate}"
+                                                     BindableSelectedGroup="{Binding SelectedGroup, Mode=TwoWay}"
+                                                     AllowDragGroups="True"
+                                                     AllowDragItemsOntoItems="False"
+                                                     Background="{DynamicResource ThemeInnerControlBackgroundBrush}"
+                                                     BorderBrush="{DynamicResource ThemeBorderBrush}"
+                                                     BorderThickness="1">
+                    <draggableTreeView:DraggableTreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource TreeViewItemStyle}">
+                            <Setter Property="IsExpanded" Value="True" />
+                        </Style>
+                    </draggableTreeView:DraggableTreeView.ItemContainerStyle>
+                </draggableTreeView:DraggableTreeView>
+                <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="{DynamicResource ThemeBorderBrush}" />
+                <ContentPresenter Content="{Binding SelectedGroup}" Grid.Column="2" Margin="5,0,0,0" />
+            </Grid>
             <!-- Apply / Reset buttons -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Margin="10,0">
                 <StackPanel.Resources>

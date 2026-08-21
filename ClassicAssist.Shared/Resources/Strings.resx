@@ -2128,4 +2128,13 @@ Are you sure you wish to continue?</value>
   <data name="Target Owner" xml:space="preserve">
     <value>Target Owner</value>
   </data>
+  <data name="Filter_Group_Filters" xml:space="preserve">
+    <value>Group ({0} filters)</value>
+  </data>
+  <data name="Filter_Group_Subgroups" xml:space="preserve">
+    <value>Group ({0} subgroups)</value>
+  </data>
+  <data name="Filter_Group_BranchPlaceholder" xml:space="preserve">
+    <value>Group has sub-groups — filters are defined in sub-groups.</value>
+  </data>
 </root>

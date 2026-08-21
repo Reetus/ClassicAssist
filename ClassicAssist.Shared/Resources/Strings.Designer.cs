@@ -5996,6 +5996,33 @@ namespace ClassicAssist.Shared.Resources {
                 return ResourceManager.GetString("Debug adapter invalid port", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group ({0} filters).
+        /// </summary>
+        public static string Filter_Group_Filters {
+            get {
+                return ResourceManager.GetString("Filter_Group_Filters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group ({0} subgroups).
+        /// </summary>
+        public static string Filter_Group_Subgroups {
+            get {
+                return ResourceManager.GetString("Filter_Group_Subgroups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group has sub-groups — filters are defined in sub-groups..
+        /// </summary>
+        public static string Filter_Group_BranchPlaceholder {
+            get {
+                return ResourceManager.GetString("Filter_Group_BranchPlaceholder", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Looks up a localized string similar to Use Right Hand.

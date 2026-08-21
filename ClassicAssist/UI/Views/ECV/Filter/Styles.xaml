@@ -187,7 +187,6 @@
             </Style>
             <valueConverters:EnumToIntegerValueConverter x:Key="EnumToIntegerValueConverter" />
             <localValueConverters:GroupItemMultiValueConverter x:Key="GroupItemMultiValueConverter" />
-            <localValueConverters:CollectionIndexZeroVisibilityConverter x:Key="CollectionIndexZeroVisibilityConverter" />
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

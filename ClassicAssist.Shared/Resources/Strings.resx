@@ -868,6 +868,15 @@
   <data name="Debug adapter invalid port" xml:space="preserve">
     <value>The debug adapter port must be between 1 and 65535.</value>
   </data>
+  <data name="MCP" xml:space="preserve">
+    <value>MCP server (AI agents)</value>
+  </data>
+  <data name="MCP tooltip" xml:space="preserve">
+    <value>Exposes a Model Context Protocol (MCP) server on localhost so AI agents can list, create, edit and run macros. Session-only, not saved to the profile.</value>
+  </data>
+  <data name="MCP invalid port" xml:space="preserve">
+    <value>The MCP server port must be between 1 and 65535.</value>
+  </data>
   <data name="Use Right Hand" xml:space="preserve">
     <value>Use Right Hand</value>
   </data>

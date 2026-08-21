@@ -6024,6 +6024,24 @@ namespace ClassicAssist.Shared.Resources {
             }
         }
 
+        public static string MCP {
+            get {
+                return ResourceManager.GetString("MCP", resourceCulture);
+            }
+        }
+
+        public static string MCP_tooltip {
+            get {
+                return ResourceManager.GetString("MCP tooltip", resourceCulture);
+            }
+        }
+
+        public static string MCP_invalid_port {
+            get {
+                return ResourceManager.GetString("MCP invalid port", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Use Right Hand.
         /// </summary>

@@ -1,8 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Assistant;
 using ClassicAssist.Data;
+using ClassicAssist.Data.BuffIcons;
+using ClassicAssist.Data.Hotkeys;
+using ClassicAssist.Data.Hotkeys.Commands;
+using ClassicAssist.Data.Macros.Commands;
+using ClassicAssist.Data.Skills;
 using ClassicAssist.UO;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Objects;
@@ -27,11 +34,13 @@ namespace ClassicAssist.Mcp
                 new McpTool
                 {
                     Name = "getBackpack",
-                    Description = "Get the contents of the player's backpack.",
+                    Description = "Get the contents of the player's backpack. The backpack must already be open; use invokeCommand('UseObject') then invokeCommand('WaitForContents') to open it.",
                     InputSchema = McpTools.ObjectSchema(
                         new JObject
                         {
-                            ["filter"] = McpTools.StringProperty( "Optional case-insensitive substring to filter item names." )
+                            ["filter"] = McpTools.StringProperty( "Optional case-insensitive substring to filter item names." ),
+                            ["limit"] = McpTools.IntegerProperty( "Maximum number of items to return (default 200)." ),
+                            ["offset"] = McpTools.IntegerProperty( "Number of items to skip (default 0)." )
                         } )
                 },
                 new McpTool
@@ -82,21 +91,36 @@ namespace ClassicAssist.Mcp
                     Name = "getMobiles",
                     Description = "Get the list of mobiles within a certain distance of the player.",
                     InputSchema = McpTools.ObjectSchema(
-                        new JObject { ["range"] = McpTools.IntegerProperty( "Maximum distance in tiles from the player (default 10)." ) } )
+                        new JObject
+                        {
+                            ["range"] = McpTools.IntegerProperty( "Maximum distance in tiles from the player (default 10)." ),
+                            ["limit"] = McpTools.IntegerProperty( "Maximum number of mobiles to return (default 200)." ),
+                            ["offset"] = McpTools.IntegerProperty( "Number of mobiles to skip (default 0)." )
+                        } )
                 },
                 new McpTool
                 {
                     Name = "getItems",
                     Description = "Get the list of items within a certain distance of the player.",
                     InputSchema = McpTools.ObjectSchema(
-                        new JObject { ["range"] = McpTools.IntegerProperty( "Maximum distance in tiles from the player (default 10)." ) } )
+                        new JObject
+                        {
+                            ["range"] = McpTools.IntegerProperty( "Maximum distance in tiles from the player (default 10)." ),
+                            ["limit"] = McpTools.IntegerProperty( "Maximum number of items to return (default 200)." ),
+                            ["offset"] = McpTools.IntegerProperty( "Number of items to skip (default 0)." )
+                        } )
                 },
                 new McpTool
                 {
                     Name = "getContainer",
-                    Description = "Get the contents of a container (e.g. bank box or backpack) by serial.",
+                    Description = "Get the contents of a container (e.g. bank box or backpack) by serial. The container must already be open; use invokeCommand('UseObject') then invokeCommand('WaitForContents') to open it.",
                     InputSchema = McpTools.ObjectSchema(
-                        new JObject { ["serial"] = McpTools.StringProperty( "The container serial (decimal or 0x hex)." ) }, "serial" )
+                        new JObject
+                        {
+                            ["serial"] = McpTools.StringProperty( "The container serial (decimal or 0x hex)." ),
+                            ["limit"] = McpTools.IntegerProperty( "Maximum number of items to return (default 200)." ),
+                            ["offset"] = McpTools.IntegerProperty( "Number of items to skip (default 0)." )
+                        }, "serial" )
                 },
                 new McpTool
                 {
@@ -106,8 +130,50 @@ namespace ClassicAssist.Mcp
                         new JObject
                         {
                             ["filter"] = McpTools.StringProperty( "Optional case-insensitive substring to filter entry text." ),
-                            ["count"] = McpTools.IntegerProperty( "Maximum number of most recent entries to return (default 20)." )
+                            ["count"] = McpTools.IntegerProperty( "Maximum number of most recent entries to return (default 20)." ),
+                            ["offset"] = McpTools.IntegerProperty( "Number of (filtered) entries to skip from the most recent end (default 0)." )
                         } )
+                },
+                new McpTool
+                {
+                    Name = "getBuffs",
+                    Description = "Get the currently active buff/debuff icons with their remaining duration.",
+                    InputSchema = McpTools.ObjectSchema(
+                        new JObject { ["filter"] = McpTools.StringProperty( "Optional case-insensitive substring to filter buff names." ) } )
+                },
+                new McpTool
+                {
+                    Name = "getSkills",
+                    Description = "Get the player's skills (value, base, cap, delta and lock status).",
+                    InputSchema = McpTools.ObjectSchema(
+                        new JObject { ["filter"] = McpTools.StringProperty( "Optional case-insensitive substring to filter skill names." ) } )
+                },
+                new McpTool
+                {
+                    Name = "getSkill",
+                    Description = "Get a single skill by name (case-insensitive substring match).",
+                    InputSchema = McpTools.ObjectSchema(
+                        new JObject { ["name"] = McpTools.StringProperty( "The skill name." ) }, "name" )
+                },
+                new McpTool
+                {
+                    Name = "getTarget",
+                    Description = "Get the current target cursor state (pending target serial/type/flags) and the last/enemy/friend target serials.",
+                    InputSchema = McpTools.ObjectSchema()
+                },
+                new McpTool
+                {
+                    Name = "getHotkeys",
+                    Description = "List the configured hotkey entries (name, type, bound shortcut and whether an action is attached).",
+                    InputSchema = McpTools.ObjectSchema(
+                        new JObject { ["filter"] = McpTools.StringProperty( "Optional case-insensitive substring to filter hotkey names." ) } )
+                },
+                new McpTool
+                {
+                    Name = "executeHotkey",
+                    Description = "Execute a configured hotkey entry by name (case-insensitive; first match with an action). Sends client input, so use with care.",
+                    InputSchema = McpTools.ObjectSchema(
+                        new JObject { ["name"] = McpTools.StringProperty( "The hotkey entry name." ) }, "name" )
                 }
             };
         }
@@ -121,7 +187,8 @@ namespace ClassicAssist.Mcp
                     case "getPlayer":
                         return McpTools.Text( GetPlayer() );
                     case "getBackpack":
-                        return McpTools.Text( GetBackpack( McpTools.GetString( args, "filter" ) ) );
+                        return McpTools.Text( GetBackpack( McpTools.GetString( args, "filter" ),
+                            McpTools.GetInt( args, "limit" ), McpTools.GetInt( args, "offset" ) ) );
                     case "getTileInfo":
                         return McpTools.Text( GetTileInfo(
                             McpTools.RequireInt( args, "x" ),
@@ -138,13 +205,29 @@ namespace ClassicAssist.Mcp
                     case "getCliloc":
                         return McpTools.Text( GetCliloc( McpTools.RequireInt( args, "cliloc" ) ) );
                     case "getMobiles":
-                        return McpTools.Text( GetMobiles( McpTools.GetInt( args, "range" ) ?? 10 ) );
+                        return McpTools.Text( GetMobiles( McpTools.GetInt( args, "range" ) ?? 10,
+                            McpTools.GetInt( args, "limit" ), McpTools.GetInt( args, "offset" ) ) );
                     case "getItems":
-                        return McpTools.Text( GetItems( McpTools.GetInt( args, "range" ) ?? 10 ) );
+                        return McpTools.Text( GetItems( McpTools.GetInt( args, "range" ) ?? 10,
+                            McpTools.GetInt( args, "limit" ), McpTools.GetInt( args, "offset" ) ) );
                     case "getContainer":
-                        return McpTools.Text( GetContainer( McpTools.RequireString( args, "serial" ) ) );
+                        return McpTools.Text( GetContainer( McpTools.RequireString( args, "serial" ),
+                            McpTools.GetInt( args, "limit" ), McpTools.GetInt( args, "offset" ) ) );
                     case "getJournal":
-                        return McpTools.Text( GetJournal( McpTools.GetString( args, "filter" ), McpTools.GetInt( args, "count" ) ) );
+                        return McpTools.Text( GetJournal( McpTools.GetString( args, "filter" ), McpTools.GetInt( args, "count" ),
+                            McpTools.GetInt( args, "offset" ) ) );
+                    case "getBuffs":
+                        return McpTools.Text( GetBuffs( McpTools.GetString( args, "filter" ) ) );
+                    case "getSkills":
+                        return McpTools.Text( GetSkills( McpTools.GetString( args, "filter" ) ) );
+                    case "getSkill":
+                        return McpTools.Text( GetSkill( McpTools.RequireString( args, "name" ) ) );
+                    case "getTarget":
+                        return McpTools.Text( GetTarget() );
+                    case "getHotkeys":
+                        return McpTools.Text( GetHotkeys( McpTools.GetString( args, "filter" ) ) );
+                    case "executeHotkey":
+                        return McpTools.Text( ExecuteHotkey( McpTools.RequireString( args, "name" ) ) );
                     default:
                         return null;
                 }
@@ -195,7 +278,7 @@ namespace ClassicAssist.Mcp
             return JsonConvert.SerializeObject( result, Formatting.Indented );
         }
 
-        private static string GetBackpack( string filter )
+        private static string GetBackpack( string filter, int? limit, int? offset )
         {
             PlayerMobile player = Engine.Player;
 
@@ -215,7 +298,8 @@ namespace ClassicAssist.Mcp
 
             if ( container == null )
             {
-                throw new InvalidOperationException( "Backpack is not open - no contents available." );
+                throw new InvalidOperationException(
+                    "Backpack is not open - no contents available. Use invokeCommand('UseObject') then invokeCommand('WaitForContents') first." );
             }
 
             IEnumerable<Item> items = container.GetItems() ?? Array.Empty<Item>();
@@ -225,9 +309,11 @@ namespace ClassicAssist.Mcp
                 items = items.Where( i => i.Name?.IndexOf( filter, StringComparison.OrdinalIgnoreCase ) >= 0 );
             }
 
+            (List<Item> page, int total, int offsetValue, int limitValue) = McpTools.Paginate( items, limit, offset );
+
             JArray array = new JArray();
 
-            foreach ( Item item in items )
+            foreach ( Item item in page )
             {
                 array.Add( new JObject
                 {
@@ -245,6 +331,8 @@ namespace ClassicAssist.Mcp
                 ["itemCount"] = array.Count,
                 ["items"] = array
             };
+
+            McpTools.WithPageInfo( result, total, offsetValue, limitValue, array.Count );
 
             return JsonConvert.SerializeObject( result, Formatting.Indented );
         }
@@ -477,7 +565,7 @@ namespace ClassicAssist.Mcp
             return Engine.Items.GetItem( serial );
         }
 
-        private static string GetMobiles( int range )
+        private static string GetMobiles( int range, int? limit, int? offset )
         {
             if ( Engine.Player == null )
             {
@@ -486,9 +574,12 @@ namespace ClassicAssist.Mcp
 
             IEnumerable<Mobile> mobiles = Engine.Mobiles.GetMobiles() ?? Array.Empty<Mobile>();
 
+            (List<Mobile> page, int total, int offsetValue, int limitValue) =
+                McpTools.Paginate( mobiles.Where( m => m.Distance <= range ), limit, offset );
+
             JArray array = new JArray();
 
-            foreach ( Mobile mobile in mobiles.Where( m => m.Distance <= range ) )
+            foreach ( Mobile mobile in page )
             {
                 array.Add( new JObject
                 {
@@ -513,10 +604,12 @@ namespace ClassicAssist.Mcp
                 ["mobiles"] = array
             };
 
+            McpTools.WithPageInfo( result, total, offsetValue, limitValue, array.Count );
+
             return JsonConvert.SerializeObject( result, Formatting.Indented );
         }
 
-        private static string GetItems( int range )
+        private static string GetItems( int range, int? limit, int? offset )
         {
             if ( Engine.Player == null )
             {
@@ -525,9 +618,12 @@ namespace ClassicAssist.Mcp
 
             IEnumerable<Item> items = Engine.Items.GetItems() ?? Array.Empty<Item>();
 
+            (List<Item> page, int total, int offsetValue, int limitValue) =
+                McpTools.Paginate( items.Where( i => i.Distance <= range ), limit, offset );
+
             JArray array = new JArray();
 
-            foreach ( Item item in items.Where( i => i.Distance <= range ) )
+            foreach ( Item item in page )
             {
                 array.Add( new JObject
                 {
@@ -551,10 +647,12 @@ namespace ClassicAssist.Mcp
                 ["items"] = array
             };
 
+            McpTools.WithPageInfo( result, total, offsetValue, limitValue, array.Count );
+
             return JsonConvert.SerializeObject( result, Formatting.Indented );
         }
 
-        private static string GetContainer( string serialStr )
+        private static string GetContainer( string serialStr, int? limit, int? offset )
         {
             if ( !McpTools.TryParseInt( serialStr, out int serial ) )
             {
@@ -565,12 +663,17 @@ namespace ClassicAssist.Mcp
 
             if ( container?.Container == null )
             {
-                throw new InvalidOperationException( $"Entity 0x{serial:x8} is not an open container." );
+                throw new InvalidOperationException(
+                    $"Entity 0x{serial:x8} is not an open container. Use invokeCommand('UseObject') then invokeCommand('WaitForContents') first." );
             }
+
+            IEnumerable<Item> items = container.Container.GetItems() ?? Array.Empty<Item>();
+
+            (List<Item> page, int total, int offsetValue, int limitValue) = McpTools.Paginate( items, limit, offset );
 
             JArray array = new JArray();
 
-            foreach ( Item item in container.Container.GetItems() )
+            foreach ( Item item in page )
             {
                 array.Add( new JObject
                 {
@@ -591,10 +694,12 @@ namespace ClassicAssist.Mcp
                 ["items"] = array
             };
 
+            McpTools.WithPageInfo( result, total, offsetValue, limitValue, array.Count );
+
             return JsonConvert.SerializeObject( result, Formatting.Indented );
         }
 
-        private static string GetJournal( string filter, int? count )
+        private static string GetJournal( string filter, int? count, int? offset )
         {
             JournalEntry[] buffer = Engine.Journal.GetEntireBuffer() ?? Array.Empty<JournalEntry>();
 
@@ -606,16 +711,17 @@ namespace ClassicAssist.Mcp
                     .ToList();
             }
 
-            int max = count ?? 20;
+            int total = entries.Count;
+            int take = Math.Max( 0, count ?? 20 );
+            int skip = Math.Max( 0, offset ?? 0 );
 
-            if ( entries.Count > max )
-            {
-                entries = entries.Skip( entries.Count - max ).ToList();
-            }
+            int end = Math.Max( 0, total - skip );
+            int start = Math.Max( 0, end - take );
+            List<JournalEntry> page = end > start ? entries.GetRange( start, end - start ) : new List<JournalEntry>();
 
             JArray array = new JArray();
 
-            foreach ( JournalEntry entry in entries )
+            foreach ( JournalEntry entry in page )
             {
                 array.Add( new JObject
                 {
@@ -633,7 +739,216 @@ namespace ClassicAssist.Mcp
                 ["entries"] = array
             };
 
+            McpTools.WithPageInfo( result, total, skip, take, array.Count );
+
             return JsonConvert.SerializeObject( result, Formatting.Indented );
+        }
+
+        private static string GetBuffs( string filter )
+        {
+            BuffIconManager manager = BuffIconManager.GetInstance();
+
+            string[] names = manager.GetEnabledNames() ?? Array.Empty<string>();
+
+            JArray array = new JArray();
+
+            foreach ( string name in names )
+            {
+                if ( string.IsNullOrEmpty( name ) )
+                {
+                    continue;
+                }
+
+                if ( !string.IsNullOrEmpty( filter ) && name.IndexOf( filter, StringComparison.OrdinalIgnoreCase ) < 0 )
+                {
+                    continue;
+                }
+
+                BuffIconData data = manager.GetDataByName( name );
+
+                array.Add( new JObject
+                {
+                    ["name"] = name,
+                    ["id"] = data?.ID ?? -1,
+                    ["remainingMs"] = (long) manager.BuffTime( name )
+                } );
+            }
+
+            JObject result = new JObject
+            {
+                ["buffCount"] = array.Count,
+                ["buffs"] = array
+            };
+
+            return JsonConvert.SerializeObject( result, Formatting.Indented );
+        }
+
+        private static string GetSkills( string filter )
+        {
+            JArray array = OnUi( () =>
+            {
+                ObservableCollection<SkillEntry> items = SkillManager.GetInstance().Items;
+
+                IEnumerable<SkillEntry> entries = items ?? Enumerable.Empty<SkillEntry>();
+
+                if ( !string.IsNullOrEmpty( filter ) )
+                {
+                    entries = entries.Where( s =>
+                        s.Skill.Name?.IndexOf( filter, StringComparison.OrdinalIgnoreCase ) >= 0 );
+                }
+
+                return new JArray( entries.OrderBy( s => s.Skill.Name ).Select( SkillToJObject ) );
+            } );
+
+            JObject result = new JObject
+            {
+                ["skillCount"] = array.Count,
+                ["skills"] = array
+            };
+
+            return JsonConvert.SerializeObject( result, Formatting.Indented );
+        }
+
+        private static string GetSkill( string name )
+        {
+            JObject result = OnUi( () =>
+            {
+                ObservableCollection<SkillEntry> items = SkillManager.GetInstance().Items;
+
+                SkillEntry entry = ( items ?? Enumerable.Empty<SkillEntry>() ).FirstOrDefault( s =>
+                    s.Skill.Name?.IndexOf( name, StringComparison.OrdinalIgnoreCase ) >= 0 );
+
+                return entry == null ? null : SkillToJObject( entry );
+            } );
+
+            if ( result == null )
+            {
+                throw new InvalidOperationException( $"Skill '{name}' not found." );
+            }
+
+            return JsonConvert.SerializeObject( result, Formatting.Indented );
+        }
+
+        private static JObject SkillToJObject( SkillEntry entry )
+        {
+            return new JObject
+            {
+                ["name"] = entry.Skill.Name,
+                ["id"] = entry.Skill.ID,
+                ["value"] = entry.Value,
+                ["base"] = entry.Base,
+                ["cap"] = entry.Cap,
+                ["delta"] = entry.Delta,
+                ["lock"] = entry.LockStatus.ToString()
+            };
+        }
+
+        private static string GetTarget()
+        {
+            PlayerMobile player = Engine.Player;
+
+            JObject result = new JObject
+            {
+                ["exists"] = Engine.TargetExists,
+                ["serial"] = Engine.TargetExists ? $"0x{Engine.TargetSerial:x8}" : null,
+                ["type"] = Engine.TargetType.ToString(),
+                ["flags"] = Engine.TargetFlags.ToString(),
+                ["lastTargetSerial"] =
+                    player != null && player.LastTargetSerial != 0 ? $"0x{player.LastTargetSerial:x8}" : null,
+                ["enemyTargetSerial"] =
+                    player != null && player.EnemyTargetSerial != 0 ? $"0x{player.EnemyTargetSerial:x8}" : null,
+                ["friendTargetSerial"] =
+                    player != null && player.FriendTargetSerial != 0 ? $"0x{player.FriendTargetSerial:x8}" : null
+            };
+
+            return JsonConvert.SerializeObject( result, Formatting.Indented );
+        }
+
+        private static string GetHotkeys( string filter )
+        {
+            JArray array = OnUi( () =>
+            {
+                JArray results = new JArray();
+
+                foreach ( HotkeyEntry entry in EnumerateHotkeys() )
+                {
+                    if ( !string.IsNullOrEmpty( filter ) &&
+                         ( entry.Name?.IndexOf( filter, StringComparison.OrdinalIgnoreCase ) ?? -1 ) < 0 )
+                    {
+                        continue;
+                    }
+
+                    results.Add( HotkeyToJObject( entry ) );
+                }
+
+                return results;
+            } );
+
+            JObject result = new JObject
+            {
+                ["hotkeyCount"] = array.Count,
+                ["hotkeys"] = array
+            };
+
+            return JsonConvert.SerializeObject( result, Formatting.Indented );
+        }
+
+        private static string ExecuteHotkey( string name )
+        {
+            HotkeyEntry target = OnUi( () => EnumerateHotkeys().FirstOrDefault( e =>
+                e.Action != null && string.Equals( e.Name, name, StringComparison.OrdinalIgnoreCase ) ) );
+
+            if ( target == null )
+            {
+                throw new InvalidOperationException( $"Hotkey '{name}' not found or has no action." );
+            }
+
+            AliasCommands.SetDefaultAliases();
+
+            Task.Run( () => target.Action( target, null ) );
+
+            return $"Executed hotkey '{target.Name}'.";
+        }
+
+        private static IEnumerable<HotkeyEntry> EnumerateHotkeys()
+        {
+            ObservableCollection<HotkeyCommand> categories = HotkeyManager.GetInstance().Items;
+
+            if ( categories == null )
+            {
+                yield break;
+            }
+
+            foreach ( HotkeyCommand category in categories )
+            {
+                if ( category.Children != null && category.Children.Count > 0 )
+                {
+                    foreach ( HotkeyEntry child in category.Children )
+                    {
+                        yield return child;
+                    }
+                }
+                else
+                {
+                    yield return category;
+                }
+            }
+        }
+
+        private static JObject HotkeyToJObject( HotkeyEntry entry )
+        {
+            return new JObject
+            {
+                ["name"] = entry.Name,
+                ["type"] = entry.GetType().Name,
+                ["key"] = entry.Hotkey?.Key.ToString(),
+                ["modifier"] = entry.Hotkey?.Modifier.ToString(),
+                ["mouse"] = entry.Hotkey?.Mouse.ToString(),
+                ["shortcut"] = entry.Hotkey?.ToString(),
+                ["isGlobal"] = entry.IsGlobal,
+                ["passToUO"] = entry.PassToUO,
+                ["hasAction"] = entry.Action != null
+            };
         }
 
         private static Gump[] GetGumps()
@@ -644,6 +959,16 @@ namespace ClassicAssist.Mcp
             }
 
             return Array.Empty<Gump>();
+        }
+
+        private static T OnUi<T>( Func<T> func )
+        {
+            if ( Engine.Dispatcher == null )
+            {
+                return func();
+            }
+
+            return Engine.Dispatcher.Invoke( func );
         }
     }
 }

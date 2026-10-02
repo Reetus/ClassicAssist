@@ -104,14 +104,76 @@ namespace ClassicAssist.Mcp
                     Name = "getMacroStatus",
                     Description = "Get the running, paused and error status of a macro by name, or of all macros if no name is given.",
                     InputSchema = ObjectSchema( new JObject { ["name"] = StringProperty( "The macro name (optional)." ) } )
+                },
+                new McpTool
+                {
+                    Name = "getCurrentMacro",
+                    Description = "Get the macro occupying the foreground slot (the single non-background macro that hotkeys/PlayMacro replace). Background macros are not reflected here - use getRunningMacros or getMacroStatus for those.",
+                    InputSchema = ObjectSchema()
+                },
+                new McpTool
+                {
+                    Name = "getRunningMacros",
+                    Description = "Get every currently running or paused macro, including background macros. Multiple background macros can run at once, so this is the authoritative 'what is running' view.",
+                    InputSchema = ObjectSchema()
+                },
+                new McpTool
+                {
+                    Name = "waitForMacro",
+                    Description =
+                        "Block until a running macro reaches the requested state, then report its status. " +
+                        "Waits on the named macro, or on the current macro when no name is given. " +
+                        "Useful for long-running macros started via playMacro (which only waits waitMs), " +
+                        "or macros started by a hotkey or autostart. 'until' defaults to 'finished'; " +
+                        "a loop macro never finishes, so supply a timeout and check isRunning on timeout.",
+                    InputSchema = ObjectSchema(
+                        new JObject
+                        {
+                            ["name"] = StringProperty( "The macro name to wait on (optional; defaults to the current macro)." ),
+                            ["until"] = new JObject
+                            {
+                                ["type"] = "string",
+                                ["enum"] = new JArray( "finished", "paused", "error" ),
+                                ["description"] = "State to wait for: finished (default), paused, or error."
+                            },
+                            ["timeoutMs"] = IntegerProperty(
+                                "Optional maximum milliseconds to wait (default 30000). Clamped to fit the request timeout." )
+                        } )
                 }
             };
 
             tools.AddRange( McpGameStateTools.GetTools() );
             tools.AddRange( McpCommandInvoker.GetTools() );
             tools.AddRange( McpAgentTools.GetTools() );
+            tools.AddRange( McpSnapshotTools.GetTools() );
+
+            ApplyAnnotations( tools );
 
             return tools;
+        }
+
+        // Tools that mutate game/client state. Everything else is reported as read-only so MCP
+        // clients can auto-approve inspection calls and prompt for the dangerous ones.
+        private static readonly HashSet<string> _mutatingTools = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
+        {
+            "createMacro", "updateMacro", "deleteMacro", "playMacro", "stopMacro", "stopAllMacros", "invokeCommand",
+            "executeHotkey"
+        };
+
+        private static void ApplyAnnotations( List<McpTool> tools )
+        {
+            foreach ( McpTool tool in tools )
+            {
+                bool mutating = _mutatingTools.Contains( tool.Name );
+
+                tool.Annotations = new JObject
+                {
+                    ["title"] = tool.Name,
+                    ["readOnlyHint"] = !mutating,
+                    ["destructiveHint"] = mutating,
+                    ["idempotentHint"] = !mutating
+                };
+            }
         }
 
         public static CallToolResult Invoke( string name, JObject args )
@@ -145,11 +207,19 @@ namespace ClassicAssist.Mcp
                         return Text( StopAllMacros() );
                     case "getMacroStatus":
                         return Text( GetMacroStatus( GetString( args, "name" ) ) );
+                    case "getCurrentMacro":
+                        return Text( GetCurrentMacro() );
+                    case "getRunningMacros":
+                        return Text( GetRunningMacros() );
+                    case "waitForMacro":
+                        return Text( WaitForMacro( GetString( args, "name" ), GetInt( args, "timeoutMs" ),
+                            GetString( args, "until" ) ) );
                     default:
                     {
                         CallToolResult result = McpGameStateTools.Invoke( name, args ) ??
                                                McpCommandInvoker.Invoke( name, args ) ??
-                                               McpAgentTools.Invoke( name, args );
+                                               McpAgentTools.Invoke( name, args ) ??
+                                               McpSnapshotTools.Invoke( name, args );
 
                         return result ?? Error( $"Unknown tool: {name}" );
                     }
@@ -414,6 +484,102 @@ namespace ClassicAssist.Mcp
             return error;
         }
 
+        private const int DEFAULT_WAIT_MACRO_TIMEOUT_MS = 30000;
+
+        private static string WaitForMacro( string name, int? timeoutMs, string until )
+        {
+            MacroEntry entry = OnUi( () =>
+            {
+                if ( !string.IsNullOrEmpty( name ) )
+                {
+                    return Find( name );
+                }
+
+                MacroEntry current = MacroManager.GetInstance().CurrentMacro;
+
+                if ( current != null && ( current.IsRunning || current.IsPaused ) )
+                {
+                    return current;
+                }
+
+                // No live foreground macro - fall back to a single running macro (which may be
+                // background), but refuse to guess when several are running.
+                MacroEntry[] running = GetItems().Where( m => m.IsRunning || m.IsPaused ).ToArray();
+
+                return running.Length == 1 ? running[0] : null;
+            } );
+
+            if ( entry == null )
+            {
+                throw new InvalidOperationException( string.IsNullOrEmpty( name )
+                    ? "No single running macro found - none are running, or several are (pass 'name' to choose one)."
+                    : $"Macro '{name}' not found." );
+            }
+
+            string condition = string.IsNullOrEmpty( until ) ? "finished" : until.ToLowerInvariant();
+
+            if ( condition != "finished" && condition != "paused" && condition != "error" )
+            {
+                throw new InvalidOperationException(
+                    $"Invalid 'until' value '{until}'. Expected one of: finished, paused, error." );
+            }
+
+            // Keep the blocking wait comfortably inside the HTTP request timeout, otherwise the
+            // connection is dropped before the tool can return its result.
+            int maxWaitMs = ( McpServer.RequestTimeoutSeconds - 5 ) * 1000;
+            int requested = timeoutMs ?? DEFAULT_WAIT_MACRO_TIMEOUT_MS;
+            int waitMs = Math.Max( 0, Math.Min( requested, maxWaitMs ) );
+
+            JObject result = WaitForMacroState( entry, condition, waitMs );
+            result["condition"] = condition;
+            result["requestedTimeoutMs"] = requested;
+            result["timeoutMs"] = waitMs;
+
+            return JsonConvert.SerializeObject( result, Formatting.Indented );
+        }
+
+        private static JObject WaitForMacroState( MacroEntry entry, string condition, int timeoutMs )
+        {
+            const int pollInterval = 50;
+            int waited = 0;
+
+            while ( waited < timeoutMs && !ConditionMet( entry, condition ) )
+            {
+                Thread.Sleep( pollInterval );
+                waited += pollInterval;
+            }
+
+            // Authoritative read on the UI thread - state is updated there.
+            (bool met, bool running, bool paused, int pausedLine, Exception exception) state = OnUi( () => (
+                ConditionMet( entry, condition ), entry.IsRunning, entry.IsPaused, entry.PausedLinedNumber,
+                entry.LastException ) );
+
+            return new JObject
+            {
+                ["name"] = entry.Name,
+                ["met"] = state.met,
+                ["timedOut"] = !state.met,
+                ["isRunning"] = state.running,
+                ["isPaused"] = state.paused,
+                ["pausedLine"] = state.pausedLine,
+                ["success"] = !state.running && state.exception == null,
+                ["error"] = state.exception != null ? GetErrorInfo( state.exception ) : null
+            };
+        }
+
+        private static bool ConditionMet( MacroEntry entry, string condition )
+        {
+            switch ( condition )
+            {
+                case "paused":
+                    return entry.IsPaused || !entry.IsRunning;
+                case "error":
+                    return entry.LastException != null || !entry.IsRunning;
+                default:
+                    return !entry.IsRunning;
+            }
+        }
+
         private static string StopMacro( string name )
         {
             OnUi( () =>
@@ -478,6 +644,66 @@ namespace ClassicAssist.Mcp
                 ["isRunning"] = entry.IsRunning,
                 ["isPaused"] = entry.IsPaused,
                 ["pausedLine"] = entry.PausedLinedNumber,
+                ["lastException"] = entry.LastException?.Message,
+                ["error"] = entry.LastException != null ? GetErrorInfo( entry.LastException ) : null
+            };
+        }
+
+        private static string GetCurrentMacro()
+        {
+            JObject result = OnUi( () =>
+            {
+                MacroEntry entry = MacroManager.GetInstance().CurrentMacro;
+
+                if ( entry == null )
+                {
+                    return new JObject { ["hasCurrent"] = false };
+                }
+
+                JObject summary = RunningSummary( entry );
+                summary["hasCurrent"] = true;
+
+                return summary;
+            } );
+
+            return JsonConvert.SerializeObject( result, Formatting.Indented );
+        }
+
+        private static string GetRunningMacros()
+        {
+            JArray array = OnUi( () =>
+            {
+                JArray results = new JArray();
+
+                foreach ( MacroEntry entry in GetItems().Where( m => m.IsRunning || m.IsPaused ).OrderBy( m => m.Name ) )
+                {
+                    results.Add( RunningSummary( entry ) );
+                }
+
+                return results;
+            } );
+
+            JObject result = new JObject
+            {
+                ["runningCount"] = array.Count,
+                ["macros"] = array
+            };
+
+            return JsonConvert.SerializeObject( result, Formatting.Indented );
+        }
+
+        private static JObject RunningSummary( MacroEntry entry )
+        {
+            return new JObject
+            {
+                ["name"] = entry.Name,
+                ["isRunning"] = entry.IsRunning,
+                ["isPaused"] = entry.IsPaused,
+                ["pausedLine"] = entry.PausedLinedNumber,
+                ["loop"] = entry.Loop,
+                ["isBackground"] = entry.IsBackground,
+                ["group"] = entry.Group ?? string.Empty,
+                ["startedOn"] = entry.StartedOn == default( DateTime ) ? null : entry.StartedOn.ToString( "o" ),
                 ["lastException"] = entry.LastException?.Message,
                 ["error"] = entry.LastException != null ? GetErrorInfo( entry.LastException ) : null
             };
@@ -556,6 +782,30 @@ namespace ClassicAssist.Mcp
             }
 
             Engine.Dispatcher.Invoke( action );
+        }
+
+        internal const int DefaultListLimit = 200;
+
+        internal static (List<T> page, int total, int offset, int limit) Paginate<T>( IEnumerable<T> source, int? limit,
+            int? offset )
+        {
+            List<T> list = source as List<T> ?? source.ToList();
+            int total = list.Count;
+            int offsetValue = Math.Max( 0, offset ?? 0 );
+            int limitValue = Math.Max( 0, limit ?? DefaultListLimit );
+
+            return ( list.Skip( offsetValue ).Take( limitValue ).ToList(), total, offsetValue, limitValue );
+        }
+
+        internal static JObject WithPageInfo( JObject result, int total, int offset, int limit, int returned )
+        {
+            result["total"] = total;
+            result["offset"] = offset;
+            result["limit"] = limit;
+            result["returned"] = returned;
+            result["truncated"] = offset + returned < total;
+
+            return result;
         }
 
         internal static CallToolResult Text( string text )

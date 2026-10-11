@@ -56,6 +56,9 @@ namespace ClassicAssist.Mcp
 
         [JsonProperty( "inputSchema" )]
         public JObject InputSchema { get; set; }
+
+        [JsonProperty( "annotations", NullValueHandling = NullValueHandling.Ignore )]
+        public JObject Annotations { get; set; }
     }
 
     public sealed class CallToolResult
@@ -72,8 +75,14 @@ namespace ClassicAssist.Mcp
         [JsonProperty( "type" )]
         public string Type { get; set; } = "text";
 
-        [JsonProperty( "text" )]
+        [JsonProperty( "text", NullValueHandling = NullValueHandling.Ignore )]
         public string Text { get; set; }
+
+        [JsonProperty( "data", NullValueHandling = NullValueHandling.Ignore )]
+        public string Data { get; set; }
+
+        [JsonProperty( "mimeType", NullValueHandling = NullValueHandling.Ignore )]
+        public string MimeType { get; set; }
     }
 
     public sealed class CallToolParams

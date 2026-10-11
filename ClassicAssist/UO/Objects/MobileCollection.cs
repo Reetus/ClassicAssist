@@ -45,6 +45,12 @@ namespace ClassicAssist.UO.Objects
 
             Mobile[] mobiles = SelectEntities( m =>
             {
+                // Never trim the player, removing it also removes its equipment (backpack) from Engine.Items
+                if ( m.Serial == Engine.Player?.Serial )
+                {
+                    return false;
+                }
+
                 double d = UOMath.Distance( x, y, m.X, m.Y );
                 return d > maxDistance;
             } );

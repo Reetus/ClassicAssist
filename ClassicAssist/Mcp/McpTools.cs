@@ -160,19 +160,44 @@ namespace ClassicAssist.Mcp
             "executeHotkey"
         };
 
+        // Mutating tools where repeating the call has no further effect.
+        private static readonly HashSet<string> _idempotentTools = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
+        {
+            "stopMacro", "stopAllMacros"
+        };
+
+        // Tools that don't change state but expose sensitive data (getSnapshot can capture the whole desktop),
+        // so they're not reported as read-only and clients will prompt before calling them.
+        private static readonly HashSet<string> _sensitiveTools = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
+        {
+            "getSnapshot"
+        };
+
         private static void ApplyAnnotations( List<McpTool> tools )
         {
             foreach ( McpTool tool in tools )
             {
-                bool mutating = _mutatingTools.Contains( tool.Name );
+                JObject annotations = new JObject { ["title"] = tool.Name };
 
-                tool.Annotations = new JObject
+                if ( _mutatingTools.Contains( tool.Name ) )
                 {
-                    ["title"] = tool.Name,
-                    ["readOnlyHint"] = !mutating,
-                    ["destructiveHint"] = mutating,
-                    ["idempotentHint"] = !mutating
-                };
+                    annotations["readOnlyHint"] = false;
+                    annotations["destructiveHint"] = true;
+                    annotations["idempotentHint"] = _idempotentTools.Contains( tool.Name );
+                }
+                else if ( _sensitiveTools.Contains( tool.Name ) )
+                {
+                    annotations["readOnlyHint"] = false;
+                    annotations["destructiveHint"] = false;
+                    annotations["idempotentHint"] = true;
+                }
+                else
+                {
+                    // destructiveHint/idempotentHint are only meaningful when readOnlyHint is false
+                    annotations["readOnlyHint"] = true;
+                }
+
+                tool.Annotations = annotations;
             }
         }
 

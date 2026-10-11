@@ -907,7 +907,7 @@ namespace ClassicAssist.Mcp
 
             Task.Run( () => target.Action( target, null ) );
 
-            return $"Executed hotkey '{target.Name}'.";
+            return $"Started hotkey '{target.Name}'.";
         }
 
         private static IEnumerable<HotkeyEntry> EnumerateHotkeys()

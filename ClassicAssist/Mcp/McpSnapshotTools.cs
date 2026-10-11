@@ -117,8 +117,12 @@ namespace ClassicAssist.Mcp
             int width;
             int height;
 
-            using ( Bitmap bitmap = Capture( fullscreen, maxWidth, out width, out height ) )
+            using ( Bitmap bitmap = Capture( fullscreen, maxWidth ) )
             {
+                // Report the returned (possibly downscaled) dimensions, not the original capture size
+                width = bitmap.Width;
+                height = bitmap.Height;
+
                 using ( MemoryStream stream = new MemoryStream() )
                 {
                     bitmap.Save( stream, imageFormat );
@@ -148,10 +152,12 @@ namespace ClassicAssist.Mcp
             };
         }
 
-        private static Bitmap Capture( bool fullscreen, int? maxWidth, out int width, out int height )
+        private static Bitmap Capture( bool fullscreen, int? maxWidth )
         {
             IntPtr dcOwner;
             IntPtr sourceDC;
+            int width;
+            int height;
 
             if ( fullscreen )
             {
@@ -187,29 +193,37 @@ namespace ClassicAssist.Mcp
                 // otherwise produce a transparent/black image).
                 Bitmap bitmap = new Bitmap( width, height, PixelFormat.Format24bppRgb );
 
-                using ( Graphics graphics = Graphics.FromImage( bitmap ) )
+                try
                 {
-                    IntPtr destinationDC = graphics.GetHdc();
+                    using ( Graphics graphics = Graphics.FromImage( bitmap ) )
+                    {
+                        IntPtr destinationDC = graphics.GetHdc();
 
-                    try
-                    {
-                        BitBlt( destinationDC, 0, 0, width, height, sourceDC, 0, 0, SRCCOPY );
+                        try
+                        {
+                            BitBlt( destinationDC, 0, 0, width, height, sourceDC, 0, 0, SRCCOPY );
+                        }
+                        finally
+                        {
+                            graphics.ReleaseHdc( destinationDC );
+                        }
                     }
-                    finally
+
+                    if ( maxWidth != null && maxWidth.Value > 0 && width > maxWidth.Value )
                     {
-                        graphics.ReleaseHdc( destinationDC );
+                        Bitmap resized = Resize( bitmap, maxWidth.Value );
+                        bitmap.Dispose();
+
+                        return resized;
                     }
+
+                    return bitmap;
                 }
-
-                if ( maxWidth != null && maxWidth.Value > 0 && width > maxWidth.Value )
+                catch
                 {
-                    Bitmap resized = Resize( bitmap, maxWidth.Value );
                     bitmap.Dispose();
-
-                    return resized;
+                    throw;
                 }
-
-                return bitmap;
             }
             finally
             {

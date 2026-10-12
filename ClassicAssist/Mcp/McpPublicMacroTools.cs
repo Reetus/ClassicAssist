@@ -86,7 +86,8 @@ namespace ClassicAssist.Mcp
 
             IEnumerable<Metadata> matches = macros.Where( m =>
                 terms.All( t => MatchesTerm( m, t ) ) && MatchesCategory( m, category ) && Equal( m.Shard, shard ) &&
-                Equal( m.Era, era ) && Equal( m.Author, author ) ).OrderBy( m => m.Name, StringComparer.OrdinalIgnoreCase );
+                ( m.Era == null || Equal( m.Era, era ) ) && Equal( m.Author, author ) )
+                .OrderBy( m => m.Name, StringComparer.OrdinalIgnoreCase );
 
             ( List<Metadata> page, int total, int offsetValue, int limitValue ) = McpTools.Paginate( matches, limit, offset );
 

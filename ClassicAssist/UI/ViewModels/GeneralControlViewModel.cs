@@ -196,33 +196,29 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            if ( json?["General"] == null )
-            {
-                return;
-            }
+            // Missing General section (e.g. new profile) still applies defaults below
+            JToken general = json?["General"];
 
-            JToken general = json["General"];
-
-            Options.LightLevel = general["LightLevel"]?.ToObject<int>() ?? 100;
-            Options.ActionDelay = general["ActionDelay"]?.ToObject<bool>() ?? true;
-            Options.ActionDelayMS = general["ActionDelayMS"]?.ToObject<int>() ?? 1000;
-            Options.DragDelay = general["DragDelay"]?.ToObject<bool>() ?? false;
-            Options.DragDelayMS = general["DragDelayMS"]?.ToObject<int>() ?? 450;
-            Options.AlwaysOnTop = general["AlwaysOnTop"]?.ToObject<bool>() ?? false;
-            Options.Debug = general["Debug"]?.ToObject<bool>() ?? false;
-            Options.SysTray = general["SysTray"]?.ToObject<bool>() ?? false;
-            Options.SlowHandlerThreshold = general["SlowHandlerThreshold"]?.ToObject<int>() ?? 250;
-            Options.Autologin = general["Autologin"]?.ToObject<bool>() ?? false;
-            Options.AutologinUsername = general["AutologinUsername"]?.ToObject<string>();
-            Options.AutologinPassword = Crypter.Decrypt( general["AutologinPassword"]?.ToObject<string>() );
-            Options.AutologinServerIndex = general["AutologinServerIndex"]?.ToObject<int>() ?? 0;
-            Options.AutologinCharacterIndex = general["AutologinCharacterIndex"]?.ToObject<int>() ?? 0;
+            Options.LightLevel = general?["LightLevel"]?.ToObject<int>() ?? 100;
+            Options.ActionDelay = general?["ActionDelay"]?.ToObject<bool>() ?? true;
+            Options.ActionDelayMS = general?["ActionDelayMS"]?.ToObject<int>() ?? 1000;
+            Options.DragDelay = general?["DragDelay"]?.ToObject<bool>() ?? false;
+            Options.DragDelayMS = general?["DragDelayMS"]?.ToObject<int>() ?? 450;
+            Options.AlwaysOnTop = general?["AlwaysOnTop"]?.ToObject<bool>() ?? false;
+            Options.Debug = general?["Debug"]?.ToObject<bool>() ?? false;
+            Options.SysTray = general?["SysTray"]?.ToObject<bool>() ?? false;
+            Options.SlowHandlerThreshold = general?["SlowHandlerThreshold"]?.ToObject<int>() ?? 250;
+            Options.Autologin = general?["Autologin"]?.ToObject<bool>() ?? false;
+            Options.AutologinUsername = general?["AutologinUsername"]?.ToObject<string>();
+            Options.AutologinPassword = Crypter.Decrypt( general?["AutologinPassword"]?.ToObject<string>() );
+            Options.AutologinServerIndex = general?["AutologinServerIndex"]?.ToObject<int>() ?? 0;
+            Options.AutologinCharacterIndex = general?["AutologinCharacterIndex"]?.ToObject<int>() ?? 0;
             Options.AutologinConnectDelay =
-                general["AutologinConnectDelay"]?.ToObject<TimeSpan>() ?? TimeSpan.FromSeconds( 5 );
+                general?["AutologinConnectDelay"]?.ToObject<TimeSpan>() ?? TimeSpan.FromSeconds( 5 );
             Options.AutologinReconnectDelay =
-                general["AutologinReconnectDelay"]?.ToObject<TimeSpan>() ?? TimeSpan.FromSeconds( 10 );
+                general?["AutologinReconnectDelay"]?.ToObject<TimeSpan>() ?? TimeSpan.FromSeconds( 10 );
 
-            if ( general["Filters"] == null )
+            if ( general?["Filters"] == null )
             {
                 return;
             }

@@ -42,6 +42,8 @@ namespace ClassicAssist.UO.Network
 
     public class DragDropOptions
     {
+        // Overrides Options.ActionDelayMS for this drag/drop only, null uses the global delay
+        public int? ActionDelayMS { get; set; }
         public Action<Item> BeforeDragDrop { get; set; }
         public Func<bool> CanPerformAction { get; set; }
         public bool CheckExisting { get; set; }
@@ -73,13 +75,7 @@ namespace ClassicAssist.UO.Network
                     actionQueueItem.TimeSpan = DateTime.Now - actionQueueItem.DateTime;
                     ActionQueueEvent?.Invoke( ActionQueueEvents.Enter, actionQueueItem );
 
-                    if ( Options.CurrentOptions.ActionDelay && actionQueueItem.DelaySend )
-                    {
-                        while ( Engine.LastActionPacket + TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) > DateTime.Now )
-                        {
-                            Thread.Sleep( 1 );
-                        }
-                    }
+                    WaitForActionDelay( actionQueueItem );
 
                     if ( actionQueueItem.Token.IsCancellationRequested )
                     {
@@ -119,13 +115,7 @@ namespace ClassicAssist.UO.Network
 
                     if ( canPerformAction )
                     {
-                        if ( Options.CurrentOptions.ActionDelay && actionItem.DelaySend )
-                        {
-                            while ( Engine.LastActionPacket + TimeSpan.FromMilliseconds( Options.CurrentOptions.ActionDelayMS ) > DateTime.Now )
-                            {
-                                Thread.Sleep( 1 );
-                            }
-                        }
+                        WaitForActionDelay( actionItem );
 
                         actionItem.TimeSpan = DateTime.Now - actionItem.DateTime;
                         ActionQueueEvent?.Invoke( ActionQueueEvents.Execute, actionItem );
@@ -151,6 +141,27 @@ namespace ClassicAssist.UO.Network
             }
 
             LastProcess = DateTime.Now;
+        }
+
+        private static void WaitForActionDelay( BaseQueueItem queueItem )
+        {
+            if ( !Options.CurrentOptions.ActionDelay || !queueItem.DelaySend )
+            {
+                return;
+            }
+
+            int delay = GetActionDelay( queueItem );
+
+            while ( Engine.LastActionPacket + TimeSpan.FromMilliseconds( delay ) > DateTime.Now )
+            {
+                Thread.Sleep( 1 );
+            }
+        }
+
+        // The delay is measured from the last action of any kind, so a longer per-item delay only slows that item
+        internal static int GetActionDelay( BaseQueueItem queueItem )
+        {
+            return queueItem.DelayMS ?? Options.CurrentOptions.ActionDelayMS;
         }
 
         // ReSharper disable once UnusedMember.Global
@@ -301,7 +312,7 @@ namespace ClassicAssist.UO.Network
                     return true;
                 }
 
-                Commands.WaitForContainerContents( containerSerial, Options.CurrentOptions.ActionDelayMS );
+                Commands.WaitForContainerContents( containerSerial, options.ActionDelayMS ?? Options.CurrentOptions.ActionDelayMS );
 
                 bool result = options.SuccessPredicate.Invoke( item.Serial, containerSerial );
 
@@ -321,6 +332,7 @@ namespace ClassicAssist.UO.Network
             {
                 CheckRange = options?.CheckRange ?? false,
                 DelaySend = options?.DelaySend ?? true,
+                DelayMS = options?.ActionDelayMS,
                 Serial = item.Serial,
                 Arguments = options?.CheckRange ?? false,
                 Caller = caller,

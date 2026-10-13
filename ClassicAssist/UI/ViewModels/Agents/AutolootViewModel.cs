@@ -56,6 +56,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
         private const int LOOT_TIMEOUT = 5000;
         private readonly object _autolootLock = new object();
         private readonly AutolootManager _manager;
+        private int _actionDelayMS = 1000;
 
         private ICommand _clipboardCopyCommand;
         private ICommand _clipboardPasteCommand;
@@ -113,6 +114,12 @@ namespace ClassicAssist.UI.ViewModels.Agents
             _manager.SetEnabled = val => Enabled = val;
 
             Items.CollectionChanged += UpdateDraggables;
+        }
+
+        public int ActionDelayMS
+        {
+            get => _actionDelayMS;
+            set => SetProperty( ref _actionDelayMS, value );
         }
 
         public ICommand ClipboardCopyCommand => _clipboardCopyCommand ?? ( _clipboardCopyCommand = new RelayCommand( ClipboardCopy, o => true ) );
@@ -259,6 +266,7 @@ namespace ClassicAssist.UI.ViewModels.Agents
                 { "DisableInGuardzone", DisableInGuardzone },
                 { "Container", ContainerSerial },
                 { "RequeueFailedItems", RequeueFailedItems },
+                { "ActionDelayMS", ActionDelayMS },
                 { "LootHumanoids", LootHumanoids },
                 { "LeftColumnWidth", LeftColumnWidth },
                 { "Groups", groupArray },
@@ -318,6 +326,9 @@ namespace ClassicAssist.UI.ViewModels.Agents
         {
             Items.Clear();
             Draggables.Clear();
+
+            // Default to the profile's global action delay, read from json so it doesn't depend on settings provider load order
+            ActionDelayMS = json?["Autoloot"]?["ActionDelayMS"]?.ToObject<int>() ?? json?["General"]?["ActionDelayMS"]?.ToObject<int>() ?? 1000;
 
             if ( json?["Autoloot"] == null )
             {
@@ -579,7 +590,11 @@ namespace ClassicAssist.UI.ViewModels.Agents
 
                         DragDropOptions options = new DragDropOptions
                         {
-                            CheckRange = true, CheckExisting = true, RequeueFailure = RequeueFailedItems, SuccessPredicate = CheckItemContainer
+                            CheckRange = true,
+                            CheckExisting = true,
+                            RequeueFailure = RequeueFailedItems,
+                            SuccessPredicate = CheckItemContainer,
+                            ActionDelayMS = ActionDelayMS
                         };
 
                         Task t = ActionPacketQueue.EnqueueDragDrop( lootItem.Serial, lootItem.Count, containerSerial, QueuePriority.High, options: options );

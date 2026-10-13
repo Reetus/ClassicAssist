@@ -32,6 +32,10 @@ namespace ClassicAssist.UO.Network
         public DateTime DateTime { get; set; }
         public string Caller { get; set; }
         public bool DelaySend { get; set; }
+
+        // Overrides Options.ActionDelayMS for this item only, null uses the global delay
+        public int? DelayMS { get; set; }
+
         public bool Result { get; set; }
 
         public string UUID { get; } = Guid.NewGuid().ToString();

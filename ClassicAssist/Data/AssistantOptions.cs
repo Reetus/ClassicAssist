@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Threading;
 using Assistant;
 using ClassicAssist.Data.Backup;
 using ClassicAssist.UI.Misc;
@@ -242,13 +243,30 @@ namespace ClassicAssist.Data
 
         private static void BackupProfiles()
         {
-            Engine.Dispatcher.Invoke( () =>
+            // The backup window is a WPF window and must be shown on the UI thread.
+            // This can be called from the UO client thread (e.g. on profile save), so marshal when needed.
+            Dispatcher dispatcher = Engine.Dispatcher;
+
+            if ( dispatcher == null || dispatcher.HasShutdownStarted || dispatcher.HasShutdownFinished )
             {
-                BackupWindowViewModel vm = new BackupWindowViewModel( BackupOptions );
-                BackupWindow backupWindow = new BackupWindow { DataContext = vm };
-                vm.CloseWindow = () => backupWindow.Close();
-                backupWindow.ShowDialog();
-            } );
+                return;
+            }
+
+            if ( dispatcher.CheckAccess() )
+            {
+                ShowBackupWindow();
+                return;
+            }
+
+            dispatcher.Invoke( ShowBackupWindow );
+        }
+
+        private static void ShowBackupWindow()
+        {
+            BackupWindowViewModel vm = new BackupWindowViewModel( BackupOptions );
+            BackupWindow backupWindow = new BackupWindow { DataContext = vm };
+            vm.CloseWindow = () => backupWindow.Close();
+            backupWindow.ShowDialog();
         }
 
         public static event dProfileChanged ProfileChangingEvent;

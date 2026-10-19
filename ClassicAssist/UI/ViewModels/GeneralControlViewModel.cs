@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Filters;
@@ -251,19 +252,24 @@ namespace ClassicAssist.UI.ViewModels
 
         private static void BackupSettings( object obj )
         {
-            if ( Engine.StartupDispatcher != null )
+            // BackupSettingsWindow is a WPF window and must be created/shown on the UI thread.
+            // Engine.Dispatcher is the dispatcher of the WPF UI thread (set by MainWindowViewModel),
+            // unlike Engine.StartupDispatcher which was captured on the UO client thread.
+            Dispatcher dispatcher = Engine.Dispatcher;
+
+            if ( dispatcher == null || dispatcher.CheckAccess() )
             {
-                Engine.StartupDispatcher.Invoke( () =>
-                {
-                    BackupSettingsWindow window = new BackupSettingsWindow();
-                    window.ShowDialog();
-                } );
+                ShowBackupSettingsWindow();
+                return;
             }
-            else
-            {
-                BackupSettingsWindow window = new BackupSettingsWindow();
-                window.ShowDialog();
-            }
+
+            dispatcher.Invoke( ShowBackupSettingsWindow );
+        }
+
+        private static void ShowBackupSettingsWindow()
+        {
+            BackupSettingsWindow window = new BackupSettingsWindow();
+            window.ShowDialog();
         }
 
         private void OnSavedPasswordsChangedEvent( object sender, EventArgs e )

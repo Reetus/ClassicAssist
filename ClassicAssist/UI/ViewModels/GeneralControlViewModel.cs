@@ -133,7 +133,6 @@ namespace ClassicAssist.UI.ViewModels
             JObject obj = new JObject
             {
                 ["AlwaysOnTop"] = Options.CurrentOptions.AlwaysOnTop,
-                ["LightLevel"] = Options.CurrentOptions.LightLevel,
                 ["ActionDelay"] = Options.CurrentOptions.ActionDelay,
                 ["ActionDelayMS"] = Options.CurrentOptions.ActionDelayMS,
                 ["DragDelay"] = Options.CurrentOptions.DragDelay,
@@ -200,7 +199,6 @@ namespace ClassicAssist.UI.ViewModels
             // Missing General section (e.g. new profile) still applies defaults below
             JToken general = json?["General"];
 
-            Options.LightLevel = general?["LightLevel"]?.ToObject<int>() ?? 100;
             Options.ActionDelay = general?["ActionDelay"]?.ToObject<bool>() ?? true;
             Options.ActionDelayMS = general?["ActionDelayMS"]?.ToObject<int>() ?? 1000;
             Options.DragDelay = general?["DragDelay"]?.ToObject<bool>() ?? false;
@@ -218,6 +216,9 @@ namespace ClassicAssist.UI.ViewModels
                 general?["AutologinConnectDelay"]?.ToObject<TimeSpan>() ?? TimeSpan.FromSeconds( 5 );
             Options.AutologinReconnectDelay =
                 general?["AutologinReconnectDelay"]?.ToObject<TimeSpan>() ?? TimeSpan.FromSeconds( 10 );
+
+            // Overwritten below if the profile has light level filter options
+            LightLevelFilter.MigrateLegacyLightLevel( general?["LightLevel"] );
 
             if ( general?["Filters"] == null )
             {

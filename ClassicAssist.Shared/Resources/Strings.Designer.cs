@@ -727,6 +727,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Brightest:.
+        /// </summary>
+        public static string Brightest_ {
+            get {
+                return ResourceManager.GetString("Brightest:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to BuffIcon.
         /// </summary>
         public static string BuffIcon {
@@ -1447,6 +1456,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Darkest:.
+        /// </summary>
+        public static string Darkest_ {
+            get {
+                return ResourceManager.GetString("Darkest:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deactivated following.
         /// </summary>
         public static string Deactivated_following {
@@ -2037,6 +2055,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Filters {
             get {
                 return ResourceManager.GetString("Filters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fixed.
+        /// </summary>
+        public static string Fixed {
+            get {
+                return ResourceManager.GetString("Fixed", resourceCulture);
             }
         }
         
@@ -2959,6 +2986,15 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Light Level:.
+        /// </summary>
+        public static string Light_Level_ {
+            get {
+                return ResourceManager.GetString("Light Level:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Limit Hotkey Retrigger.
         /// </summary>
         public static string Limit_Hotkey_Retrigger {
@@ -3339,6 +3375,15 @@ namespace ClassicAssist.Shared.Resources {
         public static string Messages {
             get {
                 return ResourceManager.GetString("Messages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min / Max.
+        /// </summary>
+        public static string Min___Max {
+            get {
+                return ResourceManager.GetString("Min / Max", resourceCulture);
             }
         }
         

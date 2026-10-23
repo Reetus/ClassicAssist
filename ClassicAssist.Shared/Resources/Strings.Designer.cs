@@ -2455,6 +2455,51 @@ namespace ClassicAssist.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Body.
+        /// </summary>
+        public static string Body {
+            get {
+                return ResourceManager.GetString("Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Layers.
+        /// </summary>
+        public static string Layers {
+            get {
+                return ResourceManager.GetString("Layers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select All.
+        /// </summary>
+        public static string Select_All {
+            get {
+                return ResourceManager.GetString("Select All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deselect All.
+        /// </summary>
+        public static string Deselect_All {
+            get {
+                return ResourceManager.GetString("Deselect All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hue.
+        /// </summary>
+        public static string Hue {
+            get {
+                return ResourceManager.GetString("Hue", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Hue Override.
         /// </summary>
         public static string Hue_Override {

@@ -36,6 +36,7 @@ namespace ClassicAssist.UO.Network
             Register( 0x11, OnMobileStatus );
             Register( 0x1C, OnASCIIMessage );
             Register( 0x20, OnMobileUpdate );
+            Register( 0x2E, OnWornItem );
             Register( 0x77, OnMobileMoving );
             Register( 0x78, OnMobileIncoming );
             Register( 0x98, OnMobileName );
@@ -235,8 +236,7 @@ namespace ClassicAssist.UO.Network
         {
             int serial = ( packet[1] << 24 ) | ( packet[2] << 16 ) | ( packet[3] << 8 ) | packet[4];
 
-            if ( Options.CurrentOptions.RehueFriends &&
-                 Options.CurrentOptions.Friends.Any( e => e.Serial == serial && e.Serial != Engine.Player.Serial ) )
+            if ( Options.CurrentOptions.RehueFriendsBody && IsRehuedFriend( serial ) )
             {
                 packet[8] = (byte) ( Options.CurrentOptions.RehueFriendsHue >> 8 );
                 packet[9] = (byte) Options.CurrentOptions.RehueFriendsHue;
@@ -276,6 +276,31 @@ namespace ClassicAssist.UO.Network
             return true;
         }
 
+        private static bool OnWornItem( ref byte[] packet, ref int length )
+        {
+            if ( !Options.CurrentOptions.RehueFriends || length < 15 ||
+                 Options.CurrentOptions.RehueFriendsExcludedLayers.Contains( (Layer) packet[8] ) )
+            {
+                return false;
+            }
+
+            int mobileSerial = ( packet[9] << 24 ) | ( packet[10] << 16 ) | ( packet[11] << 8 ) | packet[12];
+
+            if ( IsRehuedFriend( mobileSerial ) )
+            {
+                packet[13] = (byte) ( Options.CurrentOptions.RehueFriendsHue >> 8 );
+                packet[14] = (byte) Options.CurrentOptions.RehueFriendsHue;
+            }
+
+            return false;
+        }
+
+        private static bool IsRehuedFriend( int serial )
+        {
+            return Options.CurrentOptions.RehueFriends &&
+                   Options.CurrentOptions.Friends.Any( e => e.Serial == serial && e.Serial != Engine.Player?.Serial );
+        }
+
         private static bool OnSAWorldItem( ref byte[] packet, ref int length )
         {
             if ( !Engine.RehueList.CheckSAWorldItem( ref packet, ref length ) )
@@ -293,10 +318,9 @@ namespace ClassicAssist.UO.Network
         {
             int serial = ( packet[1] << 24 ) | ( packet[2] << 16 ) | ( packet[3] << 8 ) | packet[4];
 
-            if ( Options.CurrentOptions.RehueFriends &&
-                 Options.CurrentOptions.Friends.Any( e => e.Serial == serial && e.Serial != Engine.Player.Serial ) )
+            if ( Options.CurrentOptions.RehueFriendsBody && IsRehuedFriend( serial ) )
             {
-                packet[13] = (byte) ( Options.CurrentOptions.RehueFriendsHue >> 16 );
+                packet[13] = (byte) ( Options.CurrentOptions.RehueFriendsHue >> 8 );
                 packet[14] = (byte) Options.CurrentOptions.RehueFriendsHue;
                 return false;
             }
@@ -395,11 +419,10 @@ namespace ClassicAssist.UO.Network
 
             try
             {
-                if ( Options.CurrentOptions.RehueFriends &&
-                     Options.CurrentOptions.Friends.Any( e => e.Serial == serial && e.Serial != Engine.Player.Serial ) )
+                if ( IsRehuedFriend( serial ) )
                 {
-                    MobileIncoming newPacket =
-                        new MobileIncoming( mobile, container, Options.CurrentOptions.RehueFriendsHue );
+                    MobileIncoming newPacket = new MobileIncoming( mobile, container, Options.CurrentOptions.RehueFriendsHue,
+                        Options.CurrentOptions.RehueFriendsExcludedLayers, Options.CurrentOptions.RehueFriendsBody );
 
                     packet = newPacket.ToArray();
                     length = packet.Length;

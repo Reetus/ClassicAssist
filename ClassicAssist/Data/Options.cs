@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,7 @@ using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.ViewModels;
+using ClassicAssist.UO.Data;
 using Newtonsoft.Json.Linq;
 using Sentry;
 
@@ -84,6 +86,7 @@ namespace ClassicAssist.Data
         private bool _rangeCheckLastTarget;
         private int _rangeCheckLastTargetAmount = 11;
         private bool _rehueFriends;
+        private bool _rehueFriendsBody = true;
         private int _rehueFriendsHue;
         private int _selectedTabIndex;
         private bool _setUOTitle;
@@ -499,6 +502,14 @@ namespace ClassicAssist.Data
             get => _rehueFriendsHue;
             set => SetProperty( ref _rehueFriendsHue, value );
         }
+
+        public bool RehueFriendsBody
+        {
+            get => _rehueFriendsBody;
+            set => SetProperty( ref _rehueFriendsBody, value );
+        }
+
+        public HashSet<Layer> RehueFriendsExcludedLayers { get; set; } = new HashSet<Layer>();
 
         public int SelectedTabIndex
         {

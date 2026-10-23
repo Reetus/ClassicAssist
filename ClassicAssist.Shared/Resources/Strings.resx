@@ -955,6 +955,21 @@
   <data name="Hue Picker" xml:space="preserve">
     <value>Hue Picker</value>
   </data>
+  <data name="Hue" xml:space="preserve">
+    <value>Hue</value>
+  </data>
+  <data name="Body" xml:space="preserve">
+    <value>Body</value>
+  </data>
+  <data name="Layers" xml:space="preserve">
+    <value>Layers</value>
+  </data>
+  <data name="Select All" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="Deselect All" xml:space="preserve">
+    <value>Deselect All</value>
+  </data>
   <data name="Disable inside guardzone" xml:space="preserve">
     <value>Disable inside guardzone</value>
   </data>

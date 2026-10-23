@@ -2080,7 +2080,7 @@ namespace ClassicAssist.UO.Network
 
         private static PacketHandler GetExtendedHandler( int packetId )
         {
-            return packetId >= _extendedHandlers.Length ? null : _extendedHandlers[packetId];
+            return packetId < 0 || packetId >= _extendedHandlers.Length ? null : _extendedHandlers[packetId];
         }
 
         public static void AddToJournal( JournalEntry entry )

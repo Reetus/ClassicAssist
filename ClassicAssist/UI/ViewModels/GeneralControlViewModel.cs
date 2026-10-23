@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Assistant;
 using ClassicAssist.Data;
 using ClassicAssist.Data.Filters;
@@ -132,7 +133,6 @@ namespace ClassicAssist.UI.ViewModels
             JObject obj = new JObject
             {
                 ["AlwaysOnTop"] = Options.CurrentOptions.AlwaysOnTop,
-                ["LightLevel"] = Options.CurrentOptions.LightLevel,
                 ["ActionDelay"] = Options.CurrentOptions.ActionDelay,
                 ["ActionDelayMS"] = Options.CurrentOptions.ActionDelayMS,
                 ["DragDelay"] = Options.CurrentOptions.DragDelay,
@@ -196,33 +196,31 @@ namespace ClassicAssist.UI.ViewModels
                 }
             }
 
-            if ( json?["General"] == null )
-            {
-                return;
-            }
+            // Missing General section (e.g. new profile) still applies defaults below
+            JToken general = json?["General"];
 
-            JToken general = json["General"];
-
-            Options.LightLevel = general["LightLevel"]?.ToObject<int>() ?? 100;
-            Options.ActionDelay = general["ActionDelay"]?.ToObject<bool>() ?? true;
-            Options.ActionDelayMS = general["ActionDelayMS"]?.ToObject<int>() ?? 1000;
-            Options.DragDelay = general["DragDelay"]?.ToObject<bool>() ?? false;
-            Options.DragDelayMS = general["DragDelayMS"]?.ToObject<int>() ?? 450;
-            Options.AlwaysOnTop = general["AlwaysOnTop"]?.ToObject<bool>() ?? false;
-            Options.Debug = general["Debug"]?.ToObject<bool>() ?? false;
-            Options.SysTray = general["SysTray"]?.ToObject<bool>() ?? false;
-            Options.SlowHandlerThreshold = general["SlowHandlerThreshold"]?.ToObject<int>() ?? 250;
-            Options.Autologin = general["Autologin"]?.ToObject<bool>() ?? false;
-            Options.AutologinUsername = general["AutologinUsername"]?.ToObject<string>();
-            Options.AutologinPassword = Crypter.Decrypt( general["AutologinPassword"]?.ToObject<string>() );
-            Options.AutologinServerIndex = general["AutologinServerIndex"]?.ToObject<int>() ?? 0;
-            Options.AutologinCharacterIndex = general["AutologinCharacterIndex"]?.ToObject<int>() ?? 0;
+            Options.ActionDelay = general?["ActionDelay"]?.ToObject<bool>() ?? true;
+            Options.ActionDelayMS = general?["ActionDelayMS"]?.ToObject<int>() ?? 1000;
+            Options.DragDelay = general?["DragDelay"]?.ToObject<bool>() ?? false;
+            Options.DragDelayMS = general?["DragDelayMS"]?.ToObject<int>() ?? 450;
+            Options.AlwaysOnTop = general?["AlwaysOnTop"]?.ToObject<bool>() ?? false;
+            Options.Debug = general?["Debug"]?.ToObject<bool>() ?? false;
+            Options.SysTray = general?["SysTray"]?.ToObject<bool>() ?? false;
+            Options.SlowHandlerThreshold = general?["SlowHandlerThreshold"]?.ToObject<int>() ?? 250;
+            Options.Autologin = general?["Autologin"]?.ToObject<bool>() ?? false;
+            Options.AutologinUsername = general?["AutologinUsername"]?.ToObject<string>();
+            Options.AutologinPassword = Crypter.Decrypt( general?["AutologinPassword"]?.ToObject<string>() );
+            Options.AutologinServerIndex = general?["AutologinServerIndex"]?.ToObject<int>() ?? 0;
+            Options.AutologinCharacterIndex = general?["AutologinCharacterIndex"]?.ToObject<int>() ?? 0;
             Options.AutologinConnectDelay =
-                general["AutologinConnectDelay"]?.ToObject<TimeSpan>() ?? TimeSpan.FromSeconds( 5 );
+                general?["AutologinConnectDelay"]?.ToObject<TimeSpan>() ?? TimeSpan.FromSeconds( 5 );
             Options.AutologinReconnectDelay =
-                general["AutologinReconnectDelay"]?.ToObject<TimeSpan>() ?? TimeSpan.FromSeconds( 10 );
+                general?["AutologinReconnectDelay"]?.ToObject<TimeSpan>() ?? TimeSpan.FromSeconds( 10 );
 
-            if ( general["Filters"] == null )
+            // Overwritten below if the profile has light level filter options
+            LightLevelFilter.MigrateLegacyLightLevel( general?["LightLevel"] );
+
+            if ( general?["Filters"] == null )
             {
                 return;
             }
@@ -255,19 +253,24 @@ namespace ClassicAssist.UI.ViewModels
 
         private static void BackupSettings( object obj )
         {
-            if ( Engine.StartupDispatcher != null )
+            // BackupSettingsWindow is a WPF window and must be created/shown on the UI thread.
+            // Engine.Dispatcher is the dispatcher of the WPF UI thread (set by MainWindowViewModel),
+            // unlike Engine.StartupDispatcher which was captured on the UO client thread.
+            Dispatcher dispatcher = Engine.Dispatcher;
+
+            if ( dispatcher == null || dispatcher.CheckAccess() )
             {
-                Engine.StartupDispatcher.Invoke( () =>
-                {
-                    BackupSettingsWindow window = new BackupSettingsWindow();
-                    window.ShowDialog();
-                } );
+                ShowBackupSettingsWindow();
+                return;
             }
-            else
-            {
-                BackupSettingsWindow window = new BackupSettingsWindow();
-                window.ShowDialog();
-            }
+
+            dispatcher.Invoke( ShowBackupSettingsWindow );
+        }
+
+        private static void ShowBackupSettingsWindow()
+        {
+            BackupSettingsWindow window = new BackupSettingsWindow();
+            window.ShowDialog();
         }
 
         private void OnSavedPasswordsChangedEvent( object sender, EventArgs e )

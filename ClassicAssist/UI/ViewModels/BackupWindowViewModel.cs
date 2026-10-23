@@ -45,12 +45,12 @@ namespace ClassicAssist.UI.ViewModels
 
         public BackupWindowViewModel()
         {
-            _dispatcher = Dispatcher.CurrentDispatcher;
+            _dispatcher = Engine.Dispatcher ?? Dispatcher.CurrentDispatcher;
         }
 
         public BackupWindowViewModel( BackupOptions options )
         {
-            _dispatcher = Dispatcher.CurrentDispatcher;
+            _dispatcher = Engine.Dispatcher ?? Dispatcher.CurrentDispatcher;
             _options = options;
 
             Task.Run( async () =>

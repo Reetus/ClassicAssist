@@ -37,10 +37,6 @@
         </Grid.ColumnDefinitions>
         <GroupBox Grid.Column="0" Margin="5" BorderThickness="1" Header="{x:Static r:Strings.Filters}">
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
                 <ItemsControl x:Name="listBox" ItemsSource="{Binding Filters}" Grid.Row="0"
                               Background="{StaticResource ThemeInnerControlBackgroundBrush}">
                     <ItemsControl.ItemTemplate>
@@ -66,16 +62,6 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <Grid Grid.Row="1" Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Label Content="{x:Static r:Strings.Light}" Grid.Column="0" VerticalAlignment="Center" />
-                    <Slider Grid.Column="1" Maximum="31"
-                            Value="{Binding Options.LightLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            IsDirectionReversed="True" Minimum="0" Height="20" VerticalAlignment="Center" />
-                </Grid>
             </Grid>
         </GroupBox>
         <Grid Grid.Column="1">

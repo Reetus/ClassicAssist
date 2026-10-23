@@ -37,7 +37,7 @@ namespace ClassicAssist.UO.Network
         public static void Initialize()
         {
             _handlers = new PacketHandler[0x100];
-            _extendedHandlers = new PacketHandler[0x100];
+            _extendedHandlers = new PacketHandler[0x10000];
 
             Register( 0x02, 7, OnMoveRequested );
             Register( 0x06, 5, OnUseRequest );
@@ -135,7 +135,7 @@ namespace ClassicAssist.UO.Network
 
         private static void OnExtendedCommand( PacketReader reader )
         {
-            int command = reader.ReadInt16();
+            int command = reader.ReadUInt16();
 
             PacketHandler handler = GetExtendedHandler( command );
             handler?.OnReceive( reader );
@@ -339,7 +339,7 @@ namespace ClassicAssist.UO.Network
 
         private static PacketHandler GetExtendedHandler( int packetId )
         {
-            return _extendedHandlers[packetId];
+            return packetId < 0 || packetId >= _extendedHandlers.Length ? null : _extendedHandlers[packetId];
         }
     }
 }

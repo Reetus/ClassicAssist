@@ -318,7 +318,7 @@ namespace ClassicAssist.Browser.Data
                 return result;
             }
 
-            Macro inserted = new Macro { Name = macro.Name, SHA1 = macro.SHA1, Text = result };
+            Macro inserted = new Macro { Name = macro.Id, SHA1 = macro.SHA1, Text = result };
             _macros.Insert( inserted );
 
             return result;

@@ -955,6 +955,21 @@
   <data name="Hue Picker" xml:space="preserve">
     <value>Hue Picker</value>
   </data>
+  <data name="Hue" xml:space="preserve">
+    <value>Hue</value>
+  </data>
+  <data name="Body" xml:space="preserve">
+    <value>Body</value>
+  </data>
+  <data name="Layers" xml:space="preserve">
+    <value>Layers</value>
+  </data>
+  <data name="Select All" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="Deselect All" xml:space="preserve">
+    <value>Deselect All</value>
+  </data>
   <data name="Disable inside guardzone" xml:space="preserve">
     <value>Disable inside guardzone</value>
   </data>
@@ -2145,5 +2160,20 @@ Are you sure you wish to continue?</value>
   </data>
   <data name="Filter_Group_BranchPlaceholder" xml:space="preserve">
     <value>Group has sub-groups — filters are defined in sub-groups.</value>
+  </data>
+  <data name="Brightest:" xml:space="preserve">
+    <value>Brightest:</value>
+  </data>
+  <data name="Darkest:" xml:space="preserve">
+    <value>Darkest:</value>
+  </data>
+  <data name="Fixed" xml:space="preserve">
+    <value>Fixed</value>
+  </data>
+  <data name="Light Level:" xml:space="preserve">
+    <value>Light Level:</value>
+  </data>
+  <data name="Min / Max" xml:space="preserve">
+    <value>Min / Max</value>
   </data>
 </root>

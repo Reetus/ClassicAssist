@@ -146,6 +146,7 @@ namespace ClassicAssist.Mcp
             tools.AddRange( McpCommandInvoker.GetTools() );
             tools.AddRange( McpAgentTools.GetTools() );
             tools.AddRange( McpSnapshotTools.GetTools() );
+            tools.AddRange( McpPublicMacroTools.GetTools() );
 
             ApplyAnnotations( tools );
 
@@ -244,7 +245,8 @@ namespace ClassicAssist.Mcp
                         CallToolResult result = McpGameStateTools.Invoke( name, args ) ??
                                                McpCommandInvoker.Invoke( name, args ) ??
                                                McpAgentTools.Invoke( name, args ) ??
-                                               McpSnapshotTools.Invoke( name, args );
+                                               McpSnapshotTools.Invoke( name, args ) ??
+                                               McpPublicMacroTools.Invoke( name, args );
 
                         return result ?? Error( $"Unknown tool: {name}" );
                     }

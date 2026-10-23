@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,7 @@ using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.UI;
 using ClassicAssist.UI.ViewModels;
+using ClassicAssist.UO.Data;
 using Newtonsoft.Json.Linq;
 using Sentry;
 
@@ -21,8 +23,6 @@ namespace ClassicAssist.Data
 {
     public class Options : SetPropertyNotifyChanged
     {
-        public delegate void dLightLevelChanged( int level );
-
         public const string DEFAULT_SETTINGS_FILENAME = "settings.json";
         private static string _profilePath;
         private static readonly object _serializeLock = new object();
@@ -63,7 +63,6 @@ namespace ClassicAssist.Data
         private int _hotkeysStatusGumpY;
         private bool _includePartyMembersInFriends;
         private string _lastTargetMessage;
-        private int _lightLevel;
         private bool _limitHotkeyTrigger;
         private int _limitHotkeyTriggerMs;
         private bool _limitMouseWheelTrigger;
@@ -87,6 +86,7 @@ namespace ClassicAssist.Data
         private bool _rangeCheckLastTarget;
         private int _rangeCheckLastTargetAmount = 11;
         private bool _rehueFriends;
+        private bool _rehueFriendsBody = true;
         private int _rehueFriendsHue;
         private int _selectedTabIndex;
         private bool _setUOTitle;
@@ -323,20 +323,6 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _lastTargetMessage, value );
         }
 
-        public int LightLevel
-        {
-            get => _lightLevel;
-            set
-            {
-                if ( _lightLevel != value )
-                {
-                    LightLevelChanged?.Invoke( value );
-                }
-
-                SetProperty( ref _lightLevel, value );
-            }
-        }
-
         public bool LimitHotkeyTrigger
         {
             get => _limitHotkeyTrigger;
@@ -517,6 +503,14 @@ namespace ClassicAssist.Data
             set => SetProperty( ref _rehueFriendsHue, value );
         }
 
+        public bool RehueFriendsBody
+        {
+            get => _rehueFriendsBody;
+            set => SetProperty( ref _rehueFriendsBody, value );
+        }
+
+        public HashSet<Layer> RehueFriendsExcludedLayers { get; set; } = new HashSet<Layer>();
+
         public int SelectedTabIndex
         {
             get => _selectedTabIndex;
@@ -602,8 +596,6 @@ namespace ClassicAssist.Data
             get => _useObjectQueueAmount;
             set => SetProperty( ref _useObjectQueueAmount, value );
         }
-
-        public static event dLightLevelChanged LightLevelChanged;
 
         public static void Save( Options options )
         {

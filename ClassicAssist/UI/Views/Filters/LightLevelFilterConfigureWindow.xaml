@@ -1,0 +1,96 @@
+﻿<Window x:Class="ClassicAssist.UI.Views.Filters.LightLevelFilterConfigureWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:resources="clr-namespace:ClassicAssist.Shared.Resources;assembly=ClassicAssist.Shared"
+        xmlns:behaviours="clr-namespace:ClassicAssist.Shared.UI.Behaviours;assembly=ClassicAssist.Shared"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
+        mc:Ignorable="d" Background="{DynamicResource ThemeWindowBackgroundBrush}"
+        Title="{x:Static resources:Strings.Light_Level}" Width="400" SizeToContent="Height"
+        DataContext="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}" Topmost="True">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <shared:SharedResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <GroupBox Header="{x:Static resources:Strings.Options}">
+            <StackPanel Margin="10">
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type RadioButton}}">
+                            <Setter Property="Margin" Value="0,0,10,0" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <RadioButton Content="{x:Static resources:Strings.Fixed}" IsChecked="{Binding Options.IsFixed}" />
+                    <RadioButton Content="{x:Static resources:Strings.Min___Max}" IsChecked="{Binding Options.IsMinMax}" />
+                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="30" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type Slider}" BasedOn="{StaticResource {x:Type Slider}}">
+                            <Setter Property="Minimum" Value="0" />
+                            <Setter Property="Maximum" Value="31" />
+                            <Setter Property="IsDirectionReversed" Value="True" />
+                            <Setter Property="IsSnapToTickEnabled" Value="True" />
+                            <Setter Property="TickFrequency" Value="1" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="Margin" Value="0,5,0,5" />
+                        </Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="Margin" Value="0,0,10,0" />
+                        </Style>
+                    </Grid.Resources>
+
+                    <!-- Fixed -->
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Static resources:Strings.Light_Level_}"
+                               Visibility="{Binding Options.IsFixed, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <Slider Grid.Row="0" Grid.Column="1" Value="{Binding Options.FixedLevel}"
+                            Visibility="{Binding Options.IsFixed, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Options.FixedLevel}" HorizontalAlignment="Right" Margin="0"
+                               Visibility="{Binding Options.IsFixed, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                    <!-- Min / Max, sliders are reversed so the brightest level (0) is on the right -->
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{x:Static resources:Strings.Brightest_}"
+                               Visibility="{Binding Options.IsMinMax, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <Slider Grid.Row="1" Grid.Column="1" Value="{Binding Options.MinLevel}"
+                            Visibility="{Binding Options.IsMinMax, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Options.MinLevel}" HorizontalAlignment="Right" Margin="0"
+                               Visibility="{Binding Options.IsMinMax, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{x:Static resources:Strings.Darkest_}"
+                               Visibility="{Binding Options.IsMinMax, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <Slider Grid.Row="2" Grid.Column="1" Value="{Binding Options.MaxLevel}"
+                            Visibility="{Binding Options.IsMinMax, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Options.MaxLevel}" HorizontalAlignment="Right" Margin="0"
+                               Visibility="{Binding Options.IsMinMax, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                </Grid>
+            </StackPanel>
+        </GroupBox>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Content="{x:Static resources:Strings.Close}">
+                <b:Interaction.Behaviors>
+                    <behaviours:CloseOnClickBehaviour />
+                </b:Interaction.Behaviors>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

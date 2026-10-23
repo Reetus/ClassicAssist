@@ -7,6 +7,7 @@
              xmlns:agents="clr-namespace:ClassicAssist.UI.ViewModels.Agents"
              xmlns:draggableListBox="clr-namespace:ClassicAssist.Controls.DraggableListBox;assembly=ClassicAssist.Controls"
              xmlns:shared="clr-namespace:ClassicAssist.Shared.UI;assembly=ClassicAssist.Shared"
+             xmlns:valueConverters="clr-namespace:ClassicAssist.Shared.UI.ValueConverters;assembly=ClassicAssist.Shared"
              mc:Ignorable="d"
              d:DesignHeight="300">
     <d:DesignerProperties.DesignStyle>
@@ -21,7 +22,9 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <shared:SharedResourceDictionary Source="../../../Resources/DarkTheme.xaml" />
+                <ResourceDictionary Source="../ECV/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <valueConverters:InverseBooleanValueConverter x:Key="InverseBooleanValueConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -66,8 +69,45 @@
                                   Command="{Binding ChangeRehueOption}" />
                         <Button Margin="10,0,0,0" Command="{Binding SelectHueCommand}"
                                 CommandParameter="{Binding Options.CurrentOptions.RehueFriendsHue}">
+                            <Button.ToolTip>
+                                <TextBlock>
+                                    <Run Text="{x:Static resources:Strings.Hue}" /><Run Text=": " /><Run
+                                        Text="{Binding Options.CurrentOptions.RehueFriendsHue, Mode=OneWay}" />
+                                </TextBlock>
+                            </Button.ToolTip>
                             <Image Source="{StaticResource ColorWheelIcon}" Height="12" Width="12" />
                         </Button>
+                        <Button x:Name="RehueLayersButton" Margin="5,0,0,0"
+                                ToolTip="{x:Static resources:Strings.Layers}"
+                                Command="{Binding OpenRehueLayersCommand}"
+                                IsHitTestVisible="{Binding IsOpen, ElementName=RehueLayersPopup, Converter={StaticResource InverseBooleanValueConverter}}">
+                            <Image Source="{StaticResource FilterIcon}" Height="12" Width="12" />
+                        </Button>
+                        <Popup x:Name="RehueLayersPopup" StaysOpen="False" Placement="Bottom"
+                               PlacementTarget="{Binding ElementName=RehueLayersButton}"
+                               IsOpen="{Binding RehueLayersOpen}">
+                            <Border Background="{DynamicResource ThemeBackgroundBrush}"
+                                    BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" Padding="5">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                        <Button Content="{x:Static resources:Strings.Select_All}" Padding="5,2"
+                                                Command="{Binding SelectAllLayersCommand}" />
+                                        <Button Content="{x:Static resources:Strings.Deselect_All}" Padding="5,2"
+                                                Margin="5,0,0,0" Command="{Binding DeselectAllLayersCommand}" />
+                                    </StackPanel>
+                                    <ScrollViewer MaxHeight="300" VerticalScrollBarVisibility="Auto">
+                                        <ItemsControl ItemsSource="{Binding RehueLayers}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding Enabled}"
+                                                              Margin="0,1" />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                </StackPanel>
+                            </Border>
+                        </Popup>
                     </StackPanel>
                 </StackPanel>
             </GroupBox>

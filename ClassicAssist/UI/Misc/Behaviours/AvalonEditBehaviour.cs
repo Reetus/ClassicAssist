@@ -25,6 +25,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Threading;
 
 namespace ClassicAssist.UI.Misc.Behaviours
 {
@@ -57,8 +58,13 @@ namespace ClassicAssist.UI.Misc.Behaviours
 
         private void AssociatedObjectOnDataContextChanged( object sender, DependencyPropertyChangedEventArgs e )
         {
+            _textSource = null;
+
             // A different item is being edited, don't allow undo back into the previous item's text
             AssociatedObject?.Document?.UndoStack.ClearAll();
+
+            // The binding may not have updated yet, and won't call back at all if the new item's text is identical
+            AssociatedObject?.Dispatcher.BeginInvoke( DispatcherPriority.ContextIdle, new Action( () => _textSource = GetTextSource() ) );
         }
 
         private void AssociatedObjectOnLostFocus( object sender, RoutedEventArgs routedEventArgs )

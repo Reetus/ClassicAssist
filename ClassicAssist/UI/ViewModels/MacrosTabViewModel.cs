@@ -260,11 +260,6 @@ namespace ClassicAssist.UI.ViewModels
             {
                 SetProperty( ref _selectedItem, value );
                 OnPropertyChanged( nameof( Hotkey ) );
-
-                if ( Document != null )
-                {
-                    Document.UndoStack.SizeLimit = 0;
-                }
             }
         }
 

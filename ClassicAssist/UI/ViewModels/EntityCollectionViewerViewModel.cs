@@ -1048,12 +1048,23 @@ namespace ClassicAssist.UI.ViewModels
 
         private void OnCollectionChanged( int totalcount, bool added, Item[] entities )
         {
-            // Raised on the incoming packet thread - marshal asynchronously so packet processing never waits on the UI thread.
-            _dispatcher.BeginInvoke( new Action( () =>
+            void OnApply()
             {
                 OnApplyCollectionChanged( added, entities );
                 UpdateStatusLabel();
-            } ) );
+            }
+
+            // Already on the UI thread (e.g. Collection.Clear() during Refresh) - apply now, so the change lands before
+            // Entities is rebuilt rather than being replayed against the rebuilt list afterwards.
+            if ( _dispatcher.CheckAccess() )
+            {
+                OnApply();
+            }
+            else
+            {
+                // Packet/worker threads marshal asynchronously so packet processing never waits on the UI thread.
+                _dispatcher.BeginInvoke( new Action( OnApply ) );
+            }
         }
 
         private void OnApplyCollectionChanged( bool added, Item[] entities )

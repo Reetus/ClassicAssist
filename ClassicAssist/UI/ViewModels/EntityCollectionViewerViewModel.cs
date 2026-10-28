@@ -990,7 +990,9 @@ namespace ClassicAssist.UI.ViewModels
                 return;
             }
 
-            _dispatcher.Invoke( () =>
+            // BeginInvoke, not Invoke - blocking the incoming packet thread on the UI thread deadlocks whenever
+            // the UI thread is itself waiting on a packet (e.g. Refresh -> WaitForContainerContentsUse).
+            _dispatcher.BeginInvoke( new Action( () =>
             {
                 EntityCollectionData ecd = Entities.FirstOrDefault( e => e.Entity.Serial == item.Serial );
 
@@ -1041,60 +1043,73 @@ namespace ClassicAssist.UI.ViewModels
                         }
                     }
                 }
-            } );
+            } ) );
         }
 
         private void OnCollectionChanged( int totalcount, bool added, Item[] entities )
         {
-            if ( added )
+            void OnApply()
             {
-                _dispatcher.Invoke( () =>
-                {
-                    List<Item> newEntities = entities.Where( e => !Entities.Any( f => f.Entity.Equals( e ) ) )
-                        .Where( entity => Options.ShowChildItems || entity.Owner == Collection.Serial ).ToList();
+                OnApplyCollectionChanged( added, entities );
+                UpdateStatusLabel();
+            }
 
-                    foreach ( Item entity in newEntities )
-                    {
-                        EntityCollectionData data = entity.ToEntityCollectionData( _nameOverrides );
-
-                        if ( _sorter == null )
-                        {
-                            Entities.Add( data );
-                        }
-                        else
-                        {
-                            // Keep the active sort applied as items stream in live, rather than appending unsorted.
-                            int index = 0;
-
-                            while ( index < Entities.Count && _sorter.Compare( Entities[index].Entity, entity ) <= 0 )
-                            {
-                                index++;
-                            }
-
-                            Entities.Insert( index, data );
-                        }
-                    }
-
-                    ApplyLockState();
-
-                    if ( _filters != null )
-                    {
-                        ApplyFilters( _filters );
-                    }
-                } );
+            // Already on the UI thread (e.g. Collection.Clear() during Refresh) - apply now, so the change lands before
+            // Entities is rebuilt rather than being replayed against the rebuilt list afterwards.
+            if ( _dispatcher.CheckAccess() )
+            {
+                OnApply();
             }
             else
             {
-                _dispatcher.Invoke( () =>
+                // Packet/worker threads marshal asynchronously so packet processing never waits on the UI thread.
+                _dispatcher.BeginInvoke( new Action( OnApply ) );
+            }
+        }
+
+        private void OnApplyCollectionChanged( bool added, Item[] entities )
+        {
+            if ( !added )
+            {
+                foreach ( EntityCollectionData ecd in entities.ToList().Select( item => Entities.FirstOrDefault( e => e.Entity.Equals( item ) ) ).Where( ecd => ecd != null ) )
                 {
-                    foreach ( EntityCollectionData ecd in entities.ToList().Select( item => Entities.FirstOrDefault( e => e.Entity.Equals( item ) ) ).Where( ecd => ecd != null ) )
-                    {
-                        Entities.Remove( ecd );
-                    }
-                } );
+                    Entities.Remove( ecd );
+                }
+
+                return;
             }
 
-            UpdateStatusLabel();
+            List<Item> newEntities = entities.Where( e => !Entities.Any( f => f.Entity.Equals( e ) ) )
+                .Where( entity => Options.ShowChildItems || entity.Owner == Collection.Serial ).ToList();
+
+            foreach ( Item entity in newEntities )
+            {
+                EntityCollectionData data = entity.ToEntityCollectionData( _nameOverrides );
+
+                if ( _sorter == null )
+                {
+                    Entities.Add( data );
+                }
+                else
+                {
+                    // Keep the active sort applied as items stream in live, rather than appending unsorted.
+                    int index = 0;
+
+                    while ( index < Entities.Count && _sorter.Compare( Entities[index].Entity, entity ) <= 0 )
+                    {
+                        index++;
+                    }
+
+                    Entities.Insert( index, data );
+                }
+            }
+
+            ApplyLockState();
+
+            if ( _filters != null )
+            {
+                ApplyFilters( _filters );
+            }
         }
 
         private void ContextTarget( object obj )
@@ -1236,7 +1251,24 @@ namespace ClassicAssist.UI.ViewModels
             SaveOptions( Options );
             SetEventSource( null );
             IncomingPacketHandlers.ItemPropertiesUpdatedEvent -= OnItemPropertiesUpdated;
-            ThreadQueue?.Dispose();
+
+            if ( disposing )
+            {
+                foreach ( QueueAction queueAction in QueueActions.ToList() )
+                {
+                    queueAction.CancellationTokenSource?.Cancel();
+                }
+            }
+
+            // ThreadQueue.Dispose joins the worker thread, and running actions marshal status updates with
+            // _dispatcher.Invoke - joining from the UI thread (window close) would deadlock, so stop it off-thread.
+            ThreadPriorityQueue<QueueAction> threadQueue = ThreadQueue;
+            ThreadQueue = null;
+
+            if ( threadQueue != null )
+            {
+                Task.Run( () => threadQueue.Dispose() );
+            }
         }
 
         ~EntityCollectionViewerViewModel()

@@ -881,7 +881,7 @@
     <value>Start automatically</value>
   </data>
   <data name="MCP autostart tooltip" xml:space="preserve">
-    <value>Starts the MCP server on its own: on the login screen, and on each character's saved port when it logs in. Every request then needs a bearer token; use "Copy agent config" to set up your AI agent.</value>
+    <value>Starts the MCP server on its own: on each character's saved port when it logs in, and on the login screen once the profile has a saved port. A character's port is saved with the profile while the server is running. Every request then needs a bearer token; use "Copy agent config" to set up your AI agent.</value>
   </data>
   <data name="MCP autostart warning" xml:space="preserve">
     <value>The MCP server lets an AI agent create and run macros, and macros can run any program on this computer.

@@ -69,11 +69,28 @@ namespace ClassicAssist.Mcp
         /// </summary>
         public static void SetEnabled( bool enabled )
         {
+            if ( !enabled && McpServer.IsRunning )
+            {
+                // Without consent there's no token: a running server would answer anyone. It is
+                // stopped rather than left open; ticking MCP again starts a session-only server.
+                McpServer.Shutdown();
+                _startedHere = false;
+                Options.CurrentOptions.McpEnabled = false;
+            }
+
             AssistantOptions.McpAutoStart = enabled;
             AssistantOptions.McpToken = enabled ? AssistantOptions.McpToken ?? NewToken() : null;
             McpServer.Token = AssistantOptions.McpToken;
 
             AssistantOptions.Save();
+        }
+
+        /// <summary>
+        ///     Called when the server is started by hand, so it is left alone at login.
+        /// </summary>
+        public static void ReleaseOwnership()
+        {
+            _startedHere = false;
         }
 
         /// <summary>
@@ -93,7 +110,9 @@ namespace ClassicAssist.Mcp
         /// </summary>
         public static void Serialize( JObject obj )
         {
-            int serial = Engine.Player?.Serial ?? _serial;
+            // Not Engine.Player: on login it already names the incoming character while the outgoing
+            // profile is saved (AssistantOptions.PlayerInitialized), and the port belongs to the outgoing one.
+            int serial = _serial;
 
             // Several instances can share one profile file and each writes the whole of it: start from
             // the ports on disk so this save doesn't drop the other characters' entries.
@@ -139,8 +158,11 @@ namespace ClassicAssist.Mcp
             return BitConverter.ToString( bytes ).Replace( "-", string.Empty ).ToLowerInvariant();
         }
 
-        private static void OnPlayerInitialized( PlayerMobile player )
+        internal static void OnPlayerInitialized( PlayerMobile player )
         {
+            // Registered after AssistantOptions' handler, so the outgoing profile has been saved by now.
+            _serial = player.Serial;
+
             // Raised off the UI thread; the server and the bound options are only touched on it.
             if ( Engine.Dispatcher == null )
             {
@@ -172,6 +194,12 @@ namespace ClassicAssist.Mcp
 
                 if ( !McpServer.IsRunning && lowest != null )
                 {
+                    Start( lowest.Value );
+                }
+                else if ( _startedHere && lowest != null && McpServer.Port != lowest.Value && IsFree( lowest.Value ) )
+                {
+                    // Another profile was loaded before login: follow its ports.
+                    McpServer.Shutdown();
                     Start( lowest.Value );
                 }
 

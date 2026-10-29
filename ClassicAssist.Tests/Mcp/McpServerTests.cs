@@ -68,6 +68,30 @@ namespace ClassicAssist.Tests.Mcp
             Assert.AreEqual( 200, Send( port, Request( "Host: 127.0.0.1:" + port, "Authorization: Bearer secret" ) ) );
         }
 
+        [TestMethod]
+        public void OptionsNeedsTheTokenWhenSet()
+        {
+            int port = FreePort();
+            McpServer.Initialize( port );
+            McpServer.Token = "secret";
+
+            Assert.AreEqual( 401, Send( port, "OPTIONS /mcp HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n" ) );
+            Assert.AreEqual( 204,
+                Send( port, "OPTIONS /mcp HTTP/1.1\r\nHost: localhost\r\nAuthorization: Bearer secret\r\nConnection: close\r\n\r\n" ) );
+        }
+
+        [TestMethod]
+        public void OversizedBodyIsDropped()
+        {
+            int port = FreePort();
+            McpServer.Initialize( port );
+
+            string request = "POST /mcp HTTP/1.1\r\nHost: localhost\r\nContent-Type: application/json\r\n" +
+                             $"Content-Length: {64 * 1024 * 1024}\r\nConnection: close\r\n\r\n";
+
+            Assert.AreEqual( -1, Send( port, request ) );
+        }
+
         private static string Request( params string[] headers )
         {
             byte[] body = Encoding.UTF8.GetBytes( @"{""jsonrpc"":""2.0"",""id"":1,""method"":""ping""}" );

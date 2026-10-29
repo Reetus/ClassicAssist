@@ -15,6 +15,7 @@ namespace ClassicAssist.Mcp
     {
         private const string PROTOCOL_VERSION = "2025-06-18";
         private const string SERVER_VERSION = "1.0.0";
+        private const int MAX_BODY_BYTES = 4 * 1024 * 1024;
 
         /// <summary>
         ///     Maximum time a single HTTP request may take before the connection is dropped. This
@@ -179,6 +180,12 @@ namespace ClassicAssist.Mcp
                     if ( headerEnd >= 0 )
                     {
                         contentLength = ParseContentLength( data, headerEnd );
+
+                        // Don't buffer an unbounded body before the request has been validated.
+                        if ( contentLength < 0 || contentLength > MAX_BODY_BYTES )
+                        {
+                            return null;
+                        }
                     }
                     else if ( length > 64 * 1024 )
                     {
@@ -220,6 +227,24 @@ namespace ClassicAssist.Mcp
                 return HttpResponse( 403, "Forbidden", Array.Empty<byte>() );
             }
 
+            // Checked before anything else is answered, OPTIONS included.
+            string token = Token;
+
+            if ( token != null && !IsAuthorized( GetHeader( lines, "Authorization" ), token ) )
+            {
+                JsonRpcResponse unauthorized = new JsonRpcResponse
+                {
+                    Error = new JsonRpcError
+                    {
+                        Code = -32001,
+                        Message = "Missing or invalid bearer token. Copy the agent config from ClassicAssist's Options tab."
+                    }
+                };
+
+                return HttpResponse( 401, "Unauthorized", Encoding.UTF8.GetBytes( JsonConvert.SerializeObject( unauthorized ) ),
+                    "WWW-Authenticate: Bearer\r\n" );
+            }
+
             if ( method.Equals( "OPTIONS", StringComparison.OrdinalIgnoreCase ) )
             {
                 return HttpResponse( 204, "No Content", Array.Empty<byte>() );
@@ -239,23 +264,6 @@ namespace ClassicAssist.Mcp
             if ( !IsJsonContentType( GetHeader( lines, "Content-Type" ) ) )
             {
                 return HttpResponse( 415, "Unsupported Media Type", Array.Empty<byte>() );
-            }
-
-            string token = Token;
-
-            if ( token != null && !IsAuthorized( GetHeader( lines, "Authorization" ), token ) )
-            {
-                JsonRpcResponse unauthorized = new JsonRpcResponse
-                {
-                    Error = new JsonRpcError
-                    {
-                        Code = -32001,
-                        Message = "Missing or invalid bearer token. Copy the agent config from ClassicAssist's Options tab."
-                    }
-                };
-
-                return HttpResponse( 401, "Unauthorized", Encoding.UTF8.GetBytes( JsonConvert.SerializeObject( unauthorized ) ),
-                    "WWW-Authenticate: Bearer\r\n" );
             }
 
             int bodyStart = headerEnd + 4;

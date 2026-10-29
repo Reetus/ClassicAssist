@@ -382,6 +382,7 @@ namespace ClassicAssist.UI.ViewModels
                     }
 
                     McpServer.Initialize( port );
+                    McpAutoStart.ReleaseOwnership();
                 }
                 else
                 {

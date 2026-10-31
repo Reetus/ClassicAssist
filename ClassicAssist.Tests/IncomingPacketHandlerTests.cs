@@ -166,7 +166,40 @@ namespace ClassicAssist.Tests
 
             Item[] children = Engine.Items.SelectEntities( i => i.Owner == NESTED_BAG_SERIAL );
 
-            Assert.AreEqual( 2, children.Length );
+            Assert.IsNotNull( children );
+            CollectionAssert.AreEquivalent( new[] { NESTED_ITEM1_SERIAL, NESTED_ITEM2_SERIAL }, children.Select( i => i.Serial ).ToArray() );
+        }
+
+        [TestMethod]
+        public void NestedContainerAddedToUnknownParentIsKeptAtTopLevel()
+        {
+            const int unknownParentSerial = 0x40000010;
+
+            // Bag opened while its parent is unknown, so it's held at the top level
+            ReceiveContainerContents( NESTED_BAG_SERIAL, NESTED_ITEM1_SERIAL, NESTED_ITEM2_SERIAL );
+
+            byte[] packet = new ContainerContentUpdate( NESTED_BAG_SERIAL, 0xe75, Direction.North, 1, 0, 0, 0, unknownParentSerial, 0 ).ToArray();
+
+            IncomingPacketHandlers.GetHandler( 0x25 ).OnReceive( new PacketReader( packet, packet.Length, true ) );
+
+            // Parent still isn't reachable, so the bag must stay at the top level rather than being orphaned
+            Assert.IsTrue( Engine.Items.GetItems().Any( i => i.Serial == NESTED_BAG_SERIAL ), "Bag should be kept at the top level." );
+
+            Item[] children = Engine.Items.SelectEntities( i => i.IsDescendantOf( NESTED_BAG_SERIAL, 0 ) );
+
+            Assert.IsNotNull( children );
+            CollectionAssert.AreEquivalent( new[] { NESTED_ITEM1_SERIAL, NESTED_ITEM2_SERIAL }, children.Select( i => i.Serial ).ToArray() );
+
+            // Once the parent's contents arrive the bag moves into it and is no longer held twice
+            ReceiveContainerContents( unknownParentSerial, NESTED_BAG_SERIAL );
+
+            Assert.IsFalse( Engine.Items.GetItems().Any( i => i.Serial == NESTED_BAG_SERIAL ), "Bag should not be held at the top level." );
+            Assert.IsNotNull( Engine.Items.GetItem( unknownParentSerial )?.Container?.GetItem( NESTED_BAG_SERIAL ), "Bag should be in its parent." );
+
+            children = Engine.Items.SelectEntities( i => i.IsDescendantOf( NESTED_BAG_SERIAL, 0 ) );
+
+            Assert.IsNotNull( children );
+            CollectionAssert.AreEquivalent( new[] { NESTED_ITEM1_SERIAL, NESTED_ITEM2_SERIAL }, children.Select( i => i.Serial ).ToArray() );
         }
 
         [TestMethod]

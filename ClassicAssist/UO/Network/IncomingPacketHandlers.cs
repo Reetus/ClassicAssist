@@ -1556,6 +1556,9 @@ namespace ClassicAssist.UO.Network
             }
             else
             {
+                // GetItem searches nested containers, so this is true if the parent is reachable from Engine.Items
+                bool parentKnown = Engine.Items.GetItem( containerSerial ) != null;
+
                 Item container = Engine.GetOrCreateItem( containerSerial );
 
                 item.Owner = container.Serial;
@@ -1568,8 +1571,12 @@ namespace ClassicAssist.UO.Network
                 container.Container.Add( item );
 
                 // If the item was being held at the top level (e.g. a container opened before its parent's
-                // contents were known), it now lives in its parent - don't keep it in both places
-                Engine.Items.Detach( item.Serial );
+                // contents were known), it now lives in its parent - don't keep it in both places. If the parent
+                // isn't reachable yet, keep it at the top level until the parent's contents arrive (0x3C)
+                if ( parentKnown )
+                {
+                    Engine.Items.Detach( item.Serial );
+                }
             }
 
             //rehueList

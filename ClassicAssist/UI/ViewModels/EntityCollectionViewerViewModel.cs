@@ -1571,7 +1571,7 @@ namespace ClassicAssist.UI.ViewModels
                 case EntityCollectionSortStyle.Hue:
                     return new HueThenAmountComparer();
                 case EntityCollectionSortStyle.ID:
-                    return new IDThenSerialComparer();
+                    return new IDThenHueThenSerialComparer();
                 case EntityCollectionSortStyle.Quantity:
                     return new QuantityThenSerialComparer();
                 case EntityCollectionSortStyle.Weight:

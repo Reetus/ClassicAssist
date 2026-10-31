@@ -1571,7 +1571,7 @@ namespace ClassicAssist.UI.ViewModels
                 case EntityCollectionSortStyle.Hue:
                     return new HueThenAmountComparer();
                 case EntityCollectionSortStyle.ID:
-                    return new IDThenSerialComparer();
+                    return new IDThenHueThenSerialComparer();
                 case EntityCollectionSortStyle.Quantity:
                     return new QuantityThenSerialComparer();
                 case EntityCollectionSortStyle.Weight:
@@ -2041,11 +2041,10 @@ namespace ClassicAssist.UI.ViewModels
                 return new List<EntityCollectionData>();
             }
 
-            Item[] items = itemCollection.GetItems();
+            // Convert before sorting - conversion applies name overrides and RehueList hues, which the comparers sort on.
+            List<EntityCollectionData> data = itemCollection.GetItems().Select( item => item.ToEntityCollectionData( nameOverrides ) ).ToList();
 
-            IEnumerable<Item> ordered = comparer == null ? items : (IEnumerable<Item>) items.OrderBy( i => i, comparer );
-
-            return ordered.Select( item => item.ToEntityCollectionData( nameOverrides ) ).ToList();
+            return comparer == null ? data : data.OrderBy( d => d.Entity, comparer ).ToList();
         }
 
         public static EntityCollectionData ToEntityCollectionData( this Item item, Dictionary<int, string> nameOverrides )

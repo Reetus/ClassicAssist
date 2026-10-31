@@ -6132,6 +6132,36 @@ namespace ClassicAssist.Shared.Resources {
             }
         }
 
+        public static string MCP_autostart {
+            get {
+                return ResourceManager.GetString("MCP autostart", resourceCulture);
+            }
+        }
+
+        public static string MCP_autostart_tooltip {
+            get {
+                return ResourceManager.GetString("MCP autostart tooltip", resourceCulture);
+            }
+        }
+
+        public static string MCP_autostart_warning {
+            get {
+                return ResourceManager.GetString("MCP autostart warning", resourceCulture);
+            }
+        }
+
+        public static string MCP_config_copied {
+            get {
+                return ResourceManager.GetString("MCP config copied", resourceCulture);
+            }
+        }
+
+        public static string MCP_copy_config {
+            get {
+                return ResourceManager.GetString("MCP copy config", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Use Right Hand.
         /// </summary>

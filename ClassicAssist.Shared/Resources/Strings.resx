@@ -872,10 +872,33 @@
     <value>MCP server (AI agents)</value>
   </data>
   <data name="MCP tooltip" xml:space="preserve">
-    <value>Exposes a Model Context Protocol (MCP) server on localhost so AI agents can list, create, edit and run macros. Session-only, not saved to the profile.</value>
+    <value>Exposes a Model Context Protocol (MCP) server on localhost so AI agents can list, create, edit and run macros. Session-only unless "Start automatically" is ticked.</value>
   </data>
   <data name="MCP invalid port" xml:space="preserve">
     <value>The MCP server port must be between 1 and 65535.</value>
+  </data>
+  <data name="MCP autostart" xml:space="preserve">
+    <value>Start automatically</value>
+  </data>
+  <data name="MCP autostart tooltip" xml:space="preserve">
+    <value>Starts the MCP server on its own: on each character's saved port when it logs in, and on the login screen once the profile has a saved port. A character's port is saved with the profile while the server is running. Every request then needs a bearer token; use "Copy agent config" to set up your AI agent.</value>
+  </data>
+  <data name="MCP autostart warning" xml:space="preserve">
+    <value>The MCP server lets an AI agent create and run macros, and macros can run any program on this computer.
+
+With this option the server starts on its own every time, not just when you tick it. To keep other programs out, it will only answer agents that send a secret access token. Never share that token or post your agent config online.
+
+Only enable this if you use an AI agent with ClassicAssist regularly.
+
+Enable automatic start?</value>
+  </data>
+  <data name="MCP config copied" xml:space="preserve">
+    <value>The agent config, including the access token, has been copied to the clipboard. Paste it into your AI agent's MCP settings.
+
+It needs the server URL and an "Authorization: Bearer &lt;token&gt;" header; adapt the format if your agent uses a different one.</value>
+  </data>
+  <data name="MCP copy config" xml:space="preserve">
+    <value>Copy agent config</value>
   </data>
   <data name="Use Right Hand" xml:space="preserve">
     <value>Use Right Hand</value>

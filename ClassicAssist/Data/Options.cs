@@ -11,6 +11,7 @@ using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Misc;
+using ClassicAssist.Mcp;
 using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Misc;
 using ClassicAssist.Shared.UI;
@@ -627,6 +628,8 @@ namespace ClassicAssist.Data
                     File.WriteAllText( Path.Combine( AssistantOptions.GetGlobalPath(), globalSettingProvider.GetGlobalFilename() ), global.ToString() );
                 }
 
+                McpAutoStart.Serialize( obj );
+
                 string hash = obj.ToString().SHA1();
                 obj["Hash"] = hash;
 
@@ -759,6 +762,9 @@ namespace ClassicAssist.Data
 
                         globalSettingProvider.Deserialize( global, options, true );
                     }
+
+                    // After the options tab has reflected the server state, so it can change it.
+                    McpAutoStart.Deserialize( json );
                 }
                 catch ( Exception e )
                 {

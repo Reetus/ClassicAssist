@@ -53,6 +53,29 @@ namespace ClassicAssist.UI.ViewModels
             _toggleMcpCommand ??
             ( _toggleMcpCommand = new RelayCommand( ToggleMcp, o => true ) );
 
+        private ICommand _toggleMcpAutoStartCommand;
+
+        public ICommand ToggleMcpAutoStartCommand =>
+            _toggleMcpAutoStartCommand ??
+            ( _toggleMcpAutoStartCommand = new RelayCommand( ToggleMcpAutoStart, o => true ) );
+
+        private ICommand _copyMcpConfigCommand;
+
+        public ICommand CopyMcpConfigCommand =>
+            _copyMcpConfigCommand ?? ( _copyMcpConfigCommand = new RelayCommand( CopyMcpConfig, o => true ) );
+
+        private bool _mcpAutoStartEnabled = AssistantOptions.McpAutoStart;
+
+        /// <summary>
+        ///     Mirrors <see cref="AssistantOptions.McpAutoStart" />; only written back once the warning is
+        ///     accepted, by <see cref="ToggleMcpAutoStart" />.
+        /// </summary>
+        public bool McpAutoStartEnabled
+        {
+            get => _mcpAutoStartEnabled;
+            set => SetProperty( ref _mcpAutoStartEnabled, value );
+        }
+
         public void Serialize( JObject json, bool global = false )
         {
             JObject options = new JObject();
@@ -150,6 +173,7 @@ namespace ClassicAssist.UI.ViewModels
             }
 
             CurrentOptions.McpEnabled = McpServer.IsRunning;
+            McpAutoStartEnabled = AssistantOptions.McpAutoStart;
 
             if ( McpServer.IsRunning )
             {
@@ -358,6 +382,7 @@ namespace ClassicAssist.UI.ViewModels
                     }
 
                     McpServer.Initialize( port );
+                    McpAutoStart.ReleaseOwnership();
                 }
                 else
                 {
@@ -371,6 +396,53 @@ namespace ClassicAssist.UI.ViewModels
                 CurrentOptions.McpEnabled = false;
                 MessageBox.Show( e.Message, Strings.Error );
             }
+        }
+
+        private void ToggleMcpAutoStart( object obj )
+        {
+            try
+            {
+                if ( McpAutoStartEnabled )
+                {
+                    MessageBoxResult result = MessageBox.Show( Strings.MCP_autostart_warning, Strings.Warning,
+                        MessageBoxButton.YesNo, MessageBoxImage.Warning );
+
+                    if ( result != MessageBoxResult.Yes )
+                    {
+                        McpAutoStartEnabled = false;
+                        return;
+                    }
+                }
+
+                McpAutoStart.SetEnabled( McpAutoStartEnabled );
+
+                if ( McpAutoStartEnabled )
+                {
+                    CopyMcpConfig( null );
+                    MessageBox.Show( Strings.MCP_config_copied, Strings.MCP );
+                }
+            }
+            catch ( Exception e )
+            {
+                McpAutoStartEnabled = AssistantOptions.McpAutoStart;
+                MessageBox.Show( e.Message, Strings.Error );
+            }
+        }
+
+        private void CopyMcpConfig( object obj )
+        {
+            int port = McpServer.IsRunning ? McpServer.Port : CurrentOptions?.McpPort ?? 4713;
+
+            JObject server = new JObject { ["type"] = "http", ["url"] = $"http://127.0.0.1:{port}/mcp" };
+
+            if ( McpServer.Token != null )
+            {
+                server["headers"] = new JObject { ["Authorization"] = $"Bearer {McpServer.Token}" };
+            }
+
+            JObject config = new JObject { ["mcpServers"] = new JObject { ["classicassist"] = server } };
+
+            Clipboard.SetText( config.ToString() );
         }
 
         private static void SetLanguageOverride( object obj )

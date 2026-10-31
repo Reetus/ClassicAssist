@@ -1069,6 +1069,20 @@ namespace ClassicAssist.UI.ViewModels
 
         private void OnApplyCollectionChanged( bool added, Item[] entities )
         {
+            // In ShowChildItems mode Collection is a flattened snapshot rather than the live container, so mirror the
+            // change into it - otherwise re-applying filters/sorting rebuilds from stale contents and removed items reappear.
+            if ( !ReferenceEquals( Collection, _eventSource ) )
+            {
+                if ( added )
+                {
+                    Collection.Add( entities );
+                }
+                else
+                {
+                    Collection.Remove( entities );
+                }
+            }
+
             if ( !added )
             {
                 foreach ( EntityCollectionData ecd in entities.ToList().Select( item => Entities.FirstOrDefault( e => e.Entity.Equals( item ) ) ).Where( ecd => ecd != null ) )

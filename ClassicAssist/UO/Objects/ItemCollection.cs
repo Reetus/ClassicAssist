@@ -199,7 +199,7 @@ namespace ClassicAssist.UO.Objects
             }
             else
             {
-                Remove( entity.Container.GetItems() );
+                Remove( GetOwnedContents( entity ) );
 
                 changed = base.Remove( entity );
             }
@@ -230,7 +230,7 @@ namespace ClassicAssist.UO.Objects
 
                 if ( entity.Container != null )
                 {
-                    Remove( entity.Container.GetItems() );
+                    Remove( GetOwnedContents( entity ) );
                 }
 
                 if ( base.Remove( entity ) )
@@ -245,6 +245,19 @@ namespace ClassicAssist.UO.Objects
             }
 
             return changed;
+        }
+
+        /// <summary>
+        ///     The contents to remove along with <paramref name="container" />: only what it still owns.
+        ///     <para>
+        ///         <see cref="Remove(int)" /> takes a serial out of every container that lists it, so an item the
+        ///         container still listed after it had moved elsewhere was removed from where it really is. A
+        ///         chest swept by distance took what had been moved from it out of the backpack.
+        ///     </para>
+        /// </summary>
+        private static Item[] GetOwnedContents( Item container )
+        {
+            return container.Container.GetItems().Where( i => i.Owner == container.Serial ).ToArray();
         }
 
         public override bool Remove( int serial )

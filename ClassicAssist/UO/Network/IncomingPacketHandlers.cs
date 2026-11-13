@@ -1503,6 +1503,9 @@ namespace ClassicAssist.UO.Network
             int hue = reader.ReadUInt16();
 
             Item item = Engine.GetOrCreateItem( serial, containerSerial );
+
+            TakeOutOfOldContainer( item, containerSerial );
+
             item.ID = id;
             item.Count = Math.Max( count, 1 );
             item.X = x;
@@ -1592,9 +1595,43 @@ namespace ClassicAssist.UO.Network
             //rehueList
         }
 
+        /// <summary>
+        ///     Takes an item that a 0x25 / 0x3C is putting in <paramref name="containerSerial" /> out of the
+        ///     container the store has it in now. Call before the item's owner is overwritten.
+        ///     <para>
+        ///         A server need not send a 0x1D first, and the client moves the item regardless. Left in its
+        ///         old container the item is listed twice, and removing that container later (the distance
+        ///         sweep, once the player has recalled away from it) took the item out of its new one as well.
+        ///     </para>
+        /// </summary>
+        private static void TakeOutOfOldContainer( Item item, int containerSerial )
+        {
+            if ( item.Owner == containerSerial || item.Owner <= 0 )
+            {
+                return;
+            }
+
+            ItemCollection oldContainer = Engine.Items.GetItem( item.Owner )?.Container;
+
+            // Detach rather than Remove: Remove( int ) also drops the contents of the item being moved
+            if ( oldContainer == null || !oldContainer.Detach( item.Serial ) )
+            {
+                return;
+            }
+
+            oldContainer.OnCollectionChanged( true, false, new[] { item } );
+        }
+
         private static void OnItemDeleted( PacketReader reader )
         {
             int serial = reader.ReadInt32();
+
+            // The client never deletes the player on a 0x1D. Handling it here dropped every item the player
+            // owns from the store, the backpack and its whole contents included.
+            if ( serial == Engine.Player?.Serial )
+            {
+                return;
+            }
 
             Mobile mobile = Engine.Mobiles.FirstOrDefault( m =>
             {
@@ -1923,7 +1960,9 @@ namespace ClassicAssist.UO.Network
                     oldStyle = true;
                 }
 
-                ItemCollection container = null;
+                // One collection per container named in the packet, in the order first seen. Entries used to
+                // all go into the first entry's container whatever container they named.
+                List<ItemCollection> containers = new List<ItemCollection>();
 
                 for ( int i = 0; i < count; i++ )
                 {
@@ -1943,12 +1982,17 @@ namespace ClassicAssist.UO.Network
                     int containerSerial = reader.ReadInt32();
                     int hue = reader.ReadUInt16();
 
+                    ItemCollection container = containers.Find( c => c.Serial == containerSerial );
+
                     if ( container == null )
                     {
                         container = new ItemCollection( containerSerial );
+                        containers.Add( container );
                     }
 
                     Item item = Engine.GetOrCreateItem( serial, containerSerial );
+
+                    TakeOutOfOldContainer( item, containerSerial );
 
                     item.ID = id;
                     item.Count = Math.Max( amount, 1 );
@@ -1961,44 +2005,58 @@ namespace ClassicAssist.UO.Network
                     container.Add( item );
                 }
 
-                if ( container == null )
+                if ( containers.Count == 0 )
                 {
                     return;
                 }
 
-                containerItem = Engine.GetOrCreateItem( container.Serial );
-
-                if ( containerItem.Container == null )
+                for ( int i = 0; i < containers.Count; i++ )
                 {
-                    containerItem.Container = container;
-                }
-                else
-                {
-                    containerItem.Container.Clear();
-                    containerItem.Container.Add( container.GetItems() );
-                }
+                    ItemCollection container = containers[i];
 
-                // Child containers that were being held at the top level now live in this container
-                foreach ( Item child in containerItem.Container.GetItems() )
-                {
-                    Engine.Items.Detach( child.Serial );
-                }
+                    containerItem = Engine.GetOrCreateItem( container.Serial );
 
-                // Only hold the container at the top level when it isn't already inside a known parent container
-                // (on the ground, equipped on a mobile, or parent contents not yet known), otherwise it would be
-                // reachable twice and its contents returned twice by searches
-                Item parent = UOMath.IsMobile( containerItem.Owner ) ? null : Engine.Items.GetItem( containerItem.Owner );
+                    if ( containerItem.Container == null )
+                    {
+                        containerItem.Container = container;
+                    }
+                    else
+                    {
+                        // As in the client, the packet replaces what the first entry's container held and
+                        // only adds to any other container it names.
+                        if ( i == 0 )
+                        {
+                            containerItem.Container.Clear();
+                        }
 
-                if ( parent?.Container?.GetItem( containerItem.Serial ) == null )
-                {
-                    Engine.Items.Add( containerItem );
+                        containerItem.Container.Add( container.GetItems() );
+                    }
+
+                    // Child containers that were being held at the top level now live in this container
+                    foreach ( Item child in containerItem.Container.GetItems() )
+                    {
+                        Engine.Items.Detach( child.Serial );
+                    }
+
+                    // Only hold the container at the top level when it isn't already inside a known parent container
+                    // (on the ground, equipped on a mobile, or parent contents not yet known), otherwise it would be
+                    // reachable twice and its contents returned twice by searches
+                    Item parent = UOMath.IsMobile( containerItem.Owner ) ? null : Engine.Items.GetItem( containerItem.Owner );
+
+                    if ( parent?.Container?.GetItem( containerItem.Serial ) == null )
+                    {
+                        Engine.Items.Add( containerItem );
+                    }
                 }
 
                 Task.Run( () =>
                 {
-                    ContainerContentsEvent?.Invoke( container.Serial, container );
+                    foreach ( ItemCollection container in containers )
+                    {
+                        ContainerContentsEvent?.Invoke( container.Serial, container );
 
-                    Engine.RehueList.CheckContainer( container );
+                        Engine.RehueList.CheckContainer( container );
+                    }
                 } ).ConfigureAwait( false );
             }
             catch ( Exception e )

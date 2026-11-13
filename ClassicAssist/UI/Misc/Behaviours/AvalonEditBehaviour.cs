@@ -18,11 +18,14 @@
 #endregion
 
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Xaml.Behaviors;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Threading;
 
 namespace ClassicAssist.UI.Misc.Behaviours
 {
@@ -32,6 +35,8 @@ namespace ClassicAssist.UI.Misc.Behaviours
 
         public static readonly DependencyProperty TextBindingProperty = DependencyProperty.Register( nameof( TextBinding ), typeof( string ), typeof( AvalonEditBehaviour ),
             new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, PropertyChangedCallback ) );
+
+        private object _textSource;
 
         public string TextBinding
         {
@@ -47,7 +52,19 @@ namespace ClassicAssist.UI.Misc.Behaviours
             {
                 AssociatedObject.TextChanged += AssociatedObjectOnTextChanged;
                 AssociatedObject.LostFocus += AssociatedObjectOnLostFocus;
+                AssociatedObject.DataContextChanged += AssociatedObjectOnDataContextChanged;
             }
+        }
+
+        private void AssociatedObjectOnDataContextChanged( object sender, DependencyPropertyChangedEventArgs e )
+        {
+            _textSource = null;
+
+            // A different item is being edited, don't allow undo back into the previous item's text
+            AssociatedObject?.Document?.UndoStack.ClearAll();
+
+            // The binding may not have updated yet, and won't call back at all if the new item's text is identical
+            AssociatedObject?.Dispatcher.BeginInvoke( DispatcherPriority.ContextIdle, new Action( () => _textSource = GetTextSource() ) );
         }
 
         private void AssociatedObjectOnLostFocus( object sender, RoutedEventArgs routedEventArgs )
@@ -71,6 +88,7 @@ namespace ClassicAssist.UI.Misc.Behaviours
             {
                 AssociatedObject.TextChanged -= AssociatedObjectOnTextChanged;
                 AssociatedObject.LostFocus -= AssociatedObjectOnLostFocus;
+                AssociatedObject.DataContextChanged -= AssociatedObjectOnDataContextChanged;
             }
         }
 
@@ -86,9 +104,13 @@ namespace ClassicAssist.UI.Misc.Behaviours
                 return;
             }
 
-            int carot = textEditor.CaretOffset;
             TextBinding = textEditor.Document.Text;
-            textEditor.CaretOffset = carot;
+            _textSource = GetTextSource();
+        }
+
+        private object GetTextSource()
+        {
+            return BindingOperations.GetBindingExpression( this, TextBindingProperty )?.ResolvedSource;
         }
 
         private static void PropertyChangedCallback( DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs )
@@ -102,22 +124,62 @@ namespace ClassicAssist.UI.Misc.Behaviours
                 return;
             }
 
+            string text = dependencyPropertyChangedEventArgs.NewValue?.ToString() ?? string.Empty;
+
+            // The change originated from the editor itself, replacing the document would add a whole document
+            // replace to the undo stack for every keystroke and clear the redo stack
+            if ( editor.Document.Text == text )
+            {
+                return;
+            }
+
+            object textSource = behavior.GetTextSource();
+
+            if ( textSource != null && textSource == behavior._textSource )
+            {
+                // Same item changed externally (e.g. recording), apply only the changed region so the
+                // change is undoable and existing undo history is kept
+                ReplaceChangedRegion( editor.Document, text );
+                return;
+            }
+
+            behavior._textSource = textSource;
+
             IsProgrammaticTextChange = true;
 
             try
             {
-                editor.Document.Text = dependencyPropertyChangedEventArgs.NewValue?.ToString() ?? string.Empty;
+                editor.Document.Text = text;
             }
             finally
             {
                 IsProgrammaticTextChange = false;
             }
-            editor.CaretOffset = 0;
 
-            if ( editor.Document.UndoStack.SizeLimit == 0 )
+            editor.CaretOffset = 0;
+            editor.Document.UndoStack.ClearAll();
+        }
+
+        private static void ReplaceChangedRegion( TextDocument document, string text )
+        {
+            string current = document.Text;
+            int maxLength = Math.Min( current.Length, text.Length );
+
+            int prefix = 0;
+
+            while ( prefix < maxLength && current[prefix] == text[prefix] )
             {
-                editor.Document.UndoStack.SizeLimit = int.MaxValue;
+                prefix++;
             }
+
+            int suffix = 0;
+
+            while ( suffix < maxLength - prefix && current[current.Length - 1 - suffix] == text[text.Length - 1 - suffix] )
+            {
+                suffix++;
+            }
+
+            document.Replace( prefix, current.Length - prefix - suffix, text.Substring( prefix, text.Length - prefix - suffix ) );
         }
     }
 }

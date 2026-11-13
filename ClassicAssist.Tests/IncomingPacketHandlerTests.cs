@@ -1,4 +1,5 @@
-﻿using Assistant;
+﻿using System.Linq;
+using Assistant;
 using ClassicAssist.UO.Data;
 using ClassicAssist.UO.Network;
 using ClassicAssist.UO.Network.Packets;
@@ -60,6 +61,145 @@ namespace ClassicAssist.Tests
 
             Engine.Items.Clear();
             Engine.Player.SetLayer( Layer.Backpack, 0 );
+        }
+
+        private const int NESTED_BACKPACK_SERIAL = 0x40000001;
+        private const int NESTED_BAG_SERIAL = 0x40000002;
+        private const int NESTED_ITEM1_SERIAL = 0x40000003;
+        private const int NESTED_ITEM2_SERIAL = 0x40000004;
+
+        private static void SetupNestedBackpack()
+        {
+            Item backpack = new Item( NESTED_BACKPACK_SERIAL, 1 ) { Layer = Layer.Backpack };
+            Engine.Player.SetLayer( Layer.Backpack, backpack.Serial );
+            Engine.Items.Add( backpack );
+        }
+
+        private static void ReceiveContainerContents( int containerSerial, params int[] itemSerials )
+        {
+            ItemCollection collection = new ItemCollection( containerSerial );
+
+            foreach ( int serial in itemSerials )
+            {
+                collection.Add( new Item( serial ) { ID = 0xff } );
+            }
+
+            byte[] packet = new ContainerContentsPacket( collection ).ToArray();
+
+            IncomingPacketHandlers.GetHandler( 0x3C ).OnReceive( new PacketReader( packet, packet.Length, false ) );
+        }
+
+        private static void AssertBagHeldOnlyInBackpack()
+        {
+            Assert.IsFalse( Engine.Items.GetItems().Any( i => i.Serial == NESTED_BAG_SERIAL ), "Bag should not be held at the top level." );
+
+            Item backpack = Engine.Items.GetItem( NESTED_BACKPACK_SERIAL );
+            Item bag = backpack.Container.GetItem( NESTED_BAG_SERIAL );
+
+            Assert.IsNotNull( bag, "Bag should be in the backpack." );
+            Assert.AreEqual( 2, bag.Container.GetItemCount(), "Bag contents should be kept." );
+
+            Item[] children = Engine.Items.SelectEntities( i => i.IsDescendantOf( NESTED_BAG_SERIAL, 0 ) );
+
+            Assert.IsNotNull( children );
+            CollectionAssert.AreEquivalent( new[] { NESTED_ITEM1_SERIAL, NESTED_ITEM2_SERIAL }, children.Select( i => i.Serial ).ToArray() );
+        }
+
+        [TestMethod]
+        public void NestedContainerOpenedAfterParentIsNotHeldAtTopLevel()
+        {
+            SetupNestedBackpack();
+
+            ReceiveContainerContents( NESTED_BACKPACK_SERIAL, NESTED_BAG_SERIAL );
+            ReceiveContainerContents( NESTED_BAG_SERIAL, NESTED_ITEM1_SERIAL, NESTED_ITEM2_SERIAL );
+
+            AssertBagHeldOnlyInBackpack();
+
+            Engine.Player.SetLayer( Layer.Backpack, 0 );
+        }
+
+        [TestMethod]
+        public void NestedContainerOpenedBeforeParentIsMovedIntoParent()
+        {
+            SetupNestedBackpack();
+
+            // Parent unknown when the bag is opened, so it's held at the top level as a fallback
+            ReceiveContainerContents( NESTED_BAG_SERIAL, NESTED_ITEM1_SERIAL, NESTED_ITEM2_SERIAL );
+
+            Assert.IsTrue( Engine.Items.GetItems().Any( i => i.Serial == NESTED_BAG_SERIAL ) );
+
+            ReceiveContainerContents( NESTED_BACKPACK_SERIAL, NESTED_BAG_SERIAL );
+
+            AssertBagHeldOnlyInBackpack();
+
+            Engine.Player.SetLayer( Layer.Backpack, 0 );
+        }
+
+        [TestMethod]
+        public void NestedContainerAddedToParentIsRemovedFromTopLevel()
+        {
+            SetupNestedBackpack();
+
+            ReceiveContainerContents( NESTED_BAG_SERIAL, NESTED_ITEM1_SERIAL, NESTED_ITEM2_SERIAL );
+
+            byte[] packet = new ContainerContentUpdate( NESTED_BAG_SERIAL, 0xe75, Direction.North, 1, 0, 0, 0, NESTED_BACKPACK_SERIAL, 0 ).ToArray();
+
+            IncomingPacketHandlers.GetHandler( 0x25 ).OnReceive( new PacketReader( packet, packet.Length, true ) );
+
+            AssertBagHeldOnlyInBackpack();
+
+            Engine.Player.SetLayer( Layer.Backpack, 0 );
+        }
+
+        [TestMethod]
+        public void SelectEntitiesWillNotReturnDuplicatesWhenContainerReachableTwice()
+        {
+            Item backpack = new Item( NESTED_BACKPACK_SERIAL ) { Container = new ItemCollection( NESTED_BACKPACK_SERIAL ) };
+            Item bag = new Item( NESTED_BAG_SERIAL, NESTED_BACKPACK_SERIAL ) { Container = new ItemCollection( NESTED_BAG_SERIAL ) };
+
+            bag.Container.Add( new Item( NESTED_ITEM1_SERIAL, NESTED_BAG_SERIAL ) );
+            bag.Container.Add( new Item( NESTED_ITEM2_SERIAL, NESTED_BAG_SERIAL ) );
+            backpack.Container.Add( bag );
+
+            Engine.Items.Add( backpack );
+            Engine.Items.Add( bag );
+
+            Item[] children = Engine.Items.SelectEntities( i => i.Owner == NESTED_BAG_SERIAL );
+
+            Assert.IsNotNull( children );
+            CollectionAssert.AreEquivalent( new[] { NESTED_ITEM1_SERIAL, NESTED_ITEM2_SERIAL }, children.Select( i => i.Serial ).ToArray() );
+        }
+
+        [TestMethod]
+        public void NestedContainerAddedToUnknownParentIsKeptAtTopLevel()
+        {
+            const int unknownParentSerial = 0x40000010;
+
+            // Bag opened while its parent is unknown, so it's held at the top level
+            ReceiveContainerContents( NESTED_BAG_SERIAL, NESTED_ITEM1_SERIAL, NESTED_ITEM2_SERIAL );
+
+            byte[] packet = new ContainerContentUpdate( NESTED_BAG_SERIAL, 0xe75, Direction.North, 1, 0, 0, 0, unknownParentSerial, 0 ).ToArray();
+
+            IncomingPacketHandlers.GetHandler( 0x25 ).OnReceive( new PacketReader( packet, packet.Length, true ) );
+
+            // Parent still isn't reachable, so the bag must stay at the top level rather than being orphaned
+            Assert.IsTrue( Engine.Items.GetItems().Any( i => i.Serial == NESTED_BAG_SERIAL ), "Bag should be kept at the top level." );
+
+            Item[] children = Engine.Items.SelectEntities( i => i.IsDescendantOf( NESTED_BAG_SERIAL, 0 ) );
+
+            Assert.IsNotNull( children );
+            CollectionAssert.AreEquivalent( new[] { NESTED_ITEM1_SERIAL, NESTED_ITEM2_SERIAL }, children.Select( i => i.Serial ).ToArray() );
+
+            // Once the parent's contents arrive the bag moves into it and is no longer held twice
+            ReceiveContainerContents( unknownParentSerial, NESTED_BAG_SERIAL );
+
+            Assert.IsFalse( Engine.Items.GetItems().Any( i => i.Serial == NESTED_BAG_SERIAL ), "Bag should not be held at the top level." );
+            Assert.IsNotNull( Engine.Items.GetItem( unknownParentSerial )?.Container?.GetItem( NESTED_BAG_SERIAL ), "Bag should be in its parent." );
+
+            children = Engine.Items.SelectEntities( i => i.IsDescendantOf( NESTED_BAG_SERIAL, 0 ) );
+
+            Assert.IsNotNull( children );
+            CollectionAssert.AreEquivalent( new[] { NESTED_ITEM1_SERIAL, NESTED_ITEM2_SERIAL }, children.Select( i => i.Serial ).ToArray() );
         }
 
         [TestMethod]

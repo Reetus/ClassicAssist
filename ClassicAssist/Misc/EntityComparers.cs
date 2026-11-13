@@ -64,7 +64,7 @@ namespace ClassicAssist.Misc
         }
     }
 
-    public class IDThenSerialComparer : IComparer<Entity>
+    public class IDThenHueThenSerialComparer : IComparer<Entity>
     {
         public int Compare( Entity x, Entity y )
         {
@@ -74,6 +74,11 @@ namespace ClassicAssist.Misc
             }
 
             int result = x.ID.CompareTo( y.ID );
+
+            if ( result == 0 )
+            {
+                result = x.Hue.CompareTo( y.Hue );
+            }
 
             return result == 0 ? x.Serial.CompareTo( y.Serial ) : result;
         }

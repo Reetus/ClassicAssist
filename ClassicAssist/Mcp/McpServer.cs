@@ -15,6 +15,7 @@ namespace ClassicAssist.Mcp
     {
         private const string PROTOCOL_VERSION = "2025-06-18";
         private const string SERVER_VERSION = "1.0.0";
+        private const int MAX_BODY_BYTES = 4 * 1024 * 1024;
 
         /// <summary>
         ///     Maximum time a single HTTP request may take before the connection is dropped. This
@@ -29,6 +30,13 @@ namespace ClassicAssist.Mcp
         public static bool IsRunning => _listener != null;
 
         public static int Port { get; private set; }
+
+        /// <summary>
+        ///     When set, every request must carry <c>Authorization: Bearer &lt;token&gt;</c>. Set while the
+        ///     server may start on its own (see <see cref="McpAutoStart" />): a server nobody ticked this
+        ///     session must only answer an agent that was configured for it.
+        /// </summary>
+        public static string Token { get; set; }
 
         public static void Initialize( int port )
         {
@@ -172,6 +180,12 @@ namespace ClassicAssist.Mcp
                     if ( headerEnd >= 0 )
                     {
                         contentLength = ParseContentLength( data, headerEnd );
+
+                        // Don't buffer an unbounded body before the request has been validated.
+                        if ( contentLength < 0 || contentLength > MAX_BODY_BYTES )
+                        {
+                            return null;
+                        }
                     }
                     else if ( length > 64 * 1024 )
                     {
@@ -205,6 +219,32 @@ namespace ClassicAssist.Mcp
             string method = requestParts.Length > 0 ? requestParts[0] : string.Empty;
             string path = requestParts.Length > 1 ? requestParts[1] : "/";
 
+            // Binding to loopback doesn't stop a web page in the user's browser from posting here.
+            // Browsers always send Origin on those requests and agents (CLI / desktop clients) don't; a
+            // Host that isn't loopback means DNS rebinding.
+            if ( GetHeader( lines, "Origin" ) != null || !IsLoopbackHost( GetHeader( lines, "Host" ) ) )
+            {
+                return HttpResponse( 403, "Forbidden", Array.Empty<byte>() );
+            }
+
+            // Checked before anything else is answered, OPTIONS included.
+            string token = Token;
+
+            if ( token != null && !IsAuthorized( GetHeader( lines, "Authorization" ), token ) )
+            {
+                JsonRpcResponse unauthorized = new JsonRpcResponse
+                {
+                    Error = new JsonRpcError
+                    {
+                        Code = -32001,
+                        Message = "Missing or invalid bearer token. Copy the agent config from ClassicAssist's Options tab."
+                    }
+                };
+
+                return HttpResponse( 401, "Unauthorized", Encoding.UTF8.GetBytes( JsonConvert.SerializeObject( unauthorized ) ),
+                    "WWW-Authenticate: Bearer\r\n" );
+            }
+
             if ( method.Equals( "OPTIONS", StringComparison.OrdinalIgnoreCase ) )
             {
                 return HttpResponse( 204, "No Content", Array.Empty<byte>() );
@@ -219,6 +259,11 @@ namespace ClassicAssist.Mcp
                  !path.Equals( "/mcp", StringComparison.OrdinalIgnoreCase ) )
             {
                 return HttpResponse( 404, "Not Found", Array.Empty<byte>() );
+            }
+
+            if ( !IsJsonContentType( GetHeader( lines, "Content-Type" ) ) )
+            {
+                return HttpResponse( 415, "Unsupported Media Type", Array.Empty<byte>() );
             }
 
             int bodyStart = headerEnd + 4;
@@ -359,9 +404,6 @@ namespace ClassicAssist.Mcp
             header.Append( $"HTTP/1.1 {statusCode} {statusText}\r\n" );
             header.Append( "Content-Type: application/json\r\n" );
             header.Append( $"MCP-Protocol-Version: {PROTOCOL_VERSION}\r\n" );
-            header.Append( "Access-Control-Allow-Origin: *\r\n" );
-            header.Append( "Access-Control-Allow-Methods: POST, OPTIONS\r\n" );
-            header.Append( "Access-Control-Allow-Headers: content-type, mcp-protocol-version, mcp-session-id, accept\r\n" );
 
             if ( extraHeaders != null )
             {
@@ -378,6 +420,71 @@ namespace ClassicAssist.Mcp
             body.CopyTo( result, headerBytes.Length );
 
             return result;
+        }
+
+        private static string GetHeader( string[] lines, string name )
+        {
+            for ( int i = 1; i < lines.Length; i++ )
+            {
+                int colon = lines[i].IndexOf( ':' );
+
+                if ( colon > 0 && lines[i].Substring( 0, colon ).Trim().Equals( name, StringComparison.OrdinalIgnoreCase ) )
+                {
+                    return lines[i].Substring( colon + 1 ).Trim();
+                }
+            }
+
+            return null;
+        }
+
+        private static bool IsLoopbackHost( string host )
+        {
+            if ( host == null )
+            {
+                return true; // HTTP/1.0 without Host; DNS rebinding always sends one.
+            }
+
+            string name = host.StartsWith( "[" ) ? host.Substring( 0, host.IndexOf( ']' ) + 1 ) : host.Split( ':' )[0];
+
+            return name.Equals( "localhost", StringComparison.OrdinalIgnoreCase ) || name == "127.0.0.1" || name == "[::1]";
+        }
+
+        private static bool IsJsonContentType( string contentType )
+        {
+            // A browser can only send application/json cross-origin after a CORS preflight, which fails
+            // here; text/plain would skip it.
+            return contentType != null &&
+                   contentType.Split( ';' )[0].Trim().Equals( "application/json", StringComparison.OrdinalIgnoreCase );
+        }
+
+        private static bool IsAuthorized( string authorization, string token )
+        {
+            const string SCHEME = "Bearer ";
+
+            if ( authorization == null || !authorization.StartsWith( SCHEME, StringComparison.OrdinalIgnoreCase ) )
+            {
+                return false;
+            }
+
+            return FixedTimeEquals( Encoding.UTF8.GetBytes( authorization.Substring( SCHEME.Length ).Trim() ), Encoding.UTF8.GetBytes( token ) );
+        }
+
+        private static bool FixedTimeEquals( byte[] left, byte[] right )
+        {
+            // CryptographicOperations.FixedTimeEquals isn't available on net48.
+            if ( left.Length != right.Length )
+            {
+                return false;
+            }
+
+            int difference = 0;
+
+            for ( int i = 0; i < left.Length; i++ )
+            {
+                difference |= left[i] ^ right[i];
+            }
+
+            return difference == 0;
         }
 
         private static int IndexOfHeaderTerminator( byte[] data, int length )

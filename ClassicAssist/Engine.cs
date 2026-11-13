@@ -40,6 +40,7 @@ using ClassicAssist.Data.Commands;
 using ClassicAssist.Data.Hotkeys;
 using ClassicAssist.Data.Macros.Commands;
 using ClassicAssist.Data.Misc;
+using ClassicAssist.Mcp;
 using ClassicAssist.Data.Scavenger;
 using ClassicAssist.Data.Targeting;
 using ClassicAssist.Misc;
@@ -491,6 +492,8 @@ namespace Assistant
             CommandsManager.Initialize();
 
             AssistantOptions.Load();
+
+            McpAutoStart.Initialize();
         }
 
         private static void ProcessIncomingQueue( Packet packet )

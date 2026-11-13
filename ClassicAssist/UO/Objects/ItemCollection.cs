@@ -199,7 +199,7 @@ namespace ClassicAssist.UO.Objects
             }
             else
             {
-                Remove( entity.Container.GetItems() );
+                Remove( GetOwnedContents( entity ) );
 
                 changed = base.Remove( entity );
             }
@@ -230,7 +230,7 @@ namespace ClassicAssist.UO.Objects
 
                 if ( entity.Container != null )
                 {
-                    Remove( entity.Container.GetItems() );
+                    Remove( GetOwnedContents( entity ) );
                 }
 
                 if ( base.Remove( entity ) )
@@ -245,6 +245,19 @@ namespace ClassicAssist.UO.Objects
             }
 
             return changed;
+        }
+
+        /// <summary>
+        ///     The contents to remove along with <paramref name="container" />: only what it still owns.
+        ///     <para>
+        ///         <see cref="Remove(int)" /> takes a serial out of every container that lists it, so an item the
+        ///         container still listed after it had moved elsewhere was removed from where it really is. A
+        ///         chest swept by distance took what had been moved from it out of the backpack.
+        ///     </para>
+        /// </summary>
+        private static Item[] GetOwnedContents( Item container )
+        {
+            return container.Container.GetItems().Where( i => i.Owner == container.Serial ).ToArray();
         }
 
         public override bool Remove( int serial )
@@ -348,11 +361,11 @@ namespace ClassicAssist.UO.Objects
         public override Item[] SelectEntities( Func<Item, bool> func )
         {
             List<Item> itemList = new List<Item>();
-            IEnumerable<Item> ents = EntityList.Select( m => m.Value ).Where( m => func( m ) || m.IsContainer );
+            HashSet<int> seen = new HashSet<int>();
 
-            foreach ( Item i in ents )
+            foreach ( Item i in EntityList.Values )
             {
-                if ( func( i ) && !itemList.Contains( i ) )
+                if ( func( i ) && seen.Add( i.Serial ) )
                 {
                     itemList.Add( i );
                 }
@@ -364,13 +377,33 @@ namespace ClassicAssist.UO.Objects
 
                 Item[] result = i.Container.SelectEntities( func );
 
-                if ( result != null )
+                if ( result == null )
                 {
-                    itemList.AddRange( result );
+                    continue;
+                }
+
+                // An item can be reachable by more than one path (e.g. a container also held at the top level),
+                // only return it once
+                foreach ( Item child in result )
+                {
+                    if ( seen.Add( child.Serial ) )
+                    {
+                        itemList.Add( child );
+                    }
                 }
             }
 
             return itemList.Count > 0 ? itemList.ToArray() : null;
+        }
+
+        /// <summary>
+        ///     Remove the entry for the given serial from this collection only, without clearing the item's
+        ///     contents, touching its owner, or raising CollectionChanged. Used when an item that was held here
+        ///     as a fallback is found to belong in another container.
+        /// </summary>
+        internal bool Detach( int serial )
+        {
+            return EntityList.TryRemove( serial, out _ );
         }
 
         public override Item SelectEntity( Func<Item, bool> func )

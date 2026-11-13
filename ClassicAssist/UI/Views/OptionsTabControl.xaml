@@ -29,6 +29,7 @@
                 <shared:SharedResourceDictionary Source="../../Resources/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
@@ -209,6 +210,31 @@
                                          IsEnabled="{Binding CurrentOptions.McpEnabled, Converter={StaticResource InverseBooleanConverter}}" />
                             </controls:OptionedCheckBoxControl.ChildContent>
                         </controls:OptionedCheckBoxControl>
+                        <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
+                            <!-- Enabled once MCP is on, and stays enabled while ticked so consent can always be withdrawn. -->
+                            <CheckBox IsChecked="{Binding McpAutoStartEnabled}"
+                                      Command="{Binding ToggleMcpAutoStartCommand}"
+                                      Content="{x:Static resources:Strings.MCP_autostart}"
+                                      ToolTip="{x:Static resources:Strings.MCP_autostart_tooltip}"
+                                      VerticalAlignment="Center">
+                                <CheckBox.Style>
+                                    <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CurrentOptions.McpEnabled}" Value="True">
+                                                <Setter Property="IsEnabled" Value="True" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding McpAutoStartEnabled}" Value="True">
+                                                <Setter Property="IsEnabled" Value="True" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </CheckBox.Style>
+                            </CheckBox>
+                            <Button Margin="10,0,0,0" Padding="5,0" Content="{x:Static resources:Strings.MCP_copy_config}"
+                                    Command="{Binding CopyMcpConfigCommand}"
+                                    Visibility="{Binding McpAutoStartEnabled, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        </StackPanel>
                     </StackPanel>
                 </GroupBox>
             </controls:ResponsiveGrid.Items>

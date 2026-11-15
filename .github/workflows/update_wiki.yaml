@@ -29,11 +29,17 @@ jobs:
       run: dotnet build .\ClassicAssist\ClassicAssist.csproj /p:Version=$env:VERSION
     - name: Build ExportCommands
       run: dotnet build .\Tools\ExportCommands\ExportCommands.csproj
+    - name: Setup .NET 11 (markdowntopdf tool)
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 11.0.x
+    - name: Restore tools
+      run: dotnet tool restore
     - name: Generate Docs
       run: |
           cd Output\net48
           $fullPath = (Get-Location).Path
-          .\ExportCommands.exe $fullPath\ClassicAssist.dll
+          .\ExportCommands.exe $fullPath\ClassicAssist.dll --pdf
     - name: Checkout Wiki
       run: git clone https://github.com/Reetus/ClassicAssist.wiki.git
     - name: Update Wiki
@@ -42,6 +48,7 @@ jobs:
           git config --global user.name "Reetus"
           cd ClassicAssist.wiki
           copy ..\Output\net48\Docs\*.md .
+          copy ..\Output\net48\Docs\*.pdf .
           git add *
           git commit -m "Update Wiki"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Reetus/ClassicAssist.wiki.git

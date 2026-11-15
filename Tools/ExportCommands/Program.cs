@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -17,6 +18,7 @@ namespace ExportCommands
     internal class Program
     {
         private static readonly string[] _locales = { "en-US", "it-IT", "pl-PL", "ko-KR", "cs-CZ" };
+        private static string _docPath;
 
         private static void Main( string[] args )
         {
@@ -73,6 +75,11 @@ namespace ExportCommands
             {
                 Directory.CreateDirectory( docPath );
             }
+
+            _docPath = docPath;
+
+            bool generatePdf = args.Any( a => a.Equals( "--pdf", StringComparison.OrdinalIgnoreCase ) );
+            List<string> indexFiles = new List<string>();
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
@@ -293,7 +300,14 @@ namespace ExportCommands
                     fileName = "Macro-Commands.md";
                 }
 
-                File.WriteAllText( Path.Combine( originalDirectory, "Docs", fileName ), markDown );
+                string indexFile = Path.Combine( docPath, fileName );
+                File.WriteAllText( indexFile, markDown );
+                indexFiles.Add( indexFile );
+            }
+
+            if ( generatePdf )
+            {
+                GeneratePdfs( indexFiles, originalDirectory );
             }
 
             sw.Stop();
@@ -396,7 +410,58 @@ namespace ExportCommands
                 fileName = $"{categoryLN}.md";
             }
 
-            File.WriteAllText( Path.Combine( Environment.CurrentDirectory, "Docs", fileName ), markDown );
+            File.WriteAllText( Path.Combine( _docPath, fileName ), markDown );
+        }
+
+        /// <summary>
+        ///     Converts each locale's index (and the category pages it links to) into a single PDF using the
+        ///     markdowntopdf dotnet tool. PDF names follow the wiki page names, e.g. Macro-Commands-(it-IT).pdf.
+        /// </summary>
+        private static void GeneratePdfs( IEnumerable<string> indexFiles, string workingDirectory )
+        {
+            foreach ( string indexFile in indexFiles )
+            {
+                string pdfFile = Path.Combine( _docPath, $"{Path.GetFileNameWithoutExtension( indexFile ).Replace( ' ', '-' )}.pdf" );
+                string arguments = $"\"{indexFile}\" --follow-links --output \"{pdfFile}\"";
+
+                // Prefer the version pinned in .config/dotnet-tools.json, fall back to a globally installed tool
+                int exitCode = RunProcess( "dotnet", $"tool run markdowntopdf {arguments}", workingDirectory );
+
+                if ( exitCode != 0 )
+                {
+                    exitCode = RunProcess( "markdowntopdf", arguments, workingDirectory );
+                }
+
+                if ( exitCode != 0 )
+                {
+                    Console.WriteLine( $"Failed to create {pdfFile}, install the tool with 'dotnet tool restore' or 'dotnet tool install -g MarkdownToPdf.Tool'" );
+                }
+            }
+        }
+
+        private static int RunProcess( string fileName, string arguments, string workingDirectory )
+        {
+            try
+            {
+                using ( Process process = Process.Start( new ProcessStartInfo( fileName, arguments )
+                       {
+                           UseShellExecute = false, WorkingDirectory = workingDirectory
+                       } ) )
+                {
+                    if ( process == null )
+                    {
+                        return -1;
+                    }
+
+                    process.WaitForExit();
+
+                    return process.ExitCode;
+                }
+            }
+            catch ( Win32Exception )
+            {
+                return -1;
+            }
         }
 
         private static Type FindEnumType( string shortName, Assembly assembly )

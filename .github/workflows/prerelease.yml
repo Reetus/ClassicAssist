@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    permissions:
+      contents: write
+      id-token: write
     steps:
     - uses: actions/checkout@v2
       with:
@@ -88,6 +91,51 @@ jobs:
       run: dotnet build --no-restore /p:Version=$env:VERSION
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    # Sign our own binaries (third-party DLLs are left alone) before MANIFEST.json
+    # is generated, so the hashes the updater checks are of the signed files.
+    # Login is GitHub OIDC to the classicassist-github-signing app registration,
+    # which has federated credentials for master and develop only, so the
+    # workflow must be run from one of those branches.
+    - name: Azure login
+      uses: azure/login@v3
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    - name: Sign binaries
+      uses: azure/artifact-signing-action@v2
+      with:
+        endpoint: https://eus.codesigning.azure.net/
+        signing-account-name: john-scott
+        certificate-profile-name: Codesign
+        files-folder: ${{ github.workspace }}\Output\net48
+        files-folder-filter: ClassicAssist*.dll,ClassicAssist*.exe
+        file-digest: SHA256
+        timestamp-rfc3161: http://timestamp.acs.microsoft.com
+        timestamp-digest: SHA256
+        exclude-environment-credential: true
+        exclude-workload-identity-credential: true
+        exclude-managed-identity-credential: true
+        exclude-shared-token-cache-credential: true
+        exclude-visual-studio-credential: true
+        exclude-visual-studio-code-credential: true
+        exclude-azure-powershell-credential: true
+        exclude-azure-developer-cli-credential: true
+        exclude-interactive-browser-credential: true
+    - name: Check signatures
+      shell: pwsh
+      run: |
+        $expected = 'ClassicAssist.dll', 'ClassicAssist.Shared.dll', 'ClassicAssist.Controls.dll', 'ClassicAssist.Launcher.exe', 'ClassicAssist.Updater.exe'
+        $files = Get-ChildItem Output/net48/* -File -Include ClassicAssist*.dll, ClassicAssist*.exe
+        $missing = $expected | Where-Object { $files.Name -notcontains $_ }
+        if ($missing) { throw "Expected binaries not found: $($missing -join ', ')" }
+        $bad = $false
+        foreach ($file in $files) {
+          $sig = Get-AuthenticodeSignature $file.FullName
+          Write-Host ("{0}: {1} ({2})" -f $file.Name, $sig.Status, $sig.SignerCertificate.Subject)
+          if ($sig.Status -ne 'Valid') { $bad = $true }
+        }
+        if ($bad) { throw 'A binary is not validly signed.' }
     - name: Generate Manifest
       run: |
         cd Output\net48

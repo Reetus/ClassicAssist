@@ -30,6 +30,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -103,7 +104,60 @@
             <CheckBox Margin="10,0,0,0" Content="{x:Static resources:Strings.Include_Internal}" IsChecked="{Binding IncludeInternal}" Foreground="{StaticResource ThemeForegroundBrush}"/>
             <sharedControls:ImageButton ToolTip="{x:Static resources:Strings.Reset}" ImageSource="{StaticResource RefreshIcon}" Margin="10,0,0,0" Command="{Binding ResetCommand}"/>
         </ToolBar>
-        <Border BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderBrush}" Grid.Row="1">
+        <Grid Grid.Row="1" Margin="0,5,0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Static resources:Strings.Filter_}" VerticalAlignment="Center"
+                       Foreground="{DynamicResource ThemeForegroundBrush}" Margin="0,0,10,0" />
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="FilterTextBox" FontFamily="Consolas"
+                     Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged, Delay=300}">
+                <TextBox.ToolTip>
+                    <TextBlock xml:space="preserve" FontFamily="Consolas">[i] = 0xAA              byte at offset i
+[i..j] = 0xAABBCCDD      bytes i to j inclusive, big-endian (max 8)
+len &gt; 20               packet length
+contains 0x4001ABCD      bytes anywhere in the packet
+Operators: =  ==  !=  =!  &lt;  &lt;=  &gt;  &gt;=
+Combine:   &amp;&amp; / and,  || / or,  ! / not,  ( )
+Numbers:   decimal, or hex with 0x
+A byte test never matches a packet too short to have that byte.</TextBlock>
+                </TextBox.ToolTip>
+            </TextBox>
+            <!-- Placeholder: WPF's TextBox has none of its own -->
+            <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="Consolas" Margin="4,0,0,0" VerticalAlignment="Center"
+                       IsHitTestVisible="False" Opacity="0.5" Foreground="{DynamicResource ThemeForegroundBrush}"
+                       Text="[0] = 0xF3 &amp;&amp; [4..7] = 0x4001ABCD">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Text, ElementName=FilterTextBox}" Value="">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding FilterError}" Foreground="Red" TextWrapping="Wrap"
+                       Margin="0,5,0,0">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility" Value="Visible" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding FilterError}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Grid>
+        <Border BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderBrush}" Grid.Row="2">
             <ListBox ItemsSource="{Binding Items}">
                 <i:Interaction.Behaviors>
                     <behaviours:ItemsControlAutoScrollBehaviour />
@@ -129,7 +183,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Border>
-        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,10,0,0">
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="0,10,0,0">
             <CheckBox Content="{x:Static resources:Strings.Enabled}" VerticalAlignment="Center"
                       Margin="0,0,10,0" IsChecked="{Binding Enabled}" />
         </StackPanel>

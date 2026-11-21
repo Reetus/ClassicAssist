@@ -21,6 +21,12 @@ namespace ClassicAssist.UI.ViewModels.Debug
 {
     public class DebugPacketsViewModel : SetPropertyNotifyChanged, ISettingProvider
     {
+        /// <summary>
+        ///     Every captured packet, whatever the display filter. <see cref="Items" /> is the filtered view
+        ///     of it, so changing the filter re-applies to what has already been captured. UI thread only.
+        /// </summary>
+        private readonly List<PacketEntry> _allItems = new List<PacketEntry>();
+
         private readonly Dispatcher _dispatcher;
         private readonly List<PacketEntry> _tempItems = new List<PacketEntry>();
         private ICommand _changePacketEnabledCommand;
@@ -29,6 +35,15 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
         private bool _enabled;
         private ICommand _exportLogCommand;
+        private string _filter = string.Empty;
+        private string _filterError;
+
+        /// <summary>
+        ///     The last filter that parsed, or null for none. While the text is invalid (mid-edit, say)
+        ///     this keeps the previous filter applied rather than flashing the whole log back.
+        /// </summary>
+        private volatile PacketMatchExpression _filterExpression;
+
         private bool _includeInternal = true;
         private ObservableCollection<PacketEntry> _items = new ObservableCollection<PacketEntry>();
         private DateTime _lastUIUpdate;
@@ -89,6 +104,28 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
         public ICommand ExportLogCommand => _exportLogCommand ?? ( _exportLogCommand = new RelayCommand( ExportLog, o => true ) );
 
+        /// <summary>
+        ///     Display filter over the captured packets - see <see cref="PacketMatchExpression" /> for the
+        ///     syntax, e.g. <c>[0] = 0xF3 &amp;&amp; [4..7] = 0x4001ABCD</c>. Packets are still captured while
+        ///     hidden, so clearing or changing the filter shows them again.
+        /// </summary>
+        public string Filter
+        {
+            get => _filter;
+            set
+            {
+                SetProperty( ref _filter, value );
+                UpdateFilter();
+            }
+        }
+
+        /// <summary>Why <see cref="Filter" /> doesn't parse, or null when it does.</summary>
+        public string FilterError
+        {
+            get => _filterError;
+            set => SetProperty( ref _filterError, value );
+        }
+
         public bool IncludeInternal
         {
             get => _includeInternal;
@@ -125,7 +162,13 @@ namespace ClassicAssist.UI.ViewModels.Debug
                 return;
             }
 
-            JObject options = new JObject { { "Enabled", Enabled }, { "IncludeInternal", IncludeInternal }, { "Direction", Direction.ToString() } };
+            JObject options = new JObject
+            {
+                { "Enabled", Enabled },
+                { "IncludeInternal", IncludeInternal },
+                { "Direction", Direction.ToString() },
+                { "Filter", Filter ?? string.Empty }
+            };
 
             JArray packets = new JArray();
 
@@ -149,6 +192,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
             Enabled = json["Packets"]["Enabled"]?.ToObject<bool>() ?? false;
             IncludeInternal = json["Packets"]["IncludeInternal"]?.ToObject<bool>() ?? false;
             Direction = Enum.TryParse( json["Packets"]["Direction"]?.ToObject<string>() ?? string.Empty, out PacketDirection direction ) ? direction : PacketDirection.Any;
+            Filter = json["Packets"]["Filter"]?.ToObject<string>() ?? string.Empty;
 
             if ( json["Packets"]["Packets"] == null )
             {
@@ -235,11 +279,69 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
             _dispatcher.Invoke( () =>
             {
-                Items.AddRange( _tempItems );
+                AddCapturedEntries( _tempItems );
 
                 _lastUIUpdate = DateTime.Now;
                 _tempItems.Clear();
             } );
+        }
+
+        /// <summary>Records newly captured packets and shows those that pass the filter. UI thread only.</summary>
+        internal void AddCapturedEntries( IEnumerable<PacketEntry> entries )
+        {
+            PacketMatchExpression expression = _filterExpression;
+
+            foreach ( PacketEntry entry in entries )
+            {
+                _allItems.Add( entry );
+
+                if ( expression == null || expression.IsMatch( entry.Data ) )
+                {
+                    Items.Add( entry );
+                }
+            }
+        }
+
+        private void UpdateFilter()
+        {
+            if ( string.IsNullOrWhiteSpace( Filter ) )
+            {
+                _filterExpression = null;
+                FilterError = null;
+            }
+            else if ( PacketMatchExpression.TryParse( Filter, out PacketMatchExpression expression, out string error ) )
+            {
+                _filterExpression = expression;
+                FilterError = null;
+            }
+            else
+            {
+                FilterError = error;
+
+                return;
+            }
+
+            if ( _dispatcher.CheckAccess() )
+            {
+                RebuildItems();
+            }
+            else
+            {
+                _dispatcher.Invoke( RebuildItems );
+            }
+        }
+
+        /// <summary>
+        ///     Replaces <see cref="Items" /> rather than clearing and re-adding to it: one reset for the
+        ///     list instead of a change notification per packet, which matters with a long capture.
+        /// </summary>
+        private void RebuildItems()
+        {
+            PacketMatchExpression expression = _filterExpression;
+
+            IEnumerable<PacketEntry> matching = expression == null ? _allItems : _allItems.Where( e => expression.IsMatch( e.Data ) );
+
+            Items = new ObservableCollection<PacketEntry>( matching );
         }
 
         private void OnInternalPacketSentEvent( byte[] data, int length )
@@ -331,6 +433,7 @@ namespace ClassicAssist.UI.ViewModels.Debug
 
         private void Clear( object obj )
         {
+            _allItems.Clear();
             Items.Clear();
         }
 
